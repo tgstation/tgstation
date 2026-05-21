@@ -5,11 +5,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/gpstag = "COM0"
 	var/tracking = TRUE
 	var/emped = FALSE
+	var/list/turf/tagged
 
-/datum/component/gps/Initialize(_gpstag = "COM0")
+/datum/component/gps/Initialize(_gpstag = "COM0", _tracking = TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	gpstag = _gpstag
+	tracking = _tracking
 	GLOB.GPS_list += src
 
 /datum/component/gps/Destroy()
@@ -21,10 +23,20 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(deactivate_kheiral_cuffs))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(deactivate_if_station))
 
 /datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_if_station(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
+	SIGNAL_HANDLER
+	if(!isturf(new_turf))
+		return
+
+	if(is_station_level(new_turf.z))
+		qdel(src)
+		return
 
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item
@@ -32,8 +44,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+	var/debug_mode = FALSE
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working")
+/datum/component/gps/item/Initialize(_gpstag = "COM0", _tracking = TRUE, emp_proof = FALSE, state = null, overlay_state = "working", debug = FALSE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -41,16 +54,27 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(isnull(state))
 		state = GLOB.default_state
 	src.state = state
+	debug_mode = debug
 
 	var/atom/A = parent
 	if(overlay_state)
 		A.add_overlay(overlay_state)
 	A.name = "[initial(A.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+
+	if(debug_mode && tracking)
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(tag_the_floor))
+
 	if(!emp_proof)
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
+
+/datum/component/gps/item/Destroy()
+	if(tagged)
+		clear()
+	return ..()
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -58,6 +82,29 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	if(user)
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+
+///Called on COMSIG_MOVABLE_MOVED
+/datum/component/gps/item/proc/tag_the_floor(atom/movable/mover, turf/old_loc)
+	SIGNAL_HANDLER
+
+	if(!debug_mode)
+		return
+
+	var/turf/tagged_turf = get_turf(mover)
+	if(tagged_turf)
+		tagged_turf.color = RANDOM_COLOUR
+		tagged_turf.maptext = MAPTEXT("[tagged_turf.x],[tagged_turf.y],[tagged_turf.z]")
+		LAZYOR(tagged, tagged_turf)
+
+///Called on COMSIG_MOVABLE_MOVED
+/datum/component/gps/item/proc/clear()
+	SIGNAL_HANDLER
+
+	while(tagged.len)
+		var/turf/tagged_turf = pop(tagged)
+		tagged_turf.color = initial(tagged_turf.color)
+		tagged_turf.maptext = initial(tagged_turf.maptext)
+	LAZYNULL(tagged)
 
 ///Called on COMSIG_ATOM_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -107,6 +154,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		A.add_overlay("working")
 		to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
 		tracking = TRUE
+
+	if(debug_mode)
+		if(tracking)
+			RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(tag_the_floor))
+		else
+			UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+			clear()
 
 /datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)

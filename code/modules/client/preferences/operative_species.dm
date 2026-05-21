@@ -6,6 +6,7 @@
 	default_value = TRUE
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "operative_species"
+	should_update_preview = FALSE
 
 /datum/preference/toggle/nuke_ops_species/is_accessible(datum/preferences/preferences)
 	. = ..()

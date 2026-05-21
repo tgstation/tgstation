@@ -564,7 +564,7 @@
 /area/deathmatch)
 "Kb" = (
 /obj/structure/table/reinforced,
-/obj/item/ammo_box/strilka310/surplus,
+/obj/item/ammo_box/speedloader/strilka310/surplus,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Kr" = (

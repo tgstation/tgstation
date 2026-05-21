@@ -173,11 +173,10 @@
 		saturation = min(saturation, 1 - added_saturation)
 
 	var/list/new_matrix = list(
-		0, 0, 0, 0, // Ignore original hue
-		0, saturation, 0, 0, // Multiply the saturation by ours
-		0, 0, 1 - deducted_light, 0, // If we're highly saturated then remove a bit of lightness to keep some color in
-		0, 0, 0, 1, // Preserve alpha
-		hue, added_saturation, 0, 0, // And apply our preferred hue and some saturation if we're oversaturated
+		0, 0, 0, // Ignore original hue
+		0, saturation, 0, // Multiply the saturation by ours
+		0, 0, 1 - deducted_light, // If we're highly saturated then remove a bit of lightness to keep some color in
+		hue, added_saturation, 0, // And apply our preferred hue and some saturation if we're oversaturated
 	)
 	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)
 
@@ -265,3 +264,26 @@
 		modify.underlays[underlay_index] = filter_appearance_recursive(modify.underlays[underlay_index], filter_to_apply)
 
 	return modify
+
+#define ALPHA_COMPOSE(src_a, comp_a, back_ch, src_ch) ((1 - src_a / comp_a) * back_ch + (src_a / comp_a) * src_ch)
+
+/// Blend two colors using the normal blend mode of the CSS compositing algorithm
+/proc/blend_color(backdrop = "#00000000", source)
+	var/list/rgb_source = split_color(source)
+	var/source_alpha = rgb_source[4]
+	if(source_alpha == 0)
+		return backdrop
+	if(source_alpha == 255)
+		return source
+	var/list/rgb_backdrop = split_color(backdrop)
+	var/backdrop_alpha = rgb_backdrop[4] / 255
+	source_alpha /= 255
+	var/output_alpha = source_alpha + backdrop_alpha - source_alpha * backdrop_alpha
+	return rgb(
+		ALPHA_COMPOSE(source_alpha, output_alpha, rgb_backdrop[1], rgb_source[1]),
+		ALPHA_COMPOSE(source_alpha, output_alpha, rgb_backdrop[2], rgb_source[2]),
+		ALPHA_COMPOSE(source_alpha, output_alpha, rgb_backdrop[3], rgb_source[3]),
+		output_alpha * 255
+	)
+
+#undef ALPHA_COMPOSE

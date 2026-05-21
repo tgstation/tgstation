@@ -37,7 +37,7 @@ const GenomeImage = (props) => {
 const GeneCycler = (props) => {
   const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
-  const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
+  const color = (disabled && GENE_COLORS.X) || GENE_COLORS[gene];
   return (
     <Button
       {...rest}
@@ -75,6 +75,17 @@ const GeneCycler = (props) => {
     </Button>
   );
 };
+
+function isPairMatched(sequence, index) {
+  const gene1 = sequence.charAt(index);
+  const gene2 = sequence.charAt(index + 1);
+  return (
+    (gene1 === 'A' && gene2 === 'T') ||
+    (gene1 === 'T' && gene2 === 'A') ||
+    (gene1 === 'G' && gene2 === 'C') ||
+    (gene1 === 'C' && gene2 === 'G')
+  );
+}
 
 const GenomeSequencer = (props) => {
   const { mutation } = props;
@@ -120,9 +131,9 @@ const GenomeSequencer = (props) => {
         <Box
           mt="-2px"
           ml="10px"
-          width="2px"
+          width="3px"
           height="8px"
-          backgroundColor="label"
+          backgroundColor={isPairMatched(sequence, i) ? 'label' : 'red'}
         />
         {buttons[i + 1]}
       </Box>

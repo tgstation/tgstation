@@ -1,4 +1,4 @@
-import { paginate, range } from 'common/collections';
+import { chunk, range } from 'es-toolkit';
 import { useState } from 'react';
 import {
   BlockQuote,
@@ -88,7 +88,7 @@ export const InfuserBook = (props) => {
 
   const paginatedEntries = paginateEntries(entries);
 
-  let currentEntry = paginatedEntries[chapter][pageInChapter];
+  const currentEntry = paginatedEntries[chapter][pageInChapter];
 
   const switchChapter = (newChapter) => {
     if (chapter === newChapter) {
@@ -131,7 +131,7 @@ export const InfuserBook = (props) => {
     'Tier 3 - Abberations - RESTRICTED',
   ];
 
-  const paginatedTabs = paginate(tabs, 3);
+  const paginatedTabs = chunk(tabs, 3);
 
   const restrictedNext = chapter === 3 && pageInChapter === 0;
 
@@ -250,7 +250,7 @@ const InfuserEntry = (props: InfuserEntryProps) => {
   return (
     <Section
       fill
-      title={entry.name + ' Mutant'}
+      title={`${entry.name} Mutant`}
       height={PAGE_HEIGHT}
       buttons={
         <Button tooltip={tierData.desc} icon={tierData.icon}>
@@ -301,7 +301,7 @@ const paginateEntries = (collection: Entry[]): Entry[][] => {
   });
   // negative 1 to account for introduction, which has no entries
   let tier = -1;
-  for (let _ in range(tier, maxTier + 1)) {
+  for (const _ in range(tier, maxTier + 1)) {
     pages.push(collection.filter((entry) => entry.tier === tier));
     tier++;
   }

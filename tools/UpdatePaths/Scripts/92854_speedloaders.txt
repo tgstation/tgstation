@@ -1,0 +1,3 @@
+/obj/item/ammo_box/a357/@SUBTYPES : /obj/item/ammo_box/speedloader/c357/@SUBTYPES{@OLD}
+/obj/item/ammo_box/c38/@SUBTYPES : /obj/item/ammo_box/speedloader/c38/@SUBTYPES{@OLD}
+/obj/item/ammo_box/strilka310/@SUBTYPES : /obj/item/ammo_box/speedloader/strilka310/@SUBTYPES{@OLD}

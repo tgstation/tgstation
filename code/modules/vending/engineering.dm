@@ -38,4 +38,4 @@
 
 /obj/item/vending_refill/engineering
 	machine_name = "Robco Tool Maker"
-	icon_state = "refill_engi"
+	icon_state = "refill_roroco"

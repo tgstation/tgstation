@@ -344,7 +344,7 @@ The MC entry for SSAir is very helpful for debugging, and it is good to understa
 
 _Figure 6.1: SSAir sitting doing little to nothing turf wise, only processing pipenets and atmos machines_
 
-If you aren't familiar with the default subsystem stats, you can see them explained here: [][http://codedocs.tgstation13.org/.github/guides/MC_tab.md]
+If you aren't familiar with the default subsystem stats, you can see them explained here: [MC Tab Guide](/guides/MC_tab.md)
 
 The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
 

@@ -30,7 +30,7 @@
 		return
 	var/mob/living/carbon/human/human_parent = target
 	human_parent.add_eye_color(BLOODCULT_EYE, EYE_COLOR_CULT_PRIORITY)
-	human_parent.update_body()
+	human_parent.update_eyes()
 
 /**
  * Detach proc
@@ -42,6 +42,6 @@
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		human_parent.remove_eye_color(EYE_COLOR_CULT_PRIORITY)
-		human_parent.update_body()
+		human_parent.update_eyes()
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()

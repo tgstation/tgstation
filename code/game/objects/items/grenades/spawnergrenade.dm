@@ -29,6 +29,8 @@
 		// Spawn some hostile syndicate critters and spread them out
 		var/list/spawned = spawn_and_random_walk(spawner_type, target_turf, deliveryamt, walk_chance = 50, admin_spawn = ((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
 		afterspawn(spawned)
+		for(var/mob/living/created as anything in spawned)
+			ADD_TRAIT(created, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 
 	qdel(src)
 

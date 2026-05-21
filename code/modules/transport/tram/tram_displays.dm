@@ -39,13 +39,13 @@
 	desc = "Used to build tram indicator displays, just secure to the wall."
 	icon_state = "indi_blank"
 	icon = 'icons/obj/tram/tram_indicator.dmi'
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 	result_path = /obj/machinery/transport/destination_sign/indicator
 	pixel_shift = 32
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_sign))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(update_sign))
 	SStransport.displays += src
 	available_faces = list(
 		TRAMSTATION_LINE_1,
@@ -81,13 +81,14 @@
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
 /obj/machinery/transport/destination_sign/on_deconstruction(disassembled)
+	var/atom/drop = drop_location()
 	if(disassembled)
-		new /obj/item/wallframe/indicator_display(drop_location())
+		new /obj/item/wallframe/indicator_display(drop)
 	else
-		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
-		new /obj/item/stack/sheet/iron(drop_location(), 1)
-		new /obj/item/shard(drop_location())
-		new /obj/item/shard(drop_location())
+		new /obj/item/stack/sheet/mineral/titanium(drop, 2)
+		new /obj/item/stack/sheet/iron(drop)
+		new /obj/item/shard(drop)
+		new /obj/item/shard(drop)
 
 /obj/machinery/transport/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

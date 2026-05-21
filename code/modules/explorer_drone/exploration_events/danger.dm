@@ -1,6 +1,6 @@
 /// Danger event - unskippable, if you have appriopriate tool you can mitigate damage.
 /datum/exploration_event/simple/danger
-	root_abstract_type = /datum/exploration_event/simple/danger
+	abstract_type = /datum/exploration_event/simple/danger
 	description = "You encounter a giant error."
 	var/required_tool = EXODRONE_TOOL_LASER
 	var/has_tool_action_text = "Fight"
@@ -88,7 +88,7 @@
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	deep_scan_description = "Site is exposed to space radiation. Using self-diagnostic multiool attachment advised."
 	description = "The drone feed suddenly goes haywire! It seems that the drone got hit by a burst of cosmic rays! You'll have to wait for the signal to be restored."
-	has_tool_description = "Your multitool should allow a significant amount of the damage to be repaired on its own." //wait, what? 
+	has_tool_description = "Your multitool should allow a significant amount of the damage to be repaired on its own." //wait, what?
 	no_tool_description = "Nothing more to be done than to wait and assess the damage."
 	has_tool_action_text = "Wait"
 	no_tool_action_text = "Wait"

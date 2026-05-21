@@ -3,7 +3,7 @@
  * Bitrunning gimmick loadouts themed around dungeon crawling.
  * Mostly for fun, have niche but not insignificant advantages.
  */
-/obj/item/bitrunning_disk/gimmick/dungeon
+/obj/item/disk/bitrunning/gimmick/dungeon
 	name = "bitrunning gimmick: dungeon crawling"
 	selectable_loadouts = list(
 		/datum/bitrunning_gimmick/alchemist,
@@ -30,8 +30,9 @@
 	name = "unlabeled bottle"
 	desc = "A small bottle. You don't remember what you put in it."
 
+/obj/item/reagent_containers/cup/bottle/alchemist_basic/add_initial_reagents()
 	/// List of possible reagents we may pick from
-	var/static/list/possible_reagents = list(
+	var/list/possible_reagents = list(
 		/datum/reagent/aluminium, // Basic chems
 		/datum/reagent/bromine,
 		/datum/reagent/carbon,
@@ -63,7 +64,6 @@
 		/datum/reagent/consumable/coffee,
 	)
 
-/obj/item/reagent_containers/cup/bottle/alchemist_basic/add_initial_reagents()
 	var/our_reagent = pick(possible_reagents)
 	reagents.add_reagent(our_reagent, 50)
 
@@ -109,15 +109,15 @@
 
 	granted_items = list(
 		/obj/item/clothing/under/color/black,
-		/obj/item/clothing/shoes/sneakers/black,
+		/obj/item/clothing/shoes/sneakers/black/rogue,
 		/obj/item/clothing/mask/facescarf/rogue,
-		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/clothing/glasses/eyepatch/rogue,
 		/obj/item/bedsheet/black/rogue_cape,
 		/obj/item/storage/belt/fannypack/black/rogue,
 		/obj/item/knife/combat/survival,
 	)
 
-/obj/item/clothing/shoes/sneakers/black
+/obj/item/clothing/shoes/sneakers/black/rogue
 	name = "sneaker of SNEAKING"
 
 /obj/item/clothing/mask/facescarf/rogue
@@ -125,7 +125,7 @@
 	icon_state = "/obj/item/clothing/mask/facescarf/rogue"
 	greyscale_colors = "#292929"
 
-/obj/item/clothing/glasses/eyepatch
+/obj/item/clothing/glasses/eyepatch/rogue
 	name = "eyepatch of SEALING"
 
 /obj/item/bedsheet/black/rogue_cape

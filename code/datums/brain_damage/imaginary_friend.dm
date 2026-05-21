@@ -7,6 +7,10 @@
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
 	scan_desc = "partial schizophrenia"
+	symptoms = "Exhibits signs of interacting with an unseen individual, including talking to themselves, \
+		responding to unheard stimuli, and displaying behaviors that suggest the presence of a companion. \
+		This \"imaginary friend\" may influence the patient's actions and emotional state, \
+		leading to social withdrawal, altered perceptions of reality, or atypical activities."
 	gain_text = span_notice("You feel in good company, for some reason.")
 	lose_text = span_warning("You feel lonely again.")
 	var/mob/eye/imaginary_friend/friend
@@ -20,7 +24,7 @@
 	make_friend()
 	get_ghost()
 
-/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick)
 	if(get_dist(owner, friend) > 9)
 		friend.recall()
 	if(!friend)
@@ -85,13 +89,17 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
 	has_emotes = TRUE
-	var/icon/human_image
+	var/icon/human_icon
 	var/image/current_image
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
+	/// Max distance we can be from our owner before we teleport to them
+	var/distance_allowance = 9
+	/// If TRUE, we must keep line of sight with the owner
+	var/require_los = FALSE
 	/// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
 	var/extended_message_range = TRUE
 
@@ -141,7 +149,7 @@
 	gender = pick(MALE, FEMALE)
 	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
-	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+	human_icon = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
 
 /**
@@ -172,11 +180,11 @@
 		appearance_job = SSjob.get_job(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		human_icon = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 	else if(istype(appearance_job, /datum/job/cyborg))
-		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
+		human_icon = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
 	else
-		human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+		human_icon = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 	Show()
 
 /// Returns all member clients of the imaginary_group
@@ -196,7 +204,7 @@
 	remove_image_from_clients(current_image, friend_clients)
 
 	//Generate image from the static icon and the current dir
-	current_image = image(human_image, src, , MOB_LAYER, dir=src.dir)
+	current_image = image(human_icon, src, , MOB_LAYER, dir=src.dir)
 	current_image.override = TRUE
 	current_image.name = name
 	if(hidden)
@@ -209,21 +217,18 @@
 	src.client.images |= current_image
 
 /mob/eye/imaginary_friend/Destroy()
-	if(owner?.client)
-		owner.client.images.Remove(human_image)
-	if(client)
-		client.images.Remove(human_image)
+	owner.client?.images -= current_image
+	client?.images -= current_image
 	owner.imaginary_group -= src
 	return ..()
 
-/mob/eye/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/mob/eye/imaginary_friend/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, freq_name, freq_color, list/spans, list/message_mods = list(), message_range)
 	if (safe_read_pref(client, /datum/preference/toggle/enable_runechat) && (safe_read_pref(client, /datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
-	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
+	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, freq_name, freq_color, spans, message_mods))
 
 /mob/eye/imaginary_friend/send_speech(message, range = IMAGINARY_FRIEND_SPEECH_RANGE, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
 	message = get_message_mods(message, message_mods)
-	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
@@ -236,6 +241,9 @@
 	if(check_emote(message, forced))
 		return
 
+	message = check_for_custom_say_emote(message, message_mods)
+	message = capitalize(message)
+
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("♩", "♪", "♫")
 		message = "[randomnote] [capitalize(message)] [randomnote]"
@@ -246,27 +254,22 @@
 
 	var/eavesdrop_range = 0
 
-	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
-		log_message(message, LOG_RADIO_EMOTE)
-	else
+	if(!(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]))
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
-			log_talk(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
 			range = WHISPER_RANGE
-		else
-			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
-	var/quoted_message = say_quote(apply_message_emphasis(message), spans, message_mods)
-	var/rendered = "[span_name("[name]")] [quoted_message]"
-	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
+	log_sayverb_talk(message, message_mods, tag = "imaginary friend", forced_by = forced)
+
+	var/messagepart = generate_messagepart(message, spans, message_mods)
+	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [messagepart]"
 
 	var/language = message_language || owner.get_selected_language()
-	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
+	Hear(src, language, message, null, null, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		person.Hear(null, src, language, message, null, spans, message_mods, range)
+		person.Hear(src, language, message, null, null, null, spans, message_mods, range)
 
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
@@ -395,7 +398,7 @@
 	var/obj/visual = image('icons/hud/screen_gen.dmi', our_tile, "arrow", FLY_LAYER)
 
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
-	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = SINE_EASING|EASE_OUT)
 
 /mob/eye/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
@@ -430,7 +433,7 @@
 	if(world.time < move_delay)
 		return FALSE
 	setDir(Dir)
-	if(get_dist(src, owner) > 9)
+	if(get_dist(src, owner) > distance_allowance || (require_los && !can_see(owner, src, distance_allowance)))
 		recall()
 		move_delay = world.time + 10
 		return FALSE
@@ -512,6 +515,7 @@
 	gain_text = ""
 	lose_text = ""
 	random_gain = FALSE
+	known_trauma = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
 	friend = new /mob/eye/imaginary_friend/trapped(get_turf(owner), src)
@@ -539,7 +543,7 @@
 /mob/eye/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
-	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	human_icon = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
 
 #undef IMAGINARY_FRIEND_RANGE
 #undef IMAGINARY_FRIEND_SPEECH_RANGE

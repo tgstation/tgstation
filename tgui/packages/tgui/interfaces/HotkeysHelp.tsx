@@ -1,4 +1,4 @@
-import { Box, Section, Table, Tooltip } from 'tgui-core/components';
+import { Box, Button, Section, Table, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -90,12 +90,19 @@ const KeyBinding = (props: KeyBindingBoxProps) => (
 );
 
 export const HotkeysHelp = (props) => {
-  const { data } = useBackend<HotkeysHelpData>();
+  const { act, data } = useBackend<HotkeysHelpData>();
 
   return (
-    <Window title="Hotkeys Help" width={500} height={800}>
+    <Window title="Hotkeys" width={500} height={800}>
       <Window.Content scrollable>
-        <Section title="Sorted by Key">
+        <Section
+          title="Sorted by Key"
+          buttons={
+            <Button icon="wrench" onClick={() => act('open_keybindings')}>
+              Open Hotkey Settings
+            </Button>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell textAlign="center" m={1}>

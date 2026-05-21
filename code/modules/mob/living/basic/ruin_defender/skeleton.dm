@@ -3,7 +3,7 @@
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
 	gender = NEUTER
 	icon = 'icons/mob/simple/simple_human.dmi'
-	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID|MOB_SKELETAL
 	speak_emote = list("rattles")
 	maxHealth = 40
 	health = 40
@@ -172,6 +172,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/run_emote,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/simple_find_target,

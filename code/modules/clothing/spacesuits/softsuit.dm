@@ -1,25 +1,25 @@
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
-	name = "NASA Void Helmet"
+	name = "\improper NASA void helmet"
 	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	inhand_icon_state = "void_helmet"
 
 /obj/item/clothing/suit/space/nasavoid
-	name = "NASA Voidsuit"
+	name = "\improper NASA voidsuit"
 	icon_state = "void"
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
-	name = "Engineering Void Helmet"
+	name = "\improper engineering void helmet"
 	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
 	visor_dirt = "void_dirt"
 
 /obj/item/clothing/suit/space/nasavoid/old
-	name = "Engineering Voidsuit"
+	name = "\improper engineering voidsuit"
 	icon_state = "void"
 	inhand_icon_state = "void_suit"
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
@@ -28,20 +28,21 @@
 
 	//EVA suit
 /obj/item/clothing/suit/space/eva
-	name = "EVA suit"
+	name = "\improper EVA suit"
 	icon_state = "space"
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor_type = /datum/armor/space_eva
 
 /obj/item/clothing/head/helmet/space/eva
-	name = "EVA helmet"
+	name = "\improper EVA helmet"
 	icon_state = "space"
 	inhand_icon_state = "space_helmet"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/space_eva
 	visor_dirt = "space_dirt"
+	has_visor = TRUE
 
 /datum/armor/space_eva
 	bio = 100
@@ -73,7 +74,7 @@
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange" //resprite?
 	armor_type = /datum/armor/space_fragile
-	strip_delay = 65
+	strip_delay = 6.5 SECONDS
 
 /obj/item/clothing/suit/space/fragile
 	name = "emergency space suit"
@@ -83,7 +84,7 @@
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
 	armor_type = /datum/armor/space_fragile
-	strip_delay = 65
+	strip_delay = 6.5 SECONDS
 
 /datum/armor/space_fragile
 	melee = 5

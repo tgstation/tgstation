@@ -1,6 +1,6 @@
 ///Lavaproof, fireproof, fast mech with low armor and higher energy consumption and has an internal ore box.
 /obj/vehicle/sealed/mecha/clarke
-	desc = "Combining man and machine for a better, stronger miner, Cannot strafe Can even resist lava!"
+	desc = "Combining man and machine for a better, stronger miner. Can even resist lava! Due to its tracks it cannot strafe."
 	name = "\improper Clarke"
 	icon_state = "clarke"
 	base_icon_state = "clarke"
@@ -120,8 +120,9 @@
 	button_icon = 'icons/obj/devices/mecha_equipment.dmi'
 	button_icon_state = "mecha_sleeper_miner"
 
-/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(trigger_flags)
-	if(!..())
+/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
 	var/mob/living/carbon/human/human_target
@@ -139,8 +140,9 @@
 	button_icon_state = "mech_search_ruins"
 	COOLDOWN_DECLARE(search_cooldown)
 
-/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
-	if(!..())
+/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return

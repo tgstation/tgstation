@@ -11,7 +11,7 @@
 	var/obj/parent = new
 
 	for (var/obj/machinery/vending/vending_type as anything in sort_list(subtypesof(/obj/machinery/vending), GLOBAL_PROC_REF(cmp_typepaths_asc)))
-		var/obj/machinery/vending/parent_machine = type2parent(vending_type)
+		var/obj/machinery/vending/parent_machine = vending_type::parent_type
 		if(initial(parent_machine.name) == initial(vending_type.name))
 			continue //Same name, likely just a slightly touched up subtype for specific maps.
 		var/obj/machinery/vending/vending_machine = new vending_type(parent)

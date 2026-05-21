@@ -1,6 +1,6 @@
 /// Fires a bloody beam. Brimdemon Blast!
 /datum/action/cooldown/mob_cooldown/brimbeam
-	name = "brimstone blast"
+	name = "Brimstone Blast"
 	desc = "Unleash a barrage of infernal energies in the targeted direction."
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "brimdemon_firing"
@@ -15,10 +15,15 @@
 	var/beam_duration = 2 SECONDS
 	/// How long do we wind up before firing?
 	var/charge_duration = 1 SECONDS
-	/// Overlay we show when we're about to fire
-	var/static/image/direction_overlay = image('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
+	/// Have we been hit and have to abort the blast?
+	var/abort_blast = FALSE
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
+
+/datum/action/cooldown/mob_cooldown/brimbeam/Grant(mob/granted_to)
+	. = ..()
+	if(owner)
+		owner.AddElement(/datum/element/relay_attackers)
 
 /datum/action/cooldown/mob_cooldown/brimbeam/Destroy()
 	extinguish_laser()
@@ -27,27 +32,49 @@
 /datum/action/cooldown/mob_cooldown/brimbeam/Activate(atom/target)
 	StartCooldown(360 SECONDS)
 
+	abort_blast = FALSE
 	owner.face_atom(target)
 	owner.move_resist = MOVE_FORCE_VERY_STRONG
-	owner.add_overlay(direction_overlay)
 	owner.balloon_alert_to_viewers("charging...")
+	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
+	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
+	owner.add_overlay(direction_overlay)
+	owner.add_overlay(direction_emissive)
+	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_owner_attacked))
 
-	var/fully_charged = do_after(owner, delay = charge_duration, target = owner)
+	var/fully_charged = do_after(owner, delay = charge_duration, target = owner, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
 	owner.cut_overlay(direction_overlay)
+	owner.cut_overlay(direction_emissive)
 	if (!fully_charged)
+		UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 		StartCooldown()
 		return TRUE
 
 	if (!fire_laser())
 		var/static/list/fail_emotes = list("coughs.", "wheezes.", "belches out a puff of black smoke.")
 		owner.manual_emote(pick(fail_emotes))
+		UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 		StartCooldown()
 		return TRUE
 
-	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE)
+	if (istype(owner, /mob/living/basic/mining/brimdemon))
+		var/mob/living/basic/mining/brimdemon/demon = owner
+		demon.icon_state = demon.firing_icon_state
+		demon.update_appearance(UPDATE_OVERLAYS)
+
+	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
+	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	extinguish_laser()
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
+	SIGNAL_HANDLER
+	if (!(attack_flags & ATTACK_RANGED) && !(direction & owner.dir))
+		abort_blast = TRUE
+
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/beam_charge_check()
+	return !abort_blast
 
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
@@ -60,7 +87,7 @@
 		if(affected_turf.opacity)
 			break
 		var/blocked = FALSE
-		for(var/obj/potential_block in affected_turf.contents)
+		for(var/obj/potential_block in affected_turf)
 			if(potential_block.opacity)
 				blocked = TRUE
 				break
@@ -70,8 +97,8 @@
 		new_brimbeam.dir = owner.dir
 		beam_parts += new_brimbeam
 		new_brimbeam.assign_creator(owner)
-		for(var/mob/living/hit_mob in affected_turf.contents)
-			hit_mob.apply_damage(damage = 25, damagetype = BURN)
+		for(var/mob/living/hit_mob in affected_turf)
+			hit_mob.apply_damage(25, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
 			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
 		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
@@ -88,6 +115,10 @@
 		return FALSE
 	if (owner)
 		owner.move_resist = initial(owner.move_resist)
+		if (istype(owner, /mob/living/basic/mining/brimdemon) && owner.stat != DEAD)
+			var/mob/living/basic/mining/brimdemon/demon = owner
+			demon.icon_state = demon.icon_living
+			demon.update_appearance(UPDATE_OVERLAYS)
 	for(var/obj/effect/brimbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()
@@ -115,16 +146,10 @@
 	return ..()
 
 /obj/effect/brimbeam/process()
-	var/atom/ignore = creator?.resolve()
+	var/ignore = creator?.resolve()
 	for(var/mob/living/hit_mob in get_turf(src))
-		if(hit_mob == ignore)
-			continue
-		damage(hit_mob)
-
-/// Hurt the passed mob
-/obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
-	hit_mob.apply_damage(damage = 5, damagetype = BURN)
-	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
+		if(hit_mob != ignore)
+			hit_mob.apply_damage(7, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
 
 /// Ignore damage dealt to this mob
 /obj/effect/brimbeam/proc/assign_creator(mob/living/maker)

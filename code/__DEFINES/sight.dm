@@ -17,6 +17,9 @@
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
+#define INVISIBILITY_ADMIN 61
+#define SEE_INVISIBLE_ADMIN 61
+
 #define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
 
 #define INVISIBILITY_ABSTRACT 101 //only used for abstract objects (e.g. spacevine_controller), things that are not really there.
@@ -25,6 +28,7 @@
 #define BORGTHERM (1<<1)
 #define BORGXRAY (1<<2)
 #define BORGMATERIAL (1<<3)
+#define BORGDEFAULT 0
 
 //for clothing visor toggles, these determine which vars to toggle
 #define VISOR_FLASHPROTECT (1<<0)
@@ -75,4 +79,5 @@
 
 #define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
 #define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"
+#define INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON "sleep_hud_button"
 

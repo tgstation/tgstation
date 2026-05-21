@@ -15,15 +15,15 @@
 
 	overlay.color = draw_color
 
-/datum/bodypart_overlay/simple/generate_icon_cache()
+/datum/bodypart_overlay/simple/generate_icon_cache(obj/item/bodypart/limb)
 	. = ..()
-
-	. += "[icon_state]"
+	. += icon_state
 
 ///A sixpack drawn on the chest
 /datum/bodypart_overlay/simple/sixpack
 	icon_state = "sixpack"
 	layers = EXTERNAL_ADJACENT
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 ///bags drawn beneath the eyes
 /datum/bodypart_overlay/simple/bags

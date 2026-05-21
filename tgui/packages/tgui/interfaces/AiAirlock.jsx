@@ -142,19 +142,19 @@ export const AiAirlock = (props) => {
               {!data.wires.bolts && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
-              label="Door Bolt Lights"
+              label="Door Feedback"
               color="bad"
               buttons={
                 <Button
-                  icon={data.lights ? 'power-off' : 'times'}
-                  content={data.lights ? 'Enabled' : 'Disabled'}
-                  selected={data.lights}
-                  disabled={!data.wires.lights}
+                  icon={data.feedback ? 'power-off' : 'times'}
+                  content={data.feedback ? 'Enabled' : 'Disabled'}
+                  selected={data.feedback}
+                  disabled={!data.wires.feedback}
                   onClick={() => act('light-toggle')}
                 />
               }
             >
-              {!data.wires.lights && '[Wires have been cut!]'}
+              {!data.wires.feedback && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
               label="Door Force Sensors"

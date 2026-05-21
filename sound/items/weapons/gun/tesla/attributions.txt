@@ -1,0 +1,7 @@
+{
+	tesla_loop.ogg - https://freesound.org/people/Department64/sounds/554749/, License: CC BY 4.0
+	tesla_start.ogg - https://freesound.org/people/Department64/sounds/554749/, https://freesound.org/people/iainmccurdy/sounds/759257/, License: CC BY 4.0
+	click_creak.ogg - https://freesound.org/people/Sonicquinn/sounds/435834/, https://freesound.org/people/holisoysilvi/sounds/610182/, License: CC 0
+	squeak_latch.ogg - https://freesound.org/people/Sonicquinn/sounds/435834/, https://freesound.org/people/holisoysilvi/sounds/610182/, License: CC 0
+	power_breaker_fan.ogg - https://freesound.org/people/Yoyodaman234/sounds/183544/, https://freesound.org/people/jessepash/sounds/139970/, https://freesound.org/people/sribubba/sounds/130154/, License: CC 0
+}

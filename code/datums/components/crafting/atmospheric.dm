@@ -1,14 +1,3 @@
-/datum/crafting_recipe/bluespace_vendor_mount
-	name = "Bluespace Vendor Wall Mount"
-	result = /obj/item/wallframe/bluespace_vendor_mount
-	time = 6 SECONDS
-	reqs = list(
-		/obj/item/stack/sheet/iron = 15,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/cable_coil = 10,
-	)
-	category = CAT_ATMOSPHERIC
-
 /datum/crafting_recipe/pipe
 	name = "Smart pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH)
@@ -37,6 +26,19 @@
 		/obj/item/stack/sheet/iron = 1,
 		)
 	blacklist = list(/obj/item/analyzer/ranged)
+	category = CAT_ATMOSPHERIC
+
+/datum/crafting_recipe/portable_wind_turbine
+	name = "Portable Wind Turbine"
+	result = /obj/item/portable_wind_turbine
+	tool_behaviors = list(TOOL_WELDER)
+	reqs = list(
+		/obj/item/knife/kitchen = 3,
+		/obj/item/stack/sheet/plastic = 5,
+		/obj/item/stack/rods = 8,
+		/obj/item/stock_parts/servo = 2,
+		/obj/item/stack/cable_coil = 5,
+		)
 	category = CAT_ATMOSPHERIC
 
 ///abstract path for pipe crafting recipes that set the pipe_type of their results and have other checks as well

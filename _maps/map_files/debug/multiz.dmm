@@ -1022,8 +1022,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/tank/jetpack/oxygen/captain,
-/obj/item/storage/belt/utility/chief/full,
+/obj/item/tank/jetpack/captain,
+/obj/item/storage/belt/utility/full/powertools,
 /obj/item/clothing/gloves/color/yellow{
 	pixel_y = 10
 	},

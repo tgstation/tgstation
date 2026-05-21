@@ -181,6 +181,8 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 	switch(def_zone)
 		if(BODY_ZONE_CHEST)
 			return CHEST|GROIN
+		if(BODY_ZONE_PRECISE_GROIN)
+			return GROIN
 		if(BODY_ZONE_HEAD)
 			return HEAD
 		if(BODY_ZONE_L_ARM)
@@ -198,50 +200,33 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 	var/list/covered_parts = list()
 
 	if(!bpc)
-		return 0
+		return covered_parts
 
-	if(bpc == FULL_BODY)
-		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
+	if(bpc & HEAD)
+		covered_parts |= list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)
 
-	else
-		if(bpc & HEAD)
-			covered_parts |= list(BODY_ZONE_HEAD)
-		if(bpc & CHEST)
-			covered_parts |= list(BODY_ZONE_CHEST)
-		if(bpc & GROIN)
-			covered_parts |= list(BODY_ZONE_CHEST)
+	if(bpc & CHEST)
+		covered_parts |= list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)
+	else if(bpc & GROIN)
+		covered_parts |= BODY_ZONE_PRECISE_GROIN
 
-		if(bpc & ARMS)
-			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
-		else
-			if(bpc & ARM_LEFT)
-				covered_parts |= list(BODY_ZONE_L_ARM)
-			if(bpc & ARM_RIGHT)
-				covered_parts |= list(BODY_ZONE_R_ARM)
+	if(bpc & HAND_LEFT)
+		covered_parts |= list(BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_L_HAND)
+	else if(bpc & ARM_LEFT)
+		covered_parts |= BODY_ZONE_L_ARM
+	if(bpc & HAND_RIGHT)
+		covered_parts |= list(BODY_ZONE_R_ARM, BODY_ZONE_PRECISE_R_HAND)
+	else if(bpc & ARM_RIGHT)
+		covered_parts |= BODY_ZONE_R_ARM
 
-		if(bpc & HANDS)
-			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
-		else
-			if(bpc & HAND_LEFT)
-				covered_parts |= list(BODY_ZONE_L_ARM)
-			if(bpc & HAND_RIGHT)
-				covered_parts |= list(BODY_ZONE_R_ARM)
-
-		if(bpc & LEGS)
-			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
-		else
-			if(bpc & LEG_LEFT)
-				covered_parts |= list(BODY_ZONE_L_LEG)
-			if(bpc & LEG_RIGHT)
-				covered_parts |= list(BODY_ZONE_R_LEG)
-
-		if(bpc & FEET)
-			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
-		else
-			if(bpc & FOOT_LEFT)
-				covered_parts |= list(BODY_ZONE_L_LEG)
-			if(bpc & FOOT_RIGHT)
-				covered_parts |= list(BODY_ZONE_R_LEG)
+	if(bpc & FOOT_LEFT)
+		covered_parts |= list(BODY_ZONE_L_LEG, BODY_ZONE_PRECISE_L_FOOT)
+	else if(bpc & LEG_LEFT)
+		covered_parts |= BODY_ZONE_L_LEG
+	if(bpc & FOOT_RIGHT)
+		covered_parts |= list(BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_R_FOOT)
+	else if(bpc & LEG_RIGHT)
+		covered_parts |= BODY_ZONE_R_LEG
 
 	return covered_parts
 
@@ -357,27 +342,12 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		return "#ffffffff"
 	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)
 
-/proc/type2parent(child)
-	var/string_type = "[child]"
-	var/last_slash = findlasttext(string_type, "/")
-	if(last_slash == 1)
-		switch(child)
-			if(/datum)
-				return null
-			if(/obj, /mob)
-				return /atom/movable
-			if(/area, /turf)
-				return /atom
-			else
-				return /datum
-	return text2path(copytext(string_type, 1, last_slash))
-
 //returns a string the last bit of a type, without the preceeding '/'
-/proc/type2top(the_type)
+/proc/type2top(datum/typepath)
 	//handle the builtins manually
-	if(!ispath(the_type))
+	if(!ispath(typepath))
 		return
-	switch(the_type)
+	switch(typepath)
 		if(/datum)
 			return "datum"
 		if(/atom)
@@ -391,7 +361,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		if(/turf)
 			return "turf"
 		else //regex everything else (works for /proc too)
-			return LOWER_TEXT(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
+			return LOWER_TEXT(replacetext("[typepath]", "[typepath::parent_type]/", ""))
 
 /// Return html to load a url.
 /// for use inside of browse() calls to html assets that might be loaded on a cdn.

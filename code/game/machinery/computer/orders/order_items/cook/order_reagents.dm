@@ -105,3 +105,13 @@
 	name = "Mayonnaise"
 	purchase_path = /obj/item/reagent_containers/condiment/mayonnaise
 	cost_per_order = 30
+
+/datum/orderable_item/reagents/mustard
+	name = "Mustard"
+	purchase_path = /obj/item/reagent_containers/condiment/mustard
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/ketchup
+	name = "Ketchup"
+	purchase_path = /obj/item/reagent_containers/condiment/ketchup
+	cost_per_order = 30

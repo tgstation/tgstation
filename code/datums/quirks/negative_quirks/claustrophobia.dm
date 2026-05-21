@@ -4,8 +4,10 @@
 	icon = FA_ICON_BOX_OPEN
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
+	medical_symptom_text = "Experiences panic attacks and shortness of breath when confined in small spaces. \
+		Medication such as Psicodine may lessen the severity of the reaction."
 	hardcore_value = 5
-	quirk_flags = QUIRK_HUMAN_ONLY
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
 
 /datum/quirk/claustrophobia/add(client/client_source)

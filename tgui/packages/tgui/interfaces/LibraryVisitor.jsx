@@ -1,4 +1,5 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { map } from 'es-toolkit/compat';
 import {
   Box,
   Button,
@@ -76,7 +77,7 @@ const SearchAndDisplay = (props) => {
       // Generate a unique id
       key: i,
     })),
-    (record) => record.key,
+    [(record) => record.key],
   );
   return (
     <Section>

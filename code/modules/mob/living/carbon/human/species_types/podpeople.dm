@@ -40,8 +40,8 @@
 	)
 
 /datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.dna.features["mcolor"] = "#886600"
-	human.dna.features["pod_hair"] = "Rose"
+	human.dna.features[FEATURE_MUTANT_COLOR] = "#886600"
+	human.dna.features[FEATURE_POD_HAIR] = "Rose"
 	human.update_body(is_creating = TRUE)
 
 /datum/species/pod/get_physical_attributes()

@@ -53,7 +53,7 @@
 /datum/wires/mod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/obj/item/mod/control/mod = holder
 	var/mob/user = ui.user
-	if(!HAS_SILICON_ACCESS(user) && mod.seconds_electrified && mod.shock(user))
+	if(!HAS_SILICON_ACCESS(user) && mod.seconds_electrified && mod.shock(user, 100))
 		return FALSE
 	return ..()
 

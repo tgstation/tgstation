@@ -22,10 +22,14 @@
 	GLOB.camera_eyes += src
 
 /mob/eye/camera/Destroy()
-	for(var/datum/camerachunk/chunk in visibleCameraChunks)
-		chunk.remove(src)
+	clear_camera_chunks()
 	GLOB.camera_eyes -= src
 	return ..()
+
+/// Clears us from any visible camera chunks.
+/mob/eye/camera/proc/clear_camera_chunks()
+	for(var/datum/camerachunk/chunk in visibleCameraChunks)
+		chunk.remove(src)
 
 /**
  * Getter proc for getting the current user's client.
@@ -67,7 +71,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(use_visibility)
-		GLOB.cameranet.visibility(src)
+		SScameras.update_eye_chunk(src)
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()

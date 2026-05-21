@@ -17,9 +17,9 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 	SStransport.hello(src, name, id_tag)
-	register_context()
 
 /obj/item/assembly/control/transport/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
 	if(!specific_transport_id)
 		context[SCREENTIP_CONTEXT_LMB] = "Link tram"
 		return CONTEXTUAL_SCREENTIP_SET

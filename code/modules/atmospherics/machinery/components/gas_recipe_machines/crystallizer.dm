@@ -55,16 +55,14 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	return ..()
+/obj/machinery/atmospherics/components/binary/crystallizer/screwdriver_act(mob/living/user, obj/item/tool)
+	return on ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/atmospherics/components/binary/crystallizer/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
@@ -93,10 +91,9 @@
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return CLICK_ACTION_BLOCKING
-	on = !on
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_icon()
 	return CLICK_ACTION_SUCCESS
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
@@ -305,7 +302,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("recipe")

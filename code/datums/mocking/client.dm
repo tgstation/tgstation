@@ -52,17 +52,14 @@
 	src.key = "[key]_[mock_client_uid++]"
 	ckey = ckey(key)
 
-#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather bad
+#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather dbad
 	GLOB.directory[ckey] = src
 
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
 	else
 		persistent_client = new(ckey)
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
+	persistent_client.set_client(src)
 #endif
 
 	fully_created = TRUE
@@ -70,7 +67,7 @@
 /datum/client_interface/Destroy(force)
 	GLOB.directory -= ckey
 	if(persistent_client?.client == src)
-		persistent_client.client = null
+		persistent_client.set_client(null)
 	persistent_client = null
 	return ..()
 
@@ -86,5 +83,8 @@
 /datum/client_interface/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return FALSE
 
-/datum/client_interface/proc/set_fullscreen(logging_in = FALSE)
+/datum/client_interface/proc/set_fullscreen()
 	return TRUE
+
+/datum/client_interface/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)
+	return FALSE

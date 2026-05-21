@@ -3,6 +3,7 @@
 	desc = "A highly sensitive parascientific instrument calibrated to detect the slightest whiff of ectoplasm."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "ecto_sniffer"
+	base_icon_state = "ecto_sniffer"
 	density = FALSE
 	anchored = FALSE
 	pass_flags = PASSTABLE
@@ -48,28 +49,26 @@
 /obj/machinery/ecto_sniffer/update_icon_state()
 	. = ..()
 	if(panel_open)
-		icon_state = "[initial(icon_state)]_open"
+		icon_state = "[base_icon_state]_open"
 	else
-		icon_state = "[initial(icon_state)][(is_operational && on) ? null : "-p"]"
+		icon_state = "[base_icon_state][(is_operational && on) ? null : "-p"]"
 
 /obj/machinery/ecto_sniffer/update_overlays()
 	. = ..()
 	if(is_operational && on)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 15)
 	set_anchored(!anchored)
 	balloon_alert(user, "sniffer [anchored ? "anchored" : "unanchored"]")
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "ecto_sniffer_open", "ecto_sniffer", I)
+/obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/screwdrivertool)
+	return default_deconstruction_screwdriver(user, screwdrivertool)
 
 /obj/machinery/ecto_sniffer/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return ..()
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/ecto_sniffer/Destroy()
 	ectoplasmic_residues = null

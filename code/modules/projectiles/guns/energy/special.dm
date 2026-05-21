@@ -9,6 +9,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/gun/energy/ionrifle/Initialize(mapload)
 	. = ..()
@@ -115,29 +117,40 @@
 	if(cell)
 		. += span_notice("[src] is [round(cell.percent())]% charged.")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
-	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+/obj/item/gun/energy/plasmacutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/charge_multiplier = 0
+	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
 		charge_multiplier = 2
-	if(istype(I, /obj/item/stack/ore/plasma))
+	else if(istype(tool, /obj/item/stack/ore/plasma))
 		charge_multiplier = 1
-	if(charge_multiplier)
-		if(cell.charge == cell.maxcharge)
-			balloon_alert(user, "already fully charged!")
-			return
-		I.use(1)
-		cell.give(0.5 * STANDARD_CELL_CHARGE * charge_multiplier)
-		balloon_alert(user, "cell recharged")
-	else
-		..()
+
+	if(!charge_multiplier)
+		return NONE
+
+	if(cell.charge == cell.maxcharge)
+		balloon_alert(user, "already fully charged!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet = tool
+	if (!sheet.use(1))
+		return ITEM_INTERACT_BLOCKING
+
+	cell.give(0.2 * STANDARD_CELL_CHARGE * charge_multiplier)
+	balloon_alert(user, "cell recharged")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/plasmacutter/emp_act(severity)
 	. = ..()
-	if(isliving(loc))
-		var/mob/living/user = loc
-		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
-		user.adjust_fire_stacks(4)
-		user.ignite_mob()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(!isliving(loc))
+		return
+
+	var/mob/living/user = loc
+	user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+	user.adjust_fire_stacks(4)
+	user.ignite_mob()
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
@@ -161,16 +174,15 @@
 	return (!QDELETED(cell) && cell.use(used ? used * PLASMA_CUTTER_CHARGE_WELD : PLASMA_CUTTER_CHARGE_WELD))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+	if(!amount)
+		return ..(amount = 1)
 
-	if(amount)
-		var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
-		target.add_overlay(sparks)
-		LAZYADD(update_overlays_on_z, sparks)
-		. = ..()
-		LAZYREMOVE(update_overlays_on_z, sparks)
-		target.cut_overlay(sparks)
-	else
-		. = ..(amount=1)
+	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+	target.add_overlay(sparks)
+	LAZYADD(update_overlays_on_z, sparks)
+	. = ..()
+	LAZYREMOVE(update_overlays_on_z, sparks)
+	target.cut_overlay(sparks)
 
 /obj/item/gun/energy/plasmacutter/try_fire_gun(atom/target, mob/living/user, params)
 	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
@@ -322,6 +334,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
@@ -360,18 +373,73 @@
 		return FALSE
 	return ..()
 
+/**
+-----------------Tesla Cannon--------------------------------
+
+An advanced weapon that provides extremely high dps output at pinpoint accuracy due to its hitscan nature.
+
+Due to its normal w_class when folded it is suitable as a heavy reinforcement weapon, since the cell drains very quickly when firing.
+
+The power level is somewhat tempered by several drawbacks such as research requirements, anomalock, two handed firing requirement, and insultation providing damage reduction.
+
+it is often confused with the mech weapon of the same name, since it is a bit more obscure despite being very powerful. Formerly called the tesla revolver.
+**/
 /obj/item/gun/energy/tesla_cannon
 	name = "tesla cannon"
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "tesla"
-	inhand_icon_state = "tesla"
-	desc = "A gun powered by a flux anomaly that shoots lightning bolts. Electrically insulating clothing may protect from some of the damage."
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_icon_state = null //null so we build the correct inhand.
+	desc = "A high voltage flux projector prototype created using the latest advancements in the anomaly science.\n\nThe anomalous nature of the flux core allows the tesla arc to be guided from the electrode to the target without being diverted to stray conductors outside the target field."
+	SET_BASE_VISUAL_PIXEL(-8, 0)
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
+	inhand_x_dimension = 64
 	shaded_charge = TRUE
+	charge_sections = 2
+	display_empty =  FALSE
 	weapon_weight = WEAPON_HEAVY
+	w_class = WEIGHT_CLASS_BULKY
+	///if our stpck is extended and we are ready to fire.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)
+	var/ready_to_fire = FALSE
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, autofire_shot_delay =  100 MILLISECONDS, firing_sound_loop = /datum/looping_sound/tesla_cannon)
+
+/obj/item/gun/energy/tesla_cannon/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(ready_to_fire)
+		return ..()
+	//If we have charge, but the stock is folded, do sparks.
+	if(can_shoot())
+		balloon_alert(user, "electricity arcing to stock!")
+
+		if(prob(75)) //fake sparks to cut on spark spam
+			playsound(user, 'sound/effects/sparks/sparks1.ogg', 50, TRUE)
+		else
+			do_sparks(3, FALSE, user)
+	return FALSE
+
+/obj/item/gun/energy/tesla_cannon/attack_self(mob/living/user)
+	. = ..()
+	if(ready_to_fire)
+		w_class = WEIGHT_CLASS_NORMAL
+		ready_to_fire = FALSE
+		icon_state = "tesla"
+		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
+
+	else
+		playsound(user, 'sound/items/weapons/gun/tesla/click_creak.ogg', 100)
+		if(!do_after(user, 1.5 SECONDS))
+			return
+		w_class = WEIGHT_CLASS_BULKY
+		ready_to_fire = TRUE
+		icon_state = "tesla_unfolded"
+		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
+
+	update_appearance()
+	balloon_alert_to_viewers("[ready_to_fire ? "unfolded" : "folded"] stock")
 
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"
@@ -448,6 +516,7 @@
 	light_system = OVERLAY_LIGHT
 	light_power = 2
 	light_range = 1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/gun/energy/photon/Initialize(mapload)
 	. = ..()

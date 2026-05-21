@@ -84,6 +84,7 @@
 	))
 
 /datum/emote/carp
+	abstract_type = /datum/emote/carp
 	mob_type_allowed_typecache = /mob/living/basic/carp
 	mob_type_blacklist_typecache = list()
 
@@ -141,6 +142,7 @@
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
+	. = ..()
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
 	if (!feedback)
@@ -318,4 +320,4 @@
 /// If someone slaps one of the school, scatter
 /mob/living/basic/carp/passive/proc/on_attacked(mob/living/attacker)
 	for(var/mob/living/basic/carp/passive/schoolmate in oview(src, 9))
-		schoolmate.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		schoolmate.ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)

@@ -4,6 +4,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
@@ -16,6 +17,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/random_speech/when_has_target/mimic,
@@ -24,6 +26,7 @@
 
 /datum/ai_controller/basic_controller/mimic_copy/machine
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/random_speech/when_has_target/mimic_machine,
@@ -47,7 +50,7 @@
 
 /datum/ai_planning_subtree/random_speech/when_has_target/mimic_machine
 	speech_chance = 7
-	emote_hear = list()
+	emote_hear = null
 	speak = list(
 		"HUMANS ARE IMPERFECT!",
 		"YOU SHALL BE ASSIMILATED!",
@@ -84,3 +87,30 @@
 		return
 	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
+
+/// Special subtree for living wands/staffs of animation which will focus on animating more things
+/datum/ai_controller/basic_controller/mimic_copy/gun/animator
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_HUNT_TARGETING_STRATEGY = /datum/targeting_strategy/anything,
+		BB_GUNMIMIC_GUN_EMPTY = FALSE,
+	)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/shoot_animatable_objects,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/random_speech/when_has_target/mimic/gun,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+/// Try to find objects and then shoot them
+/datum/ai_planning_subtree/shoot_animatable_objects
+
+/datum/ai_planning_subtree/shoot_animatable_objects/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(controller.blackboard[BB_GUNMIMIC_GUN_EMPTY])
+		return // No charge in our gun
+	if(!controller.blackboard_key_exists(BB_CURRENT_HUNTING_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/animatable, BB_CURRENT_HUNTING_TARGET)
+		return
+	controller.queue_behavior(/datum/ai_behavior/ranged_skirmish, BB_CURRENT_HUNTING_TARGET, BB_HUNT_TARGETING_STRATEGY, null, 9, 0)
+	controller.queue_behavior(/datum/ai_behavior/clear_key, BB_CURRENT_HUNTING_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING

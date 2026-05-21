@@ -43,3 +43,30 @@
 /mob/living/carbon/get_organ_slot(slot)
 	. = organs_slot[slot]
 
+/**
+ * Returns a list of all missing organs this species should have
+ *
+ * list [key] is the ORGAN_SLOT missing an organ, list value is the text name of the slot organ
+ */
+/mob/living/carbon/human/proc/get_missing_organs()
+	var/mob/living/carbon/human/humantarget = src
+	var/list/missing_organs = list()
+
+	if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
+		missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
+	if(humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+		missing_organs[ORGAN_SLOT_HEART] = "Heart"
+	if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
+		missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
+	if(!HAS_TRAIT_FROM(humantarget, TRAIT_LIVERLESS_METABOLISM, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantliver) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
+		missing_organs[ORGAN_SLOT_LIVER] = "Liver"
+	if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOHUNGER, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantstomach) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
+		missing_organs[ORGAN_SLOT_STOMACH] ="Stomach"
+	if(!isnull(humantarget.dna.species.mutanttongue) && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
+		missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
+	if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
+		missing_organs[ORGAN_SLOT_EARS] = "Ears"
+	if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
+		missing_organs[ORGAN_SLOT_EYES] = "Eyes"
+
+	return missing_organs

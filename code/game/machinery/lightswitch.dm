@@ -23,9 +23,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/light_switch,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/light_switch), only_root_path = TRUE))
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))
@@ -34,7 +32,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		area = get_area(src)
 	if(autoname)
 		name = "light switch ([area.name])"
-	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
+	if(mapload)
+		find_and_mount_on_atom()
 	register_context()
 	update_appearance()
 
@@ -136,8 +135,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	var/obj/machinery/light_switch/attached_switch
 
 /obj/item/circuit_component/light_switch/populate_ports()
-	on_setting = add_input_port("On", PORT_TYPE_NUMBER)
-	is_on = add_output_port("Is On", PORT_TYPE_NUMBER)
+	on_setting = add_input_port("On", PORT_TYPE_BOOLEAN)
+	is_on = add_output_port("Is On", PORT_TYPE_BOOLEAN)
 
 /obj/item/circuit_component/light_switch/register_usb_parent(atom/movable/parent)
 	. = ..()

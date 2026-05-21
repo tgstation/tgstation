@@ -260,7 +260,7 @@
 				if (focused_window)
 					winset(user, focused_window, "focus=true")
 				else
-					winset(user, "mapwindow", "focus=true")
+					winset(user, SKIN_MAPWINDOW, "focus=true")
 				break
 	if (timeout)
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)

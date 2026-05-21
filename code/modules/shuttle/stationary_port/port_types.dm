@@ -80,8 +80,8 @@
 	name = "Deep Space"
 	shuttle_id = "whiteship_away"
 	height = 45 //Width and height need to remain in sync with the size of whiteshipdock.dmm, otherwise we'll get overflow
-	width = 44
-	dheight = 18
+	width = 45
+	dheight = 14
 	dwidth = 18
 	dir = 2
 	shuttlekeys = list(

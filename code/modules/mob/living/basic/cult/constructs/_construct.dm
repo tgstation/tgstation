@@ -49,18 +49,18 @@
 	var/smashes_walls = FALSE
 	/// The different flavors of goop constructs can drop, depending on theme.
 	var/static/list/remains_by_theme = list(
-		THEME_CULT = list(/obj/item/ectoplasm/construct),
-		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
-		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
-		THEME_HERETIC = list(/obj/item/ectoplasm/construct),
+		THEME_CULT = /obj/item/ectoplasm/construct,
+		THEME_HOLY = /obj/item/ectoplasm/angelic,
+		THEME_WIZARD = /obj/item/ectoplasm/mystic,
+		THEME_HERETIC = /obj/item/ectoplasm/construct,
 	)
 
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
 	throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	AddElement(/datum/element/simple_flying)
-	var/list/remains = string_list(remains_by_theme[theme])
-	if(length(remains))
+	var/remains = remains_by_theme[theme]
+	if(remains)
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
 		AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)

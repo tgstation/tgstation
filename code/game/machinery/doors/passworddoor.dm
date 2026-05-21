@@ -44,7 +44,7 @@
 /obj/machinery/door/password/get_save_vars()
 	return ..() + NAMEOF(src, password)
 
-/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/machinery/door/password/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
@@ -54,7 +54,7 @@
 /obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
-/obj/machinery/door/password/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/password/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	add_fingerprint(user)
 	if(operating)
 		return

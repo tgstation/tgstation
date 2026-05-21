@@ -5,7 +5,7 @@
 	inhand_icon_state = "swat_suit"
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/knife/combat)
 	armor_type = /datum/armor/space_hunter
-	strip_delay = 130
+	strip_delay = 13 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/power_store/cell/hyper
 

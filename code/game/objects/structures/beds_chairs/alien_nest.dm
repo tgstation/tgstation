@@ -15,11 +15,43 @@
 	can_deconstruct = FALSE
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
+/obj/structure/bed/nest/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DANGEROUS_BUCKLE, INNATE_TRAIT)
+
 /obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		return NONE
 
 	return ..()
+
+/obj/structure/bed/nest/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] lays down on [src], wrapping [buckler.p_them()]self in a thick, sticky resin."),
+			span_notice("You lay down on [src], wrapping yourself in a thick, sticky resin."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] lays [being_buckled] down on [src], wrapping [being_buckled.p_them()] in a thick, sticky resin."),
+			span_notice("[buckler] lays you down on [src], wrapping you in a thick, sticky resin."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/bed/nest/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] pulls [unbuckler.p_them()]self free from the sticky nest!"),
+			span_notice("You pull yourself free from the sticky nest!"),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] pulls [being_unbuckled] free from the sticky nest!"),
+			span_notice("[unbuckler] pulls you free from the sticky nest!"),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/captive, mob/living/hero)
 	if(!length(buckled_mobs))

@@ -13,8 +13,6 @@
 	var/filename = "virtual_domain.dmm"
 	/// The start time of the map. Used to calculate time taken
 	var/start_time
-	/// This map is specifically for unit tests. Shouldn't display in game
-	var/test_only = FALSE
 
 	/**
 	 * Generic settings / UI
@@ -32,13 +30,13 @@
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
+	/// Any additional flags for this domain
+	var/domain_flags = NONE
 
 	/**
 	 * Player customization
 	 */
 
-	/// Any restrictions this domain has on what external sources can load in
-	var/external_load_flags = NONE
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
 
@@ -86,6 +84,13 @@
 	var/list/mob/living/ghost_mobs
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"
+
+
+/datum/lazy_template/virtual_domain/proc/can_view_name(scanner_tier, server_points)
+	return difficulty < scanner_tier && cost <= server_points + 5
+
+/datum/lazy_template/virtual_domain/proc/can_view_reward(scanner_tier, server_points)
+	return difficulty < (scanner_tier + 1) && cost <= server_points + 3
 
 /datum/lazy_template/virtual_domain/Destroy(force)
 	QDEL_NULL(ghost_spawners)

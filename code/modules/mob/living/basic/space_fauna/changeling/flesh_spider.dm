@@ -16,10 +16,10 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 4, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
-	speed = -0.1
+	speed = 0.2
 	maxHealth = 90
 	health = 90
 	melee_damage_lower = 15
@@ -33,7 +33,6 @@
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
 	combat_mode = TRUE
-	faction = list() // No allies but yourself
 	pass_flags = PASSTABLE
 	unique_name = TRUE
 	lighting_cutoff_red = 22
@@ -62,7 +61,7 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
+		regeneration_delay = 3 SECONDS,\
 		brute_per_second = maxHealth / 6,\
 		outline_colour = COLOR_PINK,\
 	)

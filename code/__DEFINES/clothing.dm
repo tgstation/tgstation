@@ -43,5 +43,37 @@
 /// How much integrity does a shirt lose every time we bite it?
 #define MOTH_EATING_CLOTHING_DAMAGE 15
 
-/// Allows this clothing item to overslot other items when equipped
-#define CLOTHING_MOD_OVERSLOTTING (1<<15)
+//Suit/Skirt
+/// Preference: Jumpsuit
+#define PREF_SUIT "Jumpsuit"
+/// Preference: Jumpskirt
+#define PREF_SKIRT "Jumpskirt"
+
+// Types of backpack
+/// Backpack type: Department themed backpack
+#define DBACKPACK "Department Backpack"
+/// Backpack type: Department themed duffelbag
+#define DDUFFELBAG "Department Duffel Bag"
+/// Backpack type: Department themed satchel
+#define DSATCHEL "Department Satchel"
+/// Backpack type: Department themed messenger bag
+#define DMESSENGER "Department Messenger Bag"
+/// Backpack type: Grey backpack
+#define GBACKPACK "Grey Backpack"
+/// Backpack type: Grey duffelbag
+#define GDUFFELBAG "Grey Duffel Bag"
+/// Backpack type: Grey satchel
+#define GSATCHEL "Grey Satchel"
+/// Backpack type: Grey messenger bag
+#define GMESSENGER "Grey Messenger Bag"
+/// Backpack type: Leather satchel
+#define LSATCHEL "Leather Satchel"
+
+//Defines for space suits. The respective define is also an icon.
+#define SPACESUIT_NO_ICON "none"
+#define SPACESUIT_CELL_MISSING "missing"
+#define SPACESUIT_CELL_EMPTY "empty"
+#define SPACESUIT_CELL_HIGH "high"
+#define SPACESUIT_CELL_MID "mid"
+#define SPACESUIT_CELL_LOW "low"
+#define SPACESUIT_CELL_VERY_LOW "very_low"

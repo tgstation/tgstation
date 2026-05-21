@@ -86,7 +86,7 @@
 	. = ..()
 	if(.)
 		return
-	if(malfunctioning && prob(75))
+	if(malfunctioning && prob(MOD_MALFUNCTION_PROB))
 		balloon_alert(ui.user, "button malfunctions!")
 		return
 	switch(action)
@@ -108,7 +108,7 @@
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)
 				return
-			module.on_select()
+			module.on_select(ui.user) // We can now 
 		if("configure")
 			var/obj/item/mod/module/module = locate(params["ref"]) in modules
 			if(!module)

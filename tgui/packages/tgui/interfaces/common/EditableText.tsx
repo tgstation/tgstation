@@ -22,7 +22,7 @@ type Props = {
  */
 export const EditableText = (props: Props) => {
   const { color, field, target_ref, text } = props;
-  if (!field) return <> </>;
+  if (!field) return;
 
   const { act } = useBackend();
   const [editing, setEditing] = useState(false);

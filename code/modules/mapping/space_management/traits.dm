@@ -30,7 +30,7 @@
 	return FALSE
 
 /// Get a list of all z which have the specified trait
-/datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
+/datum/controller/subsystem/mapping/proc/levels_by_trait(trait) as /list
 	return z_trait_levels[trait] || list()
 
 /// Get a list of all z which have any of the specified traits

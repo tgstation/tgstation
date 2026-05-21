@@ -5,6 +5,7 @@
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
 	var/obj/item/spear/spear
 	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim
@@ -12,10 +13,12 @@
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
 	speartype = /obj/item/spear/bonespear
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/headpike/bamboo //for bamboo spears
 	icon_state = "headpike-bamboo"
 	speartype = /obj/item/spear/bamboospear
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/headpike/military //for military spears
 	icon_state = "headpike-military"
@@ -41,7 +44,7 @@
 	update_appearance()
 
 /obj/structure/headpike/update_name()
-	name = "[victim.real_name] on a [spear.name]"
+	name = "[victim.get_face_name()] on a [spear.name]"
 	return ..()
 
 /obj/structure/headpike/update_overlays()

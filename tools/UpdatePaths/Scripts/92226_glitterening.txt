@@ -1,0 +1,6 @@
+/obj/item/grenade/chem_grenade/glitter/white : /obj/item/grenade/chem_grenade/glitter{@OLD}
+/obj/structure/closet/crate/pink : /obj/structure/closet/crate/glitter{@OLD}
+/obj/structure/closet/crate/lavender : /obj/structure/closet/crate/glitter/lavender{@OLD}
+/obj/effect/decal/cleanable/glitter/white : /obj/effect/decal/cleanable/glitter{@OLD}
+/obj/effect/decal/cleanable/glitter/pink : /obj/effect/decal/cleanable/glitter{@OLD;color="ff8080"}
+/obj/effect/decal/cleanable/glitter/blue : /obj/effect/decal/cleanable/glitter{@OLD;color="4040ff"}

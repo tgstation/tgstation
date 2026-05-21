@@ -78,6 +78,13 @@
 		return FALSE
 
 	signed_up += candidate
+
+	log_ghost_poll("Player [candidate.key] signed candidate poll", data = list(
+		"player key" = candidate.key,
+		"role name" = role,
+		"poll question" = question,
+	))
+
 	if(!silent)
 		to_chat(candidate, span_notice(response_messages[POLL_RESPONSE_SIGNUP]))
 		// Sign them up for any other polls with the same mob type
@@ -102,6 +109,13 @@
 		return FALSE
 
 	signed_up -= candidate
+
+	log_ghost_poll("Player [candidate.key] removed from poll candidacy", data = list(
+		"player key" = candidate.key,
+		"role name" = role,
+		"poll question" = question,
+	))
+
 	if(!silent)
 		to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_UNREGISTERED]))
 

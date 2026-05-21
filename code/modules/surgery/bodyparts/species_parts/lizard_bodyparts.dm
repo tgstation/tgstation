@@ -19,7 +19,9 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	unarmed_attack_verbs = list("slash", "scratch", "claw")
+	unarmed_attack_verbs = list("slashed", "scratched", "clawed")
 	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -28,7 +30,9 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	unarmed_attack_verbs = list("slash", "scratch", "claw")
+	unarmed_attack_verbs = list("slashed", "scratched", "clawed")
 	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -60,7 +64,7 @@
 	var/uniform_compatible = isnull(worn_uniform) \
 		|| (worn_uniform.supports_variations_flags & DIGITIGRADE_VARIATIONS) \
 		|| !(worn_uniform.body_parts_covered & LEGS) \
-		|| (worn_suit?.flags_inv & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
+		|| (obscured_slots & HIDEJUMPSUIT) // If suit hides our jumpsuit, it doesn't matter if it squishes
 
 	var/suit_compatible = isnull(worn_suit) \
 		|| (worn_suit.supports_variations_flags & DIGITIGRADE_VARIATIONS) \
@@ -74,6 +78,7 @@
 /obj/item/bodypart/leg/left/digitigrade
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
+	species_id = SPECIES_LIZARD
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -85,6 +90,7 @@
 /obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
+	species_id = SPECIES_LIZARD
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	footstep_type = FOOTSTEP_MOB_CLAW

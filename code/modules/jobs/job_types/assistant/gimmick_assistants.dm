@@ -168,6 +168,7 @@
 	head = /obj/item/clothing/head/utility/hardhat
 	uniform = /obj/item/clothing/under/color/yellow
 	l_pocket = /obj/item/modular_computer/pda/assistant
+	pda_slot = ITEM_SLOT_LPOCKET
 
 	outfit_weight = 6
 

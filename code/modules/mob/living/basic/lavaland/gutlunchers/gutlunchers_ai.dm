@@ -12,6 +12,8 @@
 		BB_MAX_CHILDREN = 5,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
@@ -40,7 +42,7 @@
 	for(var/mob/living/potential_friend in oview(9, living_pawn))
 		if(!isashwalker(potential_friend))
 			continue
-		if((living_pawn.faction.Find(REF(potential_friend))))
+		if(living_pawn.has_ally(REF(potential_friend)))
 			continue
 		living_pawn.befriend(potential_friend)
 		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
@@ -55,6 +57,7 @@
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
@@ -65,6 +68,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/food_trough

@@ -122,7 +122,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "C" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -160,7 +160,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "J" = (

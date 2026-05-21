@@ -40,12 +40,13 @@
 
 /datum/voucher_set/mining/crusher_kit
 	name = "Crusher Kit"
-	description = "Contains a kinetic crusher and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
+	description = "Contains a kinetic crusher, expanded pocket oxygen tank and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	set_items = list(
 		/obj/item/kinetic_crusher,
 		/obj/item/extinguisher/mini,
+		/obj/item/tank/internals/emergency_oxygen/engi,
 	)
 
 /datum/voucher_set/mining/extraction_kit
@@ -97,4 +98,14 @@
 	icon_state = "duffel-explorer"
 	set_items = list(
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
+	)
+
+/datum/voucher_set/mining/punching_mitts
+	name = "Punching Mitts"
+	description = "Contains a pair of punching mitts for turning the local wilderness into the local gravel pit with your BARE HANDS."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "punch_mitts"
+	set_items = list(
+		/obj/item/clothing/gloves/fingerless/punch_mitts,
+		/obj/item/clothing/head/cowboy,
 	)

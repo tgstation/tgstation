@@ -1,4 +1,4 @@
-/datum/mutation/human/self_amputation
+/datum/mutation/self_amputation
 	name = "Autotomy"
 	desc = "Allows a creature to voluntary discard a random appendage."
 	quality = POSITIVE
@@ -27,7 +27,7 @@
 		return
 
 	var/list/parts = list()
-	for(var/obj/item/bodypart/to_remove as anything in cast_on.bodyparts)
+	for(var/obj/item/bodypart/to_remove as anything in cast_on.get_bodyparts())
 		if(to_remove.body_zone == BODY_ZONE_HEAD || to_remove.body_zone == BODY_ZONE_CHEST)
 			continue
 		if(to_remove.bodypart_flags & BODYPART_UNREMOVABLE)

@@ -124,7 +124,6 @@
 
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy
-	grind_results = list()
 	average_weight = FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 2
 	average_size = FISH_SIZE_BULKY_MAX
 	num_fillets = 2
@@ -133,7 +132,12 @@
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
-	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+	///used to know how many fillets should be gotten out of this fish
+	var/expected_num_fillets = 0
+
+/obj/item/fish/testdummy/fish_grind_results()
+	return null
 
 /obj/item/fish/testdummy/small
 	// The parent type is too big to reproduce inside the more compact fish tank
@@ -449,7 +453,7 @@
 /datum/fish_source/unit_test_all_fish
 
 /datum/fish_source/unit_test_all_fish/New()
-	for(var/fish_type as anything in subtypesof(/obj/item/fish))
+	for(var/fish_type in subtypesof(/obj/item/fish))
 		fish_table[fish_type] = 10
 	return ..()
 
@@ -472,11 +476,11 @@
 	REMOVE_TRAIT(gourmet, TRAIT_FISH_EATER, TRAIT_FISH_TESTING)
 
 	fish.attack(gourmet, gourmet)
-	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/consumable/nutriment/protein), "Human doesn't have ingested protein after eating fish")
-	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/blood), "Human doesn't have ingested blood after eating fish")
+	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/consumable/nutriment/protein), "Human hasn't ingested protein when eating fish")
+	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/blood), "Human hasn't ingested blood when eating fish")
 	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/fishdummy), "Human doesn't have the reagent from /datum/fish_trait/dummy after eating fish")
 
-	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [fish.health]")
+	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [PERCENT(fish.get_health_percentage())]%")
 
 	var/obj/item/organ/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
 	belly.reagents.clear_reagents()

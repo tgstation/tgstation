@@ -35,14 +35,14 @@
 /datum/element/cultist_pet/proc/on_overlays_updated(mob/living/basic/source, list/overlays)
 	SIGNAL_HANDLER
 
-	if(isnull(source.mind) && (FACTION_CULT in source.faction)) //cult indicator we show for non sentient pets
+	if(isnull(source.mind) && source.has_faction(FACTION_CULT)) //cult indicator we show for non sentient pets
 		var/image/cult_indicator = image(icon = 'icons/mob/simple/pets.dmi', icon_state = "pet_cult_indicator", layer = ABOVE_GAME_PLANE)
 		overlays += cult_indicator
 
 /datum/element/cultist_pet/proc/on_icon_state_updated(mob/living/basic/source)
 	SIGNAL_HANDLER
 
-	if(pet_cult_icon_state && (FACTION_CULT in source.faction))
+	if(pet_cult_icon_state && source.has_faction(FACTION_CULT))
 		source.icon_state = pet_cult_icon_state
 		source.icon_living = pet_cult_icon_state
 
@@ -53,7 +53,7 @@
 	if(source.stat == DEAD)
 		return
 
-	if(FACTION_CULT in source.faction)
+	if(source.has_faction(FACTION_CULT))
 		return STOP_SACRIFICE
 
 	source.mind?.add_antag_datum(/datum/antagonist/cult, team)
@@ -63,7 +63,7 @@
 	source.maxHealth = max(PET_CULT_HEALTH, source::maxHealth)
 	source.fully_heal()
 
-	source.faction = list(FACTION_CULT) //we only serve the cult
+	source.set_faction(list(FACTION_CULT)) //we only serve the cult
 
 	if(isnull(pet_cult_icon_state))
 		source.add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
@@ -115,7 +115,7 @@
 /datum/element/cultist_pet/proc/on_login(mob/living/source)
 	SIGNAL_HANDLER
 
-	if(!(FACTION_CULT in source.faction))
+	if(!source.has_faction(FACTION_CULT))
 		return
 	var/datum/team/cult_team = source.ai_controller.blackboard[BB_CULT_TEAM]
 	if(isnull(cult_team))

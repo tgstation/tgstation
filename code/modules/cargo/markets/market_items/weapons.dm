@@ -143,3 +143,23 @@
 	price_max = CARGO_CRATE_VALUE * 5
 	stock_max = 1
 	availability_prob = 35
+
+/datum/market_item/weapon/surplus_esword
+	name = "Pattern I 'Iaito' Energy Sword"
+	desc = "A mass-produced energy sword. It is functionally worse than a milspec energy sword commonly found amongst paramilitary organizations. \
+		But hey, better than nothing. Does have some power supply problems, but nothing that a bit of percussive maintenance can't fix."
+	item = /obj/item/melee/energy/sword/surplus
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 2
+	availability_prob = 80
+
+/datum/market_item/weapon/earthcracker
+	name = "E-1 Earthcracker"
+	desc = "Surplus mining equipment from one of the many, nameless asteroid mining companies bought out by Nanotrasen in this sector.\
+		While they were decent enough at mining asteroids, these things really shine at leaving large cracks on station-class hulls when deployed these days."
+	item = /obj/item/earthcracker/small
+	price_min = CARGO_CRATE_VALUE
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 1
+	availability_prob = 30

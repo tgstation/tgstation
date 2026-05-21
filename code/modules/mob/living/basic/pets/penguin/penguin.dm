@@ -1,4 +1,5 @@
 /mob/living/basic/pet/penguin
+	abstract_type = /mob/living/basic/pet/penguin
 
 	icon = 'icons/mob/simple/penguins.dmi'
 	gender = FEMALE
@@ -19,6 +20,7 @@
 	var/obj/carried_egg
 
 /datum/emote/penguin
+	abstract_type = /datum/emote/penguin
 	mob_type_allowed_typecache = /mob/living/basic/pet/penguin
 	mob_type_blacklist_typecache = list()
 
@@ -165,11 +167,3 @@
 
 /mob/living/basic/pet/penguin/baby/permanent
 	can_grow_up = FALSE
-
-/mob/living/basic/pet/penguin/emperor/snowdin
-	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
-	gold_core_spawnable = NO_SPAWN
-
-/mob/living/basic/pet/penguin/baby/permanent/snowdin
-	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
-	gold_core_spawnable = NO_SPAWN

@@ -1,0 +1,4 @@
+/obj/item/clothing/under/rank/captain/suit : /obj/item/clothing/under/costume/captain{@OLD}
+/obj/item/clothing/under/rank/captain/suit/skirt : /obj/item/clothing/under/costume/captain/skirt{@OLD}
+/obj/item/clothing/under/rank/civilian/head_of_personnel/suit : /obj/item/clothing/under/costume/head_of_personnel{@OLD}
+/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt : /obj/item/clothing/under/costume/head_of_personnel/skirt{@OLD}

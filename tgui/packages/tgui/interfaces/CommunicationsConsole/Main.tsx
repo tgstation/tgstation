@@ -5,7 +5,7 @@ import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { AlertButton } from './AlertButton';
 import { MessageModal } from './MessageModal';
-import { CommsConsoleData, ShuttleState } from './types';
+import { type CommsConsoleData, ShuttleState } from './types';
 
 export function PageMain(props) {
   const { act, data } = useBackend<CommsConsoleData>();

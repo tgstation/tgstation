@@ -30,8 +30,8 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/clownplanet)
 "ai" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/mineral/sandstone,
+/obj/structure/sign/warning/directional/south,
+/turf/open/floor/bronze,
 /area/ruin/space/has_grav/powered/clownplanet)
 "aj" = (
 /turf/open/floor/grass{
@@ -118,7 +118,9 @@
 /turf/open/floor/iron/bluespace,
 /area/ruin/space/has_grav/powered/clownplanet)
 "az" = (
-/obj/structure/signpost,
+/obj/structure/signpost{
+	teleports = 1
+	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -613,8 +615,8 @@ aa
 (10,1,1) = {"
 ae
 ae
-ac
 ai
+af
 aM
 aE
 ak
@@ -743,8 +745,8 @@ ae
 (15,1,1) = {"
 ae
 ae
-ac
 ai
+af
 aO
 aP
 aj

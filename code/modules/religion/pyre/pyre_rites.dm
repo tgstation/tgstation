@@ -14,7 +14,7 @@
 	"... allow this unworthy apparel to serve you ...",
 	"... make it strong enough to burn a thousand times and more ...")
 	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
-	favor_cost = 1000
+	favor_cost = 700
 ///the piece of clothing that will be fireproofed, only one per rite
 	var/obj/item/clothing/chosen_clothing
 
@@ -90,7 +90,7 @@
 		to_chat(user, span_warning("The sacrifice has to stay dead for the rite to work!"))
 		chosen_sacrifice = null
 		return FALSE
-	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
+	var/favor_gained = 100 + round(chosen_sacrifice.get_fire_loss())
 	GLOB.religious_sect.adjust_favor(favor_gained, user)
 	to_chat(user, span_notice("[GLOB.deity] absorbs the charred corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor."))
 	chosen_sacrifice.dust(force = TRUE)
@@ -123,7 +123,7 @@
 		"... make it burn bright ...",
 	)
 	invoke_msg = "... a blazing star is born!"
-	favor_cost = 2000
+	favor_cost = 1500
 	///arrow to enchant
 	var/obj/item/ammo_casing/arrow/holy/enchant_target
 

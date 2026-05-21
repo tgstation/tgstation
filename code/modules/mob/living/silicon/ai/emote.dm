@@ -1,8 +1,9 @@
 /datum/emote/ai
+	abstract_type = /datum/emote/ai
 	mob_type_allowed_typecache = /mob/living/silicon/ai
 	mob_type_blacklist_typecache = list()
 
-
+// This might be worth making an abstract type.
 /datum/emote/ai/emotion_display
 	key = "blank"
 	var/emotion = AI_EMOTION_BLANK
@@ -38,6 +39,14 @@
 /datum/emote/ai/emotion_display/bsod
 	key = "bsod"
 	emotion = AI_EMOTION_BSOD
+
+/datum/emote/ai/emotion_display/dead
+	key = "dead"
+	emotion = AI_EMOTION_DEAD
+
+/datum/emote/ai/emotion_display/download
+	key = "download"
+	emotion = AI_EMOTION_DOWNLOAD
 
 /datum/emote/ai/emotion_display/trollface
 	key = "trollface"

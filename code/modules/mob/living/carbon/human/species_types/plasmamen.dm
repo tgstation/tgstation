@@ -16,7 +16,7 @@
 		TRAIT_UNHUSKABLE,
 	)
 
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_SKELETAL
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
@@ -52,6 +52,7 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 	outfit_override_registry = list(
+		/datum/outfit/ninja = /datum/outfit/ninja/plasmaman,
 		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
 		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
 		/datum/outfit/syndicate/leader = /datum/outfit/syndicate/leader/plasmaman,
@@ -65,9 +66,6 @@
 		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
 		/datum/outfit/syndicate/full/loneop = /datum/outfit/syndicate/full/plasmaman/loneop,
 	)
-
-	/// If the bones themselves are burning clothes won't help you much
-	var/internal_fire = FALSE
 
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job?.plasmaman_outfit)

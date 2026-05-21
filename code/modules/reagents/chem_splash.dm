@@ -52,7 +52,7 @@
 	for(var/datum/reagents/reactant as anything in reactants)
 		reactant.trans_to(holder, reactant.total_volume, threatscale, no_react = TRUE)
 
-	holder.chem_temp += extra_heat // Average temperature of reagents + extra heat.
+	holder.chem_temp = max(holder.chem_temp + extra_heat, TCMB) // Average temperature of reagents + extra heat.
 	holder.handle_reactions() // React them now.
 
 	if(holder.total_volume)
@@ -79,11 +79,8 @@
  */
 /proc/spread_reagents(datum/reagents/source, atom/epicenter, spread_range)
 	spread_range = min(spread_range, 20) // Fuck off with trying to do more then this
-	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-	steam.set_up(10, 0, epicenter)
-	steam.attach(epicenter)
-	steam.start()
-
+	var/datum/effect_system/basic/steam_spread/steam = new /datum/effect_system/basic/steam_spread(epicenter, 10, FALSE)
+	steam.attach(epicenter).start()
 	// This is a basic floodfill algorithm of atmos connected tiles
 	// Turfs will be stored in the form turf -> TRUE
 	var/chem_temp = source.chem_temp

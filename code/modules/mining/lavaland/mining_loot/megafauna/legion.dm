@@ -10,12 +10,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	damtype = BURN
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3

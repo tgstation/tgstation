@@ -21,14 +21,14 @@
 	SIGNAL_HANDLER
 	if (!iscarbon(target))
 		return
-	if (!isnull(source.mind) && !isnull(source.hud_used?.zone_select))
+	if (!isnull(source.mind) && !isnull(source.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]))
 		return
 	var/mob/living/living_target = target
 	var/list/blacklist_zones = GLOB.all_body_zones - valid_attack_zones
 	var/new_zone = living_target.get_random_valid_zone(blacklisted_parts = blacklist_zones, bypass_warning = TRUE)
 	if (isnull(new_zone))
 		new_zone = BODY_ZONE_CHEST
-	var/atom/movable/screen/zone_sel/zone_selector = source.hud_used?.zone_select
+	var/atom/movable/screen/zone_sel/zone_selector = source.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	if (isnull(zone_selector))
 		source.zone_selected = new_zone
 	else

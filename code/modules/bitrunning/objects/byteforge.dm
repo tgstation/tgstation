@@ -5,6 +5,7 @@
 	desc = "A machine used by the quantum server. Quantum code converges here, materializing decrypted assets from the virtual abyss."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "byteforge"
+	base_icon_state = "byteforge"
 	obj_flags = BLOCKS_CONSTRUCTION | CAN_BE_HIT
 	/// Idle particles
 	var/mutable_appearance/byteforge_particles
@@ -12,26 +13,54 @@
 /obj/machinery/byteforge/Initialize(mapload)
 	. = ..()
 
-	return INITIALIZE_HINT_LATELOAD
+	register_context()
 
 /obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
 	setup_particles()
 
+/obj/machinery/byteforge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/byteforge/examine(mob/user)
+	. = ..()
+
+	. += span_notice("Must be within 4 tiles of the quantum server.")
+
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	if(panel_open)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/byteforge/update_appearance(updates)
 	. = ..()
 
 	setup_particles()
 
+/obj/machinery/byteforge/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	return default_deconstruction_screwdriver(user, screwdriver)
+
+/obj/machinery/byteforge/crowbar_act(mob/living/user, obj/item/crowbar)
+	return default_deconstruction_crowbar(user, crowbar)
+
+/obj/machinery/byteforge/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_panel" : base_icon_state
+
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
 	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
-	var/datum/effect_system/spark_spread/quantum/sparks = new()
-	sparks.set_up(5, 1, loc)
-	sparks.start()
-
+	do_sparks(5, TRUE, loc, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 	set_light(l_on = FALSE)
 
 /// Forge begins to process
@@ -64,4 +93,3 @@
 	flicker()
 
 	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS)
-

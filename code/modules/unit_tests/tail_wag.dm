@@ -92,7 +92,7 @@
 		TEST_FAIL("Tail did not start wagging when it should have!")
 
 	// kill the mob, see if it stops wagging
-	dummy.adjustBruteLoss(9001)
+	dummy.adjust_brute_loss(9001)
 	if(dummy_tail.wag_flags & WAG_WAGGING)
 		TEST_FAIL("A mob's tail was still wagging after being killed!")
 

@@ -12,6 +12,23 @@
 		/obj/machinery/computer/arcade/amputation = 2,
 	)
 
+/obj/effect/spawner/random/entertainment/slot_machine
+	name = "spawn random slot machine"
+	desc = "Automagically transforms into a random slot machine. If you see this while in a shift, please create a bug report."
+	icon_state = "arcade"
+	loot = list( // syndie slots omitted
+		/obj/machinery/computer/slot_machine = 20,
+		/obj/machinery/computer/slot_machine/security = 10,
+		/obj/machinery/computer/slot_machine/medical = 10,
+		/obj/machinery/computer/slot_machine/engineering = 10,
+		/obj/machinery/computer/slot_machine/cargo = 10,
+		/obj/machinery/computer/slot_machine/service = 10,
+		/obj/machinery/computer/slot_machine/science = 10,
+		/obj/machinery/computer/slot_machine/command = 10,
+		/obj/machinery/computer/slot_machine/clown = 5,
+		/obj/machinery/computer/slot_machine/mime = 5,
+	)
+
 /obj/effect/spawner/random/entertainment/musical_instrument
 	name = "musical instrument spawner"
 	icon_state = "eguitar"
@@ -151,6 +168,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/cigarette
@@ -165,6 +183,7 @@
 		/obj/item/cigarette/robust = 2,
 		/obj/item/cigarette/carp = 1,
 		/obj/item/cigarette/robustgold = 1,
+		/obj/item/cigarette/greytide = 3,
 	)
 
 /obj/effect/spawner/random/entertainment/cigar
@@ -275,17 +294,19 @@
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
 		/obj/item/toy/plush/lizard_plushie/space/green = 3,
-		/obj/item/toy/plush/goatplushie = 3,
 		/obj/item/toy/plush/rouny = 3,
 		/obj/item/toy/plush/abductor = 3,
 		/obj/item/toy/plush/abductor/agent = 3,
 		/obj/item/toy/plush/shark = 3,
 		/obj/item/toy/plush/unicorn = 3,
 		/obj/item/toy/plush/monkey = 3,
+		/obj/item/toy/plush/donkpocket = 3,
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+		/obj/item/toy/plush/whiny_plushie = 2,
+		/obj/item/toy/plush/rouny = 2,
 	)
 
 /obj/effect/spawner/random/entertainment/colorful_grenades
@@ -293,6 +314,6 @@
 	loot = list(
 		/obj/item/grenade/chem_grenade/glitter/pink,
 		/obj/item/grenade/chem_grenade/glitter/blue,
-		/obj/item/grenade/chem_grenade/glitter/white,
+		/obj/item/grenade/chem_grenade/glitter,
 		/obj/item/grenade/chem_grenade/colorful
 	)

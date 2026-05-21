@@ -65,7 +65,7 @@
 /datum/element/easy_ignite/proc/attackby_react(obj/item/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 
-	if(!tool.get_temperature())
+	if(tool.get_temperature() < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return NONE
 
 	if (!item_ignition(source, tool, user))
@@ -83,13 +83,11 @@
 /datum/element/easy_ignite/proc/welder_react(obj/item/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
-	if(!tool.get_temperature())
+	if(tool.get_temperature() < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return NONE
 
 	if (!item_ignition(source, tool, user))
 		return ITEM_INTERACT_BLOCKING
-
-	ignite(source, user)
 	return ITEM_INTERACT_SUCCESS
 
 /datum/element/easy_ignite/proc/item_ignition(obj/item/source, obj/item/tool, mob/user)

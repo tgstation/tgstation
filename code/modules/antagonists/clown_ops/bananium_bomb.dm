@@ -56,5 +56,5 @@
 		ADD_TRAIT(clown_mask, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 		clowned_on.equip_to_slot_or_del(clown_mask, ITEM_SLOT_MASK)
 
-	clowned_on.dna.add_mutation(/datum/mutation/human/clumsy)
+	clowned_on.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	clowned_on.gain_trauma(/datum/brain_trauma/mild/phobia/clowns, TRAUMA_RESILIENCE_LOBOTOMY) //MWA HA HA

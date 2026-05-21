@@ -4,6 +4,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "preferred_ai_hologram_display"
 	should_generate_icons = TRUE
+	should_update_preview = FALSE
 
 /datum/preference/choiced/ai_hologram_display/init_possible_values()
 	return assoc_to_keys(GLOB.ai_hologram_icons) + "Random"

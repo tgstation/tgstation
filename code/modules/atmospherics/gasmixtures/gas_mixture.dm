@@ -87,16 +87,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
-	for(var/id in cached_gases)
-		var/gas_data = cached_gases[id]
+	for(var/_id, gas_data in cached_gases)
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
-	for(var/id in cached_gases)
-		var/gas_data = cached_gases[id]
+	for(var/_id, gas_data in cached_gases)
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
@@ -173,6 +171,40 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
+
+// Set the gas specie within the gas mix to a set amount, if there is none it will be created at the target temp
+/datum/gas_mixture/proc/set_gas(gas_specie, amount)
+	ASSERT_GAS(gas_specie, src)
+	gases[gas_specie][MOLES] = amount
+	garbage_collect()
+
+/datum/gas_mixture/proc/set_temperature(target_temp)
+	temperature = target_temp
+
+/// Add a specific amount of moles to specified gas or add a new gas to the mix
+/// amount is added so make it negative to remove
+/datum/gas_mixture/proc/adjust_gas(gas, amount)
+	ASSERT_GAS(gas, src)
+	gases[gas][MOLES] += QUANTIZE(amount)
+	garbage_collect()
+
+/// Add a specific amount of moles to all the gasses present or add a new gas to the mix
+///gases_moles is an associative list of gas species to their amount to be added
+/datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
+	for(var/gas_specie in gases_moles)
+		ASSERT_GAS(gas_specie, src)
+		gases[gas_specie][MOLES] += gases_moles[gas_specie]
+	garbage_collect()
+
+
+/// Modify the gas list as to convert moles of gas species A to gas species B
+/// reactant and product are the gas species to convert and conversion_amount is the amount to be converted
+/datum/gas_mixture/proc/convert_gas(datum/gas/reactant, datum/gas/product, conversion_amount)
+	var/list/cached_gases = gases
+	assert_gases(reactant, product)
+	cached_gases[reactant][MOLES] -= QUANTIZE(conversion_amount)
+	cached_gases[product][MOLES] += QUANTIZE(conversion_amount)
+	garbage_collect()
 
 ///Proportionally removes amount of gas from the gas_mixture.
 ///Returns: gas_mixture with the gases removed
@@ -766,3 +798,4 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
+

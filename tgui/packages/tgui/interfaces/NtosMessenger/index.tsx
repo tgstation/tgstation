@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -12,13 +12,13 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { ChatScreen } from './ChatScreen';
-import { NtChat, NtMessenger, NtPicture } from './types';
+import type { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -141,7 +141,7 @@ const ContactsScreen = (props: any) => {
   const [searchUser, setSearchUser] = useState('');
 
   const sortByUnreads = (array: NtChat[]) =>
-    sortBy(array, (chat) => chat.unread_messages);
+    sortBy(array, [(chat) => chat.unread_messages]);
 
   const searchChatByName = createSearch(
     searchUser,
@@ -201,7 +201,7 @@ const ContactsScreen = (props: any) => {
           <Stack vertical textAlign="center">
             <Box bold>
               <Icon name="address-card" mr={1} />
-              SpaceMessenger V6.5.3
+              SpaceMessenger V6.5.4
             </Box>
             <Box italic opacity={0.3} mt={1}>
               Bringing you spy-proof communications since 2467.
@@ -368,6 +368,7 @@ const SendToAllSection = (props) => {
       <Section>
         <TextArea
           height={6}
+          width="100%"
           value={message}
           placeholder="Send message to everyone..."
           onChange={setMessage}

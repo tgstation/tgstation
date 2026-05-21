@@ -104,7 +104,7 @@
 	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
 	chosen_hat_colour = pick_weight(gnome_hat_colours)
 	apply_colour()
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 	AddComponent(/datum/component/swarming)
@@ -121,7 +121,7 @@
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/garden_gnome/potential_gnome in oview(src, 7))
-		potential_gnome.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		potential_gnome.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
 
 /datum/ai_controller/basic_controller/garden_gnome
 	blackboard = list(
@@ -131,6 +131,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

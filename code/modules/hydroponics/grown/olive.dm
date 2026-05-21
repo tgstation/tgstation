@@ -22,6 +22,7 @@
 	desc = "A small cylindrical salty fruit closely related to mangoes. Can be ground into a paste and mixed with water to make quality oil."
 	icon_state = "olive"
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/olivepaste = 0)
 	tastes = list("olive" = 1)
 
+/obj/item/food/grown/olive/grind_results()
+	return list(/datum/reagent/consumable/olivepaste = 0)

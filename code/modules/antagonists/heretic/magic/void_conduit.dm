@@ -28,6 +28,7 @@
 	icon_state = "void_conduit"
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 150
 	///Overlay to apply to the tiles in range of the conduit
 	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")
 	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
@@ -49,7 +50,7 @@
 /obj/structure/void_conduit/proc/build_view_turfs()
 	for(var/turf/affected_turf as anything in overlayed_turfs)
 		affected_turf.cut_overlay(void_overlay)
-	for(var/turf/affected_turf as anything in view(effect_range, src))
+	for(var/turf/affected_turf in view(effect_range, src))
 		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
@@ -72,7 +73,7 @@
 ///Sends out a pulse
 /obj/structure/void_conduit/proc/do_conduit_pulse()
 	var/list/turfs_to_affect = list()
-	for(var/turf/affected_turf as anything in view(effect_range, loc))
+	for(var/turf/affected_turf in view(effect_range, loc))
 		var/distance = get_dist(loc, affected_turf)
 		if(!turfs_to_affect["[distance]"])
 			turfs_to_affect["[distance]"] = list()
@@ -99,13 +100,9 @@
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
-				var/obj/affected_door = thing_to_affect
-				affected_door.take_damage(rand(15, 30))
-
-			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
-				var/obj/structure/affected_structure = thing_to_affect
-				affected_structure.take_damage(rand(10, 20))
+			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly) || istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
+				var/obj/affected_structure = thing_to_affect
+				affected_structure.take_damage(rand(15, 30))
 
 /datum/looping_sound/void_conduit
 	mid_sounds = 'sound/ambience/misc/ambiatm1.ogg'

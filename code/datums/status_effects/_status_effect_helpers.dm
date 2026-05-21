@@ -13,9 +13,7 @@
 /mob/living/proc/apply_status_effect(datum/status_effect/new_effect, ...)
 	RETURN_TYPE(/datum/status_effect)
 
-	// The arguments we pass to the start effect. The 1st argument is this mob.
 	var/list/arguments = args.Copy()
-	arguments[1] = src
 
 	// If the status effect we're applying doesn't allow multiple effects, we need to handle it
 	if(initial(new_effect.status_type) != STATUS_EFFECT_MULTIPLE)
@@ -37,6 +35,9 @@
 				if(STATUS_EFFECT_REFRESH)
 					existing_effect.refresh(arglist(arguments))
 					return
+
+	// For the new effect the 1st argument is this mob
+	arguments[1] = src
 
 	// Create the status effect with our mob + our arguments
 	var/datum/status_effect/new_instance = new new_effect(arguments)

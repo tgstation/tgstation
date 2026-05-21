@@ -1,7 +1,7 @@
-import { filter } from 'common/collections';
+import { filter } from 'es-toolkit/compat';
 import { flow } from 'tgui-core/fp';
 
-import { Supply, SupplyCategory } from './types';
+import type { Supply, SupplyCategory } from './types';
 
 /**
  * Take entire supplies tree

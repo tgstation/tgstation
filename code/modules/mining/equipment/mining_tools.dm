@@ -73,6 +73,10 @@
 	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
+/obj/item/pickaxe/drill/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handle
+
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
@@ -177,10 +181,11 @@
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/shovel/serrated/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_ORGANIC, damage_multiplier = 1) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_ORGANIC, damage_multiplier = 2) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
 
 /obj/item/shovel/serrated/examine(mob/user)
 	. = ..()
@@ -318,6 +323,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
@@ -373,7 +379,7 @@
 		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
 		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
 		target_mob.Knockdown(2 SECONDS)
-	var/body_zone = pick(GLOB.all_body_zones)
+	var/body_zone = pick(user.get_all_limbs())
 	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")

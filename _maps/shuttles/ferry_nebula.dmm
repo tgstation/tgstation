@@ -171,6 +171,12 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/transport)
+"I" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/transport)
 "J" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -200,8 +206,12 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/transport)
 "M" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron/dark/small,
 /area/shuttle/transport)
 "N" = (
 /obj/structure/hedge,
@@ -318,8 +328,8 @@ j
 i
 c
 a
-b
 M
+i
 "}
 (6,1,1) = {"
 q
@@ -329,8 +339,8 @@ Z
 q
 "}
 (7,1,1) = {"
-M
-h
+i
+I
 a
 K
 i

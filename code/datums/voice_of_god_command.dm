@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/candidate in candidates)
-		if(candidate.stat != DEAD && candidate.can_hear())
+		if(candidate.stat != DEAD && !HAS_TRAIT(candidate, TRAIT_DEAF))
 			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
 				to_chat(user, span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
 				continue
@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/bleed/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/human/target in listeners)
-		var/obj/item/bodypart/chosen_part = pick(target.bodyparts)
+		var/obj/item/bodypart/chosen_part = pick(target.get_bodyparts())
 		chosen_part.adjustBleedStacks(5)
 
 /// This command sets the listeners ablaze.

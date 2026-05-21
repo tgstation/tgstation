@@ -55,6 +55,8 @@
 		if(!valid_dinner(living_mob, possible_dinner, hunt_range, controller, seconds_per_tick))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
+		EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [possible_dinner] as a target for blackboard key [hunting_target_key]! Behavior: [src]", get_turf(possible_dinner), "Target: [possible_dinner]")
+		EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(possible_dinner))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 

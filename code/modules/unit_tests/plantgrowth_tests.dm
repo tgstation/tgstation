@@ -8,6 +8,9 @@
 	for(var/seedpath in paths)
 		var/obj/item/seeds/seed = new seedpath
 
+		if (seed.seed_flags & NO_PLANTING)
+			continue
+
 		for(var/i in 1 to seed.growthstages)
 			if(icon_exists(seed.growing_icon, "[seed.icon_grow][i]"))
 				continue

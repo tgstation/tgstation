@@ -30,7 +30,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -499,6 +500,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	icon_state = "moths-moths-moths"
 	desc = "LIVE MOTHS!"
 	neon_color = COLOR_RED
+
+/datum/barsign/coldones
+	name = "Cold Ones"
+	icon_state = "cold-ones"
+	desc = "That's what they call the yogurt effect."
+	neon_color = ""
+
+/datum/barsign/doctorsorders
+	name = "Doctor's Orders"
+	icon_state = "doctors-orders"
+	desc = "For over-the-counter painkillers."
+	neon_color = ""
+
+/datum/barsign/wrongturn
+	name = "Wrong Turn"
+	icon_state = "wrong-turn"
+	desc = "You don't feel lost. Nothing a few drinks cant fix, though."
+	neon_color = ""
+
+/datum/barsign/punpunspub
+	name = "Punpun's Pub"
+	icon_state = "pun-puns-pub"
+	desc = "After everything he's been through? I'd want to be near booze too."
+	neon_color = ""
 
 // Hidden signs list below this point
 

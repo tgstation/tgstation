@@ -3,6 +3,7 @@
 	id = SPECIES_ABDUCTOR
 	sexes = FALSE
 	inherent_traits = list(
+		TRAIT_ABDUCTOR_HUD,
 		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
 		TRAIT_NEVER_WOUNDED,
 		TRAIT_NOBLOOD,
@@ -31,16 +32,6 @@
 /datum/species/abductor/get_physical_attributes()
 	return "Abductors do not need to breathe, eat, do not have blood, a heart, stomach, or lungs and cannot be infected by human viruses. \
 		Their hardy physique prevents their skin from being wounded or dismembered, but their chunky tridactyl hands make it hard to operate human equipment."
-
-/datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
-	. = ..()
-	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	abductor_hud.show_to(C)
-
-/datum/species/abductor/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	abductor_hud.hide_from(C)
 
 /datum/species/abductor/get_species_description()
 	return "Abductors, colloquially known as \"Greys\" (or \"Grays\"), \

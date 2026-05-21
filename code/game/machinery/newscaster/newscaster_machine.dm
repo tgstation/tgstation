@@ -72,12 +72,13 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
-/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+/obj/machinery/newscaster/Initialize(mapload)
 	. = ..()
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
@@ -196,11 +197,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	//Then, breaks down the messages that have been made on those channels.
 	if(current_channel)
 		for(var/datum/feed_message/feed_message as anything in current_channel.messages)
-			var/photo_ID = null
+			var/photo_id = null
 			var/list/comment_list
 			if(feed_message.img)
-				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_ID].png")
-				photo_ID = "tmp_photo[feed_message.message_ID].png"
+				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_id].png")
+				photo_id = "tmp_photo[feed_message.message_id].png"
 			for(var/datum/feed_comment/comment_message as anything in feed_message.comments)
 				comment_list += list(list(
 					"auth" = comment_message.author,
@@ -211,16 +212,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				"auth" = feed_message.author,
 				"body" = feed_message.body,
 				"time" = feed_message.time_stamp,
-				"channel_num" = feed_message.parent_ID,
+				"channel_num" = feed_message.parent_id,
 				"censored_message" = feed_message.body_censor,
 				"censored_author" = feed_message.author_censor,
-				"ID" = feed_message.message_ID,
-				"photo" = photo_ID,
+				"ID" = feed_message.message_id,
+				"photo" = photo_id,
 				"comments" = comment_list
 			))
 
 
-	data["viewing_channel"] = current_channel?.channel_ID
+	data["viewing_channel"] = current_channel?.channel_id
 	data["paper"] = paper_remaining
 	//Here we display all the information about the current channel.
 	data["channelName"] = current_channel?.channel_name
@@ -264,7 +265,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"author" = channel.author,
 			"censored" = channel.censored,
 			"locked" = channel.locked,
-			"ID" = channel.channel_ID,
+			"ID" = channel.channel_id,
 		))
 
 	data["channels"] = channel_list
@@ -293,19 +294,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	switch(action)
 		if("setChannel")
-			var/prototype_channel = params["channel"]
-			if(isnull(prototype_channel))
+			var/selected_channel_id = params["channel"]
+			if(isnull(selected_channel_id))
 				return TRUE
-			for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
-				if(prototype_channel == potential_channel.channel_ID)
-					current_channel = potential_channel
+			var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[selected_channel_id]"]
+			if(isnull(potential_channel))
+				return TRUE
+			current_channel = potential_channel
 
 		if("createStory")
 			if(!current_channel)
 				balloon_alert(user, "select a channel first!")
 				return TRUE
-			var/prototype_channel = params["current"]
-			create_story(user, channel_name = prototype_channel)
+			var/current_channel_id = params["current"]
+			create_story(user, channel_id = current_channel_id)
 
 		if("togglePhoto")
 			toggle_photo(user)
@@ -316,13 +318,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("setChannelName")
-			var/pre_channel_name = params["channeltext"]
+			var/pre_channel_name = reject_bad_text(params["channeltext"], max_length = MAX_NAME_LEN)
 			if(!pre_channel_name)
 				return TRUE
 			channel_name = pre_channel_name
 
 		if("setChannelDesc")
-			var/pre_channel_desc = params["channeldesc"]
+			var/pre_channel_desc = reject_bad_text(params["channeldesc"], max_length = MAX_BROADCAST_LEN)
 			if(!pre_channel_desc)
 				return TRUE
 			channel_desc = pre_channel_desc
@@ -352,7 +354,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
-				if(iterated_feed_message.message_ID == questionable_message)
+				if(iterated_feed_message.message_id == questionable_message)
 					iterated_feed_message.toggle_censor_body()
 					break
 
@@ -366,7 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message in current_channel.messages)
-				if(iterated_feed_message.message_ID == questionable_message)
+				if(iterated_feed_message.message_id == questionable_message)
 					iterated_feed_message.toggle_censor_author()
 					break
 
@@ -378,11 +380,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
-			var/prototype_channel = (params["channel"])
-			for(var/datum/feed_channel/potential_channel in GLOB.news_network.network_channels)
-				if(prototype_channel == potential_channel.channel_ID)
-					current_channel = potential_channel
-					break
+			var/selected_channel_id = (params["channel"])
+			if(isnull(selected_channel_id))
+				return TRUE
+			var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[selected_channel_id]"]
+			if(isnull(potential_channel))
+				return TRUE
+			current_channel = potential_channel
 			current_channel.toggle_censor_D_class()
 
 		if("startComment")
@@ -394,7 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(!commentable_message)
 				return TRUE
 			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
-				if(iterated_feed_message.message_ID == commentable_message)
+				if(iterated_feed_message.message_id == commentable_message)
 					current_message = iterated_feed_message
 			return TRUE
 
@@ -660,10 +664,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(isnull(channel_locked))
 		return TRUE
 
-	for(var/datum/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
-		if(iterated_feed_channel.channel_name == channel_name)
-			tgui_alert(user, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
-			return TRUE
+	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_name[channel_name]
+	if(potential_channel)
+		tgui_alert(user, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
+		return TRUE
 
 	var/list/hard_filter_result = is_ic_filtered(channel_name)
 	if(hard_filter_result)
@@ -682,7 +686,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(tgui_alert(user,"Your channel name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \
-			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[channel_name]\"")
+			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[html_encode(channel_name)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \
 			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[channel_name]\"")
 		approval_time = EXTENDED_CROSS_SECTOR_CANCEL_TIME
@@ -698,7 +702,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		GLOB.admins,
 		span_adminnotice( \
 			"<b color='orange'>Cross-sector channel creation (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to create a cross-sector \
-			newscaster channel \"[channel_name]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
+			newscaster channel \"[html_encode(channel_name)]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
 			<b><a href='byond://?src=[REF(src)];reject_channel_creation=1'>REJECT</a></b>"\
 		)
 	)
@@ -769,16 +773,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  * Verifies that the message is being written to a real feed_channel, then provides a text input for the feed story to be written into.
  * Finally, it submits the message to the network, is logged globally, and clears all message-specific variables from the machine.
  */
-/obj/machinery/newscaster/proc/create_story(mob/user, channel_name)
-	for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
-		if(channel_name == potential_channel.channel_ID)
-			current_channel = potential_channel
-			break
+/obj/machinery/newscaster/proc/create_story(mob/user, channel_id)
+	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[channel_id]"]
+	if(isnull(potential_channel))
+		return
+	current_channel = potential_channel
 
-	if (current_channel.receiving_cross_sector)
+	if(current_channel.receiving_cross_sector)
 		return
 
-	var/temp_message = tgui_input_text(user, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
+	var/temp_message = tgui_input_text(user, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 
@@ -874,7 +878,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
-	say("Paid out [active_request.value] credits.")
+	say("Paid out [active_request.value] [MONEY_NAME].")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
 

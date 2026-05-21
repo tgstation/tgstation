@@ -152,3 +152,17 @@
 #define SD_PICTURE 3
 /// Shows whoever or whatever is on the green screen in the captain's office
 #define SD_GREENSCREEN 4
+
+// Status display priority levels (higher number = higher priority)
+/// Logo display - lowest priority, just the default NT logo
+#define DISPLAY_PRIORITY_LOGO 0
+/// Manual message from bridge communications console
+#define DISPLAY_PRIORITY_MESSAGE 10
+/// Security alert level (shows for 30 seconds then goes back to normal)
+#define DISPLAY_PRIORITY_ALERT_TEMP 20
+/// Emergency stuff like radiation storms, lockdowns, biohazard alerts
+#define DISPLAY_PRIORITY_EMERGENCY 30
+/// Shuttle countdown - highest priority because people need to know when to evacuate
+#define DISPLAY_PRIORITY_SHUTTLE 40
+/// Emergency alerts that temporarily interrupt even shuttle displays (30 seconds then revert)
+#define DISPLAY_PRIORITY_EMERGENCY_TEMP 50

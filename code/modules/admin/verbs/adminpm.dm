@@ -735,7 +735,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 		return null
 
 	var/searching_ckey = whom
-	if(whom[1] == "@")
+	if(IS_FAKE_KEY(whom))
 		searching_ckey = findTrueKey(whom)
 
 	if(searching_ckey == EXTERNAL_PM_USER)

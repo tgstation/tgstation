@@ -3,6 +3,7 @@
 /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
+	abstract_type = /obj/item/clothing/under/rank/engineering
 	armor_type = /datum/armor/clothing_under/rank_engineering
 	resistance_flags = NONE
 

@@ -51,7 +51,7 @@
 	//if true, we want to avoid any animation time, it'll tween and not rotate at all otherwise.
 	var/is_opposite_angle = REVERSE_ANGLE(lying_angle) == lying_prev
 	var/animate_time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME
-	animate(src, transform = ntransform, time = animate_time, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+	animate(src, transform = ntransform, time = animate_time, dir = final_dir, easing = SINE_EASING)
 	for (var/hud_key in hud_list)
 		var/image/hud_image = hud_list[hud_key]
 		if (istype(hud_image))
@@ -124,6 +124,8 @@
 	if(new_w == pixel_w && new_x == pixel_x && new_y == pixel_y && new_z == pixel_z)
 		return FALSE
 
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_OFFSETS, new_x, new_y, new_w, new_z, animate)
+
 	if(!animate)
 		pixel_w = new_w
 		pixel_x = new_x
@@ -141,7 +143,6 @@
 		pixel_x = new_x,
 		pixel_y = new_y,
 		pixel_z = new_z,
-		easing = (EASE_IN|EASE_OUT),
 		flags = ANIMATION_PARALLEL,
 		time = UPDATE_TRANSFORM_ANIMATION_TIME,
 	)

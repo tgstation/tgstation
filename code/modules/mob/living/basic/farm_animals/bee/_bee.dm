@@ -75,11 +75,12 @@
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
 		return
-	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
 	holder.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, picker, holder)
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
@@ -110,18 +111,18 @@
 
 /mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it
@@ -196,6 +197,16 @@
 	AddElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	generate_bee_visuals()
 
+/// Picks a random toxin and assigns it to the bee
+/mob/living/basic/bee/proc/assign_random_toxin_reagent()
+	assign_reagent(get_random_reagent_id(whitelist = subtypesof(/datum/reagent/toxin)))
+
+/mob/living/basic/bee/mutate()
+	. = ..()
+	if(!.)
+		assign_random_toxin_reagent()
+		. = TRUE
+
 /mob/living/basic/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
@@ -211,8 +222,7 @@
 
 /mob/living/basic/bee/toxin/Initialize(mapload)
 	. = ..()
-	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
-	assign_reagent(GLOB.chemical_reagents_list[toxin])
+	assign_random_toxin_reagent()
 
 /// A bee which despawns after a short amount of time (beespawns?)
 /mob/living/basic/bee/timed

@@ -8,7 +8,7 @@
 	icon_state = "chocolateegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | EGG
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon_state = "egg"
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
-	foodtypes = MEAT | RAW
+	foodtypes = MEAT | RAW | EGG
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	if(LAZYACCESS(modifiers, ICON_Y))
 		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.copy_to(broken_egg, reagents.total_volume)
+	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
 
 	hit_griddle.AddToGrill(broken_egg, user)
 	interacting_with.balloon_alert(user, "cracks [src] open")
@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	bite_consumption = 1
 	tastes = list("egg" = 4)
-	foodtypes = MEAT | FRIED | BREAKFAST
+	foodtypes = MEAT | FRIED | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
 
@@ -221,7 +221,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
-	foodtypes = MEAT | RAW
+	foodtypes = MEAT | RAW | EGG
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawegg/make_grillable()
@@ -238,7 +238,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT | BREAKFAST
+	foodtypes = MEAT | BREAKFAST | EGG
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
@@ -251,7 +251,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "eggsausage"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 4)
-	foodtypes = MEAT | FRIED | BREAKFAST
+	foodtypes = MEAT | FRIED | BREAKFAST | EGG
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -275,7 +275,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	bite_consumption = 1
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "cheese" = 1)
-	foodtypes = MEAT | BREAKFAST | DAIRY
+	foodtypes = MEAT | BREAKFAST | DAIRY | EGG
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -313,7 +313,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED
+	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED|EGG
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
@@ -329,7 +329,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT|VEGETABLES|FRIED
+	foodtypes = MEAT|VEGETABLES|FRIED|EGG
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -344,6 +344,77 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("custard" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | VEGETABLES | EGG
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/spore_sack
+	name = "spore sack"
+	desc = "A spore sack. blobby and gooey!"
+	icon = 'icons/obj/food/egg.dmi'
+	icon_state = "spore_sack"
+	base_icon_state = "spore_sack"
+	inhand_icon_state = "egg"
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 4,  /datum/reagent/toxin/spore = 4, /datum/reagent/consumable/eggwhite = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("sliminess" = 4, "blob" = 2)
+	foodtypes = MEAT | RAW | TOXIC | EGG
+	w_class = WEIGHT_CLASS_TINY
+	ant_attracting = FALSE
+	preserved_food = TRUE
+
+/obj/item/food/spore_sack/Initialize(mapload)
+	. = ..()
+	if(prob(50))
+		icon_state = "[base_icon_state]2"
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/item/food/spore_sack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/griddle))
+		return NONE
+
+	var/obj/machinery/griddle/hit_griddle = interacting_with
+	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
+		interacting_with.balloon_alert(user, "no room!")
+		return ITEM_INTERACT_BLOCKING
+	var/atom/broken_egg = new /obj/item/food/rawegg/spore(interacting_with.loc)
+	if(LAZYACCESS(modifiers, ICON_X))
+		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+	if(LAZYACCESS(modifiers, ICON_Y))
+		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
+	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
+	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
+
+	hit_griddle.AddToGrill(broken_egg, user)
+	interacting_with.balloon_alert(user, "cracks [src] open")
+
+	qdel(src)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/food/spore_sack/independent
+	icon_state = "spore_sack_independent"
+	base_icon_state = "spore_sack_independent"
+
+/obj/item/food/friedegg/spore
+	name = "fried spore"
+	desc = "A fried blob spore. Would go well with a dab of cold sauce."
+	icon_state = "friedspore"
+	//superior healing and cyto reagents to compensate for rarity and mild poison effect.
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/peptides = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("blob" = 4, "level 5 biohazard" = 2)
+
+/obj/item/food/rawegg/spore
+	name = "burst spore"
+	desc = "Is this the ant egg everyone is always talking about? Better fried."
+	icon_state = "burstspore"
+	tastes = list("sliminess" = 4, "blob" = 2)
+
+/obj/item/food/rawegg/spore/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/item/food/rawegg/spore/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/friedegg/spore, rand(15 SECONDS, 25 SECONDS), TRUE, FALSE)

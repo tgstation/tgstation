@@ -237,11 +237,11 @@
 /datum/component/proc/_GetInverseTypeList(our_type = type)
 	//we can do this one simple trick
 	. = list(our_type)
-	var/current_type = parent_type
+	var/datum/current_type = parent_type
 	//and since most components are root level + 1, this won't even have to run
 	while (current_type != /datum/component)
 		. += current_type
-		current_type = type2parent(current_type)
+		current_type = current_type::parent_type
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -364,13 +364,17 @@
 						old_component.InheritComponent(arglist(arguments))
 					else
 						old_component.InheritComponent(new_component, TRUE)
+						QDEL_NULL(new_component)
 
 				if(COMPONENT_DUPE_SOURCES)
 					if((source in old_component.sources) && !old_component.allow_source_update(source))
 						return old_component // source already registered, no work to do
 
-					if(old_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
+					var/source_result = old_component.on_source_add(arglist(list(source) + raw_args.Copy(2)))
+					if(source_result == COMPONENT_INCOMPATIBLE)
 						stack_trace("incompatible source added to a [old_component.type]. Args: [json_encode(raw_args)]")
+						return null
+					if(source_result == COMPONENT_REDUNDANT)
 						return null
 
 		else if(!new_component)
@@ -456,6 +460,9 @@
 			var/c_type = target.type
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+		if(COMPONENT_NOTRANSFER)
+			qdel(target)
+			return
 
 	AddComponent(target)
 	if(!QDELETED(target))

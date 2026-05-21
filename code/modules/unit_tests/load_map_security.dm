@@ -2,9 +2,9 @@
 #define VALID_TEST_MAP "runtimestation"
 
 /// Tests to ensure we can load a map from a whitelisted directory (_maps), but not a non-whitelisted directory (i.e "fartyShitPants")
-/datum/unit_test/load_map_security
+/datum/unit_test/maptest_load_map_security
 
-/datum/unit_test/load_map_security/Run()
+/datum/unit_test/maptest_load_map_security/Run()
 
 	// Copy our valid map into a bad directory
 	// We can technically load from /unitTestTempDir by passing it in our map name
@@ -34,7 +34,7 @@
 	TEST_ASSERT(bad_config.defaulted, "Loaded from non-whitelisted directory: data/load_map_security_temp/[VALID_TEST_MAP]")
 
 
-/datum/unit_test/load_map_security/Destroy()
+/datum/unit_test/maptest_load_map_security/Destroy()
 	// Clean up our temp directory
 	fdel("data/load_map_security_temp/")
 	return ..()

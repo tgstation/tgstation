@@ -113,7 +113,8 @@
 	for(var/obj/item as anything in storage_contents)
 		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-		item.maptext = storage_contents[item]
+		if(parent_storage.numerical_stacking)
+			item.maptext = storage_contents[item]
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 		current_x++
 		if(current_x - screen_start_x < columns)
@@ -126,24 +127,11 @@
 
 ///Silicon subtype of storage interface used by their model storage.
 /datum/storage_interface/silicon
-	var/atom/movable/screen/robot/store/store
 	var/obj/item/robot_model/robot_model
 
 /datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
 	robot_model = parent_storage.real_location
-	if(iscyborg(user))
-		store = new(null, user.hud_used)
-
-/datum/storage_interface/silicon/Destroy(force)
-	QDEL_NULL(store)
-	return ..()
-
-/datum/storage_interface/silicon/list_ui_elements(initializing = FALSE)
-	if(initializing || isnull(store))
-		return ..()
-	//we're purposely excluding 'store' from having its icon changed from initialization.
-	return ..() + store
 
 /datum/storage_interface/silicon/add_items(
 	screen_start_x,

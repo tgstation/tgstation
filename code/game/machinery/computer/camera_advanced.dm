@@ -55,9 +55,10 @@
 		actions += new move_down_action(src)
 	if(add_usb_port)
 		AddComponent(/datum/component/usb_port, \
-			list(
+			typecacheof(list(
 				/obj/item/circuit_component/advanced_camera,
 				/obj/item/circuit_component/advanced_camera_intercept,
+				), \
 			), \
 			extra_registration_callback = PROC_REF(register_usb_port), \
 			extra_unregistration_callback = PROC_REF(unregister_usb_port) \
@@ -124,8 +125,6 @@
 
 	for(var/datum/action/actions_removed as anything in actions)
 		actions_removed.Remove(user)
-	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
-		camerachunks_gone.remove(eyeobj)
 
 	eyeobj.assign_user(null)
 	current_user = null
@@ -185,10 +184,10 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && SScameras.is_visible_by_cameras(myturf))
 			camera_location = myturf
 		else
-			for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+			for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 				if(!C.can_use() || consider_zlock && !(C.z in z_lock))
 					continue
 				var/list/network_overlap = networks & C.network
@@ -231,7 +230,7 @@
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
-	var/list/cameras_by_tag = GLOB.cameranet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
+	var/list/cameras_by_tag = SScameras.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
@@ -262,7 +261,7 @@
 	if(remote_eye.zMove(UP))
 		to_chat(owner, span_notice("You move upwards."))
 	else
-		to_chat(owner, span_notice("You couldn't move upwards!"))
+		to_chat(owner, span_notice("You can't move upwards!"))
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
@@ -276,7 +275,7 @@
 	if(remote_eye.zMove(DOWN))
 		to_chat(owner, span_notice("You move downwards."))
 	else
-		to_chat(owner, span_notice("You couldn't move downwards!"))
+		to_chat(owner, span_notice("You can't move downwards!"))
 
 /obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "repackaging...")
@@ -307,18 +306,18 @@
 
 /obj/machinery/computer/camera_advanced/proc/add_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/camera_circuit_action/new_action = new(src, action_comp)
+	var/datum/action/innate/circuit_equipment_action/new_action = new(src, action_comp)
 	LAZYADD(actions, new_action)
 	if(current_user)
 		new_action.Grant(current_user)
 
 /obj/machinery/computer/camera_advanced/proc/remove_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/camera_circuit_action/action = action_comp.granted_to[REF(src)]
+	var/datum/action/innate/circuit_equipment_action/action = action_comp.granted_to[REF(src)]
 	if(!istype(action))
 		return
 	LAZYREMOVE(actions, action)
-	qdel(action)
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/machinery/computer/camera_advanced/proc/on_port_unregister_object(datum/component/usb_port/source, atom/movable/object)
 	SIGNAL_HANDLER
@@ -331,32 +330,6 @@
 	if(port.physical_object)
 		on_port_unregister_object(port, port.physical_object)
 	UnregisterSignal(port, list(COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT))
-
-/datum/action/innate/camera_circuit_action
-	name = "Action"
-	button_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "bci_power"
-
-	var/obj/machinery/computer/camera_advanced/console
-	var/obj/item/circuit_component/equipment_action/action_comp
-
-/datum/action/innate/camera_circuit_action/New(obj/machinery/computer/camera_advanced/console, obj/item/circuit_component/equipment_action/action_comp)
-	. = ..()
-	src.console = console
-	action_comp.granted_to[REF(console)] = src
-	src.action_comp = action_comp
-
-/datum/action/innate/camera_circuit_action/Destroy()
-	action_comp.granted_to -= REF(console)
-	action_comp = null
-
-	return ..()
-
-/datum/action/innate/camera_circuit_action/Activate()
-	action_comp.user.set_output(owner)
-	action_comp.signal.set_output(COMPONENT_SIGNAL)
-
-	return ..()
 
 /// Advanced camera component
 
@@ -405,7 +378,7 @@
 	var/turf/eye_turf = get_turf(source)
 	if(!eye_turf)
 		return
-	if(!GLOB.cameranet.checkTurfVis(eye_turf))
+	if(!SScameras.is_visible_by_cameras(eye_turf))
 		return
 	eye_x.set_output(source.x)
 	eye_y.set_output(source.y)
@@ -492,7 +465,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		return
-	if(!GLOB.cameranet.checkTurfVis(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		return
 	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
 		return

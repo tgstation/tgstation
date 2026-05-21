@@ -25,8 +25,10 @@
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/banana
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+
+/obj/item/food/grown/banana/juice_typepath()
+	return /datum/reagent/consumable/banana
 
 /obj/item/food/grown/banana/make_edible()
 	. = ..()
@@ -42,12 +44,6 @@
 	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
-
-/obj/item/food/grown/banana/generate_trash(atom/location)
-	. = ..()
-	var/obj/item/grown/bananapeel/peel = .
-	if(istype(peel))
-		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -83,6 +79,9 @@
 			icon_state = "[icon_state]_2"
 		else
 			icon_state = "[icon_state]_3"
+
+/obj/item/grown/bananapeel/grind_results()
+	return list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
 
 /obj/item/grown/bananapeel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

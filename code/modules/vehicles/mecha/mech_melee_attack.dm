@@ -68,9 +68,26 @@
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		return
 	if(!can_be_reached())
 		return
-	return ..()
+
+	mecha_attacker.do_attack_animation(src)
+	switch(mecha_attacker.damtype)
+		if(BRUTE)
+			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
+		if(BURN)
+			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
+		else
+			return
+	mecha_attacker.visible_message(span_danger("[mecha_attacker] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
+	// Additionally destroy any grilles
+	for(var/obj/structure/grille/grille in src.loc)
+		if(istype(grille))
+			grille.take_damage(mecha_attacker.force * 10, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
+	..()
+	return take_damage(mecha_attacker.force * 100, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
 
 /obj/vehicle/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!user.combat_mode)
@@ -100,9 +117,14 @@
 	if(!isnull(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
+
 	mecha_attacker.do_attack_animation(src)
 	if(mecha_attacker.damtype == BRUTE)
 		step_away(src, mecha_attacker, 15)
+
+	if(check_block(mecha_attacker, mecha_attacker.force * 3, "the [mecha_attacker.attack_verbs[1]]", attack_type = OVERWHELMING_ATTACK))
+		return
+
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			if(mecha_attacker.force > 35) // durand and other heavy mechas
@@ -110,7 +132,7 @@
 			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
 			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
-		if(FIRE)
+		if(BURN)
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		if(TOX)
 			playsound(src, mecha_attacker.tox_attack_sound, 50, TRUE)
@@ -123,7 +145,7 @@
 			return
 
 	var/damage = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
-	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == FIRE)
+	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == BURN)
 		var/def_zone = get_random_valid_zone(user.zone_selected, even_weights = TRUE)
 		var/zone_readable = parse_zone_with_bodypart(def_zone)
 		apply_damage(damage, mecha_attacker.damtype, def_zone, run_armor_check(

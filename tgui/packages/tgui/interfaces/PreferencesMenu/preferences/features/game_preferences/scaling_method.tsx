@@ -1,4 +1,4 @@
-import { createDropdownInput, Feature } from '../base';
+import { createDropdownInput, type Feature } from '../base';
 
 export const scaling_method: Feature<string> = {
   name: 'Scaling method',

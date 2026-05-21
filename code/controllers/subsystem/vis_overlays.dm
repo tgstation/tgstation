@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(vis_overlays)
 	name = "Vis contents overlays"
 	wait = 1 MINUTES
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_VIS
 
 	var/list/vis_overlay_cache = list()

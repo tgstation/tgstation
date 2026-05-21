@@ -11,7 +11,6 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_AWAY
 	sound_environment = SOUND_ENVIRONMENT_ROOM
-	area_flags = UNIQUE_AREA
 
 /area/awaymission/museum
 	name = "Nanotrasen Museum"
@@ -33,11 +32,11 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Super Secret Room"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	area_flags = UNIQUE_AREA|NOTELEPORT
+	area_flags = NOTELEPORT
 	default_gravity = STANDARD_GRAVITY
 
 /area/awaymission/secret
-	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA
+	area_flags = NOTELEPORT|HIDDEN_AREA
 
 /area/awaymission/secret/unpowered
 	always_unpowered = TRUE

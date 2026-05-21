@@ -51,7 +51,7 @@
 	name = ".357 Speed Loader"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
-	item = /obj/item/ammo_box/a357
+	item = /obj/item/ammo_box/speedloader/c357
 	cost = 4
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY) //nukies get their own version
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND

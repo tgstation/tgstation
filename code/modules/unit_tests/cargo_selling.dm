@@ -18,6 +18,14 @@
 	export_types = list(/obj/item/cargo_unit_test_content)
 
 /datum/unit_test/cargo_selling/Run()
+	for(var/datum/export/subtype as anything in valid_subtypesof(/datum/export))
+		if(subtype::k_recovery_time < SSprocessing.wait)
+			TEST_FAIL("[subtype] should have k_recovery time >= [SSprocessing.wait]")
+		var/datum/export/sell = new subtype
+		if(!length(sell.export_types))
+			TEST_FAIL("[subtype] has no export types")
+		qdel(sell)
+
 	var/obj/item/cargo_unit_test_container/box = allocate(/obj/item/cargo_unit_test_container)
 	var/obj/item/cargo_unit_test_container/box_skip_content = allocate(/obj/item/cargo_unit_test_container)
 

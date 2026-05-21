@@ -27,13 +27,14 @@
 /// Camera network bitrunner bodycams are on
 #define BITRUNNER_CAMERA_NET "bitrunner"
 
-/**
- * Bitrunner Domain External Load Restriction Bitflags
- */
 /// Domain forbids external sources from loading items onto avatars
 #define DOMAIN_FORBIDS_ITEMS (1<<0)
 /// Domain forbids external sources from loading abilities onto avatars
 #define DOMAIN_FORBIDS_ABILITIES (1<<1)
+/// Block nohit bonus from applying
+#define DOMAIN_NO_NOHIT_BONUS (1<<2)
+/// Test domain, don't let it be loaded normally
+#define DOMAIN_TEST_ONLY (1<<3)
 
 /// Combination flag for blocking anything from being loaded onto avatars by external sources
 #define DOMAIN_FORBIDS_ALL ALL

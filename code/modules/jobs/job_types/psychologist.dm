@@ -2,7 +2,6 @@
 	title = JOB_PSYCHOLOGIST
 	description = "Advocate sanity, self-esteem, and teamwork in a station \
 		staffed with headcases."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1

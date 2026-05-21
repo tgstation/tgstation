@@ -15,11 +15,11 @@
 /datum/preferences/proc/migrate_key_bindings()
 	var/new_key_bindings = list()
 
-	for (var/unbound_hotkey in key_bindings["Unbound"])
+	for (var/unbound_hotkey in key_bindings[UNBOUND_KEY])
 		new_key_bindings[unbound_hotkey] = list()
 
 	for (var/hotkey in key_bindings)
-		if (hotkey == "Unbound")
+		if (hotkey == UNBOUND_KEY)
 			continue
 
 		for (var/keybind in key_bindings[hotkey])
@@ -33,7 +33,6 @@
 // Before tgui preferences menu, "traitor" would handle both roundstart, midround, and latejoin.
 // These were split apart.
 /datum/preferences/proc/migrate_antagonists()
-	migrate_antagonist(ROLE_HERETIC, list(ROLE_HERETIC_SMUGGLER))
 	migrate_antagonist(ROLE_MALF, list(ROLE_MALF_MIDROUND))
 	migrate_antagonist(ROLE_OPERATIVE, list(ROLE_OPERATIVE_MIDROUND, ROLE_LONE_OPERATIVE))
 	migrate_antagonist(ROLE_REV_HEAD, list(ROLE_PROVOCATEUR))

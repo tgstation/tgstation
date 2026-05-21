@@ -4,6 +4,7 @@
 	can_randomize = FALSE
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "prefered_security_department"
+	should_update_preview = FALSE
 
 // This is what that #warn wants you to remove :)
 /datum/preference/choiced/security_department/deserialize(input, datum/preferences/preferences)

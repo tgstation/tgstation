@@ -16,10 +16,12 @@
 	var/drinking
 	/// If true, we put food in our tummy instead of deleting it
 	var/add_to_contents
-	/// Types the animal can eat.
+	/// If true, when add_to_contents would put the item into contents but when used for healing, the item is consumed instead
+	var/consume_healing
+	/// Types the animal can eat. Can be an assoc list with amount to heal/damage the mob by
 	var/list/food_types
 
-/datum/element/basic_eating/Attach(datum/target, heal_amt = 0, damage_amount = 0, damage_type = null, drinking = FALSE, add_to_contents = FALSE, food_types = list())
+/datum/element/basic_eating/Attach(datum/target, heal_amt = 0, damage_amount = 0, damage_type = null, drinking = FALSE, add_to_contents = FALSE, consume_healing = TRUE, food_types = list())
 	. = ..()
 
 	if(!isliving(target))
@@ -31,6 +33,7 @@
 	src.damage_type = damage_type
 	src.drinking = drinking
 	src.add_to_contents = add_to_contents
+	src.consume_healing = consume_healing
 	src.food_types = food_types
 
 	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_feed))
@@ -66,7 +69,8 @@
 /datum/element/basic_eating/proc/try_eating(mob/living/eater, atom/target, mob/living/feeder)
 	if(!is_type_in_list(target, food_types))
 		return FALSE
-	if(SEND_SIGNAL(eater, COMSIG_MOB_PRE_EAT, target, feeder) & COMSIG_MOB_CANCEL_EAT)
+	var/list/effect_mult = list()
+	if(SEND_SIGNAL(eater, COMSIG_MOB_PRE_EAT, target, feeder, effect_mult) & COMSIG_MOB_CANCEL_EAT)
 		return FALSE
 	if(add_to_contents && !ismovable(target))
 		return FALSE
@@ -76,22 +80,44 @@
 	else
 		eat_verb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 
-	if (heal_amt > 0)
-		var/healed = heal_amt && eater.health < eater.maxHealth
-		eater.heal_overall_damage(heal_amt)
+	var/best_match = null
+	var/best_value = 0
+	for (var/food_path in food_types)
+		// Not an assoc list
+		if (isnull(food_types[food_path]))
+			break
+		if (istype(target, food_path) && (!best_match || ispath(food_path, best_match)))
+			best_match = food_path
+			best_value = food_types[food_path]
+
+	var/to_heal = heal_amt
+	var/to_damage = damage_amount
+
+	if (best_match)
+		to_heal = 0
+		to_damage = 0
+		if (best_value > 0)
+			to_heal = best_value
+		else if (best_value < 0)
+			to_damage = -best_value
+
+		for (var/mult in effect_mult)
+			to_heal *= mult
+			to_damage *= mult
+
+	if (to_heal > 0)
+		var/healed = eater.heal_overall_damage(to_heal)
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target][healed ? ", restoring some health" : ""]."))
-
-	else if (damage_amount > 0 && damage_type)
-		eater.apply_damage(damage_amount, damage_type)
-		eater.visible_message(span_notice("[eater] [eat_verb]s [target], and seems to hurt itself."), span_notice("You [eat_verb] [target], hurting yourself in the process."))
-
+	else if (to_damage > 0 && damage_type)
+		var/damaged = eater.apply_damage(to_damage, damage_type)
+		eater.visible_message(span_notice("[eater] [eat_verb]s [target][damaged ? ", and seems to hurt [eater.p_themselves()]!" : "."]"), span_notice("You [eat_verb] [target][damaged ? ", hurting yourself in the process" : ""]."))
 	else
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
 
-	finish_eating(eater, target, feeder)
+	finish_eating(eater, target, feeder, to_heal)
 	return TRUE
 
-/datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target, mob/living/feeder)
+/datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target, mob/living/feeder, to_heal)
 	set waitfor = FALSE
 	if(drinking)
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
@@ -104,10 +130,12 @@
 		var/obj/item/stack/food_stack = target
 		final_target = food_stack.split_stack(1)
 
-	eater.log_message("has eaten [target], [add_to_contents ? "swallowing it" : "destroying it"]!", LOG_ATTACK)
+	var/devour = add_to_contents && !to_heal
+	eater.log_message("has eaten [target], [devour ? "swallowing it" : "destroying it"]!", LOG_ATTACK)
 
-	if (add_to_contents)
+	if (devour)
 		var/atom/movable/movable_target = final_target
 		movable_target.forceMove(eater)
 	else
 		qdel(final_target)
+

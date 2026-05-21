@@ -82,7 +82,7 @@
 		if(length(boxes))
 			desc = "A pile of boxes suited for pizzas. There appear to be [length(boxes) + 1] boxes in the pile."
 		if(box.boxtag != "")
-			desc = "[desc] The [length(boxes) ? "top box" : "box"]'s tag reads: [box.boxtag]"
+			desc = "[desc] The [length(boxes) ? "top box" : "box"]'s tag reads: [box.boxtag]."
 
 /obj/item/pizzabox/update_icon_state()
 	if(!open)
@@ -422,7 +422,8 @@
 			return
 
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
-	pizza = new favourite_pizza_type
+	pizza = new favourite_pizza_type(src)
+	pizza.slice()
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
 	pizza.foodtypes = nommer.get_liked_foodtypes() //it's our favorite!

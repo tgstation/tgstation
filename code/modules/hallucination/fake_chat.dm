@@ -24,6 +24,9 @@
 	return what_they_speak?.spoken_languages?.Copy() || list()
 
 /datum/hallucination/chat/start()
+	if(hallucinator.stat >= UNCONSCIOUS)
+		return FALSE
+
 	var/mob/living/carbon/human/speaker
 	var/list/datum/language/understood_languages = hallucinator.get_language_holder().understood_languages
 	var/understood_language
@@ -56,7 +59,7 @@
 	var/is_radio = force_radio || isnull(speaker)
 	if(is_radio)
 		for(var/datum/mind/crew_mind in shuffle(get_crewmember_minds()))
-			if(crew_mind == hallucinator.mind)
+			if(crew_mind == hallucinator.mind || !crew_mind.current)
 				continue
 			var/list/shared_languages = get_hallucinating_spoken_languages(crew_mind.current) & understood_languages
 			if(!length(shared_languages))
@@ -119,7 +122,7 @@
 		hallucinator.create_chat_message(speaker, understood_language, chosen, spans)
 
 	// And actually show them the message, for real.
-	var/message = hallucinator.compose_message(speaker, understood_language, chosen, is_radio ? "[FREQ_COMMON]" : null, spans, visible_name = TRUE)
+	var/message = hallucinator.compose_message(speaker, understood_language, chosen, is_radio ? "[FREQ_COMMON]" : null, is_radio ? RADIO_CHANNEL_COMMON : null, is_radio ? RADIO_COLOR_COMMON : null, spans, visible_name = TRUE)
 	to_chat(hallucinator, message)
 
 	// Then clean up.

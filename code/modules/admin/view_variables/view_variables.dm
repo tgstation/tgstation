@@ -1,14 +1,11 @@
 #define ICON_STATE_CHECKED 1 /// this dmi is checked. We don't check this one anymore.
 #define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
 
-ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", datum/thing in world)
 	user.debug_variables(thing)
 // This is kept as a separate proc because admins are able to show VV to non-admins
 
-/client/proc/debug_variables(datum/thing in world)
-	set category = "Debug"
-	set name = "View Variables"
-	//set src in world
+/client/proc/debug_variables(datum/thing)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
@@ -26,13 +23,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists don't count as lists, but can be detected by if they have list procs
 	if(!islist && !isdatum(thing))
 		return
+	var/isalist = isalist(thing) // islist will always be true for alists too
 
 	var/title = ""
 	var/refid = REF(thing)
 	var/icon/sprite
 	var/hash
 
-	var/type = islist ? /list : thing.type
+	var/type = islist ? (isalist ? /alist : /list) : thing.type
 	var/no_icon = FALSE
 
 	if(isatom(thing))
@@ -70,7 +68,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	title = "[thing] ([REF(thing)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
-	var/list/header = islist ? list("<b>/list</b>") : thing.vv_get_header()
+	var/list/header = islist ? (isalist ? list("<b>/alist</b>") : list("<b>/list</b>")) : thing.vv_get_header()
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
@@ -90,20 +88,25 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	var/list/dropdownoptions
 	if (islist)
-		dropdownoptions = list(
-			"---",
-			"Add Item" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ADD),
-			"Remove Nulls" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_NULLS),
-			"Remove Dupes" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_DUPES),
-			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
-			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
-			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
-			"---"
+		if(!isalist)
+			dropdownoptions = list(
+				"Add Item" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ADD),
+				"Remove Nulls" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_NULLS),
+				"Remove Dupes" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_DUPES),
+				"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
+				"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
+				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+				"---"
+			)
+		else
+			dropdownoptions = list(
+				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+				"---"
 			)
 		for(var/i in 1 to length(dropdownoptions))
 			var/name = dropdownoptions[i]
 			var/link = dropdownoptions[name]
-			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
+			dropdownoptions[i] = "<a style='display:none;' [link? "href='[link]'":""]>[name]</a>"
 	else
 		dropdownoptions = thing.vv_get_dropdown()
 
@@ -117,7 +120,11 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	var/ui_scale = prefs?.read_preference(/datum/preference/toggle/ui_scale)
 
 	var/list/variable_html = list()
-	if(islist)
+	if(isalist)
+		var/alist/alist_value = thing
+		for(var/key, value in alist_value)
+			variable_html += debug_variable(key, value, 0, alist_value)
+	else if(islist)
 		var/list/list_value = thing
 		for(var/i in 1 to list_value.len)
 			var/key = list_value[i]
@@ -234,6 +241,37 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 				var idx = what.indexOf(':');
 				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
 			}
+
+			function hideDropdown() {
+				var div = document.getElementById("vvDropdownDiv");
+				var a = div.getElementsByTagName("a");
+				for (i = 0; i < a.length; i++) {
+					a\[i\].style.display = "none";
+				}
+				var input = document.getElementById("vvDropdownInput");
+				input.value = "";
+			}
+
+			function filterDropdown() {
+				var input = document.getElementById("vvDropdownInput");
+				var filter = input.value.toUpperCase();
+				var div = document.getElementById("vvDropdownDiv");
+				var a = div.getElementsByTagName("a");
+				for (i = 0; i < a.length; i++) {
+					txtValue = a\[i\].textContent || a\[i\].innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						a\[i\].style.display = "";
+					} else {
+						a\[i\].style.display = "none";
+					}
+				}
+			}
+
+			function delayHide() {
+				// Unfortunately required for links to work consistently when the input loses focus from a click
+				setTimeout(() => {hideDropdown();}, 150)
+			}
+
 		</script>
 		<div align='center'>
 			<table width='100%'>
@@ -262,14 +300,12 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 						<div align='center'>
 							<a id='refresh_link' href='byond://?_src_=vars;
 datumrefresh=[refid];[HrefToken()]'>Refresh</a>
-							<form>
-								<select name="file" size="1"
-									onchange="handle_dropdown(this)"
-									onmouseclick="this.focus()">
-									<option value selected>Select option</option>
+							<div class="dropdown-content">
+								<input type="text" placeholder="Select Action" id="vvDropdownInput" onkeyup="filterDropdown()" onselect="filterDropdown()" onfocus="filterDropdown()" onblur="delayHide()">
+								<div id="vvDropdownDiv" class="dropdown-options">
 									[dropdownoptions.Join()]
-								</select>
-							</form>
+								</div>
+							</div>
 						</div>
 					</td>
 				</tr>

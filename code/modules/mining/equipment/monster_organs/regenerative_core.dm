@@ -25,7 +25,7 @@
 		return
 	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
 
-/obj/item/organ/monster_core/regenerative_core/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/regenerative_core/on_life(seconds_per_tick)
 	. = ..()
 	if (owner.health <= owner.crit_threshold)
 		trigger_organ_action(TRIGGER_FORCE_AVAILABLE)

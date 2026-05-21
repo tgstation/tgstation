@@ -49,7 +49,7 @@
 		return
 
 	user.temporarilyRemoveItemFromInventory(attire)
-
-	sharp_dresser.equip_to_slot_if_possible(attire, attire.slot_flags)
+	//we've spent time based on the item's equip_delay_other already, so we don't need to wait more on a self-equip timer
+	sharp_dresser.equip_to_slot_if_possible(attire, attire.slot_flags, bypass_equip_delay_self = TRUE)
 
 	return finish_equip_mob(attire, sharp_dresser, user)

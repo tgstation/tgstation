@@ -1,7 +1,7 @@
 import { Box, Button, Modal, NumberInput, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { AirAlarmData, EditingModalProps } from './types';
+import type { AirAlarmData, EditingModalProps } from './types';
 
 export function AlarmEditingModal(props: EditingModalProps) {
   const { act } = useBackend<AirAlarmData>();

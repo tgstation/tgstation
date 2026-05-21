@@ -42,7 +42,7 @@
 
 /datum/ai_behavior/find_and_set/find_playmate
 
-/datum/ai_behavior/find_and_set/find_playmate/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/find_playmate/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/basic/orbie/playmate in oview(search_range, controller.pawn))
 		if(playmate == controller.pawn || playmate.stat == DEAD || isnull(playmate.ai_controller))
 			continue

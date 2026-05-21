@@ -6,11 +6,11 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker } from './common/BeakerDisplay';
+import type { Beaker } from './common/BeakerDisplay';
 
 type Data = {
   active: BooleanLike;
@@ -45,7 +45,7 @@ export const SmokeMachine = (props) => {
             }}
           >
             <AnimatedNumber initial={0} value={tank.currentVolume || 0} />
-            {' / ' + tank.maxVolume}
+            {` / ${tank.maxVolume}`}
           </ProgressBar>
           <Box mt={1}>
             <LabeledList>

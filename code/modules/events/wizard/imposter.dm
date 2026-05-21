@@ -18,7 +18,7 @@
 			return //Sad Trombone
 		new /obj/effect/particle_effect/fluid/smoke(W.loc)
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
-		W.dna.transfer_identity(I, transfer_SE=1)
+		W.dna.copy_dna(I.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		I.real_name = I.dna.real_name
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)
@@ -32,7 +32,6 @@
 		imposter.wiz_team = master.wiz_team
 		master.wiz_team.add_member(imposter)
 		I.mind.add_antag_datum(imposter)
-		I.mind.special_role = "imposter"
 		I.log_message("is an imposter!", LOG_ATTACK, color="red") //?
 		SEND_SOUND(I, sound('sound/effects/magic.ogg'))
 		announce_to_ghosts(I)

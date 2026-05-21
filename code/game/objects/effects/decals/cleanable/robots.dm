@@ -20,9 +20,7 @@
 	if (prob(40))
 		new /obj/effect/decal/cleanable/blood/splatter(loc, null, GET_ATOM_BLOOD_DNA(src))
 	else if (prob(10))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+		do_sparks(3, TRUE, src)
 
 // Doesn't have overlay support as of now
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/update_blood_color()

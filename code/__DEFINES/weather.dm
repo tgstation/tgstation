@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 	"Regular - Standard Storm Activity" = THUNDER_CHANCE_AVERAGE,
 	"Occasional - A polite amount of thunder" = THUNDER_CHANCE_RARE,
 	"Rare - Like finding a four-leaf clover, but in the sky" = THUNDER_CHANCE_VERY_RARE,
-	"None - Admin Safe Space (Thunder Disabled)" = NONE,
+	"None - Admin Safe Space (Thunder Disabled)" = 0,
 ))
 
 //WEATHER FLAGS
@@ -53,6 +53,17 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_BAROMETER (1<<5)
 /// If weather temperature ignores clothing insulation when adjusting bodytemperature
 #define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<6)
+/// Alerts are only sent to people within affected area rather than on affected z-levels
+#define WEATHER_STRICT_ALERT (1<<7)
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)
+
+// Indexes for weather_data list to override behaviors
+#define WEATHER_FORCED_AREAS "Areas"
+#define WEATHER_FORCED_FLAGS "Flags"
+#define WEATHER_FORCED_REAGENT "Reagent"
+#define WEATHER_FORCED_THUNDER "Thunder Chance"
+#define WEATHER_FORCED_TELEGRAPH "Telegraph Duration"
+#define WEATHER_FORCED_END "End Duration"
+#define WEATHER_FORCED_DURATION "Weather Duration"

@@ -9,7 +9,7 @@
 	creator_name = "Protector"
 	creator_desc = "Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower."
 	creator_icon = "protector"
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
+	toggle_button_type = /datum/action/cooldown/guardian/toggle_mode
 	/// Action which toggles our shield
 	var/datum/action/cooldown/mob_cooldown/protector_shield/shield
 
@@ -34,7 +34,7 @@
 
 /mob/living/basic/guardian/protector/ex_act(severity)
 	if(severity >= EXPLODE_DEVASTATE)
-		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
+		adjust_brute_loss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 		return TRUE
 	return ..()
 
@@ -71,7 +71,9 @@
 	/// Overlay for our protection shield.
 	var/mutable_appearance/shield_overlay
 	/// Damage coefficients when shielded
-	var/list/shielded_damage = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, STAMINA = 0, OXY = 0.05)
+	var/static/list/shielded_damage = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, STAMINA = 0, OXY = 0.05)
+	// What the damage coefficients were previously
+	var/list/original_damage_coeff
 
 /datum/status_effect/protector_shield/on_apply()
 	if (isguardian(owner))
@@ -86,6 +88,7 @@
 
 	if (isbasicmob(owner)) // Better hope you are or this status is doing basically nothing useful for you
 		var/mob/living/basic/basic_owner = owner
+		original_damage_coeff = basic_owner.damage_coeff
 		basic_owner.damage_coeff = shielded_damage
 
 	to_chat(owner, span_bolddanger("You enter protection mode."))
@@ -101,7 +104,7 @@
 
 	if (isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
-		basic_owner.damage_coeff = initial(basic_owner.damage_coeff)
+		basic_owner.damage_coeff = original_damage_coeff
 
 	to_chat(owner, span_bolddanger("You return to your normal mode."))
 	UnregisterSignal(owner, list(COMSIG_ATOM_UPDATE_OVERLAYS) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)

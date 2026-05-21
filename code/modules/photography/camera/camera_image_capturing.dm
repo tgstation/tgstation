@@ -1,18 +1,22 @@
 /obj/effect/appearance_clone
 
-/obj/effect/appearance_clone/New(loc, atom/A) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
-	if(istype(A))
-		appearance = A.appearance
-		dir = A.dir
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			step_x = AM.step_x
-			step_y = AM.step_y
-	. = ..()
+/obj/effect/appearance_clone/New(loc, atom/our_atom) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
+	if(!istype(our_atom))
+		return ..()
+	if(!isopenspaceturf(our_atom))
+		appearance = our_atom.appearance
+	dir = our_atom.dir
+	if(ismovable(our_atom))
+		var/atom/movable/our_movable = our_atom
+		step_x = our_movable.step_x
+		step_y = our_movable.step_y
+	return ..()
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area)
+	PRIVATE_PROC(TRUE)
+
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -22,33 +26,34 @@
 	backdrop.blend_mode = BLEND_OVERLAY
 	backdrop.color = "#292319"
 
-	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
-		var/turf/bottom_left = clone_area.bottom_left_turfs[1]
-		var/cloned_center_x = round(bottom_left.x + ((total_x - 1) / 2))
-		var/cloned_center_y = round(bottom_left.y + ((total_y - 1) / 2))
-		for(var/t in turfs)
-			var/turf/T = t
-			var/offset_x = T.x - center.x
-			var/offset_y = T.y - center.y
-			var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, bottom_left.z)
-			if(!(newT in clone_area.reserved_turfs)) //sanity check so we don't overwrite other areas somehow
-				continue
-			atoms += new /obj/effect/appearance_clone(newT, T)
-			if(T.loc.icon_state)
-				atoms += new /obj/effect/appearance_clone(newT, T.loc)
-			if(T.lighting_object)
-				var/obj/effect/appearance_clone/lighting_overlay = new(newT)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
-				lighting_overlay.underlays += backdrop
-				lighting_overlay.blend_mode = BLEND_MULTIPLY
-				lighting += lighting_overlay
-			for(var/i in T.contents)
-				var/atom/A = i
-				if(!A.invisibility || (see_ghosts && isobserver(A)))
-					atoms += new /obj/effect/appearance_clone(newT, A)
-		skip_normal = TRUE
-		wipe_atoms = TRUE
-		center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
+	var/turf/bottom_left = clone_area.bottom_left_turfs[1]
+	var/cloned_center_x = round(bottom_left.x + ((clone_area.width - 1) / 2))
+	var/cloned_center_y = round(bottom_left.y + ((clone_area.height - 1) / 2))
+	for(var/t in turfs)
+		var/turf/T = t
+		var/offset_x = T.x - center.x
+		var/offset_y = T.y - center.y
+		var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, bottom_left.z)
+		if(!(newT in clone_area.reserved_turfs)) //sanity check so we don't overwrite other areas somehow
+			continue
+		atoms += new /obj/effect/appearance_clone(newT, T)
+		if(T.loc.icon_state)
+			atoms += new /obj/effect/appearance_clone(newT, T.loc)
+		if(T.lighting_object)
+			var/obj/effect/appearance_clone/lighting_overlay = new(newT)
+			lighting_overlay.appearance = T.lighting_object.appearance
+			lighting_overlay.underlays += backdrop
+			lighting_overlay.blend_mode = BLEND_MULTIPLY
+			lighting += lighting_overlay
+		for(var/atom/found_atom as anything in T.contents)
+			if(HAS_TRAIT(found_atom, TRAIT_INVISIBLE_TO_CAMERA))
+				if(see_ghosts)
+					atoms += new /obj/effect/appearance_clone(newT, found_atom)
+			else if(!found_atom.invisibility || (see_ghosts && isobserver(found_atom)))
+				atoms += new /obj/effect/appearance_clone(newT, found_atom)
+	skip_normal = TRUE
+	wipe_atoms = TRUE
+	center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
 
 	if(!skip_normal)
 		for(var/i in turfs)
@@ -56,19 +61,22 @@
 			atoms += T
 			if(T.lighting_object)
 				var/obj/effect/appearance_clone/lighting_overlay = new(T)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.appearance = T.lighting_object.appearance
 				lighting_overlay.underlays += backdrop
 				lighting_overlay.blend_mode = BLEND_MULTIPLY
 				lighting += lighting_overlay
 			for(var/atom/movable/A in T)
 				if(A.invisibility)
-					if(!(see_ghosts && isobserver(A)))
+					if(!(see_ghosts && (isobserver(A) || HAS_TRAIT(A, TRAIT_INVISIBLE_TO_CAMERA))))
 						continue
 				atoms += A
 			CHECK_TICK
 
+	var/psize_x = clone_area.width * ICON_SIZE_X
+	var/psize_y = clone_area.height * ICON_SIZE_Y
 	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
+
 	atoms += lighting
 
 	var/list/sorted = list()
@@ -130,7 +138,7 @@
 					img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
 					if(decompose.scale_x < 0)
 						img.Flip(EAST)
-					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					xo -= base_w * (decompose.scale_x - sign(decompose.scale_x)) / 2 * sign(decompose.scale_x)
 					yo -= base_h * (decompose.scale_y - 1) / 2
 				// Rotation
 				if(decompose.rotation != 0)
@@ -146,6 +154,9 @@
 		QDEL_LIST(atoms)
 	else
 		QDEL_LIST(lighting)
+
+	if(print_monochrome)
+		res.GrayScale()
 
 	return res
 

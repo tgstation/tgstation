@@ -113,11 +113,11 @@
 "dd" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi/directional/north,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dA" = (
@@ -473,6 +473,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
+/obj/structure/sign/poster/official/moth_epi/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ju" = (
@@ -790,10 +792,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "oV" = (
@@ -920,7 +920,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "rK" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
 "rL" = (
@@ -1072,7 +1072,7 @@
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "vx" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "vy" = (
@@ -1127,10 +1127,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wm" = (
@@ -1370,7 +1368,7 @@
 	dir = 9
 	},
 /mob/living/basic/bot/cleanbot,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ac" = (
@@ -1416,10 +1414,8 @@
 	dir = 10
 	},
 /obj/machinery/vending/coffee,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "AQ" = (
@@ -1609,7 +1605,7 @@
 /obj/item/pen/fourcolor{
 	pixel_x = -4
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 8;
 	pixel_y = 5
 	},
@@ -2066,6 +2062,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "MO" = (
@@ -2460,10 +2457,8 @@
 	dir = 6
 	},
 /obj/machinery/vending/coffee,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "UF" = (

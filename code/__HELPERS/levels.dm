@@ -52,9 +52,13 @@
 		// Central Command is definitely in space
 		return FALSE
 
-	if(what.onSyndieBase())
+	if(what.onSyndieBase() && !what.on_escaped_shuttle())
 		// Syndicate recon outpost is on some moon or something
 		return TRUE
+
+	if(is_reserved_level(what_turf.z))
+		// Reserved levels are primarily shuttles aside from syndie base
+		return FALSE
 
 	// Finally, more specific checks are ran for edge cases, such as lazily loaded map templates or away missions. Not perfect.
 	return istype(what_turf) && what_turf.planetary_atmos && what_turf.has_gravity()

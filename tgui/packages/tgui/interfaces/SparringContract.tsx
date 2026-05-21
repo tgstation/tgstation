@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -99,9 +99,7 @@ export const SparringContract = (props) => {
                     selected={weaponlist[weapon - 1]}
                     options={weaponlist}
                     onSelected={(value) =>
-                      setWeapon(
-                        weaponlist.findIndex((title) => title === value) + 1,
-                      )
+                      setWeapon(weaponlist.indexOf(value) + 1)
                     }
                   />
                 </Stack.Item>
@@ -138,9 +136,7 @@ export const SparringContract = (props) => {
                     selected={stakelist[stakes - 1]}
                     options={stakelist}
                     onSelected={(value) =>
-                      setStakes(
-                        stakelist.findIndex((title) => title === value) + 1,
-                      )
+                      setStakes(stakelist.indexOf(value) + 1)
                     }
                   />
                 </Stack.Item>
@@ -218,7 +214,7 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (in_area &&
-                        'Both participants are present in the ' + area + '.') ||
+                        `Both participants are present in the ${area}.`) ||
                       'Both participants need to be in the arena!'
                     }
                     color={(in_area && 'green') || 'red'}

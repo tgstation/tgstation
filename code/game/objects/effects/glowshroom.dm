@@ -60,6 +60,12 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/single/Spread()
 	return
 
+/obj/structure/glowshroom/brownshroom
+	name = "brownshroom"
+	desc = "Not technically a single species, but a cluster of various mushroom flora amalgamated into a single mycological patch."
+	icon_state = "brownshroom"
+	myseed = /obj/item/seeds/reishi //Just to have something since these aren't a new growable mushroom.
+
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
 	. += "This is a [generation]\th generation [name]!"

@@ -1,8 +1,8 @@
 ///status effect applied to us when we're wildly swinging
 /datum/status_effect/dagger_swinging
 	id = "dagger swinging"
-	tick_interval = 0.25 SECONDS
-	duration = 1.75 SECONDS
+	tick_interval = 0.2 SECONDS
+	duration = 1.6 SECONDS
 	alert_type = null
 	///base damage we apply to mobs near us
 	var/base_damage = 5

@@ -42,8 +42,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
-	RefreshParts()
 	update_appearance(UPDATE_ICON)
+	if(interactive)
+		AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/thermomachine), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -79,7 +80,6 @@
 	if(check_pipe_on_turf())
 		set_anchored(FALSE)
 		set_panel_open(TRUE)
-		icon_state = "thermo-open"
 		balloon_alert(user, "the port is already in use!")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
@@ -127,9 +127,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/mutable_appearance/thermo_overlay = new(icon)
-	var/image/pipe = get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
-	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
@@ -171,8 +170,7 @@
 	var/turf/local_turf = get_turf(src)
 
 	if(!is_operational || !local_turf)
-		on = FALSE
-		update_appearance(UPDATE_ICON)
+		set_on(FALSE)
 		return
 
 	// The gas we want to cool/heat
@@ -206,9 +204,8 @@
 	if(!anchored)
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
-		update_appearance(UPDATE_ICON)
-		return ITEM_INTERACT_SUCCESS
+
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -249,8 +246,11 @@
 	return FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(!panel_open || check_pipe_on_turf())
-		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return ITEM_INTERACT_SUCCESS
+	if(!anchored && check_pipe_on_turf())
+		visible_message(span_warning("A pipe is hogging the port. Remove the obstruction or change the machine piping layer."))
 		return ITEM_INTERACT_SUCCESS
 	if(default_unfasten_wrench(user, tool))
 		change_pipe_connection(!anchored)
@@ -291,7 +291,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
@@ -323,10 +323,9 @@
 	if(!is_operational)
 		return CLICK_ACTION_BLOCKING
 
-	on = !on
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()

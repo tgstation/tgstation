@@ -51,7 +51,7 @@
 /datum/status_effect/dazed
 	id = "dazed"
 	status_type = STATUS_EFFECT_UNIQUE
-	tick_interval = 0.5 SECONDS
+	tick_interval = 0.6 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
 	/// Our visual cue for the vulnerable state this status effect puts us in.
@@ -121,9 +121,9 @@
 /// Only applied by shoving someone to paralyze them
 /datum/status_effect/no_side_kick
 	id = "no side kick"
-	duration = 3.5 SECONDS
+	duration = 3.6 SECONDS
 	status_type = STATUS_EFFECT_UNIQUE
-	tick_interval = 0.5 SECONDS
+	tick_interval = 0.6 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
 

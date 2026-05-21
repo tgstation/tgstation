@@ -82,7 +82,6 @@
 	if(!do_after(parent, handcuff_timer, human_target))
 		return
 	human_target.set_handcuffed(new handcuff_type(human_target))
-	human_target.update_handcuffed()
 	post_arrest_callback?.Invoke(human_target)
 
 /datum/component/stun_n_cuff/proc/stun_target(mob/living/carbon/human_target)

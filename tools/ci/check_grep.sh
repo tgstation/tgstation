@@ -89,14 +89,19 @@ if $grep 'NanoTrasen' $map_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
     st=1
 fi;
-if $grep -i'centcomm' $map_files; then
+if $grep -i 'centcomm' $map_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in maps, please remove the extra M(s).${NC}"
     st=1
 fi;
-if $grep -i'eciev' $map_files; then
+if $grep -i 'eciev' $map_files; then
 	echo
     echo -e "${RED}ERROR: Common I-before-E typo detected in maps.${NC}"
+    st=1
+fi;
+if $grep -i 'maintainance|maintainence|maintenence' $map_files; then
+    echo
+    echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in maps, please fix.${NC}";
     st=1
 fi;
 
@@ -218,6 +223,20 @@ if $grep 'forceMove\(\s*(\w+\(\)|\w+)\s*,\s*(\w+\(\)|\w+)\s*\)' $code_files; the
 	st=1
 fi;
 
+part "as anything on typeless loops"
+if $grep 'var/[^/]+ as anything' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' used in a typeless for loop. This doesn't do anything and should be removed.${NC}"
+    st=1
+fi;
+
+part "as anything on internal functions"
+if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|hearers)\(' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' typed for loop over an internal function. These functions have some internal optimization that relies on the loop not having 'as anything' in it.${NC}"
+    st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
@@ -234,9 +253,14 @@ if $grep 'NanoTrasen' $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
-if $grep -i'eciev' $code_files; then
+if $grep -i 'eciev' $code_files; then
 	echo
     echo -e "${RED}ERROR: Common I-before-E typo detected in code.${NC}"
+    st=1
+fi;
+if $grep -i 'maintainance|maintainence|maintenence' $code_files; then
+    echo
+    echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in code, please fix.${NC}";
     st=1
 fi;
 part "map json naming"
@@ -245,6 +269,14 @@ if ls _maps/*.json | $grep "[A-Z]"; then
     echo -e "${RED}ERROR: Uppercase in a map .JSON file detected, these must be all lowercase.${NC}"
     st=1
 fi;
+
+part "Ineffective easing flags in animate()"
+if $grep 'easing\w*=\w*(EASE_IN|EASE_OUT|\(EASE_IN\w*\|\w*EASE_OUT\))' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'animate' was called with an easing argument and the default, LINEAR_EASING curve. This doesn't do anything and should be adjusted.${NC}"
+    st=1
+fi;
+
 part "map json sanity"
 for json in _maps/*.json
 do

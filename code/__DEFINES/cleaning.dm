@@ -12,6 +12,9 @@
 /// Return to stop cleaner component from blocking interaction chain further
 /// Only does anything if [CLEAN_BLOCKED] is also returned
 #define CLEAN_DONT_BLOCK_INTERACTION (1<<3)
+/// Return to do cleaning without actually cleaning anything
+/// Only does anything if [CLEAN_ALLOWED] is also returned
+#define CLEAN_NO_WASH (1<<4)
 
 // Different kinds of things that can be cleaned.
 // Use these when overriding the wash proc or registering for the clean signals to check if your thing should be cleaned

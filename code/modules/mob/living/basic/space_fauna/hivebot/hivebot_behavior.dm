@@ -1,9 +1,9 @@
 /datum/ai_behavior/find_and_set/hive_partner
 
-/datum/ai_behavior/find_and_set/hive_partner/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/hive_partner/search_tactic(datum/ai_controller/controller, locate_path, search_range = 10)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/hive_partners = list()
-	for(var/mob/living/target in oview(10, living_pawn))
+	for(var/mob/living/target in oview(search_range, living_pawn))
 		if(!istype(target, locate_path))
 			continue
 		if(target.stat == DEAD)

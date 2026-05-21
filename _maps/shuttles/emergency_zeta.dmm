@@ -226,6 +226,7 @@
 /area/shuttle/escape)
 "On" = (
 /obj/machinery/stasis/survival_pod,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "OR" = (
@@ -254,6 +255,7 @@
 "Tn" = (
 /obj/structure/table/optable/abductor,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Um" = (

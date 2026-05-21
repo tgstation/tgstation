@@ -47,7 +47,7 @@
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
 	var/distribute_pressure = ONE_ATMOSPHERE
-	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	/// Icon state when in a tank holder or a surgical table. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE
@@ -191,7 +191,9 @@
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
-		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		var/obj/item/bodypart/head = human_user.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			ADD_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
 	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))

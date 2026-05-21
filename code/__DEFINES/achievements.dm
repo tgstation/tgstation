@@ -2,6 +2,7 @@
 
 /// Achievements icon set
 #define ACHIEVEMENTS_SET 'icons/ui/achievements/achievements.dmi'
+#define PDA_THEMES_PROGRESS_SET 'icons/ui/achievements/pda_themes.dmi'
 
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
@@ -14,6 +15,7 @@
 
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
+#define MEDAL_METEOR_PUNCH "Your Life In Your Hands"
 #define MEDAL_PULSE "Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
 #define MEDAL_RODSUPLEX "Feat of Strength"
@@ -60,6 +62,7 @@
 #define MEDAL_CIGARETTES "Cigarettes"
 #define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
+#define MEDAL_DESENSITIZED "In Flanders Fields"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
@@ -70,6 +73,7 @@
 #define MAFIA_MEDAL_DETECTIVE "Detective"
 #define MAFIA_MEDAL_PSYCHOLOGIST "Psychologist"
 #define MAFIA_MEDAL_CHAPLAIN "Chaplain"
+#define MAFIA_MEDAL_CORONER "Coroner"
 #define MAFIA_MEDAL_MD "Medical Doctor"
 #define MAFIA_MEDAL_OFFICER "Security Officer"
 #define MAFIA_MEDAL_LAWYER "Lawyer"
@@ -148,6 +152,9 @@
 ///DB ID for all the different kinds of fish that you've caught so far.
 #define FISH_SCORE "Fish Score"
 
+///Database ID for unlockable PDA themes, purely costmetic
+#define PDA_THEMES_SCORE "PDA Themes"
+
 // Tourist related achievements and scores
 
 //centcom grades (achievement)
@@ -160,3 +167,6 @@
 
 #define CHEF_TOURISTS_SERVED "Tourists Served As Chef"
 #define BARTENDER_TOURISTS_SERVED "Tourists Served As Bartender"
+
+/// Value in metadata version that signifies the achievement is archived
+#define ACHIEVEMENT_ARCHIVED_VERSION 9999

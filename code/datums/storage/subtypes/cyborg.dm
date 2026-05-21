@@ -32,7 +32,7 @@
 		adjusted_contents = length(numbered_contents)
 
 	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/rows = clamp(ceil(adjusted_contents / columns), 1, screen_max_rows)
 
 	for (var/mob/ui_user as anything in storage_interfaces)
 		if (isnull(storage_interfaces[ui_user]))

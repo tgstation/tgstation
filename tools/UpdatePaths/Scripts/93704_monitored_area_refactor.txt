@@ -1,0 +1,13 @@
+/area/station/ai_monitored/command/nuke_storage/@SUBTYPES : /area/station/command/vault/@SUBTYPES{@OLD}
+/area/station/ai_monitored/command/storage/eva/@SUBTYPES : /area/station/command/eva/@SUBTYPES{@OLD}
+/area/station/ai_monitored/security/armory/@SUBTYPES : /area/station/security/armory/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/ai_upload/@SUBTYPES : /area/station/ai/upload/chamber/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/ai_upload_foyer/@SUBTYPES : /area/station/ai/upload/foyer/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/ai/@SUBTYPES : /area/station/ai/satellite/chamber/@SUBTYPES{@OLD}
+/area/station/ai_monitored/aisat/exterior/@SUBTYPES : /area/station/ai/satellite/exterior/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/aisat/maint/@SUBTYPES : /area/station/ai/satellite/maintenance/@SUBTYPES{@OLD}
+/area/station/ai_monitored/command/storage/satellite/@SUBTYPES : /area/station/ai/satellite/maintenance/storage/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/aisat/@SUBTYPES : /area/station/ai/satellite/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/aisat_interior/@SUBTYPES : /area/station/ai/satellite/interior/@SUBTYPES{@OLD}
+/area/station/ai_monitored/turret_protected/ai_sat_ext_as/@SUBTYPES : /area/station/ai/exterior{@OLD}
+/area/station/ai_monitored/turret_protected/ai_sat_ext_ap/@SUBTYPES : /area/station/ai/exterior{@OLD}

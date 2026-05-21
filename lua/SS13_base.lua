@@ -51,6 +51,10 @@ function SS13.is_type_in_typecache(thing, typecache)
 	return dm.global_procs._is_type_in_typecache(thing, typecache) == 1
 end
 
+function SS13.typesof(type, subtypes_only)
+	return dm.global_procs._typesof(SS13.type(type), subtypes_only)
+end
+
 function SS13.get_turf(thing)
 	return dm.global_procs._get_step(thing, 0)
 end

@@ -1,5 +1,3 @@
-#define CAN_STEALTH_ALERT "can_stealth"
-
 /**
  * Can enter stealth mode to become invisible and deal bonus damage on their next attack, an ambush predator.
  */
@@ -17,57 +15,44 @@
 	creator_name = "Assassin"
 	creator_desc = "Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth."
 	creator_icon = "assassin"
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/assassin
+	toggle_button_type = /datum/action/cooldown/guardian/toggle_mode/assassin
 	/// How long to put stealth on cooldown if we are forced out?
 	var/stealth_cooldown_time = 16 SECONDS
-	/// Cooldown for the stealth toggle.
-	COOLDOWN_DECLARE(stealth_cooldown)
 
 /mob/living/basic/guardian/assassin/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
-	show_can_stealth()
 	RegisterSignal(src, COMSIG_GUARDIAN_ASSASSIN_REVEALED, PROC_REF(on_forced_unstealth))
 
 // Toggle stealth
 /mob/living/basic/guardian/assassin/toggle_modes()
 	var/stealthed = has_status_effect(/datum/status_effect/guardian_stealth)
+	var/datum/action/cooldown/guardian/toggle_mode/assassin/stealth_ability = locate() in actions
 	if (stealthed)
 		to_chat(src, span_bolddanger("You exit stealth."))
 		remove_status_effect(/datum/status_effect/guardian_stealth)
-		show_can_stealth()
+		if(stealth_ability)
+			stealth_ability.build_all_button_icons()
 		return
-	if (COOLDOWN_FINISHED(src, stealth_cooldown))
-		if (!is_deployed())
-			to_chat(src, span_bolddanger("You have to be manifested to enter stealth!"))
-			return
-		apply_status_effect(/datum/status_effect/guardian_stealth)
-		clear_alert(CAN_STEALTH_ALERT)
+	if (!is_deployed())
+		to_chat(src, span_bolddanger("You have to be manifested to enter stealth!"))
 		return
-	to_chat(src, span_bolddanger("You cannot yet enter stealth, wait another [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]!"))
-
-/mob/living/basic/guardian/assassin/get_status_tab_items()
-	. = ..()
-	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
-		. += "Stealth Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]"
+	apply_status_effect(/datum/status_effect/guardian_stealth)
+	if(stealth_ability)
+		stealth_ability.build_all_button_icons()
 
 /// Called when we are removed from stealth involuntarily
 /mob/living/basic/guardian/assassin/proc/on_forced_unstealth(mob/living/source)
 	SIGNAL_HANDLER
 	visible_message(span_danger("\The [src] suddenly appears!"))
 	COOLDOWN_START(src, manifest_cooldown, 4 SECONDS)
-	COOLDOWN_START(src, stealth_cooldown, stealth_cooldown_time)
-	addtimer(CALLBACK(src, PROC_REF(show_can_stealth)), stealth_cooldown_time)
-
-/// Displays an alert letting us know that we can enter stealth
-/mob/living/basic/guardian/assassin/proc/show_can_stealth()
-	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
-		return
-	throw_alert(CAN_STEALTH_ALERT, /atom/movable/screen/alert/canstealth)
+	var/datum/action/cooldown/guardian/toggle_mode/assassin/stealth_ability = locate() in actions
+	if(stealth_ability)
+		stealth_ability.StartCooldownSelf(stealth_cooldown_time)
 
 /// Status effect which makes us sneakier and do bonus damage
 /datum/status_effect/guardian_stealth
 	id = "guardian_stealth"
-	alert_type = /atom/movable/screen/alert/status_effect/instealth
+	alert_type = null
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
 	/// Our wound bonus when in stealth mode. Allows you to actually cause wounds, unlike normal.
@@ -112,5 +97,3 @@
 	SIGNAL_HANDLER
 	SEND_SIGNAL(owner, COMSIG_GUARDIAN_ASSASSIN_REVEALED)
 	qdel(src)
-
-#undef CAN_STEALTH_ALERT

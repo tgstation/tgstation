@@ -93,3 +93,10 @@
 			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
 			vending_machine.shut_up = mend
+
+/obj/machinery/vending/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return FALSE
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()

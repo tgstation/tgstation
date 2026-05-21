@@ -95,7 +95,7 @@
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(
-		/area/station/ai_monitored/turret_protected,
+		/area/station/ai/satellite,
 		/area/station/security,
 		/area/station/command/heads_quarters/hos,
 	))

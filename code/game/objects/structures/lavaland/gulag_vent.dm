@@ -44,7 +44,10 @@
 	var/stamina_damage_to_inflict = HAS_TRAIT(user, TRAIT_STRENGTH) ? 60 : 120 //Decreases the amount of stamina damage inflicted by half if you're STRONG
 	living_user.mind?.adjust_experience(/datum/skill/athletics, 10)
 	living_user.apply_status_effect(/datum/status_effect/exercised)
-	new spawned_boulder(get_turf(living_user))
+
+	var/obj/item/boulder/gulag_boulder = new spawned_boulder(get_turf(living_user))
+	gulag_boulder.platform_lifespan = PLATFORM_LIFE_GULAG
+
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
 	living_user.apply_damage(stamina_damage_to_inflict, STAMINA)
 	playsound(src, 'sound/items/weapons/genhit.ogg', vol = 50, vary = TRUE)

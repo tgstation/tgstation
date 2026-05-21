@@ -3,11 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "l" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "L" = (
 /obj/structure/ore_vent/random,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

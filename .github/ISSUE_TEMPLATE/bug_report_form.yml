@@ -56,7 +56,7 @@ body:
       label: "Reproduction Steps:"
       description: |
         Describe the steps to reproduce the issue in detail. Include any relevant information, such as the map, round type, and any other factors that may be relevant.
-        If it is a runtime-related error, please include the runtime here as that is pertient information. Issues are not for oddities introduced by admin varedits, ensure these occur in normal circumstances.
+        If it is a runtime-related error, please include the runtime here as that is pertinent information. Issues are not for oddities introduced by admin varedits, ensure these occur in normal circumstances.
       placeholder: |
         1. Go to the X location
         2. Do Y action

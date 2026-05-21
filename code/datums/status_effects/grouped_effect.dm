@@ -11,6 +11,11 @@
 	//Get our supplied arguments, without new_owner
 	var/list/new_source_args = args.Copy(2)
 
+	if(isnull(source))
+		stack_trace("Grouped status effect applied without a source")
+		qdel(src)
+		return FALSE
+
 	var/datum/status_effect/grouped/existing = new_owner.has_status_effect(type)
 	if(existing)
 		existing.sources |= source

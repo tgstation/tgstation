@@ -30,7 +30,7 @@
 /// When we're taken out of someone, do something spooky
 /datum/element/corrupted_organ/proc/on_removed(atom/organ, mob/living/remover, mob/living/carbon/loser)
 	SIGNAL_HANDLER
-	if (loser.has_reagent(/datum/reagent/water/holywater) || loser.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY) || prob(20))
+	if (loser?.has_reagent(/datum/reagent/water/holywater) || loser?.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY) || prob(20))
 		return
 	if (prob(75))
 		organ.AddComponent(\
@@ -60,7 +60,7 @@
 /obj/effect/temp_visual/curse_blast/Initialize(mapload)
 	. = ..()
 	animate(src, transform = matrix() * 0.2, time = 0, flags = ANIMATION_PARALLEL)
-	animate(transform = matrix() * 2, time = duration, easing = EASE_IN)
+	animate(transform = matrix() * 2, time = duration, easing = QUAD_EASING|EASE_IN)
 
 	animate(src, alpha = 255, time = 0, flags = ANIMATION_PARALLEL)
 	animate(alpha = 255, time = 0.2 SECONDS)

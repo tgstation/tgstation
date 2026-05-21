@@ -131,3 +131,5 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	screen_loc = "BOTTOM,LEFT"
+	// Manages itself through the fov_handler component
+	clear_with_screen = FALSE

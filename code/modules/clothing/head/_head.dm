@@ -4,6 +4,7 @@
 	worn_icon = 'icons/mob/clothing/head/default.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	abstract_type = /obj/item/clothing/head
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 

@@ -1,4 +1,4 @@
-
+/// Gives the choice to "loan" the shuttle to central command, giving a big delay on its return to the station in exchange for money and loot/threats in the cargo hold. Only one can be available at a time.
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
@@ -24,6 +24,8 @@
 	var/datum/shuttle_loan_situation/situation
 	/// Whether the station has let Centcom commandeer the shuttle yet.
 	var/dispatched = FALSE
+	/// How long for the shuttle to come back to the station?
+	var/delay_time = 5 MINUTES
 
 /datum/round_event/shuttle_loan/setup()
 	var/datum/round_event_control/shuttle_loan/loan_control = control
@@ -49,7 +51,7 @@
 	if(fake)
 		qdel(situation)
 
-
+///Triggered when accepting the shuttle loan. Gives payment and delays shuttle. Ensures the event won't be deleted from event controller until after the cargo arrives at the station.
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
 
@@ -60,7 +62,7 @@
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
-	SSshuttle.supply.setTimer(3000)
+	SSshuttle.supply.setTimer(delay_time)
 	SSshuttle.centcom_message += situation.shuttle_transit_text
 
 	log_game("Shuttle loan event firing with type '[situation.logging_desc]'.")
@@ -73,9 +75,12 @@
 			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
-	if(!SSshuttle.shuttle_loan || !SSshuttle.shuttle_loan.dispatched)
+	if(!SSshuttle.shuttle_loan)
 		return
-	//make sure the shuttle was dispatched in time
+	if(!SSshuttle.shuttle_loan.dispatched) //Haven't dispatched in time? Too bad. Clean it up and move on without spawning anything.
+		SSshuttle.shuttle_loan = null
+		return
+
 	SSshuttle.shuttle_loan = null
 
 	//get empty turfs

@@ -56,10 +56,9 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(is_operational)
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_BLOCKING
 	return CLICK_ACTION_SUCCESS
 
@@ -75,7 +74,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		// everything is already shifted so don't shift the cap
 		var/image/cap = get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color)
 		cap.appearance_flags |= RESET_COLOR|KEEP_APART
@@ -131,7 +130,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")

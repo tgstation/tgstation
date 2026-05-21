@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { Button, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';

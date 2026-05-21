@@ -123,10 +123,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "op" = (
-/obj/structure/fence{
-	dir = 4
-	},
-/obj/structure/sign/warning/secure_area,
+/obj/structure/flora/tree/pine,
+/obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tW" = (
@@ -134,7 +132,6 @@
 	dir = 4
 	},
 /obj/structure/flora/rock/pile/icy/style_2,
-/obj/structure/sign/warning/secure_area,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "uy" = (
@@ -200,6 +197,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Fj" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Fn" = (
 /obj/structure/railing{
@@ -304,11 +306,8 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wr" = (
-/obj/structure/fence{
-	dir = 4
-	},
-/obj/structure/sign/nanotrasen,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wt" = (
 /obj/effect/turf_decal/stripes/line,
@@ -439,8 +438,8 @@ fl
 (5,1,1) = {"
 fl
 kd
+Sc
 Wr
-vJ
 vJ
 kd
 kd
@@ -868,8 +867,8 @@ mP
 mP
 mP
 bE
-nT
 op
+Sc
 "}
 (20,1,1) = {"
 cO
@@ -902,7 +901,7 @@ wg
 "}
 (21,1,1) = {"
 tW
-kd
+Fj
 lH
 Wt
 mP

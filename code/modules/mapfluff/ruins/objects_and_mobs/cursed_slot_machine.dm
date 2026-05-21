@@ -80,8 +80,8 @@
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 
 	if(!prob(win_prob))
-		if(status_effect_on_roll && isnull(user.has_status_effect(/datum/status_effect/grouped/cursed)))
-			user.apply_status_effect(/datum/status_effect/grouped/cursed)
+		if(status_effect_on_roll)
+			user.apply_status_effect(/datum/status_effect/slot_machine_curse)
 
 		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)

@@ -74,23 +74,23 @@
 		var/newamt
 		switch(Text)
 			if("brute")
-				L.adjustBruteLoss(amount, forced = TRUE)
-				newamt = L.getBruteLoss()
+				L.adjust_brute_loss(amount, forced = TRUE)
+				newamt = L.get_brute_loss()
 			if("fire")
-				L.adjustFireLoss(amount, forced = TRUE)
-				newamt = L.getFireLoss()
+				L.adjust_fire_loss(amount, forced = TRUE)
+				newamt = L.get_fire_loss()
 			if("toxin")
-				L.adjustToxLoss(amount, forced = TRUE)
-				newamt = L.getToxLoss()
+				L.adjust_tox_loss(amount, forced = TRUE)
+				newamt = L.get_tox_loss()
 			if("oxygen")
-				L.adjustOxyLoss(amount, forced = TRUE)
-				newamt = L.getOxyLoss()
+				L.adjust_oxy_loss(amount, forced = TRUE)
+				newamt = L.get_oxy_loss()
 			if("brain")
-				L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
+				L.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount)
 				newamt = L.get_organ_loss(ORGAN_SLOT_BRAIN)
 			if("stamina")
-				L.adjustStaminaLoss(amount, forced = TRUE)
-				newamt = L.getStaminaLoss()
+				L.adjust_stamina_loss(amount, forced = TRUE)
+				newamt = L.get_stamina_loss()
 			else
 				to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
 				return
@@ -117,7 +117,7 @@
 			if("wound")
 				existing_val = editing.wound_bonus
 			if("bare wound")
-				existing_val = editing.bare_wound_bonus
+				existing_val = editing.exposed_wound_bonus
 			else
 				CRASH("Invalid var_tweak passed to item vv set var: [href_list["var_tweak"]]")
 
@@ -137,7 +137,7 @@
 			if("wound")
 				editing.wound_bonus = new_val
 			if("bare wound")
-				editing.bare_wound_bonus = new_val
+				editing.exposed_wound_bonus = new_val
 
 		message_admins("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")
 		log_admin("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")

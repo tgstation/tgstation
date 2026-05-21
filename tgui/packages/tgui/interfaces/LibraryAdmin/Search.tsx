@@ -6,11 +6,11 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { useModifyState } from './hooks';
-import { Book, LibraryAdminData, ModifyTypes } from './types';
+import { type Book, type LibraryAdminData, ModifyTypes } from './types';
 
 type AdminBook = Book & {
   author_ckey: string;

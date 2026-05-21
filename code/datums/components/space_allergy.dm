@@ -18,6 +18,8 @@
 	SIGNAL_HANDLER
 
 	if(is_on_a_planet(parent) && parent.has_gravity())
-		allergy = parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity < Soul
+		var/status_effect = parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity < Soul
+		if(status_effect)
+			allergy = status_effect
 	else
 		QDEL_NULL(allergy)

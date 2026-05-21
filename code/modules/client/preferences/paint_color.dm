@@ -3,12 +3,13 @@
 	savefile_key = "paint_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
+	should_update_preview = FALSE
 
 /datum/preference/color/paint_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 
-	return "Tagger" in preferences.all_quirks
+	return /datum/quirk/item_quirk/tagger::name in preferences.all_quirks
 
 /datum/preference/color/paint_color/apply_to_human(mob/living/carbon/human/target, value)
 	return

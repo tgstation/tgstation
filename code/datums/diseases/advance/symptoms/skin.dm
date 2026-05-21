@@ -18,6 +18,7 @@
 	severity = 1
 	symptom_delay_min = 7
 	symptom_delay_max = 14
+	symptom_cure = /datum/reagent/water/salt
 
 /datum/symptom/polyvitiligo/Activate(datum/disease/advance/A)
 	. = ..()

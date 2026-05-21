@@ -46,13 +46,13 @@
 	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
-	message = "[station_time_timestamp(format = "hh:mm")] [username]: [message]"
+	message = "[round_timestamp(format = "hh:mm")] [username]: [message]"
 	messages["[next_message_id]"] = message
 	next_message_id++
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
-	message = "[station_time_timestamp(format = "hh:mm")] -!- [message]"
+	message = "[round_timestamp(format = "hh:mm")] -!- [message]"
 	messages["[next_message_id]"] = message
 	next_message_id++
 	trim_message_list()

@@ -104,7 +104,7 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //Checks if they are dead as a rock.
 		return
@@ -135,7 +135,7 @@
 			return
 		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/new_child = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
 		new_child.GiveTarget(target)
-		new_child.faction = faction.Copy()
+		SET_FACTION_AND_ALLIES_FROM(new_child, src)
 		visible_message(span_boldwarning("[new_child] appears below [src]!"))
 		register_child(new_child)
 
@@ -230,19 +230,19 @@
 	min_damage = 30
 	max_damage = 35
 
-/obj/effect/goliath_tentacle/broodmother/patch/Initialize(mapload, new_spawner)
+/obj/effect/goliath_tentacle/broodmother/patch/Initialize(mapload, mob/living/goliath)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(createpatch))
 
 /obj/effect/goliath_tentacle/broodmother/patch/proc/createpatch()
 	var/tentacle_locs = spiral_range_turfs(1, get_turf(src))
 	for(var/T in tentacle_locs)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new /obj/effect/goliath_tentacle/broodmother(T, owner)
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in directions)
 		var/turf/T = get_step(get_turf(src), i)
 		T = get_step(T, i)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new /obj/effect/goliath_tentacle/broodmother(T, owner)
 
 #undef CALL_CHILDREN
 #undef RAGE

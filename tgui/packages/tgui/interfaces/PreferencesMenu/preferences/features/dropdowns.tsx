@@ -1,11 +1,20 @@
-import { ComponentProps, ReactNode, useEffect, useState } from 'react';
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
-import { Feature, FeatureChoicedServerData, FeatureValueProps } from './base';
+import type {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+} from './base';
 
-type DropdownInputProps = FeatureValueProps<
+export type DropdownInputProps = FeatureValueProps<
   string,
   string,
   FeatureChoicedServerData
@@ -23,40 +32,58 @@ type IconnedDropdownInputProps = FeatureValueProps<
 
 export type FeatureWithIcons<T> = Feature<string, T, FeatureChoicedServerData>;
 
-type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
+export type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
+
+type DropdownEntry = {
+  displayText: ReactNode;
+  value: string | number;
+};
+
+export function generateOptions(
+  serverData: FeatureChoicedServerData,
+): DropdownEntry[] {
+  const { choices = [] } = serverData;
+
+  const newOptions: DropdownEntry[] = [];
+
+  for (const choice of choices) {
+    const displayText: ReactNode = serverData.display_names
+      ? serverData.display_names[choice]
+      : capitalizeFirst(choice);
+
+    newOptions.push({
+      displayText,
+      value: choice,
+    });
+  }
+
+  return newOptions;
+}
 
 export function FeatureDropdownInput(props: DropdownInputProps) {
   const { serverData, disabled, buttons, handleSetValue, value } = props;
+  const dropdownOptions = serverData ? generateOptions(serverData) : [];
+  const displayText = serverData?.display_names?.[value] || String(value);
+  return (
+    <Dropdown
+      buttons={buttons}
+      disabled={disabled || !serverData}
+      onSelected={handleSetValue}
+      displayText={displayText ? capitalizeFirst(displayText) : ''}
+      options={dropdownOptions}
+      selected={value}
+      width="100%"
+    />
+  );
+}
 
-  const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
+export type FeatureDropdownInputCoreProps = DropdownInputProps & {
+  populateOptions: (serverData: FeatureChoicedServerData) => DropdownOptions;
+};
 
-  function populateOptions() {
-    if (!serverData) return;
-
-    const { choices = [] } = serverData;
-
-    let newOptions: DropdownOptions = [];
-
-    for (const choice of choices) {
-      let displayText: ReactNode = serverData.display_names
-        ? serverData.display_names[choice]
-        : capitalizeFirst(choice);
-
-      newOptions.push({
-        displayText,
-        value: choice,
-      });
-    }
-
-    setDropdownOptions(newOptions);
-  }
-
-  useEffect(() => {
-    if (serverData) {
-      populateOptions();
-    }
-  }, [serverData]);
-
+export function FeatureDropdownInputCore(props: FeatureDropdownInputCoreProps) {
+  const { serverData, disabled, buttons, handleSetValue, value, populateOptions } = props;
+  const dropdownOptions = serverData ? populateOptions(serverData) : [];
   const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
@@ -72,6 +99,7 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
   );
 }
 
+
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
 
@@ -81,7 +109,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     if (!serverData) return;
     const { icons = {}, choices = [] } = serverData;
 
-    let newOptions: DropdownOptions = [];
+    const newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
       let displayText: ReactNode = serverData.display_names?.[choice]
@@ -127,6 +155,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
       options={dropdownOptions}
       selected={value}
       width="100%"
+      menuWidth="max-content"
     />
   );
 }

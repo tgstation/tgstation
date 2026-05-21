@@ -1,8 +1,4 @@
 {
-	"Space Pirates": {
-		"min_players": 20,
-		"weight": 10
-	},
 	"Spawn Bitrunning Glitch": {
 		"min_players": 1,
 		"weight": 100
@@ -17,7 +13,7 @@
 		"weight": 25
 	},
 	"Brand Intelligence": {
-		"min_players": 20,
+		"min_players": 15,
 		"weight": 5
 	},
 	"Bureaucratic Error": {
@@ -149,10 +145,6 @@
 		"min_players": 0,
 		"weight": 10
 	},
-	"Spider Infestation": {
-		"min_players": 20,
-		"weight": 10
-	},
 	"Stray Cargo Pod": {
 		"min_players": 0,
 		"weight": 20,
@@ -183,7 +175,7 @@
 	},
 	"Ventilation Clog: Major": {
 		"min_players": 0,
-		"weight": 10,
+		"weight": 12,
 		"earliest_start": 6000
 	},
 	"Ventilation Clog: Critical": {
@@ -202,7 +194,7 @@
 	},
 	"Wormholes": {
 		"min_players": 2,
-		"weight": 1
+		"weight": 2
 	},
 	"Anomaly: Energetic Flux": {
 		"min_players": 1,
@@ -248,42 +240,9 @@
 		"min_players": 20,
 		"weight": 10
 	},
-	"Abductors": {
-		"min_players": 20,
-		"weight": 10
-	},
-	"Alien Infestation": {
-		"min_players": 10,
-		"weight": 5
-	},
-	"Blob": {
-		"min_players": 20,
-		"weight": 10
-	},
-	"Changeling Meteor": {
-		"min_players": 20,
-		"weight": 8
-	},
-	"Spawn Fugitives": {
-		"min_players": 20,
-		"weight": 10,
-		"earliest_start": 18000
-	},
-	"Spawn Morph": {
-		"min_players": 0,
-		"weight": 0
-	},
-	"Spawn Nightmare": {
-		"min_players": 20,
-		"weight": 10
-	},
 	"Lone Operative": {
 		"min_players": 0,
 		"weight": 0
-	},
-	"Spawn Revenant": {
-		"min_players": 5,
-		"weight": 7
 	},
 	"Random Human-level Intelligence": {
 		"min_players": 0,
@@ -292,19 +251,6 @@
 	"Station-wide Human-level Intelligence": {
 		"min_players": 0,
 		"weight": 0
-	},
-	"Spawn Slaughter Demon": {
-		"min_players": 20,
-		"weight": 1,
-		"earliest_start": 36000
-	},
-	"Spawn Space Dragon": {
-		"min_players": 20,
-		"weight": 7
-	},
-	"Spawn Space Ninja": {
-		"min_players": 20,
-		"weight": 10
 	},
 	"Immovable Rod": {
 		"min_players": 15,

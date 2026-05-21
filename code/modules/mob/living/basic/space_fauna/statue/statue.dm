@@ -9,7 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	combat_mode = TRUE
-	mob_biotypes = MOB_HUMANOID
+	mob_biotypes = MOB_HUMANOID|MOB_MINERAL
 	gold_core_spawnable = NO_SPAWN
 
 	response_help_continuous = "touches"
@@ -136,6 +136,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
@@ -155,5 +156,4 @@
 
 /mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/dnainjector/geladikinesis)

@@ -1,4 +1,4 @@
-/datum/mutation/human/firebreath
+/datum/mutation/firebreath
 	name = "Fire Breath"
 	desc = "An ancient mutation that gives lizards breath of fire."
 	quality = POSITIVE
@@ -11,7 +11,7 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/firebreath/setup()
+/datum/mutation/firebreath/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -91,6 +91,6 @@
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
 	target_mob.ignite_mob()
 
-/datum/action/cooldown/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
+/datum/action/cooldown/spell/cone/staggered/fire_breath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
 	// Further out objects experience less exposed_temperature and exposed_volume
 	target_obj.fire_act(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)))

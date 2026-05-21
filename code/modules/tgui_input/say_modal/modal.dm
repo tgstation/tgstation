@@ -24,19 +24,25 @@
 	/// The user who opened the window
 	var/client/client
 	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
+	var/static/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
+	/// What text was present in the say box the last time save_text was called
+	var/saved_text = ""
+	/// What channel was in use in the say box the last time save_text was called
+	var/saved_channel
+	/// Speech suffuxes used for force_say after "-". Defaults to hurt_phrases
+	var/list/alter_phrases
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
-	winset(client, "tgui_say", "size=1,1;is-visible=0;")
+	winset(client, SKIN_TGUISAY, "size=1,1;is-visible=0;")
 	window.subscribe(src, PROC_REF(on_message))
 	window.is_browser = TRUE
 
@@ -50,7 +56,6 @@
 	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
-			fancy = TRUE,
 			inline_css = file("tgui/public/tgui-say.bundle.css"),
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
 	);
@@ -64,7 +69,7 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 
-	winset(client, "tgui_say", "pos=848,500;is-visible=0;")
+	winset(client, SKIN_TGUISAY, "pos=848,500;is-visible=0;")
 
 	window.send_message("props", list(
 		"lightMode" = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
@@ -87,7 +92,7 @@
 	if(!payload?["channel"])
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
-	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL)
+	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL && payload["channel"] != PRAY_CHANNEL)
 		start_thinking()
 	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
@@ -128,7 +133,7 @@
 	if (type == "typing")
 		start_typing()
 		return TRUE
-	if (type == "entry" || type == "force")
+	if (type == "entry" || type == "force" || type == "save")
 		handle_entry(type, payload)
 		return TRUE
 	return FALSE

@@ -30,6 +30,8 @@
 	///for temporary overrides of the above variable.
 	var/temp_say_mod = ""
 
+	/// Whether the owner of this tongue can speak clearly. Being set to FALSE means they mumble and slur things
+	var/speakable_with = TRUE
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
@@ -51,6 +53,10 @@
 	// - then we cache it via string list
 	// this results in tongues with identical possible languages sharing a cached list instance
 	languages_possible = string_list(get_possible_languages())
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
+	if(!sense_of_taste)
+		add_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/examine(mob/user)
 	. = ..()
@@ -137,40 +143,25 @@
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(receiver, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	apply_tongue_effects()
 
 /obj/item/organ/tongue/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	temp_say_mod = ""
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
-	REMOVE_TRAIT(organ_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	REMOVE_TRAIT(organ_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	organ_owner.voice_filter = initial(organ_owner.voice_filter)
 
-/obj/item/organ/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
-	. = ..()
-	if(!owner)
-		return FALSE
-	apply_tongue_effects()
+/obj/item/organ/tongue/on_begin_failure()
+	remove_organ_trait(TRAIT_SPEAKS_CLEARLY)
+	add_organ_trait(TRAIT_AGEUSIA)
 
-/// Applies effects to our owner based on how damaged our tongue is
-/obj/item/organ/tongue/proc/apply_tongue_effects()
+/obj/item/organ/tongue/on_failure_recovery()
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
 	if(sense_of_taste)
-		//tongues can't taste food when they are failing
-		if(organ_flags & ORGAN_FAILING)
-			ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-		else
-			REMOVE_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	else
-		//tongues can't taste food when they lack a sense of taste
-		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	if(organ_flags & ORGAN_FAILING)
-		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	else
-		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+		remove_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
@@ -354,6 +345,15 @@
 	energy = 70
 	bomb = 50
 	fire = 100
+
+/obj/item/organ/tongue/ghost
+	name = "ghost tongue"
+	desc = "You feel spooked even thinking about someone talking through this."
+	icon_state = "tongue-ghost"
+	movement_type = PHASING
+	say_mod = "boos"
+	sense_of_taste = FALSE
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/tongue/abductor
 	name = "superlingual matrix"
@@ -616,22 +616,36 @@
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
+	actions_types = list(/datum/action/item_action/organ_action/go_feral)
+	var/feral_mode = FALSE
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
 	. = ..()
-	head.unarmed_damage_low += 5
-	head.unarmed_damage_high += 10
+	head.unarmed_damage_low += 4
+	head.unarmed_damage_high += 7
 	head.unarmed_effectiveness += 10
+	head.unarmed_pummeling_bonus += 0.5
 	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
 	head.unarmed_sharpness = SHARP_EDGED
+	if(feral_mode)
+		add_organ_trait(TRAIT_FERAL_BITER)
 
 /obj/item/organ/tongue/cat/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
-	head.unarmed_damage_low -= 5
-	head.unarmed_damage_high -= 10
+	head.unarmed_damage_low -= 4
+	head.unarmed_damage_high -= 7
 	head.unarmed_effectiveness -= 10
+	head.unarmed_pummeling_bonus -= 0.5
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 	head.unarmed_sharpness = initial(head.unarmed_sharpness)
+	remove_organ_trait(TRAIT_FERAL_BITER)
+
+/obj/item/organ/tongue/cat/proc/toggle_feral()
+	feral_mode = !feral_mode
+	if(feral_mode)
+		add_organ_trait(TRAIT_FERAL_BITER)
+	else
+		remove_organ_trait(TRAIT_FERAL_BITER)
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"

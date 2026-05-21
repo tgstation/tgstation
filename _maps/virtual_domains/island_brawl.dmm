@@ -2228,7 +2228,7 @@
 /obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 29
 	},
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "BW" = (
@@ -2551,7 +2551,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Gp" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	pixel_y = 6;
 	desc = "Northwest: Hotel. South: Seaside Bar. East: Dressing Rooms."
 	},
@@ -3088,7 +3088,7 @@
 	pixel_y = 1;
 	pixel_x = 18
 	},
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_x = -15;
 	pixel_y = 10
 	},

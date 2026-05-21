@@ -14,6 +14,7 @@
 		BB_FRIENDLY_MESSAGE = "empathetically acknowledges your hardwork and tough circumstances",
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/pet_planning/cleanbot,
 		/datum/ai_planning_subtree/cleaning_subtree,
@@ -37,7 +38,6 @@
 		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
 		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -69,7 +69,7 @@
 /datum/ai_behavior/find_and_set/in_list/clean_targets
 	action_cooldown = 3 SECONDS
 
-/datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/basic_controller/bot/controller, locate_paths, search_range)
+/datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/basic_controller/bot/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
@@ -101,7 +101,7 @@
 	action_cooldown = 30 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
 		if(LAZYACCESS(ignore_list, human_target))
@@ -178,14 +178,14 @@
 	action_cooldown = 30 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/find_and_set/friendly_janitor/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/friendly_janitor/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/human/human_target in oview(search_range, living_pawn))
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
 		if(!HAS_TRAIT(human_target, TRAIT_CLEANBOT_WHISPERER))
 			continue
-		if((living_pawn.faction.Find(REF(human_target))))
+		if(living_pawn.has_ally(REF(human_target)))
 			continue
 		return human_target
 	return null

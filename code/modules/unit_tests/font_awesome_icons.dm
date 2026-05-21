@@ -32,10 +32,7 @@
  * Verifies that all quirk icons are valid.
  */
 /datum/unit_test/font_awesome_icons/proc/verify_quirk_icons()
-	for(var/datum/quirk/quirk as anything in subtypesof(/datum/quirk))
-		if(quirk == initial(quirk.abstract_parent_type))
-			continue
-
+	for(var/datum/quirk/quirk as anything in valid_subtypesof(/datum/quirk))
 		var/quirk_icon = initial(quirk.icon)
 		if(findtext(quirk_icon, "tg-") == 1) // TODO: Validate these as well
 			continue

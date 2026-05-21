@@ -177,9 +177,12 @@ def main(args):
         print("Using replacement:", args.update_source)
         updates = [args.update_source]
     else:
-        with open(args.update_source) as f:
-            updates = [line for line in f if line and not line.startswith("#") and not line.isspace()]
-        print(f"Using {len(updates)} replacements from file:", args.update_source)
+        updates = []
+        for source in args.update_source:
+            with open(source) as f:
+                updates_from_file = [line for line in f if line and not line.startswith("#") and not line.isspace()]
+            print(f"Using {len(updates_from_file)} replacements from file:", source)
+            updates.extend(updates_from_file)
 
     if args.map:
         update_map(args.map, updates, verbose=args.verbose)
@@ -191,10 +194,10 @@ def main(args):
 if __name__ == "__main__":
     prog = __spec__.name.replace('.__main__', '')
     if os.name == 'nt' and len(sys.argv) <= 1:
-        print("usage: drag-and-drop a path script .txt onto `Update Paths.bat`\n  or")
+        print("usage: drag-and-drop one or more .txt path script onto `Update Paths.bat`\n  or")
 
     parser = argparse.ArgumentParser(prog=prog, description=desc, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("update_source", help="update file path / line of update notation")
+    parser.add_argument("update_source", nargs="+", help="update file path(s) / line of update notation")
     parser.add_argument("--map", "-m", help="path to update, defaults to all maps in maps directory")
     parser.add_argument("--directory", "-d", help="path to maps directory, defaults to _maps/")
     parser.add_argument("--inline", "-i", help="treat update source as update string instead of path", action="store_true")

@@ -29,7 +29,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_no_longer_pulled))
 	if(istype(strongpulling, /obj/structure/closet) && !istype(strongpulling, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/grabbed_closet = strongpulling
-		grabbed_closet.strong_grab = TRUE
+		ADD_TRAIT(grabbed_closet, TRAIT_STRONGPULL, REF(src))
 
 /**
  * Signal for rejecting further grabs
@@ -47,7 +47,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	UnregisterSignal(strongpulling, list(COMSIG_ATOM_CAN_BE_PULLED, COMSIG_ATOM_NO_LONGER_PULLED))
 	if(istype(strongpulling, /obj/structure/closet))
 		var/obj/structure/closet/ungrabbed_closet = strongpulling
-		ungrabbed_closet.strong_grab = FALSE
+		REMOVE_TRAIT(ungrabbed_closet, TRAIT_STRONGPULL, REF(src))
 	strongpulling = null
 
 /**

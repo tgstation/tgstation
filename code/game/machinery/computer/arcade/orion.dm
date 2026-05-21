@@ -470,8 +470,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		user.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
-		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
-		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
+		victory_tickets(2)
 	obj_flags &= ~EMAGGED
 	name = initial(name)
 	desc = initial(desc)
@@ -547,7 +546,7 @@
 
 /datum/aas_config_entry/orion_violent_behavior_alert
 	// Well we don't want to show that only Orion Trails reports violent behavior, eh-h?
-	name = "Violent Behavior Alert"
+	name = "Global: Violent Behavior Alert"
 	announcement_lines_map = list(
 		RADIO_CHANNEL_SECURITY = "SECURITY ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please watch for violent behavior.",
 		RADIO_CHANNEL_MEDICAL = "PSYCH ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please schedule psych evaluation.",

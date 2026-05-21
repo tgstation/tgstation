@@ -9,7 +9,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -22,7 +22,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "e" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,

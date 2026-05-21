@@ -4,7 +4,7 @@ import { Box, Button, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { EFFECTS_ALL, POD_GREY } from './constants';
 import { useCompact } from './hooks';
-import { PodEffect, PodLauncherData } from './types';
+import type { PodEffect, PodLauncherData } from './types';
 
 export function PodStatusPage(props) {
   const [compact] = useCompact();

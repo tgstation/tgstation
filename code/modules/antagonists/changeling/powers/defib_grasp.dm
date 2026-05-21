@@ -4,6 +4,8 @@
 		we will snatch their arms off and instantly finalize our stasis."
 	helptext = "This ability is passive, and will trigger when a defibrillator paddle is applied to our chest \
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
+	button_icon_state = "defibrillator_grasp"
+	category = "utility"
 	owner_has_control = FALSE
 	dna_cost = 0
 	disabled_by_fire = FALSE
@@ -61,7 +63,7 @@
 		if(iscarbon(defibber))
 			var/removed_arms = 0
 			var/mob/living/carbon/carbon_defibber = defibber
-			for(var/obj/item/bodypart/arm/limb in carbon_defibber.bodyparts)
+			for(var/obj/item/bodypart/arm/limb in carbon_defibber.get_bodyparts())
 				if(limb.dismember(silent = FALSE))
 					removed_arms++
 					qdel(limb)

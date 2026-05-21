@@ -2,7 +2,6 @@
 	title = JOB_CHAPLAIN
 	description = "Hold services and funerals, cremate people, preach your \
 		religion, protect the crew against cults."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -12,6 +11,9 @@
 
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
+
+	mind_traits = list(TRAIT_SPIRITUAL)
+	desensitized_base = DESENSITIZED_THRESHOLD
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
@@ -45,7 +47,7 @@
 	var/obj/item/book/bible/booze/holy_bible = new
 	if(GLOB.religion)
 		if(human_spawned.mind)
-			human_spawned.mind.holy_role = HOLY_ROLE_PRIEST
+			human_spawned.mind.set_holy_role(HOLY_ROLE_PRIEST)
 		holy_bible.deity_name = GLOB.deity
 		holy_bible.name = GLOB.bible_name
 		// These checks are important as there's no guarantee the "HOLY_ROLE_HIGHPRIEST" chaplain has selected a bible skin.
@@ -62,7 +64,7 @@
 			GLOB.religious_sect.on_conversion(human_spawned)
 		return
 	if(human_spawned.mind)
-		human_spawned.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+		human_spawned.mind.set_holy_role(HOLY_ROLE_HIGHPRIEST)
 
 	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
 	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
@@ -77,7 +79,7 @@
 					holy_bible.deity_name = pick("Dick Powers", "King Cock")
 				else
 					holy_bible.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
-			human_spawned.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
+			human_spawned.adjust_organ_loss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes", "skibidi")
 			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook", "Toilet Humor")
 			switch(new_bible)
@@ -89,7 +91,7 @@
 					holy_bible.deity_name = "Twenty Ten-Sided Dice"
 				if("Toilet Humor")
 					holy_bible.deity_name = pick("Skibidi Toilet", "Skibidi Wizard", "Skibidi Bathtub", "John Skibidi", "Skibidi Skibidi", "G-Toilet 1.0", "John Freeman")
-			human_spawned.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
+			human_spawned.adjust_organ_loss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
 		if("servicianism", "partying")
 			holy_bible.desc = "Happy, Full, Clean. Live it and give it."
 		if("weeaboo","kawaii")

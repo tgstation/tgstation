@@ -3,7 +3,7 @@ import { classes } from 'tgui-core/react';
 
 import { getWindowPosition, setWindowPosition } from '../../drag';
 import { Port } from './Port';
-import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
+import type { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export type PlaneMasterProps = {

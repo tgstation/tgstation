@@ -1,5 +1,5 @@
-import { sortBy } from 'common/collections';
-import { Button, Flex, Section, Tabs } from 'tgui-core/components';
+import { sortBy } from 'es-toolkit';
+import { Button, Flex, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { useSharedState } from '../../backend';
 
@@ -100,8 +100,8 @@ export const AccessList = (props) => {
 
   return (
     <Section title="Access" buttons={extraButtons}>
-      <Flex wrap="wrap">
-        <Flex.Item width="100%">
+      <Stack vertical width="100%">
+        <Stack.Item>
           <FormatWildcards
             wildcardSlots={wildcardSlots}
             selectedList={selectedList}
@@ -109,23 +109,27 @@ export const AccessList = (props) => {
             basicUsed={selectedTrimAccess.length}
             basicMax={trimAccess.length}
           />
-        </Flex.Item>
-        <Flex.Item>
-          <RegionTabList accesses={parsedRegions} />
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <RegionAccessList
-            accesses={parsedRegions}
-            selectedList={selectedList}
-            accessMod={accessMod}
-            trimAccess={trimAccess}
-            accessFlags={accessFlags}
-            accessFlagNames={accessFlagNames}
-            wildcardSlots={wildcardSlots}
-            showBasic={showBasic}
-          />
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+        <Stack.Item>
+          <Flex>
+            <Flex.Item>
+              <RegionTabList accesses={parsedRegions} />
+            </Flex.Item>
+            <Flex.Item>
+              <RegionAccessList
+                accesses={parsedRegions}
+                selectedList={selectedList}
+                accessMod={accessMod}
+                trimAccess={trimAccess}
+                accessFlags={accessFlags}
+                accessFlagNames={accessFlagNames}
+                wildcardSlots={wildcardSlots}
+                showBasic={showBasic}
+              />
+            </Flex.Item>
+          </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
@@ -156,7 +160,7 @@ export const FormatWildcards = (props) => {
         >
           Trim:
           <br />
-          {basicUsed + '/' + basicMax}
+          {`${basicUsed}/${basicMax}`}
         </Tabs.Tab>
       )}
 
@@ -175,7 +179,7 @@ export const FormatWildcards = (props) => {
             selected={selectedWildcard === wildcard}
             onClick={() => setWildcardTab(wildcard)}
           >
-            {wildcard + ':'}
+            {`${wildcard}:`}
             <br />
             {wcLeftStr}
           </Tabs.Tab>
@@ -248,13 +252,12 @@ const RegionAccessList = (props) => {
   const selectedAccess = accesses.find(
     (access) => access.name === selectedAccessName,
   );
-  const selectedAccessEntries = sortBy(
-    selectedAccess?.accesses || [],
+  const selectedAccessEntries = sortBy(selectedAccess?.accesses || [], [
     (entry) => entry.desc,
-  );
+  ]);
 
   const allWildcards = Object.keys(wildcardSlots);
-  let wcAccess = {};
+  const wcAccess = {};
   allWildcards.forEach((wildcard) => {
     wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;
@@ -267,28 +270,36 @@ const RegionAccessList = (props) => {
   const wcUsage = wildcard ? wildcard.usage.length : 0;
   const wcAvail = wcLimit - wcUsage;
 
-  return selectedAccessEntries.map((entry) => {
-    const id = entry.ref;
-    const disableButton =
-      (wcAvail === 0 && wcAccess[id] !== selWildcard) ||
-      (wcAvail > 0 && wcAccess[id] && wcAccess[id] !== selWildcard);
-    const entryName =
-      !wcAccess[id] && trimAccess.includes(id)
-        ? entry.desc
-        : entry.desc + ' (' + accessFlagNames[accessFlags[id]] + ')';
-
-    return (
-      <Button.Checkbox
-        ml={1}
-        fluid
-        key={entry.desc}
-        content={entryName}
-        disabled={disableButton}
-        checked={selectedList.includes(entry.ref)}
-        onClick={() =>
-          accessMod(entry.ref, selWildcard === 'None' ? null : selWildcard)
-        }
-      />
-    );
-  });
+  return (
+    <Stack vertical>
+      {selectedAccessEntries.map((entry) => {
+        const id = entry.ref;
+        const disableButton =
+          (wcAvail === 0 && wcAccess[id] !== selWildcard) ||
+          (wcAvail > 0 && wcAccess[id] && wcAccess[id] !== selWildcard);
+        const entryName =
+          !wcAccess[id] && trimAccess.includes(id)
+            ? entry.desc
+            : `${entry.desc} (${accessFlagNames[accessFlags[id]]})`;
+        return (
+          <Stack.Item key={entry.desc}>
+            <Button.Checkbox
+              ml={1}
+              fluid
+              ellipsis
+              content={entryName}
+              disabled={disableButton}
+              checked={selectedList.includes(entry.ref)}
+              onClick={() =>
+                accessMod(
+                  entry.ref,
+                  selWildcard === 'None' ? null : selWildcard,
+                )
+              }
+            />
+          </Stack.Item>
+        );
+      })}
+    </Stack>
+  );
 };

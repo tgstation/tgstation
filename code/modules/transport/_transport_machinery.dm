@@ -86,7 +86,7 @@
 
 	// Construct the signals
 	LAZYINITLIST(repair_signals)
-	for(var/tool_method as anything in methods_to_fix)
+	for(var/tool_method in methods_to_fix)
 		repair_signals += COMSIG_ATOM_TOOL_ACT(how_do_we_fix_it[tool_method])
 
 	// Register signals to make it fixable
@@ -100,7 +100,7 @@
 /obj/machinery/transport/examine(mob/user)
 	. = ..()
 	if(methods_to_fix)
-		for(var/tool_method as anything in methods_to_fix)
+		for(var/tool_method in methods_to_fix)
 			. += span_warning("It needs someone to [EXAMINE_HINT(tool_method)].")
 	if(panel_open)
 		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")
@@ -150,50 +150,3 @@
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
 	return TRUE
-
-/obj/item/wallframe/tram/try_build(obj/structure/tram/on_tram, mob/user)
-	if(get_dist(on_tram,user) > 1)
-		balloon_alert(user, "you are too far!")
-		return
-
-	var/floor_to_tram = get_dir(user, on_tram)
-	if(!(floor_to_tram in GLOB.cardinals))
-		balloon_alert(user, "stand in line with tram wall!")
-		return
-
-	var/turf/tram_turf = get_turf(user)
-	var/obj/structure/thermoplastic/tram_floor = locate() in tram_turf
-	if(!istype(tram_floor))
-		balloon_alert(user, "needs tram!")
-		return
-
-	if(check_wall_item(tram_turf, floor_to_tram, wall_external))
-		balloon_alert(user, "already something here!")
-		return
-
-	return TRUE
-
-/obj/item/wallframe/tram/attach(obj/structure/tram/on_tram, mob/user)
-	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-		user.visible_message(span_notice("[user.name] installs [src] on the tram."),
-			span_notice("You install [src] on the tram."),
-			span_hear("You hear clicking."))
-		var/floor_to_tram = get_dir(user, on_tram)
-
-		var/obj/cabinet = new result_path(get_turf(user), floor_to_tram, TRUE)
-		cabinet.setDir(floor_to_tram)
-
-		if(pixel_shift)
-			switch(floor_to_tram)
-				if(NORTH)
-					cabinet.pixel_y = pixel_shift
-				if(SOUTH)
-					cabinet.pixel_y = -pixel_shift
-				if(EAST)
-					cabinet.pixel_x = pixel_shift
-				if(WEST)
-					cabinet.pixel_x = -pixel_shift
-		after_attach(cabinet)
-
-	qdel(src)

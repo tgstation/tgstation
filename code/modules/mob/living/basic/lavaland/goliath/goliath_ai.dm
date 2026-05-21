@@ -4,12 +4,15 @@
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/find_food,
@@ -33,7 +36,7 @@
 		return ..()
 	var/mob/living/target = controller.blackboard[target_key]
 	// Interrupt attack chain to use tentacles, unless the target is already tentacled
-	if (ismecha(target) || (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
+	if (ismecha(target) || (isliving(target) && !target.get_item_by_slot(ITEM_SLOT_LEGCUFFED)))
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
 		if (using_action?.IsAvailable())
 			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -45,7 +48,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!(isliving(target) || ismecha(target)) || (isliving(target) && target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
+	if (!(isliving(target) || ismecha(target)) || (isliving(target) && target.get_item_by_slot(ITEM_SLOT_LEGCUFFED)))
 		return // Target can be an item or already grabbed, we don't want to tentacle those
 	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
 	if (time_on_target < MIN_TIME_TO_TENTACLE)
@@ -111,7 +114,7 @@
 /datum/ai_behavior/goliath_dig/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/turf/target_turf = controller.blackboard[target_key]
 	var/mob/living/basic/basic_mob = controller.pawn
-	if(!basic_mob.CanReach(target_turf))
+	if(!target_turf.IsReachableBy(basic_mob))
 		return AI_BEHAVIOR_DELAY
 	basic_mob.melee_attack(target_turf)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

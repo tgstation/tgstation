@@ -4,7 +4,7 @@
 /datum/antagonist/bitrunning_glitch
 	name = "Generic Bitrunning Glitch"
 	antagpanel_category = ANTAG_GROUP_GLITCH
-	job_rank = ROLE_GLITCH
+	pref_flag = ROLE_GLITCH
 	preview_outfit = /datum/outfit/cyber_police
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
@@ -85,7 +85,7 @@
 	if(isnull(outfit_id))
 		return
 
-	outfit_id.registered_account = new()
+	outfit_id.set_account(new /datum/bank_account)
 	outfit_id.registered_account.replaceable = FALSE
 	outfit_id.registered_account.account_id = null
 	outfit_id.registered_name = player.name

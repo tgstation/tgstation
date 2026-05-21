@@ -14,7 +14,7 @@ import {
 
 import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
 export function Checkout(props) {
@@ -65,6 +65,7 @@ export function Checkout(props) {
 
 function CheckoutModal(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { checkout_title } = data;
 
   const inventory = data.inventory
     .map((book, i) => ({
@@ -77,7 +78,6 @@ function CheckoutModal(props) {
   const { checkoutBookState } = useLibraryContext();
   const [checkoutBook, setCheckoutBook] = checkoutBookState;
 
-  const [bookName, setBookName] = useState('Insert Book name...');
   const [checkoutee, setCheckoutee] = useState('Recipient');
   const [checkoutPeriod, setCheckoutPeriod] = useState(5);
 
@@ -91,9 +91,15 @@ function CheckoutModal(props) {
           <Dropdown
             over
             width="100%"
-            selected={bookName}
+            selected={checkout_title}
+            placeholder="Insert Book name..."
+            displayText={checkout_title}
             options={inventory.map((book) => book.title)}
-            onSelected={(e) => setBookName(e)}
+            onSelected={(e) => {
+              act('set_checkout', {
+                book_name: e,
+              });
+            }}
           />
         </Stack.Item>
         <Stack.Item>
@@ -110,7 +116,7 @@ function CheckoutModal(props) {
                 value={checkoutPeriod}
                 unit=" Minutes"
                 minValue={1}
-                maxValue={1440}
+                maxValue={120}
                 step={1}
                 stepPixelSize={10}
                 onChange={(value) => setCheckoutPeriod(value)}
@@ -128,7 +134,6 @@ function CheckoutModal(props) {
                 onClick={() => {
                   setCheckoutBook(false);
                   act('checkout', {
-                    book_name: bookName,
                     loaned_to: checkoutee,
                     checkout_time: checkoutPeriod,
                   });
@@ -182,7 +187,7 @@ export function CheckoutEntries(props) {
             <Table.Cell>{entry.author}</Table.Cell>
             <Table.Cell>{entry.borrower}</Table.Cell>
             <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-              {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+              {entry.overdue ? 'Overdue' : `${entry.due_in_minutes} Minutes`}
             </Table.Cell>
             <Table.Cell width="70px" textAlign="center">
               <Button

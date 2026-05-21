@@ -1,10 +1,11 @@
 /datum/disease/gastrolosis
 	name = "Invasive Gastrolosis"
+	desc = "A bizarre disease that causes the host to grow snail-like features, eventually turning into a human-snail hybrid."
 	max_stages = 4
-	spread_text = "Unknown"
+	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_SPECIAL
-	cure_text = "Salt and mutadone"
-	agent = "Agent S and DNA restructuring"
+	cure_text = /datum/reagent/consumable/salt::name + " & " + /datum/reagent/medicine/mutadone::name
+	agent = "Agent S and DNA Restructuring"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	stage_prob = 0.5
 	disease_flags = CURABLE
@@ -12,7 +13,7 @@
 	bypasses_immunity = TRUE
 
 
-/datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/gastrolosis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

@@ -6,6 +6,7 @@
 	foldabletype = null
 	max_integrity = 150
 	ttv_icon = "motor_chair_ttv"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
@@ -41,12 +42,15 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
-	// This wheelchair was crafted, so clean out default parts
-	qdel(power_cell)
-	component_parts = list()
+	. = ..()
 
+	// This wheelchair was crafted, so clean out default parts
+	QDEL_NULL(power_cell)
+
+	component_parts = list()
 	for(var/obj/item/stock_parts/part in contents)
-		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
+		// power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell))
 			power_cell = part
 			continue
 
@@ -55,9 +59,8 @@
 		if(isnull(newstockpart))
 			CRASH("No corresponding datum/stock_part for [part.type]")
 		component_parts += newstockpart
+		qdel(part)
 	refresh_parts()
-
-	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
@@ -95,55 +98,70 @@
 	user.put_in_hands(power_cell)
 	power_cell = null
 
-/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!panel_open)
-		return ..()
+/obj/vehicle/ridden/wheelchair/motorized/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return
 
-	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+	if(!panel_open || user.combat_mode)
+		return NONE
+
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
-		else
-			attacking_item.forceMove(src)
-			power_cell = attacking_item
-			to_chat(user, span_notice("You install the [attacking_item]."))
-		refresh_parts()
-		return
-	if(!istype(attacking_item, /obj/item/stock_parts))
-		return ..()
+			return ITEM_INTERACT_BLOCKING
 
-	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[attacking_item.type]
+		tool.forceMove(src)
+		power_cell = tool
+		to_chat(user, span_notice("You install the [tool]."))
+		refresh_parts()
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/stock_parts))
+		return NONE
+
+	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[tool.type]
 	if(isnull(newstockpart))
 		CRASH("No corresponding datum/stock_part for [newstockpart.type]")
+
+	var/replacement_occured = FALSE
 	for(var/datum/stock_part/oldstockpart in component_parts)
 		var/type_to_check
 		for(var/pathtype in required_parts)
 			if(ispath(oldstockpart.type, pathtype))
 				type_to_check = pathtype
 				break
-		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
-			if(newstockpart.tier > oldstockpart.tier)
-				// delete the part in the users hand and add the datum part to the component_list
-				qdel(attacking_item)
-				component_parts += newstockpart
-				// create an new instance of the old datum stock part physical type & put it in the users hand
-				var/obj/item/stock_parts/part = new oldstockpart.physical_object_type
-				user.put_in_hands(part)
-				component_parts -= oldstockpart
-				// user message
-				user.visible_message(span_notice("[user] replaces [oldstockpart.name()] with [newstockpart.name()] in [src]."), span_notice("You replace [oldstockpart.name()] with [newstockpart.name()]."))
-				break
+
+		if(!istype(newstockpart, type_to_check) || !istype(oldstockpart, type_to_check) || newstockpart.tier <= oldstockpart.tier)
+			continue
+
+		// delete the part in the users hand and add the datum part to the component_list
+		qdel(tool)
+		component_parts += newstockpart
+		// create an new instance of the old datum stock part physical type & put it in the users hand
+		var/obj/item/stock_parts/part = new oldstockpart.physical_object_type
+		user.put_in_hands(part)
+		component_parts -= oldstockpart
+		// user message
+		user.visible_message(span_notice("[user] replaces [oldstockpart.name()] with [newstockpart.name()] in [src]."), span_notice("You replace [oldstockpart.name()] with [newstockpart.name()]."))
+		replacement_occured = TRUE
+		break
+
 	refresh_parts()
+	return replacement_occured ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/vehicle/ridden/wheelchair/motorized/handle_deconstruct(disassembled)
 	. = ..()
 	if (!disassembled)
 		return
-	new /obj/item/stack/rods(drop_location(), 2)
-	new /obj/item/stack/sheet/iron(drop_location(), 6)
+
+	var/atom/drop = drop_location()
+	new /obj/item/stack/rods(drop, 2)
+	new /obj/item/stack/sheet/iron(drop, 6)
 	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
+		power_cell.forceMove(drop)
 		power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
@@ -161,7 +179,7 @@
 		return
 	. += "Speed: [speed]"
 	. += "Energy efficiency: [power_efficiency]"
-	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
+	. += "Power: [display_energy(power_cell.charge)] out of [display_energy(power_cell.maxcharge)]"
 
 /obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
 	. = ..()
@@ -193,13 +211,13 @@
 		unbuckle_mob(disabled)
 		disabled.throw_at(throw_target, 2, 3)
 		disabled.Knockdown(10 SECONDS)
-		disabled.adjustStaminaLoss(40)
+		disabled.adjust_stamina_loss(40)
 		if(isliving(bumped_atom))
 			var/mob/living/ramtarget = bumped_atom
 			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(8 SECONDS)
-			ramtarget.adjustStaminaLoss(35)
+			ramtarget.adjust_stamina_loss(35)
 			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
 		else
 			visible_message(span_danger("[src] crashes into [bumped_atom], sending [disabled] flying!"))

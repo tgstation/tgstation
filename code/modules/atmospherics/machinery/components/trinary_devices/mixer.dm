@@ -19,6 +19,9 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/Initialize(mapload)
 	. = ..()
+	var/datum/gas_mixture/air3 = airs[3]
+	air3.volume = 300
+	airs[3] = air3
 	register_context()
 
 /obj/machinery/atmospherics/components/trinary/mixer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -29,10 +32,9 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
 	if(is_operational)
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
@@ -58,12 +60,6 @@
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
 	icon_state = "mixer_[on_state ? "on" : "off"]-[set_overlay_offset(piping_layer)][flipped ? "_f" : ""]"
-
-/obj/machinery/atmospherics/components/trinary/mixer/New()
-	..()
-	var/datum/gas_mixture/air3 = airs[3]
-	air3.volume = 300
-	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
@@ -157,7 +153,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")

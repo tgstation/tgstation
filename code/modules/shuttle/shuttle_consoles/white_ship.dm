@@ -4,16 +4,17 @@
 	circuit = /obj/item/circuitboard/computer/white_ship
 	shuttleId = "whiteship"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_waystation;whiteship_lavaland;whiteship_custom"
+	may_be_remote_controlled = TRUE
 
 /// Console used on the whiteship bridge. Comes with GPS pre-baked.
 /obj/machinery/computer/shuttle/white_ship/bridge
 	name = "White Ship Bridge Console"
-	desc = "Used to control the White Ship from the bridge. Emits a faint GPS signal."
+	desc = "Used to control the White Ship from the bridge. It appears to be emitting an emergency signal, and has been for some time..."
 	circuit = /obj/item/circuitboard/computer/white_ship/bridge
 
 /obj/machinery/computer/shuttle/white_ship/bridge/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	AddComponent(/datum/component/gps, SPACE_SIGNAL_GPSTAG)
+	AddComponent(/datum/component/gps, SPACE_SIGNAL_GPSTAG_WHITE_SHIP)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship
 	name = "White Ship Navigation Computer"

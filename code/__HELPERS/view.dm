@@ -11,6 +11,12 @@
 		var/list/viewrangelist = splittext(view, "x")
 		return list(text2num(viewrangelist[1]), text2num(viewrangelist[2]))
 
+// Cached for speed as its used in mirages and such
+/proc/maxviewdist(view = LARGEST_VIEWPORT_SIZE)
+	var/static/per_view = list()
+	if (!per_view[view])
+		per_view[view] = max(getviewsize(view))
+	return per_view[view]
 
 /// Takes a string or num view, and converts it to pixel width/height in a list(pixel_width, pixel_height)
 /proc/view_to_pixels(view)

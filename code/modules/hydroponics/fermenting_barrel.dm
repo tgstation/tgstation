@@ -10,6 +10,7 @@
 	anchored = FALSE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8)
 	/// Is the barrel currently opened?
 	var/open = FALSE
 	/// Can the barrel be opened?

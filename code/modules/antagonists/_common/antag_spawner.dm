@@ -1,4 +1,5 @@
 /obj/item/antag_spawner
+	abstract_type = /obj/item/antag_spawner
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -91,7 +92,6 @@
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
 	app_mind.set_assigned_role(SSjob.get_job_type(/datum/job/wizard_apprentice))
-	app_mind.special_role = ROLE_WIZARD_APPRENTICE
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
 ///////////BORGS AND OPERATIVES
@@ -106,7 +106,7 @@
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	/// The name of the special role given to the recruit
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	var/special_role_name = ROLE_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied
@@ -139,7 +139,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE_MIDROUND, role = ROLE_OPERATIVE_MIDROUND, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -164,7 +164,7 @@
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
-	op_mind.special_role = special_role_name
+	LAZYADD(op_mind.special_roles, special_role_name)
 
 	if(outfit)
 		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
@@ -250,7 +250,7 @@
 	borg.PossessByPlayer(C.key)
 
 	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
-	borg.mind.special_role = special_role_name
+	LAZYADD(borg.mind.special_roles, special_role_name)
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
@@ -323,8 +323,6 @@
 	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// The antag role we check if the ghosts have enabled to get the poll.
-	var/poll_role_check = ROLE_TRAITOR
 	/// The mind's special role.
 	var/role_to_play = ROLE_SYNDICATE_MONKEY
 	/// What category to ignore the poll
@@ -351,8 +349,7 @@
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
-		check_jobban = poll_role_check,
-		role = poll_role_check,
+		check_jobban = role_to_play,
 		poll_time = 10 SECONDS,
 		ignore_category = poll_ignore_category,
 		alert_pic = src,
@@ -394,7 +391,7 @@
 
 		human_mob.equipOutfit(outfit)
 
-	op_mind.special_role = role_to_play
+	LAZYADD(op_mind.special_roles, role_to_play)
 
 	do_special_things(spawned_mob, user)
 
@@ -409,7 +406,7 @@
 	outfit = /datum/outfit/contractor_partner
 	use_subtypes = FALSE
 	antag_datum = /datum/antagonist/traitor/contractor_support
-	poll_ignore_category = ROLE_TRAITOR
+	poll_ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT
 	role_to_play = ROLE_CONTRACTOR_SUPPORT
 
 /obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
@@ -426,9 +423,8 @@
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
-	poll_role_check = ROLE_TRAITOR
 	role_to_play = ROLE_SYNDICATE_MONKEY
-	poll_ignore_category = POLL_IGNORE_SYNDICATE
+	poll_ignore_category = POLL_IGNORE_SYNDICATE_MONKEY
 	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
@@ -466,4 +462,3 @@
 	internals_slot = NONE
 	belt = /obj/item/lighter/skull
 	r_hand = /obj/item/food/grown/banana
-

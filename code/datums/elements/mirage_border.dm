@@ -3,7 +3,7 @@
  */
 /datum/element/mirage_border
 
-/datum/element/mirage_border/Attach(datum/target, turf/target_turf, direction, range=world.view)
+/datum/element/mirage_border/Attach(datum/target, turf/target_turf, direction, range = (maxviewdist() - 1) / 2)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -40,3 +40,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/mirage_holder)
 /atom/movable/mirage_holder
 	name = "Mirage holder"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/// If we, hypothetically, spawned on a turf that calls init (so non-space tiles), we would be transported to the other Z, which would be very bad
+/atom/movable/mirage_holder/forceMove(atom/destination)
+	return FALSE

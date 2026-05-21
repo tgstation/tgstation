@@ -9,6 +9,7 @@
 /mob
 	density = TRUE
 	layer = MOB_LAYER
+	abstract_type = /mob
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
@@ -190,7 +191,7 @@
 	var/list/client_colours = list()
 	/// List of filter names used in the past client color update for cleanup
 	var/list/color_filter_store = list()
-	var/hud_type = /datum/hud
+	var/datum/hud/hud_type = /datum/hud
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 

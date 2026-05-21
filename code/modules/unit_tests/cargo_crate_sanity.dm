@@ -19,7 +19,9 @@
 		var/crate_value = counterlist_sum(minimum_cost.total_value)
 
 		var/obj/results = new_crate.generate(testing_floor)
-		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE, delete_unsold = TRUE, export_market = EXPORT_MARKET_STATION)
+		if(!results)
+			TEST_FAIL("Cargo crate [new_crate.type] failed to generate an object to export.")
+		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE, delete_unsold = TRUE, export_markets = list(EXPORT_MARKET_STATION))
 
 		// The value of the crate and all of it's contents.
 		var/value = counterlist_sum(export_log.total_value)

@@ -60,6 +60,7 @@
 		var/client/old_user_client = GetViewerClient()
 		if(user_image && old_user_client)
 			old_user_client.images -= user_image
+		clear_camera_chunks()
 
 	user_ref = WEAKREF(new_user) //The user_ref can still be null!
 
@@ -157,3 +158,7 @@
 
 /mob/eye/camera/remote/proc/allow_z_transition(datum/space_level/from, datum/space_level/into)
 	return from == into
+
+/mob/eye/camera/remote/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	astype(user_ref?.resolve(), /mob/living)?.on_looking_z_level_change(old_turf, new_turf)

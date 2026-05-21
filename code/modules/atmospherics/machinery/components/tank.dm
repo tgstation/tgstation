@@ -42,6 +42,8 @@
 	var/max_pressure = 46000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
+	/// Up to how much percent of the max pressure do we fill the tank on init
+	var/starting_pressure_percent = 0.5
 
 	///Reference to the gas mix inside the tank
 	var/datum/gas_mixture/air_contents
@@ -94,8 +96,8 @@
 	air_contents.temperature = T20C
 	air_contents.volume = volume
 
-	if(gas_type)
-		fill_to_pressure(gas_type)
+	if(gas_type && starting_pressure_percent > 0)
+		fill_to_pressure(gas_type, starting_pressure_percent)
 
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
@@ -141,8 +143,8 @@
 	var/pressure_limit = max_pressure * safety_margin
 
 	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.assert_gas(gastype)
-	air_contents.gases[gastype][MOLES] += moles_to_add
+
+	air_contents.adjust_gas(gastype, moles_to_add)
 	air_contents.archive()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
@@ -438,8 +440,9 @@
 
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
-	fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * 0.5))
-	fill_to_pressure(/datum/gas/nitrogen, safety_margin = (N2STANDARD * 0.5))
+	if(starting_pressure_percent > 0)
+		fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * starting_pressure_percent))
+		fill_to_pressure(/datum/gas/nitrogen, safety_margin = (N2STANDARD * starting_pressure_percent))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
@@ -590,8 +593,8 @@
 	. = FALSE
 	if(!stack.material_type)
 		balloon_alert(user, "invalid material!")
-	var/datum/material/stack_mat = GET_MATERIAL_REF(stack.material_type)
-	if(!(MAT_CATEGORY_RIGID in stack_mat.categories))
+	var/datum/material/stack_mat = SSmaterials.get_material(stack.material_type)
+	if(!(stack_mat.mat_flags & MATERIAL_CLASS_RIGID))
 		to_chat(user, span_notice("This material doesn't seem rigid enough to hold the shape of a tank..."))
 		return
 

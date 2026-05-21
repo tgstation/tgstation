@@ -72,3 +72,6 @@ TGS_PROTECT_DATUM(/datum/tgs_api)
 
 /datum/tgs_api/proc/TriggerEvent(event_name, list/parameters, wait_for_completion)
 	return FALSE
+
+/datum/tgs_api/proc/TriggerDeployment()
+	return TGS_UNIMPLEMENTED

@@ -10,16 +10,16 @@ export enum ConnectionStyle {
   SUBWAY_SHARP = 'subway sharp',
 }
 
-export type Position = {
+export type Coordinates = {
   x: number;
   y: number;
 };
 
 export type Connection = {
   // X, Y starting point
-  from: Position;
+  from: Coordinates;
   // X, Y ending point
-  to: Position;
+  to: Coordinates;
   // Color of the line, defaults to blue
   color?: string;
   // Type of line - Curvy or Straight / angled, defaults to curvy
@@ -58,7 +58,7 @@ export const Connections = (props: {
         const from = val.from;
         const to = val.to;
         if (!to || !from) {
-          return;
+          return null;
         }
 
         val.color = val.color || 'blue';

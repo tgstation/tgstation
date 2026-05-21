@@ -9,7 +9,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { formatPower } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -47,12 +47,13 @@ const TurbineDisplay = (props) => {
         <LabeledList.Item label="Intake Regulator">
           <NumberInput
             animated
+            tickWhileDragging
             value={data.regulator * 100}
             unit="%"
             step={1}
             minValue={1}
             maxValue={100}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('regulate', {
                 regulate: value * 0.01,
               })

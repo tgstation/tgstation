@@ -113,7 +113,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cubannachos
-	name = "Cuban nachos"
+	name = "cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon = 'icons/obj/food/mexican.dmi'
 	icon_state = "cubannachos"

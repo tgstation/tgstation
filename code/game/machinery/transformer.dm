@@ -92,7 +92,7 @@
 
 	playsound(src.loc, 'sound/items/tools/welder.ogg', 50, TRUE)
 	victim.emote("scream") // It is painful
-	victim.adjustBruteLoss(max(0, 80 - victim.getBruteLoss())) // Hurt the human, don't try to kill them though.
+	victim.adjust_brute_loss(max(0, 80 - victim.get_brute_loss())) // Hurt the human, don't try to kill them though.
 
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(0.5 SECONDS)

@@ -1,0 +1,25 @@
+.theme-operating_computer {
+  .Layout__content {
+    background-image: url('../assets/bg-deforest.svg');
+    background-size: 90%;
+  }
+  // Base
+  --color-base: hsl(150, 100%, 18%);
+  --color-primary: hsl(from var(--color-base) h s calc(l + 5));
+  --color-border-primary: hsla(0, 0%, 100%, 0.75);
+  --secondary-lightness-adjustment: -10;
+  --base-gradient-spread: 0;
+
+  // Components
+  --button-background-selected: hsl(0, 90.3%, 32.35%);
+  --button-background-caution: hsl(29.5, 90.95%, 39.02%);
+  --button-background-danger: hsl(61.15, 100%, 30.78%);
+  --button-border-radius: 0;
+
+  --collapsible-background-selected: hsl(0, 90.3%, 32.35%);
+  --collapsible-background-caution: hsl(29.5, 90.95%, 39.02%);
+  --collapsible-background-danger: hsl(61.15, 100%, 30.78%);
+
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+  --tab-background-selected: var(--color-base);
+}

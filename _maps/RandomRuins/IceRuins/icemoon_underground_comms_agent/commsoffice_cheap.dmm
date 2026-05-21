@@ -8,7 +8,11 @@
 	pixel_x = -2
 	},
 /obj/item/paper/monitorkey,
-/obj/item/paperwork,
+/obj/item/radio/intercom/syndicate/freerange{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/item/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "b" = (
@@ -39,9 +43,6 @@
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "q" = (
-/obj/item/radio/intercom/syndicate/freerange{
-	pixel_x = -31
-	},
 /obj/machinery/modular_computer/preset{
 	dir = 4
 	},
@@ -112,7 +113,7 @@
 /area/ruin/comms_agent)
 "U" = (
 /obj/structure/closet/crate,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,

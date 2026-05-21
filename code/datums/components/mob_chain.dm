@@ -171,7 +171,7 @@
 	SIGNAL_HANDLER
 	if (forced)
 		return
-	back?.adjustStaminaLoss(amount, forced = forced)
+	back?.adjust_stamina_loss(amount, forced = forced)
 
 /// On damage or heal, affect our furthest segment
 /datum/component/mob_chain/proc/on_adjust_damage(mob/living/our_mob, type, amount, forced)
@@ -180,13 +180,13 @@
 		return
 	switch (type)
 		if(BRUTE)
-			back.adjustBruteLoss(amount, forced = forced)
+			back.adjust_brute_loss(amount, forced = forced)
 		if(BURN)
-			back.adjustFireLoss(amount, forced = forced)
+			back.adjust_fire_loss(amount, forced = forced)
 		if(TOX)
-			back.adjustToxLoss(amount, forced = forced)
+			back.adjust_tox_loss(amount, forced = forced)
 		if(OXY) // If all segments are suffocating we pile damage backwards until our ass starts dying forwards
-			back.adjustOxyLoss(amount, forced = forced)
+			back.adjust_oxy_loss(amount, forced = forced)
 	return COMPONENT_IGNORE_CHANGE
 
 /// Special handling for if damage is delegated to a mob's limbs instead of its overall damage
@@ -195,9 +195,9 @@
 	if (isnull(back))
 		return
 	if (brute != 0)
-		back.adjustBruteLoss(brute, updating_health = FALSE)
+		back.adjust_brute_loss(brute, updating_health = FALSE)
 	if (burn != 0)
-		back.adjustFireLoss(burn, updating_health = FALSE)
+		back.adjust_fire_loss(burn, updating_health = FALSE)
 	if (brute != 0 || burn != 0)
 		back.updatehealth()
 	return COMPONENT_PREVENT_LIMB_DAMAGE

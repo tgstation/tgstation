@@ -11,6 +11,15 @@
 	priority = TEST_LONGER
 	var/monkey_timer = 30 SECONDS
 	var/monkey_angry_nth = 5 // every nth monkey will be angry
+	var/monkey_weapon_index = 1 // which weapon to give the next angry monkey
+	var/list/monkey_weapon_list = list(
+		/obj/item/knife/shiv,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/energy/laser,
+		/obj/item/melee/baseball_bat,
+		/obj/item/melee/baton,
+		/obj/item/storage/toolbox,
+	)
 
 /datum/unit_test/monkey_business/Run()
 	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
@@ -19,8 +28,12 @@
 		monkey.set_species(/datum/species/monkey)
 		monkey.set_name("Monkey [monkey_id]")
 		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS
-			monkey.put_in_active_hand(new /obj/item/knife/shiv)
+			var/obj/next_weapon = monkey_weapon_list[monkey_weapon_index]
+			monkey_weapon_index = (monkey_weapon_index % length(monkey_weapon_list)) + 1
+			monkey.put_in_active_hand(new next_weapon())
 			new /datum/ai_controller/monkey/angry(monkey)
+			if(ispath(next_weapon, /obj/item/gun))
+				monkey.ai_controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.set_blackboard_key(BB_MONKEY_TARGET_MONKEYS, TRUE)

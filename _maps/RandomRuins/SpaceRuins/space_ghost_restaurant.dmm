@@ -29,7 +29,7 @@
 "eb" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "en" = (
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -60,11 +60,11 @@
 "hp" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "iF" = (
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "jd" = (
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless,
@@ -148,7 +148,7 @@
 "Bv" = (
 /obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "BA" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/effect/decal/cleanable/glass,
@@ -236,7 +236,7 @@
 "Ng" = (
 /obj/item/stack/tile/iron/showroomfloor,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ns" = (
 /obj/item/chair,
 /obj/item/clothing/head/utility/surgerycap,
@@ -272,7 +272,7 @@
 "Rm" = (
 /obj/item/circuitboard/machine/restaurant_portal,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "RI" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron/cafeteria/airless,

@@ -3,7 +3,6 @@
 #define GOLIATH_PUPIL_COLOR COLOR_RED
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
-///bonus of the goliath: you can swim through space!
 /datum/status_effect/organ_set_bonus/goliath
 	id = "organ_set_bonus_goliath"
 	organs_needed = 4
@@ -63,6 +62,7 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 	can_smoothen_out = FALSE
+	shade_color = "garnet"
 
 	var/obj/item/goliath_infuser_hammer/hammer
 
@@ -145,7 +145,7 @@
 	var/mob/living/fresh_pancake = target
 
 	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
+	if(!fresh_pancake.has_faction(list(FACTION_MINING, FACTION_BOSS)))
 		// Target is not a nemesis, so attack normally.
 		return
 

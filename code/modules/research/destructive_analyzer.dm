@@ -14,6 +14,10 @@
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 
+/obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY) //This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
+
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
@@ -61,8 +65,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
-	return ..()
+	. = ..()
+	if(panel_open && !loaded_item)
+		return // use parent call state
+
+	icon_state = "[base_icon_state][loaded_item ? "_l" : ""]"
 
 /obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -124,13 +131,9 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	return NONE
 
-//This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
-/obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
-
 //We need to call default_deconstruction_screwdriver here since its parent will call screwdriver_act on this level which will stop us from ever deconstructing.
 /obj/machinery/rnd/destructive_analyzer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 //We need to let wire cutter in (not block) so we can analyze alien wirecutters.
 /obj/machinery/rnd/destructive_analyzer/wirecutter_act(mob/living/user, obj/item/tool)

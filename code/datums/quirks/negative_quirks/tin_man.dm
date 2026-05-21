@@ -17,7 +17,7 @@
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/cybernetic/surplus,
 	)
 	var/list/possible_organ_slots = organ_slots.Copy()
-	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+	if(!CAN_HAVE_BLOOD(human_holder))
 		possible_organ_slots -= ORGAN_SLOT_HEART
 	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
 		possible_organ_slots -= ORGAN_SLOT_LUNGS

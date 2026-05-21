@@ -8,6 +8,7 @@
 	name = "projectile"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
+	abstract_type = /obj/projectile
 	density = FALSE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -233,8 +234,6 @@
 	var/log_override = FALSE
 	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and shit.
 	var/do_not_log = FALSE
-	/// We ignore mobs with these factions.
-	var/list/ignored_factions
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
 	var/turf/last_tick_turf
@@ -262,7 +261,7 @@
 	var/damage_falloff_tile
 	/// How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
 	var/stamina_falloff_tile
-	/// How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	/// How much we want to drop both wound_bonus and exposed_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	/// How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
@@ -301,7 +300,7 @@
 	pixels_moved_last_tile -= ICON_SIZE_ALL
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
-		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+		exposed_wound_bonus = max(0, exposed_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
 		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)
@@ -496,8 +495,12 @@
 		return
 
 	last_impact_turf = get_turf(target)
+
+	// If our target has TRAIT_DESIGNATED_TARGET, treat accuracy_falloff as 0
+	var/effective_accuracy = HAS_TRAIT(target, TRAIT_DESIGNATED_TARGET) ? 0 : accuracy_falloff
+
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(last_impact_turf, starting)), 5, 100))
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (effective_accuracy * get_dist(last_impact_turf, starting)), 5, 100))
 	var/impact_result = process_hit_loop(select_target(last_impact_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
 		return
@@ -630,6 +633,8 @@
 			var/mob/living/living_target = target
 			living_target.block_projectile_effects()
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_LASERS) && (armor_flag & LASER))
+		return FALSE
 	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE
@@ -637,9 +642,9 @@
 			var/mob/firer_mob = firer
 			if (firer_mob.buckled == target)
 				return FALSE
-	if(ignored_factions?.len && ismob(target) && !direct_target)
+	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(faction_check(target_mob.faction, ignored_factions))
+		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
@@ -812,7 +817,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!deletion_queued && !hitscan)
-		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
+		process_movement(max(floor(speed)), tile_limit = TRUE)
 
 /// Makes projectile home onto the passed target with minor inaccuracy
 /obj/projectile/proc/set_homing_target(atom/target)
@@ -902,7 +907,7 @@
 		pixels_to_move = SSprojectiles.max_pixels_per_tick
 
 	overrun += MODULUS(pixels_to_move, 1)
-	pixels_to_move = FLOOR(pixels_to_move, 1)
+	pixels_to_move = floor(pixels_to_move)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 
 	// Registering turf entries is done here instead of a connect_loc because else it could be called multiple times per tick and waste performance
@@ -973,8 +978,8 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = distance_to_move >= x_to_border ? SIGN(movement_vector.pixel_x) : 0
-		var/y_shift = distance_to_move >= y_to_border ? SIGN(movement_vector.pixel_y) : 0
+		var/x_shift = distance_to_move >= x_to_border ? sign(movement_vector.pixel_x) : 0
+		var/y_shift = distance_to_move >= y_to_border ? sign(movement_vector.pixel_y) : 0
 		var/moving_turfs = x_shift || y_shift
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX
@@ -1266,6 +1271,11 @@
 				break
 			source_loc = new_loc
 		pixel_y = pixel_y % (ICON_SIZE_X / 2)
+
+	// We've got moved by turf offsets
+	if (starting != source_loc)
+		starting = source_loc
+		forceMove(source_loc)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)

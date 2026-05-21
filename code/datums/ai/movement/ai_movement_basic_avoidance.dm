@@ -21,4 +21,4 @@
 
 /// Move immediately and don't update our facing
 /datum/ai_movement/basic_avoidance/backstep
-	move_flags = MOVEMENT_LOOP_START_FAST | MOVEMENT_LOOP_NO_DIR_UPDATE
+	move_flags = MOVEMENT_LOOP_START_INSTANT | MOVEMENT_LOOP_NO_DIR_UPDATE

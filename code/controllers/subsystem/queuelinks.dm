@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(queuelinks)
 	name = "Queue Links"
-	flags = SS_NO_FIRE | SS_NO_INIT
+	ss_flags = SS_NO_FIRE | SS_NO_INIT
 	///assoc list of pending queues, id = /datum/queue_link
 	var/list/queues = list()
 
