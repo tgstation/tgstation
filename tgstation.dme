@@ -3395,6 +3395,7 @@
 #include "code\modules\antagonists\blood_worm\actions\leech_blood.dm"
 #include "code\modules\antagonists\blood_worm\actions\revive_host.dm"
 #include "code\modules\antagonists\blood_worm\actions\spit_blood.dm"
+#include "code\modules\antagonists\blood_worm\actions\worm_head.dm"
 #include "code\modules\antagonists\brainwashing\brainwashing.dm"
 #include "code\modules\antagonists\brother\brother.dm"
 #include "code\modules\antagonists\changeling\cellular_emporium.dm"
