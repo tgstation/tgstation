@@ -354,3 +354,13 @@
       overfull-ness
   SmArtKar:
   - bugfix: Fixed shale and siderite biomes not spawning any features or mobs
+2026-05-21:
+  Wisemonster:
+  - code_imp: Nuclear reinforcements will now poll users with the mid-round nuke op
+      pref enabled, rather than the round-start pref.
+  lelandkemble:
+  - qol: Singularity beacon pulls singularities even if they were created after the
+      beacon's activation
+  - bugfix: right clicking an abandoned crate with a multitool no longer can blow
+      you up
+  - bugfix: Sealable biscuits can only be sealed once
