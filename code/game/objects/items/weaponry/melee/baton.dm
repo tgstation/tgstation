@@ -1009,18 +1009,15 @@
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
-		an unholy union of a mace and a cattleprod. This compliance device was designed to put a stop to ruffians, \
-		scoundrels, ne'er-do-wells and criminals in their tracks. Wherever they may rear their ugly heads.<br>\
+		an unholy union of mace and cattleprod. Designed to stop criminals in their tracks, Nanotrasen security is \
+		rarely without their trusty stun baton. Assuming they haven't lost it somewhere.<br>\
 		<br>\
-		A symbol of Nanotrasen security forces the galaxy over. The stun baton is the primary tool officers employ \
-		against the unlawful scum and villainy of the Spinward and abroad. Trained to 'baton first, interrogate later', \
-		Nanotrasen security has long since earned itself a mixed reputation. The device is able to rapidly shut down the \
-		central nervous system of a criminal with only a few direct applications of the conductive striking head. As such, \
-		few would-be troublemakers want to find themselves on the wrong end of an officer brandishing a baton. At least, \
-		not without a quick escape plan in mind.<br>\
+		Trained to 'baton first, interrogate later', Nanotrasen security has long since earned itself a mixed reputation. \
+		The device is able to rapidly shut down the central nervous system of a criminal with only a few direct applications \
+		of the conductive striking head.<br>\
 		<br>\
 		TerraGov law enforcement has avoided the adoption of stun batons due to various ethical dilemmas posed by \
-		their usage. Studies in their usage have shown numerous longterm physical and mental ramifications caused by \
+		their utilization. Studies of their usage have shown numerous longterm physical and mental ramifications caused by \
 		being struck by a human cattleprod. Citizens' rights advocacy groups protest against the proliferation of stun \
 		batons as a policing tool, arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, \
 		has had no such qualms when deploying stun batons as a compliance measure across all of their existing stations \
@@ -1033,31 +1030,14 @@
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
-		the most frequently encountered example of Cybersun Industries weaponry. Extremely similar to Nanotrasen's \
-		own Secure Apprehension Device, the baton is able to induce rapid CNS disruption in a target to render them \
-		helpless. It is also capable of devastating blunt force trauma if used as a bludgeon. The baton is also \
-		able to be telescopically collapsed and deployed, making for a discreet and versatile tool.<br>\
+		the most frequently encountered example of Cybersun Industries weaponry. Similar in purpose to Nanotrasen's \
+		own Secure Apprehension Device, the baton is capable of inducing rapid CNS disruption in a target to render them \
+		helpless. It also makes for an effective bludgeon, another quality it shares with the stun baton. To maximize \
+		ease of concealment, the baton is also able to be telescopically collapsed, to then be rapidly deployed at the \
+		pull of a trigger.<br>\
 		<br>\
 		The contractor baton is famously associated with contractors, from which it has earned its name. Elite Cybersun \
-		field agents. While the standard agent would often be tasked with sabotage, terrorism, murder or theft, contractors \
-		have the critical task of kidnapping high value personnel. Anyone with the potential to possess classified or \
-		sensitive data about Nanotrasen could find themselves a target for Cybersun. The company relentlessly employs \
-		contractors to probe Nanotrasen for any vulnerabilities that they can unearth amongst its crew. <br>\
-		<br>\
-		It has been observed that Cybersun contractors have a preferance for live capture of their victims. Which explains \
-		why Cybersun has gone to such lengths to provide their agents with a versatile nonlethal weapon. However, it seems that \
-		agents will just as readily snatch corpses if the need requires it. Leading many experts within Nanotrasen to speculate \
-		that even death may not necessarily halt their adversaries attempts at pillaging corporate secrets. <br>\
-		<br>\
-		In light of this 'security vulnerability', cremation has become more openly endorsed and encouraged amongst Nanotrasen \
-		staffers, with 'cremation benefits' provided to the next of kin of any Nanotrasen employee who willingly agrees to have their \
-		remains incinerated upon their potential unrecoverable demise. To most employees, this is assumed to simply be an \
-		space debris minimization initiative. Years of space burials have resulted in star systems becoming increasingly \
-		impossible to traverse without smashing the hull through the dessicated remains of the dozens of spacers who have \
-		been laid to rest via their station's mass driver. Unaware that they were too close to a gravity well for them \
-		not to become a new microsatellite for the various planetary bodies nearby.<br>\
-		<br>\
-		It goes without saying that there have been numerous unverified reports of Cybersun shuttles setting up 'corpse nets' \
-		kept in matched orbit with Nanotrasen stations in the hopes that they might spirit away the discarded remains of any \
-		fallen crew. This is, of course, total nonsense. They do, however, absolutely raid morgues and planetside burial grounds." \
+		field agents sent to kidnap and extract high value enemy personnel for interrogation. Anyone with the potential to \
+		possess classified or sensitive data about Nanotrasen could find themselves a target for Cybersun. The company \
+		relentlessly employs contractors to probe Nanotrasen for vulnerabilities, starting with their employees.\
 	)
