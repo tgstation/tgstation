@@ -1,4 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - bugfix: "Fixes an issue were bots would try to blacklist qdeleted atoms"

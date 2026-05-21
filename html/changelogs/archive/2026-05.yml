@@ -355,6 +355,11 @@
   SmArtKar:
   - bugfix: Fixed shale and siderite biomes not spawning any features or mobs
 2026-05-21:
+  CabinetOnFire:
+  - bugfix: Fixes an issue were bots would try to blacklist qdeleted atoms
+  EnterTheJake:
+  - bugfix: Attaching a different head onto a Aura Heretic's body won't apply the
+      aura.
   Wisemonster:
   - code_imp: Nuclear reinforcements will now poll users with the mid-round nuke op
       pref enabled, rather than the round-start pref.
