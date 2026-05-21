@@ -19,3 +19,11 @@
 	// 	return FALSE
 
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/extend_head(host)
+
+	grant_bloodworm_head(host)
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/retract_head(host)
+
+	remove_bloodworm_head(host)
