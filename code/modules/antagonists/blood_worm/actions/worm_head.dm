@@ -4,3 +4,18 @@
 	desc = "Extend or retract worm head on your host"
 
 	button_icon_state = "worm_head"
+
+	cooldown_time = 5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/IsAvailable(feedback)
+	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
+		return FALSE
+
+	var/mob/living/basic/blood_worm/worm = target
+
+	// if (worm.host?.is_mouth_covered())
+	// 	if (feedback)
+	// 		owner.balloon_alert(owner, "mouth is covered!")
+	// 	return FALSE
+
+	return ..()
