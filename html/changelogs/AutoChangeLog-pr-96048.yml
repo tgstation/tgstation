@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Singularity beacon pulls singularities even if they were created after the beacon's activation"
