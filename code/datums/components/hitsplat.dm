@@ -12,8 +12,6 @@
 		list(-10, 12) = null,
 		list(0, 22) = null,
 	)
-	///all our current active hitsplats
-	var/list/current_hitsplats = list()
 
 	var/obj/effect/overlay/vis/hitsplat/hitsplat_type = /obj/effect/overlay/vis/hitsplat/debugging
 	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
@@ -112,8 +110,11 @@
 	vis_flags = VIS_INHERIT_PLANE
 	///the damage amount we're displaying
 	var/damage_amount = 0
+	/// Percision of rounding for damage number
 	var/rounding = 1
+	/// Controls how accurate we try and be to runescape visuals, otherwise we go for consise debugging information
 	var/lore_accurate = TRUE
+	/// Color of text of image
 	var/text_color
 
 /obj/effect/overlay/vis/hitsplat/Initialize(mapload)
