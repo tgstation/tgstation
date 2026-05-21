@@ -20,11 +20,11 @@
 	var/only_attacks = FALSE
 
 /datum/component/hitsplat/Initialize(hitsplat_type, only_attacks)
+	if(!ismob(parent))
+		return COMPONENT_INCOMPATIBLE
 	if(hitsplat_type)
 		src.hitsplat_type = hitsplat_type
 	src.only_attacks = only_attacks
-	if(!ismob(parent))
-		return ELEMENT_INCOMPATIBLE
 
 /datum/component/hitsplat/RegisterWithParent()
 	if(only_attacks)
