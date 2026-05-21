@@ -3,4 +3,4 @@
 	name = "Worm head"
 	desc = "Extend or retract worm head on your host"
 
-	button_icon_state = "inject_blood"
+	button_icon_state = "worm_head"
