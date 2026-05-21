@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - code_imp: "Nuclear reinforcements will now poll users with the mid-round nuke op pref enabled, rather than the round-start pref."
