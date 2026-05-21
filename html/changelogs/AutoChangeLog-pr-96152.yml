@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Attaching a different head onto a Aura Heretic's body won't apply the aura."
