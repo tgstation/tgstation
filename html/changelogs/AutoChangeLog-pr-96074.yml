@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "right clicking an abandoned crate with a multitool no longer can blow you up"
