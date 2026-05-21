@@ -364,3 +364,6 @@
   - bugfix: right clicking an abandoned crate with a multitool no longer can blow
       you up
   - bugfix: Sealable biscuits can only be sealed once
+  mcbalaam:
+  - rscadd: Big Manipulators now use a single task loop instead of two separate point
+      loops.
