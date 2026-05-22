@@ -29878,6 +29878,8 @@
 /obj/structure/closet/l3closet/janitor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "kpj" = (

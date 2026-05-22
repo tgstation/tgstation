@@ -139,7 +139,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE_MIDROUND, role = ROLE_OPERATIVE_MIDROUND, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return

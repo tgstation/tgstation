@@ -331,7 +331,7 @@
 	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
-		colossus.say("Perish.", spans = list("colossus", "yell"))
+		colossus.say("Perish.", spans = list(SPAN_COLOSSUS, SPAN_YELL))
 
 	SLEEP_CHECK_DEATH(1.5 SECONDS, firer) //gives dumbasses in melee range a slim chance to retreat
 	var/finale_counter = 10

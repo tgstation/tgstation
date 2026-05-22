@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Restocking a vending machine can no longer produce a zero credit holochip."

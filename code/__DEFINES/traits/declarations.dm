@@ -1663,4 +1663,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be backstabbed with a crusher
 #define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
 
+/// Makes the owner immune from the pacification from synthpax
+#define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
+
 // END TRAIT DEFINES

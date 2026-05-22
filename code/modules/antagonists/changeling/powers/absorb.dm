@@ -227,9 +227,9 @@
 		return
 	ghostize(TRUE)
 
-/mob/eye/imaginary_friend/hivemind/ghostize(can_reenter_corpse, admin_ghost)
+/mob/eye/imaginary_friend/hivemind/ghostize(can_reenter_corpse, forced)
 	. = ..()
-	if(admin_ghost)
+	if(forced)
 		return
 
 	alert_hivemind("You sense the presence of [real_name] disappear from the hivemind.")

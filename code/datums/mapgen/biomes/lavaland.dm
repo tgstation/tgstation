@@ -43,7 +43,9 @@
 /datum/biome/lavaland/shale
 	open_turf_type = /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/random/volcanic/shale
+	fauna_density = 6
 	flora_density = 5
+	feature_density = 0.25
 
 	// Higher chance of lobstrocities, goldgrubs and brimdemons, but no bileworms
 	fauna_types = list(
@@ -76,7 +78,9 @@
 /datum/biome/lavaland/red_rock
 	open_turf_type = /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/random/volcanic/red_rock
+	fauna_density = 6
 	flora_density = 4
+	feature_density = 0.25
 
 	// Bileworms, raptors and watchers, but few goliaths
 	fauna_types = list(

@@ -323,3 +323,68 @@
       capitalized properly.
   timothymtorres:
   - map: Add human limbs to the holodeck medsim organ crate
+2026-05-19:
+  ArcaneMusic:
+  - bugfix: Hydroponics trays will no longer produce pollen particles if the plant
+      in the tray has died.
+  - bugfix: Restocking a vending machine can no longer produce a zero credit holochip.
+  SmArtKar:
+  - bugfix: Fixed changeling tentacles not being able to fire
+  - bugfix: Pre-equipped shaft miners and handyman assistants now start with imprinted
+      PDAs like the rest of the job outfits.
+  TheRyeGuyWhoWillNowDie:
+  - map: fixed active turfs on shoe factory ruin
+  Wisemonster:
+  - rscadd: Added beartraps to the janitor closets of wawastation and icebox
+2026-05-20:
+  JohnFulpWillard:
+  - bugfix: Mafia players now get sent back to their bodies again post-game.
+  - admin: Admin players aren't forcefully put back into aghosted bodies after using
+      a temporary body spawner.
+  - admin: Changing lobby music now updates for people in the lobby.
+  Melbert:
+  - bugfix: Fixed issues that arise from picking up two items cuffed to the same person
+  - bugfix: Fixed issues that arise from picking up two items cuffed to two different
+      people
+  - bugfix: Fixed issues that arise from traveling z-levels while having a cuffed
+      item
+  RusselNotSCP:
+  - qol: Aperitivo Liqueur's hunger inducing effect has been reduced
+  - qol: The Negroni and Spritz cocktails no longer induce hunger and now only reduce
+      overfull-ness
+  SmArtKar:
+  - bugfix: Fixed shale and siderite biomes not spawning any features or mobs
+2026-05-21:
+  CabinetOnFire:
+  - bugfix: Fixes an issue were bots would try to blacklist qdeleted atoms
+  EnterTheJake:
+  - bugfix: Attaching a different head onto a Aura Heretic's body won't apply the
+      aura.
+  Wisemonster:
+  - code_imp: Nuclear reinforcements will now poll users with the mid-round nuke op
+      pref enabled, rather than the round-start pref.
+  lelandkemble:
+  - qol: Singularity beacon pulls singularities even if they were created after the
+      beacon's activation
+  - bugfix: right clicking an abandoned crate with a multitool no longer can blow
+      you up
+  - bugfix: Sealable biscuits can only be sealed once
+  mcbalaam:
+  - rscadd: Big Manipulators now use a single task loop instead of two separate point
+      loops.
+2026-05-22:
+  SmArtKar:
+  - bugfix: Crematorium can no longer destroy indestructible objects
+  - code_imp: Cleaned up crematorium code
+  - bugfix: Bubblegun suicide no longer makes the user yell out HTML
+  - bugfix: Beepsky Smash beepskys now use proper text formatting
+  - code_imp: Cleaned up say span code in a few places
+  Y0SH1M4S73R:
+  - rscadd: Committing suicide with an empty soul shard seals your soul within it.
+  - balance: Taking damage from an attack while dosed with synthpax negates the pacification
+      from the synthpax for an amount of time equal to the damage taken, up to a maximum
+      of 5 seconds.
+  lelandkemble:
+  - bugfix: about a billion runtimes per round have been fixed, & you'll no longer
+      repeat what you said last when you're forced to speak
+  - bugfix: The dead can't drive
