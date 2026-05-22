@@ -430,7 +430,7 @@
 	air_contents.adjust_gas(/datum/gas/nitrous_oxide, (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD)
 
 /obj/structure/closet/body_bag/environmental/hardlight
-	name = "hardlight bodybag"
+	name = "hardlight body bag"
 	desc = "A hardlight bag for storing bodies. Resistant to space."
 	icon_state = "holobag_med"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -443,8 +443,8 @@
 		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight
-	name = "hardlight prisoner bodybag"
-	desc = "A hardlight bag for storing bodies. Resistant to space, can be sinched to prevent escape."
+	name = "hardlight prisoner body bag"
+	desc = "A hardlight bag for storing bodies. Resistant to space, can be cinched to prevent escape."
 	icon_state = "holobag_sec"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
@@ -456,7 +456,7 @@
 		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/stasis
-	name = "stasis bodybag"
+	name = "stasis body bag"
 	desc = "A disposable bodybag designed to keep its contents in stasis, preventing decay and further injury. \
 		The bag itself cannot maintain stasis for long, and will eventually fall apart."
 	max_integrity = 300
@@ -577,6 +577,7 @@
 	take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
 
 /obj/structure/closet/body_bag/environmental/stasis/after_open(mob/living/user, force = FALSE)
+	. = ..()
 	if(COOLDOWN_FINISHED(src, freeze_sound_cd) && (locate(/mob/living) in loc))
 		playsound(src, 'sound/effects/spray.ogg', 25, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE, frequency = 0.4)
 	COOLDOWN_START(src, freeze_sound_cd, 2 SECONDS)
@@ -588,6 +589,7 @@
 	RegisterSignal(target, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(skip_to_attack_hand))
 
 /obj/structure/closet/body_bag/environmental/stasis/after_close(mob/living/user)
+	. = ..()
 	if(COOLDOWN_FINISHED(src, freeze_sound_cd) && (locate(/mob/living) in src))
 		playsound(src, 'sound/effects/spray.ogg', 25, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE, frequency = 0.5)
 	COOLDOWN_START(src, freeze_sound_cd, 2 SECONDS)
