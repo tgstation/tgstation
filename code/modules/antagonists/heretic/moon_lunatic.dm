@@ -15,6 +15,9 @@
 	var/mob/living/carbon/human/ascended_body
 	// Our objective
 	var/datum/objective/lunatic/lunatic_obj
+	// Actions granted by this datum, tracked for proper cleanup on body transfer
+	var/datum/action/cooldown/lunatic_track/moon_track
+	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch
 
 /datum/antagonist/lunatic/on_gain()
 	// Masters gain an objective before so we dont want duplicates
@@ -44,8 +47,8 @@
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
-	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
-	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
+	moon_track = new /datum/action/cooldown/lunatic_track()
+	mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 
@@ -53,6 +56,9 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.remove_faction(FACTION_HERETIC)
+	REMOVE_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
+	QDEL_NULL(moon_track)
+	QDEL_NULL(mad_touch)
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic
