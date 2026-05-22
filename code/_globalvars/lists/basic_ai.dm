@@ -1,5 +1,7 @@
 ///all basic ai subtrees
 GLOBAL_LIST_EMPTY(ai_subtrees)
+///all singleton behavior tree node instances (composites, decorators) indexed by typepath
+GLOBAL_LIST_EMPTY(bt_nodes)
 
 ///basic ai controllers based on status
 GLOBAL_LIST_INIT(ai_controllers_by_status, list(

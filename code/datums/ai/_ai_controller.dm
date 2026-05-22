@@ -69,6 +69,12 @@ multiple modular subtrees with behaviors
 	var/able_to_plan = TRUE
 	/// are we currently on failed planning timeout?
 	var/on_failed_planning_timeout = FALSE
+	/// Assoc list of blackboard key → list of /datum/bt_node/decorator nodes watching that key.
+	/// Populated by setup_bt_observers() when the controller possesses a pawn. Nulled on unpossess.
+	var/list/bt_observer_by_key = null
+	/// Flat list of decorators that registered pawn-signal observers (via get_pawn_observe_signals()).
+	/// Used by teardown_bt_observers() to call unregister_pawn_observer() on each.
+	var/list/bt_pawn_observer_nodes = null
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -119,14 +125,20 @@ multiple modular subtrees with behaviors
 	planning_subtrees = typepaths_of_new_subtrees
 	init_subtrees()
 
-///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
+///Loops over the subtrees in planning_subtrees and resolves typepaths to singleton refs.
+/// Checks GLOB.bt_nodes (new BT composites/decorators), GLOB.ai_subtrees (legacy planning subtrees),
+/// and SSai_behaviors.ai_behaviors (behavior leaf nodes) in that order.
+/// ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()
 	if(!LAZYLEN(planning_subtrees))
 		return
 	var/list/temp_subtree_list = list()
-	for(var/subtree in planning_subtrees)
-		var/subtree_instance = GLOB.ai_subtrees[subtree]
-		temp_subtree_list += subtree_instance
+	for(var/entry in planning_subtrees)
+		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(entry)
+		if(isnull(node_instance))
+			stack_trace("[type]'s planning_subtrees contains unknown entry: [entry]")
+			continue
+		temp_subtree_list += node_instance
 	planning_subtrees = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
@@ -163,6 +175,7 @@ multiple modular subtrees with behaviors
 	set_new_cells()
 
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
+	setup_bt_observers()
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER
@@ -304,6 +317,8 @@ multiple modular subtrees with behaviors
 		return // instantiated without an applicable pawn, fine
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_UNPOSSESSED_PAWN)
+	teardown_bt_observers()
+	reset_bt_tick_states()
 	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 	clear_able_to_run()
@@ -318,6 +333,99 @@ multiple modular subtrees with behaviors
 	if(destroy)
 		qdel(src)
 
+/**
+ * Walk the resolved planning_subtrees tree and register blackboard key change signals
+ * on the pawn for every decorator with observer_abort != BT_ABORT_NONE.
+ * Only registers one signal per watched key regardless of how many decorators watch it.
+ * Called at the end of PossessPawn().
+ */
+/datum/ai_controller/proc/setup_bt_observers()
+	if(!LAZYLEN(planning_subtrees))
+		return
+	var/list/to_visit = planning_subtrees.Copy()
+	var/index = 1
+	while(index <= length(to_visit))
+		var/datum/bt_node/node = to_visit[index++]
+		if(istype(node, /datum/bt_node/decorator))
+			var/datum/bt_node/decorator/dec = node
+			if(dec.observer_abort != BT_ABORT_NONE && LAZYLEN(dec.observed_keys))
+				for(var/key in dec.observed_keys)
+					if(isnull(bt_observer_by_key))
+						bt_observer_by_key = list()
+					if(isnull(bt_observer_by_key[key]))
+						bt_observer_by_key[key] = list()
+						RegisterSignal(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), PROC_REF(on_observed_blackboard_change))
+						RegisterSignal(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key), PROC_REF(on_observed_blackboard_change))
+					bt_observer_by_key[key] += dec
+			if(LAZYLEN(dec.get_pawn_observe_signals()))
+				if(isnull(bt_pawn_observer_nodes))
+					bt_pawn_observer_nodes = list()
+				if(!(dec in bt_pawn_observer_nodes)) // deduplicate: same singleton may appear twice in a tree
+					bt_pawn_observer_nodes += dec
+					dec.register_pawn_observer(pawn)
+			if(dec.child)
+				to_visit += dec.child
+		else if(istype(node, /datum/bt_node/composite))
+			var/datum/bt_node/composite/comp = node
+			if(comp.children)
+				to_visit += comp.children
+		else if(istype(node, /datum/bt_node/subtree))
+			var/datum/bt_node/subtree/sub = node
+			if(sub.root)
+				to_visit += sub.root
+
+/// Unregisters all observer signals (blackboard + pawn) from the pawn and nulls the observer maps.
+/// Called at the start of UnpossessPawn() while pawn is still valid.
+/datum/ai_controller/proc/teardown_bt_observers()
+	if(!isnull(bt_observer_by_key))
+		for(var/key in bt_observer_by_key)
+			UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
+		bt_observer_by_key = null
+	if(!isnull(bt_pawn_observer_nodes))
+		for(var/datum/bt_node/decorator/dec as anything in bt_pawn_observer_nodes)
+			dec.unregister_pawn_observer(pawn)
+		bt_pawn_observer_nodes = null
+
+/**
+ * Signal handler fired when a watched blackboard key is set or cleared.
+ * Dispatches to each decorator observing that key so it can evaluate its condition
+ * and abort/replan if the observer_abort policy demands it.
+ */
+/datum/ai_controller/proc/on_observed_blackboard_change(atom/source, key)
+	SIGNAL_HANDLER
+	if(isnull(bt_observer_by_key))
+		return
+	var/list/decorators = bt_observer_by_key[key]
+	if(!LAZYLEN(decorators))
+		return
+	for(var/datum/bt_node/decorator/dec as anything in decorators)
+		dec.on_observed_change(src, key)
+
+/**
+ * Walk the full resolved BT tree and call reset_tick_state(src) on every node,
+ * clearing stale per-controller tick timing and cached result entries.
+ * Called during UnpossessPawn() before the pawn reference is cleared.
+ */
+/datum/ai_controller/proc/reset_bt_tick_states()
+	if(!LAZYLEN(planning_subtrees))
+		return
+	var/list/to_visit = planning_subtrees.Copy()
+	var/index = 1
+	while(index <= length(to_visit))
+		var/datum/bt_node/node = to_visit[index++]
+		node.reset_tick_state(src)
+		if(istype(node, /datum/bt_node/subtree))
+			var/datum/bt_node/subtree/sub = node
+			if(sub.root)
+				to_visit += sub.root
+		else if(istype(node, /datum/bt_node/composite))
+			var/datum/bt_node/composite/comp = node
+			if(comp.children)
+				to_visit += comp.children
+		else if(istype(node, /datum/bt_node/decorator))
+			var/datum/bt_node/decorator/dec = node
+			if(dec.child)
+				to_visit += dec.child
 /datum/ai_controller/proc/setup_able_to_run()
 	// paused_until is handled by PauseAi() manually
 	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)), PROC_REF(update_able_to_run))
@@ -383,7 +491,7 @@ multiple modular subtrees with behaviors
 			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 				continue
 			ProcessBehavior(action_seconds_per_tick, current_behavior)
-			return
+			continue // BT parallel may queue multiple behaviors; let the tree decide what runs, not process()
 
 		if(isnull(current_movement_target))
 			fail_behavior(current_behavior)
@@ -415,8 +523,8 @@ multiple modular subtrees with behaviors
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	planned_behaviors.Cut()
 
-	for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-		if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
+	for(var/datum/bt_node/node as anything in planning_subtrees)
+		if(node.tick(src, seconds_per_tick) == BT_RUNNING)
 			break
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
@@ -862,7 +970,7 @@ multiple modular subtrees with behaviors
 	blackboard[key] = null
 	if(isnull(pawn))
 		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key), key)
 
 /**
  * Remove the passed thing from the associated blackboard key

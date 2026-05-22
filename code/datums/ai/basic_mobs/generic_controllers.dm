@@ -7,14 +7,6 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-/// The most basic AI tree which just finds a guy and then runs at them to click them
-/datum/ai_controller/basic_controller/simple/simple_hostile
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
 /// Find a target, walk at target, attack intervening obstacles
 /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
 	planning_subtrees = list(
@@ -76,6 +68,47 @@
 		/datum/ai_planning_subtree/targeted_mob_ability,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+// =============================================================================
+// BT equivalents of simple_hostile
+// =============================================================================
+
+/**
+ * Selector: tries melee first (gated on having a target), falls back to find_potential_targets
+ * only when no target is set. The bb_key_set decorator aborts the attack branch reactively when
+ * the target is cleared so the selector can immediately fall through to target-finding.
+ *
+ * The attack branch runs as a BT_PARALLEL: basic_melee_attack/bt (A) handles attacking when
+ * adjacent; move_to_target (B) drives locomotion independently each tick. Both behaviors run
+ * every process() cycle — process() no longer returns after the first behavior.
+ */
+/datum/bt_node/subtree/simple_hostile_combat
+	descriptor = BT_SELECTOR(\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+						BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_LEAF(/datum/ai_behavior/basic_melee_attack/bt,\
+								BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+							),\
+							BT_LEAF(/datum/ai_behavior/move_to_target,\
+								BB_BASIC_MOB_CURRENT_TARGET, 1\
+							)\
+						),\
+						"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+						"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+						"observer_abort" = BT_ABORT_SELF\
+					),\
+					BT_LEAF(/datum/ai_behavior/find_potential_targets,\
+						BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+					)\
+			)
+
+/// BT equivalent of simple_hostile. Escape has priority: bt_escape_captivity is tried first;
+/// if no escape condition fires (BT_FAILURE) the combat parallel takes over.
+/datum/ai_controller/basic_controller/simple/simple_hostile
+	planning_subtrees = list(
+		/datum/bt_node/subtree/escape_captivity,
+		/datum/bt_node/subtree/simple_hostile_combat,
 	)
 
 /// Use an ability on target on cooldown, then try to shoot them

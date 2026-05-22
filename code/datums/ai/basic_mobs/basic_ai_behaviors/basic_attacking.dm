@@ -71,6 +71,15 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
+/**
+ * BT-native variant of basic_melee_attack for use in BT_PARALLEL alongside move_to_target.
+ * Strips AI_BEHAVIOR_REQUIRE_MOVEMENT and AI_BEHAVIOR_MOVE_AND_PERFORM — process() no longer
+ * gates execution on distance or drives movement. perform() handles out-of-range gracefully
+ * via the existing IsReachableBy check (returns AI_BEHAVIOR_INSTANT when not adjacent).
+ */
+/datum/ai_behavior/basic_melee_attack/bt
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM

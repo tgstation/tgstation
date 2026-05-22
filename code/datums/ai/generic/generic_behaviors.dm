@@ -14,12 +14,31 @@
 	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(screeches))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-///Moves to target then finishes
+/**
+ * Moves to a blackboard-keyed target and maintains movement each process() tick.
+ */
 /datum/ai_behavior/move_to_target
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	action_cooldown = 0
 
-/datum/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+/datum/ai_behavior/move_to_target/setup(datum/ai_controller/controller, target_key, required_dist = 1)
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+	controller.ai_movement.start_moving_towards(controller, target, required_dist)
+	return TRUE
+
+/datum/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, required_dist = 1)
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_FAILED
+	return AI_BEHAVIOR_INSTANT
+
+/datum/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded, target_key, required_dist = 1)
+	controller.ai_movement.stop_moving_towards(controller)
+	clear_movement_target(controller)
+	return ..()
 
 
 /datum/ai_behavior/break_spine

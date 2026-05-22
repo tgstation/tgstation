@@ -1,0 +1,49 @@
+// BT node return values
+/// Node completed its goal. Sequence continues; Selector/Parallel stop.
+#define BT_SUCCESS 1
+/// Node could not act. Selector tries next child; Sequence fails.
+#define BT_FAILURE 2
+/// Node has an action running. Both composites stop here.
+#define BT_RUNNING 3
+
+// Parallel node completion policies (mutually exclusive per axis)
+/// Parallel succeeds when any one child succeeds (default)
+#define BT_PARALLEL_SUCCESS_ONE 0
+/// Parallel succeeds only when all children succeed
+#define BT_PARALLEL_SUCCESS_ALL 1
+/// Parallel fails when any one child fails (default)
+#define BT_PARALLEL_FAILURE_ONE 0
+/// Parallel fails only when all children fail
+#define BT_PARALLEL_FAILURE_ALL 1
+
+// Decorator observer abort modes (UE5 Behavior Tree style)
+/// No observer abort registered
+#define BT_ABORT_NONE 0
+/// Abort this branch when the watched condition becomes FALSE
+#define BT_ABORT_SELF (1<<0)
+/// Abort lower-priority running behaviors when the watched condition becomes TRUE
+#define BT_ABORT_LOWER_PRIORITY (1<<1)
+/// Both BT_ABORT_SELF and BT_ABORT_LOWER_PRIORITY
+#define BT_ABORT_BOTH (BT_ABORT_SELF | BT_ABORT_LOWER_PRIORITY)
+
+/// Lookup a singleton BT node by typepath from the global registry
+#define GET_bt_node(node_type) GLOB.bt_nodes[node_type]
+
+// --- Inline descriptor keys (used internally by SSai_controllers descriptor builder) ---
+/// Key storing the node typepath in a descriptor list
+#define BT_DESC_TYPE "__t"
+/// Key storing the children list in a descriptor list
+#define BT_DESC_CHILDREN "__c"
+
+// --- Inline tree descriptor macros ---
+// DM variadic syntax: param... / ##param
+/// Inline selector (priority fallback): tries each child left-to-right, returns first non-FAILURE.
+#define BT_SELECTOR(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/selector, BT_DESC_CHILDREN = list(##children))
+/// Inline sequence: runs each child left-to-right, fails on first FAILURE.
+#define BT_SEQUENCE(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/sequence, BT_DESC_CHILDREN = list(##children))
+/// Inline parallel with an explicit fail_policy (BT_PARALLEL_FAILURE_ALL or BT_PARALLEL_FAILURE_ONE).
+#define BT_PARALLEL(fail_policy, children...) list(BT_DESC_TYPE = /datum/bt_node/composite/parallel, "failure_policy" = (fail_policy), BT_DESC_CHILDREN = list(##children))
+/// Behavior leaf node. Positional args become default_behavior_args passed to queue_behavior().
+#define BT_LEAF(behavior_type, args...) list(BT_DESC_TYPE = (behavior_type), "default_behavior_args" = list(##args))
+/// Any decorator node. child is the single guarded child descriptor or typepath. Trailing key=value pairs are var assignments on the node.
+#define BT_DECORATOR(type, child, config...) list(BT_DESC_TYPE = (type), BT_DESC_CHILDREN = list(child), ##config)

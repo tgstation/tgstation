@@ -68,3 +68,197 @@
 
 /datum/ai_planning_subtree/escape_captivity/pacifist
 	pacifist = TRUE
+
+// =============================================================================
+// BT-native escape captivity nodes
+// These replace the legacy subtree for controllers that use the inline descriptor system.
+// The legacy /datum/ai_planning_subtree/escape_captivity remains untouched for other controllers.
+// =============================================================================
+
+/**
+ * Variant of break_out_of_object that reads its target from a blackboard key.
+ * Use as BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET).
+ * The escape-condition decorators write the target into the BB key before ticking this behavior.
+ */
+/datum/ai_behavior/break_out_of_object/from_bb
+
+/datum/ai_behavior/break_out_of_object/from_bb/setup(datum/ai_controller/controller, target_key)
+	var/atom/target = controller.blackboard[target_key]
+	return should_attack_target(controller, target)
+
+/datum/ai_behavior/break_out_of_object/from_bb/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	var/atom/target = controller.blackboard[target_key]
+	if(!should_attack_target(controller, target))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	controller.ai_interact(target = target, combat_mode = TRUE)
+	return AI_BEHAVIOR_DELAY
+
+// --- Escape condition decorators ---
+
+/**
+ * Gates its child on the pawn being buckled to an obj.
+ * As a side effect of tick(), writes pawn.buckled into BB_BASIC_MOB_ESCAPE_TARGET so
+ * child behaviors (break_out_of_object/from_bb) can access it without a direct reference.
+ * Uses evaluate_for_observer() (pure, no side effects) for the observer interrupt path.
+ * Set observer_abort = BT_ABORT_LOWER_PRIORITY; watches COMSIG_MOB_BUCKLED + COMSIG_MOB_UNBUCKLED.
+ */
+/datum/bt_node/decorator/pawn_buckled_to_obj
+	var/target_key = BB_BASIC_MOB_ESCAPE_TARGET
+	observer_abort = BT_ABORT_LOWER_PRIORITY
+
+/datum/bt_node/decorator/pawn_buckled_to_obj/get_pawn_observe_signals()
+	return list(COMSIG_MOB_BUCKLED, COMSIG_MOB_UNBUCKLED)
+
+/datum/bt_node/decorator/pawn_buckled_to_obj/tick(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/pawn = controller.pawn
+	if(!isobj(pawn.buckled))
+		return BT_FAILURE
+	controller.blackboard[target_key] = pawn.buckled
+	return child.tick(controller, seconds_per_tick)
+
+/datum/bt_node/decorator/pawn_buckled_to_obj/evaluate_for_observer(datum/ai_controller/controller)
+	var/mob/living/pawn = controller.pawn
+	return isobj(pawn.buckled)
+
+/**
+ * Gates its child on the buckle target having TRAIT_DANGEROUS_BUCKLE (i.e. worth attacking to escape).
+ * Inner decorator — no observer needed; only evaluated inside a pawn_buckled_to_obj branch.
+ */
+/datum/bt_node/decorator/buckle_target_dangerous
+	var/pacifist = FALSE
+	var/target_key = BB_BASIC_MOB_ESCAPE_TARGET
+
+/datum/bt_node/decorator/buckle_target_dangerous/check_condition(datum/ai_controller/controller)
+	if(pacifist)
+		return FALSE
+	var/atom/target = controller.blackboard[target_key]
+	return !isnull(target) && HAS_TRAIT(target, TRAIT_DANGEROUS_BUCKLE)
+
+/**
+ * Gates its child on the pawn being inside an obj (not a turf, not a mob, not a mob_holder).
+ * tick() writes pawn.loc into the escape target BB key as a side effect.
+ * evaluate_for_observer() is pure (no side effects).
+ * Set observer_abort = BT_ABORT_LOWER_PRIORITY; watches COMSIG_MOVABLE_MOVED.
+ */
+/datum/bt_node/decorator/pawn_contained_in_obj
+	var/target_key = BB_BASIC_MOB_ESCAPE_TARGET
+	observer_abort = BT_ABORT_LOWER_PRIORITY
+
+/datum/bt_node/decorator/pawn_contained_in_obj/get_pawn_observe_signals()
+	return list(COMSIG_MOVABLE_MOVED)
+
+/datum/bt_node/decorator/pawn_contained_in_obj/tick(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/pawn = controller.pawn
+	if(isturf(pawn.loc) || ismob(pawn.loc) || istype(pawn.loc, /obj/item/mob_holder))
+		return BT_FAILURE
+	controller.blackboard[target_key] = pawn.loc
+	return child.tick(controller, seconds_per_tick)
+
+/datum/bt_node/decorator/pawn_contained_in_obj/evaluate_for_observer(datum/ai_controller/controller)
+	var/atom/loc = controller.pawn.loc
+	return !isturf(loc) && !ismob(loc) && !istype(loc, /obj/item/mob_holder)
+
+/**
+ * Gates its child on the container being worth attacking (pawn.obj_damage > damage_deflection).
+ * Inner decorator — no observer needed; only evaluated inside a pawn_contained_in_obj branch.
+ */
+/datum/bt_node/decorator/container_attackable
+	var/pacifist = FALSE
+	var/target_key = BB_BASIC_MOB_ESCAPE_TARGET
+
+/datum/bt_node/decorator/container_attackable/check_condition(datum/ai_controller/controller)
+	if(pacifist)
+		return FALSE
+	if(!isbasicmob(controller.pawn))
+		return FALSE
+	var/atom/target = controller.blackboard[target_key]
+	if(isnull(target))
+		return FALSE
+	var/mob/living/basic/basic_pawn = controller.pawn
+	return basic_pawn.obj_damage > target.damage_deflection
+
+/**
+ * Gates its child on the pawn being grabbed above GRAB_PASSIVE by an enemy.
+ * No observer — grab initiation has no clean pawn-side signal; evaluated each planning tick.
+ */
+/datum/bt_node/decorator/pawn_grabbed_by_enemy
+	var/targeting_strategy_key = BB_TARGETING_STRATEGY
+	child_typepath = /datum/ai_behavior/resist
+
+/datum/bt_node/decorator/pawn_grabbed_by_enemy/check_condition(datum/ai_controller/controller)
+	var/mob/living/pawn = controller.pawn
+	var/mob/puller = pawn.pulledby
+	if(isnull(puller) || puller.grab_state <= GRAB_PASSIVE)
+		return FALSE
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!strategy?.can_attack(pawn, puller))
+		return FALSE
+	var/list/friends = controller.blackboard[BB_FRIENDS_LIST] || list()
+	return !(puller in friends)
+
+/**
+ * Gates its child on the pawn having TRAIT_RESTRAINED.
+ * Set observer_abort = BT_ABORT_LOWER_PRIORITY; watches SIGNAL_ADDTRAIT and SIGNAL_REMOVETRAIT.
+ */
+/datum/bt_node/decorator/pawn_is_restrained
+	observer_abort = BT_ABORT_LOWER_PRIORITY
+	child_typepath = /datum/ai_behavior/resist
+
+/datum/bt_node/decorator/pawn_is_restrained/get_pawn_observe_signals()
+	return list(SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED))
+
+/datum/bt_node/decorator/pawn_is_restrained/check_condition(datum/ai_controller/controller)
+	return HAS_TRAIT(controller.pawn, TRAIT_RESTRAINED)
+
+// =============================================================================
+// Re-usable BT subtree composites
+// =============================================================================
+
+/**
+ * Selector that replicates escape_captivity logic using BT decorator nodes.
+ * Priority order: buckled > contained > grabbed by enemy > restrained.
+ * The first matching condition queues the appropriate behavior and returns BT_RUNNING.
+ * If none match, returns BT_FAILURE so the next planning_subtrees entry is tried.
+ */
+/datum/bt_node/subtree/escape_captivity
+	descriptor = BT_SELECTOR(\
+					BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
+						BT_SELECTOR(\
+							BT_DECORATOR(/datum/bt_node/decorator/buckle_target_dangerous,\
+								BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+							),\
+							BT_LEAF(/datum/ai_behavior/resist)\
+						)\
+					),\
+					BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
+						BT_SELECTOR(\
+							BT_DECORATOR(/datum/bt_node/decorator/container_attackable,\
+								BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+							),\
+							BT_LEAF(/datum/ai_behavior/resist)\
+						)\
+					),\
+					BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
+						BT_LEAF(/datum/ai_behavior/resist)\
+					),\
+					BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
+						BT_LEAF(/datum/ai_behavior/resist)\
+					)\
+	)
+
+/// Pacifist variant: never attacks objects, only resists.
+/datum/bt_node/subtree/escape_captivity/pacifist
+	descriptor = BT_SELECTOR(\
+		BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
+			BT_LEAF(/datum/ai_behavior/resist)\
+		),\
+		BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
+			BT_LEAF(/datum/ai_behavior/resist)\
+		),\
+		BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
+			BT_LEAF(/datum/ai_behavior/resist)\
+		),\
+		BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
+			BT_LEAF(/datum/ai_behavior/resist)\
+		)\
+	)

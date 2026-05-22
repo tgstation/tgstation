@@ -1,5 +1,8 @@
 ///Abstract class for an action an AI can take, can range from movement to grabbing a nearby weapon.
+/// Extends /datum/bt_node so that behaviors can be used as leaf nodes directly in a behavior tree
+/// without changing their type path. tick() is the BT leaf implementation; perform() is the execution actor.
 /datum/ai_behavior
+	parent_type = /datum/bt_node
 	///What distance you need to be from the target to perform the action
 	var/required_distance = 1
 	///Flags for extra behavior
@@ -7,6 +10,10 @@
 	///Cooldown between actions performances, defaults to the value of CLICK_CD_MELEE because that seemed like a nice standard for the speed of AI behavior
 	///Do not read directly or mutate, instead use get_cooldown()
 	var/action_cooldown = CLICK_CD_MELEE
+	/// Static args to pass to queue_behavior() when this behavior is used as a BT leaf node.
+	/// Set this list on the subtype to define which blackboard keys and values to forward.
+	/// Unpacked with arglist() — do NOT include the behavior type itself, only the extra args.
+	var/list/default_behavior_args = null
 
 /// Returns the delay to use for this behavior in the moment
 /// Override to return a conditional delay
@@ -43,3 +50,27 @@
 	if (controller.movement_target_source != type)
 		return
 	controller.set_movement_target(type, null)
+
+/**
+ * BT leaf node implementation. Called during SelectBehaviors().
+ * If this behavior is already running on the controller, returns BT_RUNNING immediately.
+ * Otherwise, queues it via queue_behavior() using default_behavior_args, then returns BT_RUNNING.
+ * Always returns BT_RUNNING — the behavior tree never considers an action "done" from the planning side.
+ */
+/datum/ai_behavior/tick(datum/ai_controller/controller, seconds_per_tick)
+	if(!should_tick(controller))
+		return BT_RUNNING
+	var/datum/ai_behavior/self = GET_AI_BEHAVIOR(type)
+	if(self in controller.current_behaviors)
+		// Behavior is already running — keep it alive in planned_behaviors so SelectBehaviors
+		// doesn't treat it as "forgotten" and call finish_action on it.
+		controller.planned_behaviors[self] = TRUE
+		return BT_RUNNING
+	if(LAZYLEN(default_behavior_args))
+		call(controller, /datum/ai_controller/proc/queue_behavior)(arglist(list(type) + default_behavior_args))
+	else
+		controller.queue_behavior(type)
+	if(tick_rate)
+		tick_cooldowns[controller] = world.time
+		tick_results[controller] = BT_RUNNING
+	return BT_RUNNING
