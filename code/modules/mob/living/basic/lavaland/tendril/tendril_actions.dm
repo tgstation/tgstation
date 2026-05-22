@@ -142,7 +142,7 @@
 	button_icon_state = "spikes_stabbing"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 8 SECONDS
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Lazy list of references to spike trails
