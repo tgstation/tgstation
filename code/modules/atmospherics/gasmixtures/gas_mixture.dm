@@ -405,9 +405,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/moved_moles = 0
 	var/abs_moved_moles = 0
-	//track the moles moving to and from
-	var/mole_given
-	var/mole_taken
+
 
 	//GAS TRANSFER
 
