@@ -1,0 +1,6 @@
+[build]
+target = "i686-pc-windows-msvc"
+rustflags = [
+    "-C",
+    "target-feature=+sse4.2,+cmpxchg16b,+popcnt,+avx2,+fma,+bmi1,+bmi2,+lzcnt,+f16c,+aes,+fxsr,+rdrand,+rdseed,+pclmulqdq"
+]
