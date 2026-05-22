@@ -740,7 +740,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
-/datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration)
+/datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration = 5 SECONDS)
 	src.duration = duration
 	return ..()
 
