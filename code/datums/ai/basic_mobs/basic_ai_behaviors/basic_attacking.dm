@@ -14,7 +14,7 @@
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
 	//Hiding location is priority
-	var/atom/target = (hiding_location_key ? controller.blackboard[hiding_location_key] : null) || controller.blackboard[target_key]
+	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
 
@@ -22,9 +22,6 @@
 
 /datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/atom/target = controller.blackboard[target_key]
-	return attack_target(controller, target, targeting_strategy_key, hiding_location_key)
-
-/datum/ai_behavior/basic_melee_attack/proc/attack_target(datum/ai_controller/controller, atom/target, targeting_strategy_key, hiding_location_key)
 	if (isnull(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -42,8 +39,7 @@
 
 	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
 
-	if (hiding_location_key)
-		controller.set_blackboard_key(hiding_location_key, hiding_target)
+	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	var/atom/final_target = hiding_target || target
 	controller.ai_interact(target = final_target, combat_mode = TRUE)
@@ -96,7 +92,7 @@
 	. = ..()
 	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
 		return FALSE
-	var/atom/target = (hiding_location_key ? controller.blackboard[hiding_location_key] : null) || controller.blackboard[target_key]
+	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
@@ -120,8 +116,7 @@
 		adjust_position(basic_mob, target)
 		return AI_BEHAVIOR_DELAY
 
-	if (hiding_location_key)
-		controller.set_blackboard_key(hiding_location_key, hiding_target)
+	controller.set_blackboard_key(hiding_location_key, hiding_target)
 	basic_mob.RangedAttack(final_target)
 	return AI_BEHAVIOR_DELAY //only start the cooldown when the shot is shot
 

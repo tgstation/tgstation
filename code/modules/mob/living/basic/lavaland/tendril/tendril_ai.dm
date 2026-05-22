@@ -1,7 +1,6 @@
 /datum/ai_controller/basic_controller/tendril
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 	)
 
 	planning_subtrees = list(
