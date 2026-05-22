@@ -57,7 +57,7 @@
 	pass_flags = PASSTABLE
 	damage = 5 // +10 from the grab
 	armor_flag = MELEE
-	range = 9
+	range = 7
 	hit_prone_targets = TRUE
 	hitsound = 'sound/effects/wounds/pierce1.ogg'
 	sharpness = SHARP_POINTY
@@ -276,7 +276,7 @@
 		if (as_living.health / as_living.maxHealth <= health_threshold)
 			reduced_spawns = TRUE
 
-	for (var/turf/open/target_turf in oview(9, owner_turf))
+	for (var/turf/open/target_turf in oview(7, owner_turf))
 		if (sqrt((target_turf.x - owner_turf.x) ** 2 + (target_turf.y - owner_turf.y) ** 2) > 9.5) // big circle is a lie
 			continue
 
