@@ -79390,7 +79390,7 @@
 	id = "mining_internal"
 	},
 /obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/railing/corner/end/flip{
 	dir = 4

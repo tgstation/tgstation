@@ -38728,7 +38728,9 @@
 /area/station/hallway/secondary/entry)
 "mqT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 4
+	},
 /obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
