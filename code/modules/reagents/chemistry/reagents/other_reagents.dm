@@ -2830,7 +2830,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	metabolized_traits = list()
+	metabolized_traits = null
 
 /datum/reagent/pax/peaceborg/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -2845,7 +2845,7 @@
 
 /datum/reagent/pax/peaceborg/proc/on_metabolizer_damaged(mob/living/source, amount)
 	SIGNAL_HANDLER
-	source.adjust_timed_status_effect(amount SECONDS, /datum/status_effect/synthpax_immunity, 5 SECONDS)
+	source.adjust_timed_status_effect(amount * 1 SECONDS, /datum/status_effect/synthpax_immunity, max_duration = 5 SECONDS)
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
