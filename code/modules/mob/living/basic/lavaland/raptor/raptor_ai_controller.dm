@@ -15,7 +15,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
@@ -51,7 +51,7 @@
 		BB_RAPTOR_FLEE_THRESHOLD = 0.1,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
@@ -96,7 +96,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target,

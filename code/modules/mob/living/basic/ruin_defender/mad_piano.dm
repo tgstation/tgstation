@@ -92,7 +92,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

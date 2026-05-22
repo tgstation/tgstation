@@ -5,7 +5,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
@@ -15,7 +15,7 @@
 	movement_delay = 0.8 SECONDS
 
 /datum/ai_controller/basic_controller/alien/sentinel
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
@@ -28,7 +28,7 @@
 /datum/ai_controller/basic_controller/alien/queen
 	idle_behavior = /datum/idle_behavior/idle_random_walk/plant_weeds/queen
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

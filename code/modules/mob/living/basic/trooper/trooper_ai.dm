@@ -7,7 +7,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
@@ -25,7 +25,7 @@
 	action_cooldown = 1.2 SECONDS
 
 /datum/ai_controller/basic_controller/trooper/calls_reinforcements
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/call_reinforcements,
@@ -35,7 +35,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trooper/peaceful
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
@@ -45,7 +45,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper,
@@ -61,7 +61,7 @@
 	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
@@ -76,7 +76,7 @@
 	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
@@ -85,7 +85,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun,

@@ -37,7 +37,7 @@ Speaking of subtrees, let's look at that now.
 ```dm
 /datum/ai_controller/basic/cow
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/tip_reaction, //<- goes first
 		/datum/ai_planning_subtree/find_and_eat_food, //<- goes second
 		/datum/ai_planning_subtree/random_speech/cow, //<- goes last! But at any point, a previous subtree can end the chain. If a cow is tipped over, it shouldn't make random noises or try finding food!

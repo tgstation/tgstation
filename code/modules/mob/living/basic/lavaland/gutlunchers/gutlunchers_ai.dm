@@ -11,7 +11,7 @@
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
@@ -56,7 +56,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
@@ -67,7 +67,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,

@@ -10,7 +10,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon,
@@ -103,7 +103,7 @@
 	min_range = 0
 
 /datum/ai_controller/basic_controller/ice_demon/afterimage
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon, //even the afterimages are afraid of flames!

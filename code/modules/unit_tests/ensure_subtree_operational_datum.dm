@@ -22,11 +22,11 @@
 
 		// we can't do inital() memes on lists so it's allocation time
 		testable_controller = allocate(testable_controller)
-		var/list/ai_planning_subtrees = testable_controller.planning_subtrees // list of instantiated datums. easy money
-		if(!length(ai_planning_subtrees))
+		var/list/ai_behavior_nodes = testable_controller.behavior_nodes // list of instantiated datums. easy money
+		if(!length(ai_behavior_nodes))
 			continue
 
-		for(var/datum/ai_planning_subtree/testable_subtree as anything in ai_planning_subtrees)
+		for(var/datum/ai_planning_subtree/testable_subtree as anything in ai_behavior_nodes)
 			var/list/necessary_datums = testable_subtree.operational_datums
 			if(isnull(necessary_datums))
 				continue

@@ -37,7 +37,7 @@
 
 	ai_movement = /datum/ai_movement/dumb
 	idle_behavior = null
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/face_target_or_face_initial, // we be creepy and all
 	)
@@ -83,7 +83,7 @@
 
 	ai_movement = /datum/ai_movement/jps //threat
 	idle_behavior = null
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/run_emote,

@@ -6,7 +6,7 @@
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_dog
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/dog,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/dog_harassment,
@@ -28,7 +28,7 @@
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/dog/corgi/puppy),
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/dog,
 		/datum/ai_planning_subtree/make_babies, // Ian WILL prioritise sex over following your instructions
 		/datum/ai_planning_subtree/pet_planning,
@@ -55,7 +55,7 @@
 		// With tongs in hand!
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/dog,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/dog_harassment,

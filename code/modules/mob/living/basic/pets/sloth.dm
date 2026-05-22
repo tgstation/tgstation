@@ -95,7 +95,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/climb_trees,

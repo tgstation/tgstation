@@ -55,7 +55,7 @@
 		BB_AGGRO_RANGE = 2,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,

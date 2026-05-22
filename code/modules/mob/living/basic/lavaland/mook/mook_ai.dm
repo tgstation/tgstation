@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_SONG_LINES = MOOK_SONG,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,
@@ -328,7 +328,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_STORM_APPROACHING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/look_for_village,

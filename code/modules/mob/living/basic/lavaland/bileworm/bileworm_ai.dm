@@ -3,7 +3,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bileworm,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/bileworm_attack,

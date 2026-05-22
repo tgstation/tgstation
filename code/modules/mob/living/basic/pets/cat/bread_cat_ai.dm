@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/cat/bread
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
@@ -34,7 +34,7 @@
 	return ..()
 
 /datum/ai_controller/basic_controller/cat/cake
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove,
 		/datum/ai_planning_subtree/find_and_hunt_target/decorate_donuts,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,

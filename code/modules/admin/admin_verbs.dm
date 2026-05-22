@@ -798,10 +798,10 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 	)
 	our_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
 
-	var/behaviour_exists = !!(locate(/datum/ai_planning_subtree/random_speech/blackboard) in our_controller.planning_subtrees)
+	var/behaviour_exists = !!(locate(/datum/ai_planning_subtree/random_speech/blackboard) in our_controller.behavior_nodes)
 	if (behaviour_exists)
 		return
-	our_controller.planning_subtrees = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.planning_subtrees
+	our_controller.behavior_nodes = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.behavior_nodes
 
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
 	if(!object)

@@ -1,7 +1,7 @@
 #define REPAIRBOT_SPEECH_TIMER 30 SECONDS
 
 /datum/ai_controller/basic_controller/bot/repairbot
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/repairbot_speech,
 		/datum/ai_planning_subtree/mug_robot,

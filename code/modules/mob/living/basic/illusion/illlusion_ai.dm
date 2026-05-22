@@ -10,7 +10,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
@@ -26,7 +26,7 @@
 	ai_traits = DEFAULT_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
@@ -34,7 +34,7 @@
 
 /// Retaliate subtypes of escape illusions can fight back against threats that attack them, making them more dangerous.
 /datum/ai_controller/basic_controller/illusion/escape/retaliate
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,

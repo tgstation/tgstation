@@ -5,7 +5,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,
@@ -15,7 +15,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trader/jumpscare
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,

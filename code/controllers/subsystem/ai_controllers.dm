@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/bt_nodes_setup = FALSE
 	/// Assoc list of list-identity → built /datum/bt_node for inline descriptor trees.
 	/// Keyed by the descriptor list reference itself, so each unique list gets its own built subtree.
-	var/list/cached_descriptor_nodes = list()
+	var/alist/cached_descriptor_nodes = alist()
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
@@ -115,8 +115,8 @@ SUBSYSTEM_DEF(ai_controllers)
 			stack_trace("BT decorator [node.type] references unknown child type [dec.child_typepath]")
 	else if(istype(node, /datum/bt_node/subtree))
 		var/datum/bt_node/subtree/sub = node
-		if(!isnull(sub.descriptor) && isnull(sub.root))
-			sub.root = build_node_from_descriptor(sub.descriptor)
+		if(!isnull(sub.behavior_nodes) && isnull(sub.root))
+			sub.root = build_node_from_descriptor(sub.behavior_nodes)
 
 /**
  * Returns the BT node to use for a given child_type + optional config.
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(ai_controllers)
 /**
  * Returns a BT node for the given entry, which may be:
  *   - A typepath: returns the singleton from GLOB.bt_nodes / GLOB.ai_subtrees / SSai_behaviors.
- *   - A descriptor list (built via BT_SELECTOR / BT_SEQUENCE / BT_PARALLEL / BT_LEAF / BT_DECORATOR
+ *   - A behavior node list (built via BT_SELECTOR / BT_SEQUENCE / BT_PARALLEL / BT_LEAF / BT_DECORATOR
  *     macros): builds and caches a node from the descriptor, keyed by list identity.
  */
 /datum/controller/subsystem/ai_controllers/proc/get_or_build_node(entry)

@@ -218,37 +218,37 @@
  * Selector that replicates escape_captivity logic using BT decorator nodes.
  * Priority order: buckled > contained > grabbed by enemy > restrained.
  * The first matching condition queues the appropriate behavior and returns BT_RUNNING.
- * If none match, returns BT_FAILURE so the next planning_subtrees entry is tried.
+ * If none match, returns BT_FAILURE so the next behavior_nodes entry is tried.
  */
 /datum/bt_node/subtree/escape_captivity
-	descriptor = BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
-						BT_SELECTOR(\
-							BT_DECORATOR(/datum/bt_node/decorator/buckle_target_dangerous,\
-								BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
-							),\
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
+							BT_SELECTOR(\
+								BT_DECORATOR(/datum/bt_node/decorator/buckle_target_dangerous,\
+									BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+								),\
+								BT_LEAF(/datum/ai_behavior/resist)\
+							)\
+						),\
+						BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
+							BT_SELECTOR(\
+								BT_DECORATOR(/datum/bt_node/decorator/container_attackable,\
+									BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+								),\
+								BT_LEAF(/datum/ai_behavior/resist)\
+							)\
+						),\
+						BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
+							BT_LEAF(/datum/ai_behavior/resist)\
+						),\
+						BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
 							BT_LEAF(/datum/ai_behavior/resist)\
 						)\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
-						BT_SELECTOR(\
-							BT_DECORATOR(/datum/bt_node/decorator/container_attackable,\
-								BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
-							),\
-							BT_LEAF(/datum/ai_behavior/resist)\
-						)\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
-						BT_LEAF(/datum/ai_behavior/resist)\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
-						BT_LEAF(/datum/ai_behavior/resist)\
-					)\
-	)
+		)
 
 /// Pacifist variant: never attacks objects, only resists.
 /datum/bt_node/subtree/escape_captivity/pacifist
-	descriptor = BT_SELECTOR(\
+	behavior_nodes = BT_SELECTOR(\
 		BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
 			BT_LEAF(/datum/ai_behavior/resist)\
 		),\

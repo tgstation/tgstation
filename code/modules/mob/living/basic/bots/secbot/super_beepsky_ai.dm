@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/bot/secbot/super_beepsky
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/simple_find_target,

@@ -38,7 +38,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree
 	)
@@ -75,7 +75,7 @@
 	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
 	)

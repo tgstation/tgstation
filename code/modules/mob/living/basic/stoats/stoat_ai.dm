@@ -9,7 +9,7 @@
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/random_speech/blackboard,
@@ -28,7 +28,7 @@
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/random_speech/blackboard,

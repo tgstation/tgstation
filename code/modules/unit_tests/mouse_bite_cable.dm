@@ -50,7 +50,7 @@
 
 /// Dummy mouse's ai controller that is guaranteed to find and bite a cable beneath it
 /datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
-	planning_subtrees = list(/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed)
+	behavior_nodes = list(/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed)
 
 /// Cable hunting subtree that's guarantee to hunt its target.
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed

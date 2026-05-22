@@ -19,7 +19,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	//reinforcements needs to be skipped over entirely on tamed wolves because it causes them to attack their owner and then themselves
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/call_reinforcements/wolf,

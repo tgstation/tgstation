@@ -65,7 +65,7 @@
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/rabbit,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
@@ -100,7 +100,7 @@
 	)
 
 /datum/ai_controller/basic_controller/rabbit/easter
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/rabbit/easter,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
@@ -120,7 +120,7 @@
 	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/rabbit/easter/space,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,

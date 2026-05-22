@@ -11,7 +11,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/goose
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/goose,
 		/datum/ai_planning_subtree/capricious_retaliate,
@@ -28,7 +28,7 @@
 		BB_EAT_FOOD_COOLDOWN = 0.5 SECONDS, // Uh oh
 		BB_EAT_EMOTES = list()
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/random_speech/goose,
 		/datum/ai_planning_subtree/use_mob_ability/goose_vomit,
 		/datum/ai_planning_subtree/target_retaliate,

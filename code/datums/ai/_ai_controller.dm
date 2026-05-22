@@ -15,16 +15,16 @@ multiple modular subtrees with behaviors
 	 * DO NOT set values in the blackboard directly, and especially not if you're adding a datum reference to this!
 	 * Use the setters, this is important for reference handing.
 	 */
-	var/list/blackboard = list()
+	var/alist/blackboard = alist()
 
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current actions planned to be performed by the AI in the upcoming plan
-	var/list/planned_behaviors = list()
+	var/alist/planned_behaviors = alist()
 	///Current actions being performed by the AI.
-	var/list/current_behaviors = list()
+	var/alist/current_behaviors = alist()
 	///Current actions and their respective last time ran as an assoc list.
-	var/list/behavior_cooldowns = list()
+	var/alist/behavior_cooldowns = alist()
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
@@ -32,7 +32,7 @@ multiple modular subtrees with behaviors
 	///Identifier for what last touched our movement target, so it can be cleared conditionally
 	var/movement_target_source
 	///Stored arguments for behaviors given during their initial creation
-	var/list/behavior_args = list()
+	var/alist/behavior_args = alist()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/consecutive_pathing_attempts
 	///Can the AI remain in control if there is a client?
@@ -40,7 +40,7 @@ multiple modular subtrees with behaviors
 	///distance to give up on target
 	var/max_target_distance = 14
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
-	var/list/planning_subtrees
+	var/list/behavior_nodes
 
 	///The idle behavior this AI performs when it has no actions.
 	var/datum/idle_behavior/idle_behavior = null
@@ -71,7 +71,7 @@ multiple modular subtrees with behaviors
 	var/on_failed_planning_timeout = FALSE
 	/// Assoc list of blackboard key → list of /datum/bt_node/decorator nodes watching that key.
 	/// Populated by setup_bt_observers() when the controller possesses a pawn. Nulled on unpossess.
-	var/list/bt_observer_by_key = null
+	var/alist/bt_observer_by_key = null
 	/// Flat list of decorators that registered pawn-signal observers (via get_pawn_observe_signals()).
 	/// Used by teardown_bt_observers() to call unregister_pawn_observer() on each.
 	var/list/bt_pawn_observer_nodes = null
@@ -120,26 +120,26 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
 
-///Completely replaces the planning_subtrees with a new set based on argument provided, list provided must contain specifically typepaths
-/datum/ai_controller/proc/replace_planning_subtrees(list/typepaths_of_new_subtrees)
-	planning_subtrees = typepaths_of_new_subtrees
+///Completely replaces the behavior_nodes with a new set based on argument provided, list provided must contain specifically typepaths
+/datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
+	behavior_nodes = typepaths_of_new_subtrees
 	init_subtrees()
 
-///Loops over the subtrees in planning_subtrees and resolves typepaths to singleton refs.
+///Loops over the subtrees in behavior_nodes and resolves typepaths to singleton refs.
 /// Checks GLOB.bt_nodes (new BT composites/decorators), GLOB.ai_subtrees (legacy planning subtrees),
 /// and SSai_behaviors.ai_behaviors (behavior leaf nodes) in that order.
-/// ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
+/// ENSURE behavior_nodes ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()
-	if(!LAZYLEN(planning_subtrees))
+	if(!LAZYLEN(behavior_nodes))
 		return
 	var/list/temp_subtree_list = list()
-	for(var/entry in planning_subtrees)
+	for(var/entry in behavior_nodes)
 		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(entry)
 		if(isnull(node_instance))
-			stack_trace("[type]'s planning_subtrees contains unknown entry: [entry]")
+			stack_trace("[type]'s behavior_nodes contains unknown entry: [entry]")
 			continue
 		temp_subtree_list += node_instance
-	planning_subtrees = temp_subtree_list
+	behavior_nodes = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
@@ -334,15 +334,15 @@ multiple modular subtrees with behaviors
 		qdel(src)
 
 /**
- * Walk the resolved planning_subtrees tree and register blackboard key change signals
+ * Walk the resolved behavior_nodes tree and register blackboard key change signals
  * on the pawn for every decorator with observer_abort != BT_ABORT_NONE.
  * Only registers one signal per watched key regardless of how many decorators watch it.
  * Called at the end of PossessPawn().
  */
 /datum/ai_controller/proc/setup_bt_observers()
-	if(!LAZYLEN(planning_subtrees))
+	if(!LAZYLEN(behavior_nodes))
 		return
-	var/list/to_visit = planning_subtrees.Copy()
+	var/list/to_visit = behavior_nodes.Copy()
 	var/index = 1
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
@@ -351,7 +351,7 @@ multiple modular subtrees with behaviors
 			if(dec.observer_abort != BT_ABORT_NONE && LAZYLEN(dec.observed_keys))
 				for(var/key in dec.observed_keys)
 					if(isnull(bt_observer_by_key))
-						bt_observer_by_key = list()
+						bt_observer_by_key = alist()
 					if(isnull(bt_observer_by_key[key]))
 						bt_observer_by_key[key] = list()
 						RegisterSignal(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), PROC_REF(on_observed_blackboard_change))
@@ -407,9 +407,9 @@ multiple modular subtrees with behaviors
  * Called during UnpossessPawn() before the pawn reference is cleared.
  */
 /datum/ai_controller/proc/reset_bt_tick_states()
-	if(!LAZYLEN(planning_subtrees))
+	if(!LAZYLEN(behavior_nodes))
 		return
-	var/list/to_visit = planning_subtrees.Copy()
+	var/list/to_visit = behavior_nodes.Copy()
 	var/index = 1
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
@@ -523,7 +523,7 @@ multiple modular subtrees with behaviors
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	planned_behaviors.Cut()
 
-	for(var/datum/bt_node/node as anything in planning_subtrees)
+	for(var/datum/bt_node/node as anything in behavior_nodes)
 		if(node.tick(src, seconds_per_tick) == BT_RUNNING)
 			break
 

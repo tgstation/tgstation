@@ -18,7 +18,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
@@ -42,7 +42,7 @@
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_CARPS_FEAR_FISHERMAN = FALSE,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
@@ -69,7 +69,7 @@
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
@@ -86,7 +86,7 @@
  * Flow is basically the same as regular carp, except it will try and cast a spell at its target whenever possible and not fleeing.
  */
 /datum/ai_controller/basic_controller/carp/ranged
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
@@ -116,7 +116,7 @@
 		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target/to_flee, // This should only find master fishermen because of the targeting strategy
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,

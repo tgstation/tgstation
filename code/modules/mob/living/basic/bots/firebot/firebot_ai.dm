@@ -5,7 +5,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_turfs,
 		BB_UNREACHABLE_LIST_COOLDOWN =  3 MINUTES,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/extinguishing_people,

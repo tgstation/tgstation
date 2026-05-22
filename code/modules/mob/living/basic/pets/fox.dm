@@ -69,7 +69,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
@@ -81,7 +81,7 @@
 
 // An AI controller for more docile foxes.
 /datum/ai_controller/basic_controller/fox/docile
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/random_speech/fox,

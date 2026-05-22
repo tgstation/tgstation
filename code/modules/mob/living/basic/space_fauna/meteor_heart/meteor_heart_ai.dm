@@ -5,7 +5,7 @@
 		BB_TARGETLESS_TIME = 0,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/ground_spikes,

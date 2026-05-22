@@ -7,7 +7,7 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/simple_find_target,

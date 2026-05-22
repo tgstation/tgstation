@@ -8,7 +8,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/capricious_retaliate, // Capricious like Capra, get it?
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/find_food,

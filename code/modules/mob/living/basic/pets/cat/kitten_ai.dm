@@ -7,7 +7,7 @@
 		BB_MAX_DISTANCE_TO_FOOD = 2,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,

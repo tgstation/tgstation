@@ -13,7 +13,7 @@
 		),
 		BB_FRIENDLY_MESSAGE = "empathetically acknowledges your hardwork and tough circumstances",
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/pet_planning/cleanbot,

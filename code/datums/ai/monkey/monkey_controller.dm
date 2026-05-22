@@ -7,7 +7,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/generic_resist,
 		/datum/ai_planning_subtree/monkey_combat,
 		/datum/ai_planning_subtree/generic_hunger,
@@ -61,7 +61,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/generic_resist,
 		/datum/ai_planning_subtree/monkey_combat,
 		/datum/ai_planning_subtree/serve_food,

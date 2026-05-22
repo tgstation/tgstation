@@ -5,7 +5,7 @@
 		BB_VIBEBOT_GRIM_SONG = VIBEBOT_GRIM_MUSIC,
 		BB_VIBEBOT_BIRTHDAY_SONG = VIBEBOT_HAPPY_BIRTHDAY,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/find_party_friends,

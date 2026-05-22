@@ -46,7 +46,7 @@
 		BB_BASIC_MOB_TIPPER = null,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/tip_reaction,
 		/datum/ai_planning_subtree/random_speech/cow,

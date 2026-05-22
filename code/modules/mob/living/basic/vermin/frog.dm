@@ -159,7 +159,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/random_speech/frog,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
@@ -168,7 +168,7 @@
 	)
 
 /datum/ai_controller/basic_controller/frog/trash
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/frog,
@@ -184,7 +184,7 @@
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN, //No fear, only hatred. It has nothing to lose
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/find_target_prioritize_traits,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

@@ -54,7 +54,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
 	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,

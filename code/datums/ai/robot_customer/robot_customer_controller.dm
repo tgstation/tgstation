@@ -11,7 +11,7 @@
 		BB_CUSTOMER_PATIENCE = 999 SECONDS,
 		BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE,
 	)
-	planning_subtrees = list(/datum/ai_planning_subtree/robot_customer)
+	behavior_nodes = list(/datum/ai_planning_subtree/robot_customer)
 
 /datum/ai_controller/robot_customer/Destroy()
 	// clear possible datum refs

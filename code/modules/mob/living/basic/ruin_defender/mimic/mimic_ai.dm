@@ -3,7 +3,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
@@ -16,7 +16,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
@@ -25,7 +25,7 @@
 	)
 
 /datum/ai_controller/basic_controller/mimic_copy/machine
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
@@ -70,7 +70,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_GUNMIMIC_GUN_EMPTY = FALSE,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/random_speech/when_has_target/mimic/gun,
 		/datum/ai_planning_subtree/gun_mimic_attack_subtree,
@@ -95,7 +95,7 @@
 		BB_HUNT_TARGETING_STRATEGY = /datum/targeting_strategy/anything,
 		BB_GUNMIMIC_GUN_EMPTY = FALSE,
 	)
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/shoot_animatable_objects,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/random_speech/when_has_target/mimic/gun,

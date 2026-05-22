@@ -12,9 +12,9 @@
 	/// How often (deciseconds) this node re-evaluates per controller. 0 = every planning tick.
 	var/tick_rate = 0
 	/// Per-controller last evaluation world.time. Keyed by controller ref. Only populated when tick_rate > 0.
-	var/list/tick_cooldowns = list()
+	var/alist/tick_cooldowns = alist()
 	/// Per-controller cached last BT_* result. Keyed by controller ref. Only populated when tick_rate > 0.
-	var/list/tick_results = list()
+	var/alist/tick_results = alist()
 
 /// Returns TRUE if enough time has elapsed for this node to be re-evaluated for the given controller.
 /datum/bt_node/proc/should_tick(datum/ai_controller/controller)
@@ -57,9 +57,9 @@
  * through the `root` pointer to reach all internal nodes.
  */
 /datum/bt_node/subtree
-	/// Descriptor list built via BT_SELECTOR / BT_PARALLEL / etc. macros on the subtype definition.
+	/// list built via BT_SELECTOR / BT_PARALLEL / etc. macros on the subtype definition.
 	/// resolve_node_children() builds `root` from this during setup_bt_nodes().
-	var/list/descriptor = null
+	var/list/behavior_nodes = null
 	/// The internal root node. Populated by resolve_node_children(). Do not set directly.
 	var/datum/bt_node/root = null
 

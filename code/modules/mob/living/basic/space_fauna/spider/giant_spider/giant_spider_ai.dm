@@ -7,7 +7,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
@@ -19,7 +19,7 @@
 
 /// Giant spider which won't attack structures
 /datum/ai_controller/basic_controller/giant_spider/weak
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
@@ -34,7 +34,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
@@ -50,7 +50,7 @@
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
+	behavior_nodes = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,

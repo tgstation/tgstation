@@ -8,7 +8,7 @@
 	/// in order for unit tests to succeed. This will break obviously enough if you don't do this and declare the required datum here however.
 	var/list/operational_datums = null
 
-///Determines what behaviors should the controller try processing; if this returns SUBTREE_RETURN_FINISH_PLANNING then the controller won't go through the other subtrees should multiple exist in controller.planning_subtrees
+///Determines what behaviors should the controller try processing; if this returns SUBTREE_RETURN_FINISH_PLANNING then the controller won't go through the other subtrees should multiple exist in controller.behavior_nodes
 /datum/ai_planning_subtree/proc/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	return
 
