@@ -45,5 +45,8 @@
 #define BT_PARALLEL(fail_policy, children...) list(BT_DESC_TYPE = /datum/bt_node/composite/parallel, "failure_policy" = (fail_policy), BT_DESC_CHILDREN = list(##children))
 /// Behavior leaf node. Positional args become default_behavior_args passed to queue_behavior().
 #define BT_LEAF(behavior_type, args...) list(BT_DESC_TYPE = (behavior_type), "default_behavior_args" = list(##args))
+/// Subtree reference — a modular section of behavior nodes housed in a /datum/bt_node/subtree subtype.
+/// Expands to a plain typepath; the descriptor builder resolves it to the singleton at runtime.
+#define BT_SUBTREE(subtype) (subtype)
 /// Any decorator node. child is the single guarded child descriptor or typepath. Trailing key=value pairs are var assignments on the node.
 #define BT_DECORATOR(type, child, config...) list(BT_DESC_TYPE = (type), BT_DESC_CHILDREN = list(child), ##config)

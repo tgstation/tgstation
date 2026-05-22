@@ -128,17 +128,27 @@ multiple modular subtrees with behaviors
 ///Loops over the subtrees in behavior_nodes and resolves typepaths to singleton refs.
 /// Checks GLOB.bt_nodes (new BT composites/decorators), GLOB.ai_subtrees (legacy planning subtrees),
 /// and SSai_behaviors.ai_behaviors (behavior leaf nodes) in that order.
-/// ENSURE behavior_nodes ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
+/// behavior_nodes may be either a plain list of typepaths or a single BT_* descriptor list
+/// (i.e. the result of BT_SELECTOR / BT_SEQUENCE / BT_PARALLEL / etc. at the controller level).
 /datum/ai_controller/proc/init_subtrees()
 	if(!LAZYLEN(behavior_nodes))
 		return
 	var/list/temp_subtree_list = list()
-	for(var/entry in behavior_nodes)
-		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(entry)
+	// BT_* macros expand to an assoc list with BT_DESC_TYPE as a key.
+	// If behavior_nodes itself is such a descriptor, treat it as one root node.
+	if(!isnull(behavior_nodes[BT_DESC_TYPE]))
+		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(behavior_nodes)
 		if(isnull(node_instance))
-			stack_trace("[type]'s behavior_nodes contains unknown entry: [entry]")
-			continue
-		temp_subtree_list += node_instance
+			stack_trace("[type]'s behavior_nodes BT descriptor could not be built")
+		else
+			temp_subtree_list += node_instance
+	else
+		for(var/entry in behavior_nodes)
+			var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(entry)
+			if(isnull(node_instance))
+				stack_trace("[type]'s behavior_nodes contains unknown entry: [entry]")
+				continue
+			temp_subtree_list += node_instance
 	behavior_nodes = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.

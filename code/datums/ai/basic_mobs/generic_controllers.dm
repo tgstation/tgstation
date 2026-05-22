@@ -79,7 +79,7 @@
  * only when no target is set. The bb_key_set decorator aborts the attack branch reactively when
  * the target is cleared so the selector can immediately fall through to target-finding.
  *
- * The attack branch runs as a BT_PARALLEL: basic_melee_attack/bt (A) handles attacking when
+ * The attack branch runs as a BT_PARALLEL: basic_melee_attack/basic_melee (A) handles attacking when
  * adjacent; move_to_target (B) drives locomotion independently each tick. Both behaviors run
  * every process() cycle — process() no longer returns after the first behavior.
  */
@@ -87,7 +87,7 @@
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-								BT_LEAF(/datum/ai_behavior/basic_melee_attack/bt,\
+								BT_LEAF(/datum/ai_behavior/basic_melee_attack/basic_melee,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
 								BT_LEAF(/datum/ai_behavior/move_to_target,\
@@ -106,9 +106,9 @@
 /// BT equivalent of simple_hostile. Escape has priority: bt_escape_captivity is tried first;
 /// if no escape condition fires (BT_FAILURE) the combat parallel takes over.
 /datum/ai_controller/basic_controller/simple/simple_hostile
-	behavior_nodes = list(
-		/datum/bt_node/subtree/escape_captivity,
-		/datum/bt_node/subtree/simple_hostile_combat,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_hostile_combat),\
 	)
 
 /// Use an ability on target on cooldown, then try to shoot them
