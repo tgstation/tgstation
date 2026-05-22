@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/tendril
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	planning_subtrees = list(
@@ -10,7 +11,6 @@
 		/datum/ai_planning_subtree/targeted_mob_ability/tendril_chaser,
 		/datum/ai_planning_subtree/use_mob_ability/tendril_spikes,
 		/datum/ai_planning_subtree/use_mob_ability/tendril_lash,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /datum/ai_planning_subtree/targeted_mob_ability/tendril_chaser
