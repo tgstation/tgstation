@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "opening panel of boulder refinery with screwdriver or un-wrenching it turns of its light"
+  - bugfix: "boulder refinery only takes in booster reagents and excludes others and only outputs waste chemicals as intended"
+  - bugfix: "boulder refinery machines outputs waste reagents without rounding errors in them"
+  - qol: "removed conveyer sprite from boulder smelter & pixel shifts the refiner so you can see it's plumbing pipes properly"
