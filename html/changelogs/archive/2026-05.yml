@@ -372,3 +372,16 @@
   mcbalaam:
   - rscadd: Big Manipulators now use a single task loop instead of two separate point
       loops.
+2026-05-22:
+  SmArtKar:
+  - bugfix: Crematorium can no longer destroy indestructible objects
+  - code_imp: Cleaned up crematorium code
+  - bugfix: Bubblegun suicide no longer makes the user yell out HTML
+  - bugfix: Beepsky Smash beepskys now use proper text formatting
+  - code_imp: Cleaned up say span code in a few places
+  Y0SH1M4S73R:
+  - rscadd: Committing suicide with an empty soul shard seals your soul within it.
+  lelandkemble:
+  - bugfix: about a billion runtimes per round have been fixed, & you'll no longer
+      repeat what you said last when you're forced to speak
+  - bugfix: The dead can't drive

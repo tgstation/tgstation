@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Bubblegun suicide no longer makes the user yell out HTML"
-  - bugfix: "Beepsky Smash beepskys now use proper text formatting"
-  - code_imp: "Cleaned up say span code in a few places"

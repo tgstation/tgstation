@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Crematorium can no longer destroy indestructible objects"
-  - code_imp: "Cleaned up crematorium code"

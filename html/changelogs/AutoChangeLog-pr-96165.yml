@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "about a billion runtimes per round have been fixed, & you'll no longer repeat what you said last when you're forced to speak"
