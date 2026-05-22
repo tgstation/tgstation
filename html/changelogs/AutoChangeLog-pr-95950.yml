@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - balance: "Taking damage from an attack while dosed with synthpax negates the pacification from the synthpax for an amount of time equal to the damage taken, up to a maximum of 5 seconds."

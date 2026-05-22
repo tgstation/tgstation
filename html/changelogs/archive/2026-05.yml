@@ -381,6 +381,9 @@
   - code_imp: Cleaned up say span code in a few places
   Y0SH1M4S73R:
   - rscadd: Committing suicide with an empty soul shard seals your soul within it.
+  - balance: Taking damage from an attack while dosed with synthpax negates the pacification
+      from the synthpax for an amount of time equal to the damage taken, up to a maximum
+      of 5 seconds.
   lelandkemble:
   - bugfix: about a billion runtimes per round have been fixed, & you'll no longer
       repeat what you said last when you're forced to speak
