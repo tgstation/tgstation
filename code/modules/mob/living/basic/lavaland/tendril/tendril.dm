@@ -1,5 +1,5 @@
-#define HEARTBEAT_NORMAL (1.2 SECONDS)
-#define HEARTBEAT_FAST (0.8 SECONDS)
+#define HEARTBEAT_NORMAL (1.8 SECONDS)
+#define HEARTBEAT_FAST (1 SECONDS)
 #define HEARTBEAT_FRANTIC (0.4 SECONDS)
 
 /mob/living/basic/mining/tendril
@@ -14,8 +14,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
-	maxHealth = 600
-	health = 600
+	maxHealth = 800
+	health = 800
 
 	friendly_verb_continuous = "flails at"
 	friendly_verb_simple = "flail at"
@@ -35,6 +35,9 @@
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/tendril_lash
+	var/datum/action/cooldown/mob_cooldown/tendril_chaser/tendril_chaser
+	var/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/cross_spikes
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
@@ -42,8 +45,16 @@
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
+	tendril_lash = new(src)
+	tendril_lash.Grant(src)
+	tendril_chaser = new(src)
+	tendril_chaser.Grant(src)
+	cross_spikes = new(src)
+	cross_spikes.Grant(src)
+
 	soundloop = new(src, start_immediately = FALSE)
 	soundloop.mid_length = HEARTBEAT_NORMAL
+	soundloop.extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_OVERLAYS)
@@ -94,9 +105,12 @@
 		stab.pixel_w = -24
 
 /obj/effect/temp_visual/spike_stab
-	icon = 'icons/mob/simple/meteor_heart.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "spike_small"
 	duration = 0.4 SECONDS
+
+/mob/living/basic/mining/tendril/proc/snatch_react()
+	return
 
 #undef HEARTBEAT_NORMAL
 #undef HEARTBEAT_FAST

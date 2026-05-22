@@ -5371,6 +5371,7 @@
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_food_trough.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_inheritance.dm"
 #include "code\modules\mob\living\basic\lavaland\tendril\tendril.dm"
+#include "code\modules\mob\living\basic\lavaland\tendril\tendril_actions.dm"
 #include "code\modules\mob\living\basic\lavaland\tendril\tendril_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher_ai.dm"

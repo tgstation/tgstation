@@ -45,6 +45,8 @@
 	var/position_variance = 8
 	/// Damage to deal on impale
 	var/impale_damage = 15
+	/// Wound bonus on impale
+	var/impale_wound_bonus = 0
 	/// Typecache of types of mobs not to damage
 	var/list/damage_blacklist_typecache = list(
 		/mob/living/basic/meteor_heart,
@@ -73,7 +75,7 @@
 			continue
 		hit_someone = TRUE
 		var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
-		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
+		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, wound_bonus = impale_wound_bonus, sharpness = SHARP_POINTY)
 	if (hit_someone)
 		playsound(src, 'sound/items/weapons/slice.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 	else

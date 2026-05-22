@@ -1,0 +1,276 @@
+/// Fires out two cross patterns of damaging tentacles which reel in anything they hit, then causes a followup attack
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash
+	name = "Tentacle Lash"
+	desc = "Lash out with your tentacles in 8 directions, reeling in whatever you hit and unleashing a deadly followup attack afterwards."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "goliath_tentacle_wiggle"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	click_to_activate = FALSE
+	cooldown_time = 8 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+	projectile_type = /obj/projectile/tentacle_lash
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/Activate(atom/target)
+	disable_cooldown_actions()
+
+	for (var/swipe_dir in GLOB.cardinals)
+		var/turf/open/line_turf = get_step(owner, swipe_dir)
+		for (var/i in 1 to projectile_type::range)
+			if (!istype(line_turf) || line_turf.is_blocked_turf(exclude_mobs = TRUE))
+				break
+			var/obj/effect/temp_visual/telegraphing/line/telegraph = new(line_turf)
+			telegraph.dir = swipe_dir
+			line_turf = get_step(line_turf, swipe_dir)
+
+	SLEEP_CHECK_DEATH(0.7 SECONDS, owner)
+
+	for (var/swipe_dir in GLOB.cardinals)
+		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
+
+	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
+
+	for (var/swipe_dir in GLOB.diagonals)
+		var/turf/open/line_turf = get_step(owner, swipe_dir)
+		for (var/i in 1 to projectile_type::range)
+			if (!istype(line_turf) || line_turf.is_blocked_turf(exclude_mobs = TRUE))
+				break
+			var/obj/effect/temp_visual/telegraphing/line/telegraph = new(line_turf)
+			telegraph.dir = swipe_dir
+			line_turf = get_step(line_turf, swipe_dir)
+
+	SLEEP_CHECK_DEATH(0.7 SECONDS, owner)
+
+	for (var/swipe_dir in GLOB.diagonals)
+		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
+
+	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
+	StartCooldown()
+	enable_cooldown_actions()
+	return TRUE
+
+/obj/projectile/tentacle_lash
+	name = "tentacle spike"
+	icon_state = "tentacle_spike"
+	pass_flags = PASSTABLE
+	damage = 10
+	armor_flag = MELEE
+	range = 7
+	hit_prone_targets = TRUE
+	hitsound = 'sound/effects/wounds/pierce1.ogg'
+	/// Beam connecting us and the target
+	var/datum/beam/tentacle_beam = null
+	/// How long does the projectile persist?
+	var/duration = 1.2 SECONDS
+	/// Damage dealt to targets who get snatched from entering the beam or being hit directly
+	var/snatch_damage = 15
+
+/obj/projectile/tentacle_lash/fire(fire_angle, atom/direct_target)
+	. = ..()
+	if (!firer)
+		return
+	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = /obj/effect/ebeam/reacting, emissive = FALSE)
+	RegisterSignal(tentacle_beam, COMSIG_BEAM_ENTERED, PROC_REF(on_beam_entered))
+
+/obj/projectile/tentacle_lash/Destroy()
+	QDEL_NULL(tentacle_beam)
+	return ..()
+
+// Don't range out, stop and persist until we're done
+/obj/projectile/tentacle_lash/on_range()
+	STOP_PROCESSING(SSprojectiles, src)
+	// Reset to tile center
+	pixel_x = 0
+	pixel_y = 0
+	QDEL_IN(src, duration)
+
+/obj/projectile/tentacle_lash/prehit_pierce(atom/target)
+	// Ye 'ole colossus cheese
+	if (astype(target, /mob/living)?.stat == DEAD)
+		return PROJECTILE_PIERCE_PHASE
+	return ..()
+
+/obj/projectile/tentacle_lash/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if (!isliving(target) || blocked >= 100 || pierce_hit || . != BULLET_ACT_HIT)
+		return
+	var/mob/living/victim = target
+	snatch_target(victim)
+
+/obj/projectile/tentacle_lash/proc/on_beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if (entered != firer || !isliving(entered))
+		return
+
+	var/mob/living/victim = entered
+	if (!firer || !firer.faction_check_atom(victim) || victim.stat == DEAD)
+		INVOKE_ASYNC(src, PROC_REF(snatch_target), entered)
+
+/obj/projectile/tentacle_lash/proc/snatch_target(mob/living/victim)
+	if (HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE) || SEND_SIGNAL(victim, COMSIG_TENDRIL_TENTACLED_GRABBED) & COMPONENT_TENDRIL_CANCEL_TENTACLE_GRAB)
+		return
+
+	to_chat(victim, span_userdanger("You're snatched by [firer]'s tentacles!"))
+	victim.apply_damage(snatch_damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	var/snatch_callback = null
+	if (istype(firer, /mob/living/basic/mining/tendril))
+		var/mob/living/basic/mining/tendril/tendril = firer
+		snatch_callback = CALLBACK(tendril, TYPE_PROC_REF(/mob/living/basic/mining/tendril, snatch_react))
+	victim.throw_at(firer, range, 1, firer, FALSE, gentle = TRUE, callback = snatch_callback)
+	qdel(src)
+
+/// An ability which makes spikes come out of the ground towards your target
+/datum/action/cooldown/mob_cooldown/tendril_chaser
+	name = "Impaling Spikes"
+	desc = "Send a spiked subterranean tendril chasing after your target."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "spikes_stabbing"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	cooldown_time = 12 SECONDS
+	click_to_activate = TRUE
+	shared_cooldown = NONE
+	/// Lazy list of references to spike trails
+	var/list/active_chasers
+	/// Health percentage threshold at which we send out wide charsers after the main target
+	var/wide_chaser_threshold = 0.5
+
+/datum/action/cooldown/mob_cooldown/tendril_chaser/Activate(atom/target)
+	. = ..()
+	var/primary_type = /obj/effect/temp_visual/effect_trail/tendril_chaser
+	if (isliving(owner))
+		var/mob/living/as_living = owner
+		if (as_living.health / as_living.maxHealth <= wide_chaser_threshold)
+			primary_type = /obj/effect/temp_visual/effect_trail/tendril_chaser/wide_area
+
+	var/obj/effect/temp_visual/effect_trail/tendril_chaser/chaser = new primary_type(get_turf(owner), target)
+	LAZYADD(active_chasers, WEAKREF(chaser))
+	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
+	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+
+	if (!owner.ai_controller)
+		return
+
+	for (var/atom/other_target as anything in owner.ai_controller.blackboard[BB_BASIC_MOB_SECONDARY_TARGET_LIST])
+		chaser = new(get_turf(owner), other_target)
+		LAZYADD(active_chasers, WEAKREF(chaser))
+		RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
+
+/// Remove a spike trail from our list of active trails
+/datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_chaser_destroyed(atom/chaser)
+	SIGNAL_HANDLER
+	LAZYREMOVE(active_chasers, WEAKREF(chaser))
+
+// Clean up after ourselves
+/datum/action/cooldown/mob_cooldown/tendril_chaser/Remove(mob/removed_from)
+	QDEL_LIST(active_chasers)
+	return ..()
+
+/obj/effect/temp_visual/effect_trail/tendril_chaser
+	duration = 10 SECONDS
+	spawned_effect = /obj/effect/temp_visual/emerging_ground_spike/tendril
+	/// Do we spawn spikes around ourselves as well or only on our own turf?
+	var/area_spawn = FALSE
+
+/obj/effect/temp_visual/effect_trail/tendril_chaser/wide_area
+	area_spawn = TRUE
+
+/obj/effect/temp_visual/effect_trail/tendril_chaser/add_spawner()
+	return
+
+/obj/effect/temp_visual/effect_trail/tendril_chaser/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (!area_spawn)
+		if (!(locate(spawned_effect) in loc) && isopenturf(loc))
+			new spawned_effect(loc)
+		if (loc == target.loc)
+			qdel(src)
+		return
+
+	for (var/spawn_dir in GLOB.cardinals)
+		if (spawn_dir & REVERSE_DIR(movement_dir))
+			continue
+		var/turf/spawn_loc = get_step(src, spawn_dir)
+		if (!(locate(spawned_effect) in spawn_loc) && isopenturf(spawn_loc))
+			new spawned_effect(spawn_loc)
+
+	if (loc == target.loc)
+		qdel(src)
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "spikes_stabbing"
+	duration = 0.7 SECONDS
+	position_variance = 3
+	damage_blacklist_typecache = list(
+		/mob/living/basic/mining/tendril,
+	)
+	impale_wound_bonus = CANT_WOUND
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/single
+	icon_state = "spike"
+	duration = 0.8 SECONDS
+	position_variance = 5
+	impale_damage = 20
+
+/datum/action/cooldown/mob_cooldown/tendril_cross_spikes
+	name = "Cross Spikes"
+	desc = "Create a wave of spikes around yourself, impaling anyone caught in it."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "spike"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	click_to_activate = FALSE
+	cooldown_time = 10 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+	/// Health threshold at which we reduce the amount of empty spots on the ground
+	var/health_threshold = 0.3
+
+/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/Activate(atom/target)
+	disable_cooldown_actions()
+	var/turf/owner_turf = get_turf(owner)
+	var/list/turf/spike_turfs = list()
+	var/reduced_spawns = FALSE
+	if (isliving(owner))
+		var/mob/living/as_living = owner
+		if (as_living.health / as_living.maxHealth <= health_threshold)
+			reduced_spawns = TRUE
+
+	for (var/turf/open/target_turf in orange(9, owner_turf))
+		if (reduced_spawns)
+			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y) % 2)
+				new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
+				spike_turfs += target_turf
+			continue
+
+		var/row = floor((abs(target_turf.y - owner_turf.y) + 1) / 3)
+		if (row % 2 == 0)
+			if (abs(target_turf.y - owner_turf.y) - row * 3 == 0)
+				if (abs(target_turf.x - owner_turf.x) % 4 == 2)
+					continue
+			else
+				if (abs(target_turf.x - owner_turf.x) % 4 != 0)
+					continue
+		else
+			if (abs(target_turf.y - owner_turf.y) - row * 3 == 0)
+				if (abs(target_turf.x - owner_turf.x) % 4 == 0)
+					continue
+			else
+				if (abs(target_turf.x - owner_turf.x) % 4 != 2)
+					continue
+
+		new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
+		spike_turfs += target_turf
+
+	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
+
+	for (var/turf/open/to_spawn in spike_turfs)
+		new /obj/effect/temp_visual/emerging_ground_spike/tendril/single(to_spawn)
+
+	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
+	StartCooldown()
+	enable_cooldown_actions()
+	return TRUE
