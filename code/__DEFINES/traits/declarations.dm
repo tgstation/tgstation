@@ -1591,6 +1591,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// Ignores demolition modifiers
+#define TRAIT_IGNORE_DEMOLITION "ignore_demolition"
+
 /// Makes the mob immune to carpotoxin
 #define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
@@ -1656,6 +1659,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Sunlight on this turf is blocked and thus you can't get solar power or whatever
 #define TRAIT_TURF_SUN_BLOCKED "turf_sun_blocked"
+
+/// Makes the owner immune from the pacification from synthpax
+#define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
 
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"

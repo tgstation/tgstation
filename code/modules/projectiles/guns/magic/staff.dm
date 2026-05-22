@@ -213,7 +213,7 @@
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/swap,
 		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/tentacle,
+		/obj/projectile/magic/tentacle_staff,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill
 	)
