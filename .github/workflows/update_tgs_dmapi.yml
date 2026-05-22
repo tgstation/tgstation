@@ -32,8 +32,8 @@ jobs:
       - name: Commit and Push
         continue-on-error: true
         run: |
-          git config user.name "tgstation-ci[bot]"
-          git config user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
+          git config user.name "nemesis-ci[bot]" # NEMESIS EDIT CHANGE - Original: "tgstation-ci[bot]"
+          git config user.email "action@github.com" # NEMESIS EDIT CHANGE - Original: "179393467+tgstation-ci[bot]@users.noreply.github.com"
           git add .
           git commit -m 'Update TGS DMAPI'
           git push -f -u origin tgs-dmapi-update

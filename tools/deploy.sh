@@ -23,6 +23,14 @@ if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
   cp -r .git/logs/* $1/.git/logs/
 fi
+# NEMESIS EDIT ADDITION START - Get all the .dmis and json configs from modular_nemesis
+mkdir -p \
+		$1/modular_nemesis \
+		$1/modular_nemesis/modules/GAGS/json_configs 
+
+find modular_nemesis/ -name \*.dmi -exec cp --parents {} $1 \;
+find modular_nemesis/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
+# NEMESIS EDIT ADDITION END
 
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/

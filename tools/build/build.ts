@@ -109,6 +109,10 @@ export const IconCutterTarget = new Juke.Target({
       `icons/**/*.png.toml`,
       `icons/**/*.dmi.toml`,
       `cutter_templates/**/*.toml`,
+      // NEMESIS EDIT ADDITION START - Making it work in our nemesis master files
+      `modular_nemesis/**/*.png.toml`,
+      `modular_nemesis/**/*.dmi.toml`,
+      // NEMESIS EDIT ADDITION END
       cutter_path,
     ];
     // Alright we're gonna search out any existing toml files and convert
@@ -116,6 +120,10 @@ export const IconCutterTarget = new Juke.Target({
     const existing_configs = [
       ...Juke.glob(`icons/**/*.png.toml`),
       ...Juke.glob(`icons/**/*.dmi.toml`),
+      // NEMESIS EDIT ADDITION START - Making it work in our nemesis master files
+      ...Juke.glob(`modular_nemesis/**/*.png.toml`),
+      ...Juke.glob(`modular_nemesis/**/*.dmi.toml`),
+      // NEMESIS EDIT ADDITION END
     ];
     return [
       ...standard_inputs,
@@ -127,6 +135,10 @@ export const IconCutterTarget = new Juke.Target({
     const folders = [
       ...Juke.glob(`icons/**/*.png.toml`),
       ...Juke.glob(`icons/**/*.dmi.toml`),
+      // NEMESIS EDIT ADDITION START - Making it work in our nemesis master files
+      ...Juke.glob(`modular_nemesis/**/*.png.toml`),
+      ...Juke.glob(`modular_nemesis/**/*.dmi.toml`),
+      // NEMESIS EDIT ADDITION END
     ];
     return folders
       .map((file) => file.replace(`.png.toml`, '.dmi'))
@@ -138,6 +150,7 @@ export const IconCutterTarget = new Juke.Target({
       '--templates',
       'cutter_templates',
       'icons',
+      'modular_nemesis', // NEMESIS EDIT ADDITION - Making the cutter actually work
     ]);
   },
 });
@@ -151,11 +164,37 @@ export const DmMapsIncludeTarget = new Juke.Target({
       ...Juke.glob('_maps/shuttles/**/*.dmm'),
       ...Juke.glob('_maps/templates/**/*.dmm'),
     ];
+    // NEMESIS EDIT ADDITION START
+    const isNemesisTemplate = (file: string) =>
+      file.startsWith('_maps/nemesis/') ||
+      file.startsWith('_maps/RandomRuins/SpaceRuins/nemesis/') ||
+      file.startsWith('_maps/RandomRuins/IceRuins/nemesis/') ||
+      file.startsWith('_maps/RandomRuins/LavaRuins/nemesis/') ||
+      file.startsWith('_maps/shuttles/nemesis/');
+
+    const foldersNemesis = [];
+    for (let i = folders.length - 1; i >= 0; i--) {
+      const file = folders[i];
+      if (isNemesisTemplate(file)) {
+        foldersNemesis.push(file);
+        folders.splice(i, 1); // remove from folders
+      }
+    }
+
+    foldersNemesis.push(...Juke.glob('_maps/nemesis/**/*.dmm'));
+    // NEMESIS EDIT ADDITION END
     const content = `${folders
       .map((file) => file.replace('_maps/', ''))
       .map((file) => `#include "${file}"`)
       .join('\n')}\n`;
     fs.writeFileSync('_maps/templates.dm', content);
+    // NEMESIS EDIT ADDITION START
+    const contentNemesis = `${foldersNemesis
+      .map((file) => file.replace('_maps/', ''))
+      .map((file) => `#include "${file}"`)
+      .join('\n')}\n`;
+    fs.writeFileSync('_maps/templates_nemesis.dm', contentNemesis);
+    // NEMESIS EDIT ADDITION END
   },
 });
 
@@ -169,6 +208,7 @@ export const DmTarget = new Juke.Target({
   ],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
+    get(DefineParameter).includes('NEMESIS_TEMPLATES') && DmMapsIncludeTarget, // NEMESIS EDIT ADDITION
     !get(SkipIconCutter) && IconCutterTarget,
   ],
   inputs: [
@@ -180,6 +220,7 @@ export const DmTarget = new Juke.Target({
     'interface/**',
     'sound/**',
     'tgui/public/tgui.html',
+    "modular_nemesis/**", // NEMESIS EDIT ADDITION - Making the CBT work
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
@@ -251,6 +292,7 @@ export const AutowikiTarget = new Juke.Target({
   ],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
+    get(DefineParameter).includes('NEMESIS_TEMPLATES') && DmMapsIncludeTarget, // NEMESIS EDIT ADDITION
     IconCutterTarget,
   ],
   outputs: ['data/autowiki_edits.txt'],

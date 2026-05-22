@@ -16,7 +16,7 @@ jobs:
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Send Discord notification
-        uses: tgstation/discord-notify@main
+        uses: littleboobs/discord-notify@main # NEMESIS EDIT CHANGE - Original: tgstation/discord-notify@main
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED &&
           (github.event.pull_request.merged == true || github.event.action == 'opened') &&
@@ -27,7 +27,7 @@ jobs:
           title: ${{ github.event.pull_request.user.login }} - ${{ github.event.pull_request.title }}
           message: GET_ACTION
           include_image: false
-          show_author: false
+          show_author: true # NEMESIS EDIT CHANGE - Original: show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
           username: GitHub
           title_url: "${{ github.event.pull_request.html_url }}"

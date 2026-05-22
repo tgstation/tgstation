@@ -19,8 +19,8 @@ if command -v rg >/dev/null 2>&1; then
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
 	fi
-	code_files="code/**/**.dm"
-	map_files="_maps/**/**.dmm"
+	code_files="code/**/**.dm modular_nemesis/**/**.dm" # NEMESIS EDIT CHANGE - Original: code_files="code/**/**.dm"
+	map_files="_maps/**/**.dmm modular_nemesis/**/**.dmm" # NEMESIS EDIT CHANGE - Original: map_files="_maps/**/**.dmm"
 	shuttle_map_files="_maps/shuttles/**.dmm"
 	code_x_515="code/**/!(__byond_version_compat).dm"
 else

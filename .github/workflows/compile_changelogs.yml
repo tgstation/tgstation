@@ -48,8 +48,8 @@ jobs:
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          git config --local user.name "tgstation-ci[bot]"
-          git config --local user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
+          git config --local user.name "nemesis-ci[bot]" # NEMESIS EDIT CHANGE - Original: "tgstation-ci[bot]"
+          git config --local user.email "action@github.com" # NEMESIS EDIT CHANGE - Original: "179393467+tgstation-ci[bot]@users.noreply.github.com"
           git pull origin master
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true

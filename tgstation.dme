@@ -426,6 +426,8 @@
 #include "code\__DEFINES\traits\declarations.dm"
 #include "code\__DEFINES\traits\macros.dm"
 #include "code\__DEFINES\traits\sources.dm"
+#include "code\__DEFINES\~nemesis_defines\automapper.dm"
+#include "code\__DEFINES\~nemesis_defines\traits\declarations.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_dreamluau.dm"
 #include "code\__HELPERS\_level_traits.dm"
@@ -6945,4 +6947,8 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "modular_nemesis\modules\automapper\code\area_spawn_entries.dm"
+#include "modular_nemesis\modules\automapper\code\area_spawn_subsystem.dm"
+#include "modular_nemesis\modules\automapper\code\automap_template.dm"
+#include "modular_nemesis\modules\automapper\code\automapper_subsystem.dm"
 // END_INCLUDE

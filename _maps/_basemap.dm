@@ -27,4 +27,9 @@
 	#ifdef ALL_TEMPLATES
 		#include "templates.dm"
 	#endif
+	// NEMESIS EDIT ADDITION START
+	#ifdef NEMESIS_TEMPLATES
+		#include "templates_nemesis.dm"
+	#endif
+	// NEMESIS EDIT ADDITION END
 #endif

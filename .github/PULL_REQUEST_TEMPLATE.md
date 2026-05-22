@@ -1,35 +1,45 @@
-<!-- Write **BELOW** The Headers and **ABOVE** The comments else it may not be viewable. -->
-<!-- You can view Contributing.MD for a detailed description of the pull request process. -->
+<!-- Пишите **ПОД** Заголовками и **НАД** комментариями, иначе Вашего текста будет не видно. -->
+<!-- Вы можете просмотреть CONTRIBUTING.md для получения подробного описания процесса создания PR. -->
 
-## About The Pull Request
+## Информация о PR
 
-<!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
+<!-- Опишите, что делает Ваш PR, укажите основные изменения. Пожалуйста, убедитесь, что каждое изменение задокументировано, иначе это может задержать проверку и даже отбить охоту у разработчиков объединять Ваши PR! -->
 
-## Why It's Good For The Game
+## Как это способствует улучшению игрового опыта на Немезиде?
 
-<!-- Argue for the merits of your changes and how they benefit the game, especially if they are controversial and/or far reaching. If you can't actually explain WHY what you are doing will improve the game, then it probably isn't good for the game in the first place. -->
+<!-- Пожалуйста, добавьте краткое описание того, почему, по Вашему мнению, эти изменения пойдут на пользу игре и атмосфере ролевой игры на сервере. Если вы не можете обосновать это словами, возможно, добавлять их не стоит. -->
 
-## Changelog
+## Доказательства тестирования
 
-<!-- If your PR modifies aspects of the game that can be concretely observed by players or admins you should add a changelog. If your change does NOT meet this description, remove this section. Be sure to properly mark your PRs to prevent unnecessary GBP loss. You can read up on GBP and its effects on PRs in the tgstation guides for contributors. Please note that maintainers freely reserve the right to remove and add tags should they deem it appropriate. You can attempt to finagle the system all you want, but it's best to shoot for clear communication right off the bat. -->
+<!-- Разместите скриншоты/видео/отладку Вашего кода между блоками </summary> и </details>. -->
+
+<details>
+<summary>Изображения/Видео</summary>
+
+</details>
+
+## Список изменений
+
+<!-- Если Ваш PR изменяет аспекты игры, которые могут быть конкретно замечены игроками, Вы должны добавить это в список изменений. Если Ваши изменения НЕ соответствует этому списку изменений, удалите этот раздел. -->
 
 :cl:
-add: Added new mechanics or gameplay changes
-add: Added more things
-del: Removed old things
-qol: made something easier to use
-balance: rebalanced something
-fix: fixed a few things
-sound: added/modified/removed audio or sound effects
-image: added/modified/removed some icons or images
-map: added/modified/removed map content
-spellcheck: fixed a few typos
-code: changed some code
-refactor: refactored some code
-config: changed some config setting
-admin: messed with admin stuff
-server: something server ops should know
+add: Добавлены новые механики или изменения в игровом процессе.
+del: Удалено что-то старое.
+qol: Сделано что-то более простым в использовании.
+balance: Произошёл ребаланс.
+bugfix: Исправлен какой-то баг.
+sound: Добавлены/изменены/удалены какие-то аудио или звуковые эффекты.
+image: Добавлены/изменены/удалены какие-то спрайты или изображения.
+map: Добавлены/изменены/удалены какие-то карты или их содержимое.
+spellcheck: Исправлена какая-то очепятка.
+local: Произошла локализация на русский язык.
+code_imp: Что-то добавлено в код, без изменения имеющихся механик.
+refactor: Отрефакторен какой-то код.
+config: Изменены какие-то настройки в конфиге.
+admin: Изменено что-то связанное с администрацией.
+server: Изменено что-то связанное с серверной частью или Github.
+experiment: Изменения с целью какого-то эксперимента.
 /:cl:
 
-<!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->
-<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
+<!-- Оба тега :cl: обязательны для работы списка изменений! Вы можете указать своё имя справа от первого :cl:, если хотите переопределить username пользователя GitHub, как автора в игре. -->
+<!-- Вы можете использовать несколько одинаковых префиксов (они используются только для иконки в игре) и удалять ненужные. Несмотря на некоторые теги, списки изменений должны в целом отражать то, как изменения могут повлиять на игрока, а не быть кратким содержанием PR. -->
