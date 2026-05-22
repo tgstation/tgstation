@@ -56,7 +56,7 @@
 	pass_flags = PASSTABLE
 	damage = 10
 	armor_flag = MELEE
-	range = 7
+	range = 9
 	hit_prone_targets = TRUE
 	hitsound = 'sound/effects/wounds/pierce1.ogg'
 	sharpness = SHARP_POINTY
@@ -294,6 +294,6 @@
 	shared_cooldown = NONE
 	projectile_type = /obj/projectile/tentacle_lash/stab
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/attack_sequence(mob/living/firer, atom/target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/attack_sequence(mob/living/firer, atom/target)
 	for (var/stab_dir in GLOB.alldirs)
-		shoot_projectile(get_turf(owner), get_step(owner, stab_dir), dir2angle(stab_dir), owner)
+		shoot_projectile(get_turf(owner), get_step(owner, stab_dir), firer = owner)
