@@ -1,7 +1,7 @@
 /datum/biome/lavaland
 	open_turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
 	closed_turf_type = /turf/closed/mineral/volcanic
-
+	mob_exclusion_radius = 7
 
 /datum/biome/lavaland/basalt
 	closed_turf_type = /turf/closed/mineral/random/volcanic

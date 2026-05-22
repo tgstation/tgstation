@@ -14,15 +14,15 @@
 	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
-	maxHealth = 800
-	health = 800
+	maxHealth = 1200
+	health = 1200
 
 	friendly_verb_continuous = "flails at"
 	friendly_verb_simple = "flail at"
 	speak_emote = list("resonates")
 	obj_damage = 100
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	sharpness = SHARP_POINTY
 	wound_bonus = CANT_WOUND
 	attack_sound = 'sound/items/weapons/pierce.ogg'
@@ -38,11 +38,13 @@
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/tendril_lash
 	var/datum/action/cooldown/mob_cooldown/tendril_chaser/tendril_chaser
 	var/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/cross_spikes
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/tendril_melee
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/gps, "Eerie Signal")
+	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.2 SECONDS)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
 	tendril_lash = new(src)
@@ -51,10 +53,17 @@
 	tendril_chaser.Grant(src)
 	cross_spikes = new(src)
 	cross_spikes.Grant(src)
+	tendril_melee = new(src)
+	tendril_melee.Grant(src)
+
+	ai_controller.set_blackboard_key(BB_TENDRIL_LASH, tendril_lash)
+	ai_controller.set_blackboard_key(BB_TENDRIL_CHASER, tendril_chaser)
+	ai_controller.set_blackboard_key(BB_TENDRIL_SPIKES, cross_spikes)
+
+	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 2, target_self = TRUE)
 
 	soundloop = new(src, start_immediately = FALSE)
 	soundloop.mid_length = HEARTBEAT_NORMAL
-	soundloop.extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_OVERLAYS)
@@ -110,7 +119,8 @@
 	duration = 0.4 SECONDS
 
 /mob/living/basic/mining/tendril/proc/snatch_react()
-	return
+	if (tendril_melee.IsAvailable())
+		tendril_melee.Activate()
 
 #undef HEARTBEAT_NORMAL
 #undef HEARTBEAT_FAST

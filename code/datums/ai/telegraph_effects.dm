@@ -29,7 +29,7 @@
 	duration = 2 SECONDS
 
 /obj/effect/temp_visual/telegraphing/circle/short
-	duration = 0.8 SECONDS
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/telegraphing/line
 	icon = 'icons/mob/telegraphing/telegraph.dmi'

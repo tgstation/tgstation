@@ -33,6 +33,8 @@
 	var/mob_exclusion_radius = 12
 	/// Radius around megafauna within which we avoid spawning tendrils
 	var/megafauna_exclusion_radius = 7
+	/// Minimum distance between tendril spawns
+	var/tendril_exclusion_radius = 12
 
 /datum/biome/New()
 	. = ..()
@@ -171,7 +173,7 @@
 		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
 			// Prevents tendrils spawning in each other's collapse range
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
-				if (get_dist(spawn_turf, target_turf) <= 2)
+				if (get_dist(spawn_turf, target_turf) <= tendril_exclusion_radius)
 					can_spawn = FALSE
 					break
 

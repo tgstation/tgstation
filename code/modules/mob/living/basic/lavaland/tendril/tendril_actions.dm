@@ -7,7 +7,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	projectile_type = /obj/projectile/tentacle_lash
@@ -59,19 +59,28 @@
 	range = 7
 	hit_prone_targets = TRUE
 	hitsound = 'sound/effects/wounds/pierce1.ogg'
-	/// Beam connecting us and the target
+	sharpness = SHARP_POINTY
+	/// Beam connecting us and the firer
 	var/datum/beam/tentacle_beam = null
+	/// Does this projectile persist and reel in targets?
+	var/reel_in = TRUE
 	/// How long does the projectile persist?
 	var/duration = 1.2 SECONDS
 	/// Damage dealt to targets who get snatched from entering the beam or being hit directly
-	var/snatch_damage = 15
+	var/snatch_damage = 10
+
+/obj/projectile/tentacle_lash/stab
+	damage = 15
+	range = 2
+	reel_in = FALSE
 
 /obj/projectile/tentacle_lash/fire(fire_angle, atom/direct_target)
 	. = ..()
 	if (!firer)
 		return
-	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = /obj/effect/ebeam/reacting, emissive = FALSE)
-	RegisterSignal(tentacle_beam, COMSIG_BEAM_ENTERED, PROC_REF(on_beam_entered))
+	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = reel_in ? /obj/effect/ebeam/reacting : /obj/effect/ebeam, emissive = FALSE)
+	if (reel_in)
+		RegisterSignal(tentacle_beam, COMSIG_BEAM_ENTERED, PROC_REF(on_beam_entered))
 
 /obj/projectile/tentacle_lash/Destroy()
 	QDEL_NULL(tentacle_beam)
@@ -79,6 +88,8 @@
 
 // Don't range out, stop and persist until we're done
 /obj/projectile/tentacle_lash/on_range()
+	if (!reel_in)
+		return ..()
 	STOP_PROCESSING(SSprojectiles, src)
 	// Reset to tile center
 	pixel_x = 0
@@ -93,7 +104,7 @@
 
 /obj/projectile/tentacle_lash/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
-	if (!isliving(target) || blocked >= 100 || pierce_hit || . != BULLET_ACT_HIT)
+	if (!reel_in || !isliving(target) || blocked >= 100 || pierce_hit || . != BULLET_ACT_HIT)
 		return
 	var/mob/living/victim = target
 	snatch_target(victim)
@@ -101,7 +112,7 @@
 /obj/projectile/tentacle_lash/proc/on_beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
 	SIGNAL_HANDLER
 
-	if (entered != firer || !isliving(entered))
+	if (!reel_in || entered != firer || !isliving(entered))
 		return
 
 	var/mob/living/victim = entered
@@ -129,13 +140,13 @@
 	button_icon_state = "spikes_stabbing"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 12 SECONDS
+	cooldown_time = 8 SECONDS
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Lazy list of references to spike trails
 	var/list/active_chasers
 	/// Health percentage threshold at which we send out wide charsers after the main target
-	var/wide_chaser_threshold = 0.5
+	var/wide_chaser_threshold = 0.7
 
 /datum/action/cooldown/mob_cooldown/tendril_chaser/Activate(atom/target)
 	. = ..()
@@ -185,8 +196,6 @@
 	if (!area_spawn)
 		if (!(locate(spawned_effect) in loc) && isopenturf(loc))
 			new spawned_effect(loc)
-		if (loc == target.loc)
-			qdel(src)
 		return
 
 	for (var/spawn_dir in GLOB.cardinals)
@@ -195,9 +204,6 @@
 		var/turf/spawn_loc = get_step(src, spawn_dir)
 		if (!(locate(spawned_effect) in spawn_loc) && isopenturf(spawn_loc))
 			new spawned_effect(spawn_loc)
-
-	if (loc == target.loc)
-		qdel(src)
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
@@ -211,9 +217,9 @@
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril/single
 	icon_state = "spike"
-	duration = 0.8 SECONDS
+	duration = 1 SECONDS
+	harm_delay = 0.25 SECONDS
 	position_variance = 5
-	impale_damage = 20
 
 /datum/action/cooldown/mob_cooldown/tendril_cross_spikes
 	name = "Cross Spikes"
@@ -265,7 +271,7 @@
 		new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
 		spike_turfs += target_turf
 
-	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
+	SLEEP_CHECK_DEATH(1 SECONDS, owner)
 
 	for (var/turf/open/to_spawn in spike_turfs)
 		new /obj/effect/temp_visual/emerging_ground_spike/tendril/single(to_spawn)
@@ -274,3 +280,20 @@
 	StartCooldown()
 	enable_cooldown_actions()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee
+	name = "Tentacle Stab"
+	desc = "Stab nearby hostiles with long tentacles."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "goliath_tentacle_wiggle"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	click_to_activate = FALSE
+	cooldown_time = 8 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+	projectile_type = /obj/projectile/tentacle_lash/stab
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/attack_sequence(mob/living/firer, atom/target)
+	for (var/stab_dir in GLOB.alldirs)
+		shoot_projectile(get_turf(owner), get_step(owner, stab_dir), dir2angle(stab_dir), owner)
