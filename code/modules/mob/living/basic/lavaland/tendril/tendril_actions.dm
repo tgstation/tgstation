@@ -55,7 +55,7 @@
 	name = "tentacle spike"
 	icon_state = "tentacle_spike"
 	pass_flags = PASSTABLE
-	damage = 10
+	damage = 5 // +10 from the grab
 	armor_flag = MELEE
 	range = 9
 	hit_prone_targets = TRUE
@@ -206,6 +206,7 @@
 	icon_state = "spikes_stabbing"
 	duration = 0.7 SECONDS
 	position_variance = 3
+	impale_damage = 10
 	damage_blacklist_typecache = list(
 		/mob/living/basic/mining/tendril,
 	)
