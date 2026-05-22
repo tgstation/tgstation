@@ -35,6 +35,7 @@ const testHubStorage = testGeneric(
 
 const STORAGE_CDN_TIMEOUT = 5000;
 const persistedStorageKeys = ['panel-settings', 'chat-state', 'chat-messages'];
+const legacyHubMigrationKeys = ['panel-settings'];
 
 class HubStorageBackend implements StorageBackend {
   public impl: StorageImplementation;
@@ -208,9 +209,11 @@ class StorageProxy implements StorageBackend {
 
             const hub = new HubStorageBackend();
 
-            // Migrate these existing settings from byondstorage to the IFrame.
+            // Migrate safe legacy settings from byondstorage to the IFrame.
+            // Chat history may contain server-specific HTML/components from
+            // other codebases that shared the old byondstorage namespace.
             await Promise.all(
-              persistedStorageKeys.map(async (setting) => {
+              legacyHubMigrationKeys.map(async (setting) => {
                 try {
                   const settings = await hub.get(setting);
                   if (settings !== undefined) {
