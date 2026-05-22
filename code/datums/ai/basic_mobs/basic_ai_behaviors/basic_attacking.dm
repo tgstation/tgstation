@@ -77,7 +77,7 @@
  * gates execution on distance or drives movement. perform() handles out-of-range gracefully
  * via the existing IsReachableBy check (returns AI_BEHAVIOR_INSTANT when not adjacent).
  */
-/datum/ai_behavior/basic_melee_attack/bt
+/datum/ai_behavior/basic_melee_attack/basic_melee
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_ranged_attack
