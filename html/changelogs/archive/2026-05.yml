@@ -1,0 +1,374 @@
+2026-05-01:
+  TheRyeGuyWhoWillNowDie:
+  - qol: hyposprays can now draw from other reagent containers
+2026-05-02:
+  Hatterhat:
+  - qol: The style meter for miners now stores its permanent multiplier on the meter
+      in case you're switching eyewear. The style meter item is now small, allowing
+      for easier storage.
+  lelandkemble:
+  - bugfix: Mjolnir only successfully attacks if it successfully attacks
+  necromanceranne:
+  - bugfix: Void cloaks no longer obstruct surgery while invisible.
+2026-05-03:
+  Aliceee2ch:
+  - bugfix: Fixed color matrix not applying in reskinnable item preview.
+  Melbert:
+  - bugfix: Fix some erroneous dream portents from showing up
+  lelandkemble:
+  - code_imp: Things that interrupted the opening of storages are no longer reliant
+      on a runtime, meaning they interrupt regardless of whether you had another open
+      storage open at the time
+  - balance: Blood from blood bags is fully synthetic
+  vinylspiders:
+  - code_imp: fixes mining mobs being able to spawn too close to one another under
+      certain circumstances
+2026-05-04:
+  SmArtKar:
+  - admin: Added a new debug tool which displays a detailed breakdown of in-game visuals
+2026-05-05:
+  Absolucy:
+  - qol: Changed how chat highlights are styled - any color should look good now,
+      regardless of light or dark mode.
+  LT3:
+  - balance: Cargo manifest stamp payments/penalties are now consistently applied
+      as a percentage of the order value
+  - balance: Maximum payment for an approved cargo manifest raised to 120cr
+  - balance: Cargo orders that arrive empty and stamped denied receive a full refund
+      regardless of crate return
+  Melbert:
+  - refactor: Refactored hair and eye rendering a bit, they're now rendered separately
+      to the head - report any oddities with either. Lips too but to a lesser degree.
+  - rscadd: Adds Penguin tier zero gene infusion (gives you penguin ears, which make
+      you waddle)
+  - rscadd: Adds Plant tier zero gene infusion (gives you plant hair / organs, which
+      do nothing)
+  - rscadd: Adds Stoat tier one gene infusion (makes you tall, snouted, gives you
+      finer instincts, allows you to dodge large foes)
+  - rscadd: April 26th is Chernobyl Disaster Remembrance Day.
+  Time-Green:
+  - rscadd: Adds three new maintpill-only chems! Go eat more maintpills, and maybe
+      you'll find out what they are :)
+  - rscadd: Adds a new secret chem, which can rarely be found on a petrified piece
+      of paper somewhere in maintenance...
+  - bugfix: Fixes miscellaneous sources of petrification lasting 10x as long as intended
+  Y0SH1M4S73R:
+  - rscadd: Ghosts and spirits have once again been split into two species. Becoming
+      a ghost is only possible through a lucky polymorph, or the "Forsake Body" spell,
+      available for two points in a wizard's spellbook.
+  - rscdel: Spirits no longer have the passthrough ability.
+  - balance: Ghost's passthrough ability has unlimited range and no longer leaves
+      behind a grave. It is affected by holy water, and makes you drop all your equipment,
+      along with any bodyparts and organs that are not ghostly in nature.
+  lelandkemble:
+  - bugfix: You can now get the paddles from a compact defib by clicking on it
+  strandsofivy:
+  - bugfix: The PDA direct messenger will no longer overzealously break words, resulting
+      in cleaner chat message formatting overall.
+  vinylspiders:
+  - admin: invisimin now makes the admin invisible to ghosts/observers, as well as
+      pierce-immune and able to phase through walls
+  - qol: aghosting while invisimin'd or stealthmin'd will carry over your invisibility
+      to the aghost so you no longer have to trigger it again
+  - admin: added a new admin verb, 'Toggle Admin ESP', which lets you see ghosts and
+      invisimins while active
+2026-05-06:
+  Absolucy, vinylspiders, neocloudy:
+  - rscadd: Added a pair of signboards that can be crafted in the crafting menu, a
+      wooden one, and a holographic one. Perfect for advertising or otherwise getting
+      your VERY important message across to passersby.
+  Hatterhat:
+  - admin: Admins can now varedit blob overminds (the eye mob) to not kill everyone
+      on the station if they hit critical mass. (Admins will still have to remove
+      the blob from the shuttle subsystem's "hostile environments" tracker, though.)
+  lelandkemble:
+  - bugfix: animating a wand of animation works, and that animated wand of animation
+      animating a wand of animation does not runtime
+  vinylspiders:
+  - code_imp: speeds ghost runechat up a bit, and makes it show as italic
+  - admin: adds a 'toggle dead runechat' admin verb in case you need to disable it
+      midround for an event or something
+2026-05-07:
+  ArcaneMusic:
+  - rscadd: Adds the E-2 Earthcracker device as a purchasable traitor item for 2 TC.
+      Use it to create potentially devastating weakpoints onto the station!
+  Higgin:
+  - bugfix: positive viruses no longer self-cure when not having spaceacillin or meeting
+      the nutrition/satiety requirements.
+  Melbert:
+  - bugfix: Facial hair color can be separate from hair color again
+  - bugfix: Hair covering things update when they need up
+  Shroopy:
+  - bugfix: Fixed syndicate bombs having a maximum timer of 1000 minutes instead of
+      100 minutes.
+  SmArtKar, SentryPrimis:
+  - rscadd: Siderite and Shale lavaland biomes now have unique floors, as well as
+      flora, features and fauna!
+  - bugfix: Fixed some ruins generating with default basalt walls instead of their
+      biome's walls
+2026-05-08:
+  TheRyeGuyWhoWillNowDie:
+  - balance: Granibitaluri heals 1.5 brute and burn at best now, and scales down to
+      0.5 at worst.
+  Y0SH1M4S73R:
+  - balance: You can no longer get Xenomicrobes and Nanomachines from botany mutations.
+2026-05-09:
+  1393F:
+  - bugfix: The crystallizer can be rotated once again, on left click
+  FalloutFalcon:
+  - bugfix: Drying rack no longer accepts or processes dried items
+  JohnFulpWillard:
+  - rscadd: Reorganized the UI around the game; the title bar has been removed in
+      favor of the old info buttons (top right of the screen), which now has some
+      new buttons for you.
+  - rscadd: The Status Panel is now able to be retracted with one of the infobuttons.
+  - qol: You can now go directly to your hotkey settings from your hotkeys help page.
+  Melbert:
+  - rscadd: Spacers are now "very tall" again, rather than just "decently tall".
+  - qol: Tweaks message displayed when examining recovered crew / thanatorenaisa bodies
+  - bugfix: Some masks no longer hide lizard frills.
+  - rscadd: Hats that flatten hair now also flatten lizard frills a bit.
+  Neocloudy:
+  - sound: Restored fire alarm sound quality
+  SmArtKar:
+  - rscadd: Mining mobs now use priority when choosing their target, prioritizing
+      NODE drones over miners who haven't attacked them or their allies
+  - bugfix: Removed a rogue syndiedome ruin decal
+  lelandkemble:
+  - bugfix: SyndEye PDA app tracking tracks successfully
+  - bugfix: You no longer need traitor on to get syndicate monkey or contractor ghost
+      polls, & banning from these roles bans from the polls as well
+2026-05-10:
+  Melbert:
+  - balance: Cuffing items to yourself no longer prevents you from dropping or being
+      disarmed of the item- instead, the item becomes "chained" to you, forcing it
+      to stay within one tile's reach under all circumstances.
+  - balance: You can cuff shields to yourself again. Unless we figure out it's still
+      oppressive in which case it'll probably be removed (again)
+  - bugfix: IV drops should break your character's offsets less often
+2026-05-11:
+  Aliceee2ch:
+  - bugfix: RND servers are visible once again.
+  CabinetOnFire:
+  - bugfix: Fixes the spawn panel being unable to spawn turfs
+  Melbert:
+  - bugfix: You can speak with a stoat tongue
+  - bugfix: Stoat infusion is slightly taller
+  - bugfix: Explosions won't remove organs from skeletons/plasmamen
+  - code_imp: Solar arrays don't check for the pressence of space vines every process
+      tick
+  - code_imp: Changes the way tongues allow you to speak correctly to make them less
+      prone to fault
+  - bugfix: Re-adding limbs surgically requires you do surgery again (ie, incise ->
+      retract -> clamp).
+  Time-Green:
+  - bugfix: Fixes voidwalker being unable to vomit jump if anyone vomits on a non-station
+      z-level
+  Y0SH1M4S73R:
+  - rscadd: Random polymorphs can turn you into hatchling blood worms that can mature,
+      but not reproduce.
+  vinylspiders:
+  - bugfix: disable dead keyloop lagswitch measure now properly affects new ghosts,
+      and fixes an issue where people can revive and still be frozen
+2026-05-12:
+  Melbert:
+  - bugfix: Blocks two people cuffing to one item
+  SmArtKar:
+  - rscadd: Mining MOD sphere mode now fires a barrage of micromissiles instead of
+      a singular delayed explosive
+  - balance: Raptor are now immune to ice slippage
+  - balance: Mining MOD has had its ore digging speed increased
+  - bugfix: Buckled mobs can no longer "slip" (get stunned) on wet/icy tiles.
+  SmArtKar, thgvr:
+  - balance: Goliaths no longer hardstun, but instead bind and drag their targets
+      in with their tentacles. They are, however, much faster now.
+  - balance: Brimdemon beams can no longer wound, but deal a bit more DOT damage.
+      Their beams can also be interrupted by hitting them from the side or back in
+      melee.
+  - balance: Watchers and legions now try to maintain a few tiles of distance from
+      their targets instead of retreating.
+  - bugfix: Lobstrocity AI should no longer sometimes flee out of their aggro range
+      when retreating.
+  Y0SH1M4S73R:
+  - spellcheck: You are told you are downed instead of unconscious if you attempt
+      to use an action that requires you to be conscious while in softcrit.
+  kuricityy:
+  - balance: Flesh spiders are now slightly slower than your average spessmen. (10%)
+  - balance: Flesh spiders now regenerate after 3 seconds of not taking damage, compared
+      to 4.
+  lelandkemble:
+  - bugfix: sinks(and other methods of washing) clean out petri dishes
+  - rscadd: Added a new traitor item, Carnivorous Blood. It is purchasable in uplinks.
+      Carnivorous Blood is a reagent that eats away at a victim's blood once in their
+      bloodstream, doing so significantly faster if it has been mixed with the victim's
+      blood beforehand.
+  timothymtorres:
+  - bugfix: Fix shock immunity flag not working when electrocution occurs
+2026-05-13:
+  Absolucy, SmArtKar:
+  - qol: The color changing from regenerative rainbow, adamantine, and stabilized
+      pyrite extracts now looks far better.
+  - qol: The protection effect from regenerative rainbow extracts now actually makes
+      you all rainbowy.
+  - code_imp: Minor improvements to crossbreed status effect code.
+  CabinetOnFire:
+  - refactor: Implements "Event Logging" an improved way for programmers to debug
+      specific datums.
+  ElGitificador:
+  - bugfix: fixes a certain explosions message related to influences
+  Glu-furro:
+  - rscadd: 'Increased max prisoners from 2 to 4.
+
+      :cl:'
+  Happyowl93:
+  - bugfix: fixes material floor duplication
+  necromanceranne:
+  - qol: Your overall athletics level is what protects you from a random heart attack.
+      If you achieve peak fitness, you are immune to random heart attacks.
+2026-05-14:
+  ArcaneMusic:
+  - qol: Grills now have screentips when using tools on them.
+  - qol: In-line with other deconstruction processes, grills now deconstruct on right
+      click.
+  Derpguy3:
+  - bugfix: The door control button in Deltastation's medical desk works again.
+  Iamgoofball:
+  - rscadd: You can now print basic wet floor signs at the Service Protolathe, because
+      you couldn't actually print them for decades.
+  Melbert:
+  - rscadd: You can purchase (lower quality) broadcast cameras in cargo for 800cr
+  TealSeer:
+  - bugfix: fixed arming grenades not being logged
+  TheRyeGuyWhoWillNowDie:
+  - spellcheck: nspect scanners no longer claim to be capable of area scans
+  carpotoxin:
+  - rscadd: Adds the Deep Space deathmatch map
+  lelandkemble:
+  - bugfix: The Junkie quirk gives you the addiction you ask it for
+  - bugfix: Ghost role mobspawner bans work again
+  - spellcheck: Users of a Gaseous holoparasite no longer appear to repeatedly catch
+      fire when they are not.
+  - bugfix: You can unbuckle people from wheelchairs again
+2026-05-15:
+  JohnFulpWillard:
+  - bugfix: Stat panel's "Toggle Stat Panel" button now works.
+  - bugfix: People who re-enter their body can now exit again by moving.
+  lelandkemble:
+  - spellcheck: The Moon path armor knowledge's description has been made more clear
+2026-05-16:
+  Aliceee2ch:
+  - map: Genetics Lab was made less secure and more public on every map, try it out!
+  Melbert:
+  - balance: 'Spacer: Reduction to cold damage increased from 20% to 33%'
+  - balance: 'Spacer: Reduction to pressure damage increased from 20% to 33%'
+  - balance: 'Spacer: Zero gravity drift speed increased from 20% to 25%'
+  - balance: 'Spacer: Zero gravity floating speed increased from 10% to 15%'
+  - balance: 'Spacer: Move speed penalty on planetary maps reduced from 25% to 15%'
+  - balance: 'Spacer: Passive effects now trigger every second, rather than every
+      three seconds'
+  - balance: 'Spacer: Disgust healing modifier while in zero gravity increased from
+      1x to 2x'
+  - balance: 'Spacer: Passive stun reduction in zero gravity changed from 3 seconds
+      per 3 seconds to 2 seconds per second'
+  - balance: 'Spacer: Passive stamina healing in zero gravity changed from 3 stamina
+      per 3 seconds to 4 stamina per second'
+  - balance: 'Spacer: Passive stun reduction in zero gravity now activates after 10
+      seconds in zero gravity, down from 3 minutes'
+  - balance: 'Spacer: Passive stamina healing in zero gravity now activates after
+      1 minute, down from 3 minutes'
+  - balance: 'Spacer: After being in zero gravity for 10 seconds, also reduces duration
+      of knockdown effects by 25%'
+  - refactor: Refactored bane, which is the bonus some items get to damage vs specific
+      mob types. Report any oddities or weird damage numbers you notice.
+  - balance: Flyswatter damage scales the same across all mob types (if you get a
+      +3 flyswatter you no longer one shot mothpeople)
+  - balance: Bonus damage from "bane" no longer ignore armor unless the weapon itself
+      does
+  - qol: All bane effects are now agnostic to combat mode, meaning they don't require
+      you be on combat mode to apply the bonus damage.
+  - qol: Item with bane effects have an indicator about their effect in their combat
+      label
+  - bugfix: sfx that plays when entering historian mode of a trophy case is no longer
+      mute
+2026-05-17:
+  JohnFulpWillard:
+  - bugfix: Multiple crab17 crashes will now individually affect you and require you
+      to visit each one.
+  timothymtorres:
+  - bugfix: Fix holodeck mob organs and body parts not disappearing. Any holodeck
+      mob organs and body parts can also no longer be bioscrambled.
+2026-05-18:
+  Grammi:
+  - qol: Guardian granters (holoparasites injectors, dusty shards, etc) now show if
+      they've been used on examine.
+  Hatterhat:
+  - bugfix: Bluespace launchpads are no longer invisible when deployed.
+  - bugfix: Briefcase launchpad remotes now have a functioning reset button.
+  - bugfix: Quantum pads now use their screwdrivered-open state when depowered.
+  - image: Deep fryers now have a sprite with an open maintenance panel instead of
+      becoming invisible when screwdrivered.
+  Melbert:
+  - qol: Thermite chemical reaction is tagged as "Damaging", making it easier to refer
+      to.
+  - rscadd: '[Icebox] Security saw a minor remapping, with most notably the removal
+      of the labor shuttle and the integration of the labor camp into the bottom floor
+      of the perma-brig.'
+  SmArtKar:
+  - bugfix: Stumps no longer give a reattachment moodlet to mobs
+  SyncIt21:
+  - qol: plumbing assimilator has higher heating coefficient to that of tier 3 chem
+      heater
+  emicchinya:
+  - spellcheck: Target Left arm, Right arm, Left leg and Cycle head keybinds are now
+      capitalized properly.
+  timothymtorres:
+  - map: Add human limbs to the holodeck medsim organ crate
+2026-05-19:
+  ArcaneMusic:
+  - bugfix: Hydroponics trays will no longer produce pollen particles if the plant
+      in the tray has died.
+  - bugfix: Restocking a vending machine can no longer produce a zero credit holochip.
+  SmArtKar:
+  - bugfix: Fixed changeling tentacles not being able to fire
+  - bugfix: Pre-equipped shaft miners and handyman assistants now start with imprinted
+      PDAs like the rest of the job outfits.
+  TheRyeGuyWhoWillNowDie:
+  - map: fixed active turfs on shoe factory ruin
+  Wisemonster:
+  - rscadd: Added beartraps to the janitor closets of wawastation and icebox
+2026-05-20:
+  JohnFulpWillard:
+  - bugfix: Mafia players now get sent back to their bodies again post-game.
+  - admin: Admin players aren't forcefully put back into aghosted bodies after using
+      a temporary body spawner.
+  - admin: Changing lobby music now updates for people in the lobby.
+  Melbert:
+  - bugfix: Fixed issues that arise from picking up two items cuffed to the same person
+  - bugfix: Fixed issues that arise from picking up two items cuffed to two different
+      people
+  - bugfix: Fixed issues that arise from traveling z-levels while having a cuffed
+      item
+  RusselNotSCP:
+  - qol: Aperitivo Liqueur's hunger inducing effect has been reduced
+  - qol: The Negroni and Spritz cocktails no longer induce hunger and now only reduce
+      overfull-ness
+  SmArtKar:
+  - bugfix: Fixed shale and siderite biomes not spawning any features or mobs
+2026-05-21:
+  CabinetOnFire:
+  - bugfix: Fixes an issue were bots would try to blacklist qdeleted atoms
+  EnterTheJake:
+  - bugfix: Attaching a different head onto a Aura Heretic's body won't apply the
+      aura.
+  Wisemonster:
+  - code_imp: Nuclear reinforcements will now poll users with the mid-round nuke op
+      pref enabled, rather than the round-start pref.
+  lelandkemble:
+  - qol: Singularity beacon pulls singularities even if they were created after the
+      beacon's activation
+  - bugfix: right clicking an abandoned crate with a multitool no longer can blow
+      you up
+  - bugfix: Sealable biscuits can only be sealed once
+  mcbalaam:
+  - rscadd: Big Manipulators now use a single task loop instead of two separate point
+      loops.

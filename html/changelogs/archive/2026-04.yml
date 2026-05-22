@@ -601,3 +601,53 @@
 2026-04-27:
   levels0:
   - bugfix: metalgen and secret sauce should now generate properly
+2026-04-28:
+  ArcaneMusic:
+  - bugfix: Mice now have a movement sprite going both east and west.
+  - qol: Added a sound effect when a geyser is properly scanned.
+  ElGitificador:
+  - bugfix: fixed heretic gate cam appearing in on station ss13 network
+  SmArtKar:
+  - bugfix: Fixed plasma cutter recharging
+  levels0:
+  - bugfix: molt'obeso sauce will no longer appear as an ingredient in random recipes
+  vinylspiders:
+  - bugfix: fixes blue and green cybernetic cat ears being switched
+2026-04-29:
+  Dmeto:
+  - map: IceBox station boulder processing no longer exposed to outside.
+  ElGitificador:
+  - bugfix: hierophant achievement can now be obtained from 1 tile away of it s final
+      blast
+  Melbert:
+  - rscadd: Adds the Sect of the Dream God, a new option for chaplains.
+  - qol: Drinking soup from a bowl no longer yells at you in big text
+  tmyqlfpir:
+  - rscadd: Added USB interface to emitters, temperature pumps and temperature control
+      unit machines
+  vinylspiders:
+  - bugfix: fixes a few instances of crowbar deconstruction not working for certain
+      items
+  - refactor: extends the tool_blocker element to support secondary tool_acts
+2026-04-30:
+  DresserOnFire:
+  - bugfix: Fixes a bug where player-controlled basic mobs would get a cooldown when
+      their attacks miss
+  - refactor: basic mob attack chain can now decided whether an attack resulted in
+      a cooldown or not.
+  Jacquerel:
+  - bugfix: The Hierophant Club will stop glowing when you can't use it to teleport
+  - image: Updated the Hierophant Club so that it looks like the Hierophant
+  SmArtKar:
+  - bugfix: Fixed circuits bluescreening whenever you try to put text or numbers into
+      a STRING or ANY type field
+  dresseronfire:
+  - bugfix: You can now sic pets onto targets again
+  - bugfix: Pointing at things no longer sometimes points at the wrong thing
+  lelandkemble:
+  - bugfix: Cables without power no longer produce sparks when placed
+  necromanceranne:
+  - rscadd: Gives the Cybersun reinforcement a new outfit.
+  - rscadd: No new items were added to the black market. None. Honest.
+  timothymtorres:
+  - bugfix: Fix large bulky toys from being stored in suit storage

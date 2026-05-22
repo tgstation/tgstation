@@ -3,6 +3,7 @@
 
 /// Fired by a mob which has been grabbed by a goliath
 #define COMSIG_GOLIATH_TENTACLED_GRABBED "comsig_goliath_tentacle_grabbed"
+	#define COMPONENT_GOLIATH_CANCEL_TENTACLE_GRAB (1<<0)
 /// Fired by a goliath tentacle which is returning to the earth
 #define COMSIG_GOLIATH_TENTACLE_RETRACTING 	"comsig_goliath_tentacle_retracting"
 /// Fired by a mob which has triggered a brimdust explosion from itself (not the mobs that get hit)

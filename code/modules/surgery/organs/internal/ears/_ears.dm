@@ -253,10 +253,10 @@
 	return all_images
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
-	inner_color = "#0079EA"
+	inner_color = "#00D844"
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
-	inner_color = "#00D844"
+	inner_color = "#0079EA"
 
 /obj/item/organ/ears/ghost
 	name = "ghost ears"

@@ -251,6 +251,54 @@
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_BLOCK_BREATH
 
+/datum/reagent/toxin/carnivorousblood
+	name = "Carnivorous Blood"
+	description = "An Interdyne-developed biological agent that consumes any blood similar to the blood it was trained on."
+	color ="#C80000"
+	toxpwr = 0
+	taste_description = "carbonated blood"
+	ph = 7.4
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	self_consuming = TRUE
+	// Will hold up to three DNA unique enzymes
+	data = list()
+
+/datum/reagent/toxin/carnivorousblood/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & INHALE)
+		data = list() // Being vaporized is generally undesirable for living creatures
+
+/datum/reagent/toxin/carnivorousblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(!CAN_HAVE_BLOOD(affected_mob) || affected_mob.blood_volume == 0)
+		affected_mob.reagents.remove_reagent(/datum/reagent/toxin/carnivorousblood, volume)
+		return
+	var/multiplier = 1
+	if(affected_mob.stat == DEAD)
+		multiplier *= 2
+	if(affected_mob.dna.unique_enzymes in data)
+		multiplier *= 3
+	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
+	. = ..()
+	feed_dna_list(mix_data)
+
+/// Given a list of DNA keys, adds new keys up to the limit of three distinct sequences.
+/datum/reagent/toxin/carnivorousblood/proc/feed_dna_list(list/adding_list)
+	for(var/dna in adding_list)
+		if(data.len >= 3)
+			return
+		if(dna in data)
+			continue
+		data += dna
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -1671,3 +1719,46 @@
 	volume = round(volume/2, 0.01)
 
 #undef CRITICAL_CAPACITY
+
+/// Gibs you (lol), after an easily curable disease because WERE COWARDS
+/datum/reagent/toxin/gibbium
+	name = "Gibbium"
+	description = "Guess what this does."
+	silent_toxin = TRUE
+	color = "#ff0000"
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "regret"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	/// On what cycle to gib the person
+	var/gib_cycle = 5
+
+/datum/reagent/toxin/gibbium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(current_cycle >= gib_cycle)
+		affected_mob.ForceContractDisease(new /datum/disease/gbs/no_transmission ())
+
+/datum/reagent/toxin/spider_serum
+	name = "Spider Serum"
+	description = "A horrible mutagen that transmutes flesh into spiders."
+	color = "#000000"
+	taste_description = "unending nightmares"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	toxpwr = 0
+	/// The cycle for when to do the "transformation"
+	var/transformation_cycle = 30
+
+/datum/reagent/toxin/spider_serum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(prob(10))
+		new /mob/living/basic/spider/growing/spiderling (get_turf(affected_mob))
+		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
+		to_chat(affected_mob, span_warning("You feel tiny legs climbing up your throat."))
+
+	if(current_cycle >= transformation_cycle)
+		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
+		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)
