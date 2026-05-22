@@ -1,0 +1,276 @@
+name: Build and verify Rust library
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  build-linux:
+    permissions:
+      contents: write
+      pull-requests: write
+
+    if: |
+      github.event.issue.pull_request &&
+      github.event.comment.body == '!build_rust' &&
+       (github.event.comment.author_association == 'COLLABORATOR' ||
+       github.event.comment.author_association == 'MEMBER' ||
+       github.event.comment.author_association == 'OWNER')
+
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - run: echo "FAIL_NOTIFIED=false" >> "$GITHUB_ENV"
+
+      - name: Like the comment
+        env:
+          BASE_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/$BASE_REPOSITORY/issues/comments/${{ github.event.comment.id }}/reactions \
+            -f content='+1'
+
+      - name: Extract PR info
+        id: pr_info
+        run: |
+          PR_API_URL="${{ github.event.issue.pull_request.url }}"
+          PR_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$PR_API_URL")
+          echo "PR_REPO=$(echo "$PR_JSON" | jq -r '.head.repo.full_name')" >> $GITHUB_ENV
+          echo "PR_BRANCH=$(echo "$PR_JSON"  | jq -r '.head.ref')"           >> $GITHUB_ENV
+          echo "base_repo=$(echo "$PR_JSON" | jq -r '.base.repo.full_name')" >> $GITHUB_OUTPUT
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ env.PR_REPO }}
+          ref: ${{ env.PR_BRANCH }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Rust targets
+        run: |
+          rustup target add i686-unknown-linux-gnu
+
+      - name: Install cross-toolchain deps
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y \
+            zlib1g-dev:i386 \
+            lib32gcc-11-dev \
+            gcc-multilib g++-multilib \
+            libc6-dev-i386 \
+            libgcc-11-dev:i386
+
+      - name: Build Linux libraries
+        env:
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+          BASE_REPOSITORY: ${{ github.repository }}
+          USER_USER: ${{ github.actor }}
+          USER_EMAIL: ${{ github.event.sender.email }}
+          SOURCE_DATE_EPOCH: "1577836800"
+          TZ: UTC
+        run: |
+          git config --local user.name "Rust Builder"
+          git config --local user.email "action@github.com"
+
+          git pull origin "$PR_BRANCH" --depth=$((ahead_by + 1))
+          git remote add upstream "https://github.com/$BASE_REPOSITORY.git"
+          git fetch upstream "$BASE_BRANCH" --depth=$((behind_by + 1))
+
+          cd rust
+
+          LINUX_TARGET="i686-unknown-linux-gnu"
+
+          # Build for CI (без агрессивных оптимизаций)
+          cargo build --release --target $LINUX_TARGET
+          cp target/$LINUX_TARGET/release/librustlibs.so ../tools/ci/librustlibs.so
+          cp target/$LINUX_TARGET/release/librustlibs.so ../librustlibs.so
+
+          # Build for production (с оптимизациями)
+          export RUSTFLAGS='-C target-cpu=raptorlake -C link-arg=-Wl,--build-id=none'
+          cargo build --release --target=$LINUX_TARGET
+          cp target/$LINUX_TARGET/release/librustlibs.so ../librustlibs_prod.so
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-libraries
+          path: |
+            librustlibs.so
+            librustlibs_prod.so
+            tools/ci/librustlibs.so
+
+  build-windows:
+    permissions:
+      contents: write
+      pull-requests: write
+
+    if: |
+      github.event.issue.pull_request &&
+      github.event.comment.body == '!build_rust' &&
+       (github.event.comment.author_association == 'COLLABORATOR' ||
+       github.event.comment.author_association == 'MEMBER' ||
+       github.event.comment.author_association == 'OWNER')
+
+    runs-on: windows-latest
+
+    steps:
+      - name: Install jq
+        run: choco install jq -y
+      - run: echo "FAIL_NOTIFIED=false" >> "$env:GITHUB_ENV"
+      - name: Like the comment
+        env:
+          BASE_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            repos/$BASE_REPOSITORY/issues/comments/${{ github.event.comment.id }}/reactions \
+            -f content='+1'
+
+      - name: Extract PR info
+        id: pr_info
+        shell: bash
+        run: |
+          PR_API_URL="${{ github.event.issue.pull_request.url }}"
+          PR_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$PR_API_URL")
+          echo "PR_REPO=$(echo "$PR_JSON" | jq -r '.head.repo.full_name')" >> $GITHUB_ENV
+          echo "PR_BRANCH=$(echo "$PR_JSON"  | jq -r '.head.ref')"           >> $GITHUB_ENV
+          echo "base_repo=$(echo "$PR_JSON" | jq -r '.base.repo.full_name')" >> $GITHUB_OUTPUT
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ env.PR_REPO }}
+          ref: ${{ env.PR_BRANCH }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Rust (MSVC)
+        run: |
+          rustup default stable-x86_64-pc-windows-msvc
+          rustup target add i686-pc-windows-msvc
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          install: mingw-w64-i686-gcc
+
+      - name: Build Windows DLL (MSVC)
+        env:
+          RUSTFLAGS: '-C target-cpu=x86-64'
+        run: |
+          cd rust
+          cargo build --release --target i686-pc-windows-msvc
+          copy target\i686-pc-windows-msvc\release\rustlibs.dll ..\rustlibs.dll
+
+      - name: Build Windows DLL (GNU)
+        env:
+          RUSTFLAGS: '-C target-cpu=x86-64'
+        shell: msys2 {0}
+        run: |
+          export PATH="/c/Users/runneradmin/.cargo/bin:$PATH"
+          which cargo || echo "Cargo not found, installing..."
+
+          if ! command -v cargo &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-host x86_64-pc-windows-gnu
+            export PATH="$HOME/.cargo/bin:$PATH"
+          fi
+
+          rustup target add i686-pc-windows-gnu
+
+          cd rust
+          cargo build --release --target i686-pc-windows-gnu
+          cp target/i686-pc-windows-gnu/release/rustlibs.dll ../rustlibs_gnu.dll
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-libraries
+          path: |
+            rustlibs.dll
+            rustlibs_gnu.dll
+
+  commit-and-push:
+    permissions:
+      contents: write
+      pull-requests: write
+
+    if: |
+      github.event.issue.pull_request &&
+      github.event.comment.body == '!build_rust' &&
+       (github.event.comment.author_association == 'COLLABORATOR' ||
+       github.event.comment.author_association == 'MEMBER' ||
+       github.event.comment.author_association == 'OWNER')
+
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Extract PR info
+        run: |
+          PR_API_URL="${{ github.event.issue.pull_request.url }}"
+          PR_JSON=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$PR_API_URL")
+          echo "PR_REPO=$(echo "$PR_JSON" | jq -r '.head.repo.full_name')" >> $GITHUB_ENV
+          echo "PR_BRANCH=$(echo "$PR_JSON"  | jq -r '.head.ref')"           >> $GITHUB_ENV
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ env.PR_REPO }}
+          ref: ${{ env.PR_BRANCH }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-libraries
+          path: .
+
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: windows-libraries
+          path: .
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v3.2.0
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          client-id: ${{ secrets.CHANGELOGBOT_APPID }}
+          private-key: ${{ secrets.CHANGELOGBOT_PRIVATEKEY }}
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.CHANGELOGBOT_PRIVATEKEY }}
+          APP_ID: ${{ secrets.CHANGELOGBOT_APPID }}
+
+      - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ steps.app-token-generation.outputs.token || secrets.CHANGELOGBOT_TOKEN }}
+        run: |
+          git config --local user.name "Rust Builder"
+          git config --local user.email "action@github.com"
+
+          git add --force librustlibs.so librustlibs_prod.so tools/ci/librustlibs.so rustlibs.dll rustlibs_gnu.dll
+          git commit -m "Build Rust library for Linux and Windows" || echo "No changes to commit"
+          git push origin
+
+      - name: Notify Failure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        if: failure()
+        run: |
+          gh pr comment ${{ github.event.issue.html_url }} -b 'Building Rust library failed, see the action run log for details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'

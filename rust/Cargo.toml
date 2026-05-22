@@ -1,0 +1,11 @@
+[package]
+name = "rustlibs"
+version = "2.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+byondapi = { git = "https://github.com/spacestation13/byondapi-rs.git", version = "0.6.14" }
+eyre = "0.6.12"
