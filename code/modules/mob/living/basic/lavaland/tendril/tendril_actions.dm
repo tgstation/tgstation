@@ -47,6 +47,7 @@
 
 	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
 	StartCooldown()
+	SLEEP_CHECK_DEATH(0.6 SECONDS, owner)
 	enable_cooldown_actions()
 	return TRUE
 
@@ -72,6 +73,7 @@
 /obj/projectile/tentacle_lash/stab
 	damage = 15
 	range = 2
+	duration = 0.2 SECONDS // Just for visual flair
 	reel_in = FALSE
 
 /obj/projectile/tentacle_lash/fire(fire_angle, atom/direct_target)
@@ -88,8 +90,6 @@
 
 // Don't range out, stop and persist until we're done
 /obj/projectile/tentacle_lash/on_range()
-	if (!reel_in)
-		return ..()
 	STOP_PROCESSING(SSprojectiles, src)
 	// Reset to tile center
 	pixel_x = 0
@@ -111,7 +111,7 @@
 /obj/projectile/tentacle_lash/proc/on_beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
 	SIGNAL_HANDLER
 
-	if (!reel_in || entered != firer || !isliving(entered))
+	if (!reel_in || entered == firer || !isliving(entered))
 		return
 
 	var/mob/living/victim = entered
@@ -131,7 +131,8 @@
 	if (istype(firer, /mob/living/basic/mining/tendril))
 		var/mob/living/basic/mining/tendril/tendril = firer
 		snatch_callback = CALLBACK(tendril, TYPE_PROC_REF(/mob/living/basic/mining/tendril, snatch_react))
-	victim.throw_at(firer, range, 1, firer, FALSE, gentle = TRUE, callback = snatch_callback)
+	victim.throw_at(firer, initial(range), 1, firer, FALSE, gentle = TRUE, callback = snatch_callback)
+	playsound(victim, hitsound, 50, -3, pressure_affected = FALSE)
 	qdel(src)
 
 /// An ability which makes spikes come out of the ground towards your target
@@ -209,12 +210,29 @@
 		/mob/living/basic/mining/tendril,
 	)
 	impale_wound_bonus = CANT_WOUND
+	// Have we hit someone yet?
+	var/hit_loser = FALSE
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril/single
 	icon_state = "spike"
 	duration = 1 SECONDS
 	harm_delay = 0.25 SECONDS
 	position_variance = 5
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/impale()
+	. = ..()
+	hit_loser |= .
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+
+/obj/effect/temp_visual/emerging_ground_spike/tendril/proc/on_entered(atom/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if (!isliving(arrived))
+		return
+
+	if (harm_mob(arrived) && !hit_loser)
+		playsound(src, 'sound/items/weapons/slice.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+		hit_loser = TRUE
 
 /datum/action/cooldown/mob_cooldown/tendril_cross_spikes
 	name = "Cross Spikes"
@@ -224,7 +242,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 10 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	/// Health threshold at which we reduce the amount of empty spots on the ground
@@ -256,7 +274,10 @@
 		if (as_living.health / as_living.maxHealth <= health_threshold)
 			reduced_spawns = TRUE
 
-	for (var/turf/open/target_turf in orange(9, owner_turf))
+	for (var/turf/open/target_turf in oview(9, owner_turf))
+		if (sqrt((target_turf.x - owner_turf.x) ** 2 + (target_turf.y - owner_turf.y) ** 2) > 9.5) // big circle is a lie
+			continue
+
 		if (reduced_spawns)
 			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y + inverse) % 2)
 				new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)

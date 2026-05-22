@@ -69,13 +69,25 @@ GLOBAL_LIST_INIT(tendrils, list())
 	ai_controller.set_blackboard_key(BB_TENDRIL_CHASER, tendril_chaser)
 	ai_controller.set_blackboard_key(BB_TENDRIL_SPIKES, cross_spikes)
 
-	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 1, target_self = TRUE)
+	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 2, target_self = TRUE)
 
 	soundloop = new(src, start_immediately = FALSE)
 	soundloop.mid_length = HEARTBEAT_NORMAL
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_OVERLAYS)
+
+	var/turf/our_turf = get_turf(src)
+	for (var/turf/rock in range(3, src))
+		var/dist = sqrt((rock.x - our_turf.x) ** 2 + (rock.y - our_turf.y) ** 2)
+		if (dist > 3.5)
+			continue
+
+		if (ismineralturf(rock))
+			rock.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+
+		if (isopenturf(rock) && prob(100 / max(1, dist)))
+			rock.ChangeTurf(/turf/open/indestructible/necropolis, null, CHANGETURF_IGNORE_AIR)
 
 /mob/living/basic/mining/tendril/Destroy()
 	GLOB.tendrils -= src
