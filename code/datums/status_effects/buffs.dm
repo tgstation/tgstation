@@ -736,12 +736,13 @@
 //status effect granted when taking attack damage while metabolizing synthpax
 /datum/status_effect/synthpax_immunity
 	id = "synthpax_immune"
+	duration = 5 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
 /datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration)
-	. = ..()
 	src.duration = duration
+	return ..()
 
 /datum/status_effect/synthpax_immunity/on_apply()
 	ADD_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
@@ -752,4 +753,3 @@
 	REMOVE_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
 	if(owner.reagents.has_reagent(/datum/reagent/pax/peaceborg))
 		ADD_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))
-	UnregisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE)
