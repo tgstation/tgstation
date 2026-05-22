@@ -117,10 +117,6 @@ GLOBAL_LIST_INIT(tendrils, list())
 	if (beat_rate != soundloop.mid_length)
 		soundloop.set_mid_length(beat_rate)
 
-/// Ignores melee cooldowns by default, handled on AI side unless we have a client
-/mob/living/basic/mining/tendril/melee_attack(atom/target, list/modifiers, ignore_cooldown = null)
-	return ..(target, modifiers, isnull(ignore_cooldown) ? isnull(client) : ignore_cooldown)
-
 /mob/living/basic/mining/tendril/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = item_animation_override)

@@ -258,7 +258,7 @@
 
 	for (var/turf/open/target_turf in orange(9, owner_turf))
 		if (reduced_spawns)
-			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y) % 2 + inverse)
+			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y + inverse) % 2)
 				new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
 				spike_turfs += target_turf
 			continue
@@ -305,7 +305,6 @@
 	projectile_type = /obj/projectile/tentacle_lash/stab
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/Activate(atom/target_atom, warning = TRUE)
-	disable_cooldown_actions()
 	if (warning)
 		for (var/stab_dir in GLOB.alldirs)
 			var/turf/open/stab_turf = get_step(owner, stab_dir)
@@ -321,5 +320,4 @@
 
 	SLEEP_CHECK_DEATH(0.5 SECONDS, owner)
 	StartCooldown()
-	enable_cooldown_actions()
 	return TRUE
