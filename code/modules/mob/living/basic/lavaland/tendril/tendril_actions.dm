@@ -176,6 +176,7 @@
 
 /obj/effect/temp_visual/effect_trail/tendril_chaser
 	duration = 10 SECONDS
+	move_speed = 4
 	spawned_effect = /obj/effect/temp_visual/emerging_ground_spike/tendril
 	/// Do we spawn spikes around ourselves as well or only on our own turf?
 	var/area_spawn = FALSE
