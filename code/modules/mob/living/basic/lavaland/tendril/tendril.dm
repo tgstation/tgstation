@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	GLOB.tendrils += src
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
+	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
@@ -86,7 +87,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		if (ismineralturf(rock))
 			rock.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
-		if (isopenturf(rock) && prob(100 / max(1, dist)))
+		if (istype(rock, /turf/open/misc/asteroid) && prob(100 / max(1, dist)))
 			rock.ChangeTurf(/turf/open/indestructible/necropolis, null, CHANGETURF_IGNORE_AIR)
 
 /mob/living/basic/mining/tendril/Destroy()
