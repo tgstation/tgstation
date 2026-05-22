@@ -1,0 +1,5 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - bugfix: "Blunt/sharp weapons no longer slice through your coagulants when you are dismembered"
+  - bugfix: "Burn weapons now remember that they cauterize instead of slice when dismembering"
