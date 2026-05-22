@@ -20,9 +20,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 15,
-		/obj/structure/spawner/lavaland = 1,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 7,
 	)
 
 	flora_types = list(
@@ -57,9 +55,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 40,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 35,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 3,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 8,
 	)
 
 	flora_types = list(
@@ -93,9 +89,7 @@
 		/mob/living/basic/mining/lobstrosity/lava = 25,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 20,
 		/mob/living/basic/mining/goldgrub = 15,
-		/obj/structure/spawner/lavaland = 2,
-		/obj/structure/spawner/lavaland/goliath = 1,
-		/obj/structure/spawner/lavaland/legion = 3,
+		/mob/living/basic/mining/tendril = 6,
 	)
 
 	flora_types = list(

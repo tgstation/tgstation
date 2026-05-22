@@ -78,7 +78,6 @@
 #define BB_BASIC_MOB_MELEE_DELAY "BB_basic_melee_delay"
 /// Key used to store the time we can actually attack
 #define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
-#define BB_BASIC_MOB_MELEE_COOLDOWN_MULTIPLE "BB_basic_melee_cooldown_multiple"
 
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
@@ -99,7 +98,6 @@
 /// How likely is this mob to move when idle per tick?
 #define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
 #define BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN "BB_basic_mob_target_refresh_cooldown"
-#define BB_BASIC_MOB_SECONDARY_TARGET_LIST "BB_basic_secondary_target_list"
 
 /// Minimum range to keep target within
 #define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"

@@ -31,21 +31,3 @@
 		return ..()
 	if(!HAS_TRAIT(target, TRAIT_SCARY_FISHERMAN))
 		return ..()
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/multi_target
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/multi_target
-	/// Behavior used for secondary targets
-	var/secondary_melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/multi_target
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/multi_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/found_target = FALSE
-	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-		found_target = TRUE
-
-	if(length(controller.blackboard[BB_BASIC_MOB_SECONDARY_TARGET_LIST]))
-		controller.queue_behavior(secondary_melee_attack_behavior, BB_BASIC_MOB_SECONDARY_TARGET_LIST, BB_TARGETING_STRATEGY, null)
-		found_target = TRUE
-
-	if (end_planning && found_target)
-		return SUBTREE_RETURN_FINISH_PLANNING // we are going into battle... no distractions.

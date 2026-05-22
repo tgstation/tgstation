@@ -34,4 +34,7 @@
 /obj/effect/temp_visual/telegraphing/line
 	icon = 'icons/mob/telegraphing/telegraph.dmi'
 	icon_state = "line"
-	duration = 0.7 SECONDS
+	duration = 0.8 SECONDS
+
+/obj/effect/temp_visual/telegraphing/line/short
+	duration = 0.5 SECONDS

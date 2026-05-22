@@ -2,6 +2,8 @@
 #define HEARTBEAT_FAST (1 SECONDS)
 #define HEARTBEAT_FRANTIC (0.4 SECONDS)
 
+GLOBAL_LIST_INIT(tendrils, list())
+
 /mob/living/basic/mining/tendril
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground."
@@ -31,10 +33,15 @@
 	throw_blocked_message = "does nothing to the thick shell of"
 	move_resist = INFINITY
 
+	light_range = 3
+	light_power = 2
+	light_color = LIGHT_COLOR_LAVA
+
 	ai_controller = /datum/ai_controller/basic_controller/tendril
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
+	// Abilities of the tendril
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/tendril_lash
 	var/datum/action/cooldown/mob_cooldown/tendril_chaser/tendril_chaser
 	var/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/cross_spikes
@@ -42,9 +49,11 @@
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
+	GLOB.tendrils += src
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
 	AddComponent(/datum/component/gps, "Eerie Signal")
-	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.2 SECONDS)
+	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
 	tendril_lash = new(src)
@@ -60,13 +69,29 @@
 	ai_controller.set_blackboard_key(BB_TENDRIL_CHASER, tendril_chaser)
 	ai_controller.set_blackboard_key(BB_TENDRIL_SPIKES, cross_spikes)
 
-	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 2, target_self = TRUE)
+	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 1, target_self = TRUE)
 
 	soundloop = new(src, start_immediately = FALSE)
 	soundloop.mid_length = HEARTBEAT_NORMAL
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/tendril/Destroy()
+	GLOB.tendrils -= src
+	QDEL_NULL(soundloop)
+
+	if(!SSachievements.achievements_enabled || (flags_1 & ADMIN_SPAWNED_1))
+		return ..()
+
+	for(var/mob/living/killer in view(7, src))
+		if(killer.stat || !killer.client)
+			continue
+		killer.client.give_award(/datum/award/score/tendril_score, killer)
+		if (!length(GLOB.tendrils))
+			killer.client.give_award(/datum/award/achievement/boss/tendril_exterminator, killer)
+
+	return ..()
 
 /mob/living/basic/mining/tendril/update_overlays()
 	. = ..()
@@ -82,8 +107,11 @@
 	update_heartbeat()
 
 /mob/living/basic/mining/tendril/proc/update_heartbeat()
+	if (!soundloop)
+		return
+
 	var/beat_rate = HEARTBEAT_NORMAL
-	if (ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET] || length(ai_controller?.blackboard[BB_BASIC_MOB_SECONDARY_TARGET_LIST]))
+	if (ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 		beat_rate = round(HEARTBEAT_FRANTIC + health / maxHealth * (HEARTBEAT_FAST - HEARTBEAT_FRANTIC), 0.05 SECONDS)
 
 	if (beat_rate != soundloop.mid_length)
@@ -93,16 +121,13 @@
 /mob/living/basic/mining/tendril/melee_attack(atom/target, list/modifiers, ignore_cooldown = null)
 	return ..(target, modifiers, isnull(ignore_cooldown) ? isnull(client) : ignore_cooldown)
 
-// Don't animate the tendril itself
 /mob/living/basic/mining/tendril/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = item_animation_override)
 
-/mob/living/basic/mining/tendril/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
-	. = ..()
 	// Stabby visuals
 	var/obj/effect/temp_visual/spike_stab/stab = new(get_turf(src))
-	var/target_dir = get_dir(src, target)
+	var/target_dir = get_dir(src, attacked_atom)
 	stab.transform = matrix().Turn(dir2angle(target_dir) + rand(-7, 7))
 	if (target_dir & NORTH)
 		stab.pixel_z = 24
@@ -120,7 +145,7 @@
 
 /mob/living/basic/mining/tendril/proc/snatch_react()
 	if (tendril_melee.IsAvailable())
-		tendril_melee.Activate()
+		tendril_melee.Activate(warning = FALSE)
 
 #undef HEARTBEAT_NORMAL
 #undef HEARTBEAT_FAST

@@ -28,6 +28,3 @@
 /datum/ai_planning_subtree/simple_find_target/hunt
 	strategy_key = BB_HUNT_TARGETING_STRATEGY
 
-/// Everyone who didn't get targeted gets added into a secondary target list
-/datum/ai_planning_subtree/simple_find_target/multi_target
-	target_behavior = /datum/ai_behavior/find_potential_targets/multi_target

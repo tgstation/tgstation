@@ -7,7 +7,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 12 SECONDS
+	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	projectile_type = /obj/projectile/tentacle_lash
@@ -24,12 +24,12 @@
 			telegraph.dir = swipe_dir
 			line_turf = get_step(line_turf, swipe_dir)
 
-	SLEEP_CHECK_DEATH(0.7 SECONDS, owner)
+	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.cardinals)
 		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
 
-	SLEEP_CHECK_DEATH(1.2 SECONDS, owner)
+	SLEEP_CHECK_DEATH(1.6 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.diagonals)
 		var/turf/open/line_turf = get_step(owner, swipe_dir)
@@ -40,7 +40,7 @@
 			telegraph.dir = swipe_dir
 			line_turf = get_step(line_turf, swipe_dir)
 
-	SLEEP_CHECK_DEATH(0.7 SECONDS, owner)
+	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
 
 	for (var/swipe_dir in GLOB.diagonals)
 		shoot_projectile(get_turf(owner), get_step(owner, swipe_dir), dir2angle(swipe_dir), owner)
@@ -78,7 +78,7 @@
 	. = ..()
 	if (!firer)
 		return
-	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = reel_in ? /obj/effect/ebeam/reacting : /obj/effect/ebeam, emissive = FALSE)
+	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = (reel_in ? /obj/effect/ebeam/reacting : /obj/effect/ebeam), emissive = FALSE)
 	if (reel_in)
 		RegisterSignal(tentacle_beam, COMSIG_BEAM_ENTERED, PROC_REF(on_beam_entered))
 
@@ -106,8 +106,7 @@
 	. = ..()
 	if (!reel_in || !isliving(target) || blocked >= 100 || pierce_hit || . != BULLET_ACT_HIT)
 		return
-	var/mob/living/victim = target
-	snatch_target(victim)
+	snatch_target(target)
 
 /obj/projectile/tentacle_lash/proc/on_beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
 	SIGNAL_HANDLER
@@ -116,7 +115,7 @@
 		return
 
 	var/mob/living/victim = entered
-	if (!firer || !firer.faction_check_atom(victim) || victim.stat == DEAD)
+	if ((!firer || !firer.faction_check_atom(victim)) && victim.stat != DEAD)
 		INVOKE_ASYNC(src, PROC_REF(snatch_target), entered)
 
 /obj/projectile/tentacle_lash/proc/snatch_target(mob/living/victim)
@@ -125,6 +124,9 @@
 
 	to_chat(victim, span_userdanger("You're snatched by [firer]'s tentacles!"))
 	victim.apply_damage(snatch_damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	if (QDELETED(victim))
+		qdel(src)
+		return
 	var/snatch_callback = null
 	if (istype(firer, /mob/living/basic/mining/tendril))
 		var/mob/living/basic/mining/tendril/tendril = firer
@@ -140,7 +142,7 @@
 	button_icon_state = "spikes_stabbing"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 8 SECONDS
+	cooldown_time = 10 SECONDS
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Lazy list of references to spike trails
@@ -160,14 +162,6 @@
 	LAZYADD(active_chasers, WEAKREF(chaser))
 	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
-
-	if (!owner.ai_controller)
-		return
-
-	for (var/atom/other_target as anything in owner.ai_controller.blackboard[BB_BASIC_MOB_SECONDARY_TARGET_LIST])
-		chaser = new(get_turf(owner), other_target)
-		LAZYADD(active_chasers, WEAKREF(chaser))
-		RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_chaser_destroyed(atom/chaser)
@@ -194,15 +188,16 @@
 /obj/effect/temp_visual/effect_trail/tendril_chaser/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if (!area_spawn)
-		if (!(locate(spawned_effect) in loc) && isopenturf(loc))
-			new spawned_effect(loc)
+		var/turf/spawn_turf = get_turf(src)
+		if (!(locate(/obj/effect/temp_visual/emerging_ground_spike/tendril) in spawn_turf) && isopenturf(spawn_turf))
+			new spawned_effect(spawn_turf)
 		return
 
 	for (var/spawn_dir in GLOB.cardinals)
 		if (spawn_dir & REVERSE_DIR(movement_dir))
 			continue
 		var/turf/spawn_loc = get_step(src, spawn_dir)
-		if (!(locate(spawned_effect) in spawn_loc) && isopenturf(spawn_loc))
+		if (!(locate(/obj/effect/temp_visual/emerging_ground_spike/tendril) in spawn_loc) && isopenturf(spawn_loc))
 			new spawned_effect(spawn_loc)
 
 /obj/effect/temp_visual/emerging_ground_spike/tendril
@@ -229,7 +224,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 10 SECONDS
+	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	/// Health threshold at which we reduce the amount of empty spots on the ground
@@ -237,8 +232,24 @@
 
 /datum/action/cooldown/mob_cooldown/tendril_cross_spikes/Activate(atom/target)
 	disable_cooldown_actions()
-	var/turf/owner_turf = get_turf(owner)
+	// Remove all active chasers as to not force guaranteed damage onto players
+	if (istype(owner, /mob/living/basic/mining/tendril))
+		var/mob/living/basic/mining/tendril/tendril = owner
+		QDEL_LIST(tendril.tendril_chaser.active_chasers)
+	spawn_spikes()
+	SLEEP_CHECK_DEATH(0.4 SECONDS, owner)
+	spawn_spikes(inverse = TRUE)
+	if (istype(owner, /mob/living/basic/mining/tendril))
+		var/mob/living/basic/mining/tendril/tendril = owner
+		tendril.tendril_chaser.ResetCooldown()
+	StartCooldown()
+	enable_cooldown_actions()
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/proc/spawn_spikes(inverse = FALSE)
 	var/list/turf/spike_turfs = list()
+	var/turf/owner_turf = get_turf(owner)
+
 	var/reduced_spawns = FALSE
 	if (isliving(owner))
 		var/mob/living/as_living = owner
@@ -247,25 +258,27 @@
 
 	for (var/turf/open/target_turf in orange(9, owner_turf))
 		if (reduced_spawns)
-			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y) % 2)
+			if (abs(target_turf.x - owner_turf.x) % 2 == abs(target_turf.y - owner_turf.y) % 2 + inverse)
 				new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
 				spike_turfs += target_turf
 			continue
 
-		var/row = floor((abs(target_turf.y - owner_turf.y) + 1) / 3)
+		var/row_diff = inverse ? abs(target_turf.x - owner_turf.x) : abs(target_turf.y - owner_turf.y)
+		var/column_diff = inverse ? abs(target_turf.y - owner_turf.y) : abs(target_turf.x - owner_turf.x)
+		var/row = floor((row_diff + 1) / 3)
 		if (row % 2 == 0)
-			if (abs(target_turf.y - owner_turf.y) - row * 3 == 0)
-				if (abs(target_turf.x - owner_turf.x) % 4 == 2)
+			if (row_diff - row * 3 == 0)
+				if (column_diff % 4 == 2)
 					continue
 			else
-				if (abs(target_turf.x - owner_turf.x) % 4 != 0)
+				if (column_diff % 4 != 0)
 					continue
 		else
-			if (abs(target_turf.y - owner_turf.y) - row * 3 == 0)
-				if (abs(target_turf.x - owner_turf.x) % 4 == 0)
+			if (row_diff - row * 3 == 0)
+				if (column_diff % 4 == 0)
 					continue
 			else
-				if (abs(target_turf.x - owner_turf.x) % 4 != 2)
+				if (column_diff % 4 != 2)
 					continue
 
 		new /obj/effect/temp_visual/telegraphing/circle/short(target_turf)
@@ -277,9 +290,6 @@
 		new /obj/effect/temp_visual/emerging_ground_spike/tendril/single(to_spawn)
 
 	SLEEP_CHECK_DEATH(0.8 SECONDS, owner)
-	StartCooldown()
-	enable_cooldown_actions()
-	return TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee
 	name = "Tentacle Stab"
@@ -289,11 +299,27 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = FALSE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 4 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	projectile_type = /obj/projectile/tentacle_lash/stab
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/attack_sequence(mob/living/firer, atom/target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/Activate(atom/target_atom, warning = TRUE)
+	disable_cooldown_actions()
+	if (warning)
+		for (var/stab_dir in GLOB.alldirs)
+			var/turf/open/stab_turf = get_step(owner, stab_dir)
+			if (!istype(stab_turf))
+				continue
+			var/obj/effect/temp_visual/telegraphing/line/short/telegraph = new(stab_turf)
+			telegraph.dir = stab_dir
+
+		SLEEP_CHECK_DEATH(0.5 SECONDS, owner)
+
 	for (var/stab_dir in GLOB.alldirs)
 		shoot_projectile(get_turf(owner), get_step(owner, stab_dir), firer = owner)
+
+	SLEEP_CHECK_DEATH(0.5 SECONDS, owner)
+	StartCooldown()
+	enable_cooldown_actions()
+	return TRUE

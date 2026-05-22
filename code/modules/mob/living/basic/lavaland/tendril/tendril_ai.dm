@@ -6,12 +6,12 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/call_reinforcements/mining,
-		/datum/ai_planning_subtree/target_retaliate/check_faction/multi_target,
-		/datum/ai_planning_subtree/simple_find_target/multi_target,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/tendril_chaser,
-		/datum/ai_planning_subtree/use_mob_ability/tendril_lash,
 		/datum/ai_planning_subtree/use_mob_ability/tendril_spikes,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/multi_target,
+		/datum/ai_planning_subtree/use_mob_ability/tendril_lash,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /datum/ai_planning_subtree/targeted_mob_ability/tendril_chaser

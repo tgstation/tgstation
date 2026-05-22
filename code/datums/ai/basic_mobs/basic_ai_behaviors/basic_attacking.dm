@@ -83,52 +83,6 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-/// Can attack multiple people at the same time
-/datum/ai_behavior/basic_melee_attack/multi_target
-	/// Key for storing our cooldowns, stored by ref as to not bother with reftracking
-	var/targets_key = BB_BASIC_MOB_MELEE_COOLDOWN_MULTIPLE
-
-/datum/ai_behavior/basic_melee_attack/multi_target/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	// Do not move towards secondary targets
-	if (islist(controller.blackboard[target_key]))
-		return TRUE
-	return ..()
-
-/datum/ai_behavior/basic_melee_attack/multi_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	if (!islist(controller.blackboard[target_key]))
-		return ..()
-
-	for (var/atom/other_target in controller.blackboard[target_key])
-		if (other_target.CheckReachableAdjacency(controller.pawn, astype(controller.pawn, /mob/living)?.reach_length))
-			attack_target(controller, other_target, targeting_strategy_key, null)
-
-/datum/ai_behavior/basic_melee_attack/multi_target/can_attack(datum/ai_controller/controller, atom/target)
-	var/target_ref = "[REF(target)]"
-	if (!target.IsReachableBy(controller.pawn))
-		controller.set_blackboard_key_assoc_lazylist(targets_key, target_ref, 0)
-		return FALSE
-
-	var/list/attack_delays = controller.blackboard[targets_key]
-	if (isnull(attack_delays?[target_ref]))
-		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
-		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
-		controller.set_blackboard_key_assoc_lazylist(targets_key, target_ref, world.time + attack_delay)
-		return FALSE
-
-	if (attack_delays[target_ref] > world.time)
-		return FALSE
-
-	return TRUE
-
-/datum/ai_behavior/basic_melee_attack/multi_target/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if (istype(target))
-		controller.set_blackboard_key_assoc_lazylist(targets_key, "[REF(target)]", 0)
-	else if (islist(target))
-		for (var/atom/thing as anything in target)
-			controller.set_blackboard_key_assoc_lazylist(targets_key, "[REF(thing)]", 0)
-
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
@@ -136,7 +90,7 @@
 	/// range we will try chasing the target before giving up
 	var/chase_range = 9
 	///do we care about avoiding friendly fire?
-	var/avoid_friendly_fire =  FALSE
+	var/avoid_friendly_fire = FALSE
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
