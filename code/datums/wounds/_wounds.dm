@@ -406,7 +406,8 @@
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source, replacing = TRUE)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED) && severity > new_wound.severity)
-		ADD_TRAIT(new_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
+		for(var/trait_source in GET_TRAIT_SOURCES(src, TRAIT_WOUND_SCANNED))
+			ADD_TRAIT(new_wound, TRAIT_WOUND_SCANNED, trait_source)
 	. = new_wound
 	qdel(src)
 
