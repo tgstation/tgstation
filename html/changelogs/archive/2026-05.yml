@@ -419,9 +419,19 @@
       in them
   - qol: removed conveyer sprite from boulder smelter & pixel shifts the refiner so
       you can see it's plumbing pipes properly
+  Time-Green:
+  - rscadd: Adds Interface Science! There's these strange contraptions in science,
+      who knows what they do? Figure it out, and make them usable!
   lelandkemble:
   - bugfix: Several ways you could become permanently immobile, primarily based around
       lube & other methods of slipping, have been fixed
+  timothymtorres:
+  - map: Added a "Prison Block" holodeck simulation, accessible via the disabled safety/emagged
+      menu.
+  - code_imp: Fixed electric chairs to work, and they now bypass insulation from gloves
+      when executing a mob.
+  - code_imp: Added holodeck versions of brig lockers and windoors that allow anyone
+      with a station ID card to access them.
   tontyGH:
   - bugfix: Blunt/sharp weapons no longer slice through your coagulants when you are
       dismembered
