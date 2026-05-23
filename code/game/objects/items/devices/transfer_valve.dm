@@ -144,7 +144,7 @@
 
 	return
 
-/obj/item/transfer_valve/proc/try_attach_tank(/obj/item/tank/new_tank, mob/user)
+/obj/item/transfer_valve/proc/try_attach_tank(obj/item/tank/new_tank, mob/user)
 	if(!tank_one)
 		if(!user.transferItemToLoc(new_tank, src))
 			return FALSE
@@ -162,7 +162,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/transfer_valve/proc/try_attach_assembly(/obj/item/assembly/A, mob/user)
+/obj/item/transfer_valve/proc/try_attach_assembly(obj/item/assembly/A, mob/user)
 	if(A.secured)
 		to_chat(user, span_notice("The [A] is secured; unsecure it first."))
 		return FALSE
