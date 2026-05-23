@@ -224,7 +224,7 @@
 	/// What type of thing the foam should leave behind when it dissipates.
 	var/atom/movable/result_type = null
 
-/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE,)
+/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE)
 	. = ..()
 	chemholder = new(1000, NO_REACT)
 	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
