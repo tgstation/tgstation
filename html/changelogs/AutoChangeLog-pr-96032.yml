@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - map: "Added a \"Prison Block\" holodeck simulation, accessible via the disabled safety/emagged menu."
+  - code_imp: "Fixed electric chairs to work, and they now bypass insulation from gloves when executing a mob."
+  - code_imp: "Added holodeck versions of brig lockers and windoors that allow anyone with a station ID card to access them."

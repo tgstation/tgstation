@@ -3,6 +3,8 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+#define BB_BILEWORM_SCARED "BB_bileworm_scared"
+#define BB_BILEWORM_FLEE_DISTANCE "BB_bileworm_flee_distance"
 
 // Meteor Heart AI keys
 /// Key where we keep the spike trail ability

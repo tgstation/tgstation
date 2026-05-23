@@ -24,22 +24,17 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
-	if (can_bleed())
-		limb_owner.bleed(rand(20, 40))
-
 	drop_limb(dismembered = TRUE)
-
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
-	var/turf/owner_location = limb_owner.loc
-	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
-		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
 	if(dam_type == BURN)
 		burn()
 		return TRUE
-	if (can_bleed())
+
+	// Assume we had our limb sliced/punched off by this point
+	if(can_bleed())
 		limb_owner.bleed(rand(20, 40))
 
 	var/direction = pick(GLOB.cardinals)
