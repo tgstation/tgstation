@@ -325,6 +325,7 @@
 /obj/machinery/door/allowed(mob/accessor)
 	return ..() || emergency
 
+/// A mob is trying to open or close the door
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
@@ -336,21 +337,8 @@
 	if(elevator_mode && elevator_status != LIFT_PLATFORM_UNLOCKED)
 		return
 
-	var/user_is_allowed = access_bypass
 	// note: if the ID wire is cut no ID cards are checked at all! (This is intentional!)
-	if(!user_is_allowed && requiresID())
-		// Check user ID and anyone they're carrying
-		if(allowed(user))
-			user_is_allowed = TRUE
-		else for(var/mob/living/human_backpack in user.buckled_mobs)
-			if(allowed(human_backpack))
-				user_is_allowed = TRUE
-				break
-		// Also checks for one-way access
-		else if(unrestricted_side(user))
-			user_is_allowed = !delayed_unres_open || attempt_delayed_unres_open(user)
-
-	if(user_is_allowed)
+	if(access_bypass || (requiresID() && user_can_activate_door(user)))
 		if(density)
 			open()
 		else
@@ -359,6 +347,18 @@
 
 	else if(!operating && density)
 		run_animation(DOOR_DENY_ANIMATION)
+
+/// Used in try_to_activate_door
+/obj/machinery/door/proc/user_can_activate_door(mob/user)
+	PRIVATE_PROC(TRUE)
+	if(allowed(user))
+		return TRUE
+	for(var/mob/living/human_backpack in user.buckled_mobs)
+		if(allowed(human_backpack))
+			return TRUE
+	if(unrestricted_side(user))
+		return !delayed_unres_open || attempt_delayed_unres_open(user)
+	return FALSE
 
 /// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
 /obj/machinery/door/proc/unrestricted_side(mob/opener)
