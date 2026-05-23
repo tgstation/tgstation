@@ -94,7 +94,7 @@
 
 /obj/item/mod/module/storage/holding/prebuilt
 	prebuilt = TRUE
-	item_flags |= BLUESPACE_INTERFERENCE
+	item_flags = BLUESPACE_INTERFERENCE
 
 /obj/item/mod/module/storage/holding/prebuilt/locked
 	core_removable = FALSE
