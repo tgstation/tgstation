@@ -183,7 +183,7 @@
 
 /**
  * Gates its child on the pawn being grabbed above GRAB_PASSIVE by an enemy.
- * No observer — grab initiation has no clean pawn-side signal; evaluated each planning tick.
+ * No observer — grab initiation has no clean pawn-side signal; evaluated each planning tick. Should add a signal to this later probably lol
  */
 /datum/bt_node/decorator/pawn_grabbed_by_enemy
 	var/targeting_strategy_key = BB_TARGETING_STRATEGY

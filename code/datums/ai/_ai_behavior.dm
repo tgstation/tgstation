@@ -59,14 +59,15 @@
 		perform_args += default_behavior_args
 	var/process_flags = perform(arglist(perform_args))
 
+	// Apply cooldown BEFORE finish so DELAY | FAILED / DELAY | SUCCEEDED both set the cooldown.
+	if(process_flags & AI_BEHAVIOR_DELAY)
+		behavior_cooldowns[controller] = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		_finish_behavior(controller, TRUE)
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		_finish_behavior(controller, FALSE)
 		return BT_FAILURE
-	if(process_flags & AI_BEHAVIOR_DELAY)
-		behavior_cooldowns[controller] = world.time + get_cooldown(controller)
 	return BT_RUNNING
 
 /// Calls finish_action() with args and clears per-controller state.
@@ -111,6 +112,14 @@
 	return
 
 /datum/ai_behavior/proc/clear_movement_target(datum/ai_controller/controller)
+	return
+
+// Compatibility shims so legacy ai_behavior subtypes ported via deprecated parent_type stubs
+// can still call set_movement_target / clear_movement_target without compile errors.
+/datum/bt_node/ai_behavior/proc/set_movement_target(datum/ai_controller/controller, atom/target, movement_type)
+	return
+
+/datum/bt_node/ai_behavior/proc/clear_movement_target(datum/ai_controller/controller)
 	return
 
 /datum/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)

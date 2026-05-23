@@ -240,3 +240,54 @@
 	speech_chance = speech_lines[BB_SPEAK_CHANCE] ? speech_lines[BB_SPEAK_CHANCE] : initial(speech_chance)
 
 	return ..()
+
+// =============================================================================
+// BT-native blackboard speech
+// =============================================================================
+
+/**
+ * BT-native speech behavior. Reads speech data from BB_BASIC_MOB_SPEAK_LINES each tick;
+ * rolls the configured chance and performs an emote or speech line inline.
+ * Returns BT_RUNNING while on cooldown, BT_SUCCESS if something was said, BT_FAILURE if not.
+ * Replaces /datum/ai_planning_subtree/random_speech/blackboard for BT controllers.
+ */
+/datum/bt_node/ai_behavior/random_speech_blackboard
+	action_cooldown = 1 SECONDS
+
+/datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
+	if(isnull(speech_lines))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/speech_chance = speech_lines[BB_SPEAK_CHANCE] || 1
+	if(!SPT_PROB(speech_chance, seconds_per_tick))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/list/emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
+	var/list/emote_see  = speech_lines[BB_EMOTE_SEE]  || list()
+	var/list/speak      = speech_lines[BB_EMOTE_SAY]  || list()
+	var/list/sounds     = speech_lines[BB_EMOTE_SOUND] || list()
+
+	var/total = length(emote_hear) + length(emote_see) + length(speak)
+	if(!total)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/mob/living/pawn = controller.pawn
+	if(!istype(pawn))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/sound_to_play = length(sounds) ? pick(sounds) : null
+	var/roll = rand(1, total)
+
+	if(roll <= length(emote_hear))
+		pawn.manual_emote(pick(emote_hear))
+		if(sound_to_play)
+			playsound(pawn, sound_to_play, 80, vary = TRUE, pressure_affected = TRUE, ignore_walls = FALSE)
+	else if(roll <= length(emote_hear) + length(emote_see))
+		pawn.manual_emote(pick(emote_see))
+	else
+		pawn.say(pick(speak), forced = "AI Controller")
+		if(sound_to_play)
+			playsound(pawn, sound_to_play, 80, vary = TRUE)
+
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

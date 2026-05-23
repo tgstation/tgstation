@@ -11,3 +11,14 @@
 /datum/ai_behavior/target_from_retaliate_list/nearest/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	var/turf/our_position = get_turf(controller.pawn)
 	return get_closest_atom(/atom/, enemies_list, our_position)
+
+// =============================================================================
+// BT-native nearest-target variants
+// =============================================================================
+
+/// BT version of find_potential_targets/nearest — picks the closest valid target.
+/datum/bt_node/ai_behavior/find_potential_targets/nearest
+
+/datum/bt_node/ai_behavior/find_potential_targets/nearest/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/turf/our_position = get_turf(controller.pawn)
+	return get_closest_atom(/atom/, filtered_targets, our_position)

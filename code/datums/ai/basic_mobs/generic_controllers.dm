@@ -7,71 +7,8 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-/// Find a target, walk at target, attack intervening obstacles
-/datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/// Find a target, walk at target, attack intervening obstacles
-/datum/ai_controller/basic_controller/simple/simple_ranged
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-	)
-
-/datum/ai_controller/basic_controller/simple/simple_ranged_retaliate
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-	)
-
-/// Find a target, walk towards it AND shoot it
-/datum/ai_controller/basic_controller/simple/simple_skirmisher
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/// Use an ability on target on cooldown
-/datum/ai_controller/basic_controller/simple/simple_ability
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-	)
-
-/datum/ai_controller/basic_controller/simple/simple_ability_retaliate
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-	)
-
-/// Use an ability on target on cooldown, then try to punch them
-/datum/ai_controller/basic_controller/simple/simple_ability_melee
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
 // =============================================================================
-// BT equivalents of simple_hostile
+// BT combat subtrees and controllers
 // =============================================================================
 
 /**
@@ -111,65 +48,368 @@
 		BT_SUBTREE(/datum/bt_node/subtree/simple_hostile_combat),\
 	)
 
+// =============================================================================
+// Additional BT combat subtrees
+// =============================================================================
+
+/// Ranged attack + movement toward target, falls back to target search
+/datum/bt_node/subtree/simple_ranged_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 3\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Ranged combat tree that only reacts to attackers (no active target search)
+/datum/bt_node/subtree/simple_ranged_retaliate_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/attacked_by_enemy,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 3\
+								)\
+							)\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Attacks obstacles, then melees in parallel with ranged fire while moving
+/datum/bt_node/subtree/simple_skirmisher_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 1\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Use cooldown ability on target, in parallel with movement
+/datum/bt_node/subtree/simple_ability_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 3\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Ability combat, but only retaliates (no active target search)
+/datum/bt_node/subtree/simple_ability_retaliate_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/attacked_by_enemy,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 3\
+								)\
+							)\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Use ability alongside melee, all in parallel with movement
+/datum/bt_node/subtree/simple_ability_melee_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 1\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Use ability alongside ranged fire, in parallel with movement
+/datum/bt_node/subtree/simple_ability_ranged_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 3\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Reacts only to attackers with melee + movement
+/datum/bt_node/subtree/simple_retaliate_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/attacked_by_enemy,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 1\
+								)\
+							)\
+						)\
+			)
+
+/// Randomly picks targets; de-aggros randomly too. Reacts to attackers first.
+/datum/bt_node/subtree/simple_capricious_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/attacked_by_enemy,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 1\
+								)\
+							)\
+						),\
+						BT_PARALLEL(BT_PARALLEL_FAILURE_ALL,\
+							BT_LEAF(/datum/bt_node/ai_behavior/capricious_retaliate,\
+								BB_TARGETING_STRATEGY, TRUE\
+							),\
+							BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+								BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+									BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+										BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+									),\
+									BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+										BB_BASIC_MOB_CURRENT_TARGET, 1\
+									)\
+								),\
+								"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+								"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+								"observer_abort" = BT_ABORT_SELF\
+							)\
+						)\
+			)
+
+/// Finds nearest potential target and flees from them
+/datum/bt_node/subtree/simple_fearful_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_LEAF(/datum/bt_node/ai_behavior/run_away_from_target,\
+								BB_BASIC_MOB_CURRENT_TARGET, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets/nearest,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Flees from attackers (from the retaliate list) only
+/datum/bt_node/subtree/simple_skittish_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_LEAF(/datum/bt_node/ai_behavior/run_away_from_target,\
+								BB_BASIC_MOB_CURRENT_TARGET, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+/// Melee + obstacles, full priority order
+/datum/bt_node/subtree/simple_hostile_obstacles_combat
+	behavior_nodes = BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+								),\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+									BB_BASIC_MOB_CURRENT_TARGET, 1\
+								)\
+							),\
+							"key" = BB_BASIC_MOB_CURRENT_TARGET,\
+							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
+							"observer_abort" = BT_ABORT_SELF\
+						),\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+						)\
+			)
+
+// =============================================================================
+// Ported simple_* controllers
+// =============================================================================
+
+/// Find a target, walk at target, attack intervening obstacles
+/datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_hostile_obstacles_combat),\
+	)
+
+/// Find a target, maintain distance, shoot them
+/datum/ai_controller/basic_controller/simple/simple_ranged
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ranged_combat),\
+	)
+
+/datum/ai_controller/basic_controller/simple/simple_ranged_retaliate
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ranged_retaliate_combat),\
+	)
+
+/// Find a target, walk towards it AND shoot it
+/datum/ai_controller/basic_controller/simple/simple_skirmisher
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_skirmisher_combat),\
+	)
+
+/// Use an ability on target on cooldown
+/datum/ai_controller/basic_controller/simple/simple_ability
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ability_combat),\
+	)
+
+/datum/ai_controller/basic_controller/simple/simple_ability_retaliate
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ability_retaliate_combat),\
+	)
+
+/// Use an ability on target on cooldown, then try to punch them
+/datum/ai_controller/basic_controller/simple/simple_ability_melee
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ability_melee_combat),\
+	)
+
 /// Use an ability on target on cooldown, then try to shoot them
 /datum/ai_controller/basic_controller/simple/simple_ability_ranged
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-		/datum/ai_planning_subtree/ranged_skirmish,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_ability_ranged_combat),\
 	)
 
 /// Fight back if attacked
 /datum/ai_controller/basic_controller/simple/simple_retaliate
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_retaliate_combat),\
 	)
 
 /// Get pissed at random people for no reason
 /datum/ai_controller/basic_controller/simple/simple_capricious
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/capricious_retaliate,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_capricious_combat),\
 	)
 
 /// Runs away from anyone it sees
 /datum/ai_controller/basic_controller/simple/simple_fearful
 	ai_traits = PASSIVE_AI_FLAGS
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/flee_target,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_fearful_combat),\
 	)
 
 /// Runs away when attacked
 /datum/ai_controller/basic_controller/simple/simple_skittish
 	ai_traits = PASSIVE_AI_FLAGS
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/simple_skittish_combat),\
 	)
 
 /// Does what it is told and protects da boss
+/// TODO: port pet command system to BT so pet_planning functions correctly
 /datum/ai_controller/basic_controller/simple/simple_goon
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
+		BT_SUBTREE(/datum/bt_node/subtree/pet_planning),\
 	)
 
-/// Literally does nothing except random speedh
+/// Literally does nothing except random speech
 /datum/ai_controller/basic_controller/talk
 	idle_behavior = null
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/random_speech/blackboard,
+	behavior_nodes = BT_SELECTOR(\
+		BT_LEAF(/datum/bt_node/ai_behavior/random_speech_blackboard)\
 	)

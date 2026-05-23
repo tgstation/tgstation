@@ -18,10 +18,13 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_WAS_ATTACKED)
 
-/// Add an attacking atom to a blackboard list of things which attacked us
+/// Add an attacking atom to a blackboard list of things which attacked us.
+/// Also sets BB_BASIC_MOB_ATTACKED_BY to the most recent attacker so the attacked_by_enemy BT
+/// decorator can reactively interrupt idle behaviors via its observer_abort signal.
 /datum/element/ai_retaliate/proc/on_attacked(mob/victim, atom/attacker)
 	SIGNAL_HANDLER
 
 	if (victim == attacker)
 		return
 	victim.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+	victim.ai_controller?.set_blackboard_key(BB_BASIC_MOB_ATTACKED_BY, attacker)

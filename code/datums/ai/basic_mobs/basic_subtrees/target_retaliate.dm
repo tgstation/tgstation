@@ -82,3 +82,70 @@
 		return
 	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
 	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
+
+// =============================================================================
+// BT-native target_from_retaliate_list
+// =============================================================================
+
+/**
+ * BT-native version of /datum/ai_behavior/target_from_retaliate_list.
+ * Reads BB_BASIC_MOB_RETALIATE_LIST, picks a valid visible attacker, and sets the target key.
+ * Returns BT_SUCCESS when a valid target is found/confirmed, BT_FAILURE otherwise.
+ */
+/datum/bt_node/ai_behavior/target_from_retaliate_list
+	action_cooldown = 2 SECONDS
+	var/vision_range = 9
+
+/datum/bt_node/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, check_faction = FALSE)
+	var/mob/living/living_mob = controller.pawn
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!targeting_strategy)
+		. = AI_BEHAVIOR_DELAY
+		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
+
+	if(!check_faction)
+		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
+
+	var/list/shitlist = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+	var/atom/existing_target = controller.blackboard[target_key]
+
+	if(!QDELETED(existing_target) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+	var/list/enemies_list = list()
+	for(var/mob/living/potential_target as anything in shitlist)
+		if(!targeting_strategy.can_attack(living_mob, potential_target, vision_range))
+			continue
+		enemies_list += potential_target
+
+	if(!length(enemies_list))
+		if(existing_target)
+			controller.clear_blackboard_key(target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/atom/new_target = pick_final_target(controller, enemies_list)
+	controller.set_blackboard_key(target_key, new_target)
+
+	var/atom/hiding = targeting_strategy.find_hidden_mobs(living_mob, new_target)
+	if(hiding)
+		controller.set_blackboard_key(hiding_location_key, hiding)
+
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/// Returns the desired final target from the filtered list.
+/datum/bt_node/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+	return pick(enemies_list)
+
+/datum/bt_node/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key, check_faction = FALSE)
+	. = ..()
+	if(succeeded || check_faction)
+		return
+	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
+	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
+
+/// Nearest-attacker variant
+/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest
+
+/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+	var/turf/our_position = get_turf(controller.pawn)
+	return get_closest_atom(/atom/, enemies_list, our_position)

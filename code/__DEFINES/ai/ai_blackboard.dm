@@ -145,6 +145,9 @@
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+/// The most recent mob that attacked us; set by ai_retaliate for the attacked_by_enemy BT decorator.
+/// Single ref (non-list). Cleared by attacked_by_enemy after reading.
+#define BB_BASIC_MOB_ATTACKED_BY "BB_basic_mob_attacked_by"
 
 /// Chance to randomly acquire a new target
 #define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"
