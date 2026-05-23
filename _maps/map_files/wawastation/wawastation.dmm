@@ -5536,6 +5536,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"bWe" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "bWi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64611,6 +64615,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
+"wid" = (
+/obj/machinery/gizmo/toggle/tucker_tubes,
+/turf/open/floor/iron/white,
+/area/station/science/explab)
 "wie" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -176316,7 +176324,7 @@ hOa
 ukx
 nas
 gKt
-jim
+wid
 rHF
 mHf
 xfK
@@ -177598,7 +177606,7 @@ raz
 occ
 fMz
 obA
-oQW
+bWe
 mSY
 ddZ
 nXL
