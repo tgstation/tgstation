@@ -388,3 +388,17 @@
   - bugfix: about a billion runtimes per round have been fixed, & you'll no longer
       repeat what you said last when you're forced to speak
   - bugfix: The dead can't drive
+2026-05-23:
+  SyncIt21:
+  - bugfix: opening panel of boulder refinery with screwdriver or un-wrenching it
+      turns of its light
+  - bugfix: boulder refinery only takes in booster reagents and excludes others and
+      only outputs waste chemicals as intended
+  - bugfix: boulder refinery machines outputs waste reagents without rounding errors
+      in them
+  - qol: removed conveyer sprite from boulder smelter & pixel shifts the refiner so
+      you can see it's plumbing pipes properly
+  tontyGH:
+  - bugfix: Blunt/sharp weapons no longer slice through your coagulants when you are
+      dismembered
+  - bugfix: Burn weapons now remember that they cauterize instead of slice when dismembering
