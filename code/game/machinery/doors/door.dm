@@ -322,6 +322,9 @@
 		return
 	return ..()
 
+/obj/machinery/door/allowed(mob/accessor)
+	return ..() || emergency
+
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
@@ -333,24 +336,21 @@
 	if(elevator_mode && elevator_status != LIFT_PLATFORM_UNLOCKED)
 		return
 
-	var/access_check = access_bypass
-	if(emergency)
-		access_check = TRUE
-	else if(unrestricted_side(user) && !delayed_unres_open)
-		access_check = TRUE
-	else if(!requiresID())
-		access_check = TRUE
-	else if(allowed(user)) // You
-		access_check = TRUE
-	else for(var/mob/living/human_backpack in user.buckled_mobs)
-		if(allowed(human_backpack)) // Your partner in crime
-			access_check = TRUE
-			break
+	var/user_is_allowed = access_bypass
+	// note: if the ID wire is cut no ID cards are checked at all! (This is intentional!)
+	if(!user_is_allowed && requiresID())
+		// Check user ID and anyone they're carrying
+		if(allowed(user))
+			user_is_allowed = TRUE
+		else for(var/mob/living/human_backpack in user.buckled_mobs)
+			if(allowed(human_backpack))
+				user_is_allowed = TRUE
+				break
+		// Also checks for one-way access
+		else if(unrestricted_side(user))
+			user_is_allowed = !delayed_unres_open || attempt_delayed_unres_open(user)
 
-	if(!access_check && unrestricted_side(user) && attempt_delayed_unres_open(user))
-		access_check = TRUE
-
-	if(access_check)
+	if(user_is_allowed)
 		if(density)
 			open()
 		else
