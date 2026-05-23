@@ -654,6 +654,10 @@
 		/datum/material/glass = 1,
 	)
 
+/obj/structure/ore_vent/starter_resources/Initialize(mapload)
+	. = ..()
+	generate_description()
+
 /obj/structure/ore_vent/random
 	// Todo: determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
 
@@ -792,6 +796,7 @@
 	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
 	mineral_breakdown[choice] = value
 	balloon_alert_to_viewers("weighting of [value] added")
+	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
