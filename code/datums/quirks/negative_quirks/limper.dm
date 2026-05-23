@@ -27,4 +27,4 @@
 
 /datum/quirk/item_quirk/limper/remove(client/client_source)
 	quirk_holder.remove_status_effect(/datum/status_effect/limp/quirk)
-	
+
