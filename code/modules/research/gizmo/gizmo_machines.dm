@@ -63,10 +63,10 @@
 
 	on_stop_moving(pulse)
 
-/obj/machinery/gizmo/proc/on_start_moving(datum/source, datum/gizpulse/pulse)
+/obj/machinery/gizmo/proc/on_start_moving(datum/gizpulse/pulse)
 	return
 
-/obj/machinery/gizmo/proc/on_stop_moving(datum/source, datum/gizpulse/pulse)
+/obj/machinery/gizmo/proc/on_stop_moving(datum/gizpulse/pulse)
 	return
 
 /// Gizmo that comes with a gizmo interface to start moving
