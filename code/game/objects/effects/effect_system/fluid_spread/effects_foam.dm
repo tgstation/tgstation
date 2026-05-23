@@ -32,7 +32,7 @@
 	/// The amount of time this foam stick around for before it dissipates.
 	var/lifetime = 8 SECONDS
 	/// The orignal value of lifetime
-	var/oglifetime = 8 SECONDS
+	var/original_lifetime = 8 SECONDS
 	/// Whether or not this foam should be slippery.
 	var/slippery_foam = TRUE
 
@@ -40,7 +40,7 @@
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload, fluid_group, source, lifetime, slippery)
 	. = ..()
 	src.lifetime = lifetime ? lifetime : src.lifetime
-	src.oglifetime = src.lifetime
+	src.original_lifetime = src.lifetime
 	src.slippery_foam = !isnull(slippery) ? slippery : slippery_foam
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
@@ -170,7 +170,7 @@
 				continue
 			foam_mob(foaming, seconds_per_tick)
 
-		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src, src.oglifetime, src.slippery_foam)
+		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src, src.original_lifetime, src.slippery_foam)
 		reagents.trans_to(spread_foam, reagents.total_volume, copy_only = TRUE)
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
@@ -224,7 +224,7 @@
 	/// What type of thing the foam should leave behind when it dissipates.
 	var/atom/movable/result_type = null
 
-/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE)
+/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE,)
 	. = ..()
 	chemholder = new(1000, NO_REACT)
 	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
