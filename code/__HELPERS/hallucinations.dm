@@ -293,9 +293,9 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 
 /// Lines the bubblegum hallucinatoin uses when it pops up
 #define BUBBLEGUM_HALLUCINATION_LINES list( \
-		span_colossus("I AM IMMORTAL."), \
-		span_colossus("I SHALL TAKE YOUR WORLD."), \
-		span_colossus("I SEE YOU."), \
-		span_colossus("YOU CANNOT ESCAPE ME FOREVER."), \
-		span_colossus("NOTHING CAN HOLD ME."), \
+		"I AM IMMORTAL.", \
+		"I SHALL TAKE YOUR WORLD.", \
+		"I SEE YOU.", \
+		"YOU CANNOT ESCAPE ME FOREVER.", \
+		"NOTHING CAN HOLD ME.", \
 	)

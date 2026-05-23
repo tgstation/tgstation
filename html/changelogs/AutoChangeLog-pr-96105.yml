@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Being shapeshifted while rolling midround traitor no longer robs you of your uplink"

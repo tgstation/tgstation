@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Having only midround clown ops (but not normal clown ops) enabled in antag prefs now displays operative alias/species toggles"
+  - admin: "Added clown ops to the ban panel"

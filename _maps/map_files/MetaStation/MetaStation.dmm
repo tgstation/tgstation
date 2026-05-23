@@ -7408,9 +7408,7 @@
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
 "cBZ" = (
-/obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
-	},
+/obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor{
 	id = "mining"
 	},

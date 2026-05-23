@@ -88,7 +88,7 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 			return //Give up
 
 	if(existing_loop?.compare_loops(arglist(args.Copy(2))))
-		return //it already exists stop trying to make the same moveloop
+		return existing_loop //it already exists stop trying to make the same moveloop
 
 	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, priority, flags, extra_info) //Pass the mob to move and ourselves in via new
 	var/list/arguments = args.Copy(6) //Just send the args we've not already dealt with
