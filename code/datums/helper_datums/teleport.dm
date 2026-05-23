@@ -30,9 +30,7 @@
 		if(TELEPORT_CHANNEL_BLUESPACE)
 			var/list/contents = teleatom.get_all_contents()
 			var/list/interference_list = list()
-			for(var/obj/item/check as anything in contents)
-				if(!istype(check, /obj/item))
-					continue
+			for(var/obj/item/check in contents)
 				if(check.item_flags & BLUESPACE_INTERFERENCE)
 					interference_list += check
 			if(interference_list.len)
