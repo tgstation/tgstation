@@ -22,18 +22,9 @@ SUBSYSTEM_DEF(unplanned_controllers)
 	GLOB.unplanned_controller_subsystems -= src
 	return ..()
 
+// DEPRECATED — idle behaviors are no longer dispatched here. Subsystem kept to avoid removing it from all controller dependency lists.
 /datum/controller/subsystem/unplanned_controllers/stat_entry(msg)
-	msg = "\n  Planning AIs:[length(GLOB.unplanned_controllers[target_status])]"
 	return ..()
 
 /datum/controller/subsystem/unplanned_controllers/fire(resumed)
-	if(!resumed)
-		src.current_run = GLOB.unplanned_controllers[target_status].Copy()
-	var/list/current_run = src.current_run // cache for sonic speed
-	while(length(current_run))
-		var/datum/ai_controller/unplanned = current_run[current_run.len]
-		current_run.len--
-		if(!QDELETED(unplanned))
-			unplanned.idle_behavior.perform_idle_behavior(wait * 0.1, unplanned)
-		if (MC_TICK_CHECK)
-			return
+	return

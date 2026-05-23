@@ -23,7 +23,6 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/alist/cached_descriptor_nodes = alist()
 
 /datum/controller/subsystem/ai_controllers/Initialize()
-	setup_subtrees()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
@@ -45,12 +44,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	while(length(current_run))
 		var/datum/ai_controller/ai_controller = current_run[length(current_run)]
 		current_run.len--
-		if(!ai_controller.able_to_plan)
-			continue
 		ai_controller.SelectBehaviors(wait * 0.1)
-
-		if(!length(ai_controller.current_behaviors)) //Still no plan
-			ai_controller.planning_failed()
 
 		if(MC_TICK_CHECK)
 			break
@@ -61,13 +55,11 @@ SUBSYSTEM_DEF(ai_controllers)
 
 	our_cost = MC_AVERAGE(our_cost, summing_cost)
 
-///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.
+///Creates all singleton instances of /datum/ai_planning_subtree subtypes (DEPRECATED registry).
+/// This proc is intentionally a no-op; the ai_subtrees registry has been removed.
+/// Legacy subtrees should be ported to /datum/bt_node/subtree.
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
-	if(length(GLOB.ai_subtrees))
-		return
-	for(var/subtree_type in subtypesof(/datum/ai_planning_subtree))
-		var/datum/ai_planning_subtree/subtree = new subtree_type
-		GLOB.ai_subtrees[subtree_type] = subtree
+	return
 
 /**
  * Creates singleton instances of all /datum/bt_node subtypes that are not behaviors or planning
@@ -81,8 +73,8 @@ SUBSYSTEM_DEF(ai_controllers)
 /datum/controller/subsystem/ai_controllers/proc/setup_bt_nodes()
 	bt_nodes_setup = TRUE
 	for(var/node_type in subtypesof(/datum/bt_node))
-		if(ispath(node_type, /datum/ai_behavior) || ispath(node_type, /datum/ai_planning_subtree))
-			continue // Handled by SSai_behaviors and setup_subtrees() respectively
+		if(ispath(node_type, /datum/bt_node/ai_behavior))
+			continue // Handled by SSai_behaviors
 		var/datum/bt_node/node = new node_type
 		GLOB.bt_nodes[node_type] = node
 	for(var/node_type in GLOB.bt_nodes)
@@ -129,7 +121,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		child.configure(config)
 		resolve_node_children(child)
 		return child
-	return GLOB.bt_nodes[child_type] || GLOB.ai_subtrees[child_type] || SSai_behaviors.ai_behaviors[child_type]
+	return GLOB.bt_nodes[child_type] || SSai_behaviors.ai_behaviors[child_type]
 
 /**
  * Returns a BT node for the given entry, which may be:
@@ -141,7 +133,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	if(ispath(entry))
 		if(!bt_nodes_setup)
 			setup_bt_nodes()
-		return GLOB.bt_nodes[entry] || GLOB.ai_subtrees[entry] || SSai_behaviors.ai_behaviors[entry]
+		return GLOB.bt_nodes[entry] || SSai_behaviors.ai_behaviors[entry]
 	if(islist(entry))
 		var/datum/bt_node/cached = cached_descriptor_nodes[entry]
 		if(!isnull(cached))

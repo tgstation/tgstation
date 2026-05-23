@@ -1,26 +1,25 @@
 /// Amount of time to wait before executing attack if not specified
 #define DEFAULT_ATTACK_DELAY (0.4 SECONDS)
 
-/datum/ai_behavior/basic_melee_attack
-	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+/**
+ * BT-native melee attack for use in BT trees (e.g. BT_PARALLEL with move_to_target).
+ * No movement flags — movement is handled by a separate bt_node/ai_behavior/move_to_target leaf.
+ */
+/datum/bt_node/ai_behavior/basic_melee_attack
+	action_cooldown = 0.2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
-	///do we have any alternate movement behavior?
-	var/movement_behavior
 
-/datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
-	//Hiding location is priority
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
 
-	set_movement_target(controller, target, movement_behavior)
-
-/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/atom/target = controller.blackboard[target_key]
 	if (isnull(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -56,13 +55,17 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY
 
-/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
-	if(movement_behavior)
-		controller.change_ai_movement_type(initial(controller.ai_movement))
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
+
+// DEPRECATED — port to /datum/bt_node/ai_behavior/basic_melee_attack
+/datum/ai_behavior/basic_melee_attack
+	parent_type = /datum/bt_node/ai_behavior/basic_melee_attack
+	///do we have any alternate movement behavior? (legacy, unused in BT)
+	var/movement_behavior
 
 /datum/ai_behavior/basic_melee_attack/interact_once
 	terminate_after_action = TRUE
@@ -70,15 +73,6 @@
 /datum/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-/**
- * BT-native variant of basic_melee_attack for use in BT_PARALLEL alongside move_to_target.
- * Strips AI_BEHAVIOR_REQUIRE_MOVEMENT and AI_BEHAVIOR_MOVE_AND_PERFORM — process() no longer
- * gates execution on distance or drives movement. perform() handles out-of-range gracefully
- * via the existing IsReachableBy check (returns AI_BEHAVIOR_INSTANT when not adjacent).
- */
-/datum/ai_behavior/basic_melee_attack/basic_melee
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS

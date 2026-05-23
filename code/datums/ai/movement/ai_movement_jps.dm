@@ -18,7 +18,7 @@
 		repath_delay = 0.5 SECONDS,
 		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
-		minimum_distance = controller.get_minimum_distance(),
+		minimum_distance = min_distance,
 		access = controller.get_access(),
 		subsystem = SSai_movement,
 		diagonal_handling = diagonal_flags,
@@ -36,7 +36,7 @@
 	var/datum/ai_controller/controller = source.extra_info
 
 	source.access = controller.get_access()
-	source.minimum_distance = controller.get_minimum_distance()
+	// minimum_distance was set at loop creation; no need to update it on repath
 
 /datum/ai_movement/jps/bot
 	max_pathing_attempts = 8

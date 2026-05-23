@@ -87,10 +87,10 @@
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-								BT_LEAF(/datum/ai_behavior/basic_melee_attack/basic_melee,\
+								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
-								BT_LEAF(/datum/ai_behavior/move_to_target,\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 									BB_BASIC_MOB_CURRENT_TARGET, 1\
 								)\
 							),\
@@ -98,7 +98,7 @@
 							"observed_keys" = list(BB_BASIC_MOB_CURRENT_TARGET),\
 							"observer_abort" = BT_ABORT_SELF\
 						),\
-						BT_LEAF(/datum/ai_behavior/find_potential_targets,\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
 							BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 						)\
 			)

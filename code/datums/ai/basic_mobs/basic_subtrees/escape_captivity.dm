@@ -44,27 +44,31 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 /// Keep attacking an object while it is our loc or while we are buckled to it
-/datum/ai_behavior/break_out_of_object
+/datum/bt_node/ai_behavior/break_out_of_object
 	action_cooldown = 0.2 SECONDS
 
-/datum/ai_behavior/break_out_of_object/setup(datum/ai_controller/controller, atom/target)
+/datum/bt_node/ai_behavior/break_out_of_object/setup(datum/ai_controller/controller, atom/target)
 	if (!should_attack_target(controller, target))
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/break_out_of_object/perform(seconds_per_tick, datum/ai_controller/controller, atom/target_atom)
+/datum/bt_node/ai_behavior/break_out_of_object/perform(seconds_per_tick, datum/ai_controller/controller, atom/target_atom)
 	if (!should_attack_target(controller, target_atom))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	controller.ai_interact(target = target_atom, combat_mode = TRUE)
 	return AI_BEHAVIOR_DELAY
 
-/datum/ai_behavior/break_out_of_object/proc/should_attack_target(datum/ai_controller/controller, atom/target)
+/datum/bt_node/ai_behavior/break_out_of_object/proc/should_attack_target(datum/ai_controller/controller, atom/target)
 	if (QDELETED(target))
 		return FALSE
 	var/mob/living/pawn = controller.pawn
 	if (!target.IsReachableBy(pawn))
 		return FALSE
 	return pawn.loc == target || pawn.buckled == target
+
+// DEPRECATED — port to /datum/bt_node/ai_behavior/break_out_of_object
+/datum/ai_behavior/break_out_of_object
+	parent_type = /datum/bt_node/ai_behavior/break_out_of_object
 
 /datum/ai_planning_subtree/escape_captivity/pacifist
 	pacifist = TRUE
@@ -77,16 +81,16 @@
 
 /**
  * Variant of break_out_of_object that reads its target from a blackboard key.
- * Use as BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET).
+ * Use as BT_LEAF(/datum/bt_node/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET).
  * The escape-condition decorators write the target into the BB key before ticking this behavior.
  */
-/datum/ai_behavior/break_out_of_object/from_bb
+/datum/bt_node/ai_behavior/break_out_of_object/from_bb
 
-/datum/ai_behavior/break_out_of_object/from_bb/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/break_out_of_object/from_bb/setup(datum/ai_controller/controller, target_key)
 	var/atom/target = controller.blackboard[target_key]
 	return should_attack_target(controller, target)
 
-/datum/ai_behavior/break_out_of_object/from_bb/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/break_out_of_object/from_bb/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/atom/target = controller.blackboard[target_key]
 	if(!should_attack_target(controller, target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -183,7 +187,7 @@
  */
 /datum/bt_node/decorator/pawn_grabbed_by_enemy
 	var/targeting_strategy_key = BB_TARGETING_STRATEGY
-	child_typepath = /datum/ai_behavior/resist
+	child_typepath = /datum/bt_node/ai_behavior/resist
 
 /datum/bt_node/decorator/pawn_grabbed_by_enemy/check_condition(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
@@ -202,7 +206,7 @@
  */
 /datum/bt_node/decorator/pawn_is_restrained
 	observer_abort = BT_ABORT_LOWER_PRIORITY
-	child_typepath = /datum/ai_behavior/resist
+	child_typepath = /datum/bt_node/ai_behavior/resist
 
 /datum/bt_node/decorator/pawn_is_restrained/get_pawn_observe_signals()
 	return list(SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED))
@@ -225,24 +229,24 @@
 						BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
 							BT_SELECTOR(\
 								BT_DECORATOR(/datum/bt_node/decorator/buckle_target_dangerous,\
-									BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+									BT_LEAF(/datum/bt_node/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
 								),\
-								BT_LEAF(/datum/ai_behavior/resist)\
+								BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 							)\
 						),\
 						BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
 							BT_SELECTOR(\
 								BT_DECORATOR(/datum/bt_node/decorator/container_attackable,\
-									BT_LEAF(/datum/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
+									BT_LEAF(/datum/bt_node/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
 								),\
-								BT_LEAF(/datum/ai_behavior/resist)\
+								BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 							)\
 						),\
 						BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
-							BT_LEAF(/datum/ai_behavior/resist)\
+							BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 						),\
 						BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
-							BT_LEAF(/datum/ai_behavior/resist)\
+							BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 						)\
 		)
 
@@ -250,15 +254,15 @@
 /datum/bt_node/subtree/escape_captivity/pacifist
 	behavior_nodes = BT_SELECTOR(\
 		BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
-			BT_LEAF(/datum/ai_behavior/resist)\
+			BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 		),\
 		BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
-			BT_LEAF(/datum/ai_behavior/resist)\
+			BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 		),\
 		BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
-			BT_LEAF(/datum/ai_behavior/resist)\
+			BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 		),\
 		BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
-			BT_LEAF(/datum/ai_behavior/resist)\
+			BT_LEAF(/datum/bt_node/ai_behavior/resist)\
 		)\
 	)

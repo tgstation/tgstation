@@ -1,9 +1,12 @@
 
-/datum/ai_behavior/resist/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/resist/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, TRUE)
 	living_pawn.execute_resist()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+// DEPRECATED — port to /datum/bt_node/ai_behavior/resist
+/datum/ai_behavior/resist
 
 /datum/ai_behavior/battle_screech
 	///List of possible screeches the behavior has
@@ -15,30 +18,31 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /**
- * Moves to a blackboard-keyed target and maintains movement each process() tick.
+ * Moves toward a blackboard-keyed target each tick via ai_movement.
+ * Intended for use as the movement leg of a BT_PARALLEL alongside an attack behavior.
  */
-/datum/ai_behavior/move_to_target
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+/datum/bt_node/ai_behavior/move_to_target
 	action_cooldown = 0
 
-/datum/ai_behavior/move_to_target/setup(datum/ai_controller/controller, target_key, required_dist = 1)
+/datum/bt_node/ai_behavior/move_to_target/setup(datum/ai_controller/controller, target_key, required_dist = 1)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
-	set_movement_target(controller, target)
 	controller.ai_movement.start_moving_towards(controller, target, required_dist)
 	return TRUE
 
-/datum/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, required_dist = 1)
+/datum/bt_node/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, required_dist = 1)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_INSTANT
 
-/datum/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded, target_key, required_dist = 1)
+/datum/bt_node/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded, target_key, required_dist = 1)
 	controller.ai_movement.stop_moving_towards(controller)
-	clear_movement_target(controller)
 	return ..()
+
+// DEPRECATED — port to /datum/bt_node/ai_behavior/move_to_target
+/datum/ai_behavior/move_to_target
 
 
 /datum/ai_behavior/break_spine
