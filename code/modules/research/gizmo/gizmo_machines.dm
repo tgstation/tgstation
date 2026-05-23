@@ -83,13 +83,13 @@
 
 	icon_state = base_icon_state + (moving ? "_spinning" : "")
 
-/obj/machinery/gizmo/beyblade/on_start_moving(datum/source, datum/gizpulse/pulse)
+/obj/machinery/gizmo/beyblade/on_start_moving(datum/gizpulse/pulse)
 	density = TRUE
 
 	moving = TRUE
 	update_icon()
 
-/obj/machinery/gizmo/beyblade/on_stop_moving(datum/source, datum/gizpulse/pulse)
+/obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
 	density = FALSE
 
 	moving = FALSE
