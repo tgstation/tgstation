@@ -6,8 +6,8 @@
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
-	maxHealth = 100
-	health = 100
+	maxHealth = 110
+	health = 110
 	verb_say = "spittles"
 	verb_ask = "spittles questioningly"
 	verb_exclaim = "splutters and gurgles"
@@ -30,10 +30,16 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/bileworm
 
-	///which action this mob will be given, subtypes have different attacks
-	var/attack_action_path = /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm
-	///which, if at all, mob this evolves into at the 30 min mark
+	/// Which action this mob will be given, subtypes have different attacks
+	var/attack_action_path = /datum/action/cooldown/mob_cooldown/bileworm_spew
+	/// Which, if at all, mob this evolves into at the 30 min mark
 	var/evolve_path = /mob/living/basic/mining/bileworm/vileworm
+	/// Emissive icon_state
+	var/emissive_state = "bileworm_e"
+	/// Icon file used for the jumping animation
+	var/icon_jump = 'icons/mob/simple/lavaland/bileworm_jump.dmi'
+	/// Are we currently in the middle of a jump?
+	var/jumping = FALSE
 
 /mob/living/basic/mining/bileworm/Initialize(mapload)
 	. = ..()
@@ -42,11 +48,7 @@
 	if(ispath(evolve_path))
 		AddComponent(/datum/component/evolutionary_leap, 30 MINUTES, evolve_path)
 	AddElement(/datum/element/content_barfer)
-
-	//setup mob abilities
-
-	//well, one of them has to start on infinite cooldown
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new(src)
+	var/datum/action/cooldown/mob_cooldown/spew_bile = new attack_action_path(src)
 	spew_bile.Grant(src)
 	spew_bile.StartCooldownSelf(INFINITY)
 	ai_controller?.set_blackboard_key(BB_BILEWORM_SPEW_BILE, spew_bile)
@@ -61,5 +63,10 @@
 
 /mob/living/basic/mining/bileworm/update_overlays()
 	. = ..()
-	if (stat != DEAD)
-		. += emissive_appearance(icon, "[icon_living]_e", src)
+	if (stat != DEAD && !jumping)
+		. += emissive_appearance(icon, emissive_state, src)
+
+/mob/living/basic/mining/bileworm/on_attacked(datum/source, atom/attacker, attack_flags)
+	. = ..()
+	if (!(attack_flags & (ATTACKER_STAMINA_ATTACK | ATTACKER_SHOVING)))
+		ai_controller?.set_blackboard_key(BB_BILEWORM_SCARED, TRUE)
