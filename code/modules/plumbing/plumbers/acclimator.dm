@@ -1,4 +1,4 @@
-///Same as a tier 1 chem heater
+///Same as a tier 3 chem heater
 #define HEATER_COFFICIENT 0.3
 ///Decimal point in rounding temperature
 #define TEMP_ROUNDING 0.01
