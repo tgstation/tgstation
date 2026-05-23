@@ -3,10 +3,10 @@
 // =============================================================================
 
 /**
- * BT-native capricious aggro manager. Directly controls BB_BASIC_MOB_CURRENT_TARGET.
- * If the mob currently has a target: roll de-aggro, clear on success (FAILURE so selector moves on).
- * If no target: roll aggro, pick a random nearby mob, set as target (SUCCESS so selector attacks).
- * Returns BT_RUNNING while on cooldown.
+ * BT-native capricious aggro manager. Manages BB_BASIC_MOB_RETALIATE_LIST directly.
+ * If the retaliate list is populated: roll de-aggro, clear list + target on success (return FAILURE).
+ * If no list: roll aggro, pick a random nearby mob, add to list (return SUCCESS so parallel attacks).
+ * Returns BT_RUNNING (DELAY | SUCCEEDED) while keeping an existing target.
  */
 /datum/bt_node/ai_behavior/capricious_retaliate
 	action_cooldown = 1 SECONDS
@@ -14,13 +14,14 @@
 /datum/bt_node/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	var/atom/pawn = controller.pawn
 
-	if(!isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+	if(controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
 		if(!SPT_PROB(deaggro_chance, seconds_per_tick))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED // Keep current target
 		pawn.visible_message(span_notice("[pawn] calms down."))
+		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // De-aggroed — let selector fall through
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // De-aggroed
 
 	var/aggro_chance = controller.blackboard[BB_RANDOM_AGGRO_CHANCE] || 0.5
 	if(!SPT_PROB(aggro_chance, seconds_per_tick))
@@ -47,7 +48,8 @@
 		failed_targeting(pawn)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, final_target)
+	// Add to shitlist — set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
+	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

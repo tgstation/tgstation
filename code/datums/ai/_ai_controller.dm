@@ -745,6 +745,7 @@ multiple modular subtrees with behaviors
 	LAZYINITLIST(blackboard[key])
 	TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] |= thing
+	post_blackboard_key_set(key)
 
 /**
  * Adds the value to the inner list at key with the inner key set to "thing"
