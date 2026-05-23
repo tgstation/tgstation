@@ -402,9 +402,7 @@
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
 	var/list/contents = user.get_all_contents()
-	for(var/obj/item/check as anything in contents)
-		if(!istype(check, /obj/item))
-			continue
+	for(var/obj/item/check in contents)
 		if(check.item_flags & BLUESPACE_INTERFERENCE)
 			bagholdingcheck = TRUE
 	if(isclosedturf(destination))
