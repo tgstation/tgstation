@@ -513,7 +513,7 @@
 /datum/chemical_reaction/cryostylane/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
-		overheated(holder, null, react_vol) //replace null with fix win 2.3 is merged
+		overheated(holder, reaction, react_vol)
 
 //Freezes the area around you!
 /datum/chemical_reaction/cryostylane/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
