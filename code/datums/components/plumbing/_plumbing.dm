@@ -100,7 +100,7 @@
 			if(istype(duct))
 				if(duct.neighbours && (duct.duct_layer & ducting_layer))
 					duct.neighbours[parent] = opposite_dir
-					duct.update_appearance(UPDATE_ICON_STATE)
+					duct.update_appearance(UPDATE_ICON)
 					duct.net.add_plumber(src, direction)
 				continue
 
@@ -123,7 +123,7 @@
 		for(var/obj/machinery/duct/pipe as anything in net.ducts)
 			if(pipe.neighbours[parent])
 				pipe.neighbours -= parent
-				pipe.update_appearance(UPDATE_ICON_STATE)
+				pipe.update_appearance(UPDATE_ICON)
 
 		//remove ourself from this network and delete it if emtpy
 		if(net.remove_plumber(src))
