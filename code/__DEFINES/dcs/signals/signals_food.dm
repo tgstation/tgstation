@@ -20,6 +20,8 @@
 #define COMSIG_ITEM_USED_AS_INGREDIENT "item_used_as_ingredient"
 /// called when an edible ingredient is added: (datum/component/edible/ingredient)
 #define COMSIG_FOOD_INGREDIENT_ADDED "edible_ingredient_added"
+/// called when a pizza slice is picked up: (mob/user, obj/item/food/pizzaslice/slice)
+#define COMSIG_PIZZA_SLICE_TAKEN "pizza_slice_taken"
 
 /// from base of /datum/component/edible/get_recipe_complexity(): (list/extra_complexity)
 #define COMSIG_FOOD_GET_EXTRA_COMPLEXITY "food_get_extra_complexity"
