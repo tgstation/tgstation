@@ -69,6 +69,7 @@ multiple modular subtrees with behaviors
 	/// Used by teardown_bt_observers() to call unregister_pawn_observer() on each.
 	var/list/bt_pawn_observer_nodes = null
 
+
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
@@ -168,6 +169,8 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
+	RegisterSignal(pawn, COMSIG_EVLOGGING_ENABLED, PROC_REF(on_pawn_evlogging_enabled))
+	RegisterSignal(pawn, COMSIG_EVLOGGING_DISABLED, PROC_REF(on_pawn_evlogging_disabled))
 	update_able_to_run()
 	setup_able_to_run()
 
@@ -320,7 +323,7 @@ multiple modular subtrees with behaviors
 	teardown_bt_observers()
 	reset_bt_tick_states()
 	set_ai_status(AI_STATUS_OFF)
-	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
+	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING, COMSIG_EVLOGGING_ENABLED))
 	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -805,6 +808,8 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/remove_thing_from_blackboard_key(key, thing)
 	var/associated_value = blackboard[key]
+	if(isnull(associated_value))
+		return
 	if(thing == associated_value)
 		stack_trace("remove_thing_from_blackboard_key was called un-necessarily in a situation where clear_blackboard_key would suffice. ")
 		clear_blackboard_key(key)
@@ -872,6 +877,55 @@ multiple modular subtrees with behaviors
 				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
 
 		index += 1
+
+/// When the pawn gets DF_EVLOGGING, propagate it to this controller too.
+/datum/ai_controller/proc/on_pawn_evlogging_enabled(datum/source)
+	SIGNAL_HANDLER
+	enable_evlogging(pawn)
+
+/// When the pawn gets DF_EVLOGGING disabled, propagate it to this controller too.
+/datum/ai_controller/proc/on_pawn_evlogging_disabled(datum/source)
+	SIGNAL_HANDLER
+	disable_evlogging(pawn)
+
+///Register for an event being added so we can update track info
+/datum/ai_controller/enable_evlogging()
+	. = ..()
+	RegisterSignal(src, COMSIG_EVLOG_EVENT_ADDED, PROC_REF(on_evlog_event_added))
+
+///Unregister the evlog event added event, as we're no longer updating track info
+/datum/ai_controller/disable_evlogging()
+	. = ..()
+	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
+
+/// Called whenever an event is logged for this controller. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
+/datum/ai_controller/proc/on_evlog_event_added(datum/source, datum/event_logger_track/track, list/event_data)
+	SIGNAL_HANDLER
+	var/list/track_info = list()
+
+	var/list/current_behavior_info = list()
+	for(var/datum/ai_behavior/behavior in planned_behaviors)
+		if(behavior in current_behaviors) //Not really ideal; we should find a better way to do this.
+			current_behavior_info += "ACTIVE: [span_bold("[behavior.type]")]"
+		else
+			current_behavior_info += "[behavior.type]"
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Current Behavior", jointext(current_behavior_info, "\n"))
+
+	for(var/blackboard_key_name, blackboard_value in blackboard)
+		var/value_string
+		if(isatom(blackboard_value))
+			value_string = "[blackboard_value]"
+		else if(islist(blackboard_value))
+			var/list/blackboard_list = blackboard_value
+			value_string = length(blackboard_list) ? jointext(blackboard_list, "\n") : "Empty List"
+		else if(isnull(blackboard_value))
+			value_string = "null"
+		else // I think I covered all cases?
+			value_string = "[blackboard_value]"
+		EVLOG_TRACK_INFO_ENTRY(track_info, "Blackboard", blackboard_key_name, value_string)
+
+	event_data["track_info"] = track_info
+
 
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET

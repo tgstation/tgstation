@@ -19,7 +19,7 @@
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
 	target.AddComponent(/datum/component/cult_kill_tracker)
-	target.AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	target.AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
 	ADD_TRAIT(target, TRAIT_NULLROD_ITEM, ELEMENT_TRAIT(type))
 
 	if(!PERFORM_ALL_TESTS(focus_only/nullrod_variants) || !chaplain_spawnable)

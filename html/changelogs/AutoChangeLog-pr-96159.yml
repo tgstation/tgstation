@@ -1,0 +1,4 @@
+author: "SmArtKar, ArcaneMusic"
+delete-after: True
+changes:
+  - balance: "Bileworms now fire arcing shots instead of cross patterns, and can be stunned by hitting them during the burrow animation. Their health has been slightly buffed to compensate."
