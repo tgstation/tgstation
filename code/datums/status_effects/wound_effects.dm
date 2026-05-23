@@ -141,8 +141,6 @@
 /datum/status_effect/limp/quirk
 
 /datum/status_effect/limp/quirk/update_limp(datum/source)
-	SIGNAL_HANDLER
-
 	var/mob/living/carbon/carbon_mob = owner
 	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
 	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)	
