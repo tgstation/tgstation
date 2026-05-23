@@ -139,6 +139,8 @@
 
 //Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
 /datum/status_effect/limp/quirk
+	id = "limp_quirk"
+	alert_type = null
 
 /datum/status_effect/limp/quirk/update_limp(datum/source)
 	var/mob/living/carbon/carbon_mob = owner
