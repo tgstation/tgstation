@@ -217,10 +217,10 @@
 	keycard.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Throwing an ID at an access-locked airlock failed to open it before id wire cut!")
 	door.close()
-	door.wires.cut(WIRE_IDSCAN, subject)
+	door.wires.cut(WIRE_IDSCAN)
 	keycard.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Throwing an ID at an access-locked airlock succeeded in opening it after id wire cut!")
 	door.close()
-	door.wires.cut(WIRE_IDSCAN, subject) // mend
+	door.wires.cut(WIRE_IDSCAN) // mend
 	keycard.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Throwing an ID at an access-locked airlock failed to open it after mending the id wire!")
