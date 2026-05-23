@@ -389,6 +389,9 @@
       repeat what you said last when you're forced to speak
   - bugfix: The dead can't drive
 2026-05-23:
+  Higgin:
+  - bugfix: A single space twinkie no longer cures a virus or makes it harder to get
+      rid of one.
   Melbert:
   - refactor: Refactored how digitigrade and snouts render, report any oddities with
       that
