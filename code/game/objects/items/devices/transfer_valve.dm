@@ -39,6 +39,8 @@
 		. += span_notice("A [tank_one] is attached to the primary port.")
 	if(tank_two)
 		. += span_notice("A [tank_two] is attached to the secondary port.")
+	if(!tank_one || !tank_two)
+		. += span_notice("You could attach a gas tank onto the open port.")
 	if(attached_device)
 		. += span_notice("A [attached_device] is attached to the fuse input.")
 	if(wired)
