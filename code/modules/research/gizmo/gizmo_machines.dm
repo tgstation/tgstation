@@ -119,13 +119,13 @@
 	icon_state = "gizmo_active_0" //for the mapping icon
 	anchored = TRUE
 
-/obj/machinery/gizmo/toggle/proc/on_state(datum/gizpulse/pulse)
+/obj/machinery/gizmo/toggle/proc/on_state(datum/source)
 	SIGNAL_HANDLER
 
 	on_state = TRUE
 	update_icon()
 
-/obj/machinery/gizmo/toggle/proc/off_state(datum/gizpulse/pulse)
+/obj/machinery/gizmo/toggle/proc/off_state(datum/source)
 	SIGNAL_HANDLER
 
 	on_state = FALSE
