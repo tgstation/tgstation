@@ -59,7 +59,7 @@
 		var/obj/item/gizmo_copy/copy_to_delete = copies[1]
 		qdel(copy_to_delete) //it gets removed from the list on del
 
-	RegisterSignal(copy, COMSIG_ATOM_DESTRUCTION, PROC_REF(remove_from_list))
+	RegisterSignal(copy, COMSIG_QDELETING, PROC_REF(remove_from_list))
 
 /// Remove a copy from a list if they're deleted
 /datum/gizpulse/copy/proc/remove_from_list(datum/source)

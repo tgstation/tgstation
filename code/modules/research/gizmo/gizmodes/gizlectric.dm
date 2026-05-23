@@ -116,9 +116,12 @@
 	electromaster.power.use(defib_cost)
 
 	for(var/mob/living/dead in orange(holder, 3))
-		if(dead.stat & DEAD)
-			dead.revive(excess_healing = 5)
-			dead.adjust_oxy_loss(-200)
+		if(dead.stat == DEAD)
+			if(dead.revive(excess_healing = 5))
+				if(iscarbon(dead)) //still want it to work for simple/basicmobs too
+					var/mob/living/carbon/dead_but_carbon = dead
+					dead_but_carbon.set_heartattack(FALSE)
+				dead.adjust_oxy_loss(-200)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), dead, 'sound/machines/defib/defib_zap.ogg', 60), 3 SECONDS)
 
 	new /obj/effect/temp_visual/circle_wave(get_turf(holder), COLOR_YELLOW)

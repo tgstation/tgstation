@@ -36,8 +36,8 @@
 /// Teleport someone else
 /datum/gizpulse/teleport/other/get_teleport_targets(atom/movable/holder)
 	. = list()
-	for(var/mob/living/liver in view(2, holder))
-		. += liver
+	for(var/mob/living/living in view(2, holder))
+		. += living
 
 /// Teleport yourself and someone else
 /datum/gizpulse/teleport/other/and_self/get_teleport_targets(atom/movable/holder)

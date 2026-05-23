@@ -37,21 +37,18 @@
 	RegisterSignal(src, COMSIG_GIZMO_START_MOVING, PROC_REF(start_moving))
 	RegisterSignal(src, COMSIG_GIZMO_STOP_MOVING, PROC_REF(stop_moving))
 
-/obj/machinery/gizmo/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/gizmo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
 
-	if(is_wire_tool(item))
+	if(is_wire_tool(tool))
 		attempt_wire_interaction(user)
-		return
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/gizmo/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
-
 
 /obj/machinery/gizmo/proc/start_moving(datum/source, datum/gizpulse/pulse)
 	SIGNAL_HANDLER
@@ -87,13 +84,13 @@
 	density = TRUE
 
 	moving = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
 	density = FALSE
 
 	moving = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /// A gizmo with some sort of "on" state. Really only for visuals
 /obj/machinery/gizmo/toggle

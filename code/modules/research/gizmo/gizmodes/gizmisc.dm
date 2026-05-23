@@ -20,11 +20,13 @@
 
 /datum/gizpulse/lights_on/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	SEND_SIGNAL(holder, COMSIG_GIZMO_ON_STATE)
-	holder.light_power = 2
-	holder.light_range = 3
-	holder.light_color = LIGHT_COLOR_INTENSE_RED
 
-	holder.set_light_on(TRUE)
+	holder.set_light(
+		l_range = 3,
+		l_power = 2,
+		l_color = LIGHT_COLOR_INTENSE_RED,
+		l_on = TRUE,
+	)
 
 /datum/gizpulse/lights_off/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	SEND_SIGNAL(holder, COMSIG_GIZMO_OFF_STATE)
