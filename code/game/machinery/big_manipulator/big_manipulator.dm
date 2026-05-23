@@ -470,6 +470,7 @@
 			var/datum/manipulator_task/cargo/pickup/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
+			td["ignore_dead"] = t.ignore_dead
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
@@ -480,6 +481,7 @@
 			var/datum/manipulator_task/cargo/dropoff_base/drop/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
+			td["ignore_dead"] = t.ignore_dead
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
@@ -490,6 +492,7 @@
 			var/datum/manipulator_task/cargo/dropoff_base/throw/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
+			td["ignore_dead"] = t.ignore_dead
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
@@ -500,6 +503,7 @@
 			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
+			td["ignore_dead"] = t.ignore_dead
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
@@ -513,6 +517,7 @@
 			var/datum/manipulator_task/cargo/interact/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
+			td["ignore_dead"] = t.ignore_dead
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
@@ -782,6 +787,13 @@
 				return FALSE
 			var/datum/manipulator_task/cargo/ct = target_task
 			ct.should_use_filters = !ct.should_use_filters
+			return TRUE
+
+		if("toggle_ignore_dead")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/ct = target_task
+			ct.ignore_dead = !ct.ignore_dead
 			return TRUE
 
 		if("reset_atom_filters")

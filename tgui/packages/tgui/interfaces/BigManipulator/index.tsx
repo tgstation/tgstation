@@ -248,6 +248,12 @@ function TaskEditModal(props: TaskEditModalProps) {
                   onClick={() => adjust('toggle_filter_skip')}
                   tooltip="Toggle filter usage"
                 />
+                <ConfigRow
+                  label="Ignore Dead"
+                  content={task.ignore_dead ? 'TRUE' : 'FALSE'}
+                  onClick={() => adjust('toggle_ignore_dead')}
+                  tooltip="Toggle whether dead mobs should be ignored"
+                />
                 {isPickup && (
                   <ConfigRow
                     label="Eagerness"

@@ -21,6 +21,7 @@ export interface ManipulatorTask {
   turf?: string;
   item_filters?: string[];
   filters_status?: BooleanLike;
+  ignore_dead?: BooleanLike;
   filtering_mode?: number;
   settings_list?: PrioritySettings[];
   // pickup only

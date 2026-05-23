@@ -47,6 +47,7 @@
 	var/offset_dx
 	var/offset_dy
 	var/should_use_filters = FALSE
+	var/ignore_dead = TRUE
 	var/list/atom_filters = list()
 	var/filtering_mode = TAKE_ITEMS
 	var/list/type_filters = list(
@@ -65,6 +66,7 @@
 			interaction_turf = new_turf
 
 		should_use_filters = !!serialized_data["should_use_filters"]
+		ignore_dead = !!serialized_data["ignore_dead"]
 		atom_filters = serialized_data["atom_filters"] || list()
 		filtering_mode = serialized_data["filtering_mode"]
 		type_filters = serialized_data["type_filters"] || list()
@@ -117,7 +119,7 @@
 			if(!istype(thing, prio.atom_typepath))
 				continue
 
-			if(isliving(thing))
+			if(isliving(thing) && ignore_dead)
 				var/mob/living/living_mob = thing
 				if(living_mob.stat == DEAD)
 					continue
@@ -188,6 +190,7 @@
 		"dy" = offset_dy,
 	)
 	data["should_use_filters"] = should_use_filters
+	data["ignore_dead"] = ignore_dead
 	data["atom_filters"] = atom_filters
 	data["filtering_mode"] = filtering_mode
 	data["type_filters"] = type_filters
