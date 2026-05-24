@@ -87,7 +87,7 @@
 		return ..()
 
 	if (ishuman(hallucinator) && isplasmaman(hallucinator))
-		image_icon = image_icon = 'icons/turf/floors.dmi'
+		image_icon = 'icons/turf/floors.dmi'
 		image_state = "liquidplasma"
 		return ..()
 
