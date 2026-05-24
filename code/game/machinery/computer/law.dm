@@ -21,7 +21,8 @@
 	if(istype(O, /obj/item/card/id))
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
-		if(allowed(user) == FALSE)
+
+		if(check_access(O) == FALSE)
 			balloon_alert(user, "access denied")
 			return
 		if(unlock == TRUE)
@@ -30,6 +31,7 @@
 		else
 			unlock = TRUE
 			baloon_alert(user,"console unlocked")
+			addtimer(CALLBACK(src, PROC_REF(lock_self)), 5 MINUTES, TIMER_UNIQUE)
 		return
 
 	if(istype(O, /obj/item/ai_module))
