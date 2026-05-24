@@ -4,17 +4,40 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
 	time_to_unscrew = 6 SECONDS
+	req_one_access = list(ACCESS_CAPTAIN, ACCESS_RD)
+	var/unlock = FALSE
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
+
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
+/obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
+	unlock = TRUE
+
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(O, /obj/item/card/id))
+		if(machine_stat & (NOPOWER|BROKEN|MAINT))
+			return
+		if(allowed(user) == FALSE)
+			balloon_alert(user, "access denied")
+			return
+		if(unlock == TRUE)
+			unlock = FALSE
+			baloon_alert(user,"console locked")
+		else
+			unlock = TRUE
+			baloon_alert(user,"console unlocked")
+		return
+
 	if(istype(O, /obj/item/ai_module))
 		var/obj/item/ai_module/M = O
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
+			return
+		if(unlock == FALSE)
+			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
 			return
 		if(!current)
 			to_chat(user, span_alert("You haven't selected anything to transmit laws to!"))
@@ -32,6 +55,9 @@
 	else
 		return ..()
 
+/obj/machinery/computer/upload/proc/lock_self()
+	unlock = FALSE
+
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD)
 		return FALSE
@@ -46,6 +72,8 @@
 	. = ..()
 	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
 		return INITIALIZE_HINT_QDEL
+
+	return .
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
 	current = select_active_ai(user, z, TRUE)
