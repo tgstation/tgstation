@@ -1890,7 +1890,6 @@
 	tox_prob = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	plant_blood_regen = BLOOD_REGEN_FACTOR
 
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(round(volume * 0.1))
