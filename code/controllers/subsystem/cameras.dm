@@ -119,8 +119,7 @@ SUBSYSTEM_DEF(cameras)
 /datum/controller/subsystem/cameras/proc/update_visibility(atom/relevant_atom)
 	if(!SSticker)
 		return
-	if(is_visible_by_cameras(relevant_atom))
-		major_chunk_change(relevant_atom, IGNORE_CAMERA)
+	major_chunk_change(relevant_atom, IGNORE_CAMERA)
 
 /// Removes a camera from a chunk.
 /datum/controller/subsystem/cameras/proc/remove_camera_from_chunk(obj/machinery/camera/old_cam)
