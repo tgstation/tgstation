@@ -86,14 +86,14 @@
 		image_icon = image(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
 		return ..()
 
+	if (ishuman(hallucinator) && isplasmaman(hallucinator))
+		image_icon = image_icon = 'icons/turf/floors.dmi'
+		image_state = "liquidplasma"
+		return ..()
+
 	if (istype(hallucinator, /mob/living/basic/pet/dog/corgi/ian))
 		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/job/hop))
 		name = "Head of Personnel"
-		return ..()
-
-	if (isplasmaman(hallucinator))
-		image_icon = image_icon = 'icons/turf/floors.dmi'
-		image_state = "liquidplasma"
 		return ..()
 
 	image_icon = hallucinator.icon
