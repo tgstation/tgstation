@@ -81,7 +81,7 @@
 
 /obj/effect/client_image_holder/hallucination/your_mother/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	var/mob/living/hallucinator = parent.hallucinator
-	if (ishuman(hallucinator))
+	if (ishuman(hallucinator) && !isplasmaman(hallucinator)) //Plasmapeople don't have parents in a traditional sense, so their mother is different.
 		var/mob/living/carbon/dna_haver = hallucinator
 		image_icon = image(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
 		return ..()
@@ -89,6 +89,11 @@
 	if (istype(hallucinator, /mob/living/basic/pet/dog/corgi/ian))
 		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/job/hop))
 		name = "Head of Personnel"
+		return ..()
+
+	if (isplasmaman(hallucinator))
+		image_icon = image_icon = 'icons/turf/floors.dmi'
+		image_state = "liquidplasma"
 		return ..()
 
 	image_icon = hallucinator.icon
