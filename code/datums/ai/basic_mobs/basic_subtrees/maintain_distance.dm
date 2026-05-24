@@ -49,7 +49,7 @@
 
 	var/turf/next_step = get_step_away(controller.pawn, current_target)
 	if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-		set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
+		set_movement_target(controller, target = next_step, movement_type = /datum/ai_movement/basic_avoidance/backstep)
 		return TRUE
 
 	var/list/all_dirs = GLOB.alldirs.Copy()
@@ -60,7 +60,7 @@
 	for (var/dir in all_dirs)
 		next_step = get_step(controller.pawn, dir)
 		if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-			set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
+			set_movement_target(controller, target = next_step, movement_type = /datum/ai_movement/basic_avoidance/backstep)
 			return TRUE
 	return FALSE
 

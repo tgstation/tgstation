@@ -3,8 +3,6 @@
 /// setup() is called once on first activation, perform() each tick while running.
 /// Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
 /datum/bt_node/ai_behavior
-	///What distance you need to be from the target to perform the action (informational, unused by BT tick)
-	var/required_distance = 1
 	///Flags for extra behavior (see AI_BEHAVIOR_* defines)
 	var/behavior_flags = NONE
 	///Cooldown between perform() calls; do not read directly — use get_cooldown()

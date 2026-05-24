@@ -4,12 +4,21 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/arrest_target,
-		/datum/ai_planning_subtree/find_patrol_beacon,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+			BT_DECORATOR(/datum/bt_node/decorator/secbot_target_valid,\
+				BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot,\
+					BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+				)\
+			),\
+			"key" = BB_BASIC_MOB_CURRENT_TARGET\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+			BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+		),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
 	)
 	reset_keys = list(
 		BB_BEACON_TARGET,
@@ -37,7 +46,6 @@
 		my_controller.set_blackboard_key(BB_CURRENT_CRIMINAL_ASSESSMENT, assessed_threat)
 	return (assessed_threat > THREAT_ASSESS_DANGEROUS)
 
-
 /datum/ai_controller/basic_controller/bot/secbot/TryPossessPawn(atom/new_pawn)
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
@@ -62,29 +70,10 @@
 	SIGNAL_HANDLER
 	clear_blackboard_key(BB_CURRENT_CRIMINAL_ASSESSMENT)
 
-/datum/ai_planning_subtree/arrest_target
-	///what behavior do we use when arresting?
-	var/datum/ai_behavior/arrest_behavior = /datum/ai_behavior/basic_melee_attack/interact_once/bot
+/// Removes a handcuffed target from the retaliate list so the bot stops pursuing them.
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot
 
-/datum/ai_planning_subtree/arrest_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	var/mob/living/carbon/my_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(my_target) || !istype(my_target) || my_target.handcuffed)
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-		return
-
-	var/mob/living/basic/bot/secbot/my_bot = controller.pawn
-	var/bot_flags = my_bot.security_mode_flags
-	if(my_target.IsParalyzed() && !(bot_flags & SECBOT_HANDCUFF_TARGET))
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-		return
-
-	controller.queue_behavior(arrest_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY)
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_behavior/basic_melee_attack/interact_once/bot
-	movement_behavior = /datum/ai_movement/basic_avoidance
-
-/datum/ai_behavior/basic_melee_attack/interact_once/bot/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
 	if(!isnull(human_target) && human_target.handcuffed)
 		controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, human_target)

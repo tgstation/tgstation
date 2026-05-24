@@ -19,13 +19,15 @@
 	var/observer_abort = BT_ABORT_NONE
 	/// List of BB_* blackboard key constants to watch. Only used when observer_abort != BT_ABORT_NONE.
 	var/list/observed_keys = null
+	/// If TRUE, the result of check_condition() is inverted before gating the child.
+	var/invert = FALSE
 
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
 		return tick_results[controller] || BT_FAILURE
 
 	var/result
-	if(!check_condition(controller))
+	if(check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		result = child.tick(controller, seconds_per_tick)
@@ -50,7 +52,7 @@
  * Return TRUE if the decorator's condition would pass, FALSE otherwise.
  */
 /datum/bt_node/decorator/proc/evaluate_for_observer(datum/ai_controller/controller)
-	return check_condition(controller)
+	return check_condition(controller) != invert
 
 /**
  * Called by the controller's observer handler when a watched blackboard key changes.

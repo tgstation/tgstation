@@ -61,18 +61,23 @@
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
 
+/// Single-hit variant: terminates after one successful attack and always clears the target key.
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once
+	terminate_after_action = TRUE
+
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
 // DEPRECATED — port to /datum/bt_node/ai_behavior/basic_melee_attack
 /datum/ai_behavior/basic_melee_attack
 	parent_type = /datum/bt_node/ai_behavior/basic_melee_attack
 	///do we have any alternate movement behavior? (legacy, unused in BT)
 	var/movement_behavior
 
+// DEPRECATED — port to /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
 /datum/ai_behavior/basic_melee_attack/interact_once
-	terminate_after_action = TRUE
-
-/datum/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
+	parent_type = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
 
 // DEPRECATED — port to /datum/bt_node/ai_behavior/basic_ranged_attack
 /datum/ai_behavior/basic_ranged_attack
@@ -94,7 +99,7 @@
 /datum/bt_node/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	/// Minimum range at which we fire; closer than this we don't shoot.
-	required_distance = 3
+	var/required_distance = 3
 	/// Max chase range — give up if target moves further than this.
 	var/chase_range = 9
 	/// Avoid shooting through friendlies.

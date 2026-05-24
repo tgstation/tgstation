@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
 
+	enable_evlogging()
+
 	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))

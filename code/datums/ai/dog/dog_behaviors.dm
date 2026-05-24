@@ -5,7 +5,7 @@
  */
 /datum/ai_behavior/basic_melee_attack/dog
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
-	required_distance = 3
+	var/required_distance = 3
 
 /datum/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	controller.behavior_cooldowns[src] = world.time + get_cooldown(controller)

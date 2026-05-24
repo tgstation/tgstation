@@ -13,7 +13,8 @@
  * Replaces /datum/ai_behavior/run_away_from_target for BT controllers.
  */
 /datum/bt_node/ai_behavior/run_away_from_target
-	required_distance = 0
+	/// Distance to the current escape waypoint at which we consider it reached and plot the next one.
+	var/required_distance = 0
 	action_cooldown = 0
 	/// How far do we try to run?
 	var/run_distance = DEFAULT_BASIC_FLEE_DISTANCE

@@ -1,11 +1,22 @@
 /datum/ai_controller/basic_controller/bot/secbot/super_beepsky
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_patrol_beacon,
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+				BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
+					BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+				),\
+				BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+					BB_BASIC_MOB_CURRENT_TARGET, 1\
+				)\
+			),\
+			"key" = BB_BASIC_MOB_CURRENT_TARGET\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+			BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+		),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
 	)
 
 /datum/ai_controller/basic_controller/bot/secbot/super_beepsky/on_target_set()
