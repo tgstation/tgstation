@@ -1,0 +1,5 @@
+author: "levels0"
+delete-after: True
+changes:
+  - rscadd: "you can now trap dormant revenants in mirrors"
+  - rscadd: "haunted mirrors may very rarely appear roundstart"
