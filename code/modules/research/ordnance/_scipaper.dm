@@ -286,7 +286,7 @@
 	var/list/multipliers = list(SCIPAPER_COOPERATION_INDEX = 1, SCIPAPER_FUNDING_INDEX = 1)
 	/// List of ordnance experiments that our partner is willing to accept. If this list is not filled it means the partner will accept everything.
 	var/list/accepted_experiments = list()
-	/// Associative list of which technology the partner might be able to boost and by how much.
+	/// List of which technology the partner might be able to boost.
 	var/list/boostable_nodes = list()
 
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
@@ -301,9 +301,10 @@
 	return TRUE
 
 /datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
+	var/datum/techweb_node/boosting_node = SSresearch.techweb_node_by_id(node_id)
 	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
-	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
+	if((TECHWEB_POINT_TYPE_GENERIC in boosting_node.discount_boosts) && (boosting_node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
 		return FALSE
 	if(node_id in purchasing_techweb.researched_nodes)
 		return SCIPAPER_ALREADY_BOUGHT
