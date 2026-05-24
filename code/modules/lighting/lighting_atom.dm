@@ -70,9 +70,10 @@
 /atom/proc/set_opacity(new_opacity)
 	if (new_opacity == opacity || light_flags & LIGHT_FROZEN)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, new_opacity)
 	. = opacity
 	opacity = new_opacity
+	// Change in opacity could change camera visibility
+	SScameras.update_visibility(src)
 	return .
 
 /atom/movable/set_opacity(new_opacity)
@@ -84,8 +85,6 @@
 		AddElement(/datum/element/light_blocking)
 	else
 		RemoveElement(/datum/element/light_blocking)
-	// Change in opacity could change camera visibility
-	SScameras.update_visibility(src)
 
 /turf/set_opacity(new_opacity)
 	. = ..()
