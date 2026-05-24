@@ -223,6 +223,7 @@ export async function get_updated_label_set({ github, context }) {
     }
   } catch (error) {
     console.error("Error fetching paginated events:", error);
+    pull_request.labels.forEach((l) => updated_labels.add(l.name));
   }
 
   // Always remove Test Merge Candidate
