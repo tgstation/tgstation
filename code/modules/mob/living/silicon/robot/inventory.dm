@@ -274,6 +274,7 @@
 	if(module && module_active != held_items[module_num])
 		module.icon_state = "[module.base_icon_state] +a"
 	module_active = held_items[module_num]
+	SEND_SIGNAL(module_active, COMSIG_SILICON_MODULE_ACTIVATION, TRUE)
 	return TRUE
 
 /**
@@ -285,6 +286,8 @@
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module)
 		module.icon_state = module.base_icon_state
+	if(module_active)
+		SEND_SIGNAL(module_active, COMSIG_SILICON_MODULE_ACTIVATION, FALSE)
 	module_active = null
 	return TRUE
 
