@@ -431,7 +431,7 @@
 
 	behavior_nodes = BT_SELECTOR(\
 		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
-		BT_SUBTREE(/datum/bt_node/subtree/pet_planning),\
+		BT_LEAF(/datum/bt_node/ai_behavior/pet_planning),\
 	)
 
 /// Literally does nothing except random speech

@@ -258,7 +258,7 @@
 /datum/bt_node/subtree/bot_respond_to_summon
 	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 		BT_SEQUENCE(\
-			BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BOT_SUMMON_TARGET, 0),\
+			BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BOT_SUMMON_TARGET, 0, TRUE),\
 			BT_LEAF(/datum/bt_node/ai_behavior/complete_summon_travel, BB_BOT_SUMMON_TARGET),\
 
 		),\

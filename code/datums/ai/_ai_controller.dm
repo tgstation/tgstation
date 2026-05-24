@@ -428,6 +428,7 @@ multiple modular subtrees with behaviors
 			var/datum/bt_node/decorator/dec = node
 			if(dec.child)
 				to_visit += dec.child
+
 /datum/ai_controller/proc/setup_able_to_run()
 	// paused_until is handled by PauseAi() manually
 	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)), PROC_REF(update_able_to_run))

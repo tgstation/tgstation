@@ -14,49 +14,52 @@
 		BB_FRIENDLY_MESSAGE = "empathetically acknowledges your hardwork and tough circumstances",
 	)
 	behavior_nodes = BT_SELECTOR(\
-		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),
-		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
 			BT_SELECTOR(\
-				BT_SUBTREE(/datum/bt_node/subtree/pet_planning),
+				BT_LEAF(/datum/bt_node/ai_behavior/pet_planning),\
 				BT_SELECTOR(\
 					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-							BT_SEQUENCE(\
-								BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_CLEAN_TARGET),
-								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_CLEAN_TARGET, 0)\
-							)\
+						BT_SEQUENCE(\
+							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_CLEAN_TARGET, 0, TRUE),\
+							BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_CLEAN_TARGET)\
 						),\
 						"key" = BB_CLEAN_TARGET\
-					)\
-				),
+					),\
+					BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET)\
+				),\
 				BT_SELECTOR(\
 					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-							BT_LEAF(/datum/bt_node/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE),
-							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_FRIENDLY_JANITOR, 1)\
+						BT_SEQUENCE(\
+							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_FRIENDLY_JANITOR, 1, TRUE),\
+							BT_LEAF(/datum/bt_node/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)\
 						),\
 						"key" = BB_FRIENDLY_JANITOR\
-					),
-					BT_LEAF(/datum/bt_node/ai_behavior/find_friendly_janitor, BB_FRIENDLY_JANITOR)\
+					),\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_friendly_janitor, BB_FRIENDLY_JANITOR),\
+						"invert" = TRUE,\
+						"key" = BB_FRIENDLY_JANITOR\
+					)\
 				)\
 			),\
 			"invert" = TRUE\
-		),
+		),\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-						BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET),
-						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_ACID_SPRAY_TARGET, 0)\
+					BT_SEQUENCE(\
+						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_ACID_SPRAY_TARGET, 0, TRUE),\
+						BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)\
 					),\
 					"key" = BB_ACID_SPRAY_TARGET\
-				),
-				BT_LEAF(/datum/bt_node/ai_behavior/find_spray_target, BB_ACID_SPRAY_TARGET),
+				),\
+				BT_LEAF(/datum/bt_node/ai_behavior/find_spray_target, BB_ACID_SPRAY_TARGET),\
 				BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM)\
 			)\
-		),
-		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),
+		),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon/cleanbot)\
 	)
 	reset_keys = list(
