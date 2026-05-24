@@ -86,7 +86,7 @@
 		image_icon = image(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
 		return ..()
 
-	if (ishuman(hallucinator) && isplasmaman(hallucinator))
+	if (isplasmaman(hallucinator))
 		image_icon = 'icons/turf/floors.dmi'
 		image_state = "liquidplasma"
 		return ..()
