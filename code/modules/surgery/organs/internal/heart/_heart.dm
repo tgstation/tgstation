@@ -219,7 +219,7 @@
 	/// Whether our heart suppresses bleeders and restores blood automatically.
 	var/bleed_prevention = FALSE
 	/// The probability that our blood replication causes toxin damage.
-	var/toxification_probability = 0
+	var/toxification_probability = 20
 	/// Chance of permanent effects if emp-ed.
 	var/emp_vulnerability = 80
 
@@ -286,7 +286,6 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	bleed_prevention = TRUE
 	emp_vulnerability = 40
-	toxification_probability = 20
 	blood_regeneration_multiplier = 21 // regenerates 2.25u of blood per tick (default is 0.25u)
 
 /obj/item/organ/heart/cybernetic/tier3
