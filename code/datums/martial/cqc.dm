@@ -342,7 +342,11 @@
 	if(prob(65) && (defender.stat == CONSCIOUS || !defender.IsParalyzed() || !restraining_mob?.resolve()))
 		var/obj/item/disarmed_item = defender.get_active_held_item()
 		if(disarmed_item && defender.temporarilyRemoveItemFromInventory(disarmed_item))
-			attacker.put_in_hands(disarmed_item)
+			defender.dropItemToGround(disarmed_item)
+			if(isturf(disarmed_item.loc)) //If it fell on the ground we can take it, otherwise assume it's attached to something.
+				attacker.put_in_hands(disarmed_item)
+			else
+				disarmed_item = null
 		else
 			disarmed_item = null
 
