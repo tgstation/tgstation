@@ -440,5 +440,15 @@
   Holoo-1:
   - bugfix: fixed camera static not being removed for console users when it was observed
       by AI and console user
+  SyncIt21:
+  - qol: merged large welding tool tank with engi omnitool for engiborg
+  - bugfix: examining the omnitool will reveal details about its internal tool such
+      as multitool buffer, welding fuel left etc
   Wisemonster:
   - bugfix: Fixed cyborg's recharging guns not recharging
+  levels0:
+  - rscadd: you can now trap dormant revenants in mirrors
+  - rscadd: haunted mirrors may very rarely appear roundstart
+  soulware1:
+  - rscadd: New reactions for water variants that make foam
+  - code_imp: New foam types that either slip or last longer or shorter

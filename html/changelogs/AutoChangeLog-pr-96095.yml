@@ -1,5 +1,0 @@
-author: "soulware1"
-delete-after: True
-changes:
-  - rscadd: "New reactions for water variants that make foam"
-  - code_imp: "New foam types that either slip or last longer or shorter"
