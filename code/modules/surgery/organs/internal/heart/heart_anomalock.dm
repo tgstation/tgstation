@@ -9,7 +9,7 @@
 	icon_state = "anomalock_heart"
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	toxification_probability = 0
-	blood_regeneration_multiplier = 3
+	blood_regeneration_multiplier = 2
 
 	COOLDOWN_DECLARE(survival_cooldown)
 	///Cooldown for the activation of the organ

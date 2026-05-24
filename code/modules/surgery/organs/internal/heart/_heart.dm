@@ -295,7 +295,7 @@
 	stabilization_available = TRUE
 	emp_vulnerability = 20
 	toxification_probability = 0
-	blood_regeneration_multiplier = 2.5
+	blood_regeneration_multiplier = 3
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"
