@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - bugfix: "Fixed cyborg's recharging guns not recharging"
