@@ -216,6 +216,8 @@
 	var/stabilization_available = FALSE
 	/// How long our stabilization lasts for.
 	var/stabilization_duration = 10 SECONDS
+	/// Whether our heart suppresses bleeders and restores blood automatically.
+	var/bleed_prevention = FALSE
 	/// The probability that our blood replication causes toxin damage.
 	var/toxification_probability = 0
 	/// Chance of permanent effects if emp-ed.
@@ -253,7 +255,7 @@
 		stabilize_heart()
 
 	// Wound healing is intentionally tied to blood volume.
-	if(ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
 
 		if(toxification_probability && prob(toxification_probability))
@@ -282,9 +284,10 @@
 	icon_state = "heart-c-u-on"
 	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	bleed_prevention = TRUE
 	emp_vulnerability = 40
-	blood_regeneration_multiplier = 21 // regenerates 2.25u of blood per tick (default is 0.25u)
 	toxification_probability = 20
+	blood_regeneration_multiplier = 21 // regenerates 2.25u of blood per tick (default is 0.25u)
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -294,8 +297,9 @@
 	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
-	emp_vulnerability = 20
 	toxification_probability = 0
+	bleed_prevention = TRUE
+	emp_vulnerability = 20
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"
