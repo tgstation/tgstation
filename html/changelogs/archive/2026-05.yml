@@ -444,6 +444,8 @@
   - qol: merged large welding tool tank with engi omnitool for engiborg
   - bugfix: examining the omnitool will reveal details about its internal tool such
       as multitool buffer, welding fuel left etc
+  TealSeer:
+  - image: lights on security cameras glow in the dark now
   Wisemonster:
   - bugfix: Fixed cyborg's recharging guns not recharging
   levels0:
