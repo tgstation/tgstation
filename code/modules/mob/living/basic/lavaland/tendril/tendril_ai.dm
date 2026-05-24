@@ -21,5 +21,15 @@
 /datum/ai_planning_subtree/use_mob_ability/tendril_lash
 	ability_key = BB_TENDRIL_LASH
 
+/datum/ai_planning_subtree/use_mob_ability/tendril_lash/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if (!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+		return FALSE
+	return ..()
+
 /datum/ai_planning_subtree/use_mob_ability/tendril_spikes
 	ability_key = BB_TENDRIL_SPIKES
+
+/datum/ai_planning_subtree/use_mob_ability/tendril_spikes/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if (!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+		return FALSE
+	return ..()

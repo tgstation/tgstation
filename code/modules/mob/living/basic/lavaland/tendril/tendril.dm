@@ -79,15 +79,15 @@ GLOBAL_LIST_INIT(tendrils, list())
 	update_appearance(UPDATE_OVERLAYS)
 
 	var/turf/our_turf = get_turf(src)
-	for (var/turf/rock in range(3, src))
+	for (var/turf/rock in range(4, src))
 		var/dist = sqrt((rock.x - our_turf.x) ** 2 + (rock.y - our_turf.y) ** 2)
-		if (dist > 3.5)
+		if (dist > 4.5)
 			continue
 
 		if (ismineralturf(rock))
 			rock.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
-		if (istype(rock, /turf/open/misc/asteroid) && prob(100 / max(1, dist)))
+		if (istype(rock, /turf/open/misc/asteroid) && prob(100 / sqrt(max(1, dist))))
 			rock.ChangeTurf(/turf/open/indestructible/necropolis, null, CHANGETURF_IGNORE_AIR)
 
 /mob/living/basic/mining/tendril/Destroy()

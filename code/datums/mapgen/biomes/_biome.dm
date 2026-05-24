@@ -179,17 +179,9 @@
 			if (!can_spawn)
 				continue
 
-			// Also avoid spawning them next to megafauna and mobs
+			// Also avoid spawning them next to megafauna
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
 				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
-					can_spawn = FALSE
-					break
-
-			if (!can_spawn)
-				continue
-
-			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MOB])
-				if (get_dist(spawn_turf, target_turf) <= mob_exclusion_radius)
 					can_spawn = FALSE
 					break
 
