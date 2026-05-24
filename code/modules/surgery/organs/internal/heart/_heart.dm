@@ -97,7 +97,7 @@
 
 /// Returns how effectively this heart regenerates the owner's blood based on organ health
 /obj/item/organ/heart/proc/get_blood_regeneration_multiplier()
-	if(!is_beating() || (organ_flags & ORGAN_FAILING))
+	if(!is_beating() || (organ_flags & (ORGAN_FAILING|ORGAN_EMP)))
 		return 0
 
 	var/health_percent = clamp((maxHealth - damage) / maxHealth, 0, 1)
