@@ -436,3 +436,9 @@
   - bugfix: Blunt/sharp weapons no longer slice through your coagulants when you are
       dismembered
   - bugfix: Burn weapons now remember that they cauterize instead of slice when dismembering
+2026-05-24:
+  Holoo-1:
+  - bugfix: fixed camera static not being removed for console users when it was observed
+      by AI and console user
+  Wisemonster:
+  - bugfix: Fixed cyborg's recharging guns not recharging
