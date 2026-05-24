@@ -286,7 +286,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	bleed_prevention = TRUE
 	emp_vulnerability = 40
-	blood_regeneration_multiplier = 21 // regenerates 2.25u of blood per tick (default is 0.25u)
+	blood_regeneration_multiplier = 9 // regenerates 2.25u of blood per tick (default is 0.25u)
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
