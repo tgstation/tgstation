@@ -244,7 +244,7 @@ Nothing else in the console has ID requirements.
 			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],
 			"enqueued_by_user" = enqueued_by_user,
-			"discount_boosted" = node.discount_boosted
+			"discount_boosted" = n.discount_boosted
 		))
 
 	// Get experiments and serialize them

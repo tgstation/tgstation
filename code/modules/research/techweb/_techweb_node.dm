@@ -99,7 +99,7 @@
 			if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
 				actual_costs[cost_type] -= discount_experiments[experiment_type]
 
-	if(discount_boosts) // Boosts should be subservient to experiments.
+	if(discount_boosts && discount_boosted) // Boosts should be subservient to experiments.
 		for(var/booster in discount_boosts)
 			if(actual_costs[booster])
 				actual_costs[booster] = max(actual_costs[booster] - discount_boosts[booster], 0)
