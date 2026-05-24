@@ -5,7 +5,6 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "demon_heart-on"
 	decay_factor = 0
-	blood_regeneration_multiplier = 5
 
 /obj/item/organ/heart/demon/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
