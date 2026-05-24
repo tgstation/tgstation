@@ -176,7 +176,6 @@
 	base_icon_state = "cursedheart"
 	decay_factor = 0
 	beat_noise = "a pained screeching with every beat. <b>It seems to lack any kind of rhythm</b>"
-	blood_regeneration_multiplier = 0 // blood is pumped manually
 	var/pump_delay = 3 SECONDS
 	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2
 	var/heal_brute = 0
@@ -260,6 +259,8 @@
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
 
+		wounded_owner.coagulant_effect(1 * seconds_per_tick)
+
 /obj/item/organ/heart/cybernetic/proc/stabilize_heart()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
 	stabilization_available = FALSE
@@ -282,8 +283,8 @@
 	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 40
+	blood_regeneration_multiplier = 21 // regenerates 2.25u of blood per tick (default is 0.25u)
 	toxification_probability = 20
-	blood_regeneration_multiplier = 1.5
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -295,7 +296,6 @@
 	stabilization_available = TRUE
 	emp_vulnerability = 20
 	toxification_probability = 0
-	blood_regeneration_multiplier = 3
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"
@@ -306,7 +306,6 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	beat_noise = "a concerningly irregular hydraulic hum. You <b>shouldn't touch this</b> while it's running"
 	emp_vulnerability = 100
-	blood_regeneration_multiplier = 0.5
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/heart/cybernetic/surplus/Initialize(mapload)
@@ -347,7 +346,6 @@
 	icon_state = "heart-evolved-on"
 	base_icon_state = "heart-evolved"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
-	blood_regeneration_multiplier = 1.5
 	/// Chance to heal per on_life
 	var/healing_probability = 10
 	/// Base healing we receive per tick at 0 damage and for standard versions
@@ -373,7 +371,6 @@
 
 	healing_probability = 5
 	base_healing = 0.5
-	blood_regeneration_multiplier = 1.25
 	// How much damage each magic block deals to us
 	var/damage_per_block = 50
 
