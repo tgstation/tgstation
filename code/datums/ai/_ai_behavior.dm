@@ -40,6 +40,9 @@
 	// Respect per-controller action cooldown
 	var/ready_time = behavior_cooldowns[controller]
 	if(!isnull(ready_time) && ready_time > world.time)
+		var/list/cooldown_exec_cache = GLOB.bt_execution_indices[controller.type]
+		if(cooldown_exec_cache)
+			controller.active_execution_index = cooldown_exec_cache[src]
 		return BT_RUNNING
 
 	// Run setup on first activation
@@ -48,7 +51,9 @@
 		if(LAZYLEN(default_behavior_args))
 			setup_args += default_behavior_args
 		if(!setup(arglist(setup_args)))
+			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: setup() failed")
 			return BT_FAILURE
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] starting [type]")
 		running_state[controller] = TRUE
 
 	// Run perform
@@ -61,11 +66,16 @@
 	if(process_flags & AI_BEHAVIOR_DELAY)
 		behavior_cooldowns[controller] = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		_finish_behavior(controller, TRUE)
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
 		_finish_behavior(controller, FALSE)
 		return BT_FAILURE
+	var/list/exec_cache = GLOB.bt_execution_indices[controller.type]
+	if(exec_cache)
+		controller.active_execution_index = exec_cache[src]
 	return BT_RUNNING
 
 /// Calls finish_action() with args and clears per-controller state.

@@ -12,7 +12,7 @@
 		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 			BT_DECORATOR(/datum/bt_node/decorator/secbot_target_valid,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 					BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot/ed209,\
 						BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 					),\

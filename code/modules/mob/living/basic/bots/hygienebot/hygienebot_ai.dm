@@ -16,7 +16,7 @@
 			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 				BT_SELECTOR(\
 					BT_LEAF(/datum/bt_node/ai_behavior/commence_trashtalk, BB_WASH_TARGET),\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/wash_target, BB_WASH_TARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_WASH_TARGET, 0\

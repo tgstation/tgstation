@@ -36,6 +36,17 @@
 	tick_results -= controller
 
 /**
+ * Assigns pre-order depth-first execution indices to this node and its subtree.
+ * Called once per controller type by ensure_execution_index_cache().
+ * Leaf override: records exec_cache[src] = last_cache[src] = counter, returns counter + 1.
+ * Composite/decorator subtypes override to recurse into children.
+ */
+/datum/bt_node/proc/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
+	exec_cache[src] = counter
+	last_cache[src] = counter
+	return counter + 1
+
+/**
  * Apply a configuration list to this node instance by assigning vars directly.
  * Called by setup_bt_nodes() when creating configured (non-singleton) child instances
  * from children_typepaths assoc entries (typepath → config list).
@@ -67,3 +78,11 @@
 	if(!root)
 		return BT_FAILURE
 	return root.tick(controller, seconds_per_tick)
+
+/datum/bt_node/subtree/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
+	exec_cache[src] = counter
+	counter++
+	if(root)
+		counter = root.assign_execution_indices(controller_type, counter, exec_cache, last_cache)
+	last_cache[src] = counter - 1
+	return counter

@@ -59,7 +59,7 @@
 				BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM)\
 			)\
 		),\
-		BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+		BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, TRUE,\
 			BT_SELECTOR(\
 				BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\

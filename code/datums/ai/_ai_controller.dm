@@ -41,6 +41,8 @@ multiple modular subtrees with behaviors
 	var/max_target_distance = 14
 	///All behavior_nodes for the BT tree; populated on init from typepaths or BT_* descriptors.
 	var/list/behavior_nodes
+	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
+	var/active_execution_index = 0
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
@@ -115,6 +117,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
 	behavior_nodes = typepaths_of_new_subtrees
 	init_subtrees()
+	GLOB.bt_execution_indices -= type
+	GLOB.bt_last_execution_indices -= type
 
 ///Loops over the subtrees in behavior_nodes and resolves typepaths to singleton refs.
 /// Checks GLOB.bt_nodes (new BT composites/decorators), GLOB.ai_subtrees (legacy planning subtrees),
@@ -178,6 +182,7 @@ multiple modular subtrees with behaviors
 	set_new_cells()
 
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
+	ensure_execution_index_cache()
 	setup_bt_observers()
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
@@ -523,7 +528,21 @@ multiple modular subtrees with behaviors
 	return
 
 /datum/ai_controller/proc/CancelActions()
+	active_execution_index = 0
 	reset_bt_tick_states()
+
+/// Builds the per-controller-type execution index cache for this controller's tree.
+/// Called once per type from PossessPawn; subsequent instances reuse the cached result.
+/datum/ai_controller/proc/ensure_execution_index_cache()
+	if(GLOB.bt_execution_indices[type])
+		return
+	var/list/exec_cache = list()
+	var/list/last_cache = list()
+	var/counter = 1
+	for(var/datum/bt_node/root in behavior_nodes)
+		counter = root.assign_execution_indices(type, counter, exec_cache, last_cache)
+	GLOB.bt_execution_indices[type] = exec_cache
+	GLOB.bt_last_execution_indices[type] = last_cache
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)

@@ -4,7 +4,7 @@
 /datum/bt_node/subtree/medbot_treat_patient
 	behavior_nodes = BT_SELECTOR(\
 		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 				BT_LEAF(/datum/bt_node/ai_behavior/tend_to_patient, BB_PATIENT_TARGET),\
 				BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 					BB_PATIENT_TARGET, 0\
@@ -30,8 +30,7 @@
 		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_ALL,\
-				BT_LEAF(/datum/bt_node/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY),\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, FALSE,\
 				BT_SELECTOR(\
 					BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
 						BT_SUBTREE(/datum/bt_node/subtree/medbot_find_and_announce_crit),\
@@ -42,7 +41,8 @@
 						"flag" = MEDBOT_TIPPED_MODE,\
 						"invert" = TRUE\
 					)\
-				)\
+				),\
+				BT_LEAF(/datum/bt_node/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY)\
 			),\
 			"flag" = MEDBOT_SPEAK_MODE\
 		),\

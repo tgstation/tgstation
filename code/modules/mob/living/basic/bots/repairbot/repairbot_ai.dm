@@ -5,7 +5,7 @@
 	behavior_nodes = BT_SELECTOR(\
 		BT_SELECTOR(\
 			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 					BT_SELECTOR(\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact/tip_robot, BB_ROBOT_TARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/drag_target, BB_ROBOT_TARGET)\
@@ -20,7 +20,7 @@
 		),\
 		BT_SELECTOR(\
 			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 					BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_DECONSTRUCT_TARGET),\
 					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 						BB_DECONSTRUCT_TARGET, 0\
@@ -33,8 +33,7 @@
 	)
 
 /datum/ai_controller/basic_controller/bot/repairbot
-	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_ALL,\
-		BT_LEAF(/datum/bt_node/ai_behavior/repairbot_speech),\
+	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, FALSE,\
 		BT_SELECTOR(\
 			BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 			BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
@@ -42,7 +41,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_REFILLABLE_TARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_REFILLABLE_TARGET, 0\
@@ -55,7 +54,7 @@
 			BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_BREACHED_FLOOR),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_BREACHED_FLOOR, 0\
@@ -67,7 +66,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_GIRDER_TO_WALL_TARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_GIRDER_TO_WALL_TARGET, 0\
@@ -79,7 +78,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder,\
 							BB_GIRDER_BUILD_ABILITY, BB_GIRDER_TARGET\
 						),\
@@ -93,7 +92,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_WINDOW_FRAMETARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_WINDOW_FRAMETARGET, 0\
@@ -105,7 +104,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_TILELESS_FLOOR),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_TILELESS_FLOOR, 0\
@@ -117,7 +116,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_WELDER_TARGET),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_WELDER_TARGET, 0\
@@ -129,7 +128,8 @@
 			),\
 			BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
 			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
-		)\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/repairbot_speech)\
 	)
 	reset_keys = list(
 		BB_TILELESS_FLOOR,

@@ -10,7 +10,7 @@
 		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 		BT_SELECTOR(\
 			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 					BT_LEAF(/datum/bt_node/ai_behavior/bot_interact/extinguish, BB_FIREBOT_EXTINGUISH_TARGET),\
 					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 						BB_FIREBOT_EXTINGUISH_TARGET, 0\

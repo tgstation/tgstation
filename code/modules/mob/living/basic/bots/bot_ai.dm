@@ -13,8 +13,7 @@
 		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol,\
-)\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
 	can_idle = FALSE

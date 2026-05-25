@@ -4,8 +4,7 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
-	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_ALL,\
-		BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability/random_honk, BB_HONK_ABILITY),\
+	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, FALSE,\
 		BT_SELECTOR(\
 			BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 			BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
@@ -29,7 +28,7 @@
 			),\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+					BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 						BT_LEAF(/datum/bt_node/ai_behavior/play_with_clown, BB_CLOWN_FRIEND),\
 						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
 							BB_CLOWN_FRIEND, 1\
@@ -40,7 +39,8 @@
 				BT_LEAF(/datum/bt_node/ai_behavior/find_clown_friend, BB_CLOWN_FRIEND)\
 			),\
 			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
-		)\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability/random_honk, BB_HONK_ABILITY)\
 	)
 	reset_keys = list(
 		BB_BEACON_TARGET,

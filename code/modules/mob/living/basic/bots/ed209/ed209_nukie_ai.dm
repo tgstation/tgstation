@@ -6,7 +6,7 @@
 	behavior_nodes = BT_SELECTOR(\
 		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 				BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
 					BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 				),\

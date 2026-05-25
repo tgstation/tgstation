@@ -22,7 +22,7 @@
 /datum/bt_node/subtree/simple_hostile_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
@@ -55,7 +55,7 @@
 /datum/bt_node/subtree/simple_ranged_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
@@ -81,7 +81,7 @@
 								BT_LEAF(/datum/bt_node/ai_behavior/target_from_retaliate_list,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
-								BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 									BT_LEAF(/datum/bt_node/ai_behavior/basic_ranged_attack,\
 										BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 									),\
@@ -101,7 +101,7 @@
 /datum/bt_node/subtree/simple_skirmisher_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_SELECTOR(\
 									BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
 									BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
@@ -129,7 +129,7 @@
 /datum/bt_node/subtree/simple_ability_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
 									BB_TARGETED_ACTION, BB_BASIC_MOB_CURRENT_TARGET\
 								),\
@@ -155,7 +155,7 @@
 								BT_LEAF(/datum/bt_node/ai_behavior/target_from_retaliate_list,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
-								BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 									BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
 										BB_TARGETED_ACTION, BB_BASIC_MOB_CURRENT_TARGET\
 									),\
@@ -175,7 +175,7 @@
 /datum/bt_node/subtree/simple_ability_melee_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_SELECTOR(\
 									BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
 									BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
@@ -203,7 +203,7 @@
 /datum/bt_node/subtree/simple_ability_ranged_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_SELECTOR(\
 									BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability,\
 										BB_TARGETED_ACTION, BB_BASIC_MOB_CURRENT_TARGET\
@@ -234,7 +234,7 @@
 								BT_LEAF(/datum/bt_node/ai_behavior/target_from_retaliate_list,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
-								BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 									BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
 										BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 									),\
@@ -253,13 +253,13 @@
 /// capricious_retaliate manages BB_BASIC_MOB_RETALIATE_LIST; target_from_retaliate_list picks
 /// the actual combat target. Both run in parallel so de-aggro can interrupt combat mid-flight.
 /datum/bt_node/subtree/simple_capricious_combat
-	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_ALL,\
+	behavior_nodes = BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, FALSE,\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 							BT_SEQUENCE(\
 								BT_LEAF(/datum/bt_node/ai_behavior/target_from_retaliate_list,\
 									BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 								),\
-								BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+								BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 									BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\
 										BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 									),\
@@ -313,7 +313,7 @@
 /datum/bt_node/subtree/simple_hostile_obstacles_combat
 	behavior_nodes = BT_SELECTOR(\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-							BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+							BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 								BT_SELECTOR(\
 									BT_LEAF(/datum/bt_node/ai_behavior/attack_obstructions, BB_BASIC_MOB_CURRENT_TARGET),\
 									BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack,\

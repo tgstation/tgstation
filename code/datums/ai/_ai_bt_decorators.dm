@@ -63,14 +63,40 @@
  */
 /datum/bt_node/decorator/proc/on_observed_change(datum/ai_controller/controller, key)
 	var/condition_result = evaluate_for_observer(controller)
+	var/list/exec_cache = GLOB.bt_execution_indices[controller.type]
+	var/list/last_cache = GLOB.bt_last_execution_indices[controller.type]
 
 	if(!condition_result && (observer_abort & BT_ABORT_SELF))
-		controller.CancelActions()
-		controller.SelectBehaviors(0)
+		if(exec_cache)
+			var/active = controller.active_execution_index
+			if(active >= exec_cache[src] && active <= last_cache[src])
+				EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
+				controller.CancelActions()
+				controller.SelectBehaviors(0)
+		else
+			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
+			controller.CancelActions()
+			controller.SelectBehaviors(0)
 
 	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
-		controller.CancelActions()
-		controller.SelectBehaviors(0)
+		if(exec_cache)
+			var/active = controller.active_execution_index
+			if(!active || active > last_cache[src])
+				EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
+				controller.CancelActions()
+				controller.SelectBehaviors(0)
+		else
+			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
+			controller.CancelActions()
+			controller.SelectBehaviors(0)
+
+/datum/bt_node/decorator/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
+	exec_cache[src] = counter
+	counter++
+	if(child)
+		counter = child.assign_execution_indices(controller_type, counter, exec_cache, last_cache)
+	last_cache[src] = counter - 1
+	return counter
 
 /**
  * Virtual proc. Override to return a list of COMSIG_* / SIGNAL_* constants that should
@@ -111,14 +137,7 @@
 	var/datum/ai_controller/controller = source.ai_controller
 	if(isnull(controller))
 		return
-	var/condition_result = evaluate_for_observer(controller)
-	if(!condition_result && (observer_abort & BT_ABORT_SELF))
-		controller.CancelActions()
-		controller.SelectBehaviors(0)
-		return
-	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
-		controller.CancelActions()
-		controller.SelectBehaviors(0)
+	on_observed_change(controller, null)
 
 // --- Blackboard condition helpers ---
 

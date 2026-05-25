@@ -7,14 +7,14 @@
 #define BT_RUNNING 3
 
 // Parallel node completion policies (mutually exclusive per axis)
-/// Parallel succeeds when any one child succeeds (default)
-#define BT_PARALLEL_SUCCESS_ONE 0
+/// Parallel succeeds when child 1 succeeds (default)
+#define BT_PARALLEL_SUCCESS_CHILD_ONE 0
 /// Parallel succeeds only when all children succeed
 #define BT_PARALLEL_SUCCESS_ALL 1
-/// Parallel fails when any one child fails (default)
-#define BT_PARALLEL_FAILURE_ONE 0
-/// Parallel fails only when all children fail
-#define BT_PARALLEL_FAILURE_ALL 1
+/// Parallel fails when child 1 fails (default)
+#define BT_PARALLEL_FAILURE_CHILD_ONE 0
+/// Parallel fails when any child fails
+#define BT_PARALLEL_FAILURE_ANY 1
 
 // Decorator observer abort modes (UE5 Behavior Tree style)
 /// No observer abort registered
@@ -29,6 +29,12 @@
 /// Lookup a singleton BT node by typepath from the global registry
 #define GET_bt_node(node_type) GLOB.bt_nodes[node_type]
 
+// Per-controller-type execution index caches.
+// Keyed by controller type → alist(node → index).
+// Built once per type in ensure_execution_index_cache() and used by the observer abort system.
+GLOBAL_VAR_INIT(bt_execution_indices, list())
+GLOBAL_VAR_INIT(bt_last_execution_indices, list())
+
 // --- Inline descriptor keys (used internally by SSai_controllers descriptor builder) ---
 /// Key storing the node typepath in a descriptor list
 #define BT_DESC_TYPE "__t"
@@ -41,8 +47,11 @@
 #define BT_SELECTOR(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/selector, BT_DESC_CHILDREN = list(##children))
 /// Inline sequence: runs each child left-to-right, fails on first FAILURE.
 #define BT_SEQUENCE(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/sequence, BT_DESC_CHILDREN = list(##children))
-/// Inline parallel with an explicit fail_policy (BT_PARALLEL_FAILURE_ALL or BT_PARALLEL_FAILURE_ONE).
-#define BT_PARALLEL(fail_policy, children...) list(BT_DESC_TYPE = /datum/bt_node/composite/parallel, "failure_policy" = (fail_policy), BT_DESC_CHILDREN = list(##children))
+/// Inline parallel. fail_policy: BT_PARALLEL_FAILURE_CHILD_ONE or BT_PARALLEL_FAILURE_ANY.
+/// success_policy: BT_PARALLEL_SUCCESS_CHILD_ONE or BT_PARALLEL_SUCCESS_ALL.
+/// repeat_secondary: if TRUE, children 2+ reset and retick on completion instead of counting toward tallies.
+/// finish_on_primary: if TRUE, cancels children 2+ when child 1 finishes.
+#define BT_PARALLEL(fail_policy, success_policy, repeat_secondary, finish_on_primary, children...) list(BT_DESC_TYPE = /datum/bt_node/composite/parallel, "failure_policy" = (fail_policy), "success_policy" = (success_policy), "repeat_secondary" = (repeat_secondary), "finish_on_primary" = (finish_on_primary), BT_DESC_CHILDREN = list(##children))
 /// Behavior leaf node. Positional args become default_behavior_args passed to queue_behavior().
 #define BT_LEAF(behavior_type, args...) list(BT_DESC_TYPE = (behavior_type), "default_behavior_args" = list(##args))
 /// Subtree reference — a modular section of behavior nodes housed in a /datum/bt_node/subtree subtype.

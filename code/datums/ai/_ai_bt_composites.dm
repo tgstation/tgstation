@@ -11,6 +11,14 @@
 	/// Resolved singleton child references. Populated by setup_bt_nodes(). Do not set directly.
 	var/list/children = null
 
+/datum/bt_node/composite/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
+	exec_cache[src] = counter
+	counter++
+	for(var/datum/bt_node/c in children)
+		counter = c.assign_execution_indices(controller_type, counter, exec_cache, last_cache)
+	last_cache[src] = counter - 1
+	return counter
+
 /**
  * Sequence node: ticks children in order.
  * Returns BT_FAILURE on first child failure.
@@ -101,15 +109,18 @@
  * Success and failure are determined by the configurable success_policy and failure_policy.
  *
  * Intended use: run multiple independent branches simultaneously, e.g. locomotion + action.
- * Replaces AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION and AI_BEHAVIOR_MOVE_AND_PERFORM for new content.
  */
 /datum/bt_node/composite/parallel
-	/// BT_PARALLEL_SUCCESS_ONE: succeed when any child succeeds (default).
+	/// BT_PARALLEL_SUCCESS_CHILD_ONE: succeed when child 1 succeeds (default).
 	/// BT_PARALLEL_SUCCESS_ALL: succeed only when all children succeed.
-	var/success_policy = BT_PARALLEL_SUCCESS_ONE
-	/// BT_PARALLEL_FAILURE_ONE: fail when any child fails (default).
-	/// BT_PARALLEL_FAILURE_ALL: fail only when all children fail.
-	var/failure_policy = BT_PARALLEL_FAILURE_ONE
+	var/success_policy = BT_PARALLEL_SUCCESS_CHILD_ONE
+	/// BT_PARALLEL_FAILURE_CHILD_ONE: fail when child 1 fails (default).
+	/// BT_PARALLEL_FAILURE_ANY: fail when any child fails.
+	var/failure_policy = BT_PARALLEL_FAILURE_CHILD_ONE
+	/// If TRUE, children 2+ that complete (non-RUNNING) are reset and reticked rather than counted toward tallies.
+	var/repeat_secondary = FALSE
+	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled.
+	var/finish_on_primary = FALSE
 
 /datum/bt_node/composite/parallel/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
@@ -117,22 +128,37 @@
 
 	var/succeeded = 0
 	var/failed = 0
-	var/total = length(children)
+	var/primary_result
 
-	for(var/datum/bt_node/child as anything in children)
-		switch(child.tick(controller, seconds_per_tick))
-			if(BT_SUCCESS)
+	for(var/i in 1 to length(children))
+		var/datum/bt_node/child = children[i]
+		var/child_result = child.tick(controller, seconds_per_tick)
+
+		if(i == 1)
+			primary_result = child_result
+			if(child_result == BT_SUCCESS)
 				succeeded++
-			if(BT_FAILURE)
+			else if(child_result == BT_FAILURE)
 				failed++
-			// BT_RUNNING counts toward neither tally
+		else if(repeat_secondary && child_result != BT_RUNNING)
+			child.reset_tick_state(controller)
+		else
+			if(child_result == BT_SUCCESS)
+				succeeded++
+			else if(child_result == BT_FAILURE)
+				failed++
+
+	if(finish_on_primary && primary_result != BT_RUNNING)
+		for(var/i in 2 to length(children))
+			var/datum/bt_node/child = children[i]
+			child.reset_tick_state(controller)
 
 	var/result
-	if((failure_policy == BT_PARALLEL_FAILURE_ONE && failed > 0) || \
-			(failure_policy == BT_PARALLEL_FAILURE_ALL && failed == total))
+	if((failure_policy == BT_PARALLEL_FAILURE_CHILD_ONE && primary_result == BT_FAILURE) || \
+			(failure_policy == BT_PARALLEL_FAILURE_ANY && failed > 0))
 		result = BT_FAILURE
-	else if((success_policy == BT_PARALLEL_SUCCESS_ONE && succeeded > 0) || \
-			(success_policy == BT_PARALLEL_SUCCESS_ALL && succeeded == total))
+	else if((success_policy == BT_PARALLEL_SUCCESS_CHILD_ONE && primary_result == BT_SUCCESS) || \
+			(success_policy == BT_PARALLEL_SUCCESS_ALL && succeeded == length(children)))
 		result = BT_SUCCESS
 	else
 		result = BT_RUNNING
