@@ -461,8 +461,8 @@
 	refresh_visible_annotations()
 	sync_visible_objects(current_z)
 	var/user_name = user ? key_name(user) : "System"
-	to_chat(user, span_warning("cleared all [annotation_type] annotations on z-level [current_z]."))
-	log_minimap_drawing("[user_name] has cleared all [annotation_type] annotations on z-level [current_z]")
+	to_chat(user, span_warning("cleared all [annotation_type::name] annotations on z-level [current_z]."))
+	log_minimap_drawing("[user_name] has cleared all [annotation_type::name] annotations on z-level [current_z]")
 
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
 	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
