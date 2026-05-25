@@ -1,0 +1,22 @@
+{
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"key": "BB_BOT_SUMMON_TARGET"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"args": ["BB_BOT_SUMMON_TARGET", 0, true]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/complete_summon_travel",
+				"args": ["BB_BOT_SUMMON_TARGET"]
+			}
+		]
+	}
+}

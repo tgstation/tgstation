@@ -1,0 +1,278 @@
+{
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": false,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bot_is_emagged",
+					"child": {
+						"type": "subtree",
+						"subtype": "/datum/bt_node/subtree/repairbot_emagged"
+					}
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_REFILLABLE_TARGET" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_REFILLABLE_TARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_REFILLABLE_TARGET", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
+							"args": ["BB_REFILLABLE_TARGET"]
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/bot_respond_to_summon"
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_BREACHED_FLOOR" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_BREACHED_FLOOR"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_BREACHED_FLOOR", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
+							"args": ["BB_BREACHED_FLOOR"]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_GIRDER_TO_WALL_TARGET" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_GIRDER_TO_WALL_TARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_GIRDER_TO_WALL_TARGET", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
+							"args": ["BB_GIRDER_TO_WALL_TARGET"]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_GIRDER_TARGET" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder",
+										"args": ["BB_GIRDER_BUILD_ABILITY", "BB_GIRDER_TARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_GIRDER_TARGET", 1]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
+							"args": ["BB_GIRDER_TARGET"]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_WINDOW_FRAMETARGET" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_WINDOW_FRAMETARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_WINDOW_FRAMETARGET", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_grille_target",
+							"args": ["BB_WINDOW_FRAMETARGET"]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_TILELESS_FLOOR" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_TILELESS_FLOOR"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_TILELESS_FLOOR", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf",
+							"args": ["BB_TILELESS_FLOOR"]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": { "key": "BB_WELDER_TARGET" },
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": false,
+								"finish_on_primary": false,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
+										"args": ["BB_WELDER_TARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_WELDER_TARGET", 0]
+									}
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
+							"args": ["BB_WELDER_TARGET"]
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/bot_salute_authority"
+				},
+				{ "type": "subtree", "subtype": "/datum/bt_node/subtree/bot_patrol" }
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/repairbot_speech",
+			"args": []
+		}
+	]
+}

@@ -1,0 +1,41 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist",
+				"args": []
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_contained_in_obj",
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist",
+				"args": []
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist",
+				"args": []
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/resist",
+				"args": []
+			}
+		}
+	]
+}

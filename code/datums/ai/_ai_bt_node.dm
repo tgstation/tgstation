@@ -68,7 +68,10 @@
  * through the `root` pointer to reach all internal nodes.
  */
 /datum/bt_node/subtree
-	/// list built via BT_SELECTOR / BT_PARALLEL / etc. macros on the subtype definition.
+	/// Path to the .bt.json file that is the source of truth for this subtree's behavior_nodes.
+	/// Consumed by the VS Code BT editor extension; not used at runtime.
+	var/behavior_tree_json = null
+	/// list of BT node descriptors defining this subtree's root.
 	/// resolve_node_children() builds `root` from this during setup_bt_nodes().
 	var/list/behavior_nodes = null
 	/// The internal root node. Populated by resolve_node_children(). Do not set directly.

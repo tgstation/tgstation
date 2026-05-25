@@ -1,0 +1,20 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "BB_PATIENT_IN_CRIT" },
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/announce_patient",
+				"args": ["BB_PATIENT_IN_CRIT"]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_patient_in_crit",
+			"args": ["BB_PATIENT_IN_CRIT"]
+		}
+	]
+}

@@ -39,6 +39,9 @@ multiple modular subtrees with behaviors
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
+	/// Path to the .bt.json file that is the source of truth for this controller's behavior_nodes.
+	/// Use the vs code extension to turn this into a list of behavior nodes.
+	var/behavior_tree_json = null
 	///All behavior_nodes for the BT tree; populated on init from typepaths or BT_* descriptors.
 	var/list/behavior_nodes
 	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.

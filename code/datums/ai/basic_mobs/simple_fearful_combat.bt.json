@@ -1,0 +1,31 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"key": "BB_BASIC_MOB_CURRENT_TARGET",
+				"observed_keys": ["BB_BASIC_MOB_CURRENT_TARGET"],
+				"observer_abort": "BT_ABORT_SELF"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/run_away_from_target",
+				"args": [
+					"BB_BASIC_MOB_CURRENT_TARGET",
+					"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+				]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_potential_targets/nearest",
+			"args": [
+				"BB_BASIC_MOB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		}
+	]
+}

@@ -40,22 +40,3 @@ GLOBAL_VAR_INIT(bt_last_execution_indices, list())
 #define BT_DESC_TYPE "__t"
 /// Key storing the children list in a descriptor list
 #define BT_DESC_CHILDREN "__c"
-
-// --- Inline tree descriptor macros ---
-// DM variadic syntax: param... / ##param
-/// Inline selector (priority fallback): tries each child left-to-right, returns first non-FAILURE.
-#define BT_SELECTOR(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/selector, BT_DESC_CHILDREN = list(##children))
-/// Inline sequence: runs each child left-to-right, fails on first FAILURE.
-#define BT_SEQUENCE(children...) list(BT_DESC_TYPE = /datum/bt_node/composite/sequence, BT_DESC_CHILDREN = list(##children))
-/// Inline parallel. fail_policy: BT_PARALLEL_FAILURE_CHILD_ONE or BT_PARALLEL_FAILURE_ANY.
-/// success_policy: BT_PARALLEL_SUCCESS_CHILD_ONE or BT_PARALLEL_SUCCESS_ALL.
-/// repeat_secondary: if TRUE, children 2+ reset and retick on completion instead of counting toward tallies.
-/// finish_on_primary: if TRUE, cancels children 2+ when child 1 finishes.
-#define BT_PARALLEL(fail_policy, success_policy, repeat_secondary, finish_on_primary, children...) list(BT_DESC_TYPE = /datum/bt_node/composite/parallel, "failure_policy" = (fail_policy), "success_policy" = (success_policy), "repeat_secondary" = (repeat_secondary), "finish_on_primary" = (finish_on_primary), BT_DESC_CHILDREN = list(##children))
-/// Behavior leaf node. Positional args become default_behavior_args passed to queue_behavior().
-#define BT_LEAF(behavior_type, args...) list(BT_DESC_TYPE = (behavior_type), "default_behavior_args" = list(##args))
-/// Subtree reference — a modular section of behavior nodes housed in a /datum/bt_node/subtree subtype.
-/// Expands to a plain typepath; the descriptor builder resolves it to the singleton at runtime.
-#define BT_SUBTREE(subtype) (subtype)
-/// Any decorator node. child is the single guarded child descriptor or typepath. Trailing key=value pairs are var assignments on the node.
-#define BT_DECORATOR(type, child, config...) list(BT_DESC_TYPE = (type), BT_DESC_CHILDREN = list(child), ##config)
