@@ -21,8 +21,6 @@
 #define BB_BOT_BEACON_COOLDOWN "bot_beacon_cooldown"
 
 // medbot keys
-///the patient we must heal
-#define BB_PATIENT_TARGET "patient_target"
 ///list holding our wait dialogue
 #define BB_WAIT_SPEECH "wait_speech"
 ///what we will say to our patient after we heal them

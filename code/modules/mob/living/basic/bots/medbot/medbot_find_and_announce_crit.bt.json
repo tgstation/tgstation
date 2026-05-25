@@ -1,15 +1,24 @@
 {
-	"type": "selector",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": true,
 	"children": [
 		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_PATIENT_IN_CRIT" },
-			"child": {
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/announce_patient",
-				"args": ["BB_PATIENT_IN_CRIT"]
-			}
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/tend_to_patient",
+					"args": ["BB_PATIENT_IN_CRIT"]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/announce_patient",
+					"args": ["BB_PATIENT_IN_CRIT"]
+				}
+			]
 		},
 		{
 			"type": "leaf",

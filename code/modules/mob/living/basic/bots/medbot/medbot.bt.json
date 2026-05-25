@@ -10,68 +10,62 @@
 			"subtype": "/datum/bt_node/subtree/bot_respond_to_summon"
 		},
 		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-			"config": { "flag": "MEDBOT_SPEAK_MODE" },
-			"child": {
-				"type": "parallel",
-				"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-				"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-				"repeat_secondary": true,
-				"finish_on_primary": false,
-				"children": [
-					{
-						"type": "selector",
-						"children": [
-							{
-								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-								"config": { "flag": "MEDBOT_DECLARE_CRIT" },
-								"child": {
-									"type": "subtree",
-									"subtype": "/datum/bt_node/subtree/medbot_find_and_announce_crit"
-								}
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"finish_on_primary": false,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
+							"config": {
+								"flag": "MEDBOT_DECLARE_CRIT"
 							},
-							{
-								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-								"config": { "flag": "MEDBOT_TIPPED_MODE", "invert": true },
-								"child": {
-									"type": "subtree",
-									"subtype": "/datum/bt_node/subtree/medbot_treat_patient"
-								}
+							"child": {
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/medbot_find_and_announce_crit"
 							}
-						]
-					},
-					{
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/handle_medbot_speech",
-						"args": ["BB_ANNOUNCE_ABILITY"]
-					}
-				]
-			}
-		},
-		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-			"config": { "flag": "MEDBOT_TIPPED_MODE", "invert": true },
-			"child": {
-				"type": "subtree",
-				"subtype": "/datum/bt_node/subtree/medbot_treat_patient"
-			}
-		},
-		{
-			"type": "subtree",
-			"subtype": "/datum/bt_node/subtree/bot_salute_authority"
-		},
-		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-			"config": { "cooldown_key": "MEDBOT_STATIONARY_MODE" },
-			"child": {
-				"type": "subtree",
-				"subtype": "/datum/bt_node/subtree/bot_patrol"
-			}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
+							"config": {
+								"flag": "MEDBOT_TIPPED_MODE",
+								"invert": true
+							},
+							"child": {
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/medbot_treat_patient"
+							}
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
+							"config": {
+								"flag": "MEDBOT_SPEAK_MODE"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/handle_medbot_speech",
+								"args": ["BB_ANNOUNCE_ABILITY"]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/bot_salute_authority"
+						}
+					]
+				}
+			]
 		}
 	]
 }

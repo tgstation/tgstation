@@ -29,7 +29,7 @@
 											list(\
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 0, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 1, TRUE)),\
 													list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_CURRENT_TARGET))\
 												)\
 											)\
@@ -51,6 +51,7 @@
 														)\
 													)\
 												),\
+												"observer_abort" = BT_ABORT_BOTH,\
 												"key" = BB_FRIENDLY_JANITOR\
 											),\
 											list(\
