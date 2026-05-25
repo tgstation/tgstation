@@ -1039,5 +1039,5 @@
 		The contractor baton is famously associated with contractors, elite Cybersun field agents sent to kidnap and extract \
 		high value enemy personnel for interrogation. Anyone with the potential to possess classified or sensitive data about \
 		Nanotrasen could find themselves a target for Cybersun. The company relentlessly employs contractors to probe Nanotrasen \
-		for vulnerabilities, starting with their employees."
+		for vulnerabilities, starting with their employees." \
 	)
