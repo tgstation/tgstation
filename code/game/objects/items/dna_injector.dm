@@ -63,7 +63,7 @@
 		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
 		return FALSE
 	for(var/removed_mutation in remove_mutations)
-		target.dna.remove_mutation(removed_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+		target.dna.remove_mutation(removed_mutation, GLOB.standard_mutation_sources)
 
 	for(var/datum/mutation/added_mutation as anything in add_mutations)
 		if(added_mutation::warn_admins_on_inject && target != user && !ismonkey(target))
