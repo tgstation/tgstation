@@ -286,7 +286,7 @@
 	var/list/multipliers = list(SCIPAPER_COOPERATION_INDEX = 1, SCIPAPER_FUNDING_INDEX = 1)
 	/// List of ordnance experiments that our partner is willing to accept. If this list is not filled it means the partner will accept everything.
 	var/list/accepted_experiments = list()
-	/// List of which technology the partner might be able to boost.
+	/// Associative list of which technology the partner might be able to boost and by how much.
 	var/list/boostable_nodes = list()
 
 /datum/scientific_partner/New()
