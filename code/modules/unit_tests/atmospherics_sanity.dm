@@ -19,7 +19,7 @@
 	/// We run this test in parallel, so we need to keep track of how many crawls are running
 	/// This is to prevent stack overflow mostly
 	var/crawls = 0
-	
+
 /datum/unit_test/atmospherics_sanity/proc/prepare_crawl()
 	starting_areas = list()
 	forbidden_areas = list()
@@ -99,7 +99,9 @@
 		/area/station/maintenance,
 		/area/station/science/ordnance/bomb,
 		/area/station/solars,
-		// FIXME, this is usually mapped with a vent in the buffer chamber which causes us to leak into freezer, these should be forbidden
+
+		// FIXME, burnchamber is usually mapped with a vent in the buffer airlock
+		// which causes us to leak into freezer. These two should be forbidden
 		/area/station/science/ordnance/burnchamber,
 		/area/station/science/ordnance/freezerchamber,
 	)
