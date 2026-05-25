@@ -8,8 +8,8 @@
 	var/tracking = FALSE
 	/// what target we're essentially owned by, and will cause this blip to cleanup if it gets deleted
 	var/atom/track_target
-	/// The outermost movable container of track_target, so we can follow movement through nested contents
-	var/atom/movable/tracked_container
+	/// Weak reference to connect_containers so container movement updates this blip.
+	var/datum/weakref/connect_ref
 
 /atom/movable/screen/minimap_element/blip/Initialize(mapload, datum/hud/hud_owner, atom/track_target, icon_state, icon, large = FALSE, blip_tag)
 	. = ..()
@@ -38,21 +38,11 @@
 /atom/movable/screen/minimap_element/blip/proc/clear_tracking_signals()
 	tracking = FALSE
 	if(track_target)
-		UnregisterSignal(track_target, list(COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED, COMSIG_ATOM_ENTERING))
+		UnregisterSignal(track_target, list(COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOVABLE_MOVED))
 		track_target.maptext = null
 		track_target = null
-	set_tracked_container(null)
-
-/// Swaps tracked_container to new_container, unregistering signals from the old one and registering on the new one.
-/atom/movable/screen/minimap_element/blip/proc/set_tracked_container(atom/movable/new_container)
-	if(tracked_container == new_container)
-		return
-	if(tracked_container && tracked_container != track_target)
-		UnregisterSignal(tracked_container, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_Z_CHANGED))
-	tracked_container = new_container
-	if(tracked_container && tracked_container != track_target)
-		RegisterSignal(tracked_container, COMSIG_ATOM_ENTERING, PROC_REF(update_blip))
-		RegisterSignal(tracked_container, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_z_changed))
+	qdel(connect_ref)
+	connect_ref = null
 
 /atom/movable/screen/minimap_element/blip/proc/start_tracking_target()
 	if(tracking)
@@ -60,9 +50,14 @@
 	if(isnull(track_target))
 		CRASH("[type] cannot start tracking without a registered target.")
 	RegisterSignal(track_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_z_changed))
-	RegisterSignal(track_target, COMSIG_ATOM_ENTERING, PROC_REF(on_target_entering))
+	RegisterSignal(track_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_tracked_or_container_moved))
+	if(ismovable(track_target))
+		var/static/list/container_connections = list(
+			COMSIG_MOVABLE_MOVED = PROC_REF(on_tracked_or_container_moved),
+			COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_target_z_changed),
+		)
+		connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, track_target, container_connections))
 	tracking = TRUE
-	set_tracked_container(get_outermost_movable_loc(track_target))
 	INVOKE_ASYNC(src, PROC_REF(update_minimap))
 
 /atom/movable/screen/minimap_element/blip/proc/update_minimap()
@@ -80,18 +75,9 @@
 	else
 		update_blip()
 
-/atom/movable/screen/minimap_element/blip/proc/on_target_entering(atom/movable/source, atom/new_loc, atom/old_loc)
+/atom/movable/screen/minimap_element/blip/proc/on_tracked_or_container_moved(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
-	set_tracked_container(get_outermost_movable_loc(new_loc))
 	update_blip()
-
-/atom/movable/screen/minimap_element/blip/proc/get_outermost_movable_loc(atom/start_loc)
-	var/atom/current = start_loc
-	while(!isnull(current) && !isturf(current))
-		// Once the current atom is directly on a turf, we've reached the outermost container.
-		if(isnull(current.loc) || isturf(current.loc))
-			return current
-		current = current.loc
 
 /atom/movable/screen/minimap_element/blip/proc/update_blip()
 	SIGNAL_HANDLER
