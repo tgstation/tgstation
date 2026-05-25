@@ -119,7 +119,7 @@
 	var/failure_policy = BT_PARALLEL_FAILURE_CHILD_ONE
 	/// If TRUE, children 2+ that complete (non-RUNNING) are reset and reticked rather than counted toward tallies.
 	var/repeat_secondary = FALSE
-	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled.
+	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled and the parallel immediately returns child 1's result.
 	var/finish_on_primary = FALSE
 
 /datum/bt_node/composite/parallel/tick(datum/ai_controller/controller, seconds_per_tick)
@@ -152,6 +152,10 @@
 		for(var/i in 2 to length(children))
 			var/datum/bt_node/child = children[i]
 			child.reset_tick_state(controller)
+		if(tick_rate)
+			tick_cooldowns[controller] = world.time
+			tick_results[controller] = primary_result
+		return primary_result
 
 	var/result
 	if((failure_policy == BT_PARALLEL_FAILURE_CHILD_ONE && primary_result == BT_FAILURE) || \

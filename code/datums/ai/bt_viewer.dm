@@ -99,51 +99,70 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	var/list/exec_cache = GLOB.bt_execution_indices[viewing_controller.type]
 	var/list/last_cache = GLOB.bt_last_execution_indices[viewing_controller.type]
 
+	// Node type as integer: 0=selector 1=sequence 2=parallel 3=decorator 4=leaf 5=subtree
 	var/node_type
-	if(istype(node, /datum/bt_node/composite/sequence))
-		node_type = "sequence"
-	else if(istype(node, /datum/bt_node/composite/selector))
-		node_type = "selector"
+	if(istype(node, /datum/bt_node/composite/selector))
+		node_type = 0
+	else if(istype(node, /datum/bt_node/composite/sequence))
+		node_type = 1
 	else if(istype(node, /datum/bt_node/composite/parallel))
-		node_type = "parallel"
+		node_type = 2
 	else if(istype(node, /datum/bt_node/decorator))
-		node_type = "decorator"
+		node_type = 3
 	else if(istype(node, /datum/bt_node/subtree))
-		node_type = "subtree"
+		node_type = 5
 	else
-		node_type = "leaf"
+		node_type = 4
+
+	// Nodes inside subtrees may not be in the top-level cache — treat missing as 0.
+	var/exec = exec_cache ? exec_cache[node] : 0
+	var/last = last_cache ? last_cache[node] : 0
+	if(!exec)
+		exec = 0
+	if(!last)
+		last = 0
 
 	var/list/node_data = list(
-		"label"                = viewing_controller.bt_node_label(node),
-		"full_type"            = "[node.type]",
-		"node_type"            = node_type,
-		"priority_index"       = priority_index,
-		"execution_index"      = exec_cache[node],
-		"last_execution_index" = last_cache[node],
-		"observer_abort"       = 0,
-		"observed_keys"        = list(),
-		"invert"               = FALSE,
-		"children"             = list(),
+		"l" = viewing_controller.bt_node_label(node),
+		"t" = node_type,
+		"p" = priority_index,
+		"e" = exec,
 	)
+	if(last != exec)
+		node_data["z"] = last
 
 	if(istype(node, /datum/bt_node/decorator))
 		var/datum/bt_node/decorator/dec = node
-		node_data["observer_abort"] = dec.observer_abort
-		node_data["observed_keys"] = dec.observed_keys || list()
-		node_data["invert"] = dec.invert
+		if(dec.observer_abort)
+			node_data["a"] = dec.observer_abort
+		if(length(dec.observed_keys))
+			node_data["k"] = dec.observed_keys
+		if(dec.invert)
+			node_data["i"] = TRUE
 		if(dec.child)
-			node_data["children"] = list(serialize_node(dec.child, 1))
+			var/list/child_data = serialize_node(dec.child, 1)
+			if(child_data)
+				node_data["c"] = list(child_data)
 
 	else if(istype(node, /datum/bt_node/composite))
 		var/datum/bt_node/composite/comp = node
-		var/list/children_data = list()
-		for(var/i in 1 to length(comp.children))
-			children_data += list(serialize_node(comp.children[i], i))
-		node_data["children"] = children_data
+		if(length(comp.children))
+			var/list/children_data = list()
+			for(var/i in 1 to length(comp.children))
+				var/datum/bt_node/child = comp.children[i]
+				if(!child)
+					continue
+				var/list/child_data = serialize_node(child, i)
+				if(child_data)
+					children_data += list(child_data)
+			if(length(children_data))
+				node_data["c"] = children_data
 
 	else if(istype(node, /datum/bt_node/subtree))
 		var/datum/bt_node/subtree/sub = node
 		if(sub.root)
-			node_data["children"] = list(serialize_node(sub.root, 1))
+			var/list/child_data = serialize_node(sub.root, 1)
+			if(child_data)
+				node_data["c"] = list(child_data)
 
 	return node_data

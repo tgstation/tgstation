@@ -191,5 +191,11 @@
 /datum/bt_node/decorator/bb_key_set
 	var/key = null
 
+/// Auto-populate observed_keys from key when observer_abort is set and no explicit keys were given.
+/datum/bt_node/decorator/bb_key_set/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
+	if(observer_abort != BT_ABORT_NONE && !LAZYLEN(observed_keys))
+		observed_keys = list(key)
+	return ..()
+
 /datum/bt_node/decorator/bb_key_set/check_condition(datum/ai_controller/controller)
 	return controller.blackboard_key_exists(key)

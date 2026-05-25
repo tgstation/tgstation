@@ -966,6 +966,7 @@
 #include "code\datums\ai\_ai_controller.dm"
 #include "code\datums\ai\_ai_planning_subtree.dm"
 #include "code\datums\ai\_item_behaviors.dm"
+#include "code\datums\ai\bt_viewer.dm"
 #include "code\datums\ai\telegraph_effects.dm"
 #include "code\datums\ai\babies\babies_behaviors.dm"
 #include "code\datums\ai\babies\babies_subtrees.dm"

@@ -16,58 +16,69 @@
 	behavior_nodes = BT_SELECTOR(\
 		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_LEAF(/datum/bt_node/ai_behavior/pet_planning),\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
-			BT_SELECTOR(\
-				BT_LEAF(/datum/bt_node/ai_behavior/pet_planning),\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, TRUE,\
 				BT_SELECTOR(\
 					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 						BT_SEQUENCE(\
 							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_CLEAN_TARGET, 0, TRUE),\
 							BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_CLEAN_TARGET)\
 						),\
+						"observer_abort" = BT_ABORT_BOTH,\
 						"key" = BB_CLEAN_TARGET\
 					),\
-					BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET)\
-				),\
-				BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_SEQUENCE(\
-							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_FRIENDLY_JANITOR, 1, TRUE),\
-							BT_LEAF(/datum/bt_node/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)\
+					BT_SELECTOR(\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_SEQUENCE(\
+								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_FRIENDLY_JANITOR, 1, TRUE),\
+								BT_LEAF(/datum/bt_node/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)\
+							),\
+							"key" = BB_FRIENDLY_JANITOR\
 						),\
-						"key" = BB_FRIENDLY_JANITOR\
+						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+							BT_LEAF(/datum/bt_node/ai_behavior/find_friendly_janitor, BB_FRIENDLY_JANITOR),\
+							"invert" = TRUE,\
+							"key" = BB_FRIENDLY_JANITOR\
+						)\
 					),\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_LEAF(/datum/bt_node/ai_behavior/find_friendly_janitor, BB_FRIENDLY_JANITOR),\
-						"invert" = TRUE,\
-						"key" = BB_FRIENDLY_JANITOR\
+					BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM),\
+					BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
 					)\
+				),\
+				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+					BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET),\
+					"invert" = TRUE,\
+					"key" = BB_CLEAN_TARGET\
 				)\
 			),\
 			"invert" = TRUE\
 		),\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
-			BT_SELECTOR(\
-				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_SEQUENCE(\
-						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_ACID_SPRAY_TARGET, 0, TRUE),\
-						BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)\
+			BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
+				BT_SELECTOR(\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+						BT_SEQUENCE(\
+							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_ACID_SPRAY_TARGET, 0, TRUE),\
+							BT_LEAF(/datum/bt_node/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)\
+						),\
+						"observer_abort" = BT_ABORT_BOTH,\
+						"key" = BB_ACID_SPRAY_TARGET\
 					),\
-					"key" = BB_ACID_SPRAY_TARGET\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
+					)\
 				),\
-				BT_LEAF(/datum/bt_node/ai_behavior/find_spray_target, BB_ACID_SPRAY_TARGET),\
-				BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM)\
-			)\
-		),\
-		BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, TRUE,\
-			BT_SELECTOR(\
-				BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-				BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
-					BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
-					"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
+				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+					BT_LEAF(/datum/bt_node/ai_behavior/find_spray_target, BB_ACID_SPRAY_TARGET),\
+					"invert" = TRUE,\
+					"key" = BB_ACID_SPRAY_TARGET\
 				)\
-			),\
-			BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET)\
+			)\
 		)\
 	)
 	reset_keys = list(
@@ -142,7 +153,7 @@
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] execute_clean: target deleted")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(get_dist(living_pawn, target) > 0)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] cleaning [target]", get_turf(target), "Cleaning")
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

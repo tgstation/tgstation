@@ -4,11 +4,17 @@ import { Box, Button, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import {
+  type BehaviorTreeViewerData,
   BT_ABORT_BOTH,
   BT_ABORT_LOWER_PRIORITY,
   BT_ABORT_NONE,
   BT_ABORT_SELF,
-  type BehaviorTreeViewerData,
+  BT_NODE_DECORATOR,
+  BT_NODE_LEAF,
+  BT_NODE_PARALLEL,
+  BT_NODE_SELECTOR,
+  BT_NODE_SEQUENCE,
+  BT_NODE_SUBTREE,
   type BtNodeData,
 } from './types';
 
@@ -17,55 +23,46 @@ const NODE_HEIGHT = 70;
 const H_GAP = 12;
 const V_GAP = 48;
 
-// Returns a short type badge string for composite/decorator nodes.
-function nodeTypeBadge(nodeType: BtNodeData['node_type']): string {
-  switch (nodeType) {
-    case 'sequence':
+function nodeTypeBadge(t: number): string {
+  switch (t) {
+    case BT_NODE_SEQUENCE:
       return 'SEQ';
-    case 'selector':
+    case BT_NODE_SELECTOR:
       return 'SEL';
-    case 'parallel':
+    case BT_NODE_PARALLEL:
       return 'PAR';
-    case 'decorator':
+    case BT_NODE_DECORATOR:
       return 'DEC';
-    case 'subtree':
+    case BT_NODE_SUBTREE:
       return 'SUB';
     default:
       return '';
   }
 }
 
-// Returns a human-readable color name for a node given current highlight state.
+function lastIdx(node: BtNodeData): number {
+  return node.z ?? node.e;
+}
+
+function children(node: BtNodeData): BtNodeData[] {
+  return (node.c ?? []).filter((c): c is BtNodeData => c !== null);
+}
+
 function nodeColor(
   node: BtNodeData,
   activeIdx: number,
   selectedDec: BtNodeData | null,
 ): string {
-  // Running leaf: bright green fill
-  if (
-    node.node_type === 'leaf' &&
-    activeIdx > 0 &&
-    activeIdx === node.execution_index
-  ) {
+  if (node.t === BT_NODE_LEAF && activeIdx > 0 && activeIdx === node.e) {
     return 'green';
   }
-  // Active in path: green border tint
-  if (
-    activeIdx > 0 &&
-    activeIdx >= node.execution_index &&
-    activeIdx <= node.last_execution_index
-  ) {
+  if (activeIdx > 0 && activeIdx >= node.e && activeIdx <= lastIdx(node)) {
     return 'good';
   }
-  // Would-be-cancelled by selected decorator
   if (selectedDec) {
-    const abort = selectedDec.observer_abort;
-    const inRange =
-      node.execution_index >= selectedDec.execution_index &&
-      node.execution_index <= selectedDec.last_execution_index;
-    const lowerPriority =
-      node.execution_index > selectedDec.last_execution_index;
-
+    const abort = selectedDec.a ?? BT_ABORT_NONE;
+    const inRange = node.e >= selectedDec.e && node.e <= lastIdx(selectedDec);
+    const lowerPriority = node.e > lastIdx(selectedDec);
     if (
       (abort === BT_ABORT_SELF && inRange) ||
       (abort === BT_ABORT_LOWER_PRIORITY && lowerPriority) ||
@@ -73,8 +70,7 @@ function nodeColor(
     ) {
       return 'orange';
     }
-    // Selected decorator itself: blue
-    if (node.execution_index === selectedDec.execution_index) {
+    if (node.e === selectedDec.e) {
       return 'blue';
     }
   }
@@ -91,20 +87,18 @@ type BtNodeProps = {
 function BtNodeTree(props: BtNodeProps) {
   const { node, activeIdx, selectedDec, onSelectDec } = props;
   const color = nodeColor(node, activeIdx, selectedDec);
-  const badge = nodeTypeBadge(node.node_type);
-  const isSelectedDec =
-    selectedDec !== null &&
-    node.execution_index === selectedDec.execution_index;
+  const badge = nodeTypeBadge(node.t);
+  const abort = node.a ?? BT_ABORT_NONE;
+  const kids = children(node);
+  const isSelectedDec = selectedDec !== null && node.e === selectedDec.e;
   const isClickableDec =
-    node.node_type === 'decorator' &&
-    node.observer_abort !== BT_ABORT_NONE;
+    node.t === BT_NODE_DECORATOR && abort !== BT_ABORT_NONE;
 
   function handleClick() {
     if (!isClickableDec) return;
     onSelectDec(isSelectedDec ? null : node);
   }
 
-  // Node box border color
   let borderColor: string;
   if (color === 'green' || color === 'good') {
     borderColor = '#00cc44';
@@ -119,10 +113,10 @@ function BtNodeTree(props: BtNodeProps) {
   const bgColor = color === 'green' ? '#005522' : '#1a1a1a';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Node box */}
+    <div
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
       <div
-        title={node.full_type}
         onClick={handleClick}
         style={{
           width: `${NODE_WIDTH}px`,
@@ -132,86 +126,131 @@ function BtNodeTree(props: BtNodeProps) {
           backgroundColor: bgColor,
           padding: '4px 6px',
           cursor: isClickableDec ? 'pointer' : 'default',
-          position: 'relative',
           boxSizing: 'border-box',
         }}
       >
-        {/* Top row: badge (left) + priority (right) */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#888', marginBottom: '2px' }}>
+        {/* Top row: badge + priority */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '10px',
+            color: '#888',
+            marginBottom: '2px',
+          }}
+        >
           <span style={{ fontWeight: 'bold' }}>{badge}</span>
-          <span>#{node.priority_index}</span>
+          <span>#{node.p}</span>
         </div>
 
         {/* Label */}
-        <div style={{
-          fontSize: '11px',
-          color: color === 'green' ? '#aaffcc' : '#ddd',
-          textAlign: 'center',
-          wordBreak: 'break-all',
-          lineHeight: '1.2',
-        }}>
-          {node.label}
+        <div
+          style={{
+            fontSize: '11px',
+            color: color === 'green' ? '#aaffcc' : '#ddd',
+            textAlign: 'center',
+            wordBreak: 'break-all',
+            lineHeight: '1.2',
+          }}
+        >
+          {node.l}
         </div>
 
         {/* Decorator badges */}
-        {node.node_type === 'decorator' && (
-          <div style={{ display: 'flex', gap: '3px', marginTop: '3px', flexWrap: 'wrap' }}>
-            {node.observer_abort !== BT_ABORT_NONE && (
-              <span style={{
-                fontSize: '9px',
-                background: '#225588',
-                borderRadius: '3px',
-                padding: '0 3px',
-                color: '#aaccff',
-              }}>
+        {node.t === BT_NODE_DECORATOR && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '3px',
+              marginTop: '3px',
+              flexWrap: 'wrap',
+            }}
+          >
+            {abort !== BT_ABORT_NONE && (
+              <span
+                style={{
+                  fontSize: '9px',
+                  background: '#225588',
+                  borderRadius: '3px',
+                  padding: '0 3px',
+                  color: '#aaccff',
+                }}
+              >
                 OBS
               </span>
             )}
-            {node.invert && (
-              <span style={{
-                fontSize: '9px',
-                background: '#552222',
-                borderRadius: '3px',
-                padding: '0 3px',
-                color: '#ffaaaa',
-              }}>
+            {node.i && (
+              <span
+                style={{
+                  fontSize: '9px',
+                  background: '#552222',
+                  borderRadius: '3px',
+                  padding: '0 3px',
+                  color: '#ffaaaa',
+                }}
+              >
                 NOT
               </span>
             )}
-            {node.observer_abort === BT_ABORT_SELF && (
+            {abort === BT_ABORT_SELF && (
               <span style={{ fontSize: '9px', color: '#888' }}>SELF</span>
             )}
-            {node.observer_abort === BT_ABORT_LOWER_PRIORITY && (
+            {abort === BT_ABORT_LOWER_PRIORITY && (
               <span style={{ fontSize: '9px', color: '#888' }}>LO-PRI</span>
             )}
-            {node.observer_abort === BT_ABORT_BOTH && (
+            {abort === BT_ABORT_BOTH && (
               <span style={{ fontSize: '9px', color: '#888' }}>BOTH</span>
             )}
           </div>
         )}
       </div>
 
-      {/* Children row */}
-      {node.children.length > 0 && (
+      {/* Children */}
+      {kids.length > 0 && (
         <>
-          {/* Vertical connector from node to child row */}
-          <div style={{ width: '2px', height: `${V_GAP / 2}px`, background: '#555' }} />
-          <div style={{ display: 'flex', flexDirection: 'row', gap: `${H_GAP}px`, position: 'relative' }}>
-            {/* Horizontal connector bar spanning children */}
-            {node.children.length > 1 && (
-              <div style={{
-                position: 'absolute',
-                top: '0',
-                left: `${NODE_WIDTH / 2}px`,
-                right: `${NODE_WIDTH / 2}px`,
-                height: '2px',
-                background: '#555',
-              }} />
+          <div
+            style={{
+              width: '2px',
+              height: `${V_GAP / 2}px`,
+              background: '#555',
+            }}
+          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: `${H_GAP}px`,
+              position: 'relative',
+            }}
+          >
+            {kids.length > 1 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: `${NODE_WIDTH / 2}px`,
+                  right: `${NODE_WIDTH / 2}px`,
+                  height: '2px',
+                  background: '#555',
+                }}
+              />
             )}
-            {node.children.map((child) => (
-              <div key={child.execution_index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {/* Vertical stub down to child */}
-                <div style={{ width: '2px', height: `${V_GAP / 2}px`, background: '#555' }} />
+            {kids.map((child) => (
+              <div
+                key={child.e}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    width: '2px',
+                    height: `${V_GAP / 2}px`,
+                    background: '#555',
+                  }}
+                />
                 <BtNodeTree
                   node={child}
                   activeIdx={activeIdx}
@@ -239,14 +278,10 @@ export function BehaviorTreeViewer() {
 
   const [selectedDec, setSelectedDec] = useState<BtNodeData | null>(null);
 
-  // Clear selected decorator when data changes (e.g. new mob picked)
-  // Using key on the tree container handles this naturally.
-
   return (
     <Window title="Behavior Tree Viewer" width={1200} height={700}>
       <Window.Content>
         <Stack vertical fill>
-          {/* Toolbar */}
           <Stack.Item>
             <Section>
               <Stack align="center">
@@ -254,7 +289,13 @@ export function BehaviorTreeViewer() {
                   {mob_name ? (
                     <span>
                       <b>{mob_name}</b>
-                      <span style={{ color: '#888', marginLeft: '8px', fontSize: '11px' }}>
+                      <span
+                        style={{
+                          color: '#888',
+                          marginLeft: '8px',
+                          fontSize: '11px',
+                        }}
+                      >
                         {controller_type}
                       </span>
                     </span>
@@ -284,10 +325,11 @@ export function BehaviorTreeViewer() {
               </Stack>
               {selectedDec && (
                 <Box mt={1} fontSize="11px" color="blue">
-                  Observer: <b>{selectedDec.label}</b> — highlighted nodes would be cancelled. Click node again to deselect.
-                  {selectedDec.observed_keys.length > 0 && (
+                  Observer: <b>{selectedDec.l}</b> — highlighted nodes would be
+                  cancelled. Click node again to deselect.
+                  {(selectedDec.k?.length ?? 0) > 0 && (
                     <span style={{ color: '#888', marginLeft: '8px' }}>
-                      Watching: {selectedDec.observed_keys.join(', ')}
+                      Watching: {selectedDec.k!.join(', ')}
                     </span>
                   )}
                 </Box>
@@ -295,22 +337,26 @@ export function BehaviorTreeViewer() {
             </Section>
           </Stack.Item>
 
-          {/* Tree canvas */}
-          <Stack.Item grow>
-            <div style={{
-              overflow: 'auto',
-              height: '100%',
-              padding: '16px',
-            }}>
-              {roots.length === 0 ? (
+          <Stack.Item grow style={{ minHeight: 0, overflow: 'auto' }}>
+            <div style={{ padding: '16px' }}>
+              {!roots || roots.length === 0 ? (
                 <Box color="gray" textAlign="center" mt={4}>
-                  {mob_name ? 'No behavior nodes in controller.' : 'Pick a mob to view its behavior tree.'}
+                  {mob_name
+                    ? 'No behavior nodes in controller.'
+                    : 'Pick a mob to view its behavior tree.'}
                 </Box>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '32px', alignItems: 'flex-start' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '32px',
+                    alignItems: 'flex-start',
+                  }}
+                >
                   {roots.map((root) => (
                     <BtNodeTree
-                      key={root.execution_index}
+                      key={root.e}
                       node={root}
                       activeIdx={active_execution_index}
                       selectedDec={selectedDec}
