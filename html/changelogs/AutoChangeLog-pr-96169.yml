@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Spacer: Bonus to drift speed no longer stacks with jetpack speed - only the greater of the two effects is applied."

@@ -454,3 +454,11 @@
   soulware1:
   - rscadd: New reactions for water variants that make foam
   - code_imp: New foam types that either slip or last longer or shorter
+2026-05-25:
+  ElGitificador:
+  - sound: added sound feedback to supplexing a rod
+  Melbert:
+  - balance: 'Spacer: Bonus to drift speed no longer stacks with jetpack speed - only
+      the greater of the two effects is applied.'
+  SmArtKar:
+  - admin: Added conversion and deconversion logging to Lunatics
