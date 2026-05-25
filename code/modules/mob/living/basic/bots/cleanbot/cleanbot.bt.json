@@ -17,7 +17,9 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
-			"config": { "invert": true },
+			"config": {
+				"invert": true
+			},
 			"child": {
 				"type": "parallel",
 				"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
@@ -57,7 +59,9 @@
 									{
 										"type": "decorator",
 										"decorator": "/datum/bt_node/decorator/bb_key_set",
-										"config": { "key": "BB_FRIENDLY_JANITOR" },
+										"config": {
+											"key": "BB_FRIENDLY_JANITOR"
+										},
 										"child": {
 											"type": "sequence",
 											"children": [
@@ -77,7 +81,10 @@
 									{
 										"type": "decorator",
 										"decorator": "/datum/bt_node/decorator/bb_key_set",
-										"config": { "key": "BB_FRIENDLY_JANITOR", "invert": true },
+										"config": {
+											"key": "BB_FRIENDLY_JANITOR",
+											"invert": true
+										},
 										"child": {
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/find_friendly_janitor",
@@ -89,7 +96,9 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-								"config": { "cooldown_key": "BB_POST_CLEAN_COOLDOWN" },
+								"config": {
+									"cooldown_key": "BB_POST_CLEAN_COOLDOWN"
+								},
 								"child": {
 									"type": "subtree",
 									"subtype": "/datum/bt_node/subtree/bot_patrol"
@@ -103,7 +112,10 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": { "key": "BB_CLEAN_TARGET", "invert": true },
+								"config": {
+									"key": "BB_CLEAN_TARGET",
+									"invert": true
+								},
 								"child": {
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_clean_target",
@@ -122,12 +134,13 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
+			"config": {},
 			"child": {
 				"type": "parallel",
 				"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 				"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-				"repeat_secondary": false,
-				"finish_on_primary": false,
+				"repeat_secondary": true,
+				"finish_on_primary": true,
 				"children": [
 					{
 						"type": "selector",
@@ -135,7 +148,9 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-								"config": { "cooldown_key": "BB_ACID_SPRAY_COOLDOWN" },
+								"config": {
+									"cooldown_key": "BB_ACID_SPRAY_COOLDOWN"
+								},
 								"child": {
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/bb_key_set",
@@ -173,7 +188,9 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-								"config": { "cooldown_key": "BB_POST_CLEAN_COOLDOWN" },
+								"config": {
+									"cooldown_key": "BB_POST_CLEAN_COOLDOWN"
+								},
 								"child": {
 									"type": "subtree",
 									"subtype": "/datum/bt_node/subtree/bot_patrol"
@@ -184,7 +201,10 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": { "key": "BB_ACID_SPRAY_TARGET", "invert": true },
+						"config": {
+							"key": "BB_ACID_SPRAY_TARGET",
+							"invert": true
+						},
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_spray_target",
