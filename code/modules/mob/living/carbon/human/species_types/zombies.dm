@@ -47,15 +47,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
-	/// Spooky growls we sometimes play while alive
-	var/static/list/spooks = list(
-		'sound/effects/hallucinations/growl1.ogg',
-		'sound/effects/hallucinations/growl2.ogg',
-		'sound/effects/hallucinations/growl3.ogg',
-		'sound/effects/hallucinations/veryfar_noise.ogg',
-		'sound/effects/hallucinations/wail.ogg',
-	)
-
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
 /datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
 	return
@@ -177,11 +168,6 @@
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	return min(2 SECONDS, amount)
-
-/datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick)
-	. = ..()
-	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
-		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
 // Weaker subtype - less healing, weaker attacks, etc
 /datum/species/zombie/infectious/mindless

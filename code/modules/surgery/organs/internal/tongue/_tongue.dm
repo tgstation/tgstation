@@ -419,6 +419,14 @@
 	disliked_foodtypes = NONE
 	// List of english words that translate to zombie phrases
 	var/static/list/english_to_zombie = list()
+	/// Spooky growls we sometimes play while alive
+	var/static/list/spooks = list(
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg',
+	)
 
 /obj/item/organ/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
 	english_to_zombie[english_word] = zombie_word
@@ -473,6 +481,11 @@
 		message = new_words.Join(" ")
 		message = capitalize(message)
 		speech_args[SPEECH_MESSAGE] = message
+
+/obj/item/organ/tongue/zombie/on_life(seconds_per_tick)
+	. = ..()
+	if(owner.stat == CONSCIOUS && SPT_PROB(2, seconds_per_tick))
+		playsound(owner, pick(spooks), 50, TRUE, 10)
 
 /obj/item/organ/tongue/alien
 	name = "alien tongue"
