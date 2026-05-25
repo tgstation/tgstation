@@ -55,8 +55,7 @@
 #define BB_CLEANBOT_EMAGGED_PHRASES "emagged_phrases"
 ///key that holds drawings we hunt
 #define BB_CLEANABLE_DRAWINGS "cleanable_drawings"
-///Key that holds our clean target
-#define BB_CLEAN_TARGET "clean_target"
+
 ///key that holds the janitor we will befriend
 #define BB_FRIENDLY_JANITOR "friendly_janitor"
 ///key that holds the victim we will spray
@@ -103,8 +102,6 @@
 //firebot keys
 ///things we can extinguish
 #define BB_FIREBOT_CAN_EXTINGUISH "can_extinguish"
-///the target we will extinguish
-#define BB_FIREBOT_EXTINGUISH_TARGET "extinguish_target"
 ///lines we say when we detect a fire
 #define BB_FIREBOT_FIRE_DETECTED_LINES "fire_detected_lines"
 ///lines we say when we are idle

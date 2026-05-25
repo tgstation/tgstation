@@ -34,7 +34,7 @@
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
 								"config": {
-									"key": "BB_CLEAN_TARGET",
+									"key": "BB_CURRENT_TARGET",
 									"observer_abort": "BT_ABORT_BOTH"
 								},
 								"child": {
@@ -43,12 +43,12 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": ["BB_CLEAN_TARGET", 0, true]
+											"args": ["BB_CURRENT_TARGET", 0, true]
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/execute_clean",
-											"args": ["BB_CLEAN_TARGET"]
+											"args": ["BB_CURRENT_TARGET"]
 										}
 									]
 								}
@@ -113,13 +113,13 @@
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
 								"config": {
-									"key": "BB_CLEAN_TARGET",
+									"key": "BB_CURRENT_TARGET",
 									"invert": true
 								},
 								"child": {
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_clean_target",
-									"args": ["BB_CLEAN_TARGET"]
+									"args": ["BB_CURRENT_TARGET"]
 								}
 							},
 							{

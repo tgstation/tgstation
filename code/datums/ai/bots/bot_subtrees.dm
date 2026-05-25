@@ -89,7 +89,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(get_dist(living_pawn, target) > 0)
+	if(get_dist(living_pawn, target) > 1)
 		return AI_BEHAVIOR_INSTANT
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

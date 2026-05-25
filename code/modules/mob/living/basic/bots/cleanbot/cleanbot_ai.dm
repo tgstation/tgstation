@@ -29,12 +29,12 @@
 											list(\
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CLEAN_TARGET, 0, TRUE)),\
-													list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_CLEAN_TARGET))\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 0, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_CURRENT_TARGET))\
 												)\
 											)\
 										),\
-										"key" = BB_CLEAN_TARGET,\
+										"key" = BB_CURRENT_TARGET,\
 										"observer_abort" = BT_ABORT_BOTH\
 									),\
 									list(\
@@ -78,9 +78,9 @@
 									list(\
 										"__t" = /datum/bt_node/decorator/bb_key_set,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/find_clean_target, "default_behavior_args" = list(BB_CLEAN_TARGET))\
+											list("__t" = /datum/bt_node/ai_behavior/find_clean_target, "default_behavior_args" = list(BB_CURRENT_TARGET))\
 										),\
-										"key" = BB_CLEAN_TARGET,\
+										"key" = BB_CURRENT_TARGET,\
 										"invert" = TRUE\
 									),\
 									/datum/bt_node/subtree/bot_salute_authority\
@@ -163,7 +163,7 @@
 	)
 	reset_keys = list(
 		BB_ACTIVE_PET_COMMAND,
-		BB_CLEAN_TARGET,
+		BB_CURRENT_TARGET,
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
@@ -326,7 +326,7 @@
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
 	// Copy pet target into the cleaning blackboard key so the BT cleaning branch picks it up next tick
-	controller.set_blackboard_key(BB_CLEAN_TARGET, target)
+	controller.set_blackboard_key(BB_CURRENT_TARGET, target)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 
 #undef BOT_CLEAN_PATH_LIMIT

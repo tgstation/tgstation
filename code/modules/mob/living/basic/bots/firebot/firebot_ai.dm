@@ -35,39 +35,55 @@
 											list(\
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET, 0)),\
-													list("__t" = /datum/bt_node/ai_behavior/bot_interact/extinguish, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET))\
+													list("__t" = /datum/bt_node/ai_behavior/announce_fire_detected, "default_behavior_args" = list()),\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 1, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/bot_interact/extinguish, "default_behavior_args" = list(BB_CURRENT_TARGET))\
 												)\
 											)\
 										),\
-										"key" = BB_FIREBOT_EXTINGUISH_TARGET\
+										"observer_abort" = BT_ABORT_BOTH,\
+										"key" = BB_CURRENT_TARGET\
 									),\
 									/datum/bt_node/subtree/bot_patrol\
 								)\
 							),\
 							list(\
-								"__t" = /datum/bt_node/composite/selector,\
+								"__t" = /datum/bt_node/decorator/bb_key_set,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/find_person_on_fire, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/search_burning_turfs, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET))\
-								)\
+									list(\
+										"__t" = /datum/bt_node/composite/selector,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/find_person_on_fire, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+											list("__t" = /datum/bt_node/ai_behavior/search_burning_turfs, "default_behavior_args" = list(BB_CURRENT_TARGET))\
+										)\
+									)\
+								),\
+								"invert" = TRUE,\
+								"key" = BB_CURRENT_TARGET\
 							)\
 						)\
 					)\
 				)\
 			),\
 			list(\
-				"__t" = /datum/bt_node/composite/selector,\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
 				"__c" = list(\
-					list("__t" = /datum/bt_node/ai_behavior/handle_firebot_speech, "default_behavior_args" = list()),\
-					/datum/bt_node/subtree/bot_salute_authority\
-				)\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/handle_firebot_speech, "default_behavior_args" = list()),\
+							/datum/bt_node/subtree/bot_salute_authority\
+						)\
+					)\
+				),\
+				"invert" = TRUE,\
+				"key" = BB_CURRENT_TARGET\
 			)\
 		)\
 	)
 	// @bt-generated end
 	reset_keys = list(
-		BB_FIREBOT_EXTINGUISH_TARGET,
+		BB_CURRENT_TARGET,
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
@@ -79,23 +95,25 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_FIREBOT_EXTINGUISH_TARGET), PROC_REF(on_target_found))
 
-///say a silly line whenever we find someone on fire
-/datum/ai_controller/basic_controller/bot/firebot/proc/on_target_found()
-	SIGNAL_HANDLER
-	if(!COOLDOWN_FINISHED(src, announcement_cooldown))
-		return
+// =============================================================================
+// Announce fire detected
+// =============================================================================
 
-	var/datum/action/cooldown/bot_announcement/announcement = blackboard[BB_ANNOUNCE_ABILITY]
+/datum/bt_node/ai_behavior/announce_fire_detected
+
+/datum/bt_node/ai_behavior/announce_fire_detected/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/firebot/controller)
+	if(!COOLDOWN_FINISHED(controller, announcement_cooldown))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	if(isnull(announcement))
-		return
-
-	var/list/lines = blackboard[BB_FIREBOT_FIRE_DETECTED_LINES]
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+	var/list/lines = controller.blackboard[BB_FIREBOT_FIRE_DETECTED_LINES]
 	if(!length(lines))
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	INVOKE_ASYNC(announcement, TYPE_PROC_REF(/datum/action/cooldown/bot_announcement, announce), pick(lines))
-	COOLDOWN_START(src, announcement_cooldown, ANNOUNCEMENT_TIMER)
+	COOLDOWN_START(controller, announcement_cooldown, ANNOUNCEMENT_TIMER)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 // =============================================================================
 // Find person on fire
@@ -173,8 +191,6 @@
 	var/speech_prob = 3
 
 /datum/bt_node/ai_behavior/handle_firebot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(BB_FIREBOT_EXTINGUISH_TARGET))
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(!SPT_PROB(speech_prob, seconds_per_tick))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/mob/living/basic/bot/living_bot = controller.pawn
