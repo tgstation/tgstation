@@ -9,12 +9,41 @@
 	)
 
 	ai_movement = /datum/ai_movement/jps/bot
-	behavior_nodes = BT_SELECTOR(\
-		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+	behavior_tree_json = "bot.bt.json"
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity/pacifist,\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_salute_authority,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
 	)
+	// @bt-generated end
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity/pacifist,\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_salute_authority,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
+	)
+	// @bt-generated end
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity/pacifist,\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_salute_authority,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
+	)
+	// @bt-generated end
+
 	max_target_distance = AI_BOT_PATH_LENGTH
 	can_idle = FALSE
 	///minimum distance we need to be from our target in path calculations

@@ -55,23 +55,91 @@
 		BB_AGGRO_RANGE = 2,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
-	behavior_nodes = BT_SELECTOR(\
-		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
-				BT_LEAF(/datum/bt_node/ai_behavior/targeted_mob_ability/melee, BB_DEDBOT_SLASH, BB_BASIC_MOB_CURRENT_TARGET),\
-				BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
-					BB_BASIC_MOB_CURRENT_TARGET, 1\
-				)\
+	behavior_tree_json = "dedbot.bt.json"
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity,\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = FALSE,\
+						"finish_on_primary" = FALSE,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/melee, "default_behavior_args" = list(BB_DEDBOT_SLASH, BB_BASIC_MOB_CURRENT_TARGET)),\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1))\
+						)\
+					)\
+				),\
+				"key" = BB_BASIC_MOB_CURRENT_TARGET\
 			),\
-			"key" = BB_BASIC_MOB_CURRENT_TARGET\
-		),\
-		BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
-			BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
-		),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
 	)
+	// @bt-generated end
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity,\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = FALSE,\
+						"finish_on_primary" = FALSE,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/melee, "default_behavior_args" = list(BB_DEDBOT_SLASH, BB_BASIC_MOB_CURRENT_TARGET)),\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1))\
+						)\
+					)\
+				),\
+				"key" = BB_BASIC_MOB_CURRENT_TARGET\
+			),\
+			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
+	)
+	// @bt-generated end
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity,\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = FALSE,\
+						"finish_on_primary" = FALSE,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/melee, "default_behavior_args" = list(BB_DEDBOT_SLASH, BB_BASIC_MOB_CURRENT_TARGET)),\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1))\
+						)\
+					)\
+				),\
+				"key" = BB_BASIC_MOB_CURRENT_TARGET\
+			),\
+			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			/datum/bt_node/subtree/bot_patrol\
+		)\
+	)
+	// @bt-generated end
 	max_target_distance = AI_BOT_PATH_LENGTH
 	reset_keys = list(
 		BB_BEACON_TARGET,
