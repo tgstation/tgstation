@@ -220,15 +220,15 @@
 
 /datum/heretic_knowledge/hypnosis_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/hypnosis_text = ""
-	if(!HAS_TRAIT(user, TRAIT_UNCONVERTABLE))
-		for(var/obj/item/paper/paper in selected_atoms)
-			for(var/datum/paper_input/text as anything in paper.raw_text_inputs)
-				hypnosis_text += "[STRIP_HTML_FULL(text.raw_text, MAX_MESSAGE_LEN)] "
-			paper.burn()
-			selected_atoms -= paper
+	for(var/obj/item/paper/paper in selected_atoms)
+		for(var/datum/paper_input/text as anything in paper.raw_text_inputs)
+			hypnosis_text += "[STRIP_HTML_FULL(text.raw_text, MAX_MESSAGE_LEN)] "
+		paper.burn()
+		selected_atoms -= paper
 
-	hypnosis_text = trim(hypnosis_text, MAX_MESSAGE_LEN) || pick_list(HERETIC_INFLUENCE_FILE, "hypnosis")
+	hypnosis_text = trim(hypnosis_text, MAX_MESSAGE_LEN)
 	for(var/mob/living/carbon/human/victim in selected_atoms)
+		var/specific_hypnosis_text = (HAS_TRAIT(victim, TRAIT_UNCONVERTABLE) || !hypnosis_text) ? pick_list(HERETIC_INFLUENCE_FILE, "hypnosis") : hypnosis_text
 		for(var/obj/item/implant/mindshield/shield in victim.implants)
 			shield.removed(victim, silent = FALSE)
 			shield.forceMove(victim.drop_location())
@@ -237,7 +237,7 @@
 		selected_atoms -= victim
 		// lobotomy resistance because it might be a bit rough to make this permanent aye
 		// future note: if people just spam hypnosis to make an army to rush ascension, make it so hypnosis is broken by witnessing sacrifices
-		var/datum/brain_trauma/hypnosis/trauma = new(hypnosis_text)
+		var/datum/brain_trauma/hypnosis/trauma = new(specific_hypnosis_text)
 		victim.gain_trauma(trauma, TRAUMA_RESILIENCE_LOBOTOMY)
 
 	return TRUE
