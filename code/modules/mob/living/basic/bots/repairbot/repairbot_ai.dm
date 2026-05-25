@@ -3,35 +3,65 @@
 /// Emagged repairbot behavior: mug robots then deconstruct structures.
 /datum/bt_node/subtree/repairbot_emagged
 	behavior_tree_json = "repairbot_emagged.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-		BT_SELECTOR(\
-			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
-					BT_SELECTOR(\
-						BT_LEAF(/datum/bt_node/ai_behavior/bot_interact/tip_robot, BB_ROBOT_TARGET),\
-						BT_LEAF(/datum/bt_node/ai_behavior/drag_target, BB_ROBOT_TARGET)\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/composite/selector,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/decorator/bb_key_set,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/composite/parallel,\
+								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+								"repeat_secondary" = FALSE,\
+								"finish_on_primary" = FALSE,\
+								"__c" = list(\
+									list(\
+										"__t" = /datum/bt_node/composite/selector,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/bot_interact/tip_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
+											list("__t" = /datum/bt_node/ai_behavior/drag_target, "default_behavior_args" = list(BB_ROBOT_TARGET))\
+										)\
+									),\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0))\
+								)\
+							)\
+						),\
+						"key" = BB_ROBOT_TARGET\
 					),\
-					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
-						BB_ROBOT_TARGET, 0\
-					)\
-				),\
-				"key" = BB_ROBOT_TARGET\
+					list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_robot, "default_behavior_args" = list(BB_ROBOT_TARGET))\
+				)\
 			),\
-			BT_LEAF(/datum/bt_node/ai_behavior/bot_search/valid_robot, BB_ROBOT_TARGET)\
-		),\
-		BT_SELECTOR(\
-			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
-					BT_LEAF(/datum/bt_node/ai_behavior/bot_interact, BB_DECONSTRUCT_TARGET),\
-					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
-						BB_DECONSTRUCT_TARGET, 0\
-					)\
-				),\
-				"key" = BB_DECONSTRUCT_TARGET\
-			),\
-			BT_LEAF(/datum/bt_node/ai_behavior/bot_search/deconstructable, BB_DECONSTRUCT_TARGET)\
+			list(\
+				"__t" = /datum/bt_node/composite/selector,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/decorator/bb_key_set,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/composite/parallel,\
+								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+								"repeat_secondary" = FALSE,\
+								"finish_on_primary" = FALSE,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET)),\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0))\
+								)\
+							)\
+						),\
+						"key" = BB_DECONSTRUCT_TARGET\
+					),\
+					list("__t" = /datum/bt_node/ai_behavior/bot_search/deconstructable, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
+				)\
+			)\
 		)\
 	)
+	// @bt-generated end
 
 /datum/ai_controller/basic_controller/bot/repairbot
 	behavior_tree_json = "repairbot.bt.json"

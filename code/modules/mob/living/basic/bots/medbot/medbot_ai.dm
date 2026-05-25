@@ -3,29 +3,50 @@
 /// Find and treat a patient — used by both the speak-mode parallel and the silent fallback branch.
 /datum/bt_node/subtree/medbot_treat_patient
 	behavior_tree_json = "medbot_treat_patient.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
-				BT_LEAF(/datum/bt_node/ai_behavior/tend_to_patient, BB_PATIENT_TARGET),\
-				BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
-					BB_PATIENT_TARGET, 0\
-				)\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = FALSE,\
+						"finish_on_primary" = FALSE,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/tend_to_patient, "default_behavior_args" = list(BB_PATIENT_TARGET)),\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_PATIENT_TARGET, 0))\
+						)\
+					)\
+				),\
+				"key" = BB_PATIENT_TARGET\
 			),\
-			"key" = BB_PATIENT_TARGET\
-		),\
-		BT_LEAF(/datum/bt_node/ai_behavior/find_suitable_patient, BB_PATIENT_TARGET)\
+			list("__t" = /datum/bt_node/ai_behavior/find_suitable_patient, "default_behavior_args" = list(BB_PATIENT_TARGET))\
+		)\
 	)
+	// @bt-generated end
 
 /// Find a patient in hard-crit and announce them on radio.
 /datum/bt_node/subtree/medbot_find_and_announce_crit
 	behavior_tree_json = "medbot_find_and_announce_crit.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-			BT_LEAF(/datum/bt_node/ai_behavior/announce_patient, BB_PATIENT_IN_CRIT),\
-			"key" = BB_PATIENT_IN_CRIT\
-		),\
-		BT_LEAF(/datum/bt_node/ai_behavior/find_patient_in_crit, BB_PATIENT_IN_CRIT)\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/announce_patient, "default_behavior_args" = list(BB_PATIENT_IN_CRIT))\
+				),\
+				"key" = BB_PATIENT_IN_CRIT\
+			),\
+			list("__t" = /datum/bt_node/ai_behavior/find_patient_in_crit, "default_behavior_args" = list(BB_PATIENT_IN_CRIT))\
+		)\
 	)
+	// @bt-generated end
 
 /datum/ai_controller/basic_controller/bot/medbot
 	behavior_tree_json = "medbot.bt.json"

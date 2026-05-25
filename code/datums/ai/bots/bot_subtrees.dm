@@ -267,11 +267,21 @@
 /// Travel to BB_BOT_SUMMON_TARGET if set, completing when on the same turf.
 /datum/bt_node/subtree/bot_respond_to_summon
 	behavior_tree_json = "bot_respond_to_summon.bt.json"
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-		BT_SEQUENCE(\
-			BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BOT_SUMMON_TARGET, 0, TRUE),\
-			BT_LEAF(/datum/bt_node/ai_behavior/complete_summon_travel, BB_BOT_SUMMON_TARGET),\
-
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/decorator/bb_key_set,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/composite/sequence,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BOT_SUMMON_TARGET, 0, TRUE)),\
+					list("__t" = /datum/bt_node/ai_behavior/complete_summon_travel, "default_behavior_args" = list(BB_BOT_SUMMON_TARGET))\
+				)\
+			)\
+		),\
+		"key" = BB_BOT_SUMMON_TARGET\
+	)
+	// @bt-generated end
 		),\
 		"key" = BB_BOT_SUMMON_TARGET\
 	)
@@ -279,14 +289,22 @@
 /// Salute any commissioned officer in range, rate-limited to BOT_COMMISSIONED_SALUTE_DELAY.
 /datum/bt_node/subtree/bot_salute_authority
 	behavior_tree_json = "bot_salute_authority.bt.json"
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
-		BT_SEQUENCE(\
-			BT_LEAF(/datum/bt_node/ai_behavior/find_valid_authority, BB_SALUTE_TARGET),\
-			BT_LEAF(/datum/bt_node/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES),\
-			BT_LEAF(/datum/bt_node/ai_behavior/set_bb_cooldown, BB_SALUTE_COOLDOWN, BOT_COMMISSIONED_SALUTE_DELAY)\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/decorator/bb_key_cooldown,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/composite/sequence,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/find_valid_authority, "default_behavior_args" = list(BB_SALUTE_TARGET)),\
+					list("__t" = /datum/bt_node/ai_behavior/salute_authority, "default_behavior_args" = list(BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)),\
+					list("__t" = /datum/bt_node/ai_behavior/set_bb_cooldown, "default_behavior_args" = list(BB_SALUTE_COOLDOWN, BOT_COMMISSIONED_SALUTE_DELAY))\
+				)\
+			)\
 		),\
 		"cooldown_key" = BB_SALUTE_COOLDOWN\
 	)
+	// @bt-generated end
 
 /**
  * Patrol to navbeacons in sequence when autopatrol is enabled and not on cooldown.
