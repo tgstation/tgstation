@@ -1009,8 +1009,8 @@
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
-		an unholy union of mace and cattleprod. Designed to stop criminals in their tracks, Nanotrasen security is \
-		rarely without their trusty stun baton. Assuming they haven't lost it somewhere.<br>\
+		an unholy union of mace and cattleprod. Designed to stop criminals in their tracks, Nanotrasen security members \
+		are rarely without their trusty stun baton. Assuming they haven't lost it somewhere.<br>\
 		<br>\
 		Trained to 'baton first, interrogate later', Nanotrasen security has long since earned itself a mixed reputation. \
 		The device is able to rapidly shut down the central nervous system of a criminal with only a few direct applications \
@@ -1036,8 +1036,8 @@
 		ease of concealment, the baton is also able to be telescopically collapsed, to then be rapidly deployed at the \
 		pull of a trigger.<br>\
 		<br>\
-		The contractor baton is famously associated with contractors, from which it has earned its name. Elite Cybersun \
-		field agents sent to kidnap and extract high value enemy personnel for interrogation. Anyone with the potential to \
-		possess classified or sensitive data about Nanotrasen could find themselves a target for Cybersun. The company \
-		relentlessly employs contractors to probe Nanotrasen for vulnerabilities, starting with their employees.\
+		The contractor baton is famously associated with contractors, elite Cybersun field agents sent to kidnap and extract \
+		high value enemy personnel for interrogation. Anyone with the potential to possess classified or sensitive data about \
+		Nanotrasen could find themselves a target for Cybersun. The company relentlessly employs contractors to probe Nanotrasen \
+		for vulnerabilities, starting with their employees."
 	)
