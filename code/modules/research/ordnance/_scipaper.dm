@@ -291,6 +291,8 @@
 
 /datum/scientific_partner/New()
 	. = ..()
+	// Convey boosts to their associated nodes so that they can then be passed
+	// to techweb UIs as static data.
 	for(var/node_id in boostable_nodes)
 		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
 		node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] = boostable_nodes[node_id]
