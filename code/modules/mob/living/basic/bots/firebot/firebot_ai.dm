@@ -6,129 +6,28 @@
 		BB_UNREACHABLE_LIST_COOLDOWN =  3 MINUTES,
 	)
 	behavior_tree_json = "firebot.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/bot_interact/extinguish, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET, 0))\
-								)\
-							)\
-						),\
-						"key" = BB_FIREBOT_EXTINGUISH_TARGET\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/find_person_on_fire, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-							list("__t" = /datum/bt_node/ai_behavior/search_burning_turfs, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET))\
-						)\
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_SELECTOR(\
+			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
+					BT_LEAF(/datum/bt_node/ai_behavior/bot_interact/extinguish, BB_FIREBOT_EXTINGUISH_TARGET),\
+					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+						BB_FIREBOT_EXTINGUISH_TARGET, 0\
 					)\
-				)\
+				),\
+				"key" = BB_FIREBOT_EXTINGUISH_TARGET\
 			),\
-			list("__t" = /datum/bt_node/ai_behavior/handle_firebot_speech, "default_behavior_args" = list()),\
-			/datum/bt_node/subtree/bot_salute_authority,\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
+			BT_SELECTOR(\
+				BT_LEAF(/datum/bt_node/ai_behavior/find_person_on_fire, BB_FIREBOT_EXTINGUISH_TARGET),\
+				BT_LEAF(/datum/bt_node/ai_behavior/search_burning_turfs, BB_FIREBOT_EXTINGUISH_TARGET)\
+			)\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/handle_firebot_speech),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/bot_interact/extinguish, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET, 0))\
-								)\
-							)\
-						),\
-						"key" = BB_FIREBOT_EXTINGUISH_TARGET\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/find_person_on_fire, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-							list("__t" = /datum/bt_node/ai_behavior/search_burning_turfs, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET))\
-						)\
-					)\
-				)\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/handle_firebot_speech, "default_behavior_args" = list()),\
-			/datum/bt_node/subtree/bot_salute_authority,\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/bot_interact/extinguish, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET, 0))\
-								)\
-							)\
-						),\
-						"key" = BB_FIREBOT_EXTINGUISH_TARGET\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/find_person_on_fire, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET)),\
-							list("__t" = /datum/bt_node/ai_behavior/search_burning_turfs, "default_behavior_args" = list(BB_FIREBOT_EXTINGUISH_TARGET))\
-						)\
-					)\
-				)\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/handle_firebot_speech, "default_behavior_args" = list()),\
-			/datum/bt_node/subtree/bot_salute_authority,\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
 	reset_keys = list(
 		BB_FIREBOT_EXTINGUISH_TARGET,
 		BB_BEACON_TARGET,
