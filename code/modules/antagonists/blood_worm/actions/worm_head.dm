@@ -21,7 +21,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/extend_head(host)
-
+	// todo: its must be possible to grant head via the action button
 	grant_bloodworm_head(host)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/retract_head(host)

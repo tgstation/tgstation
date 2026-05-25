@@ -50,7 +50,7 @@
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
-	grant_actions(src, host_actions)
+	grant_actions(src, host_actions) // todo: needs for begginning to give the action to every worm, but then only to adult
 
 	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
 		grant_bloodworm_head(host)
