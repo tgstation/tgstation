@@ -190,6 +190,7 @@
 	. += structure_examine()
 
 /obj/machinery/smartfridge/on_set_machine_stat(old_value)
+	. = ..()
 	recheck_atmos_passing()
 	if(machine_stat & BROKEN)
 		pass_flags_self = PASSMACHINE
