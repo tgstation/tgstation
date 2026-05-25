@@ -11,7 +11,7 @@
 		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
 		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
 		"repeat_secondary" = TRUE,\
-		"finish_on_primary" = FALSE,\
+		"finish_on_primary" = TRUE,\
 		"__c" = list(\
 			list(\
 				"__t" = /datum/bt_node/composite/selector,\
@@ -19,55 +19,68 @@
 					/datum/bt_node/subtree/escape_captivity/pacifist,\
 					/datum/bt_node/subtree/bot_respond_to_summon,\
 					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/secbot_target_valid,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
-								)\
-							)\
-						),\
-						"key" = BB_BASIC_MOB_CURRENT_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/honkbot_slip_sequence, "default_behavior_args" = list(BB_SLIP_TARGET, BB_SLIPPERY_TARGET))\
-								),\
-								"key" = BB_SLIPPERY_TARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET))\
-						)\
-					),\
-					list(\
 						"__t" = /datum/bt_node/composite/selector,\
 						"__c" = list(\
 							list(\
 								"__t" = /datum/bt_node/decorator/bb_key_set,\
 								"__c" = list(\
 									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
+										"__t" = /datum/bt_node/decorator/secbot_target_valid,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/play_with_clown, "default_behavior_args" = list(BB_CLOWN_FRIEND)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CLOWN_FRIEND, 1))\
+											list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
 										)\
 									)\
 								),\
+								"observer_abort" = BT_ABORT_BOTH,\
+								"key" = BB_BASIC_MOB_CURRENT_TARGET\
+							),\
+							list(\
+								"__t" = /datum/bt_node/decorator/bb_key_set,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/honkbot_slip_sequence, "default_behavior_args" = list(BB_SLIP_TARGET, BB_SLIPPERY_TARGET))\
+								),\
+								"observer_abort" = BT_ABORT_BOTH,\
+								"key" = BB_SLIPPERY_TARGET\
+							),\
+							list(\
+								"__t" = /datum/bt_node/decorator/bb_key_set,\
+								"__c" = list(\
+									list(\
+										"__t" = /datum/bt_node/composite/sequence,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CLOWN_FRIEND, 1, TRUE)),\
+											list("__t" = /datum/bt_node/ai_behavior/play_with_clown, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
+										)\
+									)\
+								),\
+								"observer_abort" = BT_ABORT_BOTH,\
 								"key" = BB_CLOWN_FRIEND\
 							),\
-							list("__t" = /datum/bt_node/ai_behavior/find_clown_friend, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
+							list(\
+								"__t" = /datum/bt_node/composite/parallel,\
+								"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
+								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+								"repeat_secondary" = TRUE,\
+								"finish_on_primary" = TRUE,\
+								"__c" = list(\
+									/datum/bt_node/subtree/bot_patrol,\
+									list(\
+										"__t" = /datum/bt_node/composite/selector,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
+											list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET))\
+										)\
+									)\
+								)\
+							)\
 						)\
 					),\
-					/datum/bt_node/subtree/bot_patrol\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/find_clown_friend, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
+						)\
+					)\
 				)\
 			),\
 			list("__t" = /datum/bt_node/ai_behavior/use_mob_ability/random_honk, "default_behavior_args" = list(BB_HONK_ABILITY))\
