@@ -29,37 +29,67 @@
 
 /datum/ai_controller/basic_controller/bot/medbot
 	behavior_tree_json = "medbot.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
-		BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-			BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, TRUE, FALSE,\
-				BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-						BT_SUBTREE(/datum/bt_node/subtree/medbot_find_and_announce_crit),\
-						"flag" = MEDBOT_DECLARE_CRIT\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-						BT_SUBTREE(/datum/bt_node/subtree/medbot_treat_patient),\
-						"flag" = MEDBOT_TIPPED_MODE,\
-						"invert" = TRUE\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity/pacifist,\
+			/datum/bt_node/subtree/bot_respond_to_summon,\
+			list(\
+				"__t" = /datum/bt_node/decorator/bot_medical_flag,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = TRUE,\
+						"finish_on_primary" = FALSE,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/composite/selector,\
+								"__c" = list(\
+									list(\
+										"__t" = /datum/bt_node/decorator/bot_medical_flag,\
+										"__c" = list(\
+											/datum/bt_node/subtree/medbot_find_and_announce_crit\
+										),\
+										"flag" = MEDBOT_DECLARE_CRIT\
+									),\
+									list(\
+										"__t" = /datum/bt_node/decorator/bot_medical_flag,\
+										"__c" = list(\
+											/datum/bt_node/subtree/medbot_treat_patient\
+										),\
+										"flag" = MEDBOT_TIPPED_MODE,\
+										"invert" = TRUE\
+									)\
+								)\
+							),\
+							list("__t" = /datum/bt_node/ai_behavior/handle_medbot_speech, "default_behavior_args" = list(BB_ANNOUNCE_ABILITY))\
+						)\
 					)\
 				),\
-				BT_LEAF(/datum/bt_node/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY)\
+				"flag" = MEDBOT_SPEAK_MODE\
 			),\
-			"flag" = MEDBOT_SPEAK_MODE\
-		),\
-		BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-			BT_SUBTREE(/datum/bt_node/subtree/medbot_treat_patient),\
-			"flag" = MEDBOT_TIPPED_MODE,\
-			"invert" = TRUE\
-		),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
-			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
-			"cooldown_key" = MEDBOT_STATIONARY_MODE\
+			list(\
+				"__t" = /datum/bt_node/decorator/bot_medical_flag,\
+				"__c" = list(\
+					/datum/bt_node/subtree/medbot_treat_patient\
+				),\
+				"flag" = MEDBOT_TIPPED_MODE,\
+				"invert" = TRUE\
+			),\
+			/datum/bt_node/subtree/bot_salute_authority,\
+			list(\
+				"__t" = /datum/bt_node/decorator/key_off_cooldown,\
+				"__c" = list(\
+					/datum/bt_node/subtree/bot_patrol\
+				),\
+				"cooldown_key" = MEDBOT_STATIONARY_MODE\
+			)\
 		)\
 	)
+	// @bt-generated end
 	ai_movement = /datum/ai_movement/jps/bot/medbot
 	reset_keys = list(
 		BB_PATIENT_TARGET,

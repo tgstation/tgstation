@@ -385,10 +385,15 @@
 /// Use an ability on target on cooldown
 /datum/ai_controller/basic_controller/simple/simple_ability
 	behavior_tree_json = "simple_ability.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity),\
-		BT_SUBTREE(/datum/bt_node/subtree/simple_ability_combat),\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			/datum/bt_node/subtree/escape_captivity,\
+			/datum/bt_node/subtree/simple_ability_combat\
+		)\
 	)
+	// @bt-generated end
 
 /datum/ai_controller/basic_controller/simple/simple_ability_retaliate
 	behavior_tree_json = "simple_ability_retaliate.bt.json"

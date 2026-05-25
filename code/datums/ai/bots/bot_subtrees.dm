@@ -294,31 +294,54 @@
  */
 /datum/bt_node/subtree/bot_patrol
 	behavior_tree_json = "bot_patrol.bt.json"
-
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
-		BT_DECORATOR(/datum/bt_node/decorator/bot_mode_flag,\
-			BT_SELECTOR(\
-				BT_DECORATOR(/datum/bt_node/decorator/is_at_distance,\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_SEQUENCE(\
-							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BEACON_TARGET, 0),\
-							BT_LEAF(/datum/bt_node/ai_behavior/arrive_at_beacon, BB_BEACON_TARGET)\
-						),\
-						"key" = BB_BEACON_TARGET\
-					),\
-					"invert" = TRUE,\
-					"target_key" = BB_BEACON_TARGET,\
-					"required_distance" = 0\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/decorator/key_off_cooldown,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/bot_mode_flag,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/decorator/is_at_distance,\
+								"__c" = list(\
+									list(\
+										"__t" = /datum/bt_node/decorator/bb_key_set,\
+										"__c" = list(\
+											list(\
+												"__t" = /datum/bt_node/composite/sequence,\
+												"__c" = list(\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BEACON_TARGET, 0)),\
+													list("__t" = /datum/bt_node/ai_behavior/arrive_at_beacon, "default_behavior_args" = list(BB_BEACON_TARGET))\
+												)\
+											)\
+										),\
+										"key" = BB_BEACON_TARGET\
+									)\
+								),\
+								"invert" = TRUE,\
+								"target_key" = BB_BEACON_TARGET,\
+								"required_distance" = 0\
+							),\
+							list(\
+								"__t" = /datum/bt_node/decorator/bb_key_set,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/find_next_beacon_target, "default_behavior_args" = list(BB_BEACON_TARGET))\
+								),\
+								"key" = BB_PREVIOUS_BEACON_TARGET\
+							),\
+							list("__t" = /datum/bt_node/ai_behavior/find_first_beacon_target, "default_behavior_args" = list(BB_BEACON_TARGET))\
+						)\
+					)\
 				),\
-				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_LEAF(/datum/bt_node/ai_behavior/find_next_beacon_target, BB_BEACON_TARGET),\
-					"key" = BB_PREVIOUS_BEACON_TARGET\
-				),\
-				BT_LEAF(/datum/bt_node/ai_behavior/find_first_beacon_target, BB_BEACON_TARGET)\
-			),\
-			"flag" = BOT_MODE_AUTOPATROL\
+				"flag" = BOT_MODE_AUTOPATROL\
+			)\
 		),\
 		"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
 	)
+	// @bt-generated end
+
 
 #undef BOT_NO_BEACON_PATH_PENALTY

@@ -226,30 +226,59 @@
  */
 /datum/bt_node/subtree/escape_captivity
 	behavior_tree_json = "escape_captivity.bt.json"
-	behavior_nodes = BT_SELECTOR(\
-						BT_DECORATOR(/datum/bt_node/decorator/pawn_buckled_to_obj,\
-							BT_SELECTOR(\
-								BT_DECORATOR(/datum/bt_node/decorator/buckle_target_dangerous,\
-									BT_LEAF(/datum/bt_node/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
-								),\
-								BT_LEAF(/datum/bt_node/ai_behavior/resist)\
-							)\
-						),\
-						BT_DECORATOR(/datum/bt_node/decorator/pawn_contained_in_obj,\
-							BT_SELECTOR(\
-								BT_DECORATOR(/datum/bt_node/decorator/container_attackable,\
-									BT_LEAF(/datum/bt_node/ai_behavior/break_out_of_object/from_bb, BB_BASIC_MOB_ESCAPE_TARGET)\
-								),\
-								BT_LEAF(/datum/bt_node/ai_behavior/resist)\
-							)\
-						),\
-						BT_DECORATOR(/datum/bt_node/decorator/pawn_grabbed_by_enemy,\
-							BT_LEAF(/datum/bt_node/ai_behavior/resist)\
-						),\
-						BT_DECORATOR(/datum/bt_node/decorator/pawn_is_restrained,\
-							BT_LEAF(/datum/bt_node/ai_behavior/resist)\
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/pawn_buckled_to_obj,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/decorator/buckle_target_dangerous,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/break_out_of_object/from_bb, "default_behavior_args" = list(BB_BASIC_MOB_ESCAPE_TARGET))\
+								)\
+							),\
+							list("__t" = /datum/bt_node/ai_behavior/resist, "default_behavior_args" = list())\
 						)\
-		)
+					)\
+				)\
+			),\
+			list(\
+				"__t" = /datum/bt_node/decorator/pawn_contained_in_obj,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/decorator/container_attackable,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/break_out_of_object/from_bb, "default_behavior_args" = list(BB_BASIC_MOB_ESCAPE_TARGET))\
+								)\
+							),\
+							list("__t" = /datum/bt_node/ai_behavior/resist, "default_behavior_args" = list())\
+						)\
+					)\
+				)\
+			),\
+			list(\
+				"__t" = /datum/bt_node/decorator/pawn_grabbed_by_enemy,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/resist, "default_behavior_args" = list())\
+				)\
+			),\
+			list(\
+				"__t" = /datum/bt_node/decorator/pawn_is_restrained,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/resist, "default_behavior_args" = list())\
+				)\
+			)\
+		)\
+	)
+	// @bt-generated end
 
 /// Pacifist variant: never attacks objects, only resists.
 /datum/bt_node/subtree/escape_captivity/pacifist
