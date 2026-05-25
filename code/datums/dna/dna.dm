@@ -81,8 +81,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.unique_identity = unique_identity
 	new_dna.unique_features = unique_features
-	new_dna.real_name = real_name
 	new_dna.features = features.Copy()
+	new_dna.real_name = real_name
 	if(transfer_flags & COPY_DNA_SE)
 		new_dna.mutation_index = mutation_index
 		new_dna.default_mutation_genes = default_mutation_genes
