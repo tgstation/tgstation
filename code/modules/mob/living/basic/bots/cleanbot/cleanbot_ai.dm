@@ -42,17 +42,18 @@
 							"key" = BB_FRIENDLY_JANITOR\
 						)\
 					),\
-					BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM),\
-					BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
 					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
 						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
 					)\
 				),\
-				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET),\
-					"invert" = TRUE,\
-					"key" = BB_CLEAN_TARGET\
+				BT_SELECTOR(\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+						BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET),\
+						"invert" = TRUE,\
+						"key" = BB_CLEAN_TARGET\
+					),\
+					BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority)\
 				)\
 			),\
 			"invert" = TRUE\
@@ -68,6 +69,7 @@
 						"observer_abort" = BT_ABORT_BOTH,\
 						"key" = BB_ACID_SPRAY_TARGET\
 					),\
+					BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM),\
 					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
 						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
