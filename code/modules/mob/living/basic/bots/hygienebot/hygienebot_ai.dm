@@ -28,7 +28,7 @@
 			BT_LEAF(/datum/bt_node/ai_behavior/find_valid_wash_targets, BB_WASH_TARGET)\
 		),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
 	reset_keys = list(
 		BB_WASH_TARGET,

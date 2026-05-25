@@ -59,8 +59,16 @@
 				BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM)\
 			)\
 		),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon/cleanbot)\
+		BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
+			BT_SELECTOR(\
+				BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
+				BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+					BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+					"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
+				)\
+			),\
+			BT_LEAF(/datum/bt_node/ai_behavior/find_clean_target, BB_CLEAN_TARGET)\
+		)\
 	)
 	reset_keys = list(
 		BB_ACTIVE_PET_COMMAND,

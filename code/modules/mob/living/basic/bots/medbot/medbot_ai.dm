@@ -52,7 +52,10 @@
 			"invert" = TRUE\
 		),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon/medbot)\
+		BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
+			"cooldown_key" = MEDBOT_STATIONARY_MODE\
+		)\
 	)
 	ai_movement = /datum/ai_movement/jps/bot/medbot
 	reset_keys = list(

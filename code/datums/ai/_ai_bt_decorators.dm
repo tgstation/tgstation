@@ -134,17 +134,8 @@
 /datum/bt_node/decorator/proc/bb_key_greater(datum/ai_controller/controller, key, threshold)
 	return controller.blackboard[key] > threshold
 
-/**
- * Decorator that requires the controller's pawn to be within range of a blackboard target.
- *
- * On each tick:
- * - If the target is gone → BT_FAILURE.
- * - If pawn is in [min_distance, required_distance] (and reachable when require_reach is TRUE) → child.tick().
- * - If pawn is too far or unreachable → sets movement target and returns BT_RUNNING.
- * - If pawn is too close (dist < min_distance) → BT_FAILURE (cannot back away).
- *
- * Replaces AI_BEHAVIOR_REQUIRE_MOVEMENT and AI_BEHAVIOR_REQUIRE_REACH for new content.
- */
+
+///Decorator that requires the controller's pawn to be within range of a blackboard target.
 /datum/bt_node/decorator/is_at_distance
 	/// Blackboard key holding the atom to approach. Must be set on the subtype or via configure().
 	var/target_key = null
@@ -155,34 +146,16 @@
 	/// If TRUE, also verifies target.IsReachableBy(pawn) before passing to child.
 	var/require_reach = FALSE
 
-/datum/bt_node/decorator/is_at_distance/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick(controller))
-		return tick_results[controller] || BT_RUNNING
-
+/datum/bt_node/decorator/is_at_distance/check_condition(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		if(tick_rate)
-			tick_cooldowns[controller] = world.time
-			tick_results[controller] = BT_FAILURE
-		return BT_FAILURE
+		return FALSE
 
 	var/atom/movable/pawn = controller.pawn
 	var/dist = get_dist(pawn, target)
 	var/reachable = !require_reach || target.IsReachableBy(pawn)
 
-	var/result
-	if(dist <= required_distance && (min_distance == 0 || dist >= min_distance) && reachable)
-		result = child.tick(controller, seconds_per_tick)
-	else if(dist < min_distance)
-		result = BT_FAILURE // Too close and we can't back away
-	else
-		controller.set_movement_target(type, target)
-		result = BT_RUNNING
-
-	if(tick_rate)
-		tick_cooldowns[controller] = world.time
-		tick_results[controller] = result
-	return result
+	return dist <= required_distance && (min_distance == 0 || dist >= min_distance) && reachable
 
 /**
  * Side-effect-free condition check for the observer system.
@@ -195,15 +168,7 @@
 	var/dist = get_dist(controller.pawn, target)
 	return (dist <= required_distance) && (min_distance == 0 || dist >= min_distance) && (!require_reach || target.IsReachableBy(controller.pawn))
 
-/**
- * Decorator that gates its child on a blackboard key holding a non-null value.
- * Supports self-abort: when the key is cleared while the child is running, cancels and replans.
- * Configure at usage site via BT_DECORATOR:
- *   BT_DECORATOR(/datum/bt_node/decorator/bb_key_set, child,
- *       "key" = BB_SOME_KEY,
- *       "observed_keys" = list(BB_SOME_KEY),
- *       "observer_abort" = BT_ABORT_SELF)
- */
+///Is the key set to a non-null value
 /datum/bt_node/decorator/bb_key_set
 	var/key = null
 

@@ -39,7 +39,7 @@
 				),\
 				BT_LEAF(/datum/bt_node/ai_behavior/find_clown_friend, BB_CLOWN_FRIEND)\
 			),\
-			BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
+			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 		)\
 	)
 	reset_keys = list(

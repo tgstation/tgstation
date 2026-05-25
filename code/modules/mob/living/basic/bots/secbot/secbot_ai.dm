@@ -18,7 +18,7 @@
 		BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
 			BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
 		),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
 	reset_keys = list(
 		BB_BEACON_TARGET,

@@ -16,47 +16,85 @@
  * Returns BT_FAILURE on first child failure.
  * Returns BT_RUNNING on first child returning BT_RUNNING (stops further evaluation).
  * Returns BT_SUCCESS only if all children succeed.
+ *
+ * Memory: resumes from the last RUNNING child index rather than restarting from child 1.
+ * The observer/interrupt system resets this via CancelActions() when conditions change.
  */
 /datum/bt_node/composite/sequence
+	/// Per-controller index of the child that last returned BT_RUNNING. 1-based. Keyed by controller ref.
+	var/alist/running_child_index = alist()
 
 /datum/bt_node/composite/sequence/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
 		return tick_results[controller] || BT_RUNNING
 
 	var/result = BT_SUCCESS
-	for(var/datum/bt_node/child as anything in children)
+	var/start = running_child_index[controller] || 1
+	for(var/i in start to length(children))
+		var/datum/bt_node/child = children[i]
 		var/child_result = child.tick(controller, seconds_per_tick)
 		if(child_result != BT_SUCCESS)
 			result = child_result
-			break
+			if(child_result == BT_RUNNING)
+				running_child_index[controller] = i
+			else
+				running_child_index -= controller
+			if(tick_rate)
+				tick_cooldowns[controller] = world.time
+				tick_results[controller] = result
+			return result
 
+	running_child_index -= controller
 	if(tick_rate)
 		tick_cooldowns[controller] = world.time
 		tick_results[controller] = result
 	return result
 
+/datum/bt_node/composite/sequence/reset_tick_state(datum/ai_controller/controller)
+	. = ..()
+	running_child_index -= controller
+
 /**
  * Selector node: ticks children in order.
  * Returns the first non-BT_FAILURE result (BT_SUCCESS or BT_RUNNING), stopping further evaluation.
  * Returns BT_FAILURE only if all children fail.
+ *
+ * Memory: resumes from the last RUNNING child index rather than restarting from child 1.
+ * The observer/interrupt system resets this via CancelActions() when conditions change.
  */
 /datum/bt_node/composite/selector
+	/// Per-controller index of the child that last returned BT_RUNNING. 1-based. Keyed by controller ref.
+	var/alist/running_child_index = alist()
 
 /datum/bt_node/composite/selector/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
 		return tick_results[controller] || BT_FAILURE
 
 	var/result = BT_FAILURE
-	for(var/datum/bt_node/child as anything in children)
+	var/start = running_child_index[controller] || 1
+	for(var/i in start to length(children))
+		var/datum/bt_node/child = children[i]
 		var/child_result = child.tick(controller, seconds_per_tick)
 		if(child_result != BT_FAILURE)
 			result = child_result
-			break
+			if(child_result == BT_RUNNING)
+				running_child_index[controller] = i
+			else
+				running_child_index -= controller
+			if(tick_rate)
+				tick_cooldowns[controller] = world.time
+				tick_results[controller] = result
+			return result
 
+	running_child_index -= controller
 	if(tick_rate)
 		tick_cooldowns[controller] = world.time
 		tick_results[controller] = result
 	return result
+
+/datum/bt_node/composite/selector/reset_tick_state(datum/ai_controller/controller)
+	. = ..()
+	running_child_index -= controller
 
 /**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.

@@ -899,18 +899,102 @@ multiple modular subtrees with behaviors
 	. = ..()
 	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
 
+/// Returns TRUE if any ai_behavior descendant of node has running_state set for this controller.
+/datum/ai_controller/proc/bt_has_active_descendant(datum/bt_node/node)
+	if(istype(node, /datum/bt_node/ai_behavior))
+		var/datum/bt_node/ai_behavior/behavior = node
+		return !!behavior.running_state[src]
+	if(istype(node, /datum/bt_node/composite))
+		var/datum/bt_node/composite/comp = node
+		for(var/datum/bt_node/child as anything in comp.children)
+			if(bt_has_active_descendant(child))
+				return TRUE
+		return FALSE
+	if(istype(node, /datum/bt_node/decorator))
+		var/datum/bt_node/decorator/deco = node
+		return deco.child && bt_has_active_descendant(deco.child)
+	if(istype(node, /datum/bt_node/subtree))
+		var/datum/bt_node/subtree/sub = node
+		return sub.root && bt_has_active_descendant(sub.root)
+	return FALSE
+
+/// Short display label for a bt_node, stripping standard path prefixes.
+/datum/ai_controller/proc/bt_node_label(datum/bt_node/node)
+	if(istype(node, /datum/bt_node/composite/parallel))
+		return "PARALLEL"
+	if(istype(node, /datum/bt_node/composite/sequence))
+		return "SEQUENCE"
+	if(istype(node, /datum/bt_node/composite/selector))
+		return "SELECTOR"
+	var/t = "[node.type]"
+	t = replacetext(t, "/datum/bt_node/decorator/", "")
+	t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
+	t = replacetext(t, "/datum/ai_behavior/", "")
+	t = replacetext(t, "/datum/bt_node/subtree/", "")
+	t = replacetext(t, "/datum/ai_planning_subtree/", "")
+	return t
+
+/**
+ * Recursively appends active and upcoming BT nodes to lines.
+ * Selector: only the active branch. Sequence: active node + remaining siblings marked as upcoming (↑).
+ * Parallel: all active branches. Decorator: shown as a gate label above its active child.
+ * Active leaf behaviors are bolded with a ● prefix.
+ */
+/datum/ai_controller/proc/bt_append_active_nodes(datum/bt_node/node, list/lines, indent)
+	if(istype(node, /datum/bt_node/ai_behavior))
+		var/datum/bt_node/ai_behavior/behavior = node
+		if(behavior.running_state[src])
+			lines += "[indent][span_bold("● [bt_node_label(node)]")]"
+		return
+
+	if(istype(node, /datum/bt_node/composite/sequence))
+		var/datum/bt_node/composite/sequence/seq = node
+		var/found_active = FALSE
+		for(var/datum/bt_node/child as anything in seq.children)
+			if(found_active)
+				lines += "[indent]↑ [bt_node_label(child)]"
+			else if(bt_has_active_descendant(child))
+				found_active = TRUE
+				bt_append_active_nodes(child, lines, indent)
+		return
+
+	if(istype(node, /datum/bt_node/composite/selector))
+		var/datum/bt_node/composite/selector/sel = node
+		for(var/datum/bt_node/child as anything in sel.children)
+			if(bt_has_active_descendant(child))
+				bt_append_active_nodes(child, lines, indent)
+				return
+		return
+
+	if(istype(node, /datum/bt_node/composite/parallel))
+		var/datum/bt_node/composite/parallel/par = node
+		for(var/datum/bt_node/child as anything in par.children)
+			if(bt_has_active_descendant(child))
+				bt_append_active_nodes(child, lines, indent)
+		return
+
+	if(istype(node, /datum/bt_node/decorator))
+		var/datum/bt_node/decorator/deco = node
+		if(deco.child && bt_has_active_descendant(deco.child))
+			lines += "[indent][bt_node_label(node)]"
+			bt_append_active_nodes(deco.child, lines, "[indent]  ")
+		return
+
+	if(istype(node, /datum/bt_node/subtree))
+		var/datum/bt_node/subtree/sub = node
+		if(sub.root && bt_has_active_descendant(sub.root))
+			bt_append_active_nodes(sub.root, lines, indent)
+		return
+
 /// Called whenever an event is logged for this controller. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
 /datum/ai_controller/proc/on_evlog_event_added(datum/source, datum/event_logger_track/track, list/event_data)
 	SIGNAL_HANDLER
 	var/list/track_info = list()
 
-	var/list/current_behavior_info = list()
-	for(var/datum/ai_behavior/behavior in planned_behaviors)
-		if(behavior in current_behaviors) //Not really ideal; we should find a better way to do this.
-			current_behavior_info += "ACTIVE: [span_bold("[behavior.type]")]"
-		else
-			current_behavior_info += "[behavior.type]"
-	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Current Behavior", jointext(current_behavior_info, "\n"))
+	var/list/tree_lines = list()
+	for(var/datum/bt_node/root_node as anything in behavior_nodes)
+		bt_append_active_nodes(root_node, tree_lines, "")
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Active Plan", length(tree_lines) ? jointext(tree_lines, "\n") : "(none)")
 
 	for(var/blackboard_key_name, blackboard_value in blackboard)
 		var/value_string

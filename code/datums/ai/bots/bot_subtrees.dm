@@ -282,16 +282,22 @@
  * Patrol to navbeacons in sequence when autopatrol is enabled and not on cooldown.
  * Priority: travel to current target → find next in chain → find first (nearest) beacon.
  */
-/datum/bt_node/subtree/bot_find_patrol_beacon
+/datum/bt_node/subtree/bot_patrol
+
 	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_mode_flag,\
 			BT_SELECTOR(\
-				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-					BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-						BT_LEAF(/datum/bt_node/ai_behavior/arrive_at_beacon, BB_BEACON_TARGET),\
-						BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BEACON_TARGET, 0)\
+				BT_DECORATOR(/datum/bt_node/decorator/is_at_distance,\
+					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+						BT_SEQUENCE(\
+							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BEACON_TARGET, 0),\
+							BT_LEAF(/datum/bt_node/ai_behavior/arrive_at_beacon, BB_BEACON_TARGET)\
+						),\
+						"key" = BB_BEACON_TARGET\
 					),\
-					"key" = BB_BEACON_TARGET\
+					"invert" = TRUE,\
+					"target_key" = BB_BEACON_TARGET,\
+					"required_distance" = 0\
 				),\
 				BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 					BT_LEAF(/datum/bt_node/ai_behavior/find_next_beacon_target, BB_BEACON_TARGET),\
@@ -302,59 +308,6 @@
 			"flag" = BOT_MODE_AUTOPATROL\
 		),\
 		"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
-	)
-
-/// Cleanbot variant: also gates on BB_POST_CLEAN_COOLDOWN being expired.
-/datum/bt_node/subtree/bot_find_patrol_beacon/cleanbot
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
-			BT_DECORATOR(/datum/bt_node/decorator/bot_mode_flag,\
-				BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-							BT_LEAF(/datum/bt_node/ai_behavior/arrive_at_beacon, BB_BEACON_TARGET),\
-							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BEACON_TARGET, 0)\
-						),\
-						"key" = BB_BEACON_TARGET\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_LEAF(/datum/bt_node/ai_behavior/find_next_beacon_target, BB_BEACON_TARGET),\
-						"key" = BB_PREVIOUS_BEACON_TARGET\
-					),\
-					BT_LEAF(/datum/bt_node/ai_behavior/find_first_beacon_target, BB_BEACON_TARGET)\
-				),\
-				"flag" = BOT_MODE_AUTOPATROL\
-			),\
-			"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
-		),\
-		"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
-	)
-
-/// Medbot variant: also gates on not being in stationary mode.
-/datum/bt_node/subtree/bot_find_patrol_beacon/medbot
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bot_medical_flag,\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
-			BT_DECORATOR(/datum/bt_node/decorator/bot_mode_flag,\
-				BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_PARALLEL(BT_PARALLEL_FAILURE_ONE,\
-							BT_LEAF(/datum/bt_node/ai_behavior/arrive_at_beacon, BB_BEACON_TARGET),\
-							BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_BEACON_TARGET, 0)\
-						),\
-						"key" = BB_BEACON_TARGET\
-					),\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-						BT_LEAF(/datum/bt_node/ai_behavior/find_next_beacon_target, BB_BEACON_TARGET),\
-						"key" = BB_PREVIOUS_BEACON_TARGET\
-					),\
-					BT_LEAF(/datum/bt_node/ai_behavior/find_first_beacon_target, BB_BEACON_TARGET)\
-				),\
-				"flag" = BOT_MODE_AUTOPATROL\
-			),\
-			"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
-		),\
-		"flag" = MEDBOT_STATIONARY_MODE,\
-		"invert" = TRUE\
 	)
 
 #undef BOT_NO_BEACON_PATH_PENALTY

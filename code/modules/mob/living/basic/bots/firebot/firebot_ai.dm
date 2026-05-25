@@ -25,7 +25,7 @@
 		),\
 		BT_LEAF(/datum/bt_node/ai_behavior/handle_firebot_speech),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_SUBTREE(/datum/bt_node/subtree/bot_find_patrol_beacon)\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
 	reset_keys = list(
 		BB_FIREBOT_EXTINGUISH_TARGET,
