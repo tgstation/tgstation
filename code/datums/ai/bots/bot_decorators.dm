@@ -19,14 +19,6 @@
 /datum/bt_node/decorator/bot_mode_flag/evaluate_for_observer(datum/ai_controller/controller)
 	return check_condition(controller)
 
-/// Check if the specified blackboard key is off cooldown.
-/datum/bt_node/decorator/key_off_cooldown
-	var/cooldown_key
-
-/datum/bt_node/decorator/key_off_cooldown/check_condition(datum/ai_controller/controller)
-	var/cooldown_time = controller.blackboard[cooldown_key]
-	return isnull(cooldown_time) || cooldown_time <= world.time
-
 /// Gates child when pawn has the specified medical mode flag. Use invert = TRUE for the opposite. Checked each tick.
 /datum/bt_node/decorator/bot_medical_flag
 	var/flag

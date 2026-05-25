@@ -1058,6 +1058,8 @@
 #include "code\datums\ai\generic\find_and_set.dm"
 #include "code\datums\ai\generic\generic_behaviors.dm"
 #include "code\datums\ai\generic\generic_subtrees.dm"
+#include "code\datums\ai\generic_decorators\check_cooldown.dm"
+#include "code\datums\ai\generic_tasks\set_cooldown.dm"
 #include "code\datums\ai\hauntium\haunted_controller.dm"
 #include "code\datums\ai\hauntium\hauntium_subtrees.dm"
 #include "code\datums\ai\hunting_behavior\hunting_behaviors.dm"
