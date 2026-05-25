@@ -445,7 +445,7 @@
 		return
 	drawing.clear_canvas(minimap?.base_map)
 	log_minimap_drawing("[key_name(user)] cleared the minimap canvas on z-level [minimap?.z]")
-	to_chat(user, span_warning("cleared all minimap drawings."))
+	to_chat(user, span_warning("Cleared all minimap drawings."))
 
 /atom/movable/screen/minimap_display/proc/clear_all_annotations(mob/user, annotation_type = /atom/movable/screen/minimap_element/label, annotation_type_name = "label")
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
@@ -461,7 +461,7 @@
 	refresh_visible_annotations()
 	sync_visible_objects(current_z)
 	var/user_name = user ? key_name(user) : "System"
-	to_chat(user, span_warning("cleared all [annotation_type_name] annotations on z-level [current_z]."))
+	to_chat(user, span_warning("Cleared all [annotation_type_name] annotations on z-level [current_z]."))
 	log_minimap_drawing("[user_name] has cleared all [annotation_type_name] annotations on z-level [current_z]")
 
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
