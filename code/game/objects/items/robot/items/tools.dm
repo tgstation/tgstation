@@ -278,8 +278,7 @@
 	var/mob/living/silicon/robot/user = usr
 	if (!(src in user.held_items))
 		attack_self(user, modifiers)
-	. = ..()
-	user.select_module(user.held_items.Find(src))
+	return ..()
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
