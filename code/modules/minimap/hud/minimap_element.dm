@@ -1,5 +1,5 @@
 /atom/movable/screen/minimap_element
-	name = ""
+	name = "unknown"
 	layer = MINIMAP_LABELS_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	vis_flags = VIS_INHERIT_PLANE

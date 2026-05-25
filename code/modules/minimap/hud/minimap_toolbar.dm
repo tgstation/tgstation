@@ -160,14 +160,14 @@
 /atom/movable/screen/minimap_toolbar_button/clear
 	icon_state = "clear"
 	button_slot = 5
-	desc = "Clear all drawings and labels."
+	desc = "Clear all drawings."
 
 /atom/movable/screen/minimap_toolbar_button/clear/is_active()
 	return FALSE
 
 /atom/movable/screen/minimap_toolbar_button/clear/Click(location, control, params)
 	if(usr == get_mob())
-		display?.clear_canvas_and_labels(usr)
+		display?.clear_canvas(usr)
 
 /// Label tool — click the map to place labels, right-click a label to remove it, right-click this button to clear all labels.
 /atom/movable/screen/minimap_toolbar_button/label

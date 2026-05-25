@@ -43,6 +43,8 @@
 	)
 	/// Currently active toolbar button (the active tool).
 	var/atom/movable/screen/minimap_toolbar_button/active_button = null
+	/// string for the locator blip's tag
+	var/locator_blip_tag = "locator"
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap, list/minimap_blip_tags, initial_fixed_z_level, annotation_share_tag, can_draw = TRUE)
 	src.can_draw = can_draw
@@ -101,7 +103,8 @@
 		for(var/blip_tag in valid_minimap_blip_tags)
 			UnregisterSignal(SSdcs, COMSIG_MINIMAP_ADD(blip_tag))
 			UnregisterSignal(SSdcs, COMSIG_MINIMAP_REMOVE(blip_tag))
-	blips.Cut()
+	remove_all_blips()
+
 	return ..()
 
 /atom/movable/screen/minimap_display/set_new_hud(datum/hud/hud_owner)
@@ -240,9 +243,9 @@
 		if(isnull(fixed_z_level))
 			INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), mob_loc.z)
 			return
-		remove_blip("locator")
+		remove_blip(locator_blip_tag)
 		return
-	add_blip("locator", "locator", mob_loc.x, mob_loc.y, layer = 15)
+	add_blip(locator_blip_tag, "locator", mob_loc.x, mob_loc.y, layer = 15)
 
 
 /atom/movable/screen/minimap_display/proc/resolve_and_change_z_level(new_z)
@@ -437,31 +440,27 @@
 		if(button)
 			button.screen_loc = "1:[btn_x],1:[btn_top_y - ICON_SIZE_Y - button.button_slot * ICON_SIZE_Y]"
 
-/atom/movable/screen/minimap_display/proc/clear_canvas_and_labels(mob/user)
+/atom/movable/screen/minimap_display/proc/clear_canvas(mob/user)
 	if(!can_draw)
 		return
 	drawing.clear_canvas(minimap?.base_map)
-	clear_all_annotations(user, /atom/movable/screen/minimap_element/label)
-	sync_visible_objects(minimap?.z)
 
 /atom/movable/screen/minimap_display/proc/clear_all_annotations(mob/user, annotation_type = /atom/movable/screen/minimap_element/label)
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
 	var/alist/items_by_z = annotation_store?[annotation_type]
 	if(isnull(items_by_z))
 		return
-	var/list/cleared_levels = list()
-	for(var/z_level in items_by_z)
-		var/list/items = items_by_z[z_level]
-		if(!length(items))
-			continue
-		QDEL_LIST(items)
-		items_by_z[z_level] = list()
-		cleared_levels += z_level
+	var/current_z = get_viewed_z_level()
+	var/list/items = items_by_z[current_z]
+	if(!length(items))
+		return
+	QDEL_LIST(items)
+	items_by_z[current_z] = list()
 	refresh_visible_annotations()
-	for(var/z_level in cleared_levels)
-		sync_visible_objects(z_level)
+	sync_visible_objects(current_z)
 	var/user_name = user ? key_name(user) : "System"
-	log_minimap_drawing("[user_name] has cleared all [annotation_type] annotations")
+	to_chat(user, span_warning("cleared all [annotation_type] annotations on z-level [current_z]."))
+	log_minimap_drawing("[user_name] has cleared all [annotation_type] annotations on z-level [current_z]")
 
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
 	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
