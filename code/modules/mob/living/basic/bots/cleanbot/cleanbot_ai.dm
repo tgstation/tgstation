@@ -42,7 +42,7 @@
 							"key" = BB_FRIENDLY_JANITOR\
 						)\
 					),\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+					BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
 						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
 					)\
@@ -61,7 +61,7 @@
 		BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
 			BT_PARALLEL(BT_PARALLEL_FAILURE_CHILD_ONE, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
 				BT_SELECTOR(\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+					BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
 						BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
 							BT_SEQUENCE(\
 								BT_LEAF(/datum/bt_node/ai_behavior/move_to_target, BB_ACID_SPRAY_TARGET, 0, TRUE),\
@@ -74,7 +74,7 @@
 						"cooldown_key" = BB_ACID_SPRAY_COOLDOWN\
 					),\
 					BT_LEAF(/datum/bt_node/ai_behavior/use_mob_ability, BB_CLEANBOT_FOAM),\
-					BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+					BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
 						BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 						"cooldown_key" = BB_POST_CLEAN_COOLDOWN\
 					)\
@@ -183,17 +183,6 @@
 		if(!QDELETED(living_pawn))
 			living_pawn.say(pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
-
-// =============================================================================
-// Set blackboard cooldown
-// =============================================================================
-
-// Sets the given blackboard key to world.time + cooldown_duration
-/datum/bt_node/ai_behavior/set_bb_cooldown
-
-/datum/bt_node/ai_behavior/set_bb_cooldown/perform(seconds_per_tick, datum/ai_controller/controller, cooldown_key, cooldown_duration)
-	controller.set_blackboard_key(cooldown_key, world.time + cooldown_duration)
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 // =============================================================================
 // Acid spray target search (emagged)

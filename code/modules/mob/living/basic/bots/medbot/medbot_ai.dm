@@ -52,7 +52,7 @@
 			"invert" = TRUE\
 		),\
 		BT_SUBTREE(/datum/bt_node/subtree/bot_salute_authority),\
-		BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+		BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
 			BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 			"cooldown_key" = MEDBOT_STATIONARY_MODE\
 		)\

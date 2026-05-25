@@ -19,11 +19,11 @@
 /datum/bt_node/decorator/bot_mode_flag/evaluate_for_observer(datum/ai_controller/controller)
 	return check_condition(controller)
 
-/// Gates child when a cooldown blackboard key is expired (null or <= world.time). Checked each tick.
-/datum/bt_node/decorator/bb_key_cooldown
+/// Check if the specified blackboard key is off cooldown.
+/datum/bt_node/decorator/key_off_cooldown
 	var/cooldown_key
 
-/datum/bt_node/decorator/bb_key_cooldown/check_condition(datum/ai_controller/controller)
+/datum/bt_node/decorator/key_off_cooldown/check_condition(datum/ai_controller/controller)
 	var/cooldown_time = controller.blackboard[cooldown_key]
 	return isnull(cooldown_time) || cooldown_time <= world.time
 

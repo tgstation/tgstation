@@ -9,6 +9,8 @@
 #define BB_SALUTE_MESSAGES "salute_messages"
 ///the beepsky we will salute
 #define BB_SALUTE_TARGET "salute_target"
+///cooldown key for authority saluting
+#define BB_SALUTE_COOLDOWN "salute_cooldown"
 ///our announcement ability
 #define BB_ANNOUNCE_ABILITY "announce_ability"
 ///list of our radio channels

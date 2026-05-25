@@ -197,6 +197,17 @@
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 // =============================================================================
+// Set blackboard cooldown
+// =============================================================================
+
+// Sets the given blackboard key to world.time + cooldown_duration
+/datum/bt_node/ai_behavior/set_bb_cooldown
+
+/datum/bt_node/ai_behavior/set_bb_cooldown/perform(seconds_per_tick, datum/ai_controller/controller, cooldown_key, cooldown_duration)
+	controller.set_blackboard_key(cooldown_key, world.time + cooldown_duration)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
+// =============================================================================
 // Summon travel
 // =============================================================================
 
@@ -221,7 +232,6 @@
 
 /datum/bt_node/ai_behavior/find_valid_authority
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = BOT_COMMISSIONED_SALUTE_DELAY
 
 /datum/bt_node/ai_behavior/find_valid_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	for(var/mob/living/nearby_mob in oview(7, controller.pawn))
@@ -265,17 +275,15 @@
 		"key" = BB_BOT_SUMMON_TARGET\
 	)
 
-/// Salute any commissioned officer in range if not emagged.
+/// Salute any commissioned officer in range, rate-limited to BOT_COMMISSIONED_SALUTE_DELAY.
 /datum/bt_node/subtree/bot_salute_authority
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bot_is_emagged,\
-		BT_SELECTOR(\
-			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
-				BT_LEAF(/datum/bt_node/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES),\
-				"key" = BB_SALUTE_TARGET\
-			),\
-			BT_LEAF(/datum/bt_node/ai_behavior/find_valid_authority, BB_SALUTE_TARGET)\
+	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+		BT_SEQUENCE(\
+			BT_LEAF(/datum/bt_node/ai_behavior/find_valid_authority, BB_SALUTE_TARGET),\
+			BT_LEAF(/datum/bt_node/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES),\
+			BT_LEAF(/datum/bt_node/ai_behavior/set_bb_cooldown, BB_SALUTE_COOLDOWN, BOT_COMMISSIONED_SALUTE_DELAY)\
 		),\
-		"invert" = TRUE\
+		"cooldown_key" = BB_SALUTE_COOLDOWN\
 	)
 
 /**
@@ -284,7 +292,7 @@
  */
 /datum/bt_node/subtree/bot_patrol
 
-	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/bb_key_cooldown,\
+	behavior_nodes = BT_DECORATOR(/datum/bt_node/decorator/key_off_cooldown,\
 		BT_DECORATOR(/datum/bt_node/decorator/bot_mode_flag,\
 			BT_SELECTOR(\
 				BT_DECORATOR(/datum/bt_node/decorator/is_at_distance,\
