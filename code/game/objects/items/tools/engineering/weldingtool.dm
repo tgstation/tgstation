@@ -261,13 +261,13 @@
 			START_PROCESSING(SSobj, src)
 		else
 			balloon_alert(user, "no fuel!")
-			switched_off()
+			switched_off(user)
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
-		switched_off()
+		switched_off(user)
 
 /// Switches the welder off
-/obj/item/weldingtool/proc/switched_off()
+/obj/item/weldingtool/proc/switched_off(mob/user)
 	set_welding(FALSE)
 
 	force = 3

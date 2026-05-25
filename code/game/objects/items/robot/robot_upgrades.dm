@@ -459,6 +459,10 @@
 	if(!.)
 		return .
 	ADD_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(TRUE)
 
@@ -467,7 +471,7 @@
 	if(!.)
 		return .
 	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/engineering_omnitool
@@ -482,16 +486,24 @@
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
-		return
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(TRUE)
+	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
+		welder.toolspeed = initial(welder.toolspeed) - 0.3
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
-		return
-	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
+		return .
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(FALSE)
+	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
+		welder.toolspeed = initial(welder.toolspeed)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
