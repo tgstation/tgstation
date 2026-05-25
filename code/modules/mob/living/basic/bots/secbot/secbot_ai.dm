@@ -4,76 +4,22 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
-	behavior_tree_json = "secbot.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/decorator/bb_key_set,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/secbot_target_valid,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
-						)\
-					)\
-				),\
-				"key" = BB_BASIC_MOB_CURRENT_TARGET\
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+			BT_DECORATOR(/datum/bt_node/decorator/secbot_target_valid,\
+				BT_LEAF(/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot,\
+					BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+				)\
 			),\
-			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
+			"key" = BB_BASIC_MOB_CURRENT_TARGET\
+		),\
+		BT_LEAF(/datum/bt_node/ai_behavior/find_potential_targets,\
+			BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION\
+		),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/decorator/bb_key_set,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/secbot_target_valid,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
-						)\
-					)\
-				),\
-				"key" = BB_BASIC_MOB_CURRENT_TARGET\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/decorator/bb_key_set,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/secbot_target_valid,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
-						)\
-					)\
-				),\
-				"key" = BB_BASIC_MOB_CURRENT_TARGET\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,

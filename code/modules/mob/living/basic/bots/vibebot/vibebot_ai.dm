@@ -5,106 +5,23 @@
 		BB_VIBEBOT_GRIM_SONG = VIBEBOT_GRIM_MUSIC,
 		BB_VIBEBOT_BIRTHDAY_SONG = VIBEBOT_HAPPY_BIRTHDAY,
 	)
-	behavior_tree_json = "vibebot.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/vibebot_party, "default_behavior_args" = list(BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET, 1))\
-								)\
-							)\
-						),\
-						"key" = BB_VIBEBOT_PARTY_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/find_party_friends, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET))\
-				)\
+	behavior_nodes = BT_SELECTOR(\
+		BT_SUBTREE(/datum/bt_node/subtree/escape_captivity/pacifist),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_respond_to_summon),\
+		BT_SELECTOR(\
+			BT_DECORATOR(/datum/bt_node/decorator/bb_key_set,\
+				BT_PARALLEL(BT_PARALLEL_FAILURE_ANY, BT_PARALLEL_SUCCESS_CHILD_ONE, FALSE, FALSE,\
+					BT_LEAF(/datum/bt_node/ai_behavior/vibebot_party, BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET),\
+					BT_LEAF(/datum/bt_node/ai_behavior/move_to_target,\
+						BB_VIBEBOT_PARTY_TARGET, 1\
+					)\
+				),\
+				"key" = BB_VIBEBOT_PARTY_TARGET\
 			),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
+			BT_LEAF(/datum/bt_node/ai_behavior/find_party_friends, BB_VIBEBOT_PARTY_TARGET)\
+		),\
+		BT_SUBTREE(/datum/bt_node/subtree/bot_patrol),\
 	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/vibebot_party, "default_behavior_args" = list(BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET, 1))\
-								)\
-							)\
-						),\
-						"key" = BB_VIBEBOT_PARTY_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/find_party_friends, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET))\
-				)\
-			),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			/datum/bt_node/subtree/escape_captivity/pacifist,\
-			/datum/bt_node/subtree/bot_respond_to_summon,\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/vibebot_party, "default_behavior_args" = list(BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET, 1))\
-								)\
-							)\
-						),\
-						"key" = BB_VIBEBOT_PARTY_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/find_party_friends, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET))\
-				)\
-			),\
-			/datum/bt_node/subtree/bot_patrol\
-		)\
-	)
-	// @bt-generated end
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
