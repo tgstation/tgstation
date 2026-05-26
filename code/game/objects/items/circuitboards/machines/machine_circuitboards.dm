@@ -36,18 +36,6 @@
 		/datum/stock_part/servo/tier3 = 5,
 		/obj/item/stack/cable_coil = 2)
 
-/obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame)
-	var/turf/center = get_turf(install_frame)
-	var/blocked = FALSE
-	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -2))
-		if(potential_turf.density)
-			new /obj/effect/temp_visual/point(potential_turf)
-			blocked = TRUE
-	if(blocked)
-		balloon_alert_to_viewers("no room! (3x3)")
-		return FALSE
-	return TRUE
-
 //Engineering
 
 /obj/item/circuitboard/machine/announcement_system
@@ -676,8 +664,6 @@
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_FAILURE
-	if(all_products_free)
-		return
 	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
@@ -1316,6 +1302,20 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/hydroponics/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(istype(I, /obj/item/plant_analyzer) || istype(I, /obj/item/screwdriver))
+		if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
+			name = "Hydroponics Tray"
+			build_path = /obj/machinery/hydroponics/constructable
+			to_chat(user, span_notice("Defaulting indicator location."))
+		else
+			name = "Old-Designed Hydropoincs Tray"
+			build_path = /obj/machinery/hydroponics/constructable/oldstyle
+			to_chat(user, span_notice("Moving the indicators..."))
+		return TRUE
+	else
+		return ..()
+
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
 	specific_parts = TRUE
@@ -1703,7 +1703,6 @@
 		/obj/item/assembly/igniter/condenser = 1,
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/matter_bin = 2,
-		/obj/item/reagent_containers/cup/beaker = 1,
 	)
 
 /obj/item/circuitboard/machine/smelter
@@ -1714,7 +1713,6 @@
 		/obj/item/assembly/igniter = 1,
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/matter_bin = 2,
-		/obj/item/reagent_containers/cup/beaker = 1,
 	)
 
 /obj/item/circuitboard/machine/shieldwallgen
