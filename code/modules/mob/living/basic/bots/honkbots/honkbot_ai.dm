@@ -31,6 +31,7 @@
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
 													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
 													list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
 												)\
 											)\
@@ -136,7 +137,7 @@
 							list(\
 								"__t" = /datum/bt_node/composite/sequence,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_SLIP_TARGET, 0, TRUE)),\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_SLIP_TARGET, 1, TRUE)),\
 									list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list(BB_SLIP_TARGET)),\
 									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_SLIPPERY_TARGET, 0, TRUE)),\
 									list("__t" = /datum/bt_node/ai_behavior/release_and_slip, "default_behavior_args" = list(BB_SLIP_TARGET)),\
@@ -213,9 +214,6 @@
 
 /datum/bt_node/ai_behavior/find_slippery_item/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.has_gravity())
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] find_slippery_item: no gravity")
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	var/list/slippery_items = controller.blackboard[BB_SLIPPERY_ITEMS]
 	if(!length(slippery_items))

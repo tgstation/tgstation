@@ -13,6 +13,8 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
+	if(!controller.ai_movement.moving_controllers[controller])
+		controller.ai_movement.start_moving_towards(controller, target, required_dist)
 	if(finish_on_arrival && get_dist(controller.pawn, target) <= required_dist)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT
