@@ -1,5 +1,0 @@
-author: "ArrisFairburne"
-delete-after: True
-changes:
-  - qol: "Added more description text to tank transfer valves so it's clearer what can be done with them"
-  - qol: "Clicking on a tank with a tank transfer valve will now attach it directly"

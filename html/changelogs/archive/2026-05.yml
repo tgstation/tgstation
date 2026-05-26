@@ -463,9 +463,29 @@
   SmArtKar:
   - admin: Added conversion and deconversion logging to Lunatics
 2026-05-26:
+  ArrisFairburne:
+  - qol: Added more description text to tank transfer valves so it's clearer what
+      can be done with them
+  - qol: Clicking on a tank with a tank transfer valve will now attach it directly
+  ElGitificador:
+  - sound: supplexing rods sound fix
   EnterTheJake:
   - bugfix: Traitor Wraith cloaking module now reactivates after the appropriate amount
       of time has passed.
+  Fghj240:
+  - balance: mending touch can partially heal limbs
+  - balance: mending touch no longer always transfers critical wounds when powered
+      up
+  - bugfix: mending touch blood drain properly capped
+  - code_imp: removed unnecessary check from mending touch
+  - spellcheck: mending touch lose text reworded for clarity and it no longer assumes
+      you only have one hand.
+  FlufflesTheDog:
+  - bugfix: Fix an error when trying to use the cargo app with an id card lacking
+      a job
+  - bugfix: Fix sometimes spawning with a scarred eye despite not having the quirk
+  JohnFulpWillard:
+  - bugfix: pAIs can use their instruments.
   SmArtKar:
   - bugfix: Fixed inventory items being stuck in ghosts' screens
   TheRyeGuyWhoWillNowDie:
@@ -473,9 +493,13 @@
       actual mother
   Thunder12345:
   - bugfix: The stray slow tile in Icebox perma has been removed.
+  Thunder12345 and Hugbug:
+  - bugfix: CQC can no longer steal backtank misters and other tethered items.
   lelandkemble:
   - qol: Scanned wounds stay scanned while being healed
   - bugfix: Ghost of Poly possession pulses the purple aura like it's supposed to
+  strandsofivy:
+  - bugfix: AIs should be able to access request consoles correctly now.
   timothymtorres:
   - bugfix: Fix negative bloodloss effects being ignored by determined status
   vinylspiders:
