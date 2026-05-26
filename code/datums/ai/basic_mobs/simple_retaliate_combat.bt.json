@@ -6,7 +6,6 @@
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
 			"config": {
 				"key": "BB_BASIC_MOB_RETALIATE_LIST",
-				"observed_keys": ["BB_BASIC_MOB_RETALIATE_LIST"],
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {

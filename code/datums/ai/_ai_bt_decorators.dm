@@ -17,8 +17,6 @@
 	var/datum/bt_node/child = null
 	/// Observer abort mode. Controls reactive re-planning when watched keys change.
 	var/observer_abort = BT_ABORT_NONE
-	/// List of BB_* blackboard key constants to watch. Only used when observer_abort != BT_ABORT_NONE.
-	var/list/observed_keys = null
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
 	///Tracks per-controller whether the child is currently BT_RUNNING. When observer_abort == BT_ABORT_NONE and the latch is set, tick() skips check_condition() entirely and delegates directly to child.tick().
@@ -197,11 +195,8 @@
 /datum/bt_node/decorator/bb_key_set
 	var/key = null
 
-/// Auto-populate observed_keys from key when observer_abort is set and no explicit keys were given.
-/datum/bt_node/decorator/bb_key_set/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
-	if(observer_abort != BT_ABORT_NONE && !LAZYLEN(observed_keys))
-		observed_keys = list(key)
-	return ..()
+/datum/bt_node/decorator/bb_key_set/get_pawn_observe_signals()
+	return list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
 
 /datum/bt_node/decorator/bb_key_set/check_condition(datum/ai_controller/controller)
 	return controller.blackboard_key_exists(key)

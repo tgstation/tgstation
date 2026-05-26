@@ -67,9 +67,6 @@ multiple modular subtrees with behaviors
 	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
-	/// Assoc list of blackboard key → list of /datum/bt_node/decorator nodes watching that key.
-	/// Populated by setup_bt_observers() when the controller possesses a pawn. Nulled on unpossess.
-	var/alist/bt_observer_by_key = null
 	/// Flat list of decorators that registered pawn-signal observers (via get_pawn_observe_signals()).
 	/// Used by teardown_bt_observers() to call unregister_pawn_observer() on each.
 	var/list/bt_pawn_observer_nodes = null
@@ -344,9 +341,8 @@ multiple modular subtrees with behaviors
 		qdel(src)
 
 /**
- * Walk the resolved behavior_nodes tree and register blackboard key change signals
- * on the pawn for every decorator with observer_abort != BT_ABORT_NONE.
- * Only registers one signal per watched key regardless of how many decorators watch it.
+ * Walk the resolved behavior_nodes tree and register pawn-signal observers
+ * for every decorator that implements get_pawn_observe_signals().
  * Called at the end of PossessPawn().
  */
 /datum/ai_controller/proc/setup_bt_observers()
@@ -358,15 +354,6 @@ multiple modular subtrees with behaviors
 		var/datum/bt_node/node = to_visit[index++]
 		if(istype(node, /datum/bt_node/decorator))
 			var/datum/bt_node/decorator/dec = node
-			if(dec.observer_abort != BT_ABORT_NONE && LAZYLEN(dec.observed_keys))
-				for(var/key in dec.observed_keys)
-					if(isnull(bt_observer_by_key))
-						bt_observer_by_key = alist()
-					if(isnull(bt_observer_by_key[key]))
-						bt_observer_by_key[key] = list()
-						RegisterSignal(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), PROC_REF(on_observed_blackboard_change))
-						RegisterSignal(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key), PROC_REF(on_observed_blackboard_change))
-					bt_observer_by_key[key] += dec
 			if(LAZYLEN(dec.get_pawn_observe_signals()))
 				if(isnull(bt_pawn_observer_nodes))
 					bt_pawn_observer_nodes = list()
@@ -384,32 +371,13 @@ multiple modular subtrees with behaviors
 			if(sub.root)
 				to_visit += sub.root
 
-/// Unregisters all observer signals (blackboard + pawn) from the pawn and nulls the observer maps.
+/// Unregisters all pawn-signal observers from the pawn and nulls the observer map.
 /// Called at the start of UnpossessPawn() while pawn is still valid.
 /datum/ai_controller/proc/teardown_bt_observers()
-	if(!isnull(bt_observer_by_key))
-		for(var/key in bt_observer_by_key)
-			UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
-		bt_observer_by_key = null
 	if(!isnull(bt_pawn_observer_nodes))
 		for(var/datum/bt_node/decorator/dec as anything in bt_pawn_observer_nodes)
 			dec.unregister_pawn_observer(pawn)
 		bt_pawn_observer_nodes = null
-
-/**
- * Signal handler fired when a watched blackboard key is set or cleared.
- * Dispatches to each decorator observing that key so it can evaluate its condition
- * and abort/replan if the observer_abort policy demands it.
- */
-/datum/ai_controller/proc/on_observed_blackboard_change(atom/source, key)
-	SIGNAL_HANDLER
-	if(isnull(bt_observer_by_key))
-		return
-	var/list/decorators = bt_observer_by_key[key]
-	if(!LAZYLEN(decorators))
-		return
-	for(var/datum/bt_node/decorator/dec as anything in decorators)
-		dec.on_observed_change(src, key)
 
 /**
  * Walk the full resolved BT tree and call reset_tick_state(src) on every node,
@@ -1082,9 +1050,9 @@ multiple modular subtrees with behaviors
 		if(deco.invert)
 			condition_result = !condition_result
 		condition_text = condition_result ? " (PASS)" : " (FAIL)"
-		// Show observed keys and abort policy
+		// Show abort policy
 		var/observer_text = ""
-		if(deco.observer_abort != BT_ABORT_NONE && LAZYLEN(deco.observed_keys))
+		if(deco.observer_abort != BT_ABORT_NONE)
 			var/abort_name = ""
 			if(deco.observer_abort == BT_ABORT_SELF)
 				abort_name = "SELF"
@@ -1092,7 +1060,7 @@ multiple modular subtrees with behaviors
 				abort_name = "LOWER"
 			else if(deco.observer_abort == BT_ABORT_BOTH)
 				abort_name = "BOTH"
-			observer_text = " (abort-" + abort_name + " " + jointext(deco.observed_keys, ", ") + ")"
+			observer_text = " (abort-" + abort_name + ")"
 		lines += "[indent][status] [bt_node_label(node)][condition_text][observer_text]"
 		if(deco.child)
 			bt_append_full_tree_state(deco.child, lines, "[indent]  ")

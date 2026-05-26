@@ -135,8 +135,6 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 		var/datum/bt_node/decorator/dec = node
 		if(dec.observer_abort)
 			node_data["a"] = dec.observer_abort
-		if(length(dec.observed_keys))
-			node_data["k"] = dec.observed_keys
 		if(dec.invert)
 			node_data["i"] = TRUE
 		if(dec.child)
