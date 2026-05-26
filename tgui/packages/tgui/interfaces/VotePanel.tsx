@@ -215,7 +215,7 @@ const ChoicesPanel = (props) => {
   const { currentVote, user } = data;
 
   return (
-    <span>
+    <>
       {currentVote && currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
         <NoticeBox success>Select one option</NoticeBox>
       ) : null}
@@ -293,7 +293,7 @@ const ChoicesPanel = (props) => {
         </LabeledList>
       ) : null}
       {currentVote ? null : <NoticeBox>No vote active!</NoticeBox>}
-    </span>
+    </>
   );
 };
 

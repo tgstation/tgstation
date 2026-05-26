@@ -348,13 +348,13 @@ SUBSYSTEM_DEF(vote)
 
 	data["possibleVotes"] = all_vote_data
 	data["LastVoteTime"] = last_vote_time - world.time
-	data["deadVoteEnabled"] = CONFIG_GET(flag/no_dead_vote)
 
 	return data
 
 /datum/controller/subsystem/vote/ui_static_data(mob/user)
 	var/list/data = list()
 	data["VoteCD"] = CONFIG_GET(number/vote_delay)
+	data["deadVoteEnabled"] = CONFIG_GET(flag/no_dead_vote)
 	return data
 
 /datum/controller/subsystem/vote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -394,6 +394,7 @@ SUBSYSTEM_DEF(vote)
 				return
 
 			toggle_dead_voting(voter)
+			update_static_data_for_all_viewers()
 			return TRUE
 
 		if("toggleVote")
