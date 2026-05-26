@@ -53,4 +53,4 @@
 
 /obj/item/paper/guides/circuit
 	name = "Note from previos shift"
-	default_raw_text = "Hey man, about that problem which you had at Friday with <b>auto-slime factory</b>.. <p>Have read the manual, and if understood correctly, for adding the slime at circuit's list, for analyse and process, you need just to...</p>"
+	default_raw_text = "Hey man, about that problem which you had at Friday with <b>auto-slime factory</b>.. <p>Have read the manual, and if understood correctly, for adding the slime at circuit's list, for analyse and process, you need just to...</p><p>*how to list*</p><p>Also have left you that amazing red genetically modified(actually no) apple, they say it helps mind, so so bite and go try it out</p>"
