@@ -71,7 +71,7 @@
 	var/lowhealthicon = "over_lowhealth3"
 	var/alerticon = "over_alert3"
 	var/harvesticon = "over_harvest3"
-	var/alttray = FALSE
+	var/alt_tray = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -176,7 +176,7 @@
 /obj/machinery/hydroponics/constructable/oldstyle
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	alttray = TRUE
+	alt_tray = TRUE
 
 /obj/machinery/hydroponics/constructable/fullupgrade
 	name = "deluxe hydroponics tray"
