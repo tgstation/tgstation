@@ -307,7 +307,6 @@
 
 	return FALSE
 
-///Disable power in the station APCs
 /**
  * Disables power in most station APCs temporarily
  *
