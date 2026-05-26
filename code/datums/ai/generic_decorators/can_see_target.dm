@@ -8,10 +8,14 @@
 	/// Visibility range passed to can_see(). Default matches typical bot search radius.
 	var/range = 7
 
-/datum/bt_node/decorator/can_see_target/tick(datum/ai_controller/controller, seconds_per_tick)
+/datum/bt_node/decorator/can_see_target/check_condition(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[key]
 	if(QDELETED(target) || !can_see(controller.pawn, target, range))
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] can_see_target([key]): target lost")
 		controller.clear_blackboard_key(key)
-		return BT_FAILURE
-	return child.tick(controller, seconds_per_tick)
+		return FALSE
+	return TRUE
+
+/datum/bt_node/decorator/can_see_target/evaluate_for_observer(datum/ai_controller/controller)
+	var/atom/target = controller.blackboard[key]
+	return !QDELETED(target) && can_see(controller.pawn, target, range)

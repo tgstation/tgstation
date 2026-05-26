@@ -313,25 +313,17 @@
 						"__t" = /datum/bt_node/composite/selector,\
 						"__c" = list(\
 							list(\
-								"__t" = /datum/bt_node/decorator/is_at_distance,\
+								"__t" = /datum/bt_node/decorator/bb_key_set,\
 								"__c" = list(\
 									list(\
-										"__t" = /datum/bt_node/decorator/bb_key_set,\
+										"__t" = /datum/bt_node/composite/sequence,\
 										"__c" = list(\
-											list(\
-												"__t" = /datum/bt_node/composite/sequence,\
-												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BEACON_TARGET, 0, TRUE)),\
-													list("__t" = /datum/bt_node/ai_behavior/arrive_at_beacon, "default_behavior_args" = list(BB_BEACON_TARGET))\
-												)\
-											)\
-										),\
-										"key" = BB_BEACON_TARGET\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BEACON_TARGET, 0, TRUE)),\
+											list("__t" = /datum/bt_node/ai_behavior/arrive_at_beacon, "default_behavior_args" = list(BB_BEACON_TARGET))\
+										)\
 									)\
 								),\
-								"invert" = TRUE,\
-								"target_key" = BB_BEACON_TARGET,\
-								"required_distance" = 0\
+								"key" = BB_BEACON_TARGET\
 							),\
 							list(\
 								"__t" = /datum/bt_node/decorator/bb_key_set,\

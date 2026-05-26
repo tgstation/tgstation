@@ -21,16 +21,29 @@
 	var/list/observed_keys = null
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
+	///Tracks per-controller whether the child is currently BT_RUNNING. When observer_abort == BT_ABORT_NONE and the latch is set, tick() skips check_condition() entirely and delegates directly to child.tick().
+	var/alist/child_active = alist()
 
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
 		return tick_results[controller] || BT_FAILURE
 
 	var/result
-	if(check_condition(controller) == invert)
+	// Non-observer decorators latch once the child is running — skip the condition re-check
+	// on subsequent ticks so a transient condition drop doesn't wrongly abort the child.
+	// Observer decorators re-evaluate every tick; reactive cancellation is on_observed_change.
+	if(observer_abort == BT_ABORT_NONE && child_active[controller])
+		result = child.tick(controller, seconds_per_tick)
+	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		result = child.tick(controller, seconds_per_tick)
+
+	if(observer_abort == BT_ABORT_NONE)
+		if(result == BT_RUNNING)
+			child_active[controller] = TRUE
+		else
+			child_active -= controller
 
 	if(tick_rate)
 		tick_cooldowns[controller] = world.time
@@ -89,6 +102,10 @@
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
 			controller.CancelActions()
 			controller.SelectBehaviors(0)
+
+/datum/bt_node/decorator/reset_tick_state(datum/ai_controller/controller)
+	..()
+	child_active -= controller
 
 /datum/bt_node/decorator/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
 	exec_cache[src] = counter
@@ -175,17 +192,6 @@
 	var/reachable = !require_reach || target.IsReachableBy(pawn)
 
 	return dist <= required_distance && (min_distance == 0 || dist >= min_distance) && reachable
-
-/**
- * Side-effect-free condition check for the observer system.
- * Returns TRUE if the pawn is currently within [min_distance, required_distance] of the target.
- */
-/datum/bt_node/decorator/is_at_distance/evaluate_for_observer(datum/ai_controller/controller)
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	var/dist = get_dist(controller.pawn, target)
-	return (dist <= required_distance) && (min_distance == 0 || dist >= min_distance) && (!require_reach || target.IsReachableBy(controller.pawn))
 
 ///Is the key set to a non-null value
 /datum/bt_node/decorator/bb_key_set

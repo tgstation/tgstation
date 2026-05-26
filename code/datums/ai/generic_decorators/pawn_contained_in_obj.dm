@@ -6,12 +6,12 @@
 /datum/bt_node/decorator/pawn_contained_in_obj/get_pawn_observe_signals()
 	return list(COMSIG_MOVABLE_MOVED)
 
-/datum/bt_node/decorator/pawn_contained_in_obj/tick(datum/ai_controller/controller, seconds_per_tick)
+/datum/bt_node/decorator/pawn_contained_in_obj/check_condition(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
 	if(isturf(pawn.loc) || ismob(pawn.loc) || istype(pawn.loc, /obj/item/mob_holder))
-		return BT_FAILURE
+		return FALSE
 	controller.blackboard[target_key] = pawn.loc
-	return child.tick(controller, seconds_per_tick)
+	return TRUE
 
 /datum/bt_node/decorator/pawn_contained_in_obj/evaluate_for_observer(datum/ai_controller/controller)
 	var/atom/loc = controller.pawn.loc

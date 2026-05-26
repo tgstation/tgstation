@@ -15,33 +15,24 @@
 			"children": [
 				{
 					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/is_at_distance",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"config": {
-						"invert": true,
-						"target_key": "BB_BEACON_TARGET",
-						"required_distance": 0
+						"key": "BB_BEACON_TARGET"
 					},
 					"child": {
-						"type": "decorator",
-						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
-							"key": "BB_BEACON_TARGET"
-						},
-						"child": {
-							"type": "sequence",
-							"children": [
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_BEACON_TARGET", 0, true]
-								},
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/arrive_at_beacon",
-									"args": ["BB_BEACON_TARGET"]
-								}
-							]
-						}
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"args": ["BB_BEACON_TARGET", 0, true]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/arrive_at_beacon",
+								"args": ["BB_BEACON_TARGET"]
+							}
+						]
 					}
 				},
 				{

@@ -957,6 +957,31 @@ multiple modular subtrees with behaviors
 	return t
 
 /**
+ * Returns a status marker string for the given node based on its current state.
+ * * = Currently RUNNING (active leaf behavior)
+ * + = Last tick returned SUCCESS
+ * x = Last tick returned FAILURE
+ * - = On cooldown (will not tick yet)
+ * o = Not yet evaluated this cycle
+ */
+/datum/ai_controller/proc/bt_node_status_marker(datum/bt_node/node)
+	if(istype(node, /datum/bt_node/ai_behavior))
+		var/datum/bt_node/ai_behavior/behavior = node
+		if(behavior.running_state[src])
+			return "*" // active
+
+	if(node.tick_rate > 0)
+		if(!isnull(node.tick_cooldowns[src]) && world.time < node.tick_cooldowns[src])
+			return "-" // on cooldown
+		var/result = node.tick_results[src]
+		if(result == BT_SUCCESS)
+			return "+"
+		if(result == BT_FAILURE)
+			return "x"
+
+	return "o" // not evaluated
+
+/**
  * Recursively appends active and upcoming BT nodes to lines.
  * Selector: only the active branch. Sequence: active node + remaining siblings marked as upcoming (↑).
  * Parallel: all active branches. Decorator: shown as a gate label above its active child.
@@ -1008,16 +1033,107 @@ multiple modular subtrees with behaviors
 			bt_append_active_nodes(sub.root, lines, indent)
 		return
 
+/**
+ * Recursively builds a full tree state view showing status markers, decorator conditions,
+ * and composite child indices for all nodes in the BT tree.
+ */
+/datum/ai_controller/proc/bt_append_full_tree_state(datum/bt_node/node, list/lines, indent)
+	if(istype(node, /datum/bt_node/ai_behavior))
+		var/status = bt_node_status_marker(node)
+		lines += "[indent][status] [bt_node_label(node)]"
+		return
+
+	if(istype(node, /datum/bt_node/composite/sequence))
+		var/datum/bt_node/composite/sequence/seq = node
+		var/status = bt_node_status_marker(node)
+		var/child_info = ""
+		if(seq.running_child_index[src])
+			child_info = " (child [seq.running_child_index[src]]/[length(seq.children)])"
+		lines += "[indent][status] SEQUENCE[child_info]"
+		for(var/datum/bt_node/child as anything in seq.children)
+			bt_append_full_tree_state(child, lines, "[indent]  ")
+		return
+
+	if(istype(node, /datum/bt_node/composite/selector))
+		var/datum/bt_node/composite/selector/sel = node
+		var/status = bt_node_status_marker(node)
+		var/child_info = ""
+		if(sel.running_child_index[src])
+			child_info = " (child [sel.running_child_index[src]]/[length(sel.children)])"
+		lines += "[indent][status] SELECTOR[child_info]"
+		for(var/datum/bt_node/child as anything in sel.children)
+			bt_append_full_tree_state(child, lines, "[indent]  ")
+		return
+
+	if(istype(node, /datum/bt_node/composite/parallel))
+		var/datum/bt_node/composite/parallel/par = node
+		var/status = bt_node_status_marker(node)
+		lines += "[indent][status] PARALLEL"
+		for(var/datum/bt_node/child as anything in par.children)
+			bt_append_full_tree_state(child, lines, "[indent]  ")
+		return
+
+	if(istype(node, /datum/bt_node/decorator))
+		var/datum/bt_node/decorator/deco = node
+		var/status = bt_node_status_marker(node)
+		var/condition_text = ""
+		// Show live condition result
+		var/condition_result = deco.check_condition(src)
+		if(deco.invert)
+			condition_result = !condition_result
+		condition_text = condition_result ? " (PASS)" : " (FAIL)"
+		// Show observed keys and abort policy
+		var/observer_text = ""
+		if(deco.observer_abort != BT_ABORT_NONE && LAZYLEN(deco.observed_keys))
+			var/abort_name = ""
+			if(deco.observer_abort == BT_ABORT_SELF)
+				abort_name = "SELF"
+			else if(deco.observer_abort == BT_ABORT_LOWER_PRIORITY)
+				abort_name = "LOWER"
+			else if(deco.observer_abort == BT_ABORT_BOTH)
+				abort_name = "BOTH"
+			observer_text = " (abort-" + abort_name + " " + jointext(deco.observed_keys, ", ") + ")"
+		lines += "[indent][status] [bt_node_label(node)][condition_text][observer_text]"
+		if(deco.child)
+			bt_append_full_tree_state(deco.child, lines, "[indent]  ")
+		return
+
+	if(istype(node, /datum/bt_node/subtree))
+		var/datum/bt_node/subtree/sub = node
+		var/status = bt_node_status_marker(node)
+		lines += "[indent][status] [bt_node_label(node)]"
+		if(sub.root)
+			bt_append_full_tree_state(sub.root, lines, "[indent]  ")
+		return
+
 /// Called whenever an event is logged for this controller. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
 /datum/ai_controller/proc/on_evlog_event_added(datum/source, datum/event_logger_track/track, list/event_data)
 	SIGNAL_HANDLER
 	var/list/track_info = list()
 
+	// Build full tree state view showing all nodes with status markers
 	var/list/tree_lines = list()
 	for(var/datum/bt_node/root_node as anything in behavior_nodes)
-		bt_append_active_nodes(root_node, tree_lines, "")
-	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Active Plan", length(tree_lines) ? jointext(tree_lines, "\n") : "(none)")
+		bt_append_full_tree_state(root_node, tree_lines, "")
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Full Tree State", length(tree_lines) ? jointext(tree_lines, "\n") : "(none)")
 
+	// Add execution context section
+	var/list/exec_cache = GLOB.bt_execution_indices[type]
+	var/active_node_label = "(none)"
+	if(active_execution_index && exec_cache)
+		for(var/datum/bt_node/node in exec_cache)
+			if(exec_cache[node] == active_execution_index)
+				active_node_label = bt_node_label(node)
+				break
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Able to Run", able_to_run ? "TRUE" : "FALSE")
+	if(current_movement_target)
+		EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Movement Target", "[current_movement_target] (source: [movement_target_source])")
+	else
+		EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Movement Target", "(none)")
+
+	// Blackboard snapshot
 	for(var/blackboard_key_name, blackboard_value in blackboard)
 		var/value_string
 		if(isatom(blackboard_value))

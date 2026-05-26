@@ -12,8 +12,8 @@
 	var/mob/living/our_mob = controller.pawn
 	if(our_mob.pulling == target)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	if(get_dist(our_mob, target) > 0)
-		return AI_BEHAVIOR_INSTANT
+	if(!our_mob.start_pulling(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[our_mob] grabbing [target]", get_turf(target), "Grab")
-	our_mob.start_pulling(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
