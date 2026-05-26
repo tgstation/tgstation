@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Ghost of Poly possession pulses the purple aura like it's supposed to"
