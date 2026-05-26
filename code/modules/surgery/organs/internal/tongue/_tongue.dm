@@ -8,6 +8,7 @@
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	voice_filter = ""
+	visual = FALSE
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *

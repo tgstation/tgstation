@@ -1,0 +1,4 @@
+author: "Thunder12345 and Hugbug"
+delete-after: True
+changes:
+  - bugfix: "CQC can no longer steal backtank misters and other tethered items."

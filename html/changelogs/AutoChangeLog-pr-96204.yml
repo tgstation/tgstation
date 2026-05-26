@@ -1,0 +1,5 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Fix an error when trying to use the cargo app with an id card lacking a job"
+  - bugfix: "Fix sometimes spawning with a scarred eye despite not having the quirk"
