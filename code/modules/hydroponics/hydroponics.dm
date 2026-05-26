@@ -259,7 +259,6 @@
 		))
 	QDEL_NULL(our_snail)
 
-
 /obj/machinery/hydroponics/constructable/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)
 
