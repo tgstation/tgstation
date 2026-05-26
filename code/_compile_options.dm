@@ -130,6 +130,9 @@
 #define DISABLE_DREAMLUAU
 #endif
 
+// Comment to disable auxcpu's precise cpu usage metrics. Will impact our ability to avoid overtime
+#define USE_AUXCPU
+
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it
 /// NEVER run this on live, it's for simulating highpop only

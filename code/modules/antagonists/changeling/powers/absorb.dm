@@ -216,11 +216,7 @@
 	if(href_list["exit_hivemind"] && !QDELETED(src))
 		exit_hivemind()
 
-/mob/eye/imaginary_friend/hivemind/verb/exit_hivemind()
-	set category = "IC"
-	set name = "Exit Hivemind"
-	set desc = "Leave the hivemind behind and enter the land of the dead."
-
+DEFINE_VERB(/mob/eye/imaginary_friend/hivemind, exit_hivemind, "Exit Hivemind", "Leave the hivemind behind and enter the land of the dead.", FALSE, "IC")
 	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
 		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
 	if(response != "Exit" || QDELETED(src))

@@ -405,11 +405,7 @@
 	SIGNAL_HANDLER
 	source.hud_used.add_screen_object(/atom/movable/screen/combo, HUD_MOB_COMBO, HUD_GROUP_INFO, update_screen = TRUE)
 
-/mob/living/proc/verb_switch_style()
-	set name = "Swap Style"
-	set desc = "Switch to a different martial arts style."
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, verb_switch_style, "Swap Style", "Switch to a different martial arts style.", FALSE, "IC")
 	var/datum/martial_art/current = GET_ACTIVE_MARTIAL_ART(src)
 	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 

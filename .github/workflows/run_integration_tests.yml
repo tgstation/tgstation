@@ -53,6 +53,9 @@ jobs:
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
+      - name: Install auxcpu
+        run: |
+          bash tools/ci/install_auxcpu.sh
       - name: Install dreamluau
         run: |
           bash tools/ci/install_dreamluau.sh

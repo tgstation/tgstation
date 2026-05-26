@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	var/issue_command = pick(to_command.speech_commands)
 	living_pawn.say(issue_command, forced = "controller")
-	living_pawn._pointed(target)
+	living_pawn.do_pointed(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 

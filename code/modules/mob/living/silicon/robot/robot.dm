@@ -970,7 +970,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/silicon/robot/execute_resist()
+/mob/living/silicon/robot/do_resist()
 	. = ..()
 	if(!has_buckled_mobs())
 		return

@@ -32,9 +32,7 @@
 	return ..()
 
 ///A right-click verb, for those not using hotkey mode.
-/obj/item/borg/apparatus/verb/verb_dropHeld()
-	set name = "Drop"
-
+DEFINE_VERB(/obj/item/borg/apparatus, verb_dropHeld, "Drop", "", FALSE, "")
 	if(usr != loc || !stored)
 		return
 	stored.forceMove(get_turf(usr))

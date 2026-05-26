@@ -1,27 +1,26 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
-	set name = VERB_SAY
-
+DEFINE_VERBLIKE(verb, /mob, say_verb, VERB_SAY, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
-	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
-	if(message)
+	// If we're being called off something else, we should be allowed to requeue if we're gonna lag to shit
+	if(VERB_JUST_FIRED())
+		say(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
-///Whisper verb
-/mob/verb/whisper_verb(message as text)
-	set name = VERB_WHISPER
-
+///like say(), but you always whisper it (yes it's silly)
+DEFINE_VERBLIKE(verb, /mob, whisper_verb, VERB_WHISPER, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	if(message)
+	if(VERB_JUST_FIRED())
+		whisper(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
 /**
@@ -35,16 +34,16 @@
 	say(message, language = language)
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
-	set name = VERB_ME
-
+DEFINE_VERBLIKE(verb, /mob, me_verb, VERB_ME, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", NONE, message, TRUE), SSspeech_controller)
+	if(VERB_JUST_FIRED())
+		emote("me", NONE, message, TRUE)
+	else
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", NONE, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	var/list/filter_result
