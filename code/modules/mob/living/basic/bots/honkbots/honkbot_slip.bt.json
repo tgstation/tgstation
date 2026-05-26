@@ -1,0 +1,51 @@
+{
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/can_see_target",
+	"config": {
+		"key": "BB_SLIPPERY_TARGET",
+		"range": 5
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/can_see_target",
+		"config": {
+			"key": "BB_SLIP_TARGET",
+			"range": 5
+		},
+		"child": {
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_has_gravity",
+			"config": {},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"args": ["BB_SLIP_TARGET", 0, true]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/grab_target",
+						"args": ["BB_SLIP_TARGET"]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"args": ["BB_SLIPPERY_TARGET", 0, true]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/release_and_slip",
+						"args": ["BB_SLIP_TARGET"]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/perform_emote",
+						"args": ["flip"]
+					}
+				]
+			}
+		}
+	}
+}

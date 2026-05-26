@@ -27,7 +27,13 @@
 									list(\
 										"__t" = /datum/bt_node/decorator/secbot_target_valid,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
+											list(\
+												"__t" = /datum/bt_node/composite/sequence,\
+												"__c" = list(\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CLOWN_FRIEND, 1, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
+												)\
+											)\
 										)\
 									)\
 								),\
@@ -37,7 +43,7 @@
 							list(\
 								"__t" = /datum/bt_node/decorator/bb_key_set,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/honkbot_slip_sequence, "default_behavior_args" = list(BB_SLIP_TARGET, BB_SLIPPERY_TARGET))\
+									/datum/bt_node/subtree/honkbot_slip\
 								),\
 								"observer_abort" = BT_ABORT_BOTH,\
 								"key" = BB_SLIPPERY_TARGET\
@@ -68,22 +74,16 @@
 										"__t" = /datum/bt_node/composite/selector,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-											list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET))\
+											list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET)),\
+											list("__t" = /datum/bt_node/ai_behavior/find_clown_friend, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
 										)\
 									)\
 								)\
 							)\
 						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/find_clown_friend, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
-						)\
 					)\
 				)\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/use_mob_ability/random_honk, "default_behavior_args" = list(BB_HONK_ABILITY))\
+			)\
 		)\
 	)
 	// @bt-generated end
@@ -112,6 +112,44 @@
 	clear_blackboard_key(BB_SLIP_TARGET)
 
 // =============================================================================
+// Slip subtree
+// =============================================================================
+
+/datum/bt_node/subtree/honkbot_slip
+	behavior_tree_json = "honkbot_slip.bt.json"
+	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/decorator/can_see_target,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/can_see_target,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/decorator/pawn_has_gravity,\
+						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/composite/sequence,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_SLIP_TARGET, 0, TRUE)),\
+									list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list(BB_SLIP_TARGET)),\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_SLIPPERY_TARGET, 0, TRUE)),\
+									list("__t" = /datum/bt_node/ai_behavior/release_and_slip, "default_behavior_args" = list(BB_SLIP_TARGET)),\
+									list("__t" = /datum/bt_node/ai_behavior/perform_emote, "default_behavior_args" = list("flip"))\
+								)\
+							)\
+						)\
+					)\
+				),\
+				"key" = BB_SLIP_TARGET,\
+				"range" = 5\
+			)\
+		),\
+		"key" = BB_SLIPPERY_TARGET,\
+		"range" = 5\
+	)
+	// @bt-generated end
+
+// =============================================================================
 // Random honk (prob-gated use_mob_ability)
 // =============================================================================
 
@@ -123,76 +161,41 @@
 	return ..()
 
 // =============================================================================
-// Slip sequence — stateful behavior handling grab + drag + release
+// Find slip victim
 // =============================================================================
 
-/**
- * Encapsulates the full slip-victim sequence.
- * Phase 1: Find and grab a victim (internal movement allowed — mirrors basic_melee_attack pattern).
- * Phase 2: Drag the grabbed victim to the slippery item and release.
- * Bug fix: does NOT clear BB_SLIP_TARGET in finish_action — on_stop_pulling handles cleanup.
- */
-/datum/bt_node/ai_behavior/honkbot_slip_sequence
-	action_cooldown = 1 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+/datum/bt_node/ai_behavior/bot_search/find_slip_victim
 
-/datum/bt_node/ai_behavior/honkbot_slip_sequence/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, slip_key, slippery_key)
-	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.has_gravity())
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] honkbot_slip_sequence: no gravity")
+/datum/bt_node/ai_behavior/bot_search/find_slip_victim/get_looking_for_typecache()
+	return typecacheof(list(/mob/living/carbon/human))
+
+/datum/bt_node/ai_behavior/bot_search/find_slip_victim/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
+	var/mob/living/carbon/human/candidate = my_target
+	return !candidate.buckled && candidate.has_gravity()
+
+// =============================================================================
+// Release and slip
+// =============================================================================
+
+// Positions the pulled victim onto the slippery item by stepping away, then releases.
+/datum/bt_node/ai_behavior/release_and_slip
+
+/datum/bt_node/ai_behavior/release_and_slip/perform(seconds_per_tick, datum/ai_controller/controller, victim_key)
+	var/mob/living/victim = controller.blackboard[victim_key]
+	var/mob/living/our_mob = controller.pawn
+	if(QDELETED(victim) || our_mob.pulling != victim)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[our_mob] release_and_slip: not pulling victim")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/atom/slippery_item = controller.blackboard[slippery_key]
-	if(QDELETED(slippery_item) || !can_see(living_pawn, slippery_item, 5))
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] honkbot_slip_sequence: slippery item lost (deleted=[QDELETED(slippery_item)])")
-		controller.clear_blackboard_key(slip_key)
-		controller.clear_blackboard_key(slippery_key)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/mob/living/victim = controller.blackboard[slip_key]
-	if(QDELETED(victim))
-		// Find a victim in range
-		var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-		for(var/mob/living/carbon/human/candidate in oview(5, living_pawn))
-			if(LAZYACCESS(ignore_list, candidate))
-				continue
-			if(candidate.buckled || !candidate.has_gravity())
-				continue
-			if(!can_see(living_pawn, candidate, 5))
-				continue
-			if(controller.set_if_can_reach(key = slip_key, target = candidate))
-				victim = candidate
-				break
-		if(isnull(victim))
-			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] honkbot_slip_sequence: no valid victim found near [slippery_item]")
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	if(living_pawn.pulling != victim)
-		// Phase 1: move to victim and grab
-		EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] slip phase 1: moving to grab [victim]", get_turf(victim), "Grab?")
-		set_movement_target(controller, victim)
-		if(get_dist(living_pawn, victim) <= 0)
-			living_pawn.start_pulling(victim)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	// Phase 2: move to slippery item while pulling victim
-	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] slip phase 2: dragging [victim] to [slippery_item]", get_turf(slippery_item), "Drag!")
-	set_movement_target(controller, slippery_item)
-	if(get_dist(living_pawn, slippery_item) > 0)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	// Arrived at slippery item — step to position victim on it, then release
-	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] releasing [victim] onto [slippery_item]!", get_turf(slippery_item), "HONK!")
+	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[our_mob] releasing [victim]!", get_turf(our_mob), "HONK!")
 	var/list/possible_dirs = GLOB.alldirs.Copy()
-	possible_dirs -= get_dir(living_pawn, victim)
+	possible_dirs -= get_dir(our_mob, victim)
 	for(var/direction in possible_dirs)
-		var/turf/possible_turf = get_step(living_pawn, direction)
-		if(possible_turf.is_blocked_turf(source_atom = living_pawn))
+		var/turf/possible_turf = get_step(our_mob, direction)
+		if(possible_turf.is_blocked_turf(source_atom = our_mob))
 			possible_dirs -= direction
 	if(length(possible_dirs))
-		step(living_pawn, pick(possible_dirs))
-	living_pawn.stop_pulling()
-	living_pawn.emote("flip")
+		step(our_mob, pick(possible_dirs))
+	our_mob.stop_pulling()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 // =============================================================================

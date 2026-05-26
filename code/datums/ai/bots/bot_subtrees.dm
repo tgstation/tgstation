@@ -13,14 +13,15 @@
 	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn)
+	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn)\
+	var/looking_for = get_looking_for_typecache()
 	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -36,6 +37,9 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no valid target found in radius [radius]")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+/datum/bt_node/ai_behavior/bot_search/proc/get_looking_for_typecache()
+	return
 
 /datum/bt_node/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return TRUE
