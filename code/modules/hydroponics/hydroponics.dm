@@ -66,11 +66,12 @@
 	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
 	///Indicator icon_states
-	var/watericon = "over_lowwater3"
-	var/nutriicon = "over_lownutri3"
-	var/lowhealthicon = "over_lowhealth3"
-	var/alerticon = "over_alert3"
-	var/harvesticon = "over_harvest3"
+	var/watericon = "over_lowwater3[indicatorsuffix]"
+	var/nutriicon = "over_lownutri3[indicatorsuffix]"
+	var/lowhealthicon = "over_lowhealth3[indicatorsuffix]"
+	var/alerticon = "over_alert3[indicatorsuffix]"
+	var/harvesticon = "over_harvest3[indicatorsuffix]"
+	var/indicatorsuffix = ""
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -170,17 +171,12 @@
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "hydrotray3"
+	icon_state = "hydrotray3[indicatorsuffix]"
 
 /obj/machinery/hydroponics/constructable/oldstyle
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "hydrotray3-alt"
-	watericon = "over_lowwater3-alt"
-	nutriicon = "over_lownutri3-alt"
-	lowhealthicon = "over_lowhealth3-alt"
-	alerticon = "over_alert3-alt"
-	harvesticon = "over_harvest3-alt"
+	indicatorsuffix = "-alt"
 
 /obj/machinery/hydroponics/constructable/fullupgrade
 	name = "deluxe hydroponics tray"
