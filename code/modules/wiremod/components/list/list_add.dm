@@ -51,6 +51,6 @@
 	else
 		info += data_to_add
 
-/obj/item/paper/guides/recycler
-	name = "paper - 'garbage duty instructions'"
-	default_raw_text = "<h2>New Assignment</h2> You h
+/obj/item/paper/guides/circuit
+	name = "Note from previos shift"
+	default_raw_text = "Hey man, about that problem which you had at Friday with <b>auto-slime factory<b>.. Have read the manual, and if understood correctly, for adding the slime at circuit's list, for analyse and process, you need just to..."
