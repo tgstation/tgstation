@@ -171,7 +171,7 @@
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "hydrotray3[indicatorsuffix]"
+	icon_state = "hydrotray3"
 
 /obj/machinery/hydroponics/constructable/oldstyle
 	name = "hydroponics tray"
