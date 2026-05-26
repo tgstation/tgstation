@@ -71,7 +71,9 @@
 	var/lowhealthicon = "over_lowhealth3"
 	var/alerticon = "over_alert3"
 	var/harvesticon = "over_harvest3"
+	///Suffix things
 	var/alt_tray = FALSE
+	var/suffix = ""
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -480,7 +482,6 @@
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
-	var/suffix = ""
 	if(alt_tray)
 		suffix = "-alt"
 	if(waterlevel <= 10)
