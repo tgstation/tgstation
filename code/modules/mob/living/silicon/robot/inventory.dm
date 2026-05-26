@@ -7,10 +7,6 @@
 /mob/living/silicon/robot/get_active_held_item()
 	return module_active
 
-// Returns what we have in all of our modules, not just actively selected.
-/mob/living/silicon/robot/proc/get_all_held_items()	
-	return held_items
-
 /**
  * Parent proc - triggers when an item/module is unequipped from a cyborg.
  */
