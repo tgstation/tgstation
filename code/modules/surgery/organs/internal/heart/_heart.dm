@@ -24,6 +24,7 @@
 	cell_line = CELL_LINE_ORGAN_HEART
 	cells_minimum = 1
 	cells_maximum = 2
+	visual = FALSE
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 

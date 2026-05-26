@@ -24,10 +24,6 @@
 		if(user)
 			to_chat(user, span_notice("The connected wire doesn't have enough current."))
 		return
-	for (var/datum/component/singularity/singulo as anything in GLOB.singularities)
-		var/atom/singulo_atom = singulo.parent
-		if(singulo_atom.z == z)
-			singulo.target = src
 	icon_state = "[icontype]1"
 	active = TRUE
 	if(user)
@@ -35,8 +31,7 @@
 
 
 /obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/_singulo in GLOB.singularities)
-		var/datum/component/singularity/singulo = _singulo
+	for(var/datum/component/singularity/singulo as anything in GLOB.singularities)
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
@@ -97,10 +92,10 @@
 		add_load(energy_used)
 		if(COOLDOWN_FINISHED(src, singularity_beacon_cd))
 			COOLDOWN_START(src, singularity_beacon_cd, 8 SECONDS)
-			for(var/_singulo_component in GLOB.singularities)
-				var/datum/component/singularity/singulo_component = _singulo_component
+			for(var/datum/component/singularity/singulo_component as anything in GLOB.singularities)
 				var/atom/singulo = singulo_component.parent
 				if(singulo.z == z)
+					singulo_component.target = src
 					say("[singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 	else
 		Deactivate()

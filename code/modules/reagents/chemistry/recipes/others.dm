@@ -344,11 +344,37 @@
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
+	// Does the foam slip you?
+	var/slippery = TRUE
+	// How long the foam lasts for
+	var/lifetime = 8 SECONDS
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/foam/hollow
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/hollowwater = 1)
+	lifetime = 24 SECONDS
+
+/datum/chemical_reaction/foam/salt
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/salt = 1)
+	lifetime = 1 SECONDS
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/ice
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/ice = 1)
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/soda
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/sodawater = 1)
+	lifetime = 1 SECONDS
+
+/datum/chemical_reaction/foam/holy
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/holywater = 1)
+	lifetime = 24 SECONDS
+	slippery = FALSE
+
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE)
+	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE, lifetime = src.lifetime, slippery = src.slippery)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalfoam
@@ -1104,3 +1130,22 @@
 
 	glitter.data["colors"] = list("[accumulated_color]" = 100)
 	glitter.color = accumulated_color
+
+/datum/chemical_reaction/pair_carnivorous_blood
+	results = list(/datum/reagent/toxin/carnivorousblood = 1)
+	required_reagents = list(/datum/reagent/toxin/carnivorousblood = 1, /datum/reagent/blood = 1)
+	mix_message = "the mixture jumps and sloshes around."
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/pair_carnivorous_blood/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/datum/reagent/toxin/carnivorousblood/hungryblood = holder.has_reagent(/datum/reagent/toxin/carnivorousblood)
+	var/list/new_blood_dna = list()
+	for(var/datum/reagent/blood/bloodinstance in holder.reagent_list)
+		new_blood_dna += bloodinstance.data["blood_DNA"]
+	hungryblood.feed_dna_list(new_blood_dna)
+
+/datum/chemical_reaction/feed_carnivorous_blood
+	results = list(/datum/reagent/toxin/carnivorousblood = 1)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
+	required_catalysts = list(/datum/reagent/toxin/carnivorousblood = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE

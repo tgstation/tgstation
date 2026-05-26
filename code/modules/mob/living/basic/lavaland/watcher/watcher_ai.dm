@@ -1,12 +1,16 @@
 /datum/ai_controller/basic_controller/watcher
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 3,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/maintain_distance,

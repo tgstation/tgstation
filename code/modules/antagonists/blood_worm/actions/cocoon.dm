@@ -407,3 +407,9 @@
 
 /obj/structure/blood_worm_cocoon/adult/examine(mob/user)
 	return ..() + span_warning("It can be broken to prevent the blood worm from reproducing, but it looks extremely tough.")
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
+	new_worm_type = /mob/living/basic/blood_worm/juvenile/polymorph
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/polymorph
+	new_worm_type = /mob/living/basic/blood_worm/adult/polymorph

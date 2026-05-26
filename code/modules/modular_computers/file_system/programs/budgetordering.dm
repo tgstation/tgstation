@@ -64,7 +64,7 @@
 
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
-	if(id_card?.registered_account)
+	if(id_card?.registered_account?.account_job?.paycheck_department)
 		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
 		if((ACCESS_BUDGET in id_card.access))
 			requestonly = FALSE

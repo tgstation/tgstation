@@ -398,3 +398,12 @@
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 
 	regen_rate = 0.5 // 360 seconds to recover from 0 to 180, or exactly 6 minutes.
+
+/mob/living/basic/blood_worm/hatchling/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
+
+/mob/living/basic/blood_worm/juvenile/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/polymorph
+
+/mob/living/basic/blood_worm/adult/polymorph
+	cocoon_action = null

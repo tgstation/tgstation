@@ -29,20 +29,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
 
-/datum/species/moth/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
-	. = ..()
-	RegisterSignal(human_who_gained_species, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-
-/datum/species/moth/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
-
-/datum/species/moth/proc/on_attackby(mob/living/source, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
-	SIGNAL_HANDLER
-
-	if(istype(attacking_item, /obj/item/melee/flyswatter))
-		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 10) // Yes, a 10x damage modifier
-
 /datum/species/moth/randomize_features()
 	var/list/features = ..()
 	features[FEATURE_MOTH_MARKINGS] = pick(SSaccessories.feature_list[FEATURE_MOTH_MARKINGS])

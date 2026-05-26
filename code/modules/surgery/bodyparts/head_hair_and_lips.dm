@@ -75,7 +75,7 @@
 	// Overlay
 	var/image/facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, dir = image_dir)
 	facial_hair_overlay.alpha = facial_hair_alpha
-	set_overlay_hair_color(facial_hair_overlay)
+	set_overlay_hair_color(facial_hair_overlay, facial_hair_color)
 	// Emissive blocker
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		var/mutable_appearance/em_block = emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
@@ -124,7 +124,7 @@
 				all_hair_overlays += image(hair_sprite_accessory.icon, icon_state = appendage_icon_state, layer = -OUTER_HAIR_LAYER, dir = image_dir)
 
 	for(var/image/hair_overlay as anything in all_hair_overlays)
-		set_overlay_hair_color(hair_overlay)
+		set_overlay_hair_color(hair_overlay, hair_color)
 		hair_overlay.alpha = hair_alpha
 		hair_overlay.pixel_z = hair_sprite_accessory.y_offset
 		// Emissive blocker
@@ -147,14 +147,14 @@
 	return .
 
 /// Helper for setting hair color of an overlay appropriately
-/obj/item/bodypart/head/proc/set_overlay_hair_color(image/hair_overlay)
+/obj/item/bodypart/head/proc/set_overlay_hair_color(image/hair_overlay, hair_color_to_use = src.hair_color)
 	PRIVATE_PROC(TRUE)
 	if(override_hair_color)
 		hair_overlay.color = override_hair_color
 	else if(fixed_hair_color)
 		hair_overlay.color = fixed_hair_color
 	else
-		hair_overlay.color = hair_color
+		hair_overlay.color = hair_color_to_use
 
 /// Returns a list of all eye related overlays, or an eyeless overlay if applicable
 /obj/item/bodypart/head/proc/get_eye_overlays(dropped)

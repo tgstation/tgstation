@@ -14,47 +14,80 @@
 	var/obj/item/cuffed
 	///Reference to the pair of handcuffs used to bind the item
 	var/obj/item/restraints/handcuffs/cuffs
+	///Reference to the bodypart we're cuffed to
+	var/obj/item/bodypart/arm/cuffed_to
+	///Reference to the component managing the link between the mob and the item
+	VAR_PRIVATE/datum/component/chained_together/link_effect
 
 /datum/status_effect/cuffed_item/on_creation(mob/living/new_owner, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
 	src.cuffed = cuffed
 	src.cuffs = cuffs
 	. = ..() //throws the alert and all
+	if(QDELETED(src))
+		return
 	linked_alert.update_appearance(UPDATE_OVERLAYS)
 
 /datum/status_effect/cuffed_item/on_apply()
-	if(HAS_TRAIT_FROM(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT))
-		qdel(src)
-		return FALSE
 	owner.temporarilyRemoveItemFromInventory(cuffs, force = TRUE)
-	if(!owner.is_holding(cuffed) && !owner.put_in_hands(cuffed))
+	cuffed_to = owner.get_inactive_hand()
+	if(isnull(cuffed_to) || !update_link())
 		owner.put_in_hands(cuffs)
 		qdel(src)
 		return FALSE
 
-	ADD_TRAIT(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT)
-
-	RegisterSignals(cuffed, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_displaced))
+	RegisterSignals(cuffed, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(check_for_link))
+	RegisterSignal(cuffed, COMSIG_QDELETING, PROC_REF(cleanup_effect))
 	RegisterSignal(cuffed, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 	RegisterSignal(cuffed, COMSIG_ATOM_EXAMINE, PROC_REF(cuffed_reminder))
 	RegisterSignal(cuffed, COMSIG_TOPIC, PROC_REF(topic_handler))
 	RegisterSignal(cuffed, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, PROC_REF(get_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_STRIPPABLE_ALT_ACTION, PROC_REF(do_strippable_action))
+	RegisterSignal(cuffed, COMSIG_ITEM_PRE_STORAGE_INSERTION, PROC_REF(block_storage_insert))
+	RegisterSignal(cuffed, COMSIG_ITEM_PRE_CUFFED_TO_MOB, PROC_REF(block_item_cuff))
 
-	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_displaced))
+	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(cleanup_effect))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
+
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier + 0.25, cuffed_to.click_cd_modifier + 0.25)
+	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
+	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
 
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
-	owner.log_message("bound [src] to themselves with restraints", LOG_GAME)
+	owner.log_message("bound [cuffed] to [owner.p_themselves()] with restraints", LOG_GAME)
+	SSblackbox.record_feedback("tally", "cuffed_item", 1, cuffed.type)
 
 	return TRUE
 
 /datum/status_effect/cuffed_item/on_remove()
 	//Prevent possible recursions from these signals
-	UnregisterSignal(cuffed, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	UnregisterSignal(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-
-	REMOVE_TRAIT(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT)
+	UnregisterSignal(cuffed, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_UPDATE_APPEARANCE,
+		COMSIG_ITEM_PRE_CUFFED_TO_MOB,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS,
+		COMSIG_ITEM_PRE_STORAGE_INSERTION,
+		COMSIG_ITEM_STRIPPABLE_ALT_ACTION,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+		COMSIG_TOPIC,
+	))
+	UnregisterSignal(cuffs, list(
+		COMSIG_ATOM_UPDATE_APPEARANCE,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+	))
+	UnregisterSignal(cuffed_to, list(
+		COMSIG_BODYPART_REMOVED,
+		COMSIG_QDELETING,
+	))
+	UnregisterSignal(owner, list(
+		COMSIG_ATOM_EXAMINE_MORE,
+		COMSIG_CARBON_POST_ATTACH_LIMB,
+	))
 	cuffed = null
 
 	if(!QDELETED(cuffs))
@@ -63,14 +96,117 @@
 			cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
+	cuffed_to = null
+
+	break_leash()
+
 ///Called when someone examines the owner twice, so they can know if someone has a cuffed item
 /datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("[cuffed.examine_title(user)] is bound to [owner.p_their()] [owner.get_held_index_name(owner.get_held_index_of_item(cuffed))] by [cuffs.examine_title(user)]")
+	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] \
+		[cuffed_to.plaintext_zone] by [cuffs.examine_title(user)].")
+
+/// What happens if the limb we're cuffed to is removed?
+/datum/status_effect/cuffed_item/proc/cuffed_to_removed(datum/source, mob/living/carbon/owner, special)
+	SIGNAL_HANDLER
+	// if special we will just wait for the new limb
+	if(special)
+		UnregisterSignal(cuffed_to, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
+		cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
+		cuffed_to = null
+		RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(new_cuffed_to_attached))
+		return
+	// otherwise we wipe the effect
+	qdel(src)
+
+/// Specifically if our cuffed limb is removed "specially", change it to the newly applied arm
+/datum/status_effect/cuffed_item/proc/new_cuffed_to_attached(datum/source, obj/item/bodypart/limb, special)
+	SIGNAL_HANDLER
+
+	if(!istype(limb, /obj/item/bodypart/arm))
+		return
+
+	cuffed_to = limb
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier + 0.25, cuffed_to.click_cd_modifier + 0.25)
+	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
+	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
+	UnregisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB)
+
+/// Check if we need to spawn the tether effect or not
+/datum/status_effect/cuffed_item/proc/check_for_link(...)
+	SIGNAL_HANDLER
+	if(!update_link())
+		qdel(src)
+
+/// Updates our link and beam effect based on our state
+/// Returns TRUE if we are in a valid link state, FALSE otherwise
+/datum/status_effect/cuffed_item/proc/update_link()
+	// when held, we need no tether
+	if(cuffed.loc == owner)
+		return break_leash()
+
+	// when on the ground, init a tether between item <-> owner
+	if(isturf(cuffed.loc))
+		return init_leash(cuffed)
+
+	// when being picked up by something else, init a tether between grabber <-> owner
+	if(ismovable(cuffed.loc) && isturf(cuffed.loc.loc))
+		return init_leash(cuffed.loc)
+
+	// we have no idea where it is...
+	return FALSE
+
+/// Inits the leash and beam effect to the given target, cleaning up old ones if necessary
+/datum/status_effect/cuffed_item/proc/init_leash(atom/movable/leash_to)
+	if(link_effect)
+		if(link_effect.parent == leash_to)
+			return TRUE
+		break_leash()
+
+	link_effect = leash_to.AddComponentFrom(REF(src), /datum/component/chained_together, chained_to = owner)
+	if(!QDELETED(link_effect))
+		return TRUE
+
+	// chain component failed to apply
+	if(ismob(leash_to))
+		var/mob/leash_to_mob = leash_to
+		addtimer(CALLBACK(src, PROC_REF(eject_item), leash_to_mob), 1)
+		return TRUE
+
+	return FALSE
+
+/datum/status_effect/cuffed_item/proc/break_leash()
+	link_effect?.parent.RemoveComponentSource(REF(src), /datum/component/chained_together)
+	if(QDELETED(link_effect))
+		link_effect = null
+	return TRUE
+
+// Delayed unequip after an invalid pickup. This sucks but I can't think of a better way around due to move order shenanigans
+/datum/status_effect/cuffed_item/proc/eject_item(mob/leash_to_mob)
+	if(QDELETED(src) || cuffed.loc != leash_to_mob)
+		return
+	if(!leash_to_mob.dropItemToGround(cuffed))
+		qdel(src)
+		return
+	to_chat(leash_to_mob, span_warning("[cuffs] binding [cuffed] to [owner] tugs it out of your grasp!"))
+
+/// Stops it from being stored anywhere
+/datum/status_effect/cuffed_item/proc/block_storage_insert(obj/item/source, atom/target_storage, mob/user, force, messages)
+	SIGNAL_HANDLER
+	if(messages)
+		target_storage.balloon_alert(user, "can't store [source.name] while cuffed!")
+	return BLOCK_STORAGE_INSERT
+
+/// Stops double cuff
+/datum/status_effect/cuffed_item/proc/block_item_cuff(obj/item/source, mob/cuffer, obj/item/cuffs)
+	SIGNAL_HANDLER
+	source.balloon_alert(cuffer, "cuffed to someone else!")
+	return BLOCK_ITEM_CUFF
 
 ///What happens if one of the items is moved away from the mob
-/datum/status_effect/cuffed_item/proc/on_displaced(datum/source)
+/datum/status_effect/cuffed_item/proc/cleanup_effect(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
 
@@ -128,9 +264,10 @@
 	log_combat(user, owner, "removed restraints binding [cuffed] to")
 
 	var/obj/item/restraints/handcuffs/ref_cuffs = cuffs
+	var/mob/living/ref_owner = owner
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
-	owner.balloon_alert(user, "cuffs removed from item")
+	ref_owner.balloon_alert(user, "cuffs removed from item")
 
 	return TRUE
 
@@ -162,3 +299,55 @@
 	if(.)
 		var/datum/status_effect/cuffed_item/effect = attached_effect
 		effect?.try_remove_cuffs(owner)
+
+// Chains two movable to be adjacent to each other. YMMV using this
+/datum/component/chained_together
+	dupe_mode = COMPONENT_DUPE_SOURCES
+	/// Weakref to the thing we're chained to
+	var/datum/weakref/chained_to_weakref
+	// Tracks the various things we apply to whatever we are cuffed to for cleanup
+	VAR_PRIVATE/datum/component/leash/link_effect
+	VAR_PRIVATE/datum/component/tug_towards/tug_effect
+	VAR_PRIVATE/datum/beam/beam_effect
+
+/datum/component/chained_together/on_source_add(source, atom/movable/chained_to)
+	// more sources are only allowed if they're chaining to the same thing
+	// having something linked to two different things is not supported now, and will break horribly
+	return chained_to_weakref?.resolve() == chained_to ? ..() : COMPONENT_REDUNDANT
+
+/datum/component/chained_together/Initialize(atom/movable/chained_to)
+	if(!ismovable(parent) || !ismovable(chained_to))
+		return COMPONENT_INCOMPATIBLE
+
+	chained_to_weakref = WEAKREF(chained_to)
+	var/atom/movable/movable_parent = parent
+	link_effect = movable_parent.AddComponent(/datum/component/leash, owner = chained_to, distance = 1)
+	tug_effect  = movable_parent.AddComponent(/datum/component/tug_towards, tugging_to = chained_to, strength = 0.66)
+	beam_effect = movable_parent.Beam(chained_to, "chain")
+	RegisterSignal(link_effect, COMSIG_QDELETING, PROC_REF(delete_self))
+	RegisterSignal(tug_effect,  COMSIG_QDELETING, PROC_REF(delete_self))
+	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
+
+/datum/component/chained_together/Destroy()
+	UnregisterSignal(beam_effect, COMSIG_QDELETING)
+	UnregisterSignal(link_effect, COMSIG_QDELETING)
+	UnregisterSignal(tug_effect, COMSIG_QDELETING)
+	if(!QDELETED(link_effect))
+		QDEL_NULL(link_effect)
+	if(!QDELETED(tug_effect))
+		QDEL_NULL(tug_effect)
+	if(!QDELETED(beam_effect))
+		QDEL_NULL(beam_effect)
+	return ..()
+
+/datum/component/chained_together/proc/recreate_beam(datum/beam/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(beam_effect, COMSIG_QDELETING)
+	var/atom/movable/movable_parent = parent
+	beam_effect = movable_parent.Beam(chained_to_weakref.resolve(), "chain")
+	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
+
+/datum/component/chained_together/proc/delete_self(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)

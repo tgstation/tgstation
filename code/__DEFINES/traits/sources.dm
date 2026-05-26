@@ -111,9 +111,6 @@
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"
 
-///From the cuffed_item status effect
-#define CUFFED_ITEM_TRAIT "cuffed_item_trait"
-
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
@@ -348,3 +345,6 @@
 
 /// Trait granted as a result of a mob being husked
 #define HUSK_TRAIT "husk"
+
+/// Trait granted from the metabolization of a reagent
+#define METABOLIZATION_TRAIT(type) "metabolize:[type]"
