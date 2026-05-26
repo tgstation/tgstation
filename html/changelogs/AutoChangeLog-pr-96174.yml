@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Scanned wounds stay scanned while being healed"
