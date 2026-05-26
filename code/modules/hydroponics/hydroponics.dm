@@ -715,10 +715,37 @@
 		stabmut = stabmut,
 	)
 
+/// Mutate but with higher default values
 /obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
+	myseed?.mutate(
+		lifemut = lifemut,
+		endmut = endmut,
+		productmut = productmut,
+		yieldmut = yieldmut,
+		potmut = potmut,
+		wrmut = wrmut,
+		wcmut = wcmut,
+		traitmut = traitmut,
+		stabmut = stabmut,
+	)
+
+/// Mutate but only introduce a random trait
+/obj/machinery/hydroponics/proc/traitmutate(traitmut = 1)
+	myseed?.mutate(
+		lifemut = 0,
+		endmut = 0,
+		productmut = 0,
+		yieldmut = 0,
+		potmut = 0,
+		wrmut = 0,
+		wcmut = 0,
+		traitmut = traitmut,
+		stabmut = 0,
+	)
 	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
-/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/// Mutate the species of the plant into one of its mutations
+/obj/machinery/hydroponics/proc/mutatespecie()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))
 		return
 
