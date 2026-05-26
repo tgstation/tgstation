@@ -66,12 +66,12 @@
 	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
 	///Indicator icon_states
-	var/watericon = "over_lowwater3[indicatorsuffix]"
-	var/nutriicon = "over_lownutri3[indicatorsuffix]"
-	var/lowhealthicon = "over_lowhealth3[indicatorsuffix]"
-	var/alerticon = "over_alert3[indicatorsuffix]"
-	var/harvesticon = "over_harvest3[indicatorsuffix]"
-	var/indicatorsuffix = ""
+	var/watericon = "over_lowwater3"
+	var/nutriicon = "over_lownutri3"
+	var/lowhealthicon = "over_lowhealth3"
+	var/alerticon = "over_alert3"
+	var/harvesticon = "over_harvest3"
+	var/alttray = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -176,7 +176,7 @@
 /obj/machinery/hydroponics/constructable/oldstyle
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	indicatorsuffix = "-alt"
+	alttray = TRUE
 
 /obj/machinery/hydroponics/constructable/fullupgrade
 	name = "deluxe hydroponics tray"
@@ -480,16 +480,19 @@
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
+	var/suffix = ""
+	if(alt_tray)
+		suffix = "-alt"
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', watericon)
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', watericon[suffix])
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', nutriicon)
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', nutriicon[suffix])
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', lowhealthicon)
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', lowhealthicon[suffix])
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', alerticon)
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', alerticon[suffix])
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', harvesticon)
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', harvesticon[suffix])
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
