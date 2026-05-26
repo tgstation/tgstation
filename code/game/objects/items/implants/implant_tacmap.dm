@@ -1,7 +1,7 @@
 /obj/item/implant/tacmap
 	name = "tactical map implant"
 	desc = "provides you with a map"
-	actions_types = list(/datum/action/minimap_new)
+	actions_types = list(/datum/action/minimap)
 	var/wearer_icon_state = null
 	/// Optional z-trait that resolves to the first z-level and locks the minimap there.
 	var/minimap_fixed_z_trait
@@ -42,7 +42,7 @@
 	return null
 
 /obj/item/implant/tacmap/proc/configure_minimap_action()
-	var/datum/action/minimap_new/minimap_action = locate(/datum/action/minimap_new) in actions
+	var/datum/action/minimap/minimap_action = locate(/datum/action/minimap) in actions
 	if(isnull(minimap_action))
 		return
 	minimap_action.fixed_z_level = resolve_fixed_minimap_z_level()
@@ -58,7 +58,7 @@
 	add_minimap_blip(wearer, MINIMAP_NUKEOP_BLIP, get_minimap_icon_state(wearer))
 
 /obj/item/implant/tacmap/nuclear // Nukie subtype, map shows you nuke disk, operatives, cayenne and the nuke
-	actions_types = list(/datum/action/minimap_new/nuclear)
+	actions_types = list(/datum/action/minimap/nuclear)
 	wearer_icon_state = "syndicate"
 
 /obj/item/implant/tacmap/nuclear/implant(mob/living/target, mob/user, silent, force)
@@ -82,7 +82,7 @@
 		return COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL
 
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
-	actions_types = list(/datum/action/minimap_new/nuclear)
+	actions_types = list(/datum/action/minimap/nuclear)
 	can_draw_on_personal_minimap = TRUE
 	wearer_icon_state = "syndicate_leader"
 

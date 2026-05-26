@@ -922,7 +922,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.remove_faction(FACTION_SILICON) //ai turrets
 	add_minimap_blip(cyborg, MINIMAP_NUKEOP_BORG_BLIP, "combatborg")
-	var/datum/action/minimap_new/nuclear/tacmap_action = new
+	var/datum/action/minimap/nuclear/tacmap_action = new
 	tacmap_action.Grant(cyborg)
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
@@ -960,7 +960,7 @@
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	add_minimap_blip(cyborg, MINIMAP_NUKEOP_BORG_BLIP, "mediborg")
-	var/datum/action/minimap_new/nuclear/tacmap_action = new
+	var/datum/action/minimap/nuclear/tacmap_action = new
 	tacmap_action.Grant(cyborg)
 
 /obj/item/robot_model/saboteur
@@ -998,7 +998,7 @@
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	add_minimap_blip(cyborg, MINIMAP_NUKEOP_BORG_BLIP, "engiborg")
-	var/datum/action/minimap_new/nuclear/tacmap_action = new
+	var/datum/action/minimap/nuclear/tacmap_action = new
 	tacmap_action.Grant(cyborg)
 
 /datum/action/cooldown/borg_thermal
