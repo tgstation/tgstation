@@ -783,6 +783,7 @@
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
+	remove_shared_particles(/particles/pollen) //We shouldn't look like we're pollenating if we're dead.
 	if(update_icon)
 		update_appearance()
 
@@ -1155,6 +1156,9 @@
 		return
 	if(myseed)
 		to_chat(user, span_warning("[src] already has a plant growing in it!"))
+		return
+	if(young_plant.seed_flags & NO_PLANTING)
+		to_chat(user, span_warning("[young_plant] cannot be planted in [src]!"))
 		return
 	if(istype(young_plant, /obj/item/seeds/kudzu))
 		investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
