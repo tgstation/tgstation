@@ -23,7 +23,7 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3]
+						"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3, false]
 					}
 				]
 			}
