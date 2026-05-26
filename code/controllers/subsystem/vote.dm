@@ -284,6 +284,7 @@ SUBSYSTEM_DEF(vote)
 	log_admin("[key_name(toggle_initiator)] [text_verb] Dead Vote.")
 	message_admins("[key_name_admin(toggle_initiator)] [text_verb] Dead Vote.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead Vote", text_verb))
+	update_static_data_for_all_viewers()
 
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
@@ -394,7 +395,6 @@ SUBSYSTEM_DEF(vote)
 				return
 
 			toggle_dead_voting(voter)
-			update_static_data_for_all_viewers()
 			return TRUE
 
 		if("toggleVote")
