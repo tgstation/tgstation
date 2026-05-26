@@ -128,7 +128,7 @@
 	if (target.anchored)
 		target.balloon_alert(source, "it won't budge!")
 		return FALSE
-	if((beacon.z != target.z) && (!is_station_level(beacon.z) || !is_station_level(target.z)))
+	if((beacon.z != target.z) && !(target.z in SSmapping.get_connected_levels(beacon.z)))
 		target.balloon_alert(source, "too far from beacon!")
 		return FALSE
 	return TRUE
