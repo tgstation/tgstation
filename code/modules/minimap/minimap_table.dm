@@ -11,6 +11,7 @@
 	light_color = LIGHT_COLOR_INTENSE_RED
 	light_system = OVERLAY_LIGHT
 	density = TRUE
+	bound_width = 64
 	SET_BASE_PIXEL(0, 2)
 	/// Hologram icon sheet used for startup/idle/closing projection effects.
 	var/hologram_icon_file = 'icons/obj/machines/minimap_table_hologram.dmi'
