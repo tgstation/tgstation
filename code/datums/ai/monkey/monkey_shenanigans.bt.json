@@ -1,0 +1,115 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/random_chance",
+			"config": { "chance": 0.05 },
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/use_in_hand"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/random_chance",
+			"config": { "chance": 0.2 },
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"config": { "key": "BB_monkey_current_press_target" },
+						"child": {
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance",
+							"config": { "chance": 0.5 },
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_monkey_current_press_target", 1, false]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/use_on_object",
+										"args": ["BB_monkey_current_press_target"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"config": {
+							"key": "BB_monkey_current_press_target",
+							"invert": true
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/monkey_find_press_target",
+							"args": ["BB_monkey_current_press_target"]
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": { "key": "BB_monkey_current_give_target" },
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/random_chance_from_key",
+						"config": { "chance_key": "BB_monkey_give_chance" },
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"args": ["BB_monkey_current_give_target", 1, false]
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/give",
+									"args": ["BB_monkey_current_give_target"]
+								}
+							]
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": { "key": "BB_monkey_current_give_target", "invert": true },
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_and_set/pawn_must_hold_item",
+						"args": [
+							"BB_monkey_current_give_target",
+							"/mob/living/carbon/human",
+							2
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "BB_monkey_tamed", "invert": true },
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/monkey_find_weapon"
+			}
+		}
+	]
+}

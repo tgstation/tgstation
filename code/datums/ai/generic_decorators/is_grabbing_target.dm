@@ -9,11 +9,13 @@
 
 /datum/bt_node/decorator/is_grabbing_target/check_condition(datum/ai_controller/controller)
 	var/atom/movable/target = controller.blackboard[key]
-	if(QDELETED(target) || controller.pawn.pulling != target)
+	var/mob/living/our_mob = controller.pawn
+	if(QDELETED(target) || our_mob.pulling != target)
 		controller.clear_blackboard_key(key)
 		return FALSE
 	return TRUE
 
 /datum/bt_node/decorator/is_grabbing_target/evaluate_for_observer(datum/ai_controller/controller)
 	var/atom/movable/target = controller.blackboard[key]
-	return !QDELETED(target) && controller.pawn.pulling == target
+	var/mob/living/our_mob = controller.pawn
+	return !QDELETED(target) && our_mob.pulling == target

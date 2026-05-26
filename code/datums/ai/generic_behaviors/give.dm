@@ -1,12 +1,7 @@
-/// Moves to and gives the pawn's active held item to a blackboard-keyed target.
-/datum/ai_behavior/give
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+/// gives the pawn's active held item to a blackboard-keyed target.
+/datum/bt_node/ai_behavior/give
 
-/datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	set_movement_target(controller, controller.blackboard[target_key])
-
-/datum/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
@@ -36,7 +31,7 @@
 	perform_flags |= try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
 	return AI_BEHAVIOR_DELAY | perform_flags
 
-/datum/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
+/datum/bt_node/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
 	if(QDELETED(held_item) || QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -61,6 +56,6 @@
 		target.put_in_hands(held_item)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)

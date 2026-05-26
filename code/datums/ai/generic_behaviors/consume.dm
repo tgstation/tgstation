@@ -1,8 +1,8 @@
 /// Uses the pawn's held food/drink item on themselves until consumed.
-/datum/ai_behavior/consume
+/datum/bt_node/ai_behavior/consume
 	action_cooldown = 2 SECONDS
 
-/datum/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hunger_timer_key)
+/datum/bt_node/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hunger_timer_key)
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target) || !living_pawn.is_holding(target))
@@ -12,7 +12,7 @@
 
 	return AI_BEHAVIOR_DELAY | (is_content(living_pawn, target) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
-/datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
+/datum/bt_node/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
 	. = ..()
 	if(!succeeded)
 		return
@@ -27,7 +27,7 @@
 		living_pawn.dropItemToGround(trash) // drops spawned trash items
 
 /// Check if the target is fully consumed, or being actively consumed, or if we're just bored of eating it
-/datum/ai_behavior/consume/proc/is_content(mob/living/living_pawm, obj/item/target)
+/datum/bt_node/ai_behavior/consume/proc/is_content(mob/living/living_pawm, obj/item/target)
 	if(QDELETED(target))
 		return TRUE
 	if(DOING_INTERACTION_WITH_TARGET(living_pawm, target))
@@ -36,3 +36,4 @@
 		return TRUE
 	// Even if we don't finish it all we can randomly decide to be done
 	return prob(10)
+

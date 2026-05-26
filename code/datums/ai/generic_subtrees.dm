@@ -96,3 +96,13 @@
 	if(controller.blackboard[BB_MONKEY_TAMED])
 		return FALSE
 	return prob(100 * ((NUTRITION_LEVEL_HUNGRY - monkey.nutrition) / NUTRITION_LEVEL_HUNGRY))
+
+/datum/bt_node/subtree/generic_hunger
+	behavior_tree_json = "generic_hunger.bt.json"
+	// @bt-generated begin
+	// @bt-generated end
+
+/datum/bt_node/subtree/generic_play_instrument
+	behavior_tree_json = "generic_play_instrument.bt.json"
+	// @bt-generated begin
+	// @bt-generated end

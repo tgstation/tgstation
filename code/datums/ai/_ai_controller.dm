@@ -1044,12 +1044,6 @@ multiple modular subtrees with behaviors
 	if(istype(node, /datum/bt_node/decorator))
 		var/datum/bt_node/decorator/deco = node
 		var/status = bt_node_status_marker(node)
-		var/condition_text = ""
-		// Show live condition result
-		var/condition_result = deco.check_condition(src)
-		if(deco.invert)
-			condition_result = !condition_result
-		condition_text = condition_result ? " (PASS)" : " (FAIL)"
 		// Show abort policy
 		var/observer_text = ""
 		if(deco.observer_abort != BT_ABORT_NONE)
@@ -1061,7 +1055,7 @@ multiple modular subtrees with behaviors
 			else if(deco.observer_abort == BT_ABORT_BOTH)
 				abort_name = "BOTH"
 			observer_text = " (abort-" + abort_name + ")"
-		lines += "[indent][status] [bt_node_label(node)][condition_text][observer_text]"
+		lines += "[indent][status] [bt_node_label(node)][observer_text]"
 		if(deco.child)
 			bt_append_full_tree_state(deco.child, lines, "[indent]  ")
 		return

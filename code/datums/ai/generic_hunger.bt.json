@@ -1,0 +1,45 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "bb_food_target" },
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/consume",
+						"args": ["bb_food_target", "BB_NEXT_HUNGRY"]
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"args": ["bb_food_target", 1, false]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/pick_up",
+								"args": ["bb_food_target", true]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "bb_food_target", "invert": true },
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat",
+				"args": ["bb_food_target", "/obj/item", 2]
+			}
+		}
+	]
+}

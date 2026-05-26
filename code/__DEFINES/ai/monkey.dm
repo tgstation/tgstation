@@ -23,3 +23,7 @@
 #define BB_MONKEY_PRESS_TYPEPATH "BB_monkey_press_typepath"
 /// The item the monkey is currently serving to someone
 #define BB_MONKEY_CURRENT_SERVED_ITEM "BB_monkey_current_served_item"
+/// Set to TRUE when the monkey's current pickup target is on a mob (pickpocket), null when it's on the floor
+#define BB_MONKEY_PICKUP_IS_PICKPOCKET "BB_monkey_pickup_is_pickpocket"
+/// List of nearby patrons the monkey can serve food to
+#define BB_MONKEY_PATRONS_NEARBY "BB_monkey_patrons_nearby"

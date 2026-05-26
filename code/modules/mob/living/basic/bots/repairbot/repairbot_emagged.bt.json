@@ -33,7 +33,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_ROBOT_TARGET", 0]
+								"args": ["BB_ROBOT_TARGET", 0, false]
 							}
 						]
 					}
@@ -67,7 +67,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_DECONSTRUCT_TARGET", 0]
+								"args": ["BB_DECONSTRUCT_TARGET", 0, false]
 							}
 						]
 					}

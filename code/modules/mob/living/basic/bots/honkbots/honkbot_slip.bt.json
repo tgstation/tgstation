@@ -30,9 +30,17 @@
 						"args": ["BB_SLIP_TARGET"]
 					},
 					{
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_SLIPPERY_TARGET", 0, true]
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/is_grabbing_target",
+						"config": {
+							"observer_abort": "BT_ABORT_SELF",
+							"key": "BB_SLIP_TARGET"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"args": ["BB_SLIPPERY_TARGET", 0, true]
+						}
 					},
 					{
 						"type": "leaf",

@@ -31,7 +31,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_VIBEBOT_PARTY_TARGET", 1]
+								"args": ["BB_VIBEBOT_PARTY_TARGET", 1, false]
 							}
 						]
 					}

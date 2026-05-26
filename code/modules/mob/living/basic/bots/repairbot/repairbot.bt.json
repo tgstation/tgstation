@@ -42,7 +42,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_REFILLABLE_TARGET", 0]
+										"args": ["BB_REFILLABLE_TARGET", 0, false]
 									}
 								]
 							}
@@ -80,7 +80,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_BREACHED_FLOOR", 0]
+										"args": ["BB_BREACHED_FLOOR", 0, false]
 									}
 								]
 							}
@@ -114,7 +114,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_GIRDER_TO_WALL_TARGET", 0]
+										"args": ["BB_GIRDER_TO_WALL_TARGET", 0, false]
 									}
 								]
 							}
@@ -148,7 +148,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_GIRDER_TARGET", 1]
+										"args": ["BB_GIRDER_TARGET", 1, false]
 									}
 								]
 							}
@@ -182,7 +182,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_WINDOW_FRAMETARGET", 0]
+										"args": ["BB_WINDOW_FRAMETARGET", 0, false]
 									}
 								]
 							}
@@ -216,7 +216,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_TILELESS_FLOOR", 0]
+										"args": ["BB_TILELESS_FLOOR", 0, false]
 									}
 								]
 							}
@@ -250,7 +250,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_WELDER_TARGET", 0]
+										"args": ["BB_WELDER_TARGET", 0, false]
 									}
 								]
 							}

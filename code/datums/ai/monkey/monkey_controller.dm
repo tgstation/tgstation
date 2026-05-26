@@ -7,13 +7,9 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/monkey_shenanigans,
-	)
+	behavior_tree_json = "monkey.bt.json"
+	// @bt-generated begin
+	// @bt-generated end
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/monkey,
 		BB_MONKEY_AGGRESSIVE = FALSE,
@@ -26,6 +22,7 @@ have ways of interacting with a specific mob and control it.
 		BB_SONG_LINES = MONKEY_SONG,
 		BB_RESISTING = FALSE,
 		BB_MONKEY_GIVE_CHANCE = 5,
+		BB_MONKEY_PICKUP_IS_PICKPOCKET = null,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
@@ -40,18 +37,6 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 	return ..()
 
-/datum/ai_controller/monkey/process(seconds_per_tick)
-
-	var/mob/living/living_pawn = src.pawn
-
-	if(!length(living_pawn.do_afters) && living_pawn.ai_controller.blackboard[BB_RESISTING])
-		living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, FALSE)
-
-	if(living_pawn.ai_controller.blackboard[BB_RESISTING])
-		return
-
-	. = ..()
-
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
 		ORGAN_SLOT_EYES = span_monkey("%PRONOUN_They stare%PRONOUN_s around with wild, primal eyes."),
@@ -61,14 +46,6 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/serve_food,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/monkey_shenanigans,
-	)
 	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
 
 /datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
@@ -150,49 +127,6 @@ have ways of interacting with a specific mob and control it.
 	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
 		var/obj/item/organ/brain/primate/monkeybrain = brain
 		monkeybrain.tripping = mode
-
-///re-used behavior pattern by monkeys for finding a weapon
-/datum/ai_controller/monkey/proc/TryFindWeapon()
-	var/mob/living/living_pawn = pawn
-
-	if(!(locate(/obj/item) in living_pawn.held_items))
-		set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
-
-	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
-		// We have a gun, what could we possibly want?
-		return FALSE
-
-	var/obj/item/weapon
-	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(2, living_pawn))
-		nearby_items += item
-
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands that's going to stop us from effectively attacking, we should get rid of it.
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
-
-	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
-
-	var/pickpocket = FALSE
-	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
-		if(held_weapon == weapon) // It's just the same one, not a held one
-			continue
-		pickpocket = TRUE
-		weapon = held_weapon
-
-	if(!weapon || (weapon in living_pawn.held_items))
-		return FALSE
-
-	if(weapon.force < 2) // our bite does 2 damage on average, no point in settling for anything less
-		return FALSE
-
-	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	if(pickpocket)
-		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket, BB_MONKEY_PICKUPTARGET)
-	else
-		queue_behavior(/datum/ai_behavior/monkey_equip/ground, BB_MONKEY_PICKUPTARGET)
-	return TRUE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)

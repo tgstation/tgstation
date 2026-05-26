@@ -1,0 +1,45 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "BB_SONG_INSTRUMENT" },
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/keep_playing_instrument",
+						"args": ["BB_SONG_INSTRUMENT"]
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/setup_instrument",
+								"args": ["BB_SONG_INSTRUMENT", "song_lines"]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/play_instrument",
+								"args": ["BB_SONG_INSTRUMENT"]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": { "key": "BB_SONG_INSTRUMENT", "invert": true },
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_hands",
+				"args": ["BB_SONG_INSTRUMENT", "/obj/item/instrument"]
+			}
+		}
+	]
+}
