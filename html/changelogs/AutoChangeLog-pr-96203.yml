@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "internal organs should not trigger needless updates in the char preview anymore"
