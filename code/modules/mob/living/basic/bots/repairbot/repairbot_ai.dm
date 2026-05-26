@@ -27,7 +27,7 @@
 											list("__t" = /datum/bt_node/ai_behavior/drag_target, "default_behavior_args" = list(BB_ROBOT_TARGET))\
 										)\
 									),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0))\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0, FALSE))\
 								)\
 							)\
 						),\
@@ -50,7 +50,7 @@
 								"finish_on_primary" = FALSE,\
 								"__c" = list(\
 									list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0))\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0, FALSE))\
 								)\
 							)\
 						),\
@@ -97,7 +97,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_REFILLABLE_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET, 0, FALSE))\
 										)\
 									)\
 								),\
@@ -121,7 +121,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_BREACHED_FLOOR)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BREACHED_FLOOR, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BREACHED_FLOOR, 0, FALSE))\
 										)\
 									)\
 								),\
@@ -144,7 +144,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET, 0, FALSE))\
 										)\
 									)\
 								),\
@@ -167,7 +167,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder, "default_behavior_args" = list(BB_GIRDER_BUILD_ABILITY, BB_GIRDER_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TARGET, 1))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TARGET, 1, FALSE))\
 										)\
 									)\
 								),\
@@ -190,7 +190,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET, 0, FALSE))\
 										)\
 									)\
 								),\
@@ -213,7 +213,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_TILELESS_FLOOR)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_TILELESS_FLOOR, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_TILELESS_FLOOR, 0, FALSE))\
 										)\
 									)\
 								),\
@@ -236,7 +236,7 @@
 										"finish_on_primary" = FALSE,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_WELDER_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WELDER_TARGET, 0))\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WELDER_TARGET, 0, FALSE))\
 										)\
 									)\
 								),\

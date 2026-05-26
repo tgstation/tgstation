@@ -29,6 +29,9 @@
 	if (controller.blackboard_key_exists(BB_SONG_INSTRUMENT))
 		return SUBTREE_RETURN_FINISH_PLANNING // Don't plan anything else if we're playing an instrument
 
+/datum/ai_behavior/setup_instrument
+
+/datum/ai_behavior/play_instrument
 
 /**
  * Generic Resist Subtree, resist if it makes sense to!
@@ -45,64 +48,76 @@
 		controller.queue_behavior(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
 		return SUBTREE_RETURN_FINISH_PLANNING //IM NOT DOING ANYTHING ELSE BUT EXTINGUISH MYSELF, GOOD GOD HAVE MERCY.
 
-/**
- * Generic Hunger Subtree,
- *
- * Requires at least a living mob that can hold items.
- *
- * relevant blackboards:
- * * BB_NEXT_HUNGRY - set by this subtree, is when the controller is next hungry
- */
-/datum/ai_planning_subtree/generic_hunger
-
-/datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.nutrition > NUTRITION_LEVEL_HUNGRY)
-		return
-
-	var/next_eat = controller.blackboard[BB_NEXT_HUNGRY]
-	if(!next_eat)
-		//inits the blackboard timer
-		next_eat = world.time + rand(0, 30 SECONDS)
-		controller.set_blackboard_key(BB_NEXT_HUNGRY, next_eat)
-
-	if(world.time < next_eat)
-		return
-
-	// find food
-	var/atom/food_target = controller.blackboard[BB_FOOD_TARGET]
-	if(isnull(food_target))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/food_or_drink/to_eat, BB_FOOD_TARGET, /obj/item, 2)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(living_pawn.is_holding(food_target))
-		controller.queue_behavior(/datum/ai_behavior/consume, BB_FOOD_TARGET, BB_NEXT_HUNGRY)
-	// it's been moved since we found it
-	else if(!isturf(food_target.loc))
-		// someone took it. we will fight over it!
-		if(isliving(food_target.loc) && will_fight_for_food(food_target.loc, living_pawn, controller))
-			controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, food_target.loc, MONKEY_FOOD_HATRED_AMOUNT)
-		// eh, find something else
-		else
-			controller.clear_blackboard_key(BB_FOOD_TARGET)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	else
-		controller.queue_behavior(/datum/ai_behavior/navigate_to_and_pick_up, BB_FOOD_TARGET, TRUE)
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_planning_subtree/generic_hunger/proc/will_fight_for_food(mob/living/thief, mob/living/monkey, datum/ai_controller/controller)
-	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
-		return TRUE
-	if(controller.blackboard[BB_MONKEY_TAMED])
-		return FALSE
-	return prob(100 * ((NUTRITION_LEVEL_HUNGRY - monkey.nutrition) / NUTRITION_LEVEL_HUNGRY))
-
 /datum/bt_node/subtree/generic_hunger
 	behavior_tree_json = "generic_hunger.bt.json"
 	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/consume, "default_behavior_args" = list("bb_food_target", BB_NEXT_HUNGRY)),\
+							list(\
+								"__t" = /datum/bt_node/composite/sequence,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("bb_food_target", 1, FALSE)),\
+									list("__t" = /datum/bt_node/ai_behavior/pick_up, "default_behavior_args" = list("bb_food_target", TRUE))\
+								)\
+							)\
+						)\
+					)\
+				),\
+				"key" = "bb_food_target"\
+			),\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat, "default_behavior_args" = list("bb_food_target", /obj/item, 2))\
+				),\
+				"key" = "bb_food_target",\
+				"invert" = TRUE\
+			)\
+		)\
+	)
 	// @bt-generated end
 
 /datum/bt_node/subtree/generic_play_instrument
 	behavior_tree_json = "generic_play_instrument.bt.json"
 	// @bt-generated begin
+	behavior_nodes = list(\
+		"__t" = /datum/bt_node/composite/selector,\
+		"__c" = list(\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list(\
+						"__t" = /datum/bt_node/composite/selector,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/keep_playing_instrument, "default_behavior_args" = list(BB_SONG_INSTRUMENT)),\
+							list(\
+								"__t" = /datum/bt_node/composite/sequence,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/setup_instrument, "default_behavior_args" = list(BB_SONG_INSTRUMENT, "song_lines")),\
+									list("__t" = /datum/bt_node/ai_behavior/play_instrument, "default_behavior_args" = list(BB_SONG_INSTRUMENT))\
+								)\
+							)\
+						)\
+					)\
+				),\
+				"key" = BB_SONG_INSTRUMENT\
+			),\
+			list(\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
+				"__c" = list(\
+					list("__t" = /datum/bt_node/ai_behavior/find_and_set/in_hands, "default_behavior_args" = list(BB_SONG_INSTRUMENT, /obj/item/instrument))\
+				),\
+				"key" = BB_SONG_INSTRUMENT,\
+				"invert" = TRUE\
+			)\
+		)\
+	)
 	// @bt-generated end

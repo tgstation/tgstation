@@ -3,7 +3,8 @@
 	action_cooldown = 2 SECONDS
 
 /datum/bt_node/ai_behavior/pick_up/setup(datum/ai_controller/controller, target_key, drop_held = TRUE)
-	return !QDELETED(controller.blackboard[target_key])
+	var/atom/target = controller.blackboard[target_key]
+	return !QDELETED(target)
 
 /datum/bt_node/ai_behavior/pick_up/perform(seconds_per_tick, datum/ai_controller/controller, target_key, drop_held = TRUE)
 	var/mob/living/living_pawn = controller.pawn
