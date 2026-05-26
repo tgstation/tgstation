@@ -192,7 +192,7 @@
 	var/modified_blood_volume = get_blood_volume(apply_modifiers = TRUE)
 
 	// Some effects are halved mid-combat.
-	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
+	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
 	var/word = pick("dizzy","woozy","faint")
 	switch(modified_blood_volume)
