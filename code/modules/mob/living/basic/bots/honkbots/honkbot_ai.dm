@@ -30,7 +30,7 @@
 											list(\
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CLOWN_FRIEND, 1, TRUE)),\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1, TRUE)),\
 													list("__t" = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION))\
 												)\
 											)\
@@ -74,7 +74,13 @@
 										"__t" = /datum/bt_node/composite/selector,\
 										"__c" = list(\
 											list("__t" = /datum/bt_node/ai_behavior/find_potential_targets, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)),\
-											list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET)),\
+											list(\
+												"__t" = /datum/bt_node/composite/sequence,\
+												"__c" = list(\
+													list("__t" = /datum/bt_node/ai_behavior/find_slippery_item, "default_behavior_args" = list(BB_SLIPPERY_TARGET)),\
+													list("__t" = /datum/bt_node/ai_behavior/bot_search/find_slip_victim, "default_behavior_args" = list(BB_SLIP_TARGET))\
+												)\
+											),\
 											list("__t" = /datum/bt_node/ai_behavior/find_clown_friend, "default_behavior_args" = list(BB_CLOWN_FRIEND))\
 										)\
 									)\
