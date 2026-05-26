@@ -479,15 +479,15 @@
 	if(alt_tray)
 		suffix = "-alt"
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', over_lowwater3[suffix])
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3"[suffix])
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', over_lownutri3[suffix])
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3"[suffix])
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', over_lowhealth3[suffix])
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3"[suffix])
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', over_alert3[suffix])
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3"[suffix])
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', over_harvest3[suffix])
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3"[suffix])
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
