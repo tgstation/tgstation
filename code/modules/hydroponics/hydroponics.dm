@@ -742,7 +742,6 @@
 		traitmut = traitmut,
 		stabmut = 0,
 	)
-	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
 /// Mutate the species of the plant into one of its mutations
 /obj/machinery/hydroponics/proc/mutatespecie()
@@ -761,7 +760,8 @@
 	var/message = span_warning("[oldPlantName] suddenly mutates into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/obj/machinery/hydroponics/proc/polymorph() // Polymorph a plant into another plant
+/// Transform the plant into a completely random species
+/obj/machinery/hydroponics/proc/polymorph()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
 		return
 
