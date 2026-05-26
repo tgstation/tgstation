@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 			reaction = new reaction(LAZYACCESS(json, "[reaction]"))
 		else
 			reaction = new reaction
-		if(!QDELETED(reaction))
+		if(!QDELETED(reaction)) // in case random recipe generation fail
 			reactions += reaction
 	// Ok so we're gonna do a thingTM here
 	// I want to distribute all our reactions such that each reagent id links to as few as possible
