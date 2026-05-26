@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(!istype(AM))
 		return
 
-	var/in_screen = (AM in user.client.screen) && AM.screen_loc
+	var/in_screen = AM.screen_loc && (AM in user.client.screen)
 	if (!in_screen)
 		var/list/check_locs = AM.vis_locs.Copy()
 		var/i = 1
@@ -131,15 +131,15 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			i += 1
 			if (!istype(other_check))
 				continue
-			if ((other_check in user.client.screen) && other_check.screen_loc)
+			if (other_check.screen_loc && (other_check in user.client.screen))
 				in_screen = TRUE
 				break
 			check_locs |= other_check.vis_locs
 
-	if(!in_screen)
-		if(hudfix_method && AM.loc)
-			anchor = get_atom_on_turf(anchor)
-		return
+		if(!in_screen)
+			if(hudfix_method && AM.loc)
+				anchor = get_atom_on_turf(anchor)
+			return
 
 	if(hudfix_method)
 		anchor = user

@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		show_station_trait_buttons()
 
 /datum/hud/proc/inventory_update(mob/viewer)
-	if (!mymob)
+	if (isnull(mymob))
 		return
 
 	for (var/slot_id in inventory_slots)
@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/update_inventory_slot(...)
 	var/slot_id = args[1]
-	if (!mymob)
+	if (isnull(mymob))
 		return
 	var/datum/inventory_slot/slot = inventory_slots[slot_id]
 	if (istype(slot))

@@ -49,6 +49,10 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		return
 
 	var/obj/item/slot_item = get_slot_item(owner)
+	update_slot_icon_contents(slot, slot_item)
+
+/// Updates the slot icon and its contents
+/datum/inventory_slot/proc/update_slot_icon_contents(atom/movable/screen/inventory/slot, obj/item/slot_item)
 	slot.update_appearance(UPDATE_ICON)
 	if (!slot_item)
 		slot.vis_contents.Cut()
@@ -87,15 +91,4 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		return
 
 	var/obj/item/slot_item = get_slot_item(owner, hand_index)
-	slot.update_appearance(UPDATE_ICON)
-	if (!slot_item)
-		slot.vis_contents.Cut()
-		return
-
-	if (slot_item in slot.vis_contents)
-		return
-
-	// Reset pixel offsets in order to make it fit the box
-	slot_item.pixel_x = slot_item.base_pixel_x
-	slot_item.pixel_y = slot_item.base_pixel_y
-	slot.vis_contents += slot_item
+	update_slot_icon_contents(slot, slot_item)
