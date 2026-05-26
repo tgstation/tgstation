@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Traitor Wraith cloaking module now reactivates after the appropriate amount of time has passed."

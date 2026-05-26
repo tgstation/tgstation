@@ -462,3 +462,22 @@
       the greater of the two effects is applied.'
   SmArtKar:
   - admin: Added conversion and deconversion logging to Lunatics
+2026-05-26:
+  EnterTheJake:
+  - bugfix: Traitor Wraith cloaking module now reactivates after the appropriate amount
+      of time has passed.
+  SmArtKar:
+  - bugfix: Fixed inventory items being stuck in ghosts' screens
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: the your mother hallucination for plasmapeople shows the plasmapersons
+      actual mother
+  Thunder12345:
+  - bugfix: The stray slow tile in Icebox perma has been removed.
+  lelandkemble:
+  - qol: Scanned wounds stay scanned while being healed
+  - bugfix: Ghost of Poly possession pulses the purple aura like it's supposed to
+  timothymtorres:
+  - bugfix: Fix negative bloodloss effects being ignored by determined status
+  vinylspiders:
+  - bugfix: internal organs should not trigger needless updates in the char preview
+      anymore
