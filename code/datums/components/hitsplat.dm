@@ -146,7 +146,7 @@
 			if(STAMINA)
 				text_color = COLOR_YELLOW
 
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 
 /obj/effect/overlay/vis/hitsplat/lore_accurate
