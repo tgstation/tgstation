@@ -50,3 +50,7 @@
 		info |= data_to_add
 	else
 		info += data_to_add
+
+/obj/item/paper/guides/recycler
+	name = "paper - 'garbage duty instructions'"
+	default_raw_text = "<h2>New Assignment</h2> You h
