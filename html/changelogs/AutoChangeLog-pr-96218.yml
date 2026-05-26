@@ -1,4 +1,0 @@
-author: "strandsofivy"
-delete-after: True
-changes:
-  - bugfix: "AIs should be able to access request consoles correctly now."

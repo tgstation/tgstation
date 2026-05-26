@@ -1,8 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - balance: "mending touch can partially heal limbs"
-  - balance: "mending touch no longer always transfers critical wounds when powered up"
-  - bugfix: "mending touch blood drain properly capped"
-  - code_imp: "removed unnecessary check from mending touch"
-  - spellcheck: "mending touch lose text reworded for clarity and it no longer assumes you only have one hand."
