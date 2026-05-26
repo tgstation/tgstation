@@ -5960,7 +5960,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/item/paper/guides/recycler,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "cbi" = (
