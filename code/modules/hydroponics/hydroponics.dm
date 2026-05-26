@@ -65,7 +65,12 @@
 	var/tray_flags = HYDROPONIC
 	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
-
+	///Indicator icon_states
+	var/watericon = "over_lowwater3"
+	var/nutriicon = "over_lownutri3"
+	var/lowhealthicon = "over_lowhealth3"
+	var/alerticon = "over_alert3"
+	var/harvesticon = "over_harvest3"
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -167,6 +172,16 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
+/obj/machinery/hydroponics/constructable/oldstyle
+	name = "hydroponics tray"
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "hydrotray3-alt"
+	watericon = "over_lowwater3-alt"
+	nutriicon = "over_lownutri3-alt"
+	lowhealthicon = "over_lowhealth3-alt"
+	alerticon = "over_alert3-alt"
+	harvesticon = "over_harvest3-alt"
+
 /obj/machinery/hydroponics/constructable/fullupgrade
 	name = "deluxe hydroponics tray"
 	desc = "A basin used to grown plants in, packed full of cutting-edge technology."
@@ -190,21 +205,6 @@
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
-
-	// Active power draw reduction inspired by stasis units in code\game\machinery\stasis.dm
-	// This really only matters if you're using the autogrow, because, by default, trays don't draw power.
-	// Not using energy rating because they're nonlinear and make the power draw reduction too generous.
-	var/total_rating = 0
-	for(var/datum/stock_part/part in component_parts)
-		total_rating += part.tier
-
-	/**
-	 * We sum up the part tier ratings, divide by how many upgradable parts we have (in this case, 3) for a modifier,
-	 * and divide the initial power usage by the modifier. Power draw thus becomes 1 kW / 500 W / 333.3 W / 250 W at time of writing.
-	 */
-	idle_power_usage = initial(idle_power_usage) / (total_rating / 3)
-	active_power_usage = initial(active_power_usage) / (total_rating / 3)
-	update_current_power_usage()
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
@@ -244,11 +244,16 @@
 		))
 	QDEL_NULL(our_snail)
 
-/obj/machinery/hydroponics/constructable/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/hydroponics/constructable/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(user, tool)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+	if (!user.combat_mode)
+		// handle opening the panel
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+			return
+		if(default_deconstruction_crowbar(I))
+			return
+
+	return ..()
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
@@ -392,16 +397,18 @@
 
 //This is where stability mutations exist now.
 			if(myseed.instability >= 80)
-				traitmutate(myseed.instability - 75) //Scaling odds of a random trait or chemical
+				var/mutation_chance = myseed.instability - 75
+				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow or having Prosophobic Inclination trait.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
-			if(myseed.instability >= 20 && prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
-				if(myseed.instability >= 40)
-					hardmutate(stabmut = myseed.instability >= 80 ? 5 : 0)
-				else
-					mutate(stabmut = 0)
+			if(myseed.instability >= 40)
+				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
+					hardmutate()
+			if(myseed.instability >= 20 )
+				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No mutation if Symbiotic Resilience trait is present.
+					mutate()
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -470,15 +477,15 @@
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', watericon)
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', nutriicon)
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', lowhealthicon)
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', alerticon)
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', harvesticon)
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -685,50 +692,15 @@
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
 
-/// Mutates the stats of the current seed
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
-	myseed?.mutate(
-		lifemut = lifemut,
-		endmut = endmut,
-		productmut = productmut,
-		yieldmut = yieldmut,
-		potmut = potmut,
-		wrmut = wrmut,
-		wcmut = wcmut,
-		traitmut = traitmut,
-		stabmut = stabmut,
-	)
+	if(!myseed)
+		return
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
-/// Mutate but with higher default values
 /obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
-	myseed?.mutate(
-		lifemut = lifemut,
-		endmut = endmut,
-		productmut = productmut,
-		yieldmut = yieldmut,
-		potmut = potmut,
-		wrmut = wrmut,
-		wcmut = wcmut,
-		traitmut = traitmut,
-		stabmut = stabmut,
-	)
+	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
 
-/// Mutate but only introduce a random trait
-/obj/machinery/hydroponics/proc/traitmutate(traitmut = 1)
-	myseed?.mutate(
-		lifemut = 0,
-		endmut = 0,
-		productmut = 0,
-		yieldmut = 0,
-		potmut = 0,
-		wrmut = 0,
-		wcmut = 0,
-		traitmut = traitmut,
-		stabmut = 0,
-	)
-
-/// Mutate the species of the plant into one of its mutations
-/obj/machinery/hydroponics/proc/mutatespecie()
+/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))
 		return
 
@@ -744,8 +716,7 @@
 	var/message = span_warning("[oldPlantName] suddenly mutates into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/// Transform the plant into a completely random species
-/obj/machinery/hydroponics/proc/polymorph()
+/obj/machinery/hydroponics/proc/polymorph() // Polymorph a plant into another plant
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
 		return
 
@@ -761,8 +732,7 @@
 	var/message = span_warning("[oldPlantName] suddenly polymorphs into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/// Mutates the weeds in the tray into a random weed plant (which can overtake existing plants)
-/obj/machinery/hydroponics/proc/mutateweed()
+/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if(weedlevel <= 5)
 		visible_message(span_warning("The few weeds in [src] seem to react, but only for a moment..."))
 		return
@@ -795,7 +765,6 @@
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
-	remove_shared_particles(/particles/pollen) //We shouldn't look like we're pollenating if we're dead.
 	if(update_icon)
 		update_appearance()
 
@@ -1169,9 +1138,6 @@
 	if(myseed)
 		to_chat(user, span_warning("[src] already has a plant growing in it!"))
 		return
-	if(young_plant.seed_flags & NO_PLANTING)
-		to_chat(user, span_warning("[young_plant] cannot be planted in [src]!"))
-		return
 	if(istype(young_plant, /obj/item/seeds/kudzu))
 		investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
 	if(!user.transferItemToLoc(young_plant, src))
@@ -1229,10 +1195,10 @@
 	var/datum/port/output/reagents_level
 
 /obj/item/circuit_component/hydroponics/populate_ports()
-	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_BOOLEAN)
+	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_NUMBER)
 
 	plant_status = add_output_port("Plant Status", PORT_TYPE_NUMBER)
-	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_BOOLEAN)
+	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_NUMBER)
 	plant_harvested = add_output_port("Plant Harvested", PORT_TYPE_SIGNAL)
 	last_harvest = add_output_port("Last Harvest Amount", PORT_TYPE_NUMBER)
 	plant_died = add_output_port("Plant Died", PORT_TYPE_SIGNAL)
