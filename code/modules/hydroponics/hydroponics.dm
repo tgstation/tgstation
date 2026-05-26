@@ -67,7 +67,7 @@
 	var/plant_offset_y = 0
 	///Suffix things
 	var/alt_tray = FALSE
-	var/suffix = ""
+	var/indicatorsuffix = ""
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -477,21 +477,21 @@
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
 	if(alt_tray)
-		suffix = "-alt"
+		indicatorsuffix = "-alt"
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3[suffix]")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3[indicatorsuffix]")
 		. += emissive_appearance(icon, "over_lowwater3[suffix]", src, alpha = src.alpha)
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3[suffix]")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3[indicatorsuffix]")
 		. += emissive_appearance(icon, "over_lownutri3[suffix]", src, alpha = src.alpha)
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3[suffix]")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3[indicatorsuffix]")
 		. += emissive_appearance(icon, "over_lowhealth3[suffix]", src, alpha = src.alpha)
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3[suffix]")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3[indicatorsuffix]")
 		. += emissive_appearance(icon, "over_alert3[suffix]", src, alpha = src.alpha)
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3[suffix]")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3[indicatorsuffix]")
 		. += emissive_appearance(icon, "over_harvest3[suffix]", src, alpha = src.alpha)
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
