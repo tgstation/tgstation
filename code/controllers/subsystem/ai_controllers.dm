@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	dependencies = list(
 		/datum/controller/subsystem/movement/ai_movement,
 	)
-	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
+	wait = 0.1 SECONDS //Plan every 1/10th second if required. In theory your AI should not be planning this much, but its useful because we want planning to be responsive when a previous plan ends.
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/currentrun = list()
 	///type of status we are interested in running

@@ -16,6 +16,16 @@
 /// Parallel fails when any child fails
 #define BT_PARALLEL_FAILURE_ANY 1
 
+// Subplan node completion policies (mutually exclusive per axis)
+/// Subplan propagates BT_SUCCESS when all children succeed (default)
+#define BT_SUBPLAN_SUCCEED_ON_SUCCESS 0
+/// Subplan resets and loops (returns BT_RUNNING) when all children succeed
+#define BT_SUBPLAN_LOOP_ON_SUCCESS 1
+/// Subplan propagates BT_FAILURE when a child fails (default)
+#define BT_SUBPLAN_FAIL_ON_FAILURE 0
+/// Subplan resets and loops (returns BT_RUNNING) when a child fails
+#define BT_SUBPLAN_LOOP_ON_FAILURE 1
+
 // Decorator observer abort modes (UE5 Behavior Tree style)
 /// No observer abort registered
 #define BT_ABORT_NONE 0

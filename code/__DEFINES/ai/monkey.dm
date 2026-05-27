@@ -27,3 +27,7 @@
 #define BB_MONKEY_PICKUP_IS_PICKPOCKET "BB_monkey_pickup_is_pickpocket"
 /// List of nearby patrons the monkey can serve food to
 #define BB_MONKEY_PATRONS_NEARBY "BB_monkey_patrons_nearby"
+/// Common emotes played during idle behavior
+#define BB_MONKEY_IDLE_COMMON_EMOTES "BB_monkey_idle_common_emotes"
+/// Rare emotes played during idle behavior
+#define BB_MONKEY_IDLE_RARE_EMOTES "BB_monkey_idle_rare_emotes"

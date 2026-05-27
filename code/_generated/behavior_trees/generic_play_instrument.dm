@@ -8,6 +8,13 @@
 					list(\
 						"__t" = /datum/bt_node/composite/selector,\
 						"__c" = list(\
+							list(\
+								"__t" = /datum/bt_node/decorator/is_holding_target,\
+								"__c" = list(\
+									list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list(BB_SONG_INSTRUMENT))\
+								),\
+								"observer_abort" = BT_ABORT_LOWER_PRIORITY\
+							),\
 							list("__t" = /datum/bt_node/ai_behavior/keep_playing_instrument, "default_behavior_args" = list(BB_SONG_INSTRUMENT)),\
 							list(\
 								"__t" = /datum/bt_node/composite/sequence,\

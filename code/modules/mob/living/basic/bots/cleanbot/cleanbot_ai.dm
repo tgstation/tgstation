@@ -85,7 +85,7 @@
 	if(QDELETED(target))
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] execute_clean: target deleted")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(get_dist(living_pawn, target) > 0)
+	if(get_dist(living_pawn, target) > 1)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] cleaning [target]", get_turf(target), "Cleaning")
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)

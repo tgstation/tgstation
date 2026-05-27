@@ -1,57 +1,119 @@
 {
-	"type": "selector",
-	"children": [
-		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
-				"key": "BB_monkey_current_attack_target",
-				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"key": "BB_monkey_current_attack_target",
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/pawn_health_below",
+				"config": {
+					"health_threshold": 40
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/run_away_from_target",
+					"args": ["BB_monkey_current_attack_target"]
+				}
 			},
-			"child": {
-				"type": "selector",
-				"children": [
-					{
-						"type": "decorator",
-						"decorator": "/datum/bt_node/decorator/pawn_health_below",
-						"config": { "health_threshold": 40 },
-						"child": {
+			{
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/monkey_find_weapon"
+			},
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+				"config": {
+					"cooldown_key": "BB_monkey_recruit_cooldown"
+				},
+				"child": {
+					"type": "sequence",
+					"children": [
+						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/run_away_from_target",
+							"behavior": "/datum/bt_node/ai_behavior/recruit_monkeys",
 							"args": ["BB_monkey_current_attack_target"]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+							"args": ["BB_monkey_recruit_cooldown", "MONKEY_RECRUIT_COOLDOWN"]
 						}
-					},
-					{
-						"type": "subtree",
-						"subtype": "/datum/bt_node/subtree/monkey_find_weapon"
-					},
-					{
-						"type": "decorator",
-						"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-						"config": { "cooldown_key": "BB_monkey_recruit_cooldown" },
-						"child": {
-							"type": "sequence",
-							"children": [
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/recruit_monkeys",
-									"args": ["BB_monkey_current_attack_target"]
-								},
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-									"args": [
-										"BB_monkey_recruit_cooldown",
-										"MONKEY_RECRUIT_COOLDOWN"
-									]
-								}
+					]
+				}
+			},
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
+				"config": {
+					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+					"invert": true,
+					"key": "BB_monkey_current_attack_target",
+					"max_stat": "UNCONSCIOUS"
+				},
+				"child": {
+					"type": "sequence",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": {
+								"key": "BB_monkey_target_disposal",
+								"invert": true
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+								"args": [
+									"BB_monkey_target_disposal",
+									"/obj/machinery/disposal",
+									9
+								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"args": ["BB_monkey_current_attack_target", 1, true]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/grab_target",
+							"args": ["BB_monkey_current_attack_target"]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"args": ["BB_monkey_target_disposal", 1, true]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/stuff_in_disposal",
+							"args": [
+								"BB_monkey_current_attack_target",
+								"BB_monkey_target_disposal"
 							]
 						}
-					},
+					]
+				}
+			},
+			{
+				"type": "parallel",
+				"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+				"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+				"repeat_secondary": true,
+				"finish_on_primary": true,
+				"children": [
 					{
 						"type": "parallel",
 						"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
 						"children": [
 							{
 								"type": "leaf",
@@ -61,86 +123,24 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_monkey_current_attack_target", 1, false]
-							},
-							{
-								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/random_chance",
-								"config": { "chance": 0.25 },
-								"child": {
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey"
-								}
+								"args": ["BB_monkey_current_attack_target", 1, true]
 							}
 						]
 					},
 					{
-						"type": "sequence",
-						"children": [
-							{
-								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": {
-									"key": "BB_monkey_target_disposal",
-									"invert": true
-								},
-								"child": {
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-									"args": [
-										"BB_monkey_target_disposal",
-										"/obj/machinery/disposal",
-										9
-									]
-								}
-							},
-							{
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_monkey_current_attack_target", 1, false]
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/grab_target",
-										"args": ["BB_monkey_current_attack_target"]
-									}
-								]
-							},
-							{
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_monkey_target_disposal", 1, false]
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/stuff_in_disposal",
-										"args": [
-											"BB_monkey_current_attack_target",
-											"BB_monkey_target_disposal"
-										]
-									}
-								]
-							}
-						]
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/random_chance",
+						"config": {
+							"chance": 0.25
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey",
+							"args": []
+						}
 					}
 				]
 			}
-		},
-		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_monkey_current_attack_target", "invert": true },
-			"child": {
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
-				"args": ["BB_monkey_current_attack_target", "BB_monkey_enemies"]
-			}
-		}
-	]
+		]
+	}
 }

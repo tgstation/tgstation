@@ -21,8 +21,9 @@ have ways of interacting with a specific mob and control it.
 		BB_RESISTING = FALSE,
 		BB_MONKEY_GIVE_CHANCE = 5,
 		BB_MONKEY_PICKUP_IS_PICKPOCKET = null,
+		BB_MONKEY_IDLE_COMMON_EMOTES = list("screech", "roar"),
+		BB_MONKEY_IDLE_RARE_EMOTES = list("scratch", "jump", "roll", "tail"),
 	)
-	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/targeting_strategy/basic/monkey
 
@@ -42,10 +43,6 @@ have ways of interacting with a specific mob and control it.
 	AddElement(/datum/element/ai_control_examine, control_examine)
 	return ..()
 
-/datum/ai_controller/monkey/pun_pun
-	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
-
 /datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
@@ -55,6 +52,8 @@ have ways of interacting with a specific mob and control it.
 	set_blackboard_key(BB_MONKEY_TAMED, TRUE)
 	set_blackboard_key(BB_MONKEY_GIVE_CHANCE, 30)
 	set_blackboard_key(BB_MONKEY_PRESS_TYPEPATH, /obj/structure/desk_bell)
+	override_blackboard_key(BB_MONKEY_IDLE_COMMON_EMOTES, list("tunesing", "dance", "bow"))
+	override_blackboard_key(BB_MONKEY_IDLE_RARE_EMOTES, list("clear", "sign", "tail"))
 	set_trip_mode(mode = FALSE)
 
 /datum/ai_controller/monkey/angry

@@ -105,6 +105,76 @@
 	running_child_index -= controller
 
 /**
+ * Subplan node: runs children like a sequence (stops on first failure or running child),
+ * but applies configurable restart policies when the run completes instead of propagating
+ * the result directly.
+ *
+ * success_policy:
+ *   BT_SUBPLAN_SUCCEED_ON_SUCCESS (default) — propagates BT_SUCCESS when all children succeed.
+ *   BT_SUBPLAN_LOOP_ON_SUCCESS              — resets all children and returns BT_RUNNING, restarting next tick.
+ *
+ * failure_policy:
+ *   BT_SUBPLAN_FAIL_ON_FAILURE (default) — propagates BT_FAILURE when a child fails.
+ *   BT_SUBPLAN_LOOP_ON_FAILURE           — resets all children and returns BT_RUNNING, restarting next tick.
+ *
+ * Combining both loop policies creates an infinite loop that only exits via an external
+ * observer abort or CancelActions().
+ */
+/datum/bt_node/composite/subplan
+	/// BT_SUBPLAN_SUCCEED_ON_SUCCESS: propagate success (default). BT_SUBPLAN_LOOP_ON_SUCCESS: restart.
+	var/success_policy = BT_SUBPLAN_SUCCEED_ON_SUCCESS
+	/// BT_SUBPLAN_FAIL_ON_FAILURE: propagate failure (default). BT_SUBPLAN_LOOP_ON_FAILURE: restart.
+	var/failure_policy = BT_SUBPLAN_FAIL_ON_FAILURE
+	/// Per-controller index of the child that last returned BT_RUNNING. 1-based. Keyed by controller ref.
+	var/alist/running_child_index = alist()
+
+/datum/bt_node/composite/subplan/tick(datum/ai_controller/controller, seconds_per_tick)
+	if(!should_tick(controller))
+		return tick_results[controller] || BT_RUNNING
+
+	var/start = running_child_index[controller] || 1
+	for(var/i in start to length(children))
+		var/datum/bt_node/child = children[i]
+		var/child_result = child.tick(controller, seconds_per_tick)
+		if(child_result == BT_RUNNING)
+			running_child_index[controller] = i
+			if(tick_rate)
+				tick_cooldowns[controller] = world.time
+				tick_results[controller] = BT_RUNNING
+			return BT_RUNNING
+		if(child_result == BT_FAILURE)
+			running_child_index -= controller
+			var/result
+			if(failure_policy == BT_SUBPLAN_LOOP_ON_FAILURE)
+				for(var/datum/bt_node/c in children)
+					c.reset_tick_state(controller)
+				result = BT_RUNNING
+			else
+				result = BT_FAILURE
+			if(tick_rate)
+				tick_cooldowns[controller] = world.time
+				tick_results[controller] = result
+			return result
+
+	// All children succeeded
+	running_child_index -= controller
+	var/result
+	if(success_policy == BT_SUBPLAN_LOOP_ON_SUCCESS)
+		for(var/datum/bt_node/c in children)
+			c.reset_tick_state(controller)
+		result = BT_RUNNING
+	else
+		result = BT_SUCCESS
+	if(tick_rate)
+		tick_cooldowns[controller] = world.time
+		tick_results[controller] = result
+	return result
+
+/datum/bt_node/composite/subplan/reset_tick_state(datum/ai_controller/controller)
+	. = ..()
+	running_child_index -= controller
+
+/**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.
  * Success and failure are determined by the configurable success_policy and failure_policy.
  *

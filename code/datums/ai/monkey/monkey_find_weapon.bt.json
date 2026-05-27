@@ -2,23 +2,32 @@
 	"type": "selector",
 	"children": [
 		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/monkey_find_weapon",
+			"args": []
+		},
+		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_monkey_pickuptarget" },
+			"config": {
+				"key": "BB_monkey_pickuptarget"
+			},
 			"child": {
 				"type": "selector",
 				"children": [
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": { "key": "BB_monkey_pickup_is_pickpocket" },
+						"config": {
+							"key": "BB_monkey_pickup_is_pickpocket"
+						},
 						"child": {
 							"type": "sequence",
 							"children": [
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_pickuptarget", 1, false]
+									"args": ["BB_monkey_pickuptarget", 1, true]
 								},
 								{
 									"type": "leaf",
@@ -34,7 +43,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_monkey_pickuptarget", 1, false]
+								"args": ["BB_monkey_pickuptarget", 1, true]
 							},
 							{
 								"type": "leaf",
@@ -44,15 +53,6 @@
 						]
 					}
 				]
-			}
-		},
-		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_monkey_pickuptarget", "invert": true },
-			"child": {
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/monkey_find_weapon"
 			}
 		}
 	]

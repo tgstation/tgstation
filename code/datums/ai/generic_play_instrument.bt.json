@@ -4,10 +4,24 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_SONG_INSTRUMENT" },
+			"config": {
+				"key": "BB_SONG_INSTRUMENT"
+			},
 			"child": {
 				"type": "selector",
 				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/is_holding_target",
+						"config": {
+							"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+							"args": ["BB_SONG_INSTRUMENT"]
+						}
+					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/keep_playing_instrument",
@@ -34,7 +48,10 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_SONG_INSTRUMENT", "invert": true },
+			"config": {
+				"key": "BB_SONG_INSTRUMENT",
+				"invert": true
+			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_hands",
