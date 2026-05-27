@@ -14,17 +14,17 @@
 					),\
 					/datum/bt_node/subtree/monkey_find_weapon,\
 					list(\
-						"__t" = /datum/bt_node/decorator/key_off_cooldown,\
+						"__t" = /datum/bt_node/decorator/cooldown,\
 						"__c" = list(\
 							list(\
 								"__t" = /datum/bt_node/composite/sequence,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/recruit_monkeys, "default_behavior_args" = list("BB_monkey_current_attack_target")),\
-									list("__t" = /datum/bt_node/ai_behavior/set_bb_cooldown, "default_behavior_args" = list("BB_monkey_recruit_cooldown", MONKEY_RECRUIT_COOLDOWN))\
+									list("__t" = /datum/bt_node/ai_behavior/recruit_monkeys, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
 								)\
 							)\
 						),\
-						"cooldown_key" = "BB_monkey_recruit_cooldown"\
+						"cooldown_key" = "BB_monkey_recruit_cooldown",\
+						"cooldown_duration" = 60\
 					),\
 					list(\
 						"__t" = /datum/bt_node/decorator/mob_stat_at_least,\
@@ -48,9 +48,9 @@
 							)\
 						),\
 						"observer_abort" = BT_ABORT_LOWER_PRIORITY,\
-						"invert" = TRUE,\
+						"invert" = FALSE,\
 						"key" = "BB_monkey_current_attack_target",\
-						"max_stat" = UNCONSCIOUS\
+						"min_stat" = UNCONSCIOUS\
 					),\
 					list(\
 						"__t" = /datum/bt_node/composite/parallel,\
@@ -66,16 +66,30 @@
 								"repeat_secondary" = TRUE,\
 								"finish_on_primary" = TRUE,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/monkey_attack_mob, "default_behavior_args" = list("BB_monkey_current_attack_target")),\
+									list(\
+										"__t" = /datum/bt_node/composite/subplan,\
+										"success_policy" = BT_SUBPLAN_LOOP_ON_SUCCESS,\
+										"failure_policy" = BT_SUBPLAN_LOOP_ON_FAILURE,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/monkey_attack_mob, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
+										)\
+									),\
 									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_current_attack_target", 1, TRUE))\
 								)\
 							),\
 							list(\
-								"__t" = /datum/bt_node/decorator/random_chance,\
+								"__t" = /datum/bt_node/decorator/cooldown,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/battle_screech/monkey, "default_behavior_args" = list())\
+									list(\
+										"__t" = /datum/bt_node/decorator/random_chance,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/battle_screech/monkey, "default_behavior_args" = list())\
+										),\
+										"chance" = 0.25\
+									)\
 								),\
-								"chance" = 0.25\
+								"cooldown_key" = BB_BATTLE_SCREECH_COOLDOWN,\
+								"cooldown_duration" = 5\
 							)\
 						)\
 					)\

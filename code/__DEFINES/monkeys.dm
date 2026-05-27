@@ -39,6 +39,3 @@
 #define MONKEY_CALMED_HATRED_AMOUNT -2
 /// Monkey was angered, such as from alcohol
 #define MONKEY_ANGERED_HATRED_AMOUNT 2
-
-///Monkey recruit cooldown
-#define MONKEY_RECRUIT_COOLDOWN (1 MINUTES)

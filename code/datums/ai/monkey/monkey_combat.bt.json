@@ -26,9 +26,10 @@
 			},
 			{
 				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+				"decorator": "/datum/bt_node/decorator/cooldown",
 				"config": {
-					"cooldown_key": "BB_monkey_recruit_cooldown"
+					"cooldown_key": "BB_monkey_recruit_cooldown",
+					"cooldown_duration": 60
 				},
 				"child": {
 					"type": "sequence",
@@ -37,11 +38,6 @@
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/recruit_monkeys",
 							"args": ["BB_monkey_current_attack_target"]
-						},
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-							"args": ["BB_monkey_recruit_cooldown", "MONKEY_RECRUIT_COOLDOWN"]
 						}
 					]
 				}
@@ -51,9 +47,9 @@
 				"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
 				"config": {
 					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-					"invert": true,
+					"invert": false,
 					"key": "BB_monkey_current_attack_target",
-					"max_stat": "UNCONSCIOUS"
+					"min_stat": "UNCONSCIOUS"
 				},
 				"child": {
 					"type": "sequence",
@@ -116,9 +112,16 @@
 						"finish_on_primary": true,
 						"children": [
 							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/monkey_attack_mob",
-								"args": ["BB_monkey_current_attack_target"]
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/monkey_attack_mob",
+										"args": ["BB_monkey_current_attack_target"]
+									}
+								]
 							},
 							{
 								"type": "leaf",
@@ -129,14 +132,22 @@
 					},
 					{
 						"type": "decorator",
-						"decorator": "/datum/bt_node/decorator/random_chance",
+						"decorator": "/datum/bt_node/decorator/cooldown",
 						"config": {
-							"chance": 0.25
+							"cooldown_key": "BB_BATTLE_SCREECH_COOLDOWN",
+							"cooldown_duration": 5
 						},
 						"child": {
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey",
-							"args": []
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance",
+							"config": {
+								"chance": 0.25
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey",
+								"args": []
+							}
 						}
 					}
 				]

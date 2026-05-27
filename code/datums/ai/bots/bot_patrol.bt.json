@@ -1,8 +1,9 @@
 {
 	"type": "decorator",
-	"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+	"decorator": "/datum/bt_node/decorator/cooldown",
 	"config": {
-		"cooldown_key": "BB_BOT_BEACON_COOLDOWN"
+		"cooldown_key": "BB_BOT_BEACON_COOLDOWN",
+		"cooldown_duration": 30
 	},
 	"child": {
 		"type": "decorator",

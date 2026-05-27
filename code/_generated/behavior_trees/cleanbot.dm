@@ -101,7 +101,7 @@
 								"__t" = /datum/bt_node/composite/selector,\
 								"__c" = list(\
 									list(\
-										"__t" = /datum/bt_node/decorator/key_off_cooldown,\
+										"__t" = /datum/bt_node/decorator/cooldown,\
 										"__c" = list(\
 											list(\
 												"__t" = /datum/bt_node/decorator/bb_key_set,\
@@ -110,16 +110,17 @@
 														"__t" = /datum/bt_node/composite/sequence,\
 														"__c" = list(\
 															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET, 0, TRUE, /datum/ai_movement/basic_avoidance)),\
-															list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET)),\
-															list("__t" = /datum/bt_node/ai_behavior/set_bb_cooldown, "default_behavior_args" = list(BB_ACID_SPRAY_COOLDOWN, 30))\
+															list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET))\
 														)\
 													)\
 												),\
-												"key" = BB_ACID_SPRAY_TARGET,\
-												"observer_abort" = BT_ABORT_BOTH\
+												"observer_abort" = BT_ABORT_LOWER_PRIORITY,\
+												"key" = BB_ACID_SPRAY_TARGET\
 											)\
 										),\
-										"cooldown_key" = BB_ACID_SPRAY_COOLDOWN\
+										"observer_abort" = BT_ABORT_LOWER_PRIORITY,\
+										"cooldown_key" = BB_ACID_SPRAY_COOLDOWN,\
+										"cooldown_duration" = 30\
 									),\
 									list("__t" = /datum/bt_node/ai_behavior/use_mob_ability, "default_behavior_args" = list(BB_CLEANBOT_FOAM)),\
 									list(\

@@ -1,6 +1,6 @@
 /datum/bt_node/subtree/bot_patrol
 	behavior_nodes = list(\
-		"__t" = /datum/bt_node/decorator/key_off_cooldown,\
+		"__t" = /datum/bt_node/decorator/cooldown,\
 		"__c" = list(\
 			list(\
 				"__t" = /datum/bt_node/decorator/bot_mode_flag,\
@@ -35,5 +35,6 @@
 				"flag" = BOT_MODE_AUTOPATROL\
 			)\
 		),\
-		"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
+		"cooldown_key" = BB_BOT_BEACON_COOLDOWN,\
+		"cooldown_duration" = 30\
 	)

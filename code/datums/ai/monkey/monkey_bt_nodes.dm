@@ -197,9 +197,6 @@
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
 
 	if(QDELETED(target) || !strategy.can_attack(living_pawn, target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	if(target.stat) // target is down, let disposal take over
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/obj/item/holding_weapon
@@ -211,7 +208,7 @@
 	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)
 
 	if(!attack_results || controller.blackboard[BB_MONKEY_AGGRESSIVE])
-		return AI_BEHAVIOR_DELAY
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
 	if(isnull(hatred_value))
@@ -219,7 +216,7 @@
 		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 
 	if(!SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
-		return AI_BEHAVIOR_DELAY
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	hatred_value--
 	if(hatred_value <= 0)
@@ -227,7 +224,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
-	return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

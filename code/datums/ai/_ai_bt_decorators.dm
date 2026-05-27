@@ -19,25 +19,29 @@
 	var/observer_abort = BT_ABORT_NONE
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
-	///Tracks per-controller whether the child is currently BT_RUNNING. When observer_abort == BT_ABORT_NONE and the latch is set, tick() skips check_condition() entirely and delegates directly to child.tick().
+	///Tracks per-controller whether the child is currently BT_RUNNING. When the latch is set, tick() skips check_condition() and delegates directly to child.tick().
 	var/alist/child_active = alist()
+	/// Set to TRUE by setup_bt_observers() when this decorator has signal observers registered.
+	/// When TRUE with observer_abort set, tick() latches like BT_ABORT_NONE and trusts signals for reactivity.
+	/// When FALSE with observer_abort set, tick() re-evaluates check_condition() every tick as a polling fallback.
+	var/has_observer_signals = FALSE
 
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick(controller))
 		return tick_results[controller] || BT_FAILURE
 
+	// Latch: skip check_condition when child is running, unless we're polling (observer_abort set but no signals).
+	// Signal-observer decorators rely on on_observed_change() for reactivity, so no per-tick recheck needed.
 	var/result
-	// Non-observer decorators latch once the child is running — skip the condition re-check
-	// on subsequent ticks so a transient condition drop doesn't wrongly abort the child.
-	// Observer decorators re-evaluate every tick; reactive cancellation is on_observed_change.
-	if(observer_abort == BT_ABORT_NONE && child_active[controller])
+	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
+	if(no_ticking_condition && child_active[controller])
 		result = child.tick(controller, seconds_per_tick)
 	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		result = child.tick(controller, seconds_per_tick)
 
-	if(observer_abort == BT_ABORT_NONE)
+	if(no_ticking_condition)
 		if(result == BT_RUNNING)
 			child_active[controller] = TRUE
 		else

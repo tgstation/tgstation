@@ -2,7 +2,8 @@
 //Generic BB keys
 ///Use this if you need a generic variable for a target; Use this if you don't have multiple different things to target in your ai (PROTIP: YOU BASICALLY NEVER DO!)
 #define BB_CURRENT_TARGET "Current Target"
-
+///For any battle screech cooldowns
+#define BB_BATTLE_SCREECH_COOLDOWN "Battle Screech Cooldown"
 
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree

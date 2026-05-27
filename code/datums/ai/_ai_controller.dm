@@ -355,11 +355,14 @@ multiple modular subtrees with behaviors
 		if(istype(node, /datum/bt_node/decorator))
 			var/datum/bt_node/decorator/dec = node
 			if(LAZYLEN(dec.get_pawn_observe_signals()))
+				dec.has_observer_signals = TRUE
 				if(isnull(bt_pawn_observer_nodes))
 					bt_pawn_observer_nodes = list()
 				if(!(dec in bt_pawn_observer_nodes)) // deduplicate: same singleton may appear twice in a tree
 					bt_pawn_observer_nodes += dec
 					dec.register_pawn_observer(pawn)
+			else if(dec.observer_abort != BT_ABORT_NONE)
+				stack_trace("[type] has [dec.type] with observer_abort=[dec.observer_abort] but get_pawn_observe_signals() returned nothing. The abort policy will never fire reactively.")
 			if(dec.child)
 				to_visit += dec.child
 		else if(istype(node, /datum/bt_node/composite))

@@ -153,16 +153,18 @@
 						"children": [
 							{
 								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+								"decorator": "/datum/bt_node/decorator/cooldown",
 								"config": {
-									"cooldown_key": "BB_ACID_SPRAY_COOLDOWN"
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"cooldown_key": "BB_ACID_SPRAY_COOLDOWN",
+									"cooldown_duration": 30
 								},
 								"child": {
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/bb_key_set",
 									"config": {
-										"key": "BB_ACID_SPRAY_TARGET",
-										"observer_abort": "BT_ABORT_BOTH"
+										"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+										"key": "BB_ACID_SPRAY_TARGET"
 									},
 									"child": {
 										"type": "sequence",
@@ -181,11 +183,6 @@
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/execute_clean",
 												"args": ["BB_ACID_SPRAY_TARGET"]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-												"args": ["BB_ACID_SPRAY_COOLDOWN", 30]
 											}
 										]
 									}

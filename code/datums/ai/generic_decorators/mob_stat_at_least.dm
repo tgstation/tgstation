@@ -5,6 +5,9 @@
 	/// Minimum stat value (inclusive) for the condition to pass. Default: CONSCIOUS.
 	var/min_stat = CONSCIOUS
 
+/datum/bt_node/decorator/mob_stat_at_least/get_pawn_observe_signals()
+	return list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
+
 /datum/bt_node/decorator/mob_stat_at_least/check_condition(datum/ai_controller/controller)
 	var/mob/target = controller.blackboard[key]
 	if(!ismob(target))

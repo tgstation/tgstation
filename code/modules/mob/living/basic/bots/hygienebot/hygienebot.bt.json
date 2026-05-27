@@ -27,30 +27,12 @@
 								"key": "BB_WASH_TARGET"
 							},
 							"child": {
-								"type": "selector",
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
 								"children": [
-									{
-										"type": "decorator",
-										"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-										"config": {
-											"cooldown_key": "BB_TRASH_TALK_COOLDOWN"
-										},
-										"child": {
-											"type": "sequence",
-											"children": [
-												{
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/commence_trashtalk",
-													"args": ["BB_WASH_TARGET"]
-												},
-												{
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-													"args": ["BB_TRASH_TALK_COOLDOWN", 4]
-												}
-											]
-										}
-									},
 									{
 										"type": "sequence",
 										"children": [
@@ -70,6 +52,25 @@
 												"args": ["BB_WASH_TARGET"]
 											}
 										]
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/cooldown",
+										"config": {
+											"observer_abort": "BT_ABORT_NONE",
+											"cooldown_key": "BB_TRASH_TALK_COOLDOWN",
+											"cooldown_duration": 4
+										},
+										"child": {
+											"type": "sequence",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/commence_trashtalk",
+													"args": ["BB_WASH_TARGET"]
+												}
+											]
+										}
 									}
 								]
 							}

@@ -1,8 +1,9 @@
 {
 	"type": "decorator",
-	"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+	"decorator": "/datum/bt_node/decorator/cooldown",
 	"config": {
-		"cooldown_key": "BB_SALUTE_COOLDOWN"
+		"cooldown_key": "BB_SALUTE_COOLDOWN",
+		"cooldown_duration": 60
 	},
 	"child": {
 		"type": "sequence",
@@ -16,11 +17,6 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/salute_authority",
 				"args": ["BB_SALUTE_TARGET", "BB_SALUTE_MESSAGES"]
-			},
-			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-				"args": ["BB_SALUTE_COOLDOWN", "BOT_COMMISSIONED_SALUTE_DELAY"]
 			}
 		]
 	}
