@@ -1662,4 +1662,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Sunlight on this turf is blocked and thus you can't get solar power or whatever
 #define TRAIT_TURF_SUN_BLOCKED "turf_sun_blocked"
 
+/// Makes the owner immune from the pacification from synthpax
+#define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
+
 // END TRAIT DEFINES

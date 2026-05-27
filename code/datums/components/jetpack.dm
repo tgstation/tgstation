@@ -109,7 +109,7 @@
 	RegisterSignal(new_user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(stabilize))
 	if (effect_type)
 		setup_trail(new_user)
-	new_user.inertia_move_multiplier /= drift_force // lower multiplier = faster drifting
+	new_user.inertia_move_multiplier_active /= drift_force // lower multiplier = faster drifting
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/old_user)
 	SIGNAL_HANDLER
@@ -126,7 +126,7 @@
 		COMSIG_MOVABLE_SPACEMOVE,
 	))
 	QDEL_NULL(trail)
-	old_user.inertia_move_multiplier *= drift_force
+	old_user.inertia_move_multiplier_active *= drift_force
 
 /datum/component/jetpack/proc/move_react(mob/source)
 	SIGNAL_HANDLER
