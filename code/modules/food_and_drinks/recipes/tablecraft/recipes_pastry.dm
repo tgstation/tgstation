@@ -768,6 +768,6 @@
 		/obj/item/food/appleslice = 1,
 	)
 	result = /obj/item/food/apple_fritter
-	added_foodtypes = GRAIN|FRIED
+	added_foodtypes = GRAIN|FRUIT|FRIED
 	dish_category = DISH_PASTRY
 	meal_category = MEAL_DESSERT
