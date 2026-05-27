@@ -325,7 +325,7 @@
 	toolspeed = 0.7 // Faster than a normal saw.
 	hacked = FALSE
 	active_force = 30
-	block_chance = 0
+	block_chance = 0 //Unlike assault cyborgs, syndicate medical cyborgs don't get any blocking capabilities
 	sword_color_icon = null // Stops icon from breaking when turned on.
 
 /obj/item/melee/energy/sword/pirate
