@@ -505,3 +505,12 @@
   vinylspiders:
   - bugfix: internal organs should not trigger needless updates in the char preview
       anymore
+2026-05-27:
+  SirNightKnight (sprites), JohnFulpWillard:
+  - rscdel: Deleted the "IC" tab of the stat panel.
+  - bugfix: Lightgeists can't emote or pull as intended.
+  - bugfix: Blob minions can't pull again.
+  - qol: Martial Art users now have an action button for their artstyle-related businesses,
+      rather than it being in the stat panel.
+  - qol: You can now right-click the move up/down UI buttons to look in the direction
+      without moving.
