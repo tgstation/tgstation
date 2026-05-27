@@ -134,6 +134,10 @@
 #define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"
 ///Key that holds our current interaction type, to determine how we will interact with this object
 #define BB_REPAIRBOT_INTERACTION_TYPE "interaction_type"
+///Key that hold robot target
+#define BB_ROBOT_TARGET "robot target"
+///Key thast holds thingt to deconstruct
+#define BB_DECONSTRUCT_TARGET "deconstruct_target"
 
 #define REPAIRBOT_INTERACTION_INTERACT 1
-#define REPAIRBOT_INTERACTION_BUILD_GIRDER 2
+#define REPAIRBOT_INTERACTION_BUILD_GIRDERS 2

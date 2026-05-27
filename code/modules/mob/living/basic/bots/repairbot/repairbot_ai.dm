@@ -3,193 +3,22 @@
 /// Emagged repairbot behavior: mug robots then deconstruct structures.
 /datum/bt_node/subtree/repairbot_emagged
 	behavior_tree_json = "repairbot_emagged.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
-		"__c" = list(\
-			list(\
-				"__t" = /datum/bt_node/decorator/bb_key_set,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/composite/sequence,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0, FALSE)),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_interact/tip_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
-							list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list(BB_ROBOT_TARGET))\
-						)\
-					)\
-				),\
-				"key" = BB_ROBOT_TARGET\
-			),\
-			list(\
-				"__t" = /datum/bt_node/decorator/bb_key_set,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/composite/sequence,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0, FALSE)),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
-						)\
-					)\
-				),\
-				"key" = BB_DECONSTRUCT_TARGET\
-			)\
-		)\
-	)
-	// @bt-generated end
+
+/datum/bt_node/subtree/repairbot_repair_target
+	behavior_tree_json = "repairbot_repair_target.bt.json"
+
+/datum/bt_node/subtree/repairbot_find_target
+	behavior_tree_json = "repairbot_find_target.bt.json"
 
 /datum/ai_controller/basic_controller/bot/repairbot
 	behavior_tree_json = "repairbot.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/parallel,\
-		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
-		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-		"repeat_secondary" = TRUE,\
-		"finish_on_primary" = TRUE,\
-		"__c" = list(\
-			list(\
-				"__t" = /datum/bt_node/composite/selector,\
-				"__c" = list(\
-					/datum/bt_node/subtree/escape_captivity/pacifist,\
-					list(\
-						"__t" = /datum/bt_node/composite/parallel,\
-						"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
-						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-						"repeat_secondary" = TRUE,\
-						"finish_on_primary" = TRUE,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/selector,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
-										"__c" = list(\
-											/datum/bt_node/subtree/repairbot_emagged\
-										),\
-										"observer_abort" = BT_ABORT_BOTH\
-									),\
-									list(\
-										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
-										"__c" = list(\
-											list(\
-												"__t" = /datum/bt_node/decorator/bb_key_set,\
-												"__c" = list(\
-													list(\
-														"__t" = /datum/bt_node/composite/sequence,\
-														"__c" = list(\
-															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET, 1, FALSE, /datum/ai_movement/basic_avoidance)),\
-															list(\
-																"__t" = /datum/bt_node/composite/selector,\
-																"__c" = list(\
-																	list(\
-																		"__t" = /datum/bt_node/decorator/bb_key_equals,\
-																		"__c" = list(\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_CURRENT_TARGET))\
-																		),\
-																		"key" = BB_REPAIRBOT_INTERACTION_TYPEBB_REPAIRBOT_INTERACTION_TYPE,\
-																		"value" = REPAIRBOT_INTERACTION_INTERACT\
-																	),\
-																	list(\
-																		"__t" = /datum/bt_node/decorator/bb_key_equals,\
-																		"__c" = list(\
-																			list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder, "default_behavior_args" = list(BB_GIRDER_BUILD_ABILITY, BB_CURRENT_TARGET))\
-																		),\
-																		"key" = BB_REPAIRBOT_INTERACTION_TYPE,\
-																		"value" = REPAIRBOT_INTERACTION_BUILD_GIRDERS\
-																	)\
-																)\
-															)\
-														)\
-													)\
-												),\
-												"key" = BB_CURRENT_TARGET\
-											)\
-										),\
-										"observer_abort" = BT_ABORT_SELF,\
-										"invert" = TRUE\
-									),\
-									/datum/bt_node/subtree/bot_salute_authority,\
-									/datum/bt_node/subtree/bot_patrol\
-								)\
-							),\
-							list(\
-								"__t" = /datum/bt_node/composite/selector,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
-										"__c" = list(\
-											list(\
-												"__t" = /datum/bt_node/decorator/bb_key_set,\
-												"__c" = list(\
-													list(\
-														"__t" = /datum/bt_node/composite/selector,\
-														"__c" = list(\
-															list(\
-																"__t" = /datum/bt_node/composite/sequence,\
-																"__c" = list(\
-																	list(\
-																		"__t" = /datum/bt_node/composite/selector,\
-																		"__c" = list(\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/refillable_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_wall_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_grille_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_window_fix, "default_behavior_args" = list(BB_CURRENT_TARGET))\
-																		)\
-																	),\
-																	list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list(BB_REPAIRBOT_INTERACTION_TYPE, REPAIRBOT_INTERACTION_INTERACT)),\
-																	list("__t" = /datum/bt_node/ai_behavior/cancel_current_plan, "default_behavior_args" = list())\
-																)\
-															),\
-															list(\
-																"__t" = /datum/bt_node/composite/sequence,\
-																"__c" = list(\
-																	list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_girder, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
-																	list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list(BB_REPAIRBOT_INTERACTION_TYPE, REPAIRBOT_INTERACTION_BUILD_GIRDER)),\
-																	list("__t" = /datum/bt_node/ai_behavior/cancel_current_plan, "default_behavior_args" = list())\
-																)\
-															)\
-														)\
-													)\
-												),\
-												"observer_abort" = BT_ABORT_NONE,\
-												"invert" = TRUE,\
-												"key" = BB_CURRENT_TARGET\
-											)\
-										)\
-									),\
-									list(\
-										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
-										"__c" = list(\
-											list(\
-												"__t" = /datum/bt_node/composite/selector,\
-												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
-													list("__t" = /datum/bt_node/ai_behavior/bot_search/deconstructable, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
-												)\
-											)\
-										),\
-										"invert" = TRUE\
-									)\
-								)\
-							)\
-						)\
-					)\
-				)\
-			)\
-		)\
-	)
-	// @bt-generated end
+
+
+
 	reset_keys = list(
-		BB_TILELESS_FLOOR,
-		BB_GIRDER_TARGET,
-		BB_GIRDER_TO_WALL_TARGET,
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
-		BB_WELDER_TARGET,
-		BB_WINDOW_FRAMETARGET,
+		BB_CURRENT_TARGET,
 	)
 	minimum_distance = 1
 
@@ -204,12 +33,7 @@
 	if(controller.blackboard[BB_REPAIRBOT_SPEECH_COOLDOWN] > world.time)
 		return FALSE
 	var/static/list/keys_to_look = list(
-		BB_WELDER_TARGET,
-		BB_WINDOW_FRAMETARGET,
-		BB_TILELESS_FLOOR,
-		BB_BREACHED_FLOOR,
-		BB_GIRDER_TO_WALL_TARGET,
-		BB_GIRDER_TARGET,
+		BB_CURRENT_TARGET,
 		BB_DECONSTRUCT_TARGET,
 	)
 	for(var/key in keys_to_look)

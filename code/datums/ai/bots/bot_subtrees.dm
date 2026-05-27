@@ -239,41 +239,10 @@
 /// Travel to BB_BOT_SUMMON_TARGET if set, completing when on the same turf.
 /datum/bt_node/subtree/bot_respond_to_summon
 	behavior_tree_json = "bot_respond_to_summon.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/decorator/bb_key_set,\
-		"__c" = list(\
-			list(\
-				"__t" = /datum/bt_node/composite/sequence,\
-				"__c" = list(\
-					list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BOT_SUMMON_TARGET, 0, TRUE)),\
-					list("__t" = /datum/bt_node/ai_behavior/complete_summon_travel, "default_behavior_args" = list(BB_BOT_SUMMON_TARGET))\
-				)\
-			)\
-		),\
-		"key" = BB_BOT_SUMMON_TARGET\
-	)
-	// @bt-generated end
 
 /// Salute any commissioned officer in range, rate-limited to BOT_COMMISSIONED_SALUTE_DELAY.
 /datum/bt_node/subtree/bot_salute_authority
 	behavior_tree_json = "bot_salute_authority.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/decorator/key_off_cooldown,\
-		"__c" = list(\
-			list(\
-				"__t" = /datum/bt_node/composite/sequence,\
-				"__c" = list(\
-					list("__t" = /datum/bt_node/ai_behavior/find_valid_authority, "default_behavior_args" = list(BB_SALUTE_TARGET)),\
-					list("__t" = /datum/bt_node/ai_behavior/salute_authority, "default_behavior_args" = list(BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)),\
-					list("__t" = /datum/bt_node/ai_behavior/set_bb_cooldown, "default_behavior_args" = list(BB_SALUTE_COOLDOWN, BOT_COMMISSIONED_SALUTE_DELAY))\
-				)\
-			)\
-		),\
-		"cooldown_key" = BB_SALUTE_COOLDOWN\
-	)
-	// @bt-generated end
 
 /**
  * Patrol to navbeacons in sequence when autopatrol is enabled and not on cooldown.
@@ -281,46 +250,6 @@
  */
 /datum/bt_node/subtree/bot_patrol
 	behavior_tree_json = "bot_patrol.bt.json"
-	// @bt-generated begin
-	behavior_nodes = list(\
-		"__t" = /datum/bt_node/decorator/key_off_cooldown,\
-		"__c" = list(\
-			list(\
-				"__t" = /datum/bt_node/decorator/bot_mode_flag,\
-				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/sequence,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BEACON_TARGET, 0, TRUE)),\
-											list("__t" = /datum/bt_node/ai_behavior/arrive_at_beacon, "default_behavior_args" = list(BB_BEACON_TARGET))\
-										)\
-									)\
-								),\
-								"key" = BB_BEACON_TARGET\
-							),\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/find_next_beacon_target, "default_behavior_args" = list(BB_BEACON_TARGET))\
-								),\
-								"key" = BB_PREVIOUS_BEACON_TARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/find_first_beacon_target, "default_behavior_args" = list(BB_BEACON_TARGET))\
-						)\
-					)\
-				),\
-				"flag" = BOT_MODE_AUTOPATROL\
-			)\
-		),\
-		"cooldown_key" = BB_BOT_BEACON_COOLDOWN\
-	)
-	// @bt-generated end
 
 
 #undef BOT_NO_BEACON_PATH_PENALTY
