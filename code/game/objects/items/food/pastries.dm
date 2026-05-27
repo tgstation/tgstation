@@ -602,7 +602,7 @@
 
 /obj/item/food/apple_fritter
 	name = "apple fritter"
-	desc = "For something that looks like a pile of glazed dirt, it's suprisingly tart and sweet."
+	desc = "For something that looks like a pile of glazed dirt, it's suprisingly tart. It smells sweet enough to knock you unconscious."
 	icon_state = "apple_fritter"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
