@@ -38,36 +38,8 @@
 						"type": "sequence",
 						"children": [
 							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
-								"args": ["BB_CURRENT_TARGET"]
-							},
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-								"args": [
-									"BB_REPAIRBOT_INTERACTION_TYPE",
-									"REPAIRBOT_INTERACTION_BUILD_GIRDERS"
-								]
-							},
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan",
-								"args": []
-							}
-						]
-					},
-					{
-						"type": "sequence",
-						"children": [
-							{
 								"type": "selector",
 								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
-										"args": ["BB_CURRENT_TARGET"]
-									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
@@ -75,7 +47,7 @@
 									},
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
 										"args": ["BB_CURRENT_TARGET"]
 									},
 									{
@@ -92,6 +64,11 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
 										"args": ["BB_CURRENT_TARGET"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
+										"args": ["BB_CURRENT_TARGET"]
 									}
 								]
 							},
@@ -101,6 +78,29 @@
 								"args": [
 									"BB_REPAIRBOT_INTERACTION_TYPE",
 									"REPAIRBOT_INTERACTION_INTERACT"
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan",
+								"args": []
+							}
+						]
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
+								"args": ["BB_CURRENT_TARGET"]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+								"args": [
+									"BB_REPAIRBOT_INTERACTION_TYPE",
+									"REPAIRBOT_INTERACTION_BUILD_GIRDERS"
 								]
 							},
 							{

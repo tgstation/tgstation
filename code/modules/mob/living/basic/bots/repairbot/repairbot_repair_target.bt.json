@@ -31,12 +31,7 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": [
-								"BB_CURRENT_TARGET",
-								1,
-								true,
-								"/datum/ai_movement/basic_avoidance"
-							]
+							"args": ["BB_CURRENT_TARGET", 1, true, "/datum/ai_movement/jps"]
 						},
 						{
 							"type": "selector",
@@ -64,10 +59,7 @@
 									"child": {
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder",
-										"args": [
-											"BB_GIRDER_BUILD_ABILITY",
-											"BB_CURRENT_TARGET"
-										]
+										"args": ["BB_GIRDER_BUILD_ABILITY", "BB_CURRENT_TARGET"]
 									}
 								}
 							]

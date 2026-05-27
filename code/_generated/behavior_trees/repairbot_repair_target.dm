@@ -18,7 +18,7 @@
 							list(\
 								"__t" = /datum/bt_node/composite/sequence,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 1, TRUE, /datum/ai_movement/basic_avoidance)),\
+									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_CURRENT_TARGET, 1, TRUE, /datum/ai_movement/jps)),\
 									list(\
 										"__t" = /datum/bt_node/composite/selector,\
 										"__c" = list(\
