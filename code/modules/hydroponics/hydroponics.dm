@@ -172,6 +172,7 @@
 /obj/machinery/hydroponics/constructable/oldstyle
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "hydrotray3-alt"
 	alt_tray = TRUE
 
 /obj/machinery/hydroponics/constructable/fullupgrade
