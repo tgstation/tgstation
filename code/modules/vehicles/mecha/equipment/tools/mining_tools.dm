@@ -120,7 +120,7 @@
 		return
 
 	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
-				span_userdanger("[chassis] starts to drill [target]..."), \
+				span_userdanger("[chassis] starts to drill you!"), \
 				span_hear("You hear drilling."))
 
 	log_message("Started drilling [target]", LOG_MECHA)
@@ -131,6 +131,9 @@
 		T.drill_act(src, source)
 
 		return ..()
+
+	if(isliving(target) && !do_after_mecha(target, source, 1.5 SECONDS))
+		return
 
 	// Drilling objects and mobs is a repeating procedure.
 	while(do_after_mecha(target, source, drill_delay))
