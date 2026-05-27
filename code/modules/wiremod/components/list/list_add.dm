@@ -53,4 +53,4 @@
 
 /obj/item/paper/guides/circuit
 	name = "Note from previos shift"
-	default_raw_text = "Hey man, about that problem which you had at Friday with <b>auto-slime factory</b>.. <p>Have read the manual, and if understood correctly, for adding the slime at circuit's list, for analyse and process, you need just to...</p><p>*how to list*</p><p>Also have left you that amazing red genetically modified(actually no) apple, they say it helps mind, so so bite and go try it out</p>"
+	default_raw_text = "Hey man, about that problem which you had at Friday with <b>auto-slime factory</b>.. <p>Have read the manual, and if understood correctly, for adding the slime at circuit's list, for analyse and process, you need just to...</p><i>So attach that component, than you need to connect OUTPUT of component, which is giving you a list, to a component ToString, which will make a string from a list, so thats all</i><p>Also have left you that amazing red genetically modified(actually no) apple, they say it helps mind, so bite and go try it out</p>"
