@@ -205,11 +205,16 @@
 /obj/item/organ/tail/xeno_queen/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	tail_whip.Grant(receiver)
+	if(istype(receiver, /mob/living/carbon/alien/adult/royal/queen))
+		// queens get their tail without being bogged down by it
+		return
 	receiver.add_movespeed_modifier(/datum/movespeed_modifier/tail_dragger)
 
 /obj/item/organ/tail/xeno_queen/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	tail_whip.Remove(organ_owner)
+	if(istype(organ_owner, /mob/living/carbon/alien/adult/royal/queen))
+		return
 	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/tail_dragger)
 
 ///Alien tail bodypart overlay
