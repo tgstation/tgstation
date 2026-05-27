@@ -1095,7 +1095,7 @@
 	else if(istype(O, /obj/item/soil_sack))
 		var/tmp_capacity = 0
 		var/obj/item/soil_sack/oursoil = O
-		if(!plant_status == HYDROTRAY_NO_PLANT)
+		if(!src.plant_status == HYDROTRAY_NO_PLANT)
 			balloon_alert(user, "remove the plants first!")
 			return
 		if(current_soil == null)
