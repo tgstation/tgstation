@@ -13,7 +13,7 @@
 	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -21,7 +21,8 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn)
-	var/looking_for = get_looking_for_typecache()
+	if(isnull(looking_for))
+		looking_for = get_looking_for_typecache()
 	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -43,28 +44,6 @@
 
 /datum/bt_node/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return TRUE
-
-// =============================================================================
-// Drag target
-// =============================================================================
-
-/**
- * BT-native grab behavior. Calls start_pulling on the target; does NOT clear the blackboard key.
- * Callers are responsible for key cleanup (typically via on_stop_pulling signal handlers).
- */
-/datum/bt_node/ai_behavior/drag_target
-
-/datum/bt_node/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/movable/target = controller.blackboard[target_key]
-	if(QDELETED(target) || target.anchored || target.pulledby)
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] drag_target: can't grab [target] (deleted=[QDELETED(target)], anchored=[target?.anchored], pulledby=[target?.pulledby])")
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/our_mob = controller.pawn
-	if(get_dist(our_mob, target) > 0)
-		return AI_BEHAVIOR_INSTANT
-	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[our_mob] grabbing [target]", get_turf(target), "Grab")
-	our_mob.start_pulling(target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 // =============================================================================
 // Bot speech

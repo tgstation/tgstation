@@ -69,7 +69,12 @@
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-													"args": ["BB_FRIENDLY_JANITOR", 1, true]
+													"args": [
+														"BB_FRIENDLY_JANITOR",
+														1,
+														true,
+														"/datum/ai_movement/basic_avoidance"
+													]
 												},
 												{
 													"type": "leaf",
@@ -165,7 +170,12 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_ACID_SPRAY_TARGET", 0, true]
+												"args": [
+													"BB_ACID_SPRAY_TARGET",
+													0,
+													true,
+													"/datum/ai_movement/basic_avoidance"
+												]
 											},
 											{
 												"type": "leaf",

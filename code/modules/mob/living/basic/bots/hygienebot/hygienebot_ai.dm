@@ -41,7 +41,7 @@
 											list(\
 												"__t" = /datum/bt_node/composite/sequence,\
 												"__c" = list(\
-													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WASH_TARGET, 0, FALSE)),\
+													list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WASH_TARGET, 0, FALSE, /datum/ai_movement/basic_avoidance)),\
 													list("__t" = /datum/bt_node/ai_behavior/wash_target, "default_behavior_args" = list(BB_WASH_TARGET))\
 												)\
 											)\

@@ -57,7 +57,12 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_WASH_TARGET", 0, false]
+												"args": [
+													"BB_WASH_TARGET",
+													0,
+													false,
+													"/datum/ai_movement/basic_avoidance"
+												]
 											},
 											{
 												"type": "leaf",

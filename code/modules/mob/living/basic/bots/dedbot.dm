@@ -71,7 +71,7 @@
 									list(\
 										"__t" = /datum/bt_node/composite/sequence,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1, TRUE)),\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BASIC_MOB_CURRENT_TARGET, 1, TRUE, /datum/ai_movement/basic_avoidance)),\
 											list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/melee, "default_behavior_args" = list(BB_DEDBOT_SLASH, BB_BASIC_MOB_CURRENT_TARGET))\
 										)\
 									)\

@@ -22,7 +22,7 @@
 									list(\
 										"__t" = /datum/bt_node/composite/sequence,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET, 1, TRUE, "")),\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_VIBEBOT_PARTY_TARGET, 1, TRUE, null)),\
 											list("__t" = /datum/bt_node/ai_behavior/vibebot_party, "default_behavior_args" = list(BB_VIBEBOT_PARTY_ABILITY, BB_VIBEBOT_PARTY_TARGET))\
 										)\
 									)\

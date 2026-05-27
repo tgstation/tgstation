@@ -8,56 +8,31 @@
 		"__t" = /datum/bt_node/composite/selector,\
 		"__c" = list(\
 			list(\
-				"__t" = /datum/bt_node/composite/selector,\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
 				"__c" = list(\
 					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
+						"__t" = /datum/bt_node/composite/sequence,\
 						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/selector,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact/tip_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/drag_target, "default_behavior_args" = list(BB_ROBOT_TARGET))\
-										)\
-									),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0, FALSE))\
-								)\
-							)\
-						),\
-						"key" = BB_ROBOT_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_robot, "default_behavior_args" = list(BB_ROBOT_TARGET))\
-				)\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ROBOT_TARGET, 0, FALSE)),\
+							list("__t" = /datum/bt_node/ai_behavior/bot_interact/tip_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
+							list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list(BB_ROBOT_TARGET))\
+						)\
+					)\
+				),\
+				"key" = BB_ROBOT_TARGET\
 			),\
 			list(\
-				"__t" = /datum/bt_node/composite/selector,\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
 				"__c" = list(\
 					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
+						"__t" = /datum/bt_node/composite/sequence,\
 						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/composite/parallel,\
-								"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-								"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-								"repeat_secondary" = FALSE,\
-								"finish_on_primary" = FALSE,\
-								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0, FALSE))\
-								)\
-							)\
-						),\
-						"key" = BB_DECONSTRUCT_TARGET\
-					),\
-					list("__t" = /datum/bt_node/ai_behavior/bot_search/deconstructable, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
-				)\
+							list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET, 0, FALSE)),\
+							list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
+						)\
+					)\
+				),\
+				"key" = BB_DECONSTRUCT_TARGET\
 			)\
 		)\
 	)
@@ -71,185 +46,139 @@
 		"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
 		"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
 		"repeat_secondary" = TRUE,\
-		"finish_on_primary" = FALSE,\
+		"finish_on_primary" = TRUE,\
 		"__c" = list(\
 			list(\
 				"__t" = /datum/bt_node/composite/selector,\
 				"__c" = list(\
 					/datum/bt_node/subtree/escape_captivity/pacifist,\
 					list(\
-						"__t" = /datum/bt_node/decorator/bot_is_emagged,\
-						"__c" = list(\
-							/datum/bt_node/subtree/repairbot_emagged\
-						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
+						"__t" = /datum/bt_node/composite/parallel,\
+						"failure_policy" = BT_PARALLEL_FAILURE_CHILD_ONE,\
+						"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
+						"repeat_secondary" = TRUE,\
+						"finish_on_primary" = TRUE,\
 						"__c" = list(\
 							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
+								"__t" = /datum/bt_node/composite/selector,\
 								"__c" = list(\
 									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
+										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_REFILLABLE_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET, 0, FALSE))\
-										)\
-									)\
-								),\
-								"key" = BB_REFILLABLE_TARGET\
+											/datum/bt_node/subtree/repairbot_emagged\
+										),\
+										"observer_abort" = BT_ABORT_BOTH\
+									),\
+									list(\
+										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
+										"__c" = list(\
+											list(\
+												"__t" = /datum/bt_node/decorator/bb_key_set,\
+												"__c" = list(\
+													list(\
+														"__t" = /datum/bt_node/composite/sequence,\
+														"__c" = list(\
+															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET, 1, FALSE, /datum/ai_movement/basic_avoidance)),\
+															list(\
+																"__t" = /datum/bt_node/composite/selector,\
+																"__c" = list(\
+																	list(\
+																		"__t" = /datum/bt_node/decorator/bb_key_equals,\
+																		"__c" = list(\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_CURRENT_TARGET))\
+																		),\
+																		"key" = BB_REPAIRBOT_INTERACTION_TYPEBB_REPAIRBOT_INTERACTION_TYPE,\
+																		"value" = REPAIRBOT_INTERACTION_INTERACT\
+																	),\
+																	list(\
+																		"__t" = /datum/bt_node/decorator/bb_key_equals,\
+																		"__c" = list(\
+																			list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder, "default_behavior_args" = list(BB_GIRDER_BUILD_ABILITY, BB_CURRENT_TARGET))\
+																		),\
+																		"key" = BB_REPAIRBOT_INTERACTION_TYPE,\
+																		"value" = REPAIRBOT_INTERACTION_BUILD_GIRDERS\
+																	)\
+																)\
+															)\
+														)\
+													)\
+												),\
+												"key" = BB_CURRENT_TARGET\
+											)\
+										),\
+										"observer_abort" = BT_ABORT_SELF,\
+										"invert" = TRUE\
+									),\
+									/datum/bt_node/subtree/bot_salute_authority,\
+									/datum/bt_node/subtree/bot_patrol\
+								)\
 							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/refillable_target, "default_behavior_args" = list(BB_REFILLABLE_TARGET))\
-						)\
-					),\
-					/datum/bt_node/subtree/bot_respond_to_summon,\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
 							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
+								"__t" = /datum/bt_node/composite/selector,\
 								"__c" = list(\
 									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
+										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_BREACHED_FLOOR)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_BREACHED_FLOOR, 0, FALSE))\
+											list(\
+												"__t" = /datum/bt_node/decorator/bb_key_set,\
+												"__c" = list(\
+													list(\
+														"__t" = /datum/bt_node/composite/selector,\
+														"__c" = list(\
+															list(\
+																"__t" = /datum/bt_node/composite/sequence,\
+																"__c" = list(\
+																	list(\
+																		"__t" = /datum/bt_node/composite/selector,\
+																		"__c" = list(\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/refillable_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_wall_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_grille_target, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																			list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_window_fix, "default_behavior_args" = list(BB_CURRENT_TARGET))\
+																		)\
+																	),\
+																	list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list(BB_REPAIRBOT_INTERACTION_TYPE, REPAIRBOT_INTERACTION_INTERACT)),\
+																	list("__t" = /datum/bt_node/ai_behavior/cancel_current_plan, "default_behavior_args" = list())\
+																)\
+															),\
+															list(\
+																"__t" = /datum/bt_node/composite/sequence,\
+																"__c" = list(\
+																	list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_girder, "default_behavior_args" = list(BB_CURRENT_TARGET)),\
+																	list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list(BB_REPAIRBOT_INTERACTION_TYPE, REPAIRBOT_INTERACTION_BUILD_GIRDER)),\
+																	list("__t" = /datum/bt_node/ai_behavior/cancel_current_plan, "default_behavior_args" = list())\
+																)\
+															)\
+														)\
+													)\
+												),\
+												"observer_abort" = BT_ABORT_NONE,\
+												"invert" = TRUE,\
+												"key" = BB_CURRENT_TARGET\
+											)\
 										)\
-									)\
-								),\
-								"key" = BB_BREACHED_FLOOR\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached, "default_behavior_args" = list(BB_BREACHED_FLOOR))\
-						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
+									),\
 									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
+										"__t" = /datum/bt_node/decorator/bot_is_emagged,\
 										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET, 0, FALSE))\
-										)\
+											list(\
+												"__t" = /datum/bt_node/composite/selector,\
+												"__c" = list(\
+													list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_robot, "default_behavior_args" = list(BB_ROBOT_TARGET)),\
+													list("__t" = /datum/bt_node/ai_behavior/bot_search/deconstructable, "default_behavior_args" = list(BB_DECONSTRUCT_TARGET))\
+												)\
+											)\
+										),\
+										"invert" = TRUE\
 									)\
-								),\
-								"key" = BB_GIRDER_TO_WALL_TARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_girder, "default_behavior_args" = list(BB_GIRDER_TO_WALL_TARGET))\
+								)\
+							)\
 						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder, "default_behavior_args" = list(BB_GIRDER_BUILD_ABILITY, BB_GIRDER_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_GIRDER_TARGET, 1, FALSE))\
-										)\
-									)\
-								),\
-								"key" = BB_GIRDER_TARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_wall_target, "default_behavior_args" = list(BB_GIRDER_TARGET))\
-						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET, 0, FALSE))\
-										)\
-									)\
-								),\
-								"key" = BB_WINDOW_FRAMETARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_grille_target, "default_behavior_args" = list(BB_WINDOW_FRAMETARGET))\
-						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_TILELESS_FLOOR)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_TILELESS_FLOOR, 0, FALSE))\
-										)\
-									)\
-								),\
-								"key" = BB_TILELESS_FLOOR\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf, "default_behavior_args" = list(BB_TILELESS_FLOOR))\
-						)\
-					),\
-					list(\
-						"__t" = /datum/bt_node/composite/selector,\
-						"__c" = list(\
-							list(\
-								"__t" = /datum/bt_node/decorator/bb_key_set,\
-								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/composite/parallel,\
-										"failure_policy" = BT_PARALLEL_FAILURE_ANY,\
-										"success_policy" = BT_PARALLEL_SUCCESS_CHILD_ONE,\
-										"repeat_secondary" = FALSE,\
-										"finish_on_primary" = FALSE,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/bot_interact, "default_behavior_args" = list(BB_WELDER_TARGET)),\
-											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_WELDER_TARGET, 0, FALSE))\
-										)\
-									)\
-								),\
-								"key" = BB_WELDER_TARGET\
-							),\
-							list("__t" = /datum/bt_node/ai_behavior/bot_search/valid_window_fix, "default_behavior_args" = list(BB_WELDER_TARGET))\
-						)\
-					),\
-					/datum/bt_node/subtree/bot_salute_authority,\
-					/datum/bt_node/subtree/bot_patrol\
+					)\
 				)\
-			),\
-			list("__t" = /datum/bt_node/ai_behavior/repairbot_speech, "default_behavior_args" = list())\
+			)\
 		)\
 	)
 	// @bt-generated end
@@ -339,13 +268,13 @@
 /datum/bt_node/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
 
-/datum/bt_node/ai_behavior/bot_search/deconstructable/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/deconstructable/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/things_to_deconstruct = typecacheof(list(
 		/obj/structure/window,
 		/turf/open/floor,
 		/turf/closed/wall,
 	))
-	return ..(seconds_per_tick, controller, target_key, things_to_deconstruct)
+	return ..(seconds_per_tick, controller, target_key, things_to_deconstruct, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 // =============================================================================
 // Refill materials — pick up stacks when running low
@@ -370,13 +299,13 @@
 			return TRUE
 	return FALSE
 
-/datum/bt_node/ai_behavior/bot_search/refillable_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/refillable_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/refillable_items = typecacheof(list(
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/tile,
 	))
-	return ..(seconds_per_tick, controller, target_key, refillable_items)
+	return ..(seconds_per_tick, controller, target_key, refillable_items, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 // =============================================================================
 // Floor repair — find and fix plateless / breached floors
@@ -396,8 +325,8 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
-	return ..(seconds_per_tick, controller, target_key, get_turf_type_filter(), 5, 10, FALSE, TRUE)
+/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = TRUE)
+	return ..(seconds_per_tick, controller, target_key, get_turf_type_filter(), radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/open/my_target)
 	var/static/list/blacklist_objects = typecacheof(list(
@@ -446,9 +375,9 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_girder/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_girder/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/searchable_girder = typecacheof(list(/obj/structure/girder))
-	return ..(seconds_per_tick, controller, target_key, searchable_girder)
+	return ..(seconds_per_tick, controller, target_key, searchable_girder, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_girder/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	if(!istype(my_target, /obj/structure/girder))
@@ -491,9 +420,9 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_wall_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_wall_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = TRUE)
 	var/static/list/searchable_turfs = typecacheof(list(/turf/open))
-	return ..(seconds_per_tick, controller, target_key, searchable_turfs, 5, 10, FALSE, TRUE)
+	return ..(seconds_per_tick, controller, target_key, searchable_turfs, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/my_target)
 	if(!istype(my_target, /turf/open))
@@ -528,9 +457,9 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_grille_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_grille_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille))
-	return ..(seconds_per_tick, controller, target_key, searchable_grilles)
+	return ..(seconds_per_tick, controller, target_key, searchable_grilles, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/structure/my_target)
 	if(!istype(my_target, /obj/structure/grille))
@@ -546,9 +475,9 @@
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix
 	action_cooldown = 5 SECONDS
 
-/datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))
-	return ..(seconds_per_tick, controller, target_key, searchable_objects)
+	return ..(seconds_per_tick, controller, target_key, searchable_objects, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	if(!istype(my_target, /obj/structure/window))

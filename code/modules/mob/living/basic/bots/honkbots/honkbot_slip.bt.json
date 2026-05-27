@@ -22,7 +22,12 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_SLIP_TARGET", 1, true]
+						"args": [
+							"BB_SLIP_TARGET",
+							1,
+							true,
+							"/datum/ai_movement/basic_avoidance"
+						]
 					},
 					{
 						"type": "leaf",
@@ -39,7 +44,12 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_SLIPPERY_TARGET", 0, true]
+							"args": [
+								"BB_SLIPPERY_TARGET",
+								0,
+								true,
+								"/datum/ai_movement/basic_avoidance"
+							]
 						}
 					},
 					{

@@ -46,7 +46,7 @@
 													list(\
 														"__t" = /datum/bt_node/composite/sequence,\
 														"__c" = list(\
-															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FRIENDLY_JANITOR, 1, TRUE)),\
+															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_FRIENDLY_JANITOR, 1, TRUE, /datum/ai_movement/basic_avoidance)),\
 															list("__t" = /datum/bt_node/ai_behavior/befriend_target, "default_behavior_args" = list(BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE))\
 														)\
 													)\
@@ -114,7 +114,7 @@
 													list(\
 														"__t" = /datum/bt_node/composite/sequence,\
 														"__c" = list(\
-															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET, 0, TRUE)),\
+															list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET, 0, TRUE, /datum/ai_movement/basic_avoidance)),\
 															list("__t" = /datum/bt_node/ai_behavior/execute_clean, "default_behavior_args" = list(BB_ACID_SPRAY_TARGET)),\
 															list("__t" = /datum/bt_node/ai_behavior/set_bb_cooldown, "default_behavior_args" = list(BB_ACID_SPRAY_COOLDOWN, 30))\
 														)\

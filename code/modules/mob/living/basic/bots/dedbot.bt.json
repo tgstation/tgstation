@@ -28,7 +28,12 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_BASIC_MOB_CURRENT_TARGET", 1, true]
+										"args": [
+											"BB_BASIC_MOB_CURRENT_TARGET",
+											1,
+											true,
+											"/datum/ai_movement/basic_avoidance"
+										]
 									},
 									{
 										"type": "leaf",

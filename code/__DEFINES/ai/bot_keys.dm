@@ -124,29 +124,16 @@
 #define BB_VIBEBOT_INSTRUMENT "instrument"
 
 //repairbots
-///key that holds the floor we should tile over
-#define BB_TILELESS_FLOOR "tileless_floor"
-///key that holds the turf we should place a girder over
-#define BB_GIRDER_TARGET "girder_target"
-///key that holds the girder we should place a wall over
-#define BB_GIRDER_TO_WALL_TARGET "girder_to_wall"
-///key that holds the grille we must fix
-#define BB_WINDOW_FRAMETARGET "grille_target"
-///key that holds the machinery we repair with a welder
-#define BB_WELDER_TARGET "welder_target"
 ///our wall girder ability
 #define BB_GIRDER_BUILD_ABILITY "girder_build_ability"
-///key that holds breached floors we should repair
-#define BB_BREACHED_FLOOR "breached_floor"
 ///key that holds our emagged speech
 #define BB_REPAIRBOT_EMAGGED_SPEECH "emagged_speech"
 ///key that holds our normal speech
 #define BB_REPAIRBOT_NORMAL_SPEECH "normal_speech"
-///key that holds the thing we should deconstruct
-#define BB_DECONSTRUCT_TARGET "deconstruct_target"
 ///key that holds our speech timer
 #define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"
-///key that holds our target borg
-#define BB_ROBOT_TARGET "robot_target"
-///key that holds materials we can refill
-#define BB_REFILLABLE_TARGET "refillable_target"
+///Key that holds our current interaction type, to determine how we will interact with this object
+#define BB_REPAIRBOT_INTERACTION_TYPE "interaction_type"
+
+#define REPAIRBOT_INTERACTION_INTERACT 1
+#define REPAIRBOT_INTERACTION_BUILD_GIRDER 2
