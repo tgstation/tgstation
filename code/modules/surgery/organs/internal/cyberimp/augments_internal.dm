@@ -22,8 +22,8 @@
 		bodypart_aug = new(src)
 
 /obj/item/organ/cyberimp/Destroy()
-	QDEL_NULL(bodypart_aug)
-	return ..()
+	. = ..()
+	QDEL_NULL(bodypart_aug) // Do this after Remove() has done its thing, otherwise on_bodypart_remove() will not properly remove the overlay
 
 /obj/item/organ/cyberimp/proc/get_overlay_state()
 	return aug_overlay
