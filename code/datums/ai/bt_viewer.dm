@@ -29,6 +29,9 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 /datum/bt_viewer/ui_state(mob/user)
 	return ADMIN_STATE(R_DEBUG)
 
+/datum/bt_viewer/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/simple/plane_background))
+
 /datum/bt_viewer/ui_data(mob/user)
 	var/list/data = list()
 	data["mob_name"] = viewing_mob ? viewing_mob.name : null

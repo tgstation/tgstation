@@ -1,9 +1,8 @@
 {
 	"type": "decorator",
-	"decorator": "/datum/bt_node/decorator/cooldown",
+	"decorator": "/datum/bt_node/decorator/key_off_cooldown",
 	"config": {
-		"cooldown_key": "BB_BOT_BEACON_COOLDOWN",
-		"cooldown_duration": 30
+		"cooldown_key": "BB_BOT_BEACON_COOLDOWN"
 	},
 	"child": {
 		"type": "decorator",
@@ -12,8 +11,30 @@
 			"flag": "BOT_MODE_AUTOPATROL"
 		},
 		"child": {
-			"type": "selector",
+			"type": "sequence",
 			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": {
+								"key": "BB_PREVIOUS_BEACON_TARGET"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_next_beacon_target",
+								"args": ["BB_BEACON_TARGET"]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_first_beacon_target",
+							"args": ["BB_BEACON_TARGET"]
+						}
+					]
+				},
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
@@ -35,23 +56,6 @@
 							}
 						]
 					}
-				},
-				{
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
-						"key": "BB_PREVIOUS_BEACON_TARGET"
-					},
-					"child": {
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/find_next_beacon_target",
-						"args": ["BB_BEACON_TARGET"]
-					}
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_first_beacon_target",
-					"args": ["BB_BEACON_TARGET"]
 				}
 			]
 		}

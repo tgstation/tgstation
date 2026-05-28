@@ -170,6 +170,8 @@
 				continue
 			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
 				continue
+			if(possible_enemy.stat != SOFT_CRIT) // Dont bother, theyre fucked.
+				continue
 		valids[possible_enemy] = CEILING(100 / (get_dist(living_pawn, possible_enemy) || 1), 1)
 
 	if(!length(valids))

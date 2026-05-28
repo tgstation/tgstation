@@ -6,6 +6,17 @@
 				"__t" = /datum/bt_node/composite/selector,\
 				"__c" = list(\
 					list(\
+						"__t" = /datum/bt_node/decorator/is_at_distance,\
+						"__c" = list(\
+							list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
+						),\
+						"observer_abort" = BT_ABORT_LOWER_PRIORITY,\
+						"invert" = TRUE,\
+						"target_key" = "BB_monkey_current_attack_target",\
+						"required_distance" = 10,\
+						"require_reach" = FALSE\
+					),\
+					list(\
 						"__t" = /datum/bt_node/decorator/pawn_health_below,\
 						"__c" = list(\
 							list("__t" = /datum/bt_node/ai_behavior/run_away_from_target, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
@@ -30,13 +41,20 @@
 						"__t" = /datum/bt_node/decorator/mob_stat_at_least,\
 						"__c" = list(\
 							list(\
-								"__t" = /datum/bt_node/composite/sequence,\
+								"__t" = /datum/bt_node/composite/selector,\
 								"__c" = list(\
-									list("__t" = /datum/bt_node/ai_behavior/find_and_set, "default_behavior_args" = list("BB_monkey_target_disposal", /obj/machinery/disposal, 9)),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_current_attack_target", 1, TRUE)),\
-									list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list("BB_monkey_current_attack_target")),\
-									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_target_disposal", 1, TRUE)),\
-									list("__t" = /datum/bt_node/ai_behavior/stuff_in_disposal, "default_behavior_args" = list("BB_monkey_current_attack_target", "BB_monkey_target_disposal"))\
+									list(\
+										"__t" = /datum/bt_node/composite/sequence,\
+										"__c" = list(\
+											list("__t" = /datum/bt_node/ai_behavior/find_and_set, "default_behavior_args" = list("BB_monkey_target_disposal", /obj/machinery/disposal, 9)),\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_current_attack_target", 1, TRUE)),\
+											list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list("BB_monkey_current_attack_target")),\
+											list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_target_disposal", 1, TRUE)),\
+											list("__t" = /datum/bt_node/ai_behavior/stuff_in_disposal, "default_behavior_args" = list("BB_monkey_current_attack_target", "BB_monkey_target_disposal")),\
+											list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
+										)\
+									),\
+									list("__t" = /datum/bt_node/ai_behavior/set_bb_key, "default_behavior_args" = list("BB_monkey_current_attack_target"))\
 								)\
 							)\
 						),\

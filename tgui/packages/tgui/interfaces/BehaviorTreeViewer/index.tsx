@@ -1,6 +1,13 @@
 import { useMemo, useState } from 'react';
-import { Box, Button, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  InfinitePlane,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
+import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import {
@@ -55,6 +62,17 @@ function childNodes(
     const n = nodeMap.get(idx);
     return n ? [n] : [];
   });
+}
+
+// The pixel width that the subtree rooted at `node` will occupy.
+function treeWidth(node: BtNodeData, nodeMap: Map<number, BtNodeData>): number {
+  const kids = childNodes(node, nodeMap);
+  if (kids.length === 0) return NODE_WIDTH;
+  const total = kids.reduce(
+    (sum, kid, i) => sum + treeWidth(kid, nodeMap) + (i > 0 ? H_GAP : 0),
+    0,
+  );
+  return Math.max(NODE_WIDTH, total);
 }
 
 function nodeColor(
@@ -240,8 +258,8 @@ function BtNodeTree(props: BtNodeProps) {
                 style={{
                   position: 'absolute',
                   top: '0',
-                  left: `${NODE_WIDTH / 2}px`,
-                  right: `${NODE_WIDTH / 2}px`,
+                  left: `${treeWidth(kids[0], nodeMap) / 2}px`,
+                  right: `${treeWidth(kids[kids.length - 1], nodeMap) / 2}px`,
                   height: '2px',
                   background: '#555',
                 }}
@@ -304,95 +322,118 @@ export function BehaviorTreeViewer() {
 
   return (
     <Window title="Behavior Tree Viewer" width={1200} height={700}>
-      <Window.Content>
-        <Stack vertical fill>
-          <Stack.Item>
-            <Section>
-              <Stack align="center">
-                <Stack.Item grow>
-                  {mob_name ? (
-                    <span>
-                      <b>{mob_name}</b>
-                      <span
-                        style={{
-                          color: '#888',
-                          marginLeft: '8px',
-                          fontSize: '11px',
-                        }}
-                      >
-                        {controller_type}
-                      </span>
-                    </span>
-                  ) : (
-                    <span style={{ color: '#888' }}>No mob selected</span>
-                  )}
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    icon="crosshairs"
-                    color={awaiting_pick ? 'yellow' : 'default'}
-                    onClick={() => act('pick_mob')}
-                  >
-                    {awaiting_pick ? 'Click a mob...' : 'Pick Mob'}
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    icon="times"
-                    color="red"
-                    disabled={!mob_name}
-                    onClick={() => act('clear')}
-                  >
-                    Clear
-                  </Button>
-                </Stack.Item>
-              </Stack>
-              {selectedDec && (
-                <Box mt={1} fontSize="11px" color="blue">
-                  Observer: <b>{selectedDec.l}</b> — highlighted nodes would be
-                  cancelled. Click node again to deselect.
-                  {(selectedDec.k?.length ?? 0) > 0 && (
-                    <span style={{ color: '#888', marginLeft: '8px' }}>
-                      Watching: {selectedDec.k!.join(', ')}
-                    </span>
-                  )}
-                </Box>
-              )}
-            </Section>
-          </Stack.Item>
-
-          <Stack.Item grow style={{ minHeight: 0, overflow: 'auto' }}>
-            <div style={{ padding: '16px' }}>
-              {!roots || roots.length === 0 ? (
-                <Box color="gray" textAlign="center" mt={4}>
-                  {mob_name
-                    ? 'No behavior nodes in controller.'
-                    : 'Pick a mob to view its behavior tree.'}
-                </Box>
-              ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: '32px',
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  {roots.map((rootIdx) => (
-                    <BtNodeTree
-                      key={rootIdx}
-                      nodeIdx={rootIdx}
-                      nodeMap={nodeMap}
-                      activeIdx={active_execution_index}
-                      selectedDec={selectedDec}
-                      onSelectDec={setSelectedDecIdx}
-                    />
-                  ))}
-                </div>
-              )}
+      <Window.Content style={{ backgroundImage: 'none' }}>
+        <InfinitePlane
+          width="100%"
+          height="100%"
+          backgroundImage={resolveAsset('grid_background.png')}
+          imageWidth={900}
+          initialLeft={16}
+          initialTop={16}
+        >
+          {roots && roots.length > 0 && (
+            <div
+              style={{
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '32px',
+                alignItems: 'flex-start',
+              }}
+            >
+              {roots.map((rootIdx) => (
+                <BtNodeTree
+                  key={rootIdx}
+                  nodeIdx={rootIdx}
+                  nodeMap={nodeMap}
+                  activeIdx={active_execution_index}
+                  selectedDec={selectedDec}
+                  onSelectDec={setSelectedDecIdx}
+                />
+              ))}
             </div>
-          </Stack.Item>
-        </Stack>
+          )}
+        </InfinitePlane>
+        {(!roots || roots.length === 0) && (
+          <Box
+            color="gray"
+            textAlign="center"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 5,
+              pointerEvents: 'none',
+            }}
+          >
+            {mob_name
+              ? 'No behavior nodes in controller.'
+              : 'Pick a mob to view its behavior tree.'}
+          </Box>
+        )}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 10,
+          }}
+        >
+          <Section>
+            <Stack align="center">
+              <Stack.Item grow>
+                {mob_name ? (
+                  <span>
+                    <b>{mob_name}</b>
+                    <span
+                      style={{
+                        color: '#888',
+                        marginLeft: '8px',
+                        fontSize: '11px',
+                      }}
+                    >
+                      {controller_type}
+                    </span>
+                  </span>
+                ) : (
+                  <span style={{ color: '#888' }}>No mob selected</span>
+                )}
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="crosshairs"
+                  color={awaiting_pick ? 'yellow' : 'default'}
+                  onClick={() => act('pick_mob')}
+                >
+                  {awaiting_pick ? 'Click a mob...' : 'Pick Mob'}
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="times"
+                  color="red"
+                  disabled={!mob_name}
+                  onClick={() => act('clear')}
+                >
+                  Clear
+                </Button>
+              </Stack.Item>
+            </Stack>
+            {selectedDec && (
+              <Box mt={1} fontSize="11px" color="blue">
+                Observer: <b>{selectedDec.l}</b> — highlighted nodes would be
+                cancelled. Click node again to deselect.
+                {(selectedDec.k?.length ?? 0) > 0 && (
+                  <span style={{ color: '#888', marginLeft: '8px' }}>
+                    Watching: {selectedDec.k!.join(', ')}
+                  </span>
+                )}
+              </Box>
+            )}
+          </Section>
+        </div>
       </Window.Content>
     </Window>
   );
