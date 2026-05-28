@@ -46,6 +46,8 @@ multiple modular subtrees with behaviors
 	var/list/behavior_nodes
 	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
 	var/active_execution_index = 0
+	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
+	var/list/bt_execution_log = null
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 

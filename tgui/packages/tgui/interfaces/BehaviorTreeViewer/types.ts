@@ -2,6 +2,7 @@ export type BehaviorTreeViewerData = {
   mob_name: string | null;
   controller_type: string | null;
   active_execution_index: number;
+  fired_indices: number[]; // all leaf execution indices that fired since last poll
   awaiting_pick: boolean;
   roots: number[]; // execution indices of root nodes
   nodes: BtNodeData[]; // flat list of all nodes in the tree

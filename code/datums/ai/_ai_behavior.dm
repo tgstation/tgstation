@@ -43,6 +43,10 @@
 		controller.active_execution_index = execution_index
 		return BT_RUNNING
 
+	if(controller.bt_execution_log != null)
+		if(length(controller.bt_execution_log) < BT_EXECUTION_LOG_MAX)
+			controller.bt_execution_log += execution_index
+
 	if(!running)
 		var/list/setup_args = list(controller)
 		if(LAZYLEN(default_behavior_args))

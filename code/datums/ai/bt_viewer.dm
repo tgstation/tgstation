@@ -37,6 +37,11 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	data["mob_name"] = viewing_mob ? viewing_mob.name : null
 	data["controller_type"] = viewing_controller ? "[viewing_controller.type]" : null
 	data["active_execution_index"] = viewing_controller ? viewing_controller.active_execution_index : 0
+	if(viewing_controller?.bt_execution_log != null)
+		data["fired_indices"] = viewing_controller.bt_execution_log.Copy()
+		viewing_controller.bt_execution_log.Cut()
+	else
+		data["fired_indices"] = list()
 	data["awaiting_pick"] = awaiting_pick
 	if(viewing_controller)
 		var/list/root_indices = list()
@@ -80,6 +85,7 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	_clear_target()
 	viewing_mob = target
 	viewing_controller = target.ai_controller
+	viewing_controller.bt_execution_log = list()
 	RegisterSignal(viewing_mob, COMSIG_PREQDELETED, PROC_REF(on_mob_deleted))
 
 /datum/bt_viewer/proc/on_mob_deleted(datum/source)
@@ -89,6 +95,8 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 /datum/bt_viewer/proc/_clear_target()
 	if(viewing_mob)
 		UnregisterSignal(viewing_mob, COMSIG_PREQDELETED)
+	if(viewing_controller)
+		viewing_controller.bt_execution_log = null
 	viewing_mob = null
 	viewing_controller = null
 
