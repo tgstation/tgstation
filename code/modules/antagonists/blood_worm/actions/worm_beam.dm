@@ -97,6 +97,7 @@
 		if(blocked)
 			break
 		var/obj/effect/bloodbeam/new_bloodbeam = new(affected_turf)
+		affected_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/blood)
 		new_bloodbeam.dir = owner.dir
 		beam_parts += new_bloodbeam
 		new_bloodbeam.assign_creator(owner)
@@ -152,7 +153,7 @@
 	var/ignore = creator?.resolve()
 	for(var/mob/living/hit_mob in get_turf(src))
 		if(hit_mob != ignore)
-			hit_mob.apply_damage(7, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
+			hit_mob.apply_damage(3, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
 
 /// Ignore damage dealt to this mob
 /obj/effect/bloodbeam/proc/assign_creator(mob/living/maker)
