@@ -611,6 +611,6 @@
 		/datum/reagent/consumable/applejuice = 1,
 	)
 	tastes = list("apple" = 1, "glaze" = 1)
-	foodtypes = GRAIN|FRUIT|FRIED|BREAKFAST
+	foodtypes = GRAIN|FRUIT|FRIED|DAIRY|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
