@@ -21,7 +21,6 @@
 
 /obj/item/radio/mmi
 	custom_materials = null
-	broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()

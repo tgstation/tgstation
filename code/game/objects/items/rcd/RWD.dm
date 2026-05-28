@@ -32,6 +32,8 @@
 	/// radial menu to select cable layer
 	var/list/radial_menu = null
 
+#undef MAX_CABLE_AMOUNT
+
 /obj/item/rwd/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))

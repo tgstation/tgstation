@@ -141,7 +141,7 @@ other types of metals and chemistry for reagents).
 
 ///A proc that handles transfering the materials to the target object and anything it contains that isn't abstract. You can check the doc for var/list/transfered_materials for how it works.
 /datum/design/proc/transfer_materials(list/custom_materials, multiplier, atom/target_object)
-	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!length(transfered_materials)) //most common case where the object is just one thing and 'transferred_materials' is null
 		simple_transfer_materials(custom_materials, multiplier, target_object)
@@ -159,7 +159,7 @@ other types of metals and chemistry for reagents).
 
 ///Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function. Having it as a separate proc reduces copypaste a little.
 /datum/design/proc/simple_transfer_materials(list/custom_materials, multiplier, atom/target_object)
-	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(isstack(target_object))
 		var/obj/item/stack/stack = target_object
