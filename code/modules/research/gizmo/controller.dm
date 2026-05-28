@@ -8,7 +8,7 @@
 /// Generate interfaces for interacting with the gizmo
 /datum/gizmo_controller/proc/generate_interfaces(atom/movable/holder)
 	for(var/interface_define, interface_type in interfaces)
-			var/datum/gizmo_interface/interface_instance = new interface_type(src)
+        var/datum/gizmo_interface/interface_instance = new interface_type(src)
 			interface_instance.generate_interface(holder)
 			instances += interface_instance
 
