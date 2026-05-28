@@ -121,4 +121,4 @@
 	drop_part(baton_type, drop_location)
 
 /mob/living/basic/bot/secbot/honkbot/nopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_AUTOPATROL
