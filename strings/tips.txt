@@ -297,6 +297,7 @@ When hacking doors, cutting and mending a "test light wire" will restore power t
 When in doubt about technical issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 When placing floor tiles in space, you don't need to place down lattice if there is a piece of plating nearby.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+While the floor changer buttons allow you to move through vertical open space, you can also right-click it to look through open space and even glass floors without having to move!
 Working out improves your fitness which increases your size and faster times to fireman carry. Remember that a quality diet and sleep are essential!
 You can alt-click tank transfer valves to remove a tank from them.
 You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.

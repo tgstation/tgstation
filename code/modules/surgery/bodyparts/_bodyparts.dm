@@ -1146,6 +1146,8 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
@@ -1782,6 +1784,22 @@
 	if(isnull(owner))
 		return
 	REMOVE_TRAIT(owner, old_trait, bodypart_trait_source)
+
+/// Add a bodyshape to the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/add_bodyshape(new_shape)
+	if(bodyshape & new_shape)
+		return
+
+	bodyshape |= new_shape
+	owner?.synchronize_bodyshapes()
+
+/// Remove a bodyshape from the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/remove_bodyshape(old_shape)
+	if(!(bodyshape & old_shape))
+		return
+
+	bodyshape &= ~old_shape
+	owner?.synchronize_bodyshapes()
 
 /// Add one or multiple surgical states to the bodypart
 /obj/item/bodypart/proc/add_surgical_state(new_states)

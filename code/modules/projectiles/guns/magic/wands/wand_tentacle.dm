@@ -7,7 +7,7 @@
 	name = "restraining rod"
 	desc = "This wriggling wand binds its victims in a place for a time, although it doesn't stop them from shooting back."
 	school = SCHOOL_CONJURATION
-	ammo_type = /obj/item/ammo_casing/magic/tentacle
+	ammo_type = /obj/item/ammo_casing/magic/tentacle_staff
 	icon_state = "tentawand"
 	base_icon_state = "tentawand"
 	fire_sound = 'sound/effects/splat.ogg'
@@ -24,15 +24,15 @@
 	. = ..()
 	return user.has_status_effect(/datum/status_effect/incapacitating/immobilized/wizard_tentacle/suicide) ? MANUAL_SUICIDE : SHAME
 
-/obj/item/ammo_casing/magic/tentacle
-	projectile_type = /obj/projectile/magic/tentacle
+/obj/item/ammo_casing/magic/tentacle_staff
+	projectile_type = /obj/projectile/magic/tentacle_staff
 
 /// Grabs the target for a while in an unwanted hug
-/obj/projectile/magic/tentacle
+/obj/projectile/magic/tentacle_staff
 	name = "bolt of binding"
 	icon_state = "tentacle_end"
 
-/obj/projectile/magic/tentacle/on_hit(mob/living/target, blocked = 0, pierce_hit)
+/obj/projectile/magic/tentacle_staff/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (. == BULLET_ACT_BLOCK || !istype(target) || blocked >= 100)
 		return

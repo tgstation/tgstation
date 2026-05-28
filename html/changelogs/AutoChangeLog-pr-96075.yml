@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "The \"power failure\" event should be less laggy."
+  - bugfix: "Fixed APCs reporting an incorrect duration during \"power failure\" events. Previously, the reported duration was half of the expected time. You may see the timer go up to 4 minutes now - however in practice, the duration of the event is unchanged."
+  - bugfix: "Fixed saboteur effect on APCs being 2x the expected duration - very similar to the aforementioned APC issue."
