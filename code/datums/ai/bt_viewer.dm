@@ -35,7 +35,15 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	data["controller_type"] = viewing_controller ? "[viewing_controller.type]" : null
 	data["active_execution_index"] = viewing_controller ? viewing_controller.active_execution_index : 0
 	data["awaiting_pick"] = awaiting_pick
-	data["roots"] = viewing_controller ? serialize_roots() : list()
+	if(viewing_controller)
+		var/list/root_indices = list()
+		var/list/node_list = list()
+		collect_nodes(root_indices, node_list)
+		data["roots"] = root_indices
+		data["nodes"] = node_list
+	else
+		data["roots"] = list()
+		data["nodes"] = list()
 	return data
 
 /datum/bt_viewer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -70,8 +78,6 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	viewing_mob = target
 	viewing_controller = target.ai_controller
 	RegisterSignal(viewing_mob, COMSIG_PREQDELETED, PROC_REF(on_mob_deleted))
-	if(viewing_controller)
-		viewing_controller.ensure_execution_index_cache()
 
 /datum/bt_viewer/proc/on_mob_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -89,78 +95,43 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 		UnregisterSignal(awaiting_pick_user, COMSIG_MOB_CLICKON)
 		awaiting_pick_user = null
 
-/datum/bt_viewer/proc/serialize_roots()
-	var/list/result = list()
-	for(var/datum/bt_node/root in viewing_controller.behavior_nodes)
-		result += list(serialize_node(root, 1))
-	return result
+/datum/bt_viewer/proc/collect_nodes(list/root_indices, list/node_list)
+	var/priority = 1
+	for(var/datum/bt_node/root as anything in viewing_controller.behavior_nodes)
+		root_indices += root.execution_index
+		_collect_node(root, node_list, priority++)
 
-/datum/bt_viewer/proc/serialize_node(datum/bt_node/node, priority_index)
-	var/list/exec_cache = GLOB.bt_execution_indices[viewing_controller.type]
-	var/list/last_cache = GLOB.bt_last_execution_indices[viewing_controller.type]
-
-	// Node type as integer: 0=selector 1=sequence 2=parallel 3=decorator 4=leaf 5=subtree
-	var/node_type
-	if(istype(node, /datum/bt_node/composite/selector))
-		node_type = 0
-	else if(istype(node, /datum/bt_node/composite/sequence))
-		node_type = 1
-	else if(istype(node, /datum/bt_node/composite/parallel))
-		node_type = 2
-	else if(istype(node, /datum/bt_node/decorator))
-		node_type = 3
-	else if(istype(node, /datum/bt_node/subtree))
-		node_type = 5
-	else
-		node_type = 4
-
-	// Nodes inside subtrees may not be in the top-level cache — treat missing as 0.
-	var/exec = exec_cache ? exec_cache[node] : 0
-	var/last = last_cache ? last_cache[node] : 0
-	if(!exec)
-		exec = 0
-	if(!last)
-		last = 0
+// Recursively adds node and all descendants to node_list as flat entries.
+// Each entry has e=exec_index and c as a list of child exec indices rather than nested objects.
+/datum/bt_viewer/proc/_collect_node(datum/bt_node/node, list/node_list, priority_index)
+	var/exec = node.execution_index || 0
+	var/last = node.last_execution_index || 0
 
 	var/list/node_data = list(
-		"l" = viewing_controller.bt_node_label(node),
-		"t" = node_type,
-		"p" = priority_index,
 		"e" = exec,
+		"l" = viewing_controller.bt_node_label(node),
+		"t" = node.node_type,
+		"p" = priority_index,
 	)
 	if(last != exec)
 		node_data["z"] = last
 
-	if(istype(node, /datum/bt_node/decorator))
+	if(node.node_type == BT_NODE_DECORATOR)
 		var/datum/bt_node/decorator/dec = node
 		if(dec.observer_abort)
 			node_data["a"] = dec.observer_abort
 		if(dec.invert)
 			node_data["i"] = TRUE
-		if(dec.child)
-			var/list/child_data = serialize_node(dec.child, 1)
-			if(child_data)
-				node_data["c"] = list(child_data)
 
-	else if(istype(node, /datum/bt_node/composite))
-		var/datum/bt_node/composite/comp = node
-		if(length(comp.children))
-			var/list/children_data = list()
-			for(var/i in 1 to length(comp.children))
-				var/datum/bt_node/child = comp.children[i]
-				if(!child)
-					continue
-				var/list/child_data = serialize_node(child, i)
-				if(child_data)
-					children_data += list(child_data)
-			if(length(children_data))
-				node_data["c"] = children_data
+	var/list/children = node.get_children()
+	if(length(children))
+		var/list/child_indices = list()
+		for(var/i in 1 to length(children))
+			var/datum/bt_node/child = children[i]
+			if(!child)
+				continue
+			child_indices += child.execution_index
+			_collect_node(child, node_list, i)
+		node_data["c"] = child_indices
 
-	else if(istype(node, /datum/bt_node/subtree))
-		var/datum/bt_node/subtree/sub = node
-		if(sub.root)
-			var/list/child_data = serialize_node(sub.root, 1)
-			if(child_data)
-				node_data["c"] = list(child_data)
-
-	return node_data
+	node_list += list(node_data)

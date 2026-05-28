@@ -24,25 +24,23 @@
 	return isnull(cooldown_time) || cooldown_time <= world.time
 
 /datum/bt_node/decorator/cooldown/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick(controller))
-		return tick_results[controller] || BT_FAILURE
+	if(!should_tick())
+		return tick_result || BT_FAILURE
 
 	var/result
-	if(child_active[controller])
+	if(child_active)
 		result = child.tick(controller, seconds_per_tick)
 	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
 		result = child.tick(controller, seconds_per_tick)
 
-	if(result == BT_RUNNING)
-		child_active[controller] = TRUE
-	else
-		child_active -= controller
+	child_active = (result == BT_RUNNING)
+	if(!child_active)
 		if(lock_on_succeed == (result == BT_SUCCESS))
 			controller.set_blackboard_key(cooldown_key, world.time + cooldown_duration)
 
 	if(tick_rate)
-		tick_cooldowns[controller] = world.time
-		tick_results[controller] = result
+		tick_cooldown = world.time
+		tick_result = result
 	return result

@@ -36,14 +36,21 @@
 /// Both BT_ABORT_SELF and BT_ABORT_LOWER_PRIORITY
 #define BT_ABORT_BOTH (BT_ABORT_SELF | BT_ABORT_LOWER_PRIORITY)
 
-/// Lookup a singleton BT node by typepath from the global registry
-#define GET_bt_node(node_type) GLOB.bt_nodes[node_type]
-
-// Per-controller-type execution index caches.
-// Keyed by controller type → alist(node → index).
-// Built once per type in ensure_execution_index_cache() and used by the observer abort system.
-GLOBAL_VAR_INIT(bt_execution_indices, list())
-GLOBAL_VAR_INIT(bt_last_execution_indices, list())
+// BT viewer node type identifiers (stored on bt_node.node_type)
+/// Selector composite node
+#define BT_NODE_SELECTOR 0
+/// Sequence composite node
+#define BT_NODE_SEQUENCE 1
+/// Parallel composite node
+#define BT_NODE_PARALLEL 2
+/// Decorator (gate/condition) node
+#define BT_NODE_DECORATOR 3
+/// Leaf behavior node (default)
+#define BT_NODE_LEAF 4
+/// Subtree container node
+#define BT_NODE_SUBTREE 5
+/// Subplan composite node (looping sequence variant)
+#define BT_NODE_SUBPLAN 6
 
 // --- Inline descriptor keys (used internally by SSai_controllers descriptor builder) ---
 /// Key storing the node typepath in a descriptor list

@@ -1,5 +1,5 @@
 /// Base type for AI behavior leaf nodes in the behavior tree system.
-/// Behaviors are singletons; all per-controller state lives in running_state and behavior_cooldowns.
+/// Each controller gets its own node instance, so all state lives directly on the instance.
 /// setup() is called once on first activation, perform() each tick while running.
 /// Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
 /datum/bt_node/ai_behavior
@@ -10,10 +10,12 @@
 	/// Positional args passed to setup()/perform()/finish_action() after the fixed args.
 	/// Set by BT_LEAF at build time via configure().
 	var/list/default_behavior_args = null
-	/// Per-controller active state. TRUE after setup() has been called for a controller.
-	var/alist/running_state = alist()
-	/// Per-controller cooldown. Stores world.time when perform() may next be called.
-	var/alist/behavior_cooldowns = alist()
+	/// TRUE after setup() has been called and before finish_action() completes.
+	var/running = FALSE
+	/// world.time when perform() may next be called.
+	var/next_perform_time = 0
+	/// The controller that owns this node instance. Set by finalize_tree().
+	var/datum/ai_controller/owning_controller = null
 
 /// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
 /datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
@@ -37,16 +39,11 @@
  * Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
  */
 /datum/bt_node/ai_behavior/tick(datum/ai_controller/controller, seconds_per_tick)
-	// Respect per-controller action cooldown
-	var/ready_time = behavior_cooldowns[controller]
-	if(!isnull(ready_time) && ready_time > world.time)
-		var/list/cooldown_exec_cache = GLOB.bt_execution_indices[controller.type]
-		if(cooldown_exec_cache)
-			controller.active_execution_index = cooldown_exec_cache[src]
+	if(next_perform_time > world.time)
+		controller.active_execution_index = execution_index
 		return BT_RUNNING
 
-	// Run setup on first activation
-	if(!running_state[controller])
+	if(!running)
 		var/list/setup_args = list(controller)
 		if(LAZYLEN(default_behavior_args))
 			setup_args += default_behavior_args
@@ -54,17 +51,15 @@
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: setup() failed")
 			return BT_FAILURE
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] starting [type]")
-		running_state[controller] = TRUE
+		running = TRUE
 
-	// Run perform
 	var/list/perform_args = list(seconds_per_tick, controller)
 	if(LAZYLEN(default_behavior_args))
 		perform_args += default_behavior_args
 	var/process_flags = perform(arglist(perform_args))
 
-	// Apply cooldown BEFORE finish so DELAY | FAILED / DELAY | SUCCEEDED both set the cooldown.
 	if(process_flags & AI_BEHAVIOR_DELAY)
-		behavior_cooldowns[controller] = world.time + get_cooldown(controller)
+		next_perform_time = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		_finish_behavior(controller, TRUE)
@@ -73,9 +68,7 @@
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
 		_finish_behavior(controller, FALSE)
 		return BT_FAILURE
-	var/list/exec_cache = GLOB.bt_execution_indices[controller.type]
-	if(exec_cache)
-		controller.active_execution_index = exec_cache[src]
+	controller.active_execution_index = execution_index
 	return BT_RUNNING
 
 /// Calls finish_action() with args and clears per-controller state.
@@ -84,19 +77,18 @@
 	if(LAZYLEN(default_behavior_args))
 		finish_args += default_behavior_args
 	finish_action(arglist(finish_args))
-	running_state -= controller
-	behavior_cooldowns -= controller
+	running = FALSE
+	next_perform_time = 0
 
-/// Clears per-controller tick state. Calls finish_action(FALSE) unless AI_BEHAVIOR_UNINTERRUPTIBLE.
-/datum/bt_node/ai_behavior/reset_tick_state(datum/ai_controller/controller)
-	if(running_state[controller])
+/datum/bt_node/ai_behavior/reset_tick_state()
+	if(running)
 		if(!(behavior_flags & AI_BEHAVIOR_UNINTERRUPTIBLE))
-			_finish_behavior(controller, FALSE)
+			_finish_behavior(owning_controller, FALSE)
 		else
-			running_state -= controller
-			behavior_cooldowns -= controller
+			running = FALSE
+			next_perform_time = 0
 	else
-		behavior_cooldowns -= controller
+		next_perform_time = 0
 	..()
 
 // DEPRECATED — port behaviors to /datum/bt_node/ai_behavior

@@ -6,35 +6,42 @@
  *
  * Supports UE5-style observer aborts: register to watch blackboard keys and
  * reactively abort running behaviors when the condition changes at runtime.
- *
- * child_typepath is set on the type definition and resolved to a singleton ref
- * by SSai_controllers/proc/setup_bt_nodes() before first use.
  */
 /datum/bt_node/decorator
-	/// Typepath of the single child node. Resolved to a singleton ref at subsystem init.
+	node_type = BT_NODE_DECORATOR
+	/// Typepath of the single child node. Resolved to an instance at tree construction.
 	var/child_typepath = null
-	/// Resolved singleton child reference. Populated by setup_bt_nodes(). Do not set directly.
+	/// Resolved child instance. Populated at tree construction. Do not set directly.
 	var/datum/bt_node/child = null
 	/// Observer abort mode. Controls reactive re-planning when watched keys change.
 	var/observer_abort = BT_ABORT_NONE
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
-	///Tracks per-controller whether the child is currently BT_RUNNING. When the latch is set, tick() skips check_condition() and delegates directly to child.tick().
-	var/alist/child_active = alist()
-	/// Set to TRUE by setup_bt_observers() when this decorator has signal observers registered.
-	/// When TRUE with observer_abort set, tick() latches like BT_ABORT_NONE and trusts signals for reactivity.
-	/// When FALSE with observer_abort set, tick() re-evaluates check_condition() every tick as a polling fallback.
+	/// Whether the child is currently BT_RUNNING. When latched, tick() skips check_condition() and delegates directly to child.tick().
+	var/child_active = FALSE
+	/// Set to TRUE once register_observe_signals() has been called for this instance.
+	var/observers_registered = FALSE
+	/// Set to TRUE when register_observe_signals() registered at least one signal. Controls condition-latch logic.
 	var/has_observer_signals = FALSE
+	/// The controller that owns this node instance. Set by finalize_tree().
+	var/datum/ai_controller/owning_controller = null
+
+/datum/bt_node/decorator/get_children()
+	return child ? list(child) : null
 
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick(controller))
-		return tick_results[controller] || BT_FAILURE
+	if(!should_tick())
+		return tick_result || BT_FAILURE
 
-	// Latch: skip check_condition when child is running, unless we're polling (observer_abort set but no signals).
-	// Signal-observer decorators rely on on_observed_change() for reactivity, so no per-tick recheck needed.
+	if(!observers_registered)
+		observers_registered = TRUE
+		if(observer_abort != BT_ABORT_NONE)
+			has_observer_signals = register_observe_signals(controller.pawn)
+
+	// Latch: skip check_condition when child is running, unless polling (observer_abort set but no signals).
 	var/result
 	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
-	if(no_ticking_condition && child_active[controller])
+	if(no_ticking_condition && child_active)
 		result = child.tick(controller, seconds_per_tick)
 	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
@@ -42,14 +49,11 @@
 		result = child.tick(controller, seconds_per_tick)
 
 	if(no_ticking_condition)
-		if(result == BT_RUNNING)
-			child_active[controller] = TRUE
-		else
-			child_active -= controller
+		child_active = (result == BT_RUNNING)
 
 	if(tick_rate)
-		tick_cooldowns[controller] = world.time
-		tick_results[controller] = result
+		tick_cooldown = world.time
+		tick_result = result
 	return result
 
 /**
@@ -78,85 +82,50 @@
  */
 /datum/bt_node/decorator/proc/on_observed_change(datum/ai_controller/controller, key)
 	var/condition_result = evaluate_for_observer(controller)
-	var/list/exec_cache = GLOB.bt_execution_indices[controller.type]
-	var/list/last_cache = GLOB.bt_last_execution_indices[controller.type]
 
 	if(!condition_result && (observer_abort & BT_ABORT_SELF))
-		if(exec_cache)
-			var/active = controller.active_execution_index
-			if(active >= exec_cache[src] && active <= last_cache[src])
-				EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
-				controller.CancelActions()
-				controller.SelectBehaviors(0)
-		else
+		var/active = controller.active_execution_index
+		if(!execution_index || (active >= execution_index && active <= last_execution_index))
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
 			controller.CancelActions()
-			controller.SelectBehaviors(0)
+			//controller.SelectBehaviors(0)
 
 	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
-		if(exec_cache)
-			var/active = controller.active_execution_index
-			if(!active || active > last_cache[src])
-				EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
-				controller.CancelActions()
-				controller.SelectBehaviors(0)
-		else
+		var/active = controller.active_execution_index
+		if(!execution_index || !active || active > last_execution_index)
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
 			controller.CancelActions()
-			controller.SelectBehaviors(0)
+			//controller.SelectBehaviors(0)
 
-/datum/bt_node/decorator/reset_tick_state(datum/ai_controller/controller)
+/datum/bt_node/decorator/reset_tick_state()
+	if(observers_registered)
+		unregister_observe_signals(owning_controller?.pawn)
+		observers_registered = FALSE
+		has_observer_signals = FALSE
+	child_active = FALSE
 	..()
-	child_active -= controller
 
-/datum/bt_node/decorator/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
-	exec_cache[src] = counter
+/datum/bt_node/decorator/assign_execution_indices(counter)
+	execution_index = counter
 	counter++
 	if(child)
-		counter = child.assign_execution_indices(controller_type, counter, exec_cache, last_cache)
-	last_cache[src] = counter - 1
+		counter = child.assign_execution_indices(counter)
+	last_execution_index = counter - 1
 	return counter
 
-/**
- * Virtual proc. Override to return a list of COMSIG_* / SIGNAL_* constants that should
- * trigger a reactive re-evaluation of this decorator's condition on the pawn.
- * Return null (default) if this decorator does not watch pawn signals.
- * Signals are registered FROM the decorator singleton, so there is no conflict with
- * the controller's own pawn-signal registrations (e.g. COMSIG_MOVABLE_MOVED → update_grid).
- */
-/datum/bt_node/decorator/proc/get_pawn_observe_signals()
-	return null
+/// Override to register all signal observers for this decorator. Return TRUE if any were registered.
+/datum/bt_node/decorator/proc/register_observe_signals(atom/pawn)
+	return FALSE
 
-/**
- * Called by setup_bt_observers() when the controller possesses a pawn.
- * Registers all signals from get_pawn_observe_signals() on the pawn using this singleton
- * as the source datum, with on_pawn_signal_changed() as the handler.
- */
-/datum/bt_node/decorator/proc/register_pawn_observer(atom/pawn)
-	var/list/sigs = get_pawn_observe_signals()
-	if(LAZYLEN(sigs))
-		RegisterSignals(pawn, sigs, PROC_REF(on_pawn_signal_changed))
+/// Override to unregister all observers registered by register_observe_signals().
+/datum/bt_node/decorator/proc/unregister_observe_signals(atom/pawn)
+	return
 
-/**
- * Called by teardown_bt_observers() when the controller unpossesses its pawn.
- * Unregisters all signals that were registered by register_pawn_observer().
- */
-/datum/bt_node/decorator/proc/unregister_pawn_observer(atom/pawn)
-	var/list/sigs = get_pawn_observe_signals()
-	if(LAZYLEN(sigs))
-		UnregisterSignal(pawn, sigs)
-
-/**
- * Signal handler fired when any signal from get_pawn_observe_signals() changes on the pawn.
- * Reads the controller via source.ai_controller, re-evaluates this decorator's condition via
- * evaluate_for_observer(), then aborts and replans according to observer_abort policy.
- */
-/datum/bt_node/decorator/proc/on_pawn_signal_changed(atom/source, ...)
+/// Shared signal handler. Calls on_observed_change() with owning_controller.
+/datum/bt_node/decorator/proc/on_signal_changed(atom/source, ...)
 	SIGNAL_HANDLER
-	var/datum/ai_controller/controller = source.ai_controller
-	if(isnull(controller))
-		return
-	on_observed_change(controller, null)
+	if(owning_controller)
+		on_observed_change(owning_controller, null)
 
 // --- Blackboard condition helpers ---
 
@@ -199,8 +168,12 @@
 /datum/bt_node/decorator/bb_key_set
 	var/key = null
 
-/datum/bt_node/decorator/bb_key_set/get_pawn_observe_signals()
-	return list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
+/datum/bt_node/decorator/bb_key_set/register_observe_signals(atom/pawn)
+	RegisterSignals(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)), PROC_REF(on_signal_changed))
+	return TRUE
+
+/datum/bt_node/decorator/bb_key_set/unregister_observe_signals(atom/pawn)
+	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(key)))
 
 /datum/bt_node/decorator/bb_key_set/check_condition(datum/ai_controller/controller)
 	return controller.blackboard_key_exists(key)

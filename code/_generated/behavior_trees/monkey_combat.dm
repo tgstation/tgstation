@@ -32,14 +32,7 @@
 							list(\
 								"__t" = /datum/bt_node/composite/sequence,\
 								"__c" = list(\
-									list(\
-										"__t" = /datum/bt_node/decorator/bb_key_set,\
-										"__c" = list(\
-											list("__t" = /datum/bt_node/ai_behavior/find_and_set, "default_behavior_args" = list("BB_monkey_target_disposal", /obj/machinery/disposal, 9))\
-										),\
-										"key" = "BB_monkey_target_disposal",\
-										"invert" = TRUE\
-									),\
+									list("__t" = /datum/bt_node/ai_behavior/find_and_set, "default_behavior_args" = list("BB_monkey_target_disposal", /obj/machinery/disposal, 9)),\
 									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_current_attack_target", 1, TRUE)),\
 									list("__t" = /datum/bt_node/ai_behavior/grab_target, "default_behavior_args" = list("BB_monkey_current_attack_target")),\
 									list("__t" = /datum/bt_node/ai_behavior/move_to_target, "default_behavior_args" = list("BB_monkey_target_disposal", 1, TRUE)),\
@@ -50,7 +43,7 @@
 						"observer_abort" = BT_ABORT_LOWER_PRIORITY,\
 						"invert" = FALSE,\
 						"key" = "BB_monkey_current_attack_target",\
-						"min_stat" = UNCONSCIOUS\
+						"min_stat" = SOFT_CRIT\
 					),\
 					list(\
 						"__t" = /datum/bt_node/composite/parallel,\

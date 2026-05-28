@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -14,6 +14,7 @@ import {
   BT_NODE_PARALLEL,
   BT_NODE_SELECTOR,
   BT_NODE_SEQUENCE,
+  BT_NODE_SUBPLAN,
   BT_NODE_SUBTREE,
   type BtNodeData,
 } from './types';
@@ -35,6 +36,8 @@ function nodeTypeBadge(t: number): string {
       return 'DEC';
     case BT_NODE_SUBTREE:
       return 'SUB';
+    case BT_NODE_SUBPLAN:
+      return 'PLAN';
     default:
       return '';
   }
@@ -44,8 +47,14 @@ function lastIdx(node: BtNodeData): number {
   return node.z ?? node.e;
 }
 
-function children(node: BtNodeData): BtNodeData[] {
-  return (node.c ?? []).filter((c): c is BtNodeData => c !== null);
+function childNodes(
+  node: BtNodeData,
+  nodeMap: Map<number, BtNodeData>,
+): BtNodeData[] {
+  return (node.c ?? []).flatMap((idx) => {
+    const n = nodeMap.get(idx);
+    return n ? [n] : [];
+  });
 }
 
 function nodeColor(
@@ -78,25 +87,28 @@ function nodeColor(
 }
 
 type BtNodeProps = {
-  node: BtNodeData;
+  nodeIdx: number;
+  nodeMap: Map<number, BtNodeData>;
   activeIdx: number;
   selectedDec: BtNodeData | null;
-  onSelectDec: (node: BtNodeData | null) => void;
+  onSelectDec: (idx: number | null) => void;
 };
 
 function BtNodeTree(props: BtNodeProps) {
-  const { node, activeIdx, selectedDec, onSelectDec } = props;
+  const { nodeIdx, nodeMap, activeIdx, selectedDec, onSelectDec } = props;
+  const node = nodeMap.get(nodeIdx);
+  if (!node) return null;
   const color = nodeColor(node, activeIdx, selectedDec);
   const badge = nodeTypeBadge(node.t);
   const abort = node.a ?? BT_ABORT_NONE;
-  const kids = children(node);
+  const kids = childNodes(node, nodeMap);
   const isSelectedDec = selectedDec !== null && node.e === selectedDec.e;
   const isClickableDec =
     node.t === BT_NODE_DECORATOR && abort !== BT_ABORT_NONE;
 
   function handleClick() {
     if (!isClickableDec) return;
-    onSelectDec(isSelectedDec ? null : node);
+    onSelectDec(isSelectedDec ? null : nodeIdx);
   }
 
   let borderColor: string;
@@ -252,7 +264,8 @@ function BtNodeTree(props: BtNodeProps) {
                   }}
                 />
                 <BtNodeTree
-                  node={child}
+                  nodeIdx={child.e}
+                  nodeMap={nodeMap}
                   activeIdx={activeIdx}
                   selectedDec={selectedDec}
                   onSelectDec={onSelectDec}
@@ -274,9 +287,20 @@ export function BehaviorTreeViewer() {
     active_execution_index,
     awaiting_pick,
     roots,
+    nodes,
   } = data;
 
-  const [selectedDec, setSelectedDec] = useState<BtNodeData | null>(null);
+  const nodeMap = useMemo(() => {
+    const map = new Map<number, BtNodeData>();
+    for (const node of nodes) {
+      map.set(node.e, node);
+    }
+    return map;
+  }, [nodes]);
+
+  const [selectedDecIdx, setSelectedDecIdx] = useState<number | null>(null);
+  const selectedDec =
+    selectedDecIdx !== null ? (nodeMap.get(selectedDecIdx) ?? null) : null;
 
   return (
     <Window title="Behavior Tree Viewer" width={1200} height={700}>
@@ -354,13 +378,14 @@ export function BehaviorTreeViewer() {
                     alignItems: 'flex-start',
                   }}
                 >
-                  {roots.map((root) => (
+                  {roots.map((rootIdx) => (
                     <BtNodeTree
-                      key={root.e}
-                      node={root}
+                      key={rootIdx}
+                      nodeIdx={rootIdx}
+                      nodeMap={nodeMap}
                       activeIdx={active_execution_index}
                       selectedDec={selectedDec}
-                      onSelectDec={setSelectedDec}
+                      onSelectDec={setSelectedDecIdx}
                     />
                   ))}
                 </div>

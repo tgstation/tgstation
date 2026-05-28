@@ -1,6 +1,6 @@
 /datum/bt_node/subtree/monkey_find_weapon
 	behavior_nodes = list(\
-		"__t" = /datum/bt_node/composite/selector,\
+		"__t" = /datum/bt_node/composite/sequence,\
 		"__c" = list(\
 			list("__t" = /datum/bt_node/ai_behavior/monkey_find_weapon, "default_behavior_args" = list()),\
 			list(\

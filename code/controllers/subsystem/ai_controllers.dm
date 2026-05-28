@@ -16,11 +16,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	/// The tick cost of all currently processed AI, being summed together
 	var/summing_cost
 
-	/// TRUE once setup_bt_nodes() has run at least once.
-	var/bt_nodes_setup = FALSE
-	/// Assoc list of list-identity → built /datum/bt_node for inline descriptor trees.
-	/// Keyed by the descriptor list reference itself, so each unique list gets its own built subtree.
-	var/alist/cached_descriptor_nodes = alist()
+
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	return SS_INIT_SUCCESS
@@ -32,8 +28,6 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	if(!resumed)
-		if(!bt_nodes_setup)
-			setup_bt_nodes()
 		var/list/planning_list = GLOB.ai_controllers_by_status[planning_status]
 		currentrun = planning_list.Copy()
 		summing_cost = 0
@@ -54,31 +48,6 @@ SUBSYSTEM_DEF(ai_controllers)
 		return
 
 	our_cost = MC_AVERAGE(our_cost, summing_cost)
-
-///Creates all singleton instances of /datum/ai_planning_subtree subtypes (DEPRECATED registry).
-/// This proc is intentionally a no-op; the ai_subtrees registry has been removed.
-/// Legacy subtrees should be ported to /datum/bt_node/subtree.
-/datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
-	return
-
-/**
- * Creates singleton instances of all /datum/bt_node subtypes that are not behaviors or planning
- * subtrees (those are handled by SSai_behaviors and setup_subtrees() respectively).
- * Also resolves children for composites and decorators. Children declared as plain list entries
- * use singleton lookup; assoc entries (typepath = config list) create a fresh configured instance.
- *
- * Deferred to the first fire() call (not Initialize()) so that SSai_behaviors is guaranteed to have
- * populated its singleton registry before we attempt cross-registry child resolution.
- */
-/datum/controller/subsystem/ai_controllers/proc/setup_bt_nodes()
-	bt_nodes_setup = TRUE
-	for(var/node_type in subtypesof(/datum/bt_node))
-		if(ispath(node_type, /datum/bt_node/ai_behavior))
-			continue // Handled by SSai_behaviors
-		var/datum/bt_node/node = new node_type
-		GLOB.bt_nodes[node_type] = node
-	for(var/node_type in GLOB.bt_nodes)
-		resolve_node_children(GLOB.bt_nodes[node_type])
 
 /**
  * Resolves the children/child of a composite or decorator node, creating configured instances
@@ -110,37 +79,32 @@ SUBSYSTEM_DEF(ai_controllers)
 		if(!isnull(sub.behavior_nodes) && isnull(sub.root))
 			sub.root = build_node_from_descriptor(sub.behavior_nodes)
 
-/**
- * Returns the BT node to use for a given child_type + optional config.
- * - config is null: returns the singleton from GLOB.bt_nodes, GLOB.ai_subtrees, or SSai_behaviors.
- * - config is a list: creates a fresh instance, applies configure(config), then resolves its children.
- */
+// Always creates a fresh instance regardless of whether config is provided.
 /datum/controller/subsystem/ai_controllers/proc/resolve_child_node(child_type, list/config)
+	if(!ispath(child_type, /datum/bt_node))
+		return null
+	var/datum/bt_node/child = new child_type
 	if(config)
-		var/datum/bt_node/child = new child_type
 		child.configure(config)
-		resolve_node_children(child)
-		return child
-	return GLOB.bt_nodes[child_type] || SSai_behaviors.ai_behaviors[child_type]
+	resolve_node_children(child)
+	return child
 
 /**
- * Returns a BT node for the given entry, which may be:
- *   - A typepath: returns the singleton from GLOB.bt_nodes / GLOB.ai_subtrees / SSai_behaviors.
+ * Returns a freshly instantiated BT node for the given entry, which may be:
+ *   - A typepath: creates a new instance and resolves its children.
  *   - A behavior node list (built via BT_SELECTOR / BT_SEQUENCE / BT_PARALLEL / BT_LEAF / BT_DECORATOR
- *     macros): builds and caches a node from the descriptor, keyed by list identity.
+ *     macros): builds a node tree from the descriptor. Never cached; always fresh per controller.
  */
 /datum/controller/subsystem/ai_controllers/proc/get_or_build_node(entry)
 	if(ispath(entry))
-		if(!bt_nodes_setup)
-			setup_bt_nodes()
-		return GLOB.bt_nodes[entry] || SSai_behaviors.ai_behaviors[entry]
-	if(islist(entry))
-		var/datum/bt_node/cached = cached_descriptor_nodes[entry]
-		if(!isnull(cached))
-			return cached
-		var/datum/bt_node/node = build_node_from_descriptor(entry)
-		cached_descriptor_nodes[entry] = node
+		if(!ispath(entry, /datum/bt_node))
+			stack_trace("get_or_build_node() received non-BT typepath: [entry]")
+			return null
+		var/datum/bt_node/node = new entry
+		resolve_node_children(node)
 		return node
+	if(islist(entry))
+		return build_node_from_descriptor(entry)
 	stack_trace("get_or_build_node() received unexpected entry type: [entry]")
 	return null
 

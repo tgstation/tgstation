@@ -9,8 +9,12 @@
 /datum/bt_node/decorator/bot_mode_flag
 	var/flag
 
-/datum/bt_node/decorator/bot_mode_flag/get_pawn_observe_signals()
-	return list(COMSIG_BOT_MODE_FLAGS_SET)
+/datum/bt_node/decorator/bot_mode_flag/register_observe_signals(atom/pawn)
+	RegisterSignal(pawn, COMSIG_BOT_MODE_FLAGS_SET, PROC_REF(on_signal_changed))
+	return TRUE
+
+/datum/bt_node/decorator/bot_mode_flag/unregister_observe_signals(atom/pawn)
+	UnregisterSignal(pawn, COMSIG_BOT_MODE_FLAGS_SET)
 
 /datum/bt_node/decorator/bot_mode_flag/check_condition(datum/ai_controller/controller)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn

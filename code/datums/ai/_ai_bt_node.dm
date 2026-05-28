@@ -1,27 +1,28 @@
 /**
  * Base class for all behavior tree nodes.
  *
- * All subtypes are singletons initialized by SSai_controllers on first fire.
- * Per-controller state is stored in assoc lists keyed by controller reference,
- * mirroring the pattern used by /datum/ai_movement.
- *
- * /datum/ai_behavior and /datum/ai_planning_subtree extend this type via
- * parent_type so they appear as BT nodes in a tree without changing their paths.
+ * Each controller builds its own tree of node instances, so all state lives
+ * directly on the instance rather than in assoc lists keyed by controller.
  */
 /datum/bt_node
-	/// How often (deciseconds) this node re-evaluates per controller. 0 = every planning tick.
+	/// Node type identifier for the BT viewer. One of the BT_NODE_* defines.
+	var/node_type = BT_NODE_LEAF
+	/// How often (deciseconds) this node re-evaluates. 0 = every planning tick.
 	var/tick_rate = 0
-	/// Per-controller last evaluation world.time. Keyed by controller ref. Only populated when tick_rate > 0.
-	var/alist/tick_cooldowns = alist()
-	/// Per-controller cached last BT_* result. Keyed by controller ref. Only populated when tick_rate > 0.
-	var/alist/tick_results = alist()
+	/// world.time of last evaluation. Only meaningful when tick_rate > 0.
+	var/tick_cooldown = 0
+	/// Cached last BT_* result. Only meaningful when tick_rate > 0.
+	var/tick_result = BT_FAILURE
+	/// Pre-order depth-first index of this node in the tree. Assigned by finalize_tree().
+	var/execution_index = 0
+	/// Index of the last descendant node in this subtree. Equal to execution_index for leaves.
+	var/last_execution_index = 0
 
-/// Returns TRUE if enough time has elapsed for this node to be re-evaluated for the given controller.
-/datum/bt_node/proc/should_tick(datum/ai_controller/controller)
+/// Returns TRUE if enough time has elapsed for this node to be re-evaluated.
+/datum/bt_node/proc/should_tick()
 	if(!tick_rate)
 		return TRUE
-	var/last = tick_cooldowns[controller]
-	return isnull(last) || (last + tick_rate <= world.time)
+	return tick_cooldown + tick_rate <= world.time
 
 /**
  * Called during ai_controller/SelectBehaviors(). Override in subtypes.
@@ -30,30 +31,31 @@
 /datum/bt_node/proc/tick(datum/ai_controller/controller, seconds_per_tick)
 	return BT_FAILURE
 
-/// Called when a controller unpossesses its pawn, to prune stale per-controller entries.
-/datum/bt_node/proc/reset_tick_state(datum/ai_controller/controller)
-	tick_cooldowns -= controller
-	tick_results -= controller
+/// Resets tick timing and cached result for this node instance.
+/datum/bt_node/proc/reset_tick_state()
+	tick_cooldown = 0
+	tick_result = BT_FAILURE
 
 /**
  * Assigns pre-order depth-first execution indices to this node and its subtree.
- * Called once per controller type by ensure_execution_index_cache().
- * Leaf override: records exec_cache[src] = last_cache[src] = counter, returns counter + 1.
- * Composite/decorator subtypes override to recurse into children.
+ * Called once per controller tree by finalize_tree().
  */
-/datum/bt_node/proc/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
-	exec_cache[src] = counter
-	last_cache[src] = counter
+/datum/bt_node/proc/assign_execution_indices(counter)
+	execution_index = counter
+	last_execution_index = counter
 	return counter + 1
 
-/**
- * Apply a configuration list to this node instance by assigning vars directly.
- * Called by setup_bt_nodes() when creating configured (non-singleton) child instances
- * from children_typepaths assoc entries (typepath → config list).
- */
+/// Apply a configuration list to this node instance by assigning vars directly.
 /datum/bt_node/proc/configure(list/config)
 	for(var/var_name in config)
 		vars[var_name] = config[var_name]
+
+/**
+ * Returns the list of direct child bt_node instances for tree traversal.
+ * Returns null for leaf nodes (default). Overridden in composites, decorators, and subtrees.
+ */
+/datum/bt_node/proc/get_children()
+	return null
 
 /**
  * Subtree node: a named, re-usable BT subgraph.
@@ -68,11 +70,12 @@
  * through the `root` pointer to reach all internal nodes.
  */
 /datum/bt_node/subtree
+	node_type = BT_NODE_SUBTREE
 	/// Path to the .bt.json file that is the source of truth for this subtree's behavior_nodes.
 	/// Consumed by the VS Code BT editor extension; not used at runtime.
 	var/behavior_tree_json = null
 	/// list of BT node descriptors defining this subtree's root.
-	/// resolve_node_children() builds `root` from this during setup_bt_nodes().
+	/// resolve_node_children() builds `root` from this during tree construction.
 	var/list/behavior_nodes = null
 	/// The internal root node. Populated by resolve_node_children(). Do not set directly.
 	var/datum/bt_node/root = null
@@ -82,10 +85,13 @@
 		return BT_FAILURE
 	return root.tick(controller, seconds_per_tick)
 
-/datum/bt_node/subtree/assign_execution_indices(controller_type, counter, list/exec_cache, list/last_cache)
-	exec_cache[src] = counter
+/datum/bt_node/subtree/get_children()
+	return root ? list(root) : null
+
+/datum/bt_node/subtree/assign_execution_indices(counter)
+	execution_index = counter
 	counter++
 	if(root)
-		counter = root.assign_execution_indices(controller_type, counter, exec_cache, last_cache)
-	last_cache[src] = counter - 1
+		counter = root.assign_execution_indices(counter)
+	last_execution_index = counter - 1
 	return counter

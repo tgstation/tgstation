@@ -49,27 +49,19 @@
 					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 					"invert": false,
 					"key": "BB_monkey_current_attack_target",
-					"min_stat": "UNCONSCIOUS"
+					"min_stat": "SOFT_CRIT"
 				},
 				"child": {
 					"type": "sequence",
 					"children": [
 						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
-								"key": "BB_monkey_target_disposal",
-								"invert": true
-							},
-							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-								"args": [
-									"BB_monkey_target_disposal",
-									"/obj/machinery/disposal",
-									9
-								]
-							}
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+							"args": [
+								"BB_monkey_target_disposal",
+								"/obj/machinery/disposal",
+								9
+							]
 						},
 						{
 							"type": "leaf",

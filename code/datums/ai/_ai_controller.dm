@@ -67,10 +67,6 @@ multiple modular subtrees with behaviors
 	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
-	/// Flat list of decorators that registered pawn-signal observers (via get_pawn_observe_signals()).
-	/// Used by teardown_bt_observers() to call unregister_pawn_observer() on each.
-	var/list/bt_pawn_observer_nodes = null
-
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -113,24 +109,16 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
 
-///Completely replaces the behavior_nodes with a new set based on argument provided, list provided must contain specifically typepaths
+///Completely replaces the behavior_nodes with a new set based on argument provided.
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
 	behavior_nodes = typepaths_of_new_subtrees
 	init_subtrees()
-	GLOB.bt_execution_indices -= type
-	GLOB.bt_last_execution_indices -= type
 
-///Loops over the subtrees in behavior_nodes and resolves typepaths to singleton refs.
-/// Checks GLOB.bt_nodes (new BT composites/decorators), GLOB.ai_subtrees (legacy planning subtrees),
-/// and SSai_behaviors.ai_behaviors (behavior leaf nodes) in that order.
-/// behavior_nodes may be either a plain list of typepaths or a single BT_* descriptor list
-/// (i.e. the result of BT_SELECTOR / BT_SEQUENCE / BT_PARALLEL / etc. at the controller level).
+/// Builds the per-controller BT node tree from behavior_nodes typepaths or descriptors, then finalizes it.
 /datum/ai_controller/proc/init_subtrees()
 	if(!LAZYLEN(behavior_nodes))
 		return
 	var/list/temp_subtree_list = list()
-	// BT_* macros expand to an assoc list with BT_DESC_TYPE as a key.
-	// If behavior_nodes itself is such a descriptor, treat it as one root node.
 	if(!isnull(behavior_nodes[BT_DESC_TYPE]))
 		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(behavior_nodes)
 		if(isnull(node_instance))
@@ -145,6 +133,35 @@ multiple modular subtrees with behaviors
 				continue
 			temp_subtree_list += node_instance
 	behavior_nodes = temp_subtree_list
+	finalize_tree()
+
+/// Walks the resolved tree to set owning_controller on leaf/decorator nodes and assigns execution indices.
+/datum/ai_controller/proc/finalize_tree()
+	if(!LAZYLEN(behavior_nodes))
+		return
+	var/list/to_visit = behavior_nodes.Copy()
+	var/index = 1
+	while(index <= length(to_visit))
+		var/datum/bt_node/node = to_visit[index++]
+		if(istype(node, /datum/bt_node/decorator))
+			var/datum/bt_node/decorator/dec = node
+			dec.owning_controller = src
+			if(dec.child)
+				to_visit += dec.child
+		else if(istype(node, /datum/bt_node/composite))
+			var/datum/bt_node/composite/comp = node
+			if(comp.children)
+				to_visit += comp.children
+		else if(istype(node, /datum/bt_node/subtree))
+			var/datum/bt_node/subtree/sub = node
+			if(sub.root)
+				to_visit += sub.root
+		else if(istype(node, /datum/bt_node/ai_behavior))
+			var/datum/bt_node/ai_behavior/beh = node
+			beh.owning_controller = src
+	var/counter = 1
+	for(var/datum/bt_node/root in behavior_nodes)
+		counter = root.assign_execution_indices(counter)
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
@@ -182,8 +199,6 @@ multiple modular subtrees with behaviors
 	set_new_cells()
 
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
-	ensure_execution_index_cache()
-	setup_bt_observers()
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER
@@ -325,7 +340,6 @@ multiple modular subtrees with behaviors
 		return // instantiated without an applicable pawn, fine
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_UNPOSSESSED_PAWN)
-	teardown_bt_observers()
 	reset_bt_tick_states()
 	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING, COMSIG_EVLOGGING_ENABLED))
@@ -341,48 +355,6 @@ multiple modular subtrees with behaviors
 		qdel(src)
 
 /**
- * Walk the resolved behavior_nodes tree and register pawn-signal observers
- * for every decorator that implements get_pawn_observe_signals().
- * Called at the end of PossessPawn().
- */
-/datum/ai_controller/proc/setup_bt_observers()
-	if(!LAZYLEN(behavior_nodes))
-		return
-	var/list/to_visit = behavior_nodes.Copy()
-	var/index = 1
-	while(index <= length(to_visit))
-		var/datum/bt_node/node = to_visit[index++]
-		if(istype(node, /datum/bt_node/decorator))
-			var/datum/bt_node/decorator/dec = node
-			if(LAZYLEN(dec.get_pawn_observe_signals()))
-				dec.has_observer_signals = TRUE
-				if(isnull(bt_pawn_observer_nodes))
-					bt_pawn_observer_nodes = list()
-				if(!(dec in bt_pawn_observer_nodes)) // deduplicate: same singleton may appear twice in a tree
-					bt_pawn_observer_nodes += dec
-					dec.register_pawn_observer(pawn)
-			else if(dec.observer_abort != BT_ABORT_NONE)
-				stack_trace("[type] has [dec.type] with observer_abort=[dec.observer_abort] but get_pawn_observe_signals() returned nothing. The abort policy will never fire reactively.")
-			if(dec.child)
-				to_visit += dec.child
-		else if(istype(node, /datum/bt_node/composite))
-			var/datum/bt_node/composite/comp = node
-			if(comp.children)
-				to_visit += comp.children
-		else if(istype(node, /datum/bt_node/subtree))
-			var/datum/bt_node/subtree/sub = node
-			if(sub.root)
-				to_visit += sub.root
-
-/// Unregisters all pawn-signal observers from the pawn and nulls the observer map.
-/// Called at the start of UnpossessPawn() while pawn is still valid.
-/datum/ai_controller/proc/teardown_bt_observers()
-	if(!isnull(bt_pawn_observer_nodes))
-		for(var/datum/bt_node/decorator/dec as anything in bt_pawn_observer_nodes)
-			dec.unregister_pawn_observer(pawn)
-		bt_pawn_observer_nodes = null
-
-/**
  * Walk the full resolved BT tree and call reset_tick_state(src) on every node,
  * clearing stale per-controller tick timing and cached result entries.
  * Called during UnpossessPawn() before the pawn reference is cleared.
@@ -394,7 +366,7 @@ multiple modular subtrees with behaviors
 	var/index = 1
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
-		node.reset_tick_state(src)
+		node.reset_tick_state()
 		if(istype(node, /datum/bt_node/subtree))
 			var/datum/bt_node/subtree/sub = node
 			if(sub.root)
@@ -504,19 +476,6 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/CancelActions()
 	active_execution_index = 0
 	reset_bt_tick_states()
-
-/// Builds the per-controller-type execution index cache for this controller's tree.
-/// Called once per type from PossessPawn; subsequent instances reuse the cached result.
-/datum/ai_controller/proc/ensure_execution_index_cache()
-	if(GLOB.bt_execution_indices[type])
-		return
-	var/list/exec_cache = list()
-	var/list/last_cache = list()
-	var/counter = 1
-	for(var/datum/bt_node/root in behavior_nodes)
-		counter = root.assign_execution_indices(type, counter, exec_cache, last_cache)
-	GLOB.bt_execution_indices[type] = exec_cache
-	GLOB.bt_last_execution_indices[type] = last_cache
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
@@ -892,11 +851,11 @@ multiple modular subtrees with behaviors
 	. = ..()
 	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
 
-/// Returns TRUE if any ai_behavior descendant of node has running_state set for this controller.
+/// Returns TRUE if any ai_behavior descendant of node is currently running.
 /datum/ai_controller/proc/bt_has_active_descendant(datum/bt_node/node)
 	if(istype(node, /datum/bt_node/ai_behavior))
 		var/datum/bt_node/ai_behavior/behavior = node
-		return !!behavior.running_state[src]
+		return behavior.running
 	if(istype(node, /datum/bt_node/composite))
 		var/datum/bt_node/composite/comp = node
 		for(var/datum/bt_node/child as anything in comp.children)
@@ -910,6 +869,27 @@ multiple modular subtrees with behaviors
 		var/datum/bt_node/subtree/sub = node
 		return sub.root && bt_has_active_descendant(sub.root)
 	return FALSE
+
+/// Walks the subtree rooted at node to find the first node with the given execution_index.
+/// Returns the matching node or null if not found.
+/datum/ai_controller/proc/find_node_by_index(datum/bt_node/node, target_index)
+	if(node.execution_index == target_index)
+		return node
+	if(istype(node, /datum/bt_node/composite))
+		var/datum/bt_node/composite/comp = node
+		for(var/datum/bt_node/child as anything in comp.children)
+			var/found = find_node_by_index(child, target_index)
+			if(found)
+				return found
+	else if(istype(node, /datum/bt_node/decorator))
+		var/datum/bt_node/decorator/dec = node
+		if(dec.child)
+			return find_node_by_index(dec.child, target_index)
+	else if(istype(node, /datum/bt_node/subtree))
+		var/datum/bt_node/subtree/sub = node
+		if(sub.root)
+			return find_node_by_index(sub.root, target_index)
+	return null
 
 /// Short display label for a bt_node, stripping standard path prefixes.
 /datum/ai_controller/proc/bt_node_label(datum/bt_node/node)
@@ -938,13 +918,13 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/bt_node_status_marker(datum/bt_node/node)
 	if(istype(node, /datum/bt_node/ai_behavior))
 		var/datum/bt_node/ai_behavior/behavior = node
-		if(behavior.running_state[src])
+		if(behavior.running)
 			return "*" // active
 
 	if(node.tick_rate > 0)
-		if(!isnull(node.tick_cooldowns[src]) && world.time < node.tick_cooldowns[src])
+		if(world.time < node.tick_cooldown)
 			return "-" // on cooldown
-		var/result = node.tick_results[src]
+		var/result = node.tick_result
 		if(result == BT_SUCCESS)
 			return "+"
 		if(result == BT_FAILURE)
@@ -961,7 +941,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/bt_append_active_nodes(datum/bt_node/node, list/lines, indent)
 	if(istype(node, /datum/bt_node/ai_behavior))
 		var/datum/bt_node/ai_behavior/behavior = node
-		if(behavior.running_state[src])
+		if(behavior.running)
 			lines += "[indent][span_bold("● [bt_node_label(node)]")]"
 		return
 
@@ -1018,8 +998,8 @@ multiple modular subtrees with behaviors
 		var/datum/bt_node/composite/sequence/seq = node
 		var/status = bt_node_status_marker(node)
 		var/child_info = ""
-		if(seq.running_child_index[src])
-			child_info = " (child [seq.running_child_index[src]]/[length(seq.children)])"
+		if(seq.running_child_index)
+			child_info = " (child [seq.running_child_index]/[length(seq.children)])"
 		lines += "[indent][status] SEQUENCE[child_info]"
 		for(var/datum/bt_node/child as anything in seq.children)
 			bt_append_full_tree_state(child, lines, "[indent]  ")
@@ -1029,8 +1009,8 @@ multiple modular subtrees with behaviors
 		var/datum/bt_node/composite/selector/sel = node
 		var/status = bt_node_status_marker(node)
 		var/child_info = ""
-		if(sel.running_child_index[src])
-			child_info = " (child [sel.running_child_index[src]]/[length(sel.children)])"
+		if(sel.running_child_index)
+			child_info = " (child [sel.running_child_index]/[length(sel.children)])"
 		lines += "[indent][status] SELECTOR[child_info]"
 		for(var/datum/bt_node/child as anything in sel.children)
 			bt_append_full_tree_state(child, lines, "[indent]  ")
@@ -1083,12 +1063,12 @@ multiple modular subtrees with behaviors
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Full Tree State", length(tree_lines) ? jointext(tree_lines, "\n") : "(none)")
 
 	// Add execution context section
-	var/list/exec_cache = GLOB.bt_execution_indices[type]
 	var/active_node_label = "(none)"
-	if(active_execution_index && exec_cache)
-		for(var/datum/bt_node/node in exec_cache)
-			if(exec_cache[node] == active_execution_index)
-				active_node_label = bt_node_label(node)
+	if(active_execution_index)
+		for(var/datum/bt_node/root_node as anything in behavior_nodes)
+			var/found = find_node_by_index(root_node, active_execution_index)
+			if(found)
+				active_node_label = bt_node_label(found)
 				break
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))

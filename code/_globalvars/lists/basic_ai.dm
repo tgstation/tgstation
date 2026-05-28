@@ -1,6 +1,3 @@
-///all singleton behavior tree node instances (composites, decorators) indexed by typepath
-GLOBAL_ALIST_EMPTY(bt_nodes)
-
 ///basic ai controllers based on status
 GLOBAL_LIST_INIT(ai_controllers_by_status, list(
 	AI_STATUS_ON = list(),
