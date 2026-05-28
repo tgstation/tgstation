@@ -69,12 +69,15 @@
 	id = "rwd"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
+	//The cable coils don't count toward the total mats of the item.
+	removed_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1 * /obj/item/rwd/loaded::max_amount, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1 * /obj/item/rwd/loaded::max_amount)
 	build_path = /obj/item/rwd/loaded
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+	fixed_cost_efficiency = TRUE // The cable coils can be removed and recycled to generate more material than that spent printing it at higher stock part tiers.
 
 /datum/design/analyzer
 	name = "Gas Analyzer"

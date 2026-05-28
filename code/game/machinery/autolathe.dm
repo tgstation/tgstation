@@ -306,7 +306,7 @@
 		materials_needed[material] += amount_needed
 
 	//checks for available materials
-	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
+	var/material_cost_coefficient = (ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency) ? 1 : creation_efficiency
 	if(!materials.has_materials(materials_needed, material_cost_coefficient, build_count))
 		say("Not enough materials to begin production.")
 		return
@@ -404,7 +404,12 @@
 	if (length(slots_chosen))
 		created.set_material_slots(slots_chosen)
 	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
-		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
+		var/list/inherited_materials = materials_needed.Copy()
+		for(var/mat_type, amount in design.removed_materials) // note: this doesn't work for material requirements yet, no design that uses material requirement datums uses this however.
+			inherited_materials[mat_type] -= amount
+			if(inherited_materials[mat_type] <= 0)
+				inherited_materials -= mat_type
+		split_materials_uniformly(inherited_materials, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

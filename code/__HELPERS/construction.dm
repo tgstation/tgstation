@@ -75,7 +75,12 @@
  */
 /proc/split_materials_uniformly(list/custom_materials, multiplier, atom/target_object)
 	if(!length(target_object.contents)) //most common case where the object is just 1 thing
-		target_object.set_custom_materials(custom_materials, multiplier)
+		if(isstack(target_object))
+			var/obj/item/stack/stack = target_object
+			stack.mats_per_unit = SSmaterials.get_material_set_cache(custom_materials, multiplier / stack.amount)
+			stack.update_custom_materials()
+		else
+			target_object.set_custom_materials(custom_materials, multiplier)
 		return
 
 	//Step 1: Get recursive contents of all objects, only filter obj cause that what's material container accepts
@@ -114,9 +119,5 @@
 		for(var/mat in material_map_amounts)
 			var/list/mat_per_item = material_map_amounts[mat]
 			final_material_list[mat] = mat_per_item[index]
-		if(isstack(object))
-			var/obj/item/stack/stack = object
-			stack.mats_per_unit = SSmaterials.get_material_set_cache(final_material_list, multiplier / stack.amount)
-		else
 			object.set_custom_materials(final_material_list, multiplier)
 		index += 1

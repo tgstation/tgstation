@@ -48,17 +48,28 @@
 		if(design.inherit_materials != DESIGN_INHERIT_MATS || !design.build_path || !length(design.materials) || length(generic_types & design.materials))
 			continue
 
-		var/atom/generic_instance = allocate(design.build_path)
+		var/atom/generic_instance // The object that represents the type of object that can be built from the design, though it's simple spawned in this case
+		var/is_stack = ispath(design.build_path)
+		var/stack_amount = 1
+		if(is_stack) //If this is a stack, we don't want it to merge with the other stack
+			var/obj/item/stack/stack_path = design.build_path
+			stack_amount = initial(stack_path.amount)
+			//So we need to specify the args up to the merge argument to avoid issues
+			generic_instance = allocate(stack_path, run_loc_floor_bottom_left, /*new_amount =*/ stack_amount, /*merge =*/ FALSE)
+		else
+			generic_instance = allocate(design.build_path)
 
-		if(generic_instance.contents.len)
-			continue //todo remove and fix before merge!
+		var/atom/printed_instance // The object that represents the type of object built from the design.
+		if(is_stack) //If this is a stack, we don't want it to merge with the other stack
+			printed_instance = allocate(design.build_path, run_loc_floor_bottom_left, /*new_amount =*/ stack_amount, /*merge =*/ FALSE)
+		else
+			printed_instance = allocate(design.build_path)
 
 		var/list/expected_materials = design.materials.Copy()
 		for(var/mat_type, amount in design.removed_materials)
 			expected_materials[mat_type] -= amount
 			if(expected_materials[mat_type] <= 0)
 				expected_materials -= mat_type
-		var/atom/printed_instance = allocate(design.build_path)
 		split_materials_uniformly(expected_materials, 1, printed_instance)
 
 		if(generic_instance.compare_materials(printed_instance))

@@ -135,6 +135,7 @@
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
 	icon_angle = 90
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT

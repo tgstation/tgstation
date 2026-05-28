@@ -6,6 +6,7 @@
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"
 	base_icon_state = "biopsy"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5)
 	/// Whether or not we can swab objects
 	var/can_swap_objects = FALSE
 

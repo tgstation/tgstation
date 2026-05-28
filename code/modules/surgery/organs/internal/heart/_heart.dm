@@ -294,6 +294,7 @@
 	toxification_probability = 0
 	bleed_prevention = TRUE
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"

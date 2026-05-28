@@ -283,6 +283,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
 	resistance_flags = FIRE_PROOF
 	dog_fashion = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.6)
 
 /datum/armor/balloon
 	melee = 10

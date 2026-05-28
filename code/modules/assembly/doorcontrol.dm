@@ -2,6 +2,7 @@
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// The ID of the blast door electronics to match to the ID of the blast door being used.
 	var/id = -1
 	/// Cooldown of the door's controller. Updates when pressed (activate())
@@ -180,6 +181,7 @@
 /obj/item/assembly/control/igniter
 	name = "ignition controller"
 	desc = "A remote controller for a mounted igniter."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/assembly/control/igniter/activate()
 	if(cooldown)

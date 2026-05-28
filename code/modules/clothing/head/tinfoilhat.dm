@@ -6,6 +6,7 @@
 	armor_type = /datum/armor/costume_foilhat
 	equip_delay_other = 14 SECONDS
 	clothing_flags = ANTI_TINFOIL_MANEUVER
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 	interaction_flags_mouse_drop = NEED_HANDS

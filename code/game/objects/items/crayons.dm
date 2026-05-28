@@ -770,6 +770,7 @@
 	name = "spray can"
 	icon_state = "spraycan"
 	worn_icon_state = "spraycan"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"

@@ -5,6 +5,7 @@
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "swab"
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 
 ///Adds the swabbing component to the biopsy tool
 /obj/item/swab/Initialize(mapload)

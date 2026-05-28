@@ -12,6 +12,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.9, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 	/// maximum amount of cable this device can hold
 	var/max_amount = 210

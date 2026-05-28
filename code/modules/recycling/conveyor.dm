@@ -606,6 +606,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "switch-off"
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	// ID of the switch-in-the-making, to link conveyor belts to it.
 	var/id = ""
 
@@ -644,6 +645,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
 	merge_type = /obj/item/stack/conveyor
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	/// ID for linking a belt to one or more switches, all conveyors with the same ID will be controlled the same switch(es).
 	var/id = ""
 

@@ -7,6 +7,7 @@
 	pickup_sound = SFX_FOOD_PLATE_PICKUP
 	drop_sound = SFX_FOOD_PLATE_DROP
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	///How many things fit on this plate?
 	var/max_items = 8
 	///The offset from side to side the food items can have on the plate

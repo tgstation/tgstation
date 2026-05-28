@@ -362,7 +362,7 @@
 	name = "Cap Gun"
 	id = "toygun"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -374,7 +374,7 @@
 	name = "Box of Cap Gun Shots"
 	id = "capbox"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)
+	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/toy/ammo/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -386,7 +386,7 @@
 	name = "Plastic Balloon"
 	id = "toy_balloon"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.6)
 	build_path = /obj/item/toy/balloon
 	category = list(
 		RND_CATEGORY_HACKED,

@@ -367,6 +367,7 @@
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
 	light_color = LIGHT_COLOR_PURPLE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
@@ -401,6 +402,7 @@
 	light_color = "#99ccff"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	has_closed_handle = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp

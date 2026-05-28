@@ -282,11 +282,7 @@
 	fire_delay = 1
 	shot_delay = 2
 	firing_shakes_camera = FALSE
-	custom_materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
-		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.45)
 	debris = list(
 		/obj/item/stack/cable_coil = 4,
 		/obj/item/stock_parts/micro_laser = 1,

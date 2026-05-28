@@ -17,6 +17,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_atmos_filter"
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	///Amount of filtering points available
 	var/filter_status = 100
 	///strength of the filter against high filtering gases
