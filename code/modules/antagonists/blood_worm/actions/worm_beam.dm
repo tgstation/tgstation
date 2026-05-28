@@ -112,6 +112,20 @@
 	first_brimbeam.icon_state = "brimbeam_start"
 	return TRUE
 
+/// Get rid of our laser when we are done with it
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/extinguish_laser()
+	if(!length(beam_parts))
+		return FALSE
+	if (owner)
+		owner.move_resist = initial(owner.move_resist)
+		if (istype(owner, /mob/living/basic/mining/brimdemon) && owner.stat != DEAD)
+			var/mob/living/basic/mining/brimdemon/demon = owner
+			demon.icon_state = demon.icon_living
+			demon.update_appearance(UPDATE_OVERLAYS)
+	for(var/obj/effect/brimbeam/beam in beam_parts)
+		beam.disperse()
+	beam_parts = list()
+
 /obj/effect/bloodbeam
 
 	name = "brimbeam"
