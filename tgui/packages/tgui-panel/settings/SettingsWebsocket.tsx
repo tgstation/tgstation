@@ -46,7 +46,7 @@ export function SettingsWebsocket(props) {
                         'you to have in-game actions reflect in other services, or the real ' +
                         'world, (ex. Reactive RGB, haptics, play effects/animations in vtubing ' +
                         'software, etc). You can find more information ' +
-                        '<a href="https://github.com/tgstation/tgstation/pull/meow">here in the pull request.</a></span></div>',
+                        '<a href="https://github.com/tgstation/tgstation/pull/96241">here in the pull request.</a></span></div>',
                     },
                   ]);
                 }}
