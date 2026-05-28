@@ -18049,7 +18049,9 @@
 /area/station/science/lobby)
 "ewa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"
