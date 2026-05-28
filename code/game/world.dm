@@ -156,7 +156,19 @@ GLOBAL_VAR(restart_counter)
 	// Try to set round ID
 	SSdbcore.InitializeRound()
 
+	if(SSdbcore.IsConnected())
+		SSdbcore.FireAndForget(
+			"CREATE TABLE IF NOT EXISTS [format_table_name(\"personal_stash\")] ("
+			"stash_id VARCHAR(64) PRIMARY KEY, "
+			"owner_ckey VARCHAR(32), "
+			"contents TEXT, "
+			"last_updated DATETIME DEFAULT Now() ON UPDATE Now()"
+			") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+			list()
+		)
+
 	SetupLogs()
+	GLOB.trader_spawn_manager = new /datum/trader/spawn_manager
 
 	load_admins(initial = TRUE)
 
