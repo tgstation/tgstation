@@ -71,6 +71,14 @@
 	StartCooldown()
 	return TRUE
 
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
+	SIGNAL_HANDLER
+	if (!(attack_flags & ATTACK_RANGED) && !(direction & owner.dir))
+		abort_blast = TRUE
+
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/beam_charge_check()
+	return !abort_blast
+
 /obj/effect/bloodbeam
 
 	name = "brimbeam"
