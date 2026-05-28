@@ -569,11 +569,11 @@
 					player_cid = query_create_ban_get_player.item[3]
 		else
 			if(use_last_connection)
-				if(tgui_alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", list("Yes", "No", "Cancel")) != "Yes")
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_create_ban_get_player)
 					return
 			else
-				if(tgui_alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", list("Yes", "No", "Cancel")) != "Yes")
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_create_ban_get_player)
 					return
 		qdel(query_create_ban_get_player)
@@ -802,11 +802,11 @@
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/mirror_unban = FALSE
-	if(tgui_alert(usr, "Do you want to unban matching bans related to this one?", "Mirror Unban", list("Yes", "No")) == "Yes")
+	if(alert(usr, "Do you want to unban matching bans related to this one?", "Mirror Unban", "Yes", "No") == "Yes")
 		mirror_unban = TRUE
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
-	if(tgui_alert(usr, "Please confirm unban of [target] from [role][mirror_unban ? " and other matching bans" : ""].", "Unban confirmation", list("Yes", "No")) != "Yes")
+	if(alert(usr, "Please confirm unban of [target] from [role][mirror_unban ? " and other matching bans" : ""].", "Unban confirmation", "Yes", "No")	 != "Yes")
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
@@ -866,7 +866,7 @@
 
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
-	if(tgui_alert(usr, "Please confirm undoing of unban of [target] from [role].", "Reban confirmation", list("Yes", "No")) != "Yes")
+	if(alert(usr, "Please confirm undoing of unban of [target] from [role].", "Reban confirmation", "Yes", "No") != "Yes")
 		return
 
 	if(applies_to_admins && !can_place_additional_admin_ban(usr.client.ckey))
@@ -930,11 +930,11 @@
 					player_cid = query_edit_ban_get_player.item[4]
 		else
 			if(use_last_connection)
-				if(tgui_alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to edit a ban for them?", "Unknown key", list("Yes", "No", "Cancel")) != "Yes")
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_edit_ban_get_player)
 					return
 			else
-				if(tgui_alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to edit a ban for them?", "Unknown key", list("Yes", "No", "Cancel")) != "Yes")
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_edit_ban_get_player)
 					return
 		qdel(query_edit_ban_get_player)
