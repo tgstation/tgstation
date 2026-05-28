@@ -1,7 +1,27 @@
-/datum/action/cooldown/mob_cooldown/blood_worm/worm_beam
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam
 
 	name = "Blood beam"
-	desc = "Unleash a barrage of hot acid blood energies in the targeted direction."
+	esc = "Unleash a barrage of hot acid blood energies in the targeted direction."
+
+	// name = "Brimstone Blast"
+	// desc = "Unleash a barrage of infernal energies in the targeted direction."
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "brimdemon_firing"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+	click_to_activate = TRUE
+	cooldown_time = 5 SECONDS
+	melee_cooldown_time = 0
+	/// How far does our beam go?
+	var/beam_range = 10
+	/// How long does our beam last?
+	var/beam_duration = 2 SECONDS
+	/// How long do we wind up before firing?
+	var/charge_duration = 1 SECONDS
+	/// Have we been hit and have to abort the blast?
+	var/abort_blast = FALSE
+	/// A list of all the beam parts.
+	var/list/beam_parts = list()
 
 /obj/effect/bloodbeam
 
