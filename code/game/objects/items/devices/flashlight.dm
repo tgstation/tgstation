@@ -1218,7 +1218,7 @@
 		return FALSE
 	. = ..()
 	if(light_on)
-		var/obj/machinery/power/port_gen/space_bubble/space_furnance_gen/space_gen = new(turf_activation)
+		var/obj/machinery/power/port_gen/space_bubble_gen/space_furnance_gen/space_gen = new(turf_activation)
 		if(istype(space_bubble))
 			QDEL_NULL(space_bubble)
 			QDEL_NULL(space_gen)
