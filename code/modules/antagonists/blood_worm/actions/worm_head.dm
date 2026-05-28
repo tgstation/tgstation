@@ -23,6 +23,8 @@
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
 	var/mob/living/basic/blood_worm/worm = src.target
 	var/mob/living/carbon/human/host = worm.host
