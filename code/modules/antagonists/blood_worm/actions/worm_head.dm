@@ -34,8 +34,8 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(host)
 	// todo: its must be possible to grant head via the action button
-	owner:grant_bloodworm_head(host)
+	host:grant_bloodworm_head(host)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(host)
 
-	owner:remove_bloodworm_head(host)
+	host:remove_bloodworm_head(host)

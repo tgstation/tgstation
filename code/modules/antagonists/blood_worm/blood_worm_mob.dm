@@ -72,8 +72,6 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm/invade/invade_action
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/cocoon_action
-	/// What is Typed? So need to give proper arg with type?
-	var/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/worm_head_action
 
 	// Host actions
 
@@ -83,6 +81,8 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm/eject/eject_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm/revive/revive_action
+	/// What is Typed? So need to give proper arg with type?
+	var/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/worm_head_action
 
 	/// List of actions outside of a host.
 	var/list/innate_actions = list()
@@ -135,6 +135,9 @@
 
 	revive_action = new(src)
 	host_actions += revive_action
+
+	worm_head_action = new(src)
+	host_actions += worm_head_action
 
 	grant_actions(src, innate_actions)
 
