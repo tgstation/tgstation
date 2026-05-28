@@ -52,7 +52,7 @@
 		worm.grant_bloodworm_head(host)
 		blood_worm_beam = new(src)
 		blood_worm_beam.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
-		blood_worm_beam.button_icon_state = "spit_blood"
+		blood_worm_beam.button_icon_state = "worm_beam"
 		blood_worm_beam.Grant(host)
 
 	return ..()
