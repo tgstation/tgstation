@@ -96,20 +96,20 @@
 				break
 		if(blocked)
 			break
-		var/obj/effect/brimbeam/new_brimbeam = new(affected_turf)
-		new_brimbeam.dir = owner.dir
-		beam_parts += new_brimbeam
-		new_brimbeam.assign_creator(owner)
+		var/obj/effect/bloodbeam/new_bloodbeam = new(affected_turf)
+		new_bloodbeam.dir = owner.dir
+		beam_parts += new_bloodbeam
+		new_bloodbeam.assign_creator(owner)
 		for(var/mob/living/hit_mob in affected_turf)
 			hit_mob.apply_damage(25, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
-			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
-		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
+			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s bloodbeam!"))
+		RegisterSignal(new_bloodbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
 		return FALSE
-	var/atom/last_brimbeam = beam_parts[length(beam_parts)]
-	last_brimbeam.icon_state = "brimbeam_end"
-	var/atom/first_brimbeam = beam_parts[1]
-	first_brimbeam.icon_state = "brimbeam_start"
+	var/atom/last_bloodbeam = beam_parts[length(beam_parts)]
+	last_bloodbeam.icon_state = "brimbeam_end"
+	var/atom/first_bloodbeam = beam_parts[1]
+	first_bloodbeam.icon_state = "brimbeam_start"
 	return TRUE
 
 /// Get rid of our laser when we are done with it
