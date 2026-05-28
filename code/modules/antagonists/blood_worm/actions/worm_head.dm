@@ -46,7 +46,7 @@
 	else
 		worm.grant_bloodworm_head(host)
 		blood_worm_beam = new(src)
-		blood_worm_beam.Grant(src)
+		blood_worm_beam.Grant(worm)
 
 	return ..()
 
