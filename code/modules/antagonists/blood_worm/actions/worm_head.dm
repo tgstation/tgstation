@@ -21,12 +21,6 @@
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
 
-	var/datum/action/cooldown/mob_cooldown/brimbeam/blood_worm_beam
-
-	blood_worm_beam.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
-
-	blood_worm_beam.button_icon_state = "spit_blood"
-
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Destroy()
 	UnregisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE)
 	return ..()
@@ -57,6 +51,8 @@
 	else
 		worm.grant_bloodworm_head(host)
 		blood_worm_beam = new(src)
+		blood_worm_beam.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
+		blood_worm_beam.button_icon_state = "spit_blood"
 		blood_worm_beam.Grant(host)
 
 	return ..()
