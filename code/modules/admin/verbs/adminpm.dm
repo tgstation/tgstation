@@ -42,7 +42,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			nametag = "[real_mob_name](as [mob_name])"
 		targets["[nametag] - [client]"] = client
 
-	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	var/target = tgui_input_list(user, "To whom shall we send a message?", "Admin PM", sort_list(targets))
 	if (isnull(target))
 		return
 	user.cmd_admin_pm(targets[target], null)
