@@ -1666,4 +1666,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
 
+/// Mobs with this trait will always have be a priority target for mining mobs
+#define TRAIT_MINING_AGGRO "mining_aggro"
+
 // END TRAIT DEFINES
