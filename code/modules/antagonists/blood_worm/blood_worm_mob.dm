@@ -166,6 +166,7 @@
 
 	innate_actions = null
 	host_actions = null
+	worm_head_action = null
 
 	return ..()
 
