@@ -119,9 +119,9 @@
 	if (owner)
 		owner.move_resist = initial(owner.move_resist)
 		if (owner.stat != DEAD)
-			var/mob/living/carbon/human/owner = owner
-			owner.icon_state = owner.icon_living
-			owner.update_appearance(UPDATE_OVERLAYS)
+			var/mob/living/carbon/human/host = owner
+			host.icon_state = host.icon_living
+			host.update_appearance(UPDATE_OVERLAYS)
 	for(var/obj/effect/bloodbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()
