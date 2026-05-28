@@ -100,7 +100,7 @@
 	var/long_term_power = 10
 	///Automatically name the APC after the area is in
 	var/auto_name = FALSE
-	///Time to allow the APC to regain some power and to turn the channels back online
+	///Time to allow the APC to regain some power and to turn the channels back online in seconds
 	var/failure_timer = 0
 	///Forces an update on the power use to ensure that the apc has enough power
 	var/force_update = FALSE
@@ -282,8 +282,8 @@
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
-	energy_fail(disrupt_duration)
+	// failure timer is in seconds, not deciseconds, so we need to convert
+	energy_fail(disrupt_duration * 0.1)
 	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
@@ -589,7 +589,7 @@
 	if(!area?.requires_power)
 		return
 	if(failure_timer)
-		failure_timer--
+		failure_timer = max(0, failure_timer - seconds_per_tick)
 		force_update = TRUE
 		return
 

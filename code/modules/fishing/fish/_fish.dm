@@ -271,7 +271,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
-	return MANUAL_SUICIDE
+	REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+	if (user.stat == DEAD)
+		return MANUAL_SUICIDE
+	user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but fails to go through with it!"))
+	return SHAME
 
 /obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)

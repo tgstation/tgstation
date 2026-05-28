@@ -270,7 +270,7 @@
 		if(IS_RIGHT_INDEX(get_held_index_of_item(I)))
 			icon_file = I.righthand_file
 
-		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
 	return hands
 
 /mob/living/carbon/get_fire_overlay(stacks, on_fire)
@@ -344,7 +344,7 @@
 
 	if(wear_mask)
 		if(!(obscured_slots & HIDEMASK))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
+			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', bodyshape = bodyshape)
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -358,7 +358,7 @@
 
 	if(wear_neck)
 		if(!(obscured_slots & HIDENECK))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
+			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', bodyshape = bodyshape)
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -371,7 +371,7 @@
 		inv.update_appearance()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
+		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', bodyshape = bodyshape)
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
@@ -379,10 +379,13 @@
 /mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
-	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
-		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
+	if(!legcuffed)
+		return
+	if(astype(legcuffed, /obj/item/restraints/legcuffs)?.legcuff_state)
+		var/obj/item/restraints/legcuffs/cuffs = legcuffed
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', cuffs.legcuff_state, -LEGCUFF_LAYER)
+	apply_overlay(LEGCUFF_LAYER)
+	throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
@@ -396,7 +399,7 @@
 
 	if(head)
 		if(!(obscured_slots & HIDEHEADGEAR))
-			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi', bodyshape = bodyshape)
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
@@ -464,10 +467,13 @@
 	update_damage_overlays()
 	update_wound_overlays()
 	var/limb_count_update = 0
+	var/head_update = FALSE
 	var/list/new_limbs = list()
 	for(var/body_zone, limb_untyped in get_bodyparts_by_zones())
 		var/obj/item/bodypart/limb = limb_untyped
 		if(isnull(limb) || IS_STUMP(limb))
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			if(icon_render_keys[body_zone])
 				icon_render_keys -= body_zone
 				limb_count_update += 1
@@ -483,6 +489,8 @@
 			new_limbs += limb_icon_cache[new_key]
 
 		else
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			limb_icon_cache[new_key] ||= limb.get_limb_icon(dropped = FALSE)
 			new_limbs += limb_icon_cache[new_key]
 			icon_render_keys[limb.body_zone] = new_key
@@ -498,6 +506,10 @@
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
+	// for legacy support, head changes triggers an eye/hair update
+	if(head_update)
+		update_eyes()
+		update_hair()
 
 /mob/living/carbon/proc/update_face_offset()
 	return
@@ -536,12 +548,18 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
+
+/obj/item/bodypart/head/generate_icon_key()
+	. = ..()
+	if(lip_style)
+		. += lip_color
+		. += lip_style
 
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
@@ -559,48 +577,10 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
-	return .
-
-/obj/item/bodypart/head/generate_icon_key()
-	. = ..()
-	if(lip_style)
-		. += "-[lip_style]"
-		. += "-[lip_color]"
-
-	if(facial_hair_hidden)
-		. += "-FACIAL_HAIR_HIDDEN"
-	else
-		. += "-[facial_hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
-		. += "-[facial_hair_alpha]"
-		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
-		if(facial_hair_gradient_style)
-			. += "-[facial_hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
-
-	if(show_eyeless)
-		. += "-SHOW_EYELESS"
-	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
-		return .
-
-	if(hair_hidden)
-		. += "-HAIR_HIDDEN"
-	else
-		. += "-[hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || hair_color]"
-		. += "-[hair_alpha]"
-		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
-		if(hair_gradient_style)
-			. += "-[hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
-		if(LAZYLEN(hair_masks))
-			. += "-[jointext(hair_masks, "-")]"
-
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

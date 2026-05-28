@@ -13,6 +13,7 @@
 	now_failing = span_warning("You are unable to hear at all!")
 	now_fixed = span_info("Noise slowly begins filling your ears once more.")
 	low_threshold_cleared = span_info("The ringing in your ears has died down.")
+	visual = FALSE
 
 	/// temporary deafness, measured in seconds. While > 0, the person is unable to hear anything.
 	var/temporary_deafness = 0
@@ -140,7 +141,6 @@
 
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
-
 
 /obj/item/organ/ears/cat
 	name = "cat ears"

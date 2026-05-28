@@ -144,7 +144,7 @@
 // Bileworm
 /obj/item/crusher_trophy/bileworm_spewlet
 	name = "bileworm spewlet"
-	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet

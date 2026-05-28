@@ -10,6 +10,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/wet_floor_sign
+	name = "Wet Floor Sign"
+	id = "wet_floor_sign"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/clothing/suit/caution
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/watering_can
 	name = "Watering Can"
 	id = "watering_can"

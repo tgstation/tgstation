@@ -141,6 +141,9 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 /// Prevents material items from displaying their descriptors in examine_more with sci glasses
 #define MATERIAL_NO_DESCRIPTORS (1 << 8)
 
+/// Flags for metalgen imprinting
+#define MATERIAL_METALGEN MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item
 #define MATERIAL_INSERT_ITEM_NO_MATS -1
