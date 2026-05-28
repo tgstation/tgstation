@@ -24,17 +24,22 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
+	if (can_bleed())
+		limb_owner.bleed(rand(20, 40))
+
 	drop_limb(dismembered = TRUE)
+
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
+	var/turf/owner_location = limb_owner.loc
+	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
+		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
 	if(dam_type == BURN)
 		burn()
 		return TRUE
-
-	// Assume we had our limb sliced/punched off by this point
-	if(can_bleed())
+	if (can_bleed())
 		limb_owner.bleed(rand(20, 40))
 
 	var/direction = pick(GLOB.cardinals)
@@ -236,7 +241,7 @@
 	return ..()
 
 ///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails. Returns TRUE on success, FALSE on failure.
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner)
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, delete_old_limb = FALSE)
 	if(!istype(limb_owner))
 		return FALSE
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
@@ -245,6 +250,9 @@
 	if(!try_attach_limb(limb_owner, TRUE)) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb?.try_attach_limb(limb_owner, TRUE)
 		return FALSE
+
+	if(delete_old_limb && old_limb && !QDELETED(old_limb))
+		qdel(old_limb)
 	return TRUE
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
@@ -304,7 +312,7 @@
 			LAZYREMOVE(wounds, wound)
 			wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
-		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]") && !(bodypart_flags & BODYPART_STUMP))
+		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
 			new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 			new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
