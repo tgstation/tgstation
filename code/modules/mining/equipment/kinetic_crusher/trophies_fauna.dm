@@ -205,11 +205,11 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	damage_type = BRUTE // Otherwise the mobs take heavily reduced damage
 
-/obj/projectile/bileworm_acid/crusher/Initialize(mapload)
+/obj/projectile/bileworm_acid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/parriable_projectile)
 
-/obj/projectile/bileworm_acid/crusher/prehit_pierce(atom/target)
+/obj/projectile/bileworm_acid/prehit_pierce(atom/target)
 	if (!isliving(target))
 		return ..()
 	var/mob/living/as_living = target
