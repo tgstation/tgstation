@@ -11,6 +11,8 @@
 
 	unset_after_click = FALSE
 
+	var/status_effect_type = null
+
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
@@ -26,6 +28,19 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
 	var/mob/living/basic/blood_worm/worm = src.target
 	var/mob/living/carbon/human/host = worm.host
+
+	host.apply_status_effect(status_effect_type, worm) // is it some kind of blur for screen? dont know what is it
+
+	host.visible_message(
+		message = span_danger("[host]'s head start covering with unnatural red flesh!"),
+		ignored_mobs = owner
+	)
+
+	to_chat(owner, span_notice("You grew worm head into your host."))
+
+	worm.grant_bloodworm_head(host)
+
+	return ..()
 
 	// if (worm.host?.is_mouth_covered())
 	// 	if (feedback)
