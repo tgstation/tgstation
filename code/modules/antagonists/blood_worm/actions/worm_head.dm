@@ -45,8 +45,6 @@
 	// 		owner.balloon_alert(owner, "mouth is covered!")
 	// 	return FALSE
 
-	return ..()
-
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(host)
 	// todo: its must be possible to grant head via the action button
 	host:grant_bloodworm_head(host)
