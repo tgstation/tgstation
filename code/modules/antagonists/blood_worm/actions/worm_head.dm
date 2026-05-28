@@ -14,10 +14,6 @@
 	// blood beam actions, grans with a worm head, same as brim demon beam but with some changes(actually no heh)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/blood_worm_beam
 
-	// icon_to_change_var.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
-
-	// icon_to_change_var.button_icon_state = "spit_blood"
-
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
