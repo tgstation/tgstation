@@ -62,7 +62,7 @@
 		hallucinator.client?.images -= fire_overlay
 		fire_overlay = null
 
-	GLOB.all_ongoing_hallucinations -= src
+	// GLOB.all_ongoing_hallucinations -= src
 
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
