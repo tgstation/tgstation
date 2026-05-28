@@ -534,6 +534,10 @@
   SmArtKar:
   - balance: Mining mobs now prioritize humans over basicmobs, with exception of red
       and black raptors - those are prioritized over humans instead.
+  Wisemonster:
+  - rscadd: Added a flash to the QM's locker
+  lelandkemble:
+  - spellcheck: Maximum quality food is referred to as "Divine" rather than "Godlike"
   mcbalaam:
   - bugfix: Vote panel doesn't close for the admin cancelling the vote now
   timothymtorres:
