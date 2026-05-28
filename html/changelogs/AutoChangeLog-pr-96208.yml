@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Podpeople blood can now be restored by E-Z Nutrient, which functions similarly to iron pills for humans."
+  - rscadd: "Plant nutriment (Liquid Earthsquake, Robust Harvest, E-Z Nutrient, Left 4 Zed, Enduro Grow) now heals toxin damage for mobs with the MOB_PLANT biotype."
