@@ -11,7 +11,7 @@
 
 	check_flags = NONE
 
-	var/datum/action/cooldown/mob_cooldown/brimbeam/blood_worm_beam
+	var/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/blood_worm_beam
 
 	// icon_to_change_var.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
 

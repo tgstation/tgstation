@@ -6,9 +6,9 @@
 	// name = "Brimstone Blast"
 	// desc = "Unleash a barrage of infernal energies in the targeted direction."
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	button_icon_state = "brimdemon_firing"
-	background_icon_state = "bg_demon"
-	overlay_icon_state = "bg_demon_border"
+	// button_icon_state = "brimdemon_firing"
+	// background_icon_state = "bg_demon"
+	// overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
@@ -80,8 +80,8 @@
 	return !abort_blast
 
 /// Create a laser in the direction we are facing
-/datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
-	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
+/datum/action/cooldown/mob_cooldown/blood_beam/proc/fire_laser()
+	owner.visible_message(span_danger("[owner] fires a blood beam!"))
 	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)
