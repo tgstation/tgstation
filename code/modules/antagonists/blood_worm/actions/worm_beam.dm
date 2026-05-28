@@ -71,12 +71,12 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/brimbeam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
+/datum/action/cooldown/mob_cooldown/blood_beam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
 	SIGNAL_HANDLER
 	if (!(attack_flags & ATTACK_RANGED) && !(direction & owner.dir))
 		abort_blast = TRUE
 
-/datum/action/cooldown/mob_cooldown/brimbeam/proc/beam_charge_check()
+/datum/action/cooldown/mob_cooldown/blood_beam/proc/beam_charge_check()
 	return !abort_blast
 
 /// Create a laser in the direction we are facing
@@ -113,22 +113,22 @@
 	return TRUE
 
 /// Get rid of our laser when we are done with it
-/datum/action/cooldown/mob_cooldown/brimbeam/proc/extinguish_laser()
+/datum/action/cooldown/mob_cooldown/blood_beam/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
 	if (owner)
 		owner.move_resist = initial(owner.move_resist)
-		if (istype(owner, /mob/living/basic/mining/brimdemon) && owner.stat != DEAD)
+		if (owner.stat != DEAD)
 			var/mob/living/basic/mining/brimdemon/demon = owner
 			demon.icon_state = demon.icon_living
 			demon.update_appearance(UPDATE_OVERLAYS)
-	for(var/obj/effect/brimbeam/beam in beam_parts)
+	for(var/obj/effect/blood_beam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()
 
 /obj/effect/bloodbeam
 
-	name = "brimbeam"
+	name = "blood_beam"
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
