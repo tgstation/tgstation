@@ -116,12 +116,12 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
-	if (host)
-		host.move_resist = initial(host.move_resist)
-		if (host.stat != DEAD)
-			var/mob/living/carbon/human/host = host
-			host.icon_state = host.icon_living
-			host.update_appearance(UPDATE_OVERLAYS)
+	if (owner)
+		owner.move_resist = initial(owner.move_resist)
+		if (owner.stat != DEAD)
+			var/mob/living/carbon/human/owner = owner
+			owner.icon_state = owner.icon_living
+			owner.update_appearance(UPDATE_OVERLAYS)
 	for(var/obj/effect/bloodbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()
