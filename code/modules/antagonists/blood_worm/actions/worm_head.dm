@@ -36,7 +36,11 @@
 
 	to_chat(owner, span_notice("You grew worm head into your host."))
 
-	worm.grant_bloodworm_head(host)
+
+	if(host:get_bodypart(BODY_ZONE_HEAD) == /obj/item/bodypart/head/blood_worm) // or better istype ?
+		worm.remove_bloodworm_head(host)
+	else
+		worm.grant_bloodworm_head(host)
 
 	return ..()
 
