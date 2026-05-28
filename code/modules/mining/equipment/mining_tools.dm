@@ -107,7 +107,7 @@
 	toolspeed = 3 //3 times slower than a normal pickaxe
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6) //This number used to be insane and I'm just going to save your sanity and not tell you what it was.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.05, /datum/material/plastic = SMALL_MATERIAL_AMOUNT) //This number used to be insane and I'm just going to save your sanity and not tell you what it was.
 
 /obj/item/shovel
 	name = "shovel"

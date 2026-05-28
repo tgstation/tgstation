@@ -58,8 +58,6 @@ other types of metals and chemistry for reagents).
 	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
 
-	/// If set, an amount of materials that will be removed from the custom materials of the built object
-	var/alist/removed_materials
 	/**
 	 * A variable for if and how we want the printed object to receive the materials that were used to print it.
 	 *
@@ -74,6 +72,27 @@ other types of metals and chemistry for reagents).
 	var/inherit_materials = DESIGN_INHERIT_MATS
 	// If true, the efficiency of this design won't be influenced by the tier of the stock parts of the machine printing it
 	var/fixed_cost_efficiency = FALSE
+
+	/**
+	 * If set, instead of transfering the contents of the materials var to the item(s), this list will be used.
+	 * This is useful for printed items that possess fewer mats than those used in the process of printing them,
+	 * Or items that in turn contain more items that can be extracted and recycled singularly.
+	 *
+	 * Here's an example of how it's supposed to be structured:
+	 *	transfered_materials = list(
+	 *		/obj/item/printed = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5),
+	 *		/obj/item/inside_printed = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5),
+	 *	)
+	 *
+	 * A few things to consider though:
+	 * 1) It shouldn't include materials not present in the 'materials' variable.
+	 * 2) The sum of each material in the lists shouldn't surpass what present in the 'materials' list.
+	 * 3) It's incompatible with material_slot and material_requirement datums. This might change in the future, i dunno.
+	 * 4) this does nothing if 'inherit_materials' is set to DESIGN_DONT_INHERIT_MATS.
+	 *
+	 * I've set a few unit test checks to make sure that things don't go wrong anyway, so don't worry too much about it
+	 */
+	var/list/transfered_materials
 
 /datum/design/error_design
 	name = "ERROR"
@@ -119,6 +138,35 @@ other types of metals and chemistry for reagents).
 	if (isnull(amount))
 		amount = 1
 	return new build_path(drop_loc, amount)
+
+///A proc that handles transfering the materials to the target object and anything it contains that isn't abstract. You can check the doc for var/list/transfered_materials for how it works.
+/datum/design/proc/transfer_materials(list/custom_materials, multiplier, atom/target_object)
+	SHOULD_BE_PURE(TRUE)
+
+	if(!length(transfered_materials)) //most common case where the object is just one thing and 'transferred_materials' is null
+		simple_transfer_materials(custom_materials, multiplier, target_object)
+		return
+
+	var/list/recursive_contents = target_object.get_all_contents_type(/obj/item)
+
+	for(var/obj/item/object as anything in recursive_contents)
+		if(object.item_flags & ABSTRACT) //skip abstract entities
+			continue
+		if(!transfered_materials[object.type])
+			stack_trace("[object.type] missing from the 'transfered_materials' list of the design. Edit the 'transfered_materials' var of [type], or consider giving them ABSTRACT flag if appropriate.")
+			continue
+		simple_transfer_materials(transfered_materials[object.type], multiplier, object)
+
+///Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function. Having it as a separate proc reduces copypaste a little.
+/datum/design/proc/simple_transfer_materials(list/custom_materials, multiplier, atom/target_object)
+	SHOULD_BE_PURE(TRUE)
+
+	if(isstack(target_object))
+		var/obj/item/stack/stack = target_object
+		stack.mats_per_unit = SSmaterials.get_material_set_cache(custom_materials, multiplier / stack.amount)
+		stack.update_custom_materials()
+	else
+		target_object.set_custom_materials(custom_materials, multiplier)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

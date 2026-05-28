@@ -1,3 +1,6 @@
+//This represents the amount of materials (both iron and glass that the max_amount of cable would amount to
+#define MAX_CABLE_AMOUNT (SMALL_MATERIAL_AMOUNT * 0.1 * /obj/item/rwd/loaded::max_amount)
+
 /obj/item/rwd
 	name = "rapid wiring device"
 	desc = "A device used to rapidly lay cable & pick up stray cable pieces laying around."
@@ -12,7 +15,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.9, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5 - MAX_CABLE_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5 - MAX_CABLE_AMOUNT)
 
 	/// maximum amount of cable this device can hold
 	var/max_amount = 210

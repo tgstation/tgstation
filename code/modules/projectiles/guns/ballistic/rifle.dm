@@ -299,7 +299,7 @@
 	inhand_icon_state = "pipegun"
 	worn_icon_state = "pipegun"
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8.05, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 
 	projectile_damage_multiplier = 1.35
@@ -338,7 +338,7 @@
 	icon_state = "pipepistol"
 	inhand_icon_state = "pipepistol"
 	worn_icon_state = "gun"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.25, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
@@ -364,11 +364,12 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 2
 	custom_materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.15,
-		/datum/material/wood = SHEET_MATERIAL_AMOUNT *8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.2,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15,
 		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3,
 	)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
@@ -495,7 +496,12 @@
 	semi_auto = TRUE
 	slot_flags = ITEM_SLOT_BACK
 	projectile_damage_multiplier = 0.5
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.5, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2,
+	)
 
 	SET_BASE_PIXEL(-8, 0)
 

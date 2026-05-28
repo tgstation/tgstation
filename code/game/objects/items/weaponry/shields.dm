@@ -481,7 +481,7 @@
 	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
 	icon_state = "improvised"
 	inhand_icon_state = "improvised"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised

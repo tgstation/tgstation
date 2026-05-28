@@ -204,7 +204,9 @@
 	id = "c10mm"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30)
-	removed_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
+	transfered_materials = list(
+		/obj/item/ammo_box/c10mm = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15),
+	)
 	build_path = /obj/item/ammo_box/c10mm
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -217,7 +219,9 @@
 	id = "c45"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30)
-	removed_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
+	transfered_materials = list(
+		/obj/item/ammo_box/c45 = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15),
+	)
 	build_path = /obj/item/ammo_box/c45
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -230,7 +234,9 @@
 	id = "c9mm"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30)
-	removed_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
+	transfered_materials = list(
+		/obj/item/ammo_box/c9mm = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15),
+	)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list(
 		RND_CATEGORY_HACKED,

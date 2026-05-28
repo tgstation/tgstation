@@ -304,6 +304,7 @@
 	equipment_slot = MECHA_POWER
 	can_be_toggled = TRUE
 	active = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
@@ -392,7 +393,13 @@
 
 ///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 1)
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 10)
+
+/// Version without the initial fuel
+/obj/item/mecha_parts/mecha_equipment/generator/printed
+
+/obj/item/mecha_parts/mecha_equipment/generator/generator_init()
+	return
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 

@@ -43,7 +43,7 @@
 	/// variable for R walls to deconstruct them
 	var/canRturf = FALSE
 	/// integrated airlock electronics for setting access to a newly built airlocks
-	var/obj/item/electronics/airlock/airlock_electronics
+	var/obj/item/electronics/airlock/rcd/airlock_electronics
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 
@@ -53,6 +53,9 @@
 /obj/effect/rcd_hologram
 	name = "hologram"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/item/electronics/airlock/rcd
+	custom_materials = null
 
 /obj/effect/rcd_hologram/Initialize(mapload)
 	. = ..()
@@ -515,6 +518,7 @@
 
 /obj/item/construction/rcd/loaded
 	matter = 160
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/construction/rcd/loaded/upgraded
 	construction_upgrades = RCD_ALL_UPGRADES
@@ -568,8 +572,9 @@
 	ranged = TRUE
 	has_ammobar = FALSE
 	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
+	item_flags = NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
 	delay_mod = 0.5
+	custom_materials = null
 
 /obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
 	if(ismecha(owner))

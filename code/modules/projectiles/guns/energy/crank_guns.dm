@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_HEAVY
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.35, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.3)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.35, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.3, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	light_color = COLOR_PURPLE
 
 /obj/item/gun/energy/laser/musket/add_bayonet_point()
@@ -42,9 +42,8 @@
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.55,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.45,
-		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3,
 	)
-
 
 /obj/item/gun/energy/disabler/smoothbore
 	name = "smoothbore disabler"
@@ -60,6 +59,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.35,
 		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT,
 	)
 
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
@@ -97,6 +97,7 @@
 		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.3,
 		/datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT,
 	)
 
 //Inferno and Cryo Pistols

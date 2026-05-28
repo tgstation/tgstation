@@ -433,12 +433,7 @@
 
 	created = design.create_result(target, design.materials, amount = number_to_make)
 	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
-		var/list/design_materials = design.materials.Copy()
-		for(var/mat_type, amount in design.removed_materials)
-			design_materials[mat_type] -= amount
-			if(design_materials[mat_type] <= 0)
-				design_materials -= mat_type
-		split_materials_uniformly(design_materials, material_cost_coefficient, created)
+		design.transfer_materials(design.materials, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

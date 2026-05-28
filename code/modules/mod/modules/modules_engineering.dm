@@ -483,6 +483,7 @@
 	desc = "An atmospheric resin mister, able to fix up areas quickly."
 	device = /obj/item/extinguisher/mini/nozzle/mod
 	volume = 250
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/mister/atmos/Initialize(mapload)
 	. = ..()

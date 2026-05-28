@@ -117,6 +117,7 @@
 	min_distance = 2
 	skill_mod = -1
 	fishing_modifier = -5
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"

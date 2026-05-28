@@ -5,6 +5,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_chem"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// All possible injection sizes for the implant shown in the prisoner management console.
 	var/list/implant_sizes = list(1, 5, 10)
 	/// Frequency of radio signal we've been synced to

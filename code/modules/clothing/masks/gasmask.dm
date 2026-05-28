@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	flash_protect = FLASH_PROTECTION_WELDER
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	tint = 2
 	toggle_message = "You pull the visor down."
 	alt_toggle_message = "You push the visor up."

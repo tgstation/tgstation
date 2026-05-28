@@ -263,6 +263,7 @@
 
 /obj/item/flamethrower/full
 	create_full = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE

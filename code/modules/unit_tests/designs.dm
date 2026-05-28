@@ -33,7 +33,7 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
-	var/list/generic_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
+	var/list/special_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
 		design = new design()
@@ -44,8 +44,30 @@
 			continue
 		all_designs[design.id] = design.type
 
-		//Perform material checks onto the design if needed to ensure the required materials (minus the removed_materials) match the custom materials of the object.
-		if(design.inherit_materials != DESIGN_INHERIT_MATS || !design.build_path || !length(design.materials) || length(generic_types & design.materials))
+		var/mat_requirement_design = length(special_types & design.materials)
+
+		if(length(design.transfered_materials) && mat_requirement_design)
+			TEST_FAIL("'transfer_materials' doesn't work for [design.type] and other designs that have [/datum/material_slot] or [/datum/material_requirement] in their 'materials' var yet")
+
+		//Do not perform further checks if it doesn't have a built path, mat requirements or if it's one of those designs with choosable requirements (harder to implement checks for those)
+		if(!design.build_path || !length(design.materials) || mat_requirement_design)
+			continue
+
+		if(length(design.transfered_materials))
+			var/list/mats_total = list()
+			for(var/object_type in design.transfered_materials)
+				var/list/transfered_to_obj = design.transfered_materials[object_type]
+				for(var/mat in design.transfered_materials[object_type])
+					if(!(mat in design.materials))
+						TEST_FAIL("Found material type [mat] in the 'transfered_materials' var of [design.type] that isn't present in its 'materials' var")
+						continue
+					mats_total[mat] += transfered_to_obj[mat]
+			for(var/mat in mats_total)
+				if(mats_total[mat] > design.materials[mat])
+					TEST_FAIL("Amount of [mat] in the 'transfered_materials' var of [design.type] exceeds what present in its 'materials' var")
+
+		//We do not care if the mats of the printed version match with those of its generic instance
+		if(design.inherit_materials == DESIGN_INHERIT_MATS_SPECIAL || design.inherit_materials == DESIGN_DONT_INHERIT_MATS)
 			continue
 
 		var/atom/generic_instance // The object that represents the type of object that can be built from the design, though it's simple spawned in this case
@@ -65,12 +87,7 @@
 		else
 			printed_instance = allocate(design.build_path)
 
-		var/list/expected_materials = design.materials.Copy()
-		for(var/mat_type, amount in design.removed_materials)
-			expected_materials[mat_type] -= amount
-			if(expected_materials[mat_type] <= 0)
-				expected_materials -= mat_type
-		split_materials_uniformly(expected_materials, 1, printed_instance)
+		design.transfer_materials(design.materials, 1, printed_instance)
 
 		if(generic_instance.compare_materials(printed_instance))
 			continue
@@ -92,7 +109,7 @@
 
 		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is]). \
 			Fix it or change the value of the [NAMEOF(design, inherit_materials)] var of [design.type]. \
-			You can also edit the [NAMEOF(design, removed_materials)] alist of the design.")
+			You can also edit the [NAMEOF(design, transfered_materials)] list of the design")
 
 	for (var/datum/techweb_node/node as anything in subtypesof(/datum/techweb_node))
 		node = new node()

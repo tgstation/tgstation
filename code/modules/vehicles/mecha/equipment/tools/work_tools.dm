@@ -235,6 +235,7 @@
 	energy_drain = 0 // internal RCD handles power consumption based on matter use
 	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 12.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 10)
 
 	///The location the mech was when it began using the rcd
 	var/atom/initial_location = FALSE

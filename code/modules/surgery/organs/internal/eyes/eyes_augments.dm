@@ -6,6 +6,7 @@
 	failing_desc = "seems to be broken."
 	pupils_name = "apertures"
 	penlight_message = "are cybernetic, click-whirring as they refocus"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
@@ -404,6 +405,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "aperture clusters"
 	penlight_message = "are metal hemispheres, resembling insect eyes"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
