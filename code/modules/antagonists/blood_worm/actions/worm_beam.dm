@@ -23,6 +23,15 @@
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
 
+/datum/action/cooldown/mob_cooldown/brimbeam/Grant(mob/granted_to)
+	. = ..()
+	if(owner)
+		owner.AddElement(/datum/element/relay_attackers)
+
+/datum/action/cooldown/mob_cooldown/brimbeam/Destroy()
+	extinguish_laser()
+	return ..()
+
 /obj/effect/bloodbeam
 
 	name = "brimbeam"
