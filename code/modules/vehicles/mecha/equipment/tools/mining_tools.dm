@@ -209,7 +209,7 @@
 	target.create_splatter(get_dir(chassis, target))
 
 	//organs go everywhere
-	if(target_part && blocked < 100 && prob(10 * drill_level))
+	if(target_part && blocked < 100 && prob(2 * drill_level))
 		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
