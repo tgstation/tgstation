@@ -11,11 +11,11 @@
 
 	check_flags = NONE
 
-	var/datum/action/cooldown/mob_cooldown/brimbeam/blood_worm_beam
+	var/datum/action/cooldown/mob_cooldown/brimbeam/blood_worm_beam = icon_to_change_var
 
-	blood_worm_beam.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
+	icon_to_change_var.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
 
-	blood_worm_beam.button_icon_state = "spit_blood"
+	icon_to_change_var.button_icon_state = "spit_blood"
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
 	. = ..()
