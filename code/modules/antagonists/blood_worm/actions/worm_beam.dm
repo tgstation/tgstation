@@ -23,16 +23,16 @@
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
 
-/datum/action/cooldown/mob_cooldown/brimbeam/Grant(mob/granted_to)
+/datum/action/cooldown/mob_cooldown/blood_beam/Grant(mob/granted_to)
 	. = ..()
 	if(owner)
 		owner.AddElement(/datum/element/relay_attackers)
 
-/datum/action/cooldown/mob_cooldown/brimbeam/Destroy()
+/datum/action/cooldown/mob_cooldown/blood_beam/Destroy()
 	extinguish_laser()
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/brimbeam/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/blood_beam/Activate(atom/target)
 	StartCooldown(360 SECONDS)
 
 	abort_blast = FALSE
