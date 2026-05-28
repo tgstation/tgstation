@@ -1,4 +1,12 @@
-import { useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Box,
   Button,
@@ -30,6 +38,33 @@ const NODE_WIDTH = 160;
 const NODE_HEIGHT = 70;
 const H_GAP = 12;
 const V_GAP = 48;
+const FADE_DURATION = 1500;
+
+type AnimContextType = {
+  recentNodes: Map<number, number>;
+  now: number;
+};
+const AnimContext = createContext<AnimContextType>({
+  recentNodes: new Map(),
+  now: 0,
+});
+
+function fadeOf(
+  recentNodes: Map<number, number>,
+  execIdx: number,
+  now: number,
+): number {
+  const ts = recentNodes.get(execIdx);
+  if (ts === undefined) return 0;
+  const age = now - ts;
+  return age >= FADE_DURATION ? 0 : 1 - age / FADE_DURATION;
+}
+
+function lineColor(f: number): string {
+  if (f < 0.01) return '#555';
+  const v = Math.round(85 + 170 * f);
+  return `rgb(${v}, ${v}, ${v})`;
+}
 
 function nodeTypeBadge(t: number): string {
   switch (t) {
@@ -120,6 +155,9 @@ function BtNodeTree(props: BtNodeProps) {
   const badge = nodeTypeBadge(node.t);
   const abort = node.a ?? BT_ABORT_NONE;
   const kids = childNodes(node, nodeMap);
+  const { recentNodes, now } = useContext(AnimContext);
+  const nodeFade = fadeOf(recentNodes, nodeIdx, now);
+  const kidFades = kids.map((k) => fadeOf(recentNodes, k.e, now));
   const isSelectedDec = selectedDec !== null && node.e === selectedDec.e;
   const isClickableDec =
     node.t === BT_NODE_DECORATOR && abort !== BT_ABORT_NONE;
@@ -142,6 +180,15 @@ function BtNodeTree(props: BtNodeProps) {
 
   const bgColor = color === 'green' ? '#005522' : '#1a1a1a';
 
+  const nodeTreeWidth = treeWidth(node, nodeMap);
+  const connectorCx = nodeTreeWidth / 2;
+  let cumChildX = 0;
+  const childCenters = kids.map((kid) => {
+    const center = cumChildX + treeWidth(kid, nodeMap) / 2;
+    cumChildX += treeWidth(kid, nodeMap) + H_GAP;
+    return center;
+  });
+
   return (
     <div
       style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -156,6 +203,10 @@ function BtNodeTree(props: BtNodeProps) {
           backgroundColor: bgColor,
           padding: '4px 6px',
           cursor: isClickableDec ? 'pointer' : 'default',
+          boxShadow:
+            nodeFade > 0.01
+              ? `0 0 ${Math.round(4 + nodeFade * 14)}px rgba(255, 255, 255, ${(nodeFade * 0.85).toFixed(2)})`
+              : undefined,
           boxSizing: 'border-box',
         }}
       >
@@ -238,57 +289,58 @@ function BtNodeTree(props: BtNodeProps) {
       {/* Children */}
       {kids.length > 0 && (
         <>
-          <div
-            style={{
-              width: '2px',
-              height: `${V_GAP / 2}px`,
-              background: '#555',
-            }}
-          />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: `${H_GAP}px`,
-              position: 'relative',
-            }}
+          <svg
+            width={nodeTreeWidth}
+            height={V_GAP}
+            style={{ display: 'block', flexShrink: 0 }}
           >
-            {kids.length > 1 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  left: `${treeWidth(kids[0], nodeMap) / 2}px`,
-                  right: `${treeWidth(kids[kids.length - 1], nodeMap) / 2}px`,
-                  height: '2px',
-                  background: '#555',
-                }}
-              />
-            )}
+            {/* Vertical from parent center down to junction */}
+            <line
+              x1={connectorCx}
+              y1={0}
+              x2={connectorCx}
+              y2={V_GAP / 2}
+              stroke={lineColor(nodeFade)}
+              strokeWidth={2}
+            />
+            {/* Per-child: horizontal arm from spine to child, then vertical down */}
+            {kids.map((kid, i) => {
+              const kx = childCenters[i];
+              const fade = kidFades[i] ?? 0;
+              return (
+                <g key={kid.e}>
+                  <line
+                    x1={Math.min(connectorCx, kx)}
+                    y1={V_GAP / 2}
+                    x2={Math.max(connectorCx, kx)}
+                    y2={V_GAP / 2}
+                    stroke={lineColor(fade)}
+                    strokeWidth={2}
+                  />
+                  <line
+                    x1={kx}
+                    y1={V_GAP / 2}
+                    x2={kx}
+                    y2={V_GAP}
+                    stroke={lineColor(fade)}
+                    strokeWidth={2}
+                  />
+                </g>
+              );
+            })}
+          </svg>
+          <div
+            style={{ display: 'flex', flexDirection: 'row', gap: `${H_GAP}px` }}
+          >
             {kids.map((child) => (
-              <div
+              <BtNodeTree
                 key={child.e}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    width: '2px',
-                    height: `${V_GAP / 2}px`,
-                    background: '#555',
-                  }}
-                />
-                <BtNodeTree
-                  nodeIdx={child.e}
-                  nodeMap={nodeMap}
-                  activeIdx={activeIdx}
-                  selectedDec={selectedDec}
-                  onSelectDec={onSelectDec}
-                />
-              </div>
+                nodeIdx={child.e}
+                nodeMap={nodeMap}
+                activeIdx={activeIdx}
+                selectedDec={selectedDec}
+                onSelectDec={onSelectDec}
+              />
             ))}
           </div>
         </>
@@ -303,6 +355,7 @@ export function BehaviorTreeViewer() {
     mob_name,
     controller_type,
     active_execution_index,
+    fired_indices,
     awaiting_pick,
     roots,
     nodes,
@@ -320,67 +373,70 @@ export function BehaviorTreeViewer() {
   const selectedDec =
     selectedDecIdx !== null ? (nodeMap.get(selectedDecIdx) ?? null) : null;
 
+  const recentNodesRef = useRef<Map<number, number>>(new Map());
+  const animRafRef = useRef<number | null>(null);
+  const [animNow, setAnimNow] = useState<number>(() => Date.now());
+
+  const startAnimLoop = useCallback(() => {
+    if (animRafRef.current !== null) return;
+    const tick = () => {
+      const curNow = Date.now();
+      let anyFading = false;
+      for (const ts of recentNodesRef.current.values()) {
+        if (curNow - ts < FADE_DURATION) {
+          anyFading = true;
+          break;
+        }
+      }
+      if (anyFading) {
+        setAnimNow(curNow);
+        animRafRef.current = requestAnimationFrame(tick);
+      } else {
+        animRafRef.current = null;
+      }
+    };
+    animRafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (animRafRef.current !== null) {
+        cancelAnimationFrame(animRafRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!fired_indices?.length && active_execution_index <= 0) return;
+    const curNow = Date.now();
+    const toStamp = new Set<number>(fired_indices ?? []);
+    if (active_execution_index > 0) toStamp.add(active_execution_index);
+    for (const node of nodes) {
+      for (const idx of toStamp) {
+        if (node.e <= idx && idx <= (node.z ?? node.e)) {
+          recentNodesRef.current.set(node.e, curNow);
+        }
+      }
+    }
+    startAnimLoop();
+  }, [active_execution_index, fired_indices, nodes, startAnimLoop]);
+
+  const animCtxValue = useMemo(
+    () => ({ recentNodes: recentNodesRef.current, now: animNow }),
+    [animNow],
+  );
+
   return (
     <Window title="Behavior Tree Viewer" width={1200} height={700}>
-      <Window.Content style={{ backgroundImage: 'none' }}>
-        <InfinitePlane
-          width="100%"
-          height="100%"
-          backgroundImage={resolveAsset('grid_background.png')}
-          imageWidth={900}
-          initialLeft={16}
-          initialTop={16}
-        >
-          {roots && roots.length > 0 && (
-            <div
-              style={{
-                padding: '16px',
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '32px',
-                alignItems: 'flex-start',
-              }}
-            >
-              {roots.map((rootIdx) => (
-                <BtNodeTree
-                  key={rootIdx}
-                  nodeIdx={rootIdx}
-                  nodeMap={nodeMap}
-                  activeIdx={active_execution_index}
-                  selectedDec={selectedDec}
-                  onSelectDec={setSelectedDecIdx}
-                />
-              ))}
-            </div>
-          )}
-        </InfinitePlane>
-        {(!roots || roots.length === 0) && (
-          <Box
-            color="gray"
-            textAlign="center"
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 5,
-              pointerEvents: 'none',
-            }}
-          >
-            {mob_name
-              ? 'No behavior nodes in controller.'
-              : 'Pick a mob to view its behavior tree.'}
-          </Box>
-        )}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-          }}
-        >
+      <Window.Content
+        fitted
+        style={{
+          backgroundImage: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div style={{ flexShrink: 0 }}>
           <Section>
             <Stack align="center">
               <Stack.Item grow>
@@ -433,6 +489,59 @@ export function BehaviorTreeViewer() {
               </Box>
             )}
           </Section>
+        </div>
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+          <AnimContext.Provider value={animCtxValue}>
+            <InfinitePlane
+              width="100%"
+              height="100%"
+              backgroundImage={resolveAsset('grid_background.png')}
+              imageWidth={900}
+              initialLeft={16}
+              initialTop={16}
+            >
+              {roots && roots.length > 0 && (
+                <div
+                  style={{
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '32px',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  {roots.map((rootIdx) => (
+                    <BtNodeTree
+                      key={rootIdx}
+                      nodeIdx={rootIdx}
+                      nodeMap={nodeMap}
+                      activeIdx={active_execution_index}
+                      selectedDec={selectedDec}
+                      onSelectDec={setSelectedDecIdx}
+                    />
+                  ))}
+                </div>
+              )}
+            </InfinitePlane>
+          </AnimContext.Provider>
+          {(!roots || roots.length === 0) && (
+            <Box
+              color="gray"
+              textAlign="center"
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 5,
+                pointerEvents: 'none',
+              }}
+            >
+              {mob_name
+                ? 'No behavior nodes in controller.'
+                : 'Pick a mob to view its behavior tree.'}
+            </Box>
+          )}
         </div>
       </Window.Content>
     </Window>
