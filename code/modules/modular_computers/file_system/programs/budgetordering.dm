@@ -285,7 +285,9 @@
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
-			SO.generateRequisition(T)
+			if(computer.stored_paper >= 1)
+				SO.generateRequisition(T)
+				computer.stored_paper -= 1
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
 			else
