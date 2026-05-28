@@ -1155,6 +1155,9 @@
 	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
 	var/datum/proximity_monitor/advanced/bubble/space_protection/space_bubble
 
+	/// The invisible, abstrat generator, which is generating unlimited(when core will die, then eneryg too) power, its low, but its something
+	var/obj/machinery/power/port_gen/space_bubble_gen/space_bubble_gen
+
 /obj/item/flashlight/lamp/space_bubble/Initialize(mapload)
 	AddElement(/datum/element/update_icon_updates_onmob)
 	. = ..()
@@ -1207,6 +1210,7 @@
 	if(!installed_pyro_core)
 		user.balloon_alert(user, "core missing!")
 		return FALSE
+	var/turf_activation = src.loc
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/affected_pressure = environment.return_pressure()
 	if(!light_on && (affected_pressure < ONE_ATMOSPHERE - 1))
@@ -1214,8 +1218,10 @@
 		return FALSE
 	. = ..()
 	if(light_on)
+		var/obj/machinery/power/port_gen/space_bubble/space_furnance_gen/space_gen = new(turf_activation)
 		if(istype(space_bubble))
 			QDEL_NULL(space_bubble)
+			QDEL_NULL(space_gen)
 		bubble_timer = addtimer(CALLBACK(src, PROC_REF(start_bubble_close), "dies down..."), bubble_duration, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 		space_bubble = new(src, 4, FALSE, src)
 		slowdown = SLOWDOWN_ON
@@ -1234,12 +1240,20 @@
 ///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
 /obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
 	QDEL_NULL(space_bubble)
+	QDEL_NULL(space_bubble.space_bubble_gen)
 	if(bubble_timer)
 		deltimer(bubble_timer)
 	slowdown = initial(slowdown)
 	drag_slowdown = initial(drag_slowdown)
 	if(user)
 		user.update_equipment_speed_mods()
+
+/obj/machinery/power/port_gen/space_bubble_gen
+	name = "space furnance invisible generator"
+	desc = "Structure, which generates power, when space furnance is active, also invisible, if you see this, something is wrong"
+	density = FALSE
+	active = TRUE
+	power_output = 0.2
 
 #undef SLOWDOWN_ON
 
