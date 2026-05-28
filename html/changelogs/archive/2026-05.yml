@@ -519,3 +519,26 @@
 2026-05-28:
   1393F:
   - spellcheck: Some references to the cult flagellant robes have been removed
+  FalloutFalconPlays, Ben10Omintrix:
+  - rscadd: Adds an element for Runescape hitsplats
+  LT3:
+  - rscadd: Janitors now have perfect aim when throwing things into disposal units
+  Melbert:
+  - code_imp: The "power failure" event should be less laggy.
+  - bugfix: Fixed APCs reporting an incorrect duration during "power failure" events.
+      Previously, the reported duration was half of the expected time. You may see
+      the timer go up to 4 minutes now - however in practice, the duration of the
+      event is unchanged.
+  - bugfix: Fixed saboteur effect on APCs being 2x the expected duration - very similar
+      to the aforementioned APC issue.
+  SmArtKar:
+  - balance: Mining mobs now prioritize humans over basicmobs, with exception of red
+      and black raptors - those are prioritized over humans instead.
+  mcbalaam:
+  - bugfix: Vote panel doesn't close for the admin cancelling the vote now
+  timothymtorres:
+  - bugfix: Fix limping not switching legs when using a cane
+  - rscadd: Podpeople blood can now be restored by E-Z Nutrient, which functions similarly
+      to iron pills for humans.
+  - rscadd: Plant nutriment (Liquid Earthsquake, Robust Harvest, E-Z Nutrient, Left
+      4 Zed, Enduro Grow) now heals toxin damage for mobs with the MOB_PLANT biotype.

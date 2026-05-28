@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Mining mobs now prioritize humans over basicmobs, with exception of red and black raptors - those are prioritized over humans instead."
