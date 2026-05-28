@@ -7,11 +7,9 @@
 
 	cooldown_time = 5 SECONDS
 
-	cooldown_time = 0 SECONDS
+	click_to_activate = FALSE
 
-	unset_after_click = FALSE
-
-	var/status_effect_type = null
+	check_flags = NONE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
 	. = ..()
@@ -28,8 +26,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
 	var/mob/living/basic/blood_worm/worm = src.target
 	var/mob/living/carbon/human/host = worm.host
-
-	host.apply_status_effect(status_effect_type, worm) // is it some kind of blur for screen? dont know what is it
 
 	host.visible_message(
 		message = span_danger("[host]'s head start covering with unnatural red flesh!"),
