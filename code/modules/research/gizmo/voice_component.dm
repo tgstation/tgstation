@@ -3,11 +3,11 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 
 /// Listen to the tones and send the sequence to the puzzle datum
 /datum/component/gizmo_voice
-	var/datum/gizmo_puzzle/puzzle
+	var/datum/gizmo_puzzle_handler/puzzle
 	/// they're not really words but you get it
 	var/static/list/active_words = list()
 
-/datum/component/gizmo_voice/Initialize(datum/gizmo_puzzle/puzzle)
+/datum/component/gizmo_voice/Initialize(datum/gizmo_puzzle_handler/puzzle)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 /// Pick the activate keywords
 /datum/component/gizmo_voice/proc/generate_active_words()
 	var/list/possible_words = GLOB.gizmo_words.Copy()
-	for(var/i in 1 to puzzle.cryptic_pulse.len)
+	for(var/i in 1 to puzzle.possible_wire_numbers.len)
 		active_words += pick_n_take(possible_words)
 
 /// Listen to a message, and pick out the puzzle words
@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 	for(var/needle in active_words)
 		var/position = 1
 		// we can have multiple of the same keyword in one sequence
-		for(var/i in 1 to puzzle.code_length)
+		for(var/i in 1 to puzzle.sequence_size)
 			position = findtext(haystack, needle, position)
 
 			if(!position)

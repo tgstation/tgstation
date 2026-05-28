@@ -29,12 +29,12 @@
 
 /// Common gizmo modes to pick from. They are also weighted so you have even more probability control isnt that cool
 #define GIZMO_COMMON_MODES list(\
-	/datum/gizmodes/mood_pulser = 1,\
-	/datum/gizmodes/mopper = 1,\
-	/datum/gizmodes/teleporter = 1,\
-	/datum/gizmodes/electric = 1,\
-	/datum/gizmodes/dispenser/food = 1,\
-	/datum/gizmodes/sputter = 1,\
-	/datum/gizmodes/copier = 1,\
-	/datum/gizmodes/bad = 1,\
+	/datum/gizmo_effect_combination/mood_pulser = 1,\
+	/datum/gizmo_effect_combination/mopper = 1,\
+	/datum/gizmo_effect_combination/teleporter = 1,\
+	/datum/gizmo_effect_combination/electric = 1,\
+	/datum/gizmo_effect_combination/dispense/food = 1,\
+	/datum/gizmo_effect_combination/sputter = 1,\
+	/datum/gizmo_effect_combination/copier = 1,\
+	/datum/gizmo_effect_combination/dangerous = 1,\
 )

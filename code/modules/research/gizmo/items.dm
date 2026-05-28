@@ -1,7 +1,7 @@
 /// A handheld gizmo, with some different activation modes
 /obj/item/gizmo
 	name = "gizmo"
-	desc = "Fliggoes the giggoe when its oven in hot the device."
+	desc = "Hey, that's the... what was it again? This one is handheld."
 	icon = 'icons/obj/science/gizmos.dmi'
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -13,6 +13,8 @@
 
 /obj/item/gizmo/Initialize(mapload)
 	. = ..()
+
+	name = pick(obj/machinery/gizmo::possible_names)
 
 	if(icon_states)
 		base_icon_state = pick(icon_states)

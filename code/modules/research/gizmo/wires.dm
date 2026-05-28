@@ -18,9 +18,9 @@
 		CRYPTIC_WIRE_8,
 	)
 
-	var/datum/gizmo_puzzle/puzzle
+	var/datum/gizmo_puzzle_handler/puzzle
 
-/datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle/puzzle)
+/datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle_handler/puzzle)
 	wires = cryptic_wires
 	src.puzzle = puzzle
 

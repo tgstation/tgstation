@@ -1,24 +1,9 @@
-/// Scan and copies the nearest object. The copy copies no functionality, only visually
-/datum/gizmodes/copier
-	guaranteed_active_gizmodes = list(
-		/datum/gizpulse/scan,
-		/datum/gizpulse/copy,
-		/datum/gizpulse/erase,
-	)
-
-	/// Weakref of what is marked to copy
-	var/datum/weakref/marked
-	/// List of copies currently in circulation
-	var/list/copies = list()
-	/// The max amount of copies that can exist at a time
-	var/max_copies = 50
-
 /// Scan the nearest mob/object
-/datum/gizpulse/scan/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
-	if(!istype(master, /datum/gizmodes/copier))
+/datum/gizmo_effect/scan/activate(atom/movable/holder, datum/gizmo_effect_combination/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmo_effect_combination/copier))
 		return
 
-	var/datum/gizmodes/copier/copier = master
+	var/datum/gizmo_effect_combination/copier/copier = master
 
 	for(var/atom/movable/candidate in oview(1, holder))
 		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_UNDERFLOOR)) // skips most undertile and hidden objects
@@ -29,15 +14,15 @@
 		return
 
 /// Make a copy of whatever you previously scanned
-/datum/gizpulse/copy
+/datum/gizmo_effect/copy
 	/// Reference to the gizmodes' copies list so we can track deletions
 	var/list/copies
 
-/datum/gizpulse/copy/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
-	if(!istype(master, /datum/gizmodes/copier))
+/datum/gizmo_effect/copy/activate(atom/movable/holder, datum/gizmo_effect_combination/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmo_effect_combination/copier))
 		return
 
-	var/datum/gizmodes/copier/copier = master
+	var/datum/gizmo_effect_combination/copier/copier = master
 	copies = copier.copies
 
 	var/atom/movable/object_to_copy = copier.marked?.resolve()
@@ -62,17 +47,17 @@
 	RegisterSignal(copy, COMSIG_QDELETING, PROC_REF(remove_from_list))
 
 /// Remove a copy from a list if they're deleted
-/datum/gizpulse/copy/proc/remove_from_list(datum/source)
+/datum/gizmo_effect/copy/proc/remove_from_list(datum/source)
 	SIGNAL_HANDLER
 
 	copies.Remove(source)
 
 /// Wipe all current copies
-/datum/gizpulse/erase/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
-	if(!istype(master, /datum/gizmodes/copier))
+/datum/gizmo_effect/erase/activate(atom/movable/holder, datum/gizmo_effect_combination/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmo_effect_combination/copier))
 		return
 
-	var/datum/gizmodes/copier/copier = master
+	var/datum/gizmo_effect_combination/copier/copier = master
 
 	for(var/copy in copier.copies)
 		qdel(copy)
