@@ -7,7 +7,7 @@
 
 	cooldown_time = 5 SECONDS
 
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/IsAvailable(feedback)
+/datum/action/cooldown/mob_cooldown/blood_worm/IsAvailable(feedback)
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 
@@ -20,10 +20,10 @@
 
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/extend_head(host)
+/datum/action/cooldown/mob_cooldown/blood_worm/proc/extend_head(host)
 	// todo: its must be possible to grant head via the action button
 	grant_bloodworm_head(host)
 
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/retract_head(host)
+/datum/action/cooldown/mob_cooldown/blood_worm/proc/retract_head(host)
 
 	remove_bloodworm_head(host)
