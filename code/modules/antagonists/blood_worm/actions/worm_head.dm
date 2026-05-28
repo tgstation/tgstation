@@ -11,6 +11,8 @@
 
 	check_flags = NONE
 
+	var/datum/action/cooldown/mob_cooldown/brimbeam/blood_worm_beam
+
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
@@ -43,6 +45,8 @@
 		worm.remove_bloodworm_head(host)
 	else
 		worm.grant_bloodworm_head(host)
+		blood_worm_beam = new(src)
+		blood_worm_beam.Grant(src)
 
 	return ..()
 
