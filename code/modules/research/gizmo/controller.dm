@@ -8,15 +8,15 @@
 /// Generate interfaces for interacting with the gizmo
 /datum/gizmo_controller/proc/generate_interfaces(atom/movable/holder)
 	for(var/interface_define, interface_type in interfaces)
-        var/datum/gizmo_interface/interface_instance = new interface_type(src)
-        interface_instance.generate_interface(holder)
-        instances += interface_instance
+		var/datum/gizmo_interface/interface_instance = new interface_type(src)
+		interface_instance.generate_interface(holder)
+		instances += interface_instance
 
-        switch(interface_define)
-            if(GIZMO_INTERFACE_WIRES)
-                holder.set_wires(new /datum/wires/gizmo(holder, interface_instance.puzzle))
-            if(GIZMO_INTERFACE_VOICE)
-                holder.AddComponent(/datum/component/gizmo_voice, interface_instance.puzzle)
+		switch(interface_define)
+			if(GIZMO_INTERFACE_WIRES)
+				holder.set_wires(new /datum/wires/gizmo(holder, interface_instance.puzzle))
+			if(GIZMO_INTERFACE_VOICE)
+				holder.AddComponent(/datum/component/gizmo_voice, interface_instance.puzzle)
 
 /// Wired with an interface that moves
 /datum/gizmo_controller/beyblade
