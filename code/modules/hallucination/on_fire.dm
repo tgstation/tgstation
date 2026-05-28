@@ -146,3 +146,5 @@
 /atom/movable/screen/alert/fire/fake/handle_stop_drop_roll(mob/living/roller)
 	return !!roller.apply_status_effect(/datum/status_effect/stop_drop_roll/hallucinating, hallucination_weakref)
 
+/datum/status_effect/stop_drop_roll/hallucinating
+
