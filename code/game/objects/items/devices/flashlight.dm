@@ -1165,6 +1165,9 @@
 	active = TRUE
 	power_output = 0.2
 
+/obj/machinery/power/port_gen/space_bubble_gen/Initialize()
+	. = ..()
+
 /obj/item/flashlight/lamp/space_bubble/Initialize(mapload)
 	AddElement(/datum/element/update_icon_updates_onmob)
 	. = ..()
