@@ -98,6 +98,7 @@
 			break
 		var/obj/effect/bloodbeam/new_bloodbeam = new(affected_turf)
 		affected_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/blood)
+		playsound(affected_turf, 'sound/effects/splat.ogg', 15, 3, 9)
 		new_bloodbeam.dir = owner.dir
 		beam_parts += new_bloodbeam
 		new_bloodbeam.assign_creator(owner)
