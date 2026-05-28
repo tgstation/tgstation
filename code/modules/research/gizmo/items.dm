@@ -14,7 +14,7 @@
 /obj/item/gizmo/Initialize(mapload)
 	. = ..()
 
-	name = pick(obj/machinery/gizmo::possible_names)
+	name = pick(/obj/machinery/gizmo::possible_names)
 
 	if(icon_states)
 		base_icon_state = pick(icon_states)
