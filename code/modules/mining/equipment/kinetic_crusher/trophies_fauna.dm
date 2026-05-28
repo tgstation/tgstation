@@ -194,6 +194,7 @@
 	return ..()
 
 /obj/projectile/bileworm_acid // basically only used by the crusher trophy
+	name = "acidic bile"
 	damage = 20
 	speed = 0.5
 	range = 20
