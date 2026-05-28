@@ -439,13 +439,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			continue
 		slot.update_inventory_slot(src, mymob)
 
-/datum/hud/proc/update_inventory_slot(...)
-	var/slot_id = args[1]
-	if (isnull(mymob))
+/datum/hud/proc/update_inventory_slot(slot_id, ...)
+	if(isnull(mymob))
 		return
 	var/datum/inventory_slot/slot = inventory_slots[slot_id]
-	if (istype(slot))
-		slot.update_inventory_slot(arglist(list(src, mymob) + args.Copy(2)))
+	if (!istype(slot))
+		var/list/slot_args = list(src, mymob) + args.Copy(2)
+		slot.update_inventory_slot(arglist(slot_args))
 
 /datum/hud/proc/update_ui_style(new_ui_style)
 	// do nothing if overridden by a subtype or already on that style
