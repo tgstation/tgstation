@@ -1250,7 +1250,7 @@
 ///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
 /obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
 	QDEL_NULL(space_bubble)
-	QDEL_NULL(space_furnance_gen)
+	QDEL_NULL(space_bubble_gen)
 	if(bubble_timer)
 		deltimer(bubble_timer)
 	slowdown = initial(slowdown)
