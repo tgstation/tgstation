@@ -79,6 +79,39 @@
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/beam_charge_check()
 	return !abort_blast
 
+/// Create a laser in the direction we are facing
+/datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
+	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
+	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
+	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
+	var/turf/origin_turf = get_turf(owner)
+	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf
+	for(var/turf/affected_turf in affected_turfs)
+		if(affected_turf.opacity)
+			break
+		var/blocked = FALSE
+		for(var/obj/potential_block in affected_turf)
+			if(potential_block.opacity)
+				blocked = TRUE
+				break
+		if(blocked)
+			break
+		var/obj/effect/brimbeam/new_brimbeam = new(affected_turf)
+		new_brimbeam.dir = owner.dir
+		beam_parts += new_brimbeam
+		new_brimbeam.assign_creator(owner)
+		for(var/mob/living/hit_mob in affected_turf)
+			hit_mob.apply_damage(25, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
+			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
+		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
+	if(!length(beam_parts))
+		return FALSE
+	var/atom/last_brimbeam = beam_parts[length(beam_parts)]
+	last_brimbeam.icon_state = "brimbeam_end"
+	var/atom/first_brimbeam = beam_parts[1]
+	first_brimbeam.icon_state = "brimbeam_start"
+	return TRUE
+
 /obj/effect/bloodbeam
 
 	name = "brimbeam"
