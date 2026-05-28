@@ -32,6 +32,45 @@
 	extinguish_laser()
 	return ..()
 
+/datum/action/cooldown/mob_cooldown/brimbeam/Activate(atom/target)
+	StartCooldown(360 SECONDS)
+
+	abort_blast = FALSE
+	owner.face_atom(target)
+	owner.move_resist = MOVE_FORCE_VERY_STRONG
+	owner.balloon_alert_to_viewers("charging...")
+	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
+	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
+	owner.add_overlay(direction_overlay)
+	owner.add_overlay(direction_emissive)
+	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_owner_attacked))
+
+	var/fully_charged = do_after(owner, delay = charge_duration, target = owner, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
+	owner.cut_overlay(direction_overlay)
+	owner.cut_overlay(direction_emissive)
+	if (!fully_charged)
+		UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+		StartCooldown()
+		return TRUE
+
+	if (!fire_laser())
+		var/static/list/fail_emotes = list("coughs.", "wheezes.", "belches out a puff of black smoke.")
+		owner.manual_emote(pick(fail_emotes))
+		UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+		StartCooldown()
+		return TRUE
+
+	if (istype(owner, /mob/living/basic/mining/brimdemon))
+		var/mob/living/basic/mining/brimdemon/demon = owner
+		demon.icon_state = demon.firing_icon_state
+		demon.update_appearance(UPDATE_OVERLAYS)
+
+	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
+	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+	extinguish_laser()
+	StartCooldown()
+	return TRUE
+
 /obj/effect/bloodbeam
 
 	name = "brimbeam"
