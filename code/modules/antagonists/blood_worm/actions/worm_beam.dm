@@ -129,8 +129,8 @@
 /obj/effect/bloodbeam
 
 	name = "blood_beam"
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "brimbeam_mid"
+	icon = 'icons/mob/nonhuman-player/blood_worm_32x48.dmi'
+	icon_state = "bloodbeam_mid"
 	layer = ABOVE_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
