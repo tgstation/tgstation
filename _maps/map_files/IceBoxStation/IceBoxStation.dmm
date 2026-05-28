@@ -42509,7 +42509,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "mdx" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining_internal"
