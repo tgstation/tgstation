@@ -1231,7 +1231,7 @@
 		var/obj/machinery/power/port_gen/space_bubble_gen/space_furnance_gen = new()
 		if(istype(space_bubble))
 			QDEL_NULL(space_bubble)
-			QDEL_NULL(space_gen)
+			QDEL_NULL(space_furnance_gen)
 		bubble_timer = addtimer(CALLBACK(src, PROC_REF(start_bubble_close), "dies down..."), bubble_duration, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 		space_bubble = new(src, 4, FALSE, src)
 		slowdown = SLOWDOWN_ON
@@ -1250,7 +1250,7 @@
 ///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
 /obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
 	QDEL_NULL(space_bubble)
-	QDEL_NULL(space_gen)
+	QDEL_NULL(space_furnance_gen)
 	if(bubble_timer)
 		deltimer(bubble_timer)
 	slowdown = initial(slowdown)
