@@ -1,7 +1,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/blood_beam
 
 	name = "Blood beam"
-	esc = "Unleash a barrage of hot acid blood energies in the targeted direction."
+	desc = "Unleash a barrage of hot acid blood energies in the targeted direction."
 
 	// name = "Brimstone Blast"
 	// desc = "Unleash a barrage of infernal energies in the targeted direction."
@@ -23,16 +23,16 @@
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
 
-/datum/action/cooldown/mob_cooldown/blood_beam/Grant(mob/granted_to)
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/Grant(mob/granted_to)
 	. = ..()
 	if(owner)
 		owner.AddElement(/datum/element/relay_attackers)
 
-/datum/action/cooldown/mob_cooldown/blood_beam/Destroy()
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/Destroy()
 	extinguish_laser()
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_beam/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/Activate(atom/target)
 	StartCooldown(360 SECONDS)
 
 	abort_blast = FALSE
@@ -71,16 +71,16 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_beam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/proc/on_owner_attacked(datum/source, atom/attacker, attack_flags, direction)
 	SIGNAL_HANDLER
 	if (!(attack_flags & ATTACK_RANGED) && !(direction & owner.dir))
 		abort_blast = TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_beam/proc/beam_charge_check()
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/proc/beam_charge_check()
 	return !abort_blast
 
 /// Create a laser in the direction we are facing
-/datum/action/cooldown/mob_cooldown/blood_beam/proc/fire_laser()
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/proc/fire_laser()
 	owner.visible_message(span_danger("[owner] fires a blood beam!"))
 	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
@@ -113,7 +113,7 @@
 	return TRUE
 
 /// Get rid of our laser when we are done with it
-/datum/action/cooldown/mob_cooldown/blood_beam/proc/extinguish_laser()
+/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
 	if (owner)
