@@ -107,9 +107,9 @@
 	if(!length(beam_parts))
 		return FALSE
 	var/atom/last_bloodbeam = beam_parts[length(beam_parts)]
-	last_bloodbeam.icon_state = "brimbeam_end"
+	last_bloodbeam.icon_state = "bloodbeam_end"
 	var/atom/first_bloodbeam = beam_parts[1]
-	first_bloodbeam.icon_state = "brimbeam_start"
+	first_bloodbeam.icon_state = "bloodbeam_start"
 	return TRUE
 
 /// Get rid of our laser when we are done with it
