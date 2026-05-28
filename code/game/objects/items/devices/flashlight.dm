@@ -1158,6 +1158,13 @@
 	/// The invisible, abstrat generator, which is generating unlimited(when core will die, then eneryg too) power, its low, but its something
 	var/obj/machinery/power/port_gen/space_bubble_gen/space_bubble_gen
 
+/obj/machinery/power/port_gen/space_bubble_gen
+	name = "space furnance invisible generator"
+	desc = "Structure, which generates power, when space furnance is active, also invisible, if you see this, something is wrong"
+	density = FALSE
+	active = TRUE
+	power_output = 0.2
+
 /obj/item/flashlight/lamp/space_bubble/Initialize(mapload)
 	AddElement(/datum/element/update_icon_updates_onmob)
 	. = ..()
@@ -1247,13 +1254,6 @@
 	drag_slowdown = initial(drag_slowdown)
 	if(user)
 		user.update_equipment_speed_mods()
-
-/obj/machinery/power/port_gen/space_bubble_gen
-	name = "space furnance invisible generator"
-	desc = "Structure, which generates power, when space furnance is active, also invisible, if you see this, something is wrong"
-	density = FALSE
-	active = TRUE
-	power_output = 0.2
 
 #undef SLOWDOWN_ON
 
