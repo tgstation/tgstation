@@ -184,7 +184,6 @@
 
 /obj/projectile/beam/disabler/weak
 	damage = 15
-	speed = 1 //why you need speed with shotgun?
 
 /obj/projectile/beam/disabler/scatter
 	name = "scatter disabler"
