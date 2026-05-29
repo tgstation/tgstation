@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Bitrunners no longer take double damage in-domain, and do take damage to their real bodies"

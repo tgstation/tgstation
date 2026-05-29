@@ -547,6 +547,8 @@
   - rscadd: Plant nutriment (Liquid Earthsquake, Robust Harvest, E-Z Nutrient, Left
       4 Zed, Enduro Grow) now heals toxin damage for mobs with the MOB_PLANT biotype.
 2026-05-29:
+  SmArtKar:
+  - bugfix: Fixed Gene Stim missing an icon in ling UI
   Wisemonster:
   - bugfix: Starting boulder refineries and smelters should start facing the correct
       direction.
@@ -554,6 +556,12 @@
   - qol: Support holoparasites can teleport things between two station Z-levels
   - bugfix: Support holoparasite teleportation no longer runtimes when attempting
       to teleport a turf
+  - bugfix: Bitrunners no longer take double damage in-domain, and do take damage
+      to their real bodies
+  - balance: For every living, connected bitrunner remaining in a domain, bitrunning
+      glitches will take five times longer to escape.
+  - bugfix: You can no longer softlock any virtual domain that uses points by crowbarring
+      the reward turf before the crate spawns.
   timothymtorres:
   - rscadd: The heart organ now controls how fast or slow the blood rate is regenerated
       for a mob. The health of the heart organ also affects the blood rate, so the
