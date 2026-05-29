@@ -18,6 +18,8 @@
 	icon_living = "base"
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
+	density = FALSE
+	pass_flags = PASSTABLE
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
@@ -109,6 +111,7 @@
 
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
+	AddComponent(/datum/component/swarming, 20, 20)
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
