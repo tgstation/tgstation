@@ -122,7 +122,6 @@
 	var/datum/hallucination/fire/hallucination = hallucination_weakref?.resolve()
 	if(istype(hallucination))
 		hallucination.clear_fire()
-		// GLOB.all_ongoing_hallucinations -= owner
 
 	owner.visible_message(
 		span_danger("[owner] stops flailing around on the ground."),
