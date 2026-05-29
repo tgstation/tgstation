@@ -28,6 +28,13 @@
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
 	lunatic_obj = loony
+	moon_track = new /datum/action/cooldown/lunatic_track()
+	mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
+	return ..()
+
+/datum/antagonist/lunatic/on_removal()
+	QDEL_NULL(moon_track)
+	QDEL_NULL(mad_touch)
 	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master
@@ -47,8 +54,6 @@
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
-	moon_track = new /datum/action/cooldown/lunatic_track()
-	mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 
@@ -58,9 +63,9 @@
 	our_mob.remove_faction(FACTION_HERETIC)
 	REMOVE_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 	if(moon_track)
-		QDEL_NULL(moon_track)
+		moon_track.Remove(our_mob)
 	if(mad_touch)
-		QDEL_NULL(mad_touch)
+		mad_touch.Remove(our_mob)
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic
