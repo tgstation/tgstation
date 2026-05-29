@@ -1,0 +1,4 @@
+author: "TelevisionStatic"
+delete-after: True
+changes:
+  - rscadd: "Adds an autolathe circuit board as one of the purchasable goodies in the cargo market."
