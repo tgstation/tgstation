@@ -7,7 +7,7 @@
 
 	/// Are we currently burning our mob?
 	var/active = TRUE
-	/// What stare of fire are we in?
+	/// What stage of fire are we in?
 	var/stage = 0
 
 	/// What icon file to use for our hallucinator
