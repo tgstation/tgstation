@@ -618,7 +618,7 @@
 	return text
 
 /atom/proc/transcribe_mat_value_as_sheet(value)
-	var/amount = sheets_from_value(mats_list[mat])
+	var/amount = sheets_from_value(value)
 	switch(amount)
 		if(0 to 0.09)
 			return "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
