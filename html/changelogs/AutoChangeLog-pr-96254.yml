@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - bugfix: "Starting boulder refineries and smelters should start facing the correct direction."
