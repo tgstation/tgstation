@@ -5,7 +5,7 @@
 	button_icon_state = "minimap"
 	/// Mob currently bound to z-change signal handling for auto-hide behavior.
 	var/mob/tracked_owner
-	/// Optional fixed z-level for this action's minimap display.
+	/// Optional fixed z-level that anchors this action's minimap stack and permission checks.
 	var/fixed_z_level
 	/// Optional minimap blip tags to render on the rewrite minimap display.
 	var/list/minimap_blip_tags = list()
@@ -34,17 +34,18 @@
 	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
 		return
 
-	if(is_forbidden_minimap_z(clicker?.z))
+	var/anchor_z = get_anchor_z_level(clicker?.z)
+	if(is_forbidden_minimap_z(anchor_z))
 		to_chat(clicker, span_warning("The minimap cannot be used on this z-level."))
 		clicker.balloon_alert(clicker, "invalid z-level!")
 		return
+	var/display_z = get_opening_display_z_level(anchor_z, clicker?.z)
 
-	var/display_z = isnull(fixed_z_level) ? clicker.z : fixed_z_level
 	var/datum/minimap/minimap = get_minimap_for_z(display_z)
 	if(isnull(minimap))
 		clicker.balloon_alert(clicker, "no minimap generated")
 		return
-	add_huds(hud, minimap)
+	add_huds(hud, minimap, isnull(fixed_z_level) ? null : display_z)
 	to_chat(clicker, span_notice("Minimap shown."))
 
 /datum/action/minimap/Grant(mob/grant_to)
@@ -61,10 +62,10 @@
 			return TRUE
 	return FALSE
 
-/datum/action/minimap/proc/add_huds(datum/hud/hud, datum/minimap/minimap)
+/datum/action/minimap/proc/add_huds(datum/hud/hud, datum/minimap/minimap, initial_display_z_level)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
-		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, fixed_z_level, annotation_share_tag, can_draw)
+		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, initial_display_z_level, annotation_share_tag, can_draw)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
 
 /datum/action/minimap/proc/set_tracked_owner(mob/new_owner)
@@ -76,6 +77,16 @@
 	if(!isnull(tracked_owner))
 		RegisterSignal(tracked_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_owner_z_changed))
 
+/datum/action/minimap/proc/get_anchor_z_level(current_z_level)
+	return isnull(fixed_z_level) ? current_z_level : fixed_z_level
+
+
+/datum/action/minimap/proc/get_opening_display_z_level(anchor_z_level, current_z_level)
+	var/list/connected_levels = SSmapping.get_connected_levels(anchor_z_level)
+	if(length(connected_levels) && connected_levels.Find(current_z_level))
+		return current_z_level
+	return (length(connected_levels) ? connected_levels[1] : anchor_z_level)
+
 /datum/action/minimap/proc/is_forbidden_minimap_z(z_level)
 	if(isnull(z_level))
 		return FALSE
@@ -83,13 +94,27 @@
 
 /datum/action/minimap/proc/on_owner_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
-	if(!is_forbidden_minimap_z(new_turf?.z))
-		return
 	var/mob/owner_mob = source
 	var/datum/hud/owner_hud = owner_mob?.hud_used
-	if(!isnull(owner_hud) && has_minimap_huds(owner_hud))
+	if(isnull(owner_hud) || !has_minimap_huds(owner_hud))
+		return
+
+	var/anchor_z = get_anchor_z_level(new_turf?.z)
+	if(is_forbidden_minimap_z(anchor_z))
 		remove_huds(owner_hud)
 		to_chat(owner_mob, span_warning("The minimap closes on this z-level."))
+		return
+
+	var/display_z = get_opening_display_z_level(anchor_z, new_turf?.z)
+	var/atom/movable/screen/minimap_display/display = owner_hud.screen_objects[HUD_TAC_MINIMAP]
+	if(isnull(display))
+		return
+	var/datum/minimap/minimap = get_minimap_for_z(display_z)
+	if(isnull(minimap))
+		return
+	if(display.get_viewed_z_level() == display_z)
+		return
+	display.change_z_level(display_z, minimap)
 
 /datum/action/minimap/nuclear
 	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
