@@ -64,7 +64,8 @@
 					mats_total[mat] += transfered_to_obj[mat]
 			for(var/mat in mats_total)
 				if(mats_total[mat] > design.materials[mat])
-					TEST_FAIL("Amount of [mat] in the 'transfered_materials' var of [design.type] exceeds what present in its 'materials' var")
+					TEST_FAIL("Amount of [mat] in the 'transfered_materials' var of [design.type] exceeds what present in its 'materials' var \
+					([transcribe_mat_value_as_sheet(mats_total[mat])] vs [transcribe_mat_value_as_sheet(design.materials[mat])])")
 
 		//We do not care if the mats of the printed version match with those of its generic instance
 		if(design.inherit_materials == DESIGN_INHERIT_MATS_SPECIAL || design.inherit_materials == DESIGN_DONT_INHERIT_MATS)

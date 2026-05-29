@@ -361,6 +361,7 @@
 /obj/item/disk/manipulator
 	name = "manipulator task disk"
 	desc = "A floppy disk containing manipulator tasks."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/list/tasks_data = list()
 
 /obj/item/disk/manipulator/proc/set_tasks(list/new_tasks_data)

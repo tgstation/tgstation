@@ -609,30 +609,29 @@
 	var/index = 1
 	var/mats_len = length(mats_list)
 	for(var/datum/material/mat as anything in mats_list)
-		var/amount_string = ""
-		if(as_sheets)
-			var/amount = sheets_from_value(mats_list[mat])
-			switch(amount)
-				if(0 to 0.09)
-					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
-				if(0.1)
-					amount_string = "SMALL_MATERIAL_AMOUNT"
-				if(0.11 to 0.49)
-					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
-				if(0.5)
-					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
-				if(1)
-					amount_string = "SHEET_MATERIAL_AMOUNT"
-				else
-					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
-		else
-			amount_string = "[mats_list[mat]]"
+		var/amount_string = as_sheets ? transcribe_mat_value_as_sheet(mats_list[mat]) : "[mats_list[mat]]"
 		text += "[mat.type] = " + amount_string
 		if(index < mats_len)
 			text += ", "
 		index++
 	text += ")"
 	return text
+
+/atom/proc/transcribe_mat_value_as_sheet(value)
+	var/amount = sheets_from_value(mats_list[mat])
+	switch(amount)
+		if(0 to 0.09)
+			return "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+		if(0.1)
+			return "SMALL_MATERIAL_AMOUNT"
+		if(0.11 to 0.49)
+			return "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+		if(0.5)
+			return "HALF_SHEET_MATERIAL_AMOUNT"
+		if(1)
+			return "SHEET_MATERIAL_AMOUNT"
+		else
+			return "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
 
 /// Convert a raw material amount into
 /// "SHEET_MATERIAL_AMOUNT", or "* N", with rounding rules.
