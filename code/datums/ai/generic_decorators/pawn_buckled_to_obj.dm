@@ -16,7 +16,3 @@
 		return FALSE
 	controller.blackboard[target_key] = pawn.buckled
 	return TRUE
-
-/datum/bt_node/decorator/pawn_buckled_to_obj/evaluate_for_observer(datum/ai_controller/controller)
-	var/mob/living/pawn = controller.pawn
-	return isobj(pawn.buckled)

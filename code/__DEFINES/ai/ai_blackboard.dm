@@ -92,7 +92,6 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 /// Target atom written by escape-captivity BT decorators (pawn_buckled_to_obj, pawn_contained_in_obj)
-/// so that break_out_of_object/from_bb can read it without needing a direct atom arg.
 #define BB_BASIC_MOB_ESCAPE_TARGET "BB_basic_mob_escape_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"

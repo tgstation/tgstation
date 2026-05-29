@@ -16,7 +16,3 @@
 		return FALSE
 	controller.blackboard[target_key] = pawn.loc
 	return TRUE
-
-/datum/bt_node/decorator/pawn_contained_in_obj/evaluate_for_observer(datum/ai_controller/controller)
-	var/atom/loc = controller.pawn.loc
-	return !isturf(loc) && !ismob(loc) && !istype(loc, /obj/item/mob_holder)

@@ -108,11 +108,8 @@
 	running_child_index = 0
 
 /**
- * Subplan node: Runs exactly one child and applies configurable restart policies
+ * Subplan node: Runs child and applies configurable restart policies
  * when the child completes instead of propagating completion directly.
- *
- * Legacy trees that encoded multiple subplan children are normalized at build time
- * into a single sequence child to preserve behavior.
  *
  * success_policy:
  *   BT_SUBPLAN_SUCCEED_ON_SUCCESS (default) — propagates BT_SUCCESS when all children succeed.
@@ -171,9 +168,6 @@
 		tick_cooldown = world.time
 		tick_result = result
 	return result
-
-/datum/bt_node/composite/subplan/reset_tick_state()
-	return ..()
 
 /**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.

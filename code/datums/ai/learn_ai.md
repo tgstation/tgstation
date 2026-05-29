@@ -1,6 +1,6 @@
 # Learn Behavior Tree AI
 
-This file covers
+This file covers how the behavior tree system works in /tg/station, and how to use it in practice.
 
 ## Disclaimer
 
@@ -198,3 +198,9 @@ On the left, you can find a palette of all the nodes you have. The compsoite nod
 3. Browser (All ai_controllers and subtrees)
 
 ![Behavior example](learn_ai_images/bt_editor_example1.png)
+
+You can drag these nodes into the node-graph to place them.
+
+You can also change the nodes connections by dragging from either end to another node. This system is currently a bit fidgetty while I figure out how to become a better editor programmer.
+
+Once you are done with your tree, be sure to save the file and if you want to test it press deploy to DM, the button to the right of deploy to DM also deploys ALL other behavior trees.

@@ -48,11 +48,11 @@
 #define BT_NODE_PARALLEL 2
 /// Decorator (gate/condition) node
 #define BT_NODE_DECORATOR 3
-/// Leaf behavior node (default)
+/// Leaf behavior node
 #define BT_NODE_LEAF 4
 /// Subtree container node
 #define BT_NODE_SUBTREE 5
-/// Subplan composite node (looping sequence variant)
+/// Subplan composite node
 #define BT_NODE_SUBPLAN 6
 
 // --- Inline descriptor keys (used internally by SSai_controllers descriptor builder) ---

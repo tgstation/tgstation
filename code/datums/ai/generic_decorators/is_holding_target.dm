@@ -22,8 +22,3 @@
 		controller.clear_blackboard_key(key)
 		return FALSE
 	return mob_pawn.is_holding(target)
-
-/datum/bt_node/decorator/is_holding_target/evaluate_for_observer(datum/ai_controller/controller)
-	var/obj/item/target = controller.blackboard[key]
-	var/mob/mob_pawn = controller.pawn
-	return !QDELETED(target) && mob_pawn.is_holding(target)
