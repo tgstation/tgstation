@@ -94,7 +94,6 @@
 	screen_loc = ui_iclothing
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-
 /datum/inventory_slot/human/suit
 	name = "suit"
 	slot_id = ITEM_SLOT_OCLOTHING
