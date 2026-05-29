@@ -172,6 +172,7 @@
 	name = "disabler beam"
 	icon_state = "omnilaser"
 	damage = 30
+	speed = 1.6
 	damage_type = STAMINA
 	armor_flag = ENERGY
 	hitsound = 'sound/items/weapons/sear_disabler.ogg'
@@ -183,13 +184,14 @@
 
 /obj/projectile/beam/disabler/weak
 	damage = 15
+	speed = 1 //why you need speed with shotgun?
 
 /obj/projectile/beam/disabler/scatter
 	name = "scatter disabler"
 	icon_state = "scatterdisabler"
 	damage = 5.5
 	damage_falloff_tile = -0.5
-	speed = 1.2
+	speed = 1 //same, that's a shotgun, you dont need speed on shotgun 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
