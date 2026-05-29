@@ -178,7 +178,11 @@
 		return null
 	var/list/trait_levels = SSmapping.levels_by_trait(target_z_trait)
 	if(length(trait_levels))
-		return trait_levels[1]
+		var/top_level
+		for(var/level in trait_levels)
+			if(isnull(top_level) || level > top_level)
+				top_level = level
+		return top_level
 	return null
 
 /obj/machinery/minimap_table/proc/set_minimap()
