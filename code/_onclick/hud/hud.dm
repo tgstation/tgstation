@@ -443,7 +443,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(isnull(mymob))
 		return
 	var/datum/inventory_slot/slot = inventory_slots[slot_id]
-	if (!istype(slot))
+	if (istype(slot))
 		var/list/slot_args = list(src, mymob) + args.Copy(2)
 		slot.update_inventory_slot(arglist(slot_args))
 
