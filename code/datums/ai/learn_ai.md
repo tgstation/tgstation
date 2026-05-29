@@ -1,139 +1,200 @@
-# Learn AI
+# Learn Behavior Tree AI
 
-In ye olde days, we designed mob AI, and we built it into simple animals as they were the "non player controlled" mobs. Made sense at the time. But by coding AI directly into the mob, there was so little ability to make unique or complicated AI, and even when it was pulled off the code was hacky and non-reusable. the datum AI system was made to rectify these problems, and expand AI beyond just mobs.
+This file covers
 
-## AI Controllers Attach
+## Disclaimer
 
-Any atom can have an AI controller, I'm choosing a basic mob for this guide, because basic mobs stand as a nice "blank canvas" for AI on mobs. Simple animals come with AI built into the mob, basic mobs don't, which is great for us adding AI on top of it.
+I strongly reccomend you install the "BehaviorTreeG" extension before continueing, as it is the intended way of editing behavior trees. In theory you can manually edit them, but this is strongly reccomended against due to the nature of the structure of behavior trees.
 
-Anyways, we just define the type of AI this mob has on the ai_controller var. It starts as a type, but is turned into an instance once the mob is instantiated.
+## What are behavior trees?
 
-```dm
-/mob/living/basic/butterfly
-	name = "butterfly"
-	desc = "A colorful butterfly, how'd it get up here?"
-	// a lot more variables defining for us what a butterfly is
+Behavior trees are a common pattern in game AI in which you build your AI out of a tree made out of nodes. These nodes structure and conditionalize AI behavior in a readable way.
 
-	ai_controller = /datum/ai_controller/basic/butterfly
+The behavior tree runs left to right, allowing you to put high priority behavior first, and only running low priority behavior later. It also lets you sequence a series of behaviors after each other to create sensible sequences (e.g. grab key, unlock door, move through door)
+
+## Blackboard First
+
+The blackboard is the controller's shared memory. It makes use of an associative list to allow arbitrary keys to be assigned values.
+
+- Nodes read keys from it to make decisions.
+- Nodes write keys to it so later nodes can use those results.
+- Keys are usually things like "current target", "current objective", "cooldowns", or "flags".
+
+In essence, these are just variables. But by storing them in an associative list we do not have to have define actual variables, and our AI code can be made out of modular pieces and does not need to rely on hardcoded variables on the controller.
+
+The keys for the blackboard are simple string defines:
+
+example:
+`#define BB_CURRENT_TARGET "Current Target"`
+
+After this is done, you can start using the key in your behavior tree; by setting it somewhere in the tree it will automatically be added to the blackboard.
+
+Example flow (in psuedocode):
+
+```text
+FIND TARGET LEAF:
+	set BB_BASIC_MOB_CURRENT_TARGET
+
+ATTACK BRANCH:
+	if BB_BASIC_MOB_CURRENT_TARGET is set
+  		move toward target
+			attack target
 ```
 
-## Controllers Themselves
+## Behavior Tree Node
 
-First, let's look at the blackboard.
+This is the parent type of all other nodes in this guide. And when active they will return one of three values:
 
-```dm
-/datum/ai_controller/basic/cow
-	blackboard = list(
-		BB_TARGETING_STRATEGY = new /datum/targeting_strategy/basic/allow_items(),
-		BB_BASIC_MOB_TIP_REACTING = FALSE,
-		BB_BASIC_MOB_TIPPER = null,
-	)
-```
+1. BT_SUCCESS - This node succeeded, and will report this to its parent node
+2. BT_FAILURE - This node failed, and will report this to its parent node
+3. BT_RUNNING - This node is still running, and will report this to its parent node.
 
-Think of the blackboard as the unique format for variables. They are set initially, or by behaviors, **but never in subtrees.** Because we check `blackboard[BB_SOME_KEY]` instead of a variable, we can wipe out variables and slap new ones onto the AI as it runs. For example, this cow uses BB_BASIC_MOB_TIP_REACTING and BB_BASIC_MOB_TIPPER because cows can get tipped, and the AI needs to know that in the subtrees when it plans behavior. And in fact, those two keys aren't required to be defined initially, it's just for clarity that they are.
+This is important for the flow of the behavior tree, as different nodes will behave differently depending on whether their children succeed or fail.
 
-Speaking of subtrees, let's look at that now.
+## Leaf / ai_behavior
 
-```dm
-/datum/ai_controller/basic/cow
+A leaf is the behavior node, and it is what performs actual actions.
 
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/tip_reaction, //<- goes first
-		/datum/ai_planning_subtree/find_and_eat_food, //<- goes second
-		/datum/ai_planning_subtree/random_speech/cow, //<- goes last! But at any point, a previous subtree can end the chain. If a cow is tipped over, it shouldn't make random noises or try finding food!
-	)
-	//and by the end for however many subtrees ran, each one that did may have planned behavior for the AI to act on.
-```
+It is defined as /datum/bt_node/ai_behavior
 
-AI's work by planning specific behaviors, and subtrees are datums that bundle the planning of behavior together. From top to bottom they run, and they can cancel future subtrees. As an example, cows have their very first consideration be tip_reaction, a subtree that prevents further subtrees like eating food and random speech, as well as planning out how the cow reacts (looking sad at the person who tipped it).
+Common leaf jobs:
 
-```dm
-/datum/ai_controller/basic/cow
-	ai_traits = null
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = null
+- Find a target.
+- Move toward something.
+- Attack.
+- Use an ability.
+- Execute job logic (clean, heal, arrest, etc).
 
-```
+Example:
 
-Finally, we have some more minor things.
+![Behavior example](learn_ai_images/behavior_example.png)
 
-- ai_traits are flags for the AI, things like "STOP_MOVING_WHEN_PULLED" slightly modifying how the AI acts under some situations.
-- ai_movement is how the mob moves to its movement target. ranges from simple behaviors like ai_movement/dumb that awlays move in the direction of the target and hope there's nothing in the way, all the way to ai_movement/jps that plans and occasionally recalcuates more complicated paths, at the cost of more lag.
-- idle_behavior is just some simpler behavior to perform when nothing has been planned at all, like idle_behavior/idle_random_walk making a mob wander passively.
+This moves to the target set on the selected target key, and finishes execution when arrived
 
-## Subtrees and Behaviors
+## Decorator
 
-Okay, so we have blackboard variables, which are considered by subtrees to plan behaviors. Let's actually look at a subtree planning behaviors, and behaviors themselves.
+Decorators are essentially condition checks that gate nodes behind them.
 
-```dm
-/// this subtree checks if the mob has a target. if it doesn't, it plans looking for food. if it does, it tries to eat the food via attacking it.
-/datum/ai_planning_subtree/find_and_eat_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	//get things out of blackboard
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/atom/target = weak_target?.resolve()
-	var/list/wanted = controller.blackboard[BB_BASIC_FOODS]
+Basic use case:
+Only execute combat branch if a target key is present.
 
-	//we see if we have a target (remember, anything can be in that blackboard, it's not a hard reference)
-	if(!target || QDELETED(target))
-		//we need to find some food
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_BASIC_MOB_CURRENT_TARGET, wanted)
-		return //this allows further subtrees to plan since we're doing a non-invasive behavior like checking the viscinity for food.
+Example:
 
-	//now we know we have a target but should let a hostile subtree plan attacking humans. let's check if it's actually food
-	if(target in wanted)
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-		return SUBTREE_RETURN_FINISH_PLANNING //this prevents further subtrees from planning since we want to focus on eating the food
-```
+![Behavior example](learn_ai_images/decorator_example.png)
 
-And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I've dumped in a bunch of comments explaining how this one behavior gets mobs to chase a target and slap it if in range.
+This gates the attack behavior behind the BB_CURRENT_TARGET_KEY being set.
 
-```dm
-///this behavior makes an AI get close to their movement target, and attack every time perform() is called.
-/datum/ai_behavior/basic_melee_attack
-	action_cooldown = 0.6 SECONDS
-	//flag tells the AI it needs to have a movement target to work, and since it doesn't have "AI_BEHAVIOR_MOVE_AND_PERFORM", it won't call perform() every 0.6 seconds until it is in melee range. Smart!
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+Outside of this, decorators serve a second important function, which is being able to observe the condition they are checking to see if its still valid while behavior is running in other nodes. There are two use cases for this:
 
-/datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	//all this is doing in setup is setting the movement target. setup is called once when the behavior is first planned, and returning FALSE can cancel the behavior if something isn't right.
+1. Stop performing behavior of my children because the conditions has become FALSE (e.g. I lost my target, stop attacking!)
+2. Stop performing lower priority behavior, because the condition has become TRUE (e.g. Hey I found a target! stop idling!)
 
-	//Hiding location is priority
-	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(!target)
-		return FALSE
-	//now the AI_BEHAVIOR_REQUIRE_MOVEMENT flag will be happy, we have a target to always be moving towards.
-	controller.current_movement_target = target
+You can also run observers for both of these cases at the same time.
 
-///perform will run every "action_cooldown" deciseconds as long as the conditions are good for it to do so (we set "AI_BEHAVIOR_REQUIRE_MOVEMENT", so it won't perform until in range).
-/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	var/mob/living/basic/basic_mob = controller.pawn
-	//targeting strategy will kill the action if not real anymore
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+For most decorators, we can register for signals to observe when a potential condition change might have happend, for example in the case of the target, we register on the target key being changed somewhere.
 
-	if(!targeting_strategy.can_attack(basic_mob, target))
-		///We have a target that is no longer valid to attack. Remember that returning doesn't end the behavior, JUST this single performance. So we call "finish_action" with whether it succeeded in doing what it wanted to do (it didn't, so FALSE) and the blackboard keys passed into this behavior.
-		finish_action(controller, FALSE, target_key)
-		return //don't forget to end the performance too
+If for some reason we cannot have signals check the condition, you can also make it check every ai_controller process(), this is less efficient so use signals when possible.
 
-	var/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+## What Composites Are
 
-	controller.blackboard[hiding_location_key] = hiding_target
+Composites are structural nodes that control how child nodes run.
 
-	///and finally, we're in range, we have a valid target, we can attack. When they fall into crit, they will no longer be a valid target, to the melee behavior will end.
-	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
-	else
-		basic_mob.melee_attack(target)
+- They never perform behavior themselves, and exist purely to determine how nodes below them are ran.
+- The composite nodes are Selector, Sequence, Parallel, and Subplan
 
-///and so the action has ended. we can now clean up the AI's blackboard based on the success of the action, and the keys passed in.
-/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	///if the behavior failed, the target is no longer valid, so we should lose aggro of them. We remove the target_key (which could be anything, it's whatever key was passed into the behavior by the subtree) from the blackboard. Couldn't do THAT with normal variables!
-	if(!succeeded)
-		controller.blackboard -= target_key
-```
+## BT Node Types
+
+### 1) Selector
+
+What it does:
+Tries children in order until one returns BT_SUCCEED.
+
+To be clear; this means until the first child returns BT_FAILURE, the second child will never start.
+
+Basic use case:
+Try attacking, if you cant, perform idle behavior.
+
+![Behavior example](learn_ai_images/selector_example.png)
+
+In the above example, we try to run monkey combat behavior, if for some reason this doesn't succeed (usually due to lack of target), we run idle behavior.
+
+### 2) Sequence
+
+What it does:
+Runs children in order and stops on first failure. Basically the opposite of selector. And allows for chaining behavior that needs to happen in sequence.
+
+Basic use case:
+Move to a target, then perform work once in range.
+
+If you fail to moving to the target, then performing work would make no sense. So a sequence is best here.
+
+![Behavior example](learn_ai_images/sequence_example.png)
+
+In the above example, we move to a target, and then give them our currently held item. If we fail to move to them, we also dont try to give the item
+
+### 3) Parallel
+
+What it does:
+Runs multiple children in parallel.
+
+This also has the option to loop the non-primary nodes (e.g. the nodes 2nd and up). This allows for behavior such as continiously checking whether we can find a target.
+
+You also have the option to stop any secondary behavior once the primary behavior is finished. This is useful in examples where you do not wish to wait until the secondary behavior finishes.
+
+Basic use case:
+Finding targets while also performing all other behavior
+
+![Behavior example](learn_ai_images/parallel_example.png)
+
+### 4) Subplan
+
+What it does:
+Runs a child branch with a loop policy behavior.
+
+This essentially allows us to prevent the child from returning its return value to its parent, and instead try to loop.
+
+This is useful for things like combat and prevents redundant replanning of the entire plan. You can basically do "Hey, if you fail to hit someone this time, try again next time until you succeed".
+
+If doing this, its important to make use of observers on decorators to make sure you can exit the subplan, else you can get stuck in an endless cycle of behavior.
+
+Basic use case:
+In combat, keep retrying attack logic instead of ending after one attempt.
+
+![Behavior example](learn_ai_images/subplan_example.png)
+
+In the above example, we are running a combat behavior where we first check if our target is set, (and have an observer that cancels if the condition changes).
+
+Then, we run a parallel; on the left side (primary) we have a subplan that runs a looping attack behavior; if this attack behavior fails (We're not close or some other issue), the sub-plan will just try again next tick.
+
+In the secondary branch, we try to move to the target. (and keep trying this as well, due to the parallels looping rule)
+
+Due to us having the observer, if for some reason our target changes due to being changed by another node, the decorators observer will re-evaluate and cancel the plan. Without an observer, this behavior would be stuck in an endless loop.
+
+## Quick Node Selection Guide
+
+- Use leaf when you want to do one concrete action.
+- Use selector when branches are alternatives.
+- Use sequence when steps are ordered dependencies.
+- Use parallel when you need concurrent actions
+- Use decorator when a branch should only run behind a condition or should react to a condition changing.
+- Use subplan when a child branch should loop on succes and/or failure.
+
+## Subtrees
+
+Subtrees are essentially modularized pieces of tree that can be re-used in different trees. This allows for patternizing common behaviors into a re-useable tree.
+
+## Editor
+
+The behavior tree editor can be opened via opening one of our .bt.json files. These .bt.json files are specialized json files that format our (sub)trees. In theory these jsons are human-readable, but the editor makes it much easier to parse them and provides a way of baking them into .DM code.
+
+When opening the editor, you should press "Refresh Types" at the top, this will make the editor parse through all the relevant .dm files to find defined behaviors, decorators, subtrees and ai controllers. You should also run this if you modify or add new nodes, else your cache will be out of date.
+
+Now, you should be able to see the tree in front of you. In this view you can re-order nodes, add new ones, and change parameters on individual nodes.
+
+On the left, you can find a palette of all the nodes you have. The compsoite nodes are found in the top left, while the rest are distributed across 3 browsers:
+
+1. Behavior types (Leaf / ai_behavior nodes)
+2. Decorator types (Decorator nodes)
+3. Browser (All ai_controllers and subtrees)
+
+![Behavior example](learn_ai_images/bt_editor_example1.png)
