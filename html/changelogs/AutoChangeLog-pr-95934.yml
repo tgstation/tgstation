@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - balance: "For every living, connected bitrunner remaining in a domain, bitrunning glitches will take five times longer to escape."
+  - bugfix: "You can no longer softlock any virtual domain that uses points by crowbarring the reward turf before the crate spawns."
