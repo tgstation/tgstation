@@ -15,7 +15,3 @@
 		controller.clear_blackboard_key(key)
 		return FALSE
 	return TRUE
-
-/datum/bt_node/decorator/can_see_target/evaluate_for_observer(datum/ai_controller/controller)
-	var/atom/target = controller.blackboard[key]
-	return !QDELETED(target) && can_see(controller.pawn, target, range)

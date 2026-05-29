@@ -1,11 +1,8 @@
 /**
- * Base decorator node. Wraps a single child with an optional condition gate.
+ * Base decorator node. Wraps a single child with a condition check.
  *
- * If check_condition() returns FALSE, tick() returns BT_FAILURE immediately.
- * Otherwise, delegates to child.tick().
  *
- * Supports UE5-style observer aborts: register to watch blackboard keys and
- * reactively abort running behaviors when the condition changes at runtime.
+ * Supports UE5-style observer aborts: register to watch specific signals, which triggers a re-check of the condition, potentially aborting the plan depending on the observer_abort settings.
  */
 /datum/bt_node/decorator
 	node_type = BT_NODE_DECORATOR
@@ -13,15 +10,15 @@
 	var/child_typepath = null
 	/// Resolved child instance. Populated at tree construction. Do not set directly.
 	var/datum/bt_node/child = null
-	/// Observer abort mode. Controls reactive re-planning when watched keys change.
+	/// Observer abort mode. Controls reactive re-planning when watched keys change. BT_ABORT_NONE (default) means no reactivity. BT_ABORT_SELF triggers re-plan if we're inside one of our children and the condition changes, while BT_ABORT_LOWER_PRIORITY triggers re-plan if we are in a lower priority (e.g. further to the right) node and the condition changes. BT_ABORT_BOTH does both.
 	var/observer_abort = BT_ABORT_NONE
 	/// If TRUE, the result of check_condition() is inverted before gating the child.
 	var/invert = FALSE
-	/// Whether the child is currently BT_RUNNING. When latched, tick() skips check_condition() and delegates directly to child.tick().
+	/// Whether the child is currently BT_RUNNING. This makes tick() skip check_condition() and delegate directly to child.tick().
 	var/child_active = FALSE
 	/// Set to TRUE once register_observe_signals() has been called for this instance.
 	var/observers_registered = FALSE
-	/// Set to TRUE when register_observe_signals() registered at least one signal. Controls condition-latch logic.
+	/// Set to TRUE when register_observe_signals() registered at least one signal. If this is not true but we are observing; then we need to check the condition every tick; not efficient, but allows for reactivity.
 	var/has_observer_signals = FALSE
 	/// The controller that owns this node instance. Set by finalize_tree().
 	var/datum/ai_controller/owning_controller = null
@@ -38,7 +35,7 @@
 		if(observer_abort != BT_ABORT_NONE)
 			has_observer_signals = register_observe_signals(controller.pawn)
 
-	// Latch: skip check_condition when child is running, unless polling (observer_abort set but no signals).
+	// skip check_condition when child is running, unless polling (observer_abort set but no signals).
 	var/result
 	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
 	if(no_ticking_condition && child_active)
@@ -59,15 +56,12 @@
 /**
  * Override to implement custom condition logic.
  * Return TRUE to allow child.tick() to proceed, FALSE to return BT_FAILURE immediately.
- * Blackboard helpers below (bb_key_exists, bb_key_equals, bb_key_greater) are available.
  */
 /datum/bt_node/decorator/proc/check_condition(datum/ai_controller/controller)
 	return TRUE
 
 /**
- * Virtual proc called by the observer system when a watched key changes.
- * Override this instead of check_condition() for decorators that implement custom tick() logic
- * (e.g. is_at_distance) so the observer path never triggers movement side-effects.
+ * Proc called by the observer system when a watched key changes.
  * Return TRUE if the decorator's condition would pass, FALSE otherwise.
  */
 /datum/bt_node/decorator/proc/evaluate_for_observer(datum/ai_controller/controller)
@@ -77,8 +71,8 @@
  * Called by the controller's observer handler when a watched blackboard key changes.
  * Re-evaluates evaluate_for_observer() and aborts based on observer_abort policy.
  *
- * BT_ABORT_SELF:            condition became FALSE → cancel actions and replan immediately.
- * BT_ABORT_LOWER_PRIORITY:  condition became TRUE  → cancel actions and replan immediately.
+ * BT_ABORT_SELF:            condition became FALSE and we're running our children → cancel actions
+ * BT_ABORT_LOWER_PRIORITY:  condition became TRUE and we're running lower priority nodes → cancel actions
  */
 /datum/bt_node/decorator/proc/on_observed_change(datum/ai_controller/controller, key)
 	var/condition_result = evaluate_for_observer(controller)
@@ -88,14 +82,12 @@
 		if(!execution_index || (active >= execution_index && active <= last_execution_index))
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
 			controller.CancelActions()
-			//controller.SelectBehaviors(0)
 
 	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
 		var/active = controller.active_execution_index
 		if(!execution_index || !active || active > last_execution_index)
-			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, preempting")
+			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, replanning")
 			controller.CancelActions()
-			//controller.SelectBehaviors(0)
 
 /datum/bt_node/decorator/reset_tick_state()
 	if(observers_registered)
@@ -113,7 +105,7 @@
 	last_execution_index = counter - 1
 	return counter
 
-/// Override to register all signal observers for this decorator. Return TRUE if any were registered.
+/// Override to register all signal observers for this decorator. Return TRUE if any were registered. If a decorator does not handle this and we have an observer_abort mode that isn't BT_ABORT_NONE, the system will fall back to ticking the condition every tick, which is less efficient but allows for reactivity without signals.
 /datum/bt_node/decorator/proc/register_observe_signals(atom/pawn)
 	return FALSE
 
@@ -127,7 +119,6 @@
 	if(owning_controller)
 		on_observed_change(owning_controller, null)
 
-// --- Blackboard condition helpers ---
 
 /// Returns TRUE if the blackboard key holds a non-null, non-deleted value.
 /datum/bt_node/decorator/proc/bb_key_exists(datum/ai_controller/controller, key)

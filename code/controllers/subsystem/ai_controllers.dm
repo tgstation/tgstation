@@ -59,14 +59,20 @@ SUBSYSTEM_DEF(ai_controllers)
 		var/datum/bt_node/composite/comp = node
 		if(!LAZYLEN(comp.children_typepaths) || LAZYLEN(comp.children))
 			return
-		comp.children = list()
+		var/list/resolved_children = list()
 		for(var/child_type in comp.children_typepaths)
 			var/list/config = comp.children_typepaths[child_type]
 			var/datum/bt_node/child = resolve_child_node(child_type, config)
 			if(isnull(child))
 				stack_trace("BT composite [node.type] references unknown child type [child_type]")
 				continue
-			comp.children += child
+			resolved_children += child
+		if(istype(comp, /datum/bt_node/composite/subplan) && length(resolved_children) > 1)
+			var/datum/bt_node/composite/sequence/legacy_subplan_sequence = new
+			legacy_subplan_sequence.children = resolved_children
+			comp.children = list(legacy_subplan_sequence)
+		else
+			comp.children = resolved_children
 	else if(istype(node, /datum/bt_node/decorator))
 		var/datum/bt_node/decorator/dec = node
 		if(isnull(dec.child_typepath) || !isnull(dec.child))
@@ -124,11 +130,17 @@ SUBSYSTEM_DEF(ai_controllers)
 	if(LAZYLEN(children_descs))
 		if(istype(node, /datum/bt_node/composite))
 			var/datum/bt_node/composite/comp = node
-			comp.children = list()
+			var/list/resolved_children = list()
 			for(var/child_entry in children_descs)
 				var/datum/bt_node/child_node = get_or_build_node(child_entry)
 				if(!isnull(child_node))
-					comp.children += child_node
+					resolved_children += child_node
+			if(istype(comp, /datum/bt_node/composite/subplan) && length(resolved_children) > 1)
+				var/datum/bt_node/composite/sequence/legacy_subplan_sequence = new
+				legacy_subplan_sequence.children = resolved_children
+				comp.children = list(legacy_subplan_sequence)
+			else
+				comp.children = resolved_children
 		else if(istype(node, /datum/bt_node/decorator))
 			var/datum/bt_node/decorator/dec = node
 			dec.child = get_or_build_node(children_descs[1])

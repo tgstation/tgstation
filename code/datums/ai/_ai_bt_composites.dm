@@ -27,12 +27,11 @@
  * Returns BT_RUNNING on first child returning BT_RUNNING (stops further evaluation).
  * Returns BT_SUCCESS only if all children succeed.
  *
- * Memory: resumes from the last RUNNING child index rather than restarting from child 1.
- * The observer/interrupt system resets this via CancelActions() when conditions change.
+ * Resumes from the last RUNNING child index rather than restarting from child 1.
  */
 /datum/bt_node/composite/sequence
 	node_type = BT_NODE_SEQUENCE
-	/// Index of the child that last returned BT_RUNNING. 1-based.
+	/// Index of the child that last returned BT_RUNNING.
 	var/running_child_index = 0
 
 /datum/bt_node/composite/sequence/tick(datum/ai_controller/controller, seconds_per_tick)
@@ -70,12 +69,12 @@
  * Returns the first non-BT_FAILURE result (BT_SUCCESS or BT_RUNNING), stopping further evaluation.
  * Returns BT_FAILURE only if all children fail.
  *
- * Memory: resumes from the last RUNNING child index rather than restarting from child 1.
- * The observer/interrupt system resets this via CancelActions() when conditions change.
+ * Resumes from the last RUNNING child index rather than restarting from child 1.
+
  */
 /datum/bt_node/composite/selector
 	node_type = BT_NODE_SELECTOR
-	/// Index of the child that last returned BT_RUNNING. 1-based.
+	/// Index of the child that last returned BT_RUNNING.
 	var/running_child_index = 0
 
 /datum/bt_node/composite/selector/tick(datum/ai_controller/controller, seconds_per_tick)
@@ -109,9 +108,11 @@
 	running_child_index = 0
 
 /**
- * Subplan node: runs children like a sequence (stops on first failure or running child),
- * but applies configurable restart policies when the run completes instead of propagating
- * the result directly.
+ * Subplan node: Runs exactly one child and applies configurable restart policies
+ * when the child completes instead of propagating completion directly.
+ *
+ * Legacy trees that encoded multiple subplan children are normalized at build time
+ * into a single sequence child to preserve behavior.
  *
  * success_policy:
  *   BT_SUBPLAN_SUCCEED_ON_SUCCESS (default) — propagates BT_SUCCESS when all children succeed.
@@ -121,8 +122,7 @@
  *   BT_SUBPLAN_FAIL_ON_FAILURE (default) — propagates BT_FAILURE when a child fails.
  *   BT_SUBPLAN_LOOP_ON_FAILURE           — resets all children and returns BT_RUNNING, restarting next tick.
  *
- * Combining both loop policies creates an infinite loop that only exits via an external
- * observer abort or CancelActions().
+ * Combining both loop policies creates an infinite loop that only exits via an external observer abort or CancelActions(), so be careful pls
  */
 /datum/bt_node/composite/subplan
 	node_type = BT_NODE_SUBPLAN
@@ -130,43 +130,40 @@
 	var/success_policy = BT_SUBPLAN_SUCCEED_ON_SUCCESS
 	/// BT_SUBPLAN_FAIL_ON_FAILURE: propagate failure (default). BT_SUBPLAN_LOOP_ON_FAILURE: restart.
 	var/failure_policy = BT_SUBPLAN_FAIL_ON_FAILURE
-	/// Index of the child that last returned BT_RUNNING. 1-based.
-	var/running_child_index = 0
 
 /datum/bt_node/composite/subplan/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick())
 		return tick_result || BT_RUNNING
 
-	var/start = running_child_index || 1
-	for(var/i in start to length(children))
-		var/datum/bt_node/child = children[i]
-		var/child_result = child.tick(controller, seconds_per_tick)
-		if(child_result == BT_RUNNING)
-			running_child_index = i
-			if(tick_rate)
-				tick_cooldown = world.time
-				tick_result = BT_RUNNING
-			return BT_RUNNING
-		if(child_result == BT_FAILURE)
-			running_child_index = 0
-			var/result
-			if(failure_policy == BT_SUBPLAN_LOOP_ON_FAILURE)
-				for(var/datum/bt_node/c in children)
-					c.reset_tick_state()
-				result = BT_RUNNING
-			else
-				result = BT_FAILURE
-			if(tick_rate)
-				tick_cooldown = world.time
-				tick_result = result
-			return result
+	var/datum/bt_node/child = LAZYACCESS(children, 1)
+	if(isnull(child))
+		if(tick_rate)
+			tick_cooldown = world.time
+			tick_result = BT_FAILURE
+		return BT_FAILURE
 
-	// All children succeeded
-	running_child_index = 0
+	var/child_result = child.tick(controller, seconds_per_tick)
+	if(child_result == BT_RUNNING)
+		if(tick_rate)
+			tick_cooldown = world.time
+			tick_result = BT_RUNNING
+		return BT_RUNNING
+
+	if(child_result == BT_FAILURE)
+		var/result
+		if(failure_policy == BT_SUBPLAN_LOOP_ON_FAILURE)
+			child.reset_tick_state()
+			result = BT_RUNNING
+		else
+			result = BT_FAILURE
+		if(tick_rate)
+			tick_cooldown = world.time
+			tick_result = result
+		return result
+
 	var/result
 	if(success_policy == BT_SUBPLAN_LOOP_ON_SUCCESS)
-		for(var/datum/bt_node/c in children)
-			c.reset_tick_state()
+		child.reset_tick_state()
 		result = BT_RUNNING
 	else
 		result = BT_SUCCESS
@@ -175,13 +172,8 @@
 		tick_result = result
 	return result
 
-/datum/bt_node/composite/parallel/reset_tick_state()
-	. = ..()
-	secondary_ready_at = null
-
 /datum/bt_node/composite/subplan/reset_tick_state()
-	. = ..()
-	running_child_index = 0
+	return ..()
 
 /**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.
@@ -197,11 +189,11 @@
 	/// BT_PARALLEL_FAILURE_CHILD_ONE: fail when child 1 fails (default).
 	/// BT_PARALLEL_FAILURE_ANY: fail when any child fails.
 	var/failure_policy = BT_PARALLEL_FAILURE_CHILD_ONE
-	/// If TRUE, children 2+ that complete (non-RUNNING) are reset and reticked rather than counted toward tallies.
+	/// If TRUE, children 2+ that complete are reset and reticked
 	var/repeat_secondary = FALSE
-	/// Minimum delay (deciseconds) before a repeat_secondary child can be re-ticked after completing. 0 = immediate (default).
+	/// Minimum delay before a repeat_secondary child can be re-ticked after completing. 0 = immediate (default).
 	var/repeat_secondary_delay = 0
-	/// world.time values for when each secondary child (keyed by 1-based index) is next allowed to tick. Null when no delays are active.
+	/// world.time values for when each secondary child is next allowed to tick. Null when no delays are active.
 	var/list/secondary_ready_at = null
 	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled and the parallel immediately returns child 1's result.
 	var/finish_on_primary = FALSE
@@ -262,3 +254,7 @@
 		tick_cooldown = world.time
 		tick_result = result
 	return result
+
+/datum/bt_node/composite/parallel/reset_tick_state()
+	. = ..()
+	secondary_ready_at = null
