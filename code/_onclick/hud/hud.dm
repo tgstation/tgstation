@@ -77,9 +77,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	/// List of typepaths of /datum/inventory_slot which will be used to automatically create inventory slot UI elements
 	/// If assigned a typepath instead of a list, it will instead use all valid subtypes of said typepath
-	/// Safe to change in initialize_screen_objects() but not later
-	/// After init gets reassigned into a slot_id -> inventory slot datum alist
-	var/list/datum/inventory_slot/inventory_slots = null
+	/// Can be changed in initialize_screen_objects() to add/remove slots
+	var/list/datum/inventory_slot/default_inventory_slots = null
+	/// Alist of slot_id -> inventory_slot datum of our slots
+	/// These are singletons, do not modify individual slots!
+	var/list/datum/inventory_slot/inventory_slots = alist()
 
 	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
 	/// They typically use * in their render target. They exist solely so we can reuse them,
@@ -435,15 +437,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	for (var/slot_id in inventory_slots)
 		var/datum/inventory_slot/slot = inventory_slots[slot_id]
-		if (!istype(slot))
-			continue
-		slot.update_inventory_slot(src, mymob)
+		if (!isnull(slot))
+			slot.update_inventory_slot(src, mymob)
 
 /datum/hud/proc/update_inventory_slot(slot_id, ...)
 	if(isnull(mymob))
 		return
 	var/datum/inventory_slot/slot = inventory_slots[slot_id]
-	if (istype(slot))
+	if (!isnull(slot))
 		var/list/slot_args = list(src, mymob) + args.Copy(2)
 		slot.update_inventory_slot(arglist(slot_args))
 
@@ -525,25 +526,22 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_locked_slots()
 	return
 
-/// Creates inventory slot screen elements based on our assigned inventory_slots
+/// Creates inventory slot screen elements based on our assigned default_inventory_slots
 /datum/hud/proc/create_inventory_slots()
-	var/list/created_paths = inventory_slots
-	if (ispath(inventory_slots))
-		created_paths = valid_subtypesof(inventory_slots)
+	var/list/created_paths = default_inventory_slots
+	if (ispath(created_paths))
+		created_paths = valid_subtypesof(created_paths)
 
-	var/alist/new_slots = alist()
 	for (var/datum/inventory_slot/slot_type as anything in created_paths)
 		var/datum/inventory_slot/inv_slot = GLOB.inventory_slot_datums[slot_type]
 		if (!inv_slot)
 			stack_trace("[src] attempted to use an invalid inventory slot: [slot_type]")
 			continue
 		inv_slot.create_element(src)
-		new_slots[inv_slot.slot_id] = inv_slot
+		inventory_slots[inv_slot.slot_id] = inv_slot
 
 	// Lets add an abstract "hands" slot to ourselves for native handling
-	new_slots[ITEM_SLOT_HANDS] = GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
-
-	inventory_slots = new_slots
+	inventory_slots[ITEM_SLOT_HANDS] = GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
 	inventory_update()
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)

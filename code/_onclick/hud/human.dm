@@ -1,5 +1,5 @@
 /datum/hud/human
-	inventory_slots = /datum/inventory_slot/human
+	default_inventory_slots = /datum/inventory_slot/human
 
 /datum/hud/human/initialize_screen_objects()
 	. = ..()
