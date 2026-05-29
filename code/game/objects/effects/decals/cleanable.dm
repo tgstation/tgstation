@@ -78,10 +78,16 @@
 		reagents.trans_to(merger, reagents.total_volume)
 
 /// Returns reagents datum if it exists, or lazyloads one if it doesn't
-/obj/effect/decal/cleanable/proc/lazy_init_reagents()
+/obj/effect/decal/cleanable/proc/lazy_init_reagents(force_reagent = null, force_amount = null)
 	RETURN_TYPE(/datum/reagents)
 	if (reagents)
 		return reagents
+
+	if (!isnull(force_reagent))
+		decal_reagent = force_reagent
+
+	if (!isnull(force_amount))
+		reagent_amount = force_amount
 
 	if (!decal_reagent)
 		return
