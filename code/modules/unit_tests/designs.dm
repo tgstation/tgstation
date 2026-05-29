@@ -33,7 +33,6 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
-	var/list/special_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
 		design = new design()
@@ -43,6 +42,55 @@
 			TEST_FAIL("Design [design.type] shares an ID \"[design.id]\" with another design")
 			continue
 		all_designs[design.id] = design.type
+
+	for (var/datum/techweb_node/node as anything in subtypesof(/datum/techweb_node))
+		node = new node()
+		for (var/design_id in node.design_ids)
+			if (!all_designs[design_id])
+				TEST_FAIL("Techweb node [node.display_name] ([node.id]) has a design_id \"[design_id]\" which doesn't correspond to any existing design!")
+				continue
+			all_designs -= design_id
+		qdel(node)
+
+	// Designs can also be disk-exclusive
+	for (var/obj/item/disk/design_disk/design_disk as anything in subtypesof(/obj/item/disk/design_disk))
+		design_disk = new design_disk()
+		for (var/datum/design/design as anything in design_disk.blueprints)
+			all_designs -= design.id
+		qdel(design_disk)
+
+	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
+		design_disk = new design_disk()
+		for (var/surgery_type in design_disk.surgeries)
+			for (var/design_id in all_designs)
+				var/datum/design/surgery/design = all_designs[design_id]
+				if (ispath(design, /datum/design/surgery) && design::surgery == surgery_type)
+					all_designs -= design::id
+		qdel(design_disk)
+
+	// Or machine-exclusive
+	for (var/datum/techweb/autounlocking/techweb as anything in subtypesof(/datum/techweb/autounlocking))
+		techweb = new techweb()
+		for (var/design_id in techweb.researched_designs + techweb.hacked_designs)
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			// If we have a design thats supposed to be printable from a protolathe and an autolathe, but only autolathes can print it
+			// then we still should error because then we either have a missing design_id or redundant build flags
+			if (!(design.build_type & (~techweb.allowed_buildtypes)))
+				all_designs -= design_id
+		qdel(techweb)
+
+	for (var/missing_id in all_designs)
+		TEST_FAIL("Design [all_designs[missing_id]] has an ID \"[missing_id]\" which is not in any of the techweb nodes or tech disks, or it is possibly misconfigured!")
+
+/datum/unit_test/design_mats
+
+/datum/unit_test/design_mats/Run()
+	var/list/special_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
+
+	for (var/datum/design/design as anything in subtypesof(/datum/design))
+		design = new design()
+		if (design.id == DESIGN_ID_IGNORE)
+			continue
 
 		var/mat_requirement_design = length(special_types & design.materials)
 
@@ -65,7 +113,7 @@
 			for(var/mat in mats_total)
 				if(mats_total[mat] > design.materials[mat])
 					TEST_FAIL("Amount of [mat] in the 'transfered_materials' var of [design.type] exceeds what present in its 'materials' var \
-					([transcribe_mat_value_as_sheet(mats_total[mat])] vs [transcribe_mat_value_as_sheet(design.materials[mat])])")
+					([mats_total[mat]] vs [design.materials[mat]])")
 
 		//We do not care if the mats of the printed version match with those of its generic instance
 		if(design.inherit_materials == DESIGN_INHERIT_MATS_SPECIAL || design.inherit_materials == DESIGN_DONT_INHERIT_MATS)
@@ -111,42 +159,3 @@
 		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is]). \
 			Fix it or change the value of the [NAMEOF(design, inherit_materials)] var of [design.type]. \
 			You can also edit the [NAMEOF(design, transfered_materials)] list of the design")
-
-	for (var/datum/techweb_node/node as anything in subtypesof(/datum/techweb_node))
-		node = new node()
-		for (var/design_id in node.design_ids)
-			if (!all_designs[design_id])
-				TEST_FAIL("Techweb node [node.display_name] ([node.id]) has a design_id \"[design_id]\" which doesn't correspond to any existing design!")
-				continue
-			all_designs -= design_id
-		qdel(node)
-
-	// Designs can also be disk-exclusive
-	for (var/obj/item/disk/design_disk/design_disk as anything in subtypesof(/obj/item/disk/design_disk))
-		design_disk = new design_disk()
-		for (var/datum/design/design as anything in design_disk.blueprints)
-			all_designs -= design.id
-		qdel(design_disk)
-
-	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
-		design_disk = new design_disk()
-		for (var/surgery_type in design_disk.surgeries)
-			for (var/design_id in all_designs)
-				var/datum/design/surgery/design = all_designs[design_id]
-				if (ispath(design, /datum/design/surgery) && design::surgery == surgery_type)
-					all_designs -= design::id
-		qdel(design_disk)
-
-	// Or machine-exclusive
-	for (var/datum/techweb/autounlocking/techweb as anything in subtypesof(/datum/techweb/autounlocking))
-		techweb = new techweb()
-		for (var/design_id in techweb.researched_designs + techweb.hacked_designs)
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-			// If we have a design thats supposed to be printable from a protolathe and an autolathe, but only autolathes can print it
-			// then we still should error because then we either have a missing design_id or redundant build flags
-			if (!(design.build_type & (~techweb.allowed_buildtypes)))
-				all_designs -= design_id
-		qdel(techweb)
-
-	for (var/missing_id in all_designs)
-		TEST_FAIL("Design [all_designs[missing_id]] has an ID \"[missing_id]\" which is not in any of the techweb nodes or tech disks, or it is possibly misconfigured!")
