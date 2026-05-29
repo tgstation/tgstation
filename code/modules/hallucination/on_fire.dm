@@ -133,7 +133,7 @@
 	fire_clearing = TRUE
 	next_action = 0
 
-	qdel(src)
+	src.Destroy()
 
 #undef RAISE_FIRE_COUNT
 #undef RAISE_FIRE_TIME
