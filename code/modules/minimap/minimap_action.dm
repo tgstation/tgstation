@@ -62,6 +62,11 @@
 			return TRUE
 	return FALSE
 
+/datum/action/minimap/proc/get_open_minimap_display(datum/hud/hud)
+	if(isnull(hud) || !has_minimap_huds(hud))
+		return null
+	return hud.screen_objects[HUD_TAC_MINIMAP]
+
 /datum/action/minimap/proc/add_huds(datum/hud/hud, datum/minimap/minimap, initial_display_z_level)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
@@ -94,25 +99,30 @@
 
 /datum/action/minimap/proc/on_owner_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
-	var/mob/owner_mob = source
+	INVOKE_ASYNC(src, PROC_REF(handle_owner_z_changed), source, new_turf?.z)
+
+/datum/action/minimap/proc/handle_owner_z_changed(mob/owner_mob, new_z_level)
 	var/datum/hud/owner_hud = owner_mob?.hud_used
-	if(isnull(owner_hud) || !has_minimap_huds(owner_hud))
+	if(isnull(get_open_minimap_display(owner_hud)))
 		return
 
-	var/anchor_z = get_anchor_z_level(new_turf?.z)
+	var/anchor_z = get_anchor_z_level(new_z_level)
 	if(is_forbidden_minimap_z(anchor_z))
 		remove_huds(owner_hud)
 		to_chat(owner_mob, span_warning("The minimap closes on this z-level."))
 		return
+	if(isnull(fixed_z_level))
+		return
 
-	var/display_z = get_opening_display_z_level(anchor_z, new_turf?.z)
-	var/atom/movable/screen/minimap_display/display = owner_hud.screen_objects[HUD_TAC_MINIMAP]
-	if(isnull(display))
+	var/display_z = get_opening_display_z_level(anchor_z, new_z_level)
+	var/atom/movable/screen/minimap_display/display = get_open_minimap_display(owner_hud)
+	if(isnull(display) || display.get_viewed_z_level() == display_z)
 		return
 	var/datum/minimap/minimap = get_minimap_for_z(display_z)
-	if(isnull(minimap))
+	if(QDELETED(src) || isnull(minimap))
 		return
-	if(display.get_viewed_z_level() == display_z)
+	display = get_open_minimap_display(owner_hud)
+	if(isnull(display) || display.get_viewed_z_level() == display_z)
 		return
 	display.change_z_level(display_z, minimap)
 
