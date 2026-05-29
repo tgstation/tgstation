@@ -546,3 +546,12 @@
       to iron pills for humans.
   - rscadd: Plant nutriment (Liquid Earthsquake, Robust Harvest, E-Z Nutrient, Left
       4 Zed, Enduro Grow) now heals toxin damage for mobs with the MOB_PLANT biotype.
+2026-05-29:
+  lelandkemble:
+  - qol: Support holoparasites can teleport things between two station Z-levels
+  - bugfix: Support holoparasite teleportation no longer runtimes when attempting
+      to teleport a turf
+  timothymtorres:
+  - rscadd: The heart organ now controls how fast or slow the blood rate is regenerated
+      for a mob. The health of the heart organ also affects the blood rate, so the
+      more damage it takes, the less blood it pumps.

@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "The heart organ now controls how fast or slow the blood rate is regenerated for a mob. The health of the heart organ also affects the blood rate, so the more damage it takes, the less blood it pumps."

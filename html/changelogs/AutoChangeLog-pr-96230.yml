@@ -1,5 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - qol: "Support holoparasites can teleport things between two station Z-levels"
-  - bugfix: "Support holoparasite teleportation no longer runtimes when attempting to teleport a turf"
