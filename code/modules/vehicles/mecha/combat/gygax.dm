@@ -75,7 +75,7 @@
 
 /obj/vehicle/sealed/mecha/gygax/dark/Initialize(mapload)
 	. = ..()
-	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "mech_pilot")
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/Initialize(mapload)
 	. = ..()

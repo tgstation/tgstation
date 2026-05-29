@@ -163,7 +163,7 @@
 
 /obj/vehicle/sealed/mecha/marauder/mauler/Initialize(mapload)
 	. = ..()
-	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "mech_pilot")
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	equip_by_category = list(
