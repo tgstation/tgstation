@@ -6997,7 +6997,7 @@
 /obj/machinery/status_display/supply{
 	pixel_y = 32
 	},
-/obj/machinery/disposal/delivery_chute{
+/obj/structure/disposaloutlet{
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/south,
@@ -66150,10 +66150,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
-"rDG" = (
-/obj/effect/turf_decal/tile/red,
-/turf/closed/wall/r_wall,
-/area/station/engineering/lobby)
 "rDN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -198059,7 +198055,7 @@ weC
 lDI
 kOk
 kOk
-rDG
+kOk
 kOk
 kOk
 mAH
