@@ -31,6 +31,11 @@
 				{
 					"type": "subtree",
 					"subtype": "/datum/bt_node/subtree/monkey_shenanigans"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/monkey_idle",
+					"args": []
 				}
 			]
 		},

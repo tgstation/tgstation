@@ -2,7 +2,7 @@
 /datum/proximity_monitor/advanced/ai_target_tracking
 	edge_is_a_field = TRUE
 	/// The ai behavior who owns us
-	var/datum/ai_behavior/find_potential_targets/owning_behavior
+	var/datum/ai_behavior/update_targets/owning_behavior
 	/// The ai controller we're using
 	var/datum/ai_controller/controller
 	/// The target key we're trying to fill
@@ -20,7 +20,7 @@
 
 // Initially, run the check manually
 // If that fails, set up a field and have it manage the behavior fully
-/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/find_potential_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/update_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	src.owning_behavior = owning_behavior
 	src.controller = controller

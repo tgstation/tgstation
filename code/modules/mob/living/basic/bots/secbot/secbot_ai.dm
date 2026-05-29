@@ -62,4 +62,5 @@
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
 	if(!isnull(human_target) && human_target.handcuffed)
 		controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, human_target)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 	return ..()

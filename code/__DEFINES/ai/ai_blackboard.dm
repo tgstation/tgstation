@@ -38,7 +38,7 @@
 ///the list of interactions we can have with the owner
 #define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
 
-///The trait checked by ai_behavior/find_potential_targets/prioritize_trait to return a target with a trait over the rest.
+///The trait checked by ai_behavior/update_targets/prioritize_trait to return a target with a trait over the rest.
 #define BB_TARGET_PRIORITY_TRAIT "target_priority_trait"
 
 /// Store a single or list of emotes at this key
@@ -246,5 +246,5 @@
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists
-/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+/// For /datum/ai_behavior/update_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"

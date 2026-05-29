@@ -31,7 +31,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_potential_targets",
+					"behavior": "/datum/bt_node/ai_behavior/update_targets",
 					"args": [
 						"BB_BASIC_MOB_CURRENT_TARGET",
 						"BB_TARGETING_STRATEGY",

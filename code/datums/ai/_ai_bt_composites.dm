@@ -175,6 +175,10 @@
 		tick_result = result
 	return result
 
+/datum/bt_node/composite/parallel/reset_tick_state()
+	. = ..()
+	secondary_ready_at = null
+
 /datum/bt_node/composite/subplan/reset_tick_state()
 	. = ..()
 	running_child_index = 0
@@ -195,6 +199,10 @@
 	var/failure_policy = BT_PARALLEL_FAILURE_CHILD_ONE
 	/// If TRUE, children 2+ that complete (non-RUNNING) are reset and reticked rather than counted toward tallies.
 	var/repeat_secondary = FALSE
+	/// Minimum delay (deciseconds) before a repeat_secondary child can be re-ticked after completing. 0 = immediate (default).
+	var/repeat_secondary_delay = 0
+	/// world.time values for when each secondary child (keyed by 1-based index) is next allowed to tick. Null when no delays are active.
+	var/list/secondary_ready_at = null
 	/// If TRUE, when child 1 finishes (non-RUNNING), all children 2+ are cancelled and the parallel immediately returns child 1's result.
 	var/finish_on_primary = FALSE
 
@@ -208,6 +216,10 @@
 
 	for(var/i in 1 to length(children))
 		var/datum/bt_node/child = children[i]
+
+		if(i > 1 && repeat_secondary && repeat_secondary_delay > 0 && secondary_ready_at?[i] > world.time)
+			continue // secondary child is waiting out its repeat delay
+
 		var/child_result = child.tick(controller, seconds_per_tick)
 
 		if(i == 1)
@@ -218,6 +230,9 @@
 				failed++
 		else if(repeat_secondary && child_result != BT_RUNNING)
 			child.reset_tick_state()
+			if(repeat_secondary_delay > 0)
+				LAZYINITLIST(secondary_ready_at)
+				secondary_ready_at[i] = world.time + repeat_secondary_delay
 		else
 			if(child_result == BT_SUCCESS)
 				succeeded++

@@ -28,10 +28,32 @@
 							"child": {
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/secbot_target_valid",
-								"config": {},
+								"config": {
+									"observer_abort": "BT_ABORT_SELF"
+								},
 								"child": {
-									"type": "sequence",
+									"type": "parallel",
+									"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+									"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+									"repeat_secondary": true,
+									"finish_on_primary": true,
 									"children": [
+										{
+											"type": "subplan",
+											"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+											"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
+													"args": [
+														"BB_BASIC_MOB_CURRENT_TARGET",
+														"BB_TARGETING_STRATEGY",
+														"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+													]
+												}
+											]
+										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
@@ -40,24 +62,6 @@
 												1,
 												true,
 												"/datum/ai_movement/basic_avoidance"
-											]
-										},
-										{
-											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_BASIC_MOB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
-											]
-										},
-										{
-											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_BASIC_MOB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
 											]
 										}
 									]
@@ -72,7 +76,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_potential_targets",
+					"behavior": "/datum/bt_node/ai_behavior/update_targets",
 					"args": [
 						"BB_BASIC_MOB_CURRENT_TARGET",
 						"BB_TARGETING_STRATEGY",

@@ -38,7 +38,7 @@
 
 	var/spell_targeting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETING]
 	if (!spell_targeting)
-		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+		controller.queue_behavior(/datum/ai_behavior/update_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 		return
 
 	switch(spell_targeting)
@@ -53,9 +53,9 @@
 			return
 
 /// This subtype only exists because if you queue multiple of the same action with different arguments it deletes their stored arguments
-/datum/ai_behavior/find_potential_targets/nearest/magicarp
+/datum/ai_behavior/update_targets/nearest/magicarp
 
-/datum/ai_behavior/find_potential_targets/nearest/magicarp/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+/datum/ai_behavior/update_targets/nearest/magicarp/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	for(var/atom/atom as anything in enemies_list)
 		if(HAS_TRAIT(atom, TRAIT_SCARY_FISHERMAN))
 			enemies_list -= atom

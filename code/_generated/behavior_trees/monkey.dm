@@ -14,7 +14,8 @@
 					/datum/bt_node/subtree/monkey_serve_food,\
 					/datum/bt_node/subtree/generic_hunger,\
 					/datum/bt_node/subtree/generic_play_instrument,\
-					/datum/bt_node/subtree/monkey_shenanigans\
+					/datum/bt_node/subtree/monkey_shenanigans,\
+					list("__t" = /datum/bt_node/ai_behavior/monkey_idle, "default_behavior_args" = list())\
 				)\
 			),\
 			list(\

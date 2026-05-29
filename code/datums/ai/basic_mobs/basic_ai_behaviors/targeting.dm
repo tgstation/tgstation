@@ -5,7 +5,9 @@ GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 /// Must be kept up to date with the contents of hostile_machines
 GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 
-/datum/bt_node/ai_behavior/find_potential_targets
+
+///Consider
+/datum/bt_node/ai_behavior/update_targets
 	action_cooldown = 2 SECONDS
 	/// How far can we see stuff?
 	var/vision_range = 9
@@ -16,12 +18,12 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	/// If we have a priority strategy set, how often do we refresh our target search?
 	var/priority_refresh_cooldown = 6 SECONDS
 
-/datum/bt_node/ai_behavior/find_potential_targets/get_cooldown(datum/ai_controller/cooldown_for)
+/datum/bt_node/ai_behavior/update_targets/get_cooldown(datum/ai_controller/cooldown_for)
 	if(cooldown_for.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return 60 SECONDS
 	return ..()
 
-/datum/bt_node/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
@@ -86,7 +88,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
@@ -106,7 +108,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
 
-/datum/bt_node/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
+/datum/bt_node/ai_behavior/update_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
 	for(var/maybe_target in found)
@@ -126,7 +128,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	// Fire instantly, you should find something I hope
 	controller.modify_cooldown(src, world.time)
 
-/datum/bt_node/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
+/datum/bt_node/ai_behavior/update_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
@@ -135,7 +137,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
 	for(var/maybe_target in found)
@@ -161,7 +163,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/bt_node/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
@@ -170,20 +172,20 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		controller.modify_cooldown(src, get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets
-/datum/bt_node/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/datum/bt_node/ai_behavior/update_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[priority_strategy_key])
 	if(!priority_strategy)
 		return pick(filtered_targets)
 	return priority_strategy.select_target(controller, filtered_targets)
 
-// DEPRECATED — port to /datum/bt_node/ai_behavior/find_potential_targets
-/datum/ai_behavior/find_potential_targets
-	parent_type = /datum/bt_node/ai_behavior/find_potential_targets
+// DEPRECATED — port to /datum/bt_node/ai_behavior/update_targets
+/datum/ai_behavior/update_targets
+	parent_type = /datum/bt_node/ai_behavior/update_targets
 
 /// Targets with the trait specified by the BB_TARGET_PRIORITY_TRAIT blackboard key will be prioritized over the rest.
-/datum/ai_behavior/find_potential_targets/prioritize_trait
+/datum/ai_behavior/update_targets/prioritize_trait
 
-/datum/ai_behavior/find_potential_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets) // still compiles via deprecated stub
+/datum/ai_behavior/update_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets) // still compiles via deprecated stub
 	var/priority_targets = list()
 	for(var/atom/target as anything in filtered_targets)
 		if(HAS_TRAIT(target, controller.blackboard[BB_TARGET_PRIORITY_TRAIT]))
@@ -192,5 +194,5 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return ..(controller, priority_targets)
 	return ..()
 
-/datum/ai_behavior/find_potential_targets/bigger_range
+/datum/ai_behavior/update_targets/bigger_range
 	vision_range = 16

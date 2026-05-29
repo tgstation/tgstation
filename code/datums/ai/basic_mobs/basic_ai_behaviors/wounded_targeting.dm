@@ -1,7 +1,7 @@
 /// Picks targets based on which one has the lowest health
-/datum/ai_behavior/find_potential_targets/most_wounded
+/datum/ai_behavior/update_targets/most_wounded
 
-/datum/ai_behavior/find_potential_targets/most_wounded/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/datum/ai_behavior/update_targets/most_wounded/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	var/list/living_targets = list()
 	for(var/mob/living/living_target in filtered_targets)
 		living_targets += filtered_targets
