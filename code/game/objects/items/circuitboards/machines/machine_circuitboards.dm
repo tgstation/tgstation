@@ -1316,19 +1316,25 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/hydroponics/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/plant_analyzer) || istype(I, /obj/item/screwdriver))
-		if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
-			name = "Hydroponics Tray"
-			build_path = /obj/machinery/hydroponics/constructable
-			to_chat(user, span_notice("Defaulting indicator location."))
-		else
-			name = "Old-Designed Hydropoincs Tray"
-			build_path = /obj/machinery/hydroponics/constructable/oldstyle
-			to_chat(user, span_notice("Moving the indicators..."))
-		return TRUE
+/obj/item/circuitboard/machine/hydroponics/changeindicators()
+	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
+		name = "Hydroponics Tray"
+		build_path = /obj/machinery/hydroponics/constructable
+		to_chat(user, span_notice("Defaulting indicator location."))
+	else
+		name = "Old-Designed Hydropoincs Tray"
+		build_path = /obj/machinery/hydroponics/constructable/oldstyle
+		to_chat(user, span_notice("Moving the indicators..."))
+	return TRUE
+
+/obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
+	if(istype(I, /obj/item/plant_analyzer))
+		src.changeindicators()
 	else
 		return ..()
+
+/obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
+	src.changeindicators()
 
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
