@@ -5497,6 +5497,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/syndicate)
+"Lt" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/turf/open/misc/asteroid/moon,
+/area/awaymission/moonoutpost19/mines)
 "Lx" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -6549,6 +6554,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
+"Sw" = (
+/obj/structure/alien/weeds,
+/mob/living/basic/alien/sentinel,
+/turf/open/misc/asteroid/moon,
+/area/awaymission/moonoutpost19/mines)
 "SD" = (
 /obj/item/trash/can{
 	pixel_x = 7;
@@ -53214,7 +53224,7 @@ mo
 RT
 mo
 mo
-mo
+tb
 tb
 JH
 mo
@@ -53472,7 +53482,7 @@ mo
 mo
 mo
 mo
-mo
+tb
 tb
 tb
 tm
@@ -54538,9 +54548,9 @@ zY
 pS
 vz
 nw
-pS
+Sw
 nw
-pS
+Lt
 zY
 tb
 tb
@@ -55569,7 +55579,7 @@ nw
 nw
 nw
 nw
-KA
+pS
 pS
 pS
 pS
@@ -55822,7 +55832,7 @@ pS
 pS
 pS
 pS
-pS
+Lt
 nw
 JH
 pS
@@ -56344,7 +56354,7 @@ pS
 JH
 pS
 pS
-pS
+Lt
 zY
 tb
 tb
@@ -57334,7 +57344,7 @@ eA
 mo
 mo
 mo
-mo
+sn
 tb
 mo
 mo
@@ -57591,7 +57601,7 @@ mo
 mo
 mo
 mo
-sn
+tb
 tb
 mo
 FK
