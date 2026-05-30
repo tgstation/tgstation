@@ -40,11 +40,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": [
-									"BB_BASIC_MOB_CURRENT_TARGET",
-									3,
-									false
-								]
+								"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3, false]
 							}
 						]
 					}
@@ -53,6 +49,7 @@
 					"type": "subplan",
 					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+					"tick_rate": "IDLE_BEHAVIOR_RATE",
 					"children": [
 						{
 							"type": "leaf",

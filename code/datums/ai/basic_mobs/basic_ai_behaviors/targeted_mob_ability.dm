@@ -36,15 +36,15 @@
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(get_dist(controller.pawn, target) > required_distance)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(!ability.IsAvailable())
-		return AI_BEHAVIOR_INSTANT // On cooldown — return RUNNING to keep parallel alive
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/mob/pawn = controller.pawn
 	pawn.face_atom(target)
 	var/result = ability.Trigger(target = target)
 	if(result)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/and_plan_execute
 

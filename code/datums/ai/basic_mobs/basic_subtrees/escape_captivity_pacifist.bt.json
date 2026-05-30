@@ -4,6 +4,9 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+			"config": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/resist",
@@ -13,6 +16,9 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_contained_in_obj",
+			"config": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/resist",
@@ -22,6 +28,9 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+			"config": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/resist",
@@ -31,6 +40,9 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+			"config": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/resist",

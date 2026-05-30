@@ -32,8 +32,8 @@
 								)\
 							)\
 						),\
-						"key" = BB_BASIC_MOB_CURRENT_TARGET,\
-						"observer_abort" = BT_ABORT_SELF\
+						"observer_abort" = BT_ABORT_BOTH,\
+						"key" = BB_BASIC_MOB_CURRENT_TARGET\
 					),\
 					list(\
 						"__t" = /datum/bt_node/composite/subplan,\

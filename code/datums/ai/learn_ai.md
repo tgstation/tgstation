@@ -146,6 +146,8 @@ Finding targets while also performing all other behavior
 
 ![Behavior example](learn_ai_images/parallel_example.png)
 
+Parallels also have a repeat_secondary_delay, which is a cooldown between the looping of secondary children. Ideal to cap how often certain behaviors fire (e.g. idle behavior)
+
 ### 4) Subplan
 
 What it does:
