@@ -17,6 +17,7 @@
 	var/datum/objective/lunatic/lunatic_obj
 
 /datum/antagonist/lunatic/on_gain()
+	owner.current.log_message("has become a Lunatic!", LOG_ATTACK, color="red")
 	// Masters gain an objective before so we dont want duplicates
 	for(var/objective in objectives)
 		if(!istype(objective, /datum/objective/lunatic))
@@ -25,6 +26,10 @@
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
 	lunatic_obj = loony
+	return ..()
+
+/datum/antagonist/lunatic/on_removal()
+	owner?.current?.log_message("lost their Lunatic status!", LOG_ATTACK, color="red")
 	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master

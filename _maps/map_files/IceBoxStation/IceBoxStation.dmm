@@ -10743,6 +10743,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"cXQ" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "cXR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/cold_temp/directional/north,
@@ -42505,7 +42509,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "mdx" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining_internal"
@@ -54276,9 +54282,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/lobby)
 "pnK" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "pnR" = (
@@ -59992,12 +59998,6 @@
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
-"qSu" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/sepia,
-/area/station/security/prison/rec)
 "qSE" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "misclab";
@@ -112737,7 +112737,7 @@ fps
 usS
 xhK
 mGC
-qSu
+rFN
 vIW
 nNn
 hqy
@@ -266768,7 +266768,7 @@ xLq
 nsZ
 rDZ
 rDZ
-rDZ
+cXQ
 swa
 rDZ
 rDZ

@@ -50,7 +50,7 @@
 	update_effects(quirk_holder, skip_timers = TRUE)
 
 	// drift slightly faster through zero G
-	quirk_holder.inertia_move_multiplier *= drift_mod
+	quirk_holder.inertia_move_multiplier_passive *= drift_mod
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(modded_height)
@@ -81,7 +81,7 @@
 	if(QDELING(quirk_holder))
 		return
 
-	quirk_holder.inertia_move_multiplier /= drift_mod
+	quirk_holder.inertia_move_multiplier_passive /= drift_mod
 	quirk_holder.clear_mood_event("spacer")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
 	quirk_holder.remove_status_effect(/datum/status_effect/spacer)
