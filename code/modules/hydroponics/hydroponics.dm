@@ -1093,7 +1093,6 @@
 			to_chat(user, span_notice("[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!"))
 			return
 	else if(istype(O, /obj/item/soil_sack))
-		var/tmp_capacity = 0
 		var/obj/item/soil_sack/oursoil = O
 		if(!src.plant_status == HYDROTRAY_NO_PLANT)
 			balloon_alert(user, "remove the plants first!")
@@ -1113,6 +1112,7 @@
 			src.current_soil_overlay = "[oursoil.stored_soil.icon_state]_tray"
 			src.name = "botanic tray"
 			src.desc = "A basin used to grow plants in. Filled with [oursoil.stored_soil.name]."
+			oursoil.stored_soil.forceMove(src)
 			qdel(oursoil)
 			src.update_appearance()
 			return
