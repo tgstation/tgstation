@@ -6265,6 +6265,11 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/moon,
 /area/awaymission/moonoutpost19/hive)
+"QB" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/misc/asteroid/moon,
+/area/awaymission/moonoutpost19/mines)
 "QG" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = "201"
@@ -55582,7 +55587,7 @@ nw
 pS
 pS
 pS
-pS
+QB
 zY
 tb
 tb
@@ -56344,7 +56349,7 @@ zY
 pS
 pS
 nw
-pS
+QB
 nw
 pS
 nw
@@ -57380,7 +57385,7 @@ pS
 pS
 pS
 pS
-pS
+QB
 nw
 JH
 pS
@@ -58151,7 +58156,7 @@ pS
 pS
 pS
 pS
-pS
+QB
 nw
 pS
 zY
