@@ -1101,13 +1101,10 @@
 			balloon_alert(user, "filling the tray...")
 			if(!do_after(user, 2 SECONDS, src))
 				return
-			for (var/datum/stock_part/matter_bin/bin in component_parts)
-				tmp_capacity += bin.tier
 			src.current_soil = oursoil.stored_soil
 			src.current_soil_maxwater = oursoil.stored_soil.maxwater
 			src.current_soil_maxnutri = oursoil.stored_soil.maxnutri
 			src.RefreshParts()
-			///src.can_self_sustain = FALSE
 			src.tray_flags = oursoil.stored_soil.tray_flags
 			src.current_soil_overlay = "[oursoil.stored_soil.icon_state]_tray"
 			src.name = "botanic tray"
