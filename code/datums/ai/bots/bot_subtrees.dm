@@ -1,9 +1,5 @@
 #define BOT_NO_BEACON_PATH_PENALTY 30 SECONDS
 
-// =============================================================================
-// Bot search (base BT behavior for all bot-specific range searches)
-// =============================================================================
-
 /**
  * Searches for a valid target in oview and sets a blackboard key when found.
  * Subtypes override valid_target() to refine selection criteria.
@@ -45,10 +41,8 @@
 /datum/bt_node/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return TRUE
 
-// =============================================================================
-// Bot speech
-// =============================================================================
 
+///Performs bot speech from a list of options
 /datum/bt_node/ai_behavior/bot_speech
 	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -60,10 +54,8 @@
 	announcement.announce(pick(list_to_pick_from))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Bot interact
-// =============================================================================
 
+///Interact with an object. Could probably be moved to a generic behavior as the only unique thing is the blacklist.
 /datum/bt_node/ai_behavior/bot_interact
 	var/clear_target = TRUE
 
@@ -89,10 +81,7 @@
 /datum/bt_node/ai_behavior/bot_interact/keep_target
 	clear_target = FALSE
 
-// =============================================================================
-// Use mob ability (BT-native — triggers a single ability from a blackboard key)
-// =============================================================================
-
+///Use a mob ability
 /datum/bt_node/ai_behavior/use_mob_ability
 
 /datum/bt_node/ai_behavior/use_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key)
@@ -103,10 +92,7 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Beacon patrol behaviors
-// =============================================================================
-
+///Find the closest beacon and set it as the target
 /datum/bt_node/ai_behavior/find_first_beacon_target
 
 /datum/bt_node/ai_behavior/find_first_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
@@ -131,6 +117,7 @@
 	controller.set_blackboard_key(target_key, final_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
+///Find the next beacon from a previous target and set it as the new target
 /datum/bt_node/ai_behavior/find_next_beacon_target
 	action_cooldown = 5 SECONDS
 
@@ -179,9 +166,6 @@
 	controller.clear_blackboard_key(target_key)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Summon travel
-// =============================================================================
 
 /// Completes summon travel once the bot reaches the summon target's turf.
 /datum/bt_node/ai_behavior/complete_summon_travel
@@ -198,10 +182,7 @@
 	controller.clear_blackboard_key(target_key)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Authority salute behaviors
-// =============================================================================
-
+///Find a valid authority to salute and set them as the target
 /datum/bt_node/ai_behavior/find_valid_authority
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
@@ -213,6 +194,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
+///Salute the authority /(o.o)
 /datum/bt_node/ai_behavior/salute_authority
 
 /datum/bt_node/ai_behavior/salute_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
@@ -232,15 +214,12 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-// =============================================================================
-// Shared BT subtrees
-// =============================================================================
 
 /// Travel to BB_BOT_SUMMON_TARGET if set, completing when on the same turf.
 /datum/bt_node/subtree/bot_respond_to_summon
 	behavior_tree_json = "bot_respond_to_summon.bt.json"
 
-/// Salute any commissioned officer in range, rate-limited to BOT_COMMISSIONED_SALUTE_DELAY.
+/// Salute any commissioned officer in range
 /datum/bt_node/subtree/bot_salute_authority
 	behavior_tree_json = "bot_salute_authority.bt.json"
 

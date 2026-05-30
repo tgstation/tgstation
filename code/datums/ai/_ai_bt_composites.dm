@@ -203,7 +203,7 @@
 	for(var/i in 1 to length(children))
 		var/datum/bt_node/child = children[i]
 
-		if(i > 1 && repeat_secondary && repeat_secondary_delay > 0 && secondary_ready_at?[i] > world.time)
+		if(i > 1 && repeat_secondary && repeat_secondary_delay > 0 && LAZYACCESS(secondary_ready_at, i) > world.time)
 			continue // secondary child is waiting out its repeat delay
 
 		var/child_result = child.tick(controller, seconds_per_tick)
@@ -217,7 +217,8 @@
 		else if(repeat_secondary && child_result != BT_RUNNING)
 			child.reset_tick_state()
 			if(repeat_secondary_delay > 0)
-				LAZYINITLIST(secondary_ready_at)
+				if(length(secondary_ready_at) < i)
+					LAZYSETLEN(secondary_ready_at, i)
 				secondary_ready_at[i] = world.time + repeat_secondary_delay
 		else
 			if(child_result == BT_SUCCESS)
