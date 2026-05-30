@@ -566,3 +566,21 @@
   - rscadd: The heart organ now controls how fast or slow the blood rate is regenerated
       for a mob. The health of the heart organ also affects the blood rate, so the
       more damage it takes, the less blood it pumps.
+2026-05-30:
+  ArcaneMusic:
+  - balance: Non-boss ore vents may no longer contain bluespace crystals and diamonds.
+  - balance: All ore vents now have a flat 7% chance to spawn an artifact boulder.
+  - balance: There are now 2 new artifact boulder types, which may contain 1-5 sheets
+      worth of bluespace crystals or diamonds respectively. These boulders may have
+      their rare ore boosted via chemical boosting.
+  - balance: ore distribution in vents have been adjusted to accommodate for bluespace
+      and diamonds being removed from vents accordingly.
+  - spellcheck: ' Ore vents now explain the artifact boulder mechanic on examine.'
+  TelevisionStatic:
+  - rscadd: Adds an autolathe circuit board as one of the purchasable goodies in the
+      cargo market.
+  Wisemonster:
+  - qol: Debug bluespace rpeds now come stocked with their respective tier of mega
+      cells
+  lelandkemble:
+  - bugfix: Patrol bounties properly pay those who complete them
