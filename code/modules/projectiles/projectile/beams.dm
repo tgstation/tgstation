@@ -190,7 +190,7 @@
 	icon_state = "scatterdisabler"
 	damage = 5.5
 	damage_falloff_tile = -0.5
-	speed = 1 //same, that's a shotgun, you dont need speed on shotgun 
+	speed = 1.2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
