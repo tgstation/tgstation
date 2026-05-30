@@ -172,6 +172,8 @@ In the secondary branch, we try to move to the target. (and keep trying this as 
 
 Due to us having the observer, if for some reason our target changes due to being changed by another node, the decorators observer will re-evaluate and cancel the plan. Without an observer, this behavior would be stuck in an endless loop.
 
+Subplans also expose `loop_delay`, which when set causes a delay between each loop of the behavior, essentially a cooldown. It can be useful to gate things like idle behavior without triggering re-planning
+
 ## Quick Node Selection Guide
 
 - Use leaf when you want to do one concrete action.

@@ -127,13 +127,24 @@
 	var/success_policy = BT_SUBPLAN_SUCCEED_ON_SUCCESS
 	/// BT_SUBPLAN_FAIL_ON_FAILURE: propagate failure (default). BT_SUBPLAN_LOOP_ON_FAILURE: restart.
 	var/failure_policy = BT_SUBPLAN_FAIL_ON_FAILURE
+	/// Minimum delay before ticking again after a loop policy restarts the child. 0 = immediate (default).
+	var/loop_delay = 0
+	/// world.time when this subplan is next allowed to tick after a loop restart.
+	var/next_loop_time = 0
 
 /datum/bt_node/composite/subplan/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick())
 		return tick_result || BT_RUNNING
 
+	if(loop_delay > 0 && next_loop_time > world.time)
+		if(tick_rate)
+			tick_cooldown = world.time
+			tick_result = BT_RUNNING
+		return BT_RUNNING
+
 	var/datum/bt_node/child = LAZYACCESS(children, 1)
 	if(isnull(child))
+		next_loop_time = 0
 		if(tick_rate)
 			tick_cooldown = world.time
 			tick_result = BT_FAILURE
@@ -150,8 +161,11 @@
 		var/result
 		if(failure_policy == BT_SUBPLAN_LOOP_ON_FAILURE)
 			child.reset_tick_state()
+			if(loop_delay > 0)
+				next_loop_time = world.time + loop_delay
 			result = BT_RUNNING
 		else
+			next_loop_time = 0
 			result = BT_FAILURE
 		if(tick_rate)
 			tick_cooldown = world.time
@@ -161,13 +175,20 @@
 	var/result
 	if(success_policy == BT_SUBPLAN_LOOP_ON_SUCCESS)
 		child.reset_tick_state()
+		if(loop_delay > 0)
+			next_loop_time = world.time + loop_delay
 		result = BT_RUNNING
 	else
+		next_loop_time = 0
 		result = BT_SUCCESS
 	if(tick_rate)
 		tick_cooldown = world.time
 		tick_result = result
 	return result
+
+/datum/bt_node/composite/subplan/reset_tick_state()
+	. = ..()
+	next_loop_time = 0
 
 /**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.
