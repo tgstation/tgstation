@@ -1335,6 +1335,7 @@
 
 /obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
 	src.changeindicators()
+	return
 
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
