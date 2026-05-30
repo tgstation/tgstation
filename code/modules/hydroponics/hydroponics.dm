@@ -1160,7 +1160,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	if(!can_self_sustain)
-		balloon_alert(user, "unable to self-sustain.")
+		balloon_alert(user, "no self-sustain mode!")
 		return CLICK_ACTION_BLOCKING
 
 	set_self_sustaining(!self_sustaining)
