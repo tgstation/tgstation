@@ -2093,7 +2093,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			update_transform(var_value/current_size)
 			. = TRUE
 		if(NAMEOF(src, pull_force))
-			change_pull_force(var_value)
+			pull_force_change(var_value)
 			. = TRUE
 
 
@@ -3039,11 +3039,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
 
-/mob/living/proc/change_pull_force(new_pull_force)
-	if(pull_force == new_pull_force)
-		return
-	pull_force = new_pull_force
-	if(pull_force)
-		add_verb(src, /mob/living/verb/pulled)
-	else
+/mob/living/proc/pull_force_change(new_pull_force)
+	if(new_pull_force != MOVE_FORCE_NO_UPDATE)
+		pull_force = new_pull_force
+	if(!pull_force || HAS_TRAIT(src, TRAIT_PULL_BLOCKED))
 		remove_verb(src, /mob/living/verb/pulled)
+	else
+		add_verb(src, /mob/living/verb/pulled)
