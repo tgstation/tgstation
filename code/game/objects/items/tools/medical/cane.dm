@@ -90,11 +90,12 @@
  *
  * Gives feedback to the user and makes it show up inhand.
  */
-/obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
+/obj/item/cane/white/proc/on_transform(obj/item/source, mob/living/user, active)
 	SIGNAL_HANDLER
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
+		user.update_usable_leg_status()
 
 	if(!HAS_TRAIT(src, TRAIT_BLIND_TOOL))
 		ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
