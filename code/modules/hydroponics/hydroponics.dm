@@ -193,6 +193,9 @@
 	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/hydroponics), only_root_path = TRUE))
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
+/obj/machinery/hydroponics/constructable/on_deconstruction(disassembled)
+	current_soil?.forceMove(drop_location())
+
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
 	var/tmp_capacity = 0
