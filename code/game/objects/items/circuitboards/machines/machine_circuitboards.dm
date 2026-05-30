@@ -1316,7 +1316,7 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/hydroponics/changeindicators(mob/living/user, obj/item/I)
+/obj/item/circuitboard/machine/hydroponics/proc/changeindicators(mob/living/user, obj/item/I)
 	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
 		name = "Hydroponics Tray"
 		build_path = /obj/machinery/hydroponics/constructable
