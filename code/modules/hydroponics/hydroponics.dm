@@ -1097,7 +1097,7 @@
 		if(!src.plant_status == HYDROTRAY_NO_PLANT)
 			balloon_alert(user, "remove the plants first!")
 			return
-		if(current_soil == null)
+		if(isnull(current_soil))
 			balloon_alert(user, "filling the tray...")
 			if(!do_after(user, 2 SECONDS, src))
 				return
