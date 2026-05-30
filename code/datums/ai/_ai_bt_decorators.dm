@@ -124,6 +124,27 @@
 /datum/bt_node/decorator/proc/bb_key_exists(datum/ai_controller/controller, key)
 	return controller.blackboard_key_exists(key)
 
+/// Gates on whether the named override slot currently has an active override installed.
+/// Observes COMSIG_AI_OVERRIDE_SLOT_CHANGED so it reacts immediately when a command is set or cleared.
+/// Use with observer_abort = BT_ABORT_LOWER_PRIORITY to preempt idle behaviour when a command arrives.
+/datum/bt_node/decorator/override_id_set
+	/// SUBPLAN_ID_* constant matching the override slot to watch.
+	var/override_id = null
+
+/datum/bt_node/decorator/override_id_set/check_condition(datum/ai_controller/controller)
+	var/datum/bt_node/subtree/potential_subtree = LAZYACCESS(controller.override_slots, override_id)
+	return !isnull(potential_subtree.override_node)
+
+/datum/bt_node/decorator/override_id_set/register_observe_signals(atom/pawn)
+	if(isnull(override_id))
+		return FALSE
+	RegisterSignal(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(override_id), PROC_REF(on_signal_changed))
+	return TRUE
+
+/datum/bt_node/decorator/override_id_set/unregister_observe_signals(atom/pawn)
+	if(!isnull(override_id))
+		UnregisterSignal(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(override_id))
+
 /// Returns TRUE if the blackboard value at key equals the given value.
 /datum/bt_node/decorator/proc/bb_key_equals(datum/ai_controller/controller, key, value)
 	return controller.blackboard[key] == value

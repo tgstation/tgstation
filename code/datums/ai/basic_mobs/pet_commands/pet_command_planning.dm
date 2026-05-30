@@ -14,23 +14,18 @@
 	return command.execute_action(controller)
 
 // =============================================================================
-// BT-native pet planning
+// BT-native pet planning — DEPRECATED
 // =============================================================================
 
 /**
- * BT-native pet planning leaf. Checks BB_ACTIVE_PET_COMMAND and delegates to
- * command.execute_action(). Succeeds when the command signals it should block
- * further planning (SUBTREE_RETURN_FINISH_PLANNING), fails when there is no command
- * or the command allows planning to continue.
+ * DEPRECATED. The pet command dispatch model no longer uses this leaf.
+ * Pet command trees now use an override slot subtree (override_id = SUBPLAN_ID_PET_COMMAND).
+ * execute_action() is called once from set_command_active() to install the correct override.
  *
- * NOTE: Individual pet command execute_action() implementations currently call queue_behavior()
- * which is a no-op. Those commands need to be ported to direct BT actions to function.
+ * This type is kept only for compile compat with any trees not yet updated to the override
+ * slot model. It always returns BT_FAILURE so it is a no-op in a BT selector.
  */
 /datum/bt_node/ai_behavior/pet_planning
 
 /datum/bt_node/ai_behavior/pet_planning/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/datum/pet_command/command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
-	if(isnull(command))
-		return AI_BEHAVIOR_FAILED
-	var/result = command.execute_action(controller)
-	return (result == SUBTREE_RETURN_FINISH_PLANNING) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED
+	return AI_BEHAVIOR_FAILED

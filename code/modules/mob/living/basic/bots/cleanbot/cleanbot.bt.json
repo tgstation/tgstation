@@ -10,9 +10,9 @@
 			"subtype": "/datum/bt_node/subtree/bot_respond_to_summon"
 		},
 		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/pet_planning",
-			"args": []
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/fail",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
 		},
 		{
 			"type": "decorator",

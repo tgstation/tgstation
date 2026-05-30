@@ -1,0 +1,20 @@
+{
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"key": "BB_CURRENT_PET_TARGET",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "subplan",
+		"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+		"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"args": ["BB_CURRENT_PET_TARGET", 0, true]
+			}
+		]
+	}
+}

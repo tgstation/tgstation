@@ -1,0 +1,5 @@
+{
+	"type": "leaf",
+	"behavior": "/datum/bt_node/ai_behavior/wait",
+	"args": ["", true]
+}

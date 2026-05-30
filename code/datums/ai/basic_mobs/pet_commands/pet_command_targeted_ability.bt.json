@@ -1,0 +1,44 @@
+{
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"key": "BB_CURRENT_PET_TARGET",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "parallel",
+		"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+		"repeat_secondary": true,
+		"finish_on_primary": true,
+		"children": [
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+				"children": [
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+								"args": ["BB_TARGETED_ACTION", "BB_CURRENT_PET_TARGET"]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
+								"args": []
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"args": ["BB_CURRENT_PET_TARGET", 1, false]
+			}
+		]
+	}
+}

@@ -48,6 +48,9 @@ multiple modular subtrees with behaviors
 	var/active_execution_index = 0
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
 	var/list/bt_execution_log = null
+	/// assoc list of override_id → /datum/bt_node/subtree for runtime subtree replacement.
+	/// Populated by finalize_tree() when subtrees with override_id are found. Null until then.
+	var/list/override_slots = null
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
@@ -137,11 +140,16 @@ multiple modular subtrees with behaviors
 	behavior_nodes = temp_subtree_list
 	finalize_tree()
 
-/// Walks the resolved tree to set owning_controller on leaf/decorator nodes and assigns execution indices.
+/// Walks the resolved tree to set owning_controller and parent_node on all nodes, populates
+/// override_slots, and assigns pre-order execution indices. Called after init_subtrees() and
+/// after set_behavior_tree_override() installs or removes an override node.
 /datum/ai_controller/proc/finalize_tree()
 	if(!LAZYLEN(behavior_nodes))
 		return
+	override_slots = null
 	var/list/to_visit = behavior_nodes.Copy()
+	for(var/datum/bt_node/root in behavior_nodes)
+		root.parent_node = null
 	var/index = 1
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
@@ -149,15 +157,25 @@ multiple modular subtrees with behaviors
 			var/datum/bt_node/decorator/dec = node
 			dec.owning_controller = src
 			if(dec.child)
+				dec.child.parent_node = node
 				to_visit += dec.child
 		else if(istype(node, /datum/bt_node/composite))
 			var/datum/bt_node/composite/comp = node
 			if(comp.children)
+				for(var/datum/bt_node/child in comp.children)
+					child.parent_node = node
 				to_visit += comp.children
 		else if(istype(node, /datum/bt_node/subtree))
 			var/datum/bt_node/subtree/sub = node
+			if(!isnull(sub.override_id))
+				LAZYINITLIST(override_slots)
+				override_slots[sub.override_id] = sub
 			if(sub.root)
+				sub.root.parent_node = node
 				to_visit += sub.root
+			if(sub.override_node)
+				sub.override_node.parent_node = node
+				to_visit += sub.override_node
 		else if(istype(node, /datum/bt_node/ai_behavior))
 			var/datum/bt_node/ai_behavior/beh = node
 			beh.owning_controller = src
@@ -373,6 +391,8 @@ multiple modular subtrees with behaviors
 			var/datum/bt_node/subtree/sub = node
 			if(sub.root)
 				to_visit += sub.root
+			if(sub.override_node)
+				to_visit += sub.override_node
 		else if(istype(node, /datum/bt_node/composite))
 			var/datum/bt_node/composite/comp = node
 			if(comp.children)
@@ -381,6 +401,39 @@ multiple modular subtrees with behaviors
 			var/datum/bt_node/decorator/dec = node
 			if(dec.child)
 				to_visit += dec.child
+
+/**
+ * Installs or removes a runtime override on the subtree slot registered with the given id.
+ *
+ * id          — a SUBPLAN_ID_* constant matching a subtree node's override_id in this tree.
+ * datum_type  — the /datum/bt_node/subtree subtype to install, or null to clear the override.
+ *
+ * No-ops when: no slot with that id exists in the tree, or the slot already holds the same type.
+ * On change: cancels running actions, installs the new override node (built fresh), re-finalizes
+ * the tree so owning_controller/parent_node/execution indices are consistent.
+ */
+/datum/ai_controller/proc/set_behavior_tree_override(id, datum_type)
+	var/datum/bt_node/subtree/slot = LAZYACCESS(override_slots, id)
+	if(isnull(slot))
+		return
+
+	var/current_type = isnull(slot.override_node) ? null : slot.override_node.type
+	if(current_type == datum_type)
+		return
+
+	CancelActions()
+
+	if(isnull(datum_type))
+		slot.override_node = null
+		finalize_tree()
+		SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), null)
+		return
+
+	var/datum/bt_node/subtree/new_node = new datum_type
+	SSai_controllers.resolve_node_children(new_node)
+	slot.override_node = new_node
+	finalize_tree()
+	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), datum_type)
 
 /datum/ai_controller/proc/setup_able_to_run()
 	// paused_until is handled by PauseAi() manually

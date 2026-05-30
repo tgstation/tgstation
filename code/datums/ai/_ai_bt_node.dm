@@ -17,6 +17,9 @@
 	var/execution_index = 0
 	/// Index of the last descendant node in this subtree. Equal to execution_index for leaves.
 	var/last_execution_index = 0
+	/// Reference to this node's parent in the resolved tree. Set by ai_controller/finalize_tree().
+	/// Null for root-level nodes.
+	var/datum/bt_node/parent_node = null
 
 /// Returns TRUE if enough time has elapsed for this node to be re-evaluated.
 /datum/bt_node/proc/should_tick()
@@ -79,13 +82,24 @@
 	var/list/behavior_nodes = null
 	/// The internal root node. Populated by resolve_node_children(). Do not set directly.
 	var/datum/bt_node/root = null
+	/// If non-null, this subtree acts as a runtime override slot. The string is a
+	/// SUBPLAN_ID_* constant. ai_controller.set_behavior_tree_override() finds the slot
+	/// by this ID and sets override_node on it.
+	var/override_id = null
+	/// Active override subtree. When set, tick() delegates to this node instead of root.
+	/// Set to null to deactivate the override. Managed by set_behavior_tree_override() only.
+	var/datum/bt_node/subtree/override_node = null
 
 /datum/bt_node/subtree/tick(datum/ai_controller/controller, seconds_per_tick)
+	if(override_node)
+		return override_node.tick(controller, seconds_per_tick)
 	if(!root)
 		return BT_FAILURE
 	return root.tick(controller, seconds_per_tick)
 
 /datum/bt_node/subtree/get_children()
+	if(override_node)
+		return override_node.root ? list(override_node.root) : null
 	return root ? list(root) : null
 
 /datum/bt_node/subtree/assign_execution_indices(counter)
@@ -93,5 +107,7 @@
 	counter++
 	if(root)
 		counter = root.assign_execution_indices(counter)
+	if(override_node)
+		counter = override_node.assign_execution_indices(counter)
 	last_execution_index = counter - 1
 	return counter

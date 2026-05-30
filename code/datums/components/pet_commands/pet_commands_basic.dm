@@ -12,14 +12,14 @@
 	command_feedback = "sits"
 
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
-	return SUBTREE_RETURN_FINISH_PLANNING // This cancels further AI planning
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
 
 /datum/pet_command/idle/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to stay idle!"
 
 /**
  * # Pet Command: Stop
- * Tells a pet to exit command mode and resume its normal behaviour, which includes regular target-seeking and what have you
+ * Tells a pet to exit command mode and resume its normal behaviour
  */
 /datum/pet_command/free
 	command_name = "Loose"
@@ -29,8 +29,8 @@
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return // Just move on to the next planning subtree.
 
 /datum/pet_command/free/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to go free!"
@@ -58,8 +58,7 @@
 	return "signals [living_pet] to follow!"
 
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(follow_behavior, BB_CURRENT_PET_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/follow)
 
 /datum/pet_command/follow/add_new_friend(mob/living/tamer)
 	. = ..()
@@ -84,8 +83,7 @@
 	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
 
 /datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/play_dead)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/play_dead)
 
 /datum/pet_command/play_dead/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to play dead!"
@@ -112,14 +110,13 @@
 	// If we get past this point someone has finally added a non-binary dog
 
 /datum/pet_command/good_boy/execute_action(datum/ai_controller/controller)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
+		return
 	new /obj/effect/temp_visual/heart(parent.loc)
 	parent.emote("spin")
-	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
  * # Pet Command: Use ability
@@ -133,9 +130,9 @@
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
 		return
-	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, ability_key)
+	controller.set_blackboard_key(BB_PET_ACTIVE_ABILITY, ability)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/untargeted_ability)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/untargeted_ability/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to use an ability!"
@@ -155,8 +152,7 @@
 	pointed_reaction = "and growls"
 	/// Balloon alert to display if providing an invalid target
 	var/refuse_reaction = "shakes head"
-	/// Attack behaviour to use
-	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
+	var/datum/bt_node/subtree/attack_subtree = /datum/bt_node/subtree/pet_command/attack
 
 // Refuse to target things we can't target, chiefly other friends
 /datum/pet_command/attack/set_command_target(mob/living/parent, atom/target)
@@ -183,8 +179,7 @@
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
 
 /datum/pet_command/attack/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targeting_strategy_key)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, attack_subtree)
 
 /**
  * # Breed command. breed with a partner!
@@ -195,8 +190,6 @@
 	requires_pointing = TRUE
 	radial_icon_state = "breed"
 	speech_commands = list("breed", "consummate")
-	///the behavior we use to make babies
-	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
 /datum/pet_command/breed/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !isliving(target))
@@ -213,10 +206,9 @@
 	return ..()
 
 /datum/pet_command/breed/execute_action(datum/ai_controller/controller)
-	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
-		controller.queue_behavior(reproduce_behavior, BB_CURRENT_PET_TARGET)
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(!is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
+		return
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/breed)
 
 /datum/pet_command/breed/retrieve_command_text(atom/living_pet, atom/target)
 	return isnull(target) ? null : "signals [living_pet] to breed with [target]!"
@@ -245,10 +237,9 @@
 	var/datum/action/cooldown/using_action = controller.blackboard[pet_ability_key]
 	if (QDELETED(using_action))
 		return
-	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
-	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
-	controller.queue_behavior(ability_behavior, pet_ability_key, BB_CURRENT_PET_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	// Store the action datum in a fixed key so the targeted_ability subtree can find it
+	controller.override_blackboard_key(BB_TARGETED_ACTION, using_action)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/targeted_ability)
 
 /datum/pet_command/use_ability/retrieve_command_text(atom/living_pet, atom/target)
 	return isnull(target) ? null : "signals [living_pet] to use an ability on [target]!"
@@ -260,10 +251,9 @@
 	callout_type = /datum/callout_option/guard
 	///the range our owner needs to be in for us to protect him
 	var/protect_range = 9
-	///the behavior we will use when he is attacked
-	var/protect_behavior = /datum/ai_behavior/basic_melee_attack
 	///message cooldown to prevent too many people from telling you not to commit suicide
 	COOLDOWN_DECLARE(self_harm_message_cooldown)
+	var/datum/bt_node/subtree/protect_owner_subtree = datum/bt_node/subtree/pet_command/protect_owner
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
@@ -274,18 +264,7 @@
 	UnregisterSignal(unfriended, COMSIG_ATOM_WAS_ATTACKED)
 
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
-	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
-	if(QDELETED(victim))
-		return
-	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(!targeter.can_attack(controller.pawn, victim))
-		return
-	// cancel the action if they're below our given crit stat, OR if we're trying to attack ourselves (this can happen on tamed mobs w/ protect subtree rarely)
-	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT] || victim == controller.pawn)
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		return
-	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETING_STRATEGY)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, protect_subtree)
 
 /datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)
 	. = ..()
@@ -314,7 +293,7 @@
 		set_command_active(owner, attacker)
 
 /**
- * # Fish command: command the mob to fish at the next fishing spot you point at. Requires the profound fisher component
+ * # Fish command: command the mob to fish at the next fishing spot you point at.
  */
 /datum/pet_command/fish
 	command_name = "Fish"
@@ -324,9 +303,10 @@
 	speech_commands = list("fish")
 
 /datum/pet_command/fish/execute_action(datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/interact_with_target/fishing, BB_CURRENT_PET_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
+		return
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/fish)
 
 /datum/pet_command/fish/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to go fish!"
@@ -337,8 +317,6 @@
 	requires_pointing = TRUE
 	radial_icon_state = "move"
 	speech_commands = list("move", "walk")
-	///the behavior we use to walk towards targets
-	var/datum/ai_behavior/walk_behavior = /datum/ai_behavior/travel_towards
 
 /datum/pet_command/move/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !can_see(parent, target, 9))
@@ -346,9 +324,10 @@
 	return ..()
 
 /datum/pet_command/move/execute_action(datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		controller.queue_behavior(walk_behavior, BB_CURRENT_PET_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
+		return
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/move_to)
 
 /datum/pet_command/move/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to move!"

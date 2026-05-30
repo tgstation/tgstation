@@ -158,6 +158,7 @@
 
 	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
 	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
+	execute_action(parent.ai_controller) // Install the BT override subtree for this command
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 	if(!radial_command)

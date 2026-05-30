@@ -60,3 +60,8 @@
 #define BT_DESC_TYPE "__t"
 /// Key storing the children list in a descriptor list
 #define BT_DESC_CHILDREN "__c"
+
+// --- Runtime subtree override slot IDs ---
+/// Override slot ID for pet command dispatch. Used by set_behavior_tree_override() and the
+/// pet_command_slot subtree node in simple_goon and cleanbot trees.
+#define SUBPLAN_ID_PET_COMMAND "pet_command"
