@@ -1205,8 +1205,10 @@
 	handcuffed = new_value
 	if(.)
 		if(!handcuffed)
+			change_pull_force(initial(pull_force))
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
+		change_pull_force(MOVE_FORCE_NONE)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	update_handcuffed()
 
