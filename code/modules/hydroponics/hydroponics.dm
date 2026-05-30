@@ -1112,7 +1112,7 @@
 			src.tray_flags = oursoil.stored_soil.tray_flags
 			src.current_soil_overlay = "[oursoil.stored_soil.icon_state]_tray"
 			src.name = "botanic tray"
-			src.desc = "A basin used to grow plants in. It is now filled with [oursoil.stored_soil.name]."
+			src.desc = "A basin used to grow plants in. Filled with [oursoil.stored_soil.name]."
 			qdel(oursoil)
 			src.update_appearance()
 			return
