@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "The honkbot on the casino emergency shuttle has been told not to abandon its post."
