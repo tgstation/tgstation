@@ -103,7 +103,6 @@
 		/obj/item/radio,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
-		/obj/item/gun/energy/disabler,
 		/obj/item/restraints/legcuffs/bola,
 	))
 
