@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid forward movement."
-	icon_state = "jetboots"
+	icon_state = "jumpboots"
 	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/bhop)
@@ -47,3 +47,9 @@
 	actions_types = list(/datum/action/item_action/bhop/brocket)
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5
+
+// Also has the rocket boot's dodge action, but grants flight while activated.
+/obj/item/clothing/shoes/bhop/rocket/jet
+	name = "jet boots"
+	desc = "Top of the line rocket boots, featuring a precise enough flight mechanism that can enable flight!"
+	actions_types = list(/datum/action/item_action/bhop, /datum/action/item_action/toggle_flight)
