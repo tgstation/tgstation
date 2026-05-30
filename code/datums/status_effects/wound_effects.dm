@@ -79,17 +79,25 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
-	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
-		return
-
+	var/obj/item/bodypart/leg_about_to_limp
+	var/limp_chance
+	var/limp_slowdown
 	if(next_leg == left)
-		if(prob(limp_chance_left * determined_mod))
-			owner.client.move_delay += slowdown_left * determined_mod
+		leg_about_to_limp = left
+		limp_chance = limp_chance_left
+		limp_slowdown = slowdown_left
 		next_leg = right
 	else
-		if(prob(limp_chance_right * determined_mod))
-			owner.client.move_delay += slowdown_right * determined_mod
+		leg_about_to_limp = right
+		limp_chance = limp_chance_right
+		limp_slowdown = slowdown_right
 		next_leg = left
+
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, leg_about_to_limp) & COMPONENT_CANCEL_LIMP)
+		return
+
+	if(prob(limp_chance * determined_mod))
+		owner.client.move_delay += limp_slowdown * determined_mod
 
 /// We need to make sure that we properly clear these refs if one of the owner's limbs gets deleted
 /datum/status_effect/limp/proc/on_limb_removed(datum/source, obj/item/bodypart/limb_lost, special, dismembered)
