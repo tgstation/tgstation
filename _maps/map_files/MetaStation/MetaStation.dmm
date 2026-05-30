@@ -19355,9 +19355,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/visible/layer2{
-	dir = 4;
-	name = "Public Scrubbers to Waste"
+/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/hidden/layer2{
+	name = "Public Scrubbers to Waste";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -23360,9 +23360,9 @@
 "iep" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/visible/layer2{
-	dir = 4;
-	name = "Public Scrubbers to Waste"
+/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/hidden/layer2{
+	name = "Public Scrubbers to Waste";
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -65678,7 +65678,7 @@
 /area/station/science/robotics/mechbay)
 "wrP" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/visible/layer2{
+/obj/machinery/atmospherics/components/binary/pump/on/scrubbers/hidden/layer2{
 	name = "Public Scrubbers to Waste"
 	},
 /turf/open/floor/iron,
