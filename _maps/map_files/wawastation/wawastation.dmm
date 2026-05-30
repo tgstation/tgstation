@@ -5536,6 +5536,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"bWe" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "bWi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23339,7 +23343,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "iee" = (
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "brm"
@@ -29878,6 +29884,8 @@
 /obj/structure/closet/l3closet/janitor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "kpj" = (
@@ -38995,7 +39003,9 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "nuu" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "brm"
@@ -64607,6 +64617,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
+"wid" = (
+/obj/machinery/gizmo/toggle/tucker_tubes,
+/turf/open/floor/iron/white,
+/area/station/science/explab)
 "wie" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -176312,7 +176326,7 @@ hOa
 ukx
 nas
 gKt
-jim
+wid
 rHF
 mHf
 xfK
@@ -177594,7 +177608,7 @@ raz
 occ
 fMz
 obA
-oQW
+bWe
 mSY
 ddZ
 nXL

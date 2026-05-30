@@ -38728,7 +38728,9 @@
 /area/station/hallway/secondary/entry)
 "mqT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 4
+	},
 /obj/structure/railing,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
@@ -50643,7 +50645,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "qLx" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"
@@ -59879,6 +59883,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "tWb" = (
@@ -61774,6 +61779,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"uAs" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "uAx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -119969,7 +119978,7 @@ sQZ
 owO
 owO
 owO
-owO
+uAs
 cJS
 rKD
 udg

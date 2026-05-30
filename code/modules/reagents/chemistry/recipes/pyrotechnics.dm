@@ -214,7 +214,7 @@
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
 	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/iron = 1, /datum/reagent/oxygen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/emp_pulse
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1, /datum/reagent/aluminium = 1)
@@ -513,7 +513,7 @@
 /datum/chemical_reaction/cryostylane/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
-		overheated(holder, null, react_vol) //replace null with fix win 2.3 is merged
+		overheated(holder, reaction, react_vol)
 
 //Freezes the area around you!
 /datum/chemical_reaction/cryostylane/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)

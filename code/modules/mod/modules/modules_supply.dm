@@ -752,9 +752,9 @@
 
 /obj/projectile/bullet/mining_missile/proc/spawn_particles(atom/target)
 	var/obj/effect/abstract/particle_holder/impact_particles = new(get_turf(target), /particles/micromissile_impact)
-	impact_particles.particles.position = generator(GEN_VECTOR, list(impact_x - 2, impact_x + 2), list(impact_y - 2, impact_y + 2), NORMAL_RAND)
-	impact_particles.particles.velocity = generator(GEN_VECTOR, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2), list(movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
-	QDEL_IN(impact_particles, 1 SECONDS)
+	impact_particles.particles.position = generator(GEN_BOX, list(impact_x - 2, impact_y - 2), list(impact_x + 2, impact_y + 2), NORMAL_RAND)
+	impact_particles.particles.velocity = generator(GEN_BOX, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, ), list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
+	QDEL_IN(impact_particles, /particles/micromissile_impact::lifespan)
 
 /particles/micromissile_impact
 	icon = 'icons/effects/particles/generic.dmi'
