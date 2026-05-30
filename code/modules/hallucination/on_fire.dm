@@ -128,6 +128,7 @@
 
 	active = FALSE
 	hallucinator.clear_alert(ALERT_FIRE, clear_override = TRUE)
+	hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, timeout_override = 10, override = TRUE)
 	hallucinator.client?.images -= fire_overlay
 	fire_overlay = null
 	fire_clearing = TRUE
