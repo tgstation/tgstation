@@ -40,22 +40,17 @@
 			]
 		},
 		{
-			"type": "selector",
-			"children": [
-				{
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
-						"key": "BB_monkey_current_attack_target",
-						"invert": true
-					},
-					"child": {
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
-						"args": ["BB_monkey_current_attack_target", "BB_monkey_enemies"]
-					}
-				}
-			]
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"key": "BB_monkey_current_attack_target",
+				"invert": true
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
+				"args": ["BB_monkey_current_attack_target", "BB_monkey_enemies"]
+			}
 		}
 	]
 }

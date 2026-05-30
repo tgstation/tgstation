@@ -19,17 +19,12 @@
 				)\
 			),\
 			list(\
-				"__t" = /datum/bt_node/composite/selector,\
+				"__t" = /datum/bt_node/decorator/bb_key_set,\
 				"__c" = list(\
-					list(\
-						"__t" = /datum/bt_node/decorator/bb_key_set,\
-						"__c" = list(\
-							list("__t" = /datum/bt_node/ai_behavior/monkey_set_combat_target, "default_behavior_args" = list("BB_monkey_current_attack_target", "BB_monkey_enemies"))\
-						),\
-						"key" = "BB_monkey_current_attack_target",\
-						"invert" = TRUE\
-					)\
-				)\
+					list("__t" = /datum/bt_node/ai_behavior/monkey_set_combat_target, "default_behavior_args" = list("BB_monkey_current_attack_target", "BB_monkey_enemies"))\
+				),\
+				"key" = "BB_monkey_current_attack_target",\
+				"invert" = TRUE\
 			)\
 		)\
 	)

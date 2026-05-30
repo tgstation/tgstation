@@ -44,7 +44,6 @@
 						"__t" = /datum/bt_node/composite/subplan,\
 						"success_policy" = BT_SUBPLAN_LOOP_ON_SUCCESS,\
 						"failure_policy" = BT_SUBPLAN_FAIL_ON_FAILURE,\
-						"tick_rate" = IDLE_BEHAVIOR_RATE,\
 						"__c" = list(\
 							list("__t" = /datum/bt_node/ai_behavior/idle_random_walk, "default_behavior_args" = list())\
 						)\
