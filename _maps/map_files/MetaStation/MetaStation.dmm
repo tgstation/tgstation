@@ -17025,7 +17025,7 @@
 "fVF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4{
+/obj/machinery/atmospherics/components/binary/pump/off/supply/hidden/layer4{
 	dir = 1;
 	name = "Distro to Public Pumps"
 	},
@@ -64243,7 +64243,7 @@
 /area/station/medical/treatment_center)
 "vSv" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4{
+/obj/machinery/atmospherics/components/binary/pump/off/supply/hidden/layer4{
 	dir = 1;
 	name = "Distro to Public Pumps"
 	},
