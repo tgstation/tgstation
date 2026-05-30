@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored dna injectors (both the ones that change appearance and activate mutations), report any oddities with them like failing to revert your appearance or mutations not applying correctly"
+  - code_imp: "Ever so slightly changed how diseases tick, report any oddities"
+  - code_imp: "Ever so slightly changed how some species mechanics tick, like golems and slimes, report any oddities"
+  - code_imp: "The code behind printing appearance modifying dna injectors from genetics has changed, report any oddities"
+  - code_imp: "Some backend transformation sting code changed slightly, report any oddities"
+  - code_imp: "Zombie \"idle\" groaning is now tied to the tongue rather than the species itself"
+  - admin: "Force-injecting someone with HARS give an admin alert, the same as force-injecting someone with Monkey"
+  - bugfix: "Several methods of copying DNA (including transformation sting) mistakenly copied \"active mutations\", this has been fixed"
