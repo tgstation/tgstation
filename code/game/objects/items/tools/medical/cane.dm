@@ -14,13 +14,13 @@
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 	/// The amount of slowdown to reduce for a limbless leg
-	var/limbless_slowdown_modifier = 0.2 // reduces slowdown by 20%
+	var/limbless_slowdown_modifier = 0.75 // reduces slowdown by 25%
 	/// Does this cause waddling when held
 	var/causes_waddling = FALSE
 
 /obj/item/cane/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/movement_support, causes_waddling, get_walking_aid_required_trait(), limbless_slowdown_modifier)
+	AddComponent(/datum/component/walking_aid, causes_waddling, get_walking_aid_required_trait(), limbless_slowdown_modifier)
 
 /// Determines if a trait is required to be used as a walking aid (ex. foldable canes)
 /obj/item/cane/proc/get_walking_aid_required_trait()

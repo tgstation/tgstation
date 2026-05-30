@@ -16,9 +16,9 @@
 	/// Weakref to the mob currently being supported
 	var/datum/weakref/current_user_ref
 	/// The amount of slowdown to reduce for a limbless leg
-	var/limbless_slowdown_modifier = 0.2 // reduces slowdown by 20%
+	var/limbless_slowdown_modifier = 0.75 // reduces slowdown by 25%
 
-/datum/component/walking_aid/Initialize(waddling = FALSE, required_trait = null, limbless_slowdown_modifier = 0.2)
+/datum/component/walking_aid/Initialize(waddling = FALSE, required_trait = null, limbless_slowdown_modifier = 0.75)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
