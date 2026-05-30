@@ -91,7 +91,6 @@
 
 /// Updates effects that rely on blood volume or status, like blood HUDs.
 /mob/living/proc/update_blood_effects()
-	living_flags &= ~BLOOD_UPDATE_QUEUED
 	blood_hud_set_status()
 
 /// Updates effects that rely on whether the mob can have blood.
