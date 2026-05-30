@@ -362,8 +362,11 @@
 		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar or right click with an empty hand to remove existing modkits."))
 		return FALSE
 
-	if(transfer_to_loc && !user.transferItemToLoc(src, KA))
-		return
+	if(transfer_to_loc)
+		if (user && !user.transferItemToLoc(src, KA))
+			return FALSE
+		else if (!user)
+			forceMove(KA)
 
 	if (user)
 		to_chat(user, span_notice("You install the modkit."))
