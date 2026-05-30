@@ -34,9 +34,17 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
+	RegisterSignal(parent, COMSIG_TWOHANDED_WIELD, PROC_REF(update_legs))
+	RegisterSignal(parent, COMSIG_TWOHANDED_UNWIELD, PROC_REF(update_legs))
 
 /datum/component/walking_aid/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE_TAGS))
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ATOM_EXAMINE_TAGS,
+		COMSIG_TWOHANDED_WIELD,
+		COMSIG_TWOHANDED_UNWIELD
+	))
 	remove_support()
 
 /datum/component/walking_aid/proc/on_equip(datum/source, mob/equipper, slot)
@@ -58,6 +66,11 @@
 	SIGNAL_HANDLER
 
 	examine_list["walking-aid"] = "It can be help lessen the slowdown caused from a missing or injured leg, when held on the same side as the injury."
+
+// Updates our leg status when wielded/unwielded a two handed walking aid like a spear
+/datum/component/walking_aid/proc/update_legs(mob/living/user)
+	SIGNAL_HANDLER
+	user.update_usable_leg_status()
 
 /datum/component/walking_aid/proc/apply_support(mob/living/user)
 	if(current_user_ref)
