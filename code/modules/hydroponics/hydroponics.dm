@@ -202,8 +202,8 @@
 	for (var/datum/stock_part/servo/servo in component_parts)
 		rating = servo.tier
 	if(current_soil)
-		maxwater = current_soil.maxwater + ((tmp_capacity - 2)*50)
-		maxnutri = current_soil.maxnutri + ((tmp_capacity - 2)*5)
+		maxwater = current_soil?.maxwater + ((tmp_capacity - 2)*50)
+		maxnutri = current_soil?.maxnutri + ((tmp_capacity - 2)*5)
 	else
 		maxwater = tmp_capacity * 50
 		maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY
