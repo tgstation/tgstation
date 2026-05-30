@@ -71,8 +71,6 @@
 	var/indicatorsuffix = ""
 	///Soil things
 	var/current_soil = null
-	var/current_soil_maxwater = 100
-	var/current_soil_maxnutri = 20
 	var/current_soil_overlay = null
 
 /obj/machinery/hydroponics/Initialize(mapload)
@@ -204,8 +202,8 @@
 	for (var/datum/stock_part/servo/servo in component_parts)
 		rating = servo.tier
 	if(current_soil)
-		maxwater = current_soil_maxwater + ((tmp_capacity - 2)*50)
-		maxnutri = current_soil_maxnutri + ((tmp_capacity - 2)*5)
+		maxwater = current_soil.maxwater + ((tmp_capacity - 2)*50)
+		maxnutri = current_soil.maxnutri + ((tmp_capacity - 2)*5)
 	else
 		maxwater = tmp_capacity * 50
 		maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY
@@ -1105,8 +1103,6 @@
 			if(!do_after(user, 2 SECONDS, src))
 				return
 			src.current_soil = oursoil.stored_soil
-			src.current_soil_maxwater = oursoil.stored_soil.maxwater
-			src.current_soil_maxnutri = oursoil.stored_soil.maxnutri
 			src.RefreshParts()
 			src.tray_flags = oursoil.stored_soil.tray_flags
 			src.current_soil_overlay = "[oursoil.stored_soil.icon_state]_tray"
