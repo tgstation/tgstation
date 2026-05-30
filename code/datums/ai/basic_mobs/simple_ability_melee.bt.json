@@ -1,7 +1,10 @@
 {
 	"type": "selector",
 	"children": [
-		{ "type": "subtree", "subtype": "/datum/bt_node/subtree/escape_captivity" },
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
 		{
 			"type": "subtree",
 			"subtype": "/datum/bt_node/subtree/simple_ability_melee_combat"

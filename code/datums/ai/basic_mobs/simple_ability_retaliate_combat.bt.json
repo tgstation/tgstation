@@ -1,26 +1,21 @@
 {
-	"type": "selector",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": true,
 	"children": [
 		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
-				"key": "BB_BASIC_MOB_RETALIATE_LIST",
-				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
-			},
-			"child": {
-				"type": "sequence",
-				"children": [
-					{
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-						"args": [
-							"BB_BASIC_MOB_CURRENT_TARGET",
-							"BB_TARGETING_STRATEGY",
-							"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
-						]
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": {
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_BASIC_MOB_RETALIATE_LIST"
 					},
-					{
+					"child": {
 						"type": "parallel",
 						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
 						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
@@ -28,19 +23,54 @@
 						"finish_on_primary": false,
 						"children": [
 							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-								"args": ["BB_TARGETED_ACTION", "BB_BASIC_MOB_CURRENT_TARGET"]
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+										"args": [
+											"BB_TARGETED_ACTION",
+											"BB_BASIC_MOB_CURRENT_TARGET"
+										]
+									}
+								]
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3, false]
+								"args": [
+									"BB_BASIC_MOB_CURRENT_TARGET",
+									3,
+									false
+								]
 							}
 						]
 					}
-				]
-			}
+				},
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
+							"args": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+			"args": [
+				"BB_BASIC_MOB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+			]
 		}
 	]
 }
