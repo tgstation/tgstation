@@ -1095,26 +1095,34 @@
 			return
 	else if(istype(O, /obj/item/soil_sack))
 		var/obj/item/soil_sack/oursoil = O
+
 		if(plant_status != HYDROTRAY_NO_PLANT)
 			balloon_alert(user, "remove the plants first!")
 			return
-		if(isnull(current_soil))
-			balloon_alert(user, "filling the tray...")
-			if(!do_after(user, 2 SECONDS, src))
-				return
-			src.current_soil = oursoil.stored_soil
-			src.RefreshParts()
-			src.tray_flags = current_soil.tray_flags
-			src.current_soil_overlay = "[current_soil.icon_state]_tray"
-			src.name = "botanic tray"
-			src.desc = "A basin used to grow plants in. Filled with [current_soil.name]."
-			oursoil.stored_soil.forceMove(src)
-			update_appearance()
-			qdel(oursoil)
-			return
-		else
+
+		if(!isnull(current_soil))
 			balloon_alert(user, "tray is full")
 			return
+
+		balloon_alert(user, "filling the tray...")
+		if(!do_after(user, 2 SECONDS, src))
+			return
+
+		if(!oursoil.stored_soil)
+			balloon_alert(user, "sack is empty!")
+			return
+
+		src.current_soil = new oursoil.stored_soil(src)
+
+		src.RefreshParts()
+		src.tray_flags = current_soil.tray_flags
+		src.current_soil_overlay = "[current_soil.icon_state]_tray"
+		src.name = "botanic tray"
+		src.desc = "A basin used to grow plants in. Filled with [current_soil.name]."
+
+		qdel(oursoil)
+		update_appearance()
+		return
 
 	else
 		return ..()
