@@ -18,6 +18,11 @@
 /datum/bt_node/ai_behavior/has_active_descendants()
 	return running
 
+/datum/bt_node/ai_behavior/get_status_marker()
+	if(running)
+		return "*"
+	return ..()
+
 /datum/bt_node/ai_behavior/append_active_nodes(list/lines, indent)
 	if(running)
 		lines += "[indent][span_bold("● [get_label()]")]"

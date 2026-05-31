@@ -472,20 +472,7 @@ multiple modular subtrees with behaviors
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
 		node.reset_tick_state()
-		if(istype(node, /datum/bt_node/subtree))
-			var/datum/bt_node/subtree/sub = node
-			if(sub.root)
-				to_visit += sub.root
-			if(sub.override_node)
-				to_visit += sub.override_node
-		else if(istype(node, /datum/bt_node/composite))
-			var/datum/bt_node/composite/comp = node
-			if(comp.children)
-				to_visit += comp.children
-		else if(istype(node, /datum/bt_node/decorator))
-			var/datum/bt_node/decorator/dec = node
-			if(dec.child)
-				to_visit += dec.child
+		node.collect_reset_children(to_visit)
 
 /**
  * Installs or removes a runtime override on the subtree slot registered with the given id.
@@ -992,98 +979,6 @@ multiple modular subtrees with behaviors
 	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
 
 
-/**
- * Returns a status marker string for the given node based on its current state.
- * * = Currently RUNNING (active leaf behavior)
- * + = Last tick returned SUCCESS
- * x = Last tick returned FAILURE
- * - = On cooldown (will not tick yet)
- * o = Not yet evaluated this cycle
- */
-/datum/ai_controller/proc/bt_node_status_marker(datum/bt_node/node)
-	if(istype(node, /datum/bt_node/ai_behavior))
-		var/datum/bt_node/ai_behavior/behavior = node
-		if(behavior.running)
-			return "*" // active
-
-	if(node.tick_rate > 0)
-		if(world.time < node.tick_cooldown)
-			return "-" // on cooldown
-		var/result = node.tick_result
-		if(result == BT_SUCCESS)
-			return "+"
-		if(result == BT_FAILURE)
-			return "x"
-
-	return "o" // not evaluated
-
-/**
- * Recursively builds a full tree state view showing status markers, decorator conditions,
- * and composite child indices for all nodes in the BT tree.
- */
-/datum/ai_controller/proc/bt_append_full_tree_state(datum/bt_node/node, list/lines, indent)
-	if(istype(node, /datum/bt_node/ai_behavior))
-		var/status = bt_node_status_marker(node)
-		lines += "[indent][status] [node.get_label()]"
-		return
-
-	if(istype(node, /datum/bt_node/composite/sequence))
-		var/datum/bt_node/composite/sequence/seq = node
-		var/status = bt_node_status_marker(node)
-		var/child_info = ""
-		if(seq.running_child_index)
-			child_info = " (child [seq.running_child_index]/[length(seq.children)])"
-		lines += "[indent][status] SEQUENCE[child_info]"
-		for(var/datum/bt_node/child as anything in seq.children)
-			bt_append_full_tree_state(child, lines, "[indent]  ")
-		return
-
-	if(istype(node, /datum/bt_node/composite/selector))
-		var/datum/bt_node/composite/selector/sel = node
-		var/status = bt_node_status_marker(node)
-		var/child_info = ""
-		if(sel.running_child_index)
-			child_info = " (child [sel.running_child_index]/[length(sel.children)])"
-		lines += "[indent][status] SELECTOR[child_info]"
-		for(var/datum/bt_node/child as anything in sel.children)
-			bt_append_full_tree_state(child, lines, "[indent]  ")
-		return
-
-	if(istype(node, /datum/bt_node/composite/parallel))
-		var/datum/bt_node/composite/parallel/par = node
-		var/status = bt_node_status_marker(node)
-		lines += "[indent][status] PARALLEL"
-		for(var/datum/bt_node/child as anything in par.children)
-			bt_append_full_tree_state(child, lines, "[indent]  ")
-		return
-
-	if(istype(node, /datum/bt_node/decorator))
-		var/datum/bt_node/decorator/deco = node
-		var/status = bt_node_status_marker(node)
-		// Show abort policy
-		var/observer_text = ""
-		if(deco.observer_abort != BT_ABORT_NONE)
-			var/abort_name = ""
-			if(deco.observer_abort == BT_ABORT_SELF)
-				abort_name = "SELF"
-			else if(deco.observer_abort == BT_ABORT_LOWER_PRIORITY)
-				abort_name = "LOWER"
-			else if(deco.observer_abort == BT_ABORT_BOTH)
-				abort_name = "BOTH"
-			observer_text = " (abort-" + abort_name + ")"
-		lines += "[indent][status] [node.get_label()][observer_text]"
-		if(deco.child)
-			bt_append_full_tree_state(deco.child, lines, "[indent]  ")
-		return
-
-	if(istype(node, /datum/bt_node/subtree))
-		var/datum/bt_node/subtree/sub = node
-		var/status = bt_node_status_marker(node)
-		lines += "[indent][status] [node.get_label()]"
-		if(sub.root)
-			bt_append_full_tree_state(sub.root, lines, "[indent]  ")
-		return
-
 /// Called whenever an event is logged for this controller. Attaches a snapshot of current behaviors and blackboard state to the event via track_info.
 /datum/ai_controller/proc/on_evlog_event_added(datum/source, datum/event_logger_track/track, list/event_data)
 	SIGNAL_HANDLER
@@ -1092,7 +987,7 @@ multiple modular subtrees with behaviors
 	// Build full tree state view showing all nodes with status markers
 	var/list/tree_lines = list()
 	for(var/datum/bt_node/root_node as anything in behavior_nodes)
-		bt_append_full_tree_state(root_node, tree_lines, "")
+		root_node.append_full_tree_state(tree_lines, "")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Full Tree State", length(tree_lines) ? jointext(tree_lines, "\n") : "(none)")
 
 	// Add execution context section

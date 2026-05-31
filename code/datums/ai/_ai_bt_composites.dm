@@ -37,6 +37,10 @@
 			resolved += child_node
 	children = resolved
 
+/datum/bt_node/composite/collect_reset_children(list/to_visit)
+	if(children)
+		to_visit += children
+
 /datum/bt_node/composite/assign_execution_indices(counter)
 	execution_index = counter
 	counter++
@@ -100,6 +104,12 @@
 			found_active = TRUE
 			child.append_active_nodes(lines, indent)
 
+/datum/bt_node/composite/sequence/append_full_tree_state(list/lines, indent)
+	var/child_info = running_child_index ? " (child [running_child_index]/[length(children)])" : ""
+	lines += "[indent][get_status_marker()] SEQUENCE[child_info]"
+	for(var/datum/bt_node/child as anything in children)
+		child.append_full_tree_state(lines, "[indent]  ")
+
 /**
  * Selector node: ticks children in order.
  * Returns the first non-BT_FAILURE result (BT_SUCCESS or BT_RUNNING), stopping further evaluation.
@@ -151,6 +161,12 @@
 		if(child.has_active_descendants())
 			child.append_active_nodes(lines, indent)
 			return
+
+/datum/bt_node/composite/selector/append_full_tree_state(list/lines, indent)
+	var/child_info = running_child_index ? " (child [running_child_index]/[length(children)])" : ""
+	lines += "[indent][get_status_marker()] SELECTOR[child_info]"
+	for(var/datum/bt_node/child as anything in children)
+		child.append_full_tree_state(lines, "[indent]  ")
 
 /**
  * Subplan node: Runs child and applies configurable restart policies
@@ -334,3 +350,8 @@
 	for(var/datum/bt_node/child as anything in children)
 		if(child.has_active_descendants())
 			child.append_active_nodes(lines, indent)
+
+/datum/bt_node/composite/parallel/append_full_tree_state(list/lines, indent)
+	lines += "[indent][get_status_marker()] PARALLEL"
+	for(var/datum/bt_node/child as anything in children)
+		child.append_full_tree_state(lines, "[indent]  ")

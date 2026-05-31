@@ -101,6 +101,25 @@
 /datum/bt_node/proc/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
 	return
 
+/// Returns a single-character status marker for display. Overridden by ai_behavior to check running.
+/datum/bt_node/proc/get_status_marker()
+	if(tick_rate > 0)
+		if(world.time < tick_cooldown)
+			return "-"
+		if(tick_result == BT_SUCCESS)
+			return "+"
+		if(tick_result == BT_FAILURE)
+			return "x"
+	return "o"
+
+/// Appends this node's full tree state (status + label + children) to lines for display.
+/datum/bt_node/proc/append_full_tree_state(list/lines, indent)
+	lines += "[indent][get_status_marker()] [get_label()]"
+
+/// Adds all children that must be visited during reset to to_visit. No-op for leaf nodes.
+/datum/bt_node/proc/collect_reset_children(list/to_visit)
+	return
+
 /**
  * Subtree node: a named, re-usable BT subgraph.
  *
@@ -163,6 +182,17 @@
 /datum/bt_node/subtree/append_active_nodes(list/lines, indent)
 	if(root && root.has_active_descendants())
 		root.append_active_nodes(lines, indent)
+
+/datum/bt_node/subtree/collect_reset_children(list/to_visit)
+	if(root)
+		to_visit += root
+	if(override_node)
+		to_visit += override_node
+
+/datum/bt_node/subtree/append_full_tree_state(list/lines, indent)
+	..()
+	if(root)
+		root.append_full_tree_state(lines, "[indent]  ")
 
 /datum/bt_node/subtree/assign_execution_indices(counter)
 	execution_index = counter

@@ -42,6 +42,25 @@
 /datum/bt_node/decorator/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
 	child = controller.get_or_build_node(children_descs[1])
 
+/datum/bt_node/decorator/collect_reset_children(list/to_visit)
+	if(child)
+		to_visit += child
+
+/datum/bt_node/decorator/append_full_tree_state(list/lines, indent)
+	var/observer_text = ""
+	if(observer_abort != BT_ABORT_NONE)
+		var/abort_name = ""
+		if(observer_abort == BT_ABORT_SELF)
+			abort_name = "SELF"
+		else if(observer_abort == BT_ABORT_LOWER_PRIORITY)
+			abort_name = "LOWER"
+		else if(observer_abort == BT_ABORT_BOTH)
+			abort_name = "BOTH"
+		observer_text = " (abort-[abort_name])"
+	lines += "[indent][get_status_marker()] [get_label()][observer_text]"
+	if(child)
+		child.append_full_tree_state(lines, "[indent]  ")
+
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick())
 		return tick_result || BT_FAILURE
