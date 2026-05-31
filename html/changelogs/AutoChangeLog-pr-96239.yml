@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Xenomorph queens are no longer slowed down by their own giant tails, by virtue of also being giant."
