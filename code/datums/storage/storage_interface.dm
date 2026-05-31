@@ -112,7 +112,7 @@
 
 	for(var/obj/item as anything in storage_contents)
 		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+		item.screen_loc = "[current_x]:[screen_pixel_x + item.base_pixel_x],[current_y]:[screen_pixel_y + item.base_pixel_y]"
 		if(parent_storage.numerical_stacking)
 			item.maptext = storage_contents[item]
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
