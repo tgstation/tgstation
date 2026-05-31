@@ -28,9 +28,8 @@
 
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
-			var/list/contents = teleatom.get_all_contents()
 			var/interference = 0
-			for(var/obj/item/check in contents)
+			for(var/obj/item/check as anything in teleatom.get_all_contents_type(/obj/item))
 				if(check.item_flags & BLUESPACE_INTERFERENCE)
 					interference += 1
 			if(interference)
