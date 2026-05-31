@@ -606,3 +606,6 @@
       cells
   lelandkemble:
   - bugfix: Patrol bounties properly pay those who complete them
+2026-05-31:
+  Melbert:
+  - bugfix: Fix mutators printed from genetics
