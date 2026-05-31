@@ -829,7 +829,7 @@
 
 			// Create a new DNA Injector and add the appropriate mutations to it
 			var/obj/item/dnainjector/activator/injector = new /obj/item/dnainjector/activator(loc)
-			injector.add_mutations += mutation.make_copy()
+			LAZYADD(injector.add_mutations, mutation.make_copy())
 
 			var/is_activator = text2num(params["is_activator"])
 
@@ -1505,7 +1505,7 @@
 			//  new injector
 			var/total_stability = 0
 			for(var/datum/mutation/mutation as anything in injector_selection[inj_name])
-				injector.add_mutations += mutation.make_copy()
+				LAZYADD(injector.add_mutations, mutation.make_copy())
 				total_stability += mutation.instability
 
 			// Force apply any mutations, this is functionality similar to mutators
