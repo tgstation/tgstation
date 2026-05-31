@@ -185,15 +185,15 @@
 	return FALSE
 
 /obj/effect/collapse/proc/collapse()
-	for(var/mob/M in range(7,src))
-		shake_camera(M, 15, 1)
+	for(var/mob/viewer in range(7, src))
+		shake_camera(viewer, 15, 1)
 	playsound(get_turf(src),'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
 	visible_message(span_bolddanger("The tendril falls inward, the ground around it widening into a yawning chasm!"))
-	for(var/turf/T in RANGE_TURFS(2,src))
-		if(HAS_TRAIT(T, TRAIT_NO_TERRAFORM))
+	for(var/turf/ground in RANGE_TURFS(2, src))
+		if(HAS_TRAIT(ground, TRAIT_NO_TERRAFORM))
 			continue
-		if(!T.density)
-			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
+		if(!ground.density)
+			ground.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
 	qdel(src)
 
 #undef ASH_WALKER_SPAWN_THRESHOLD
