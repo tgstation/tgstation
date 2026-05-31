@@ -29,12 +29,12 @@
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
 			var/list/contents = teleatom.get_all_contents()
-			var/list/interference_list = list()
+			var/interference = 0
 			for(var/obj/item/check in contents)
 				if(check.item_flags & BLUESPACE_INTERFERENCE)
-					interference_list += check
-			if(interference_list.len)
-				precision = max(rand(1,100)*interference_list.len,100)
+					interference += 1
+			if(interference)
+				precision = max(rand(1,100)*interference,100)
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
 					to_chat(MM, span_warning("The clashing pulls of bluespace interfere with your teleport!"))
