@@ -531,6 +531,19 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT / 5)
 
+/obj/item/food/cake/kotort_cake
+	name = "kotort cake"
+	desc = "Is it Kot, or cake, or tort, or kotort? Anyways, looks like a famous \"cake\" among the Gamers... How can you eat me? :3"
+	icon_state = "kotort_cake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 60,
+		/datum/reagent/consumable/nutriment/vitamin = 20,
+	)
+
+	tastes = list("cake" = 5, "kot" = 5, "sweetness" = 1, "tort" = 1)
+	foodtypes = GRAIN | DAIRY | EGG | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_4
+
 /obj/item/food/cake/vanilla_cake
 	name = "vanilla cake"
 	desc = "A vanilla frosted cake."
