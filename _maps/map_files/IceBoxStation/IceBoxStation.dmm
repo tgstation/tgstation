@@ -4982,6 +4982,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"brE" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/metro/train_tunnels/north_tunnel)
 "brJ" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/event_spawn,
@@ -31124,6 +31130,13 @@
 "iHp" = (
 /turf/closed/wall/r_wall,
 /area/station/ai/satellite/chamber)
+"iHF" = (
+/obj/structure/fluff/minepost,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/metro/train_tunnels/north_tunnel)
 "iHG" = (
 /obj/machinery/shower/directional/south,
 /obj/item/soap/nanotrasen,
@@ -112408,7 +112421,7 @@ pGD
 pGD
 gpH
 pGD
-pGD
+brE
 pXV
 oSU
 oSU
@@ -112659,7 +112672,7 @@ thA
 ghx
 ghx
 ghx
-pGD
+brE
 gpH
 pGD
 pGD
@@ -112916,7 +112929,7 @@ thA
 ghx
 ghx
 ghx
-rzh
+iHF
 gpH
 pGD
 pGD
@@ -113430,13 +113443,13 @@ ghx
 thA
 ghx
 pXV
-pGD
-pGD
+sJx
+sJx
 sJx
 sJx
 hwe
 sJx
-pGD
+sJx
 pXV
 oSU
 oSU
