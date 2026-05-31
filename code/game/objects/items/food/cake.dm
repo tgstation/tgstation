@@ -540,7 +540,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 20,
 	)
 
-	tastes = list("cake" = 5, "kot" = 5, "sweetness" = 1, "tort" = 1)
+	tastes = list("cake" = 5, "kot" = 5, "sweetness" = 1, "chocolate" = 4, "tort" = 1)
 	foodtypes = GRAIN | DAIRY | EGG | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 

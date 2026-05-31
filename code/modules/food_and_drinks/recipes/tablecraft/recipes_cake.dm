@@ -160,6 +160,16 @@
 	dish_category = DISH_CAKE
 	meal_category = MEAL_DESSERT
 
+/datum/crafting_recipe/food/kotort_cake
+
+	name = "Kotort cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/chocolatebar = 2,
+		/obj/item/food/cookie = 2,
+		/obj/item/food/chocolateegg = 2
+	)
+
 /datum/crafting_recipe/food/berry_chocolate_cake
 	name = "strawberry chocolate cake"
 	reqs = list(
