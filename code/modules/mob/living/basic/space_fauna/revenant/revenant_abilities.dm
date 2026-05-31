@@ -21,22 +21,24 @@
 	return ..(get_turf(revenant), 2)
 
 // Mirror Talk - only available once the revenant has been imprisoned in a mirror.
-/datum/action/cooldown/mirror_talk
+/datum/action/mirror_talk
 	name = "Mirror Talk"
 	desc = "Talk through your mirror."
 
-/datum/action/cooldown/mirror_talk/IsAvailable(feedback = FALSE)
+/datum/action/mirror_talk/IsAvailable(feedback = FALSE)
 	return ..() && istype(owner.loc, /obj/structure/mirror)
 
-/datum/action/cooldown/mirror_talk/Activate()
+/datum/action/mirror_talk/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return .
 	var/obj/structure/mirror/mirror = astype(owner.loc)
 	if(!mirror)
-		return
+		return FALSE
 	var/message = tgui_input_text(owner, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
-	if(!message)
-		return
+	if(!message || QDELETED(src) || QDELETED(owner) || !IsAvailable())
+		return FALSE
 	mirror.say(message, spans = list(SPAN_REVENWARNING))
-	..()
+	return TRUE
 
 /datum/action/cooldown/spell/aoe/revenant
 	background_icon_state = "bg_revenant"
