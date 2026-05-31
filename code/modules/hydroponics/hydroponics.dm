@@ -70,7 +70,7 @@
 	var/alt_tray = FALSE
 	var/indicatorsuffix = ""
 	///Soil things
-	var/current_soil = null
+	var/obj/machinery/hydroponics/soil/current_soil = null
 	var/current_soil_overlay = null
 
 /obj/machinery/hydroponics/Initialize(mapload)
