@@ -46,6 +46,9 @@
 /datum/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
 	action_cooldown = 1 SECONDS
 
+/datum/bt_node/ai_behavior/basic_ranged_attack/glockroach
+	action_cooldown = 1 SECONDS
+
 /// roach who shoots at you slightly slower
 /datum/ai_controller/basic_controller/cockroach/mobroach
 	behavior_nodes = list(

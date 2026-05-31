@@ -188,6 +188,10 @@
 	if(get_dist(living_pawn, target) <= minimum_distance)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
+/// BT-native ranged attack for the minebot pet command. Avoids friendly fire.
+/datum/bt_node/ai_behavior/basic_ranged_attack/minebot
+	avoid_friendly_fire = TRUE
+
 ///mine walls if we are on automated mining mode
 /datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard[BB_AUTOMATED_MINING])
@@ -330,7 +334,7 @@
 	return "signals [living_pet] to dump its ore!"
 
 /datum/pet_command/attack/minebot
-	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
+	attack_subtree = /datum/bt_node/subtree/pet_command/attack/minebot
 
 /datum/pet_command/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)

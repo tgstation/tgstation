@@ -402,30 +402,10 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_behavior/attack_obstructions/star_gazer
-	action_cooldown = 0.4 SECONDS
-	can_attack_turfs = TRUE
-	can_attack_dense_objects = TRUE
+	behavior_tree_json = "star_gazer.bt.json"
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"
 	refuse_reaction = "..."
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack

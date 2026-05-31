@@ -241,10 +241,6 @@
 
 	return ..()
 
-// =============================================================================
-// BT-native blackboard speech
-// =============================================================================
-
 /**
  * BT-native speech behavior. Reads speech data from BB_BASIC_MOB_SPEAK_LINES each tick;
  * rolls the configured chance and performs an emote or speech line inline.

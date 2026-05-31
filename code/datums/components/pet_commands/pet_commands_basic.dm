@@ -45,10 +45,10 @@
 	radial_icon_state = "follow"
 	speech_commands = list("heel", "follow")
 	callout_type = /datum/callout_option/move
-	///the behavior we use to follow
-	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
 	///should we activate immediately if we're doing nothing else and gain a friend?
 	var/activate_on_befriend = FALSE
+	/// BT subtree installed by execute_action; override to use a mob-specific follow tree.
+	var/follow_subtree = /datum/bt_node/subtree/pet_command/follow
 
 /datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
@@ -58,7 +58,7 @@
 	return "signals [living_pet] to follow!"
 
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
-	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/follow)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, follow_subtree)
 
 /datum/pet_command/follow/add_new_friend(mob/living/tamer)
 	. = ..()
@@ -228,8 +228,6 @@
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
-	/// The AI behavior to use for the ability
-	var/ability_behavior = /datum/ai_behavior/pet_use_ability
 
 /datum/pet_command/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
@@ -253,7 +251,7 @@
 	var/protect_range = 9
 	///message cooldown to prevent too many people from telling you not to commit suicide
 	COOLDOWN_DECLARE(self_harm_message_cooldown)
-	var/datum/bt_node/subtree/protect_owner_subtree = datum/bt_node/subtree/pet_command/protect_owner
+	var/datum/bt_node/subtree/protect_owner_subtree = /datum/bt_node/subtree/pet_command/protect_owner
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
@@ -264,7 +262,7 @@
 	UnregisterSignal(unfriended, COMSIG_ATOM_WAS_ATTACKED)
 
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
-	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, protect_subtree)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, protect_owner_subtree)
 
 /datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)
 	. = ..()

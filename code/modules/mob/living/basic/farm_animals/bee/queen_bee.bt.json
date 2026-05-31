@@ -1,0 +1,44 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": { "key": "BB_CURRENT_HOME", "invert": true },
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_hive",
+						"args": []
+					}
+				},
+				{
+					"type": "sequence",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"args": ["BB_CURRENT_HOME", 1, false]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/inhabit_hive",
+							"args": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen",
+			"args": []
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
+		}
+	]
+}

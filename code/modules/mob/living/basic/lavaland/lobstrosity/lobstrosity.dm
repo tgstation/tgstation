@@ -272,7 +272,6 @@
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	pet_ability_key = BB_TARGETED_ACTION
-	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/long_ranged
 
 /datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
@@ -284,4 +283,3 @@
 	return ..()
 
 /datum/pet_command/use_ability/lob_charge/shrimp
-	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/short_ranged

@@ -103,7 +103,6 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/pet_command/follow/orbie
-	follow_behavior = /datum/ai_behavior/pet_follow_friend/orbie
 
 /datum/pet_command/follow/orbie/New(mob/living/parent)
 	. = ..()
@@ -112,9 +111,6 @@
 /datum/pet_command/follow/orbie/proc/on_summon(datum/source, mob/living/friend)
 	SIGNAL_HANDLER
 	set_command_active(source, friend)
-
-/datum/ai_behavior/pet_follow_friend/orbie
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 ///command to make our pet turn its lights on, we need to be level 2 to activate this ability
 /datum/pet_command/untargeted_ability/pet_lights

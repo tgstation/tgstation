@@ -1,0 +1,20 @@
+{
+	"type": "sequence",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+			"args": ["BB_CURRENT_HOME", 1, false]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive",
+			"args": []
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
+			"args": []
+		}
+	]
+}

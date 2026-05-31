@@ -1,10 +1,7 @@
 /// Amount of time to wait before executing attack if not specified
 #define DEFAULT_ATTACK_DELAY (0.4 SECONDS)
 
-/**
- * BT-native melee attack for use in BT trees (e.g. BT_PARALLEL with move_to_target).
- * No movement flags — movement is handled by a separate bt_node/ai_behavior/move_to_target leaf.
- */
+/// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
 	action_cooldown = 0.2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION

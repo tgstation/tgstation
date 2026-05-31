@@ -1,0 +1,38 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"key": "BB_CURRENT_PET_TARGET",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"args": ["BB_CURRENT_PET_TARGET", 1, false]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/mine_wall",
+						"args": ["BB_CURRENT_PET_TARGET"]
+					}
+				]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
+			"args": ["BB_CURRENT_PET_TARGET"]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
+			"args": []
+		}
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"key": "BB_DOG_HARASS_TARGET",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"args": ["BB_DOG_HARASS_TARGET", 1, false]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/dog",
+						"args": [
+							"BB_DOG_HARASS_TARGET",
+							"BB_PET_TARGETING_STRATEGY",
+							"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+						]
+					}
+				]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_hated_dog_target",
+			"args": ["BB_DOG_HARASS_TARGET", "BB_PET_TARGETING_STRATEGY"]
+		}
+	]
+}

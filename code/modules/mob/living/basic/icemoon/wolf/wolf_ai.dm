@@ -16,27 +16,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	behavior_tree_json = "wolf.bt.json"
 
-	//reinforcements needs to be skipped over entirely on tamed wolves because it causes them to attack their owner and then themselves
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/call_reinforcements/wolf,
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/call_reinforcements/wolf
-
-/datum/ai_planning_subtree/call_reinforcements/wolf/decide_to_call(datum/ai_controller/controller)
-	//only call reinforcements if the person who just smacked us isn't a friend to avoid hitting them once, then killing ourselves if we've been tamed
-	if (controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && istype(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET], /mob))
-		return !(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] in controller.blackboard[BB_FRIENDS_LIST])
-	else
-		return FALSE
 

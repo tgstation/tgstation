@@ -146,6 +146,19 @@
 		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
 		equipped_back_fashion_item.apply_to_speech(speech)
 
+/// Applies corgi fashion to the BT blackboard speech data by routing through the planning stub.
+/mob/living/basic/pet/dog/corgi/update_dog_speak_blackboard(datum/ai_controller/controller)
+	var/datum/ai_planning_subtree/random_speech/stub = new
+	update_dog_speech(stub) // Populate via the existing fashion-aware proc
+	var/list/speech_data = list()
+	speech_data[BB_EMOTE_SAY] = stub.speak || list()
+	speech_data[BB_EMOTE_HEAR] = stub.emote_hear || list()
+	speech_data[BB_EMOTE_SEE] = stub.emote_see || list()
+	speech_data[BB_EMOTE_SOUND] = stub.sound || list()
+	speech_data[BB_SPEAK_CHANCE] = stub.speech_chance || 1
+	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
+	qdel(stub)
+
 /mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
 		"speak" = CALLBACK(src, PROC_REF(bork)),

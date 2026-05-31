@@ -33,7 +33,8 @@
 /datum/bt_node/ai_behavior/pass_item_virtual
 
 /datum/bt_node/ai_behavior/pass_item_virtual/setup(datum/ai_controller/controller, delivery_key, storage_key)
-	return !QDELETED(controller.blackboard[delivery_key])
+	var/atom/target = controller.blackboard[delivery_key]
+	return !QDELETED(target)
 
 /datum/bt_node/ai_behavior/pass_item_virtual/perform(seconds_per_tick, datum/ai_controller/controller, delivery_key, storage_key)
 	var/atom/target = controller.blackboard[delivery_key]

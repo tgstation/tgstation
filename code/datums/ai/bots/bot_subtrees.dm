@@ -81,16 +81,6 @@
 /datum/bt_node/ai_behavior/bot_interact/keep_target
 	clear_target = FALSE
 
-///Use a mob ability
-/datum/bt_node/ai_behavior/use_mob_ability
-
-/datum/bt_node/ai_behavior/use_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key)
-	var/datum/action/using_action = controller.blackboard[ability_key]
-	if(QDELETED(using_action) || !using_action.IsAvailable())
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	if(using_action.Trigger())
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 ///Find the closest beacon and set it as the target
 /datum/bt_node/ai_behavior/find_first_beacon_target

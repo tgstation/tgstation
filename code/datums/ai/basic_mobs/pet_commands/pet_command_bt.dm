@@ -26,7 +26,8 @@
 /datum/bt_node/ai_behavior/fetch_seek
 
 /datum/bt_node/ai_behavior/fetch_seek/setup(datum/ai_controller/controller, target_key)
-	return !QDELETED(controller.blackboard[target_key])
+	var/obj/item/target = controller.blackboard[target_key]
+	return !QDELETED(target)
 
 /datum/bt_node/ai_behavior/fetch_seek/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/obj/item/fetch_thing = controller.blackboard[target_key]
@@ -112,3 +113,19 @@
 /// Fetch: seek → pick up → deliver. Falls back to clear_pet_command if nothing to do.
 /datum/bt_node/subtree/pet_command/fetch
 	behavior_tree_json = "pet_command_fetch.bt.json"
+
+/// Attacks BB_CURRENT_PET_TARGET using the dog's melee behavior (paws if BB_DOG_HARASS_HARM is false, bites otherwise).
+/datum/bt_node/subtree/pet_command/attack/dog
+	behavior_tree_json = "pet_command_attack_dog.bt.json"
+
+/// Attacks BB_CURRENT_PET_TARGET with glockroach ranged attack (1s cooldown).
+/datum/bt_node/subtree/pet_command/attack/ranged/glockroach
+	behavior_tree_json = "pet_command_attack_ranged_glockroach.bt.json"
+
+/// Attacks BB_CURRENT_PET_TARGET with minebot ranged attack (avoids friendly fire).
+/datum/bt_node/subtree/pet_command/attack/minebot
+	behavior_tree_json = "pet_command_attack_minebot.bt.json"
+
+/// Protect owner: loops validity check then glockroach ranged attack. Clears command if target invalid.
+/datum/bt_node/subtree/pet_command/protect_owner/ranged/glockroach
+	behavior_tree_json = "pet_command_protect_owner_ranged_glockroach.bt.json"

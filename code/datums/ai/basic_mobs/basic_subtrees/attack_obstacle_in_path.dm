@@ -1,6 +1,3 @@
-// =============================================================================
-// BT-native obstacle attack
-// =============================================================================
 
 /**
  * BT-native obstacle attack. Returns BT_FAILURE when the path is clear so a BT_SELECTOR

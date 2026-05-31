@@ -1,0 +1,130 @@
+{
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/change_slime_face",
+			"args": []
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+			"args": ["BB_SLIME_EVOLVE"]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+			"args": ["BB_SLIME_REPRODUCE"]
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/fail",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_BASIC_MOB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/feed_on_slime_target",
+														"args": ["BB_BASIC_MOB_CURRENT_TARGET"]
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"args": [
+															"BB_BASIC_MOB_CURRENT_TARGET",
+															"BB_TARGETING_STRATEGY",
+															"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+														]
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_BASIC_MOB_CURRENT_TARGET", 1, false]
+									}
+								]
+							}
+						},
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"loop_delay": "IDLE_BEHAVIOR_RATE",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
+									"args": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+							"args": [
+								"BB_BASIC_MOB_CURRENT_TARGET",
+								"BB_TARGETING_STRATEGY",
+								"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION",
+								false
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_slime_food",
+							"args": []
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard",
+					"args": []
+				}
+			]
+		}
+	]
+}
