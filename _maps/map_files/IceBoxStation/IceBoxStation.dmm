@@ -42509,7 +42509,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "mdx" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining_internal"
@@ -59996,12 +59998,6 @@
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
-"qSu" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/sepia,
-/area/station/security/prison/rec)
 "qSE" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "misclab";
@@ -112741,7 +112737,7 @@ fps
 usS
 xhK
 mGC
-qSu
+rFN
 vIW
 nNn
 hqy

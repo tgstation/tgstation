@@ -1857,12 +1857,15 @@
 	color = COLOR_BLACK // RBG: 0, 0, 0
 	taste_description = "plant food"
 	ph = 3
+	/// The chance of toxin damage for a mob (heals toxins for MOB_PLANT biotype)
 	var/tox_prob = 0
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+
 	if(SPT_PROB(tox_prob, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
+		var/tox_modifier = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_tox_loss(tox_modifier * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
@@ -1889,7 +1892,6 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.2))
 

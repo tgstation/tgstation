@@ -23344,7 +23344,7 @@
 /area/station/maintenance/department/engine)
 "iee" = (
 /obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
+	dir = 8
 	},
 /obj/machinery/conveyor{
 	dir = 6;
@@ -39003,7 +39003,9 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "nuu" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "brm"

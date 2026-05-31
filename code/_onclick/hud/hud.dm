@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_hotkeys
 			if (length(group_info))
 				screenmob.client.screen += group_info
-			if (length(group_storage))
+			if (length(group_storage) && viewmob == mymob)
 				screenmob.client.screen += group_storage
 
 			screenmob.client.screen += palette
