@@ -31,11 +31,11 @@
 /datum/action/mirror_talk/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
-	var/obj/structure/mirror/mirror = astype(owner.loc)
+	var/obj/structure/mirror/mirror = astype(clicker.loc)
 	if(!mirror)
 		return FALSE
-	var/message = tgui_input_text(owner, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
-	if(!message || QDELETED(src) || QDELETED(owner) || !IsAvailable())
+	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
+	if(!message || QDELETED(src) || QDELETED(clicker) || !IsAvailable())
 		return FALSE
 	mirror.say(message, spans = list(SPAN_REVENWARNING))
 	return TRUE
