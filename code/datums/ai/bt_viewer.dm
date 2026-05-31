@@ -120,7 +120,7 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 
 	var/list/node_data = list(
 		"e" = exec,
-		"l" = viewing_controller.bt_node_label(node),
+		"l" = node.get_label(),
 		"t" = node.node_type,
 		"p" = priority_index,
 	)

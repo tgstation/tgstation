@@ -13,6 +13,30 @@
 /datum/bt_node/composite/get_children()
 	return children
 
+/datum/bt_node/composite/has_active_descendants()
+	if(!children)
+		return FALSE
+	for(var/datum/bt_node/child as anything in children)
+		if(child.has_active_descendants())
+			return TRUE
+	return FALSE
+
+/datum/bt_node/composite/finalize_node(datum/ai_controller/controller, list/to_visit)
+	..()
+	if(!children)
+		return
+	for(var/datum/bt_node/child as anything in children)
+		child.parent_node = src
+	to_visit += children
+
+/datum/bt_node/composite/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
+	var/list/resolved = list()
+	for(var/child_entry in children_descs)
+		var/datum/bt_node/child_node = controller.get_or_build_node(child_entry)
+		if(!isnull(child_node))
+			resolved += child_node
+	children = resolved
+
 /datum/bt_node/composite/assign_execution_indices(counter)
 	execution_index = counter
 	counter++
@@ -64,6 +88,18 @@
 	. = ..()
 	running_child_index = 0
 
+/datum/bt_node/composite/sequence/get_label()
+	return "SEQUENCE"
+
+/datum/bt_node/composite/sequence/append_active_nodes(list/lines, indent)
+	var/found_active = FALSE
+	for(var/datum/bt_node/child as anything in children)
+		if(found_active)
+			lines += "[indent]↑ [child.get_label()]"
+		else if(child.has_active_descendants())
+			found_active = TRUE
+			child.append_active_nodes(lines, indent)
+
 /**
  * Selector node: ticks children in order.
  * Returns the first non-BT_FAILURE result (BT_SUCCESS or BT_RUNNING), stopping further evaluation.
@@ -106,6 +142,15 @@
 /datum/bt_node/composite/selector/reset_tick_state()
 	. = ..()
 	running_child_index = 0
+
+/datum/bt_node/composite/selector/get_label()
+	return "SELECTOR"
+
+/datum/bt_node/composite/selector/append_active_nodes(list/lines, indent)
+	for(var/datum/bt_node/child as anything in children)
+		if(child.has_active_descendants())
+			child.append_active_nodes(lines, indent)
+			return
 
 /**
  * Subplan node: Runs child and applies configurable restart policies
@@ -189,6 +234,13 @@
 /datum/bt_node/composite/subplan/reset_tick_state()
 	. = ..()
 	next_loop_time = 0
+
+/datum/bt_node/composite/subplan/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
+	..()
+	if(length(children) > 1)
+		var/datum/bt_node/composite/sequence/legacy_subplan_sequence = new
+		legacy_subplan_sequence.children = children
+		children = list(legacy_subplan_sequence)
 
 /**
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.
@@ -274,3 +326,11 @@
 /datum/bt_node/composite/parallel/reset_tick_state()
 	. = ..()
 	secondary_ready_at = null
+
+/datum/bt_node/composite/parallel/get_label()
+	return "PARALLEL"
+
+/datum/bt_node/composite/parallel/append_active_nodes(list/lines, indent)
+	for(var/datum/bt_node/child as anything in children)
+		if(child.has_active_descendants())
+			child.append_active_nodes(lines, indent)

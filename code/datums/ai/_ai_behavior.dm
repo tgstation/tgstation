@@ -14,8 +14,13 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
-	/// The controller that owns this node instance. Set by finalize_tree().
-	var/datum/ai_controller/owning_controller = null
+
+/datum/bt_node/ai_behavior/has_active_descendants()
+	return running
+
+/datum/bt_node/ai_behavior/append_active_nodes(list/lines, indent)
+	if(running)
+		lines += "[indent][span_bold("● [get_label()]")]"
 
 /// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
 /datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)

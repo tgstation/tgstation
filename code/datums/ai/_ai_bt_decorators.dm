@@ -20,11 +20,27 @@
 	var/observers_registered = FALSE
 	/// Set to TRUE when register_observe_signals() registered at least one signal. If this is not true but we are observing; then we need to check the condition every tick; not efficient, but allows for reactivity.
 	var/has_observer_signals = FALSE
-	/// The controller that owns this node instance. Set by finalize_tree().
-	var/datum/ai_controller/owning_controller = null
+
 
 /datum/bt_node/decorator/get_children()
 	return child ? list(child) : null
+
+/datum/bt_node/decorator/has_active_descendants()
+	return child && child.has_active_descendants()
+
+/datum/bt_node/decorator/finalize_node(datum/ai_controller/controller, list/to_visit)
+	..()
+	if(child)
+		child.parent_node = src
+		to_visit += child
+
+/datum/bt_node/decorator/append_active_nodes(list/lines, indent)
+	if(child && child.has_active_descendants())
+		lines += "[indent][get_label()]"
+		child.append_active_nodes(lines, "[indent]  ")
+
+/datum/bt_node/decorator/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
+	child = controller.get_or_build_node(children_descs[1])
 
 /datum/bt_node/decorator/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(!should_tick())

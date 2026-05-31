@@ -119,6 +119,103 @@ multiple modular subtrees with behaviors
 	behavior_nodes = typepaths_of_new_subtrees
 	init_subtrees()
 
+/// Resolves the children/child of a composite or decorator node, creating configured instances.
+/// Safe to call on any node type; non-composite/non-decorator nodes are a no-op.
+/datum/ai_controller/proc/resolve_node_children(datum/bt_node/node)
+	if(istype(node, /datum/bt_node/composite))
+		var/datum/bt_node/composite/comp = node
+		if(!LAZYLEN(comp.children_typepaths) || LAZYLEN(comp.children))
+			return
+		var/list/resolved_children = list()
+		for(var/child_type in comp.children_typepaths)
+			var/list/config = comp.children_typepaths[child_type]
+			var/datum/bt_node/child = resolve_child_node(child_type, config)
+			if(isnull(child))
+				stack_trace("BT composite [node.type] references unknown child type [child_type]")
+				continue
+			resolved_children += child
+		if(istype(comp, /datum/bt_node/composite/subplan) && length(resolved_children) > 1)
+			var/datum/bt_node/composite/sequence/legacy_subplan_sequence = new
+			legacy_subplan_sequence.children = resolved_children
+			comp.children = list(legacy_subplan_sequence)
+		else
+			comp.children = resolved_children
+	else if(istype(node, /datum/bt_node/decorator))
+		var/datum/bt_node/decorator/dec = node
+		if(isnull(dec.child_typepath) || !isnull(dec.child))
+			return
+		dec.child = resolve_child_node(dec.child_typepath, null)
+		if(isnull(dec.child))
+			stack_trace("BT decorator [node.type] references unknown child type [dec.child_typepath]")
+	else if(istype(node, /datum/bt_node/subtree))
+		var/datum/bt_node/subtree/sub = node
+		if(!isnull(sub.behavior_nodes) && isnull(sub.root))
+			sub.root = build_node_from_descriptor(sub.behavior_nodes)
+		else if(!isnull(sub.behavior_tree_json) && isnull(sub.root))
+			var/filename = copytext(sub.behavior_tree_json, findlasttext(sub.behavior_tree_json, "/") + 1)
+			var/tree_name = copytext(filename, 1, length(filename) - 4)
+			sub.root = load_tree_from_json(BT_COMPILED_PATH(tree_name))
+
+// Always creates a fresh instance regardless of whether config is provided.
+/datum/ai_controller/proc/resolve_child_node(child_type, list/config)
+	if(!ispath(child_type, /datum/bt_node))
+		return null
+	var/datum/bt_node/child = new child_type
+	if(config)
+		child.configure(config)
+	resolve_node_children(child)
+	return child
+
+/datum/ai_controller/proc/get_or_build_node(entry)
+	if(ispath(entry))
+		if(!ispath(entry, /datum/bt_node))
+			stack_trace("get_or_build_node() received non-BT typepath: [entry]")
+			return null
+		var/datum/bt_node/node = new entry
+		resolve_node_children(node)
+		return node
+	if(islist(entry))
+		return build_node_from_descriptor(entry)
+	stack_trace("get_or_build_node() received unexpected entry type: [entry]")
+	return null
+
+///Loads and decodes a compiled BT JSON file into a node tree.
+/datum/ai_controller/proc/load_tree_from_json(path)
+	var/list/desc = json_decode(file2text(path))
+	return build_node_from_descriptor(desc)
+
+/**
+ * Recursively builds a BT node tree from a descriptor list.
+ * BT_DESC_TYPE and BT_DESC_CHILDREN are consumed internally; all other keys are written
+ * as vars onto the node. String values starting with "/" are resolved via text2path so
+ * typepath args (e.g. "/datum/ai_movement/basic_avoidance") arrive as actual types.
+ */
+/datum/ai_controller/proc/build_node_from_descriptor(list/desc)
+	var/raw_type = desc[BT_DESC_TYPE]
+	var/node_type = ispath(raw_type) ? raw_type : text2path(raw_type)
+	if(isnull(node_type))
+		stack_trace("build_node_from_descriptor(): unknown typepath '[raw_type]'")
+		return null
+	var/datum/bt_node/node = new node_type
+	resolve_node_children(node)
+	for(var/key in desc)
+		if(key == BT_DESC_TYPE || key == BT_DESC_CHILDREN)
+			continue
+		var/value = desc[key]
+		if(islist(value))
+			var/list/resolved = value.Copy()
+			for(var/i in 1 to length(resolved))
+				if(istext(resolved[i]) && copytext(resolved[i], 1, 2) == "/")
+					resolved[i] = text2path(resolved[i])
+			value = resolved
+		else if(istext(value) && copytext(value, 1, 2) == "/")
+			value = text2path(value)
+		node.vars[key] = value
+	var/list/children_descs = desc[BT_DESC_CHILDREN]
+	if(LAZYLEN(children_descs))
+		node.set_descriptor_children(children_descs, src)
+	return node
+
 /// Builds the per-controller BT node tree from behavior_nodes typepaths or descriptors, then finalizes it.
 /datum/ai_controller/proc/init_subtrees()
 	if(!isnull(behavior_tree_json) && !LAZYLEN(behavior_nodes))
@@ -127,7 +224,7 @@ multiple modular subtrees with behaviors
 		var/filename = copytext(behavior_tree_json, findlasttext(behavior_tree_json, "/") + 1) // Find the filename
 		var/tree_name = copytext(filename, 1, length(filename) - 4) //Remove the .json extension
 		var/compiled_path = BT_COMPILED_PATH(tree_name) //Find the compiled version of this BT
-		var/datum/bt_node/root = SSai_controllers.load_tree_from_json(compiled_path)
+		var/datum/bt_node/root = load_tree_from_json(compiled_path)
 		if(isnull(root))
 			stack_trace("[type] failed to load behavior tree from compiled JSON: [compiled_path]")
 			return
@@ -138,14 +235,14 @@ multiple modular subtrees with behaviors
 		return
 	var/list/temp_subtree_list = list()
 	if(!isnull(behavior_nodes[BT_DESC_TYPE]))
-		var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(behavior_nodes)
+		var/datum/bt_node/node_instance = get_or_build_node(behavior_nodes)
 		if(isnull(node_instance))
 			stack_trace("[type]'s behavior_nodes BT descriptor could not be built")
 		else
 			temp_subtree_list += node_instance
 	else
 		for(var/entry in behavior_nodes)
-			var/datum/bt_node/node_instance = SSai_controllers.get_or_build_node(entry)
+			var/datum/bt_node/node_instance = get_or_build_node(entry)
 			if(isnull(node_instance))
 				stack_trace("[type]'s behavior_nodes contains unknown entry: [entry]")
 				continue
@@ -166,32 +263,7 @@ multiple modular subtrees with behaviors
 	var/index = 1
 	while(index <= length(to_visit))
 		var/datum/bt_node/node = to_visit[index++]
-		if(istype(node, /datum/bt_node/decorator))
-			var/datum/bt_node/decorator/dec = node
-			dec.owning_controller = src
-			if(dec.child)
-				dec.child.parent_node = node
-				to_visit += dec.child
-		else if(istype(node, /datum/bt_node/composite))
-			var/datum/bt_node/composite/comp = node
-			if(comp.children)
-				for(var/datum/bt_node/child in comp.children)
-					child.parent_node = node
-				to_visit += comp.children
-		else if(istype(node, /datum/bt_node/subtree))
-			var/datum/bt_node/subtree/sub = node
-			if(!isnull(sub.override_id))
-				LAZYINITLIST(override_slots)
-				override_slots[sub.override_id] = sub
-			if(sub.root)
-				sub.root.parent_node = node
-				to_visit += sub.root
-			if(sub.override_node)
-				sub.override_node.parent_node = node
-				to_visit += sub.override_node
-		else if(istype(node, /datum/bt_node/ai_behavior))
-			var/datum/bt_node/ai_behavior/beh = node
-			beh.owning_controller = src
+		node.finalize_node(src, to_visit)
 	var/counter = 1
 	for(var/datum/bt_node/root in behavior_nodes)
 		counter = root.assign_execution_indices(counter)
@@ -443,7 +515,7 @@ multiple modular subtrees with behaviors
 		return
 
 	var/datum/bt_node/subtree/new_node = new datum_type
-	SSai_controllers.resolve_node_children(new_node)
+	resolve_node_children(new_node)
 	slot.override_node = new_node
 	finalize_tree()
 	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), datum_type)
@@ -919,61 +991,6 @@ multiple modular subtrees with behaviors
 	. = ..()
 	UnregisterSignal(src, COMSIG_EVLOG_EVENT_ADDED)
 
-/// Returns TRUE if any ai_behavior descendant of node is currently running.
-/datum/ai_controller/proc/bt_has_active_descendant(datum/bt_node/node)
-	if(istype(node, /datum/bt_node/ai_behavior))
-		var/datum/bt_node/ai_behavior/behavior = node
-		return behavior.running
-	if(istype(node, /datum/bt_node/composite))
-		var/datum/bt_node/composite/comp = node
-		for(var/datum/bt_node/child as anything in comp.children)
-			if(bt_has_active_descendant(child))
-				return TRUE
-		return FALSE
-	if(istype(node, /datum/bt_node/decorator))
-		var/datum/bt_node/decorator/deco = node
-		return deco.child && bt_has_active_descendant(deco.child)
-	if(istype(node, /datum/bt_node/subtree))
-		var/datum/bt_node/subtree/sub = node
-		return sub.root && bt_has_active_descendant(sub.root)
-	return FALSE
-
-/// Walks the subtree rooted at node to find the first node with the given execution_index.
-/// Returns the matching node or null if not found.
-/datum/ai_controller/proc/find_node_by_index(datum/bt_node/node, target_index)
-	if(node.execution_index == target_index)
-		return node
-	if(istype(node, /datum/bt_node/composite))
-		var/datum/bt_node/composite/comp = node
-		for(var/datum/bt_node/child as anything in comp.children)
-			var/found = find_node_by_index(child, target_index)
-			if(found)
-				return found
-	else if(istype(node, /datum/bt_node/decorator))
-		var/datum/bt_node/decorator/dec = node
-		if(dec.child)
-			return find_node_by_index(dec.child, target_index)
-	else if(istype(node, /datum/bt_node/subtree))
-		var/datum/bt_node/subtree/sub = node
-		if(sub.root)
-			return find_node_by_index(sub.root, target_index)
-	return null
-
-/// Short display label for a bt_node, stripping standard path prefixes.
-/datum/ai_controller/proc/bt_node_label(datum/bt_node/node)
-	if(istype(node, /datum/bt_node/composite/parallel))
-		return "PARALLEL"
-	if(istype(node, /datum/bt_node/composite/sequence))
-		return "SEQUENCE"
-	if(istype(node, /datum/bt_node/composite/selector))
-		return "SELECTOR"
-	var/t = "[node.type]"
-	t = replacetext(t, "/datum/bt_node/decorator/", "")
-	t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
-	t = replacetext(t, "/datum/ai_behavior/", "")
-	t = replacetext(t, "/datum/bt_node/subtree/", "")
-	t = replacetext(t, "/datum/ai_planning_subtree/", "")
-	return t
 
 /**
  * Returns a status marker string for the given node based on its current state.
@@ -1001,65 +1018,13 @@ multiple modular subtrees with behaviors
 	return "o" // not evaluated
 
 /**
- * Recursively appends active and upcoming BT nodes to lines.
- * Selector: only the active branch. Sequence: active node + remaining siblings marked as upcoming (↑).
- * Parallel: all active branches. Decorator: shown as a gate label above its active child.
- * Active leaf behaviors are bolded with a ● prefix.
- */
-/datum/ai_controller/proc/bt_append_active_nodes(datum/bt_node/node, list/lines, indent)
-	if(istype(node, /datum/bt_node/ai_behavior))
-		var/datum/bt_node/ai_behavior/behavior = node
-		if(behavior.running)
-			lines += "[indent][span_bold("● [bt_node_label(node)]")]"
-		return
-
-	if(istype(node, /datum/bt_node/composite/sequence))
-		var/datum/bt_node/composite/sequence/seq = node
-		var/found_active = FALSE
-		for(var/datum/bt_node/child as anything in seq.children)
-			if(found_active)
-				lines += "[indent]↑ [bt_node_label(child)]"
-			else if(bt_has_active_descendant(child))
-				found_active = TRUE
-				bt_append_active_nodes(child, lines, indent)
-		return
-
-	if(istype(node, /datum/bt_node/composite/selector))
-		var/datum/bt_node/composite/selector/sel = node
-		for(var/datum/bt_node/child as anything in sel.children)
-			if(bt_has_active_descendant(child))
-				bt_append_active_nodes(child, lines, indent)
-				return
-		return
-
-	if(istype(node, /datum/bt_node/composite/parallel))
-		var/datum/bt_node/composite/parallel/par = node
-		for(var/datum/bt_node/child as anything in par.children)
-			if(bt_has_active_descendant(child))
-				bt_append_active_nodes(child, lines, indent)
-		return
-
-	if(istype(node, /datum/bt_node/decorator))
-		var/datum/bt_node/decorator/deco = node
-		if(deco.child && bt_has_active_descendant(deco.child))
-			lines += "[indent][bt_node_label(node)]"
-			bt_append_active_nodes(deco.child, lines, "[indent]  ")
-		return
-
-	if(istype(node, /datum/bt_node/subtree))
-		var/datum/bt_node/subtree/sub = node
-		if(sub.root && bt_has_active_descendant(sub.root))
-			bt_append_active_nodes(sub.root, lines, indent)
-		return
-
-/**
  * Recursively builds a full tree state view showing status markers, decorator conditions,
  * and composite child indices for all nodes in the BT tree.
  */
 /datum/ai_controller/proc/bt_append_full_tree_state(datum/bt_node/node, list/lines, indent)
 	if(istype(node, /datum/bt_node/ai_behavior))
 		var/status = bt_node_status_marker(node)
-		lines += "[indent][status] [bt_node_label(node)]"
+		lines += "[indent][status] [node.get_label()]"
 		return
 
 	if(istype(node, /datum/bt_node/composite/sequence))
@@ -1106,7 +1071,7 @@ multiple modular subtrees with behaviors
 			else if(deco.observer_abort == BT_ABORT_BOTH)
 				abort_name = "BOTH"
 			observer_text = " (abort-" + abort_name + ")"
-		lines += "[indent][status] [bt_node_label(node)][observer_text]"
+		lines += "[indent][status] [node.get_label()][observer_text]"
 		if(deco.child)
 			bt_append_full_tree_state(deco.child, lines, "[indent]  ")
 		return
@@ -1114,7 +1079,7 @@ multiple modular subtrees with behaviors
 	if(istype(node, /datum/bt_node/subtree))
 		var/datum/bt_node/subtree/sub = node
 		var/status = bt_node_status_marker(node)
-		lines += "[indent][status] [bt_node_label(node)]"
+		lines += "[indent][status] [node.get_label()]"
 		if(sub.root)
 			bt_append_full_tree_state(sub.root, lines, "[indent]  ")
 		return
@@ -1134,9 +1099,9 @@ multiple modular subtrees with behaviors
 	var/active_node_label = "(none)"
 	if(active_execution_index)
 		for(var/datum/bt_node/root_node as anything in behavior_nodes)
-			var/found = find_node_by_index(root_node, active_execution_index)
+			var/found = root_node.find_by_index(active_execution_index)
 			if(found)
-				active_node_label = bt_node_label(found)
+				active_node_label = found.get_label()
 				break
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))

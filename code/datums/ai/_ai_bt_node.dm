@@ -20,6 +20,8 @@
 	/// Reference to this node's parent in the resolved tree. Set by ai_controller/finalize_tree().
 	/// Null for root-level nodes.
 	var/datum/bt_node/parent_node = null
+	///Owning controller for this node
+	var/datum/ai_controller/owning_controller = null
 
 /// Returns TRUE if enough time has elapsed for this node to be re-evaluated.
 /datum/bt_node/proc/should_tick()
@@ -59,6 +61,45 @@
  */
 /datum/bt_node/proc/get_children()
 	return null
+
+/// Returns TRUE if this node or any descendant has an active (running) ai_behavior leaf.
+/datum/bt_node/proc/has_active_descendants()
+	return FALSE
+
+/// Short display label for this node, stripping standard path prefixes.
+/datum/bt_node/proc/get_label()
+	var/t = "[type]"
+	t = replacetext(t, "/datum/bt_node/decorator/", "")
+	t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
+	t = replacetext(t, "/datum/ai_behavior/", "")
+	t = replacetext(t, "/datum/bt_node/subtree/", "")
+	t = replacetext(t, "/datum/ai_planning_subtree/", "")
+	return t
+
+/// Walks descendants to find the node with the given execution_index. Returns null if not found.
+/datum/bt_node/proc/find_by_index(target_index)
+	if(execution_index == target_index)
+		return src
+	var/list/ch = get_children()
+	if(!ch)
+		return null
+	for(var/datum/bt_node/child as anything in ch)
+		var/found = child.find_by_index(target_index)
+		if(found)
+			return found
+	return null
+
+/// Appends this node's active/upcoming state to lines for display. No-op for plain leaf nodes.
+/datum/bt_node/proc/append_active_nodes(list/lines, indent)
+	return
+
+/// Called during finalize_tree() to set owning_controller, register overrides, and enqueue children.
+/datum/bt_node/proc/finalize_node(datum/ai_controller/controller, list/to_visit)
+	owning_controller = controller
+
+/// Called during build_node_from_descriptor() to resolve and assign child nodes from JSON descriptors.
+/datum/bt_node/proc/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
+	return
 
 /**
  * Subtree node: a named, re-usable BT subgraph.
@@ -101,6 +142,27 @@
 	if(override_node)
 		return override_node.root ? list(override_node.root) : null
 	return root ? list(root) : null
+
+/datum/bt_node/subtree/has_active_descendants()
+	if(override_node)
+		return override_node.has_active_descendants()
+	return root && root.has_active_descendants()
+
+/datum/bt_node/subtree/finalize_node(datum/ai_controller/controller, list/to_visit)
+	..()
+	if(!isnull(override_id))
+		LAZYINITLIST(controller.override_slots)
+		controller.override_slots[override_id] = src
+	if(root)
+		root.parent_node = src
+		to_visit += root
+	if(override_node)
+		override_node.parent_node = src
+		to_visit += override_node
+
+/datum/bt_node/subtree/append_active_nodes(list/lines, indent)
+	if(root && root.has_active_descendants())
+		root.append_active_nodes(lines, indent)
 
 /datum/bt_node/subtree/assign_execution_indices(counter)
 	execution_index = counter
