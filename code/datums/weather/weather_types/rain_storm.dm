@@ -3,6 +3,8 @@
 	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
 
 	particle_type = /particles/weather/rain_storm
+	min_severity = 30
+
 	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
 	telegraph_duration = 30 SECONDS
 
@@ -64,13 +66,11 @@
 	position = generator(GEN_BOX, list(-510, -256, 0), list(400, 512, 0))
 	grow = list(-0.01, -0.01)
 	gravity = list(0, -10, 0.5)
-	drift = generator(GEN_CIRCLE, 0, 1) // Some random movement for variation
-	friction = 0.3  // shed 30% of velocity and drift every 0.1s
-	transform = null // Rain is directional - so don't make it "3D"
-	//Weather effects, max values
+	drift = generator(GEN_CIRCLE, 0, 1)
+	friction = 0.3
 	min_spawn = 50
-	max_spawn = 250
-	wind_strength = 2
+	max_spawn = 300
+	wind_strength = 5
 	spin = 0
 
 /datum/weather/particle/rain_storm/blood
