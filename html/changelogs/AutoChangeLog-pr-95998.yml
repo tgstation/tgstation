@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactors inventory UI to be completely datum and vis_contents-based"
+  - bugfix: "Observers should no longer see doubled up inventory UIs"
