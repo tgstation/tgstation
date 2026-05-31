@@ -48,7 +48,7 @@
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5
 
-// Also has the rocket boot's dodge action, but grants flight while activated.
+// Has the rocket boot's dodge action, in addition to sustained flight while activated.
 /obj/item/clothing/shoes/bhop/rocket/jet
 	name = "jet boots"
 	desc = "Top of the line rocket boots, featuring a precise enough flight mechanism that can enable flight!"
