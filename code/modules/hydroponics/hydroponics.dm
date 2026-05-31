@@ -1109,6 +1109,7 @@
 			src.name = "botanic tray"
 			src.desc = "A basin used to grow plants in. Filled with [oursoil.stored_soil.name]."
 			oursoil.stored_soil.forceMove(src)
+			oursoil.stored_soil = null
 			qdel(oursoil)
 			src.update_appearance()
 			return
