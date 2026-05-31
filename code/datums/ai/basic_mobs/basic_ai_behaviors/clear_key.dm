@@ -5,10 +5,6 @@
 	controller.clear_blackboard_key(key)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Legacy planning version
-// =============================================================================
-
 /// Clears a blackboard key (or keys), simply if you want to do this after an action without making a subtype
 /datum/ai_behavior/clear_key
 
