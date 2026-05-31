@@ -2,14 +2,14 @@
 
 /// Find and treat a patient — used by both the speak-mode parallel and the silent fallback branch.
 /datum/bt_node/subtree/medbot_treat_patient
-	behavior_tree_json = "medbot_treat_patient.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot_treat_patient.bt.json"
 
 /// Find a patient in hard-crit and announce them on radio.
 /datum/bt_node/subtree/medbot_find_and_announce_crit
-	behavior_tree_json = "medbot_find_and_announce_crit.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot_find_and_announce_crit.bt.json"
 
 /datum/ai_controller/basic_controller/bot/medbot
-	behavior_tree_json = "medbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot.bt.json"
 	ai_movement = /datum/ai_movement/jps/bot/medbot
 	reset_keys = list(
 		BB_CURRENT_TARGET,

@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/bot/vibebot
-	behavior_tree_json = "vibebot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/vibebot/vibebot.bt.json"
 	blackboard = list(
 		BB_UNREACHABLE_LIST_COOLDOWN = 2 MINUTES,
 		BB_VIBEBOT_HAPPY_SONG = VIBEBOT_CHEER_SONG,

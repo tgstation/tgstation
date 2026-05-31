@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/bt_node/subtree/simple_ability_combat",
 	"type": "parallel",
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
@@ -42,11 +43,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": [
-									"BB_BASIC_MOB_CURRENT_TARGET",
-									3,
-									false
-								]
+								"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3, false]
 							}
 						]
 					}

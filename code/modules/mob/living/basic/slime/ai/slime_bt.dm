@@ -1,6 +1,6 @@
 /// Slime pet command attack: loops feed_on_slime_target toward BB_CURRENT_PET_TARGET.
 /datum/bt_node/subtree/pet_command/attack/slime
-	behavior_tree_json = "pet_command_attack_slime.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/slime/ai/pet_command_attack_slime.bt.json"
 
 // =============================================================================
 // Slime BT-native behaviors

@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/ai_controller/basic_controller/goldgrub",
 	"type": "selector",
 	"children": [
 		{
@@ -58,36 +59,69 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": { "key": "BB_BOULDER_TARGET", "observer_abort": "BT_ABORT_BOTH" },
+							"config": {
+								"key": "BB_BOULDER_TARGET",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
 							"child": {
 								"type": "sequence",
 								"children": [
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/move_to_target", "args": ["BB_BOULDER_TARGET", 1, false] },
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/grub_eat", "args": ["BB_BOULDER_TARGET"] }
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_BOULDER_TARGET", 1, false]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
+										"args": ["BB_BOULDER_TARGET"]
+									}
 								]
 							}
 						},
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": { "key": "BB_ORE_TARGET", "observer_abort": "BT_ABORT_BOTH" },
+							"config": {
+								"key": "BB_ORE_TARGET",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
 							"child": {
 								"type": "sequence",
 								"children": [
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/move_to_target", "args": ["BB_ORE_TARGET", 1, false] },
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/grub_eat", "args": ["BB_ORE_TARGET"] }
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_ORE_TARGET", 1, false]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
+										"args": ["BB_ORE_TARGET"]
+									}
 								]
 							}
 						},
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": { "key": "BB_VENT_TARGET", "observer_abort": "BT_ABORT_BOTH" },
+							"config": {
+								"key": "BB_VENT_TARGET",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
 							"child": {
 								"type": "sequence",
 								"children": [
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/move_to_target", "args": ["BB_VENT_TARGET", 1, false] },
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/grub_eat", "args": ["BB_VENT_TARGET"] }
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_VENT_TARGET", 1, false]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
+										"args": ["BB_VENT_TARGET"]
+									}
 								]
 							}
 						},
@@ -109,12 +143,23 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": { "key": "BB_LOW_PRIORITY_HUNTING_TARGET", "observer_abort": "BT_ABORT_BOTH" },
+							"config": {
+								"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
 							"child": {
 								"type": "sequence",
 								"children": [
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/move_to_target", "args": ["BB_LOW_PRIORITY_HUNTING_TARGET", 1, false] },
-									{ "type": "leaf", "behavior": "/datum/bt_node/ai_behavior/pull_grub_egg", "args": ["BB_LOW_PRIORITY_HUNTING_TARGET"] }
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_LOW_PRIORITY_HUNTING_TARGET", 1, false]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/pull_grub_egg",
+										"args": ["BB_LOW_PRIORITY_HUNTING_TARGET"]
+									}
 								]
 							}
 						},
@@ -122,7 +167,6 @@
 							"type": "subplan",
 							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-							"tick_rate": "IDLE_BEHAVIOR_RATE",
 							"children": [
 								{
 									"type": "leaf",

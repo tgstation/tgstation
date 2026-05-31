@@ -1,0 +1,1 @@
+{"__t":"/datum/bt_node/composite/selector","__c":[{"__t":"/datum/bt_node/subtree/escape_captivity/pacifist"},{"__t":"/datum/bt_node/subtree/bot_respond_to_summon"},{"__t":"/datum/bt_node/subtree/bot_salute_authority"},{"__t":"/datum/bt_node/subtree/bot_patrol"}]}

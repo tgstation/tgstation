@@ -2,16 +2,16 @@
 
 /// Emagged repairbot behavior: mug robots then deconstruct structures.
 /datum/bt_node/subtree/repairbot_emagged
-	behavior_tree_json = "repairbot_emagged.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/repairbot/repairbot_emagged.bt.json"
 
 /datum/bt_node/subtree/repairbot_repair_target
-	behavior_tree_json = "repairbot_repair_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/repairbot/repairbot_repair_target.bt.json"
 
 /datum/bt_node/subtree/repairbot_find_target
-	behavior_tree_json = "repairbot_find_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/repairbot/repairbot_find_target.bt.json"
 
 /datum/ai_controller/basic_controller/bot/repairbot
-	behavior_tree_json = "repairbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/repairbot/repairbot.bt.json"
 
 
 

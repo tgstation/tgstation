@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/ai_controller/basic_controller/pet_cult",
 	"type": "selector",
 	"children": [
 		{
@@ -13,7 +14,10 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_FRIENDLY_CULTIST", "observer_abort": "BT_ABORT_BOTH" },
+			"config": {
+				"key": "BB_FRIENDLY_CULTIST",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
 			"child": {
 				"type": "sequence",
 				"children": [
@@ -33,7 +37,10 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_OCCUPIED_RUNE", "observer_abort": "BT_ABORT_BOTH" },
+			"config": {
+				"key": "BB_OCCUPIED_RUNE",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
 			"child": {
 				"type": "sequence",
 				"children": [
@@ -53,7 +60,10 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": { "key": "BB_DEAD_CULTIST", "observer_abort": "BT_ABORT_BOTH" },
+			"config": {
+				"key": "BB_DEAD_CULTIST",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
 			"child": {
 				"type": "sequence",
 				"children": [
@@ -94,7 +104,10 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": { "observer_abort": "BT_ABORT_BOTH", "key": "BB_BASIC_MOB_CURRENT_TARGET" },
+							"config": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_BASIC_MOB_CURRENT_TARGET"
+							},
 							"child": {
 								"type": "parallel",
 								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
@@ -130,7 +143,6 @@
 							"type": "subplan",
 							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-							"tick_rate": "IDLE_BEHAVIOR_RATE",
 							"children": [
 								{
 									"type": "leaf",

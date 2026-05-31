@@ -2,6 +2,13 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"type": "shell",
+			"command": "python tools/build_bt.py",
+			"group": "build",
+			"presentation": { "reveal": "silent", "panel": "shared" },
+			"label": "Compile BT Trees"
+		},
+		{
 			"type": "process",
 			"command": "tools/build/build.sh",
 			"windows": {
@@ -17,7 +24,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": "dm: reparse",
+			"dependsOn": ["dm: reparse", "Compile BT Trees"],
 			"label": "Build All"
 		},
 		{

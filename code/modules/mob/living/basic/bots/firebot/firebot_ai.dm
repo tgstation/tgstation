@@ -5,7 +5,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_turfs,
 		BB_UNREACHABLE_LIST_COOLDOWN =  3 MINUTES,
 	)
-	behavior_tree_json = "firebot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/firebot/firebot.bt.json"
 	reset_keys = list(
 		BB_CURRENT_TARGET,
 		BB_BEACON_TARGET,

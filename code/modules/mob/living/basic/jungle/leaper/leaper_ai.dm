@@ -5,7 +5,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "leaper.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/leaper/leaper.bt.json"
 
 /datum/pet_command/use_ability/flop
 	command_name = "Flop"

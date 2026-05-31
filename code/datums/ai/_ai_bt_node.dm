@@ -74,8 +74,8 @@
  */
 /datum/bt_node/subtree
 	node_type = BT_NODE_SUBTREE
-	/// Path to the .bt.json file that is the source of truth for this subtree's behavior_nodes.
-	/// Consumed by the VS Code BT editor extension; not used at runtime.
+	/// Repo-relative path to the .bt.json source file for this subtree (e.g. "code/datums/ai/bots/bot_patrol.bt.json").
+	/// resolve_node_children() derives the compiled path from this and loads the tree at runtime.
 	var/behavior_tree_json = null
 	/// list of BT node descriptors defining this subtree's root.
 	/// resolve_node_children() builds `root` from this during tree construction.

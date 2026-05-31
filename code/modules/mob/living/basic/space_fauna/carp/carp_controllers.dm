@@ -17,7 +17,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "carp.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp.bt.json"
 
 ///Megacarps. The only difference is that they don't flee from scary fishermen and prioritize them.
 /datum/ai_controller/basic_controller/carp/mega
@@ -41,14 +41,14 @@
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	behavior_tree_json = "carp_pet.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_pet.bt.json"
 
 /**
  * AI for carp with a spell.
  * Flow is basically the same as regular carp, except it will try and cast a spell at its target whenever possible and not fleeing.
  */
 /datum/ai_controller/basic_controller/carp/ranged
-	behavior_tree_json = "carp_ranged.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_ranged.bt.json"
 
 /**
  * Carp which bites back, but doesn't look for targets and doesnt do as much damage
@@ -63,4 +63,4 @@
 		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	behavior_tree_json = "carp_passive.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive.bt.json"

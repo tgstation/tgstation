@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/ai_controller/basic_controller/leaper",
 	"type": "selector",
 	"children": [
 		{
@@ -46,22 +47,34 @@
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-														"args": ["BB_LEAPER_BUBBLE", "BB_BASIC_MOB_CURRENT_TARGET"]
+														"args": [
+															"BB_LEAPER_BUBBLE",
+															"BB_BASIC_MOB_CURRENT_TARGET"
+														]
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-														"args": ["BB_LEAPER_FLOP", "BB_BASIC_MOB_CURRENT_TARGET"]
+														"args": [
+															"BB_LEAPER_FLOP",
+															"BB_BASIC_MOB_CURRENT_TARGET"
+														]
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-														"args": ["BB_LEAPER_VOLLEY", "BB_BASIC_MOB_CURRENT_TARGET"]
+														"args": [
+															"BB_LEAPER_VOLLEY",
+															"BB_BASIC_MOB_CURRENT_TARGET"
+														]
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-														"args": ["BB_LEAPER_SUMMON", "BB_BASIC_MOB_CURRENT_TARGET"]
+														"args": [
+															"BB_LEAPER_SUMMON",
+															"BB_BASIC_MOB_CURRENT_TARGET"
+														]
 													},
 													{
 														"type": "leaf",
@@ -88,7 +101,6 @@
 							"type": "subplan",
 							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-							"tick_rate": "IDLE_BEHAVIOR_RATE",
 							"children": [
 								{
 									"type": "leaf",

@@ -6,7 +6,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "pet_cult.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/pet_cult/pet_cult.bt.json"
 
 ///if target gets pulled away, unset him
 /datum/ai_controller/basic_controller/pet_cult/proc/delete_pull_target(datum/source, atom/movable/was_pulling)

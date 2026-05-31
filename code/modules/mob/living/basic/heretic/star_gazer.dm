@@ -402,7 +402,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "star_gazer.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/star_gazer.bt.json"
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")

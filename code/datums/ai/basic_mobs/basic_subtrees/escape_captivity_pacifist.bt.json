@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/bt_node/subtree/escape_captivity/pacifist",
 	"type": "selector",
 	"children": [
 		{

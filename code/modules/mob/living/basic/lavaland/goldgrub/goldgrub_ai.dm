@@ -7,7 +7,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "goldgrub.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/goldgrub/goldgrub.bt.json"
 
 /datum/ai_controller/basic_controller/babygrub
 	blackboard = list(
@@ -19,7 +19,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "babygrub.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/goldgrub/babygrub.bt.json"
 
 /datum/pet_command/grub_spit
 	command_name = "Spit"

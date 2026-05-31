@@ -13,7 +13,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "slime.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/slime/ai/slime.bt.json"
 
 /datum/ai_controller/basic_controller/slime/CancelActions()
 	..()

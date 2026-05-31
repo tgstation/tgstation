@@ -7,7 +7,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
-	behavior_tree_json = "monkey.bt.json"
+	behavior_tree_json = "code/datums/ai/monkey/monkey.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/monkey,
 		BB_MONKEY_AGGRESSIVE = FALSE,

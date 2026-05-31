@@ -6,7 +6,7 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "bee.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/bee/bee.bt.json"
 
 /datum/ai_controller/basic_controller/queen_bee
 	blackboard = list(
@@ -15,5 +15,5 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "queen_bee.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/bee/queen_bee.bt.json"
 

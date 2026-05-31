@@ -39,8 +39,8 @@ multiple modular subtrees with behaviors
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
-	/// Path to the .bt.json file that is the source of truth for this controller's behavior_nodes.
-	/// Use the vs code extension to turn this into a list of behavior nodes.
+	/// Repo-relative path to the .bt.json source file for this controller (e.g. "code/datums/ai/basic_mobs/cleanbot.bt.json").
+	/// init_subtrees() derives the compiled path from this and loads the BT tree at runtime.
 	var/behavior_tree_json = null
 	///All behavior_nodes for the BT tree; populated on init from typepaths or BT_* descriptors.
 	var/list/behavior_nodes
@@ -121,6 +121,19 @@ multiple modular subtrees with behaviors
 
 /// Builds the per-controller BT node tree from behavior_nodes typepaths or descriptors, then finalizes it.
 /datum/ai_controller/proc/init_subtrees()
+	if(!isnull(behavior_tree_json) && !LAZYLEN(behavior_nodes))
+
+		///This kind of sucks to do every time, but I don't know if there's a nicer way to inject .compiled into the path?
+		var/filename = copytext(behavior_tree_json, findlasttext(behavior_tree_json, "/") + 1) // Find the filename
+		var/tree_name = copytext(filename, 1, length(filename) - 4) //Remove the .json extension
+		var/compiled_path = BT_COMPILED_PATH(tree_name) //Find the compiled version of this BT
+		var/datum/bt_node/root = SSai_controllers.load_tree_from_json(compiled_path)
+		if(isnull(root))
+			stack_trace("[type] failed to load behavior tree from compiled JSON: [compiled_path]")
+			return
+		behavior_nodes = list(root)
+		finalize_tree()
+		return
 	if(!LAZYLEN(behavior_nodes))
 		return
 	var/list/temp_subtree_list = list()

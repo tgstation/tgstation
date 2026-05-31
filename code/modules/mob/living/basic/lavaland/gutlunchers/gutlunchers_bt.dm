@@ -94,4 +94,4 @@
 
 /// Mine walls pet command subtree: find mineral wall → move to it → mine it → clear command.
 /datum/bt_node/subtree/pet_command/mine_walls
-	behavior_tree_json = "pet_command_mine_walls.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_mine_walls.bt.json"

@@ -1,0 +1,1 @@
+{"__t":"/datum/bt_node/composite/sequence","__c":[{"__t":"/datum/bt_node/ai_behavior/play_dead","default_behavior_args":[]},{"__t":"/datum/bt_node/ai_behavior/clear_pet_command","default_behavior_args":[]}]}

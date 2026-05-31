@@ -22,7 +22,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "lobstrosity.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/lobstrosity/lobstrosity.bt.json"
 
 /datum/ai_controller/basic_controller/lobstrosity/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -44,14 +44,14 @@
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
 	)
-	behavior_tree_json = "lobstrosity.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/lobstrosity/lobstrosity.bt.json"
 
 ///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm
-	behavior_tree_json = "lobstrosity_calm.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/lobstrosity/lobstrosity_calm.bt.json"
 
 ///A subtype of juvenile lobster AI that has the capricious_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious
-	behavior_tree_json = "lobstrosity_capricious.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/lobstrosity/lobstrosity_capricious.bt.json"
 
 #undef SHRIMP_HARM_RESPONSES

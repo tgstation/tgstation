@@ -60,8 +60,15 @@
 #define BT_DESC_TYPE "__t"
 /// Key storing the children list in a descriptor list
 #define BT_DESC_CHILDREN "__c"
+/// Key storing the default behavior args list in a leaf descriptor
+#define BT_DESC_BEHAVIOR_ARGS "default_behavior_args"
+/// Key storing the override slot ID in a subtree descriptor
+#define BT_DESC_OVERRIDE_ID "override_id"
 
-// --- Runtime subtree override slot IDs ---
-/// Override slot ID for pet command dispatch. Used by set_behavior_tree_override() and the
-/// pet_command_slot subtree node in simple_goon and cleanbot trees.
+/// Resolves the compiled JSON path for a behavior tree by name.
+#define BT_COMPILED_PATH(tree_name) ("build/behavior_trees/[tree_name].compiled.json")
+
+// Runtime subtree IDs. Can be used to override trees at runtime
+
+/// pet_command ID to override based on given pet command
 #define SUBPLAN_ID_PET_COMMAND "pet_command"

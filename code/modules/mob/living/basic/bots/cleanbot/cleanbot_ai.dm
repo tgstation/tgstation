@@ -2,7 +2,7 @@
 #define POST_CLEAN_COOLDOWN 5 SECONDS
 
 /datum/ai_controller/basic_controller/bot/cleanbot
-	behavior_tree_json = "cleanbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/cleanbot/cleanbot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

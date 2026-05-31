@@ -2,7 +2,7 @@
 #define SPECIAL_LINES "special_lines"
 
 /datum/ai_controller/basic_controller/bot/ed209
-	behavior_tree_json = "ed209.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/ed209/ed209.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,

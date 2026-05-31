@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior",
 	"type": "selector",
 	"children": [
 		{

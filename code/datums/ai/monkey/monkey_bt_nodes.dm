@@ -354,13 +354,13 @@
 // --- BT Subtrees ---
 
 /datum/bt_node/subtree/monkey_combat
-	behavior_tree_json = "monkey_combat.bt.json"
+	behavior_tree_json = "code/datums/ai/monkey/monkey_combat.bt.json"
 
 /datum/bt_node/subtree/monkey_find_weapon
-	behavior_tree_json = "monkey_find_weapon.bt.json"
+	behavior_tree_json = "code/datums/ai/monkey/monkey_find_weapon.bt.json"
 
 /datum/bt_node/subtree/monkey_shenanigans
-	behavior_tree_json = "monkey_shenanigans.bt.json"
+	behavior_tree_json = "code/datums/ai/monkey/monkey_shenanigans.bt.json"
 
 /datum/bt_node/subtree/monkey_serve_food
-	behavior_tree_json = "monkey_serve_food.bt.json"
+	behavior_tree_json = "code/datums/ai/monkey/monkey_serve_food.bt.json"

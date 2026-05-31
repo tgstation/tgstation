@@ -2,7 +2,7 @@
 #define BOT_ANGER_THRESHOLD 5
 
 /datum/ai_controller/basic_controller/bot/hygienebot
-	behavior_tree_json = "hygienebot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/hygienebot/hygienebot.bt.json"
 	blackboard = list(
 		BB_SALUTE_MESSAGES = list(
 			"salutes",

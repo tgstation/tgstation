@@ -49,7 +49,7 @@
 	grant_actions_by_list(innate_actions)
 
 /datum/ai_controller/basic_controller/bot/dedbot
-	behavior_tree_json = "dedbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/dedbot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = DEAD,

@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/bt_node/subtree/monkey_combat",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
 	"config": {

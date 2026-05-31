@@ -1,0 +1,1 @@
+{"__t":"/datum/bt_node/composite/sequence","__c":[{"__t":"/datum/bt_node/ai_behavior/run_away_from_target","default_behavior_args":["BB_current_pet_target","BB_basic_current_target_hiding_location"]},{"__t":"/datum/bt_node/ai_behavior/clear_pet_command","default_behavior_args":[]}]}

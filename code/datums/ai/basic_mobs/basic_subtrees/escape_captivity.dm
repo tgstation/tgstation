@@ -57,8 +57,8 @@
  * If none match, returns BT_FAILURE so the next behavior_nodes entry is tried.
  */
 /datum/bt_node/subtree/escape_captivity
-	behavior_tree_json = "escape_captivity.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/escape_captivity.bt.json"
 
 /// Pacifist variant: never attacks objects, only resists.
 /datum/bt_node/subtree/escape_captivity/pacifist
-	behavior_tree_json = "escape_captivity_pacifist.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/escape_captivity_pacifist.bt.json"

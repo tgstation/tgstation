@@ -156,12 +156,12 @@
 
 /// Scatter command: runs away from BB_CURRENT_PET_TARGET then clears the command.
 /datum/bt_node/subtree/pet_command/scatter
-	behavior_tree_json = "pet_command_scatter.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_scatter.bt.json"
 
 /// Swirl command: swarm around BB_SWARM_TARGET continuously (no auto-clear).
 /datum/bt_node/subtree/pet_command/swirl
-	behavior_tree_json = "pet_command_swirl.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_swirl.bt.json"
 
 /// Beehive command: move to hive and enter/exit it.
 /datum/bt_node/subtree/pet_command/beehive
-	behavior_tree_json = "pet_command_beehive.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_beehive.bt.json"

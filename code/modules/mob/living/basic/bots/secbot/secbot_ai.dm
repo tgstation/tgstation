@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/bot/secbot
-	behavior_tree_json = "secbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/secbot/secbot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,

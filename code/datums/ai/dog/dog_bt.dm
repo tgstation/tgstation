@@ -145,4 +145,4 @@
 
 /// Dog harassment: find a TRAIT_HATED_BY_DOGS target nearby, then approach and paw/bite it.
 /datum/bt_node/subtree/dog_harassment
-	behavior_tree_json = "dog_harassment.bt.json"
+	behavior_tree_json = "code/datums/ai/dog/dog_harassment.bt.json"

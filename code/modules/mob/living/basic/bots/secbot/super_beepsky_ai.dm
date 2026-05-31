@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/bot/secbot/super_beepsky
-	behavior_tree_json = "super_beepsky.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/secbot/super_beepsky.bt.json"
 
 /datum/ai_controller/basic_controller/bot/secbot/super_beepsky/on_target_set()
 	. = ..()

@@ -3,7 +3,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 	)
-	behavior_tree_json = "ed209_syndicate.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/ed209/ed209_syndicate.bt.json"
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,

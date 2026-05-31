@@ -1,0 +1,1 @@
+{"__t":"/datum/bt_node/composite/sequence","__c":[{"__t":"/datum/bt_node/ai_behavior/move_to_target","default_behavior_args":["BB_current_home",1,false]},{"__t":"/datum/bt_node/ai_behavior/enter_exit_hive","default_behavior_args":[]},{"__t":"/datum/bt_node/ai_behavior/clear_pet_command","default_behavior_args":[]}]}

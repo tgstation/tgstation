@@ -207,18 +207,18 @@
 
 /// Travel to BB_BOT_SUMMON_TARGET if set, completing when on the same turf.
 /datum/bt_node/subtree/bot_respond_to_summon
-	behavior_tree_json = "bot_respond_to_summon.bt.json"
+	behavior_tree_json = "code/datums/ai/bots/bot_respond_to_summon.bt.json"
 
 /// Salute any commissioned officer in range
 /datum/bt_node/subtree/bot_salute_authority
-	behavior_tree_json = "bot_salute_authority.bt.json"
+	behavior_tree_json = "code/datums/ai/bots/bot_salute_authority.bt.json"
 
 /**
  * Patrol to navbeacons in sequence when autopatrol is enabled and not on cooldown.
  * Priority: travel to current target → find next in chain → find first (nearest) beacon.
  */
 /datum/bt_node/subtree/bot_patrol
-	behavior_tree_json = "bot_patrol.bt.json"
+	behavior_tree_json = "code/datums/ai/bots/bot_patrol.bt.json"
 
 
 #undef BOT_NO_BEACON_PATH_PENALTY

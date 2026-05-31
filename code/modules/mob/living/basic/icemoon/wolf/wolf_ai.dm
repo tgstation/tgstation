@@ -16,6 +16,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "wolf.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/icemoon/wolf/wolf.bt.json"
 
 

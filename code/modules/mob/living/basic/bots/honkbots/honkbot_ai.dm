@@ -4,7 +4,7 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
-	behavior_tree_json = "honkbot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/honkbots/honkbot.bt.json"
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
@@ -34,7 +34,7 @@
 // =============================================================================
 
 /datum/bt_node/subtree/honkbot_slip
-	behavior_tree_json = "honkbot_slip.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/honkbots/honkbot_slip.bt.json"
 
 // =============================================================================
 // Random honk (prob-gated use_mob_ability)

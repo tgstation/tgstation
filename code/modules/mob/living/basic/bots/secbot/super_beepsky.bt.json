@@ -1,4 +1,5 @@
 {
+	"dm_type": "/datum/ai_controller/basic_controller/bot/secbot/super_beepsky",
 	"type": "selector",
 	"children": [
 		{

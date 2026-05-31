@@ -84,6 +84,10 @@ SUBSYSTEM_DEF(ai_controllers)
 		var/datum/bt_node/subtree/sub = node
 		if(!isnull(sub.behavior_nodes) && isnull(sub.root))
 			sub.root = build_node_from_descriptor(sub.behavior_nodes)
+		else if(!isnull(sub.behavior_tree_json) && isnull(sub.root))
+			var/filename = copytext(sub.behavior_tree_json, findlasttext(sub.behavior_tree_json, "/") + 1)
+			var/tree_name = copytext(filename, 1, length(filename) - 4)
+			sub.root = load_tree_from_json(BT_COMPILED_PATH(tree_name))
 
 // Always creates a fresh instance regardless of whether config is provided.
 /datum/controller/subsystem/ai_controllers/proc/resolve_child_node(child_type, list/config)
@@ -114,14 +118,27 @@ SUBSYSTEM_DEF(ai_controllers)
 	stack_trace("get_or_build_node() received unexpected entry type: [entry]")
 	return null
 
+///Loads and decodes a compiled JSON
+/datum/controller/subsystem/ai_controllers/proc/load_tree_from_json(path)
+	var/list/desc = json_decode(file2text(path))
+	return build_node_from_descriptor(desc)
+
 /**
  * Recursively builds a BT node tree from an inline descriptor list.
  * Descriptor keys BT_DESC_TYPE and BT_DESC_CHILDREN are consumed internally;
  * all other keys are written as vars directly onto the new node instance.
+ * Supports both legacy DM-literal descriptors (typepath values) and JSON-decoded
+ * descriptors (string typepaths resolved via text2path).
  */
 /datum/controller/subsystem/ai_controllers/proc/build_node_from_descriptor(list/desc)
-	var/node_type = desc[BT_DESC_TYPE]
+	var/raw_type = desc[BT_DESC_TYPE]
+	var/node_type = ispath(raw_type) ? raw_type : text2path(raw_type)
+	if(isnull(node_type))
+		stack_trace("build_node_from_descriptor(): unknown typepath '[raw_type]'")
+		return null
 	var/datum/bt_node/node = new node_type
+	// For subtree references with behavior_tree_compiled_json, this builds their internal root.
+	resolve_node_children(node)
 	for(var/key in desc)
 		if(key == BT_DESC_TYPE || key == BT_DESC_CHILDREN)
 			continue

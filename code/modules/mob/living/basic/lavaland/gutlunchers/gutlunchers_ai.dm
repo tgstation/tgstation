@@ -10,20 +10,20 @@
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
 	)
-	behavior_tree_json = "gutlunch_warrior.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_warrior.bt.json"
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
-	behavior_tree_json = "gutlunch_baby.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_baby.bt.json"
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	behavior_tree_json = "gutlunch_milk.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_milk.bt.json"
 
 /datum/pet_command/mine_walls
 	command_name = "Mine"

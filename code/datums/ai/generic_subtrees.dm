@@ -49,7 +49,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING //IM NOT DOING ANYTHING ELSE BUT EXTINGUISH MYSELF, GOOD GOD HAVE MERCY.
 
 /datum/bt_node/subtree/generic_hunger
-	behavior_tree_json = "generic_hunger.bt.json"
+	behavior_tree_json = "code/datums/ai/generic_hunger.bt.json"
 
 /datum/bt_node/subtree/generic_play_instrument
-	behavior_tree_json = "generic_play_instrument.bt.json"
+	behavior_tree_json = "code/datums/ai/generic_play_instrument.bt.json"
