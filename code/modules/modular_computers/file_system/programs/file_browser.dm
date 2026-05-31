@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			if(!file)
 				return
 			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
-			if(!filter_filename_pda(newname))
+			if(!length(newname) || !filter_filename_pda(newname))
 				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			if(!file)
 				return
 			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
-			if(!filter_filename_pda(newname))
+			if(!length(newname) || !filter_filename_pda(newname))
 				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
