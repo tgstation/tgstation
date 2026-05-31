@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/user = current_user_ref?.resolve()
-	user.update_usable_leg_status()
+	user?.update_usable_leg_status()
 
 /datum/component/walking_aid/proc/apply_support(mob/living/user)
 	if(current_user_ref)
