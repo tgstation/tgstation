@@ -137,14 +137,14 @@
 		return FALSE
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_task.find_type_priority()
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
 
 	if(isnull(type_to_use))
-		check_for_cycle_end_drop(destination_task, FALSE, work_done_at_point)
+		finish_manipulation()
 		return FALSE
 
 	if(isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
-		check_for_cycle_end_drop(destination_task, FALSE, work_done_at_point)
+		finish_manipulation()
 		return FALSE
 
 	var/original_loc = held_item.loc
@@ -241,7 +241,7 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_task.find_type_priority()
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
 	if(isnull(type_to_use))
 		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
 		return

@@ -507,6 +507,7 @@
 			td["use_post_interaction"] = t.use_post_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
+			td["skip_anchored"] = t.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/cargo/interact))
 			td["task_type"] = TASK_TYPE_INTERACT
@@ -520,6 +521,7 @@
 			td["use_post_interaction"] = t.use_post_interaction
 			td["worker_use_rmb"] = t.worker_use_rmb
 			td["worker_combat_mode"] = t.worker_combat_mode
+			td["skip_anchored"] = t.skip_anchored
 
 		else if(istype(task, /datum/manipulator_task/simple/wait))
 			td["task_type"] = TASK_TYPE_WAIT
@@ -587,7 +589,10 @@
 			return TRUE
 
 		if("unbuckle")
-			unbuckle_all_mobs()
+			var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
+			if(poor_monkey)
+				poor_monkey.drop_all_held_items()
+				poor_monkey.forceMove(get_turf(src))
 			monkey_worker = null
 			return TRUE
 
@@ -894,6 +899,17 @@
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
 				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
 				cycle_target_task.worker_combat_mode = !cycle_target_task.worker_combat_mode
+				return TRUE
+			return FALSE
+
+		if("toggle_skip_anchored")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/unanchor_target = target_task
+				unanchor_target.skip_anchored = !unanchor_target.skip_anchored
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/unanchor_target = target_task
+				unanchor_target.skip_anchored = !unanchor_target.skip_anchored
 				return TRUE
 			return FALSE
 
