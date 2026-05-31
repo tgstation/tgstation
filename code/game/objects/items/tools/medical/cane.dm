@@ -14,7 +14,7 @@
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 	/// The amount of slowdown to reduce for a limbless leg
-	var/limbless_slowdown_modifier = 0.75 // reduces slowdown by 25%
+	var/limbless_slowdown_modifier = 0.6 // reduces slowdown by 40%
 	/// Does this cause waddling when held
 	var/causes_waddling = FALSE
 
@@ -41,7 +41,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
-	limbless_slowdown_modifier = 0.4
+	limbless_slowdown_modifier = 0.4 // reduces slowdown by 60%
 	causes_waddling = TRUE
 
 /obj/item/cane/crutch/Initialize(mapload)
@@ -95,7 +95,6 @@
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-		user.update_usable_leg_status()
 
 	if(!HAS_TRAIT(src, TRAIT_BLIND_TOOL))
 		ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)

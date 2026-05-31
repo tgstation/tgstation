@@ -16,9 +16,9 @@
 	/// Weakref to the mob currently being supported
 	var/datum/weakref/current_user_ref
 	/// The amount of slowdown to reduce for a limbless leg
-	var/limbless_slowdown_modifier = 0.75 // reduces slowdown by 25%
+	var/limbless_slowdown_modifier = 0.6 // reduces slowdown by 40%
 
-/datum/component/walking_aid/Initialize(limbless_slowdown_modifier = 0.65, required_trait = null, waddling = FALSE)
+/datum/component/walking_aid/Initialize(limbless_slowdown_modifier = 0.6, required_trait = null, waddling = FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -69,7 +69,7 @@
 /datum/component/walking_aid/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list["walking-aid"] = "It can be help lessen the slowdown caused from a missing or injured leg, when held on the same side as the injury."
+	examine_list["walking-aid"] = "It can help lessen the slowdown caused from a missing or injured leg, when held on the same side as the injury."
 
 // Updates our leg status when wielded/unwielded a two handed walking aid like a spear
 /datum/component/walking_aid/proc/update_legs(atom/source)
