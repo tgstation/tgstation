@@ -30,7 +30,7 @@
 
 /datum/action/mirror_talk/Trigger(mob/clicker, trigger_flags)
 	if(!..())
-		return .
+		return FALSE
 	var/obj/structure/mirror/mirror = astype(owner.loc)
 	if(!mirror)
 		return FALSE
