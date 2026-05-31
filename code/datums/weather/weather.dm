@@ -13,9 +13,10 @@
  */
 
 /datum/weather
-	/// name of weather
+	abstract_type = /datum/weather
+	/// Name of weather
 	var/name = "space wind"
-	/// description of weather
+	/// Description of weather
 	var/desc = "Heavy gusts of wind blanket the area, periodically knocking down anyone caught in the open."
 	/// The message displayed in chat to foreshadow the weather's beginning
 	var/telegraph_message = span_warning("The wind begins to pick up.")
@@ -326,7 +327,7 @@
  */
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
-		return
+		return FALSE
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type), src)
 	stage = MAIN_STAGE
 	update_areas()
@@ -335,6 +336,7 @@
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration, TIMER_UNIQUE)
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
+	return TRUE
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -345,12 +347,13 @@
  */
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
-		return
+		return FALSE
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type), src)
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	send_alert(end_message, end_sound, end_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(end)), end_duration, TIMER_UNIQUE)
+	return TRUE
 
 /**
  * Fully ends the weather
@@ -361,7 +364,7 @@
  */
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return
+		return FALSE
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type), src)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED)
 	stage = END_STAGE
@@ -373,6 +376,7 @@
 	if(target_trait)
 		for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
 			UnregisterSignal(affected, COMSIG_MOB_LOGIN)
+	return TRUE
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx, alert_sfx_vol = 100)

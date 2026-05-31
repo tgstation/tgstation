@@ -347,7 +347,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /obj/machinery/power/weather_tower/proc/get_summonable_weather_types()
 	. = list(
 		/datum/weather/ash_storm,
-		/datum/weather/rain_storm,
+		/datum/weather/particle/rain_storm,
 		/datum/weather/sand_storm,
 		/datum/weather/snow_storm,
 	)

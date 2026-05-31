@@ -1,16 +1,14 @@
-/datum/weather/rain_storm
+/datum/weather/particle/rain_storm
 	name = "rain"
 	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
 
+	particle_type = /particles/weather/rain_storm
 	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
-	telegraph_overlay = "rain_low"
 	telegraph_duration = 30 SECONDS
 
 	weather_message = span_userdanger("<i>Rain pours down around you!</i>")
-	weather_overlay = "rain_high"
 
 	end_message = span_bolddanger("The downpour gradually slows to a light shower.")
-	end_overlay = "rain_low"
 	end_duration = 30 SECONDS
 
 	weather_duration_lower = 3 MINUTES
@@ -27,10 +25,10 @@
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
 	whitelist_weather_reagents = list(/datum/reagent/water)
 
-/datum/weather/rain_storm/get_playlist_ref()
+/datum/weather/particle/rain_storm/get_playlist_ref()
 	return GLOB.rain_storm_sounds
 
-/datum/weather/rain_storm/telegraph()
+/datum/weather/particle/rain_storm/telegraph()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
@@ -43,39 +41,55 @@
 
 	return ..()
 
-/datum/weather/rain_storm/start()
+/datum/weather/particle/rain_storm/start()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/middle
 	return ..()
 
-/datum/weather/rain_storm/wind_down()
+/datum/weather/particle/rain_storm/wind_down()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/end
 	return ..()
 
-/datum/weather/rain_storm/end()
+/datum/weather/particle/rain_storm/end()
 	GLOB.rain_storm_sounds.Cut()
 	return ..()
 
-/datum/weather/rain_storm/blood
+/particles/weather/rain_storm
+	icon = 'icons/effects/particles/generic.dmi'
+	icon_state = "drop"
+	color = "#ccffff"
+	position = generator(GEN_BOX, list(-510, -256, 0), list(400, 512, 0))
+	grow = list(-0.01, -0.01)
+	gravity = list(0, -10, 0.5)
+	drift = generator(GEN_CIRCLE, 0, 1) // Some random movement for variation
+	friction = 0.3  // shed 30% of velocity and drift every 0.1s
+	transform = null // Rain is directional - so don't make it "3D"
+	//Weather effects, max values
+	min_spawn = 50
+	max_spawn = 250
+	wind_strength = 2
+	spin = 0
+
+/datum/weather/particle/rain_storm/blood
 	whitelist_weather_reagents = list(/datum/reagent/blood)
 	probability = 0 // admeme event
 
 // Fun fact - if you increase the weather_temperature higher than LIQUID_PLASMA_BP
 // the plasma rain will vaporize into a gas on whichever turf it lands on
-/datum/weather/rain_storm/plasma
+/datum/weather/particle/rain_storm/plasma
 	whitelist_weather_reagents = list(/datum/reagent/toxin/plasma)
 	probability = 0 // maybe for icebox maps one day?
 
-/datum/weather/rain_storm/deep_fried
+/datum/weather/particle/rain_storm/deep_fried
 	weather_temperature = 455 // just hot enough to apply the fried effect
 	whitelist_weather_reagents = list(/datum/reagent/consumable/nutriment/fat/oil)
 	weather_flags = (WEATHER_TURFS | WEATHER_INDOORS)
 	probability = 0 // admeme event
 
-/datum/weather/rain_storm/acid
+/datum/weather/particle/rain_storm/acid
 	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
 
 	telegraph_duration = 40 SECONDS
@@ -97,7 +111,7 @@
 	)
 	probability = 0
 
-/datum/weather/rain_storm/wizard
+/datum/weather/particle/rain_storm/wizard
 	name = "magical rain"
 	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
 
@@ -116,7 +130,7 @@
 	probability = 0 // shouldn't spawn normally
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER)
 
-/datum/weather/rain_storm/wizard/New(z_levels, list/weather_data)
+/datum/weather/particle/rain_storm/wizard/New(z_levels, list/weather_data)
 	if(length(GLOB.wizard_rain_reagents)) // the wizard event has already been run once and setup the whitelist
 		whitelist_weather_reagents = GLOB.wizard_rain_reagents
 		return ..()
