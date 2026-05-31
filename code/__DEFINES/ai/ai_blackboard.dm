@@ -241,3 +241,8 @@
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
+
+///Currently enraged
+#define BB_BASIC_MOB_ENRAGE "BB_enraged"
+///Previous melee cooldown
+#define BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN "BB_previous_melee_cooldown"
