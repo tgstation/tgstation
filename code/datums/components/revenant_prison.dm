@@ -6,7 +6,7 @@
 	// ckey of the player who controlled it when it was imprisoned
 	var/old_ckey
 	// mirror talk ability which is enabled if the revenant gets contained inside the mirror
-	var/datum/action/cooldown/mirror_talk/mirror_talk
+	var/datum/action/mirror_talk/mirror_talk
 
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
 	if(create_on_release)
@@ -68,6 +68,3 @@
 
 /datum/component/revenant_prison/PostTransfer(datum/new_parent)
 	revenant.forceMove(new_parent)
-	if(istype(new_parent, /obj/structure/mirror))
-		var/datum/action/cooldown/mirror_talk/new_ability = new
-		new_ability.Grant(revenant)
