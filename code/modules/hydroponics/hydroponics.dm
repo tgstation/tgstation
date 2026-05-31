@@ -192,7 +192,7 @@
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
 /obj/machinery/hydroponics/constructable/on_deconstruction(disassembled)
-	current_soil?.forceMove(drop_location())
+	src.current_soil?.forceMove(drop_location())
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
@@ -1104,14 +1104,13 @@
 				return
 			src.current_soil = oursoil.stored_soil
 			src.RefreshParts()
-			src.tray_flags = oursoil.stored_soil.tray_flags
-			src.current_soil_overlay = "[oursoil.stored_soil.icon_state]_tray"
+			src.tray_flags = current_soil.tray_flags
+			src.current_soil_overlay = "[current_soil.icon_state]_tray"
 			src.name = "botanic tray"
-			src.desc = "A basin used to grow plants in. Filled with [oursoil.stored_soil.name]."
+			src.desc = "A basin used to grow plants in. Filled with [current_soil.name]."
 			oursoil.stored_soil.forceMove(src)
-			oursoil.stored_soil = null
+			update_appearance()
 			qdel(oursoil)
-			src.update_appearance()
 			return
 		else
 			balloon_alert(user, "tray is full")
