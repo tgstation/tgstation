@@ -73,10 +73,7 @@
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_clean_target: no reachable clean target in range ([length(found)] candidates, [length(ignore_list)] ignored)")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Execute clean
-// =============================================================================
-
+///clean that shit bro fr fr 67
 /datum/bt_node/ai_behavior/execute_clean
 
 /datum/bt_node/ai_behavior/execute_clean/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
@@ -152,10 +149,11 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Pet command: clean
-// =============================================================================
 
+/datum/bt_node/subtree/clean_pet_target
+	behavior_tree_json = "clean_pet_target.bt.json"
+
+///Tells the cleanbot to go clean a target
 /datum/pet_command/clean
 	command_name = "Clean"
 	command_desc = "Command a cleanbot to clean the mess."
@@ -178,9 +176,7 @@
 	if(QDELETED(target))
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
-	// Copy pet target into the cleaning blackboard key so the BT cleaning branch picks it up next tick
-	controller.set_blackboard_key(BB_CURRENT_TARGET, target)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/clean_pet_target)
 
 #undef BOT_CLEAN_PATH_LIMIT
 #undef POST_CLEAN_COOLDOWN

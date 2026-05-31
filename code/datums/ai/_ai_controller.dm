@@ -203,13 +203,16 @@ multiple modular subtrees with behaviors
 			continue
 		var/value = desc[key]
 		if(islist(value))
-			var/list/resolved = value.Copy()
+			var/list/resolved = value
 			for(var/i in 1 to length(resolved))
-				if(istext(resolved[i]) && copytext(resolved[i], 1, 2) == "/")
-					resolved[i] = text2path(resolved[i])
-			value = resolved
-		else if(istext(value) && copytext(value, 1, 2) == "/")
-			value = text2path(value)
+				if(istext(resolved[i]))
+					var/as_path = text2path(resolved[i])
+					if(!isnull(as_path))
+						resolved[i] = as_path
+		else if(istext(value))
+			var/as_path = text2path(value)
+			if(!isnull(as_path))
+				value = as_path
 		node.vars[key] = value
 	var/list/children_descs = desc[BT_DESC_CHILDREN]
 	if(LAZYLEN(children_descs))
@@ -493,7 +496,7 @@ multiple modular subtrees with behaviors
 	if(current_type == datum_type)
 		return
 
-	CancelActions()
+
 
 	if(isnull(datum_type))
 		slot.override_node = null
@@ -994,7 +997,7 @@ multiple modular subtrees with behaviors
 	var/active_node_label = "(none)"
 	if(active_execution_index)
 		for(var/datum/bt_node/root_node as anything in behavior_nodes)
-			var/found = root_node.find_by_index(active_execution_index)
+			var/datum/bt_node/found = root_node.find_by_index(active_execution_index)
 			if(found)
 				active_node_label = found.get_label()
 				break

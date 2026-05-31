@@ -2,5 +2,5 @@
 	"dm_type": "/datum/bt_node/subtree/pet_command/stay",
 	"type": "leaf",
 	"behavior": "/datum/bt_node/ai_behavior/wait",
-	"args": ["", true]
+	"args": [0]
 }
