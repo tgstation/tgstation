@@ -2,16 +2,8 @@
 /datum/ai_behavior/run_away_from_target
 	parent_type = /datum/bt_node/ai_behavior/run_away_from_target
 
-// =============================================================================
-// BT-native flee behavior
-// =============================================================================
 
-/**
- * BT-native flee behavior. Runs as a leaf in a BT_SELECTOR; returns BT_FAILURE when the mob
- * has reached a safe distance, allowing the selector to fall through to an attack branch.
- * Movement is delegated to the controller's ai_movement (same as move_to_target).
- * Replaces /datum/ai_behavior/run_away_from_target for BT controllers.
- */
+///Tries to move away from target
 /datum/bt_node/ai_behavior/run_away_from_target
 	/// Distance to the current escape waypoint at which we consider it reached and plot the next one.
 	var/required_distance = 0
@@ -31,15 +23,13 @@
 	return ..()
 
 /datum/bt_node/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
-	if(controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // Told to stop; return FAILURE so selector falls through
 
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target) || !can_see(controller.pawn, target, run_distance))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // Out of range — return FAILURE so selector can attack
 
 	if(get_dist(controller.pawn, controller.current_movement_target) > required_distance)
-		return AI_BEHAVIOR_DELAY // Still heading to the escape point
+		return AI_BEHAVIOR_DELAY
 
 	if(plot_path_away_from(controller, target))
 		return AI_BEHAVIOR_DELAY // Keep fleeing
