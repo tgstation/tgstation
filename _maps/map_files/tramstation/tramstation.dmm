@@ -50645,7 +50645,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "qLx" = (
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"

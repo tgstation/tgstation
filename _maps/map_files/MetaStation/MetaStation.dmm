@@ -1978,7 +1978,7 @@
 /area/station/commons/lounge)
 "aKs" = (
 /obj/machinery/bouldertech/refinery{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/conveyor{
 	id = "mining"
@@ -7409,7 +7409,9 @@
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
 "cBZ" = (
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 1
+	},
 /obj/machinery/conveyor{
 	id = "mining"
 	},

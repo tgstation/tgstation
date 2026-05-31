@@ -444,6 +444,8 @@
   - qol: merged large welding tool tank with engi omnitool for engiborg
   - bugfix: examining the omnitool will reveal details about its internal tool such
       as multitool buffer, welding fuel left etc
+  TealSeer:
+  - image: lights on security cameras glow in the dark now
   Wisemonster:
   - bugfix: Fixed cyborg's recharging guns not recharging
   levels0:
@@ -452,3 +454,158 @@
   soulware1:
   - rscadd: New reactions for water variants that make foam
   - code_imp: New foam types that either slip or last longer or shorter
+2026-05-25:
+  ElGitificador:
+  - sound: added sound feedback to supplexing a rod
+  Melbert:
+  - balance: 'Spacer: Bonus to drift speed no longer stacks with jetpack speed - only
+      the greater of the two effects is applied.'
+  SmArtKar:
+  - admin: Added conversion and deconversion logging to Lunatics
+2026-05-26:
+  ArrisFairburne:
+  - qol: Added more description text to tank transfer valves so it's clearer what
+      can be done with them
+  - qol: Clicking on a tank with a tank transfer valve will now attach it directly
+  ElGitificador:
+  - sound: supplexing rods sound fix
+  EnterTheJake:
+  - bugfix: Traitor Wraith cloaking module now reactivates after the appropriate amount
+      of time has passed.
+  Fghj240:
+  - balance: mending touch can partially heal limbs
+  - balance: mending touch no longer always transfers critical wounds when powered
+      up
+  - bugfix: mending touch blood drain properly capped
+  - code_imp: removed unnecessary check from mending touch
+  - spellcheck: mending touch lose text reworded for clarity and it no longer assumes
+      you only have one hand.
+  FlufflesTheDog:
+  - bugfix: Fix an error when trying to use the cargo app with an id card lacking
+      a job
+  - bugfix: Fix sometimes spawning with a scarred eye despite not having the quirk
+  JohnFulpWillard:
+  - bugfix: pAIs can use their instruments.
+  SmArtKar:
+  - bugfix: Fixed inventory items being stuck in ghosts' screens
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: the your mother hallucination for plasmapeople shows the plasmapersons
+      actual mother
+  Thunder12345:
+  - bugfix: The stray slow tile in Icebox perma has been removed.
+  Thunder12345 and Hugbug:
+  - bugfix: CQC can no longer steal backtank misters and other tethered items.
+  lelandkemble:
+  - qol: Scanned wounds stay scanned while being healed
+  - bugfix: Ghost of Poly possession pulses the purple aura like it's supposed to
+  strandsofivy:
+  - bugfix: AIs should be able to access request consoles correctly now.
+  timothymtorres:
+  - bugfix: Fix negative bloodloss effects being ignored by determined status
+  vinylspiders:
+  - bugfix: internal organs should not trigger needless updates in the char preview
+      anymore
+2026-05-27:
+  SirNightKnight (sprites), JohnFulpWillard:
+  - rscdel: Deleted the "IC" tab of the stat panel.
+  - bugfix: Lightgeists can't emote or pull as intended.
+  - bugfix: Blob minions can't pull again.
+  - qol: Martial Art users now have an action button for their artstyle-related businesses,
+      rather than it being in the stat panel.
+  - qol: You can now right-click the move up/down UI buttons to look in the direction
+      without moving.
+  theselfish, INFRARED_BARON:
+  - rscadd: The Captain now has a Bicorne, and matching attire...
+2026-05-28:
+  1393F:
+  - spellcheck: Some references to the cult flagellant robes have been removed
+  FalloutFalconPlays, Ben10Omintrix:
+  - rscadd: Adds an element for Runescape hitsplats
+  LT3:
+  - rscadd: Janitors now have perfect aim when throwing things into disposal units
+  Melbert:
+  - code_imp: The "power failure" event should be less laggy.
+  - bugfix: Fixed APCs reporting an incorrect duration during "power failure" events.
+      Previously, the reported duration was half of the expected time. You may see
+      the timer go up to 4 minutes now - however in practice, the duration of the
+      event is unchanged.
+  - bugfix: Fixed saboteur effect on APCs being 2x the expected duration - very similar
+      to the aforementioned APC issue.
+  SmArtKar:
+  - balance: Mining mobs now prioritize humans over basicmobs, with exception of red
+      and black raptors - those are prioritized over humans instead.
+  Wisemonster:
+  - rscadd: Added a flash to the QM's locker
+  lelandkemble:
+  - spellcheck: Maximum quality food is referred to as "Divine" rather than "Godlike"
+  mcbalaam:
+  - bugfix: Vote panel doesn't close for the admin cancelling the vote now
+  timothymtorres:
+  - bugfix: Fix limping not switching legs when using a cane
+  - rscadd: Podpeople blood can now be restored by E-Z Nutrient, which functions similarly
+      to iron pills for humans.
+  - rscadd: Plant nutriment (Liquid Earthsquake, Robust Harvest, E-Z Nutrient, Left
+      4 Zed, Enduro Grow) now heals toxin damage for mobs with the MOB_PLANT biotype.
+2026-05-29:
+  SmArtKar:
+  - bugfix: Fixed Gene Stim missing an icon in ling UI
+  Wisemonster:
+  - bugfix: Starting boulder refineries and smelters should start facing the correct
+      direction.
+  lelandkemble:
+  - qol: Support holoparasites can teleport things between two station Z-levels
+  - bugfix: Support holoparasite teleportation no longer runtimes when attempting
+      to teleport a turf
+  - bugfix: Bitrunners no longer take double damage in-domain, and do take damage
+      to their real bodies
+  - balance: For every living, connected bitrunner remaining in a domain, bitrunning
+      glitches will take five times longer to escape.
+  - bugfix: You can no longer softlock any virtual domain that uses points by crowbarring
+      the reward turf before the crate spawns.
+  timothymtorres:
+  - rscadd: The heart organ now controls how fast or slow the blood rate is regenerated
+      for a mob. The health of the heart organ also affects the blood rate, so the
+      more damage it takes, the less blood it pumps.
+2026-05-30:
+  ArcaneMusic:
+  - balance: Non-boss ore vents may no longer contain bluespace crystals and diamonds.
+  - balance: All ore vents now have a flat 7% chance to spawn an artifact boulder.
+  - balance: There are now 2 new artifact boulder types, which may contain 1-5 sheets
+      worth of bluespace crystals or diamonds respectively. These boulders may have
+      their rare ore boosted via chemical boosting.
+  - balance: ore distribution in vents have been adjusted to accommodate for bluespace
+      and diamonds being removed from vents accordingly.
+  - spellcheck: ' Ore vents now explain the artifact boulder mechanic on examine.'
+  Melbert:
+  - refactor: Refactored dna injectors (both the ones that change appearance and activate
+      mutations), report any oddities with them like failing to revert your appearance
+      or mutations not applying correctly
+  - code_imp: Ever so slightly changed how diseases tick, report any oddities
+  - code_imp: Ever so slightly changed how some species mechanics tick, like golems
+      and slimes, report any oddities
+  - code_imp: The code behind printing appearance modifying dna injectors from genetics
+      has changed, report any oddities
+  - code_imp: Some backend transformation sting code changed slightly, report any
+      oddities
+  - code_imp: Zombie "idle" groaning is now tied to the tongue rather than the species
+      itself
+  - admin: Force-injecting someone with HARS give an admin alert, the same as force-injecting
+      someone with Monkey
+  - bugfix: Several methods of copying DNA (including transformation sting) mistakenly
+      copied "active mutations", this has been fixed
+  NiklasNeighbor:
+  - qol: gives the voidwalker nightvision. Why wasn't this a thing before??
+  TelevisionStatic:
+  - rscadd: Adds an autolathe circuit board as one of the purchasable goodies in the
+      cargo market.
+  Thunder12345:
+  - bugfix: The honkbot on the casino emergency shuttle has been told not to abandon
+      its post.
+  Wisemonster:
+  - qol: Debug bluespace rpeds now come stocked with their respective tier of mega
+      cells
+  lelandkemble:
+  - bugfix: Patrol bounties properly pay those who complete them
+2026-05-31:
+  Melbert:
+  - bugfix: Fix mutators printed from genetics

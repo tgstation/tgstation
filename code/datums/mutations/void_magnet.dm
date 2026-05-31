@@ -60,7 +60,7 @@
 /datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if(!isliving(source) || HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD || HAS_TRAIT(source, TRAIT_NO_TRANSFORM))
+	if(HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD)
 		return
 
 	if(!is_valid_target(source))

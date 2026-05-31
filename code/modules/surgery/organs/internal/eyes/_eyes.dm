@@ -426,6 +426,8 @@
 	. = ..()
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
+	fix_scar(LEFT_EYE_SCAR)
+	fix_scar(RIGHT_EYE_SCAR)
 
 /obj/item/organ/eyes/on_low_damage_received()
 	if(damage >= high_threshold)

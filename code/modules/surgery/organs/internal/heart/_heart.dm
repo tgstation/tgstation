@@ -24,6 +24,7 @@
 	cell_line = CELL_LINE_ORGAN_HEART
 	cells_minimum = 1
 	cells_maximum = 2
+	visual = FALSE
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
@@ -35,7 +36,10 @@
 	var/beat = BEAT_NONE
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE
+	/// The message that is displayed when listening to a heart via a stethoscope
 	var/beat_noise = "a rhythmic thumping"
+	/// The rate at which blood is pumped by the heart is multiplied by this (value of 0 disables blood regeneration entirely)
+	var/blood_regeneration_multiplier = 1
 
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
@@ -91,6 +95,14 @@
 /obj/item/organ/heart/OnEatFrom(eater, feeder)
 	. = ..()
 	Stop()
+
+/// Returns how effectively this heart regenerates the owner's blood based on organ health
+/obj/item/organ/heart/proc/get_blood_regeneration_multiplier()
+	if(!is_beating() || (organ_flags & (ORGAN_FAILING|ORGAN_EMP)))
+		return 0
+
+	var/health_percent = clamp((maxHealth - damage) / maxHealth, 0, 1)
+	return blood_regeneration_multiplier * health_percent
 
 /// Checks if the heart is beating.
 /// Can be overridden to add more conditions for more complex hearts.
@@ -203,16 +215,12 @@
 	beat_noise = "a steady fsssh of hydraulics"
 	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
-
 	/// How long our stabilization lasts for.
 	var/stabilization_duration = 10 SECONDS
-
 	/// Whether our heart suppresses bleeders and restores blood automatically.
 	var/bleed_prevention = FALSE
-
 	/// The probability that our blood replication causes toxin damage.
 	var/toxification_probability = 20
-
 	/// Chance of permanent effects if emp-ed.
 	var/emp_vulnerability = 80
 
@@ -251,8 +259,6 @@
 	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
 
-		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
-
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
 
@@ -281,6 +287,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	bleed_prevention = TRUE
 	emp_vulnerability = 40
+	blood_regeneration_multiplier = 9 // regenerates 2.25u of blood per tick (default is 0.25u)
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -342,9 +349,7 @@
 	desc = "It beats ever strong."
 	icon_state = "heart-evolved-on"
 	base_icon_state = "heart-evolved"
-
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
-
 	/// Chance to heal per on_life
 	var/healing_probability = 10
 	/// Base healing we receive per tick at 0 damage and for standard versions
@@ -370,7 +375,6 @@
 
 	healing_probability = 5
 	base_healing = 0.5
-
 	// How much damage each magic block deals to us
 	var/damage_per_block = 50
 
