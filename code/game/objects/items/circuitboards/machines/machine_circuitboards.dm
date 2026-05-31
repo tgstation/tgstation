@@ -1320,11 +1320,11 @@
 	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
 		name = "Hydroponics Tray"
 		build_path = /obj/machinery/hydroponics/constructable
-		balloon_alert(user, "Defaulting indicator location.")
+		balloon_alert(user, "defaulting indicator location.")
 	else
 		name = "Old-Designed Hydropoincs Tray"
 		build_path = /obj/machinery/hydroponics/constructable/oldstyle
-		balloon_alert(user, "Moving the indicators...")
+		balloon_alert(user, "moving the indicators...")
 	return TRUE
 
 /obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
