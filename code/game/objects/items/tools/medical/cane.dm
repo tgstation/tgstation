@@ -20,7 +20,7 @@
 
 /obj/item/cane/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/walking_aid, causes_waddling, get_walking_aid_required_trait(), limbless_slowdown_modifier)
+	AddComponent(/datum/component/walking_aid, limbless_slowdown_modifier, get_walking_aid_required_trait(), causes_waddling)
 
 /// Determines if a trait is required to be used as a walking aid (ex. foldable canes)
 /obj/item/cane/proc/get_walking_aid_required_trait()

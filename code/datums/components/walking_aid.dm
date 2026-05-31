@@ -18,7 +18,7 @@
 	/// The amount of slowdown to reduce for a limbless leg
 	var/limbless_slowdown_modifier = 0.75 // reduces slowdown by 25%
 
-/datum/component/walking_aid/Initialize(waddling = FALSE, required_trait = null, limbless_slowdown_modifier = 0.75)
+/datum/component/walking_aid/Initialize(limbless_slowdown_modifier = 0.65, required_trait = null, waddling = FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
