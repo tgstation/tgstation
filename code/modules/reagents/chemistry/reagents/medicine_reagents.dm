@@ -2021,6 +2021,6 @@
 
 /datum/reagent/medicine/immunosilence
 	name = "ImmunoSilence"
-	description = "While in the organism prevents viruses from being naturaly cured."
+	description = "Prevents viruses from being naturally cured."
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	metabolized_traits = list(TRAIT_NO_SELF_CURE)

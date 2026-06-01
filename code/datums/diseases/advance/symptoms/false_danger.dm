@@ -15,7 +15,7 @@
 	power = 2
 
 	threshold_descs = list(
-		"Transmission -5" = "The virus is able to able to heal the host, with the healing speed being increased in accordance to it''s severity.",
+		"Transmission -5" = "The virus is able to able to heal the host, with the healing speed being increased in accordance to its severity.",
 	)
 
 	var/severityHealBonus = 0.25
