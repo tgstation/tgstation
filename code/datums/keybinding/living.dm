@@ -247,7 +247,7 @@
 	if(.)
 		return
 	var/mob/living/mob_user = user.mob
-	if(!LAZYLEN(mob_user.do_afters))
+	if(!LAZYLEN(mob_user.do_afters) || HAS_TRAIT(mob_user, TRAIT_INCAPACITATED))
 		return
 	// this is currently the best way to stop all ongoing doafters
 	mob_user.incapacitate(0.1 SECONDS, ignore_canstun = TRUE)
