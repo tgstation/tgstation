@@ -41,10 +41,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
-	// Abilities of the tendril
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash/tendril_lash
-	var/datum/action/cooldown/mob_cooldown/tendril_chaser/tendril_chaser
-	var/datum/action/cooldown/mob_cooldown/tendril_cross_spikes/cross_spikes
+	/// Melee attack ability to used in retaliation to melee strikes and whenever it manages to grab someone
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/tendril_melee
 
 /mob/living/basic/mining/tendril/Initialize(mapload)
@@ -55,21 +52,18 @@ GLOBAL_LIST_INIT(tendrils, list())
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
+	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
-	tendril_lash = new(src)
-	tendril_lash.Grant(src)
-	tendril_chaser = new(src)
-	tendril_chaser.Grant(src)
-	cross_spikes = new(src)
-	cross_spikes.Grant(src)
+	var/static/list/abilities = list(
+		/datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash = BB_TENDRIL_LASH,
+		/datum/action/cooldown/mob_cooldown/tendril_chaser = BB_TENDRIL_CHASER,
+		/datum/action/cooldown/mob_cooldown/tendril_cross_spikes = BB_TENDRIL_SPIKES,
+	)
+	grant_actions_by_list(abilities)
+
 	tendril_melee = new(src)
 	tendril_melee.Grant(src)
-
-	ai_controller.set_blackboard_key(BB_TENDRIL_LASH, tendril_lash)
-	ai_controller.set_blackboard_key(BB_TENDRIL_CHASER, tendril_chaser)
-	ai_controller.set_blackboard_key(BB_TENDRIL_SPIKES, cross_spikes)
-
 	AddComponent(/datum/component/revenge_ability, tendril_melee, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]), max_range = 2, target_self = TRUE)
 
 	soundloop = new(src, start_immediately = FALSE)

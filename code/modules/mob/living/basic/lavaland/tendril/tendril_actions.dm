@@ -151,6 +151,30 @@
 	/// Health percentage threshold at which we send out wide charsers after the main target
 	var/wide_chaser_threshold = 0.7
 
+/datum/action/cooldown/mob_cooldown/tendril_chaser/Grant(mob/granted_to)
+	. = ..()
+	RegisterSignal(granted_to, COMSIG_MOB_ABILITY_STARTED, PROC_REF(on_ability_started))
+	RegisterSignal(granted_to, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(on_ability_finished))
+
+// Clean up after ourselves
+/datum/action/cooldown/mob_cooldown/tendril_chaser/Remove(mob/removed_from)
+	UnregisterSignal(removed_from, list(COMSIG_MOB_ABILITY_STARTED, COMSIG_MOB_ABILITY_FINISHED))
+	QDEL_LIST(active_chasers)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_ability_started(mob/living/owner, datum/action/cooldown/activated)
+	SIGNAL_HANDLER
+
+	// Delete all of our chasers when our owner triggers cross spikes as to not cause guaranteed damage
+	if (istype(activated, /datum/action/cooldown/mob_cooldown/tendril_cross_spikes))
+		QDEL_LIST(active_chasers)
+
+/datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_ability_finished(mob/living/owner, datum/action/cooldown/activated)
+	SIGNAL_HANDLER
+
+	if (istype(activated, /datum/action/cooldown/mob_cooldown/tendril_cross_spikes))
+		ResetCooldown()
+
 /datum/action/cooldown/mob_cooldown/tendril_chaser/Activate(atom/target)
 	. = ..()
 	var/primary_type = /obj/effect/temp_visual/effect_trail/tendril_chaser
@@ -168,11 +192,6 @@
 /datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_chaser_destroyed(atom/chaser)
 	SIGNAL_HANDLER
 	LAZYREMOVE(active_chasers, WEAKREF(chaser))
-
-// Clean up after ourselves
-/datum/action/cooldown/mob_cooldown/tendril_chaser/Remove(mob/removed_from)
-	QDEL_LIST(active_chasers)
-	return ..()
 
 /obj/effect/temp_visual/effect_trail/tendril_chaser
 	duration = 10 SECONDS
@@ -252,16 +271,9 @@
 
 /datum/action/cooldown/mob_cooldown/tendril_cross_spikes/Activate(atom/target)
 	disable_cooldown_actions()
-	// Remove all active chasers as to not force guaranteed damage onto players
-	if (istype(owner, /mob/living/basic/mining/tendril))
-		var/mob/living/basic/mining/tendril/tendril = owner
-		QDEL_LIST(tendril.tendril_chaser.active_chasers)
 	spawn_spikes()
 	SLEEP_CHECK_DEATH(0.4 SECONDS, owner)
 	spawn_spikes(inverse = TRUE)
-	if (istype(owner, /mob/living/basic/mining/tendril))
-		var/mob/living/basic/mining/tendril/tendril = owner
-		tendril.tendril_chaser.ResetCooldown()
 	StartCooldown()
 	enable_cooldown_actions()
 	return TRUE
