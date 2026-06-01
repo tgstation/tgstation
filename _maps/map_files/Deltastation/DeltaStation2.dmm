@@ -7387,7 +7387,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "bMI" = (
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/closet/crate/goldcrate/stocked,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
