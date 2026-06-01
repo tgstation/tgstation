@@ -22,7 +22,7 @@
 
 /datum/symptom/heal/false_danger/CanHeal(datum/disease/advance/our_disease)
 	if(our_disease.totalTransmittable() <= -6)
-		return power + our_disease.totalSeverity() * severityHealBonus
+		return power + our_disease.totalSeverity() * severity_heal_bonus
 	return 0
 
 /datum/symptom/heal/false_danger/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
