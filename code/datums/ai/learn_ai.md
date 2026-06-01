@@ -187,6 +187,8 @@ Subplans also expose `loop_delay`, which when set causes a delay between each lo
 
 Subtrees are essentially modularized pieces of tree that can be re-used in different trees. This allows for patternizing common behaviors into a re-useable tree.
 
+One feature of subtrees is that if you are making a subtree, and want to change something when using the subtree depending on the AI, you can assign any field in the subtree as a binding; this makes it editable in any controller (or subtree) that the subtree is used.
+
 ## Editor
 
 The behavior tree editor can be opened via opening one of our .bt.json files. These .bt.json files are specialized json files that format our (sub)trees. In theory these jsons are human-readable, but the editor makes it much easier to parse them and provides a way of baking them into .DM code.
@@ -207,4 +209,4 @@ You can drag these nodes into the node-graph to place them.
 
 You can also change the nodes connections by dragging from either end to another node. This system is currently a bit fidgetty while I figure out how to become a better editor programmer.
 
-Once you are done with your tree, be sure to save the file and if you want to test it press deploy to DM, the button to the right of deploy to DM also deploys ALL other behavior trees.
+Once you are done with your tree, be sure to save the file. The behavior tree will now automatically be used in-game

@@ -1,5 +1,4 @@
 /datum/ai_controller/basic_controller
-	behavior_tree_json = "basic_controller.bt.json"
 	movement_delay = 0.4 SECONDS
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)

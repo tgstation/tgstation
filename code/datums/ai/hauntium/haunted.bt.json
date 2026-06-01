@@ -1,5 +1,79 @@
 {
 	"dm_type": "/datum/ai_controller/haunted",
 	"type": "selector",
-	"children": []
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/item_being_held",
+			"config": {},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"config": {
+							"key": "BB_LIKES_EQUIPPER",
+							"observer_abort": "BT_ABORT_SELF"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/wait",
+							"args": [0]
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/item_escape_grasp",
+						"args": []
+					}
+				]
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": false,
+			"finish_on_primary": false,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"loop_delay": 20,
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/haunted_throw_attack",
+									"args": [
+										"BB_HAUNT_TARGET",
+										"BB_TO_HAUNT_LIST",
+										"BB_HAUNTED_THROW_ATTEMPT_COUNT"
+									]
+								}
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"args": ["BB_HAUNT_TARGET", 3, false]
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/pick_haunt_target",
+					"args": ["BB_HAUNT_TARGET", "BB_TO_HAUNT_LIST"]
+				}
+			]
+		}
+	]
 }
