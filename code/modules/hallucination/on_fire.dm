@@ -118,6 +118,11 @@
 	if(stage <= 0)
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 		if(!active)
+			// so, if you agree, i will add here the some alerts, cause if hallucination is !active
+			// its means that fake fire is extinguished
+			// so after that, we will give fake_hot_temp alert for like 10 second, f. e.
+			// and than its done, nothing else will happen, alert will be removed after 10 secs
+			// should i make it like that?
 			hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, override = TRUE)
 			qdel(src)
 	else
