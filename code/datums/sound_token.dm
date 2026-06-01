@@ -1,6 +1,6 @@
 // Sound tokens, a datumized handler for spatial sound.
 // Uses the spatial grid to track clients in range and add them as listeners
-// Updated by the SSsound_tokens subsystem every tick so that if the source or listener moves, the sound updates accordingly.
+// Updated by the SSsound_tokens subsystem every tick when requested by client so that if the source or listener moves, the sound updates accordingly.
 /datum/sound_token
 	/// The atom playing the sound.
 	var/atom/source
@@ -68,7 +68,7 @@
 		sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	sound.channel = sound_channel
 	sound_duration = SSsounds.get_sound_length(_sound)
-	start_time = world.time
+	start_time = REALTIMEOFDAY
 	if(start_playing)
 		force_update_all_listeners(FALSE)
 
@@ -120,8 +120,6 @@
 
 	if(source_turf.z != listener_turf.z)
 		should_be_muted = TRUE
-		if(should_be_muted && is_muted)
-			return
 
 	var/distance = get_dist(source_turf, listener_turf)
 	if(distance > range)
@@ -228,7 +226,7 @@
 
 ///Calculates the offset to give the sound for people who start hearing it mid-play
 /datum/sound_token/proc/calculate_offset()
-	var/elapsed = world.time - start_time
+	var/elapsed = REALTIMEOFDAY - start_time
 	var/freq_factor = (sound.frequency || 100) / 100
 	var/pitch_factor = (sound.pitch || 100) / 100
 	var/offset = elapsed * freq_factor * pitch_factor

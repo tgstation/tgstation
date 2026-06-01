@@ -183,12 +183,6 @@
 	SEND_SOUND(src, sound_to_use)
 	return TRUE
 
-
-///Creates a sound token, which lets you create spatial audio for !!important!! sounds that need to update as the source or listener move. Please do not use this for every single sound. I have an army of dachshunds that have been trained on the scent of poor use of sound tokens and they are ruthless. Also; this can probably be a macro.
-/proc/play_sound_token(atom/source, sound, range = 10, volume = 50, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
-	return new /datum/sound_token(source, sound, range, volume, falloff_exponent, falloff_distance)
-
-
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S, datum/preference/numeric/volume/volume_preference = null)
 	if(!S)
 		S = sound(get_sfx(soundin))
