@@ -1,0 +1,4 @@
+2026-06-01:
+  SmArtKar:
+  - refactor: Refactors inventory UI to be completely datum and vis_contents-based
+  - bugfix: Observers should no longer see doubled up inventory UIs
