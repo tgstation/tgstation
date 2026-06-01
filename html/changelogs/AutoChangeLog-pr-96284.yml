@@ -1,0 +1,4 @@
+author: "Glamyrio"
+delete-after: True
+changes:
+  - bugfix: "Renamed 2 cameras on MetaStation; first cam was with wrong name and second one was a badnamed"
