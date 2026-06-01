@@ -27,6 +27,16 @@
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
 	whitelist_weather_reagents = list(/datum/reagent/water)
 
+/datum/weather/particle/rain_storm/New(z_levels, list/weather_data)
+	. = ..()
+	if (isnull(weather_reagent) || istype(weather_reagent, /datum/reagent/water) || !weather_color)
+		return
+
+	// Non-water rain gets colored into their reagent's color
+	for (var/list/holder_list as anything in weather_objects)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			holder.particles.color = weather_color
+
 /datum/weather/particle/rain_storm/get_playlist_ref()
 	return GLOB.rain_storm_sounds
 

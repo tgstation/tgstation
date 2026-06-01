@@ -45,10 +45,10 @@
 	friction = 0.3
 	min_spawn = 20
 	max_spawn = 400
-	wind_strength = 10
+	wind_strength = 16
 	spin = generator(GEN_NUM, -5, 5, NORMAL_RAND)
 	/// Y-coordinate of our gravity
-	var/gravity_power = -7
+	var/gravity_power = -12
 
 /particles/weather/ash_storm/animate_severity(severity)
 	. = ..()
@@ -65,10 +65,16 @@
 	max_spawn = 80
 
 /particles/weather/ash_storm/emberfall
-	gravity_power = 1
+	min_spawn = 20
+	max_spawn = 200
+	wind_strength = 3
+	gravity_power = -2
 
 /particles/weather/ash_storm/embers/emberfall
-	gravity_power = 1
+	min_spawn = 20
+	max_spawn = 200
+	wind_strength = 3
+	gravity_power = -2
 
 /datum/weather/particle/ash_storm/get_playlist_ref()
 	return GLOB.ash_storm_sounds
@@ -135,6 +141,3 @@
 
 	particle_type = /particles/weather/ash_storm/emberfall
 	emissive_type = /particles/weather/ash_storm/embers/emberfall
-	min_severity = 1
-	max_severity = 20
-	severity_variation = 2
