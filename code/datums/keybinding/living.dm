@@ -238,8 +238,8 @@
 /datum/keybinding/living/cancel_interactions
 	name = "stop_interactions"
 	full_name = "Cancel Interactions"
-	description = "Cancels any ongoing interactions (such as using a tool, performing surgery, or climbing) \
-		Note that some interactions cannot be interrupted, and it does not affect other player's interacting with you."
+	description = "Cancels any ongoing interactions (such as using a tool, performing surgery, or climbing). \
+		Note that some interactions cannot be interrupted, and you can't cancel other player's interaction with this hotkey."
 	keybind_signal = COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN
 
 /datum/keybinding/living/cancel_interactions/down(client/user, turf/target, mousepos_x, mousepos_y)
