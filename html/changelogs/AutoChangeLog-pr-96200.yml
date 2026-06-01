@@ -1,0 +1,4 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - rscadd: "Added the limper quirk, which makes you limp."
