@@ -54,3 +54,12 @@
 	desc = "Top of the line rocket boots, featuring a precise enough flight mechanism that can enable flight!"
 	icon_state = "jetboots"
 	actions_types = list(/datum/action/item_action/bhop, /datum/action/item_action/toggle_flight)
+	/// Are the jet boots currently flying?
+	var/flight_active = FALSE
+
+/obj/item/clothing/shoes/bhop/rocket/jet/update_icon_state()
+	if(flight_active)
+		icon_state = "jetboots_active"
+	else
+		icon_state = "jetboots"
+	return ..()

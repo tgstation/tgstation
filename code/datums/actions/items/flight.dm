@@ -46,10 +46,11 @@
 	if(!target)
 		return FALSE
 	switch_flight()
+	return TRUE
 
 /// Proc that toggles between flight behavior on the mob being on and off, including the mob's flight, gravity, passtable, and the sounds/visuals.
 /datum/action/item_action/toggle_flight/proc/switch_flight()
-	var/obj/item/target_shoes = target
+	var/obj/item/clothing/shoes/bhop/rocket/jet/target_shoes = target
 	var/mob/living/carbon/human/human_owner = owner
 
 	if(!HAS_TRAIT_FROM(human_owner, TRAIT_MOVE_FLOATING, SHOES_TRAIT))
@@ -67,7 +68,7 @@
 		//visuals
 		burning_audio.start()
 		human_owner.add_overlay(jet_fire)
-		target_shoes.icon_state = "jetboots_active"
+		target_shoes.flight_active = TRUE
 		target_shoes.update_appearance(UPDATE_ICON_STATE)
 		human_owner.update_appearance(UPDATE_OVERLAYS)
 		return
@@ -85,7 +86,7 @@
 	//visuals
 	burning_audio.stop()
 	human_owner.cut_overlay(jet_fire)
-	target_shoes.icon_state = "jetboots"
+	target_shoes.flight_active = FALSE
 	target_shoes.update_appearance(UPDATE_ICON_STATE)
 	human_owner.update_appearance(UPDATE_OVERLAYS)
 
@@ -98,9 +99,9 @@
 	var/turf/location = get_turf(human)
 	if(!location)
 		return FALSE
-
 	if(human.get_item_by_slot(ITEM_SLOT_LEGCUFFED))
 		to_chat(human, span_warning("Your legs are bound! Free yourself first!"))
+		return FALSE
 
 	var/datum/gas_mixture/environment = location.return_air()
 	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
