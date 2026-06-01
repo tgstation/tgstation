@@ -119,46 +119,98 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
+/obj/machinery/camera/analyzer_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return ..()
+	if(isXRay(TRUE))
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool, newloc = src))
+		return ITEM_INTERACT_BLOCKING
+	upgradeXRay(FALSE, TRUE)
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/plasma_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return NONE
+	if(isEmpProof(TRUE))
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 0, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	upgradeEmpProof(FALSE, TRUE)
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/prox_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return NONE
+	if(isMotion())
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool, newloc = src))
+		return ITEM_INTERACT_BLOCKING
+	upgradeMotion()
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/cable_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_WELDED)
+		return NONE
+	if(!astype(tool, /obj/item/stack/cable_coil)?.use(2))
+		to_chat(user, span_warning("You need two lengths of cable to wire [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You add wires to [src]."))
+	camera_construction_state = CAMERA_STATE_WIRED
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/computer_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_FINISHED)
+		return NONE
+	var/obj/item/modular_computer/computer = tool
+	var/note_name = sanitize(computer.name)
+	var/datum/computer_file/program/notepad/notepad_app = locate() in computer.stored_files
+	if(!notepad_app)
+		return ITEM_INTERACT_BLOCKING
+	var/note_text = sanitize(notepad_app.written_note)
+	if(!note_text)
+		return ITEM_INTERACT_BLOCKING
+	display_note(user, note_name, note_text)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/paper_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_FINISHED)
+		return NONE
+	var/obj/item/paper/paper = tool
+	last_shown_paper = paper.copy(paper.type, null)
+	var/note_name = sanitize(last_shown_paper.name)
+	last_shown_paper.camera_holder = WEAKREF(src)
+	display_note(user, note_name)
+
+/obj/machinery/camera/proc/display_note(mob/living/user, title, text)
+	to_chat(user, span_notice("You hold up \the [title] up to the camera..."))
+	user.log_talk(title, LOG_GAME, "Pressed to camera", TRUE)
+	user.changeNext_move(CLICK_CD_MELEE)
+
+/obj/machinery/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
+		return plasma_act(user, tool)
+	else if(isprox(tool))
+		return prox_act(user, tool)
+	else if(istype(tool, /obj/item/stack/cable_coil))
+		return cable_act(user, tool)
+	else if(istype(tool, /obj/item/modular_computer))
+		return computer_act(user, tool)
+
+
+
 /obj/machinery/camera/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(camera_construction_state != CAMERA_STATE_FINISHED || panel_open)
-		if(attacking_item.tool_behaviour == TOOL_ANALYZER)
-			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
-					return
-				upgradeXRay(FALSE, TRUE)
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
-				qdel(attacking_item)
-			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
-		else if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
-			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(attacking_item.use_tool(src, user, 0, amount=1))
-					upgradeEmpProof(FALSE, TRUE)
-					to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
-			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
-		else if(isprox(attacking_item))
-			if(!isMotion())
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
-					return
-				upgradeMotion()
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
-				qdel(attacking_item)
-			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
 	switch(camera_construction_state)
-		if(CAMERA_STATE_WELDED)
-			if(istype(attacking_item, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/attacking_cable = attacking_item
-				if(attacking_cable.use(2))
-					to_chat(user, span_notice("You add wires to [src]."))
-					camera_construction_state = CAMERA_STATE_WIRED
-				else
-					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
-				return
 		if(CAMERA_STATE_FINISHED)
 			if(istype(attacking_item, /obj/item/modular_computer))
 				var/itemname = ""
