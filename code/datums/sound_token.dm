@@ -106,6 +106,8 @@
 	SEND_SOUND(listener_mob, null_sound)
 
 /datum/sound_token/proc/update_listener(mob/listener_mob, update_sound = TRUE)
+	if(QDELETED(src))
+		return
 	if(isnull(listeners[listener_mob]))
 		return
 
