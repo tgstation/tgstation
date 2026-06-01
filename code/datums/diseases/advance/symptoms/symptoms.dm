@@ -34,6 +34,7 @@
 	var/power = 1
 	///A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
+	///If this symptom can be neutered via neutering chems
 	var/can_be_neutered = TRUE
 	var/list/thresholds
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()

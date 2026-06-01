@@ -17,19 +17,16 @@
 	threshold_descs = list(
 		"Transmission -5" = "The virus is able to able to heal the host, with the healing speed being increased in accordance to its severity.",
 	)
-
-	var/severityHealBonus = 0.25
+	///Increases the healing (if active) of the virus by this percentage for each severity level above 1
+	var/severity_heal_bonus = 0.25
 
 /datum/symptom/heal/false_danger/CanHeal(datum/disease/advance/our_disease)
 	if(our_disease.totalTransmittable() <= -6)
-		return power + our_disease.totalSeverity()*severityHealBonus
+		return power + our_disease.totalSeverity() * severityHealBonus
 	return 0
 
 /datum/symptom/heal/false_danger/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
 
-	var/needs_update = FALSE
-	needs_update += carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
-	if(needs_update)
-		carbon_host.updatehealth()
+	carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes)
 	return TRUE
