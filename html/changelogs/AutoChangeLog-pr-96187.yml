@@ -1,0 +1,5 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "storage module of holding now triggers bluespace interference as intended"
+  - refactor: "teleporter interference checks check an item flag rather than hard type-checking bags of holding"
