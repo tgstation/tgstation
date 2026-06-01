@@ -1,4 +1,6 @@
 /datum/targeting_strategy/basic
+	///Whether we ignore faction checks
+	var/ignore_target_status = FALSE
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
 	/// Whether we care for seeing the target or not
@@ -42,7 +44,7 @@
 	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
-	if(isliving(the_target)) //Targeting vs living mobs
+	if(!ignore_target_status && isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
 		if(faction_check(our_controller, living_mob, living_target))
 			return FALSE

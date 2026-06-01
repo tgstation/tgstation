@@ -8,6 +8,8 @@
 /datum/targeting_strategy/basic/holding_object
 	/// BB key that holds the target typepath to use
 	var/target_item_key = BB_TARGET_HELD_ITEM
+	///We dont care that they're dead, if they got tongs theyre bad
+	ignore_target_status = TRUE
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targeting_strategy/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)

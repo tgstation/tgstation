@@ -6,7 +6,7 @@ GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 
 
-///Consider
+///Use the targetting strategy to find a target
 /datum/bt_node/ai_behavior/update_targets
 	action_cooldown = 2 SECONDS
 	/// How far can we see stuff?

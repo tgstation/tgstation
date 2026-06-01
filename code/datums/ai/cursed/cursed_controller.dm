@@ -6,6 +6,7 @@
  * Added by /datum/element/cursed, and as such will try to remove this element and go dormant when it finds a victim to curse
  */
 /datum/ai_controller/cursed
+	behavior_tree_json = "cursed.bt.json"
 	movement_delay = 0.4 SECONDS
 	blackboard = list(
 		BB_CURSE_TARGET,

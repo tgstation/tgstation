@@ -66,3 +66,22 @@
 		controller.set_blackboard_key(throw_count_key, 0)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
+
+///Teleport every now and then
+/datum/bt_node/ai_behavior/idle_ghost_item
+	///Chance for item to teleport somewhere else
+	var/teleport_chance = 4
+	action_cooldown = 1 SECONDS
+
+/datum/bt_node/ai_behavior/idle_ghost_item/perform(seconds_per_tick, datum/ai_controller/controller)
+	. = ..()
+	var/obj/item/item_pawn = controller.pawn
+	if(ismob(item_pawn.loc)) //Being held. dont teleport
+		return AI_BEHAVIOR_INSTANT
+	if(SPT_PROB(teleport_chance, seconds_per_tick))
+		playsound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+		#ifndef UNIT_TESTS // hauntium teleports can cause mapping nearstation tests to fail if it teleports outside an area
+		do_teleport(item_pawn, get_turf(item_pawn), 4, channel = TELEPORT_CHANNEL_MAGIC)
+		#endif
+	return AI_BEHAVIOR_INSTANT
