@@ -404,4 +404,5 @@
 	access_view = ACCESS_CARGO
 	cost = CARGO_CRATE_VALUE * 200 // One pair of these boots are really gosh darn expensive.
 	contains = list(/obj/item/clothing/shoes/bhop/rocket/jet)
+	crate_name = "nuVoid Jet Boots Crate"
 	crate_type = /obj/structure/closet/crate/goldcrate

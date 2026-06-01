@@ -3,7 +3,7 @@
 	name = "Activate Flight Jets"
 	desc = "Activates the jet boot's miniturized rocket thrusters, allowing for sustained flight."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "flight"
+	button_icon_state = "jet_boot_toggle"
 	/// Managed overlay for the fire produced from flight.
 	var/mutable_appearance/jet_fire
 	/// Audio loop for when the jet boot flight is active.
@@ -34,12 +34,20 @@
 		/datum/effect_system/trail_follow/smoke, \
 	)
 
+/datum/action/item_action/toggle_flight/Remove(mob/remove_from)
+	. = ..()
+	if(HAS_TRAIT_FROM(remove_from, TRAIT_MOVE_FLOATING, SHOES_TRAIT))
+		switch_flight()
+
 /datum/action/item_action/toggle_flight/do_effect(trigger_flags)
 	if(!ishuman(owner))
 		to_chat(owner, span_warning("Your shoes aren't built with you in mind, unfortunately."))
 		return FALSE
 	if(!target)
 		return FALSE
+	switch_flight()
+
+/datum/action/item_action/toggle_flight/proc/switch_flight()
 	var/obj/item/target_shoes = target
 	var/mob/living/carbon/human/human_owner = owner
 
@@ -54,6 +62,7 @@
 		to_chat(human_owner, span_notice("You click your jet boots together and begin to hover gently above the ground..."))
 		human_owner.set_resting(FALSE, TRUE)
 		human_owner.refresh_gravity()
+		RegisterSignals(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE), PROC_REF(switch_flight))
 		//visuals
 		burning_audio.start()
 		human_owner.add_overlay(jet_fire)
@@ -71,6 +80,7 @@
 	passtable_off(human_owner, SHOES_TRAIT)
 	to_chat(human_owner, span_notice("You're lowered back onto the ground..."))
 	human_owner.refresh_gravity()
+	UnregisterSignal(list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
 	//visuals
 	burning_audio.stop()
 	human_owner.cut_overlay(jet_fire)
@@ -94,5 +104,6 @@
 	var/datum/gas_mixture/environment = location.return_air()
 	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
 		to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
+		switch_flight()
 		return FALSE
 	return TRUE
