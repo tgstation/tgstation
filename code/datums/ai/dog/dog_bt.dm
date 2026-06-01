@@ -91,56 +91,16 @@
 
 	return AI_BEHAVIOR_DELAY
 
-// =============================================================================
+///Dog speech updates the BB keys based on the dogs swag
+/datum/bt_node/ai_behavior/random_speech_blackboard/dog_random_speech
 
-/**
- * Refreshes BB_BASIC_MOB_SPEAK_LINES from the dog pawn's current speech state, then speaks.
- * Dogs dynamically update their speech based on fashion accessories — this behavior
- * keeps the blackboard in sync before each roll.
- */
-/datum/bt_node/ai_behavior/dog_random_speech
-
-/datum/bt_node/ai_behavior/dog_random_speech/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/pet/dog/dog_pawn = controller.pawn
 	if(!istype(dog_pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
 	dog_pawn.update_dog_speak_blackboard(controller)
+	return ..()
 
-	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
-	if(isnull(speech_lines))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/speech_chance = speech_lines[BB_SPEAK_CHANCE] || 1
-	if(!prob(speech_chance)) // Dont use SPT because this can tick on a different interval based on the plan
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/list/emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
-	var/list/emote_see  = speech_lines[BB_EMOTE_SEE]  || list()
-	var/list/speak      = speech_lines[BB_EMOTE_SAY]  || list()
-	var/list/sounds     = speech_lines[BB_EMOTE_SOUND] || list()
-
-	var/total = length(emote_hear) + length(emote_see) + length(speak)
-	if(!total)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/sound_to_play = length(sounds) ? pick(sounds) : null
-	var/roll = rand(1, total)
-
-	if(roll <= length(emote_hear))
-		dog_pawn.manual_emote(pick(emote_hear))
-		if(sound_to_play)
-			playsound(dog_pawn, sound_to_play, 80, vary = TRUE, pressure_affected = TRUE, ignore_walls = FALSE)
-	else if(roll <= length(emote_hear) + length(emote_see))
-		dog_pawn.manual_emote(pick(emote_see))
-	else
-		dog_pawn.say(pick(speak), forced = "AI Controller")
-		if(sound_to_play)
-			playsound(dog_pawn, sound_to_play, 80, vary = TRUE)
-
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-// =============================================================================
 
 /// Dog harassment: find a TRAIT_HATED_BY_DOGS target nearby, then approach and paw/bite it.
 /datum/bt_node/subtree/dog_harassment

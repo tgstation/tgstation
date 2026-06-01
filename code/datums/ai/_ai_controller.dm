@@ -46,6 +46,8 @@ multiple modular subtrees with behaviors
 	var/list/behavior_nodes
 	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
 	var/active_execution_index = 0
+	/// Set to TRUE by CancelActions() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
+	var/cancelled_during_tick = FALSE
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
 	var/list/bt_execution_log = null
 	/// assoc list of override_id → /datum/bt_node/subtree for runtime subtree replacement.
@@ -504,11 +506,7 @@ multiple modular subtrees with behaviors
 	if(destroy)
 		qdel(src)
 
-/**
- * Walk the full resolved BT tree and call reset_tick_state(src) on every node,
- * clearing stale per-controller tick timing and cached result entries.
- * Called during UnpossessPawn() before the pawn reference is cleared.
- */
+///Call reset tick state on every node in the tree
 /datum/ai_controller/proc/reset_bt_tick_states()
 	if(!LAZYLEN(behavior_nodes))
 		return
@@ -606,6 +604,7 @@ multiple modular subtrees with behaviors
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE)
+	cancelled_during_tick = FALSE
 	for(var/datum/bt_node/node as anything in behavior_nodes)
 		if(node.tick(src, seconds_per_tick) == BT_RUNNING)
 			break
@@ -647,6 +646,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/CancelActions()
 	active_execution_index = 0
+	cancelled_during_tick = TRUE
 	reset_bt_tick_states()
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again

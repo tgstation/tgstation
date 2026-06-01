@@ -241,12 +241,208 @@
 
 	return ..()
 
-/**
- * BT-native speech behavior. Reads speech data from BB_BASIC_MOB_SPEAK_LINES each tick;
- * rolls the configured chance and performs an emote or speech line inline.
- * Returns BT_RUNNING while on cooldown, BT_SUCCESS if something was said, BT_FAILURE if not.
- * Replaces /datum/ai_planning_subtree/random_speech/blackboard for BT controllers.
- */
+///Random speech behavior, for speech thats random
+/datum/bt_node/ai_behavior/random_speech
+	action_cooldown = 1 SECONDS
+	/// Chance that the mob will speak.
+	var/speech_chance = 1
+	/// Hearable emotes (e.g. "barks.") — played with sound if sound list is populated.
+	var/list/emote_hear
+	/// Visible-only emotes (e.g. "wags tail.") — no sound.
+	var/list/emote_see
+	/// Spoken lines.
+	var/list/speak
+	/// Sound files to play alongside emote_hear or speak lines.
+	var/list/sound
+
+/datum/bt_node/ai_behavior/random_speech/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(!prob(speech_chance))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/audible = length(emote_hear)
+	var/visible = length(emote_see)
+	var/spoken = length(speak)
+	var/total = audible + visible + spoken
+	if(!total)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/mob/living/pawn = controller.pawn
+	if(!istype(pawn))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/sound_to_play = length(sound) ? pick(sound) : null
+	var/roll = rand(1, total)
+
+	if(roll <= audible)
+		pawn.manual_emote(pick(emote_hear))
+		if(sound_to_play)
+			playsound(pawn, sound_to_play, 80, vary = TRUE, pressure_affected = TRUE, ignore_walls = FALSE)
+	else if(roll <= audible + visible)
+		pawn.manual_emote(pick(emote_see))
+	else
+		pawn.say(pick(speak), forced = "AI Controller")
+		if(sound_to_play)
+			playsound(pawn, sound_to_play, 80, vary = TRUE)
+
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/bt_node/ai_behavior/random_speech/insect
+	speech_chance = 5
+	sound = list('sound/mobs/non-humanoids/insect/chitter.ogg')
+	emote_hear = list("chitters.")
+
+/datum/bt_node/ai_behavior/random_speech/mothroach
+	speech_chance = 15
+	emote_hear = list("flutters.")
+
+/datum/bt_node/ai_behavior/random_speech/mouse
+	speech_chance = 1
+	speak = list("Squeak!", "SQUEAK!", "Squeak?")
+	sound = list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg')
+	emote_hear = list("squeaks.")
+	emote_see = list("runs in a circle.", "shakes.")
+
+/datum/bt_node/ai_behavior/random_speech/frog
+	speech_chance = 3
+	emote_see = list("jumps in a circle.", "shakes.")
+
+/datum/bt_node/ai_behavior/random_speech/lizard
+	speech_chance = 3
+	emote_hear = list("stamps around some.", "hisses a bit.")
+	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
+
+/datum/bt_node/ai_behavior/random_speech/sheep
+	speech_chance = 5
+	speak = list("baaa", "baaaAAAAAH!", "baaah")
+	sound = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg')
+	emote_hear = list("bleats.")
+	emote_see = list("shakes her head.", "stares into the distance.")
+
+/datum/bt_node/ai_behavior/random_speech/rabbit
+	speech_chance = 10
+	speak = list("Mrrp.", "CHIRP!", "Mrrp?")
+	emote_hear = list("hops.")
+	emote_see = list("hops around.", "bounces up and down.")
+
+/datum/bt_node/ai_behavior/random_speech/rabbit/easter
+	speak = list("Hop into Easter!", "Come get your eggs!", "Prizes for everyone!")
+
+/datum/bt_node/ai_behavior/random_speech/rabbit/easter/space
+	speak = list("Hmph mmph mmmph!", "Mmphe mmphe mmphe!", "Hmm mmm mmm!")
+
+/datum/bt_node/ai_behavior/random_speech/chicken
+	speech_chance = 15
+	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
+	sound = list('sound/mobs/non-humanoids/chicken/clucks.ogg', 'sound/mobs/non-humanoids/chicken/bagawk.ogg')
+	emote_hear = list("clucks.", "croons.")
+	emote_see = list("pecks at the ground.", "flaps her wings viciously.")
+
+/datum/bt_node/ai_behavior/random_speech/zombie
+	speech_chance = 3
+	emote_hear = list("groans.", "moans.", "grunts.")
+	emote_see = list("twitches.", "shudders.")
+
+/datum/bt_node/ai_behavior/random_speech/chick
+	speech_chance = 4
+	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
+	sound = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg')
+	emote_hear = list("cheeps.")
+	emote_see = list("pecks at the ground.", "flaps her tiny wings.")
+
+/datum/bt_node/ai_behavior/random_speech/cow
+	speech_chance = 1
+	speak = list("moo?", "moo", "MOOOOOO")
+	sound = list('sound/mobs/non-humanoids/cow/cow.ogg')
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
+
+/datum/bt_node/ai_behavior/random_speech/cow/wisdom
+	speech_chance = 15
+
+/datum/bt_node/ai_behavior/random_speech/cow/wisdom/New()
+	. = ..()
+	speak = GLOB.wisdoms
+	sound = list()
+
+/datum/bt_node/ai_behavior/random_speech/deer
+	speech_chance = 1
+	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
+
+/datum/bt_node/ai_behavior/random_speech/faithless
+	speech_chance = 1
+	emote_see = list("wails.")
+
+/datum/bt_node/ai_behavior/random_speech/garden_gnome
+	speech_chance = 5
+	speak = list("Gnot a gnelf!", "Gnot a gnoblin!", "Howdy chum!")
+	emote_hear = list("snores.", "burps.")
+	emote_see = list("blinks.")
+
+/datum/bt_node/ai_behavior/random_speech/tree
+	speech_chance = 3
+	emote_see = list("photosynthesizes angrily.")
+
+/datum/bt_node/ai_behavior/random_speech/pig
+	speech_chance = 3
+	speak = list("oink?", "oink", "snurf")
+	sound = list('sound/mobs/non-humanoids/pig/pig1.ogg', 'sound/mobs/non-humanoids/pig/pig2.ogg')
+	emote_hear = list("snorts.")
+	emote_see = list("sniffs around.")
+
+/datum/bt_node/ai_behavior/random_speech/pony
+	speech_chance = 3
+	sound = list('sound/mobs/non-humanoids/pony/whinny01.ogg', 'sound/mobs/non-humanoids/pony/whinny02.ogg', 'sound/mobs/non-humanoids/pony/whinny03.ogg')
+	emote_hear = list("whinnies!")
+	emote_see = list("horses around.")
+
+/datum/bt_node/ai_behavior/random_speech/pony/tamed
+	sound = list('sound/mobs/non-humanoids/pony/snort.ogg')
+	emote_hear = list("snorts.")
+	emote_see = list("snorts.")
+
+/datum/bt_node/ai_behavior/random_speech/killer_tomato
+	speech_chance = 3
+	emote_hear = list("gnashes.", "growls lowly.", "snarls.")
+	emote_see = list("salivates.")
+
+/datum/bt_node/ai_behavior/random_speech/ant
+	speech_chance = 1
+	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
+	sound = list('sound/mobs/non-humanoids/insect/chitter.ogg')
+	emote_hear = list("buzzes.", "clacks.")
+	emote_see = list("shakes their head.", "twitches their antennae.")
+
+/datum/bt_node/ai_behavior/random_speech/fox
+	speech_chance = 1
+	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+	emote_hear = list("howls.", "barks.", "screams.")
+	emote_see = list("shakes their head.", "shivers.")
+
+/datum/bt_node/ai_behavior/random_speech/crab
+	speech_chance = 1
+	sound = list('sound/mobs/non-humanoids/crab/claw_click.ogg')
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+
+/datum/bt_node/ai_behavior/random_speech/penguin
+	speech_chance = 5
+	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
+	emote_hear = list("squawks", "gakkers")
+
+/datum/bt_node/ai_behavior/random_speech/bear
+	speech_chance = 5
+	emote_hear = list("rawrs.", "grumbles.", "grawls.", "stomps!")
+	emote_see = list("stares ferociously.")
+
+/datum/bt_node/ai_behavior/random_speech/cats
+	speech_chance = 10
+	sound = list(SFX_CAT_MEOW)
+	emote_hear = list("meows.")
+	emote_see = list("meows.")
+
+///Speech behavior that reads from a blackboard to pick what to say. Useful for things with dynamic speech behaviors
 /datum/bt_node/ai_behavior/random_speech_blackboard
 	action_cooldown = 1 SECONDS
 
@@ -256,7 +452,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/speech_chance = speech_lines[BB_SPEAK_CHANCE] || 1
-	if(!SPT_PROB(speech_chance, seconds_per_tick))
+	if(!prob(speech_chance))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/emote_hear = speech_lines[BB_EMOTE_HEAR] || list()

@@ -1,5 +1,64 @@
 {
 	"dm_type": "/datum/ai_controller/cursed",
-	"type": "selector",
-	"children": []
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": {
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_HAUNT_TARGET"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
+						"children": [
+							{
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+								"loop_delay": 20,
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/throw_attack/haunted",
+										"args": [
+											"BB_HAUNT_TARGET",
+											"BB_HAUNTED_THROW_ATTEMPT_COUNT",
+											"BB_TO_HAUNT_LIST"
+										]
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"args": ["BB_HAUNT_TARGET", 3, false]
+							}
+						]
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/idle_ghost_item",
+					"args": []
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+			"args": ["BB_CURSE_TARGET", "/mob/living/carbon", "CURSED_VIEW_RANGE"]
+		}
+	]
 }

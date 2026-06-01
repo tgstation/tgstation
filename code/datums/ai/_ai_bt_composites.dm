@@ -71,6 +71,8 @@
 	for(var/i in start to length(children))
 		var/datum/bt_node/child = children[i]
 		var/child_result = child.tick(controller, seconds_per_tick)
+		if(controller.cancelled_during_tick)
+			return BT_FAILURE
 		if(child_result != BT_SUCCESS)
 			result = child_result
 			if(child_result == BT_RUNNING)
@@ -132,6 +134,8 @@
 	for(var/i in start to length(children))
 		var/datum/bt_node/child = children[i]
 		var/child_result = child.tick(controller, seconds_per_tick)
+		if(controller.cancelled_during_tick)
+			return BT_FAILURE
 		if(child_result != BT_FAILURE)
 			result = child_result
 			if(child_result == BT_RUNNING)
@@ -212,6 +216,9 @@
 		return BT_FAILURE
 
 	var/child_result = child.tick(controller, seconds_per_tick)
+	if(controller.cancelled_during_tick)
+		return BT_FAILURE
+
 	if(child_result == BT_RUNNING)
 		if(tick_rate)
 			tick_cooldown = world.time
@@ -296,6 +303,8 @@
 			continue // secondary child is waiting out its repeat delay
 
 		var/child_result = child.tick(controller, seconds_per_tick)
+		if(controller.cancelled_during_tick)
+			return BT_FAILURE
 
 		if(i == 1)
 			primary_result = child_result

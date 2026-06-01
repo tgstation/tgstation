@@ -73,9 +73,8 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 /datum/bt_viewer/proc/on_pick_click(mob/source, atom/clicked, list/modifiers)
 	SIGNAL_HANDLER
 	_end_pick()
-	if(!ismob(clicked))
-		return NONE
-	var/mob/target = clicked
+
+	var/atom/target = clicked
 	if(!target.ai_controller)
 		return NONE
 	set_target(target)

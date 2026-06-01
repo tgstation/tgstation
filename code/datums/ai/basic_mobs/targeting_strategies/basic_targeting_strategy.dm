@@ -44,7 +44,9 @@
 	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
-	if(!ignore_target_status && isliving(the_target)) //Targeting vs living mobs
+	if(isliving(the_target)) //Targeting vs living mobs
+		if(ignore_target_status)
+			return TRUE
 		var/mob/living/living_target = the_target
 		if(faction_check(our_controller, living_mob, living_target))
 			return FALSE

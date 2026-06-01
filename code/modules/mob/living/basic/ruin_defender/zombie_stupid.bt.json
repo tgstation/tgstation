@@ -1,0 +1,20 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/zombie/stupid",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/random_speech/zombie",
+			"args": []
+		}
+	]
+}

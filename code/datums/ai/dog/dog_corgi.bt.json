@@ -9,7 +9,7 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/dog_random_speech",
+			"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard",
 			"args": []
 		},
 		{

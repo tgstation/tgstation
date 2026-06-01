@@ -80,6 +80,10 @@
 	else
 		result = child.tick(controller, seconds_per_tick)
 
+	if(controller.cancelled_during_tick)
+		child_active = FALSE
+		return BT_FAILURE
+
 	if(no_ticking_condition)
 		child_active = (result == BT_RUNNING)
 
