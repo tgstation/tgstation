@@ -2025,7 +2025,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	metabolized_traits = list(TRAIT_NO_SELF_CURE)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	pH = 5.5
+	ph = 5.5
 	color = "#C8A5DC"
 	taste_description = "plastic"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
