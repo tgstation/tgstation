@@ -26,7 +26,5 @@
 	return 0
 
 /datum/symptom/heal/false_danger/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
-	var/heal_amt = actual_power
-
-	carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes)
+	carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes)
 	return TRUE
