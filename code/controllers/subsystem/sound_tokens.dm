@@ -19,5 +19,6 @@ SUBSYSTEM_DEF(sound_tokens)
 			continue
 		for(var/datum/sound_token/token in client.sound_tokens)
 			token.update_listener(owned_mob)
-			CHECK_TICK
+		if(MC_TICK_CHECK)
+			break
 
