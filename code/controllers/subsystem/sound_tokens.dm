@@ -5,10 +5,15 @@ SUBSYSTEM_DEF(sound_tokens)
 
 
 	var/list/clients_needing_update = list()
+	var/list/currentrun = list()
 
 /datum/controller/subsystem/sound_tokens/fire(resumed)
-	for(var/client/client in clients_needing_update)
-		clients_needing_update -= client
+	if(!resumed)
+		currentrun = clients_needing_update
+		clients_needing_update = list()
+	while(length(currentrun))
+		var/client/client = currentrun[currentrun.len]
+		currentrun.len--
 		var/mob/owned_mob = client.mob
 		if(!owned_mob)
 			continue
