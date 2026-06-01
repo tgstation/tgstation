@@ -2018,3 +2018,9 @@
 	if(affected_mob.losebreath >= 1)
 		affected_mob.losebreath -= 1 * metabolization_ratio * seconds_per_tick
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/medicine/immunosilence
+	name = "ImmunoSilence"
+	description = "While in the organism prevents viruses from being naturaly cured."
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolized_traits = list(TRAIT_NO_SELF_CURE)
