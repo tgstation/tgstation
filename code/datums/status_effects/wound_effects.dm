@@ -142,6 +142,31 @@
 		carbon_mob.remove_status_effect(src)
 		return
 
+//Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
+/datum/status_effect/limp/quirk
+	id = "limp_quirk"
+	alert_type = null
+
+/datum/status_effect/limp/quirk/update_limp(datum/source)
+	var/mob/living/carbon/carbon_mob = owner
+	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
+	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)	
+
+	slowdown_left = 0
+	slowdown_right = 0
+	limp_chance_left = 0
+	limp_chance_right = 0
+
+	
+	if(left)
+		slowdown_left = 7 //Same as compound fracture
+		limp_chance_left = 70
+
+	else if(right)
+		slowdown_right = 7
+		limp_chance_right = 70
+	
+
 /////////////////////////
 //////// WOUNDS /////////
 /////////////////////////
