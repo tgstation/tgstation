@@ -401,8 +401,7 @@
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
-	var/list/contents = user.get_all_contents()
-	for(var/obj/item/check in contents)
+	for(var/obj/item/check as anything in user.get_all_contents_type(/obj/item))
 		if(check.item_flags & BLUESPACE_INTERFERENCE)
 			bagholdingcheck = TRUE
 	if(isclosedturf(destination))
