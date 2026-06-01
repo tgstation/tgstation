@@ -349,7 +349,7 @@
 
 // Neuter a symptom, so it will only affect stats
 /datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
-	if(!S.neutered)
+	if(!S.neutered && S.can_be_neutered)
 		S.neutered = TRUE
 		S.name += " (neutered)"
 		S.OnRemove(src)
