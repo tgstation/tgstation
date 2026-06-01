@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - bugfix: "Fixed Nebula's boulder refinery being constantly spaced."
