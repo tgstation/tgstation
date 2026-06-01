@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/next_hit_by_zlevel = list()
 	/// Alist of all particle holders per Z-stack offset for particle weather to be shown to clients
 	var/alist/particle_holders = alist()
-	/// List of all PARTICLE_WEATHER_PLANE and EMISSIVE_PARTICLE_WEATHER_PLANE planes
+	/// List of all RENDER_PLANE_PARTICLE_WEATHER and RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER planes
 	var/list/particle_planemasters = list()
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(weather)
 				eligible_zlevels["[z]"][weather] = probability
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/weather/proc/add_weather_objects(list/new_holders)
+/datum/controller/subsystem/weather/proc/add_weather_objects(list/new_holders, z_level)
 	for (var/offset in 1 to length(new_holders))
 		var/list/holder_list = new_holders[offset]
 		if (isnull(particle_holders[offset]))

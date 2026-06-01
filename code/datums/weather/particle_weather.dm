@@ -35,14 +35,14 @@
 		var/list/object_list = list()
 		if (particle_type)
 			var/obj/effect/abstract/weather_holder/holder = new()
-			SET_PLANE_W_SCALAR(holder, PARTICLE_WEATHER_PLANE, offset)
+			SET_PLANE_W_SCALAR(holder, RENDER_PLANE_PARTICLE_WEATHER, offset)
 			holder.particles = new particle_type()
 			object_list += holder
 
 		if (emissive_type)
 			var/obj/effect/abstract/weather_holder/holder = new()
 			holder.particles = new emissive_type()
-			SET_PLANE_W_SCALAR(holder, EMISSIVE_PARTICLE_WEATHER_PLANE, offset)
+			SET_PLANE_W_SCALAR(holder, RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER, offset)
 			object_list += holder
 
 		weather_objects += list(object_list)
