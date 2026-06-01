@@ -113,6 +113,7 @@
 	else
 		clear_fire()
 
+/// Handling the making you feel hot(hallucinationally hot), if you are suffering fake_fire hallucination
 /datum/hallucination/fire/proc/update_temp()
 	if(stage <= 0)
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
