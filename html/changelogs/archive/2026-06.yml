@@ -1,4 +1,7 @@
 2026-06-01:
+  Glamyrio:
+  - bugfix: Renamed 2 cameras on MetaStation; first cam was with wrong name and second
+      one was a badnamed
   SmArtKar:
   - refactor: Refactors inventory UI to be completely datum and vis_contents-based
   - bugfix: Observers should no longer see doubled up inventory UIs
@@ -7,6 +10,7 @@
   - bugfix: storage module of holding now triggers bluespace interference as intended
   - refactor: teleporter interference checks check an item flag rather than hard type-checking
       bags of holding
+  - spellcheck: Securiy
   lelandkemble:
   - balance: The RNG instant kill via organ removal of the mech drill has been removed,
       and replaced with a very high wounding chance
