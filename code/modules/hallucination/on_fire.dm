@@ -123,7 +123,7 @@
 			// so after that, we will give fake_hot_temp alert for like 10 second, f. e.
 			// and than its done, nothing else will happen, alert will be removed after 10 secs
 			// should i make it like that?
-			hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, override = TRUE)
+			hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, override = TRUE) // seems like need to add timeout_override or something, so it fake alert will be removed after time
 			qdel(src)
 	else
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
