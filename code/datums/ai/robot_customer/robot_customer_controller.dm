@@ -1,4 +1,5 @@
 /datum/ai_controller/robot_customer
+	behavior_tree_json = "robot_customer.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.8 SECONDS
 	blackboard = list(
@@ -11,12 +12,11 @@
 		BB_CUSTOMER_PATIENCE = 999 SECONDS,
 		BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE,
 	)
-	behavior_nodes = list(/datum/ai_planning_subtree/robot_customer)
 
 /datum/ai_controller/robot_customer/Destroy()
-	// clear possible datum refs
 	clear_blackboard_key(BB_CUSTOMER_CURRENT_ORDER)
 	clear_blackboard_key(BB_CUSTOMER_CUSTOMERINFO)
+	clear_blackboard_key(BB_CUSTOMER_EXIT_PORTAL)
 	return ..()
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)

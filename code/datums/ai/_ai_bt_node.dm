@@ -149,6 +149,8 @@
 	/// Active override subtree. When set, tick() delegates to this node instead of root.
 	/// Set to null to deactivate the override. Managed by set_behavior_tree_override() only.
 	var/datum/bt_node/subtree/override_node = null
+	///Any bindings this subtree has; assigned by the json
+	var/list/bindings = null
 
 /datum/bt_node/subtree/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(override_node)

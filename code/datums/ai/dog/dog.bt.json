@@ -8,22 +8,32 @@
 			"override_id": "SUBPLAN_ID_PET_COMMAND"
 		},
 		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/dog_random_speech",
-			"args": []
-		},
-		{
 			"type": "subtree",
 			"subtype": "/datum/bt_node/subtree/dog_harassment"
 		},
 		{
-			"type": "subplan",
-			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-			"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "1 SECONDS",
+			"finish_on_primary": true,
 			"children": [
 				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/idle_dog",
+							"args": []
+						}
+					]
+				},
+				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/idle_dog",
+					"behavior": "/datum/bt_node/ai_behavior/dog_random_speech",
 					"args": []
 				}
 			]

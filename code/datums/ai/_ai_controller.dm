@@ -154,7 +154,10 @@ multiple modular subtrees with behaviors
 		else if(!isnull(sub.behavior_tree_json) && isnull(sub.root))
 			var/filename = copytext(sub.behavior_tree_json, findlasttext(sub.behavior_tree_json, "/") + 1)
 			var/tree_name = copytext(filename, 1, length(filename) - 4)
-			sub.root = load_tree_from_json(BT_COMPILED_PATH(tree_name))
+			var/list/raw_desc = json_decode(file2text(BT_COMPILED_PATH(tree_name)))
+			if(LAZYLEN(sub.bindings) || !isnull(raw_desc[BT_DESC_BINDINGS]))
+				raw_desc = apply_bindings_to_descriptor(raw_desc, sub.bindings)
+			sub.root = build_node_from_descriptor(raw_desc)
 
 // Always creates a fresh instance regardless of whether config is provided.
 /datum/ai_controller/proc/resolve_child_node(child_type, list/config)
@@ -185,6 +188,45 @@ multiple modular subtrees with behaviors
 	return build_node_from_descriptor(desc)
 
 /**
+ * Merges call-site binding overrides with the subtree's declared defaults,
+ * then substitutes all $name placeholders in the descriptor tree.
+ * Returns a new descriptor with BT_DESC_BINDINGS stripped and placeholders resolved.
+ */
+/datum/ai_controller/proc/apply_bindings_to_descriptor(list/desc, list/call_site_bindings)
+	var/list/merged = list()
+	var/list/declared = desc[BT_DESC_BINDINGS]
+	for(var/name in declared)
+		merged[name] = declared[name]["default"]
+	for(var/name in call_site_bindings)
+		merged[name] = call_site_bindings[name]
+	return _substitute_bindings(desc, merged)
+
+/// Recursively walks a descriptor list, replacing "$name" strings with their bound values.
+/datum/ai_controller/proc/_substitute_bindings(list/desc, list/merged)
+	var/list/out = list()
+	for(var/key in desc)
+		if(key == BT_DESC_BINDINGS)
+			continue
+		var/value = desc[key]
+		if(islist(value))
+			var/list/resolved_list = list()
+			for(var/item in value)
+				if(islist(item))
+					resolved_list += list(_substitute_bindings(item, merged))
+				else if(istext(item) && copytext(item, 1, 2) == "$")
+					var/binding_name = copytext(item, 2)
+					resolved_list += isnull(merged[binding_name]) ? item : merged[binding_name]
+				else
+					resolved_list += item
+			out[key] = resolved_list
+		else if(istext(value) && copytext(value, 1, 2) == "$")
+			var/binding_name = copytext(value, 2)
+			out[key] = isnull(merged[binding_name]) ? value : merged[binding_name]
+		else
+			out[key] = value
+	return out
+
+/**
  * Recursively builds a BT node tree from a descriptor list.
  * BT_DESC_TYPE and BT_DESC_CHILDREN are consumed internally; all other keys are written
  * as vars onto the node. String values starting with "/" are resolved via text2path so
@@ -199,7 +241,7 @@ multiple modular subtrees with behaviors
 	var/datum/bt_node/node = new node_type
 	resolve_node_children(node)
 	for(var/key in desc)
-		if(key == BT_DESC_TYPE || key == BT_DESC_CHILDREN)
+		if(key == BT_DESC_TYPE || key == BT_DESC_CHILDREN || key == BT_DESC_BINDINGS)
 			continue
 		var/value = desc[key]
 		if(islist(value))

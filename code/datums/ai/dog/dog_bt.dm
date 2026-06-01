@@ -99,7 +99,6 @@
  * keeps the blackboard in sync before each roll.
  */
 /datum/bt_node/ai_behavior/dog_random_speech
-	action_cooldown = 1 SECONDS
 
 /datum/bt_node/ai_behavior/dog_random_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/pet/dog/dog_pawn = controller.pawn
@@ -113,7 +112,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/speech_chance = speech_lines[BB_SPEAK_CHANCE] || 1
-	if(!SPT_PROB(speech_chance, seconds_per_tick))
+	if(!prob(speech_chance)) // Dont use SPT because this can tick on a different interval based on the plan
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/emote_hear = speech_lines[BB_EMOTE_HEAR] || list()

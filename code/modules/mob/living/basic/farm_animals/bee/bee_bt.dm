@@ -22,7 +22,7 @@
 	for(var/obj/structure/beebox/potential_home in oview(10, bee_pawn))
 		if(!potential_home.habitable(bee_pawn))
 			continue
-		controller.set_blackboard_key(BB_CURRENT_HOME, potential_home)
+		controller.set_blackboard_key(BB_TARGET_HOME, potential_home)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -53,16 +53,9 @@
 	if(!succeeded)
 		controller.clear_blackboard_key(BB_CURRENT_HOME)
 
-// =============================================================================
-
-/**
- * Probabilistically enters or exits the beehive.
- * If inside hive → rolls exit_chance% to leave.
- * If outside → rolls flyback_chance% to return home.
- * Returns FAILURE when not rolling so the selector passes through.
- */
+///Chance to leave or enter hive
 /datum/bt_node/ai_behavior/enter_exit_hive
-	action_cooldown = 10 SECONDS
+	action_cooldown = 1 SECONDS
 	var/flyback_chance = 15
 	var/exit_chance = 35
 
@@ -77,11 +70,7 @@
 	if(!SPT_PROB(prob_to_use, seconds_per_tick))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(!bee_pawn.Adjacent(home))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-	controller.ai_interact(target = home, combat_mode = FALSE)
+	controller.set_blackboard_key(BB_WANTS_TO_TRANSITION_HIVE, TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Queen variant: strongly prefers staying in hive.
@@ -99,7 +88,7 @@
 	var/mob/living/bee_pawn = controller.pawn
 	if(!isturf(bee_pawn.loc))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(!SPT_PROB(85, seconds_per_tick))
+	if(!prob(85))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	for(var/obj/machinery/hydroponics/tray in oview(10, bee_pawn))
 		if(!tray.can_bee_pollinate())

@@ -55,10 +55,14 @@
 // bee keys
 ///the bee hive we live inside
 #define BB_CURRENT_HOME "BB_current_home"
+///the bee hive we want to move into
+#define BB_TARGET_HOME "BB_target_home"
 ///the hydro we will pollinate
 #define BB_TARGET_HYDRO "BB_target_hydro"
 ///key to swarm around
 #define BB_SWARM_TARGET "BB_swarm_target"
+///key to indicate if the bee wants to go in or out of its hive.
+#define BB_WANTS_TO_TRANSITION_HIVE "BB_wants_to_transition_hive"
 
 // bear keys
 ///the hive with honey that we will steal from

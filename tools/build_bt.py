@@ -41,7 +41,7 @@ STATIC_NODES: dict[str, str] = {
 }
 
 # Source JSON structural keys that are consumed/transformed during compilation.
-_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'args', 'config', 'subtype', 'dm_type'})
+_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'args', 'config', 'subtype', 'dm_type', 'bindings'})
 
 
 
@@ -144,6 +144,8 @@ def resolve_value(val, defines: dict):
     """Resolve a JSON value: define lookup, then arithmetic/timing expression, then raw."""
     if not isinstance(val, str):
         return val
+    if val.startswith('$'):
+        return val  # binding reference placeholder — preserve as-is
     if val in defines:
         return defines[val]
     resolved = _resolve_expr(val, defines)
@@ -185,6 +187,18 @@ def compile_node(src: dict, defines: dict) -> dict:
     # Behavior perform() args
     if 'args' in src:
         out[desc_args] = [resolve_value(a, defines) for a in src['args']]
+
+    # Bindings: declaration on a subtree definition file's root vs. call-site overrides
+    if 'bindings' in src:
+        if node_type == 'subtree':
+            # Call-site overrides: resolve values through defines, emit as "bindings" (becomes node.vars)
+            out['bindings'] = {k: resolve_value(v, defines) for k, v in src['bindings'].items()}
+        else:
+            # Declaration: emit as "__bindings" with label + resolved default (consumed by DM runtime)
+            out['__bindings'] = {
+                name: {'label': info.get('label', name), 'default': resolve_value(info.get('default'), defines)}
+                for name, info in src['bindings'].items()
+            }
 
     # anything else
     for key, val in src.items():

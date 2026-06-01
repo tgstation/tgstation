@@ -1137,7 +1137,6 @@
 #include "code\datums\ai\objects\vending_machines\vending_machine_controller.dm"
 #include "code\datums\ai\robot_customer\robot_customer_behaviors.dm"
 #include "code\datums\ai\robot_customer\robot_customer_controller.dm"
-#include "code\datums\ai\robot_customer\robot_customer_subtrees.dm"
 #include "code\datums\ai_laws\ai_laws.dm"
 #include "code\datums\ai_laws\laws_antagonistic.dm"
 #include "code\datums\ai_laws\laws_neutral.dm"

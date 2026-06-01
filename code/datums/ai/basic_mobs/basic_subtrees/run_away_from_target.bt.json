@@ -1,5 +1,11 @@
 {
 	"dm_type": "/datum/bt_node/subtree/run_away_from_target",
+	"bindings": {
+		"flee_from_target": {
+			"label": "target_key",
+			"default": "BB_BASIC_MOB_CURRENT_TARGET"
+		}
+	},
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
 	"config": {
@@ -14,7 +20,7 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
 				"args": [
-					"BB_BASIC_MOB_CURRENT_TARGET",
+					"$flee_from_target",
 					"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION",
 					"BB_FLEE_LOCATION"
 				]

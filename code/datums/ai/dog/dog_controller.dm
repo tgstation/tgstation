@@ -39,5 +39,6 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object,
 		// With tongs in hand!
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
+		BB_FUCKS = FALSE, // Puppies don't
 	)
-	behavior_tree_json = "code/datums/ai/dog/dog_puppy.bt.json"
+	behavior_tree_json = "code/datums/ai/dog/dog_corgi.bt.json"

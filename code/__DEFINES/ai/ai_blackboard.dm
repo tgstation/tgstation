@@ -105,6 +105,9 @@
 #define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
 #define BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN "BB_basic_mob_target_refresh_cooldown"
 
+/// whether we can have fuck
+#define BB_FUCKS "can we fuck?"
+
 /// Minimum range to keep target within
 #define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
 /// Maximum range to keep target within

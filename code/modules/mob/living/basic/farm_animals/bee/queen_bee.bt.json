@@ -1,34 +1,41 @@
 {
 	"dm_type": "/datum/ai_controller/basic_controller/queen_bee",
-	"type": "selector",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": false,
+	"finish_on_primary": false,
 	"children": [
 		{
 			"type": "selector",
 			"children": [
 				{
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
-						"key": "BB_CURRENT_HOME",
-						"invert": true
-					},
-					"child": {
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/find_hive",
-						"args": []
-					}
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_hive"
 				},
 				{
-					"type": "sequence",
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/pollinate_target"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/transition_hive_status"
+				},
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
 					"children": [
 						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_CURRENT_HOME", 1, false]
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/inhabit_hive",
+							"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen",
 							"args": []
 						}
 					]
@@ -36,13 +43,17 @@
 			]
 		},
 		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen",
-			"args": []
-		},
-		{
-			"type": "subtree",
-			"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"invert": true,
+				"key": "BB_TARGET_HOME"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_hive",
+				"args": []
+			}
 		}
 	]
 }

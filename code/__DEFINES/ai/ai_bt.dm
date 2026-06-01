@@ -64,6 +64,8 @@
 #define BT_DESC_BEHAVIOR_ARGS "default_behavior_args"
 /// Key storing the override slot ID in a subtree descriptor
 #define BT_DESC_OVERRIDE_ID "override_id"
+/// Key storing bindable parameter declarations in a compiled subtree descriptor
+#define BT_DESC_BINDINGS "__bindings"
 
 /// Resolves the compiled JSON path for a behavior tree by name.
 #define BT_COMPILED_PATH(tree_name) ("build/behavior_trees/[tree_name].compiled.json")

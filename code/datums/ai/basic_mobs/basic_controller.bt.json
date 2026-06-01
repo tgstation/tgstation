@@ -1,0 +1,11 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller",
+	"type": "selector",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/wait",
+			"args": []
+		}
+	]
+}

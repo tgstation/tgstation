@@ -15,3 +15,7 @@
 #define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 /// Robot customer has said their can't find seat line at least once. Used to rate limit how often they'll complain after the first time.
 #define BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE "BB_customer_said_cant_find_seat_line"
+/// The exit portal atom the customer walks to when leaving the venue.
+#define BB_CUSTOMER_EXIT_PORTAL "BB_customer_exit_portal"
+/// Cooldown key used to throttle seat-search retries.
+#define BB_CUSTOMER_FIND_SEAT_COOLDOWN "BB_customer_find_seat_cooldown"

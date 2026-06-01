@@ -1,3 +1,7 @@
+/// BT subtree: gates on BB_BREED_READY + BB_PARTNER_SEARCH_TIMEOUT, then finds a partner, moves to them, and breeds.
+/datum/bt_node/subtree/make_babies
+	behavior_tree_json = "code/datums/ai/babies/make_babies.bt.json"
+
 /**
  * Reproduce with a similar mob.
  */
