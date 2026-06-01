@@ -32945,7 +32945,7 @@
 /area/station/cargo/storage)
 "lje" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Starboard Primary Hallway - Auxiliary Tool Storage"
+	c_tag = "Starboard Primary Hallway - Technical Storage"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36196,7 +36196,7 @@
 /area/station/service/kitchen)
 "mta" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Starboard Primary Hallway - tech_storage"
+	c_tag = "Starboard Primary Hallway - Auxiliary Tool Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
