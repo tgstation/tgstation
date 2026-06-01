@@ -11,8 +11,8 @@
  * then sets it when the child finishes — replacing the key_off_cooldown + set_bb_cooldown pair.
  *
  * cooldown_duration is in deciseconds (e.g. 30 SECONDS).
- * lock_on_succeed = TRUE (default): lock after child SUCCESS — standard rate-limit after action.
- * lock_on_succeed = FALSE: lock after child FAILURE — backoff on repeated failure.
+ * lock_on_succeed = TRUE (default): lock after child SUCCESS only.
+ * lock_on_succeed = FALSE: lock after any completion (SUCCESS or FAILURE).
  */
 /datum/bt_node/decorator/cooldown
 	var/cooldown_key
@@ -20,7 +20,7 @@
 	var/lock_on_succeed = TRUE
 
 /datum/bt_node/decorator/cooldown/check_condition(datum/ai_controller/controller)
-	var/cooldown_time = controller.blackboard[cooldown_key] SECONDS
+	var/cooldown_time = controller.blackboard[cooldown_key]
 	return isnull(cooldown_time) || cooldown_time <= world.time
 
 /datum/bt_node/decorator/cooldown/tick(datum/ai_controller/controller, seconds_per_tick)
@@ -37,7 +37,7 @@
 
 	child_active = (result == BT_RUNNING)
 	if(!child_active)
-		if(lock_on_succeed == (result == BT_SUCCESS))
+		if(!lock_on_succeed || result == BT_SUCCESS)
 			controller.set_blackboard_key(cooldown_key, world.time + cooldown_duration)
 
 	if(tick_rate)

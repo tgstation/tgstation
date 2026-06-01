@@ -91,15 +91,7 @@
 	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
 	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
 
-// =============================================================================
-// BT-native target_from_retaliate_list
-// =============================================================================
-
-/**
- * BT-native version of /datum/ai_behavior/target_from_retaliate_list.
- * Reads BB_BASIC_MOB_RETALIATE_LIST, picks a valid visible attacker, and sets the target key.
- * Returns BT_SUCCESS when a valid target is found/confirmed, BT_FAILURE otherwise.
- */
+///Pick a target from our retaliate list
 /datum/bt_node/ai_behavior/target_from_retaliate_list
 	action_cooldown = 2 SECONDS
 	var/vision_range = 9

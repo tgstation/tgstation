@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/thing_boss
+	behavior_tree_json = "thing_boss.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD, // Will attack dead ungutted mobs

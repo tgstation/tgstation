@@ -32,7 +32,7 @@ have ways of interacting with a specific mob and control it.
 	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
 		return FALSE
 	// target was forcibly set, all bets are off again
-	if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == the_target)
+	if(controller.blackboard[BB_CURRENT_TARGET] == the_target)
 		return FALSE
 	return ..()
 

@@ -1,9 +1,10 @@
-// DEPRECATED — port to /datum/bt_node/ai_behavior/run_away_from_target
+// DEPRECATED — use /datum/bt_node/subtree/run_away_from_target in BT trees instead
 /datum/ai_behavior/run_away_from_target
 	parent_type = /datum/bt_node/ai_behavior/run_away_from_target
 
 
-///Tries to move away from target
+// DEPRECATED — kept for non-standard callers (monkey, scatter pet) that cannot use the subtree.
+// New BT trees should use /datum/bt_node/subtree/run_away_from_target instead.
 /datum/bt_node/ai_behavior/run_away_from_target
 	/// Distance to the current escape waypoint at which we consider it reached and plot the next one.
 	var/required_distance = 0

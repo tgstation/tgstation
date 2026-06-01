@@ -141,10 +141,13 @@ def _resolve_expr(raw: str, defines: dict):
 
 
 def resolve_value(val, defines: dict):
-    """If val is a string that names a define, return the resolved value; else return val."""
-    if isinstance(val, str) and val in defines:
+    """Resolve a JSON value: define lookup, then arithmetic/timing expression, then raw."""
+    if not isinstance(val, str):
+        return val
+    if val in defines:
         return defines[val]
-    return val
+    resolved = _resolve_expr(val, defines)
+    return resolved if resolved is not None else val
 
 
 def compile_node(src: dict, defines: dict) -> dict:

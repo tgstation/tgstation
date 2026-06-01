@@ -1,0 +1,29 @@
+{
+	"dm_type": "/datum/bt_node/subtree/run_away_from_target",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"key": "BB_BASIC_MOB_STOP_FLEEING",
+		"invert": true,
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
+				"args": [
+					"BB_BASIC_MOB_CURRENT_TARGET",
+					"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION",
+					"BB_FLEE_LOCATION"
+				]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"args": ["BB_FLEE_LOCATION", 0, false]
+			}
+		]
+	}
+}

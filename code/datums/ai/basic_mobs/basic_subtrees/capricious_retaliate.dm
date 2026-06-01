@@ -1,13 +1,4 @@
-// =============================================================================
-// BT-native capricious retaliate
-// =============================================================================
-
-/**
- * BT-native capricious aggro manager. Manages BB_BASIC_MOB_RETALIATE_LIST directly.
- * If the retaliate list is populated: roll de-aggro, clear list + target on success (return FAILURE).
- * If no list: roll aggro, pick a random nearby mob, add to list (return SUCCESS so parallel attacks).
- * Returns BT_RUNNING (DELAY | SUCCEEDED) while keeping an existing target.
- */
+///Random chance to add things to our retaliate list
 /datum/bt_node/ai_behavior/capricious_retaliate
 	action_cooldown = 1 SECONDS
 
@@ -16,15 +7,14 @@
 
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
-		if(!SPT_PROB(deaggro_chance, seconds_per_tick))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED // Keep current target
-		pawn.visible_message(span_notice("[pawn] calms down."))
-		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // De-aggroed
+		if(prob(deaggro_chance)) //Chance to chill the fuck out. This prob() should be matched with the frequency of calling.
+			pawn.visible_message(span_notice("[pawn] calms down."))
+			controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+			controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // De-aggroed
 
 	var/aggro_chance = controller.blackboard[BB_RANDOM_AGGRO_CHANCE] || 0.5
-	if(!SPT_PROB(aggro_chance, seconds_per_tick))
+	if(!prob(aggro_chance)) //Check if we should get pissed at someone REEE
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/aggro_range = controller.blackboard[BB_AGGRO_RANGE] || 9

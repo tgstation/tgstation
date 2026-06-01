@@ -119,6 +119,8 @@
 #define BB_FLEE_TARGETING_STRATEGY "flee_targeting_strategy"
 #define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
 #define DEFAULT_BASIC_FLEE_DISTANCE 9
+/// Computed flee destination turf set by find_flee_location and consumed by move_to_target
+#define BB_FLEE_LOCATION "BB_flee_location"
 
 /// Generic key for a non-specific targeted action
 #define BB_TARGETED_ACTION "BB_TARGETED_action"

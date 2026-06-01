@@ -44,13 +44,13 @@
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
 			"config": {
-				"key": "BB_monkey_current_attack_target",
+				"key": "BB_CURRENT_TARGET",
 				"invert": true
 			},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
-				"args": ["BB_monkey_current_attack_target", "BB_monkey_enemies"]
+				"args": ["BB_CURRENT_TARGET", "BB_monkey_enemies"]
 			}
 		}
 	]
