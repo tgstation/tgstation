@@ -47,6 +47,7 @@
 		return FALSE
 	switch_flight()
 
+/// Proc that toggles between flight behavior on the mob being on and off, including the mob's flight, gravity, passtable, and the sounds/visuals.
 /datum/action/item_action/toggle_flight/proc/switch_flight()
 	var/obj/item/target_shoes = target
 	var/mob/living/carbon/human/human_owner = owner
@@ -80,7 +81,7 @@
 	passtable_off(human_owner, SHOES_TRAIT)
 	to_chat(human_owner, span_notice("You're lowered back onto the ground..."))
 	human_owner.refresh_gravity()
-	UnregisterSignal(list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
+	UnregisterSignal(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
 	//visuals
 	burning_audio.stop()
 	human_owner.cut_overlay(jet_fire)
