@@ -33,6 +33,8 @@
 	var/mob_exclusion_radius = 12
 	/// Radius around megafauna within which we avoid spawning tendrils
 	var/megafauna_exclusion_radius = 7
+	/// Minimum distance between tendril spawns
+	var/tendril_exclusion_radius = 12
 
 /datum/biome/New()
 	. = ..()
@@ -168,18 +170,21 @@
 			is_megafauna = TRUE
 
 		var/can_spawn = TRUE
-		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-			// Prevents tendrils spawning in each other's collapse range
+		if(ispath(picked_mob, /mob/living/basic/mining/tendril))
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
-				if (get_dist(spawn_turf, target_turf) <= 2)
+				if (get_dist(spawn_turf, target_turf) <= tendril_exclusion_radius)
 					can_spawn = FALSE
 					break
+
+			if (!can_spawn)
+				continue
 
 			// Also avoid spawning them next to megafauna
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
 				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
 					can_spawn = FALSE
 					break
+
 		else if (is_megafauna)
 			// Megafauna can spawn wherever it wants as long as its not next to another mega
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
@@ -195,12 +200,11 @@
 		if (!can_spawn)
 			continue
 
-		if (ispath(picked_mob, /obj/structure/spawner/lavaland))
+		if (ispath(picked_mob, /mob/living/basic/mining/tendril))
 			spawn_data[CAVE_SPAWN_TENDRIL] += target_turf
-		else
-			if (is_megafauna)
-				spawn_data[CAVE_SPAWN_MEGAFAUNA] += target_turf
-			spawn_data[CAVE_SPAWN_MOB] += target_turf
+		else if (is_megafauna)
+			spawn_data[CAVE_SPAWN_MEGAFAUNA] += target_turf
+		spawn_data[CAVE_SPAWN_MOB] += target_turf
 
 		new picked_mob(target_turf)
 
