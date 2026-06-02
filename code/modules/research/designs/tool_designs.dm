@@ -106,7 +106,7 @@
 	name = "RCD Matter Cartridge"
 	id = "rcd_ammo"
 	build_type = PROTOLATHE | AWAY_LATHE
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*3)
+	materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/rcd_ammo
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
