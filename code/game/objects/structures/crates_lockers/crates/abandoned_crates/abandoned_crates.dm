@@ -125,7 +125,7 @@
 
 	var/input = tgui_input_text(user, title = "Deca-code lock", message = "Enter [code_length] digits. All digits must be unique.", max_length = code_length)
 
-	var/result = try_code(input, user)
+	var/result = try_code(input)
 	switch(result)
 		if(LOOT_CRATE_SUCCESS)
 			togglelock(user)
@@ -134,7 +134,6 @@
 			to_chat(user, span_notice("You leave the crate alone."))
 		if(LOOT_CRATE_INCORRECT)
 			to_chat(user, span_warning("A red light flashes."))
-			previous_attempts += list(bulls_and_cows(input))
 		if(LOOT_CRATE_FAIL)
 			boom(user)
 	return
@@ -154,6 +153,7 @@
 		return LOOT_CRATE_CANCEL
 	attempts--
 	if(attempts > 0)
+		previous_attempts += list(bulls_and_cows(input))
 		return LOOT_CRATE_INCORRECT
 	return LOOT_CRATE_FAIL
 
