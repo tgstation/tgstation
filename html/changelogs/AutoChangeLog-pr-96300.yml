@@ -1,0 +1,4 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "jaws of recovery are blacklisted from crafting the jaws of recovery"
