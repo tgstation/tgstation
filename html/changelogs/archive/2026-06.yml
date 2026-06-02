@@ -15,6 +15,11 @@
   - balance: The RNG instant kill via organ removal of the mech drill has been removed,
       and replaced with a very high wounding chance
 2026-06-02:
+  Fghj240:
+  - bugfix: Cybernetic cat ears can no longer be restyled with flesh reshapers (because
+      it broke them)
+  Hatterhat:
+  - bugfix: Bileworm spewlet trophies no longer spit bullets instead of acidic bile.
   Iajret:
   - bugfix: Mending touch works once again
   Melbert:
