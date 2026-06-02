@@ -198,6 +198,7 @@
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject opened access-locked airlock with id wire cut!")
 	door.wires.pulse(WIRE_OPEN, subject)
 	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-locked airlock with id wire cut and open wire pulsed!")
+	door.close()
 	door.wires.cut(WIRE_IDSCAN, subject) // mend
 	subject.last_bumped = 0
 	subject.Bump(door)
