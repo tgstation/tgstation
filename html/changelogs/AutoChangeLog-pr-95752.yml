@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "merged large welding tool tank with engi omnitool for engiborg"
-  - bugfix: "examining the omnitool will reveal details about its internal tool such as multitool buffer, welding fuel left etc"

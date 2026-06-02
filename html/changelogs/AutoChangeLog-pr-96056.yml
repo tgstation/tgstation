@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - spellcheck: "Adds some additional deep lore to some of the pistols in the game. FInd your favourite and see if I cared to add one."
+  - spellcheck: "Rewrote the lore for contractor batons and stun batons."
+  - code_imp: "Repathed Liberators. This has no bearing on their function."
+  - code_imp: "Rechambers Regal Condors in .45 and 10mm Reaper rounds to .45 Reaper rounds. This has no impact on their function."

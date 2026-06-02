@@ -123,6 +123,7 @@
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/power_store/cell/high(src)
+		new /obj/item/stock_parts/power_store/battery/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2/PopulateContents()
 	for(var/i in 1 to 10)
@@ -132,6 +133,7 @@
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/power_store/cell/super(src)
+		new /obj/item/stock_parts/power_store/battery/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3/PopulateContents()
 	for(var/i in 1 to 10)
@@ -141,6 +143,7 @@
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/power_store/cell/hyper(src)
+		new /obj/item/stock_parts/power_store/battery/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4/PopulateContents()
 	for(var/i in 1 to 10)
@@ -150,6 +153,7 @@
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/power_store/cell/bluespace(src)
+		new /obj/item/stock_parts/power_store/battery/bluespace(src)
 		new /obj/item/stack/cable_coil/thirty(src)
 
 //used in a cargo crate

@@ -22,6 +22,8 @@
 	cells_minimum = 1
 	cells_maximum = 2
 
+	visual = FALSE
+
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
