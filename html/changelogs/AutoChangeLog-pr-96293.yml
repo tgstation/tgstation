@@ -1,6 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - bugfix: "Non-square paint canvases and Nanopaint projects correctly save to icons."
-  - bugfix: "You can no longer enter empty filenames when saving Nanopaint files."
-  - spellcheck: "User-provided modular computer filenames are now checked against the pda IC filter."

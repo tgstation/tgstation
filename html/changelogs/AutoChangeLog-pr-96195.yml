@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Cutting an airlock's ID wire prevents ID usage again (instead of changing the door to all access)"
