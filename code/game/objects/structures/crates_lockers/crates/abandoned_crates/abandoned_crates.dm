@@ -140,7 +140,7 @@
 	return
 
 // Test the input, spawn loot if it's correct. Returns the outcome of testing.
-/obj/structure/closet/crate/secure/loot/proc/try_code(var/input)
+/obj/structure/closet/crate/secure/loot/proc/try_code(input)
 	if(input == code)
 		if(!spawned_loot)
 			spawn_loot()

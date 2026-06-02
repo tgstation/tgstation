@@ -89,11 +89,11 @@
 			// Grab last attempt from list
 			var/outcome = lootbox.previous_attempts[11 - lootbox.attempts]
 			holder.visible_message("[moo] emits [outcome["bulls"]] high-pitched beeps and [outcome["cows"]] low-pitched ones.")
-			for(1 to outcome["bulls"])
+			for(var/i in 1 to outcome["bulls"])
 				sleep(0.5 SECONDS)
 				playsound(holder, "sound/machines/synth/synth_yes.ogg", 100)
 			sleep(0.5 SECONDS)
-			for(1 to outcome["cows"])
+			for(var/i in 1 to outcome["cows"])
 				sleep(0.5 SECONDS)
 				playsound(holder, "sound/machines/synth/synth_no.ogg", 100)
 		if(LOOT_CRATE_FAIL)
