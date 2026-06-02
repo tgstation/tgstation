@@ -12,14 +12,33 @@
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 	action = "crushing"
 	waste_chemical = /datum/reagent/toxin/acid/industrial_waste
+	pixel_y = 1
 
-	/// What list of reagents should we look at when we boost the effectiveness of this machinery?
-	booster_list = list(
-		/datum/reagent/toxin/acid = 1,
-		/datum/reagent/toxin/acid/fluacid = 2,
-		/datum/reagent/toxin/acid/nitracid = 3,
-		/datum/reagent/teslium = 5,
-	)
+/obj/machinery/bouldertech/refinery/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plumbing/boulder_reactions)
+	AddElement(/datum/element/simple_rotation)
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/bouldertech/refinery/update_icon_state()
+	. = ..()
+	set_light_on(anchored && is_operational && !panel_open)
+
+/obj/machinery/bouldertech/refinery/create_reagents(max_vol, flags)
+	QDEL_NULL(reagents)
+	reagents = new /datum/reagents/plumbing(max_vol, flags)
+	reagents.my_atom = src
+
+/obj/machinery/bouldertech/refinery/get_booster_reagents()
+	var/static/list/booster_reagents
+	if(!length(booster_reagents))
+		booster_reagents = list(
+			/datum/reagent/toxin/acid = 1,
+			/datum/reagent/toxin/acid/fluacid = 2,
+			/datum/reagent/toxin/acid/nitracid = 3,
+			/datum/reagent/teslium = 5,
+		)
+	return booster_reagents
 
 /obj/machinery/bouldertech/refinery/can_process_material(datum/material/possible_mat)
 	var/static/list/processable_materials
@@ -54,24 +73,19 @@
 	reagents.maximum_volume = new_volume
 
 
-/obj/machinery/bouldertech/refinery/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/plumbing/boulder_reactions)
-	AddElement(/datum/element/simple_rotation)
-	update_appearance(UPDATE_OVERLAYS)
-
 /obj/machinery/bouldertech/refinery/check_for_boosts()
 	. = ..() //resets to 1.00 efficiency in the parent
+
 	var/highest_boost = 0
 	var/datum/reagent/biggest_booster
-	for(var/datum/reagent/chem in reagents.reagent_list)
-		if(!booster_list[chem.type])
+	var/list/datum/reagents/booster_list = get_booster_reagents()
+	for(var/datum/reagent/booster as anything in booster_list)
+		var/booster_volume = booster_list[booster]
+		if(!reagents.has_reagent(booster, booster_volume)) //check that we have the associated quantity of the chem in order to perform the boost.
 			continue
-		if(!reagents.has_reagent(chem.type, booster_list[chem.type])) //check that we have the associated quantity of the chem in order to perform the boost.
-			continue
-		if(booster_list[chem.type] > highest_boost)
-			highest_boost = booster_list[chem.type]
-			biggest_booster = chem.type
+		if(booster_list[booster] > highest_boost)
+			highest_boost = booster_volume
+			biggest_booster = booster
 
 	if(!biggest_booster)
 		return
@@ -79,14 +93,6 @@
 	reagents.remove_reagent(biggest_booster, highest_boost) //remove the associated amount from the reagents
 	refining_efficiency = 1 + (highest_boost / 10) //Results in a boost from 10-30%
 	reagents.add_reagent(waste_chemical, highest_boost)
-
-/obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	. = ..()
-	set_light_on(TRUE)
-
-/obj/machinery/bouldertech/refinery/default_unfasten_wrench(mob/user, obj/item/wrench, time)
-	. = ..()
-	set_light_on(TRUE)
 
 /obj/machinery/bouldertech/refinery/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	. = ..()
@@ -113,16 +119,23 @@
 	circuit = /obj/item/circuitboard/machine/smelter
 	usage_sound = 'sound/machines/mining/smelter.ogg'
 	action = "smelting"
-	booster_list = list(
-		/datum/reagent/fuel = 1,
-		/datum/reagent/thermite = 2,
-		/datum/reagent/gunpowder = 3,
-		/datum/reagent/liquid_dark_matter = 5,
-	)
+	pixel_x = -1
 
 /obj/machinery/bouldertech/refinery/smelter/Initialize(mapload)
 	. = ..()
 	update_light_value()
+
+
+/obj/machinery/bouldertech/refinery/smelter/get_booster_reagents()
+	var/static/list/booster_reagents
+	if(!length(booster_reagents))
+		booster_reagents = list(
+			/datum/reagent/fuel = 1,
+			/datum/reagent/thermite = 2,
+			/datum/reagent/gunpowder = 3,
+			/datum/reagent/liquid_dark_matter = 5,
+		)
+	return booster_reagents
 
 /obj/machinery/bouldertech/refinery/smelter/can_process_material(datum/material/possible_mat)
 	var/static/list/processable_materials

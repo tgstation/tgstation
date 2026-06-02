@@ -35,7 +35,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
-
 	controller.clear_blackboard_key(target_key)
 
 	// If we're using a field rn, just don't do anything yeah?

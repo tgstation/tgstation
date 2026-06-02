@@ -28,3 +28,8 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/captain/royal
+	name = "captain's royal uniform"
+	desc = "A captain's royal uniform. Fit for commanding your Officers in the midst of a nuclear incursion."
+	icon_state = "caproyal"

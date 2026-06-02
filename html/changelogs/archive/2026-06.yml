@@ -1,0 +1,51 @@
+2026-06-01:
+  Glamyrio:
+  - bugfix: Renamed 2 cameras on MetaStation; first cam was with wrong name and second
+      one was a badnamed
+  SmArtKar:
+  - refactor: Refactors inventory UI to be completely datum and vis_contents-based
+  - bugfix: Observers should no longer see doubled up inventory UIs
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: Added the limper quirk, which makes you limp.
+  - bugfix: storage module of holding now triggers bluespace interference as intended
+  - refactor: teleporter interference checks check an item flag rather than hard type-checking
+      bags of holding
+  - spellcheck: Securiy
+  lelandkemble:
+  - balance: The RNG instant kill via organ removal of the mech drill has been removed,
+      and replaced with a very high wounding chance
+2026-06-02:
+  Iajret:
+  - bugfix: Mending touch works once again
+  Melbert:
+  - bugfix: Cutting an airlock's ID wire prevents ID usage again (instead of changing
+      the door to all access)
+  - map: Roundstart nuclear operatives now spawn in the nuke base elevator, rather
+      than in the base itself. This change was done so we could reduce the lag from
+      loading the nuke base during round startup.
+  SmArtKar:
+  - bugfix: Fixed spilled flour not containing any flour
+  - balance: You can make toolboxes out of meat and paper again
+  - balance: Lavaland tendrils have been reworked into a full fledged miniboss instead
+      of a simple mob spawner.
+  - balance: Lavaland mobs minimum spawn separation distance has been lowered from
+      12 to 7
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: jaws of recovery are blacklisted from crafting the jaws of recovery
+  Wisemonster:
+  - bugfix: Fixed Nebula's boulder refinery being constantly spaced.
+  Y0SH1M4S73R:
+  - bugfix: Non-square paint canvases and Nanopaint projects correctly save to icons.
+  - bugfix: You can no longer enter empty filenames when saving Nanopaint files.
+  - spellcheck: User-provided modular computer filenames are now checked against the
+      pda IC filter.
+  lelandkemble:
+  - balance: Bitrunners can't back out of domains via the ladder while bitrunning
+      glitches remain in them
+  necromanceranne:
+  - spellcheck: Adds some additional deep lore to some of the pistols in the game.
+      FInd your favourite and see if I cared to add one.
+  - spellcheck: Rewrote the lore for contractor batons and stun batons.
+  - code_imp: Repathed Liberators. This has no bearing on their function.
+  - code_imp: Rechambers Regal Condors in .45 and 10mm Reaper rounds to .45 Reaper
+      rounds. This has no impact on their function.

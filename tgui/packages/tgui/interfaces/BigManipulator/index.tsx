@@ -3,8 +3,8 @@ import {
   BlockQuote,
   Box,
   Button,
+  Dropdown,
   Icon,
-  Input,
   Modal,
   Section,
   Slider,
@@ -15,18 +15,30 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import type { ManipulatorData, ManipulatorTask } from './types';
 
-import type { InteractionPoint, ManipulatorData } from './types';
-
-const taskingSchedules = ['Round Robin', 'Strict Robin', 'Prefer First'];
-
-const taskingScheduleIcons = {
-  'Round Robin': 'list-ol',
-  'Strict Robin': 'arrows-spin',
-  'Prefer First': 'arrow-down-1-9',
+const TASK_TYPE_LABELS: Record<string, string> = {
+  pickup: 'Pick up...',
+  drop: 'Drop...',
+  throw: 'Throw...',
+  use: 'Use held...',
+  interact: 'Interact...',
+  wait: 'Wait...',
 };
 
-const buttonNumberToIcon = {
+const TASK_TYPE_ICONS: Record<string, string> = {
+  pickup: 'hand',
+  drop: 'box-open',
+  interact: 'bolt',
+  wait: 'hourglass-half',
+};
+
+const TASKING_STRATEGY_ICONS: Record<string, string> = {
+  Sequential: 'list-ol',
+  'Strict order': 'lock',
+};
+
+const buttonNumberToIcon: Record<number, string> = {
   1: '',
   2: 'arrow-up',
   3: '',
@@ -38,29 +50,23 @@ const buttonNumberToIcon = {
   9: '',
 };
 
-const MasterControls = () => {
+function MasterControls() {
   const { act, data } = useBackend<ManipulatorData>();
-  const {
-    delay_step,
-    speed_multiplier,
-    min_speed_multiplier,
-    max_speed_multiplier,
-  } = data;
+  const { speed_multiplier, min_speed_multiplier, max_speed_multiplier } = data;
+
   return (
     <Stack>
       <Stack.Item>
         <Button
           icon="backward-step"
           onClick={() =>
-            act('adjust_interaction_speed', {
-              new_speed: min_speed_multiplier,
-            })
+            act('adjust_interaction_speed', { new_speed: min_speed_multiplier })
           }
         />
       </Stack.Item>
       <Stack.Item grow>
         <Slider
-          style={{ marginTop: '-5px' }}
+          style={{ marginTop: '-0px', marginBottom: '-7px' }}
           lineHeight={1}
           step={0.1}
           my={1}
@@ -69,10 +75,8 @@ const MasterControls = () => {
           maxValue={max_speed_multiplier}
           unit="x"
           stepPixelSize={20}
-          onDrag={(value) =>
-            act('adjust_interaction_speed', {
-              new_speed: value,
-            })
+          onChange={(_e, value) =>
+            act('adjust_interaction_speed', { new_speed: value })
           }
         />
       </Stack.Item>
@@ -80,9 +84,7 @@ const MasterControls = () => {
         <Button
           icon="forward-step"
           onClick={() =>
-            act('adjust_interaction_speed', {
-              new_speed: max_speed_multiplier,
-            })
+            act('adjust_interaction_speed', { new_speed: max_speed_multiplier })
           }
         />
       </Stack.Item>
@@ -97,7 +99,7 @@ const MasterControls = () => {
       </Stack.Item>
       <Stack.Item>
         <Button
-          icon="eject"
+          icon="person-walking-arrow-right"
           tooltip="Unbuckle the worker"
           onClick={() => act('unbuckle')}
         >
@@ -112,32 +114,23 @@ type ConfigRowProps = {
   label: string;
   content: string;
   onClick: () => void;
-  tooltip: string;
+  tooltip?: string;
   selected?: BooleanLike;
 };
 
 const ConfigRow = (props: ConfigRowProps) => {
-  const { label, content, onClick, ...rest } = props;
-  const { tooltip = '', selected = false } = rest;
+  const { label, content, onClick, tooltip = '', selected = false } = props;
 
   return (
     <Table.Row
       className="candystripe"
-      style={{
-        height: '2em',
-        padding: '20px',
-        lineHeight: '2em',
-      }}
+      style={{ height: '2em', lineHeight: '2em' }}
     >
       <Table.Cell>
         <Box style={{ marginLeft: '5px' }}>{label}</Box>
       </Table.Cell>
       <Table.Cell
-        style={{
-          width: 'min-content',
-          whiteSpace: 'nowrap',
-          textAlign: 'right',
-        }}
+        style={{ width: 'min-content', whiteSpace: 'nowrap', textAlign: 'right' }}
       >
         <Button tooltip={tooltip} onClick={onClick} selected={!!selected}>
           {content}
@@ -147,421 +140,194 @@ const ConfigRow = (props: ConfigRowProps) => {
   );
 };
 
-const PointSection = (props: {
-  title: string;
-  points: InteractionPoint[];
-  onAdd: () => void;
-  act: (action: string, params?: Record<string, any>) => void;
-}) => {
-  const { data } = useBackend<ManipulatorData>();
-  const { title, points, onAdd, act } = props;
-  const [editingPoint, setEditingPoint] = useState<InteractionPoint | null>(
-    null,
-  );
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [editingNameId, setEditingNameId] = useState<string | null>(null);
-  const [newName, setNewName] = useState('');
+const getPointButtonNumber = (offset: string): number | null => {
+  const [dx, dy] = offset.split(',').map(Number);
+  if (!Number.isFinite(dx) || !Number.isFinite(dy)) return null;
+  if (dx < -1 || dx > 1 || dy < -1 || dy > 1) return null;
+  if (dx === 0 && dy === 0) return null;
+  const xIndex = dx + 1;
+  const yIndex = 1 - dy;
+  return yIndex * 3 + xIndex + 1;
+};
 
-  const isPickup = title === 'Pickup Points';
-  const currentTasking = isPickup ? data.pickup_tasking : data.dropoff_tasking;
-  const currentIcon = taskingScheduleIcons[currentTasking] || 'clipboard-list';
+const getFilteringModeText = (mode: number) => {
+  switch (mode) {
+    case 1: return 'Items';
+    case 2: return 'Closets';
+    case 3: return 'Humans';
+    default: return 'Unknown';
+  }
+};
 
-  const cycleTaskingSchedule = () => {
-    const currentIndex = taskingSchedules.indexOf(currentTasking);
-    const nextIndex = (currentIndex + 1) % taskingSchedules.length;
-    const newTasking = taskingSchedules[nextIndex];
-    act('cycle_tasking_schedule', {
-      new_schedule: newTasking,
-      is_pickup: isPickup,
-    });
-  };
+type TaskEditModalProps = {
+  task: ManipulatorTask;
+  onClose: () => void;
+};
 
-  const adjustPoint = (pointId: string, param: string, value?: any) => {
-    act('adjust_point_param', { pointId, param, value });
-  };
+function TaskEditModal(props: TaskEditModalProps) {
+  const { act, data } = useBackend<ManipulatorData>();
+  const { task, onClose } = props;
 
-  const handleSaveName = (pointId: string) => {
-    adjustPoint(pointId, 'set_name', newName);
-    setEditingNameId(null);
-    setNewName('');
-  };
+  const adjust = (param: string, value?: any) =>
+    act('adjust_task_param', { taskId: task.id, param, value });
 
-  const handleEditPoint = (point: InteractionPoint, index: number) => {
-    setEditingPoint(point);
-    setEditingIndex(index);
-  };
+  const isCargo = !!task.turf;
+  const isPickup = task.task_type.includes('pickup');
+  const isDropoff = task.task_type.includes('dropoff');
+  const isInteract = task.task_type.includes('interact');
 
-  useEffect(() => {
-    if (editingPoint && editingIndex !== null) {
-      const currentPoints = isPickup ? data.pickup_points : data.dropoff_points;
-      const updatedPoint = currentPoints.find((p) => p.id === editingPoint.id);
-      if (updatedPoint) {
-        setEditingPoint(updatedPoint);
-      }
-    }
-  }, [
-    data.pickup_points,
-    data.dropoff_points,
-    editingPoint?.id,
-    editingIndex,
-    isPickup,
-  ]);
-
-  const handleDirectionClick = (buttonNumber: number) => {
-    if (!editingPoint || editingIndex === null) return;
-
-    adjustPoint(editingPoint.id, 'move_to', {
-      buttonNumber,
-      is_pickup: title === 'Pickup Points',
-    });
-  };
-
-  const getPointButtonNumber = (point: InteractionPoint): number | null => {
-    if (!point || !point.turf) return null;
-
-    const [pointX, pointY] = point.turf.split(',').map(Number);
-    const [baseX, baseY] = data.manipulator_position.split(',').map(Number);
-
-    const dx = pointX - baseX;
-    const dy = pointY - baseY;
-
-    if (dx === -1 && dy === 1) return 1;
-    if (dx === 0 && dy === 1) return 2;
-    if (dx === 1 && dy === 1) return 3;
-    if (dx === -1 && dy === 0) return 4;
-    if (dx === 0 && dy === 0) return 5;
-    if (dx === 1 && dy === 0) return 6;
-    if (dx === -1 && dy === -1) return 7;
-    if (dx === 0 && dy === -1) return 8;
-    if (dx === 1 && dy === -1) return 9;
-
-    return null;
-  };
-
-  const getFilteringModeText = (mode: number) => {
-    switch (mode) {
-      case 1:
-        return 'ITEMS';
-      case 2:
-        return 'CLOSETS';
-      case 3:
-        return 'HUMANS';
-      default:
-        return 'UNKNOWN';
-    }
-  };
-
-  const formatFilters = (filters: string[]) => {
-    if (!filters || filters.length === 0) return '—';
-    if (filters.length <= 2) return filters.join(', ');
-    const shown = filters.slice(0, 2).join(', ');
-    const remaining = filters.length - 2;
-    return `${shown} and ${remaining} more...`;
-  };
+  const currentButton = task.turf
+    ? getPointButtonNumber(task.turf)
+    : null;
 
   return (
-    <>
+    <Modal style={{ padding: '6px', width: '340px', boxSizing: 'initial' }}>
       <Section
-        title={title}
+        title={`Edit: ${task.name}`}
         buttons={
-          <>
-            <Button
-              tooltip="Cycle tasking schedule"
-              onClick={cycleTaskingSchedule}
-              icon={currentIcon}
-              color="transparent"
-            >
-              {currentTasking}
-            </Button>
-            <Button
-              icon="arrows-spin"
-              color="transparent"
-              onClick={() => act(`reset_tasking_${title}`)}
-            >
-              Reset
-            </Button>
-            <Button icon="plus" color="transparent" onClick={onAdd} />
-          </>
+          <Button icon="xmark" color="bad" onClick={onClose} />
         }
       >
-        <Stack vertical>
-          {points.map((point, index) => (
-            <Stack.Item
-              key={index}
-              style={{
-                padding: '5px',
-              }}
-              className="candystripe"
-            >
-              <Box>
-                <Stack>
-                  <Stack.Item grow>
-                    <Box>
-                      <Box bold>
-                        {editingNameId === point.id ? (
-                          <Stack>
-                            <Stack.Item>
-                              <Input
-                                value={newName}
-                                onChange={(value) => setNewName(value)}
-                                onEnter={() => handleSaveName(point.id)}
-                                maxLength={20}
-                                autoFocus
-                              />
-                            </Stack.Item>
-                            <Stack.Item>
-                              <Button
-                                icon="check"
-                                onClick={() => handleSaveName(point.id)}
-                              />
-                            </Stack.Item>
-                          </Stack>
-                        ) : (
-                          <>
-                            {point.name}{' '}
-                            <Button
-                              icon="edit"
-                              color="transparent"
-                              onClick={() => {
-                                setEditingNameId(point.id);
-                                setNewName(point.name);
-                              }}
-                            />
-                          </>
-                        )}
-                      </Box>
-                      <Box color="label">Mode: {point.mode.toUpperCase()}</Box>
-                      <Box
-                        color="label"
-                        style={{
-                          maxWidth: '280px',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: 'block',
-                        }}
-                      >
-                        Filters: {formatFilters(point.item_filters)}
-                      </Box>
-                    </Box>
-                  </Stack.Item>
-                  <Stack vertical>
-                    <Stack.Item>
-                      <Button
-                        icon="gear"
-                        color="transparent"
-                        onClick={() => handleEditPoint(point, index)}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        icon="trash"
-                        color="transparent"
-                        onClick={() =>
-                          adjustPoint(
-                            point.id,
-                            'remove_point',
-                            isPickup && 'SOMETHING',
-                          )
-                        }
-                      />
-                    </Stack.Item>
-                  </Stack>
-                </Stack>
+        {task.task_type.includes('wait') && (
+          <Table>
+            <Table.Row className="candystripe" style={{ height: '2em', lineHeight: '2em' }}>
+              <Table.Cell>
+                <Box style={{ marginLeft: '5px' }}>Wait Time</Box>
+              </Table.Cell>
+              <Table.Cell style={{ paddingRight: '5px' }}>
+                <Slider
+                  value={task.time ?? 1}
+                  minValue={1}
+                  maxValue={60}
+                  step={1}
+                  stepPixelSize={4}
+                  unit="s"
+                  onChange={(_e, value) => adjust('set_wait_time', value)}
+                />
+              </Table.Cell>
+            </Table.Row>
+          </Table>
+        )}
+        {isCargo && (
+          <Stack>
+            <Stack.Item>
+              <Box
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  gridTemplateRows: '1fr 1fr 1fr',
+                  height: '60px',
+                  width: '60px',
+                  gap: '2px',
+                  marginRight: '10px',
+                }}
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                  <Button
+                    key={n}
+                    disabled={n === 5}
+                    color={currentButton === n ? 'good' : 'default'}
+                    onClick={() => n !== 5 && adjust('move_to', { buttonNumber: n })}
+                    style={{ margin: '0', padding: '0', textAlign: 'center' }}
+                    icon={buttonNumberToIcon[n]}
+                  />
+                ))}
               </Box>
             </Stack.Item>
-          ))}
-        </Stack>
+            <Stack.Item grow>
+              <Table>
+                <ConfigRow
+                  label="Object Type"
+                  content={getFilteringModeText(task.filtering_mode ?? 1)}
+                  onClick={() => adjust('cycle_filtering_mode')}
+                  tooltip="Cycle object category"
+                />
+                <ConfigRow
+                  label="Use Filters"
+                  content={task.filters_status ? 'TRUE' : 'FALSE'}
+                  onClick={() => adjust('toggle_filter_skip')}
+                  tooltip="Toggle filter usage"
+                />
+                {isPickup && (
+                  <ConfigRow
+                    label="Eagerness"
+                    content={task.pickup_eagerness ?? '—'}
+                    onClick={() => adjust('cycle_pickup_eagerness')}
+                    tooltip="Wait for dropoff slot or pick up immediately"
+                  />
+                )}
+                {isDropoff && (
+                  <>
+                    <ConfigRow
+                      label="Mode"
+                      content={(task.interaction_mode ?? '').toUpperCase()}
+                      onClick={() => adjust('cycle_interaction_mode')}
+                      tooltip="Drop / Throw / Use"
+                    />
+                    <ConfigRow
+                      label="Overflow"
+                      content={task.overflow_status ?? '—'}
+                      onClick={() => adjust('cycle_overflow_status')}
+                      tooltip="Cycle overflow behaviour"
+                    />
+                    {task.interaction_mode?.toUpperCase() === 'THROW' && (
+                      <ConfigRow
+                        label="Throw Range"
+                        content={`${task.throw_range} TILES`}
+                        onClick={() => adjust('cycle_throw_range')}
+                        tooltip="Cycle throwing range"
+                      />
+                    )}
+                  </>
+                )}
+                {(isDropoff || isInteract) && task.interaction_mode?.toUpperCase() !== 'THROW' && (
+                  <>
+                    <ConfigRow
+                      label="Worker Action"
+                      content={task.worker_interaction ?? '—'}
+                      onClick={() => adjust('cycle_worker_interaction')}
+                      tooltip="Normal / Single use / Empty hand"
+                    />
+                    <ConfigRow
+                      label="Alt Click"
+                      content={task.worker_use_rmb ? 'TRUE' : 'FALSE'}
+                      onClick={() => adjust('toggle_worker_rmb')}
+                      tooltip="Simulate RMB click"
+                    />
+                    <ConfigRow
+                      label="Combat Mode"
+                      content={task.worker_combat_mode ? 'TRUE' : 'FALSE'}
+                      onClick={() => adjust('toggle_worker_combat')}
+                      tooltip="Use combat mode during interaction"
+                    />
+                    <ConfigRow
+                      label="No Uses Left"
+                      content={task.use_post_interaction ?? '—'}
+                      onClick={() => adjust('cycle_post_interaction')}
+                      tooltip="What to do when nothing left to interact with"
+                    />
+                  </>
+                )}
+              </Table>
+            </Stack.Item>
+          </Stack>
+        )}
       </Section>
 
-      {editingPoint && editingIndex !== null && (
-        <Modal
-          style={{
-            padding: '6px',
-            width: '340px',
-            boxSizing: 'initial',
-          }}
-        >
-          <Section
-            title="Point Properties"
-            buttons={
-              <Button
-                icon="xmark"
-                color="bad"
-                onClick={() => {
-                  setEditingPoint(null);
-                  setEditingIndex(null);
-                }}
-              />
-            }
-          >
-            <Stack>
-              <Stack.Item>
-                <Box
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr 1fr',
-                    gridTemplateRows: '1fr 1fr 1fr',
-                    height: '60px',
-                    width: '60px',
-                    gap: '2px',
-                    rowGap: '2px',
-                    marginRight: '10px',
-                  }}
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((buttonNumber) => {
-                    const isCenter = buttonNumber === 5;
-                    const currentButton = getPointButtonNumber(editingPoint);
-                    const isCurrentButton = currentButton === buttonNumber;
-
-                    return (
-                      <Button
-                        key={buttonNumber}
-                        disabled={isCenter}
-                        color={isCurrentButton ? 'good' : 'default'}
-                        onClick={() =>
-                          !isCenter && handleDirectionClick(buttonNumber)
-                        }
-                        style={{
-                          margin: '0px',
-                          textAlign: 'center',
-                          padding: '0px',
-                        }}
-                        icon={buttonNumberToIcon[buttonNumber]}
-                      />
-                    );
-                  })}
-                </Box>
-              </Stack.Item>
-              <Stack.Item grow>
-                <Table>
-                  <ConfigRow
-                    label="Object Type"
-                    content={getFilteringModeText(editingPoint.filtering_mode)}
-                    onClick={() =>
-                      adjustPoint(editingPoint.id, 'cycle_pickup_point_type')
-                    }
-                    tooltip="Cycle the pickup type"
-                  />
-                  {title === 'Pickup Points' ? (
-                    <ConfigRow
-                      label="Use Item Filters"
-                      content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                      onClick={() =>
-                        adjustPoint(editingPoint.id, 'toggle_filter_skip')
-                      }
-                      tooltip="Toggle filter usage"
-                    />
-                  ) : (
-                    <>
-                      <ConfigRow
-                        label="Mode"
-                        content={editingPoint.mode.toUpperCase()}
-                        onClick={() =>
-                          adjustPoint(
-                            editingPoint.id,
-                            'cycle_dropoff_point_interaction',
-                          )
-                        }
-                        tooltip="Change dropoff mode"
-                      />
-                      <ConfigRow
-                        label="Overflow"
-                        content={editingPoint.overflow_status}
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'cycle_overflow_status')
-                        }
-                        tooltip="Cycle overflow status"
-                      />
-                      <ConfigRow
-                        label="Use Item Filters"
-                        content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'toggle_filter_skip')
-                        }
-                        tooltip="Toggle filter usage"
-                      />
-                      {editingPoint.mode.toUpperCase() === 'THROW' && (
-                        <ConfigRow
-                          label="Throw Range"
-                          content={`${editingPoint.throw_range} TILES`}
-                          onClick={() =>
-                            adjustPoint(editingPoint.id, 'cycle_throw_range')
-                          }
-                          tooltip="Cycle throwing range"
-                        />
-                      )}
-                      {editingPoint.mode.toUpperCase() === 'USE' && (
-                        <>
-                          <ConfigRow
-                            label="Alt Worker Action"
-                            content={
-                              editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'
-                            }
-                            onClick={() =>
-                              adjustPoint(editingPoint.id, 'toggle_worker_rmb')
-                            }
-                            tooltip="Toggle RMB-like attack"
-                          />
-                          <ConfigRow
-                            label="Combat Stance"
-                            content={
-                              editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
-                            }
-                            onClick={() =>
-                              adjustPoint(
-                                editingPoint.id,
-                                'toggle_worker_combat',
-                              )
-                            }
-                            tooltip="Toggle using Combat Mode for interactions"
-                          />
-                          <ConfigRow
-                            label="Alt Worker Action"
-                            content={editingPoint.worker_interaction}
-                            onClick={() =>
-                              adjustPoint(
-                                editingPoint.id,
-                                'cycle_worker_interaction',
-                              )
-                            }
-                            tooltip="Cycle interaction type"
-                          />
-                          <ConfigRow
-                            label="No Uses Left"
-                            content={editingPoint.use_post_interaction}
-                            onClick={() =>
-                              adjustPoint(
-                                editingPoint.id,
-                                'cycle_post_interaction',
-                              )
-                            }
-                            tooltip="Cycle what to do when no interaction is avaliable"
-                          />
-                        </>
-                      )}
-                    </>
-                  )}
-                </Table>
-              </Stack.Item>
-            </Stack>
-          </Section>
+      {isCargo && (
+        <>
           <Section
             title="Item Filters"
             buttons={
               <>
                 <Button
                   icon="plus"
-                  onClick={() =>
-                    adjustPoint(editingPoint.id, 'add_atom_filter_from_held')
-                  }
+                  onClick={() => adjust('add_atom_filter_from_held')}
                 >
                   Add held
                 </Button>
                 <Button.Confirm
-                  onClick={() =>
-                    adjustPoint(editingPoint.id, 'reset_atom_filters')
-                  }
+                  onClick={() => adjust('reset_atom_filters')}
                   confirmContent="Reset?"
                   icon="trash"
                 />
@@ -569,59 +335,242 @@ const PointSection = (props: {
             }
           >
             <Stack vertical>
-              {editingPoint.item_filters.map((name: string, index: number) => {
-                return (
-                  <Stack key={index}>
-                    <Stack.Item grow>
-                      <BlockQuote>{name}</BlockQuote>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        color="transparent"
-                        icon="xmark"
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'delete_filter', index)
-                        }
-                      />
-                    </Stack.Item>
-                  </Stack>
-                );
-              })}
+              {(task.item_filters ?? []).map((name, index) => (
+                <Stack key={index}>
+                  <Stack.Item grow>
+                    <BlockQuote>{name}</BlockQuote>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      color="transparent"
+                      icon="xmark"
+                      onClick={() => adjust('delete_filter', index)}
+                    />
+                  </Stack.Item>
+                </Stack>
+              ))}
             </Stack>
           </Section>
-          <Section title="Interaction Priorities">
-            <Table>
-              {editingPoint.settings_list.map((setting, index) => (
-                <Table.Row className="candystripe" key={setting.name}>
-                  <Table.Cell style={{ padding: '4px 4px' }}>
-                    <Icon name="hashtag" /> {index + 1}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button.Checkbox
-                      onClick={() =>
-                        adjustPoint(editingPoint.id, 'toggle_priority', index)
-                      }
-                      checked={setting.active}
-                      fluid
+
+          {(task.settings_list ?? []).length > 0 && (
+            <Section title="Interaction Priorities">
+              <Table>
+                {task.settings_list!.map((setting, index) => (
+                  <Table.Row className="candystripe" key={setting.name}>
+                    <Table.Cell style={{ padding: '4px' }}>
+                      <Icon name="hashtag" /> {index + 1}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button.Checkbox
+                        onClick={() => adjust('toggle_priority', index)}
+                        checked={!!setting.active}
+                        fluid
+                      >
+                        {setting.name}
+                      </Button.Checkbox>
+                    </Table.Cell>
+                    <Table.Cell width="1em">
+                      <Button
+                        icon="arrow-up"
+                        disabled={index === 0}
+                        onClick={() =>
+                          index > 0 && adjust('priority_move_up', index)
+                        }
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Section>
+          )}
+        </>
+      )}
+    </Modal>
+  );
+};
+
+const TaskList = () => {
+  const { act, data } = useBackend<ManipulatorData>();
+  const { tasks_data, current_task, tasking_strategy } = data;
+
+  const [editingTask, setEditingTask] = useState<ManipulatorTask | null>(null);
+  const [editingNameId, setEditingNameId] = useState<string | null>(null);
+  const [newName, setNewName] = useState('');
+  const [selectedType, setSelectedType] = useState<string>('pickup');
+
+  const adjust = (taskId: string, param: string, value?: any) =>
+    act('adjust_task_param', { taskId, param, value });
+
+  const handleSaveName = (taskId: string) => {
+    adjust(taskId, 'set_name', newName);
+    setEditingNameId(null);
+    setNewName('');
+  };
+
+  // keep modal in sync with live data
+  useEffect(() => {
+    if (!editingTask) return;
+    const updated = tasks_data.find((t) => t.id === editingTask.id);
+    if (updated) setEditingTask(updated);
+  }, [tasks_data]);
+
+  const strategyIcon =
+    TASKING_STRATEGY_ICONS[tasking_strategy] ?? 'list-ol';
+
+  return (
+    <>
+      <Section
+        title="Tasks"
+        buttons={
+          <>
+            <Button
+              icon={strategyIcon}
+              color="transparent"
+              tooltip="Cycle tasking strategy"
+              onClick={() => act('cycle_tasking_strategy', {
+                new_strategy: tasking_strategy === 'Sequential' ? 'Strict order' : 'Sequential',
+              })}
+            >
+              {tasking_strategy}
+            </Button>
+            <Button
+              icon="arrows-spin"
+              color="transparent"
+              tooltip="Reset tasking index"
+              onClick={() => act('reset_tasking_index')}
+            >
+              Reset
+            </Button>
+          </>
+        }
+      >
+        <Stack vertical>
+          {tasks_data.map((task, index) => {
+            const isActive = current_task === task.id;
+            const taskTypeKey = Object.keys(TASK_TYPE_LABELS).find((k) =>
+              task.task_type.includes(k),
+            ) ?? 'wait';
+
+            return (
+              <Stack.Item
+                key={task.id}
+                style={{
+                  padding: '5px',
+                  border: isActive ? '1px solid #bdad5e' : '1px solid transparent',
+                  borderRadius: '2px',
+                  boxShadow: isActive ? '0 0 6px 2px rgba(200, 168, 0, 0.55)' : undefined,
+                  backgroundColor: isActive ? 'rgba(151, 142, 95, 0.55)' : undefined
+                }}
+                className="candystripe"
+              >
+                <Stack align="center">
+                  <Stack.Item>
+                    <Box
+                      style={{
+                        width: '1.4em',
+                        textAlign: 'center',
+                        color: '#888',
+                        fontWeight: 'bold',
+                      }}
                     >
-                      {setting.name}
-                    </Button.Checkbox>
-                  </Table.Cell>
-                  <Table.Cell width="1em">
-                    <Button
-                      icon="arrow-up"
-                      disabled={index === 0}
-                      onClick={() =>
-                        index > 0 &&
-                        adjustPoint(editingPoint.id, 'priority_move_up', index)
-                      }
+                      {index + 1}
+                    </Box>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Icon
+                      name={TASK_TYPE_ICONS[taskTypeKey] ?? 'circle'}
+                      style={{ width: '1.2em', textAlign: 'center', marginRight: '5px' }}
                     />
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table>
-          </Section>
-        </Modal>
+                  </Stack.Item>
+                  <Stack.Item grow>
+                      <Box>
+                        <Box bold style={{ display: 'inline' }}>
+                          {TASK_TYPE_LABELS[taskTypeKey] ?? task.task_type}
+                        </Box>
+                        <Box color="label" fontSize="11px">
+
+                          {task.item_filters && task.item_filters.length > 0 && (
+                            <Box>
+                              {'...any of: ' +
+                                task.item_filters.slice(0, 3).join(', ') +
+                                (task.item_filters.length > 3 ? ` and ${task.item_filters.length - 3} more` : '') +
+                                '...'}
+                            </Box>
+                          )}
+                          {task.turf && <Box>...at [{task.turf}]...</Box>}
+                          {task.time && <Box>...for {task.time} second{task.time > 1 && "s"}...</Box>}
+                        </Box>
+                      </Box>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="gear"
+                      color="transparent"
+                      onClick={() => setEditingTask(task)}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="trash"
+                      color="transparent"
+                      onClick={() => adjust(task.id, 'remove_task')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Stack style={{ gap: '4px' }}>
+                      <Stack.Item>
+                        <Button
+                          icon="arrow-down"
+                          disabled={index === tasks_data.length - 1}
+                          onClick={() => adjust(task.id, 'move_down')}
+                        />
+                      </Stack.Item>
+                      <Stack.Item>
+                        <Button
+                          icon="arrow-up"
+                          disabled={index === 0}
+                          onClick={() => adjust(task.id, 'move_up')}
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+            );
+          })}
+        </Stack>
+      </Section>
+
+      <Section>
+        <Stack>
+          <Stack.Item grow>
+            <Dropdown
+              width="100%"
+              options={Object.keys(TASK_TYPE_LABELS).map((k) => ({
+                value: k,
+                displayText: TASK_TYPE_LABELS[k],
+              }))}
+              selected={TASK_TYPE_LABELS[selectedType]}
+              onSelected={(val) => setSelectedType(val)}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="plus"
+              onClick={() => act('create_task', { task_type: selectedType })}
+              style={{lineHeight: '22px'}}
+            >
+              New
+            </Button>
+          </Stack.Item>
+        </Stack>
+      </Section>
+
+      {editingTask && (
+        <TaskEditModal
+          task={editingTask}
+          onClose={() => setEditingTask(null)}
+        />
       )}
     </>
   );
@@ -629,162 +578,78 @@ const PointSection = (props: {
 
 export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
-  const { current_task, current_task_duration, pickup_points, dropoff_points } =
-    data;
-
-  const [progressValue, setProgressValue] = useState(0);
-  const [progressKey, setProgressKey] = useState(0);
-
-  useEffect(() => {
-    const isTaskActive = current_task !== 'IDLE' && current_task !== 'NO TASK';
-
-    if (isTaskActive) {
-      setProgressValue(0);
-      setProgressKey((prev) => prev + 1);
-
-      setTimeout(() => {
-        setProgressValue(100);
-      }, 10);
-    } else {
-      setProgressValue(0);
-      setProgressKey((prev) => prev + 1);
-    }
-  }, [current_task, current_task_duration]);
+  const { active, stopping } = data;
 
   return (
-    <Window title="Manipulator Interface" width={420} height={610}>
+    <Window title="Manipulator Interface" width={420} height={560}>
       <Window.Content overflowY="auto">
-        <Box
-          style={{
-            height: '100%',
-            overflowY: 'auto',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
+        <Section
+          title="Action Panel"
+          buttons={
+            <Button
+              icon={!active ? 'play' : stopping ? 'hourglass-start' : 'stop'}
+              color={!active ? 'good' : stopping ? 'blue' : 'bad'}
+              onClick={() => act('run_cycle')}
+            >
+              {!active ? 'Run' : stopping ? 'Stopping' : 'Stop'}
+            </Button>
+          }
         >
-          <Section
-            title="Action Panel"
-            buttons={
-              <Button
-                icon={
-                  current_task === 'NO TASK'
-                    ? 'play'
-                    : current_task === 'STOPPING'
-                      ? 'hourglass-start'
-                      : 'stop'
-                }
-                color={
-                  current_task === 'NO TASK'
-                    ? 'good'
-                    : current_task === 'STOPPING'
-                      ? 'blue'
-                      : 'bad'
-                }
-                onClick={() => act('run_cycle')}
+          <MasterControls />
+        </Section>
+        <Section
+
+        >
+          <Stack>
+            <Stack.Item grow>
+            <Button style={{
+              width: '100%',
+              lineHeight: '24px'
+            }}
+              icon={ data.disk_inserted ? "eject" : 'info' }
+              disabled={!data.disk_inserted || !!active || !!stopping}
+              color={!data.disk_inserted && "none"}
+              onClick={() => act('disk_eject')}
+            >
+              { data.disk_inserted ? "floppy drive (tasks: " + data.disk_task_count + ")" : "No drives inserted" }
+            </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button style={{
+              lineHeight: '24px'
+            }}
+                icon="download"
+                disabled={!data.disk_inserted || !!active || !!stopping}
+                onClick={() => act('disk_read')}
               >
-                {current_task === 'NO TASK'
-                  ? 'Run'
-                  : current_task === 'STOPPING'
-                    ? 'Stopping'
-                    : 'Stop'}
+                Read
               </Button>
-            }
-          >
-            <Box
-              style={{
-                lineHeight: '1.8em',
-                marginBottom: '-5px',
-              }}
-            >
-              <MasterControls />
-            </Box>
-          </Section>
-
-          <Section>
-            <Box
-              key={progressKey}
-              style={{
-                position: 'relative',
-                height: '1.8em',
-                border: '1px solid #40668c',
-                overflow: 'hidden',
-                borderRadius: '2px',
-              }}
-            >
-              <Box
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  height: '100%',
-                  width: `${progressValue}%`,
-                  backgroundColor: '#40668c',
-                  transition: `width ${current_task_duration / 10}s linear`,
-                  zIndex: 1,
-                }}
-              />
-              <Box
-                style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0 8px',
-                  color: '#fff',
-                  fontSize: '12px',
-                }}
+            </Stack.Item>
+            <Stack.Item>
+              <Button style={{
+              lineHeight: '24px'
+            }}
+                icon="upload"
+                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                onClick={() => act('disk_write')}
               >
-                <Box style={{ marginRight: '8px', marginLeft: '-2px' }}>
-                  Current task:
-                </Box>
-                <Box style={{ flexGrow: 1 }}>{current_task.toUpperCase()}</Box>
-              </Box>
-            </Box>
-          </Section>
-
-          {/* <Section>
-            <Stack>
-              <Stack.Item lineHeight="1.8" grow>
-                <Box
-                  style={{
-                    padding: '2px',
-                    backgroundColor: '#444444',
-                  }}
-                >
-                  <Button fluid icon="eject">
-                    data disk
-                  </Button>
-                  <BlockQuote>No storage detected.</BlockQuote>
-                </Box>
-              </Stack.Item>
-              <Stack.Item style={{ alignContent: 'center' }}>
-                <Button lineHeight="2" icon="floppy-disk">
-                  Read
-                </Button>
-              </Stack.Item>
-              <Stack.Item style={{ alignContent: 'center' }}>
-                <Button lineHeight="2" icon="circle">
-                  Write
-                </Button>
-              </Stack.Item>
-            </Stack>
-          </Section> */}
-
-          <PointSection
-            title="Pickup Points"
-            points={pickup_points}
-            onAdd={() => act('create_pickup_point')}
-            act={act}
-          />
-
-          <PointSection
-            title="Dropoff Points"
-            points={dropoff_points}
-            onAdd={() => act('create_dropoff_point')}
-            act={act}
-          />
-        </Box>
+                Write
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button.Confirm style={{
+              lineHeight: '24px'
+            }}
+                icon="trash"
+                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                confirmContent="Clear?"
+                onClick={() => act('disk_clear')}
+              >Clear
+              </Button.Confirm>
+            </Stack.Item>
+          </Stack>
+        </Section>
+        <TaskList />
       </Window.Content>
     </Window>
   );
