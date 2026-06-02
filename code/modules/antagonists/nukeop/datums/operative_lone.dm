@@ -1,6 +1,7 @@
 /datum/antagonist/nukeop/lone
 	name = "Lone Operative"
 	send_to_spawnpoint = FALSE //Handled by event
+	give_bonus_tc = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/full/loneop
 	preview_outfit = /datum/outfit/nuclear_operative
 	preview_outfit_behind = null
