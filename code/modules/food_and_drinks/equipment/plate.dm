@@ -7,7 +7,6 @@
 	pickup_sound = SFX_FOOD_PLATE_PICKUP
 	drop_sound = SFX_FOOD_PLATE_DROP
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	///How many things fit on this plate?
 	var/max_items = 8
 	///The offset from side to side the food items can have on the plate
@@ -118,6 +117,13 @@
 	max_x_offset = 4
 	max_height_offset = 5
 	biggest_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/plate/iron
+	name = "metal plate"
+	icon_state = "plate_metal"
+	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk. Made from sturdier iron instead of more fragile ceramic."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
+	fragile = FALSE
 
 /obj/item/plate_shard
 	name = "ceramic shard"

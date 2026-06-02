@@ -20,6 +20,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
 	var/root_category
@@ -518,7 +519,6 @@
 
 /obj/item/construction/rcd/loaded
 	matter = 160
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/construction/rcd/loaded/upgraded
 	construction_upgrades = RCD_ALL_UPGRADES
@@ -644,9 +644,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*3)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*16)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*12)
 	ammoamt = 160
