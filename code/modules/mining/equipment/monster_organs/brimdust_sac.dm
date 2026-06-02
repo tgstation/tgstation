@@ -169,6 +169,7 @@
 	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
 	dust_overlay.color = COLOR_RED_LIGHT
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
+	ADD_KEEP_TOGETHER(owner, REF(src))
 	owner.add_overlay(dust_overlay)
 	var/obj/effect/holder = owner.add_shared_particles(/particles/brimdust, "brimdust_coating-[owner.base_pixel_w]")
 	holder.pixel_w = -owner.base_pixel_w
@@ -178,6 +179,7 @@
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
 	owner.cut_overlay(dust_overlay)
+	REMOVE_KEEP_TOGETHER(owner, REF(src))
 	owner.remove_shared_particles("brimdust_coating-[owner.base_pixel_w]")
 	UnregisterSignal(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_COMPONENT_CLEAN_ACT))
 
