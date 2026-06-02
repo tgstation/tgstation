@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
-	icon_screen = "command"
+	icon_screen = "command_locked"
 	time_to_unscrew = 6 SECONDS
 	req_one_access = list(ACCESS_CAPTAIN, ACCESS_RD)
 	var/unlock = FALSE
@@ -16,6 +16,9 @@
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
 	unlock = TRUE
+	icon_screen = "command"
+	update_appearance(UPDATE_OVERLAYS)
+	balloon_alert(user, "console unlocked")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/card/id))
@@ -27,11 +30,15 @@
 			return
 		if(unlock == TRUE)
 			unlock = FALSE
-			baloon_alert(user,"console locked")
+			icon_screen = "command_locked"
+			balloon_alert(user,"console locked")
 		else
 			unlock = TRUE
-			baloon_alert(user,"console unlocked")
+			icon_screen = "command"
+			balloon_alert(user, "console unlocked")
 			addtimer(CALLBACK(src, PROC_REF(lock_self)), 5 MINUTES, TIMER_UNIQUE)
+
+		update_appearance(UPDATE_OVERLAYS)
 		return
 
 	if(istype(O, /obj/item/ai_module))
@@ -40,6 +47,7 @@
 			return
 		if(unlock == FALSE)
 			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
+			balloon_alert(user, "console locked")
 			return
 		if(!current)
 			to_chat(user, span_alert("You haven't selected anything to transmit laws to!"))
@@ -58,6 +66,8 @@
 		return ..()
 
 /obj/machinery/computer/upload/proc/lock_self()
+	icon_screen = "command_locked"
+	update_appearance(UPDATE_OVERLAYS)
 	unlock = FALSE
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
