@@ -14,3 +14,9 @@
   lelandkemble:
   - balance: The RNG instant kill via organ removal of the mech drill has been removed,
       and replaced with a very high wounding chance
+2026-06-02:
+  Wisemonster:
+  - bugfix: Fixed Nebula's boulder refinery being constantly spaced.
+  lelandkemble:
+  - balance: Bitrunners can't back out of domains via the ladder while bitrunning
+      glitches remain in them
