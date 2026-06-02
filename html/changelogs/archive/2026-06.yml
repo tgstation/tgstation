@@ -20,8 +20,16 @@
   Melbert:
   - bugfix: Cutting an airlock's ID wire prevents ID usage again (instead of changing
       the door to all access)
+  - map: Roundstart nuclear operatives now spawn in the nuke base elevator, rather
+      than in the base itself. This change was done so we could reduce the lag from
+      loading the nuke base during round startup.
   SmArtKar:
   - bugfix: Fixed spilled flour not containing any flour
+  - balance: You can make toolboxes out of meat and paper again
+  - balance: Lavaland tendrils have been reworked into a full fledged miniboss instead
+      of a simple mob spawner.
+  - balance: Lavaland mobs minimum spawn separation distance has been lowered from
+      12 to 7
   TheRyeGuyWhoWillNowDie:
   - bugfix: jaws of recovery are blacklisted from crafting the jaws of recovery
   Wisemonster:

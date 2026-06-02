@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - map: "Roundstart nuclear operatives now spawn in the nuke base elevator, rather than in the base itself. This change was done so we could reduce the lag from loading the nuke base during round startup."
