@@ -628,7 +628,7 @@
 	power = 2
 
 	threshold_descs = list(
-		"Severity > 1" = "For each severity above 1 the healing provided by the virus increases.",
+		"Severity > 1" = "For each point of severity above 1, the healing provided by the virus increases.",
 	)
 	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
 	var/severity_heal_bonus = 0.25
