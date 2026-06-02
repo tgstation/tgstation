@@ -106,7 +106,7 @@
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"config": {
 								"observer_abort": "BT_ABORT_BOTH",
-								"key": "BB_BASIC_MOB_CURRENT_TARGET"
+								"key": "BB_CURRENT_TARGET"
 							},
 							"child": {
 								"type": "parallel",
@@ -124,9 +124,9 @@
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
 												"args": [
-													"BB_BASIC_MOB_CURRENT_TARGET",
+													"BB_CURRENT_TARGET",
 													"BB_TARGETING_STRATEGY",
-													"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+													"BB_CURRENT_TARGET_HIDING_LOCATION"
 												]
 											}
 										]
@@ -134,7 +134,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_BASIC_MOB_CURRENT_TARGET", 1, false]
+										"args": ["BB_CURRENT_TARGET", 1, false]
 									}
 								]
 							}
@@ -160,9 +160,9 @@
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/update_targets",
 							"args": [
-								"BB_BASIC_MOB_CURRENT_TARGET",
+								"BB_CURRENT_TARGET",
 								"BB_TARGETING_STRATEGY",
-								"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+								"BB_CURRENT_TARGET_HIDING_LOCATION"
 							]
 						},
 						{

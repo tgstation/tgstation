@@ -33,10 +33,10 @@ Example flow (in psuedocode):
 
 ```text
 FIND TARGET LEAF:
-	set BB_BASIC_MOB_CURRENT_TARGET
+	set BB_CURRENT_TARGET
 
 ATTACK BRANCH:
-	if BB_BASIC_MOB_CURRENT_TARGET is set
+	if BB_CURRENT_TARGET is set
   		move toward target
 			attack target
 ```

@@ -12,7 +12,7 @@
 
 	//do we have a current target or is chance to unbuckle has passed? then unbuckle!
 	if(buckled_to)
-		if((SPT_PROB(unperch_chance, seconds_per_tick) || controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)))
+		if((SPT_PROB(unperch_chance, seconds_per_tick) || controller.blackboard_key_exists(BB_CURRENT_TARGET)))
 			controller.queue_behavior(/datum/ai_behavior/unbuckle_mob)
 			return
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -20,7 +20,7 @@
 	//if we are perched, we can go find something else to perch too
 	var/final_chance = HAS_TRAIT(living_pawn, TRAIT_PARROT_PERCHED) ? unperch_chance : perch_chance
 
-	if(!SPT_PROB(final_chance, seconds_per_tick) || controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!SPT_PROB(final_chance, seconds_per_tick) || controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
 
 	if(controller.blackboard_key_exists(BB_PERCH_TARGET))

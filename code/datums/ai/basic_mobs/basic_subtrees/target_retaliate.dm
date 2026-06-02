@@ -4,9 +4,9 @@
 	/// Blackboard key which tells us how to select valid targets
 	var/targeting_strategy_key = BB_TARGETING_STRATEGY
 	/// Blackboard key in which to store selected target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// Blackboard key in which to store selected target's hiding place
-	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
+	var/hiding_place_key = BB_CURRENT_TARGET_HIDING_LOCATION
 	/// do we check for faction?
 	var/check_faction = FALSE
 

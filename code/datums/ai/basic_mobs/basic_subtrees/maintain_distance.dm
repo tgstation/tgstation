@@ -1,7 +1,7 @@
 /// Step away if too close, or towards if too far
 /datum/ai_planning_subtree/maintain_distance
 	/// Blackboard key holding atom we want to stay away from
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// How far do we look for our target?
 	var/view_distance = 10
 	/// the run away behavior we will use

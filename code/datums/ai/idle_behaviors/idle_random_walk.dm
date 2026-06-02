@@ -137,7 +137,7 @@
 // Only walk if we don't have a target.
 /datum/bt_node/ai_behavior/idle_random_walk/no_target
 	/// Where do we look for a target?
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 /datum/bt_node/ai_behavior/idle_random_walk/no_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(controller.blackboard_key_exists(target_key))

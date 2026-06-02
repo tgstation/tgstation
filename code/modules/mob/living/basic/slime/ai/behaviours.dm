@@ -41,7 +41,7 @@
 		return FALSE
 
 	//If we are retaliating on someone edible, lets eat them instead
-	if(dinner == controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if(dinner == controller.blackboard[BB_CURRENT_TARGET])
 		return can_see(hunter, dinner, radius)
 
 	//We are so hungry, lets eat them

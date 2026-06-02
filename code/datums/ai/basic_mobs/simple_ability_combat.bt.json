@@ -16,7 +16,7 @@
 					"config": {
 						"observer_abort": "BT_ABORT_BOTH",
 						"invert": false,
-						"key": "BB_BASIC_MOB_CURRENT_TARGET"
+						"key": "BB_CURRENT_TARGET"
 					},
 					"child": {
 						"type": "parallel",
@@ -33,17 +33,14 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-										"args": [
-											"BB_TARGETED_ACTION",
-											"BB_BASIC_MOB_CURRENT_TARGET"
-										]
+										"args": ["BB_TARGETED_ACTION", "BB_CURRENT_TARGET"]
 									}
 								]
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_BASIC_MOB_CURRENT_TARGET", 3, false]
+								"args": ["BB_CURRENT_TARGET", 3, false]
 							}
 						]
 					}
@@ -67,9 +64,9 @@
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/update_targets",
 			"args": [
-				"BB_BASIC_MOB_CURRENT_TARGET",
+				"BB_CURRENT_TARGET",
 				"BB_TARGETING_STRATEGY",
-				"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
 			]
 		}
 	]

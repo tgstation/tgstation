@@ -3,7 +3,7 @@
 	/// Blackboard key for the ability
 	var/ability_key = BB_TARGETED_ACTION
 	/// Blackboard key for where the target ref is stored
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// Behaviour to perform using ability
 	var/use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability
 	/// If true we terminate planning after trying to use the ability.

@@ -6,9 +6,9 @@
 	var/ability_key
 
 /datum/ai_planning_subtree/teleport_away_from_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	var/distance_from_target = get_dist(target, controller.pawn)
 	if(distance_from_target >= minimum_distance)
 		controller.clear_blackboard_key(BB_ESCAPE_DESTINATION)
@@ -19,7 +19,7 @@
 	var/turf/location_turf = controller.blackboard[BB_ESCAPE_DESTINATION]
 
 	if(isnull(location_turf))
-		controller.queue_behavior(/datum/ai_behavior/find_furthest_turf_from_target, BB_BASIC_MOB_CURRENT_TARGET, BB_ESCAPE_DESTINATION, minimum_distance)
+		controller.queue_behavior(/datum/ai_behavior/find_furthest_turf_from_target, BB_CURRENT_TARGET, BB_ESCAPE_DESTINATION, minimum_distance)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(get_dist(location_turf, target) < minimum_distance || !can_see(controller.pawn, location_turf)) //target moved close too close or we moved too far since finding the target turf

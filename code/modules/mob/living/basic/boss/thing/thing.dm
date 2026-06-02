@@ -69,8 +69,8 @@
 	if(!maploaded)
 		return
 	spawn_loc = loc
-	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
-	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), PROC_REF(target_gained))
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET), PROC_REF(target_lost))
 	SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -179,9 +179,9 @@
 /// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range and a high sight range
 /mob/living/basic/boss/thing/proc/immediate_aggro(datum/source, mob/attacker, flags)
 	SIGNAL_HANDLER
-	if(isnull(ai_controller) || stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(isnull(ai_controller) || stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
-	ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+	ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, attacker)
 
 /mob/living/basic/boss/thing/vv_edit_var(vname, vval)
 	. = ..()
@@ -303,7 +303,7 @@
 	/// queue id
 	var/queue_id = RUIN_QUEUE
 	/// blackboard key for target
-	var/target_bb_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_bb_key = BB_CURRENT_TARGET
 
 /obj/structure/aggro_gate/Initialize(mapload)
 	. = ..()

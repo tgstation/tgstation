@@ -112,7 +112,7 @@
 		return
 
 	// Inherit our creator's target and reinforcement requests
-	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	ai_controller.set_blackboard_key(BB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_CURRENT_TARGET])
 	ai_controller.set_blackboard_key(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS])
 
 /// Reference handling

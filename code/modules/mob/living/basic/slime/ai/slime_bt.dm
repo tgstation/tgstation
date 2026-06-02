@@ -27,7 +27,7 @@
 		new_mood = SLIME_MOOD_ANGRY
 	else if(controller.blackboard[BB_SLIME_HUNGER_DISABLED])
 		new_mood = SLIME_MOOD_SMILE
-	else if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	else if(controller.blackboard[BB_CURRENT_TARGET])
 		new_mood = SLIME_MOOD_MISCHIEVOUS
 	else
 		new_mood = pick(SLIME_MOOD_SAD, SLIME_MOOD_SMILE, SLIME_MOOD_POUT)
@@ -39,7 +39,7 @@
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /**
- * Searches for a living mob the slime can feed on and sets BB_BASIC_MOB_CURRENT_TARGET.
+ * Searches for a living mob the slime can feed on and sets BB_CURRENT_TARGET.
  * Only runs when the slime is hungry, rabid, or already has a combat target.
  */
 /datum/bt_node/ai_behavior/find_slime_food
@@ -50,7 +50,7 @@
 	if(!istype(slime_pawn) || slime_pawn.buckled)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_NONE && !controller.blackboard[BB_SLIME_RABID] && isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_NONE && !controller.blackboard[BB_SLIME_RABID] && isnull(controller.blackboard[BB_CURRENT_TARGET]))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/static/list/slime_faction
@@ -64,13 +64,13 @@
 			continue
 		if(!valid_slime_target(slime_pawn, candidate, controller, seconds_per_tick))
 			continue
-		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, candidate)
+		controller.set_blackboard_key(BB_CURRENT_TARGET, candidate)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/bt_node/ai_behavior/find_slime_food/proc/valid_slime_target(mob/living/basic/slime/slime_pawn, mob/living/candidate, datum/ai_controller/controller, seconds_per_tick)
-	if(candidate == controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if(candidate == controller.blackboard[BB_CURRENT_TARGET])
 		return can_see(slime_pawn, candidate, 7)
 	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_STARVING && controller.blackboard[BB_SLIME_RABID])
 		return can_see(slime_pawn, candidate, 7)
@@ -81,7 +81,7 @@
 // =============================================================================
 
 /**
- * Attempt to feed on the target at BB_BASIC_MOB_CURRENT_TARGET.
+ * Attempt to feed on the target at BB_CURRENT_TARGET.
  * If the target is feedable, calls start_feeding. Otherwise attacks.
  * Returns FAILURE if the target is gone, buckled (slime), or not feedable in context.
  */

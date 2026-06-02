@@ -34,9 +34,9 @@
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
 					"args": [
-						"BB_BASIC_MOB_CURRENT_TARGET",
+						"BB_CURRENT_TARGET",
 						"BB_TARGETING_STRATEGY",
-						"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+						"BB_CURRENT_TARGET_HIDING_LOCATION"
 					]
 				}
 			]

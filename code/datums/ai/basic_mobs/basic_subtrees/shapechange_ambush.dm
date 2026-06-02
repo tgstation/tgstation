@@ -4,7 +4,7 @@
 	/// Key where we keep our ability
 	var/ability_key = BB_SHAPESHIFT_ACTION
 	/// Key where we keep our target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// How long to lull our target into a false sense of security
 	var/minimum_target_time = 8 SECONDS
 

@@ -23,7 +23,7 @@
 	if(HAS_TRAIT_FROM(pawn, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT) || (controller.blackboard[BB_THETHING_ATTACKMODE] || controller.blackboard[BB_THETHING_NOAOE]))
 		return
 	// our target
-	var/mob/living/shaft_miner = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/shaft_miner = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(shaft_miner) || shaft_miner.stat == DEAD) //Dont use abilities on off z level targets, or dead shaft miners. We want to melee those.
 		return
 
@@ -38,9 +38,9 @@
 		return
 	var/current_aoe_key = pick(possible_attacks)
 	controller.set_blackboard_key(BB_THETHING_LASTAOE, current_aoe_key)
-	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, current_aoe_key, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, current_aoe_key, BB_CURRENT_TARGET)
 	if(prob(60) && shaft_miner.body_position != LYING_DOWN) //potential follow-up
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, BB_THETHING_CHARGE, BB_BASIC_MOB_CURRENT_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, BB_THETHING_CHARGE, BB_CURRENT_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 
@@ -50,7 +50,7 @@
 		return
 
 	// our target
-	var/mob/living/shaft_miner = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/shaft_miner = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(shaft_miner))
 		return
 	var/target_dist = get_dist(pawn, shaft_miner)
@@ -63,10 +63,10 @@
 	controller.set_blackboard_key(BB_THETHING_ATTACKMODE, FALSE)
 
 	if(shriek.IsAvailable() && target_dist <= 2 && shaft_miner.stat != DEAD)
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/min_range/short, BB_THETHING_SHRIEK, BB_BASIC_MOB_CURRENT_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/min_range/short, BB_THETHING_SHRIEK, BB_CURRENT_TARGET)
 		return
 	else if(charge.IsAvailable() && target_dist >= 5) // While we cant hit prone targets, this helps to close the distance.
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, BB_THETHING_CHARGE, BB_BASIC_MOB_CURRENT_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability, BB_THETHING_CHARGE, BB_CURRENT_TARGET)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_CURRENT_TARGET_HIDING_LOCATION)

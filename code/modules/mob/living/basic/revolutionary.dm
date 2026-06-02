@@ -140,7 +140,7 @@
 
 
 /datum/ai_planning_subtree/random_speech/blackboard/revolutionary/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
 
 	return ..()

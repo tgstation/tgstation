@@ -3,11 +3,11 @@
 	/// Behaviour to execute when sleeping
 	var/sleep_behaviour = /datum/ai_behavior/sleep_after_targetless_time
 	/// Target key to interrogate
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 /datum/ai_planning_subtree/sleep_with_no_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(sleep_behaviour, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(sleep_behaviour, BB_CURRENT_TARGET)
 
 /// Disables AI after a certain amount of time spent with no target, you will have to enable the AI again somewhere else
 /datum/ai_behavior/sleep_after_targetless_time

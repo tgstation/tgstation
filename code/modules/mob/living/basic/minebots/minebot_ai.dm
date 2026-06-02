@@ -145,22 +145,22 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/minebot
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(target))
 		return
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode) //we are not on attack mode
 		return
-	controller.queue_behavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(ranged_attack_behavior, BB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_planning_subtree/minebot_maintain_distance/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(target))
 		return
 	var/mob/living/living_pawn = controller.pawn
 	if(get_dist(living_pawn, target) <= controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE])
-		controller.queue_behavior(/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot, BB_BASIC_MOB_CURRENT_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/run_away_from_target/run_and_shoot/minebot, BB_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/run_away_from_target/run_and_shoot/minebot
@@ -354,8 +354,8 @@
 /datum/pet_command/protect_owner/minebot/set_command_target(mob/living/parent, atom/target)
 	if(!parent.ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
 		return FALSE
-	if(!parent.ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && !QDELETED(target)) //we are already dealing with something,
-		parent.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+	if(!parent.ai_controller.blackboard_key_exists(BB_CURRENT_TARGET) && !QDELETED(target)) //we are already dealing with something,
+		parent.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, target)
 	return TRUE
 
 /datum/pet_command/protect_owner/minebot/execute_action(datum/ai_controller/controller)

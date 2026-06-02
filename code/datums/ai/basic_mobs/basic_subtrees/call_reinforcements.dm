@@ -24,7 +24,7 @@
 
 /// Decides when to call reinforcements, can be overridden for alternate behavior
 /datum/ai_planning_subtree/call_reinforcements/proc/decide_to_call(datum/ai_controller/controller)
-	return controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && istype(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET], /mob)
+	return controller.blackboard_key_exists(BB_CURRENT_TARGET) && istype(controller.blackboard[BB_CURRENT_TARGET], /mob)
 
 /datum/ai_planning_subtree/call_reinforcements/mining
 	call_type = /datum/ai_behavior/call_reinforcements/mining
@@ -42,7 +42,7 @@
 		if(!pawn_mob.faction_check_atom(other_mob) || isnull(other_mob.ai_controller))
 			continue
 		// Add our current target to their retaliate list so that they'll attack our aggressor
-		other_mob.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET], world.time)
+		other_mob.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, controller.blackboard[BB_CURRENT_TARGET], world.time)
 		other_mob.ai_controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENT_TARGET, pawn_mob)
 
 	controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN, world.time + cooldown)
@@ -55,7 +55,7 @@
 
 /datum/ai_behavior/call_reinforcements/mining/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/pawn_mob = controller.pawn
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	for(var/mob/other_mob in oview(reinforcements_range, pawn_mob))
 		if(!pawn_mob.faction_check_atom(other_mob) || isnull(other_mob.ai_controller))
 			continue

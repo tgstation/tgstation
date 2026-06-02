@@ -22,7 +22,7 @@
 	if(!dig_ability?.IsAvailable())
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/has_target = controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)
+	var/has_target = controller.blackboard_key_exists(BB_CURRENT_TARGET)
 
 	if(currently_underground && !has_target)
 		// No target/danger while underground — emerge
@@ -47,7 +47,7 @@
 
 /datum/bt_node/ai_behavior/burrow_through_ground/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	if(!is_jaunting(living_pawn) || QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 

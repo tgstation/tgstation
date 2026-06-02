@@ -3,7 +3,7 @@
 	/// Behaviour to execute to line ourselves up
 	var/move_behaviour = /datum/ai_behavior/move_to_cardinal
 	/// Blackboard key in which to store selected target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 /datum/ai_planning_subtree/move_to_cardinal/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()

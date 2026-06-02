@@ -2,6 +2,8 @@
 //Generic BB keys
 ///Use this if you need a generic variable for a target; Use this if you don't have multiple different things to target in your ai (PROTIP: YOU BASICALLY NEVER DO!)
 #define BB_CURRENT_TARGET "Current Target"
+///Use this if you need a generic variable for a hiding location;
+#define BB_CURRENT_TARGET_HIDING_LOCATION "Current Target Hiding Location"
 ///For any battle screech cooldowns
 #define BB_BATTLE_SCREECH_COOLDOWN "Battle Screech Cooldown"
 
@@ -83,9 +85,6 @@
 /// Key used to store the time we can actually attack
 #define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
 
-///Targeting subtrees
-#define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
-#define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
 #define BB_TARGET_PRIORITY_STRATEGY "target_priority_strategy"
 #define BB_HUNT_TARGETING_STRATEGY "hunt_targeting_strategy"

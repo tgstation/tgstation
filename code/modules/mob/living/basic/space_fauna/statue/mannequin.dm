@@ -45,11 +45,11 @@
 /datum/ai_planning_subtree/face_target_or_face_initial
 
 /datum/ai_planning_subtree/face_target_or_face_initial/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+	if(isnull(controller.blackboard[BB_CURRENT_TARGET]))
 		return
 	var/mob/living/we = controller.pawn
 	controller.blackboard[BB_STARTING_DIRECTION] = we.dir
-	controller.queue_behavior(/datum/ai_behavior/face_target_or_face_initial, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/face_target_or_face_initial, BB_CURRENT_TARGET)
 
 /datum/ai_behavior/face_target_or_face_initial
 

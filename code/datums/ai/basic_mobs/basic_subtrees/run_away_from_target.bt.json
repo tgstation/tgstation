@@ -3,7 +3,7 @@
 	"bindings": {
 		"flee_from_target": {
 			"label": "target_key",
-			"default": "BB_BASIC_MOB_CURRENT_TARGET"
+			"default": "BB_CURRENT_TARGET"
 		}
 	},
 	"type": "decorator",
@@ -21,7 +21,7 @@
 				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
 				"args": [
 					"$flee_from_target",
-					"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION",
+					"BB_CURRENT_TARGET_HIDING_LOCATION",
 					"BB_FLEE_LOCATION"
 				]
 			},

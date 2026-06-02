@@ -349,8 +349,8 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_planning_subtree/issue_commands/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		return
-	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/attack)
+	if(controller.blackboard_key_exists(BB_CURRENT_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_CURRENT_TARGET, /datum/pet_command/attack)
 		return
 
 	var/atom/ore_target = controller.blackboard[BB_ORE_TARGET]

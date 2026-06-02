@@ -14,7 +14,7 @@
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"config": {
-						"key": "BB_BASIC_MOB_CURRENT_TARGET",
+						"key": "BB_CURRENT_TARGET",
 						"observer_abort": "BT_ABORT_SELF"
 					},
 					"child": {
@@ -26,9 +26,9 @@
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest",
 					"args": [
-						"BB_BASIC_MOB_CURRENT_TARGET",
+						"BB_CURRENT_TARGET",
 						"BB_TARGETING_STRATEGY",
-						"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+						"BB_CURRENT_TARGET_HIDING_LOCATION"
 					]
 				}
 			]

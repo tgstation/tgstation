@@ -19,7 +19,7 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(on_target_set))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), PROC_REF(on_target_set))
 
 
 /datum/ai_controller/basic_controller/bot/ed209/proc/on_target_set()

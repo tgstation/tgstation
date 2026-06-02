@@ -10,7 +10,7 @@
 		if(prob(deaggro_chance)) //Chance to chill the fuck out. This prob() should be matched with the frequency of calling.
 			pawn.visible_message(span_notice("[pawn] calms down."))
 			controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
-			controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			controller.clear_blackboard_key(BB_CURRENT_TARGET)
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // De-aggroed
 
 	var/aggro_chance = controller.blackboard[BB_RANDOM_AGGRO_CHANCE] || 0.5
@@ -78,7 +78,7 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
 		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
 		return AI_BEHAVIOR_DELAY
 

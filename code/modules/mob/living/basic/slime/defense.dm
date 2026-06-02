@@ -110,7 +110,7 @@
 /mob/living/basic/slime/proc/discipline_slime()
 	stop_feeding(silent = TRUE)
 	if(life_stage == SLIME_LIFE_STAGE_BABY && prob(80))
-		ai_controller?.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		ai_controller?.clear_blackboard_key(BB_CURRENT_TARGET)
 		ai_controller?.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
 
 	if(prob(10))

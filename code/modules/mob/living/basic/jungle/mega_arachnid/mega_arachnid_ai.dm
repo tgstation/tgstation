@@ -55,7 +55,7 @@
 	var/minimum_health = 50
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/mega_arachnid/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	if(!ishuman(target))
 		return ..()
 

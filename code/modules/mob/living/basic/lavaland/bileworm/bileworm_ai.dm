@@ -19,18 +19,18 @@
 /datum/ai_planning_subtree/bileworm_attack
 
 /datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if (!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if (!controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
 	var/datum/action/cooldown/mob_cooldown/bile = controller.blackboard[BB_BILEWORM_SPEW_BILE]
 
-	if(resurface?.IsAvailable() && (controller.blackboard[BB_BILEWORM_SCARED] || get_dist(controller.pawn, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) <= controller.blackboard[BB_BILEWORM_FLEE_DISTANCE]))
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_RESURFACE, BB_BASIC_MOB_CURRENT_TARGET)
+	if(resurface?.IsAvailable() && (controller.blackboard[BB_BILEWORM_SCARED] || get_dist(controller.pawn, controller.blackboard[BB_CURRENT_TARGET]) <= controller.blackboard[BB_BILEWORM_FLEE_DISTANCE]))
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_RESURFACE, BB_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(bile?.IsAvailable())
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_SPEW_BILE, BB_BASIC_MOB_CURRENT_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_SPEW_BILE, BB_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING //focus on the fight
 
 /datum/ai_planning_subtree/bileworm_execute

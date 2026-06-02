@@ -48,7 +48,7 @@
 
 /datum/ai_planning_subtree/use_mob_ability/snail_retreat/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/shell_retreated = HAS_TRAIT(controller.pawn, TRAIT_SHELL_RETREATED)
-	var/has_target = controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)
+	var/has_target = controller.blackboard_key_exists(BB_CURRENT_TARGET)
 	if((has_target && shell_retreated) || (!has_target && !shell_retreated))
 		return
 	return ..()

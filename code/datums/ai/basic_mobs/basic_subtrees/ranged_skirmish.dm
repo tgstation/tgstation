@@ -2,7 +2,7 @@
 /datum/ai_planning_subtree/ranged_skirmish
 	operational_datums = list(/datum/component/ranged_attacks)
 	/// Blackboard key holding target atom
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// What AI behaviour do we actually run?
 	var/attack_behavior = /datum/ai_behavior/ranged_skirmish
 	/// If target is further away than this we don't fire
@@ -14,7 +14,7 @@
 	. = ..()
 	if(!controller.blackboard_key_exists(target_key))
 		return
-	controller.queue_behavior(attack_behavior, target_key, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
+	controller.queue_behavior(attack_behavior, target_key, BB_TARGETING_STRATEGY, BB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
 
 /// How often will we try to perform our ranged attack?
 /datum/ai_behavior/ranged_skirmish

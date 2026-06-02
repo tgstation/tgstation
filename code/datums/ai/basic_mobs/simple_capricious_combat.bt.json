@@ -36,9 +36,9 @@
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
 												"args": [
-													"BB_BASIC_MOB_CURRENT_TARGET",
+													"BB_CURRENT_TARGET",
 													"BB_TARGETING_STRATEGY",
-													"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+													"BB_CURRENT_TARGET_HIDING_LOCATION"
 												]
 											}
 										]
@@ -46,7 +46,7 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_BASIC_MOB_CURRENT_TARGET", 1, false]
+										"args": ["BB_CURRENT_TARGET", 1, false]
 									}
 								]
 							}
@@ -80,9 +80,9 @@
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
 					"args": [
-						"BB_BASIC_MOB_CURRENT_TARGET",
+						"BB_CURRENT_TARGET",
 						"BB_TARGETING_STRATEGY",
-						"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+						"BB_CURRENT_TARGET_HIDING_LOCATION"
 					]
 				}
 			]

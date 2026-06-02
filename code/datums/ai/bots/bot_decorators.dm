@@ -29,20 +29,20 @@
 	return !!(bot_pawn.medical_mode_flags & flag)
 
 /**
- * Validates the secbot's current target. Clears BB_BASIC_MOB_CURRENT_TARGET and returns BT_FAILURE
+ * Validates the secbot's current target. Clears BB_CURRENT_TARGET and returns BT_FAILURE
  * if the target is handcuffed, deleted, or paralyzed without handcuff mode. Otherwise ticks child.
  */
 /datum/bt_node/decorator/secbot_target_valid
 
 /datum/bt_node/decorator/secbot_target_valid/check_condition(datum/ai_controller/controller)
-	var/mob/living/carbon/my_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/carbon/my_target = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(my_target) || !istype(my_target) || my_target.handcuffed)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] secbot_target_valid: clearing target [my_target] (deleted=[QDELETED(my_target)], handcuffed=[my_target?.handcuffed])")
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		return FALSE
 	var/mob/living/basic/bot/secbot/my_bot = controller.pawn
 	if(my_target.IsParalyzed() && !(my_bot.security_mode_flags & SECBOT_HANDCUFF_TARGET))
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] secbot_target_valid: clearing [my_target] (paralyzed, no handcuff mode)")
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		return FALSE
 	return TRUE

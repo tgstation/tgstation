@@ -23,4 +23,4 @@
 	if (!victim.ai_controller)
 		return
 	victim.ai_controller.CancelActions()
-	victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+	victim.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, attacker)

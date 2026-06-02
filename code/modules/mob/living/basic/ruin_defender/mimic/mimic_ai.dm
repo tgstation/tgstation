@@ -35,7 +35,7 @@
 
 /datum/ai_planning_subtree/random_speech/when_has_target
 	/// target key
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 
 /datum/ai_planning_subtree/random_speech/when_has_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -81,11 +81,11 @@
 
 /datum/ai_planning_subtree/gun_mimic_attack_subtree/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
 	if(controller.blackboard[BB_GUNMIMIC_GUN_EMPTY])
 		return
-	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire, BB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
 /// Special subtree for living wands/staffs of animation which will focus on animating more things

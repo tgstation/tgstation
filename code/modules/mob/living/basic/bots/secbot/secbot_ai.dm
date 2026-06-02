@@ -35,8 +35,8 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(on_target_set))
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(on_clear_target))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), PROC_REF(on_target_set))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET), PROC_REF(on_clear_target))
 
 /datum/ai_controller/basic_controller/bot/secbot/proc/on_target_set()
 	SIGNAL_HANDLER
@@ -62,5 +62,5 @@
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
 	if(!isnull(human_target) && human_target.handcuffed)
 		controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, human_target)
-		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_CURRENT_TARGET)
 	return ..()

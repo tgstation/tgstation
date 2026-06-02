@@ -3,9 +3,9 @@
 	/// Behaviour to execute in order to flee
 	var/flee_behaviour = /datum/ai_behavior/run_away_from_target
 	/// Blackboard key in which to store selected target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// Blackboard key in which to store selected target's hiding place
-	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
+	var/hiding_place_key = BB_CURRENT_TARGET_HIDING_LOCATION
 
 /datum/ai_planning_subtree/flee_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()

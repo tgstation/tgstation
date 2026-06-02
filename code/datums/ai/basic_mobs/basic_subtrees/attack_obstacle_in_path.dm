@@ -68,7 +68,7 @@
 /// If there's something between us and our target then we need to queue a behaviour to make it not be there
 /datum/ai_planning_subtree/attack_obstacle_in_path
 	/// Blackboard key containing current target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// The action to execute, extend to add a different cooldown or something
 	var/attack_behaviour = /datum/ai_behavior/attack_obstructions
 

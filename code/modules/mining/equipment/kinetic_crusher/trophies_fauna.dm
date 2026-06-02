@@ -233,7 +233,7 @@
 		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
 		friend.set_faction(list(FACTION_NEUTRAL))
 		friend.befriend(user)
-		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		friend.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, target)
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)
 
 ///try to make them spawn all around the target to surround him

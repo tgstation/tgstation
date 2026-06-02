@@ -33,7 +33,7 @@
 	finish_planning = FALSE
 
 /datum/ai_planning_subtree/find_and_hunt_target/teleport_destination/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(!controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
 	if(controller.blackboard_key_exists(BB_ESCAPE_DESTINATION))
 		controller.clear_blackboard_key(BB_TELEPORT_DESTINATION)
@@ -46,7 +46,7 @@
 /datum/ai_behavior/find_valid_teleport_location
 
 /datum/ai_behavior/find_valid_teleport_location/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
-	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/target = controller.blackboard[BB_CURRENT_TARGET]
 	var/list/possible_turfs = list()
 
 	if(QDELETED(target))
@@ -82,7 +82,7 @@
 /datum/ai_planning_subtree/flee_target/ice_demon
 
 /datum/ai_planning_subtree/flee_target/ice_demon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/atom/target = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(target))
 		return
 	if(!iscarbon(target))
