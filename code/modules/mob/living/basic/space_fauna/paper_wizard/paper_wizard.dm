@@ -73,7 +73,7 @@
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/paper_wizard
 
 /datum/ai_behavior/attack_obstructions/paper_wizard
-	action_cooldown = 0.4 SECONDS
+	time_between_perform = 0.4 SECONDS
 	can_attack_turfs = TRUE
 	can_attack_dense_objects = TRUE
 
@@ -86,7 +86,7 @@
 	finish_planning = FALSE
 
 /datum/ai_behavior/find_and_set/empty_paper
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/empty_papers = list()

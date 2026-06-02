@@ -1,7 +1,7 @@
 /// Checks that a song instrument's song is still properly configured and playing.
 /// Returns SUCCEEDED while the song is playing correctly, FAILED when it needs setup or restart.
 /datum/bt_node/ai_behavior/keep_playing_instrument
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/keep_playing_instrument/perform(seconds_per_tick, datum/ai_controller/controller, song_instrument_key)
 	var/obj/item/instrument/song_player = controller.blackboard[song_instrument_key]

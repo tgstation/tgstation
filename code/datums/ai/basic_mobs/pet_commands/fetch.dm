@@ -84,7 +84,7 @@
  */
 /datum/ai_behavior/eat_fetched_snack
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	action_cooldown = 0.8 SECONDS
+	time_between_perform = 0.8 SECONDS
 
 /datum/ai_behavior/eat_fetched_snack/setup(datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()

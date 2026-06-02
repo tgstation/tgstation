@@ -65,7 +65,7 @@
 /datum/bt_node/ai_behavior/idle_ghost_item
 	///Chance for item to teleport somewhere else
 	var/teleport_chance = 4
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/idle_ghost_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()

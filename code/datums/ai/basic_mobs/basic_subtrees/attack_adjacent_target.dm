@@ -16,7 +16,7 @@
 
 /// Attack something which is already adjacent to us without moving
 /datum/ai_behavior/basic_melee_attack/opportunistic
-	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
+	time_between_perform = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_melee_attack/opportunistic/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)

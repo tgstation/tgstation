@@ -120,7 +120,7 @@
 
 /datum/ai_behavior/send_sos_message
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 2 MINUTES
+	time_between_perform = 2 MINUTES
 
 /datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/carbon/target = controller.blackboard[target_key]
@@ -214,7 +214,7 @@
 /datum/ai_behavior/minebot_mine_turf
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	required_distance = 2
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 
 /datum/ai_behavior/minebot_mine_turf/setup(datum/ai_controller/controller, target_key)
 	. = ..()

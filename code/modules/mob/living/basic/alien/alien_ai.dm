@@ -44,7 +44,7 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/alien
 
 /datum/ai_behavior/basic_ranged_attack/alien
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 	required_distance = 3
 	avoid_friendly_fire = TRUE
 

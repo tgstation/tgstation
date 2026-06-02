@@ -44,10 +44,10 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
 
 /datum/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/glockroach
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /// roach who shoots at you slightly slower
 /datum/ai_controller/basic_controller/cockroach/mobroach
@@ -64,4 +64,4 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
 
 /datum/ai_behavior/basic_ranged_attack/mobroach
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS

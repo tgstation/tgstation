@@ -23,7 +23,7 @@
 	hunt_chance = 45
 
 /datum/ai_behavior/find_hunt_target/snail_people
-	action_cooldown = 1 MINUTES
+	time_between_perform = 1 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_hunt_target/snail_people/valid_dinner(mob/living/source, mob/living/carbon/potential_snail, radius, datum/ai_controller/controller, seconds_per_tick)

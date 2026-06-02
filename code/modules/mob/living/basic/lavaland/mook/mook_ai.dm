@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/fetch)
 
 /datum/ai_behavior/issue_commands
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/ai_behavior/issue_commands/perform(seconds_per_tick, datum/ai_controller/controller, target_key, command_path)
 	var/mob/living/basic/living_pawn = controller.pawn

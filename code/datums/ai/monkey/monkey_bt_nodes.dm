@@ -2,7 +2,7 @@
 
 /// Monkey's battle screech variant — louder and on a 5 second cooldown
 /datum/bt_node/ai_behavior/battle_screech/monkey
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	screeches = list("roar", "screech")
 
 // --- Equip behaviors ---
@@ -191,7 +191,7 @@
 
 /// Attacks the target mob; SUCCEEDED when target is gone, FAILED when target goes down (triggers disposal fallthrough)
 /datum/bt_node/ai_behavior/monkey_attack_mob
-	action_cooldown = CLICK_CD_MELEE
+	time_between_perform = CLICK_CD_MELEE
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/target = controller.blackboard[target_key]
@@ -309,7 +309,7 @@
 
 /// Finds a press target: uses BB_MONKEY_PRESS_TYPEPATH if set, else a random nearby atom
 /datum/bt_node/ai_behavior/monkey_find_press_target
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/monkey_find_press_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	if(controller.blackboard_key_exists(target_key))

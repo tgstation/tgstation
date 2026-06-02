@@ -62,7 +62,7 @@
 	controller.queue_behavior(/datum/ai_behavior/goliath_find_diggable_turf)
 
 /datum/ai_behavior/goliath_find_diggable_turf
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	/// Where do we store the target data
 	var/target_key = BB_GOLIATH_HOLE_TARGET
 	/// How far do we look for turfs?
@@ -101,7 +101,7 @@
 
 /// If we got nothing better to do, dig a little hole
 /datum/ai_behavior/goliath_dig
-	action_cooldown = 3 MINUTES
+	time_between_perform = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/goliath_dig/setup(datum/ai_controller/controller, target_key)

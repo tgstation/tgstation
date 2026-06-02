@@ -11,7 +11,7 @@
 
 /datum/ai_behavior/mine_wall
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 15 SECONDS
+	time_between_perform = 15 SECONDS
 
 /datum/ai_behavior/mine_wall/setup(datum/ai_controller/controller, target_key)
 	. = ..()

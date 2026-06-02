@@ -84,4 +84,4 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/stickman
 
 /datum/ai_behavior/basic_ranged_attack/stickman
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS

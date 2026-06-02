@@ -1,6 +1,6 @@
 /// Uses the pawn's held food/drink item on themselves until consumed.
 /datum/bt_node/ai_behavior/consume
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hunger_timer_key)
 	var/mob/living/living_pawn = controller.pawn

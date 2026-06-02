@@ -38,7 +38,7 @@
 	return null
 
 /datum/ai_behavior/find_and_set/hoard_item
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_and_set/hoard_item/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)

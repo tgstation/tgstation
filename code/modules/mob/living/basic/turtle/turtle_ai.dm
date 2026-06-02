@@ -47,7 +47,7 @@
 	hunt_chance = 45
 
 /datum/ai_behavior/find_hunt_target/sniff_flora
-	action_cooldown = 1 MINUTES
+	time_between_perform = 1 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_hunt_target/sniff_flora/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
@@ -74,7 +74,7 @@
 	hunt_chance = 45
 
 /datum/ai_behavior/find_hunt_target/human_to_headbutt
-	action_cooldown = 2 MINUTES
+	time_between_perform = 2 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_hunt_target/human_to_headbutt/valid_dinner(mob/living/source, mob/living/carbon/human/dinner, radius, datum/ai_controller/controller, seconds_per_tick)

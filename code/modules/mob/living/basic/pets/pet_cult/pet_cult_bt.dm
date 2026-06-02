@@ -4,10 +4,10 @@
 
 /**
  * Finds a nearby cultist that isn't already befriended and sets BB_FRIENDLY_CULTIST.
- * Uses a cooldown via action_cooldown.
+ * Uses a cooldown via time_between_perform.
  */
 /datum/bt_node/ai_behavior/find_friendly_cultist
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/find_friendly_cultist/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -26,7 +26,7 @@
  * with a dead cultist on it. Sets BB_OCCUPIED_RUNE.
  */
 /datum/bt_node/ai_behavior/find_occupied_rune
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 
 /datum/bt_node/ai_behavior/find_occupied_rune/perform(seconds_per_tick, datum/ai_controller/controller)
 	if((LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used) < 0)
@@ -54,7 +54,7 @@
  * Must be adjacent. Clears BB_OCCUPIED_RUNE on finish.
  */
 /datum/bt_node/ai_behavior/activate_rune
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 
 /datum/bt_node/ai_behavior/activate_rune/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[BB_OCCUPIED_RUNE]

@@ -6,7 +6,7 @@
 	///Flags for extra behavior (see AI_BEHAVIOR_* defines)
 	var/behavior_flags = NONE
 	///Cooldown between perform() calls; do not read directly — use get_cooldown()
-	var/action_cooldown = CLICK_CD_MELEE
+	var/time_between_perform = 0
 	/// Positional args passed to setup()/perform()/finish_action() after the fixed args.
 	/// Set by BT_LEAF at build time via configure().
 	var/list/default_behavior_args = null
@@ -14,6 +14,8 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
+	/// Whether we only set the cooldown if the behavior succeeded, rather than every perform call
+	var/only_set_cooldown_on_success = FALSE
 
 /datum/bt_node/ai_behavior/has_active_descendants()
 	return running
@@ -29,7 +31,7 @@
 
 /// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
 /datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
-	return action_cooldown
+	return time_between_perform
 
 /// Called when this behavior first activates on a controller. Return FALSE to abort (returns BT_FAILURE).
 /datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
@@ -73,7 +75,8 @@
 	var/process_flags = perform(arglist(perform_args))
 
 	if(process_flags & AI_BEHAVIOR_DELAY)
-		next_perform_time = world.time + get_cooldown(controller)
+		if(!only_set_cooldown_on_success || (process_flags & AI_BEHAVIOR_SUCCEEDED))
+			next_perform_time = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		_finish_behavior(controller, TRUE)
@@ -92,7 +95,6 @@
 		finish_args += default_behavior_args
 	finish_action(arglist(finish_args))
 	running = FALSE
-	next_perform_time = 0
 
 /datum/bt_node/ai_behavior/reset_tick_state()
 	if(running)
@@ -100,9 +102,6 @@
 			_finish_behavior(owning_controller, FALSE)
 		else
 			running = FALSE
-			next_perform_time = 0
-	else
-		next_perform_time = 0
 	..()
 
 // DEPRECATED — port behaviors to /datum/bt_node/ai_behavior
@@ -110,7 +109,7 @@
 /datum/ai_behavior
 	var/required_distance = 1
 	var/behavior_flags = NONE
-	var/action_cooldown = CLICK_CD_MELEE
+	var/time_between_perform = CLICK_CD_MELEE
 
 /datum/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
 	return TRUE
@@ -137,4 +136,4 @@
 	return
 
 /datum/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
-	return action_cooldown
+	return time_between_perform

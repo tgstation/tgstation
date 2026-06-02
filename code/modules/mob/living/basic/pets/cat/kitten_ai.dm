@@ -29,7 +29,7 @@
 	return ..()
 
 /datum/ai_behavior/beacon_for_food
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/ai_behavior/beacon_for_food/perform(seconds_per_tick, datum/ai_controller/controller, target_key, meows_key)
 	var/atom/target = controller.blackboard[target_key]

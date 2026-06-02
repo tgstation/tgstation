@@ -4,6 +4,8 @@
  * Artificers will seek out and heal the most wounded construct or shade they can see.
  * If there is no one to heal, they will run away from any non-allied mobs.
  */
+/datum/ai_planning_subtree/simple_find_wounded_target
+
 /datum/ai_controller/basic_controller/artificer
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/same_faction/construct,
@@ -70,18 +72,10 @@
  * Wraiths seek out the most injured non-allied mob to beat to death.
  */
 /datum/ai_controller/basic_controller/wraith
+	behavior_tree_json = "wraith.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_wounded_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /// Targeting strategy that will only allow mobs that constructs can heal.

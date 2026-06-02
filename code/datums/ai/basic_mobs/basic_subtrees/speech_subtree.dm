@@ -243,7 +243,7 @@
 
 ///Random speech behavior, for speech thats random
 /datum/bt_node/ai_behavior/random_speech
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 	/// Chance that the mob will speak.
 	var/speech_chance = 1
 	/// Hearable emotes (e.g. "barks.") — played with sound if sound list is populated.
@@ -444,7 +444,7 @@
 
 ///Speech behavior that reads from a blackboard to pick what to say. Useful for things with dynamic speech behaviors
 /datum/bt_node/ai_behavior/random_speech_blackboard
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]

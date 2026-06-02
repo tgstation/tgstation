@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 ///Use the targetting strategy to find a target
 /datum/bt_node/ai_behavior/update_targets
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -177,6 +177,18 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(!priority_strategy)
 		return pick(filtered_targets)
 	return priority_strategy.select_target(controller, filtered_targets)
+
+/// Picks targets based on which one has the lowest health.
+/datum/bt_node/ai_behavior/update_targets/most_wounded
+
+/datum/bt_node/ai_behavior/update_targets/most_wounded/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/list/living_targets = list()
+	for(var/mob/living/living_target in filtered_targets)
+		living_targets += living_target
+	if(living_targets.len)
+		sortTim(living_targets, GLOBAL_PROC_REF(cmp_mob_health))
+		return living_targets[living_targets.len]
+	return ..()
 
 // DEPRECATED — port to /datum/bt_node/ai_behavior/update_targets
 /datum/ai_behavior/update_targets

@@ -43,7 +43,7 @@
  * Returns FAILURE when not jaunting so the selector passes through.
  */
 /datum/bt_node/ai_behavior/burrow_through_ground
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/burrow_through_ground/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
@@ -76,7 +76,7 @@
 
 /// Finds an ore pile the goldgrub can eat. Sets BB_ORE_TARGET. Skips forbidden types and fetch targets.
 /datum/bt_node/ai_behavior/find_ore
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_ore/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(90, seconds_per_tick))
@@ -97,7 +97,7 @@
 
 /// Finds a boulder the goldgrub can break. Sets BB_BOULDER_TARGET.
 /datum/bt_node/ai_behavior/find_boulder
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_boulder/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/grub_pawn = controller.pawn
@@ -113,7 +113,7 @@
 
 /// Finds an ore vent to harvest. Sets BB_VENT_TARGET.
 /datum/bt_node/ai_behavior/find_ore_vent
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/find_ore_vent/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(25, seconds_per_tick))
@@ -138,7 +138,7 @@
 
 /// Finds a grub egg to protect/pull. Sets BB_LOW_PRIORITY_HUNTING_TARGET.
 /datum/bt_node/ai_behavior/find_grub_egg
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/find_grub_egg/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(75, seconds_per_tick))
@@ -155,7 +155,7 @@
 
 /// Eats/interacts with a target at the given blackboard key. Must be adjacent.
 /datum/bt_node/ai_behavior/grub_eat
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 
 /datum/bt_node/ai_behavior/grub_eat/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/atom/target = controller.blackboard[target_key]

@@ -3,7 +3,8 @@
 
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
-	action_cooldown = 0.2 SECONDS
+	time_between_perform = 0.2 SECONDS
+	only_set_cooldown_on_success = TRUE
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
@@ -83,18 +84,9 @@
 /datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
 
-// =============================================================================
-// BT-native ranged attack
-// =============================================================================
-
-/**
- * BT-native ranged attack. Runs as a leaf in a BT_PARALLEL alongside move_to_target.
- * Returns BT_RUNNING when out of range (movement drives the approach).
- * Returns BT_FAILURE only when can_attack() fails (target gone or outside chase_range).
- * Replaces /datum/ai_behavior/basic_ranged_attack for BT controllers.
- */
+//Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
-	action_cooldown = 0.6 SECONDS
+	time_between_perform = 0.6 SECONDS
 	/// Minimum range at which we fire; closer than this we don't shoot.
 	var/required_distance = 3
 	/// Max chase range — give up if target moves further than this.

@@ -6,10 +6,10 @@
 /// If you are seriously considering using this component, it would be a great idea to extend this proc to be more versatile/less overpowered - the mobs that currently implement this benefit the most
 /// since they are weak as shit with only five health. Up to you though, don't take what's written here as gospel.
 /datum/ai_behavior/crawl_through_vents
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/ai_behavior/crawl_through_vents/get_cooldown(datum/ai_controller/cooldown_for)
-	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
+	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(time_between_perform)
 
 /datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
 	. = ..()

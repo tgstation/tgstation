@@ -41,7 +41,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_valid_wash_targets
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_valid_wash_targets/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn

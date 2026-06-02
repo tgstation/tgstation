@@ -133,7 +133,7 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/netguardian
 
 /datum/ai_behavior/basic_ranged_attack/netguardian
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 	avoid_friendly_fire = TRUE
 
 /datum/ai_planning_subtree/targeted_mob_ability/fire_rockets

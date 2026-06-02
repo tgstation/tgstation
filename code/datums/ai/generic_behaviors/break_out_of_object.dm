@@ -1,6 +1,6 @@
 /// Attacks an escape target until the pawn is no longer buckled to or contained by it.
 /datum/bt_node/ai_behavior/break_out_of_object
-	action_cooldown = 0.2 SECONDS
+	time_between_perform = 0.2 SECONDS
 
 /datum/bt_node/ai_behavior/break_out_of_object/setup(datum/ai_controller/controller, atom/target)
 	if (!should_attack_target(controller, target))

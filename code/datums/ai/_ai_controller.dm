@@ -522,10 +522,6 @@ multiple modular subtrees with behaviors
  *
  * id          — a SUBPLAN_ID_* constant matching a subtree node's override_id in this tree.
  * datum_type  — the /datum/bt_node/subtree subtype to install, or null to clear the override.
- *
- * No-ops when: no slot with that id exists in the tree, or the slot already holds the same type.
- * On change: cancels running actions, installs the new override node (built fresh), re-finalizes
- * the tree so owning_controller/parent_node/execution indices are consistent.
  */
 /datum/ai_controller/proc/set_behavior_tree_override(id, datum_type)
 	var/datum/bt_node/subtree/slot = LAZYACCESS(override_slots, id)

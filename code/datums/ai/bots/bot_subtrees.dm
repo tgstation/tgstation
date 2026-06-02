@@ -6,7 +6,7 @@
  * looking_for is an optional typecache pre-filter; pass null to check all atoms via valid_target().
  */
 /datum/bt_node/ai_behavior/bot_search
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
@@ -44,7 +44,7 @@
 
 ///Performs bot speech from a list of options
 /datum/bt_node/ai_behavior/bot_speech
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/bot_speech/perform(seconds_per_tick, datum/ai_controller/controller, list/list_to_pick_from, announce_key)
@@ -109,7 +109,7 @@
 
 ///Find the next beacon from a previous target and set it as the new target
 /datum/bt_node/ai_behavior/find_next_beacon_target
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn

@@ -181,7 +181,7 @@
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/drone
 
 /datum/ai_behavior/run_away_from_target/drone
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 	run_distance = 3
 
 

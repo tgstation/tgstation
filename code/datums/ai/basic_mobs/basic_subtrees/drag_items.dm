@@ -16,7 +16,7 @@
 
 /datum/ai_behavior/find_and_set/find_stealable
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 2 MINUTES
+	time_between_perform = 2 MINUTES
 
 /datum/ai_behavior/find_and_set/find_stealable/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn

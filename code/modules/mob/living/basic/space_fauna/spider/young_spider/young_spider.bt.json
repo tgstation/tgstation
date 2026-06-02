@@ -1,0 +1,140 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/young_spider",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "1 SECONDS",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"config": {
+										"observer_abort": "BT_ABORT_BOTH",
+										"key": "BB_BASIC_MOB_CURRENT_TARGET"
+									},
+									"child": {
+										"type": "selector",
+										"children": [
+											{
+												"type": "parallel",
+												"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+												"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+												"repeat_secondary": true,
+												"finish_on_primary": true,
+												"children": [
+													{
+														"type": "selector",
+														"children": [
+															{
+																"type": "leaf",
+																"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+																"args": [
+																	"BB_BASIC_MOB_CURRENT_TARGET",
+																	"BB_TARGETING_STRATEGY",
+																	"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+																]
+															},
+															{
+																"type": "leaf",
+																"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+																"args": ["BB_BASIC_MOB_CURRENT_TARGET"]
+															}
+														]
+													},
+													{
+														"type": "selector",
+														"children": [
+															{
+																"type": "subtree",
+																"subtype": "/datum/bt_node/subtree/run_away_from_target",
+																"bindings": {
+																	"flee_from_target": "BB_BASIC_MOB_CURRENT_TARGET"
+																}
+															},
+															{
+																"type": "leaf",
+																"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+																"args": ["BB_BASIC_MOB_CURRENT_TARGET", 1]
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"config": {
+										"observer_abort": "BT_ABORT_BOTH",
+										"key": "BB_SPIDER_WEB_TARGET"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"args": ["BB_SPIDER_WEB_TARGET", 0]
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/spin_web",
+												"args": ["BB_SPIDER_WEB_ACTION", "BB_SPIDER_WEB_TARGET"]
+											}
+										]
+									}
+								}
+							]
+						},
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest",
+									"args": [
+										"BB_BASIC_MOB_CURRENT_TARGET",
+										"BB_TARGETING_STRATEGY",
+										"BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION"
+									]
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_unwebbed_turf",
+									"args": ["BB_SPIDER_WEB_TARGET"]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/random_speech/insect",
+					"args": []
+				}
+			]
+		}
+	]
+}

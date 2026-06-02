@@ -4,7 +4,7 @@
  * cool tip: search_tactic() can set lists
  */
 /datum/bt_node/ai_behavior/find_and_set
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
 	if (controller.blackboard_key_exists(set_key))
@@ -203,7 +203,7 @@
 	return null
 
 /datum/ai_behavior/find_and_set/nearby_friends
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/nearby_friends/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/atom/friend = locate(/mob/living/carbon/human) in oview(search_range, controller.pawn)

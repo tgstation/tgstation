@@ -2,7 +2,7 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/find_hunt_target/injured_raptor
-	action_cooldown = 7.5 SECONDS
+	time_between_perform = 7.5 SECONDS
 
 /datum/ai_behavior/find_hunt_target/injured_raptor/valid_dinner(mob/living/source, mob/living/target, radius)
 	return (source != target && target.health < target.maxHealth)
@@ -20,7 +20,7 @@
 	return ..()
 
 /datum/ai_behavior/find_hunt_target/raptor_trough
-	action_cooldown = 7.5 SECONDS
+	time_between_perform = 7.5 SECONDS
 
 /datum/ai_behavior/find_hunt_target/raptor_trough/valid_dinner(mob/living/source, atom/movable/trough, radius)
 	return !!(locate(/obj/item/stack/ore) in trough.contents)

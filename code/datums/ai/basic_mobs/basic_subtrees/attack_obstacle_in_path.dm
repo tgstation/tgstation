@@ -1,13 +1,8 @@
 
-/**
- * BT-native obstacle attack. Returns BT_FAILURE when the path is clear so a BT_SELECTOR
- * can fall through to the next attack branch (e.g. basic_melee_attack).
- * Returns BT_RUNNING (via AI_BEHAVIOR_DELAY) after attacking an obstacle.
- * Replaces /datum/ai_planning_subtree/attack_obstacle_in_path + /datum/ai_behavior/attack_obstructions
- * for BT controllers.
- */
+///Destroy shit int he way
 /datum/bt_node/ai_behavior/attack_obstructions
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
+	only_set_cooldown_on_success = TRUE
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
@@ -66,7 +61,9 @@
 		return FALSE
 	return TRUE
 
-// =============================================================================
+/datum/bt_node/ai_behavior/attack_obstructions/attack_turfs
+	can_attack_turfs = TRUE
+
 
 /// If there's something between us and our target then we need to queue a behaviour to make it not be there
 /datum/ai_planning_subtree/attack_obstacle_in_path
@@ -90,7 +87,7 @@
 
 /// Something is in our way, get it outta here
 /datum/ai_behavior/attack_obstructions
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects

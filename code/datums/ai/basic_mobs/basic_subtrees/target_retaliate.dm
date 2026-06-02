@@ -29,7 +29,7 @@
  * You will probably need /datum/element/ai_retaliate to take advantage of this unless you're populating the blackboard yourself
  */
 /datum/ai_behavior/target_from_retaliate_list
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	/// How far can we see stuff?
 	var/vision_range = 9
 
@@ -93,7 +93,7 @@
 
 ///Pick a target from our retaliate list
 /datum/bt_node/ai_behavior/target_from_retaliate_list
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 	var/vision_range = 9
 
 /datum/bt_node/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, check_faction = FALSE)

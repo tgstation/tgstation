@@ -1,7 +1,7 @@
 /// Moves to and applies full-body brute damage to a target while pulling them.
 /datum/ai_behavior/break_spine
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 0.7 SECONDS
+	time_between_perform = 0.7 SECONDS
 	var/give_up_distance = 10
 
 /datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)

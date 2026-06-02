@@ -1,7 +1,6 @@
 /// Computes the best flee destination turf away from a target and stores it in a blackboard key.
 /// Returns INSTANT SUCCESS if a path away was found, INSTANT FAILURE otherwise (trapped or target out of range).
 /datum/bt_node/ai_behavior/find_flee_location
-	action_cooldown = 0
 
 /datum/bt_node/ai_behavior/find_flee_location/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key, destination_key)
 	var/run_distance = controller.blackboard[BB_BASIC_MOB_FLEE_DISTANCE] || DEFAULT_BASIC_FLEE_DISTANCE

@@ -75,7 +75,7 @@
 		living_pawn.stop_pulling()
 
 /datum/bt_node/ai_behavior/bot_search/valid_robot
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_robot/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	if(!istype(my_target, /mob/living/silicon/robot))
@@ -87,7 +87,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/deconstructable
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
@@ -105,7 +105,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/refillable_target
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/refillable_target/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	var/static/list/desired_types = list(
@@ -136,7 +136,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/proc/get_turf_type_filter()
 	return typecacheof(list(/turf/open/floor/plating))
@@ -188,7 +188,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_girder
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_girder/setup(datum/ai_controller/controller, target_key)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
@@ -233,7 +233,7 @@
 
 /// Search for open turfs adjacent to space (valid girder build locations).
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target/setup(datum/ai_controller/controller, target_key)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
@@ -271,7 +271,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target/setup(datum/ai_controller/controller, target_key)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
@@ -297,7 +297,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))

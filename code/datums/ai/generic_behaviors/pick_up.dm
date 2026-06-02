@@ -1,6 +1,6 @@
 /// Picks up a blackboard-keyed item. Pair with move_to_target in the BT tree for navigation.
 /datum/bt_node/ai_behavior/pick_up
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/pick_up/setup(datum/ai_controller/controller, target_key, drop_held = TRUE)
 	var/atom/target = controller.blackboard[target_key]

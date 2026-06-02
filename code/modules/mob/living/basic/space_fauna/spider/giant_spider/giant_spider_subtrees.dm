@@ -6,7 +6,7 @@
 
 /// Find an unwebbed nearby turf and store it
 /datum/ai_behavior/find_unwebbed_turf
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	/// Where do we store the target data
 	var/target_key = BB_SPIDER_WEB_TARGET
 	/// How far do we look for unwebbed turfs?
@@ -65,7 +65,7 @@
 
 /// Move to an unwebbed nearby turf and web it up
 /datum/ai_behavior/spin_web
-	action_cooldown = 15 SECONDS // We don't want them doing this too quickly
+	time_between_perform = 15 SECONDS // We don't want them doing this too quickly
 	required_distance = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 

@@ -71,7 +71,7 @@
 
 /datum/ai_behavior/sculpt_statue
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 5 MINUTES
+	time_between_perform = 5 MINUTES
 
 /datum/ai_behavior/sculpt_statue/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -148,7 +148,7 @@
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	required_distance = 2
-	action_cooldown = 2 MINUTES
+	time_between_perform = 2 MINUTES
 
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees/setup(datum/ai_controller/controller, ability_key, target_key)
 	. = ..()

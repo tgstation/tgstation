@@ -4,10 +4,10 @@
 
 /**
  * Searches for nearby ashwalkers and befriends them, printing a message to the ashwalker.
- * Returns FAILURE if no new ashwalker is found. Uses action_cooldown for rate limiting.
+ * Returns FAILURE if no new ashwalker is found. Uses time_between_perform for rate limiting.
  */
 /datum/bt_node/ai_behavior/befriend_ashwalkers
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -53,7 +53,7 @@
 
 /// Mines the mineral wall at target_key when adjacent. Clears the target key on finish.
 /datum/bt_node/ai_behavior/mine_wall
-	action_cooldown = 15 SECONDS
+	time_between_perform = 15 SECONDS
 
 /datum/bt_node/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/basic/living_pawn = controller.pawn

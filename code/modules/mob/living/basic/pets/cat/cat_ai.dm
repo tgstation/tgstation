@@ -115,7 +115,7 @@
 
 /datum/ai_behavior/territorial_struggle
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	///chance the battle ends!
 	var/end_battle_chance = 25
 
@@ -179,7 +179,7 @@
 //play as in kill
 /datum/ai_behavior/play_with_mouse
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 	///chance we hunt the mouse!
 	var/consume_chance = 70
 
@@ -258,7 +258,7 @@
 
 /datum/ai_behavior/deliver_food_to_kitten
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/ai_behavior/deliver_food_to_kitten/setup(datum/ai_controller/controller, target_key, food_key)
 	. = ..()

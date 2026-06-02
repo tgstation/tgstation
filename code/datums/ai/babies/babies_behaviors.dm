@@ -2,7 +2,7 @@
 
 /// Find someone to have love with
 /datum/bt_node/ai_behavior/find_partner
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	var/range = 7
 	var/max_nearby_pop = 3
 
@@ -70,7 +70,7 @@
  * Find a compatible, living partner, if we're also alone.
  */
 /datum/ai_behavior/find_partner
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 	/// Range to look.
 	var/range = 7
 	/// Maximum number of nearby pop

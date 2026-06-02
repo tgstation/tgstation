@@ -34,7 +34,7 @@
  * Must be in range (adjacent) to work. Returns FAILURE if home is gone or full.
  */
 /datum/bt_node/ai_behavior/inhabit_hive
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/inhabit_hive/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/bee/bee_pawn = controller.pawn
@@ -55,7 +55,7 @@
 
 ///Chance to leave or enter hive
 /datum/bt_node/ai_behavior/enter_exit_hive
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 	var/flyback_chance = 15
 	var/exit_chance = 35
 
@@ -82,7 +82,7 @@
 
 /// Finds a hydroponics tray that can be pollinated. Sets BB_TARGET_HYDRO.
 /datum/bt_node/ai_behavior/find_pollination_target
-	action_cooldown = 10 SECONDS
+	time_between_perform = 10 SECONDS
 
 /datum/bt_node/ai_behavior/find_pollination_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/bee_pawn = controller.pawn
@@ -103,7 +103,7 @@
 
 /// Pollinates the hydro tray at BB_TARGET_HYDRO. Must be adjacent.
 /datum/bt_node/ai_behavior/pollinate_hydro
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/pollinate_hydro/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/machinery/hydroponics/tray = controller.blackboard[BB_TARGET_HYDRO]

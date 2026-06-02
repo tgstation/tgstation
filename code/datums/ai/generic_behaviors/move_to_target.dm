@@ -2,7 +2,7 @@
 /// Pass finish_on_arrival = FALSE to keep running indefinitely (used in combat parallels).
 /// Pass movement_type to temporarily override the controller's ai_movement; resets to the initial type on finish.
 /datum/bt_node/ai_behavior/move_to_target
-	action_cooldown = 0
+	time_between_perform = 0
 
 /datum/bt_node/ai_behavior/move_to_target/setup(datum/ai_controller/controller, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
 	var/atom/target = controller.blackboard[target_key]

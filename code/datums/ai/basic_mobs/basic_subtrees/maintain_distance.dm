@@ -36,7 +36,7 @@
 /datum/ai_behavior/step_away
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	required_distance = 0
-	action_cooldown = 0.2 SECONDS
+	time_between_perform = 0.2 SECONDS
 
 /datum/ai_behavior/step_away/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -94,7 +94,7 @@
 /datum/ai_behavior/cover_minimum_distance
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	required_distance = 0
-	action_cooldown = 0.2 SECONDS
+	time_between_perform = 0.2 SECONDS
 
 /datum/ai_behavior/cover_minimum_distance/setup(datum/ai_controller/controller, target_key, minimum_distance)
 	. = ..()

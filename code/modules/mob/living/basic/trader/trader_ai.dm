@@ -28,7 +28,7 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trader
 
 /datum/ai_behavior/basic_ranged_attack/trader
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 	avoid_friendly_fire = TRUE
 
 ///Subtree to find our very first customer and set up our shop after walking right into their face

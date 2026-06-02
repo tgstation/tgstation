@@ -45,7 +45,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_party_friends
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_party_friends/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/static/list/type_to_search = typecacheof(list(/mob/living/carbon/human))

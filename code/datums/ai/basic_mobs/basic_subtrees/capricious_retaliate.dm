@@ -1,6 +1,6 @@
 ///Random chance to add things to our retaliate list
 /datum/bt_node/ai_behavior/capricious_retaliate
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	var/atom/pawn = controller.pawn
@@ -68,7 +68,7 @@
 
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_behavior/capricious_retaliate
-	action_cooldown = 1 SECONDS
+	time_between_perform = 1 SECONDS
 
 /datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	var/atom/pawn = controller.pawn

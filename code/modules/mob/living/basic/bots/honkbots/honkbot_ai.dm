@@ -90,7 +90,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_slippery_item
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_slippery_item/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
@@ -118,7 +118,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_clown_friend
-	action_cooldown = 5 SECONDS
+	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/find_clown_friend/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]

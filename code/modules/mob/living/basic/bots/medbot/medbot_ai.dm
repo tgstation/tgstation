@@ -38,7 +38,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_suitable_patient
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
@@ -126,7 +126,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/handle_medbot_speech
-	action_cooldown = 20 SECONDS
+	time_between_perform = 20 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, announce_key)
@@ -172,7 +172,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/bt_node/ai_behavior/announce_patient
-	action_cooldown = 3 MINUTES
+	time_between_perform = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)

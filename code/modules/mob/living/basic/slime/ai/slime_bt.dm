@@ -43,7 +43,7 @@
  * Only runs when the slime is hungry, rabid, or already has a combat target.
  */
 /datum/bt_node/ai_behavior/find_slime_food
-	action_cooldown = 7.5 SECONDS
+	time_between_perform = 7.5 SECONDS
 
 /datum/bt_node/ai_behavior/find_slime_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn

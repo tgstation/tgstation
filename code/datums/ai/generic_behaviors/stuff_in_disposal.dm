@@ -1,6 +1,6 @@
 /// Grabs a downed target mob and stuffs them into a nearby disposal unit.
 /datum/bt_node/ai_behavior/stuff_in_disposal
-	action_cooldown = 2 SECONDS
+	time_between_perform = 2 SECONDS
 
 /datum/bt_node/ai_behavior/stuff_in_disposal/perform(seconds_per_tick, datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	var/mob/living/target = controller.blackboard[attack_target_key]

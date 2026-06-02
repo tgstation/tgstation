@@ -34,7 +34,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_clean_target
-	action_cooldown = 3 SECONDS
+	time_between_perform = 3 SECONDS
 
 /datum/bt_node/ai_behavior/find_clean_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/cleanbot/controller, target_key)
 	var/list/final_hunt_list = list()
@@ -113,7 +113,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_spray_target
-	action_cooldown = 30 SECONDS
+	time_between_perform = 30 SECONDS
 
 /datum/bt_node/ai_behavior/find_spray_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
@@ -134,7 +134,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_friendly_janitor
-	action_cooldown = 30 SECONDS
+	time_between_perform = 30 SECONDS
 
 /datum/bt_node/ai_behavior/find_friendly_janitor/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn

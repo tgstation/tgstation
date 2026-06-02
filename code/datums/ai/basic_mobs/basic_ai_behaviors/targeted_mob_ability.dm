@@ -11,17 +11,7 @@
 
 /datum/ai_behavior/targeted_mob_ability/min_range/short
 
-// =============================================================================
-// BT-native targeted mob ability
-// =============================================================================
-
-/**
- * BT-native version of targeted_mob_ability.
- * Returns BT_RUNNING (via AI_BEHAVIOR_INSTANT, no flags) when out of range or on cooldown so
- * a BT_PARALLEL keeps move_to_target alive while waiting.
- * Returns BT_FAILURE only when the ability or target is gone (hard stop).
- * Replaces /datum/ai_behavior/targeted_mob_ability for BT controllers.
- */
+/// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
 	/// Maximum distance at which the ability can fire; override in subclasses.
 	var/required_distance = 0

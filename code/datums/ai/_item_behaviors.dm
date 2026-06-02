@@ -3,7 +3,7 @@
 /datum/ai_behavior/item_move_close_and_attack
 	required_distance = 3
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	action_cooldown = 20
+	time_between_perform = 20
 	///Sound to use
 	var/attack_sound
 	///Max attemps to make
