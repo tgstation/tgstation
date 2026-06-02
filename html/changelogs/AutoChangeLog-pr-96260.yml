@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Bileworm spewlet trophies no longer spit bullets instead of acidic bile."
