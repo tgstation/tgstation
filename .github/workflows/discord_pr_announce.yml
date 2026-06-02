@@ -19,7 +19,7 @@ jobs:
         uses: tgstation/discord-notify@main
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED &&
-          (github.event.pull_request.merged == true || github.event.action == 'opened') &&
+          (github.event.pull_request.merged == true || github.event.action == 'opened' || github.event.action == 'reopened') &&
           github.event.pull_request.author_association != 'FIRST_TIMER' &&
           github.event.pull_request.author_association != 'FIRST_TIME_CONTRIBUTOR'
         with:
