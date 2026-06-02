@@ -21,6 +21,8 @@
 	cells_minimum = 1
 	cells_maximum = 2
 
+	visual = FALSE
+
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
 	/// The maximum volume of toxins the liver will ignore

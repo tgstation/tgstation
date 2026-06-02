@@ -77,7 +77,6 @@
 	. = ..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
-
 	var/obj/item/l_hand = get_item_for_held_index(1)
 	if(l_hand)
 		var/itm_state = l_hand.inhand_icon_state

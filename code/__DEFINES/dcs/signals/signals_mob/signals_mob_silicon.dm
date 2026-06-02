@@ -15,3 +15,5 @@
 #define COMSIG_SILICON_AI_VACATE_APC "AI_vacate_apc"
 ///called when an AI's control is toggled
 #define COMSIG_SILICON_AI_SET_CONTROL_DISABLED "AI_set_control_disabled"
+///called when borg module is activated/deactivated
+#define COMSIG_SILICON_MODULE_ACTIVATION "borg_module_select"

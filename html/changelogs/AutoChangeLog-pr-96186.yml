@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Lavaland tendrils have been reworked into a full fledged miniboss instead of a simple mob spawner."
+  - balance: "Lavaland mobs minimum spawn separation distance has been lowered from 12 to 7"

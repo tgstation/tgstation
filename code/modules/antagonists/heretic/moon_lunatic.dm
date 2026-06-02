@@ -20,6 +20,7 @@
 	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch
 
 /datum/antagonist/lunatic/on_gain()
+	owner.current.log_message("has become a Lunatic!", LOG_ATTACK, color="red")
 	// Masters gain an objective before so we dont want duplicates
 	. = ..()
 	for(var/objective in objectives)
@@ -37,6 +38,10 @@
 /datum/antagonist/lunatic/on_removal()
 	QDEL_NULL(moon_track)
 	QDEL_NULL(mad_touch)
+	return ..()
+
+/datum/antagonist/lunatic/on_removal()
+	owner?.current?.log_message("lost their Lunatic status!", LOG_ATTACK, color="red")
 	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master

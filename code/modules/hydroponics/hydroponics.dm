@@ -795,6 +795,7 @@
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
+	remove_shared_particles(/particles/pollen) //We shouldn't look like we're pollenating if we're dead.
 	if(update_icon)
 		update_appearance()
 
