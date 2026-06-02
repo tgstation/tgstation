@@ -1,5 +1,6 @@
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
 
+
 /obj/structure/closet/crate/secure/loot
 	name = "abandoned crate"
 	desc = "What could be inside?"
@@ -124,24 +125,37 @@
 
 	var/input = tgui_input_text(user, title = "Deca-code lock", message = "Enter [code_length] digits. All digits must be unique.", max_length = code_length)
 
+	var/result = try_code(input, user)
+	switch(result)
+		if(LOOT_CRATE_SUCCESS)
+			togglelock(user)
+			SStgui.close_user_uis(user, src)
+		if(LOOT_CRATE_CANCEL)
+			to_chat(user, span_notice("You leave the crate alone."))
+		if(LOOT_CRATE_INCORRECT)
+			to_chat(user, span_warning("A red light flashes."))
+			previous_attempts += list(bulls_and_cows(input))
+		if(LOOT_CRATE_FAIL)
+			boom(user)
+	return
+
+// Test the input, spawn loot if it's correct. Returns the outcome of testing.
+/obj/structure/closet/crate/secure/loot/proc/try_code(var/input)
 	if(input == code)
 		if(!spawned_loot)
 			spawn_loot()
 		tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
-		togglelock(user)
-		SStgui.close_user_uis(user, src)
-		return
+		// reset attempt history
+		attempts = initial(attempts)
+		previous_attempts = list()
+		return LOOT_CRATE_SUCCESS
 
 	if(!validate_input(input))
-		to_chat(user, span_notice("You leave the crate alone."))
-		return
-
-	to_chat(user, span_warning("A red light flashes."))
-	previous_attempts += list(bulls_and_cows(input))
+		return LOOT_CRATE_CANCEL
 	attempts--
-
-	if(attempts <= 0)
-		boom(user)
+	if(attempts > 0)
+		return LOOT_CRATE_INCORRECT
+	return LOOT_CRATE_FAIL
 
 /// Checks if user input is a valid code attempt
 /obj/structure/closet/crate/secure/loot/proc/validate_input(input)
@@ -222,10 +236,8 @@
 	if(!locked)
 		. = ..() //Run the normal code.
 		if(locked) //Double check if the crate actually locked itself when the normal code ran.
-			//reset the anti-tampering, number of attempts and last attempt when the lock is re-enabled.
+			//reset the anti-tampering when the lock is re-enabled.
 			tamperproof = initial(tamperproof)
-			attempts = initial(attempts)
-			previous_attempts = list()
 		return
 	if(tamperproof)
 		return
