@@ -238,9 +238,8 @@
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/ai_module/syndicate
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
