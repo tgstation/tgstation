@@ -401,11 +401,9 @@
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
-	if(iscarbon(user))
-		var/mob/living/carbon/teleporting_guy = user
-		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES))
+	for(var/obj/item/check as anything in user.get_all_contents_type(/obj/item))
+		if(check.item_flags & BLUESPACE_INTERFERENCE)
 			bagholdingcheck = TRUE
-
 	if(isclosedturf(destination))
 		if(!triggered_by_emp && !bagholdingcheck)
 			panic_teleport(user, destination) //We're in a wall, engage emergency parallel teleport.

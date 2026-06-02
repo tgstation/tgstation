@@ -9,9 +9,11 @@
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
 	/// do we check for faction?
 	var/check_faction = FALSE
+	/// Behavior to use to select our target
+	var/target_behavior = /datum/ai_behavior/target_from_retaliate_list
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
+	controller.queue_behavior(target_behavior, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
 	check_faction = TRUE

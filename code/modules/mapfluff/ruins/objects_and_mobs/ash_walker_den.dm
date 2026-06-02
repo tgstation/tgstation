@@ -123,4 +123,77 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	max_integrity = 200
 
+/obj/effect/light_emitter/tendril
+	set_luminosity = 4
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_LAVA
+
+/obj/effect/collapse
+	name = "collapsing necropolis tendril"
+	desc = "Get your loot and get clear!"
+	layer = TABLE_LAYER
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
+	icon_state = "tendril"
+	anchored = TRUE
+	density = TRUE
+	/// weakref list of which mobs have gotten their loot from this effect.
+	var/list/collected = list()
+	/// a bit of light as to make less unfair deaths from the chasm
+	var/obj/effect/light_emitter/tendril/emitted_light
+
+/obj/effect/collapse/Initialize(mapload)
+	. = ..()
+	emitted_light = new(loc)
+	visible_message(span_bolddanger("The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!"))
+	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
+	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
+
+/obj/effect/collapse/examine(mob/user)
+	var/list/examine_messages = ..()
+	if(isliving(user))
+		if(has_collected(user))
+			examine_messages += span_boldnotice("You've grabbed what you can, now get out!")
+		else
+			examine_messages += span_boldnotice("You might have some time to grab some goodies with an open hand before it collapses!")
+	return examine_messages
+
+/obj/effect/collapse/attack_hand(mob/living/collector, list/modifiers)
+	. = ..()
+	if(has_collected(collector))
+		to_chat(collector, span_danger("You've already gotten some loot, just get out of there with it!"))
+		return
+	visible_message(span_warning("Something falls free of the tendril!"))
+	var/obj/structure/closet/crate/necropolis/tendril/loot = new /obj/structure/closet/crate/necropolis/tendril(loc)
+	collector.start_pulling(loot)
+	collected += WEAKREF(collector)
+
+/obj/effect/collapse/Destroy()
+	collected.Cut()
+	QDEL_NULL(emitted_light)
+	return ..()
+
+///Helper proc that resolves weakrefs to determine if collector is in collected list, returning a boolean.
+/obj/effect/collapse/proc/has_collected(mob/collector)
+	for(var/datum/weakref/weakref as anything in collected)
+		var/mob/living/resolved = weakref.resolve()
+		//it could have been collector, it could not have been, we don't care
+		if(!resolved)
+			continue
+		if(resolved == collector)
+			return TRUE
+	return FALSE
+
+/obj/effect/collapse/proc/collapse()
+	for(var/mob/viewer in range(7, src))
+		shake_camera(viewer, 15, 1)
+	playsound(get_turf(src),'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
+	visible_message(span_bolddanger("The tendril falls inward, the ground around it widening into a yawning chasm!"))
+	for(var/turf/ground in RANGE_TURFS(2, src))
+		if(HAS_TRAIT(ground, TRAIT_NO_TERRAFORM))
+			continue
+		if(!ground.density)
+			ground.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
+	qdel(src)
+
 #undef ASH_WALKER_SPAWN_THRESHOLD

@@ -61,7 +61,7 @@
 	icon_state = "bag_of_holding"
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
-	item_flags = NO_MAT_REDEMPTION
+	item_flags = NO_MAT_REDEMPTION | BLUESPACE_INTERFERENCE
 	armor_type = /datum/armor/backpack_holding
 	storage_type = /datum/storage/bag_of_holding
 	pickup_sound = null

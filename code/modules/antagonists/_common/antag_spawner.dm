@@ -185,8 +185,8 @@
 
 /obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
 	. = ..()
-	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
-		spawn_location = pick(GLOB.nukeop_overwatch_start)
+	if(length(GLOB.nukeop_base_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_base_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown

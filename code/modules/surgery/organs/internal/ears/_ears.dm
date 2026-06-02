@@ -200,6 +200,7 @@
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
+	restyle_flags = NONE
 
 /obj/item/organ/ears/cat/cybernetic/volume
 	name = "volume-adjusting cybernetic cat ears"
