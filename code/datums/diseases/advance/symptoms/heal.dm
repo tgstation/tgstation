@@ -612,7 +612,7 @@
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) // Because people can never really suffer enough
 
 /datum/symptom/heal/aggressive_healing
-	name = "Agressive Healing"
+	name = "Aggressive Healing"
 	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
 	severity = 1
 	stealth = -4
@@ -624,7 +624,6 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	symptom_cure = null
-	can_be_neutered = FALSE
 	power = 2
 
 	threshold_descs = list(
