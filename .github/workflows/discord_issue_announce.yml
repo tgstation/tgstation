@@ -1,4 +1,4 @@
-name: "Discord PR Notification"
+name: "Discord Issue Notification"
 on:
   issues:
     types: [opened]
