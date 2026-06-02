@@ -21,6 +21,7 @@
 
 /datum/antagonist/lunatic/on_gain()
 	// Masters gain an objective before so we dont want duplicates
+	. = ..()
 	for(var/objective in objectives)
 		if(!istype(objective, /datum/objective/lunatic))
 			continue
@@ -28,9 +29,10 @@
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
 	lunatic_obj = loony
-	moon_track = new /datum/action/cooldown/lunatic_track()
-	mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
-	return ..()
+	moon_track = new(owner)
+	mad_touch = new(owner)
+	mad_touch.Grant(owner.current)
+	moon_track.Grant(owner.current)
 
 /datum/antagonist/lunatic/on_removal()
 	QDEL_NULL(moon_track)
@@ -54,18 +56,11 @@
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
-	mad_touch.Grant(our_mob)
-	moon_track.Grant(our_mob)
-
 /datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.remove_faction(FACTION_HERETIC)
 	REMOVE_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
-	if(moon_track)
-		moon_track.Remove(our_mob)
-	if(mad_touch)
-		mad_touch.Remove(our_mob)
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic
