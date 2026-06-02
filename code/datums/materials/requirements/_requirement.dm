@@ -61,5 +61,13 @@
 		MATERIAL_FLEXIBILITY = 5,
 	)
 
+/datum/material_requirement/any_material
+	property_minimums = list(
+
+	)
+	property_maximums = list(
+
+	)
+
 /datum/material_requirement/rigid_material
 	required_flags = MATERIAL_CLASS_RIGID
