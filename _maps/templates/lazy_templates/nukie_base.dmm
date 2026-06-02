@@ -2759,12 +2759,6 @@
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
-"Ev" = (
-/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south{
-	pixel_x = 16
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/control)
 "Ez" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
@@ -9709,7 +9703,7 @@ wG
 ru
 XZ
 TH
-Ev
+Ov
 DZ
 Ox
 Vm

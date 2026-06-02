@@ -18,13 +18,6 @@
 "s" = (
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
-"t" = (
-/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south{
-	pixel_x = 16
-	},
-/obj/effect/landmark/start/nukeop_elevator,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/control)
 "u" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
@@ -81,7 +74,7 @@ a
 W
 I
 F
-t
+w
 a
 "}
 (4,1,1) = {"
