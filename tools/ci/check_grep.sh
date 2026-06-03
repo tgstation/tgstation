@@ -104,6 +104,11 @@ if $grep -i 'maintainance|maintainence|maintenence' $map_files; then
     echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in maps, please fix.${NC}";
     st=1
 fi;
+if $grep -i 'securaty|securiy|secuirty' $map_files; then
+    echo
+    echo -e "${RED}ERROR: Misspelling(s) of 'security' detected in maps, please fix.${NC}";
+    st=1
+fi;
 
 section "whitespace issues"
 part "space indentation"
@@ -261,6 +266,11 @@ fi;
 if $grep -i 'maintainance|maintainence|maintenence' $code_files; then
     echo
     echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in code, please fix.${NC}";
+    st=1
+fi;
+if $grep -i 'securaty|securiy|secuirty' $code_files; then
+    echo
+    echo -e "${RED}ERROR: Misspelling(s) of 'security' detected in code, please fix.${NC}";
     st=1
 fi;
 part "map json naming"
