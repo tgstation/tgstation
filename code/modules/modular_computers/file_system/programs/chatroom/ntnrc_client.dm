@@ -126,8 +126,8 @@
 		if("PRG_savelog")
 			if(!channel)
 				return
-			var/logname = stripped_input(params["log_name"])
-			if(!logname)
+			var/logname = trim(params["log_name"], MAX_MESSAGE_LEN)
+			if(!length(logname) || !filter_filename_pda(logname))
 				return
 			var/datum/computer_file/data/text/logfile = new()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.

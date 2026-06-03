@@ -86,7 +86,6 @@
 #define HUD_CYBORG_HANDS "cyborg_module"
 #define HUD_CYBORG_RADIO "cyborg_radio"
 #define HUD_CYBORG_DEATH "cyborg_death"
-#define HUD_KEY_CYBORG_MODULE(slot) "cyborg_module:[slot]"
 
 #define HUD_AI_FLOOR_INDICATOR "ai_floor_indicator"
 #define HUD_AI_GO_UP "ai_go_up"
