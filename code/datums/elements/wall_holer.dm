@@ -63,8 +63,10 @@
 	if (is_valid != WALL_HOLE_ALLOWED)
 		return
 	hole_maker.do_attack_animation(target)
-	var/datum/component/torn_wall/torn_wall_hole/hole_component = target.AddComponent(/datum/component/torn_wall/torn_wall_hole)
-	target.AddComponent(/datum/component/torn_wall)
+	var/datum/component/hole_wall/hole_component = target.AddComponent(/datum/component/hole_wall)
+	hole_component.dir_for_hole = tearing_dir
+	target.AddComponent(/datum/component/hole_wall, dir_of_tearer = tearing_dir)
+	// target.AddComponent(/datum/component/torn_wall)
 	is_valid = validate_target(target, hole_maker) // And now we might have just destroyed it
 	if (is_valid == WALL_HOLE_ALLOWED)
 		hole_maker.UnarmedAttack(target, proximity_flag = TRUE)
