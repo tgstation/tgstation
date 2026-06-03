@@ -45,8 +45,8 @@
 		tearer.balloon_alert(tearer, "busy!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 	var/is_valid = validate_target(target, tearer)
-	if (is_valid != WALL_TEAR_ALLOWED)
-		return is_valid == WALL_TEAR_FAIL_CANCEL_CHAIN ? COMPONENT_HOSTILE_NO_ATTACK : NONE
+	if (is_valid != WALL_HOLE_ALLOWED)
+		return is_valid == WALL_HOLE_FAIL_CANCEL_CHAIN ? COMPONENT_HOSTILE_NO_ATTACK : NONE
 	INVOKE_ASYNC(src, PROC_REF(rip_and_tear), tearer, target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
