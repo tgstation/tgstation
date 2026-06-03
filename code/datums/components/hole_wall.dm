@@ -69,10 +69,29 @@
 
 	attached_wall.dismantle_wall(devastated = TRUE)
 
+/// Fix it up on weld
+/datum/component/hole_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(try_repair), source, user, tool)
+	return ITEM_INTERACT_BLOCKING
+
+/// Fix us up
+/datum/component/hole_wall/proc/try_repair(atom/source, mob/user, obj/item/tool)
+	source.balloon_alert(user, "repairing...")
+	if(!tool.use_tool(source, user, 5 SECONDS, amount = 2, volume = 50))
+		source.balloon_alert(user, "interrupted!")
+		return
+	current_stage--
+	if (current_stage < TORN_WALL_INITIAL)
+		qdel(src)
+		return
+	source.update_appearance(UPDATE_ICON)
+	try_repair(source, user, tool) // Keep going
+
 /// Give them a hint
 /datum/component/hole_wall/proc/on_examined(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	var/intensity = (current_stage == TORN_WALL_INITIAL) ? "slightly" : "badly"
+	var/intensity = (current_stage == HOLED_WALL_INITIAL) ? "slightly" : "badly"
 	examine_list += span_notice("It looks [intensity] damaged.")
 	examine_list += span_info("You may be able to repair it using a welding tool.")
 
