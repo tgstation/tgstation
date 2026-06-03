@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 	if(progress)
 		if(user.client || bar_override?.client)
-			progbar = new(bar_override || user, delay, target || user)
+			progbar = new(bar_override || user, delay, (timed_action_flags & PROGRESSBAR_OVER_USER) ? user : (target || user))
 
 		if(!hidden && delay >= 1 SECONDS)
 			cog = new(bar_override || user, icon, iconstate)

@@ -323,6 +323,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_SLOWDOWNS (1<<4)
 /// Cancel the action if the user does another action (mainly via clicking)
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
+/// Show progress bar over the user instead of the target
+#define PROGRESSBAR_OVER_USER (1<<6)
+
 
 // Spacevine-related flags
 /// Is the spacevine / flower bud heat resistant
