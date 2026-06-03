@@ -31,9 +31,39 @@
 								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 								"children": [
 									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-										"args": ["BB_TARGETED_ACTION", "BB_CURRENT_TARGET"]
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/cooldown",
+										"config": {
+											"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+											"cooldown_key": "BB_WIZARD_SPELL_COOLDOWN",
+											"cooldown_duration": "WIZARD_SPELL_COOLDOWN"
+										},
+										"child": {
+											"type": "selector",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+													"args": [
+														"BB_WIZARD_TARGETED_SPELL",
+														"BB_CURRENT_TARGET"
+													]
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+													"args": [
+														"BB_WIZARD_SECONDARY_SPELL",
+														"BB_CURRENT_TARGET"
+													]
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+													"args": ["BB_WIZARD_BLINK_SPELL", "BB_CURRENT_TARGET"]
+												}
+											]
+										}
 									}
 								]
 							},

@@ -1076,6 +1076,7 @@
 #include "code\datums\ai\generic_behaviors\give.dm"
 #include "code\datums\ai\generic_behaviors\grab_target.dm"
 #include "code\datums\ai\generic_behaviors\keep_playing_instrument.dm"
+#include "code\datums\ai\generic_behaviors\maintain_distance.dm"
 #include "code\datums\ai\generic_behaviors\move_to_target.dm"
 #include "code\datums\ai\generic_behaviors\perform_emote.dm"
 #include "code\datums\ai\generic_behaviors\perform_speech.dm"

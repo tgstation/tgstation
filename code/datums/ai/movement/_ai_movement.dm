@@ -8,10 +8,21 @@
 //Override this to setup the moveloop you want to use
 /datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	SHOULD_CALL_PARENT(TRUE)
+	var/old_movement_target = moving_controllers[controller]
+	if(old_movement_target)
+		if(old_movement_target == current_movement_target)
+			return FALSE
+		else
+			update_movement_target(controller, current_movement_target)
+			return FALSE
 	controller.consecutive_pathing_attempts = 0
 	controller.set_blackboard_key(BB_CURRENT_MIN_MOVE_DISTANCE, min_distance)
 	moving_controllers[controller] = current_movement_target
 	SEND_SIGNAL(controller.pawn, COMSIG_MOB_AI_MOVEMENT_STARTED, current_movement_target)
+	return TRUE
+
+/datum/ai_movement/proc/update_movement_target(datum/ai_controller/controller, atom/new_target)
+	moving_controllers[controller] = new_target
 
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts = 0

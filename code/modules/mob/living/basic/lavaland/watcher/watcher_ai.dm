@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/watcher
+	behavior_tree_json = "watcher.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,

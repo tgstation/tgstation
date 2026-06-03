@@ -1,0 +1,53 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/watcher",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
+			"args": []
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+							"args": [
+								"BB_CURRENT_TARGET",
+								"BB_TARGETING_STRATEGY",
+								"BB_CURRENT_TARGET_HIDING_LOCATION",
+								true
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/update_targets",
+							"args": [
+								"BB_CURRENT_TARGET",
+								"BB_TARGETING_STRATEGY",
+								"BB_CURRENT_TARGET_HIDING_LOCATION"
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
+							"args": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -9,6 +9,8 @@
 
 /datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	. = ..()
+	if(!.)
+		return FALSE
 	var/atom/movable/moving = controller.pawn
 	var/delay = controller.movement_delay
 
@@ -30,6 +32,12 @@
 	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, PROC_REF(repath_incoming))
 
 	return loop
+
+/datum/ai_movement/jps/update_movement_target(datum/ai_controller/controller, atom/new_target)
+	. = ..()
+	var/datum/move_loop/has_target/jps/loop = GLOB.move_manager.processing_on(controller.pawn, SSai_movement)
+	if(loop)
+		INVOKE_ASYNC(loop, TYPE_PROC_REF(/datum/move_loop/has_target/jps, recalculate_path))
 
 /datum/ai_movement/jps/proc/repath_incoming(datum/move_loop/has_target/jps/source)
 	SIGNAL_HANDLER
