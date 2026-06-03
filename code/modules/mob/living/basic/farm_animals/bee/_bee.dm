@@ -184,7 +184,7 @@
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
 
 /mob/living/basic/bee/proc/assign_reagent(datum/reagent/toxin)
-	if(!istype(toxin))
+	if(!ispath(toxin))
 		return
 	var/static/list/injection_range
 	if(!injection_range)
