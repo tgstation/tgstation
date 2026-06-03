@@ -36,7 +36,7 @@
 	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
 	/// Flags passed to the reagents datum upon creation
-    var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
+	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
