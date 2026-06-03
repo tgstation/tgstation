@@ -69,6 +69,13 @@
 
 	attached_wall.dismantle_wall(devastated = TRUE)
 
+/// Give them a hint
+/datum/component/hole_wall/proc/on_examined(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	var/intensity = (current_stage == TORN_WALL_INITIAL) ? "slightly" : "badly"
+	examine_list += span_notice("It looks [intensity] damaged.")
+	examine_list += span_info("You may be able to repair it using a welding tool.")
+
 #undef HOLED_WALL_HOLE
 #undef HOLED_WALL_DAMAGED
 #undef HOLED_WALL_INITIAL
