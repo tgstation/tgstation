@@ -32,6 +32,8 @@
 	var/beam_color
 	///If we use an emissive appearance
 	var/emissive = TRUE
+	/// If FALSE, redraws snap per update instead of using animate() interpolation.
+	var/animate = TRUE
 	/// If set will be used instead of origin's pixel_x in offset calculations
 	var/override_origin_pixel_x = null
 	/// If set will be used instead of origin's pixel_y in offset calculations
@@ -81,6 +83,7 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
@@ -95,6 +98,7 @@
 	src.beam_type = beam_type
 	src.beam_color = beam_color
 	src.emissive = emissive
+	src.animate = animate
 	src.override_origin_pixel_x = override_origin_pixel_x
 	src.override_origin_pixel_y = override_origin_pixel_y
 	src.override_target_pixel_x = override_target_pixel_x
@@ -129,7 +133,7 @@
 		qdel(src)
 		return
 	var/queued_time = 0
-	if(istype(mover))
+	if(animate && istype(mover))
 		queued_time = ICON_SIZE_ALL / max(mover.glide_size, MIN_GLIDE_SIZE) * world.tick_lag
 	if(queued_time > pending_animate_time)
 		pending_animate_time = queued_time
@@ -155,6 +159,8 @@
 		return
 	var/animate_time = pending_animate_time
 	pending_animate_time = 0
+	if(!animate)
+		animate_time = 0
 	var/origin_px = (isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x) + origin.pixel_w
 	var/origin_py = (isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y) + origin.pixel_z
 	var/target_px = (isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x) + target.pixel_w
@@ -300,7 +306,7 @@
 	// changes (e.g. diagonal moves).
 	var/old_count = length(old_elements)
 	var/new_count = length(new_elements)
-	if(animate_time && old_count > new_count)
+	if(animate_time && old_count > new_count && progress >= 1)
 		for(var/i in 1 to new_count)
 			qdel(old_elements[i])
 		for(var/i in new_count + 1 to old_count)
@@ -374,6 +380,7 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
@@ -491,6 +498,7 @@
 	time=INFINITY,maxdistance=INFINITY,
 	beam_type=/obj/effect/ebeam,
 	beam_color = null, emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
@@ -501,8 +509,8 @@
 	var/datum/beam/newbeam
 
 	if(icon_state_variants <= 0)
-		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
 	else
-		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
+		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam
