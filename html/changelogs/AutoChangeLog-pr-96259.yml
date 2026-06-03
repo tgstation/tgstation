@@ -1,0 +1,4 @@
+author: "Frfor17"
+delete-after: True
+changes:
+  - bugfix: "fixed NT shop printing infiniti papers, now its linked to computer's(laptop, pda, any) paper storage"
