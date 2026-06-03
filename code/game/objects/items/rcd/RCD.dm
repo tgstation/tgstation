@@ -56,6 +56,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/item/electronics/airlock/rcd
+	item_flags = parent_type::item_flags | ABSTRACT
 	custom_materials = null
 
 /obj/effect/rcd_hologram/Initialize(mapload)

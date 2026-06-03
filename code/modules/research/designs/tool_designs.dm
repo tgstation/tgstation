@@ -82,7 +82,6 @@
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 15)
 	transfered_materials = list(
 		/obj/item/construction/rcd/loaded = /obj/item/construction/rcd::custom_materials, //The RCD has less materials than what's used, as some is converted to charge/matter
-		/obj/item/electronics/airlock/rcd = null,
 	)
 	build_path = /obj/item/construction/rcd/loaded
 	category = list(

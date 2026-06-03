@@ -152,8 +152,8 @@ other types of metals and chemistry for reagents).
 	for(var/obj/item/object as anything in recursive_contents)
 		if(object.item_flags & ABSTRACT) //skip abstract entities
 			continue
-		if(!transfered_materials[object.type])
-			stack_trace("[object.type] missing from the 'transfered_materials' list of the design. Edit the 'transfered_materials' var of [type], or consider giving them ABSTRACT flag if appropriate.")
+		if(!(object.type in transfered_materials))
+			stack_trace("[object.type] missing from the 'transfered_materials' list of the design. Edit the 'transfered_materials' var of [type], or give it the ABSTRACT item flag if appropriate.")
 			continue
 		simple_transfer_materials(transfered_materials[object.type], multiplier, object)
 
