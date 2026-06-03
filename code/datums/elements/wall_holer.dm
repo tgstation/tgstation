@@ -36,8 +36,6 @@
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK))
 
-/datum/element/wall_holer/proc/rip_and_tear(mob/living/tearer, atom/target)
-
 /// Try to tear up a wall
 /datum/element/wall_holer/proc/on_attacked_wall(mob/living/tearer, atom/target, proximity_flag)
 	SIGNAL_HANDLER
@@ -50,7 +48,7 @@
 	INVOKE_ASYNC(src, PROC_REF(rip_and_tear), tearer, target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-/datum/element/wall_holer/proc/rip_and_tear(mob/living/tearer, atom/target)
+/datum/element/wall_holer/proc/rip_and_hole(mob/living/tearer, atom/target)
 	// We need to do this three times to actually destroy it
 	var/rip_time = (istype(target, /turf/closed/wall/r_wall) ? hole_making_time * reinforced_multiplier : hole_making_time) / 3
 	if (rip_time > 0)
