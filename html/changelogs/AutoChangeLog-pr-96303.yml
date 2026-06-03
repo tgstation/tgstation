@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten"
+delete-after: True
+changes:
+  - bugfix: "Blobs can no longer destroy indestructible items, like the disk."
