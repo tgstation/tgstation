@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 	qdel(field) // autoclears so it's fine
 	// Fire instantly, you should find something I hope
-	controller.modify_cooldown(src, world.time)
+	modify_cooldown(world.time)
 
 /datum/bt_node/ai_behavior/update_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
 	if(checking == pawn)
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field) // autoclears so it's fine
 		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
-		controller.modify_cooldown(src, get_cooldown(controller))
+		modify_cooldown(get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets
 /datum/bt_node/ai_behavior/update_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

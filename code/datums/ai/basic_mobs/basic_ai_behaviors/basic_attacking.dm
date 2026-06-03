@@ -4,7 +4,6 @@
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
 	time_between_perform = 0.2 SECONDS
-	only_set_cooldown_on_success = TRUE
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
@@ -20,7 +19,7 @@
 /datum/bt_node/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/atom/target = controller.blackboard[target_key]
 	if (isnull(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if (!target.IsReachableBy(controller.pawn))
 		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
 		return AI_BEHAVIOR_INSTANT
@@ -41,7 +40,7 @@
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy.can_attack(controller.pawn, target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
 
@@ -51,7 +50,7 @@
 	controller.ai_interact(target = final_target, combat_mode = TRUE)
 	if(terminate_after_action)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_INSTANT
 
 /datum/bt_node/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()

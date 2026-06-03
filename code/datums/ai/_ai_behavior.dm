@@ -14,8 +14,6 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
-	/// Whether we only set the cooldown if the behavior succeeded, rather than every perform call
-	var/only_set_cooldown_on_success = FALSE
 
 /datum/bt_node/ai_behavior/has_active_descendants()
 	return running
@@ -75,8 +73,7 @@
 	var/process_flags = perform(arglist(perform_args))
 
 	if(process_flags & AI_BEHAVIOR_DELAY)
-		if(!only_set_cooldown_on_success || (process_flags & AI_BEHAVIOR_SUCCEEDED))
-			next_perform_time = world.time + get_cooldown(controller)
+		next_perform_time = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		_finish_behavior(controller, TRUE)
@@ -87,6 +84,10 @@
 		return BT_FAILURE
 	controller.active_execution_index = execution_index
 	return BT_RUNNING
+
+/datum/bt_node/ai_behavior/proc/modify_cooldown(new_next_perform_time)
+	next_perform_time = new_next_perform_time
+
 
 /// Calls finish_action() with args and clears per-controller state.
 /datum/bt_node/ai_behavior/proc/_finish_behavior(datum/ai_controller/controller, succeeded)

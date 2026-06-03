@@ -2,7 +2,6 @@
 ///Destroy shit int he way
 /datum/bt_node/ai_behavior/attack_obstructions
 	time_between_perform = 2 SECONDS
-	only_set_cooldown_on_success = TRUE
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
@@ -13,7 +12,7 @@
 	var/atom/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/turf/next_step = get_step_towards(basic_mob, target)
 	if(!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
@@ -30,7 +29,7 @@
 
 	for(var/direction in dirs_to_move)
 		if(attack_in_direction(controller, basic_mob, direction))
-			return AI_BEHAVIOR_DELAY
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Nothing smashable — let selector fall through
 
 /datum/bt_node/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
