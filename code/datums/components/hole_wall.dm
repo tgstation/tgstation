@@ -42,7 +42,7 @@
 	atom_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/hole_wall/InheritComponent(datum/component/C, i_am_original)
-	increase_stage()
+	increase_stage_of_holening()
 
 /// Play a fun animation and make our wall look damaged, same as torn wall component
 /datum/component/hole_wall/proc/apply_visuals()
@@ -52,7 +52,7 @@
 	atom_parent.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
 
 /// Make the effect more dramatic
-/datum/component/hole_wall/proc/increase_stage()
+/datum/component/hole_wall/proc/increase_stage_of_holening()
 	current_stage++
 	if (current_stage != HOLED_WALL_HOLE)
 		apply_visuals()
@@ -62,12 +62,12 @@
 
 	message_admins("so, hole appeared?")
 
-	if(ismineralturf(attached_wall))
-		var/turf/closed/mineral/mineral_turf = attached_wall
-		mineral_turf.gets_drilled()
-		return
+	// if(ismineralturf(attached_wall))
+	// 	var/turf/closed/mineral/mineral_turf = attached_wall
+	// 	mineral_turf.gets_drilled()
+	// 	return
 
-	attached_wall.dismantle_wall(devastated = TRUE)
+	attached_wall.make_hole(dir = dir_for_hole)
 
 /// Fix it up on weld
 /datum/component/hole_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
