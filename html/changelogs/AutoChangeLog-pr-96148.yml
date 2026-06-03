@@ -1,4 +1,0 @@
-author: "levels0"
-delete-after: True
-changes:
-  - bugfix: "random recipes can no longer have upper pH bound above 14"
