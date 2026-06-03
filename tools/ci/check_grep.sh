@@ -268,7 +268,7 @@ if $grep -i 'maintainance|maintainence|maintenence' "${code_files[@]}"; then
 	echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in code, please fix.${NC}";
 	st=1
 fi;
-if $grep -i 'securaty|securiy|secuirty' $code_files; then
+if $grep -i 'securaty|securiy|secuirty' "${code_files[@]}"; then
     echo
     echo -e "${RED}ERROR: Misspelling(s) of 'security' detected in code, please fix.${NC}";
     st=1
