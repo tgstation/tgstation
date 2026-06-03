@@ -50,7 +50,7 @@
 
 /datum/element/wall_holer/proc/rip_and_hole(mob/living/hole_maker, atom/target)
 	// We need to do this three times to actually destroy it
-	var/atom/tearing_dir = tearer.dir
+	var/atom/tearing_dir = hole_maker.dir
 	var/rip_time = (istype(target, /turf/closed/wall/r_wall) ? hole_making_time * reinforced_multiplier : hole_making_time) / 3
 	if (rip_time > 0)
 		hole_maker.visible_message(span_warning("[hole_maker] begins tearing through [target]!"))
