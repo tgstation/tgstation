@@ -55,6 +55,8 @@
   - code_imp: Rechambers Regal Condors in .45 and 10mm Reaper rounds to .45 Reaper
       rounds. This has no impact on their function.
 2026-06-03:
+  FalloutFalcon:
+  - bugfix: Stumps aren't see through
   Macaroni:
   - qol: The alt jester outfit now has grayscale and is buyable
   StrangeWeirdKitten:
