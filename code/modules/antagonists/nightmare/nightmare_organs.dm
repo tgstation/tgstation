@@ -117,7 +117,7 @@
 	. = ..()
 	if(special == HEART_SPECIAL_SHADOWIFY)
 		return
-	blade = new/obj/item/light_eater
+	blade = new /obj/item/light_eater
 	heart_owner.put_in_hands(blade)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(on_blade_deleted))
 
