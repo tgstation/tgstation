@@ -22,12 +22,12 @@
 	/// Which type of hole will be made, bloody one, normal gery one, etc
 	var/hole_type
 
-/datum/element/wall_holer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 2 SECONDS, reinforced_multiplier = 2, do_after_key = null)
+/datum/element/wall_holer/Attach(datum/target, allow_reinforced = TRUE, hole_making_time = 2 SECONDS, reinforced_multiplier = 2, do_after_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 	src.allow_reinforced = allow_reinforced
-	src.tear_time = tear_time
+	src.hole_making_time = hole_making_time
 	src.reinforced_multiplier = reinforced_multiplier
 	src.do_after_key = do_after_key
 	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_wall))
