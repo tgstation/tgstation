@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - spellcheck: "Add security misspelling checks to CI"
