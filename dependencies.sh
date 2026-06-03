@@ -5,7 +5,7 @@
 
 # byond version. Also must be updated in .tgs.yml
 export BYOND_MAJOR=516
-export BYOND_MINOR=1659
+export BYOND_MINOR=1675
 
 #rust_g git tag
 export RUST_G_VERSION=4.2.0
