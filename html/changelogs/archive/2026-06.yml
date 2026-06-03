@@ -59,5 +59,7 @@
   - qol: The alt jester outfit now has grayscale and is buyable
   StrangeWeirdKitten:
   - bugfix: Blobs can no longer destroy indestructible items, like the disk.
+  levels0:
+  - bugfix: random recipes can no longer have upper pH bound above 14
   timothymtorres:
   - spellcheck: Add security misspelling checks to CI
