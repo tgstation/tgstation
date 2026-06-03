@@ -57,6 +57,10 @@
 2026-06-03:
   FalloutFalcon:
   - bugfix: Stumps aren't see through
+  Hatterhat:
+  - bugfix: Stasis body bags are no longer dense when closed.
+  - spellcheck: Fixed a typo relating to the spelling of "cinched" in body bags with
+      buckles (prisoner bags, et cetera).
   Macaroni:
   - qol: The alt jester outfit now has grayscale and is buyable
   StrangeWeirdKitten:

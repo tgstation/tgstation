@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Stasis body bags are no longer dense when closed."
-  - spellcheck: "Fixed a typo relating to the spelling of \"cinched\" in body bags with buckles (prisoner bags, et cetera)."
