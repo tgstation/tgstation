@@ -130,7 +130,7 @@
 		return
 	var/queued_time = 0
 	if(istype(mover))
-		queued_time = round(ICON_SIZE_ALL / max(mover.glide_size, MIN_GLIDE_SIZE) * world.tick_lag, world.tick_lag)
+		queued_time = ICON_SIZE_ALL / max(mover.glide_size, MIN_GLIDE_SIZE) * world.tick_lag
 	if(queued_time > pending_animate_time)
 		pending_animate_time = queued_time
 	testing("beam([REF(src)]): drawing for mover=[mover] oldloc=[oldloc] animate_time=[pending_animate_time]")
@@ -204,6 +204,11 @@
 	var/turf/origin_turf = get_turf(origin)
 	rot_matrix.Turn(Angle)
 	old_rot_matrix.Turn(old_angle)
+	var/raw_angle_delta = abs(Angle - old_angle)
+	// Crossing the 0/360 seam can make matrix interpolation spin the long way and visibly flip,
+	// and exact 180-degree reversals look like a mirror-flip. In either case, snap rotation to
+	// the destination angle and only animate positional offsets.
+	var/animate_rotation = animate_time && raw_angle_delta < 180
 
 	var/DX = (32*target.x+target_px)-(32*origin.x+origin_px)
 	var/DY = (32*target.y+target_py)-(32*origin.y+origin_py)
@@ -245,7 +250,7 @@
 			segment.color = beam_color
 		else
 			set_subsegment_appearance(segment)
-		if(animate_time)
+		if(animate_rotation)
 			segment.transform = old_rot_matrix
 		else
 			segment.transform = rot_matrix
@@ -278,7 +283,10 @@
 			if(N >= old_length)
 				segment.alpha = 0
 				animate(segment, alpha = 255, time = animate_time, flags = ANIMATION_PARALLEL)
-			animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
+			if(animate_rotation)
+				animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
+			else
+				animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, time = animate_time, flags = ANIMATION_PARALLEL)
 		else
 			segment.pixel_x = new_pixel_x
 			segment.pixel_y = new_pixel_y
@@ -307,7 +315,10 @@
 			var/target_px_anim = round(proj_world_x - dying_world_x)
 			var/target_py_anim = round(proj_world_y - dying_world_y)
 			dying.cut_overlays() // Remove emissive overlay so it doesn't glow while the segment fades out.
-			animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
+			if(animate_rotation)
+				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
+			else
+				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
 			QDEL_IN(dying, animate_time)
 	else
 		QDEL_LIST(old_elements)
