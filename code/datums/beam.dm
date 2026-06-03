@@ -292,7 +292,7 @@
 			segment.pixel_x = new_pixel_x
 			segment.pixel_y = new_pixel_y
 		if(emissive)
-			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, icon_state, segment, alpha = segment.alpha))
+			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha))
 
 	elements = new_elements
 	// Fade out segments that extended past the new beam's end before deleting them, so shrinking
