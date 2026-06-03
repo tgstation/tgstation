@@ -1728,6 +1728,7 @@
 #include "code\datums\elements\voucher_redeemer.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\elements\wall_engraver.dm"
+#include "code\datums\elements\wall_holer.dm"
 #include "code\datums\elements\wall_smasher.dm"
 #include "code\datums\elements\wall_tearer.dm"
 #include "code\datums\elements\wall_walker.dm"
