@@ -611,7 +611,7 @@ export const BigManipulator = () => {
               color={!data.disk_inserted && "none"}
               onClick={() => act('disk_eject')}
             >
-              { data.disk_inserted ? "floppy drive (tasks: " + data.disk_task_count + ")" : "No drives inserted" }
+              { data.disk_inserted ? `floppy drive (tasks: ${data.disk_task_count})` : "No drives inserted" }
             </Button>
             </Stack.Item>
             <Stack.Item>
