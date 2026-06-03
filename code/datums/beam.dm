@@ -224,9 +224,23 @@
 		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
 		new_elements += segment
 
+		var/icon/terminal_icon = null
 		if(N+32>length)
-			var/icon/terminal_icon = new(icon, icon_state)
-			terminal_icon.DrawBox(null,1,(length-N),32,32)
+			terminal_icon = new(icon, icon_state)
+			var/cut_row = length - N
+			terminal_icon.DrawBox(null, 1, cut_row, 32, 32)
+			// Soft alpha falloff for the few rows just below the cut so the tip isn't a hard line.
+			var/fade_height = min(4, cut_row - 1)
+			if(fade_height > 0)
+				var/icon/alpha_mask = new(icon, icon_state)
+				alpha_mask.DrawBox(rgb(255, 255, 255, 255), 1, 1, 32, 32)
+				var/band_start = cut_row - fade_height
+				for(var/y in band_start to cut_row - 1)
+					var/from_tip = (cut_row - 1) - y // 0 at the tip row, fade_height-1 furthest back
+					var/a = round(255 * (from_tip + 1) / (fade_height + 1))
+					alpha_mask.DrawBox(rgb(255, 255, 255, a), 1, y, 32, y)
+				alpha_mask.DrawBox(null, 1, cut_row, 32, 32)
+				terminal_icon.Blend(alpha_mask, ICON_MULTIPLY)
 			segment.icon = terminal_icon
 			segment.color = beam_color
 		else
@@ -260,13 +274,43 @@
 			segment.pixel_y = new_pixel_y + round(old_visual_y - new_visual_y)
 			if(N == 0)
 				testing("beam([REF(src)]): seg N=[N] tile=([final_x],[final_y]) start_px=([segment.pixel_x],[segment.pixel_y]) end_px=([new_pixel_x],[new_pixel_y]) old_angle=[old_angle] new_angle=[Angle] anim=[animate_time]")
+			// Segments past the old beam's end fade in instead of popping.
+			if(N >= old_length)
+				segment.alpha = 0
+				animate(segment, alpha = 255, time = animate_time, flags = ANIMATION_PARALLEL)
 			animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
 		else
 			segment.pixel_x = new_pixel_x
 			segment.pixel_y = new_pixel_y
+		if(emissive)
+			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, icon_state, segment, alpha = segment.alpha))
 
 	elements = new_elements
-	QDEL_LIST(old_elements)
+	// Fade out segments that extended past the new beam's end before deleting them, so shrinking
+	// the beam doesn't pop the tail. Each dying segment is also slid+rotated onto its projected
+	// position along the new beam direction, so the tail doesn't look detached when the angle
+	// changes (e.g. diagonal moves).
+	var/old_count = length(old_elements)
+	var/new_count = length(new_elements)
+	if(animate_time && old_count > new_count)
+		for(var/i in 1 to new_count)
+			qdel(old_elements[i])
+		for(var/i in new_count + 1 to old_count)
+			var/obj/effect/ebeam/dying = old_elements[i]
+			// Project this dying segment's center onto the new beam, clamped to the new beam's tip
+			// so the tail collapses *into* the target instead of sliding past it.
+			var/proj_pos = clamp((i - 1) * ICON_SIZE_ALL + 16, 0, length)
+			var/proj_world_x = (origin.x * ICON_SIZE_ALL + origin_px) + sin(Angle) * proj_pos
+			var/proj_world_y = (origin.y * ICON_SIZE_ALL + origin_py) + cos(Angle) * proj_pos
+			var/dying_world_x = dying.x * ICON_SIZE_ALL
+			var/dying_world_y = dying.y * ICON_SIZE_ALL
+			var/target_px_anim = round(proj_world_x - dying_world_x)
+			var/target_py_anim = round(proj_world_y - dying_world_y)
+			dying.cut_overlays() // Remove emissive overlay so it doesn't glow while the segment fades out.
+			animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
+			QDEL_IN(dying, animate_time)
+	else
+		QDEL_LIST(old_elements)
 
 	// Cache this draw's seed ("from") and destination ("to") frames so the next Draw() can lerp
 	// between them to find where segments really are if it fires mid-animation.
@@ -335,24 +379,16 @@
 	set_up_effect(segment, "[icon_state][rand(1, icon_state_variants)]")
 
 /obj/effect/ebeam
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	var/emissive = TRUE
 	var/datum/beam/owner
 
 /obj/effect/ebeam/Initialize(mapload, beam_owner)
 	owner = beam_owner
 	return ..()
-
-/obj/effect/ebeam/update_overlays()
-	. = ..()
-	if(!emissive)
-		return
-	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
-	emissive_overlay.transform = transform
-	emissive_overlay.alpha = alpha
-	. += emissive_overlay
 
 /obj/effect/ebeam/Destroy()
 	owner = null
