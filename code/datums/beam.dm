@@ -137,7 +137,6 @@
 		queued_time = ICON_SIZE_ALL / max(mover.glide_size, MIN_GLIDE_SIZE) * world.tick_lag
 	if(queued_time > pending_animate_time)
 		pending_animate_time = queued_time
-	testing("beam([REF(src)]): drawing for mover=[mover] oldloc=[oldloc] animate_time=[pending_animate_time]")
 	// Synchronous: deferring via INVOKE_ASYNC would start animate() one render frame after the mob's
 	// BYOND-managed glide, making the beam trail. Draw() doesn't sleep, so calling it here is safe.
 	Draw()
@@ -189,8 +188,6 @@
 	var/old_origin_world_y = old_origin_y_f * ICON_SIZE_ALL + old_origin_py_f
 	var/old_target_world_x = old_target_x_f * ICON_SIZE_ALL + old_target_px_f
 	var/old_target_world_y = old_target_y_f * ICON_SIZE_ALL + old_target_py_f
-
-	testing("beam([REF(src)]): Draw() animate_time=[animate_time] progress=[progress] origin=([origin.x],[origin.y])+([origin_px],[origin_py]) target=([target.x],[target.y])+([target_px],[target_py]) old_origin_world=([old_origin_world_x],[old_origin_world_y]) old_target_world=([old_target_world_x],[old_target_world_y])")
 
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x, target.y, target_px, target_py)
 	// Old angle derived from interpolated endpoints, not the cached destination frame.
@@ -283,8 +280,6 @@
 			var/new_visual_y = final_y * ICON_SIZE_ALL + new_pixel_y
 			segment.pixel_x = new_pixel_x + round(old_visual_x - new_visual_x)
 			segment.pixel_y = new_pixel_y + round(old_visual_y - new_visual_y)
-			if(N == 0)
-				testing("beam([REF(src)]): seg N=[N] tile=([final_x],[final_y]) start_px=([segment.pixel_x],[segment.pixel_y]) end_px=([new_pixel_x],[new_pixel_y]) old_angle=[old_angle] new_angle=[Angle] anim=[animate_time]")
 			// Segments past the old beam's end fade in instead of popping.
 			if(N >= old_length)
 				segment.alpha = 0
