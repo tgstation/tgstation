@@ -82,7 +82,7 @@
 		source.balloon_alert(user, "interrupted!")
 		return
 	current_stage--
-	if (current_stage < TORN_WALL_INITIAL)
+	if (current_stage < HOLED_WALL_INITIAL)
 		qdel(src)
 		return
 	source.update_appearance(UPDATE_ICON)
@@ -99,7 +99,7 @@
 /datum/component/hole_wall/proc/on_update_overlays(turf/source, list/overlays)
 	SIGNAL_HANDLER
 	var/mutable_appearance/crack = mutable_appearance('icons/turf/overlays.dmi', "explodable", source.layer + 0.1)
-	if (current_stage == TORN_WALL_INITIAL)
+	if (current_stage == HOLED_WALL_INITIAL)
 		crack.alpha *= 0.5
 	overlays += crack
 
