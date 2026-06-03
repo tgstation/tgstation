@@ -63,6 +63,7 @@
 	if (is_valid != WALL_HOLE_ALLOWED)
 		return
 	hole_maker.do_attack_animation(target)
+	var/datum/component/torn_wall/torn_wall_hole/hole_component = target.AddComponent(/datum/component/torn_wall/torn_wall_hole)
 	target.AddComponent(/datum/component/torn_wall)
 	is_valid = validate_target(target, hole_maker) // And now we might have just destroyed it
 	if (is_valid == WALL_HOLE_ALLOWED)
