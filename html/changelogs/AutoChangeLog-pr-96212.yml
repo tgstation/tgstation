@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "moonatics switching bodies (including slimeperson swap) giving you duplicate action buttons"
+  - bugfix: "lock path not having 1 point discounts"
