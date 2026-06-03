@@ -48,7 +48,6 @@
 
 /datum/element/wall_tearer/proc/rip_and_tear(mob/living/tearer, atom/target)
 	// We need to do this three times to actually destroy it
-	var/atom/tearing_dir = tearer.dir
 	var/rip_time = (istype(target, /turf/closed/wall/r_wall) ? tear_time * reinforced_multiplier : tear_time) / 3
 	if (rip_time > 0)
 		tearer.visible_message(span_warning("[tearer] begins tearing through [target]!"))
@@ -62,9 +61,7 @@
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return
 	tearer.do_attack_animation(target)
-	var/datum/component/torn_wall/torn_wall_hole/hole_component = target.AddComponent(/datum/component/torn_wall/torn_wall_hole)
-	hole_component.dir_for_hole = tearing_dir
-	target.AddComponent(/datum/component/torn_wall/torn_wall_hole, dir_of_tearer = tearing_dir)
+	target.AddComponent(/datum/component/torn_wall)
 	is_valid = validate_target(target, tearer) // And now we might have just destroyed it
 	if (is_valid == WALL_TEAR_ALLOWED)
 		tearer.UnarmedAttack(target, proximity_flag = TRUE)
@@ -72,9 +69,6 @@
 /// Check if the target atom is a wall we can actually rip up
 /datum/element/wall_tearer/proc/validate_target(atom/target, mob/living/tearer)
 	if (!isclosedturf(target) || isindestructiblewall(target))
-		return WALL_TEAR_INVALID
-
-	if (HAS_TRAIT(target, TRAIT_WALL_HOLED))
 		return WALL_TEAR_INVALID
 
 	var/reinforced = istype(target, /turf/closed/wall/r_wall)
