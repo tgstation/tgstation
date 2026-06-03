@@ -95,6 +95,19 @@
 	examine_list += span_notice("It looks [intensity] damaged.")
 	examine_list += span_info("You may be able to repair it using a welding tool.")
 
+/// Show a little crack on here
+/datum/component/hole_wall/proc/on_update_overlays(turf/source, list/overlays)
+	SIGNAL_HANDLER
+	var/mutable_appearance/crack = mutable_appearance('icons/turf/overlays.dmi', "explodable", source.layer + 0.1)
+	if (current_stage == TORN_WALL_INITIAL)
+		crack.alpha *= 0.5
+	overlays += crack
+
+/// If the wall becomes any other turf, delete us. Transforming into a different works fine as a fix.
+/datum/component/hole_wall/proc/on_turf_changed()
+	SIGNAL_HANDLER
+	qdel(src)
+
 #undef HOLED_WALL_HOLE
 #undef HOLED_WALL_DAMAGED
 #undef HOLED_WALL_INITIAL
