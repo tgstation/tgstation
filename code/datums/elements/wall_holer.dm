@@ -40,7 +40,7 @@
 /datum/element/wall_holer/proc/on_attacked_wall(mob/living/hole_maker, atom/target, proximity_flag)
 	SIGNAL_HANDLER
 	if (DOING_INTERACTION_WITH_TARGET(hole_maker, target) || (!isnull(do_after_key) && DOING_INTERACTION(hole_maker, do_after_key)))
-		tearer.balloon_alert(hole_maker, "busy!")
+		hole_maker.balloon_alert(hole_maker, "busy!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 	var/is_valid = validate_target(target, hole_maker)
 	if (is_valid != WALL_HOLE_ALLOWED)
