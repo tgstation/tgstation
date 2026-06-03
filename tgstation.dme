@@ -1113,6 +1113,7 @@
 #include "code\datums\ai\generic_decorators\pawn_is_restrained.dm"
 #include "code\datums\ai\generic_decorators\random_chance.dm"
 #include "code\datums\ai\generic_decorators\random_chance_from_key.dm"
+#include "code\datums\ai\generic_decorators\target_has_trait.dm"
 #include "code\datums\ai\generic_subtrees\fail.dm"
 #include "code\datums\ai\hauntium\haunted_bt_nodes.dm"
 #include "code\datums\ai\hauntium\haunted_controller.dm"

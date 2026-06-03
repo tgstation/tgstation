@@ -45,7 +45,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/alien
 	time_between_perform = 3 SECONDS
-	required_distance = 3
+	max_range = 3
 	avoid_friendly_fire = TRUE
 
 /datum/idle_behavior/idle_random_walk/plant_weeds

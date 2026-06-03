@@ -13,9 +13,13 @@
 	if(friends && (target in friends))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/emote_text = controller.blackboard[BB_REINFORCEMENTS_EMOTE]
-	if(!isnull(emote_text))
-		pawn_mob.manual_emote(emote_text)
+	var/say_text = controller.blackboard[BB_REINFORCEMENTS_SAY]
+	if(!isnull(say_text))
+		pawn_mob.say(say_text, forced = "AI Controller")
+	else
+		var/emote_text = controller.blackboard[BB_REINFORCEMENTS_EMOTE]
+		if(!isnull(emote_text))
+			pawn_mob.manual_emote(emote_text)
 
 	for(var/mob/other_mob in oview(reinforcements_range, pawn_mob))
 		if(!pawn_mob.faction_check_atom(other_mob) || isnull(other_mob.ai_controller))

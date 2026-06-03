@@ -61,7 +61,10 @@
 															"args": [
 																"BB_WIZARD_SECONDARY_SPELL",
 																"BB_CURRENT_TARGET"
-															]
+															],
+															"vars": {
+																"min_distance": 0
+															}
 														},
 														{
 															"type": "leaf",
@@ -69,7 +72,10 @@
 															"args": [
 																"BB_WIZARD_BLINK_SPELL",
 																"BB_CURRENT_TARGET"
-															]
+															],
+															"vars": {
+																"min_distance": 0
+															}
 														}
 													]
 												}

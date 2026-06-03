@@ -41,7 +41,7 @@ STATIC_NODES: dict[str, str] = {
 }
 
 # Source JSON structural keys that are consumed/transformed during compilation.
-_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'args', 'config', 'subtype', 'dm_type', 'bindings'})
+_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'args', 'config', 'vars', 'subtype', 'dm_type', 'bindings'})
 
 
 
@@ -188,6 +188,10 @@ def compile_node(src: dict, defines: dict) -> dict:
     if 'args' in src:
         out[desc_args] = [resolve_value(a, defines) for a in src['args']]
 
+    # Instance vars (same unpacking as config, usable on any node type)
+    for key, val in src.get('vars', {}).items():
+        out[key] = resolve_value(val, defines)
+
     # Bindings: declaration on a subtree definition file's root vs. call-site overrides
     if 'bindings' in src:
         if node_type == 'subtree':
@@ -236,7 +240,7 @@ def main() -> int:
 
     for src_path in bt_files:
         # src_path.stem strips one extension, giving e.g. "simple_hostile_combat.bt"
-        # We want the base name without the .bt part.
+        # We want the base name without the .bt part. so we can slam a compiled inbetween :3
         stem = src_path.stem  # "simple_hostile_combat.bt"
         name = stem[:-3] if stem.endswith('.bt') else stem  # "simple_hostile_combat"
         compiled_name = f'{name}.bt.compiled.json'

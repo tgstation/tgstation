@@ -87,8 +87,8 @@
 //Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
 	time_between_perform = 0.6 SECONDS
-	/// Minimum range at which we fire; closer than this we don't shoot.
-	var/required_distance = 3
+	/// Max range at which we can fire. Make sure your movement actually gets you this lcose please
+	var/max_range = 3
 	/// Max chase range — give up if target moves further than this.
 	var/chase_range = 9
 	/// Avoid shooting through friendlies.
@@ -115,7 +115,7 @@
 	var/atom/final_target = hiding_target ? hiding_target : target
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(!can_see(basic_mob, final_target, required_distance))
+	if(!can_see(basic_mob, final_target, max_range))
 		return AI_BEHAVIOR_INSTANT // Out of range — parallel's move_to_target will approach
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targeting_strategy))

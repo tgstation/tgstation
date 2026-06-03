@@ -8,7 +8,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 ///Use the targetting strategy to find a target
 /datum/bt_node/ai_behavior/update_targets
-	time_between_perform = 2 SECONDS
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified

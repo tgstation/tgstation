@@ -8,16 +8,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements/mining,
-		/datum/ai_planning_subtree/target_retaliate/check_faction,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/use_mob_ability/gaze,
-		/datum/ai_planning_subtree/ranged_skirmish/watcher,
-	)
 
 /datum/ai_planning_subtree/use_mob_ability/gaze
 	finish_planning = TRUE

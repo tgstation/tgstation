@@ -57,7 +57,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/trooper
 	time_between_perform = 1 SECONDS
-	required_distance = 5
+	max_range = 5
 	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst
@@ -97,7 +97,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/trooper_shotgun
 	time_between_perform = 3 SECONDS
-	required_distance = 3
+	max_range = 3
 	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/viscerator

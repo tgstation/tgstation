@@ -14,18 +14,18 @@
 /// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
 	/// Maximum distance at which the ability can fire; override in subclasses.
-	var/required_distance = 0
+	var/min_distance = 0
 
 /// Variant for abilities that require adjacency (distance ≤ 1).
 /datum/bt_node/ai_behavior/targeted_mob_ability/melee
-	required_distance = 1
+	min_distance = 1
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	if(required_distance && get_dist(controller.pawn, target) > required_distance)
+	if(min_distance && get_dist(controller.pawn, target) > min_distance)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(!ability.IsAvailable())
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
