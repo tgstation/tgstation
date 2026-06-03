@@ -37,10 +37,10 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/aggro_range = vision_range
-	if(isnull(current_target) && !isnull(ai_controller.blackboard[aggro_grab_range_key]))
-		aggro_range = ai_controller.blackboard[aggro_grab_range_key]
-	else if(!isnull(ai_controller.blackboard[aggro_range_key]))
-		aggro_range = ai_controller.blackboard[aggro_range_key]
+	if(isnull(current_target) && !isnull(controller.blackboard[aggro_grab_range_key]))
+		aggro_range = controller.blackboard[aggro_grab_range_key]
+	else if(!isnull(controller.blackboard[aggro_range_key]))
+		aggro_range = controller.blackboard[aggro_range_key]
 
 	controller.clear_blackboard_key(target_key)
 
@@ -95,10 +95,10 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 /datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = vision_range
-	if(isnull(current_target) && !isnull(ai_controller.blackboard[aggro_grab_range_key]))
-		aggro_range = ai_controller.blackboard[aggro_grab_range_key]
-	else if(!isnull(ai_controller.blackboard[aggro_range_key]))
-		aggro_range = ai_controller.blackboard[aggro_range_key]
+	if(!isnull(controller.blackboard[aggro_grab_range_key]))
+		aggro_range = controller.blackboard[aggro_grab_range_key]
+	else if(!isnull(controller.blackboard[aggro_range_key]))
+		aggro_range = controller.blackboard[aggro_range_key]
 
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
