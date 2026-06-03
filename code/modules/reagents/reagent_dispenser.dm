@@ -382,6 +382,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
+
+	// Lets the user know what reagents are in the cooler, if they can see them.
+	if(user.can_see_reagents() && reagents.total_volume)
+		for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+			. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
+
 	if (paper_cups > 1)
 		. += "There are [paper_cups] paper cups left."
 	else if (paper_cups == 1)
