@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - code_imp: "Wizard Apprentices now use the mid-round wizard pref, instead of the round start wizard pref."
