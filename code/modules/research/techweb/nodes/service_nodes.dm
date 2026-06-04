@@ -38,8 +38,8 @@
 		"water_balloon",
 		"ticket_machine",
 		"radio_entertainment",
-		"photocopier",
 		"rdd",
+		"photocopier",
 	)
 
 /datum/techweb_node/sanitation
