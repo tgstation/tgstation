@@ -1,0 +1,153 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/vatbeast",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_TARGET_FOOD"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_TARGET_FOOD", 1]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/perform_emote",
+										"args": ["eats up happily!"]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+										"args": ["BB_TARGET_FOOD"]
+									}
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"config": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "selector",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+												"args": ["BB_CURRENT_TARGET"]
+											},
+											{
+												"type": "decorator",
+												"decorator": "/datum/bt_node/decorator/bb_key_at_least",
+												"config": {
+													"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+													"key": "BB_BASIC_MOB_HAS_TARGET_TIME",
+													"minimum": "10 SECONDS"
+												},
+												"child": {
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/melee",
+													"args": ["BB_GENERIC_ACTION", "BB_CURRENT_TARGET"]
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+												"args": [
+													"BB_CURRENT_TARGET",
+													"BB_TARGETING_STRATEGY",
+													"BB_CURRENT_TARGET_HIDING_LOCATION"
+												],
+												"vars": {
+													"terminate_after_action": true
+												}
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_CURRENT_TARGET", 1, false]
+									}
+								]
+							}
+						},
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"loop_delay": "IDLE_BEHAVIOR_RATE",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
+									"args": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
+							"args": ["BB_TARGET_FOOD", "BB_BASIC_FOODS"]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+							"args": [
+								"BB_CURRENT_TARGET",
+								"BB_TARGETING_STRATEGY",
+								"BB_CURRENT_TARGET_HIDING_LOCATION",
+								true
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/update_targets",
+							"args": [
+								"BB_CURRENT_TARGET",
+								"BB_TARGETING_STRATEGY",
+								"BB_CURRENT_TARGET_HIDING_LOCATION"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

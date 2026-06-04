@@ -52,21 +52,8 @@
 		return // Don't look for food while choking or vomiting
 	return ..()
 
-/// Only set things geese will try to eat
 /datum/ai_behavior/find_and_set/in_list/goose_food
-
-/datum/ai_behavior/find_and_set/in_list/goose_food/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
-	if(!length(found))
-		return
-
-	var/list/filtered = list()
-	for (var/obj/item/thing as anything in found)
-		if (IS_EDIBLE(thing) || thing.has_material_type(/datum/material/plastic))
-			filtered += thing
-
-	if(length(filtered))
-		return pick(filtered)
+	parent_type = /datum/bt_node/ai_behavior/find_and_set/in_list/goose_food
 
 /// Use this ability only if we roll a dice correctly
 /datum/ai_planning_subtree/use_mob_ability/goose_vomit

@@ -47,7 +47,7 @@
 	var/datum/action/cooldown/tentacle_slap/slapper = new (src)
 	slapper.Grant(src)
 
-	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, slapper)
+	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, slapper)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(enjoyed_food))
 
 /mob/living/basic/vatbeast/tamed(mob/living/tamer, obj/item/food)
@@ -64,20 +64,12 @@
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast
+	behavior_tree_json = "vatbeast.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
-	)
 
 /// Only do this if we are adjacent to target and have been mad at the same guy for at least 10 seconds
 /// That slap REALLY hurts

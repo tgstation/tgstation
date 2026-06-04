@@ -131,8 +131,6 @@
 	try_random_step(living_pawn, seconds_per_tick, walk_chance)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/idle_random_walk/less_walking
-	walk_chance = 10
 
 // Only walk if we don't have a target.
 /datum/bt_node/ai_behavior/idle_random_walk/no_target

@@ -323,13 +323,17 @@
 /// What (first in combo) attack was last executed
 #define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
 
-//turtle
-///our tree's ability
-#define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
 ///people we headbutt!
 #define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
 ///flore we must smell
 #define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
+///Cooldown between headbutts
+#define BB_TURTLE_HEADBUTT_COOLDOWN "turtle_headbutt_cooldown"
+///Cooldown between smelling flora
+#define BB_TURTLE_FLORA_COOLDOWN "turtle_flora_cooldown"
+#define BB_TURTLE_HEADBUTT_TYPES "turtle_headbutt_types"
+#define BB_TURTLE_FLORA_TYPES "turtle_flora_types"
+
 
 #define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
 

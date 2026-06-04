@@ -53,6 +53,14 @@
 	var/static/list/indigestible_seeds = typecacheof(list(
 		/obj/item/seeds/random,
 	))
+	var/static/list/headbutt_targets = list(
+		/mob/living/carbon/human,
+	)
+	var/static/list/flora_to_smell = list(
+		/obj/machinery/hydroponics,
+		/obj/item/kirbyplants,
+	)
+
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -67,6 +75,8 @@
 	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	var/static/list/eatable_food = list(/obj/item/seeds)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
+	ai_controller.set_blackboard_key(BB_TURTLE_HEADBUTT_TYPES, typecacheof(headbutt_targets))
+	ai_controller.set_blackboard_key(BB_TURTLE_FLORA_TYPES, typecacheof(flora_to_smell))
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	AddComponent(/datum/component/happiness)
 	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food))
@@ -162,7 +172,7 @@
 	developed_path = evolution_path
 	var/datum/action/cooldown/tree_ability = new new_ability_path(src)
 	tree_ability?.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TURTLE_TREE_ABILITY, tree_ability)
+	ai_controller?.set_blackboard_key(BB_GENERIC_ACTION, tree_ability)
 	STOP_PROCESSING(SSprocessing, src)
 	update_appearance()
 

@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/turtle
+	behavior_tree_json = "turtle.bt.json"
 	blackboard = list(
 		BB_HAPPY_EMOTIONS = list(
 			"wiggles its tree in excitement!",
@@ -15,17 +16,6 @@
 		),
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/express_happiness,
-		/datum/ai_planning_subtree/use_mob_ability/turtle_tree,
-		/datum/ai_planning_subtree/find_and_hunt_target/headbutt_people, //playfully headbutt people's legs
-		/datum/ai_planning_subtree/find_and_hunt_target/sniff_flora, //mmm the aroma
-	)
-
-/datum/ai_planning_subtree/use_mob_ability/turtle_tree
-	ability_key = BB_TURTLE_TREE_ABILITY
 
 /datum/ai_planning_subtree/use_mob_ability/turtle_tree/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/happiness_count = controller.blackboard[BB_BASIC_HAPPINESS] * 100

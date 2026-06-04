@@ -46,6 +46,7 @@
 		return FALSE
 	return ..()
 
+
 /// Eat other dragons
 /datum/ai_behavior/hunt_target/interact_with_target/dragon_cannibalise
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION

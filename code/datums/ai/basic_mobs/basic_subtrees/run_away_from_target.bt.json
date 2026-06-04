@@ -1,7 +1,7 @@
 {
 	"dm_type": "/datum/bt_node/subtree/run_away_from_target",
 	"bindings": {
-		"flee_from_target": {
+		"byk9gqj4": {
 			"label": "target_key",
 			"default": "BB_CURRENT_TARGET"
 		}
@@ -20,7 +20,7 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
 				"args": [
-					"$flee_from_target",
+					"$byk9gqj4",
 					"BB_CURRENT_TARGET_HIDING_LOCATION",
 					"BB_FLEE_LOCATION"
 				]

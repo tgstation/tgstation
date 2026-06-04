@@ -62,7 +62,7 @@ def parse_defines(repo_root: Path) -> dict:
 
     pending: list[tuple[str, str]] = []
     seen_names: set[str] = set(defines)
-    defines_dir = repo_root / 'code' / '__DEFINES'
+    defines_dir = repo_root / 'code'
     for fpath in sorted(defines_dir.rglob('*.dm')):
         for line in fpath.read_text(encoding='utf-8', errors='ignore').splitlines():
             line = line.strip()
@@ -140,12 +140,37 @@ def _resolve_expr(raw: str, defines: dict):
     return None
 
 
+def _split_list_args(inner: str) -> list[str]:
+    """Split comma-separated args respecting nested parentheses."""
+    args: list[str] = []
+    depth = 0
+    current: list[str] = []
+    for ch in inner:
+        if ch == ',' and depth == 0:
+            args.append(''.join(current).strip())
+            current = []
+        else:
+            if ch == '(':
+                depth += 1
+            elif ch == ')':
+                depth -= 1
+            current.append(ch)
+    if current:
+        args.append(''.join(current).strip())
+    return [a for a in args if a]
+
+
 def resolve_value(val, defines: dict):
-    """Resolve a JSON value: define lookup, then arithmetic/timing expression, then raw."""
+    """Resolve a JSON value: define lookup, then arithmetic/timing expression, then raw.
+    Strings matching list(...) are parsed into Python lists with each element resolved."""
     if not isinstance(val, str):
         return val
     if val.startswith('$'):
         return val  # binding reference placeholder — preserve as-is
+    stripped = val.strip()
+    if stripped.startswith('list(') and stripped.endswith(')'):
+        inner = stripped[5:-1]
+        return [resolve_value(a, defines) for a in _split_list_args(inner)]
     if val in defines:
         return defines[val]
     resolved = _resolve_expr(val, defines)

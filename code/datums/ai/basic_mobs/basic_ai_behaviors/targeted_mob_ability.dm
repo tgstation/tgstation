@@ -13,19 +13,19 @@
 
 /// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
-	/// Maximum distance at which the ability can fire; override in subclasses.
+	/// Minimum distance at which the ability can fire; override in subclasses.
 	var/min_distance = 0
+	///Does this require adjacency?
+	var/require_adjacency = FALSE
 
-/// Variant for abilities that require adjacency (distance ≤ 1).
-/datum/bt_node/ai_behavior/targeted_mob_ability/melee
-	min_distance = 1
-
-/datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key = BB_GENERIC_ACTION, target_key)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(min_distance && get_dist(controller.pawn, target) > min_distance)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	if(require_adjacency && !controller.pawn.Adjacent(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(!ability.IsAvailable())
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -35,6 +35,11 @@
 	if(result)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+/// Variant for abilities that require adjacency (distance ≤ 1).
+/datum/bt_node/ai_behavior/targeted_mob_ability/melee
+	require_adjacency = TRUE
+
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/and_plan_execute
 
