@@ -192,7 +192,7 @@
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
 /obj/machinery/hydroponics/constructable/on_deconstruction(disassembled)
-	src.current_soil?.forceMove(drop_location())
+	current_soil?.forceMove(drop_location())
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
