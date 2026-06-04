@@ -27,3 +27,21 @@
 		/obj/item/stack/cable_coil = 5,
 	)
 	category = CAT_TILES
+
+/datum/crafting_recipe/fakewater
+	name = "Fake Water Tile"
+	result = /obj/item/stack/tile/fakewater
+	reqs = list(
+		/datum/reagent/water = 0.25,
+		/obj/item/stack/tile/iron = 1
+	)
+	category = CAT_TILES
+
+/datum/crafting_recipe/fakewater
+	name = "Fake Coastline Tile"
+	result = /obj/item/stack/tile/fakecoastline
+	reqs = list(
+		/datum/reagent/water = 0.25*0.5,
+		/obj/item/stack/tile/fakesand = 1
+	)
+	category = CAT_TILES
