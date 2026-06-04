@@ -271,10 +271,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	if(!target_turf)
 		return NONE
 
-	var/obj/structure/decoration/found
-	for(var/obj/structure/decoration/dec in target_turf.contents)
-		found = dec
-		break
+	var/obj/structure/decoration/found = locate() in target_turf
 
 	if(!found)
 		return NONE
