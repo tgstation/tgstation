@@ -1,8 +1,0 @@
-author: "MelokG000"
-delete-after: True
-changes:
-  - rscadd: "added botanic trays - hydroponic trays with soil instead of water, just fill a tray with any soil and done!"
-  - image: "resprited auto-growth mode and added emissives to it"
-  - image: "resprited hydroponic trays"
-  - rscadd: "added old-designed mode for hydroponic trays - use a screwdriver or a plant analyzer on the circuit!"
-  - image: "added emissives to hydroponic tray indicators"

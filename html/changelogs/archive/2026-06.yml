@@ -77,6 +77,14 @@
   Frfor17:
   - bugfix: fixed NT shop printing infiniti papers, now its linked to computer's(laptop,
       pda, any) paper storage
+  MelokG000:
+  - rscadd: added botanic trays - hydroponic trays with soil instead of water, just
+      fill a tray with any soil and done!
+  - image: resprited auto-growth mode and added emissives to it
+  - image: resprited hydroponic trays
+  - rscadd: added old-designed mode for hydroponic trays - use a screwdriver or a
+      plant analyzer on the circuit!
+  - image: added emissives to hydroponic tray indicators
   QuiteLiterallyAnything:
   - bugfix: Made discounts from toxins papers show up in research UIs properly.
   - refactor: Refactored research techwebs such that toxins discounts are now stored
@@ -85,6 +93,8 @@
   - bugfix: Fixed brimdust overlay on wide mobs leaking onto other objects
   - bugfix: Drake swoop no longer misleadingly claims you fall into lava if it fails
       to spawn said lava
+  - bugfix: Tendrils no longer try to attack you when you're out of their reach
+  - code_imp: Cleaned up The Thing's aggro code
   Wisemonster:
   - code_imp: Wizard Apprentices now use the mid-round wizard pref, instead of the
       round start wizard pref.
@@ -92,3 +102,4 @@
   - bugfix: Material spears no longer partially avoid the force malus from being unwielded
   - balance: Smartfridges no longer block atmos when broken & no longer let creatures
       pass until broken
+  - bugfix: Toxin bees get toxin
