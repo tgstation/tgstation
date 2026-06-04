@@ -79,11 +79,12 @@
 	switch(lootbox.try_code(input))
 		if(LOOT_CRATE_SUCCESS)
 			for(var/atom/movable/item in lootbox)
-				playsound(holder,"sound/machines/machinevend.ogg", 100)
+				playsound(holder,"sound/machines/machine_vend.ogg", 100)
 				item.forceMove(get_turf(holder))
 				sleep(0.3 SECONDS)
 		if(LOOT_CRATE_CANCEL)
 			playsound(holder, "sound/machines/terminal/terminal_error.ogg", 100)
+			return
 		if(LOOT_CRATE_INCORRECT)
 			// Grab last attempt from list
 			var/outcome = lootbox.previous_attempts[10 - lootbox.attempts]
@@ -102,4 +103,4 @@
 	sleep(0.2 SECONDS)
 	moo.current_code = list("0", "0", "0", "0")
 	moo.position = initial(moo.position)
-	playsound(holder, "sound/machines/terminal_eject.ogg", 100)
+	playsound(holder, "sound/machines/terminal/terminal_eject.ogg", 100)
