@@ -70,6 +70,8 @@
   timothymtorres:
   - spellcheck: Add security misspelling checks to CI
 2026-06-04:
+  AnturK:
+  - balance: polar bears are tiny bit faster
   Arturlang:
   - bugfix: moonatics switching bodies (including slimeperson swap) giving you duplicate
       action buttons
@@ -95,6 +97,11 @@
       to spawn said lava
   - bugfix: Tendrils no longer try to attack you when you're out of their reach
   - code_imp: Cleaned up The Thing's aggro code
+  TheRyeGuyWhoWillNowDie:
+  - balance: instead of the hard requirement for sleeping, cryox's healing power is
+      doubled by being asleep instead
+  - bugfix: on default settings a cryo tube filled with cryoxadone can no longer softlock
+      you by outdamaging its own healing potential
   Wisemonster:
   - code_imp: Wizard Apprentices now use the mid-round wizard pref, instead of the
       round start wizard pref.
