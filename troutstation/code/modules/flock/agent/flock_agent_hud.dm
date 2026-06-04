@@ -1,6 +1,6 @@
 /datum/hud/flock_agent
 	ui_style = 'troutstation/icons/hud/screen_flock.dmi'
-	inventory_slots = /datum/inventory_slot/flock_agent
+	default_inventory_slots = /datum/inventory_slot/flock_agent
 	/// Used to toggle eat mode (consuming internal storage)
 	var/atom/movable/screen/eat
 	/// Internal storage
@@ -42,34 +42,6 @@
 	for(var/atom/movable/screen/inventory/inv in screen_groups[HUD_GROUP_STATIC] + screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY])
 		if(inv.slot_id && inv.slot_id == ITEM_SLOT_DEX_STORAGE)
 			internal = inv
-
-/datum/hud/flock_agent/persistent_inventory_update(mob/viewer)
-	if(!mymob)
-		return
-	..()
-	var/mob/living/basic/flock/agent/flockmob = mymob
-	var/mob/screenmob = viewer || flockmob
-
-	if(screenmob.hud_used && screenmob.hud_used.hud_shown)
-		for(var/obj/item/item in flockmob.held_items)
-			item.screen_loc = ui_hand_position(flockmob.get_held_index_of_item(item))
-			screenmob.client.screen += item
-		if(!isnull(flockmob.internal_storage))
-			flockmob.internal_storage.screen_loc = ui_flock_storage
-			screenmob.client.screen += flockmob.internal_storage
-		if(!isnull(flockmob.head))
-			flockmob.head.screen_loc = ui_flock_head
-			screenmob.client.screen += flockmob.head
-	else
-		for(var/obj/item/item in flockmob.held_items)
-			item.screen_loc = null
-			screenmob.client.screen -= item
-		if(flockmob.internal_storage)
-			flockmob.internal_storage.screen_loc = null
-			screenmob.client.screen -= flockmob.internal_storage
-		if(flockmob.head)
-			flockmob.head.screen_loc = null
-			screenmob.client.screen -= flockmob.head
 
 /datum/inventory_slot/flock_agent
 	abstract_type = /datum/inventory_slot/flock_agent

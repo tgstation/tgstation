@@ -18,17 +18,13 @@
 		update_inv_internal_storage()
 
 /mob/living/basic/flock/agent/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used?.hud_shown)
-		internal_storage.screen_loc = ui_flock_storage
-		client.screen += internal_storage
+	hud_used?.update_inventory_slot(ITEM_SLOT_DEX_STORAGE)
 
 /mob/living/basic/flock/agent/update_worn_head()
 	remove_overlay(FLOCK_AGENT_HEAD_LAYER)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HEAD)
 
 	if(head)
-		if(client && hud_used?.hud_shown)
-			head.screen_loc = ui_flock_head
-			client.screen += head
 		var/used_head_icon = 'icons/mob/clothing/head/utility.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = FLOCK_AGENT_HEAD_LAYER, default_icon_file = used_head_icon)
 		var/hat_offset = gear_offsets["hat"]

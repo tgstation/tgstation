@@ -46,21 +46,17 @@
 	var/waiting_for_signal = FALSE
 	/// Turfs we registered enter/exit signals on while waiting.
 	var/list/signal_turfs = list()
-	
-	// BEGIN TROUTSTATION EDIT
-	/// Laser taped on to improve throwing accuracy.
-	/// This exists entirely so that we can use the arm to throw items in the disposal bin when it's attached (adds `TRAIT_THROWINGARM`).
-	var/obj/item/stock_parts/micro_laser/laser
-	// END TROUTSTATION EDIT
-
-/// Re-creates hud images for the points
-/obj/machinery/big_manipulator/proc/update_hud()
-	LAZYCLEARLIST(hud_points)
 
 	/// Which tasking scenario we use for iterating tasks.
 	var/tasking_strategy = TASKING_SEQUENTIAL
 	/// Tasking strategy instance.
 	var/datum/tasking_strategy/master_tasking
+
+	// BEGIN TROUTSTATION EDIT
+	/// Laser taped on to improve throwing accuracy.
+	/// This exists entirely so that we can use the arm to throw items in the disposal bin when it's attached (adds `TRAIT_THROWINGARM`).
+	var/obj/item/stock_parts/micro_laser/laser
+	// END TROUTSTATION EDIT
 
 /// Attempts to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
