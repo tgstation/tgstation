@@ -194,7 +194,6 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	for(var/category in GLOB.rdd_designs)
 		var/list/cat_entry = list("cat_name" = category, "designs" = list())
 		for(var/list/design in GLOB.rdd_designs[category])
-			var/obj/structure/decoration/dec_path = design["path"]
 			cat_entry["designs"] += list(list(
 				"name" = design["name"],
 				"icon" = sanitize_css_class_name(design["name"]),

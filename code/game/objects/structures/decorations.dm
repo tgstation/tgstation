@@ -19,8 +19,6 @@
 	. = ..()
 	. += span_notice("It's made of cheap, hollow plastic.")
 
-
-
 /obj/structure/decoration/grass
 	name = "plastic grass patch"
 	desc = "Fake grass. Feels like a brillo pad."

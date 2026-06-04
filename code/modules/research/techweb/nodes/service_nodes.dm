@@ -39,6 +39,7 @@
 		"ticket_machine",
 		"radio_entertainment",
 		"photocopier",
+		"rdd",
 	)
 
 /datum/techweb_node/sanitation

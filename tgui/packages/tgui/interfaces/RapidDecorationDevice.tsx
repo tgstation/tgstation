@@ -55,7 +55,7 @@ export const RapidDecorationDevice = () => {
   return (
     <Window width={470} height={580}>
       <Window.Content>
-        <Stack fill vertical>
+        <Stack vertical fill>
           <Stack.Item>
             <Section>
               <LabeledList>
@@ -68,30 +68,32 @@ export const RapidDecorationDevice = () => {
               </LabeledList>
             </Section>
           </Stack.Item>
-          <Stack.Item grow style={{ overflowY: 'auto' }}>
-            {categories.map((category) => (
-              <Section key={category.cat_name}>
-                <Stack wrap>
-                  {category.designs.map((design) => (
-                    <Stack.Item key={design.name}>
-                      <DecorationCard
-                        design={design}
-                        selected={
-                          design.name === selected_design &&
-                          category.cat_name === selected_category
-                        }
-                        onClick={() =>
-                          act('design', {
-                            category: category.cat_name,
-                            name: design.name,
-                          })
-                        }
-                      />
-                    </Stack.Item>
-                  ))}
-                </Stack>
-              </Section>
-            ))}
+          <Stack.Item grow>
+            <Section scrollable fill>
+              {categories.map((category) => (
+                <Section key={category.cat_name}>
+                  <Stack wrap>
+                    {category.designs.map((design) => (
+                      <Stack.Item key={design.name}>
+                        <DecorationCard
+                          design={design}
+                          selected={
+                            design.name === selected_design &&
+                            category.cat_name === selected_category
+                          }
+                          onClick={() =>
+                            act('design', {
+                              category: category.cat_name,
+                              name: design.name,
+                            })
+                          }
+                        />
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                </Section>
+              ))}
+            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
