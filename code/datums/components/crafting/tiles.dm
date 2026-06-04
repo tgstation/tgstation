@@ -30,18 +30,20 @@
 
 /datum/crafting_recipe/fakewater
 	name = "Fake Water Tile"
-	result = /obj/item/stack/tile/fakewater
+	time = 0 SECONDS
 	reqs = list(
 		/datum/reagent/water = 0.25,
 		/obj/item/stack/tile/iron = 1
 	)
+	result = /obj/item/stack/tile/fakewater
 	category = CAT_TILES
 
-/datum/crafting_recipe/fakewater
+/datum/crafting_recipe/fakecoastline
 	name = "Fake Coastline Tile"
-	result = /obj/item/stack/tile/fakecoastline
+	time = 0 SECONDS
 	reqs = list(
 		/datum/reagent/water = 0.25*0.5,
 		/obj/item/stack/tile/fakesand = 1
 	)
+	result = /obj/item/stack/tile/fakecoastline
 	category = CAT_TILES
