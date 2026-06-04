@@ -25,6 +25,7 @@
 	name = "Mirror Talk"
 	desc = "Talk through your mirror."
 	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	button_icon_state = "mirror_talk"
 
 /datum/action/mirror_talk/IsAvailable(feedback = FALSE)
