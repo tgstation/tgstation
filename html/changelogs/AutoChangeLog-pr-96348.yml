@@ -1,0 +1,4 @@
+author: "UgoManzo"
+delete-after: True
+changes:
+  - bugfix: "Fixed a server crash caused by igniting plasma-covered floor lights."
