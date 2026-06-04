@@ -1329,7 +1329,7 @@
 
 /obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
 	if(istype(I, /obj/item/plant_analyzer))
-		src.changeindicators(user)
+		changeindicators(user)
 	else
 		return ..()
 
