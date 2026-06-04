@@ -79,6 +79,9 @@
   Frfor17:
   - bugfix: fixed NT shop printing infiniti papers, now its linked to computer's(laptop,
       pda, any) paper storage
+  JohnFulpWillard:
+  - qol: People who are handcuffed/resting/anyone who can't pull people won't be prompted
+      to pull things in the dropdown menu.
   MelokG000:
   - rscadd: added botanic trays - hydroponic trays with soil instead of water, just
       fill a tray with any soil and done!
@@ -97,6 +100,7 @@
       to spawn said lava
   - bugfix: Tendrils no longer try to attack you when you're out of their reach
   - code_imp: Cleaned up The Thing's aggro code
+  - bugfix: Drake tail trophy no longer pushes immovable mobs
   TheRyeGuyWhoWillNowDie:
   - balance: instead of the hard requirement for sleeping, cryox's healing power is
       doubled by being asleep instead
