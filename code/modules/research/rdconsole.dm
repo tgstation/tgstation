@@ -243,7 +243,8 @@ Nothing else in the console has ID requirements.
 			"can_unlock" = stored_research.can_unlock_node(n),
 			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],
-			"enqueued_by_user" = enqueued_by_user
+			"enqueued_by_user" = enqueued_by_user,
+			"discount_boosted" = n.discount_boosted
 		))
 
 	// Get experiments and serialize them
@@ -305,6 +306,8 @@ Nothing else in the console has ID requirements.
 			node_cache[compressed_id]["required_experiments"] = node.required_experiments
 		if (LAZYLEN(node.discount_experiments))
 			node_cache[compressed_id]["discount_experiments"] = node.discount_experiments
+		if (LAZYLEN(node.discount_boosts))
+			node_cache[compressed_id]["discount_boosts"] = node.discount_boosts
 
 	// Build design cache
 	var/design_cache = list()
