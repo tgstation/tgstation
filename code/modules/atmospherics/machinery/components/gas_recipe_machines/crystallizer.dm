@@ -260,15 +260,15 @@
 	if(internal.total_moles())
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
-			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-			"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
+			"name"= GUS_META(gasid)[META_GAS_NAME],
+			"id" = GUS_META(gasid)[META_GAS_ID],
 			"amount" = round(internal.gases[gasid][MOLES], 0.01),
 			)))
 	else
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
-				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-				"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
+				"name"= GUS_META(gasid)[META_GAS_NAME],
+				"id" = GUS_META(gasid)[META_GAS_ID],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data

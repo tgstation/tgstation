@@ -278,7 +278,7 @@
 			var/giver_gas_data = giver_gases[giver_id]
 			ASSERT_GAS_IN_LIST(giver_id, total_gases)
 			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+			heat_capacity += giver_gas_data[MOLES] * GUS_META(giver_id)[META_GAS_SPECIFIC_HEAT]
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity

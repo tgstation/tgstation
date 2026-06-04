@@ -4,8 +4,6 @@
 #define MOLES 1
 ///Archived version of MOLES
 #define ARCHIVE 2
-///All gas related variables
-#define GAS_META 3
 ///Gas specific heat per mole
 #define META_GAS_SPECIFIC_HEAT 1
 ///Name of the gas

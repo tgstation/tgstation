@@ -43,8 +43,8 @@
 		return
 	for(var/gas_path in gasmix.gases)
 		.["gases"] += list(list(
-			gasmix.gases[gas_path][GAS_META][META_GAS_ID],
-			gasmix.gases[gas_path][GAS_META][META_GAS_NAME],
+			GUS_META(gas_path)[META_GAS_ID],
+			GUS_META(gas_path)[META_GAS_NAME],
 			gasmix.gases[gas_path][MOLES],
 		))
 	for(var/datum/gas_reaction/reaction_result as anything in gasmix.reaction_results)
@@ -208,5 +208,5 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 	var/message = "TEMPERATURE: [gas_mixture.temperature]K, QUANTITY: [gas_mixture.total_moles()] mols, VOLUME: [gas_mixture.volume]L; "
 	for(var/key in gas_mixture.gases)
 		var/list/gaslist = gas_mixture.gases[key]
-		message += "[gaslist[GAS_META][META_GAS_ID]]=[gaslist[MOLES]] mols;"
+		message += "[gas_mixture.gas_meta[META_GAS_ID]]=[gaslist[MOLES]] mols;"
 	return message
