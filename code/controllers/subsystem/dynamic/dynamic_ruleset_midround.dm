@@ -1032,7 +1032,7 @@
 	candidate_role = "Slaughter Demon"
 	// preview_antag_datum = /datum/antagonist/slaughter // Doesn't actually have its own pref
 	midround_type = HEAVY_MIDROUND
-	jobban_flag = ROLE_ALIEN
+	jobban_flag = ROLE_SENTIENCE
 	ruleset_flags = RULESET_INVADER
 	weight = 0
 	min_pop = 20
