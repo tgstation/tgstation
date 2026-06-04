@@ -1134,7 +1134,7 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
-	if(SEND_SIGNAL(src, COMSIG_LIVING_RESIST) & COMSIG_BLOCK_RESIST)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_RESIST) & COMPONENT_BLOCK_RESIST)
 		return
 
 	//resisting grabs (as if it helps anyone...)
