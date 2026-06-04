@@ -339,12 +339,17 @@ Nothing else in the console has ID requirements.
 		if (department::department_bitflags)
 			department_flags["[department::department_bitflags]"] = department::department_name
 
+	// Don't pass away flags as those are irrelevant to the station
+	var/list/build_types = GLOB.build_types_to_string
+	build_types -= "[AWAY_IMPRINTER]"
+	build_types -= "[AWAY_LATHE]"
+
 	.["static_data"] = list(
 		"node_cache" = node_cache,
 		"design_cache" = design_cache,
 		"id_cache" = flat_id_cache,
 		"SHEET_MATERIAL_AMOUNT" = SHEET_MATERIAL_AMOUNT,
-		"build_types" = GLOB.build_types_to_string,
+		"build_types" = build_types,
 		"department_flags" = department_flags,
 	)
 
