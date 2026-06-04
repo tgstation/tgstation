@@ -146,6 +146,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	charge_icon_state = "rtd"
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
