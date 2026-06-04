@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - balance: "Smartfridges no longer block atmos when broken & no longer let creatures pass until broken"

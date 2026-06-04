@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Drake swoop no longer misleadingly claims you fall into lava if it fails to spawn said lava"

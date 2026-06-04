@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Material spears no longer partially avoid the force malus from being unwielded"
