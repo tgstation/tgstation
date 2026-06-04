@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Tendrils no longer try to attack you when you're out of their reach"
+  - code_imp: "Cleaned up The Thing's aggro code"
