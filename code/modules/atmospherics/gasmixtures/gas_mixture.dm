@@ -8,19 +8,20 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
+	/datum/gas_mixture::gas_meta = GLOB.meta_gas_info
 	var/list/gases = list()
 	for(var/id in GLOB.meta_gas_info)
-		var/list/cached_gas = new(3)
+		var/list/cached_gas = new(2)
 
 		gases[id] = cached_gas
 
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
-		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
 	return gases
 
 /datum/gas_mixture
 	var/list/gases
+	var/static/list/gas_meta
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
@@ -87,15 +88,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
-	for(var/_id, gas_data in cached_gases)
-		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/id, gas_data in cached_gases)
+		. += gas_data[data] * GUS_META(id)[META_GAS_SPECIFIC_HEAT]
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
-	for(var/_id, gas_data in cached_gases)
-		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/id, gas_data in cached_gases)
+		. += gas_data[data] * GUS_META(id)[META_GAS_SPECIFIC_HEAT]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
@@ -415,7 +416,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			delta = delta * sharer_coeff
 
 		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+			var/gas_heat_capacity = delta * GUS_META(id)[META_GAS_SPECIFIC_HEAT]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
@@ -790,7 +791,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	for(var/gas_path in cached_gases)
 		var/gas_moles = cached_gases[gas_path][MOLES]
-		var/gas_id = cached_gases[gas_path][GAS_META][META_GAS_ID]
+		var/gas_id = GUS_META(gas_path)[META_GAS_ID]
 
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)

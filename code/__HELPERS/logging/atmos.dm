@@ -18,10 +18,10 @@
 		var/list/gas = gases[gas_path]
 		var/moles = gas[MOLES]
 		var/composition = moles / total_moles
-		var/energy = temperature * moles * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+		var/energy = temperature * moles * GUS_META(gas_path)[META_GAS_SPECIFIC_HEAT]
 		var/value = initial(gas_path.base_value) * moles
 		total_value += value
-		specific_gas_data[gas[GAS_META][META_GAS_NAME]] = list(
+		specific_gas_data[GUS_META(gas_path)[META_GAS_NAME]] = list(
 			"moles" = moles,
 			"composition" = composition,
 			"molar concentration" = moles / volume,

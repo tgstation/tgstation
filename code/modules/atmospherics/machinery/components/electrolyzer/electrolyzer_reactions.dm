@@ -98,13 +98,12 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	var/list/hypernoblium = cached_gases[/datum/gas/hypernoblium]
-	var/list/antinoblium = cached_gases[/datum/gas/antinoblium]
 	var/electrolysed = hypernoblium[MOLES] * clamp(supermatter_power - POWER_PENALTY_THRESHOLD, 0, CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD) / (CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD)
 
 	air_mixture.adjust_gas(/datum/gas/hypernoblium, -electrolysed)
 	air_mixture.adjust_gas(/datum/gas/antinoblium, electrolysed)
 
-	var/new_heat_capacity = old_heat_capacity + electrolysed * (antinoblium[GAS_META][META_GAS_SPECIFIC_HEAT] - hypernoblium[GAS_META][META_GAS_SPECIFIC_HEAT])
+	var/new_heat_capacity = old_heat_capacity + electrolysed * (GUS_META(/datum/gas/antinoblium)[META_GAS_SPECIFIC_HEAT] - GUS_META(/datum/gas/hypernoblium)[META_GAS_SPECIFIC_HEAT])
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
