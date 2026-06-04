@@ -1,6 +1,5 @@
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
 
-
 /obj/structure/closet/crate/secure/loot
 	name = "abandoned crate"
 	desc = "What could be inside?"
