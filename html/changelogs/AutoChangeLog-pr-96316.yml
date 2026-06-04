@@ -1,0 +1,5 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - balance: "instead of the hard requirement for sleeping, cryox's healing power is doubled by being asleep instead"
+  - bugfix: "on default settings a cryo tube filled with cryoxadone can no longer softlock you by outdamaging its own healing potential"
