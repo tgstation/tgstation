@@ -119,7 +119,7 @@
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targeting_strategy))
 		adjust_position(basic_mob, target)
-		return AI_BEHAVIOR_DELAY
+		return AI_BEHAVIOR_INSTANT
 
 	basic_mob.RangedAttack(final_target)
 	return AI_BEHAVIOR_DELAY

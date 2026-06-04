@@ -6,6 +6,8 @@
 #define BB_CURRENT_TARGET_HIDING_LOCATION "Current Target Hiding Location"
 ///For any battle screech cooldowns
 #define BB_BATTLE_SCREECH_COOLDOWN "Battle Screech Cooldown"
+///Target for snitching (calling reinforcements on) but dont want to atatck.
+#define BB_CALL_REINFORCEMENTS_TARGET "BB_call_reinforcements_target"
 
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
@@ -52,6 +54,8 @@
 #define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
 /// Something the mob will remote when calling reinforcements
 #define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+/// Does this mob call reinforcements?
+#define BB_CALLS_REINFORCEMENTS "BB_calls_reinforcements"
 
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"

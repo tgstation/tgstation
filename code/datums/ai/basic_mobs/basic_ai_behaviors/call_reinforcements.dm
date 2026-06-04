@@ -3,9 +3,11 @@
 /datum/bt_node/ai_behavior/call_reinforcements
 	/// How far to look for reinforcements
 	var/reinforcements_range = 15
+	///Target to call reinforcements on
+	var/target_key = BB_CURRENT_TARGET
 
 /datum/bt_node/ai_behavior/call_reinforcements/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/target = controller.blackboard[BB_CURRENT_TARGET]
+	var/mob/target = controller.blackboard[target_key]
 	if(!istype(target, /mob))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/mob/pawn_mob = controller.pawn
@@ -34,7 +36,7 @@
 	reinforcements_range = 7
 
 /datum/bt_node/ai_behavior/call_reinforcements/mining/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/target = controller.blackboard[BB_CURRENT_TARGET]
+	var/mob/target = controller.blackboard[target_key]
 	if(!istype(target, /mob))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/mob/pawn_mob = controller.pawn

@@ -209,19 +209,22 @@ def compile_node(src: dict, defines: dict) -> dict:
     for key, val in src.get('config', {}).items():
         out[key] = resolve_value(val, defines)
 
-    # Behavior perform() args
+    # Behavior perform() args — "" means null (DM uses the parameter default)
     if 'args' in src:
-        out[desc_args] = [resolve_value(a, defines) for a in src['args']]
+        out[desc_args] = [None if (rv := resolve_value(a, defines)) == '' else rv for a in src['args']]
 
-    # Instance vars (same unpacking as config, usable on any node type)
+    # Instance vars — "" means omit the key (DM uses the type var default)
     for key, val in src.get('vars', {}).items():
-        out[key] = resolve_value(val, defines)
+        rv = resolve_value(val, defines)
+        if rv != '':
+            out[key] = rv
 
     # Bindings: declaration on a subtree definition file's root vs. call-site overrides
     if 'bindings' in src:
         if node_type == 'subtree':
             # Call-site overrides: resolve values through defines, emit as "bindings" (becomes node.vars)
-            out['bindings'] = {k: resolve_value(v, defines) for k, v in src['bindings'].items()}
+            # Empty string means "use the default from the declaration" — omit the key.
+            out['bindings'] = {k: rv for k, v in src['bindings'].items() if (rv := resolve_value(v, defines)) != ''}
         else:
             # Declaration: emit as "__bindings" with label + resolved default (consumed by DM runtime)
             out['__bindings'] = {

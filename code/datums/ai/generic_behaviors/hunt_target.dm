@@ -11,7 +11,8 @@
 	var/always_reset_target = FALSE
 
 /datum/bt_node/ai_behavior/hunt_target/setup(datum/ai_controller/controller)
-	return !QDELETED(controller.blackboard[target_key])
+	var/atom/hunted = controller.blackboard[target_key]
+	return !QDELETED(hunted)
 
 /datum/bt_node/ai_behavior/hunt_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/hunted = controller.blackboard[target_key]

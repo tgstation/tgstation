@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/trooper
+	behavior_tree_json = "trooper.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -6,14 +7,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
-	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/trooper
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack
@@ -25,80 +18,69 @@
 	time_between_perform = 1.2 SECONDS
 
 /datum/ai_controller/basic_controller/trooper/calls_reinforcements
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_CALLS_REINFORCEMENTS = TRUE,
 	)
 
 /datum/ai_controller/basic_controller/trooper/peaceful
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	behavior_tree_json = "peaceful.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_CALLS_REINFORCEMENTS = TRUE
 	)
+
+/datum/bt_node/subtree/trooper_ranged
+	behavior_tree_json = "trooper_ranged.bt.json"
+
 
 /datum/ai_controller/basic_controller/trooper/ranged
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	behavior_tree_json = "ranged.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 3,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 4
 	)
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper
 
-/datum/ai_behavior/basic_ranged_attack/trooper
-	time_between_perform = 1 SECONDS
-	max_range = 5
-	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	behavior_tree_json = "burst.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
 	)
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper_burst
-
-/datum/ai_behavior/basic_ranged_attack/trooper_burst
-	time_between_perform = 3 SECONDS
-	avoid_friendly_fire = TRUE
-
-/datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_burst,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+//lol my parser cant deal with two subtypes with the same name so this is just a peaceful burst :DDDD ebin
+/datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful_burst
+	behavior_tree_json = "peaceful_burst.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_CALLS_REINFORCEMENTS = TRUE
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce,
+	behavior_tree_json = "shotgunner.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!",
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
 	)
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trooper_shotgun
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trooper_shotgun
 
-/datum/ai_behavior/basic_ranged_attack/trooper_shotgun
-	time_between_perform = 3 SECONDS
-	max_range = 3
-	avoid_friendly_fire = TRUE
 
 /datum/ai_controller/basic_controller/trooper/viscerator
 	blackboard = list(
