@@ -160,14 +160,12 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 
 /obj/item/construction/rdd/Initialize(mapload)
 	. = ..()
-	for(var/cat in GLOB.rdd_designs)
-		selected_category = cat
-		var/list/category_designs = GLOB.rdd_designs[cat]
-		if(length(category_designs))
-			var/list/first_design = category_designs[1]
-			selected_decoration = first_design["path"]
-			selected_design_name = first_design["name"]
-		break
+	selected_category = GLOB.rdd_designs[1]
+	var/list/category_designs = GLOB.rdd_designs[selected_category]
+	if(length(category_designs))
+		var/list/first_design = category_designs[1]
+		selected_decoration = first_design["path"]
+		selected_design_name = first_design["name"]
 
 /obj/item/construction/rdd/examine(mob/user)
 	. = ..()
