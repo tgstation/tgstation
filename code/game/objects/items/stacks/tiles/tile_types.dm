@@ -1030,7 +1030,7 @@
 
 // in the vein of the other "fake" tiles, even though this is made out of real sand
 /obj/item/stack/tile/fakesand
-	name = "sand tile"
+	name = "sand tiles"
 	singular_name = "sand tile"
 	desc = "A piece of tile covered in sand."
 	icon_state = "tile_sand"
@@ -1055,7 +1055,7 @@
 	amount = 30
 
 /obj/item/stack/tile/fakecoastline
-	name = "fake coastline"
+	name = "fake coastlines"
 	singular_name = "fake coastline tile"
 	desc = "A piece of tile covered in sand and water!"
 	icon_state = "tile_coastline"
