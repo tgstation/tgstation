@@ -1028,50 +1028,6 @@
 /obj/item/stack/tile/fakeice/loaded
 	amount = 30
 
-// in the vein of the other "fake" tiles, even though this is made out of real sand
-/obj/item/stack/tile/fakesand
-	name = "sand tile"
-	singular_name = "sand tile"
-	desc = "A piece of tile covered in sand."
-	icon_state = "tile_sand"
-	inhand_icon_state = "tile-sand"
-	turf_type = /turf/open/floor/fakesand
-	merge_type = /obj/item/stack/tile/fakesand
-	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT*0.25)
-
-/obj/item/stack/tile/fakesand/loaded
-	amount = 30
-
-/obj/item/stack/tile/fakewater
-	name = "fake water"
-	singular_name = "fake water tile"
-	desc = "A piece of tile covered in water?"
-	icon_state = "tile_water"
-	inhand_icon_state = "tile-water"
-	turf_type = /turf/open/floor/fakewater
-	merge_type = /obj/item/stack/tile/fakewater
-
-/obj/item/stack/tile/fakewater/loaded
-	amount = 30
-
-/obj/item/stack/tile/fakecoastline
-	name = "fake coastline"
-	singular_name = "fake coastline tile"
-	desc = "A piece of tile covered in sand and water!"
-	icon_state = "tile_coastline"
-	inhand_icon_state = "tile-sand"
-	turf_type = /turf/open/floor/fakecoastline
-	merge_type = /obj/item/stack/tile/fakecoastline
-	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT*0.25)
-
-/obj/item/stack/tile/fakecoastline/place_tile(turf/open/floor/plating/target_plating, mob/user)
-	. = ..()
-	target_plating = .
-	target_plating.setDir(user.dir)
-
-/obj/item/stack/tile/fakecoastline/loaded
-	amount = 30
-
 //High-traction
 /obj/item/stack/tile/noslip
 	name = "high-traction floor tile"
