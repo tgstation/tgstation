@@ -36,6 +36,7 @@
 	#define DOORCRUSH_NO_WOUND (1<<0)
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
+	#define COMSIG_BLOCK_RESIST (1<<0)
 ///from base of mob/living/ignite_mob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
 ///from base of mob/living/extinguish_mob() (/mob/living)
