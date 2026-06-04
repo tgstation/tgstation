@@ -1112,13 +1112,13 @@
 			balloon_alert(user, "sack is empty!")
 			return
 
-		src.current_soil = new oursoil.stored_soil(src)
+		current_soil = new oursoil.stored_soil(src)
 
-		src.RefreshParts()
-		src.tray_flags = current_soil.tray_flags
-		src.current_soil_overlay = "[current_soil.icon_state]_tray"
-		src.name = "botanic tray"
-		src.desc = "A basin used to grow plants in. Filled with [current_soil.name]."
+		RefreshParts()
+		tray_flags = current_soil.tray_flags
+		current_soil_overlay = "[current_soil.icon_state]_tray"
+		name = "botanic tray"
+		desc = "A basin used to grow plants in. Filled with [current_soil.name]."
 
 		qdel(oursoil)
 		update_appearance()
