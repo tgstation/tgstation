@@ -147,15 +147,20 @@
 		finish_manipulation()
 		return FALSE
 
+	if(istype(destination_task, /datum/manipulator_task/cargo/interact) && destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
+		finish_manipulation()
+		return FALSE
+
 	var/original_loc = held_item.loc
 
 	monkey_resolve.put_in_active_hand(held_item)
 	if(held_item.GetComponent(/datum/component/two_handed))
 		held_item.attack_self(monkey_resolve)
 
+	var/old_combat_mode = monkey_resolve.combat_mode
 	monkey_resolve.combat_mode = destination_task.worker_combat_mode
 	held_item.melee_attack_chain(monkey_resolve, type_to_use, list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
-	monkey_resolve.combat_mode = FALSE
+	monkey_resolve.combat_mode = old_combat_mode
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 
@@ -246,16 +251,14 @@
 		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
 		return
 
-	if(isitem(type_to_use))
-		var/obj/item/interact_with_item = type_to_use
-		var/resolve_loc = interact_with_item.loc
-		monkey_resolve.put_in_active_hand(interact_with_item)
-		interact_with_item.attack_self(monkey_resolve)
-		interact_with_item.forceMove(resolve_loc)
-	else
-		monkey_resolve.combat_mode = destination_task.worker_combat_mode
-		monkey_resolve.UnarmedAttack(type_to_use)
-		monkey_resolve.combat_mode = FALSE
+	if(destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
+		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
+		return
+
+	var/old_combat_mode = monkey_resolve.combat_mode
+	monkey_resolve.combat_mode = destination_task.worker_combat_mode
+	monkey_resolve.UnarmedAttack(type_to_use, modifiers = list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
+	monkey_resolve.combat_mode = old_combat_mode
 
 	var/turf/dest_turf = destination_task.interaction_turf
 	if(dest_turf)

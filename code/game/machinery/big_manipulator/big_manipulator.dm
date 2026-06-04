@@ -500,7 +500,6 @@
 			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
-			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
 			td["worker_interaction"] = t.worker_interaction
@@ -514,7 +513,6 @@
 			var/datum/manipulator_task/cargo/interact/t = task
 			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
-			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
 			td["settings_list"] = _collect_priorities(t.interaction_priorities)
 			td["worker_interaction"] = t.worker_interaction
@@ -817,6 +815,8 @@
 			return TRUE
 
 		if("cycle_filtering_mode")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use) || istype(target_task, /datum/manipulator_task/cargo/interact))
+				return FALSE
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
 			var/datum/manipulator_task/cargo/ct = target_task
