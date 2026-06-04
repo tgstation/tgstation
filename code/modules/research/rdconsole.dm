@@ -340,7 +340,7 @@ Nothing else in the console has ID requirements.
 			department_flags["[department::department_bitflags]"] = department::department_name
 
 	// Don't pass away flags as those are irrelevant to the station
-	var/list/build_types = GLOB.build_types_to_string
+	var/list/build_types = GLOB.build_types_to_string.Copy()
 	build_types -= "[AWAY_IMPRINTER]"
 	build_types -= "[AWAY_LATHE]"
 
