@@ -77,6 +77,10 @@
   Frfor17:
   - bugfix: fixed NT shop printing infiniti papers, now its linked to computer's(laptop,
       pda, any) paper storage
+  QuiteLiterallyAnything:
+  - bugfix: Made discounts from toxins papers show up in research UIs properly.
+  - refactor: Refactored research techwebs such that toxins discounts are now stored
+      per techweb node rather than per techweb.
   SmArtKar:
   - bugfix: Fixed brimdust overlay on wide mobs leaking onto other objects
   - bugfix: Drake swoop no longer misleadingly claims you fall into lava if it fails

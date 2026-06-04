@@ -1,5 +1,0 @@
-author: "QuiteLiterallyAnything"
-delete-after: True
-changes:
-  - bugfix: "Made discounts from toxins papers show up in research UIs properly."
-  - refactor: "Refactored research techwebs such that toxins discounts are now stored per techweb node rather than per techweb."
