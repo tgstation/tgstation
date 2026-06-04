@@ -136,13 +136,21 @@
 	if(source.client.intended_direction && check_on_move.Invoke(TRUE)) //You use jet when press keys. yes.
 		trail?.generate_effect()
 
+/// Handles all active 0g movement, including both manual (trying to move a direction in 0g) and automatic (drifting idly in 0g)
 /datum/component/jetpack/proc/stabilize(mob/source, movement_dir, continuous_move, backup)
 	SIGNAL_HANDLER
-	if(!continuous_move && movement_dir)
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-	// Check if we have the fuel to stop this. Do NOT consume any fuel, just check
-	// This is done because things other then us can use our fuel
-	if(stabilize && check_on_move.Invoke(FALSE))
+	/*
+	 * Checks if we should stop any active drift
+	 *
+	 * Obviously we stop drifting if we have stabilizers active
+	 * less obviously, we stop drift if we are trying to move in a different direction than our current drift
+	 * Without checking the latter, jetpacks will feel very janky, as every movement will fight against your drift
+	 *
+	 * Either way, we need to check that we have the "fuel" to stop this
+	 * DO NOT CONSUME FUEL HERE, just check if we have it
+	 * This is done because things other then us can use our fuel
+	 */
+	if((stabilize || (!continuous_move && movement_dir)) && check_on_move.Invoke(FALSE))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 	return NONE
 
