@@ -1050,6 +1050,8 @@
 	inhand_icon_state = "tile-water"
 	turf_type = /turf/open/floor/fakewater
 	merge_type = /obj/item/stack/tile/fakewater
+	// made from a iron tile
+	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*0.25)
 
 /obj/item/stack/tile/fakewater/loaded
 	amount = 30
