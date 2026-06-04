@@ -156,7 +156,7 @@
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
-	if(!do_after(src, buckle_cd, target = buckled, timed_action_flags = IGNORE_HELD_ITEM|IGNORE_TARGET_LOC_CHANGE|PROGRESSBAR_OVER_USER, hidden = TRUE))
+	if(!do_after(src, buckle_cd, target = buckled, timed_action_flags = IGNORE_HELD_ITEM|IGNORE_TARGET_LOC_CHANGE, hidden = TRUE))
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
