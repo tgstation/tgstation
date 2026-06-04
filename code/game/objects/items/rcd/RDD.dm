@@ -223,10 +223,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		if("design")
 			var/category = params["category"]
 			var/design_name = params["name"]
-			var/list/category_designs = GLOB.rdd_designs[category]
-			if(!category_designs)
-				return TRUE
-			for(var/list/design in category_designs)
+			for(var/list/design as anything in GLOB.rdd_designs[category])
 				if(design["name"] == design_name)
 					selected_decoration = design["path"]
 					selected_category = category
