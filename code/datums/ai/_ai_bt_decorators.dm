@@ -20,6 +20,10 @@
 	var/observers_registered = FALSE
 	/// Set to TRUE when register_observe_signals() registered at least one signal. If this is not true but we are observing; then we need to check the condition every tick; not efficient, but allows for reactivity.
 	var/has_observer_signals = FALSE
+	/// Last result seen by poll_condition(). null = not yet polled. Used to detect condition changes when no signal is available.
+	var/last_poll_result = null
+	/// TRUE when this decorator is registered in the controller's polling_observers list.
+	var/is_polled = FALSE
 
 
 /datum/bt_node/decorator/get_children()
@@ -69,11 +73,13 @@
 		observers_registered = TRUE
 		if(observer_abort != BT_ABORT_NONE)
 			has_observer_signals = register_observe_signals(controller.pawn)
+			if(!has_observer_signals)
+				is_polled = TRUE
+				LAZYADDASSOC(controller.polling_observers, src, TRUE)
 
-	// skip check_condition when child is running, unless polling (observer_abort set but no signals).
 	var/result
 	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
-	if(no_ticking_condition && child_active)
+	if((no_ticking_condition || is_polled) && child_active)
 		result = child.tick(controller, seconds_per_tick)
 	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
@@ -84,7 +90,7 @@
 		child_active = FALSE
 		return BT_FAILURE
 
-	if(no_ticking_condition)
+	if(no_ticking_condition || is_polled)
 		child_active = (result == BT_RUNNING)
 
 	if(tick_rate)
@@ -113,6 +119,17 @@
  * BT_ABORT_SELF:            condition became FALSE and we're running our children → cancel actions
  * BT_ABORT_LOWER_PRIORITY:  condition became TRUE and we're running lower priority nodes → cancel actions
  */
+/// Called by the controller's polling loop for decorators that have no signal observers.
+/// Sets a baseline on first call, then fires on_observed_change() only when the result changes.
+/datum/bt_node/decorator/proc/poll_condition(datum/ai_controller/controller)
+	var/current = evaluate_for_observer(controller)
+	if(last_poll_result == null)
+		last_poll_result = current
+		return
+	if(current != last_poll_result)
+		last_poll_result = current
+		on_observed_change(controller, null)
+
 /datum/bt_node/decorator/proc/on_observed_change(datum/ai_controller/controller, key)
 	var/condition_result = evaluate_for_observer(controller)
 
@@ -131,8 +148,12 @@
 /datum/bt_node/decorator/reset_tick_state()
 	if(observers_registered)
 		unregister_observe_signals(owning_controller?.pawn)
+		if(is_polled)
+			LAZYREMOVE(owning_controller?.polling_observers, src)
+			is_polled = FALSE
 		observers_registered = FALSE
 		has_observer_signals = FALSE
+	last_poll_result = null
 	child_active = FALSE
 	..()
 

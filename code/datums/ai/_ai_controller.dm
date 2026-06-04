@@ -53,6 +53,8 @@ multiple modular subtrees with behaviors
 	/// assoc list of override_id → /datum/bt_node/subtree for runtime subtree replacement.
 	/// Populated by finalize_tree() when subtrees with override_id are found. Null until then.
 	var/list/override_slots = null
+	/// Decorators in polling mode (observer_abort set, no signal registered). Iterated after each SelectBehaviors tick so their condition is re-evaluated even when skipped by composite resume logic.
+	var/list/polling_observers = null
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
@@ -601,6 +603,9 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE)
 	cancelled_during_tick = FALSE
+	if(LAZYLEN(polling_observers))
+		for(var/datum/bt_node/decorator/dec as anything in polling_observers.Copy())
+			dec.poll_condition(src)
 	for(var/datum/bt_node/node as anything in behavior_nodes)
 		if(node.tick(src, seconds_per_tick) == BT_RUNNING)
 			break
