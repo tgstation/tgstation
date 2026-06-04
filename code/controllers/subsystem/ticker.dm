@@ -238,6 +238,11 @@ SUBSYSTEM_DEF(ticker)
 				else
 					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server rebooting in:\n\ [DisplayTimeText(timeleft(SSticker.reboot_timer), 1)]</center>")
 
+/datum/controller/subsystem/ticker/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, login_music))
+		set_lobby_music(var_value, override = TRUE)
+	return ..()
+
 /// Checks if the round should be ending, called every ticker tick
 /datum/controller/subsystem/ticker/proc/check_finished()
 	if(!setup_done)
@@ -922,6 +927,10 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	login_music = new_music
+	//we just overrode the song, let's update everyone.
+	if(override)
+		for(var/mob/dead/new_player/new_player as anything in GLOB.new_player_list)
+			new_player?.client.playtitlemusic()
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT

@@ -254,18 +254,22 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		lum = max(read_color[3], 80)
 	return rgb(read_color[1], sat, lum, space = COLORSPACE_HSL)
 
-/*
-Transfer_mind is there to check if mob is being deleted/not going to have a body.
-Works together with spawning an observer, noted above.
-*/
-
-/mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
+/**
+ * # Ghostize
+ *
+ * Creates a /mob/dead/observer and moves the player's key into it (among other handling for player->observer)
+ * Ignores things like adminghosts and corpselocked (ethereal) players.
+ * Args:
+ * can_reenter_corse: Whether the new Ghost will be able to click "Re-enter body", TRUE by default.
+ * forced: Whether we are forcing this player to be ghosted, ignoring things like corpselocking, FALSE by default.
+ */
+/mob/proc/ghostize(can_reenter_corpse = TRUE, forced = FALSE)
 	if(!key)
 		return
 	if(IS_FAKE_KEY(key)) // Skip aghosts.
 		return
 
-	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
+	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !forced)
 		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
@@ -293,7 +297,7 @@ Works together with spawning an observer, noted above.
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
-/mob/living/ghostize(can_reenter_corpse = TRUE)
+/mob/living/ghostize(can_reenter_corpse = TRUE, forced = FALSE)
 	. = ..()
 	if(. && can_reenter_corpse)
 		var/mob/dead/observer/ghost = .

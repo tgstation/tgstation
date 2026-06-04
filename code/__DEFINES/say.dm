@@ -93,6 +93,8 @@
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_SMALL_VOICE "small"
 #define SPAN_SOAPBOX "soapbox"
+#define SPAN_COLOSSUS "colossus"
+#define SPAN_DANGER "danger"
 // Troutstation edit
 #define SPAN_FLOCK "flock"
 

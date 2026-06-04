@@ -16,6 +16,9 @@
 		)
 	airlock_wires = /datum/wires/airlock/engineering
 
+/area/station/tcommsat/maints
+	name = "\improper Telecomms Maintenance Room"
+
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"
 	icon_state = "tcomsatcomp"

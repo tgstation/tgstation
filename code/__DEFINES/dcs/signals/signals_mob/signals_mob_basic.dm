@@ -33,3 +33,5 @@
 #define COMSIG_RAPTOR_GROWTH_STAGE_CHANGE "raptor_growth_stage_change"
 	/// Cancel raptor growth
 	#define COMPONENT_CANCEL_RAPTOR_GROWTH (1<<0)
+// Called when the revenant is to be released from its prison : (cause)
+#define COMSIG_REVENANT_RELEASE "revenant_release"

@@ -61,21 +61,16 @@
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime)
-#define COMSIG_LIVING_LIFE "living_life"
+#define COMSIG_LIVING_PRE_LIFE "living_pre_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
+///From living/Life(). (deltatime)
+#define COMSIG_LIVING_LIFE "living_life"
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
-
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
-	#define COMPONENT_CANCEL_BANING (1<<0)
-
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
 
 // adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
 /// Returned from all the following messages if you actually aren't going to apply any change

@@ -24,6 +24,7 @@ type TypePath = string;
 type Ability = {
   name: string;
   desc: string;
+  icon: string;
   helptext: string;
   path: TypePath;
   genetic_point_required: number;
@@ -39,14 +40,6 @@ type CellularEmporiumContext = {
   owned_abilities: TypePath[];
   absorb_count: number;
   dna_count: number;
-};
-
-// ==========
-// Helper: convert ability name to icon_state
-// Example: "Augmented Eyesight" → "augmented_eyesight"
-// ==========
-const nameToIconState = (name: string): string => {
-  return name.toLowerCase().replace(/\s+/g, '_');
 };
 
 // ==========
@@ -252,8 +245,6 @@ const ItemList = (props: ItemListProps) => {
               ? `Cost: ${ability.dna_required} DNA`
               : `Cost: ${ability.genetic_point_required} DNA`;
 
-          const iconState = nameToIconState(ability.name);
-
           return (
             <Stack.Item key={ability.path} mt={compactMode ? 0.5 : 1}>
               <Section fitted={!!compactMode}>
@@ -281,7 +272,7 @@ const ItemList = (props: ItemListProps) => {
                           top="0"
                           left="0"
                           icon="icons/mob/actions/actions_changeling.dmi"
-                          icon_state={iconState}
+                          icon_state={ability.icon}
                           width={iconSize}
                           fallback={<Icon name="question-circle" size={3} />}
                         />

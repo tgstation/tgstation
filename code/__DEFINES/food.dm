@@ -132,7 +132,7 @@ GLOBAL_ALIST_INIT(food_quality_description, alist(
 	FOOD_QUALITY_VERYGOOD = "very good",
 	FOOD_QUALITY_FANTASTIC = "fantastic",
 	FOOD_QUALITY_AMAZING = "amazing",
-	FOOD_QUALITY_TOP = "godlike",
+	FOOD_QUALITY_TOP = "divine",
 ))
 
 /// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff

@@ -27,9 +27,9 @@
 		if(isliving(user))
 			L = user
 			accounts_to_rob -= L.get_bank_account()
+		var/obj/effect/dumpeet_target/dump_machine = new /obj/effect/dumpeet_target(targetturf, L)
 		for(var/datum/bank_account/B as anything in accounts_to_rob)
-			B.dumpeet()
-		new /obj/effect/dumpeet_target(targetturf, L)
+			B.dumpeet(dump_machine.dump)
 
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
@@ -67,7 +67,7 @@
  */
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/datum/bank_account/B as anything in accounts_to_rob)
-		if (B.being_dumped)
+		if(LAZYFIND(B.being_dumped, src))
 			return FALSE
 	return TRUE
 
@@ -94,13 +94,13 @@
 		balloon_alert(user, "card has no registered account!")
 		return
 
-	if(!card.registered_account.being_dumped)
+	if(!LAZYFIND(card.registered_account.being_dumped, src))
 		balloon_alert(user, "funds are already safe!")
 		return
 
 	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
 	accounts_to_rob -= card.registered_account
-	card.registered_account.stop_dump()
+	card.registered_account.stop_dump(src)
 
 	if(check_if_finished())
 		qdel(src)
@@ -112,6 +112,8 @@
 		return
 	bogdanoff = user
 	internal_account = new /datum/bank_account/remote("CRAB-17", 0, player_account = FALSE)
+
+/obj/structure/checkoutmachine/proc/setup_siphoning()
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
@@ -232,7 +234,7 @@
  */
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/datum/bank_account/B as anything in accounts_to_rob)
-		B.stop_dump()
+		B.stop_dump(src)
 
 /**
  * Splits the balance of the internal_account into several smaller piles of cash and scatters them around the area.
@@ -274,6 +276,7 @@
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
 	bogdanoff = user
+	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
@@ -283,7 +286,7 @@
  */
 /obj/effect/dumpeet_target/proc/startLaunch()
 	DF = new /obj/effect/dumpeet_fall(drop_location())
-	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
+	dump.setup_siphoning()
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)

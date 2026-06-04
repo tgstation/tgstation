@@ -119,7 +119,7 @@
 		src.force_multiplier = force_multiplier
 	if(!isnull(force_wielded))
 		src.force_wielded = force_wielded
-	if(isnull(force_unwielded))
+	if(!isnull(force_unwielded))
 		src.force_unwielded = force_unwielded
 	if(icon_wielded)
 		src.icon_wielded = icon_wielded

@@ -1857,12 +1857,15 @@
 	color = COLOR_BLACK // RBG: 0, 0, 0
 	taste_description = "plant food"
 	ph = 3
+	/// The chance of toxin damage for a mob (heals toxins for MOB_PLANT biotype)
 	var/tox_prob = 0
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+
 	if(SPT_PROB(tox_prob, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
+		var/tox_modifier = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_tox_loss(tox_modifier * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
@@ -1889,7 +1892,6 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.2))
 
@@ -2825,10 +2827,27 @@
 
 /datum/reagent/pax/peaceborg
 	name = "Synthpax"
-	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
+	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster \
+	and cannot overpower any retaliatory responses triggered by physical trauma."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	metabolized_traits = null
+
+/datum/reagent/pax/peaceborg/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(!HAS_TRAIT(affected_mob, TRAIT_SYNTHPAX_IMMUNE))
+		ADD_TRAIT(affected_mob, TRAIT_PACIFISM, METABOLIZATION_TRAIT(type))
+	RegisterSignal(affected_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_metabolizer_damaged))
+
+/datum/reagent/pax/peaceborg/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
+	. = ..()
+	UnregisterSignal(affected_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE)
+	REMOVE_TRAIT(affected_mob, TRAIT_PACIFISM, METABOLIZATION_TRAIT(type))
+
+/datum/reagent/pax/peaceborg/proc/on_metabolizer_damaged(mob/living/source, amount)
+	SIGNAL_HANDLER
+	source.adjust_timed_status_effect(amount * 1 SECONDS, /datum/status_effect/synthpax_immunity, max_duration = 5 SECONDS)
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
