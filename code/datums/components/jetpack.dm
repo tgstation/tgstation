@@ -140,11 +140,12 @@
 /datum/component/jetpack/proc/stabilize(mob/source, movement_dir, continuous_move, backup)
 	SIGNAL_HANDLER
 	/*
-	 * Checks if we should stop any active drift
+	 * Checks if we should stop any active movement
 	 *
-	 * Obviously we stop drifting if we have stabilizers active
-	 * less obviously, we stop drift if we are trying to move in a different direction than our current drift
-	 * Without checking the latter, jetpacks will feel very janky, as every movement will fight against your drift
+	 * Obviously we stop all forms of drifting if we have stabilizers active (allowing free space movement)
+	 * Less obviously, we stop need to stop drift if we are trying to move *while passively drifting*
+	 * (Without checking the latter, jetpacks will act very weird and jank. As you move in one direction,
+	 * you will simultaneously drift in that direction, causing you to jump/skip a tile every so often.)
 	 *
 	 * Either way, we need to check that we have the "fuel" to stop this
 	 * DO NOT CONSUME FUEL HERE, just check if we have it
