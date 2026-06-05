@@ -129,6 +129,27 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		list("name" = "Large Plastic Bush (Alt 2)", "path" = /obj/structure/decoration/bush/large/third),
 		list("name" = "Large Plastic Bush (Random)", "path" = /obj/structure/decoration/bush/large/style_random),
 	),
+	"Rocks" = list(
+		list("name" = "Plastic Rock", "path" = /obj/structure/decoration/rock/first),
+		list("name" = "Plastic Rock (Alt)", "path" = /obj/structure/decoration/rock/second),
+		list("name" = "Plastic Rock (Alt 2)", "path" = /obj/structure/decoration/rock/third),
+		list("name" = "Plastic Rock (Alt 3)", "path" = /obj/structure/decoration/rock/fourth),
+		list("name" = "Plastic Rock (Random)", "path" = /obj/structure/decoration/rock/style_random),
+		list("name" = "Plastic Rock Pile", "path" = /obj/structure/decoration/rock/pile/first),
+		list("name" = "Plastic Rock Pile (Alt)", "path" = /obj/structure/decoration/rock/pile/second),
+		list("name" = "Plastic Rock Pile (Alt 2)", "path" = /obj/structure/decoration/rock/pile/third),
+		list("name" = "Plastic Rock Pile (Random)", "path" = /obj/structure/decoration/rock/pile/style_random),
+		list("name" = "Plastic Jungle Rocks", "path" = /obj/structure/decoration/rock/pile/jungle/first),
+		list("name" = "Plastic Jungle Rocks (Alt)", "path" = /obj/structure/decoration/rock/pile/jungle/second),
+		list("name" = "Plastic Jungle Rocks (Alt 2)", "path" = /obj/structure/decoration/rock/pile/jungle/third),
+		list("name" = "Plastic Jungle Rocks (Alt 3)", "path" = /obj/structure/decoration/rock/pile/jungle/fourth),
+		list("name" = "Plastic Jungle Rocks (Alt 4)", "path" = /obj/structure/decoration/rock/pile/jungle/fifth),
+		list("name" = "Plastic Jungle Rocks (Random)", "path" = /obj/structure/decoration/rock/pile/jungle/style_random),
+		list("name" = "Large Plastic Rocks", "path" = /obj/structure/decoration/rock/pile/jungle/large/first),
+		list("name" = "Large Plastic Rocks (Alt)", "path" = /obj/structure/decoration/rock/pile/jungle/large/second),
+		list("name" = "Large Plastic Rocks (Alt 2)", "path" = /obj/structure/decoration/rock/pile/jungle/large/third),
+		list("name" = "Large Plastic Rocks (Random)", "path" = /obj/structure/decoration/rock/pile/jungle/large/style_random),
+	),
 ))
 
 /obj/item/construction/rdd
@@ -271,7 +292,6 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	if(!found)
 		return NONE
 
-	balloon_alert(user, "vacuuming decoration...")
 	playsound(target_turf, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, 0.5 SECONDS, target_turf))
 		return ITEM_INTERACT_BLOCKING
