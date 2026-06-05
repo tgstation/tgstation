@@ -254,12 +254,11 @@
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 
-	var/list/total_gases = list()
-
 	var/volume_sum = 0
 
 	var/static/process_id = 0
 	process_id = WRAP_UID(process_id + 1)
+	var/datum/gas_mixture/total_gas_mixture = new
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice
@@ -271,14 +270,13 @@
 
 		// This is sort of a combined merge + heat_capacity calculation
 
-		var/list/giver_gases = gas_mixture.gases
+		var/list/giver_cached_moles = gas_mixture.moles
 		var/heat_capacity = 0
 		//gas transfer
-		for(var/giver_id in giver_gases)
-			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS_IN_LIST(giver_id, total_gases)
-			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			heat_capacity += giver_gas_data[MOLES] * GUS_META(giver_id)[META_GAS_SPECIFIC_HEAT]
+		for(var/gas_id in giver_cached_moles)
+			ASSERT_GAS(gas_id, total_gas_mixture)
+			total_gas_mixture.moles[gas_id] += giver_cached_moles[gas_id]
+			heat_capacity += giver_cached_moles[gas_id] * GUS_META(gas_id)[META_GAS_SPECIFIC_HEAT]
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity
@@ -286,9 +284,8 @@
 	if(volume_sum == 0)
 		return
 
-	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
+	total_gas_mixture.volume = volume_sum
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
-	total_gas_mixture.gases = total_gases
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio
@@ -330,8 +327,8 @@
 
 	var/current_weight = 0
 	var/current_color
-	for(var/datum/gas/gas_path as anything in air.gases)
-		var/gas_weight = air.gases[gas_path][MOLES]
+	for(var/datum/gas/gas_path as anything in air.moles)
+		var/gas_weight = air.moles[gas_path]
 		if(!gas_weight)
 			continue
 		var/gas_color = initial(gas_path.primary_color)

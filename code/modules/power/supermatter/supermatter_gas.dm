@@ -105,11 +105,11 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 		return
 	var/co2_pp = sm.absorbed_gasmix.return_pressure() * sm.gas_percentage[/datum/gas/carbon_dioxide]
 	var/co2_ratio = clamp((1/2 * (co2_pp - CO2_CONSUMPTION_PP) / (co2_pp + CO2_PRESSURE_SCALING)), 0, 1)
-	var/consumed_co2 = sm.absorbed_gasmix.gases[/datum/gas/carbon_dioxide][MOLES] * co2_ratio
+	var/consumed_co2 = sm.absorbed_gasmix.moles[/datum/gas/carbon_dioxide] * co2_ratio
 	consumed_co2 = min(
 		consumed_co2,
-		sm.absorbed_gasmix.gases[/datum/gas/carbon_dioxide][MOLES],
-		sm.absorbed_gasmix.gases[/datum/gas/oxygen][MOLES]
+		sm.absorbed_gasmix.moles[/datum/gas/carbon_dioxide],
+		sm.absorbed_gasmix.moles[/datum/gas/oxygen]
 	)
 	if(!consumed_co2)
 		return
@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 		return
 	var/miasma_pp = sm.absorbed_gasmix.return_pressure() * sm.gas_percentage[/datum/gas/miasma]
 	var/miasma_ratio = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (sm.gas_heat_power_generation * MIASMA_GASMIX_SCALING)), 0, 1)
-	var/consumed_miasma = sm.absorbed_gasmix.gases[/datum/gas/miasma][MOLES] * miasma_ratio
+	var/consumed_miasma = sm.absorbed_gasmix.moles[/datum/gas/miasma] * miasma_ratio
 	if(!consumed_miasma)
 		return
 	sm.absorbed_gasmix.adjust_gas(/datum/gas/miasma, -consumed_miasma)

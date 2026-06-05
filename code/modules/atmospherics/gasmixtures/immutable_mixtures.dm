@@ -12,7 +12,8 @@
 /datum/gas_mixture/immutable/garbage_collect()
 	temperature = initial_temperature
 	temperature_archived = initial_temperature
-	gases.Cut()
+	moles.Cut()
+	moles_archive.Cut()
 
 /datum/gas_mixture/immutable/archive()
 	return TRUE //nothing changes, so we do nothing and the archive is successful
@@ -60,11 +61,12 @@
 
 /datum/gas_mixture/immutable/planetary/garbage_collect()
 	..()
-	gases.Cut()
-	for(var/id in initial_gas)
-		ADD_GAS(id, gases)
-		gases[id][MOLES] = initial_gas[id][MOLES]
-		gases[id][ARCHIVE] = initial_gas[id][ARCHIVE]
+	moles.Cut()
+	moles_archive.Cut()
+	for(var/gas_id in initial_gas)
+		ADD_GAS(gas_id, src)
+		moles[gas_id] = initial_gas[gas_id]
+		moles_archive[gas_id] = initial_gas[gas_id]
 
 /datum/gas_mixture/immutable/planetary/proc/parse_string_immutable(gas_string) //I know I know, I need this tho
 	gas_string = SSair.preprocess_gas_string(gas_string)
@@ -81,13 +83,10 @@
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, mix)
-		mix[path][MOLES] = text2num(gas[id])
-		mix[path][ARCHIVE] = mix[path][MOLES]
+		mix[path] = text2num(gas[id])
 
-	for(var/id in mix)
-		ADD_GAS(id, gases)
-		gases[id][MOLES] = mix[id][MOLES]
-		gases[id][ARCHIVE] = mix[id][MOLES]
+	for(var/gas_id in mix)
+		ADD_GAS(gas_id, src)
+		moles[gas_id] = mix[gas_id]
 
 

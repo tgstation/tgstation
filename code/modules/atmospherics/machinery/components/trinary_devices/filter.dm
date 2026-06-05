@@ -98,7 +98,7 @@
 	if(filtering)
 		var/datum/gas_mixture/filtered_out = new
 
-		for(var/gas in removed.gases & filter_type)
+		for(var/gas in removed.moles & filter_type)
 			var/datum/gas_mixture/removing = removed.remove_specific_ratio(gas, 1)
 			if(removing)
 				filtered_out.merge(removing)

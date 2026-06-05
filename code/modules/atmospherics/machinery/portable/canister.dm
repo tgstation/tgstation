@@ -707,13 +707,13 @@
 	output += "[key_name(user)] <b>opened</b> a canister[wire_pulsed ? " via wire pulse" : ""] that contains the following:"
 	var/list/admin_output = list()
 	admin_output += "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister[wire_pulsed ? " via wire pulse" : ""] that contains the following at [ADMIN_VERBOSEJMP(src)]:"
-	var/list/gases = air_contents.gases
+	var/list/cached_moles = air_contents.moles
 	var/danger = FALSE
-	for(var/gas_index in 1 to length(gases))
-		var/list/gas_info = gases[gases[gas_index]]
-		var/list/meta = GUS_META(gases[gas_index])
+	for(var/gas_index in 1 to length(cached_moles))
+		var/gas_id = cached_moles[gas_index]
+		var/list/meta = GUS_META(gas_id)
 		var/name = meta[META_GAS_NAME]
-		var/moles = gas_info[MOLES]
+		var/moles = cached_moles[gas_id]
 
 		output += "[name]: [moles] moles."
 		if(gas_index <= 5) //the first five gases added

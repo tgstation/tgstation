@@ -41,11 +41,11 @@
 	)
 	if(!gasmix)
 		return
-	for(var/gas_path in gasmix.gases)
+	for(var/gas_path in gasmix.moles)
 		.["gases"] += list(list(
 			GUS_META(gas_path)[META_GAS_ID],
 			GUS_META(gas_path)[META_GAS_NAME],
-			gasmix.gases[gas_path][MOLES],
+			gasmix.moles[gas_path],
 		))
 	for(var/datum/gas_reaction/reaction_result as anything in gasmix.reaction_results)
 		.["reactions"] += list(list(
@@ -172,41 +172,8 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 
 	return null
 
-/**
- * A simple helper proc that checks if the contents of a list of gases are within acceptable terms.
- *
- * Arguments:
- * * gases: The list of gases which contents are being checked
- * * acceptable_gas_bounds: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
- * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
- * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
- *
- * Returns TRUE if the list of gases is acceptable, FALSE otherwise.
- */
-/proc/check_gases(list/gases, list/acceptable_gas_bounds, extraneous_gas_limit = 0.1)
-	SHOULD_BE_PURE(TRUE)
-
-	var/list/gases_to_check = acceptable_gas_bounds.Copy() // thank you spaceman
-	for(var/id in gases)
-		var/gas_moles = gases[id][MOLES]
-		if(!(id in gases_to_check))
-			if(gas_moles > extraneous_gas_limit)
-				return FALSE
-			continue
-		var/list/boundaries = gases_to_check[id]
-		if(boundaries && !ISINRANGE(gas_moles, boundaries[1], boundaries[2]))
-			return FALSE
-		gases_to_check -= id
-	///Check that gases absent from the turf have a lower boundary of zero or none at all, otherwise return FALSE
-	for(var/id in gases_to_check)
-		var/list/boundaries = gases_to_check[id]
-		if(boundaries && boundaries[1] > 0)
-			return FALSE
-	return TRUE
-
 /proc/print_gas_mixture(datum/gas_mixture/gas_mixture)
 	var/message = "TEMPERATURE: [gas_mixture.temperature]K, QUANTITY: [gas_mixture.total_moles()] mols, VOLUME: [gas_mixture.volume]L; "
-	for(var/key in gas_mixture.gases)
-		var/list/gaslist = gas_mixture.gases[key]
-		message += "[gas_mixture.gas_meta[META_GAS_ID]]=[gaslist[MOLES]] mols;"
+	for(var/gas_id in gas_mixture.moles)
+		message += "[gas_mixture.gas_meta[META_GAS_ID]]=[gas_mixture.moles[gas_id]] mols;"
 	return message

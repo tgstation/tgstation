@@ -1357,8 +1357,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if((suit_flags & STOPSPRESSUREDAMAGE) && (head_flags & STOPSPRESSUREDAMAGE))
 		return
 
-	for(var/gas_id in environment.gases)
-		var/gas_amount = environment.gases[gas_id][MOLES]
+	for(var/gas_id in environment.moles)
+		var/gas_amount = environment.moles[gas_id]
 		switch(gas_id)
 			if(/datum/gas/antinoblium) // Antinoblium - irradiates the target.
 				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))

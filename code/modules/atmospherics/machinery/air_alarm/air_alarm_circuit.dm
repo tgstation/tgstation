@@ -230,7 +230,7 @@
 	pressure.set_output(round(environment.return_pressure()))
 	temperature.set_output(round(environment.temperature))
 	if(ispath(options_map[current_option]))
-		gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
+		gas_amount.set_output(round(environment.moles[options_map[current_option]]))
 
 	update_received.set_output(COMPONENT_SIGNAL)
 
