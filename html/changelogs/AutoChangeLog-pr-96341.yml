@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "You can now review your character's personality from the mood message box (by clicking the mood hud element)."

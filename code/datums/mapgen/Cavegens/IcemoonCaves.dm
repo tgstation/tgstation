@@ -11,7 +11,7 @@
 		/mob/living/basic/mining/lobstrosity = 15,
 		/mob/living/basic/mining/wolf = 50,
 		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
-		/mob/living/simple_animal/hostile/asteroid/polarbear = 30,
+		/mob/living/basic/mining/polarbear = 30,
 		/obj/structure/spawner/ice_moon = 3,
 		/obj/structure/spawner/ice_moon/polarbear = 3,
 	)

@@ -677,17 +677,19 @@
 	var/obj/item/light/light_tube = drop_light_tube()
 	return light_tube.attack_tk(user)
 
-// break the light and make sparks if was on
+// break the light and make sparks if was on, state is mutated BEFORE firing side-effects to prevent re-entrancy loops from synchronous signals.
 /obj/machinery/light/proc/break_light_tube(skip_sound_and_sparks = FALSE)
 	if(status == LIGHT_EMPTY || status == LIGHT_BROKEN)
 		return
 
+	var/was_ok = (status == LIGHT_OK || status == LIGHT_BURNED)
+	status = LIGHT_BROKEN
+
 	if(!skip_sound_and_sparks)
-		if(status == LIGHT_OK || status == LIGHT_BURNED)
+		if(was_ok)
 			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
-	status = LIGHT_BROKEN
 	update()
 
 /obj/machinery/light/proc/fix()

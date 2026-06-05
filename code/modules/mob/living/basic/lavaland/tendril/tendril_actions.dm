@@ -266,6 +266,8 @@
 	cooldown_time = 10 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
+	/// Range in which we create spikes
+	var/spike_range = 7
 	/// Health threshold at which we reduce the amount of empty spots on the ground
 	var/health_threshold = 0.3
 
@@ -288,7 +290,7 @@
 		if (as_living.health / as_living.maxHealth <= health_threshold)
 			reduced_spawns = TRUE
 
-	for (var/turf/open/target_turf in oview(7, owner_turf))
+	for (var/turf/open/target_turf in oview(spike_range, owner_turf))
 		if (sqrt((target_turf.x - owner_turf.x) ** 2 + (target_turf.y - owner_turf.y) ** 2) > 9.5) // big circle is a lie
 			continue
 

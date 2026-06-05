@@ -70,6 +70,8 @@
   timothymtorres:
   - spellcheck: Add security misspelling checks to CI
 2026-06-04:
+  AnturK:
+  - balance: polar bears are tiny bit faster
   Arturlang:
   - bugfix: moonatics switching bodies (including slimeperson swap) giving you duplicate
       action buttons
@@ -77,6 +79,17 @@
   Frfor17:
   - bugfix: fixed NT shop printing infiniti papers, now its linked to computer's(laptop,
       pda, any) paper storage
+  JohnFulpWillard:
+  - qol: People who are handcuffed/resting/anyone who can't pull people won't be prompted
+      to pull things in the dropdown menu.
+  MelokG000:
+  - rscadd: added botanic trays - hydroponic trays with soil instead of water, just
+      fill a tray with any soil and done!
+  - image: resprited auto-growth mode and added emissives to it
+  - image: resprited hydroponic trays
+  - rscadd: added old-designed mode for hydroponic trays - use a screwdriver or a
+      plant analyzer on the circuit!
+  - image: added emissives to hydroponic tray indicators
   QuiteLiterallyAnything:
   - bugfix: Made discounts from toxins papers show up in research UIs properly.
   - refactor: Refactored research techwebs such that toxins discounts are now stored
@@ -85,6 +98,14 @@
   - bugfix: Fixed brimdust overlay on wide mobs leaking onto other objects
   - bugfix: Drake swoop no longer misleadingly claims you fall into lava if it fails
       to spawn said lava
+  - bugfix: Tendrils no longer try to attack you when you're out of their reach
+  - code_imp: Cleaned up The Thing's aggro code
+  - bugfix: Drake tail trophy no longer pushes immovable mobs
+  TheRyeGuyWhoWillNowDie:
+  - balance: instead of the hard requirement for sleeping, cryox's healing power is
+      doubled by being asleep instead
+  - bugfix: on default settings a cryo tube filled with cryoxadone can no longer softlock
+      you by outdamaging its own healing potential
   Wisemonster:
   - code_imp: Wizard Apprentices now use the mid-round wizard pref, instead of the
       round start wizard pref.
@@ -92,3 +113,9 @@
   - bugfix: Material spears no longer partially avoid the force malus from being unwielded
   - balance: Smartfridges no longer block atmos when broken & no longer let creatures
       pass until broken
+  - bugfix: Toxin bees get toxin
+2026-06-05:
+  SmArtKar:
+  - refactor: Implemented overlay-based smoothing for lavaland lava and water
+  UgoManzo:
+  - bugfix: Fixed a server crash caused by igniting plasma-covered floor lights.
