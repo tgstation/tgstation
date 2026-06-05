@@ -51,7 +51,9 @@
 
 /datum/weather/particle/Destroy()
 	SSweather.remove_weather_objects(weather_objects)
-	QDEL_LIST(weather_objects)
+	for(var/list/object_list as anything in weather_objects)
+		QDEL_LIST(object_list)
+	weather_objects = null
 	return ..()
 
 /datum/weather/particle/telegraph(list/weather_data)
