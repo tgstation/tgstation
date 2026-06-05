@@ -378,6 +378,9 @@ SUBSYSTEM_DEF(air)
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
 		if (T)
+			if(!isopenturf(T))
+				active_turfs -= T
+				continue
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
