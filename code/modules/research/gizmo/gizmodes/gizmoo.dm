@@ -88,15 +88,15 @@
 		if(LOOT_CRATE_INCORRECT)
 			// Grab last attempt from list
 			var/outcome = lootbox.previous_attempts[10 - lootbox.attempts]
-			holder.visible_message("[holder] emits [outcome["bulls"]] high-pitched beeps and [outcome["cows"]] low-pitched ones.")
+			holder.visible_message(span_notice("[holder] emits [outcome["bulls"]] high-pitched beeps and [outcome["cows"]] low-pitched ones."))
 			for(var/i in 1 to outcome["bulls"])
 				playsound(holder, "sound/machines/synth/synth_yes.ogg", 100)
-				sleep(0.2 SECONDS)
+				sleep(0.25 SECONDS)
 			for(var/i in 1 to outcome["cows"])
-				sleep(0.2 SECONDS)
+				sleep(0.25 SECONDS)
 				playsound(holder, "sound/machines/synth/synth_no.ogg", 100)
 		if(LOOT_CRATE_FAIL)
-			playsound(holder, "sound/machines/slowclap.ogg", 150)
+			playsound(holder, "sound/items/sitcom_laugh/SitcomLaugh3.ogg", 150)
 			var/obj/item/grenade/clusterbuster/syndieminibomb/payback = new(get_turf(holder))
 			payback.arm_grenade(delayoverride = 0.2 SECONDS)
 	// The abandoned crate demands for the inputs to be reset after the cracking attempt
