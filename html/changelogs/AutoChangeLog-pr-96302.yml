@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Adds \"cancel interaction\" keybinding, unbound by default, it cancels (most) interactions you're doing without needing to move or swap items."
