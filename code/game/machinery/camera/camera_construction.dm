@@ -115,7 +115,7 @@
 	to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/camera/analyzer_act(mob/living/user, obj/item/tool)
+/obj/machinery/camera/proc/gas_analyzer_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
 		return ..()
 	if(isXRay(TRUE))
@@ -228,6 +228,8 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
 		return plasma_act(user, tool)
+	if(istype(tool, /obj/item/analyzer))
+		return gas_analyzer_act(user, tool)
 	else if(isprox(tool))
 		return prox_act(user, tool)
 	else if(istype(tool, /obj/item/stack/cable_coil))
