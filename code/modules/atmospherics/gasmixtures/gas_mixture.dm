@@ -75,18 +75,12 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 ///joules per kelvin
 /datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
-	. = 0
-	for(var/gas_id in cached_moles)
-		. += cached_moles[gas_id] * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
+	return values_dot(cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT))
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
-	. = 0
-	for(var/gas_id in cached_moles)
-		. += cached_moles[gas_id] * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
-	if(!.)
-		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
+	return values_dot(cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
 
 /// Calculate moles
 /datum/gas_mixture/proc/total_moles()
@@ -402,6 +396,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	for(var/gas_id in only_in_cached) //create gases not in the sharing mix
 		ADD_GAS(gas_id, sharer)
 
+	var/cached_heat_capacity = GUS_META(META_GAS_SPECIFIC_HEAT)
 	for(var/gas_id in cached_moles) //transfer gases
 		var/delta = QUANTIZE(cached_moles_archive[gas_id] - sharer_cached_moles_archive[gas_id]) //the amount of gas that gets moved between the mixtures
 
@@ -416,7 +411,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 			delta = delta * sharer_coeff
 
 		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
+			var/gas_heat_capacity = delta * cached_heat_capacity[gas_id]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
