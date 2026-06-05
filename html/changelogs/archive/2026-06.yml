@@ -115,5 +115,7 @@
       pass until broken
   - bugfix: Toxin bees get toxin
 2026-06-05:
+  SmArtKar:
+  - refactor: Implemented overlay-based smoothing for lavaland lava and water
   UgoManzo:
   - bugfix: Fixed a server crash caused by igniting plasma-covered floor lights.
