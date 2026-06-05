@@ -71,53 +71,49 @@
 	return ..()
 
 /obj/machinery/camera/wrench_act(mob/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_WRENCHED)
-		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You detach [src] from its place."))
-		deconstruct(TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_WRENCHED)
+		return ..()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You detach [src] from its place."))
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/camera/crowbar_act(mob/living/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_FINISHED)
-		if(!panel_open)
-			return ITEM_INTERACT_BLOCKING
-		var/list/droppable_parts = list()
-		if(xray_module)
-			droppable_parts += xray_module
-		if(emp_module)
-			droppable_parts += emp_module
-		if(proximity_monitor)
-			droppable_parts += proximity_monitor
-		if(!length(droppable_parts))
-			return ITEM_INTERACT_BLOCKING
-		var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
-		if(isnull(choice))
-			return ITEM_INTERACT_BLOCKING
-		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You remove [choice] from [src]."))
-		if(choice == xray_module)
-			drop_upgrade(xray_module)
-			removeXRay()
-		if(choice == emp_module)
-			drop_upgrade(emp_module)
-			removeEmpProof()
-		if(choice == proximity_monitor)
-			drop_upgrade(proximity_monitor)
-			removeMotion()
-		tool.play_tool_sound(src)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
+		return ..()
+	var/list/droppable_parts = list()
+	if(xray_module)
+		droppable_parts += xray_module
+	if(emp_module)
+		droppable_parts += emp_module
+	if(proximity_monitor)
+		droppable_parts += proximity_monitor
+	if(!length(droppable_parts))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You remove [choice] from [src]."))
+	if(choice == xray_module)
+		drop_upgrade(xray_module)
+		removeXRay()
+	if(choice == emp_module)
+		drop_upgrade(emp_module)
+		removeEmpProof()
+	if(choice == proximity_monitor)
+		drop_upgrade(proximity_monitor)
+		removeMotion()
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/camera/multitool_act(mob/living/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_FINISHED)
-		if(!panel_open)
-			return ITEM_INTERACT_BLOCKING
-		setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-		to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
+		return ..()
+	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
+	to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/camera/analyzer_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
