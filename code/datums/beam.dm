@@ -141,6 +141,48 @@
 	// BYOND-managed glide, making the beam trail. Draw() doesn't sleep, so calling it here is safe.
 	Draw()
 
+/** Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
+/datum/beam/proc/get_last_geometry()
+	if(!last_draw_valid)
+		return null
+	return list(
+		"origin_x" = last_origin_x,
+		"origin_y" = last_origin_y,
+		"origin_px" = last_origin_px,
+		"origin_py" = last_origin_py,
+		"target_x" = last_target_x,
+		"target_y" = last_target_y,
+		"target_px" = last_target_px,
+		"target_py" = last_target_py,
+	)
+
+/** Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
+/datum/beam/proc/inherit_glide(list/geometry, animate_time)
+	if(!geometry || animate_time <= 0)
+		return
+	last_origin_x = geometry["origin_x"]
+	last_origin_y = geometry["origin_y"]
+	last_origin_px = geometry["origin_px"]
+	last_origin_py = geometry["origin_py"]
+	last_target_x = geometry["target_x"]
+	last_target_y = geometry["target_y"]
+	last_target_px = geometry["target_px"]
+	last_target_py = geometry["target_py"]
+	// Mirror into the anim "from" frame; with anim_duration 0 the next Draw() treats progress as 1 and
+	// seeds segments exactly at these endpoints, then animates to the (new) live position.
+	anim_from_origin_x = last_origin_x
+	anim_from_origin_y = last_origin_y
+	anim_from_origin_px = last_origin_px
+	anim_from_origin_py = last_origin_py
+	anim_from_target_x = last_target_x
+	anim_from_target_y = last_target_y
+	anim_from_target_px = last_target_px
+	anim_from_target_py = last_target_py
+	anim_duration = 0
+	anim_start_time = world.time
+	last_draw_valid = TRUE
+	pending_animate_time = animate_time
+
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
 	QDEL_NULL(visuals)
@@ -183,14 +225,14 @@
 	if(!last_draw_valid)
 		animate_time = 0
 
-	// Old endpoints as absolute pixel coordinates.
+	// Old endpoints in absolute pixel coordinates.
 	var/old_origin_world_x = old_origin_x_f * ICON_SIZE_ALL + old_origin_px_f
 	var/old_origin_world_y = old_origin_y_f * ICON_SIZE_ALL + old_origin_py_f
 	var/old_target_world_x = old_target_x_f * ICON_SIZE_ALL + old_target_px_f
 	var/old_target_world_y = old_target_y_f * ICON_SIZE_ALL + old_target_py_f
 
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x, target.y, target_px, target_py)
-	// Old angle derived from interpolated endpoints, not the cached destination frame.
+	// Old angle from the interpolated endpoints.
 	var/OLD_DX_F = old_target_world_x - old_origin_world_x
 	var/OLD_DY_F = old_target_world_y - old_origin_world_y
 	var/old_angle
@@ -208,10 +250,10 @@
 	rot_matrix.Turn(Angle)
 	old_rot_matrix.Turn(old_angle)
 	var/raw_angle_delta = abs(Angle - old_angle)
-	// Crossing the 0/360 seam can make matrix interpolation spin the long way and visibly flip,
-	// and exact 180-degree reversals look like a mirror-flip. In either case, snap rotation to
-	// the destination angle and only animate positional offsets.
-	var/animate_rotation = animate_time && raw_angle_delta < 180
+	if(raw_angle_delta > 180) // Normalize to shortest-path angle across the 0/360 seam.
+		raw_angle_delta = 360 - raw_angle_delta
+	// Byond doesn't handle 180 degree rotations well
+	var/animate_rotation = animate_time && raw_angle_delta < 90
 
 	var/DX = (32*target.x+target_px)-(32*origin.x+origin_px)
 	var/DY = (32*target.y+target_py)-(32*origin.y+origin_py)
@@ -225,9 +267,7 @@
 	for(N in 0 to length-1 step 32)
 		if(QDELETED(src))
 			break
-		// Map segment's center on the new beam to the same pixel offset on the (interpolated) old beam.
-		// Constant offset keeps adjacent segments tiled at 32px (no gaps at frame 0); past the old
-		// beam's end we clamp to its tail and animate outward to fill the new length.
+		// Map each new segment to the same offset on the interpolated old beam.
 		var/old_pos = clamp(N + 16, 0, old_length)
 		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
 		new_elements += segment
@@ -237,7 +277,7 @@
 			terminal_icon = new(icon, icon_state)
 			var/cut_row = length - N
 			terminal_icon.DrawBox(null, 1, cut_row, 32, 32)
-			// Soft alpha falloff for the few rows just below the cut so the tip isn't a hard line.
+			// Soft alpha falloff so the tip isn't a hard line.
 			var/fade_height = min(4, cut_row - 1)
 			if(fade_height > 0)
 				var/icon/alpha_mask = new(icon, icon_state)
@@ -273,7 +313,7 @@
 		var/new_pixel_x = origin_px + Pixel_x
 		var/new_pixel_y = origin_py + Pixel_y
 		if(animate_time)
-			// Seed position from interpolated old endpoints so consecutive redraws don't snap.
+			// Seed from interpolated old endpoints so consecutive redraws don't snap.
 			var/old_visual_x = old_origin_world_x + sin(old_angle) * old_pos
 			var/old_visual_y = old_origin_world_y + cos(old_angle) * old_pos
 			var/new_visual_x = final_x * ICON_SIZE_ALL + new_pixel_x
@@ -295,10 +335,7 @@
 			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha))
 
 	elements = new_elements
-	// Fade out segments that extended past the new beam's end before deleting them, so shrinking
-	// the beam doesn't pop the tail. Each dying segment is also slid+rotated onto its projected
-	// position along the new beam direction, so the tail doesn't look detached when the angle
-	// changes (e.g. diagonal moves).
+	// Fade out extra segments before deleting them so shrinking the beam does not pop the tail.
 	var/old_count = length(old_elements)
 	var/new_count = length(new_elements)
 	if(animate_time && old_count > new_count && progress >= 1)
@@ -306,8 +343,7 @@
 			qdel(old_elements[i])
 		for(var/i in new_count + 1 to old_count)
 			var/obj/effect/ebeam/dying = old_elements[i]
-			// Project this dying segment's center onto the new beam, clamped to the new beam's tip
-			// so the tail collapses *into* the target instead of sliding past it.
+			// Project the dying segment onto the new beam and clamp it to the tip.
 			var/proj_pos = clamp((i - 1) * ICON_SIZE_ALL + 16, 0, length)
 			var/proj_world_x = (origin.x * ICON_SIZE_ALL + origin_px) + sin(Angle) * proj_pos
 			var/proj_world_y = (origin.y * ICON_SIZE_ALL + origin_py) + cos(Angle) * proj_pos
@@ -324,8 +360,7 @@
 	else
 		QDEL_LIST(old_elements)
 
-	// Cache this draw's seed ("from") and destination ("to") frames so the next Draw() can lerp
-	// between them to find where segments really are if it fires mid-animation.
+	// Cache this draw's seed and destination so the next Draw() can lerp mid-animation.
 	anim_from_origin_x = old_origin_x_f
 	anim_from_origin_y = old_origin_y_f
 	anim_from_origin_px = old_origin_px_f
@@ -500,6 +535,8 @@
 	override_target_pixel_y = null,
 	layer = ABOVE_ALL_MOB_LAYER,
 	icon_state_variants = 0,
+	glide_seed = null,
+	glide_time = 0,
 )
 	var/datum/beam/newbeam
 
@@ -507,5 +544,8 @@
 		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
 	else
 		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
+	// Seed the glide before Start()'s first Draw() runs (INVOKE_ASYNC runs it synchronously here since
+	// Draw() never sleeps), so a rebuilt beam animates from its predecessor instead of snapping.
+	newbeam.inherit_glide(glide_seed, glide_time)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam
