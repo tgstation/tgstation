@@ -3,7 +3,7 @@ set -e
 source dependencies.sh
 echo "Downloading BYOND version ${BYOND_MAJOR}.${BYOND_MINOR}"
 
-if [ "$DOWNLOAD_FROM_BYOND_WEBSITE" = "1" ]; then
+if [ "${DOWNLOAD_FROM_BYOND_WEBSITE:-}" = "1" ]; then
 	base_url="http://www.byond.com/download/build"
 else
 	base_url="https://byond-builds.dm-lang.org"

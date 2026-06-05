@@ -6,7 +6,7 @@ if [ -z "${BYOND_MAJOR+x}" ]; then
   source dependencies.sh
 fi
 
-if [ "${DOWNLOAD_FROM_BYOND_WEBSITE}" = "1" ]; then
+if [ "${DOWNLOAD_FROM_BYOND_WEBSITE:-}" = "1" ]; then
   base_url="http://www.byond.com/download/build"
 else
   base_url="https://byond-builds.dm-lang.org"
