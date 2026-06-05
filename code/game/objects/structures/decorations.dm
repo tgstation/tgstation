@@ -13,6 +13,8 @@
 	. = ..()
 
 /obj/structure/decoration/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		new /obj/effect/decal/cleanable/plastic(loc)
 	return
 
 /obj/structure/decoration/examine(mob/user)

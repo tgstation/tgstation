@@ -265,6 +265,13 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		balloon_alert(user, "tile is blocked!")
 		return ITEM_INTERACT_BLOCKING
 
+	var/decoration_count = 0
+	for(var/obj/structure/decoration/existing in target_turf.contents)
+		decoration_count++
+		if(decoration_count >= 3)
+			balloon_alert(user, "too many decorations here!")
+			return ITEM_INTERACT_BLOCKING
+
 	var/cost = RDD_COST_MULTIPLIER
 	if(!useResource(cost, user, TRUE))
 		return ITEM_INTERACT_BLOCKING
