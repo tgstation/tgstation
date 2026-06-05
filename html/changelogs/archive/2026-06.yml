@@ -114,3 +114,6 @@
   - balance: Smartfridges no longer block atmos when broken & no longer let creatures
       pass until broken
   - bugfix: Toxin bees get toxin
+2026-06-05:
+  UgoManzo:
+  - bugfix: Fixed a server crash caused by igniting plasma-covered floor lights.
