@@ -271,12 +271,11 @@
 		// This is sort of a combined merge + heat_capacity calculation
 
 		var/list/giver_cached_moles = gas_mixture.moles
-		var/heat_capacity = 0
+		var/heat_capacity = values_dot(giver_cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT))
 		//gas transfer
 		for(var/gas_id in giver_cached_moles)
 			ASSERT_GAS(gas_id, total_gas_mixture)
 			total_gas_mixture.moles[gas_id] += giver_cached_moles[gas_id]
-			heat_capacity += giver_cached_moles[gas_id] * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity
