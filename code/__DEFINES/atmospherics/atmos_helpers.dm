@@ -60,10 +60,6 @@
 ///Adds a gas to a gas mixture but checks if is already present, faster than the same proc
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.moles[gas_id]) { ADD_GAS(gas_id, gas_mixture) };
 
-//prefer this to gas_mixture/total_moles in performance critical areas
-///Calculate the total moles of the gas mixture, faster than the proc, good for performance critical areas
-#define TOTAL_MOLES(gasmix) values_sum(gasmix.moles)
-
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 
 #ifdef TESTING

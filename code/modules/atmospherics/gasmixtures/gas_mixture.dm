@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 /// Calculate moles
 /datum/gas_mixture/proc/total_moles()
-	return TOTAL_MOLES(src)
+	return values_sum(moles)
 
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 /// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
 	if(volume) // to prevent division by zero
-		return TOTAL_MOLES(src) * R_IDEAL_GAS_EQUATION * temperature / volume
+		return values_sum(moles) * R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
 /// Calculate temperature in kelvins
@@ -202,11 +202,11 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 /datum/gas_mixture/proc/remove(amount)
 
 	var/list/cached_moles = moles
-	var/sum = TOTAL_MOLES(src)
-	amount = min(amount, sum) //Can not take more air than tile has!
+	var/total_moles = values_sum(cached_moles)
+	amount = min(amount, total_moles) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
-	var/ratio = amount / sum
+	var/ratio = amount / total_moles
 
 	var/datum/gas_mixture/removed = new type(volume)
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
@@ -448,8 +448,8 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		sharer.garbage_collect()
 
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/our_moles = TOTAL_MOLES(src)
-		var/their_moles = TOTAL_MOLES(sharer)
+		var/our_moles = values_sum(cached_moles)
+		var/their_moles = values_sum(sharer_cached_moles)
 		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 ///Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
