@@ -118,9 +118,13 @@
 	data["reactionSuppressionEnabled"] = suppress_reactions
 
 	data["filterTypes"] = list()
-	for(var/gas_path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[gas_path]
-		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (gas_path in scrubbing)))
+	var/cached_gas_info = GLOB.meta_gas_info_soa
+	for(var/gas_path in cached_gas_info[META_GAS_ID])
+		data["filterTypes"] += list(list(
+			"gasId" = cached_gas_info[META_GAS_ID][gas_path],
+			"gasName" = cached_gas_info[META_GAS_NAME][gas_path],
+			"enabled" = (gas_path in scrubbing)
+		))
 
 	return data
 
