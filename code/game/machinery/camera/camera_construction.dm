@@ -117,7 +117,7 @@
 
 /obj/machinery/camera/proc/gas_analyzer_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
-		return ..()
+		return NONE
 	if(isXRay(TRUE))
 		to_chat(user, span_warning("[src] already has that upgrade!"))
 		return ITEM_INTERACT_BLOCKING
