@@ -115,7 +115,23 @@
       pass until broken
   - bugfix: Toxin bees get toxin
 2026-06-05:
+  Ghommie:
+  - qol: You can now review your character's personality from the mood message box
+      (by clicking the mood hud element).
+  Melbert:
+  - qol: Adds "cancel interaction" keybinding, unbound by default, it cancels (most)
+      interactions you're doing without needing to move or swap items.
   SmArtKar:
   - refactor: Implemented overlay-based smoothing for lavaland lava and water
+  - rscadd: Blood-drunk miner now drops an infernal PKA with an in-built improved
+      rapid repeater modification
+  - balance: Blood-drunk miner has been reworked with new attacks and patterns
+  - bugfix: Blood-drunk miner's combos are no longer guaranteed to land even if you
+      move away from it
   UgoManzo:
   - bugfix: Fixed a server crash caused by igniting plasma-covered floor lights.
+  Wisemonster:
+  - code_imp: Slaughter/laughter demons now use the sentient creature pref, instead
+      of the xenomorph pref
+  lelandkemble:
+  - map: Catwalk disposals outputs correctly.

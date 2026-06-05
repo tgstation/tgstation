@@ -1,4 +1,0 @@
-author: "Wisemonster"
-delete-after: True
-changes:
-  - code_imp: "Slaughter/laughter demons now use the sentient creature pref, instead of the xenomorph pref"
