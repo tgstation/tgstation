@@ -130,6 +130,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
 	var/fire_overlay = "human"
+	/// The icon_state of the electrocutions overlay added when zapped. see electrocution_animation()
+	var/electrocution_overlay = "electrocuted_base"
 
 	/// Generic traits tied to having the species.
 	var/list/inherent_traits = list()
