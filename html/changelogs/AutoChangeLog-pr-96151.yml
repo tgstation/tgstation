@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Implemented overlay-based smoothing for lavaland lava and water"
