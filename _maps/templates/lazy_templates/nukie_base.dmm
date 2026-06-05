@@ -254,7 +254,7 @@
 /area/centcom/syndicate_mothership)
 "du" = (
 /obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/start/nukeop,
+/obj/effect/landmark/start/nukeop_base,
 /obj/structure/sign/poster/contraband/donk_co/directional/south,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
@@ -1126,7 +1126,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "my" = (
-/obj/effect/landmark/start/nukeop_leader,
+/obj/effect/landmark/start/nukeop_base/leader,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
@@ -1184,7 +1184,8 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters/syndicate{
 	id = "FBBZ1";
-	name = "Security Shutters"
+	name = "Security Shutters";
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
@@ -1441,7 +1442,7 @@
 /obj/structure/chair/greyscale{
 	dir = 4
 	},
-/obj/effect/landmark/start/nukeop_overwatch,
+/obj/effect/landmark/start/nukeop_base/overwatch,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
 "pU" = (
@@ -1628,9 +1629,18 @@
 	},
 /obj/effect/turf_decal/siding/wideplating,
 /obj/machinery/door/poddoor/shutters/syndicate/indestructible{
-	name = "Subterrainian Cargo Lift"
+	name = "Base Lift";
+	dir = 1;
+	id_tag = "nukiespawnlift";
+	id = "nukiespawnlift"
 	},
 /turf/open/floor/iron/dark/textured_half,
+/area/centcom/syndicate_mothership/control)
+"rw" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "rA" = (
 /obj/effect/turf_decal/siding/purple{
@@ -2032,6 +2042,12 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"we" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "wg" = (
 /obj/structure/fence/corner{
 	dir = 6
@@ -2095,6 +2111,10 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
 	},
+/area/centcom/syndicate_mothership/control)
+"wS" = (
+/obj/effect/landmark/nukeop_elevator/exterior,
+/turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
 "wW" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -2392,7 +2412,9 @@
 	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/poddoor/shutters/syndicate,
+/obj/machinery/door/poddoor/shutters/syndicate{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "AO" = (
@@ -2421,7 +2443,7 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
-/obj/effect/landmark/start/nukeop,
+/obj/effect/landmark/start/nukeop_base,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "AW" = (
@@ -2736,9 +2758,6 @@
 "Eo" = (
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/centcom/syndicate_mothership/control)
-"Ev" = (
-/turf/open/floor/plating/elevatorshaft,
 /area/centcom/syndicate_mothership/control)
 "Ez" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -3222,6 +3241,12 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"Ja" = (
+/obj/machinery/light/small/red/directional/north{
+	allow_break_on_init = 0
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/control)
 "Jc" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -3612,7 +3637,7 @@
 	dir = 8
 	},
 /obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/nukeop,
+/obj/effect/landmark/start/nukeop_base,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "Nb" = (
@@ -3883,15 +3908,6 @@
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
-"Qe" = (
-/obj/machinery/button/door/directional/south{
-	desc = "Looks like the elevator is under maintenance..";
-	name = "Elevator Button"
-	},
-/turf/open/floor/iron/smooth_half{
-	dir = 1
-	},
-/area/centcom/syndicate_mothership/control)
 "Qh" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Frosted Window"
@@ -4336,6 +4352,12 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
+"TH" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "TK" = (
 /obj/structure/barricade/sandbags,
 /obj/effect/light_emitter{
@@ -4643,7 +4665,7 @@
 /area/centcom/syndicate_mothership)
 "Xu" = (
 /obj/structure/chair/stool/directional/west,
-/obj/effect/landmark/start/nukeop,
+/obj/effect/landmark/start/nukeop_base,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "Xv" = (
@@ -4725,6 +4747,12 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
+/area/centcom/syndicate_mothership/control)
+"XZ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Yd" = (
 /obj/machinery/camera/autoname/directional/south{
@@ -6727,7 +6755,7 @@ sk
 DW
 RD
 EM
-RD
+EM
 RD
 Ox
 sU
@@ -9569,10 +9597,10 @@ ZZ
 Me
 wc
 wG
-Qe
+wG
 DZ
-Ev
-Ev
+Ja
+Ov
 DZ
 DZ
 nS
@@ -9673,9 +9701,9 @@ zH
 wG
 wG
 ru
-Ev
-Ev
-Ev
+XZ
+TH
+Ov
 DZ
 Ox
 Vm
@@ -9775,9 +9803,9 @@ zH
 wG
 wG
 ru
-Ev
-Ev
-Ev
+we
+rw
+Ov
 DZ
 Ox
 To
@@ -9877,8 +9905,8 @@ wc
 wG
 lE
 DZ
-Ev
-Ev
+Ja
+Ov
 DZ
 DZ
 Ox
@@ -9978,7 +10006,7 @@ go
 as
 wG
 wG
-DZ
+wS
 DZ
 DZ
 DZ

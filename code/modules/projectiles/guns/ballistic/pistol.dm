@@ -60,6 +60,17 @@
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
+/obj/item/gun/ballistic/automatic/pistol/clandestine/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "Manufactured by Scarborough Arms, the Ansem is regarded as one of the best sidearms on the market. Minimal recoil combined with \
+		high stopping power makes it a favourite amongst soldiers of fortune across known space.<br> \
+		<br>\
+		The ease of concealment due to the weapon's sleek profile has given it a well-earned reputation as the 'smuggler's gun of course'. While \
+		space pirate bands tend to favour the HDS-1 created by Nanotrasen due to their low maintenance cost, the Ansem has seen plenty of use by \
+		mercernaries, hitmen and espionage agents. Dozens of seized Ansem pistols line evidence lockups across the Spinward. Many with extremely \
+		long and bloodied histories from years of service amongst underground criminal elements." \
+	)
+
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher
 	name = "\improper Ansem/SC pistol"
 	desc = "A modified variant of the Ansem, spiritual successor to the Makarov, featuring an integral suppressor and push-button trigger on the grip \
@@ -74,6 +85,8 @@
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Initialize(mapload)
 	. = ..()
 	underbarrel = new /obj/item/gun/energy/recharge/fisher(src)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore = "The Ansem/SC is a Scarborough Arms overhaul suite for their own Ansem handgun, designed for special operators who operate operationally, \
 		especially against people who like using lightbulbs.<br>\
@@ -125,6 +138,18 @@
 	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'
 
+/obj/item/gun/ballistic/automatic/pistol/m1911/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "The Colt M1911, created by John Moses Browning centuries ago, is the primordial ancestor of modern automatic firearms. \
+		Somehow, to this day, there are still officers who refuse to utilize anything that isn't chambered in 'God's Caliber'.<br>\
+		<br>\
+		Few want to tell any of these people that .45 ACP has struggled to puncture modern ballistic plating for almost five centuries.<br>\
+		<br>\
+		You are VERY confident that this particular example was lathed this decade. Most M1911's seen in the wild today are recreations of the weapon \
+		made with modern alloyed metals and manufactoring techniques, mass produced for the consumer market. This does not stop fraudsters from \
+		claiming that their weapon is a 'family heirloom' that has saved them from various conflicts that they insist they participated in." \
+	)
+
 /**
  * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
  * 15 damage every.. second? 7 shots to kill. Not fast.
@@ -136,6 +161,8 @@
 	projectile_wound_bonus = -12
 	pin = /obj/item/firing_pin/monkey
 
+/obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun/add_deep_lore()
+	return
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
@@ -180,16 +207,29 @@
 	name = "\improper Regal Condor"
 	desc = "Unlike the Desert Eagle, this weapon seems to utilize some kind of advanced internal stabilization system to significantly \
 		reduce felt recoil and increase overall accuracy, at the cost of using a smaller caliber. \
-		This does allow it to fire a very quick 2-round burst. Uses 10mm ammo."
+		This allows it to fire a very quick 2-round burst. Chambered in .45."
 	icon_state = "reagle"
 	inhand_icon_state = "deagleg"
 	burst_size = 2
 	burst_delay = 1
 	projectile_damage_multiplier = 1.25
-	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/r45
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 30, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.5, /datum/material/telecrystal = SHEET_MATERIAL_AMOUNT * 4)
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "One of the Culling Arms of the Tiger Cooperative, a collection of relic weapons said to have come to Martinson in a frenzied vision from \
+		God to enact holy retribution upon the enemies of the faith. Almost all examples of these guns are replicas of the original pattern. This one is no \
+		different. However, it carries some of the gravitus of the original firearm. And, some say, the holy might that it wielded against the enemies of the cult.<br>\
+		<br>\
+		The fact that you are looking at this relic weapon means one of two things.<br>\
+		<br>\
+		A) A Tiger Cooperative evangelist has died during or before they could commit a bloody massacre in the name of God. Or <br>\
+		<br>\
+		B) You are that evangelist, and will soon be adding another chapter to this gun's dark history." \
+	)
 
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"
@@ -225,10 +265,9 @@
 #define DOORHICKEY_GUN_MIN_DAMAGE 70
 #define DOORHICKEY_GUN_MAX_DAMAGE 140
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey
+/obj/item/gun/ballistic/automatic/pistol/doohickey
 	name = "\improper Liberator"
-	desc = "A poorly made 3D printed \"gun\", only capable of firing a single shot. Well-known throughout the Spinward Sector \
-		after an incident where 3 assistants were killed by shrapnel from such a device exploding while attempting to shoot a mouse."
+	desc = "A poorly made 3D printed \"gun\", only capable of firing a single shot."
 	icon_state = "doorhickey"
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -243,7 +282,7 @@
 	projectile_damage_multiplier = 0.5
 	spread = 10
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/unload_ammo(mob/living/user, forced = FALSE)
+/obj/item/gun/ballistic/automatic/pistol/doohickey/unload_ammo(mob/living/user, forced = FALSE)
 	if (forced)
 		return ..()
 
@@ -254,7 +293,7 @@
 		return
 	. = ..()
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/load_gun(obj/item/ammo, mob/living/user)
+/obj/item/gun/ballistic/automatic/pistol/doohickey/load_gun(obj/item/ammo, mob/living/user)
 	. = ..()
 	if (!.)
 		return
@@ -268,7 +307,7 @@
 	unload_ammo(user, forced = TRUE)
 	return FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+/obj/item/gun/ballistic/automatic/pistol/doohickey/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	var/dmg_multiplier = 1
 
 	if (get_dist(target, user) <= 1)
@@ -287,7 +326,7 @@
 	. = ..()
 	projectile_damage_multiplier /= dmg_multiplier
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
+/obj/item/gun/ballistic/automatic/pistol/doohickey/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	. = ..()
 	if (!.)
 		return
@@ -325,6 +364,26 @@
 
 	new /obj/effect/decal/cleanable/plastic(get_turf(src))
 	take_damage(damage_to_take)
+
+/obj/item/gun/ballistic/automatic/pistol/doohickey/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "The Liberator pattern, according to digital historians, was first posted to a fringe imageboard on the NTNet. The post included a now dead \
+		link to a defuncting hosting service through which board members were encouraged to download and 'admire' the design. The thread's author began their \
+		post by describing their extreme vitriolic hatred of so-called 'moon men' amongst the Nanotrasen 'elites'. And that, through 'the sauce', they had \
+		been shown a means to 'end the oppression of Luna's Tormentors'. They called it the 'Liberator' as a result.<br>\
+		<br>\
+		Response to this thread began as skeptism amongst posters regarding the 3D pattern. Many highlighted the dubious functionality, let alone safe operation \
+		of a gun created using cheap plastic and minimal machined parts firing a high pressure round through an unrifled barrel. But the thread suddenly began to \
+		gain traction immediately following a particular news article published by the Spinward Dove, a respected editorial in the Spinward Sector. The author of this \
+		article recounts that, during a particularly brisk day in New Moscow, they observed three off-duty Nanotrasen assistants attempting to use what the author \
+		described as a 'bizarre plastic doohickey' to shoot a mouse at point blank. The horrific aftermath, and images of the rattled but otherwise unscathed mouse, lead many \
+		to try and find from where these now crippled assistants had come across such an absurd device. Word spread of the post, and its author's continuously nonsensical \
+		rants regarding their hated foe in other areas of the imageboard.<br>\
+		<br>\
+		The author of the thread returned immediately following the news, claiming that those who frequented the imageboard had 'stolen' their 'dreams of freedom', and \
+		that clearly the moon men were attempting to discredit their invention through this publicity stunt. A slur-laiden rant from the thread author followed this declaration, \
+		leading to the the moderators of the imageboard to step in and close the thread for good." \
+	)
 
 /obj/item/disk/design_disk/liberator
 	name = "illegal 3D printer design disk"

@@ -593,6 +593,8 @@
       someone with Monkey
   - bugfix: Several methods of copying DNA (including transformation sting) mistakenly
       copied "active mutations", this has been fixed
+  NiklasNeighbor:
+  - qol: gives the voidwalker nightvision. Why wasn't this a thing before??
   TelevisionStatic:
   - rscadd: Adds an autolathe circuit board as one of the purchasable goodies in the
       cargo market.
@@ -604,3 +606,9 @@
       cells
   lelandkemble:
   - bugfix: Patrol bounties properly pay those who complete them
+2026-05-31:
+  Hatterhat:
+  - bugfix: Xenomorph queens are no longer slowed down by their own giant tails, by
+      virtue of also being giant.
+  Melbert:
+  - bugfix: Fix mutators printed from genetics

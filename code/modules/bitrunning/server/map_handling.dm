@@ -199,6 +199,7 @@
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
+	domain_complete = FALSE
 
 	sever_connections()
 
