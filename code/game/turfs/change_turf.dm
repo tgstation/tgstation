@@ -261,12 +261,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs) // Is this even fired?
 	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
-	var/list/total_gases = total.gases
 	//Stolen blatently from self_breakdown
 	var/list/turf_list = atmos_adjacent_turfs + src
 	var/turflen = turf_list.len
@@ -282,14 +281,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		var/list/giver_gases = mix.gases
-		for(var/giver_id in giver_gases)
-			ASSERT_GAS_IN_LIST(giver_id, total_gases)
-			total.adjust_gas(giver_id, giver_gases[giver_id][MOLES])
+		for(var/giver_id in mix.moles)
+			ASSERT_GAS(giver_id, total)
+			total.adjust_gas(giver_id, mix.moles[giver_id])
 
 	total.temperature = energy / heat_cap
-	for(var/id in total_gases)
-		total_gases[id][MOLES] /= turflen
+	for(var/id in total.moles)
+		total.moles[id] /= turflen
 
 	for(var/turf/open/turf in turf_list)
 		turf.air.copy_from(total)

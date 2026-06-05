@@ -25,22 +25,17 @@
 		exposed_temperature = TCMB
 		CRASH("[src].hotspot_expose() called with exposed_temperature < [TCMB]")
 	//If the air doesn't exist we just return false
-	var/list/air_gases = air?.gases
-	if(!air_gases)
+	var/cached_moles = air?.moles
+	if(!cached_moles)
 		return
 
-	. = air_gases[/datum/gas/oxygen]
-	var/oxy = . ? .[MOLES] : 0
+	var/oxy = cached_moles[/datum/gas/oxygen] || 0
 	if (oxy < 0.5)
 		return
-	. = air_gases[/datum/gas/plasma]
-	var/plas = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/tritium]
-	var/trit = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/hydrogen]
-	var/h2 = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/freon]
-	var/freon = . ? .[MOLES] : 0
+	var/plas = cached_moles[/datum/gas/plasma] || 0
+	var/trit = cached_moles[/datum/gas/tritium] || 0
+	var/h2 = cached_moles[/datum/gas/hydrogen] || 0
+	var/freon = cached_moles[/datum/gas/freon] || 0
 	if(active_hotspot)
 		if(soh)
 			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
@@ -282,7 +277,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (!location.air.moles[path] || location.air.moles[path] < 0.5)
 
 /**
  * Regular process proc for hotspots governed by the controller.
