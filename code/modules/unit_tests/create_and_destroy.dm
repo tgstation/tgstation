@@ -1,5 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
+	// Since this unit test takes so damn long, we split it up across all runners
+	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
 
@@ -15,6 +17,29 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	GLOB.running_create_and_destroy = TRUE
 	var/list/type_paths_to_check = (valid_typesof(/atom/movable) + valid_typesof(/turf)) - uncreatables // No areas please
+
+	// This code is responsible for splitting up create & destroy across multiple integration tests.
+	var/total_amount_to_check = length(type_paths_to_check)
+	var/runner_count = length(maplist)
+
+	var/split_up_amount = floor(total_amount_to_check / runner_count)
+
+	var/what_map_index_are_we = 1
+	for(var/map_name, _map_config in maplist)
+		if(SSmapping.current_map == _map_config)
+			break
+		what_map_index_are_we++
+
+	var/start_index = ((what_map_index_are_we - 1) * split_up_amount) + 1
+	var/end_index
+
+	if(what_map_index_are_we == runner_count)
+		end_index = total_amount_to_check + 1
+	else
+		end_index = start_index + split_up_amount
+
+	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index)
+
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
