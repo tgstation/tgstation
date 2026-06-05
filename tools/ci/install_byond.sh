@@ -6,19 +6,25 @@ if [ -z "${BYOND_MAJOR+x}" ]; then
   source dependencies.sh
 fi
 
-if [ -d "$HOME/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR}.${BYOND_MINOR}" $HOME/BYOND/version.txt;
+if [ "${DOWNLOAD_FROM_BYOND_WEBSITE}" = "1" ]; then
+  base_url="http://www.byond.com/download/build"
+else
+  base_url="https://byond-builds.dm-lang.org"
+fi
+
+if [ -d "${HOME}/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR}.${BYOND_MINOR}" ${HOME}/BYOND/version.txt;
 then
   echo "Using cached directory."
 else
   echo "Setting up BYOND."
-  rm -rf "$HOME/BYOND"
-  mkdir -p "$HOME/BYOND"
-  cd "$HOME/BYOND"
-  curl -H "User-Agent: tgstation/1.0 CI Script" "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+  rm -rf "${HOME}/BYOND"
+  mkdir -p "${HOME}/BYOND"
+  cd "${HOME}/BYOND"
+  curl -H "User-Agent: tgstation/1.0 CI Script" "${base_url}/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
   unzip byond.zip
   rm byond.zip
   cd byond
   make here
-  echo "$BYOND_MAJOR.$BYOND_MINOR" > "$HOME/BYOND/version.txt"
+  echo "${BYOND_MAJOR}.${BYOND_MINOR}" > "${HOME}/BYOND/version.txt"
   cd ~/
 fi
