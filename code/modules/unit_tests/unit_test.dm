@@ -20,42 +20,32 @@ GLOBAL_LIST_EMPTY(required_map_items)
 
 GLOBAL_LIST_EMPTY(test_run_times)
 
-/// A list of every test that is currently focused.
-/// Use the PERFORM_ALL_TESTS macro instead.
-GLOBAL_VAR_INIT(focused_tests, focused_tests())
-
-/proc/focused_tests()
-	var/list/focused_tests = list()
-	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
-		if (initial(unit_test.focus))
-			focused_tests += unit_test
-
-	return focused_tests.len > 0 ? focused_tests : null
-
 /datum/unit_test
-	/// Do not instantiate if type matches this
 	abstract_type = /datum/unit_test
 
-	//Bit of metadata for the future maybe
-	var/list/procs_tested
-
-	/// The bottom left floor turf of the testing zone
-	var/turf/run_loc_floor_bottom_left
-
-	/// The top right floor turf of the testing zone
-	var/turf/run_loc_floor_top_right
-	///The priority of the test, the larger it is the later it fires
+	/// Behavior flags for this unit test
+	var/test_flags = UNIT_TEST_BASIC
+	/// The priority of the test, the larger it is the later it fires
 	var/priority = TEST_DEFAULT
-	//internal shit
-	var/focus = FALSE
-	var/succeeded = TRUE
-	var/list/allocated
-	var/list/fail_reasons
+	/// How many times this unit test will run. Use the TEST_REPEAT() macro
 	var/times_to_run = 1
 
-	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
-	var/static/list/uncreatables = null
+	// internal shit
+	/// If this test has passed or not
+	var/succeeded = TRUE
+	/// The bottom left floor turf of the testing zone
+	var/turf/run_loc_floor_bottom_left
+	/// The top right floor turf of the testing zone
+	var/turf/run_loc_floor_top_right
+	/// A list of instances created by this unit test. Use allocate()
+	var/list/allocated
+	/// Lazy list of why this unit test failed.
+	var/list/fail_reasons
 
+	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy.
+	/// Stored on the base datum for usability in other relevant tests that need this data.
+	var/static/list/uncreatables = null
+	/// Reference to the blank z-level containing our testing enviroment
 	var/static/datum/space_level/reservation
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
@@ -66,10 +56,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/datum/map_template/unit_tests/template = new
 		reservation = template.load_new_z()
 
-	if (isnull(uncreatables))
-		uncreatables = build_list_of_uncreatables()
+	uncreatables ||= build_list_of_uncreatables()
 
-	allocated = new
+	allocated = list()
 
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
@@ -367,12 +356,15 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	var/list/tests_to_run = subtypesof(/datum/unit_test)
+	var/list/tests_to_run = list()
 	var/list/focused_tests = list()
-	for (var/_test_to_run in tests_to_run)
-		var/datum/unit_test/test_to_run = _test_to_run
-		if (initial(test_to_run.focus))
+	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
+		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map)
+			continue
+		if (potential_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += test_to_run
+			continue
+		tests_to_run += potential_test
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 

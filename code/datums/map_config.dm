@@ -12,6 +12,8 @@
 	var/config_min_users = 0
 	var/voteweight = 1
 	var/votable = FALSE
+	/// If TRUE, only map
+	var/is_unit_test_map = FALSE
 
 	///A URL linking to a place for people to send feedback about this map.
 	var/feedback_link

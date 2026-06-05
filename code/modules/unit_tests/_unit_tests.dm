@@ -67,6 +67,16 @@
  */
 #define TEST_AFTER_CREATE_AND_DESTROY INFINITY
 
+// Unit test bitflags
+
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+#define UNIT_TEST_FOCUS (1<<0)
+/// This unit test only runs on specially designated unit test maps (Should only ever be one).
+#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+
+#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
+#define UNIT_TEST_MAP_TEST (NONE)
+
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
 #define TEST_OUTPUT_RED(text) "\x1B\x5B1;31m[text]\x1B\x5B0m"
