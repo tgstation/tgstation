@@ -238,4 +238,4 @@
 		return computer_act(user, tool)
 	if(istype(tool, /obj/item/paper))
 		return paper_act(user, tool)
-
+	return NONE
