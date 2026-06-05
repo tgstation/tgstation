@@ -72,7 +72,7 @@
 
 /obj/machinery/camera/wrench_act(mob/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_WRENCHED)
-		return ..()
+		return NONE
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You detach [src] from its place."))
 	deconstruct(TRUE)
@@ -80,7 +80,7 @@
 
 /obj/machinery/camera/crowbar_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
-		return ..()
+		return NONE
 	var/list/droppable_parts = list()
 	if(xray_module)
 		droppable_parts += xray_module
@@ -110,7 +110,7 @@
 
 /obj/machinery/camera/multitool_act(mob/living/user, obj/item/tool)
 	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
-		return ..()
+		return NONE
 	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 	to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
 	return ITEM_INTERACT_SUCCESS
