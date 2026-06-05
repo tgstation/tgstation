@@ -277,8 +277,20 @@ export async function reportFlakyTests({ github, context }) {
     );
 
     if (existingIssueId !== undefined) {
-      // Maybe in the future, if it's helpful, update the existing issue with new links
       console.log(`Existing issue found: #${existingIssueId}`);
+      await github.rest.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: existingIssueId,
+        body: createBody(
+          details,
+          `https://github.com/${context.repo.owner}/${
+            context.repo.repo
+          }/actions/runs/${context.payload.workflow_run.id}/attempts/${
+            context.payload.workflow_run.run_attempt - 1
+          }`,
+        ),
+      });
       return;
     }
 
