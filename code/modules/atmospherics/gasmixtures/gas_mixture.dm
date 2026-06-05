@@ -4,25 +4,13 @@ Calculations are done using the archived variables with the results merged into 
 This prevents race conditions that arise based on the order of tile processing.
 */
 
-GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
-GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
-
-/proc/init_gaslist_cache()
-	/datum/gas_mixture::gas_meta = GLOB.meta_gas_info
-	var/list/gases = list()
-	for(var/id in GLOB.meta_gas_info)
-		var/list/cached_gas = new(2)
-
-		gases[id] = cached_gas
-
-		cached_gas[MOLES] = 0
-		cached_gas[ARCHIVE] = 0
-	return gases
+GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture
 	var/list/moles[0]
 	var/list/moles_archive[0]
-	var/static/list/gas_meta
+	//var/static/list/gas_meta
+	var/static/list/gas_meta_soa
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
@@ -89,14 +77,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
 	. = 0
 	for(var/gas_id in cached_moles)
-		. += cached_moles[gas_id] * GUS_META(gas_id)[META_GAS_SPECIFIC_HEAT]
+		. += cached_moles[gas_id] * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
 	. = 0
 	for(var/gas_id in cached_moles)
-		. += cached_moles[gas_id] * GUS_META(gas_id)[META_GAS_SPECIFIC_HEAT]
+		. += cached_moles[gas_id] * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
@@ -132,12 +120,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/result = list();
 	var/cached_moles = moles
 	var/offset = GET_TURF_PLANE_OFFSET(z_context) + 1;
+	var/meta_moles_visible = GUS_META(META_GAS_MOLES_VISIBLE)
+	var/meta_gas_overlay = GUS_META(META_GAS_OVERLAY)
 	for(var/gas_id in cached_moles){
 		if(GLOB.nonoverlaying_gases[gas_id]) continue;
 		var/amount = cached_moles[gas_id];
-		var/meta = GUS_META(gas_id);
-		if(amount <= meta[META_GAS_MOLES_VISIBLE]) continue;
-		var/gas_overlay = meta[META_GAS_OVERLAY][offset];
+		if(amount <= meta_moles_visible[gas_id]) continue;
+		var/gas_overlay = meta_gas_overlay[gas_id][offset];
 		result += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(amount / MOLES_GAS_VISIBLE_STEP, 1))];
 	}
 	return result
@@ -427,7 +416,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			delta = delta * sharer_coeff
 
 		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * GUS_META(gas_id)[META_GAS_SPECIFIC_HEAT]
+			var/gas_heat_capacity = delta * GUS_META(META_GAS_SPECIFIC_HEAT)[gas_id]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
@@ -802,7 +791,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		var/gas_moles = cached_moles[gas_id]
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)
-			atmos_contents += "[GUS_META(gas_id)[META_GAS_ID]]=[num2text(gas_moles)]"
+			atmos_contents += "[GUS_META(META_GAS_ID)[gas_id]]=[num2text(gas_moles)]"
 
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")

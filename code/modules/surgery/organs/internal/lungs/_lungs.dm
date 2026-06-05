@@ -570,7 +570,7 @@
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
 	var/gas_breathed = breathe_gas_volume(breath, /datum/gas/tritium)
-	var/moles_visible = GLOB.meta_gas_info[/datum/gas/tritium][META_GAS_MOLES_VISIBLE] * BREATH_PERCENTAGE
+	var/moles_visible = GLOB.meta_gas_info_soa[META_GAS_MOLES_VISIBLE][/datum/gas/tritium] * BREATH_PERCENTAGE
 	// Tritium side-effects.
 	if(gas_breathed > moles_visible)
 		var/ratio = gas_breathed * 15

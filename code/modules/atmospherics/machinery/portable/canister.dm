@@ -66,7 +66,7 @@
 		create_gas()
 
 	if(ispath(gas_type, /datum/gas))
-		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
+		desc = "[GLOB.meta_gas_info_soa[META_GAS_NAME][gas_type]]. [GLOB.meta_gas_info_soa[META_GAS_DESC][gas_type]]"
 
 	update_window()
 
