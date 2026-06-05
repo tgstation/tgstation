@@ -42,7 +42,7 @@
 	name = "Fake Coastline Tile"
 	time = 0 SECONDS
 	reqs = list(
-		/datum/reagent/water = 0.25*0.5,
+		/datum/reagent/water = 0.125,
 		/obj/item/stack/tile/fakesand = 1
 	)
 	result = /obj/item/stack/tile/fakecoastline
