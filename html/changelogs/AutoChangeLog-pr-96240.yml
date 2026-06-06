@@ -1,0 +1,4 @@
+author: "Rhials, Dendydoom"
+delete-after: True
+changes:
+  - rscadd: "Apple Fritters have been added to your local chef's cookbook!"
