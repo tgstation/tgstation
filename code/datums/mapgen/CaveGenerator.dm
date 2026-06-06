@@ -342,7 +342,7 @@
 			is_megafauna = TRUE
 
 		var/can_spawn = TRUE
-		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
+		if(ispath(picked_mob, /mob/living/basic/mining/tendril))
 			// Prevents tendrils spawning in each other's collapse range
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
 				if (get_dist(spawn_turf, target_turf) <= 2)
@@ -369,7 +369,7 @@
 		if (!can_spawn)
 			continue
 
-		if (ispath(picked_mob, /obj/structure/spawner/lavaland))
+		if (ispath(picked_mob, /mob/living/basic/mining/tendril))
 			spawn_data[CAVE_SPAWN_TENDRIL] += target_turf
 		else
 			if (is_megafauna)

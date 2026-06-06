@@ -206,7 +206,7 @@
 	if(!length(possible_targets))
 		return
 	var/turf/target = pick(possible_targets)
-	new /obj/effect/temp_visual/telegraphing/thunderbolt(target)
+	new /obj/effect/temp_visual/telegraphing/circle(target)
 	addtimer(CALLBACK(src, PROC_REF(strike), target), 1 SECONDS)
 
 /obj/item/assembly/signaler/anomaly/weather/proc/strike(turf/target)

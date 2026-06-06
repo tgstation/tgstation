@@ -1,4 +1,3 @@
-
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
@@ -53,6 +52,8 @@
 	var/datum/weakref/lastuser
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
+	///If the tray is currently able to self-sustain
+	var/can_self_sustain = TRUE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 	///Whether the plant is currently being pollinated or polinating the nearby plants
@@ -65,7 +66,12 @@
 	var/tray_flags = HYDROPONIC
 	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
-
+	///Suffix things
+	var/alt_tray = FALSE
+	var/indicatorsuffix = ""
+	///Soil things
+	var/obj/machinery/hydroponics/soil/current_soil = null
+	var/current_soil_overlay = null
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -167,6 +173,12 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
+/obj/machinery/hydroponics/constructable/oldstyle
+	name = "hydroponics tray"
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "hydrotray3-alt"
+	alt_tray = TRUE
+
 /obj/machinery/hydroponics/constructable/fullupgrade
 	name = "deluxe hydroponics tray"
 	desc = "A basin used to grown plants in, packed full of cutting-edge technology."
@@ -179,6 +191,9 @@
 	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/hydroponics), only_root_path = TRUE))
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
+/obj/machinery/hydroponics/constructable/on_deconstruction(disassembled)
+	current_soil?.forceMove(drop_location())
+
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
 	var/tmp_capacity = 0
@@ -186,8 +201,12 @@
 		tmp_capacity += matter_bin.tier
 	for (var/datum/stock_part/servo/servo in component_parts)
 		rating = servo.tier
-	maxwater = tmp_capacity * 50 // Up to 300
-	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
+	if(current_soil)
+		maxwater = current_soil.maxwater + ((tmp_capacity - 2)*50)
+		maxnutri = current_soil.maxnutri + ((tmp_capacity - 2)*5)
+	else
+		maxwater = tmp_capacity * 50
+		maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
 
@@ -464,21 +483,32 @@
 		. += myseed.get_tray_overlay(age, plant_status, plant_offset_y)
 		. += update_status_light_overlays()
 
+	if(current_soil && current_soil_overlay)
+		. += mutable_appearance(icon, current_soil_overlay, OBJ_LAYER + 0.001)
+
 	if(self_sustaining && self_sustaining_overlay_icon_state)
-		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
+		. += mutable_appearance(icon, self_sustaining_overlay_icon_state, OBJ_LAYER + 0.002)
+		. += emissive_appearance(icon, self_sustaining_overlay_icon_state, src, OBJ_LAYER + 0.002)
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
+	if(alt_tray)
+		indicatorsuffix = "-alt"
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3[indicatorsuffix]")
+		. += emissive_appearance(icon, "over_lowwater3[indicatorsuffix]", src, alpha = src.alpha)
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3[indicatorsuffix]")
+		. += emissive_appearance(icon, "over_lownutri3[indicatorsuffix]", src, alpha = src.alpha)
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3[indicatorsuffix]")
+		. += emissive_appearance(icon, "over_lowhealth3[indicatorsuffix]", src, alpha = src.alpha)
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3[indicatorsuffix]")
+		. += emissive_appearance(icon, "over_alert3[indicatorsuffix]", src, alpha = src.alpha)
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3[indicatorsuffix]")
+		. += emissive_appearance(icon, "over_harvest3[indicatorsuffix]", src, alpha = src.alpha)
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -795,6 +825,7 @@
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
+	remove_shared_particles(/particles/pollen) //We shouldn't look like we're pollenating if we're dead.
 	if(update_icon)
 		update_appearance()
 
@@ -1062,6 +1093,37 @@
 			flowergun.update_appearance()
 			to_chat(user, span_notice("[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!"))
 			return
+	else if(istype(O, /obj/item/soil_sack))
+		var/obj/item/soil_sack/oursoil = O
+
+		if(plant_status != HYDROTRAY_NO_PLANT)
+			balloon_alert(user, "remove the plants first!")
+			return
+
+		if(!isnull(current_soil))
+			balloon_alert(user, "tray is full")
+			return
+
+		balloon_alert(user, "filling the tray...")
+		if(!do_after(user, 2 SECONDS, src))
+			return
+
+		if(!oursoil.stored_soil)
+			balloon_alert(user, "sack is empty!")
+			return
+
+		current_soil = new oursoil.stored_soil(src)
+
+		RefreshParts()
+		tray_flags = current_soil.tray_flags
+		current_soil_overlay = "[current_soil.icon_state]_tray"
+		name = "botanic tray"
+		desc = "A basin used to grow plants in. Filled with [current_soil.name]."
+
+		qdel(oursoil)
+		update_appearance()
+		return
+
 	else
 		return ..()
 
@@ -1102,6 +1164,10 @@
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
+		return CLICK_ACTION_BLOCKING
+
+	if(!can_self_sustain)
+		balloon_alert(user, "no self-sustain mode!")
 		return CLICK_ACTION_BLOCKING
 
 	set_self_sustaining(!self_sustaining)

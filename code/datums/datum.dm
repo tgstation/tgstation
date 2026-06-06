@@ -87,7 +87,7 @@
 
 	/**
 	 * Parent types.
-	 * 
+	 *
 	 * Abstract-ness is a meta-property of a class that is used to indicate
 	 * that the class is intended to be used as a base class for others, and
 	 * should not (or cannot) be instantiated.
@@ -123,6 +123,7 @@
  * Returns [QDEL_HINT_QUEUE]
  */
 /datum/proc/Destroy(force = FALSE)
+	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null

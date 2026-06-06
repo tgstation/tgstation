@@ -15,6 +15,8 @@
 	var/datum/team/nuclear/nuke_team
 	/// Should the user be moved to default spawnpoint after being granted this datum.
 	var/send_to_spawnpoint = TRUE
+	/// Should the nukie get a little bonus tc depending on how many players there are
+	var/give_bonus_tc = TRUE
 
 	var/job_type = /datum/job/nuclear_operative
 	/// The DEFAULT outfit we will give to players granted this datum
@@ -49,11 +51,11 @@
 	equip_op()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
-		// grant extra TC for the people who start in the nukie base ie. not the lone op
-		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
+	if(give_bonus_tc)
+		var/extra_tc = CEILING(GLOB.joined_player_list.len / 5, 5)
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
-		if (uplink)
-			uplink.uplink_handler.add_telecrystals(extra_tc)
+		uplink?.uplink_handler.add_telecrystals(extra_tc)
+
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
 		var/datum/team/nuclear/nuke_team = get_team()
@@ -81,7 +83,7 @@
 		objectives |= nuke_team.objectives
 
 /datum/antagonist/nukeop/leader/get_spawnpoint()
-	return pick(GLOB.nukeop_leader_start)
+	return pick(GLOB.nukeop_base_leader_start)
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)
@@ -146,7 +148,7 @@
 	return TRUE
 
 /datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
-	owner.current.forceMove(pick(GLOB.nukeop_start))
+	owner.current.forceMove(pick(GLOB.nukeop_base_start))
 
 /datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
 	var/code
@@ -192,7 +194,7 @@
 	if(nuke_team)
 		team_number = nuke_team.members.Find(owner)
 
-	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+	return GLOB.nukeop_base_start[((team_number - 1) % GLOB.nukeop_base_start.len) + 1]
 
 /datum/antagonist/nukeop/proc/spawn_infiltrator()
 	var/datum/map_template/shuttle/infiltrator/ship = SSmapping.shuttle_templates[infiltrator_id]
@@ -221,6 +223,6 @@
 	mobile_port.setTimer(mobile_port.ignitionTime)
 
 /datum/antagonist/nukeop/on_respawn(mob/new_character)
-	new_character.forceMove(pick(GLOB.nukeop_start))
+	new_character.forceMove(pick(GLOB.nukeop_base_start))
 	equip_op()
 	return TRUE

@@ -187,13 +187,20 @@
 	return ..()
 
 /obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
 	if (!issilicon(user))
 		return
+
 	var/mob/living/silicon/robot/as_cyborg = user
 	if (!(src in as_cyborg.held_items))
 		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
-	return CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/borg/cyborg_omnitool/examine(mob/user)
+	. = ..()
+	if(reference)
+		var/obj/item/tool = get_proxy_attacker_for(src, usr)
+		. += tool.examine(user)
 
 /**
  * Sets the new internal tool to be used
@@ -202,8 +209,6 @@
  * * obj/item/ref - typepath for the new internal omnitool
  */
 /obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
 	for(var/obj/item/internal_tool as anything in omni_toolkit)
 		if(internal_tool == tool)
 			reference = internal_tool
@@ -237,11 +242,14 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
+	//assign the upgraded toolspeed, if engi omnitool upgrade was applied.
+	tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
 	//the internal tool is considered part of the tool itself, so don't let it be dropped.
 	tool.item_flags |= ABSTRACT
 	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
+	//store tool for future use
 	atoms[reference] = tool
-	tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3 //and finally assign the upgraded toolspeed, if any.
+
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
@@ -270,7 +278,8 @@
 	var/mob/living/silicon/robot/user = usr
 	if (!(src in user.held_items))
 		attack_self(user)
-	return ..()
+	. = ..()
+	user.select_module(user.held_items.Find(src))
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
@@ -318,15 +327,77 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
+		/obj/item/weldingtool/largetank/cyborg,
 	)
+
+/obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
+
+/obj/item/borg/cyborg_omnitool/engineering/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user) || tool_behaviour != TOOL_WELDER)
+		return
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle welder"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
 	. = ..()
+	if(tool_behaviour == TOOL_WELDER)
+		. += span_notice("Use [EXAMINE_HINT("Ctrl Click")] to toggle welder")
 
-	if(tool_behaviour == TOOL_MULTITOOL)
-		for(var/obj/item/multitool/tool in atoms)
-			. += "Its multitool buffer contains [tool.buffer]"
-			break
+/obj/item/borg/cyborg_omnitool/engineering/update_overlays()
+	. = ..()
+	if(tool_behaviour == TOOL_WELDER)
+		var/obj/item/weldingtool/tool = atoms[/obj/item/weldingtool/largetank/cyborg]
+		if(tool?.welding)
+			. |= tool.update_overlays()
+
+/obj/item/borg/cyborg_omnitool/engineering/set_internal_tool(obj/item/tool)
+	if(tool_behaviour == TOOL_WELDER)
+		welder_toggle(src, FALSE)
+
+	. = ..()
+
+	if(tool_behaviour == TOOL_WELDER)
+		welder_toggle(src, TRUE)
+
+/obj/item/borg/cyborg_omnitool/engineering/item_ctrl_click(mob/user)
+	. = NONE
+	if(tool_behaviour == TOOL_WELDER)
+		var/mob/living/silicon/robot/borgy = loc
+		if(!istype(borgy) || borgy.module_active != src)
+			return
+
+		welder_toggle(src, null)
+		return CLICK_ACTION_SUCCESS
+
+///Reflects internal welder icon onto the omnitool
+/obj/item/borg/cyborg_omnitool/engineering/proc/welder_update(source)
+	PRIVATE_PROC(TRUE)
+	SIGNAL_HANDLER
+
+	update_appearance(UPDATE_OVERLAYS)
+
+///Toggles welder on/off when module slot is selected/deselected
+/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(datum/omnitool, state)
+	PRIVATE_PROC(TRUE)
+	SIGNAL_HANDLER
+
+	if(tool_behaviour == TOOL_WELDER)
+		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, usr)
+		if(isnull(state))
+			state = !tool.welding
+		if(state == tool.welding)
+			return
+
+		if(state)
+			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update))
+			tool.switched_on(usr)
+		else
+			tool.switched_off()
+			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"

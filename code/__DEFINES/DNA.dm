@@ -21,8 +21,6 @@
 #define MUTATION_SOURCE_ACTIVATED "activated"
 ///Source for mutations that have been added via mutators
 #define MUTATION_SOURCE_MUTATOR "mutator"
-///From timed dna injectors.
-#define MUTATION_SOURCE_TIMED_INJECTOR "timed_injector"
 ///From mob/living/carbon/human/proc/crewlike_monkify()
 #define MUTATION_SOURCE_CREW_MONKEY "crew_monkey"
 #define MUTATION_SOURCE_MEDIEVAL_CTF "medieval_ctf"
@@ -78,13 +76,13 @@
 #define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
 #define FEATURE_LEGS "legs"
 
-///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
+// flag for the transfer_flag argument from dna/proc/copy_dna().
+/// Copies SE (mob's innate mutations)
 #define COPY_DNA_SE (1<<0)
-///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the species.
+/// Copies the species.
 #define COPY_DNA_SPECIES (1<<1)
-///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the mutations.
+/// Copies active mutations and anything mutated from other means
 #define COPY_DNA_MUTATIONS (1<<2)
-
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
