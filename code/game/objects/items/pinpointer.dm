@@ -96,13 +96,13 @@
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
-		switch(get_dist(here, there))
-			if(1 to close_range)
-				return "pinon[alert ? "alert" : "close"][icon_suffix]"
-			if((close_range + 1) to medium_range)
-				return "pinon[alert ? "alert" : "medium"][icon_suffix]"
-			if(medium_range to INFINITY)
-				return "pinon[alert ? "alert" : "far"][icon_suffix]"
+		var/current_distance = get_dist(here, there)
+		if(current_distance >= 1 && current_distance <= close_range)
+			return "pinon[alert ? "alert" : "close"][icon_suffix]"
+		else if(current_distance > (close_range + 1) && current_distance <= medium_range)
+			return "pinon[alert ? "alert" : "medium"][icon_suffix]"
+		else if(current_distance > medium_range)
+			return "pinon[alert ? "alert" : "far"][icon_suffix]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
