@@ -5,6 +5,7 @@
 	icon_screen = "command_locked"
 	time_to_unscrew = 6 SECONDS
 	var/locked = TRUE
+	var/lock_timer
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
@@ -30,11 +31,11 @@
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
 	if(locked == locked_state)
 		return
-	locked  = locked_state ? FALSE : TRUE
-	icon_screen = locked_state ? "command" : "command_locked"
+	locked  = !!locked_state
+	icon_screen = locked ? "command_locked" : "command"
 	update_appearance(UPDATE_OVERLAYS)
 	if(user)
-		balloon_alert(user, locked_state ? "console unlocked!" : "console locked!")
+		balloon_alert(user, locked ? "console locked!" : "console unlocked!")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/card/id))
@@ -48,8 +49,11 @@
 			return
 
 		set_locked(!locked, user)
+		if(lock_timer)
+			deltimer(lock_timer)
+			lock_timer = null
 		if(!locked)
-			addtimer(CALLBACK(src, PROC_REF(set_locked), TRUE), 5 MINUTES, TIMER_UNIQUE)
+			lock_timer = addtimer(CALLBACK(src, PROC_REF(set_locked), TRUE), 5 MINUTES, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
