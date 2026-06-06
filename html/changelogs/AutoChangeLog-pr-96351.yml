@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Pinpointers stop tracking a shunted ai when that ai is no longer shunted"
