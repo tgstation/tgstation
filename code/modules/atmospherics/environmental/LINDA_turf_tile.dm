@@ -499,7 +499,6 @@
 
 		var/list/giver_cached_moles = mix.moles
 		for(var/gas_id in giver_cached_moles)
-			ASSERT_GAS(gas_id, shared_mix)
 			shared_cached_moles[gas_id] += giver_cached_moles[gas_id]
 
 	if(!imumutable_in_group)

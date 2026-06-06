@@ -259,6 +259,7 @@
 	var/static/process_id = 0
 	process_id = WRAP_UID(process_id + 1)
 	var/datum/gas_mixture/total_gas_mixture = new
+	var/list/total_cached_moles = total_gas_mixture.moles
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice
@@ -274,8 +275,7 @@
 		var/heat_capacity = values_dot(giver_cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT))
 		//gas transfer
 		for(var/gas_id in giver_cached_moles)
-			ASSERT_GAS(gas_id, total_gas_mixture)
-			total_gas_mixture.moles[gas_id] += giver_cached_moles[gas_id]
+			total_cached_moles[gas_id] += giver_cached_moles[gas_id]
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity

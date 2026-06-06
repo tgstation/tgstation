@@ -53,13 +53,6 @@
 ///Calculate the thermal energy of the selected gas (J)
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
-///Directly adds a gas to a gas mixture without checking for its presence beforehand, use only if is certain the absence of said gas
-#define ADD_GAS(gas_id, gas_mixture)\
-	gas_mixture.moles[gas_id] = 0; gas_mixture.moles_archive[gas_id] = 0
-
-///Adds a gas to a gas mixture but checks if is already present, faster than the same proc
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.moles[gas_id]) { ADD_GAS(gas_id, gas_mixture) };
-
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 
 #ifdef TESTING

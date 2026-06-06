@@ -41,34 +41,35 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 ///assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 ///Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
-	ASSERT_GAS(gas_id, src)
+	moles[gas_id] += 0
+	moles_archive[gas_id] += 0
 
-///assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
+///assert_gases(args) - shorthand for calling assert_gas(gas_id) once for each gas type.
 /datum/gas_mixture/proc/assert_gases(...)
-	for(var/id in args)
-		ASSERT_GAS(id, src)
+	for(var/gas_id in args)
+		moles[gas_id] += 0
+		moles_archive[gas_id] += 0
 
 ///add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
 ///Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
 /datum/gas_mixture/proc/add_gas(gas_id)
-	ADD_GAS(gas_id, src)
+	moles[gas_id] = 0
+	moles_archive[gas_id] = 0
 
 ///add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases(...)
 	for(var/gas_id in args)
-		ADD_GAS(gas_id, src)
+		moles[gas_id] = 0
+		moles_archive[gas_id] = 0
 
 ///garbage_collect() - removes any gas list which is empty.
 ///If called with a list as an argument, only removes gas lists with IDs from that list.
 ///Must be used after subtracting from a gas. Must be used after assert_gas()
 ///if assert_gas() was called only to read from the gas.
 ///By removing empty gases, processing speed is increased.
-/datum/gas_mixture/proc/garbage_collect(list/tocheck)
-	var/list/cached_moles = moles
-	for(var/gas_id in (tocheck || cached_moles))
-		if(QUANTIZE(cached_moles[gas_id] <= 0))
-			cached_moles -= gas_id
-			moles_archive -= gas_id
+/datum/gas_mixture/proc/garbage_collect()
+	values_cut_under(moles, MOLAR_ACCURACY, TRUE)
+	values_cut_under(moles_archive, MOLAR_ACCURACY, TRUE)
 
 //PV = nRT
 
@@ -90,10 +91,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
-	ASSERT_GAS(gas_id, src)
-	var/is_there_gas = amount < moles[gas_id]
-	garbage_collect()
-	return is_there_gas
+	return amount < moles[gas_id]
 
 /// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
@@ -157,7 +155,6 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	var/list/cached_giver_moles = giver.moles
 	//gas transfer
 	for(var/gas_id in cached_giver_moles)
-		ASSERT_GAS(gas_id, src)
 		cached_moles[gas_id] += cached_giver_moles[gas_id]
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
@@ -165,7 +162,6 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 // Set the gas specie within the gas mix to a set amount, if there is none it will be created at the target temp
 /datum/gas_mixture/proc/set_gas(gas_specie, amount)
-	ASSERT_GAS(gas_specie, src)
 	moles[gas_specie] = amount
 	garbage_collect()
 
@@ -175,16 +171,14 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 /// Add a specific amount of moles to specified gas or add a new gas to the mix
 /// amount is added so make it negative to remove
 /datum/gas_mixture/proc/adjust_gas(gas, amount)
-	ASSERT_GAS(gas, src)
 	moles[gas] += QUANTIZE(amount)
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 ///gases_moles is an associative list of gas species to their amount to be added
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
-	for(var/gas_specie in gases_moles)
-		ASSERT_GAS(gas_specie, src)
-		moles[gas_specie] += gases_moles[gas_specie]
+	for(var/gas_id in gases_moles)
+		moles[gas_id] += gases_moles[gas_id]
 	garbage_collect()
 
 
@@ -213,7 +207,6 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 	removed.temperature = temperature
 	for(var/id in cached_moles)
-		ADD_GAS(id, removed)
 		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
@@ -236,7 +229,6 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 	removed.temperature = temperature
 	for(var/id in cached_moles)
-		ADD_GAS(id, removed)
 		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
@@ -254,11 +246,11 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		return null
 	var/datum/gas_mixture/removed = new type // TODO(antropod): forgot volume here?
 	removed.temperature = temperature
-	ADD_GAS(gas_id, removed)
 	removed.moles[gas_id] = amount
 	cached_moles[gas_id] -= amount
 
-	garbage_collect(list(gas_id))
+	// TODO(antropod): maybe use if (cached_moles[gas_id] < MOLAR_ACCURACY) cached_moles -= gas_id?
+	garbage_collect()
 	return removed
 
 /datum/gas_mixture/proc/remove_specific_ratio(gas_id, ratio)
@@ -271,11 +263,11 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	ADD_GAS(gas_id, removed)
 	cached_removed_moles[gas_id] = QUANTIZE(cached_moles[gas_id] * ratio)
 	cached_moles[gas_id] -= cached_removed_moles[gas_id]
 
-	garbage_collect(list(gas_id))
+	// TODO(antropod): maybe use if (cached_moles[gas_id] < MOLAR_ACCURACY) cached_moles -= gas_id?
+	garbage_collect()
 
 	return removed
 
@@ -355,7 +347,6 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 	temperature = sample.temperature
 	for(var/gas_id in sample_cached_moles)
-		ASSERT_GAS(gas_id, src)
 		cached_moles[gas_id] = sample_cached_moles[gas_id] * partial
 
 	return TRUE
@@ -392,9 +383,11 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 	//Prep
 	for(var/gas_id in only_in_sharer) //create gases not in our cache
-		ADD_GAS(gas_id, src)
+		cached_moles[gas_id] = 0
+		cached_moles_archive[gas_id] = 0
 	for(var/gas_id in only_in_cached) //create gases not in the sharing mix
-		ADD_GAS(gas_id, sharer)
+		sharer_cached_moles[gas_id] = 0
+		sharer_cached_moles_archive[gas_id] = 0
 
 	var/cached_heat_capacity = GUS_META(META_GAS_SPECIFIC_HEAT)
 	for(var/gas_id in cached_moles) //transfer gases

@@ -153,7 +153,6 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(miasma_moles, MIASTER_STERILIZATION_RATE_BASE + (air.temperature - MIASTER_STERILIZATION_TEMP) / MIASTER_STERILIZATION_RATE_SCALE)
 	cached_moles[/datum/gas/miasma] -= cleaned_air
-	ASSERT_GAS(/datum/gas/oxygen, air)
 	cached_moles[/datum/gas/oxygen] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
@@ -221,11 +220,8 @@
 	cached_moles[/datum/gas/plasma] = QUANTIZE(plasma_moles - plasma_burn_rate)
 	cached_moles[/datum/gas/oxygen] = QUANTIZE(oxygen_moles - (plasma_burn_rate * oxygen_burn_ratio))
 	if(super_saturation)
-		ASSERT_GAS(/datum/gas/tritium, air)
 		cached_moles[/datum/gas/tritium] += plasma_burn_rate
 	else
-		ASSERT_GAS(/datum/gas/carbon_dioxide, air)
-		ASSERT_GAS(/datum/gas/water_vapor, air)
 		cached_moles[/datum/gas/carbon_dioxide] += plasma_burn_rate * 0.75
 		cached_moles[/datum/gas/water_vapor] += plasma_burn_rate * 0.25
 
@@ -281,7 +277,6 @@
 
 	cached_moles[/datum/gas/hydrogen] -= burned_fuel
 	cached_moles[/datum/gas/oxygen] -= burned_fuel * 0.5
-	ASSERT_GAS(/datum/gas/water_vapor, air)
 	cached_moles[/datum/gas/water_vapor] += burned_fuel
 
 	SET_REACTION_RESULTS(burned_fuel)
@@ -338,7 +333,6 @@
 
 	cached_moles[/datum/gas/tritium] -= burned_fuel
 	cached_moles[/datum/gas/oxygen] -= burned_fuel * 0.5
-	ASSERT_GAS(/datum/gas/water_vapor, air)
 	cached_moles[/datum/gas/water_vapor] += burned_fuel
 
 	SET_REACTION_RESULTS(burned_fuel)
@@ -420,7 +414,6 @@
 	freon_burn_rate = min(freon_burn_rate, freon_moles, oxygen_moles * INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
 	cached_moles[/datum/gas/freon] = QUANTIZE(freon_moles - freon_burn_rate)
 	cached_moles[/datum/gas/oxygen] = QUANTIZE(oxygen_moles - (freon_burn_rate * oxygen_burn_ratio))
-	ASSERT_GAS(/datum/gas/carbon_dioxide, air)
 	cached_moles[/datum/gas/carbon_dioxide] += freon_burn_rate
 
 	if(temperature < HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE && temperature > HOT_ICE_FORMATION_MINIMUM_TEMPERATURE && prob(HOT_ICE_FORMATION_PROB) && isturf(holder))
@@ -476,7 +469,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	cached_moles[/datum/gas/oxygen] -= heat_efficiency * 0.5
 	cached_moles[/datum/gas/nitrogen] -= heat_efficiency
-	ASSERT_GAS(/datum/gas/nitrous_oxide, air)
 	cached_moles[/datum/gas/nitrous_oxide] += heat_efficiency
 
 	SET_REACTION_RESULTS(heat_efficiency)
@@ -516,9 +508,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	cached_moles[/datum/gas/nitrous_oxide] -= burned_fuel
-	ASSERT_GAS(/datum/gas/nitrogen, air)
 	cached_moles[/datum/gas/nitrogen] += burned_fuel
-	ASSERT_GAS(/datum/gas/oxygen, air)
 	cached_moles[/datum/gas/oxygen] += burned_fuel / 2
 
 	SET_REACTION_RESULTS(burned_fuel)
@@ -573,13 +563,10 @@
 	*N2O decomposes with its normal decomposition energy
 	*/
 	if (nitrous_oxide_decomposed_factor>0)
-		ASSERT_GAS(/datum/gas/nitrogen, air)
-		ASSERT_GAS(/datum/gas/oxygen, air)
 		var/amount_decomposed = 0.4 * bz_formed * nitrous_oxide_decomposed_factor
 		cached_moles[/datum/gas/nitrogen] += amount_decomposed
 		cached_moles[/datum/gas/oxygen] += 0.5 * amount_decomposed
 
-	ASSERT_GAS(/datum/gas/bz, air)
 	cached_moles[/datum/gas/bz] += bz_formed * (1-nitrous_oxide_decomposed_factor)
 	cached_moles[/datum/gas/nitrous_oxide] -= 0.4 * bz_formed
 	cached_moles[/datum/gas/plasma] -= 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
@@ -628,9 +615,7 @@
 	cached_moles[/datum/gas/carbon_dioxide] -= produced_amount
 	cached_moles[/datum/gas/oxygen] -= produced_amount * 0.5
 	cached_moles[/datum/gas/tritium] -= produced_amount * 0.01
-	ASSERT_GAS(/datum/gas/pluoxium, air)
 	cached_moles[/datum/gas/pluoxium] += produced_amount
-	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_moles[/datum/gas/hydrogen] += produced_amount * 0.01
 
 	SET_REACTION_RESULTS(produced_amount)
@@ -676,7 +661,6 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/nitrium, air)
 	cached_moles[/datum/gas/tritium] -= heat_efficiency
 	cached_moles[/datum/gas/nitrogen] -= heat_efficiency
 	cached_moles[/datum/gas/bz] -= heat_efficiency * 0.05 //bz gets consumed to balance the nitrium production and not make it too common and/or easy
@@ -773,7 +757,6 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/freon, air)
 	cached_moles[/datum/gas/plasma] -= freon_formed * 0.6
 	cached_moles[/datum/gas/carbon_dioxide] -= freon_formed * 0.3
 	cached_moles[/datum/gas/bz] -= freon_formed * 0.1
@@ -824,7 +807,7 @@
 
 	//calling QUANTIZE on results to round very small floating point values.
 	if (QUANTIZE(nob_formed) <= 0 || (QUANTIZE(tritium_moles - 5 * nob_formed * reduction_factor) < 0) || (QUANTIZE(nitrogen_moles - 10 * nob_formed) < 0))
-		air.garbage_collect(arglist(asserted_gases))
+		air.garbage_collect()
 		return
 
 	var/old_heat_capacity = air.heat_capacity()
@@ -874,7 +857,6 @@
 		return
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/pluoxium, air)
 	cached_moles[/datum/gas/halon] -= heat_efficiency
 	cached_moles[/datum/gas/oxygen] -= heat_efficiency * 20
 	cached_moles[/datum/gas/pluoxium] += heat_efficiency * 2.5
@@ -927,7 +909,6 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/healium, air)
 	cached_moles[/datum/gas/freon] -= heat_efficiency * 2.75
 	cached_moles[/datum/gas/bz] -= heat_efficiency * 0.25
 	cached_moles[/datum/gas/healium] += heat_efficiency * 3
@@ -970,7 +951,6 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/zauker, air)
 	cached_moles[/datum/gas/hypernoblium] -= heat_efficiency * 0.01
 	cached_moles[/datum/gas/nitrium] -= heat_efficiency * 0.5
 	cached_moles[/datum/gas/zauker] += heat_efficiency * 0.5
@@ -1011,7 +991,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	cached_moles[/datum/gas/zauker] -= burned_fuel
-	ASSERT_GAS(/datum/gas/oxygen, air)
 	cached_moles[/datum/gas/oxygen] += burned_fuel * 0.3
 	cached_moles[/datum/gas/nitrogen] += burned_fuel * 0.7
 
@@ -1055,7 +1034,6 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/proto_nitrate, air)
 	cached_moles[/datum/gas/hydrogen] -= heat_efficiency * 2
 	cached_moles[/datum/gas/pluoxium] -= heat_efficiency * 0.2
 	cached_moles[/datum/gas/proto_nitrate] += heat_efficiency * 2.2
@@ -1138,7 +1116,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	cached_moles[/datum/gas/proto_nitrate] -= produced_amount * 0.01
 	cached_moles[/datum/gas/tritium] -= produced_amount
-	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_moles[/datum/gas/hydrogen] += produced_amount
 
 	SET_REACTION_RESULTS(produced_amount)
@@ -1191,11 +1168,8 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	cached_moles[/datum/gas/bz] -= consumed_amount
-	ASSERT_GAS(/datum/gas/nitrogen, air)
 	cached_moles[/datum/gas/nitrogen] += consumed_amount * 0.4
-	ASSERT_GAS(/datum/gas/helium, air)
 	cached_moles[/datum/gas/helium] += consumed_amount * 1.6
-	ASSERT_GAS(/datum/gas/plasma, air)
 	cached_moles[/datum/gas/plasma] += consumed_amount * 0.8
 
 	SET_REACTION_RESULTS(consumed_amount)
