@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed an issue where Stop-All-Active-Weather verb would not remove ash storm sounds"
+  - refactor: "Rain and ash storms have been refactored to use particles rather than overlays"
