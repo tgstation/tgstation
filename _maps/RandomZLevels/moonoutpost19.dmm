@@ -5274,7 +5274,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/moonoutpost19/arrivals)
 "IM" = (
-/turf/cordon,
+/turf/cordon/secret,
 /area/misc/cordon)
 "IO" = (
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -7554,7 +7554,7 @@
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals/shed)
 "YM" = (
-/turf/cordon,
+/turf/cordon/secret,
 /area/space)
 "YO" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{

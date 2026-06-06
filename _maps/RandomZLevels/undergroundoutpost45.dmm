@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/cordon,
+/turf/cordon/secret,
 /area/misc/cordon)
 "ab" = (
 /turf/closed/indestructible/riveted,
