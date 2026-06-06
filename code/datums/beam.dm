@@ -225,16 +225,18 @@
 	if(!last_draw_valid)
 		animate_time = 0
 
-	// Old endpoints in absolute pixel coordinates.
-	var/old_origin_world_x = old_origin_x_f * ICON_SIZE_ALL + old_origin_px_f
-	var/old_origin_world_y = old_origin_y_f * ICON_SIZE_ALL + old_origin_py_f
-	var/old_target_world_x = old_target_x_f * ICON_SIZE_ALL + old_target_px_f
-	var/old_target_world_y = old_target_y_f * ICON_SIZE_ALL + old_target_py_f
+	// Endpoints in absolute world-pixel coordinates.
+	var/vector/origin_world = vector(origin.x * ICON_SIZE_ALL + origin_px, origin.y * ICON_SIZE_ALL + origin_py)
+	var/vector/target_world = vector(target.x * ICON_SIZE_ALL + target_px, target.y * ICON_SIZE_ALL + target_py)
+	var/vector/old_origin_world = vector(old_origin_x_f * ICON_SIZE_ALL + old_origin_px_f, old_origin_y_f * ICON_SIZE_ALL + old_origin_py_f)
+	var/vector/old_target_world = vector(old_target_x_f * ICON_SIZE_ALL + old_target_px_f, old_target_y_f * ICON_SIZE_ALL + old_target_py_f)
 
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x, target.y, target_px, target_py)
+	var/vector/beam_direction = vector(sin(Angle), cos(Angle))
 	// Old angle from the interpolated endpoints.
-	var/OLD_DX_F = old_target_world_x - old_origin_world_x
-	var/OLD_DY_F = old_target_world_y - old_origin_world_y
+	var/vector/old_beam_delta = old_target_world - old_origin_world
+	var/OLD_DX_F = old_beam_delta.x
+	var/OLD_DY_F = old_beam_delta.y
 	var/old_angle
 	if(!OLD_DY_F)
 		old_angle = (OLD_DX_F >= 0) ? 90 : 270
@@ -255,11 +257,13 @@
 	// Byond doesn't handle 180 degree rotations well
 	var/animate_rotation = animate_time && raw_angle_delta < 90
 
-	var/DX = (32*target.x+target_px)-(32*origin.x+origin_px)
-	var/DY = (32*target.y+target_py)-(32*origin.y+origin_py)
+	var/vector/beam_delta = target_world - origin_world
+	var/DX = beam_delta.x
+	var/DY = beam_delta.y
 	var/N = 0
-	var/length = round(sqrt((DX)**2+(DY)**2))
-	var/old_length = round(sqrt((OLD_DX_F)**2+(OLD_DY_F)**2))
+	var/length = round(beam_delta.size)
+	var/old_length = round(old_beam_delta.size)
+	var/vector/old_beam_direction = vector(sin(old_angle), cos(old_angle))
 
 	var/list/old_elements = elements
 	var/list/new_elements = list()
@@ -314,12 +318,11 @@
 		var/new_pixel_y = origin_py + Pixel_y
 		if(animate_time)
 			// Seed from interpolated old endpoints so consecutive redraws don't snap.
-			var/old_visual_x = old_origin_world_x + sin(old_angle) * old_pos
-			var/old_visual_y = old_origin_world_y + cos(old_angle) * old_pos
+			var/vector/old_visual = old_origin_world + old_beam_direction * old_pos
 			var/new_visual_x = final_x * ICON_SIZE_ALL + new_pixel_x
 			var/new_visual_y = final_y * ICON_SIZE_ALL + new_pixel_y
-			segment.pixel_x = new_pixel_x + round(old_visual_x - new_visual_x)
-			segment.pixel_y = new_pixel_y + round(old_visual_y - new_visual_y)
+			segment.pixel_x = new_pixel_x + round(old_visual.x - new_visual_x)
+			segment.pixel_y = new_pixel_y + round(old_visual.y - new_visual_y)
 			// Segments past the old beam's end fade in instead of popping.
 			if(N >= old_length)
 				segment.alpha = 0
@@ -345,12 +348,11 @@
 			var/obj/effect/ebeam/dying = old_elements[i]
 			// Project the dying segment onto the new beam and clamp it to the tip.
 			var/proj_pos = clamp((i - 1) * ICON_SIZE_ALL + 16, 0, length)
-			var/proj_world_x = (origin.x * ICON_SIZE_ALL + origin_px) + sin(Angle) * proj_pos
-			var/proj_world_y = (origin.y * ICON_SIZE_ALL + origin_py) + cos(Angle) * proj_pos
+			var/vector/proj_world = origin_world + beam_direction * proj_pos
 			var/dying_world_x = dying.x * ICON_SIZE_ALL
 			var/dying_world_y = dying.y * ICON_SIZE_ALL
-			var/target_px_anim = round(proj_world_x - dying_world_x)
-			var/target_py_anim = round(proj_world_y - dying_world_y)
+			var/target_px_anim = round(proj_world.x - dying_world_x)
+			var/target_py_anim = round(proj_world.y - dying_world_y)
 			dying.cut_overlays() // Remove emissive overlay so it doesn't glow while the segment fades out.
 			if(animate_rotation)
 				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
