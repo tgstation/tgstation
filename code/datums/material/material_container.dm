@@ -293,10 +293,10 @@
 		//e.g. projectiles inside bullets are not objects
 		if(!istype(target_item))
 			continue
-		//can't allow abstract, hologram items
-		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
+		//can't allow abstract, hologram items, or if they item is designed to be ignored by the mat container without throwing warnings and stuff (unlike NO_MAT_REDEMPTION flag).
+		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1) || HAS_TRAIT(target_item, TRAIT_IGNORED_BY_MAT_REDEMPTION))
 			continue
-		//user defined conditions
+		//user defined conditions for the object the material container datum is attached to
 		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 			continue
 		//item is either indestructible, not allowed for redemption or not in the allowed types

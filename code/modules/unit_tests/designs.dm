@@ -159,3 +159,14 @@
 		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is]). \
 			Fix it or change the value of the [NAMEOF(design, inherit_materials)] var of [design.type]. \
 			You can also edit the [NAMEOF(design, transfered_materials)] list of the design")
+
+		if(!length(printed_instance.contents))
+			continue
+
+		var/list/all_mats = printed_instance.get_contents_custom_materials(/obj/item, TRAIT_IGNORED_BY_MAT_REDEMPTION)
+		var/list/design_ref_mats = SSmaterials.get_material_set_cache(design.materials)
+		for(var/datum/material/mat as anything in all_mats)
+			if(all_mats[mat] > design_ref_mats[mat])
+				var/sheet_val = transcribe_mat_value_as_sheet(all_mats[mat])
+				var/design_val = transcribe_mat_value_as_sheet(design_ref_mats[mat])
+				TEST_FAIL("The [mat.name] ([mat.type] = [sheet_val]) of [printed_instance.type] plus its contents exceeds what presents in [design.type] ([design_val]). Review the code of the object and fix that.")

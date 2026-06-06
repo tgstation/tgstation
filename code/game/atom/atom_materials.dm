@@ -556,6 +556,31 @@
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
+/**
+ * Returns a list with the sum of the materials of the source and its contents for each mat type.
+ * If contents_type is set, only consider contained objects of that type (plus src).
+ * Any object that has any of the traits in skip_traits will also be skipped.
+ */
+/atom/proc/get_contents_custom_materials(contents_type, list/skip_traits)
+	var/list/contained = ispath(contents_type) ? get_all_contents_type(contents_type) : get_all_contents()
+	if(skip_traits && !islist(skip_traits))
+		skip_traits = list(skip_traits)
+	var/list/all_mats = list()
+	for(var/atom/atom as anything in contained)
+		if(!length(atom.custom_materials))
+			continue
+		if(skip_traits)
+			var/skip = FALSE
+			for(var/trait in skip_traits)
+				if(HAS_TRAIT(atom, trait))
+					skip = TRUE
+					continue
+			if(skip)
+				continue
+		for(var/material in atom.custom_materials)
+			all_mats[material] += atom.custom_materials[material]
+	return all_mats
+
 /// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
 /atom/proc/drop_custom_materials(multiplier = 1)
 	for(var/datum/material/material as anything in custom_materials)
