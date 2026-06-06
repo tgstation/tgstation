@@ -1,37 +1,18 @@
 /datum/ai_controller/basic_controller/trader
 	behavior_tree_json = "trader.bt.json"
+	behavior_tree_json = "trader.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TRADER_RUSH_TO_SELL = FALSE
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,
-		/datum/ai_planning_subtree/prepare_travel_to_destination/trader,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target,
-		/datum/ai_planning_subtree/setup_shop,
-	)
 
 /datum/ai_controller/basic_controller/trader/jumpscare
-	behavior_tree_json = "jumpscare.bt.json"
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader,
-		/datum/ai_planning_subtree/prepare_travel_to_destination/trader,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target,
-		/datum/ai_planning_subtree/setup_shop/jumpscare,
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TRADER_RUSH_TO_SELL = TRUE
 	)
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/trader
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/trader
-
-/datum/ai_behavior/basic_ranged_attack/trader
-	time_between_perform = 3 SECONDS
-	avoid_friendly_fire = TRUE
 
 ///Subtree to find our very first customer and set up our shop after walking right into their face
 /datum/ai_planning_subtree/setup_shop
@@ -48,7 +29,7 @@
 	if(controller.blackboard_key_exists(BB_SHOP_SPOT))
 		return
 
-	//If we don't have a costurmer to greet, look for one
+	//If we don't have a customer to greet, look for one
 	if(!controller.blackboard_key_exists(BB_FIRST_CUSTOMER))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/conscious_person, BB_FIRST_CUSTOMER, /mob/living/carbon/human)
 		return
@@ -77,13 +58,6 @@
 
 /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
 	target_key = BB_SHOP_SPOT
-
-///Version of setup show where the trader will run at you to assault you with incredible deals
-/datum/ai_planning_subtree/setup_shop/jumpscare
-	setup_shop_behavior = /datum/ai_behavior/setup_shop/jumpscare
-
-/datum/ai_behavior/setup_shop/jumpscare
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
 /datum/ai_behavior/setup_shop/jumpscare/setup(datum/ai_controller/controller, target_key)
 	. = ..()

@@ -1070,6 +1070,7 @@
 #include "code\datums\ai\generic_behaviors\drop_item.dm"
 #include "code\datums\ai\generic_behaviors\fail.dm"
 #include "code\datums\ai\generic_behaviors\find_and_set.dm"
+#include "code\datums\ai\generic_behaviors\succeed.dm"
 #include "code\datums\ai\generic_behaviors\find_and_set\apcs.dm"
 #include "code\datums\ai\generic_behaviors\find_and_set\bonfire.dm"
 #include "code\datums\ai\generic_behaviors\find_and_set\corpses.dm"

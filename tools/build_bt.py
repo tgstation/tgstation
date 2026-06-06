@@ -20,6 +20,7 @@ import json
 import os
 import re
 import sys
+import warnings
 from pathlib import Path
 
 # The time macros, so we can use them in JSON files
@@ -123,7 +124,9 @@ def _resolve_expr(raw: str, defines: dict):
     expr = expr.strip()
 
     try:
-        val = ast.literal_eval(expr)
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', SyntaxWarning)
+            val = ast.literal_eval(expr)
         if isinstance(val, (int, float, str)):
             return val
         return None
@@ -131,7 +134,9 @@ def _resolve_expr(raw: str, defines: dict):
         pass
 
     try:
-        val = eval(expr, {'__builtins__': {}}, {})  # noqa: S307
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', SyntaxWarning)
+            val = eval(expr, {'__builtins__': {}}, {})  # noqa: S307
         if isinstance(val, (int, float)):
             return val
     except Exception:
