@@ -22,6 +22,7 @@ cd ..
 
 mkdir -p data
 if [ -d "ci_test/data/screenshots_new" ]; then
+    mkdir -p data/screenshots_new
     cp -r ci_test/data/screenshots_new data/screenshots_new
 fi
 cp ci_test/data/unit_tests.json data/unit_tests.json
