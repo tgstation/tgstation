@@ -69,13 +69,13 @@
 
 // Unit test bitflags
 
-/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run. Does not support splitting up across integration runs
 #define UNIT_TEST_FOCUS (1<<0)
-/// This unit test only runs on specially designated unit test maps (Should only ever be one).
-#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+/// This unit test runs on every map
+#define UNIT_TEST_EVERY_MAP (1<<1)
 
-#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
-#define UNIT_TEST_MAP_TEST (NONE)
+#define UNIT_TEST_BASIC (NONE)
+#define UNIT_TEST_MAP_TEST (UNIT_TEST_EVERY_MAP)
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
