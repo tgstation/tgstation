@@ -80,8 +80,9 @@
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
+ * * euclidean_distance - whether to use Euclidean distance instead of get_dist
  */
-/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE, euclidean_distance = FALSE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -113,6 +114,9 @@
 	//on a whole this can outperform iterating through all movables in view() by ~2x especially when hearables are a tiny percentage of movables in view
 	//using hearers is a further optimization of that because for our purposes its the same as view except we dont have to set center's luminosity to 6 and then unset it
 	for(var/mob/oranges_ear/ear in hearers(view_radius, center_turf))
+		if(euclidean_distance)
+			if(get_dist_euclidean(center_turf, ear) > view_radius)
+				continue
 		. += ear.references
 
 	for(var/mob/oranges_ear/remaining_ear as anything in assigned_oranges_ears)//we need to clean up our mess
@@ -129,8 +133,9 @@
  * * radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
+ * * euclidean_distance - whether to use Euclidean distance instead of get_dist
  */
-/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE, euclidean_distance = FALSE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -150,7 +155,7 @@
 		return .
 
 	for(var/atom/movable/hearable as anything in hearables_from_grid)
-		if (get_dist(center_turf, hearable) <= range)
+		if (euclidean_distance ? get_dist_euclidean(center_turf, hearable) <= range : get_dist(center_turf, hearable) <= range)
 			. += hearable
 
 	return .
