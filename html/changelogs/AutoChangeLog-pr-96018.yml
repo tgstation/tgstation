@@ -1,5 +1,0 @@
-author: "CabinetOnFire, Kapu"
-delete-after: True
-changes:
-  - sound: "Changed our falloff to be less intense, as it was punching volume down way too fast."
-  - refactor: "Implements a system for spatial audio to improve our looping sounds"
