@@ -11,6 +11,7 @@ mkdir -p ci_test/data
 
 #test config
 cp tools/ci/ci_config.txt ci_test/config/config.txt
+cp tools/ci/ci_config_maps.txt ci_test/config/maps.txt
 
 #set the map
 cp _maps/$MAP.json ci_test/data/next_map.json
