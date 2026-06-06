@@ -4,8 +4,7 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command_locked"
 	time_to_unscrew = 6 SECONDS
-	req_one_access = list(ACCESS_CAPTAIN, ACCESS_RD)
-	var/unlock = FALSE
+	var/locked = TRUE
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
@@ -14,30 +13,43 @@
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
+	if(circuit.obj_flags & EMAGGED)
+		set_locked(TRUE, user)
+
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
-	unlock = TRUE
-	icon_screen = "command"
-	update_appearance(UPDATE_OVERLAYS)
-	balloon_alert(user, "console unlocked")
+	if (circuit.obj_flags & EMAGGED)
+		return FALSE
+	circuit.obj_flags |= EMAGGED
+	circuit.req_one_access.Cut()
+
+	set_locked(TRUE, user)
+	if(user)
+		balloon_alert(user, "access restrictions removed!")
 	return TRUE
+
+/obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
+	if(locked == !locked_state)
+		return
+	locked  = locked_state ? FALSE : TRUE
+	icon_screen = locked_state ? "command" : "command_locked"
+	update_appearance(UPDATE_OVERLAYS)
+	if(user)
+		balloon_alert(user, locked_state ? "console unlocked!" : "console locked!")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/card/id))
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
-
-		if(!check_access(O))
+		if(circuit.obj_flags & EMAGGED)
+			ballon_alert(user, "access locks fried!")
+			return
+		if(!circuit.check_access(O))
 			balloon_alert(user, "access denied!")
 			return
-		if(unlock)
-			unlock = FALSE
-			icon_screen = "command_locked"
-			balloon_alert(user, "console locked")
-		else
-			unlock = TRUE
-			icon_screen = "command"
-			balloon_alert(user, "console unlocked")
-			addtimer(CALLBACK(src, PROC_REF(lock_self)), 5 MINUTES, TIMER_UNIQUE)
+
+		set_locked(!locked, user)
+		if(!locked)
+			addtimer(CALLBACK(src, PROC_REF(set_locked), TRUE), 5 MINUTES, TIMER_UNIQUE)
 
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
@@ -46,7 +58,7 @@
 		var/obj/item/ai_module/M = O
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
-		if(!unlock)
+		if(locked)
 			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
 			balloon_alert(user, "console locked!")
 			return
@@ -65,11 +77,6 @@
 		imprint_gps("Weak Upload Signal")
 	else
 		return ..()
-
-/obj/machinery/computer/upload/proc/lock_self()
-	icon_screen = "command_locked"
-	update_appearance(UPDATE_OVERLAYS)
-	unlock = FALSE
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD)
