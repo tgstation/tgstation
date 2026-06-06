@@ -1534,3 +1534,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	name = "blunt impact dent"
 	icon_state = "impact1"
 	dent_type = WALL_DENT_HIT
+
+/***
+ * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
+ * The trait is removed if the turf is changed. That's how it's supposed to work.
+ * For a version of this that persists between turf changes, use /obj/effect/landmark/persistent_no_tele_turf instead
+ */
+/obj/effect/mapping_helpers/no_tele_turf
+	name = "no teleport turf"
+	icon_state = "no_teleport_turf"
+
+/obj/effect/mapping_helpers/wall_dent/Initialize(mapload)
+	. = ..()
+	var/turf/our_turf = get_turf(src)
+	ADD_TRAIT(our_turf, TRAIT_NO_TELEPORT, INNATE_TRAIT)

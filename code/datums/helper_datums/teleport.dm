@@ -37,7 +37,7 @@
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
 					to_chat(MM, span_warning("The clashing pulls of bluespace interfere with your teleport!"))
-			
+
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/basic/spark_spread/sparks = new(teleatom, 5, TRUE)
@@ -245,7 +245,7 @@
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
 
-	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT) || HAS_TRAIT(destination_turf, TRAIT_NO_TELEPORT))
 		return FALSE
 
 	// prevent unprecise teleports from landing you outside of the destination's reserved area

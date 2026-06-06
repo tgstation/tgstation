@@ -28,6 +28,11 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Nanotrasen Museum Cafeteria"
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
+/area/awaymission/museum/inaccessible
+	name = "Nanotrasen Museum (INACCESSIBLE)"
+	icon_state = "away_inaccessible"
+	area_flags = NOTELEPORT|HIDDEN_AREA
+
 /area/awaymission/errorroom
 	name = "Super Secret Room"
 	static_lighting = FALSE
@@ -57,3 +62,9 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 /area/awaymission/secret/powered/fullbright
 	static_lighting = FALSE
 	base_lighting_alpha = 255
+
+///Denotes area of away missions that shouldn't be accessible through teleportation.
+/area/awaymission/inaccessible
+	name = "inaccessible away mission area"
+	icon_state = "away_inaccessible"
+	area_flags = NOTELEPORT|HIDDEN_AREA

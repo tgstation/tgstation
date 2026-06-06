@@ -52,18 +52,7 @@
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
-	// Mineral turfs are big, so they need to be on the game plane at a high layer
-	// But they're also turfs, so we need to cut them out from the light mask plane
-	// So we draw them as if they were on the game plane, and then overlay a copy onto
-	// The wall plane (so emissives/light masks behave)
-	// I am so sorry
-	var/static/list/mutable_appearance/wall_overlays = list()
-	var/mutable_appearance/wall_overlay = wall_overlays[wall_icon_state]
-	if (!wall_overlay)
-		wall_overlay = mutable_appearance('icons/turf/mining.dmi', wall_icon_state, appearance_flags = RESET_TRANSFORM)
-		wall_overlays[wall_icon_state] = wall_overlay
-	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
-	overlays += wall_overlay
+	add_large_wall_overlay('icons/turf/mining.dmi', wall_icon_state)
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
@@ -673,6 +662,7 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
 	exposure_based = TRUE
+	wall_icon_state = "mountainrock"
 
 /turf/closed/mineral/random/snow/change_ore(ore_type, random = TRUE)
 	. = ..()
@@ -680,7 +670,6 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(
