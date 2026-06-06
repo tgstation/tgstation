@@ -763,17 +763,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
-
-/**
- * The tougher cousin of /obj/effect/mapping_helpers/no_tele_turf, used to prevent things from teleporting on (but not off) the turf (unless for when the forced arg is set to TRUE)
- * unlike the mapping helper, the effect of this landmark persists between turf changes. For when you don't want people to tele on this turf but the turf itself isn't immutable.
- * If it's a whole area though, consider using the NO_TELEPORT or LOCAL_TELEPORT area flag instead.
- */
-/obj/effect/landmark/persistent_no_tele_turf
-	name = "no teleport turf"
-	icon = 'icons/effects/mapping_helpers.dmi'
-	icon_state = "no_teleport_turf"
-
-/obj/effect/landmark/persistent_no_tele_turf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_NO_TELEPORT)))

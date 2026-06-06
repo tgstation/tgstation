@@ -1537,8 +1537,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /***
  * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
- * The trait is removed if the turf is changed. That's how it's supposed to work.
- * For a version of this that persists between turf changes, use /obj/effect/landmark/persistent_no_tele_turf instead
+ * The trait is removed if the turf is changed, so you should only keep it on small sections with indestructible turfs, ideally corners surrounded by
+ * other inaccessible walls. For larger sections, consider using areas with NO_TELEPORT or LOCAL_TELEPORT flags instead.
  */
 /obj/effect/mapping_helpers/no_tele_turf
 	name = "no teleport turf"
