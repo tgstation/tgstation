@@ -6589,7 +6589,6 @@
 #include "code\modules\surgery\organs\external\restyling.dm"
 #include "code\modules\surgery\organs\external\spines.dm"
 #include "code\modules\surgery\organs\external\tails.dm"
-#include "code\modules\surgery\organs\external\wings\functional_wings.dm"
 #include "code\modules\surgery\organs\external\wings\moth_wings.dm"
 #include "code\modules\surgery\organs\external\wings\wings.dm"
 #include "code\modules\surgery\organs\internal\appendix\_appendix.dm"
