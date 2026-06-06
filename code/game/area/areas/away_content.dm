@@ -63,7 +63,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-///Denotes area of away missions that shouldn't be accessible through teleportation.
+///Denotes area of away missions that shouldn't be accessible through teleportation etc.
 /area/awaymission/inaccessible
 	name = "inaccessible away mission area"
 	icon_state = "away_inaccessible"
