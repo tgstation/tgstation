@@ -20,6 +20,18 @@ GLOBAL_LIST_EMPTY(required_map_items)
 
 GLOBAL_LIST_EMPTY(test_run_times)
 
+/// A list of every test that is currently focused.
+/// Use the PERFORM_ALL_TESTS macro instead.
+GLOBAL_VAR_INIT(focused_tests, focused_tests())
+
+/proc/focused_tests()
+	var/list/focused_tests = list()
+	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
+		if (unit_test::test_flags & UNIT_TEST_FOCUS)
+			focused_tests += unit_test
+
+	return length(focused_tests) ? focused_tests : null
+
 /datum/unit_test
 	abstract_type = /datum/unit_test
 
