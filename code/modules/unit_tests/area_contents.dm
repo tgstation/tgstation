@@ -35,5 +35,5 @@
 
 	for(var/turf/position in ALL_TURFS())
 		if(!position.in_contents_of)
-			var/zlevel_name = position.z ? SSmapping.get_level(position_z)?.name : null
+			var/zlevel_name = position.z ? SSmapping.get_level(position.z)?.name : null
 			TEST_FAIL("Found a turf [position.type] [COORD(position)][zlevel_name ? " ([zlevel_name])" : ""] inside [position.loc.type] that is NOT stored in any area's turf listing")
