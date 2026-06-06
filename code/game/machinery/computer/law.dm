@@ -19,19 +19,20 @@
 	icon_screen = "command"
 	update_appearance(UPDATE_OVERLAYS)
 	balloon_alert(user, "console unlocked")
+	return TRUE
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/card/id))
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 
-		if(check_access(O) == FALSE)
-			balloon_alert(user, "access denied")
+		if(!check_access(O))
+			balloon_alert(user, "access denied!")
 			return
-		if(unlock == TRUE)
+		if(unlock)
 			unlock = FALSE
 			icon_screen = "command_locked"
-			balloon_alert(user,"console locked")
+			balloon_alert(user, "console locked")
 		else
 			unlock = TRUE
 			icon_screen = "command"
@@ -39,15 +40,15 @@
 			addtimer(CALLBACK(src, PROC_REF(lock_self)), 5 MINUTES, TIMER_UNIQUE)
 
 		update_appearance(UPDATE_OVERLAYS)
-		return
+		return TRUE
 
 	if(istype(O, /obj/item/ai_module))
 		var/obj/item/ai_module/M = O
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
-		if(unlock == FALSE)
+		if(!unlock)
 			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
-			balloon_alert(user, "console locked")
+			balloon_alert(user, "console locked!")
 			return
 		if(!current)
 			to_chat(user, span_alert("You haven't selected anything to transmit laws to!"))
