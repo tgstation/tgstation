@@ -1,4 +1,0 @@
-author: "Floyd"
-delete-after: True
-changes:
-  - code_imp: "Rust-G has been updated to 6.2.0"
