@@ -74,14 +74,22 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 //PV = nRT
 
 ///joules per kelvin
-/datum/gas_mixture/proc/heat_capacity(data = MOLES)
-	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
-	return values_dot(cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT))
+/datum/gas_mixture/proc/heat_capacity()
+	return values_dot(moles, GUS_META(META_GAS_SPECIFIC_HEAT))
+
+///joules per kelvin. Same as heat_capacity() for moles_archive.
+// Separate function to reduce branches in a hot function
+/datum/gas_mixture/proc/heat_capacity_archive()
+	return values_dot(moles_archive, GUS_META(META_GAS_SPECIFIC_HEAT))
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
-/datum/gas_mixture/turf/heat_capacity(data = MOLES)
-	var/list/cached_moles = (data == MOLES) ? moles : moles_archive
-	return values_dot(cached_moles, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+/datum/gas_mixture/turf/heat_capacity()
+	return values_dot(moles, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+
+/// Same as above except vacuums return HEAT_CAPACITY_VACUUM
+// Separate function to reduce branches in a hot function
+/datum/gas_mixture/turf/heat_capacity_archive()
+	return values_dot(moles_archive, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
 
 /// Calculate moles
 /datum/gas_mixture/proc/total_moles()
@@ -453,8 +461,8 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity(ARCHIVE)
-		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity(ARCHIVE)
+		var/self_heat_capacity = heat_capacity_archive()
+		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity_archive()
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			// coefficient applied first because some turfs have very big heat caps.
