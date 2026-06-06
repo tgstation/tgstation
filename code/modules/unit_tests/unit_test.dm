@@ -374,7 +374,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map)
 			continue
 		if (potential_test::test_flags & UNIT_TEST_FOCUS)
-			focused_tests += test_to_run
+			focused_tests += potential_test
 			continue
 		tests_to_run += potential_test
 	if(length(focused_tests))
