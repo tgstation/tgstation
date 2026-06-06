@@ -816,7 +816,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/apply_material_effects()
 	. = ..()
 	//Either effects aren't applied of he materials are simply being increased/decreased along with the weight. Avoids recursion.
-	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT) || material_weight_mult == 1)
+	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT) )
 		return
 	maximum_weight *= material_weight_mult
 	update_size_and_weight(size, (temp_weight || weight) * material_weight_mult, update_materials = FALSE)
