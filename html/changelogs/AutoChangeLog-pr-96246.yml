@@ -1,0 +1,5 @@
+author: "Frfor17"
+delete-after: True
+changes:
+  - qol: "now Admin RPED has 40 parts each"
+  - code_imp: "now Admin outfit and Debug outfit(what is that) has AdminDebug RPED with 40 parts, and not just tier4 RPED, which is like game thing"
