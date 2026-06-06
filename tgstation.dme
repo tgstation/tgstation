@@ -449,6 +449,7 @@
 #include "code\__HELPERS\colors.dm"
 #include "code\__HELPERS\config.dm"
 #include "code\__HELPERS\construction.dm"
+#include "code\__HELPERS\creation_test.dm"
 #include "code\__HELPERS\dates.dm"
 #include "code\__HELPERS\datums.dm"
 #include "code\__HELPERS\dna.dm"
