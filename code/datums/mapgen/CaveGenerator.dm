@@ -90,7 +90,7 @@
 	///Cave gen settings below!!
 
 	/// Minimum dimension of a BSP leaf in the generator. Raising this creates larger pockets but can end up making for big corridors
-	var/min_bsp_size = 35
+	var/min_bsp_size = 25
 	/// Maximum aspect ratio for BSP splits for lavaland generator
 	var/max_ratio = 1.5
 	/// Room edge padding within BSP leaf for lavaland generator
@@ -100,9 +100,9 @@
 	/// Width of corridors between rooms for lavaland generator. Raising this just means corridors are AT LEAST this wide. but cellular automata can make them bigger
 	var/corridor_width = 1
 	/// Chance to add extra MST edges for loops for lavaland generator. This basically results in more corridors / mazier generation
-	var/loop_percent = 5
+	var/loop_percent = 15
 	/// Initial random floor density for lavaland generator
-	var/noise_percent = 50
+	var/noise_percent = 51
 	/// Cellular Automata smoothing iterations for lavaland generator
 	var/ca_steps = 8
 	/// Neighbors to create floor (>=) for lavaland generator
