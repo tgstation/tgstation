@@ -289,6 +289,7 @@
 	cost = 5
 	suffix = "lavaland_surface_bileworm_nest.dmm"
 	allow_duplicates = FALSE
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/lavaland/lava_phonebooth
 	name = "Lava-Ruin Phonebooth"
