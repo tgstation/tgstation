@@ -68,7 +68,7 @@
 	var/anim_from_target_y = 0
 	var/anim_from_target_px = 0
 	var/anim_from_target_py = 0
-	///world.time at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
+	///REALTIMEOFDAY at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
 	var/anim_start_time = 0
 	///Duration of the last animation, in deciseconds (matches the time= passed to animate()).
 	var/anim_duration = 0
@@ -226,10 +226,10 @@
 		animate_time = 0
 
 	// Endpoints in absolute world-pixel coordinates.
-	var/vector/origin_world = vector(origin.x * ICON_SIZE_ALL + origin_px, origin.y * ICON_SIZE_ALL + origin_py)
-	var/vector/target_world = vector(target.x * ICON_SIZE_ALL + target_px, target.y * ICON_SIZE_ALL + target_py)
-	var/vector/old_origin_world = vector(old_origin_x_f * ICON_SIZE_ALL + old_origin_px_f, old_origin_y_f * ICON_SIZE_ALL + old_origin_py_f)
-	var/vector/old_target_world = vector(old_target_x_f * ICON_SIZE_ALL + old_target_px_f, old_target_y_f * ICON_SIZE_ALL + old_target_py_f)
+	var/vector/origin_world = vector(origin.x * ICON_SIZE_X + origin_px, origin.y * ICON_SIZE_Y + origin_py)
+	var/vector/target_world = vector(target.x * ICON_SIZE_X + target_px, target.y * ICON_SIZE_Y + target_py)
+	var/vector/old_origin_world = vector(old_origin_x_f * ICON_SIZE_X + old_origin_px_f, old_origin_y_f * ICON_SIZE_Y + old_origin_py_f)
+	var/vector/old_target_world = vector(old_target_x_f * ICON_SIZE_X + old_target_px_f, old_target_y_f * ICON_SIZE_Y + old_target_py_f)
 
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x, target.y, target_px, target_py)
 	var/vector/beam_direction = vector(sin(Angle), cos(Angle))
@@ -289,7 +289,7 @@
 				var/band_start = cut_row - fade_height
 				for(var/y in band_start to cut_row - 1)
 					var/from_tip = (cut_row - 1) - y // 0 at the tip row, fade_height-1 furthest back
-					var/a = round(255 * (from_tip + 1) / (fade_height + 1))
+					var/a = round(255 * (from_tip + 1) / (fade_height + 1), 1)
 					alpha_mask.DrawBox(rgb(255, 255, 255, a), 1, y, 32, y)
 				alpha_mask.DrawBox(null, 1, cut_row, 32, 32)
 				terminal_icon.Blend(alpha_mask, ICON_MULTIPLY)
@@ -302,8 +302,8 @@
 		else
 			segment.transform = rot_matrix
 
-		var/Pixel_x = (DX == 0) ? 0 : round(sin(Angle) + 32 * sin(Angle) * (N + 16) / 32)
-		var/Pixel_y = (DY == 0) ? 0 : round(cos(Angle) + 32 * cos(Angle) * (N + 16) / 32)
+		var/Pixel_x = (DX == 0) ? 0 : round(sin(Angle) + 32 * sin(Angle) * (N + 16) / 32, 1)
+		var/Pixel_y = (DY == 0) ? 0 : round(cos(Angle) + 32 * cos(Angle) * (N + 16) / 32, 1)
 
 		var/final_x = segment.x
 		var/final_y = segment.y
@@ -319,10 +319,10 @@
 		if(animate_time)
 			// Seed from interpolated old endpoints so consecutive redraws don't snap.
 			var/vector/old_visual = old_origin_world + old_beam_direction * old_pos
-			var/new_visual_x = final_x * ICON_SIZE_ALL + new_pixel_x
-			var/new_visual_y = final_y * ICON_SIZE_ALL + new_pixel_y
-			segment.pixel_x = new_pixel_x + round(old_visual.x - new_visual_x)
-			segment.pixel_y = new_pixel_y + round(old_visual.y - new_visual_y)
+			var/new_visual_x = final_x * ICON_SIZE_X + new_pixel_x
+			var/new_visual_y = final_y * ICON_SIZE_Y + new_pixel_y
+			segment.pixel_x = new_pixel_x + round(old_visual.x - new_visual_x, 1)
+			segment.pixel_y = new_pixel_y + round(old_visual.y - new_visual_y, 1)
 			// Segments past the old beam's end fade in instead of popping.
 			if(N >= old_length)
 				segment.alpha = 0
@@ -349,10 +349,10 @@
 			// Project the dying segment onto the new beam and clamp it to the tip.
 			var/proj_pos = clamp((i - 1) * ICON_SIZE_ALL + 16, 0, length)
 			var/vector/proj_world = origin_world + beam_direction * proj_pos
-			var/dying_world_x = dying.x * ICON_SIZE_ALL
-			var/dying_world_y = dying.y * ICON_SIZE_ALL
-			var/target_px_anim = round(proj_world.x - dying_world_x)
-			var/target_py_anim = round(proj_world.y - dying_world_y)
+			var/dying_world_x = dying.x * ICON_SIZE_X
+			var/dying_world_y = dying.y * ICON_SIZE_Y
+			var/target_px_anim = round(proj_world.x - dying_world_x, 1)
+			var/target_py_anim = round(proj_world.y - dying_world_y, 1)
 			dying.cut_overlays() // Remove emissive overlay so it doesn't glow while the segment fades out.
 			if(animate_rotation)
 				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
