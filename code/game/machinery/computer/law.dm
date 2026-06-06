@@ -14,7 +14,7 @@
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 	if(circuit.obj_flags & EMAGGED)
-		set_locked(TRUE, user)
+		set_locked(TRUE)
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (circuit.obj_flags & EMAGGED)
@@ -28,7 +28,7 @@
 	return TRUE
 
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
-	if(locked == !locked_state)
+	if(locked == locked_state)
 		return
 	locked  = locked_state ? FALSE : TRUE
 	icon_screen = locked_state ? "command" : "command_locked"
@@ -41,7 +41,7 @@
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(circuit.obj_flags & EMAGGED)
-			ballon_alert(user, "access locks fried!")
+			balloon_alert(user, "access locks fried!")
 			return
 		if(!circuit.check_access(O))
 			balloon_alert(user, "access denied!")
@@ -55,10 +55,10 @@
 		return TRUE
 
 	if(istype(O, /obj/item/ai_module))
-		var/obj/item/ai_module/M = O
+		var/obj/item/ai_module/module = O
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
-		if(locked)
+		if(locked && !module.bypass_access_check)
 			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
 			balloon_alert(user, "console locked!")
 			return
@@ -73,7 +73,7 @@
 			to_chat(user, span_alert("Upload failed! Unable to establish a connection to [current.name]. You're too far away!"))
 			current = null
 			return
-		M.install(current.laws, user)
+		module.install(current.laws, user)
 		imprint_gps("Weak Upload Signal")
 	else
 		return ..()
