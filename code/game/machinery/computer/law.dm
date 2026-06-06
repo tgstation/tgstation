@@ -15,7 +15,7 @@
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 	if(circuit.obj_flags & EMAGGED)
-		set_locked(TRUE)
+		set_locked(FALSE)
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (circuit.obj_flags & EMAGGED)
@@ -23,7 +23,7 @@
 	circuit.obj_flags |= EMAGGED
 	circuit.req_one_access.Cut()
 
-	set_locked(TRUE, user)
+	set_locked(FALSE, user)
 	if(user)
 		balloon_alert(user, "access restrictions removed!")
 	return TRUE
