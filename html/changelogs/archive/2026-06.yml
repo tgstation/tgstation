@@ -140,3 +140,7 @@
   - sound: Changed our falloff to be less intense, as it was punching volume down
       way too fast.
   - refactor: Implements a system for spatial audio to improve our looping sounds
+  TheRyeGuyWhoWillNowDie:
+  - balance: Syndicate assault cyborgs can now block attacks with their energy swords
+  - balance: Syndicate medical cyborgs now feature atropine in their hypospray to
+      prevent microbomb detonations.
