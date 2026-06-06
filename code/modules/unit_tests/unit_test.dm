@@ -204,9 +204,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-#ifdef UNIT_TESTS
 	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
-#endif UNIT_TESTS
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
@@ -373,10 +371,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/tests_to_run = list()
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
-#ifdef UNIT_TESTS
 		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map)
 			continue
-#endif
 		if (potential_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += potential_test
 			continue

@@ -60,7 +60,7 @@
 	/// Boolean - if TRUE, players spawn with grappling hooks in their bags
 	var/give_players_hooks = FALSE
 
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 	/// If TRUE, only unit tests with UNIT_TEST_DEBUG_MAP_ONLY will run on this map
