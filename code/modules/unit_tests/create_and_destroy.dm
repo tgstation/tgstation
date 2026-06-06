@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 #ifdef CREATION_TEST_REQUIRED_NEIGHBOR
 		// If we have a master and it has already been tested then we're good :D
 		// If not, let's do it now & shunt the current test to the end
-		if(type_path::creation_test_master && !type_paths_to_check.Find(type_path::creation_test_master), 1, i - 1)
+		if(type_path::creation_test_master && !type_paths_to_check.Find(type_path::creation_test_master, 1, i - 1))
 			type_paths_to_check += type_path
 			type_path = type_path::creation_test_master
 		else if(type_path::creation_test_has_child)
