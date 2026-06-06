@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "borg attack chain now passes modifiers to its item `attack_self()` proc"
-  - qol: "omni tool welder now won't turn on automatically when switching to it via radial menu or using inventory button. This stops accidental combustion in hazardous areas"
-  - qol: "omni tool welder can now be turned on/off via LMB like regular welder & not CTRL+LMB. Use RMB to open radial menu to switch to other tools when using welder"

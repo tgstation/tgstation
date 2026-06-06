@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed TGUI spawn panel direction option not working"

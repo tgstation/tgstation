@@ -1,4 +1,0 @@
-author: "UgoManzo"
-delete-after: True
-changes:
-  - bugfix: "Water coolers now properly reveal their custom reagents when examined by ghosts or players with science goggles."
