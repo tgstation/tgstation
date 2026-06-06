@@ -64,7 +64,6 @@
 	moles.Cut()
 	moles_archive.Cut()
 	for(var/gas_id in initial_gas)
-		ADD_GAS(gas_id, src)
 		moles[gas_id] = initial_gas[gas_id]
 		moles_archive[gas_id] = initial_gas[gas_id]
 
@@ -86,7 +85,6 @@
 		mix[path] = text2num(gas[id])
 
 	for(var/gas_id in mix)
-		ADD_GAS(gas_id, src)
 		moles[gas_id] = mix[gas_id]
 
 

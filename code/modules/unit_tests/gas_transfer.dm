@@ -25,9 +25,6 @@
 	first_mix.volume = 200
 	second_mix.volume = 200
 
-	ASSERT_GAS(/datum/gas/hypernoblium, first_mix)
-	ASSERT_GAS(/datum/gas/tritium, second_mix)
-
 	first_mix.moles[/datum/gas/hypernoblium] = nob_moles
 	first_mix.temperature = nob_temp
 

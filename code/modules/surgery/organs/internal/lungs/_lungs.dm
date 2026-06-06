@@ -670,7 +670,6 @@
 		var/partial_pressure = partial_pressures[breath_id] || 0
 		var/old_partial_pressure = last_partial_pressures[breath_id] || 0
 		// Ensures the gas will always be instanciated, so people can interact with it safely
-		ASSERT_GAS(breath_id, breath)
 		var/inhale = breathe_always[breath_id]
 		call(src, inhale)(breather, breath, partial_pressure, old_partial_pressure)
 
@@ -727,7 +726,6 @@
 	volume = min(volume, breath_moles[remove_id])
 	breath_moles[remove_id] -= volume
 	if(exchange_id)
-		ASSERT_GAS(exchange_id, breath_out)
 		breath_out.moles[exchange_id] += volume
 	return volume
 
