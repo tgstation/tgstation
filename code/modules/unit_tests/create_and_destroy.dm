@@ -41,6 +41,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index)
 
+	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
+
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
