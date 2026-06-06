@@ -368,49 +368,17 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	var/list/all_unit_tests = subtypesof(/datum/unit_test)
-
 	var/list/tests_to_run = list()
-
-	var/alist/unit_tests_by_priority = alist()
 	var/list/focused_tests = list()
-	for(var/datum/unit_test/potential_test as anything in all_unit_tests)
+	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
+		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map)
+			continue
 		if (potential_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += potential_test
 			continue
-		if(potential_test::test_flags & UNIT_TEST_EVERY_MAP)
-			tests_to_run += potential_test
-			continue
-		LAZYADD(unit_tests_by_priority[potential_test.priority], potential_test)
-
+		tests_to_run += potential_test
 	if(length(focused_tests))
 		tests_to_run = focused_tests
-	else
-		// Split up unit tests (by priority) across integration runs
-		var/runner_count = length(config.maplist)
-
-		for(var/priority, _unit_tests in unit_tests_by_priority)
-			var/list/unit_tests = _unit_tests
-
-			var/total_amount_to_check = length(unit_tests)
-			var/split_up_amount = floor(total_amount_to_check / runner_count)
-
-			var/what_map_index_are_we = 1
-			for(var/map_name, _map_config in config.maplist)
-				var/datum/map_config/map_config = _map_config
-				if(SSmapping.current_map.map_name == map_config.map_name)
-					break
-				what_map_index_are_we++
-
-			var/start_index = ((what_map_index_are_we - 1) * split_up_amount) + 1
-			var/end_index
-
-			if(what_map_index_are_we == runner_count)
-				end_index = total_amount_to_check + 1
-			else
-				end_index = start_index + split_up_amount
-
-			tests_to_run += unit_tests.Copy(start_index, end_index)
 
 	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
