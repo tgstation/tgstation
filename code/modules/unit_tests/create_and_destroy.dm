@@ -46,7 +46,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/list/whitelisted_types = list()
 	for(var/i = 1 to length(type_paths_to_check))
 		var/atom/type_path = type_paths_to_check[i]
-#ifdef CREATION_TEST_REQUIRED_NEIGHBOR
 		// If we have a master and it has already been tested then we're good :D
 		// If not, let's do it now & shunt the current test to the end
 		if(type_path::creation_test_master && !type_paths_to_check.Find(type_path::creation_test_master, 1, i - 1))
@@ -55,7 +54,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		else if(type_path::creation_test_has_child)
 			// If we have a child then go ahead and skip. All master type paths should be caught by the code above
 			continue
-#endif
 
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
