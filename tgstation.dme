@@ -2145,6 +2145,7 @@
 #include "code\datums\votes\custom_vote.dm"
 #include "code\datums\votes\map_vote.dm"
 #include "code\datums\votes\restart_vote.dm"
+#include "code\datums\weather\particle_weather.dm"
 #include "code\datums\weather\weather.dm"
 #include "code\datums\weather\weather_types\ash_storm.dm"
 #include "code\datums\weather\weather_types\floor_is_lava.dm"
