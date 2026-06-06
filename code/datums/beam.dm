@@ -68,7 +68,7 @@
 	var/anim_from_target_y = 0
 	var/anim_from_target_px = 0
 	var/anim_from_target_py = 0
-	///REALTIMEOFDAY at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
+	///world.time at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
 	var/anim_start_time = 0
 	///Duration of the last animation, in deciseconds (matches the time= passed to animate()).
 	var/anim_duration = 0
