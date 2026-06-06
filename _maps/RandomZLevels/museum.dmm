@@ -2848,9 +2848,6 @@
 	dir = 1
 	},
 /area/awaymission/museum/mothroachvoid)
-"xa" = (
-/turf/cordon/secret,
-/area/awaymission/museum/inaccessible)
 "xb" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -41669,8 +41666,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -41678,8 +41675,8 @@ uY
 tD
 Qi
 mj
-xa
-xa
+re
+re
 zE
 re
 re
@@ -41926,8 +41923,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -41935,8 +41932,8 @@ TM
 tD
 Qi
 mj
-xa
-xa
+re
+re
 zE
 re
 re
@@ -42183,8 +42180,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -42192,8 +42189,8 @@ uY
 tD
 Qi
 mj
-xa
-xa
+re
+re
 zE
 re
 re
@@ -42440,8 +42437,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -42449,8 +42446,8 @@ uY
 tD
 Qi
 mj
-xa
-xa
+re
+re
 zE
 re
 re
@@ -42697,8 +42694,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -42706,8 +42703,8 @@ TM
 tD
 Qi
 mj
-xa
-xa
+re
+re
 zE
 re
 re
@@ -42954,8 +42951,8 @@ re
 re
 re
 zE
-xa
-xa
+re
+re
 dK
 Qi
 lb
@@ -42963,8 +42960,8 @@ uY
 tD
 Qi
 GD
-xa
-xa
+re
+re
 zE
 re
 re

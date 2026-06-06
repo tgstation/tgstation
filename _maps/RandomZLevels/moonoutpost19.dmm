@@ -7553,9 +7553,6 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals/shed)
-"YM" = (
-/turf/cordon/secret,
-/area/space)
 "YO" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
@@ -8039,7 +8036,7 @@ IM
 IM
 IM
 IM
-YM
+IM
 "}
 (2,1,1) = {"
 IM
