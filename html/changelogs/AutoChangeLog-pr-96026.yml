@@ -1,5 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - refactor: "Lavaland/Icemoon now uses a smarter algorithm to generate caves, making them more interconnected and making ruins easier to locate."
-  - bugfix: "wishgranter ruin now has /biome_replace subtypes on its floors/walls, ensuring it spawns in correctly (if enabled in config)"

@@ -136,13 +136,42 @@
   lelandkemble:
   - map: Catwalk disposals outputs correctly.
 2026-06-06:
+  CabinetOnFire:
+  - refactor: Lavaland/Icemoon now uses a smarter algorithm to generate caves, making
+      them more interconnected and making ruins easier to locate.
+  - bugfix: wishgranter ruin now has /biome_replace subtypes on its floors/walls,
+      ensuring it spawns in correctly (if enabled in config)
   CabinetOnFire, Kapu:
   - sound: Changed our falloff to be less intense, as it was punching volume down
       way too fast.
   - refactor: Implements a system for spatial audio to improve our looping sounds
   Floyd:
   - code_imp: Rust-G has been updated to 6.2.0
+  Frfor17:
+  - qol: now Admin RPED has 40 parts each
+  - code_imp: now Admin outfit and Debug outfit(what is that) has AdminDebug RPED
+      with 40 parts, and not just tier4 RPED, which is like game thing
+  Melbert:
+  - bugfix: Fix moths being able to fly in space
+  QuiteLiterallyAnything:
+  - image: Added a directional sprite for coffins.
+  Rhials, Dendydoom:
+  - rscadd: Apple Fritters have been added to your local chef's cookbook!
+  SyncIt21:
+  - code_imp: borg attack chain now passes modifiers to its item `attack_self()` proc
+  - qol: omni tool welder now won't turn on automatically when switching to it via
+      radial menu or using inventory button. This stops accidental combustion in hazardous
+      areas
+  - qol: omni tool welder can now be turned on/off via LMB like regular welder & not
+      CTRL+LMB. Use RMB to open radial menu to switch to other tools when using welder
+  TealSeer:
+  - bugfix: fixed TGUI spawn panel direction option not working
   TheRyeGuyWhoWillNowDie:
   - balance: Syndicate assault cyborgs can now block attacks with their energy swords
   - balance: Syndicate medical cyborgs now feature atropine in their hypospray to
       prevent microbomb detonations.
+  UgoManzo:
+  - bugfix: Water coolers now properly reveal their custom reagents when examined
+      by ghosts or players with science goggles.
+  lelandkemble:
+  - bugfix: Pinpointers stop tracking a shunted ai when that ai is no longer shunted
