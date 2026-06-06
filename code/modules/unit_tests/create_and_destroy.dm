@@ -43,7 +43,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
 
-	var/list/whitelisted_types = list()
 	for(var/i = 1 to length(type_paths_to_check))
 		var/atom/type_path = type_paths_to_check[i]
 		// If we have a master and it has already been tested then we're good :D
