@@ -236,12 +236,16 @@ function TaskEditModal(props: TaskEditModalProps) {
             </Stack.Item>
             <Stack.Item grow>
               <Table>
-                <ConfigRow
-                  label="Object Type"
-                  content={getFilteringModeText(task.filtering_mode ?? 1)}
-                  onClick={() => adjust('cycle_filtering_mode')}
-                  tooltip="Cycle object category"
-                />
+                {(task.task_type === 'pickup' ||
+                  task.task_type === 'drop' ||
+                  task.task_type === 'throw') && (
+                  <ConfigRow
+                    label="Object Type"
+                    content={getFilteringModeText(task.filtering_mode ?? 1)}
+                    onClick={() => adjust('cycle_filtering_mode')}
+                    tooltip="Cycle object category"
+                  />
+                )}
                 <ConfigRow
                   label="Use Filters"
                   content={task.filters_status ? 'TRUE' : 'FALSE'}

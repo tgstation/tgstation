@@ -310,6 +310,8 @@
 		return FALSE
 	if(!manipulator.monkey_worker?.resolve())
 		return FALSE
+	if(!find_type_priority(skip_anchored))
+		return FALSE
 	return can_accept(target)
 
 /datum/manipulator_task/cargo/dropoff_base/run_task(obj/machinery/big_manipulator/manipulator)
