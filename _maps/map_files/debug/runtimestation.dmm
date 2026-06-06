@@ -62,9 +62,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aq" = (
-/obj/machinery/camera/directional/north,
 /obj/machinery/computer/monitor,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "av" = (
@@ -286,13 +286,13 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft)
 "bM" = (
-/obj/machinery/camera/directional/north,
 /obj/structure/table,
 /obj/item/construction/rld,
 /obj/item/construction/rcd/arcd,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bO" = (
@@ -304,10 +304,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "bR" = (
-/obj/machinery/camera/directional/north,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/chem_heater/debug,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "bS" = (
@@ -323,8 +323,8 @@
 /area/station/security/brig)
 "bV" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/directional/north,
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/construction)
 "bY" = (
@@ -642,11 +642,11 @@
 /area/station/security/brig)
 "dS" = (
 /obj/machinery/atmospherics/components/tank/air,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "dT" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "dV" = (
@@ -1040,7 +1040,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gn" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "gv" = (
@@ -1061,7 +1061,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gE" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "gF" = (
@@ -1081,7 +1081,7 @@
 /area/station/cargo/storage)
 "gI" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "gJ" = (
@@ -1181,7 +1181,7 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -1317,13 +1317,13 @@
 /area/station/commons/storage/primary)
 "pZ" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/camera/directional/north,
 /obj/effect/turf_decal/plaque{
 	icon_state = "L11"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qb" = (
@@ -2034,10 +2034,10 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "Hc" = (
-/obj/machinery/camera/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "Hg" = (
@@ -2057,7 +2057,7 @@
 /turf/open/floor/iron,
 /area/station/science)
 "Ih" = (
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "Ir" = (
