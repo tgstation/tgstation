@@ -371,7 +371,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/tests_to_run = list()
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
-		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map)
+		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map && !SSmapping.current_map.skipped_tests.Find(potential_test))
 			continue
 		if (potential_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += potential_test
