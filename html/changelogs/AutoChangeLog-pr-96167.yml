@@ -1,4 +1,0 @@
-author: "UvvU"
-delete-after: True
-changes:
-  - bugfix: "fixed improper chat caching."

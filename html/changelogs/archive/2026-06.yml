@@ -181,3 +181,5 @@
       storm sounds
   - refactor: Rain and ash storms have been refactored to use particles rather than
       overlays
+  UvvU:
+  - bugfix: fixed improper chat caching.
