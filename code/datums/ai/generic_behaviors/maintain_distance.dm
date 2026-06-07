@@ -1,13 +1,22 @@
 /// Moves away from a target if too close, or toward it if too far, to stay within the blackboard-keyed distance band.
 /datum/bt_node/ai_behavior/maintain_distance
+	/// Set by on_movement_failed() when the movement system gives up pathing.
+	var/movement_failed = FALSE
 
 /datum/bt_node/ai_behavior/maintain_distance/setup(datum/ai_controller/controller, target_key, min_dist_key = BB_RANGED_SKIRMISH_MIN_DISTANCE, max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE)
 	var/atom/target = controller.blackboard[target_key]
 	if(!isliving(target) || !can_see(controller.pawn, target, 10))
 		return FALSE
+	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
 	return TRUE
 
+/datum/bt_node/ai_behavior/maintain_distance/proc/on_movement_failed(atom/source)
+	SIGNAL_HANDLER
+	movement_failed = TRUE
+
 /datum/bt_node/ai_behavior/maintain_distance/perform(seconds_per_tick, datum/ai_controller/controller, target_key, min_dist_key = BB_RANGED_SKIRMISH_MIN_DISTANCE, max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE)
+	if(movement_failed)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
@@ -30,6 +39,8 @@
 	return AI_BEHAVIOR_INSTANT
 
 /datum/bt_node/ai_behavior/maintain_distance/finish_action(datum/ai_controller/controller, succeeded, target_key, min_dist_key, max_dist_key)
+	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
+	movement_failed = FALSE
 	controller.ai_movement.stop_moving_towards(controller)
 	controller.change_ai_movement_type(initial(controller.ai_movement))
 	return ..()

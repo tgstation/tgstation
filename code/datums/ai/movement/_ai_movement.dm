@@ -34,7 +34,7 @@
 /datum/ai_movement/proc/increment_pathing_failures(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts++
 	if(controller.consecutive_pathing_attempts >= max_pathing_attempts)
-		controller.CancelActions()
+		SEND_SIGNAL(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, moving_controllers[controller])
 
 /datum/ai_movement/proc/reset_pathing_failures(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts = 0

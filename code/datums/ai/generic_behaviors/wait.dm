@@ -12,9 +12,6 @@
 		return AI_BEHAVIOR_INSTANT
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/wait/finish_action(datum/ai_controller/controller, succeeded, duration = 0)
-	message_admins("we finished [succeeded] waiting for [duration] deciseconds")
-
 /datum/bt_node/ai_behavior/wait/reset_tick_state()
 	end_time = 0
 	..()

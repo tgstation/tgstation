@@ -3,6 +3,8 @@
 /// Pass movement_type to temporarily override the controller's ai_movement; resets to the initial type on finish.
 /datum/bt_node/ai_behavior/move_to_target
 	time_between_perform = 0
+	/// Set by on_movement_failed() when the movement system gives up pathing.
+	var/movement_failed = FALSE
 
 /datum/bt_node/ai_behavior/move_to_target/setup(datum/ai_controller/controller, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
 	var/atom/target = controller.blackboard[target_key]
@@ -10,10 +12,17 @@
 		return FALSE
 	if(movement_type)
 		controller.change_ai_movement_type(movement_type)
+	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
 	controller.ai_movement.start_moving_towards(controller, target, required_dist)
 	return TRUE
 
+/datum/bt_node/ai_behavior/move_to_target/proc/on_movement_failed(atom/source)
+	SIGNAL_HANDLER
+	movement_failed = TRUE
+
 /datum/bt_node/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
+	if(movement_failed)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
@@ -24,6 +33,8 @@
 	return AI_BEHAVIOR_INSTANT
 
 /datum/bt_node/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
+	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
+	movement_failed = FALSE
 	controller.ai_movement.stop_moving_towards(controller)
 	if(movement_type)
 		controller.change_ai_movement_type(initial(controller.ai_movement))
