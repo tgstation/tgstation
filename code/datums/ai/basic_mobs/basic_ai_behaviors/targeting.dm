@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
+	/// Range in which we can acquire a new target
+	var/aggro_grab_range_key = BB_AGGRO_GRAB_RANGE
 	/// Blackboard key for the target priority strategy
 	var/priority_strategy_key = BB_TARGET_PRIORITY_STRATEGY
 	/// If we have a priority strategy set, how often do we refresh our target search?
@@ -34,7 +36,12 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if((!priority_strategy || controller.blackboard[BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN] > world.time) && current_target && targeting_strategy.can_attack(living_mob, current_target, vision_range))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
+	var/aggro_range = vision_range
+	if(isnull(current_target) && !isnull(controller.blackboard[aggro_grab_range_key]))
+		aggro_range = controller.blackboard[aggro_grab_range_key]
+	else if(!isnull(controller.blackboard[aggro_range_key]))
+		aggro_range = controller.blackboard[aggro_range_key]
+
 	controller.clear_blackboard_key(target_key)
 
 	// If we're using a field rn, just don't do anything yeah?
@@ -87,7 +94,12 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
+	var/aggro_range = vision_range
+	if(!isnull(controller.blackboard[aggro_grab_range_key]))
+		aggro_range = controller.blackboard[aggro_grab_range_key]
+	else if(!isnull(controller.blackboard[aggro_range_key]))
+		aggro_range = controller.blackboard[aggro_range_key]
+
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
 	// Alright, here's the interesting bit
@@ -187,6 +199,3 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(length(priority_targets))
 		return ..(controller, priority_targets)
 	return ..()
-
-/datum/ai_behavior/find_potential_targets/bigger_range
-	vision_range = 16

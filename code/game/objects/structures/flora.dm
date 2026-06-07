@@ -308,7 +308,8 @@
 
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/seethrough, get_seethrough_map())
+	if(get_seethrough_map())
+		AddComponent(/datum/component/seethrough, get_seethrough_map())
 
 /obj/structure/flora/tree/get_potential_products()
 	return list(/obj/item/grown/log/tree = 1)
@@ -344,6 +345,9 @@
 	..()
 	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
+
+/obj/structure/flora/tree/stump/get_seethrough_map()
+	return FALSE
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/fluff/flora/deadtrees.dmi'

@@ -22,9 +22,5 @@
 /datum/ai_planning_subtree/simple_find_target/to_flee
 	target_key = BB_BASIC_MOB_FLEE_TARGET
 
-/datum/ai_planning_subtree/simple_find_target/increased_range
-	target_behavior = /datum/ai_behavior/find_potential_targets/bigger_range
-
 /datum/ai_planning_subtree/simple_find_target/hunt
 	strategy_key = BB_HUNT_TARGETING_STRATEGY
-

@@ -78,7 +78,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/attack_sequence(mob/living/firer, atom/target)
 	for(var/i in 1 to shot_count)
 		shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
-		SLEEP_CHECK_DEATH(shot_delay, src)
+		SLEEP_CHECK_DEATH(shot_delay, firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct
 	shot_count = 40

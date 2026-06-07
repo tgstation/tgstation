@@ -82,9 +82,13 @@
 	icon_state = "engi_lobby"
 
 /area/station/engineering/supermatter
-	name = "\improper Supermatter Engine"
+	name = "\improper Place Somewhere Around the Supermatter" // don't use this type
 	icon_state = "engine_sm"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+
+/area/station/engineering/supermatter/engine
+	name = "\improper Supermatter Engine"
+	icon_state = "engine_sm"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/engineering/supermatter/Initialize(mapload)

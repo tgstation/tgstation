@@ -56,8 +56,6 @@
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
 	return_action.Grant(occupier)
-	SEND_SIGNAL(src, COMSIG_SILICON_AI_OCCUPY_APC, occupier)
-	SEND_SIGNAL(occupier, COMSIG_SILICON_AI_OCCUPY_APC, occupier)
 	occupier.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
@@ -71,6 +69,12 @@
 		occupier.gib(DROP_ALL_REMAINS)
 		occupier = null
 		return
+
+	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
+		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+			disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
+			disk_pinpointers.alert = FALSE
+
 	if(occupier.linked_core)
 		occupier.shunted = FALSE
 		occupier.resolve_core_link()
@@ -78,10 +82,6 @@
 	else
 		stack_trace("An AI: [occupier] has vacated an APC with no linked core and without being gibbed.")
 
-	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
-		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
-			disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
-			disk_pinpointers.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()
