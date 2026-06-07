@@ -20,15 +20,10 @@
 	if(range >= minimum_distance && range <= maximum_distance)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-
-
 	if(range < minimum_distance)
-		message_admins("retreat")
-
 		if(!retreat(controller, target, minimum_distance))
 			return AI_BEHAVIOR_FAILED
 	else
-		message_admins("go go")
 		controller.change_ai_movement_type(initial(controller.ai_movement))
 		controller.ai_movement.start_moving_towards(controller, target, maximum_distance)
 
@@ -46,7 +41,7 @@
 	pawn.face_atom(target)
 	var/turf/next_step = get_step_away(pawn, target)
 	if(!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-		controller.ai_movement.start_moving_towards(controller, next_step, 0)
+		controller.ai_movement.start_moving_towards(controller, next_step, 0, controller.movement_delay * 2)
 		return TRUE
 	var/list/all_dirs = GLOB.alldirs.Copy()
 	all_dirs -= get_dir(pawn, next_step)
@@ -55,7 +50,7 @@
 	for(var/dir in all_dirs)
 		next_step = get_step(pawn, dir)
 		if(!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
-			controller.ai_movement.start_moving_towards(controller, next_step, 0)
+			controller.ai_movement.start_moving_towards(controller, next_step, 0, controller.movement_delay * 2)
 			return TRUE
 	return FALSE
 

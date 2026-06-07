@@ -75,17 +75,9 @@
 	ai_controller = /datum/ai_controller/basic_controller/suspicious_mannequin
 
 /datum/ai_controller/basic_controller/suspicious_mannequin
+	behavior_tree_json = "suspicious_mannequin.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_AGGRO_RANGE = 14,
-		BB_EMOTE_KEY = "scream", //spooky
 	)
 
-	ai_movement = /datum/ai_movement/jps //threat
-	idle_behavior = null
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/run_emote,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	ai_movement = /datum/ai_movement/basic_avoidance

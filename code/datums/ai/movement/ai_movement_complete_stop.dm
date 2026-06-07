@@ -2,7 +2,7 @@
 /datum/ai_movement/complete_stop
 	max_pathing_attempts = INFINITY // path all you want, you can not escape your fate
 
-/datum/ai_movement/complete_stop/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/complete_stop/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	. = ..()
 	if(!.)
 		return FALSE

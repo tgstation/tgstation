@@ -7,12 +7,12 @@
 	///how we deal with diagonal movement, whether we try to avoid them or follow through with them
 	var/diagonal_flags = DIAGONAL_REMOVE_CLUNKY
 
-/datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	. = ..()
 	if(!.)
 		return FALSE
 	var/atom/movable/moving = controller.pawn
-	var/delay = controller.movement_delay
+	var/delay = delay_override || controller.movement_delay
 
 	var/datum/move_loop/has_target/jps/loop = GLOB.move_manager.jps_move(moving,
 		current_movement_target,
@@ -51,7 +51,7 @@
 	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 
-/datum/ai_movement/jps/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/jps/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))

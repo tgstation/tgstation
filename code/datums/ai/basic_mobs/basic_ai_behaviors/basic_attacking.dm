@@ -54,7 +54,6 @@
 
 /datum/bt_node/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
-	controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
 
@@ -122,7 +121,7 @@
 		return AI_BEHAVIOR_INSTANT
 
 	basic_mob.RangedAttack(final_target)
-	return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()

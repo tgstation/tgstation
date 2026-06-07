@@ -173,7 +173,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field) // autoclears so it's fine
-		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
 		modify_cooldown(get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets

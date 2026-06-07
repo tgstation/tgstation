@@ -83,22 +83,13 @@
 	single_use = FALSE
 
 /datum/ai_controller/basic_controller/supermatter_spider
+	behavior_tree_json = "supermatter_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/random_speech/supermatter_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+/datum/bt_node/subtree/supermatter_spider_speech_subtree
+	behavior_tree_json = "supermatter_spider_speech_subtree.bt.json"
 
-/datum/ai_planning_subtree/random_speech/supermatter_spider
-	speech_chance = 7
-	emote_hear = list("clinks", "clanks")
-	emote_see = list("vibrates")

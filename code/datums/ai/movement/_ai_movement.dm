@@ -6,7 +6,7 @@
 	var/max_pathing_attempts
 
 //Override this to setup the moveloop you want to use
-/datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	SHOULD_CALL_PARENT(TRUE)
 	var/old_movement_target = moving_controllers[controller]
 	if(old_movement_target)
@@ -78,7 +78,6 @@
 
 	// Check if this controller can actually run, so we don't chase people with corpses
 	if(!controller.able_to_run)
-		controller.CancelActions()
 		qdel(source) //stop moving
 		return MOVELOOP_SKIP_STEP
 
