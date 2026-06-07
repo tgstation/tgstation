@@ -68,7 +68,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 				qdel(to_kill)
 
 	GLOB.running_create_and_destroy = FALSE
-	sleep(1 SECONDS)
 
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
@@ -101,6 +100,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			var/list/oldest_packet = queue_to_check[1]
 			//Pull out the time we inserted at
 			var/qdeld_at = oldest_packet[GC_QUEUE_ITEM_GCD_DESTROYED]
+
+			// STOP HANGING ON TO REFERENCES!!!
+			oldest_packet = null
 
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
