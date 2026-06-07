@@ -1,7 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
 	// Since this unit test takes so damn long, we split it up across all runners
-	test_flags = UNIT_TEST_FOCUS
+	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
 
@@ -54,13 +54,13 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))
+				// Same as below
+				creation = null
 				continue
 			//Go all in
 			qdel(creation, force = TRUE)
 			//This will hold a ref to the last thing we process unless we set it to null
 			//Yes byond is fucking sinful
-			if(type_path == /obj/effect/turf_decal/siding/brown/inner_corner)
-				log_world("[refcount(creation)]")
 			creation = null
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
