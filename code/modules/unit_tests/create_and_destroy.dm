@@ -38,7 +38,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// +1 because byond's list.Copy() implementation is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
 
-	log_world("Running create and destroy on [length(type_paths_to_check)] \[[start_index] ([type_paths_to_check[1]]) - [end_index] ([type_paths_to_check[length(type_paths_to_check)]])\] atoms out of the [total_amount_to_check] total")
+	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
+	log_world("([start_index] [type_paths_to_check[1]]) - ([end_index] [type_paths_to_check[length(type_paths_to_check)]])")
 
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
@@ -67,6 +68,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 				qdel(to_kill)
 
 	GLOB.running_create_and_destroy = FALSE
+	sleep(1 SECONDS)
 
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
@@ -75,7 +77,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	var/list/queues_we_care_about = list()
 	// All of em, I want hard deletes too, since we rely on the debug info from them
-	for(var/i in 1 to GC_QUEUE_HARDDELETE)
+	for(var/i in GC_QUEUE_FILTER to GC_QUEUE_HARDDELETE)
 		queues_we_care_about += i
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
