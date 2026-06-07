@@ -7,8 +7,8 @@
 		var/name = language::name
 		var/key = language::key
 		if(!key)
-			continue
-		if(used_keys[key])
+			TEST_FAIL("[name] ([language]) does not have a prefix!")
+		else if(used_keys[key])
 			var/datum/language/conflicting_language = used_keys[key]
 			TEST_FAIL("[name] ([language]) uses the '[key]' prefix, which is also used by [conflicting_language::name] ([conflicting_language])!")
 		else
