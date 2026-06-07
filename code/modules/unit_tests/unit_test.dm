@@ -368,12 +368,27 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /proc/RunUnitTests()
 	CHECK_TICK
 
+	// Find our primary unit test map & find out if we are the secondary
+	var/datum/map_config/primary_unit_test_map
+	var/is_secondary_unit_test_map = FALSE
+	var/found_secondary_unit_test_map = FALSE
+	for(var/map_name, _map_config in config.maplist)
+		var/datum/map_config/map_config = _map_config
+		if(map_config.is_unit_test_map)
+			primary_unit_test_map = map_config
+		if(!LAZYLEN(map_config.skipped_tests) && !found_secondary_unit_test_map)
+			found_secondary_unit_test_map = TRUE
+			if(SSmapping.current_map.map_name == map_config.map_name)
+				is_secondary_unit_test_map = TRUE
+
 	var/list/tests_to_run = list()
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
-		// If the test has UNIT_TEST_DEBUG_MAP_ONLY and we aren't running the debug map, skip it.
-		// We ignore the bitflag if the test is in the debug map's skipped_tests list
-		if ((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map && !SSmapping.current_map.skipped_tests?.Find(potential_test))
+		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
+		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
+		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map && \
+			!(primary_unit_test_map.skipped_tests?.Find(potential_test) && is_secondary_unit_test_map) \
+		)
 			continue
 		if (potential_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += potential_test
@@ -381,6 +396,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		tests_to_run += potential_test
 	if(length(focused_tests))
 		tests_to_run = focused_tests
+
+	primary_unit_test_map = null // I'm paranoid
 
 	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
