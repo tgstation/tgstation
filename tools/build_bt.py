@@ -185,8 +185,8 @@ def resolve_value(val, defines: dict):
 def compile_node(src: dict, defines: dict) -> dict:
     """Recursively compile one source JSON node into a DM descriptor dict."""
     # Read structural keys from defines
-    desc_type     = defines.get('BT_DESC_TYPE',          '__t')
-    desc_children = defines.get('BT_DESC_CHILDREN',      '__c')
+    desc_type     = defines.get('BT_DESC_TYPE',          'type')
+    desc_children = defines.get('BT_DESC_CHILDREN',      'children')
     desc_args     = defines.get('BT_DESC_BEHAVIOR_ARGS', 'default_behavior_args')
 
     node_type = src.get('type', '')

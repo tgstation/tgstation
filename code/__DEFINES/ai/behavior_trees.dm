@@ -55,9 +55,9 @@
 
 // --- Inline descriptor keys (used internally by SSai_controllers descriptor builder) ---
 /// Key storing the node typepath in a descriptor list
-#define BT_DESC_TYPE "__t"
+#define BT_DESC_TYPE "type"
 /// Key storing the children list in a descriptor list
-#define BT_DESC_CHILDREN "__c"
+#define BT_DESC_CHILDREN "children"
 /// Key storing the default behavior args list in a leaf descriptor
 #define BT_DESC_BEHAVIOR_ARGS "default_behavior_args"
 /// Key storing the override slot ID in a subtree descriptor

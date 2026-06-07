@@ -60,7 +60,7 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 		return
 	var/mob/user = ui.user
 	switch(action)
-		if("pick_mob")
+		if("pick_target")
 			_end_pick()
 			awaiting_pick = TRUE
 			awaiting_pick_user = user

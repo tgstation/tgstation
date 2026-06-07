@@ -1,5 +1,4 @@
 /// Base type for AI behavior leaf nodes in the behavior tree system.
-/// Each controller gets its own node instance, so all state lives directly on the instance.
 /// setup() is called once on first activation, perform() each tick while running.
 /// Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
 /datum/bt_node/ai_behavior
@@ -44,7 +43,7 @@
 	return
 
 /**
- * BT leaf tick. Runs setup() once on first activation, then perform() each tick.
+ * ai behavior tick. Runs setup() once on first activation, then perform() each tick.
  * Respects per-controller cooldowns set by AI_BEHAVIOR_DELAY.
  * Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
  */

@@ -286,7 +286,7 @@
 #include "code\__DEFINES\zoom.dm"
 #include "code\__DEFINES\ai\ai.dm"
 #include "code\__DEFINES\ai\ai_blackboard.dm"
-#include "code\__DEFINES\ai\ai_bt.dm"
+#include "code\__DEFINES\ai\behavior_trees.dm"
 #include "code\__DEFINES\ai\bot_keys.dm"
 #include "code\__DEFINES\ai\carp.dm"
 #include "code\__DEFINES\ai\haunted.dm"

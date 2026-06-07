@@ -1,9 +1,6 @@
 /**
  * Base composite node. Holds an ordered list of child bt_node instances.
- *
- * Set children_typepaths on your subtype definition to declare children.
- * SSai_controllers resolves them into instances when the controller's tree is built.
- */
+ * */
 /datum/bt_node/composite
 	/// Typepaths of child nodes declared on the type. Resolved to instances at tree construction.
 	var/list/children_typepaths = null
@@ -269,7 +266,7 @@
  * Parallel node: ticks ALL children every planning cycle, regardless of intermediate results.
  * Success and failure are determined by the configurable success_policy and failure_policy.
  *
- * Intended use: run multiple independent branches simultaneously, e.g. locomotion + action.
+ * Intended use: run multiple independent branches simultaneously, e.g.  action + locomotion
  */
 /datum/bt_node/composite/parallel
 	node_type = BT_NODE_PARALLEL

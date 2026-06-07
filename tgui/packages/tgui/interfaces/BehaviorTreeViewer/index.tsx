@@ -461,9 +461,9 @@ export function BehaviorTreeViewer() {
                 <Button
                   icon="crosshairs"
                   color={awaiting_pick ? 'yellow' : 'default'}
-                  onClick={() => act('pick_mob')}
+                  onClick={() => act('pick_target')}
                 >
-                  {awaiting_pick ? 'Click a mob...' : 'Pick Mob'}
+                  {awaiting_pick ? 'Click your target...' : 'Pick Mob'}
                 </Button>
               </Stack.Item>
               <Stack.Item>

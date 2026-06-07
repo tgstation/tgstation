@@ -16,7 +16,7 @@ The blackboard is an associated list keyed with strings and with values of whate
 
 ## AI Behavior
 
-AI behaviors are the actions an AI can take. These can range from "Do an emote" to "Attack this target". Any dynamic data should be stored in the blackboard, to allow different controllers to use the same behaviors.
+AI behaviors are the actions an AI can take. These can range from "Do an emote" to "Attack this target". Any dynamic data such as target should be stored in the blackboard
 
 # Guides:
 
