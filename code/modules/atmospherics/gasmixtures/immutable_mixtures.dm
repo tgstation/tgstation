@@ -10,8 +10,7 @@
 	garbage_collect()
 
 /datum/gas_mixture/immutable/garbage_collect()
-	temperature = initial_temperature
-	temperature_archived = initial_temperature
+	temperature = temperature_archived = initial_temperature
 	moles.Cut()
 	moles_archive.Cut()
 
@@ -60,12 +59,15 @@
 	var/list/initial_gas = list()
 
 /datum/gas_mixture/immutable/planetary/garbage_collect()
-	..()
-	moles.Cut()
-	moles_archive.Cut()
-	for(var/gas_id in initial_gas)
-		moles[gas_id] = initial_gas[gas_id]
-		moles_archive[gas_id] = initial_gas[gas_id]
+	temperature = temperature_archived = initial_temperature
+	var/cached_initial_gas = initial_gas
+	var/list/cached_moles = moles
+	var/list/cached_moles_archive = moles_archive
+
+	cached_moles.Cut()
+	cached_moles_archive.Cut()
+	for(var/gas_id in cached_initial_gas)
+		cached_moles[gas_id] = cached_moles_archive[gas_id] = cached_initial_gas[gas_id]
 
 /datum/gas_mixture/immutable/planetary/proc/parse_string_immutable(gas_string) //I know I know, I need this tho
 	gas_string = SSair.preprocess_gas_string(gas_string)

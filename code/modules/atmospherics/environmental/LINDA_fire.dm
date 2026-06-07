@@ -29,29 +29,27 @@
 	if(!cached_moles)
 		return
 
-	var/oxy = cached_moles[/datum/gas/oxygen] || 0
-	if (oxy < 0.5)
+	if (cached_moles[/datum/gas/oxygen] < 0.5)
 		return
-	var/plas = cached_moles[/datum/gas/plasma] || 0
-	var/trit = cached_moles[/datum/gas/tritium] || 0
-	var/h2 = cached_moles[/datum/gas/hydrogen] || 0
-	var/freon = cached_moles[/datum/gas/freon] || 0
+
+	var/plas_trit_h2_threshold = (cached_moles[/datum/gas/plasma] > 0.5 || cached_moles[/datum/gas/tritium] > 0.5 || cached_moles[/datum/gas/hydrogen])
+	var/freon_threshold = (cached_moles[/datum/gas/freon] > 0.5)
 	if(active_hotspot)
 		if(soh)
-			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas_trit_h2_threshold)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-			else if(freon > 0.5)
+			else if(freon_threshold)
 				if(active_hotspot.temperature > exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
-		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
+	if (((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && plas_trit_h2_threshold) || \
+		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && freon_threshold))
 
 		new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature)
 		SSair.add_to_active(src)
