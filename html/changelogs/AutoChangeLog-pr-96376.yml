@@ -1,0 +1,4 @@
+author: "soulware1"
+delete-after: True
+changes:
+  - bugfix: "Parthenogenesis no longer makes your material fish have null weights"
