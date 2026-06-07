@@ -18,7 +18,7 @@ let reconnectTimer: number | null = null;
 let retryCount = 0;
 let manuallyClosed = false;
 
-const sendWSNotice = (message, small = false) => {
+function sendWSNotice(message, small = false) {
   chatRenderer.processBatch([
     {
       html: small
@@ -26,16 +26,16 @@ const sendWSNotice = (message, small = false) => {
         : `<div class="boxed_message"><center><span class='alertwarning'>${message}</span></center></div>`,
     },
   ]);
-};
+}
 
-const clearReconnectTimer = () => {
+function clearReconnectTimer() {
   if (reconnectTimer !== null) {
     clearInterval(reconnectTimer);
     reconnectTimer = null;
   }
-};
+}
 
-const safeClose = (code = SAFE_CLOSE_CODE, reason?: string) => {
+function safeClose(code = SAFE_CLOSE_CODE, reason?: string) {
   if (!websocket) return;
   if (
     websocket.readyState === WebSocket.CLOSED ||
@@ -45,9 +45,9 @@ const safeClose = (code = SAFE_CLOSE_CODE, reason?: string) => {
   }
 
   websocket.close(code, reason);
-};
+}
 
-const startReconnectLoop = () => {
+function startReconnectLoop() {
   if (reconnectTimer !== null) return;
 
   reconnectTimer = window.setInterval(() => {
@@ -76,9 +76,9 @@ const startReconnectLoop = () => {
       setupWebsocket();
     }
   }, RETRY_INTERVAL);
-};
+}
 
-const setupWebsocket = (force = false) => {
+function setupWebsocket(force = false) {
   const { websocketEnabled, websocketServer } = store.get(settingsAtom);
 
   if (!websocketEnabled) {
@@ -152,7 +152,7 @@ const setupWebsocket = (force = false) => {
     logger.error('got websocket error', ev);
     safeClose(WEBSOCKET_REATTEMPT, 'got error from server');
   });
-};
+}
 
 // Initial connect
 setupWebsocket();
