@@ -113,6 +113,7 @@
 		// INFECTIOUS UNIQUE
 		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
+		TRAIT_STUNIMMUNE, //The optimal way to combat an undead horde should not be a baton
 	)
 
 	// Infectious zombies have slow legs
