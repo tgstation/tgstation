@@ -1,7 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
 	// Since this unit test takes so damn long, we split it up across all runners
-	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
+	test_flags = UNIT_TEST_FOCUS
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
 
@@ -24,16 +24,16 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
 
-	var/what_map_index_are_we = 0
+	var/what_map_index_are_we = 1
 	for(var/map_name, _map_config in config.maplist)
 		var/datum/map_config/map_config = _map_config
 		if(SSmapping.current_map.map_name == map_config.map_name)
 			break
 		what_map_index_are_we++
 
-	var/start_index = what_map_index_are_we * split_up_amount
+	var/start_index = (what_map_index_are_we - 1) * split_up_amount
 	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
-	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
+	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount + 50
 
 	// +1 because byond's list.Copy() implementation is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
@@ -100,9 +100,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			var/list/oldest_packet = queue_to_check[1]
 			//Pull out the time we inserted at
 			var/qdeld_at = oldest_packet[GC_QUEUE_ITEM_GCD_DESTROYED]
-
-			// STOP HANGING ON TO REFERENCES!!!
-			oldest_packet = null
 
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
