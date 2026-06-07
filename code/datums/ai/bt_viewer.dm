@@ -49,9 +49,23 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 		collect_nodes(root_indices, node_list)
 		data["roots"] = root_indices
 		data["nodes"] = node_list
+		var/list/bb_entries = list()
+		var/list/bb = viewing_controller.blackboard
+		for(var/key in bb)
+			var/value = bb[key]
+			var/str_val
+			if(isnull(value))
+				str_val = "null"
+			else if(islist(value))
+				str_val = "list([length(value)])"
+			else
+				str_val = "[value]"
+			bb_entries += list(list("key" = key, "value" = str_val))
+		data["blackboard"] = bb_entries
 	else
 		data["roots"] = list()
 		data["nodes"] = list()
+		data["blackboard"] = list()
 	return data
 
 /datum/bt_viewer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -112,26 +126,26 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 		_collect_node(root, node_list, priority++)
 
 // Recursively adds node and all descendants to node_list as flat entries.
-// Each entry has e=exec_index and c as a list of child exec indices rather than nested objects.
+// Each entry has exec_index as its unique key, with children as a flat list of child exec_indices.
 /datum/bt_viewer/proc/_collect_node(datum/bt_node/node, list/node_list, priority_index)
 	var/exec = node.execution_index || 0
 	var/last = node.last_execution_index || 0
 
 	var/list/node_data = list(
-		"e" = exec,
-		"l" = node.get_label(),
-		"t" = node.node_type,
-		"p" = priority_index,
+		"exec_index" = exec,
+		"label" = node.get_label(),
+		"node_type" = node.node_type,
+		"priority" = priority_index,
 	)
 	if(last != exec)
-		node_data["z"] = last
+		node_data["last_exec_index"] = last
 
 	if(node.node_type == BT_NODE_DECORATOR)
 		var/datum/bt_node/decorator/dec = node
 		if(dec.observer_abort)
-			node_data["a"] = dec.observer_abort
+			node_data["observer_abort"] = dec.observer_abort
 		if(dec.invert)
-			node_data["i"] = TRUE
+			node_data["invert"] = TRUE
 
 	var/list/children = node.get_children()
 	if(length(children))
@@ -142,6 +156,6 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 				continue
 			child_indices += child.execution_index
 			_collect_node(child, node_list, i)
-		node_data["c"] = child_indices
+		node_data["children"] = child_indices
 
 	node_list += list(node_data)

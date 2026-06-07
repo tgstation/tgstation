@@ -1,1 +1,1 @@
-{"__t":"/datum/bt_node/decorator/bb_key_set","__c":[{"__t":"/datum/bt_node/composite/subplan","__c":[{"__t":"/datum/bt_node/ai_behavior/swirl_around_target","default_behavior_args":[]}],"success_policy":1,"failure_policy":1}],"key":"BB_swarm_target","observer_abort":3}
+{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/composite/subplan","children":[{"type":"/datum/bt_node/ai_behavior/swirl_around_target","default_behavior_args":[]}],"success_policy":1,"failure_policy":1}],"key":"BB_swarm_target","observer_abort":3}

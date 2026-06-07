@@ -2,7 +2,7 @@
  * Base decorator node. Wraps a single child with a condition check.
  *
  *
- * Supports UE5-style observer aborts: register to watch specific signals, which triggers a re-check of the condition, potentially aborting the plan depending on the observer_abort settings.
+ * Supports observer aborts: register to watch specific signals, which triggers a re-check of the condition, potentially aborting the plan depending on the observer_abort settings.
  */
 /datum/bt_node/decorator
 	node_type = BT_NODE_DECORATOR

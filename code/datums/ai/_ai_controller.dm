@@ -1049,10 +1049,6 @@ multiple modular subtrees with behaviors
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Able to Run", able_to_run ? "TRUE" : "FALSE")
-	if(current_movement_target)
-		EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Movement Target", "[current_movement_target] (source: [movement_target_source])")
-	else
-		EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Movement Target", "(none)")
 
 	// Blackboard snapshot
 	for(var/blackboard_key_name, blackboard_value in blackboard)
