@@ -38,7 +38,7 @@
 		living_target.adjust_fire_loss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
-	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
+	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target)) && target.move_resist < INFINITY) //megafauna will always be pushed
 		step(target, get_dir(user, target))
 
 //bubblegum

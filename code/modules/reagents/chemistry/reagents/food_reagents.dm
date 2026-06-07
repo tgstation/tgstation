@@ -726,7 +726,7 @@
 
 	var/obj/effect/decal/cleanable/food/flour/flour_decal = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/flour)
 	if(flour_decal)
-		flour_decal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+		flour_decal.init_reagents(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"

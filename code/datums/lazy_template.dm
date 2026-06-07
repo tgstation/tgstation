@@ -112,6 +112,10 @@
 	reservations += reservation
 	return reservation
 
+/datum/lazy_template/nukie_elevator
+	key = LAZY_TEMPLATE_KEY_NUKIEELEVATOR
+	map_name = "nukie_elevator"
+
 /datum/lazy_template/nukie_base
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
 	map_name = "nukie_base"

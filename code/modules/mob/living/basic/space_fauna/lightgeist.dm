@@ -41,7 +41,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
-	pull_force = 0
+	pull_force = MOVE_FORCE_NONE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist

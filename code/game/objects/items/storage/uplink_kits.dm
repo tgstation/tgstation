@@ -803,6 +803,7 @@
 
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
+	nuke_datum.give_bonus_tc = FALSE
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
 	human_target.add_faction(ROLE_SYNDICATE)

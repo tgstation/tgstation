@@ -140,6 +140,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "basalt"
 	floor_variance = 15
 	dig_result = /obj/item/stack/ore/glass/basalt
+	smoothing_groups = SMOOTH_GROUP_FLOOR_BASALT
 
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
@@ -267,7 +268,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "siderite"
 	layer = HIGH_TURF_LAYER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
 	dig_result = /obj/item/stack/ore/glass/siderite
 
 /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
@@ -287,7 +288,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "shale-255"
 	base_icon_state = "shale"
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
