@@ -1,5 +1,15 @@
 {
 	"dm_type": "/datum/bt_node/subtree/simple_hostile_obstacles_combat",
+	"bindings": {
+		"b95z0f0c": {
+			"label": "while_attacking_subtree",
+			"default": ""
+		},
+		"by235tlw": {
+			"label": "cant_attack_subtree",
+			"default": ""
+		}
+	},
 	"type": "parallel",
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
@@ -54,9 +64,17 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 								"args": ["BB_CURRENT_TARGET", 1, false]
+							},
+							{
+								"type": "subtree",
+								"subtype": "$b95z0f0c"
 							}
 						]
 					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "$by235tlw"
 				},
 				{
 					"type": "subplan",

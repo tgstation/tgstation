@@ -3,31 +3,29 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD, // Will attack dead ungutted mobs
-		BB_THETHING_ATTACKMODE = TRUE, //Whether we are using our melee abilities right now
+		BB_THETHING_MELEEMODE = TRUE, //Whether we are using our melee abilities right now
 		BB_THETHING_NOAOE = TRUE, // Restricts us to only melee abilities
 		BB_THETHING_LASTAOE = null, // Last AOE ability key executed
-		BB_AGGRO_RANGE = 6, //lets not execute hearers for a 16 tile radius
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance // dont need anything better because the arena is a square lol
-	idle_behavior = null
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target/increased_range, //aggros at 6, sees 16 tiles
-		/datum/ai_planning_subtree/thing_boss_aoe,
-		/datum/ai_planning_subtree/thing_boss_melee,
-	)
+
+/datum/bt_node/subtree/thing_aoe
+	behavior_tree_json = "thing_aoe.bt.json"
+
+/datum/bt_node/subtree/thing_melee
+	behavior_tree_json = "thing_melee.bt.json"
 
 /datum/ai_planning_subtree/thing_boss_aoe/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
 	var/mob/living/pawn = controller.pawn
-	if(HAS_TRAIT_FROM(pawn, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT) || (controller.blackboard[BB_THETHING_ATTACKMODE] || controller.blackboard[BB_THETHING_NOAOE]))
+	if(HAS_TRAIT_FROM(pawn, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT) || (controller.blackboard[BB_THETHING_MELEEMODE] || controller.blackboard[BB_THETHING_NOAOE]))
 		return
 	// our target
 	var/mob/living/shaft_miner = controller.blackboard[BB_CURRENT_TARGET]
 	if(QDELETED(shaft_miner) || shaft_miner.stat == DEAD) //Dont use abilities on off z level targets, or dead shaft miners. We want to melee those.
 		return
 
-	controller.set_blackboard_key(BB_THETHING_ATTACKMODE, TRUE) // putting this here so we go to melee mode if we cant do any aoe
+	controller.set_blackboard_key(BB_THETHING_MELEEMODE, TRUE) // putting this here so we go to melee mode if we cant do any aoe
 	var/static/list/aoe_attacks = list(BB_THETHING_DECIMATE, BB_THETHING_BIGTENDRILS, BB_THETHING_CARDTENDRILS, BB_THETHING_ACIDSPIT)
 	var/list/possible_attacks = aoe_attacks.Copy() - controller.blackboard[BB_THETHING_LASTAOE]
 	for(var/bb_action_key in possible_attacks)
@@ -60,7 +58,7 @@
 	if(isnull(shriek) || isnull(charge))
 		return // pray this never occurs
 
-	controller.set_blackboard_key(BB_THETHING_ATTACKMODE, FALSE)
+	controller.set_blackboard_key(BB_THETHING_MELEEMODE, FALSE)
 
 	if(shriek.IsAvailable() && target_dist <= 2 && shaft_miner.stat != DEAD)
 		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/min_range/short, BB_THETHING_SHRIEK, BB_CURRENT_TARGET)

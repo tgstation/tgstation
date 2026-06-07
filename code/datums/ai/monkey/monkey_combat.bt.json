@@ -16,7 +16,7 @@
 					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 					"invert": true,
 					"target_key": "BB_CURRENT_TARGET",
-					"required_distance": 10,
+					"maximum_distance": 10,
 					"require_reach": false
 				},
 				"child": {

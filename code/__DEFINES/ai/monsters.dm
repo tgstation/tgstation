@@ -317,11 +317,13 @@
 #define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
 #define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
 /// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
-#define BB_THETHING_ATTACKMODE "BB_THETHING_ATTACKMODE"
+#define BB_THETHING_MELEEMODE "BB_THETHING_MELEEMODE"
 /// The Thing will be in attack mode forever if true
 #define BB_THETHING_NOAOE "BB_THETHING_NOAOE"
 /// What (first in combo) attack was last executed
 #define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
+/// The action object selected by pick_random_ability for the current AOE slot
+#define BB_THETHING_SELECTED_AOE "BB_THETHING_SELECTED_AOE"
 
 ///people we headbutt!
 #define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"

@@ -238,12 +238,13 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/build_node_from_descriptor(list/desc)
 	var/raw_type = desc[BT_DESC_TYPE]
+	if(!raw_type) // This can happen if we have an overriden type with no binding. (e.g. subtrees not being overriden and default to null)
+		return null
 	var/node_type = ispath(raw_type) ? raw_type : text2path(raw_type)
 	if(isnull(node_type))
 		stack_trace("build_node_from_descriptor(): unknown typepath '[raw_type]'")
 		return null
 	var/datum/bt_node/node = new node_type
-	resolve_node_children(node)
 	for(var/key in desc)
 		if(key == BT_DESC_TYPE || key == BT_DESC_CHILDREN || key == BT_DESC_BINDINGS)
 			continue
@@ -260,6 +261,7 @@ multiple modular subtrees with behaviors
 			if(!isnull(as_path))
 				value = as_path
 		node.vars[key] = value
+	resolve_node_children(node)
 	var/list/children_descs = desc[BT_DESC_CHILDREN]
 	if(LAZYLEN(children_descs))
 		node.set_descriptor_children(children_descs, src)

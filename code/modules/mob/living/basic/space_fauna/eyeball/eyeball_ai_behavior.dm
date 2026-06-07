@@ -48,7 +48,6 @@
 
 /datum/ai_behavior/targeted_mob_ability/glare_at_target
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	min_distance = 0
 
 /datum/ai_behavior/targeted_mob_ability/glare_at_target/setup(datum/ai_controller/controller, ability_key, target_key)
 	. = ..()

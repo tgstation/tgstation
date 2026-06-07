@@ -13,8 +13,8 @@
 
 /// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
-	/// Minimum distance at which the ability can fire; override in subclasses.
-	var/min_distance = 0
+	/// Maximum distance at which the ability can fire
+	var/maximum_distance = 0
 	///Does this require adjacency?
 	var/require_adjacency = FALSE
 
@@ -23,7 +23,7 @@
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	if(min_distance && get_dist(controller.pawn, target) > min_distance)
+	if(maximum_distance && get_dist(controller.pawn, target) >= maximum_distance)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(require_adjacency && !controller.pawn.Adjacent(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED

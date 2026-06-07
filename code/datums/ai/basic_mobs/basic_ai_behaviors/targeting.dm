@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
+	///Aggro loss distance
+	var/aggro_loss_distance = 12
 	/// Blackboard key for the target priority strategy
 	var/priority_strategy_key = BB_TARGET_PRIORITY_STRATEGY
 	/// If we have a priority strategy set, how often do we refresh our target search?
@@ -36,8 +38,6 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 
-	controller.clear_blackboard_key(target_key)
-
 	// If we're using a field rn, just don't do anything yeah?
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -53,7 +53,10 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(!potential_targets.len)
 		if(!current_target)
 			failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		if (!can_see(living_mob, current_target, aggro_loss_distance))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		potential_targets += current_target
 
 	var/list/filtered_targets = list()
 	var/current_priority = 0
@@ -77,7 +80,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [target_key]! Behavior: [src]", get_turf(target), "Target: [target]")
 	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
 
-	controller.set_blackboard_key(target_key, target)
+	if(target != current_target)
+		controller.set_blackboard_key(target_key, target)
 	controller.set_blackboard_key(BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN, world.time + priority_refresh_cooldown)
 
 	var/atom/potential_hiding_location = targeting_strategy.find_hidden_mobs(living_mob, target)
@@ -106,6 +110,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	)
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
+	controller.clear_blackboard_key(target_key)
+
 
 /datum/bt_node/ai_behavior/update_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE

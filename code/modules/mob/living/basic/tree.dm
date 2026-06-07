@@ -106,3 +106,8 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
+
+
+///holy shit lois tree subtree
+/datum/bt_node/subtree/tree_speech_subtree
+	behavior_tree_json = "tree_speech_subtree.bt.json"

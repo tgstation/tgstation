@@ -1,6 +1,0 @@
-{
-	"dm_type": "/datum/bt_node/subtree/fail",
-	"type": "leaf",
-	"behavior": "/datum/bt_node/ai_behavior/fail",
-	"args": []
-}

@@ -213,7 +213,7 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder
-	min_distance = 1
+	maximum_distance = 1
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder/setup(datum/ai_controller/controller, ability_key, target_key)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
