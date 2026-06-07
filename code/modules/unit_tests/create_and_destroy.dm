@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			qdel(creation, force = TRUE)
 			//This will hold a ref to the last thing we process unless we set it to null
 			//Yes byond is fucking sinful
+			if(type_path == /obj/effect/turf_decal/siding/brown/inner_corner)
+				log_world("[refcount(creation)]")
 			creation = null
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
@@ -66,8 +68,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
-				to_kill = null
-		to_del = null
 
 	GLOB.running_create_and_destroy = FALSE
 
