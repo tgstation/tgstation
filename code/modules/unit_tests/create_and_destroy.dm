@@ -38,7 +38,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// +1 because byond's list.Copy() implementation is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
 
-	log_world("Running create and destroy on [length(type_paths_to_check)] \[[start_index] ([type_paths_to_check[start_index]]) - [end_index] ([type_paths_to_check[end_index]])\] atoms out of the [total_amount_to_check] total")
+	log_world("Running create and destroy on [length(type_paths_to_check)] \[[start_index] ([type_paths_to_check[1]]) - [end_index] ([type_paths_to_check[length(type_paths_to_check)]])\] atoms out of the [total_amount_to_check] total")
 
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
