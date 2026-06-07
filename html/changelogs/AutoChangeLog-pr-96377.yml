@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - balance: "The mining ventpointer has been adjusted so that it can now more accurately show the distance to the nearest vent, and will now claim you've arrived if you're within 8 tiles away from a vent, down from 14."
+  - code_imp: "Several backend improvements to the pinpointer functionality and adjustability."
