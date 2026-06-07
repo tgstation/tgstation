@@ -15,7 +15,7 @@ Format:
 	webmap_url (link to the a webmap to see the map in the user's browser)
 endmap
 
-# When adding or removing maps be sure to add this to ci_config_maps.txt
+# When adding or removing maps be sure to also add/remove from ci_config_maps.txt
 
 # Production-level maps.
 
