@@ -1,0 +1,5 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - sound: "Sound now makes use of euclidean distance for falloff"
+  - code_imp: "max_range on playsound now ensures the sound is audible up to that range."
