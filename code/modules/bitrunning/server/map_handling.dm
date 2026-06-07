@@ -53,12 +53,12 @@
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
-		
-		
+
+
 	//We will want to record how the domain was selected. Either entirely randomly, with the name redacted, or with full information.
 	//Without this, it is difficult to determine what domains are selected more often intentionallly, vs unintentionally.
 	var/selection_type
-	
+
 	if(was_random_selection)
 		selection_type = "random selection"
 	else
@@ -168,8 +168,7 @@
 			continue
 
 		if(istype(thing, /obj/effect/landmark/bitrunning/loot_signal))
-			var/turf/signaler_turf = get_turf(thing)
-			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
+			generated_domain.main_crate_loc = thing.loc
 			qdel(thing)
 			continue
 
@@ -200,6 +199,7 @@
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
+	domain_complete = FALSE
 
 	sever_connections()
 

@@ -67,7 +67,7 @@
 		var/pref_volume = M?.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
 		if(!pref_volume)
 			continue
-		M.playsound_local(get_turf(parent), null, volume * (pref_volume/100), FALSE, K.frequency, null, channel, null, copy)
+		M.playsound_local(get_turf(parent), null, volume * (pref_volume/100), FALSE, K.frequency, exponential_falloff, channel, null, copy)
 		// Could do environment and echo later but not for now
 
 /**

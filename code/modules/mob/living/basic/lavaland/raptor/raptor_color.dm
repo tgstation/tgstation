@@ -96,6 +96,10 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	// Doesn't care for your excuses for friendly fire
 	ai_controller = /datum/ai_controller/basic_controller/raptor/aggressive
 
+/datum/raptor_color/red/setup_raptor(mob/living/basic/raptor/raptor)
+	. = ..()
+	ADD_TRAIT(raptor, TRAIT_MINING_AGGRO, INNATE_TRAIT)
+
 /datum/raptor_color/purple
 	color = "purple"
 	description = "A small, nimble breed, these raptors have been bred as travel companions rather than mounts, capable of storing the owner's possessions and helping them escape from danger unscathed."
@@ -440,7 +444,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/black/setup_raptor(mob/living/basic/raptor/raptor)
 	. = ..()
-	raptor.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE_SPREAD), INNATE_TRAIT)
+	raptor.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_NOFIRE_SPREAD, TRAIT_MINING_AGGRO), INNATE_TRAIT)
 
 /datum/raptor_color/black/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()

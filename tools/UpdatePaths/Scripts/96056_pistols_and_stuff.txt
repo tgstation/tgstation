@@ -1,0 +1,4 @@
+/obj/item/gun/ballistic/automatic/pistol/doorhickey : /obj/item/gun/ballistic/automatic/pistol/doohickey{@OLD}
+/obj/item/ammo_box/magazine/r10mm : /obj/item/ammo_box/magazine/r45{@OLD}
+/obj/item/ammo_casing/c10mm/reaper : /obj/item/ammo_casing/c45/reaper{@OLD}
+/obj/projectile/bullet/c10mm/reaper : /obj/projectile/bullet/c45/reaper{@OLD}

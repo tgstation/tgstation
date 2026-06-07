@@ -18,13 +18,15 @@
 	falloff_exponent = 10
 	falloff_distance = 5
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/destabilized_crystal
 	mid_sounds = list('sound/machines/sm/loops/delamming.ogg')
 	mid_length = 6 SECONDS
 	volume = 55
-	extra_range = 15
+	extra_range = 35
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/hypertorus
 	mid_sounds = list('sound/machines/hypertorus/loops/hypertorus_nominal.ogg')
@@ -32,6 +34,7 @@
 	volume = 55
 	extra_range = 15
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/generator
 	start_sound = 'sound/machines/generator/generator_start.ogg'
@@ -52,9 +55,10 @@
 		'sound/machines/fryer/deep_fryer_1.ogg',
 		'sound/machines/fryer/deep_fryer_2.ogg',
 	)
-	mid_length = 0.2 SECONDS
+	mid_length = 1 SECONDS
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
 	volume = 15
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/clock
 	mid_sounds = list('sound/ambience/misc/ticking_clock.ogg')
@@ -66,6 +70,7 @@
 	mid_sounds = list('sound/machines/grill/grillsizzle.ogg')
 	mid_length = 18
 	volume = 50
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/oven
 	start_sound = 'sound/machines/oven/oven_loop_start.ogg' //my immersions
@@ -75,14 +80,7 @@
 	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
 	volume = 100
 	falloff_exponent = 4
-
-/datum/looping_sound/deep_fryer
-	mid_length = 0.2 SECONDS
-	mid_sounds = list(
-		'sound/machines/fryer/deep_fryer_1.ogg',
-		'sound/machines/fryer/deep_fryer_2.ogg',
-	)
-	volume = 30
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
@@ -94,6 +92,7 @@
 	mid_length = 1 SECONDS
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/lathe_print
 	mid_sounds = list('sound/machines/lathe/lathe_print.ogg')
@@ -103,12 +102,14 @@
 	ignore_walls = FALSE
 	falloff_distance = 1
 	mid_length_vary = 1 SECONDS
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/jackpot
 	mid_length = 1.1 SECONDS
 	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/server
 	mid_sounds = list(
@@ -140,9 +141,10 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 1 SECONDS
 	volume = SOUND_AUDIBLE_VOLUME_MIN
-	falloff_exponent = 5 //Ultra quiet very fast
+	falloff_exponent = 4 //Ultra quiet very fast
 	extra_range = -12
-	falloff_distance = 1 //Instant falloff after initial tile
+	falloff_distance = 0 //Instant falloff after initial tile
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/gravgen
 	start_sound = 'sound/machines/gravgen/grav_gen_start.ogg'
@@ -157,7 +159,8 @@
 	vary = TRUE
 	volume = 70
 	falloff_distance = 5
-	falloff_exponent = 20
+	falloff_exponent = 10
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/firealarm
 	mid_sounds = list(
@@ -168,16 +171,19 @@
 	)
 	mid_length = 2.4 SECONDS
 	volume = 30
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/gravgen/kinesis
 	volume = 20
 	falloff_distance = 2
 	falloff_exponent = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/boiling
 	mid_sounds = list('sound/effects/bubbles/bubbles2.ogg')
 	mid_length = 7 SECONDS
 	volume = 25
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/typing
 	mid_sounds = list(
@@ -205,7 +211,8 @@
 	end_sound = 'sound/effects/soup_boil/soup_boil_end.ogg'
 	end_volume = 60
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
-	falloff_exponent = 4
+	falloff_exponent = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/soup/toxic
 	volume = 40
@@ -225,3 +232,4 @@
 	)
 	mid_length = 5 SECONDS
 	volume = 50
+	use_sound_tokens = TRUE

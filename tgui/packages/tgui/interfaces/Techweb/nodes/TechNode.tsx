@@ -40,6 +40,7 @@ export function TechNode(props: Props) {
     tier,
     enqueued_by_user,
     is_free,
+    discount_boosted,
   } = node;
   const {
     name,
@@ -49,6 +50,7 @@ export function TechNode(props: Props) {
     prereq_ids,
     required_experiments,
     discount_experiments,
+    discount_boosts,
   } = node_cache[id];
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
@@ -86,11 +88,19 @@ export function TechNode(props: Props) {
 
   // Notice that this logic will have to be changed if we make the discounts
   // pool-specific
-  const nodeDiscount = Object.keys(discount_experiments)
+  const nodeDiscountExperiments = Object.keys(discount_experiments)
     .filter((x) => experiments[x]?.completed)
     .reduce((tot, curr) => {
       return tot + discount_experiments[curr];
     }, 0);
+
+  // Will need to be changed (along with some backend/DM code) if boosts should
+  // ever vary by point type. As is, this simply adds up all discount boosts.
+  const nodeDiscountBoosts = discount_boosted
+    ? Object.keys(discount_boosts).reduce((tot, curr) => {
+        return tot + discount_boosts[curr];
+      }, 0)
+    : 0;
 
   return (
     <Section
@@ -150,7 +160,10 @@ export function TechNode(props: Props) {
       {tier !== 0 && (
         <Stack className="Techweb__NodeProgress">
           {costs.map((k) => {
-            const reqPts = Math.max(0, k.value - nodeDiscount);
+            const reqPts = Math.max(
+              0,
+              k.value - nodeDiscountExperiments - nodeDiscountBoosts,
+            );
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
               <Stack.Item key={k.type} grow basis={0}>
