@@ -564,8 +564,7 @@ SUBSYSTEM_DEF(air)
 			if(enemy_tile.current_cycle == -INFINITY)
 				continue
 			// .air instead of .return_air() because we can guarantee that the proc won't do anything
-			if(potential_diff.air.compare(enemy_tile.air, MOLES))
-				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air, MOLES)]")
+			if(potential_diff.air.compare(enemy_tile.air, FALSE))
 				if(!potential_diff.excited)
 					potential_diff.excited = TRUE
 					SSair.active_turfs += potential_diff

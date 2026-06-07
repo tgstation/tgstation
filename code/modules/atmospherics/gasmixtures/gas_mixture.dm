@@ -373,11 +373,11 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	var/list/only_in_cached = cached_moles - sharer_cached_moles
 
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
-	var/abs_temperature_delta = abs(temperature_delta)
+	var/temp_delta_threshold = abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER
 
 	var/old_self_heat_capacity = 0
 	var/old_sharer_heat_capacity = 0
-	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+	if(temp_delta_threshold)
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		else
 			delta = delta * sharer_coeff
 
-		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		if(temp_delta_threshold)
 			var/gas_heat_capacity = delta * cached_heat_capacity[gas_id]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	last_share = abs_moved_moles
 
 	//THERMAL ENERGY TRANSFER
-	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+	if(temp_delta_threshold)
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
@@ -478,27 +478,21 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	//thermal energy of the system (self and sharer) is unchanged
 
 ///Compares sample to self to see if within acceptable ranges that group processing may be enabled
-///Takes the gas index to read from as a second arg (either MOLES or ARCHIVE)
+///Takes the bool as a second arg to read to read archived values for moles and temperature
 ///Returns: a string indicating what check failed, or "" if check passes
-/datum/gas_mixture/proc/compare(datum/gas_mixture/sample, index)
-	var/list/cached_moles = (index == MOLES) ? moles : moles_archive
-	var/list/sample_cached_moles = (index == MOLES) ? sample.moles : sample.moles_archive //accessing datum vars is slower than proc vars
-	var/moles_sum = 0
+/datum/gas_mixture/proc/compare(datum/gas_mixture/sample, cmp_archive)
+	var/list/cached_moles = (cmp_archive) ? moles_archive : moles
+	var/list/sample_cached_moles = (cmp_archive) ? sample.moles_archive : sample.moles  //accessing datum vars is slower than proc vars
 
 	for(var/gas_id in cached_moles | sample_cached_moles) // compare gases from either mixture
-		// Yes this is actually fast. I too hate it here
-		var/gas_moles = cached_moles[gas_id] || 0
-		var/sample_moles = sample_cached_moles[gas_id] || 0
-		// Brief explanation. We are much more likely to not pass this first check then pass the first and fail the second
-		// Because of this, double calculating the delta is FASTER then inserting it into a var
-		if(abs(gas_moles - sample_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-			if(abs(gas_moles - sample_moles) > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
-				return gas_id
-		// similarly, we will rarely get cut off, so this is cheaper then doing it later
-		moles_sum += gas_moles
+		var/gas_moles = cached_moles[gas_id] // it can be null, but everything coerce to 0 after, so we save JMP and Tst
+		var/sample_moles = sample_cached_moles[gas_id]
+		var/abs_delta = abs(gas_moles - sample_moles)
+		if((abs_delta > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs_delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE))
+			return gas_id
 
-	if(moles_sum > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
-		if(index == ARCHIVE)
+	if(values_sum(cached_moles) > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
+		if(cmp_archive)
 			if(abs(temperature_archived - sample.temperature_archived) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 				return "temp"
 		else
