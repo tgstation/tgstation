@@ -215,6 +215,9 @@
 /datum/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE, alist/user_data)
 	if(QDELETED(weapon))
 		return MATERIAL_INSERT_ITEM_NO_MATS
+	if(HAS_TRAIT(weapon, TRAIT_IGNORED_BY_MAT_REDEMPTION))
+		qdel(weapon)
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
