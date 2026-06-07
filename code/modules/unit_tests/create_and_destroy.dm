@@ -33,7 +33,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	var/start_index = what_map_index_are_we * split_up_amount
 	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
-	var/end_index (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
+	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
 
 	// +1 because byond's list.Copy() implementation is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
