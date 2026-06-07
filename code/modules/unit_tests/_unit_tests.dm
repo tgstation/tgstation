@@ -39,7 +39,7 @@
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
+#define TEST_FOCUS(test_path) ##test_path { test_flags = UNIT_TEST_FOCUS; }
 
 /// Run the test provided within the parentheses run_count times
 /// Useful for debugging flaky tests that only fail sometimes
