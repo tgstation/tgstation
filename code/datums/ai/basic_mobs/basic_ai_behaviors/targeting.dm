@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
 	///Aggro loss distance
-	var/aggro_loss_distance = 12
+	var/aggro_loss_distance = 16
 	/// Blackboard key for the target priority strategy
 	var/priority_strategy_key = BB_TARGET_PRIORITY_STRATEGY
 	/// If we have a priority strategy set, how often do we refresh our target search?

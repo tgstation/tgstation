@@ -31,24 +31,19 @@
 						"args": ["BB_THETHING_MELEEMODE", true]
 					},
 					{
-						"type": "sequence",
-						"children": [
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/pick_random_ability",
-								"args": [],
-								"vars": {
-									"ability_keys": "list(BB_THETHING_DECIMATE, BB_THETHING_BIGTENDRILS, BB_THETHING_CARDTENDRILS, BB_THETHING_ACIDSPIT)",
-									"last_used_key": "BB_THETHING_LASTAOE",
-									"result_key": "BB_GENERIC_ACTION"
-								}
-							},
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-								"args": ["BB_GENERIC_ACTION", "BB_CURRENT_TARGET"]
-							}
-						]
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/pick_random_ability",
+						"args": [],
+						"vars": {
+							"ability_keys": "list(BB_THETHING_DECIMATE, BB_THETHING_BIGTENDRILS, BB_THETHING_CARDTENDRILS, BB_THETHING_ACIDSPIT)",
+							"last_used_key": "BB_THETHING_LASTAOE",
+							"result_key": "BB_GENERIC_ACTION"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+						"args": ["BB_GENERIC_ACTION", "BB_CURRENT_TARGET"]
 					},
 					{
 						"type": "decorator",

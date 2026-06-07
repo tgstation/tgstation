@@ -2,11 +2,11 @@
 #define BT_EXECUTION_LOG_MAX 100
 
 // BT node return values
-/// Node completed its goal. Sequence continues; Selector/Parallel stop.
+/// Node completed its goal and succeeded
 #define BT_SUCCESS 1
-/// Node could not act. Selector tries next child; Sequence fails.
+/// Node failed for one reason or the other
 #define BT_FAILURE 2
-/// Node has an action running. Both composites stop here.
+/// Node has an action running;
 #define BT_RUNNING 3
 
 // Parallel node completion policies (mutually exclusive per axis)
@@ -19,7 +19,6 @@
 /// Parallel fails when any child fails
 #define BT_PARALLEL_FAILURE_ANY 1
 
-// Subplan node completion policies (mutually exclusive per axis)
 /// Subplan propagates BT_SUCCESS when all children succeed (default)
 #define BT_SUBPLAN_SUCCEED_ON_SUCCESS 0
 /// Subplan resets and loops (returns BT_RUNNING) when all children succeed
@@ -29,7 +28,6 @@
 /// Subplan resets and loops (returns BT_RUNNING) when a child fails
 #define BT_SUBPLAN_LOOP_ON_FAILURE 1
 
-// Decorator observer abort modes (UE5 Behavior Tree style)
 /// No observer abort registered
 #define BT_ABORT_NONE 0
 /// Abort this branch when the watched condition becomes FALSE
