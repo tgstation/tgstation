@@ -24,24 +24,21 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
 
-	var/what_map_index_are_we = 1
+	var/what_map_index_are_we = 0
 	for(var/map_name, _map_config in config.maplist)
 		var/datum/map_config/map_config = _map_config
 		if(SSmapping.current_map.map_name == map_config.map_name)
 			break
 		what_map_index_are_we++
 
-	var/start_index = ((what_map_index_are_we - 1) * split_up_amount) + 1
-	var/end_index
+	var/start_index = what_map_index_are_we * split_up_amount
+	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
+	var/end_index (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
 
-	if(what_map_index_are_we == runner_count)
-		end_index = total_amount_to_check + 1
-	else
-		end_index = start_index + split_up_amount
+	// +1 because byond's list.Copy() implementation is weird
+	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
 
-	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index)
-
-	log_world("Running create and destroy on [length(type_paths_to_check)] ([start_index]-[end_index]) atoms out of the [total_amount_to_check] total")
+	log_world("Running create and destroy on [length(type_paths_to_check)] \[[start_index] ([type_paths_to_check[start_index]]) - [end_index] ([type_paths_to_check[end_index]])\] atoms out of the [total_amount_to_check] total")
 
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))
