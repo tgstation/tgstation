@@ -136,13 +136,74 @@
   lelandkemble:
   - map: Catwalk disposals outputs correctly.
 2026-06-06:
+  CabinetOnFire:
+  - refactor: Lavaland/Icemoon now uses a smarter algorithm to generate caves, making
+      them more interconnected and making ruins easier to locate.
+  - bugfix: wishgranter ruin now has /biome_replace subtypes on its floors/walls,
+      ensuring it spawns in correctly (if enabled in config)
   CabinetOnFire, Kapu:
   - sound: Changed our falloff to be less intense, as it was punching volume down
       way too fast.
   - refactor: Implements a system for spatial audio to improve our looping sounds
   Floyd:
   - code_imp: Rust-G has been updated to 6.2.0
+  Frfor17:
+  - qol: now Admin RPED has 40 parts each
+  - code_imp: now Admin outfit and Debug outfit(what is that) has AdminDebug RPED
+      with 40 parts, and not just tier4 RPED, which is like game thing
+  Melbert:
+  - bugfix: Fix moths being able to fly in space
+  QuiteLiterallyAnything:
+  - image: Added a directional sprite for coffins.
+  Rhials, Dendydoom:
+  - rscadd: Apple Fritters have been added to your local chef's cookbook!
+  SyncIt21:
+  - code_imp: borg attack chain now passes modifiers to its item `attack_self()` proc
+  - qol: omni tool welder now won't turn on automatically when switching to it via
+      radial menu or using inventory button. This stops accidental combustion in hazardous
+      areas
+  - qol: omni tool welder can now be turned on/off via LMB like regular welder & not
+      CTRL+LMB. Use RMB to open radial menu to switch to other tools when using welder
+  TealSeer:
+  - bugfix: fixed TGUI spawn panel direction option not working
   TheRyeGuyWhoWillNowDie:
   - balance: Syndicate assault cyborgs can now block attacks with their energy swords
   - balance: Syndicate medical cyborgs now feature atropine in their hypospray to
       prevent microbomb detonations.
+  UgoManzo:
+  - bugfix: Water coolers now properly reveal their custom reagents when examined
+      by ghosts or players with science goggles.
+  lelandkemble:
+  - bugfix: Pinpointers stop tracking a shunted ai when that ai is no longer shunted
+2026-06-07:
+  ArcaneMusic:
+  - balance: The mining ventpointer has been adjusted so that it can now more accurately
+      show the distance to the nearest vent, and will now claim you've arrived if
+      you're within 8 tiles away from a vent, down from 14.
+  - code_imp: Several backend improvements to the pinpointer functionality and adjustability.
+  CabinetOnFire:
+  - sound: Sound now makes use of euclidean distance for falloff
+  - code_imp: max_range on playsound now ensures the sound is audible up to that range.
+  SmArtKar:
+  - bugfix: Fixed an issue where Stop-All-Active-Weather verb would not remove ash
+      storm sounds
+  - refactor: Rain and ash storms have been refactored to use particles rather than
+      overlays
+  - image: Made volcanic pores more noticeable
+  UvvU:
+  - bugfix: fixed improper chat caching.
+  soulware1:
+  - bugfix: Parthenogenesis no longer makes your material fish have null weights
+2026-06-08:
+  Absolucy:
+  - bugfix: Made the BYOND member OOC icon better aligned to the text.
+  Melbert:
+  - bugfix: Fixed a bug where diseases wouldn't trigger their regular effects when
+      applied in certain contexts
+  - bugfix: Fixed a bug where airborne diseases wouldn't spread via breathing when
+      applied in certain contexts
+  mcbalaam:
+  - rscadd: Added fake plastic plants to be used for decoration
+  - rscadd: 'RDD: Rapid Decoration Device is now available for the service department'
+  soulware1:
+  - balance: Carving blocks can be made out of any material now!

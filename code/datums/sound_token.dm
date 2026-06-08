@@ -123,7 +123,7 @@
 	if(source_turf.z != listener_turf.z)
 		should_be_muted = TRUE
 
-	var/distance = get_dist(source_turf, listener_turf)
+	var/distance = get_dist_euclidean(source_turf, listener_turf)
 	if(distance > range)
 		should_be_muted = TRUE
 		if(should_be_muted && is_muted)
@@ -195,7 +195,7 @@
 		return
 	if(player_turf.z != source_turf.z)
 		return
-	if(get_dist(source_turf, player_turf) > range)
+	if(get_dist_euclidean(source_turf, player_turf) > range)
 		return
 	add_or_update_listener(player)
 

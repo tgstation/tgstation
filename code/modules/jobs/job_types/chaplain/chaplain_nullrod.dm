@@ -340,6 +340,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
 
+/obj/item/nullrod/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 /obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
@@ -629,6 +633,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		force_unwielded = 14, \
 		force_wielded = 18, \
 	)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/nullrod/bostaff/update_icon_state()
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
@@ -703,6 +708,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	sharpness = SHARP_EDGED
 	menu_description = "A sharp pitchfork. Can be worn on the back."
 
+/obj/item/nullrod/pitchfork/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 // Egyptian Staff - Used as a tool for making mummy wraps.
 
 /obj/item/nullrod/egyptian
@@ -719,6 +728,11 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	attack_verb_continuous = list("bashes", "smacks", "whacks")
 	attack_verb_simple = list("bash", "smack", "whack")
 	menu_description = "A staff. Can be used as a tool to craft exclusive egyptian items. Easily stored. Can be worn on the back."
+
+
+/obj/item/nullrod/egyptian/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
 
 // Hypertool - It does brain damage rather than normal damage.
 
@@ -760,6 +774,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
 
+/obj/item/nullrod/spear/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 // Unholy version of above, since the gamemode is dead in the water
 
 /obj/item/brass_spear
@@ -782,6 +800,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+
+/obj/item/brass_spear/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
 
 // Nullblade - For when you really want to feel like rolling dice during combat
 
