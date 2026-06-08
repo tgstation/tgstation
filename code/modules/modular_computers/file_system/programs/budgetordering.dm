@@ -285,7 +285,15 @@
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
-			SO.generateRequisition(T)
+			if(computer.stored_paper >= 1)
+				SO.generateRequisition(T)
+				computer.stored_paper -= 1
+				if(computer.stored_paper <= 4)
+					computer.say("Paper's storage has only [computer.stored_paper] papers. Refill please!")
+					if(computer.stored_paper <= 1)
+						computer.say("Only 1 paper has left, refill please!")
+			else
+				computer.say("Requisition cannot be printed, paper storage is empty. Please insert more paper!")
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
 			else

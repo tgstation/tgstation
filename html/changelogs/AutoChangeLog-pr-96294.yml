@@ -1,0 +1,7 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Pole objects like mops, brooms, staves, scythes, and spears can now be held in a hand to act as walking aids, mitigating limping from fractures and reducing missing-leg slowdowns."
+  - balance: "Walking aids must be held in the hand on the same side as the injured or missing leg to provide support, and lose their effectiveness if actively wielded with two hands."
+  - balance: "Objects with the walking aid reduce limbless slowdown by 40%, while dedicated medical crutches reduce it by 60%."
+  - refactor: "Refactor cane and crutch code logic into a modular walking aid component"
