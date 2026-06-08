@@ -1,5 +1,11 @@
 {
 	"dm_type": "/datum/bt_node/subtree/simple_ranged_combat",
+	"bindings": {
+		"bpnckxev": {
+			"label": "time_between_ranged_attacks",
+			"default": "0.6 SECONDS"
+		}
+	},
 	"type": "parallel",
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
@@ -39,7 +45,10 @@
 													"BB_CURRENT_TARGET",
 													"BB_TARGETING_STRATEGY",
 													"BB_CURRENT_TARGET_HIDING_LOCATION"
-												]
+												],
+												"vars": {
+													"time_between_perform": "$bpnckxev"
+												}
 											}
 										]
 									}

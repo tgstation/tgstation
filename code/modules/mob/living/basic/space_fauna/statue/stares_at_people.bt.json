@@ -1,0 +1,46 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/stares_at_people",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"key": "BB_CURRENT_TARGET"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/face_target_or_face_initial",
+						"args": [],
+						"vars": {
+							"target_key": "BB_CURRENT_TARGET"
+						}
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/wait",
+					"args": []
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/update_targets",
+			"args": [
+				"BB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		}
+	]
+}

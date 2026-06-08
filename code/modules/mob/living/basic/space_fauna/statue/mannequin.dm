@@ -30,6 +30,7 @@
 		. += mutable_appearance(hat::worn_icon, hat::worn_icon_state || hat::post_init_icon_state || hat::icon_state)
 
 /datum/ai_controller/basic_controller/stares_at_people
+	behavior_tree_json = "stares_at_people.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 6,
@@ -37,10 +38,6 @@
 
 	ai_movement = /datum/ai_movement/dumb
 	idle_behavior = null
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/face_target_or_face_initial, // we be creepy and all
-	)
 
 /datum/ai_planning_subtree/face_target_or_face_initial
 

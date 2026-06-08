@@ -7,7 +7,9 @@
 ///For any battle screech cooldowns
 #define BB_BATTLE_SCREECH_COOLDOWN "Battle Screech Cooldown"
 ///Target for snitching (calling reinforcements on) but dont want to atatck.
-#define BB_CALL_REINFORCEMENTS_TARGET "BB_call_reinforcements_target"
+#define BB_CALL_REINFORCEMENTS_TARGET "Call reinforcements target"
+///Generic target for hunting
+#define BB_HUNT_TARGET_LIST "Hunt Target List"
 
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree

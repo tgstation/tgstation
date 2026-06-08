@@ -64,6 +64,7 @@
 		/datum/action/cooldown/spell/aoe/flicker_lights,
 	)
 	grant_actions_by_list(innate_actions)
+	ai_controller.set_blackboard_key(BB_HUNT_TARGET_LIST, typecacheof(list(/obj/machinery/light)))
 
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -130,17 +131,12 @@
 	victim.adjust_temp_blindness(8 SECONDS)
 
 /datum/ai_controller/basic_controller/statue
+	behavior_tree_json = "statue.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
-	)
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"

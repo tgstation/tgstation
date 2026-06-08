@@ -32,16 +32,12 @@
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
 
 /datum/ai_controller/basic_controller/stickman
+	behavior_tree_json = "stickman.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
-	)
 
 /mob/living/basic/stickman/dog
 	name = "Angry Stick Dog"
@@ -75,6 +71,7 @@
 	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged
+	behavior_tree_json = "ranged.bt.json"
 	behavior_nodes = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
