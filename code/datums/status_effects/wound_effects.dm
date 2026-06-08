@@ -79,18 +79,21 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
+	var/obj/item/bodypart/leg_about_to_limp
 	var/limp_chance
 	var/limp_slowdown
 	if(next_leg == left)
+		leg_about_to_limp = left
 		limp_chance = limp_chance_left
 		limp_slowdown = slowdown_left
 		next_leg = right
 	else
+		leg_about_to_limp = right
 		limp_chance = limp_chance_right
 		limp_slowdown = slowdown_right
 		next_leg = left
 
-	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, leg_about_to_limp) & COMPONENT_CANCEL_LIMP)
 		return
 
 	if(prob(limp_chance * determined_mod))
