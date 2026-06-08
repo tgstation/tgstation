@@ -158,8 +158,6 @@
 	var/datum/pet_command/previous = parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND]
 	if(previous && previous != src)
 		previous.command_ended(parent.ai_controller)
-
-	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
 	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
 	execute_action(parent.ai_controller) // Install the BT override subtree for this command
 	if (command_feedback)
@@ -173,6 +171,7 @@
 	RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
 	commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/pet_paw.dmi'
 	commander.update_mouse_pointer()
+
 
 /// Called when this command is replaced by another command or otherwise deactivated. Extend to add cleanup logic.
 /datum/pet_command/proc/command_ended(datum/ai_controller/controller)

@@ -94,6 +94,11 @@
 															"max_range": "$beslksyc",
 															"avoid_friendly_fire": "$bnr1aazo"
 														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/succeed",
+														"args": []
 													}
 												]
 											}

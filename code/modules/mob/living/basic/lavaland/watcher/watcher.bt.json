@@ -71,6 +71,11 @@
 															"vars": {
 																"max_range": 9
 															}
+														},
+														{
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/succeed",
+															"args": []
 														}
 													]
 												}
@@ -78,14 +83,9 @@
 										}
 									},
 									{
-										"type": "sequence",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
-												"args": ["BB_CURRENT_TARGET"]
-											}
-										]
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
+										"args": ["BB_CURRENT_TARGET"]
 									},
 									{
 										"type": "leaf",

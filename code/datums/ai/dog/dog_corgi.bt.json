@@ -4,7 +4,7 @@
 	"children": [
 		{
 			"type": "subtree",
-			"subtype": "",
+			"subtype": "/datum/bt_node/subtree",
 			"override_id": "SUBPLAN_ID_PET_COMMAND"
 		},
 		{

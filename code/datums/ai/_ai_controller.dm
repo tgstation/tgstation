@@ -40,7 +40,7 @@ multiple modular subtrees with behaviors
 	///distance to give up on target
 	var/max_target_distance = 14
 	/// Repo-relative path to the .bt.json source file for this controller (e.g. "code/datums/ai/basic_mobs/cleanbot.bt.json").
-	/// init_subtrees() derives the compiled path from this and loads the BT tree at runtime.
+	/// initialize_behavior_tree() derives the compiled path from this and loads the BT tree at runtime.
 	var/behavior_tree_json = null
 	///All behavior_nodes for the BT tree; populated on init from typepaths or BT_* descriptors.
 	var/list/behavior_nodes
@@ -79,7 +79,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
-	init_subtrees()
+	initialize_behavior_tree()
 
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
@@ -121,7 +121,7 @@ multiple modular subtrees with behaviors
 ///Completely replaces the behavior_nodes with a new set based on argument provided.
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
 	behavior_nodes = typepaths_of_new_subtrees
-	init_subtrees()
+	initialize_behavior_tree()
 
 /// Resolves the children/child of a composite or decorator node, creating configured instances.
 /// Safe to call on any node type; non-composite/non-decorator nodes are a no-op.
@@ -268,7 +268,7 @@ multiple modular subtrees with behaviors
 	return node
 
 /// Builds the per-controller BT node tree from behavior_nodes typepaths or descriptors, then finalizes it.
-/datum/ai_controller/proc/init_subtrees()
+/datum/ai_controller/proc/initialize_behavior_tree()
 	if(!isnull(behavior_tree_json) && !LAZYLEN(behavior_nodes))
 
 		///This kind of sucks to do every time, but I don't know if there's a nicer way to inject .compiled into the path?
@@ -302,7 +302,7 @@ multiple modular subtrees with behaviors
 	finalize_tree()
 
 /// Walks the resolved tree to set owning_controller and parent_node on all nodes, populates
-/// override_slots, and assigns pre-order execution indices. Called after init_subtrees() and
+/// override_slots, and assigns pre-order execution indices. Called after initialize_behavior_tree() and
 /// after set_behavior_tree_override() installs or removes an override node.
 /datum/ai_controller/proc/finalize_tree()
 	if(!LAZYLEN(behavior_nodes))
@@ -548,6 +548,7 @@ multiple modular subtrees with behaviors
 	resolve_node_children(new_node)
 	slot.override_node = new_node
 	finalize_tree()
+	CancelActions() // Reset, not ideal; Maybe later on we can do this more gracefully.
 	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), datum_type)
 
 /datum/ai_controller/proc/setup_able_to_run()

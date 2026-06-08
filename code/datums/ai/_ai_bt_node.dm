@@ -142,9 +142,7 @@
 	var/list/behavior_nodes = null
 	/// The internal root node. Populated by resolve_node_children(). Do not set directly.
 	var/datum/bt_node/root = null
-	/// If non-null, this subtree acts as a runtime override slot. The string is a
-	/// SUBPLAN_ID_* constant. ai_controller.set_behavior_tree_override() finds the slot
-	/// by this ID and sets override_node on it.
+	/// Set this to allow runtime overriding of this subtree, useful for things like pet commands!
 	var/override_id = null
 	/// Active override subtree. When set, tick() delegates to this node instead of root.
 	/// Set to null to deactivate the override. Managed by set_behavior_tree_override() only.

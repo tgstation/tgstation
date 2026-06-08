@@ -23,7 +23,7 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_CURRENT_PET_TARGET", 1, false]
+								"args": ["BB_CURRENT_PET_TARGET", 1, true]
 							},
 							{
 								"type": "leaf",
@@ -60,7 +60,7 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_FETCH_DELIVER_TO", 1, false]
+							"args": ["BB_FETCH_DELIVER_TO", 1, true]
 						},
 						{
 							"type": "leaf",
@@ -77,9 +77,18 @@
 			}
 		},
 		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-			"args": []
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"observer_abort": "BT_ABORT_BOTH",
+				"invert": true,
+				"key": "BB_CURRENT_PET_TARGET"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/wait",
+				"args": []
+			}
 		}
 	]
 }

@@ -14,7 +14,7 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_CURRENT_PET_TARGET", 0, true]
+				"args": ["BB_CURRENT_PET_TARGET", 1, true]
 			}
 		]
 	}

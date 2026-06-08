@@ -96,6 +96,7 @@
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	if(!targeting_strategy.can_attack(basic_mob, target, chase_range))
+		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target)
@@ -103,19 +104,14 @@
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	if(!can_see(basic_mob, final_target, max_range))
-		return AI_BEHAVIOR_INSTANT // Out of range — parallel's move_to_target will approach
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targeting_strategy))
 		adjust_position(basic_mob, target)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	basic_mob.RangedAttack(final_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/bt_node/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	if(!succeeded)
-		controller.clear_blackboard_key(target_key)
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/proc/check_friendly_in_path(mob/living/source, atom/target, datum/targeting_strategy/targeting_strategy)
 	var/list/turfs_list = calculate_trajectory(source, target)
