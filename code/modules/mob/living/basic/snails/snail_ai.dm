@@ -1,16 +1,10 @@
 /datum/ai_controller/basic_controller/snail
+	behavior_tree_json = "snail.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/use_mob_ability/snail_retreat,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/find_and_hunt_target/snail_people,
-	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/snail_people
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET

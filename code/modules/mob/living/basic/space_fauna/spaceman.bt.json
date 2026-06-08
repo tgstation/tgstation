@@ -1,0 +1,14 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/spaceman",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/simple_retaliate_combat"
+		}
+	]
+}

@@ -41,6 +41,7 @@
 
 ///Controller for space bats, has nothing unique, just retaliation.
 /datum/ai_controller/basic_controller/space_bat
+	behavior_tree_json = "space_bat.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

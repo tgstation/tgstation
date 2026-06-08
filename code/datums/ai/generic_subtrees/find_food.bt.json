@@ -1,0 +1,14 @@
+{
+	"dm_type": "/datum/bt_node/subtree/find_food",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+	"config": {
+		"observer_abort": "BT_ABORT_SELF",
+		"cooldown_key": "BB_EAT_FOOD_COOLDOWN"
+	},
+	"child": {
+		"type": "leaf",
+		"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
+		"args": ["BB_TARGET_FOOD", "BB_BASIC_FOODS"]
+	}
+}

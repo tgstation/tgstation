@@ -86,6 +86,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
+	behavior_tree_json = "sloth.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -93,14 +94,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/climb_trees,
-		/datum/ai_planning_subtree/random_speech/sloth,
-	)
 
 /datum/ai_planning_subtree/random_speech/sloth
 	speech_chance = 1

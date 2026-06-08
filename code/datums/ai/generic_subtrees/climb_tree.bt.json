@@ -1,0 +1,38 @@
+{
+	"dm_type": "/datum/bt_node/subtree/climb_tree",
+	"bindings": {
+		"bb0lcfol": {
+			"label": "tree_climbing_cooldown",
+			"default": "10 SECONDS"
+		}
+	},
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cooldown",
+	"config": {
+		"cooldown_key": "BB_TREE_CLIMBING_COOLDOWN",
+		"cooldown_duration": "$bb0lcfol"
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"config": {
+			"observer_abort": "BT_ABORT_BOTH",
+			"key": "BB_CLIMBED_TREE"
+		},
+		"child": {
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+					"args": ["BB_CLIMBED_TREE"]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+					"args": ["BB_CLIMBED_TREE"]
+				}
+			]
+		}
+	}
+}

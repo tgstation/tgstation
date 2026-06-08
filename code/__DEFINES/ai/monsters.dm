@@ -74,6 +74,8 @@
 #define BB_FOUND_HONEY "BB_found_honey"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
+///tree climbing cooldown
+#define BB_TREE_CLIMBING_COOLDOWN "Tree Climbing Cooldown"
 
 /// Lobstrosities will only attack people with one of these traits
 #define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"
