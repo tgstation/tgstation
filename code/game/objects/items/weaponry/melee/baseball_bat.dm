@@ -3,7 +3,7 @@
 	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'icons/obj/weapons/bat.dmi'
 	icon_state = "baseball_bat"
-	worn_icon_state="staff"
+	worn_icon_state="bostaff0"
 	inhand_icon_state = "baseball_bat"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
