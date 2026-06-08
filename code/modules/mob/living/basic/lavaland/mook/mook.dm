@@ -58,6 +58,7 @@
 
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
+	AddElement(/datum/element/ai_held_item)
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
 	if(is_healer)
@@ -84,6 +85,7 @@
 /mob/living/basic/mining/mook/Entered(atom/movable/mover)
 	if(istype(mover, /obj/item/stack/ore))
 		held_ore = mover
+		ai_controller?.set_blackboard_key(BB_SIMPLE_CARRY_ITEM, mover)
 		update_appearance(UPDATE_OVERLAYS)
 
 	return ..()

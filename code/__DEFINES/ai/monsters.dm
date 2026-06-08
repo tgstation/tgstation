@@ -237,6 +237,12 @@
 #define BB_MOOK_MUSIC_AUDIENCE "music_audience"
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+/// turf we are wandering toward (away from village)
+#define BB_WANDER_DESTINATION "BB_wander_destination"
+/// turf we will stand on to deposit ores at the material stand
+#define BB_DEPOSIT_POSITION "BB_deposit_position"
+/// list of /datum/pet_command instances the chief can issue
+#define BB_MOOK_COMMANDS "BB_mook_commands"
 
 //gutlunch keys
 ///the trough we will eat from

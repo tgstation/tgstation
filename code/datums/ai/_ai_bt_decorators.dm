@@ -77,13 +77,16 @@
 				is_polled = TRUE
 				LAZYADDASSOC(controller.polling_observers, src, TRUE)
 
+	var/child_ticked = FALSE
 	var/result
 	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
 	if((no_ticking_condition || is_polled) && child_active)
+		child_ticked = TRUE
 		result = child.tick(controller, seconds_per_tick)
 	else if(check_condition(controller) == invert)
 		result = BT_FAILURE
 	else
+		child_ticked = TRUE
 		result = child.tick(controller, seconds_per_tick)
 
 	if(controller.cancelled_during_tick)
@@ -92,11 +95,20 @@
 
 	if(no_ticking_condition || is_polled)
 		child_active = (result == BT_RUNNING)
+		if(child_ticked && !child_active)
+			on_child_complete(controller, result)
 
 	if(tick_rate)
 		tick_cooldown = world.time
 		tick_result = result
 	return result
+
+/**
+ * Called when the child finishes (returns a non-RUNNING result after being ticked).
+ * NOT called when the condition gate blocks the child, or when the tree is cancelled mid-tick.
+ */
+/datum/bt_node/decorator/proc/on_child_complete(datum/ai_controller/controller, result)
+	return
 
 /**
  * Override to implement custom condition logic.

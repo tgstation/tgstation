@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ))
 
 /datum/ai_controller/basic_controller/mook
+	behavior_tree_json = 'mook.bt.json'
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
@@ -13,20 +14,6 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/look_for_village,
-		/datum/ai_planning_subtree/targeted_mob_ability/leap,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
-		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
-		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook,
-		/datum/ai_planning_subtree/mine_walls/mook,
-		/datum/ai_planning_subtree/wander_away_from_village,
-	)
 	can_idle = FALSE // these guys are intended to operate even if nobody's around
 
 ///check for faction if not a ash walker, otherwise just attack
@@ -341,6 +328,10 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		/datum/ai_planning_subtree/find_and_hunt_target/bonfire,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/tribal_chief,
 	)
+
+/datum/ai_controller/basic_controller/mook/tribal_chief/New(atom/new_pawn)
+	. = ..()
+	set_blackboard_key(BB_MOOK_COMMANDS, GLOB.mook_commands)
 
 /datum/ai_planning_subtree/issue_commands
 	///how far we look for a mook to command

@@ -3,7 +3,7 @@
 	"bindings": {
 		"bb0lcfol": {
 			"label": "tree_climbing_cooldown",
-			"default": "10 SECONDS"
+			"default": "30 SECONDS"
 		}
 	},
 	"type": "decorator",
@@ -30,6 +30,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+					"args": ["BB_CLIMBED_TREE"]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/clear_key",
 					"args": ["BB_CLIMBED_TREE"]
 				}
 			]
