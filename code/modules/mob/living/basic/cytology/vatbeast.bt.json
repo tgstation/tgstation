@@ -88,10 +88,7 @@
 													"BB_CURRENT_TARGET",
 													"BB_TARGETING_STRATEGY",
 													"BB_CURRENT_TARGET_HIDING_LOCATION"
-												],
-												"vars": {
-													"terminate_after_action": true
-												}
+												]
 											}
 										]
 									},

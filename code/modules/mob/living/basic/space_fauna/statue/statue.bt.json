@@ -53,39 +53,40 @@
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"config": {
 								"observer_abort": "BT_ABORT_BOTH",
-								"key": "BB_CURRENT_TARGET"
+								"invert": true,
+								"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
 							},
 							"child": {
-								"type": "parallel",
-								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
-								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-								"repeat_secondary": true,
-								"finish_on_primary": true,
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_CURRENT_TARGET", 1, false]
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-										"args": [
-											"BB_CURRENT_TARGET",
-											"BB_TARGETING_STRATEGY",
-											"BB_CURRENT_TARGET_HIDING_LOCATION"
-										],
-										"vars": {
-											"terminate_after_action": true
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"config": {
+									"observer_abort": "BT_ABORT_BOTH",
+									"key": "BB_CURRENT_TARGET"
+								},
+								"child": {
+									"type": "parallel",
+									"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+									"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+									"repeat_secondary": true,
+									"finish_on_primary": true,
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"args": ["BB_CURRENT_TARGET", 1, false]
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+											"args": [
+												"BB_CURRENT_TARGET",
+												"BB_TARGETING_STRATEGY",
+												"BB_CURRENT_TARGET_HIDING_LOCATION"
+											]
 										}
-									}
-								]
+									]
+								}
 							}
-						},
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/wait",
-							"args": []
 						}
 					]
 				},

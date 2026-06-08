@@ -3,10 +3,6 @@
 
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
-	time_between_perform = 0.2 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	///do we finish this action after hitting once?
-	var/terminate_after_action = FALSE
 
 /datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -22,24 +18,25 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if (!target.IsReachableBy(controller.pawn))
 		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/can_attack_time = controller.blackboard[BB_BASIC_MOB_MELEE_COOLDOWN_TIMER]
 	if (isnull(can_attack_time))
 		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
 		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
 		controller.set_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER, world.time + attack_delay)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if (can_attack_time > world.time)
-		return AI_BEHAVIOR_INSTANT
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	if (isliving(controller.pawn))
 		var/mob/living/pawn = controller.pawn
 		if (world.time < pawn.next_move)
-			return AI_BEHAVIOR_INSTANT
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy.can_attack(controller.pawn, target))
+		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
@@ -48,18 +45,10 @@
 
 	var/atom/final_target = hiding_target || target
 	controller.ai_interact(target = final_target, combat_mode = TRUE)
-	if(terminate_after_action)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT
-
-/datum/bt_node/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	if(!succeeded)
-		controller.clear_blackboard_key(target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Single-hit variant: terminates after one successful attack and always clears the target key.
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
-	terminate_after_action = TRUE
 
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
