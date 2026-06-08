@@ -11,6 +11,9 @@
 ///Generic target for hunting
 #define BB_HUNT_TARGET_LIST "Hunt Target List"
 
+///Cooldown on venting (sus)
+#define BB_VENTING_COOLDOWN "Venting Cooldown"
+
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"

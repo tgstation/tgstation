@@ -42,7 +42,7 @@
 										"child": {
 											"type": "subplan",
 											"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-											"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+											"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 											"children": [
 												{
 													"type": "selector",
@@ -71,11 +71,6 @@
 															"vars": {
 																"max_range": 9
 															}
-														},
-														{
-															"type": "leaf",
-															"behavior": "/datum/bt_node/ai_behavior/succeed",
-															"args": []
 														}
 													]
 												}
@@ -88,9 +83,18 @@
 										"args": ["BB_CURRENT_TARGET"]
 									},
 									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
-										"args": []
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/cooldown",
+										"config": {
+											"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
+											"cooldown_duration": "30 SECONDS",
+											"lock_on_succeed": true
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
+											"args": []
+										}
 									}
 								]
 							}

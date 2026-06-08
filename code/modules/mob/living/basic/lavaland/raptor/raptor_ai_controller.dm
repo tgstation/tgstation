@@ -89,6 +89,7 @@
 	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
 
 /datum/ai_controller/basic_controller/baby_raptor
+	behavior_tree_json = "baby_raptor.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/raptor),

@@ -12,7 +12,7 @@
 
 /datum/bt_node/decorator/pawn_contained_in_obj/check_condition(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
-	if(isturf(pawn.loc) || ismob(pawn.loc) || istype(pawn.loc, /obj/item/mob_holder))
+	if(isturf(pawn.loc) || ismob(pawn.loc) || istype(pawn.loc, /obj/item/mob_holder) || HAS_TRAIT(controller.pawn, TRAIT_MOVE_VENTCRAWLING))
 		return FALSE
 	controller.blackboard[target_key] = pawn.loc
 	return TRUE

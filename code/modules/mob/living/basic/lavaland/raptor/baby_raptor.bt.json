@@ -1,0 +1,33 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/baby_raptor",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/is_in_vent",
+			"config": {},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/exit_vent",
+				"args": []
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/cooldown",
+			"config": {
+				"cooldown_key": "BB_VENTING_COOLDOWN"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/enter_vent",
+						"args": []
+					}
+				]
+			}
+		}
+	]
+}

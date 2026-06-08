@@ -1,5 +1,0 @@
-{
-	"dm_type": "/datum/ai_controller/basic_controller",
-	"type": "selector",
-	"children": []
-}

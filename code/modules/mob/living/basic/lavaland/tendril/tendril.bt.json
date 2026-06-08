@@ -25,41 +25,41 @@
 						"finish_on_primary": false,
 						"children": [
 							{
-								"type": "selector",
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 								"children": [
 									{
-										"type": "decorator",
-										"decorator": "/datum/bt_node/decorator/is_at_distance",
-										"config": {
-											"target_key": "BB_CURRENT_TARGET",
-											"maximum_distance": 7
-										},
-										"child": {
-											"type": "selector",
-											"children": [
-												{
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-													"args": [
-														"BB_TENDRIL_SPIKES"
-													]
+										"type": "selector",
+										"children": [
+											{
+												"type": "decorator",
+												"decorator": "/datum/bt_node/decorator/is_at_distance",
+												"config": {
+													"target_key": "BB_CURRENT_TARGET",
+													"maximum_distance": 7
 												},
-												{
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-													"args": [
-														"BB_TENDRIL_LASH"
+												"child": {
+													"type": "selector",
+													"children": [
+														{
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+															"args": ["BB_TENDRIL_SPIKES"]
+														},
+														{
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+															"args": ["BB_TENDRIL_LASH"]
+														}
 													]
 												}
-											]
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-										"args": [
-											"BB_TENDRIL_CHASER",
-											"BB_CURRENT_TARGET"
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+												"args": ["BB_TENDRIL_CHASER", "BB_CURRENT_TARGET"]
+											}
 										]
 									}
 								]

@@ -43,21 +43,28 @@
 												"finish_on_primary": true,
 												"children": [
 													{
-														"type": "selector",
+														"type": "subplan",
+														"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+														"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 														"children": [
 															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-																"args": [
-																	"BB_CURRENT_TARGET",
-																	"BB_TARGETING_STRATEGY",
-																	"BB_CURRENT_TARGET_HIDING_LOCATION"
+																"type": "selector",
+																"children": [
+																	{
+																		"type": "leaf",
+																		"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+																		"args": [
+																			"BB_CURRENT_TARGET",
+																			"BB_TARGETING_STRATEGY",
+																			"BB_CURRENT_TARGET_HIDING_LOCATION"
+																		]
+																	},
+																	{
+																		"type": "leaf",
+																		"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+																		"args": ["BB_CURRENT_TARGET"]
+																	}
 																]
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-																"args": ["BB_CURRENT_TARGET"]
 															}
 														]
 													},

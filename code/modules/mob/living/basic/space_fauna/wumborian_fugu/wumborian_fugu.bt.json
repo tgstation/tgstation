@@ -32,17 +32,24 @@
 								"finish_on_primary": true,
 								"children": [
 									{
-										"type": "selector",
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 										"children": [
 											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-												"args": ["BB_FUGU_INFLATE", "BB_CURRENT_TARGET"]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/attack_obstructions/attack_turfs",
-												"args": ["BB_CURRENT_TARGET"]
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+														"args": ["BB_FUGU_INFLATE", "BB_CURRENT_TARGET"]
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions/attack_turfs",
+														"args": ["BB_CURRENT_TARGET"]
+													}
+												]
 											}
 										]
 									},
