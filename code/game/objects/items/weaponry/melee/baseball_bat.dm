@@ -7,15 +7,16 @@
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 12
+	force = 13
 	wound_bonus = -10
-	throwforce = 12
+	throwforce = 13
 	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK
 	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
 	/// Are we ready to do a homerun?
