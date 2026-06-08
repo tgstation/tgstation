@@ -1,0 +1,84 @@
+{
+	"dm_type": "/datum/bt_node/subtree/find_stealable_object",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/is_dragging",
+			"config": {},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/random_chance_from_key",
+						"config": {
+							"chance_key": "BB_GUILTY_CONSCIOUS_CHANCE"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/stop_dragging",
+							"args": []
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/succeed",
+						"args": []
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"config": {
+				"invert": true,
+				"key": "BB_WANTS_TO_COMMIT_THEFT"
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/random_chance_from_key",
+				"config": {
+					"chance_key": "BB_STEAL_CHANCE"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+					"args": ["BB_WANTS_TO_COMMIT_THEFT", true]
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"config": {
+				"invert": true,
+				"key": "BB_WANTS_TO_COMMIT_THEFT"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/succeed",
+				"args": []
+			}
+		},
+		{
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/find_stealable",
+					"args": [],
+					"vars": {
+						"target_key": "BB_ITEM_TO_STEAL"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+					"args": ["BB_WANTS_TO_COMMIT_THEFT", false]
+				}
+			]
+		}
+	]
+}

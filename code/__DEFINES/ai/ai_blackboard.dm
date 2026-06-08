@@ -38,6 +38,10 @@
 #define BB_GUILTY_CONSCIOUS_CHANCE "guilty_concious_rate"
 ///the item we will steal
 #define BB_ITEM_TO_STEAL "item_to_steal"
+///be stoat do crime
+#define BB_WANTS_TO_COMMIT_THEFT "BB_WANTS_TO_COMMIT_THEFT"
+///last stolen item
+#define BB_LAST_STOLEN_ITEM "BB_LAST_STOLEN_ITEM"
 
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"

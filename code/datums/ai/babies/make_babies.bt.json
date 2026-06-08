@@ -3,37 +3,22 @@
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
 	"config": {
-		"key": "BB_BREED_READY"
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_BABIES_TARGET"
 	},
 	"child": {
-		"type": "decorator",
-		"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-		"config": {
-			"cooldown_key": "BB_PARTNER_SEARCH_TIMEOUT"
-		},
-		"child": {
-			"type": "sequence",
-			"children": [
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_partner",
-					"args": [
-						"BB_BABIES_TARGET",
-						"BB_BABIES_PARTNER_TYPES",
-						"BB_BABIES_CHILD_TYPES"
-					]
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-					"args": ["BB_BABIES_TARGET", 1, true]
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/make_babies",
-					"args": ["BB_BABIES_TARGET", "BB_BABIES_CHILD_TYPES"]
-				}
-			]
-		}
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"args": ["BB_BABIES_TARGET", 1, true]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/make_babies",
+				"args": ["BB_BABIES_TARGET", "BB_BABIES_CHILD_TYPES"]
+			}
+		]
 	}
 }

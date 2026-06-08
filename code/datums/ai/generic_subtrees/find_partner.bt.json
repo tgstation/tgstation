@@ -1,0 +1,32 @@
+{
+	"dm_type": "/datum/bt_node/subtree/find_partner",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"config": {
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+		"key": "BB_FUCKS"
+	},
+	"child": {
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"config": {
+			"key": "BB_BREED_READY"
+		},
+		"child": {
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+			"config": {
+				"cooldown_key": "BB_PARTNER_SEARCH_TIMEOUT"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_partner",
+				"args": [
+					"BB_BABIES_TARGET",
+					"BB_BABIES_PARTNER_TYPES",
+					"BB_BABIES_CHILD_TYPES"
+				]
+			}
+		}
+	}
+}
