@@ -194,3 +194,11 @@
   - bugfix: fixed improper chat caching.
   soulware1:
   - bugfix: Parthenogenesis no longer makes your material fish have null weights
+2026-06-08:
+  Melbert:
+  - bugfix: Fixed a bug where diseases wouldn't trigger their regular effects when
+      applied in certain contexts
+  - bugfix: Fixed a bug where airborne diseases wouldn't spread via breathing when
+      applied in certain contexts
+  soulware1:
+  - balance: Carving blocks can be made out of any material now!

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bug where diseases wouldn't trigger their regular effects when applied in certain contexts"
-  - bugfix: "Fixed a bug where airborne diseases wouldn't spread via breathing when applied in certain contexts"
