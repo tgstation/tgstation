@@ -19,7 +19,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	if(!isnum(z) || z > length(SSmapping.z_list))
 		CRASH("Tried to create minimap for invalid Z-level ([z])")
 
-	src.base_map = icon('icons/ui_icons/minimap/minimap.dmi')
+	base_map = icon('icons/ui_icons/minimap/minimap.dmi')
 	src.z = z
 
 	var/min_x = world.maxx

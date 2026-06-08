@@ -359,7 +359,7 @@
 /**
  * Atom's version of RangedAttack, for when you want to do something when a mob clicks on this with more sanity than just Click()
  */
-/atom/proc/RangedAttackOn(mob/A, list/modifiers)
+/atom/proc/RangedAttackOn(mob/attacker, list/modifiers)
 	return null
 
 /**

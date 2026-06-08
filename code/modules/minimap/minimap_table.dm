@@ -70,10 +70,10 @@
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(set_minimap))
 
-/obj/machinery/minimap_table/RangedAttackOn(mob/A, list/modifiers)
-	if(get_dist(src, A) > interactivity_range)
+/obj/machinery/minimap_table/RangedAttackOn(mob/attacker, list/modifiers)
+	if(get_dist(src, attacker) > interactivity_range)
 		return
-	interact(A)
+	interact(attacker)
 
 /obj/machinery/minimap_table/interact(mob/user)
 	. = ..()
@@ -223,7 +223,3 @@
 		return
 	if(mob_gone in viewers)
 		hide_minimap(gone)
-
-/obj/machinery/minimap_table/proc/on_climb_enter()
-
-/obj/machinery/minimap_table/proc/on_climb_exit()

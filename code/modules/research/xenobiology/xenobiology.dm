@@ -822,6 +822,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
+	add_minimap_blip(smart_mob, MINIMAP_NUKEOP_BLIP, "cayenne")
 
 /obj/item/slimepotion/sentience/nuclear/dangerous_horse
 	name = "dangerous pony potion"

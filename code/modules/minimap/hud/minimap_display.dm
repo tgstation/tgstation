@@ -52,9 +52,7 @@
 	if(isnull(minimap))
 		CRASH("[type] created without a minimap reference!")
 	src.annotation_share_tag = isnull(annotation_share_tag) ? "[type]" : annotation_share_tag
-	if(isnull(GLOB.minimap_annotation_viewers[src.annotation_share_tag]))
-		GLOB.minimap_annotation_viewers[src.annotation_share_tag] = list()
-	GLOB.minimap_annotation_viewers[src.annotation_share_tag] |= src
+	LAZYOR(GLOB.minimap_annotation_viewers[src.annotation_share_tag], src)
 	if(!isnull(initial_fixed_z_level))
 		fixed_z_level = initial_fixed_z_level
 		INVOKE_ASYNC(src, PROC_REF(apply_fixed_z_minimap), initial_fixed_z_level)

@@ -20,7 +20,7 @@
 
 /atom/movable/screen/minimap_toolbar_button/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/minimap_display/minimap_display)
 	. = ..()
-	src.display = minimap_display
+	display = minimap_display
 
 /atom/movable/screen/minimap_toolbar_button/Destroy()
 	display = null

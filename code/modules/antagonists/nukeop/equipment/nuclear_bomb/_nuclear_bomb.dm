@@ -573,10 +573,7 @@ GLOBAL_VAR(station_nuke_source)
 	if(!is_on_minimap)
 		return
 	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
-	if(timing)
-		add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_on", blip_icon, TRUE)
-	else
-		add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_off", blip_icon, TRUE)
+	add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_[timing ? "on" : "off"]", blip_icon, TRUE)
 
 /// If the nuke is active, gets how much time is left until it detonates, in seconds.
 /// If the nuke is not active, gets how much time the nuke is set for, in seconds.

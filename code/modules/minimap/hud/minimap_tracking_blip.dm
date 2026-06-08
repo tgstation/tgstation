@@ -41,8 +41,7 @@
 		UnregisterSignal(track_target, list(COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOVABLE_MOVED))
 		track_target.maptext = null
 		track_target = null
-	qdel(connect_ref)
-	connect_ref = null
+	QDEL_NULL(connect_ref)
 
 /atom/movable/screen/minimap_element/blip/proc/start_tracking_target()
 	if(tracking)
