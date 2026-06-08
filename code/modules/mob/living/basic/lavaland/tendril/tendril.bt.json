@@ -1,0 +1,123 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/tendril",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"config": {
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_CURRENT_TARGET"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": false,
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/is_at_distance",
+										"config": {
+											"target_key": "BB_CURRENT_TARGET",
+											"maximum_distance": 7
+										},
+										"child": {
+											"type": "selector",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+													"args": [
+														"BB_TENDRIL_SPIKES"
+													]
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+													"args": [
+														"BB_TENDRIL_LASH"
+													]
+												}
+											]
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+										"args": [
+											"BB_TENDRIL_CHASER",
+											"BB_CURRENT_TARGET"
+										]
+									}
+								]
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/cooldown",
+								"config": {
+									"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
+									"cooldown_duration": "30 SECONDS",
+									"lock_on_succeed": true
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
+									"args": []
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/wait",
+					"args": []
+				}
+			]
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+					"args": [
+						"BB_CURRENT_TARGET",
+						"BB_TARGETING_STRATEGY",
+						"BB_CURRENT_TARGET_HIDING_LOCATION",
+						true
+					],
+					"vars": {
+						"vision_range": 5
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/update_targets",
+					"args": [
+						"BB_CURRENT_TARGET",
+						"BB_TARGETING_STRATEGY",
+						"BB_CURRENT_TARGET_HIDING_LOCATION"
+					],
+					"vars": {
+						"aggro_loss_distance": 9,
+						"vision_range": 5
+					}
+				}
+			]
+		}
+	]
+}
