@@ -1316,6 +1316,26 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/hydroponics/proc/changeindicators(mob/living/user, obj/item/I)
+	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
+		name = "Hydroponics Tray [name_extension]"
+		build_path = /obj/machinery/hydroponics/constructable
+		balloon_alert(user, "defaulting indicator location")
+	else
+		name = "Hydroponics Tray (Alt) [name_extension]"
+		build_path = /obj/machinery/hydroponics/constructable/oldstyle
+		balloon_alert(user, "moved indicators location")
+
+/obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
+	if(istype(I, /obj/item/plant_analyzer))
+		changeindicators(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
+	changeindicators(user)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
 	specific_parts = TRUE

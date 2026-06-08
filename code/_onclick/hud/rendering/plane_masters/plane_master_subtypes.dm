@@ -328,6 +328,22 @@
 		return
 	home.AddComponent(/datum/component/hide_weather_planes, src)
 
+/atom/movable/screen/plane_master/weather_mask
+	name = "Weather Mask"
+	documentation = "Used to mask particle weather effects to cut out areas unaffected by weather."
+	plane = WEATHER_MASK_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	render_target = WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+
 /atom/movable/screen/plane_master/massive_obj
 	name = "Massive object"
 	documentation = "Huge objects need to render above everything else on the game plane, otherwise they'd well, get clipped and look not that huge. This does that."

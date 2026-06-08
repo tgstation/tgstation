@@ -15,13 +15,26 @@
   - balance: The RNG instant kill via organ removal of the mech drill has been removed,
       and replaced with a very high wounding chance
 2026-06-02:
+  Fghj240:
+  - bugfix: Cybernetic cat ears can no longer be restyled with flesh reshapers (because
+      it broke them)
+  Hatterhat:
+  - bugfix: Bileworm spewlet trophies no longer spit bullets instead of acidic bile.
   Iajret:
   - bugfix: Mending touch works once again
   Melbert:
   - bugfix: Cutting an airlock's ID wire prevents ID usage again (instead of changing
       the door to all access)
+  - map: Roundstart nuclear operatives now spawn in the nuke base elevator, rather
+      than in the base itself. This change was done so we could reduce the lag from
+      loading the nuke base during round startup.
   SmArtKar:
   - bugfix: Fixed spilled flour not containing any flour
+  - balance: You can make toolboxes out of meat and paper again
+  - balance: Lavaland tendrils have been reworked into a full fledged miniboss instead
+      of a simple mob spawner.
+  - balance: Lavaland mobs minimum spawn separation distance has been lowered from
+      12 to 7
   TheRyeGuyWhoWillNowDie:
   - bugfix: jaws of recovery are blacklisted from crafting the jaws of recovery
   Wisemonster:
@@ -41,3 +54,156 @@
   - code_imp: Repathed Liberators. This has no bearing on their function.
   - code_imp: Rechambers Regal Condors in .45 and 10mm Reaper rounds to .45 Reaper
       rounds. This has no impact on their function.
+2026-06-03:
+  FalloutFalcon:
+  - bugfix: Stumps aren't see through
+  Hatterhat:
+  - bugfix: Stasis body bags are no longer dense when closed.
+  - spellcheck: Fixed a typo relating to the spelling of "cinched" in body bags with
+      buckles (prisoner bags, et cetera).
+  Macaroni:
+  - qol: The alt jester outfit now has grayscale and is buyable
+  StrangeWeirdKitten:
+  - bugfix: Blobs can no longer destroy indestructible items, like the disk.
+  levels0:
+  - bugfix: random recipes can no longer have upper pH bound above 14
+  timothymtorres:
+  - spellcheck: Add security misspelling checks to CI
+2026-06-04:
+  AnturK:
+  - balance: polar bears are tiny bit faster
+  Arturlang:
+  - bugfix: moonatics switching bodies (including slimeperson swap) giving you duplicate
+      action buttons
+  - bugfix: lock path not having 1 point discounts
+  Frfor17:
+  - bugfix: fixed NT shop printing infiniti papers, now its linked to computer's(laptop,
+      pda, any) paper storage
+  JohnFulpWillard:
+  - qol: People who are handcuffed/resting/anyone who can't pull people won't be prompted
+      to pull things in the dropdown menu.
+  MelokG000:
+  - rscadd: added botanic trays - hydroponic trays with soil instead of water, just
+      fill a tray with any soil and done!
+  - image: resprited auto-growth mode and added emissives to it
+  - image: resprited hydroponic trays
+  - rscadd: added old-designed mode for hydroponic trays - use a screwdriver or a
+      plant analyzer on the circuit!
+  - image: added emissives to hydroponic tray indicators
+  QuiteLiterallyAnything:
+  - bugfix: Made discounts from toxins papers show up in research UIs properly.
+  - refactor: Refactored research techwebs such that toxins discounts are now stored
+      per techweb node rather than per techweb.
+  SmArtKar:
+  - bugfix: Fixed brimdust overlay on wide mobs leaking onto other objects
+  - bugfix: Drake swoop no longer misleadingly claims you fall into lava if it fails
+      to spawn said lava
+  - bugfix: Tendrils no longer try to attack you when you're out of their reach
+  - code_imp: Cleaned up The Thing's aggro code
+  - bugfix: Drake tail trophy no longer pushes immovable mobs
+  TheRyeGuyWhoWillNowDie:
+  - balance: instead of the hard requirement for sleeping, cryox's healing power is
+      doubled by being asleep instead
+  - bugfix: on default settings a cryo tube filled with cryoxadone can no longer softlock
+      you by outdamaging its own healing potential
+  Wisemonster:
+  - code_imp: Wizard Apprentices now use the mid-round wizard pref, instead of the
+      round start wizard pref.
+  lelandkemble:
+  - bugfix: Material spears no longer partially avoid the force malus from being unwielded
+  - balance: Smartfridges no longer block atmos when broken & no longer let creatures
+      pass until broken
+  - bugfix: Toxin bees get toxin
+2026-06-05:
+  Ghommie:
+  - qol: You can now review your character's personality from the mood message box
+      (by clicking the mood hud element).
+  Melbert:
+  - qol: Adds "cancel interaction" keybinding, unbound by default, it cancels (most)
+      interactions you're doing without needing to move or swap items.
+  SmArtKar:
+  - refactor: Implemented overlay-based smoothing for lavaland lava and water
+  - rscadd: Blood-drunk miner now drops an infernal PKA with an in-built improved
+      rapid repeater modification
+  - balance: Blood-drunk miner has been reworked with new attacks and patterns
+  - bugfix: Blood-drunk miner's combos are no longer guaranteed to land even if you
+      move away from it
+  UgoManzo:
+  - bugfix: Fixed a server crash caused by igniting plasma-covered floor lights.
+  Wisemonster:
+  - code_imp: Slaughter/laughter demons now use the sentient creature pref, instead
+      of the xenomorph pref
+  lelandkemble:
+  - map: Catwalk disposals outputs correctly.
+2026-06-06:
+  CabinetOnFire:
+  - refactor: Lavaland/Icemoon now uses a smarter algorithm to generate caves, making
+      them more interconnected and making ruins easier to locate.
+  - bugfix: wishgranter ruin now has /biome_replace subtypes on its floors/walls,
+      ensuring it spawns in correctly (if enabled in config)
+  CabinetOnFire, Kapu:
+  - sound: Changed our falloff to be less intense, as it was punching volume down
+      way too fast.
+  - refactor: Implements a system for spatial audio to improve our looping sounds
+  Floyd:
+  - code_imp: Rust-G has been updated to 6.2.0
+  Frfor17:
+  - qol: now Admin RPED has 40 parts each
+  - code_imp: now Admin outfit and Debug outfit(what is that) has AdminDebug RPED
+      with 40 parts, and not just tier4 RPED, which is like game thing
+  Melbert:
+  - bugfix: Fix moths being able to fly in space
+  QuiteLiterallyAnything:
+  - image: Added a directional sprite for coffins.
+  Rhials, Dendydoom:
+  - rscadd: Apple Fritters have been added to your local chef's cookbook!
+  SyncIt21:
+  - code_imp: borg attack chain now passes modifiers to its item `attack_self()` proc
+  - qol: omni tool welder now won't turn on automatically when switching to it via
+      radial menu or using inventory button. This stops accidental combustion in hazardous
+      areas
+  - qol: omni tool welder can now be turned on/off via LMB like regular welder & not
+      CTRL+LMB. Use RMB to open radial menu to switch to other tools when using welder
+  TealSeer:
+  - bugfix: fixed TGUI spawn panel direction option not working
+  TheRyeGuyWhoWillNowDie:
+  - balance: Syndicate assault cyborgs can now block attacks with their energy swords
+  - balance: Syndicate medical cyborgs now feature atropine in their hypospray to
+      prevent microbomb detonations.
+  UgoManzo:
+  - bugfix: Water coolers now properly reveal their custom reagents when examined
+      by ghosts or players with science goggles.
+  lelandkemble:
+  - bugfix: Pinpointers stop tracking a shunted ai when that ai is no longer shunted
+2026-06-07:
+  ArcaneMusic:
+  - balance: The mining ventpointer has been adjusted so that it can now more accurately
+      show the distance to the nearest vent, and will now claim you've arrived if
+      you're within 8 tiles away from a vent, down from 14.
+  - code_imp: Several backend improvements to the pinpointer functionality and adjustability.
+  CabinetOnFire:
+  - sound: Sound now makes use of euclidean distance for falloff
+  - code_imp: max_range on playsound now ensures the sound is audible up to that range.
+  SmArtKar:
+  - bugfix: Fixed an issue where Stop-All-Active-Weather verb would not remove ash
+      storm sounds
+  - refactor: Rain and ash storms have been refactored to use particles rather than
+      overlays
+  - image: Made volcanic pores more noticeable
+  UvvU:
+  - bugfix: fixed improper chat caching.
+  soulware1:
+  - bugfix: Parthenogenesis no longer makes your material fish have null weights
+2026-06-08:
+  Absolucy:
+  - bugfix: Made the BYOND member OOC icon better aligned to the text.
+  Melbert:
+  - bugfix: Fixed a bug where diseases wouldn't trigger their regular effects when
+      applied in certain contexts
+  - bugfix: Fixed a bug where airborne diseases wouldn't spread via breathing when
+      applied in certain contexts
+  mcbalaam:
+  - rscadd: Added fake plastic plants to be used for decoration
+  - rscadd: 'RDD: Rapid Decoration Device is now available for the service department'
+  soulware1:
+  - balance: Carving blocks can be made out of any material now!

@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	if(!isnull(oldname))
-		desc = "The sad remains of what used to be [oldname]"
+		desc = "The sad remains of what used to be \a [oldname]."
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
