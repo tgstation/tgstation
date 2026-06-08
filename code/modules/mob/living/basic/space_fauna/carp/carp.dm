@@ -252,7 +252,7 @@
 	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
 	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
 	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
-	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear, src)
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
 	implanter.implant(src, null, TRUE)
 
 /mob/living/basic/carp/pet/cayenne/apply_colour()

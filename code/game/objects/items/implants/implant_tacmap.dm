@@ -81,6 +81,9 @@
 		user.balloon_alert(user, "can't use implant in the base, go to the holotable!")
 		return COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL
 
+/obj/item/implant/tacmap/nuclear/cayenne // subtype used for cayenne and syndie sentience potions in general
+	wearer_icon_state = "cayenne"
+
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
 	actions_types = list(/datum/action/minimap/nuclear)
 	can_draw_on_personal_minimap = TRUE
