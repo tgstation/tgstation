@@ -195,10 +195,15 @@
   soulware1:
   - bugfix: Parthenogenesis no longer makes your material fish have null weights
 2026-06-08:
+  Absolucy:
+  - bugfix: Made the BYOND member OOC icon better aligned to the text.
   Melbert:
   - bugfix: Fixed a bug where diseases wouldn't trigger their regular effects when
       applied in certain contexts
   - bugfix: Fixed a bug where airborne diseases wouldn't spread via breathing when
       applied in certain contexts
+  mcbalaam:
+  - rscadd: Added fake plastic plants to be used for decoration
+  - rscadd: 'RDD: Rapid Decoration Device is now available for the service department'
   soulware1:
   - balance: Carving blocks can be made out of any material now!
