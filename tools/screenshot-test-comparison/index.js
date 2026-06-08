@@ -8,9 +8,9 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { join, parse } from 'node:path';
-import pixelmatch from 'node:pixelmatch';
-import { PNG } from 'node:pngjs';
 import { argv, exit } from 'node:process';
+import pixelmatch from 'pixelmatch';
+import { PNG } from 'pngjs';
 
 const artifactsDirectory = argv[2];
 if (!artifactsDirectory) {
