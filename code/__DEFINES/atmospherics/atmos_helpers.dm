@@ -54,6 +54,23 @@
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
+///Returns a list of overlays of every gas in the mixture
+#define GAS_OVERLAYS(moles, out_var, z_layer_turf)\
+	do { \
+		out_var = list();\
+		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
+		var/_META_MOLES_VISIBLE = GAS_META(META_GAS_MOLES_VISIBLE);\
+		var/_META_GAS_OVERLAY = GAS_META(META_GAS_OVERLAY);\
+		for(var/gas_id in moles){\
+			if(GLOB.nonoverlaying_gases[gas_id]) continue;\
+			var/amount = moles[gas_id];\
+			if(amount <= _META_MOLES_VISIBLE[gas_id]) continue;\
+			var/_GAS_OVERLAY = _META_GAS_OVERLAY[gas_id][offset];\
+			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(amount / MOLES_GAS_VISIBLE_STEP, 1))];\
+		}\
+	}\
+	while (FALSE)
+
 
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
