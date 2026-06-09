@@ -148,7 +148,7 @@
 	SIGNAL_HANDLER
 
 	if(time_spend_creeping >= 20 SECONDS && damage_type == STAMINA)
-		damage_mods += 0.8
+		damage_mods += 0.75
 
 /datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
 	SIGNAL_HANDLER
