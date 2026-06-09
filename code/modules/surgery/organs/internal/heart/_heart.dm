@@ -40,6 +40,14 @@
 	var/beat_noise = "a rhythmic thumping"
 	/// The rate at which blood is pumped by the heart is multiplied by this (value of 0 disables blood regeneration entirely)
 	var/blood_regeneration_multiplier = 1
+	/// When removed we will stop beating in 12 seconds, so we gotta do this to avoid a GC failure.
+	var/stop_beating_timer
+
+/obj/item/organ/heart/Destroy(force)
+	if(!isnull(stop_beating_timer))
+		deltimer(stop_beating_timer)
+		stop_beating_timer = null
+	return ..()
 
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
@@ -48,13 +56,11 @@
 /obj/item/organ/heart/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	if(!special)
-		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
+		stop_beating_timer = addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
 	beat = BEAT_NONE
 	owner?.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
-	if(QDELETED(src))
-		return
 	if(IS_ROBOTIC_ORGAN(src))
 		return
 	if(isnull(owner))
