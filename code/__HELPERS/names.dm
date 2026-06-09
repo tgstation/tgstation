@@ -198,7 +198,7 @@ GLOBAL_VAR(command_name)
 
 // Really don't want code phrase generation to runtime
 // Which, it CAN happen because strings() will return no list if it is admin proc called
-#define SAFE_PICK(some_list) LOWERTEXT(length(some_list) ? pick(some_list) : "Bug")
+#define SAFE_PICK(some_list) LOWER_TEXT(length(some_list) ? pick(some_list) : "Bug")
 
 //Traitors and traitor silicons will get these. Revs will not.
 GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
