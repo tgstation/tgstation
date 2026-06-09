@@ -106,8 +106,8 @@
 	//The size of the phase space hypertorus
 	var/toroidal_size = (2 * PI) + TORADIANS(arctan((volume - TOROID_VOLUME_BREAKEVEN) / TOROID_VOLUME_BREAKEVEN))
 	//Calculation of the gas power, only for theoretical instability calculations
-	var/gas_power = values_dot(GUS_META(META_GAS_FUSION_POWER), internal_fusion.moles)
-	gas_power += 0.75 * values_dot(GUS_META(META_GAS_FUSION_POWER), moderator_internal.moles)
+	var/gas_power = values_dot(GAS_META(META_GAS_FUSION_POWER), internal_fusion.moles)
+	gas_power += 0.75 * values_dot(GAS_META(META_GAS_FUSION_POWER), moderator_internal.moles)
 
 	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) - iron_content * 0.05
 	//Effective reaction instability (determines if the energy is used/released)

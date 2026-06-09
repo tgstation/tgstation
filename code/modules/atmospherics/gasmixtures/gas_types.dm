@@ -1,24 +1,4 @@
 /proc/meta_gas_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
-		var/list/gas_info = new(META_GAS_LENGTH)
-		var/datum/gas/gas = gas_path
-
-		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME] = initial(gas.name)
-
-		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
-		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = generate_gas_overlays(0, SSmapping.max_plane_offset, gas)
-
-		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
-		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
-		gas_info[META_GAS_ID] = initial(gas.id)
-		gas_info[META_GAS_DESC] = initial(gas.desc)
-		.[gas_path] = gas_info
-	return .
-
-/proc/meta_gas_soa()
 	var/list/gas_info = new (META_GAS_LENGTH)
 	for (var/array_idx in 1 to gas_info.len)
 		gas_info[array_idx] = list()
@@ -35,9 +15,7 @@
 		gas_info[META_GAS_ID][gas_path] = initial(gas.id)
 		gas_info[META_GAS_DESC][gas_path] = initial(gas.desc)
 
-	// EHH, initialize it here i guess
-	/datum/gas_mixture::gas_meta_soa = gas_info
-
+	/datum/gas_mixture::gas_meta = gas_info // save the reference to the list
 	return gas_info
 
 /proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
@@ -51,7 +29,7 @@
 	return to_return
 
 /proc/gas_id2path(id)
-	var/list/meta_gas_id = GLOB.meta_gas_info_soa[META_GAS_ID]
+	var/list/meta_gas_id = GLOB.meta_gas_info[META_GAS_ID]
 	if(id in meta_gas_id)
 		return id
 	for(var/path in meta_gas_id)

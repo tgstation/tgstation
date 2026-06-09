@@ -66,7 +66,7 @@
 		create_gas()
 
 	if(ispath(gas_type, /datum/gas))
-		desc = "[GLOB.meta_gas_info_soa[META_GAS_NAME][gas_type]]. [GLOB.meta_gas_info_soa[META_GAS_DESC][gas_type]]"
+		desc = "[GLOB.meta_gas_info[META_GAS_NAME][gas_type]]. [GLOB.meta_gas_info[META_GAS_DESC][gas_type]]"
 
 	update_window()
 
@@ -710,7 +710,7 @@
 	var/danger = FALSE
 	for(var/gas_index in 1 to length(cached_moles))
 		var/gas_id = cached_moles[gas_index]
-		var/list/meta = GUS_META(gas_id)
+		var/list/meta = GAS_META(gas_id)
 		var/name = meta[META_GAS_NAME]
 		var/moles = cached_moles[gas_id]
 

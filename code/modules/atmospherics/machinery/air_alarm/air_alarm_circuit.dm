@@ -164,7 +164,7 @@
 			"Temperature" = "temperature"
 		)
 
-		var/cached_gas_info = GLOB.meta_gas_info_soa
+		var/cached_gas_info = GLOB.meta_gas_info
 		for(var/gas_id in cached_gas_info[META_GAS_ID])
 			component_options[cached_gas_info[META_GAS_NAME][gas_id]] = gas_id2path(gas_id)
 
@@ -352,7 +352,7 @@
 	. = ..()
 	var/static/list/meta_data = list()
 	if(length(meta_data) == 0)
-		var/cached_gas_info = GLOB.meta_gas_info_soa
+		var/cached_gas_info = GLOB.meta_gas_info
 		for(var/typepath in cached_gas_info[META_GAS_ID])
 			meta_data += cached_gas_info[META_GAS_ID][typepath]
 	. += create_table_notices(meta_data, column_name = "Gas", column_name_plural = "Gases")

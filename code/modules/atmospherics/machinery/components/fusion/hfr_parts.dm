@@ -288,7 +288,7 @@
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()
-	var/cached_gas_info = GLOB.meta_gas_info_soa
+	var/cached_gas_info = GLOB.meta_gas_info
 	for(var/path in cached_gas_info[META_GAS_ID])
 		data["filter_types"] += list(list(
 			"gas_id" = cached_gas_info[META_GAS_ID][path],

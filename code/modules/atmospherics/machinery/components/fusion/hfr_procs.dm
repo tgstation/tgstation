@@ -167,7 +167,7 @@
 
 	internal_fusion.assert_gas(/datum/gas/antinoblium)
 
-	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info_soa[META_GAS_ID]))
+	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info[META_GAS_ID]))
 
 	if (!selected_fuel)
 		return
