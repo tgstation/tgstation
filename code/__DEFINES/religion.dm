@@ -68,3 +68,53 @@
 #define RITE_ALLOW_MULTIPLE_PERFORMS (1<<1)
 ///The rite can only be fully performed once, so we'll completely remove it from the rite list afterwards.
 #define RITE_ONE_TIME_USE (1<<2)
+
+///Default prayer type for the pray verb
+#define DEFAULT_PRAYER "PRAYER"
+///Cult prayer type
+#define CULT_PRAYER "CULTIST PRAYER"
+//Heretic prayer type
+#define HERETIC_PRAYER "HERETICAL PRAYER"
+///Chaplain prayer type
+#define CHAPLAIN_PRAYER "CHAPLAIN PRAYER"
+///Spiritual prayer type
+#define SPIRITUAL_PRAYER "SPIRITUAL PRAYER"
+///Evil prayer type
+#define EVIL_PRAYER "EVIL PRAYER"
+///Standard prayer type that santa sees
+#define SANTA_PRAYER "PRAYER"
+///what type of prayer santa sees when someone's bad
+#define SANTA_NAUGHTY_PRAYER "PRAYER (NAUGHTY)"
+
+GLOBAL_LIST_INIT(prayer_type_to_font_color, list(
+	DEFAULT_PRAYER = "purple",
+	CULT_PRAYER = "black",
+	HERETIC_PRAYER = "green",
+	CHAPLAIN_PRAYER = "yellow",
+	SPIRITUAL_PRAYER = "blue",
+	EVIL_PRAYER = "red",
+	SANTA_PRAYER = "purple",
+	SANTA_NAUGHTY_PRAYER = "red",
+))
+
+GLOBAL_LIST_INIT(prayer_type_to_icon_state, list(
+	DEFAULT_PRAYER = "bible",
+	CULT_PRAYER = "tome",
+	HERETIC_PRAYER = "necronomicon",
+	CHAPLAIN_PRAYER = "kingyellow",
+	SPIRITUAL_PRAYER = "holylight",
+	EVIL_PRAYER = "burning",
+	SANTA_PRAYER = "bible", //here just in case, we use present boxes for the icon
+	SANTA_NAUGHTY_PRAYER = "burning",
+))
+
+GLOBAL_LIST_INIT(prayer_type_to_message_box, list(
+	DEFAULT_PRAYER = "",
+	CULT_PRAYER = "red_box",
+	HERETIC_PRAYER = "green_box",
+	CHAPLAIN_PRAYER = "blue_box",
+	SPIRITUAL_PRAYER = "",
+	EVIL_PRAYER = "red_box",
+	SANTA_PRAYER = "blue_box",
+	SANTA_NAUGHTY_PRAYER = "red_box",
+))

@@ -1258,6 +1258,7 @@
 #include "code\datums\components\limb_applicable.dm"
 #include "code\datums\components\ling_decoy_brain.dm"
 #include "code\datums\components\listen_and_repeat.dm"
+#include "code\datums\components\listen_prayers.dm"
 #include "code\datums\components\lock_on_cursor.dm"
 #include "code\datums\components\lockable_storage.dm"
 #include "code\datums\components\magnet.dm"
