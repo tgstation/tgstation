@@ -222,9 +222,8 @@ GLOBAL_VAR(command_name)
 	var/list/foods = strings(ION_FILE, "ionfood")
 	var/list/drinks = strings(ION_FILE, "iondrinks")
 	var/list/locations = list()
-	for(var/area/area_type as anything in GLOB.the_station_areas)
-		if(area_type::area_flags & VALID_TERRITORY)
-			locations |= format_text(area_type::name)
+	for(var/area/area_type as anything in list(/area/space) | GLOB.the_station_areas)
+		locations |= format_text(area_type::name)
 
 	var/list/names = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
