@@ -554,13 +554,12 @@
 		new_rock = new /obj/item/boulder(loc)
 	Shake(duration = 1.5 SECONDS)
 
-	//decorate the boulder with materials if it doesn't have any already
-	if(!length(new_rock.custom_materials))
-		var/list/mats_list = list()
-		for(var/iteration in 1 to MINERALS_PER_BOULDER)
-			var/datum/material/material = pick_weight(mineral_breakdown)
-			mats_list[material] += ore_quantity_function(iteration)
-		new_rock.set_custom_materials(mats_list)
+	//decorate the boulder with materials
+	var/list/mats_list = new_rock.custom_materials?.Copy() || list()
+	for(var/iteration in 1 to MINERALS_PER_BOULDER)
+		var/datum/material/material = pick_weight(mineral_breakdown)
+		mats_list[material] += ore_quantity_function(iteration)
+	new_rock.set_custom_materials(mats_list)
 
 	//set size & durability
 	new_rock.boulder_size = boulder_size
