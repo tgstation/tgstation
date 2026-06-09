@@ -219,3 +219,8 @@
   - balance: Objects with the walking aid reduce limbless slowdown by 40%, while dedicated
       medical crutches reduce it by 60%.
   - refactor: Refactor cane and crutch code logic into a modular walking aid component
+2026-06-09:
+  mcbalaam:
+  - bugfix: Fixed some of the Big Manipulator behavior such as not working in strict
+      mode, putting items inside itself and incorrectly targeting items due to misconfigured
+      filters.
