@@ -186,6 +186,19 @@ GLOBAL_VAR(command_name)
 
 	return name
 
+/// Returns a cached list of names of all the areas on the station, ie list("Medbay Lobby", "Engineering", "Bar", ...)
+/proc/get_all_station_area_names()
+	var/static/list/station_area_names
+	if(!station_area_names)
+		station_area_names = list()
+		for(var/area/area_type as anything in GLOB.the_station_areas)
+			station_area_names |= format_text(area_type::name)
+
+	return station_area_names
+
+// Really don't want code phrase generation to runtime
+// Which, it CAN happen because strings() will return no list if it is admin proc called
+#define SAFE_PICK(some_list) LOWERTEXT(length(some_list) ? pick(some_list) : "Bug")
 
 //Traitors and traitor silicons will get these. Revs will not.
 GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
@@ -223,14 +236,14 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 		25; 5
 	)
 
-	var/list/safety = list(1,2,3)//Tells the proc which options to remove later on.
-	var/nouns = strings(ION_FILE, "ionabstract")
-	var/objects = strings(ION_FILE, "ionobjects")
-	var/adjectives = strings(ION_FILE, "ionadjectives")
-	var/threats = strings(ION_FILE, "ionthreats")
-	var/foods = strings(ION_FILE, "ionfood")
-	var/drinks = strings(ION_FILE, "iondrinks")
-	var/locations = strings(LOCATIONS_FILE, "locations")
+	var/list/safety = list(1, 2, 3)//Tells the proc which options to remove later on.
+	var/list/nouns = strings(ION_FILE, "ionabstract")
+	var/list/objects = strings(ION_FILE, "ionobjects")
+	var/list/adjectives = strings(ION_FILE, "ionadjectives")
+	var/list/threats = strings(ION_FILE, "ionthreats")
+	var/list/foods = strings(ION_FILE, "ionfood")
+	var/list/drinks = strings(ION_FILE, "iondrinks")
+	var/list/locations = get_all_station_area_names()
 
 	var/list/names = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
@@ -265,27 +278,29 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += LOWER_TEXT(pick(drinks))
+						. += SAFE_PICK(pick(drinks))
 					if(2)
-						. += LOWER_TEXT(pick(foods))
+						. += SAFE_PICK(pick(foods))
 					if(3)
-						. += LOWER_TEXT(pick(locations))
+						. += SAFE_PICK(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += LOWER_TEXT(pick(nouns))
+						. += SAFE_PICK(pick(nouns))
 					if(2)
-						. += LOWER_TEXT(pick(objects))
+						. += SAFE_PICK(pick(objects))
 					if(3)
-						. += LOWER_TEXT(pick(adjectives))
+						. += SAFE_PICK(pick(adjectives))
 					if(4)
-						. += LOWER_TEXT(pick(threats))
+						. += SAFE_PICK(pick(threats))
 		if(!return_list)
 			if(words == 1)
 				. += "."
 			else
 				. += ", "
+
+#undef SAFE_PICK
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
