@@ -31,19 +31,23 @@
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
-	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+	RegisterSignal(new_vampire, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	if(new_vampire.hud_used)
 		on_hud_created(new_vampire)
 
 /datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(old_vampire, list(
+		COMSIG_ATOM_ATTACKBY,
+		COMSIG_MOB_HUD_CREATED,
+		COMSIG_LIVING_LIFE,
+	))
 	old_vampire.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
 
-/datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick)
-	. = ..()
+/datum/species/human/vampire/proc/on_life(mob/living/carbon/human/vampire, seconds_per_tick)
+	SIGNAL_HANDLER
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE
 		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
@@ -156,7 +160,6 @@
 	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	organ_traits = list(
-		TRAIT_SPEAKS_CLEARLY,
 		TRAIT_DRINKS_BLOOD,
 		// future todo : tie nobreath and nohunger to a vampire organ set bonus
 		TRAIT_NOBREATH,

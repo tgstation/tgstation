@@ -1,4 +1,4 @@
-#define MAX_ARTIFACT_ROLL_CHANCE 10
+#define ARTIFACT_ROLL_CHANCE 7
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
@@ -72,7 +72,7 @@
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
-	var/artifact_chance = 0
+	var/artifact_chance = ARTIFACT_ROLL_CHANCE
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
 	/// We use a cooldown to prevent players from tapping boulders rapidly from vents.
@@ -140,6 +140,7 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		produce_boulder(TRUE)
+		return TRUE
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -160,6 +161,8 @@
 				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+	if(artifact_chance)
+		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
@@ -525,6 +528,11 @@
 		var/atom/movable/flick_visual/visual = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', selected_mat.name), 4.5 SECONDS)
 		animate(visual, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
+	if(artifact_chance)
+		var/atom/movable/flick_visual/rare = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', "rare_ore"), 4.5 SECONDS)
+		animate(rare, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+
+
 /**
  * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
  * Returns the boulder produced.
@@ -540,7 +548,8 @@
 	//produce the boulder
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))
-		new_rock = new /obj/item/boulder/artifact(loc)
+		var/picked_artifact = pick(typesof(/obj/item/boulder/artifact))
+		new_rock = new picked_artifact(loc)
 	else
 		new_rock = new /obj/item/boulder(loc)
 	Shake(duration = 1.5 SECONDS)
@@ -645,6 +654,10 @@
 		/datum/material/glass = 1,
 	)
 
+/obj/structure/ore_vent/starter_resources/Initialize(mapload)
+	. = ..()
+	generate_description()
+
 /obj/structure/ore_vent/random
 	// Todo: determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
 
@@ -653,7 +666,6 @@
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 		generate_description()
-	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
@@ -665,7 +677,7 @@
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE,
@@ -678,7 +690,7 @@
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/ice_demon,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE = 3,
@@ -699,9 +711,9 @@
 		/datum/material/titanium = 1,
 		/datum/material/silver = 1,
 		/datum/material/gold = 1,
-		/datum/material/diamond = 1,
+		/datum/material/diamond = 0.1,
 		/datum/material/uranium = 1,
-		/datum/material/bluespace = 1,
+		/datum/material/bluespace = 0.1,
 		/datum/material/plastic = 1,
 	)
 	defending_mobs = list(
@@ -784,6 +796,7 @@
 	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
 	mineral_breakdown[choice] = value
 	balloon_alert_to_viewers("weighting of [value] added")
+	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -806,7 +819,7 @@
 	GLOB.mining_center += loc
 	return INITIALIZE_HINT_QDEL
 
-#undef MAX_ARTIFACT_ROLL_CHANCE
+#undef ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH

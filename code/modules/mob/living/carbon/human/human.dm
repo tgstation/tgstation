@@ -696,7 +696,7 @@
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
 		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE && existing_mutation.remove_on_aheal)
-				dna.remove_mutation(existing_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+				dna.remove_mutation(existing_mutation, GLOB.standard_mutation_sources)
 
 	if(heal_flags & HEAL_TEMP)
 		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
@@ -980,12 +980,12 @@
 /mob/living/carbon/human/proc/add_eye_color_left(color, color_priority, update_body = TRUE)
 	LAZYSET(eye_color_left_overrides, "[color_priority]", color)
 	if (update_body)
-		update_body()
+		update_eyes()
 
 /mob/living/carbon/human/proc/add_eye_color_right(color, color_priority, update_body = TRUE)
 	LAZYSET(eye_color_right_overrides, "[color_priority]", color)
 	if (update_body)
-		update_body()
+		update_eyes()
 
 /mob/living/carbon/human/proc/add_eye_color(color, color_priority, update_body = TRUE)
 	add_eye_color_left(color, color_priority, update_body = FALSE)
@@ -995,9 +995,12 @@
 	LAZYREMOVE(eye_color_left_overrides, "[color_priority]")
 	LAZYREMOVE(eye_color_right_overrides, "[color_priority]")
 	if (update_body)
-		update_body()
+		update_eyes()
 
-/mob/living/carbon/human/proc/get_right_eye_color()
+/mob/living/carbon/proc/get_right_eye_color()
+	return
+
+/mob/living/carbon/human/get_right_eye_color()
 	if (!LAZYLEN(eye_color_right_overrides))
 		return eye_color_right
 
@@ -1010,7 +1013,10 @@
 			eye_color = eye_color_right_overrides[override_priority]
 	return eye_color
 
-/mob/living/carbon/human/proc/get_left_eye_color()
+/mob/living/carbon/proc/get_left_eye_color()
+	return
+
+/mob/living/carbon/human/get_left_eye_color()
 	if (!LAZYLEN(eye_color_left_overrides))
 		return eye_color_left
 
@@ -1108,8 +1114,11 @@
 /mob/living/carbon/human/species/lizard/silverscale
 	race = /datum/species/lizard/silverscale
 
+/mob/living/carbon/human/species/spirit
+	race = /datum/species/spirit
+
 /mob/living/carbon/human/species/ghost
-	race = /datum/species/ghost
+	race = /datum/species/spirit/ghost
 
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal

@@ -25,6 +25,7 @@
 	 * This unit test requires every (unless ignored) atom to have been created at least once
 	 * for a more accurate search, which is why it's run after create_and_destroy is done running.
 	 */
+	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
 	priority = TEST_AFTER_CREATE_AND_DESTROY
 
 /datum/unit_test/dcs_check_list_arguments/Run()

@@ -159,11 +159,9 @@
 		content.forceMove(folding_bodybag)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
-		if(iscarbon(content))
-			var/mob/living/carbon/mob = content
-			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
-				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
-				continue
+		if(HAS_TRAIT(content, TRAIT_DWARF))
+			max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
+			continue
 		if(!isitem(content))
 			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
 			continue
@@ -319,15 +317,15 @@
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner
 	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
-	/// How long it takes to sinch the bag.
-	var/sinch_time = 10 SECONDS
-	/// Whether or not the bag is sinched. Starts unsinched.
-	var/sinched = FALSE
-	/// The sound that plays when the bag is done sinching.
-	var/sinch_sound = 'sound/items/equip/toolbelt_equip.ogg'
+	/// How long it takes to cinch the bag.
+	var/cinch_time = 10 SECONDS
+	/// Whether or not the bag is cinched. Starts uncinched.
+	var/cinched = FALSE
+	/// The sound that plays when the bag is done cinching.
+	var/cinch_sound = 'sound/items/equip/toolbelt_equip.ogg'
 
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
-	if(sinched)
+	if(cinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
 		return FALSE
 	return ..()
@@ -337,23 +335,23 @@
 	if(!.)
 		return FALSE
 
-	if(sinched && !force)
-		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
+	if(cinched && !force)
+		to_chat(user, span_danger("The buckles on [src] are cinched down, preventing it from opening."))
 		return FALSE
 
-	sinched = FALSE //in case it was forced open unsinch it
+	cinched = FALSE //in case it was forced open uncinch it
 	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
-	if(sinched)
-		icon_state = initial(icon_state) + "_sinched"
+	if(cinched)
+		icon_state = initial(icon_state) + "_cinched"
 	else
 		icon_state = initial(icon_state)
 
 /obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user, loc_required = TRUE)
 	// copy-pasted with changes because flavor text as well as some other misc stuff
-	if(opened || ismovable(loc) || !sinched)
+	if(opened || ismovable(loc) || !cinched)
 		return ..()
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -362,7 +360,7 @@
 		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear straining cloth from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !sinched )
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !cinched )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
@@ -376,7 +374,7 @@
 
 
 /obj/structure/closet/body_bag/environmental/prisoner/bust_open()
-	sinched = FALSE
+	cinched = FALSE
 	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
 	open()
 
@@ -395,19 +393,19 @@
 		return
 	if(iscarbon(user))
 		add_fingerprint(user)
-	if(!sinched)
+	if(!cinched)
 		for(var/mob/living/target in contents)
 			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
-		user.visible_message(span_notice("[user] begins sinching down the buckles on [src]."))
-		if(!(do_after(user,(sinch_time),target = src)))
+		user.visible_message(span_notice("[user] begins cinching down the buckles on [src]."))
+		if(!(do_after(user,(cinch_time),target = src)))
 			return
-	sinched = !sinched
-	if(sinched)
-		playsound(loc, sinch_sound, 15, TRUE, -2)
-	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
-							span_notice("You [sinched ? null : "un"]sinch [src]."),
+	cinched = !cinched
+	if(cinched)
+		playsound(loc, cinch_sound, 15, TRUE, -2)
+	user.visible_message(span_notice("[user] [cinched ? null : "un"]cinches [src]."),
+							span_notice("You [cinched ? null : "un"]cinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
-	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
+	user.log_message("[cinched ? "cinched":"uncinched"] secure environmental bag [src]", LOG_GAME)
 	update_appearance()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate
@@ -420,7 +418,7 @@
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 	breakout_time = 8 MINUTES
-	sinch_time = 20 SECONDS
+	cinch_time = 20 SECONDS
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
 	air_contents = null
@@ -432,7 +430,7 @@
 	air_contents.adjust_gas(/datum/gas/nitrous_oxide, (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD)
 
 /obj/structure/closet/body_bag/environmental/hardlight
-	name = "hardlight bodybag"
+	name = "hardlight body bag"
 	desc = "A hardlight bag for storing bodies. Resistant to space."
 	icon_state = "holobag_med"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -445,8 +443,8 @@
 		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight
-	name = "hardlight prisoner bodybag"
-	desc = "A hardlight bag for storing bodies. Resistant to space, can be sinched to prevent escape."
+	name = "hardlight prisoner body bag"
+	desc = "A hardlight bag for storing bodies. Resistant to space, can be cinched to prevent escape."
 	icon_state = "holobag_sec"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
@@ -458,7 +456,7 @@
 		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/stasis
-	name = "stasis bodybag"
+	name = "stasis body bag"
 	desc = "A disposable bodybag designed to keep its contents in stasis, preventing decay and further injury. \
 		The bag itself cannot maintain stasis for long, and will eventually fall apart."
 	max_integrity = 300
@@ -579,6 +577,7 @@
 	take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
 
 /obj/structure/closet/body_bag/environmental/stasis/after_open(mob/living/user, force = FALSE)
+	. = ..()
 	if(COOLDOWN_FINISHED(src, freeze_sound_cd) && (locate(/mob/living) in loc))
 		playsound(src, 'sound/effects/spray.ogg', 25, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE, frequency = 0.4)
 	COOLDOWN_START(src, freeze_sound_cd, 2 SECONDS)
@@ -590,6 +589,7 @@
 	RegisterSignal(target, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(skip_to_attack_hand))
 
 /obj/structure/closet/body_bag/environmental/stasis/after_close(mob/living/user)
+	. = ..()
 	if(COOLDOWN_FINISHED(src, freeze_sound_cd) && (locate(/mob/living) in src))
 		playsound(src, 'sound/effects/spray.ogg', 25, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE, frequency = 0.5)
 	COOLDOWN_START(src, freeze_sound_cd, 2 SECONDS)

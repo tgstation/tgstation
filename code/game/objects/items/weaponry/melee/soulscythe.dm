@@ -38,7 +38,8 @@
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_attack))
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(on_secondary_attack))
 	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
@@ -263,12 +264,10 @@
 /mob/living/basic/soulscythe/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_LAVA_IMMUNE), INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick) // done like this because there's no need to go through all of life since the item does the work anyways
+/mob/living/basic/soulscythe/Life(seconds_per_tick)
 	if(stat == CONSCIOUS)
 		adjust_blood_volume(round(1 * seconds_per_tick), maximum = MAX_BLOOD_LEVEL)
-	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 /// Special projectile for the soulscythe.
 /obj/projectile/soulscythe

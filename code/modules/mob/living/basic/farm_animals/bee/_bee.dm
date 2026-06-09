@@ -111,18 +111,18 @@
 
 /mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it
@@ -199,7 +199,7 @@
 
 /// Picks a random toxin and assigns it to the bee
 /mob/living/basic/bee/proc/assign_random_toxin_reagent()
-	assign_reagent(get_random_reagent_id(whitelist = subtypesof(/datum/reagent/toxin)))
+	assign_reagent(GLOB.chemical_reagents_list[get_random_reagent_id(whitelist = subtypesof(/datum/reagent/toxin))])
 
 /mob/living/basic/bee/mutate()
 	. = ..()

@@ -36,9 +36,13 @@
 	var/speech_span
 	///Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
-	///Multiplier for inertia based movement in space
-	var/inertia_move_multiplier = 1
-	///Object "weight", higher weight reduces acceleration applied to the object
+	/// Multiplies speed the movable drifts when unaffected by gravity.
+	/// "Passive" is used for referring "base drift speed" - only the smaller of the two are used.
+	var/inertia_move_multiplier_passive = 1
+	/// Multiplies speed the movable drifts when unaffected by gravity.
+	/// "Active" is used for referring to things boosting our drift speed, like jetpacks - only the smaller of the two are used.
+	var/inertia_move_multiplier_active = 1
+	/// Object "weight", higher weight reduces acceleration applied to the object
 	var/inertia_force_weight = 1
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
@@ -241,12 +245,6 @@
 		SSspatial_grid.force_remove_from_grid(src)
 
 	LAZYNULL(client_mobs_in_contents)
-
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
-#endif
 
 	. = ..()
 

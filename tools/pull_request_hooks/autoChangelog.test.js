@@ -1,6 +1,6 @@
-import assert from "node:assert/strict";
-import { changelogToYml } from "./autoChangelog.js";
-import { parseChangelog } from "./changelogParser.js";
+import assert from 'node:assert/strict';
+import { changelogToYml } from './autoChangelog.js';
+import { parseChangelog } from './changelogParser.js';
 
 assert.equal(
   changelogToYml(

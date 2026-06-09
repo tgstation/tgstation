@@ -58,7 +58,7 @@
 	if(equipping.pulledby)
 		equipping.pulledby.stop_pulling()
 
-	equipping.screen_loc = null // will get moved if inventory is visible
+	hud_used?.update_inventory_slot(slot)
 	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 

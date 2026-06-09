@@ -119,3 +119,11 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BB_RAPTOR_FLEE_THRESHOLD "raptor_flee_threshold"
 
 #define MAX_RAPTOR_POP 64
+
+
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack continue as normal.
+#define BASIC_MOB_CONTINUE_ATTACK_CHAIN 0
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, but not set a cooldown. This is the default.
+#define BASIC_MOB_END_ATTACK_CHAIN 1
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, and sets a cooldown. Useful if you add behavior to early_melee_attack
+#define BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN 2

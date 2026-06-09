@@ -24,11 +24,12 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 
-	minimum_survivable_temperature = 0
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
 	maximum_survivable_temperature = T0C + 100
-	unsuitable_cold_damage = 0
+	unsuitable_cold_damage = 1
+	unsuitable_atmos_damage = 2
 
-	habitable_atmos = null
+	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0)
 
 	// A vivid red.
 	lighting_cutoff_red = 40
@@ -398,3 +399,12 @@
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 
 	regen_rate = 0.5 // 360 seconds to recover from 0 to 180, or exactly 6 minutes.
+
+/mob/living/basic/blood_worm/hatchling/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
+
+/mob/living/basic/blood_worm/juvenile/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/polymorph
+
+/mob/living/basic/blood_worm/adult/polymorph
+	cocoon_action = null

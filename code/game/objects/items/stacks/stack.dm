@@ -475,8 +475,12 @@
 
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
+			if(recipe.res_amount > 0 && recipe.req_amount != recipe.res_amount)
+				var/scale = recipe.req_amount / recipe.res_amount
+				for(var/mat in result_mats)
+					result_mats[mat] *= scale
 			crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
-			update_custom_materials()
+			crafted_stack.update_custom_materials()
 		else
 			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)
 

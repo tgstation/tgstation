@@ -86,7 +86,6 @@
 #define HUD_CYBORG_HANDS "cyborg_module"
 #define HUD_CYBORG_RADIO "cyborg_radio"
 #define HUD_CYBORG_DEATH "cyborg_death"
-#define HUD_KEY_CYBORG_MODULE(slot) "cyborg_module:[slot]"
 
 #define HUD_AI_FLOOR_INDICATOR "ai_floor_indicator"
 #define HUD_AI_GO_UP "ai_go_up"
@@ -169,6 +168,19 @@
 #define HUD_MULTITOOL_ARROW "multitool_arrow"
 
 #define HUD_XENOBIO_CONSOLE "xenobio_console"
+
+#define HUD_TAC_MINIMAP "tac_minimap"
+#define HUD_TAC_MINIMAP_DIMMER "tac_minimap_dimmer"
+#define HUD_TAC_MINIMAP_Z_INDICATOR "tac_minimap_z_indicator"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_UP "tac_minimap_z_up"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_DOWN "tac_minimap_z_down"
+#define HUD_TAC_MINIMAP_TOOL_RED "tac_minimap_tool_red"
+#define HUD_TAC_MINIMAP_TOOL_YELLOW "tac_minimap_tool_yellow"
+#define HUD_TAC_MINIMAP_TOOL_PURPLE "tac_minimap_tool_purple"
+#define HUD_TAC_MINIMAP_TOOL_BLUE "tac_minimap_tool_blue"
+#define HUD_TAC_MINIMAP_TOOL_ERASE "tac_minimap_tool_erase"
+#define HUD_TAC_MINIMAP_TOOL_LABEL "tac_minimap_tool_label"
+#define HUD_TAC_MINIMAP_TOOL_CLEAR "tac_minimap_tool_clear"
 
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.

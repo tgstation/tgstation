@@ -567,7 +567,7 @@ em {
 }
 
 .green {
-  color: hsl(132.8, 93.4%, 29.6%);
+  color: hsl(132.9, 100%, 50.6%);
 }
 
 .grey {
@@ -952,6 +952,11 @@ em {
 .upside_down {
   transform: rotate(180deg);
   display: inline-block;
+}
+
+.cyan {
+  color: #bde0dc;
+  text-shadow: 0 0 6px #bde0dc;
 }
 
 .connectionClosed,

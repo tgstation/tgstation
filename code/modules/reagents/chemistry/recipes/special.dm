@@ -41,97 +41,115 @@
 /datum/chemical_reaction/randomized/New(recipe_data)
 	. = ..()
 
-	//creation time, decides if we are random generating or not
-	created = recipe_data ? text2num(recipe_data["timestamp"]) : world.realtime
+	if(!recipe_data || !load_recipe(recipe_data))
+		log_game("Generating recipe for [src]")
+		if(!generate_recipe())
+			log_game("Couldn't generate recipe for [src]")
+			qdel(src)
+
+
+/datum/chemical_reaction/randomized/proc/load_recipe(recipe_data)
+	PRIVATE_PROC(TRUE)
+	// Timestamp
+	created = text2num(recipe_data["timestamp"])
 	if(daysSince(created) > persistence_period)
-		recipe_data = null
-
-	//all reagents
-	if(recipe_data)
-		required_reagents = unwrap_reagent_list(recipe_data["required_reagents"])
-		if(!required_reagents)
-			qdel(src)
-			return
-		required_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
-		if(!required_catalysts)
-			qdel(src)
-			return
-		results = unwrap_reagent_list(recipe_data["results"])
-		if(!results)
-			qdel(src)
-			return
-	else
-		var/list/remaining_possible_reagents = GetPossibleReagents(RNGCHEM_INPUT)
-		var/list/remaining_possible_catalysts = GetPossibleReagents(RNGCHEM_CATALYSTS)
-		//We're going to assume we're not doing any weird partial reactions for now.
-		for(var/reagent_type in results)
-			remaining_possible_catalysts -= reagent_type
-			remaining_possible_reagents -= reagent_type
-
-		var/in_reagent_count = min(rand(min_input_reagents, max_input_reagents),remaining_possible_reagents.len)
-		if(in_reagent_count <= 0)
-			qdel(src)
-			return
-
-		required_reagents = list()
-		for(var/i in 1 to in_reagent_count)
-			var/r_id = pick_n_take(remaining_possible_reagents)
-			required_reagents[r_id] = rand(min_input_reagent_amount,max_input_reagent_amount)
-			remaining_possible_catalysts -= r_id //Can't have same reagents both as catalyst and reagent. Or can we ?
-
-		required_catalysts = list()
-		var/in_catalyst_count = min(rand(min_catalysts,max_catalysts),remaining_possible_catalysts.len)
-		for(var/i in 1 to in_catalyst_count)
-			required_catalysts[pick_n_take(remaining_possible_catalysts)] = rand(min_input_reagent_amount,max_input_reagent_amount)
-
-	//temperature
-	if(recipe_data)
-		is_cold_recipe = recipe_data["is_cold_recipe"]
-		required_temp = recipe_data["required_temp"]
-		optimal_temp = recipe_data["optimal_temp"]
-		overheat_temp = recipe_data["overheat_temp"]
-		thermic_constant = recipe_data["thermic_constant"]
-	else
-		is_cold_recipe = pick(TRUE, FALSE)
-		if(is_cold_recipe)
-			required_temp = rand(min_temp + 50, max_temp)
-			optimal_temp = rand(min_temp + 25, required_temp - 10)
-			overheat_temp = rand(min_temp, optimal_temp - 10)
-			if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
-				overheat_temp = 200
-		else
-			required_temp = rand(min_temp, max_temp - 50)
-			optimal_temp = rand(required_temp + 10, max_temp - 25)
-			overheat_temp = rand(optimal_temp, max_temp + 50)
-			if(overheat_temp <= 400)
-				overheat_temp = 400
-
-	//ph
-	if(recipe_data)
-		optimal_ph_min = recipe_data["optimal_ph_min"]
-		optimal_ph_max = recipe_data["optimal_ph_max"]
-		determin_ph_range = recipe_data["determin_ph_range"]
-		H_ion_release = recipe_data["H_ion_release"]
-	else
-		optimal_ph_min = CHEMICAL_MIN_PH + rand(0, suboptimal_range_ph)
-		optimal_ph_max = max((CHEMICAL_MAX_PH + rand(0, suboptimal_range_ph)), (CHEMICAL_MIN_PH + 1)) //Always ensure we've a window of 1
-		determin_ph_range = suboptimal_range_ph
-		H_ion_release = (rand(0, 25) / 100)// 0 - 0.25
-
-	//purity
-	purity_min = recipe_data ? recipe_data["purity_min"] : (rand(0, 4) / 10)
+		log_game("Recipe [src] expired.")
+		return FALSE
+	//ingredients and catalysts
+	required_reagents = unwrap_reagent_list(recipe_data["required_reagents"])
+	if(!required_reagents)
+		log_game("Couldn't load reagents for [src]")
+		return FALSE
+	required_catalysts = unwrap_reagent_list(recipe_data["required_catalysts"])
+	if(!required_catalysts)
+		log_game("Couldn't load catalysts for [src]")
+		return FALSE
 
 	//container
-	if(recipe_data)
-		var/container = recipe_data["required_container"]
-		if(container)
-			container = text2path(container)
-			if(!container)
-				qdel(src)
-				return
-			required_container = container
-	else if(length(possible_containers))
+	if(possible_containers)
+		var/container = recipe_data["required_container"] ? text2path(recipe_data["required_container"]) : null
+		if(!container)
+			log_game("Couldn't load container for [src]")
+			return FALSE
+		required_container = container
+
+	//temperature
+	is_cold_recipe = recipe_data["is_cold_recipe"]
+	required_temp = recipe_data["required_temp"]
+	optimal_temp = recipe_data["optimal_temp"]
+	overheat_temp = recipe_data["overheat_temp"]
+	thermic_constant = recipe_data["thermic_constant"]
+
+	//pH
+	optimal_ph_min = recipe_data["optimal_ph_min"]
+	optimal_ph_max = recipe_data["optimal_ph_max"]
+	determin_ph_range = recipe_data["determin_ph_range"]
+	H_ion_release = recipe_data["H_ion_release"]
+
+	//purity
+	purity_min = recipe_data["purity_min"]
+
+	return TRUE
+
+/datum/chemical_reaction/randomized/proc/generate_recipe()
+	// Timestamp
+	created = world.realtime
+
+	// Reagents and catalysts
+	var/list/remaining_possible_reagents = GetPossibleReagents(RNGCHEM_INPUT)
+	var/list/remaining_possible_catalysts = GetPossibleReagents(RNGCHEM_CATALYSTS)
+	//We're going to assume we're not doing any weird partial reactions for now.
+	for(var/reagent_type in results)
+		remaining_possible_catalysts -= reagent_type
+		remaining_possible_reagents -= reagent_type
+
+	if(remaining_possible_reagents.len < min_input_reagents)
+		log_game("Couldn't find enough reagents for [src]")
+		return FALSE
+
+	required_reagents = list()
+	var/in_reagent_count = min(rand(min_input_reagents, max_input_reagents),remaining_possible_reagents.len)
+	for(var/i in 1 to in_reagent_count)
+		var/r_id = pick_n_take(remaining_possible_reagents)
+		required_reagents[r_id] = rand(min_input_reagent_amount,max_input_reagent_amount)
+		remaining_possible_catalysts -= r_id //Can't have same reagents both as catalyst and reagent. Or can we ?
+
+	if(remaining_possible_catalysts.len < min_catalysts)
+		log_game("Couldn't find enough catalysts for [src]")
+		return FALSE
+
+	required_catalysts = list()
+	var/in_catalyst_count = min(rand(min_catalysts,max_catalysts),remaining_possible_catalysts.len)
+	for(var/i in 1 to in_catalyst_count)
+		required_catalysts[pick_n_take(remaining_possible_catalysts)] = rand(min_input_reagent_amount,max_input_reagent_amount)
+
+	// Container
+	if(possible_containers)
 		required_container = pick(possible_containers)
+	// Temperature
+	is_cold_recipe = pick(TRUE, FALSE)
+	if(is_cold_recipe)
+		required_temp = rand(min_temp + 50, max_temp)
+		optimal_temp = rand(min_temp + 25, required_temp - 10)
+		overheat_temp = rand(min_temp, optimal_temp - 10)
+		if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
+			overheat_temp = 200
+	else
+		required_temp = rand(min_temp, max_temp - 50)
+		optimal_temp = rand(required_temp + 10, max_temp - 25)
+		overheat_temp = rand(optimal_temp, max_temp + 50)
+		if(overheat_temp <= 400)
+			overheat_temp = 400
+
+	//pH
+	optimal_ph_min = CHEMICAL_MIN_PH + rand(0, suboptimal_range_ph)
+	optimal_ph_max = max((CHEMICAL_MAX_PH - rand(0, suboptimal_range_ph)), (optimal_ph_min + 1)) //Always ensure we've a window of 1
+	determin_ph_range = suboptimal_range_ph
+	H_ion_release = (rand(0, 25) / 100)// 0 - 0.25
+
+	// Purity
+	purity_min = (rand(0, 4) / 10)
+	return TRUE
 
 /**
  * Returns the reagents to select for randomizing
@@ -196,8 +214,23 @@
 		if(RNGCHEM_CATALYSTS)
 			return list(/datum/reagent/wittel)
 
+///Random recipe that turns stuff into ROCKS
+/datum/chemical_reaction/randomized/gorgium
+	persistence_period = 7
+	results = list(/datum/reagent/metalgen/gorgium = 20)
+
+/datum/chemical_reaction/randomized/gorgium/GetPossibleReagents(kind)
+	var/list/possible_ingredients = list()
+	for(var/datum/reagent/reagent as anything in valid_subtypesof(/datum/reagent))
+		var/chemical_flags = reagent::chemical_flags
+		if(VALID_RANDOM_RECIPE_REAGENT(chemical_flags))
+			possible_ingredients += reagent
+	return possible_ingredients
+
 /obj/item/paper/secretrecipe
 	name = "Old Recipe"
+	/// The recipes we can spawn with
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/metalgen, /datum/chemical_reaction/randomized/secret_sauce)
 
 /obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()
@@ -222,7 +255,7 @@
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	PRIVATE_PROC(TRUE)
 
-	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[pick(valid_subtypesof(/datum/chemical_reaction/randomized))]
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[pick(possible_recipes)]
 	if(!recipe)
 		add_raw_text("This recipe is illegible.")
 		update_appearance()
@@ -259,6 +292,26 @@
 	dat += "."
 	add_raw_text(dat.Join(""))
 	update_appearance()
+
+/// Paper that spawns a recipe for the petrification serum
+/obj/item/paper/secretrecipe/gorgium
+	name = "paper" //gets affixed by rock
+	possible_recipes = list(/datum/chemical_reaction/randomized/gorgium)
+
+/obj/item/paper/secretrecipe/gorgium/Initialize(mapload)
+	. = ..()
+
+	metal_transmute(src, /datum/material/rock)
+
+/// Recipe that always has metalgen
+/obj/item/paper/secretrecipe/metalgen
+	name = "paper" //gets affixed by uranium
+	possible_recipes = list(/datum/chemical_reaction/randomized/metalgen)
+
+/obj/item/paper/secretrecipe/metalgen/Initialize(mapload)
+	. = ..()
+
+	metal_transmute(src, /datum/material/uranium)
 
 #undef RNGCHEM_INPUT
 #undef RNGCHEM_CATALYSTS

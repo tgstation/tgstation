@@ -13,6 +13,7 @@
 	now_failing = span_warning("You are unable to hear at all!")
 	now_fixed = span_info("Noise slowly begins filling your ears once more.")
 	low_threshold_cleared = span_info("The ringing in your ears has died down.")
+	visual = FALSE
 
 	/// temporary deafness, measured in seconds. While > 0, the person is unable to hear anything.
 	var/temporary_deafness = 0
@@ -141,7 +142,6 @@
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
 
-
 /obj/item/organ/ears/cat
 	name = "cat ears"
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -199,6 +199,7 @@
 	sprite_accessory_override = /datum/sprite_accessory/ears/cat/cybernetic
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
+	restyle_flags = NONE
 
 /obj/item/organ/ears/cat/cybernetic/upgraded
 	name = "cybernetic cat ears"
@@ -253,10 +254,10 @@
 	return all_images
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
-	inner_color = "#0079EA"
+	inner_color = "#00D844"
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
-	inner_color = "#00D844"
+	inner_color = "#0079EA"
 
 /obj/item/organ/ears/ghost
 	name = "ghost ears"

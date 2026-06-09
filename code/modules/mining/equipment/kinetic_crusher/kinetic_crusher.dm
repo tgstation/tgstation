@@ -218,7 +218,7 @@
 	var/backstabbed = FALSE
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
-	if(check_behind(user, target) || boosted_mark)
+	if(check_behind(user, target) && !HAS_TRAIT(target, TRAIT_BACKSTAB_IMMUNE) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
 		playsound(user, backstab_sound, 100, TRUE) //Seriously who spelled it wrong
@@ -335,6 +335,9 @@
 /obj/projectile/destabilizer/Destroy()
 	fired_from = null
 	return ..()
+
+/obj/projectile/destabilizer/is_hostile_projectile()
+	return TRUE
 
 /obj/projectile/destabilizer/proc/on_parry(mob/user)
 	SIGNAL_HANDLER

@@ -3260,7 +3260,7 @@
 
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/herbal_liqueur
@@ -3392,7 +3392,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
+/datum/reagent/consumable/ethanol/negroni //Aperitif that supresses overeating
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
@@ -3405,8 +3405,7 @@
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
 	name = "Nuclear daiquiri"
@@ -3451,7 +3450,14 @@
 	taste_description = "honeyed herbal gin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	metabolized_traits = list(TRAIT_HERETICAL_DREAMS) //Enables non-heretics to have heretical dreams
+
+/datum/reagent/consumable/ethanol/poets_dream/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.apply_status_effect(/datum/status_effect/grouped/heretic_dreams, type)
+
+/datum/reagent/consumable/ethanol/poets_dream/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
+	. = ..()
+	affected_mob.remove_status_effect(/datum/status_effect/grouped/heretic_dreams, type)
 
 /datum/reagent/consumable/ethanol/pousse_cafe
 	name = "Pousse Cafe"
@@ -3464,7 +3470,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger
+/datum/reagent/consumable/ethanol/spritz //Aperitif that supresses overeating
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
 	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
 	boozepwr = 20
@@ -3477,8 +3483,7 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/vieux_carre
 	name = "Vieux Carré"
