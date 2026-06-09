@@ -1,4 +1,5 @@
 /datum/unit_test/cargo_dep_order_locations
+	test_flags = UNIT_TEST_MAP_TEST
 
 /datum/unit_test/cargo_dep_order_locations/Run()
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
