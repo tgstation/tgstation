@@ -1,0 +1,4 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - bugfix: "Fixed some of the Big Manipulator behavior such as not working in strict mode, putting items inside itself and incorrectly targeting items due to misconfigured filters."
