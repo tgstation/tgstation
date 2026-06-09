@@ -1,5 +1,5 @@
 /// Maximum number of execution indices the bt_viewer draining log can hold between polls.
-#define BT_EXECUTION_LOG_MAX 100
+#define BT_EXECUTION_LOG_MAX 250
 
 // BT node return values
 /// Node completed its goal and succeeded

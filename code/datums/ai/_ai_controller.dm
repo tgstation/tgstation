@@ -77,6 +77,9 @@ multiple modular subtrees with behaviors
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
 
+	///Can run even if no clients are on the zlevel, used by
+	var/can_run_without_clients_on_zlevel = FALSE
+
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	initialize_behavior_tree()
@@ -465,7 +468,7 @@ multiple modular subtrees with behaviors
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) || !able_to_run)
+	if((!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !can_run_without_clients_on_zlevel)|| !able_to_run)
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_IDLE

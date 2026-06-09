@@ -1,5 +1,5 @@
 {
-	"dm_type": "/datum/ai_controller/basic_controller/mook",
+	"dm_type": "/datum/ai_controller/basic_controller/mook/bard",
 	"type": "selector",
 	"children": [
 		{
@@ -55,12 +55,17 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
-												"args": ["BB_TARGET_MINERAL_WALL"]
+												"args": ["BB_MOOK_MUSIC_AUDIENCE"]
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
 												"args": ["BB_MOOK_JUMP_ABILITY"]
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"args": ["BB_TARGET_MINERAL_WALL"]
 											}
 										]
 									}
@@ -119,8 +124,44 @@
 							}
 						},
 						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/go_mining"
+							"type": "parallel",
+							"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+							"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+							"repeat_secondary": true,
+							"finish_on_primary": true,
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/generic_play_instrument"
+								},
+								{
+									"type": "selector",
+									"children": [
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
+											"config": {
+												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+												"key": "BB_MOOK_MUSIC_AUDIENCE"
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"args": ["BB_MOOK_MUSIC_AUDIENCE", 2, false]
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
+											"args": [],
+											"vars": {
+												"target_key": "BB_HOME_VILLAGE",
+												"walk_chance": 75
+											}
+										}
+									]
+								}
+							]
 						}
 					]
 				},
@@ -130,15 +171,6 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-							"args": [
-								"BB_CURRENT_TARGET",
-								"BB_TARGETING_STRATEGY",
-								"BB_CURRENT_TARGET_HIDING_LOCATION"
-							]
-						},
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/update_targets",
 							"args": [
 								"BB_CURRENT_TARGET",
 								"BB_TARGETING_STRATEGY",
@@ -169,6 +201,16 @@
 										"args": ["BB_MOOK_TRIBAL_CHIEF"]
 									}
 								]
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person_near_anchor",
+							"args": ["BB_MOOK_MUSIC_AUDIENCE"],
+							"vars": {
+								"time_between_perform": "1 SECONDS",
+								"anchor_key": "BB_HOME_VILLAGE",
+								"max_distance_key": 20
 							}
 						}
 					]

@@ -30,7 +30,8 @@
 	var/list/resolved = list()
 	for(var/child_entry in children_descs)
 		var/datum/bt_node/child_node = controller.get_or_build_node(child_entry)
-		resolved += child_node
+		if(!isnull(child_node))
+			resolved += child_node
 	children = resolved
 
 /datum/bt_node/composite/collect_reset_children(list/to_visit)

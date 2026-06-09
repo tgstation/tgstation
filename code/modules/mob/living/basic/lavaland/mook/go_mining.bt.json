@@ -4,7 +4,7 @@
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 	"repeat_secondary": true,
-	"repeat_secondary_delay": "1 SECODNS",
+	"repeat_secondary_delay": "1 SECONDS",
 	"finish_on_primary": true,
 	"children": [
 		{
@@ -15,88 +15,123 @@
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"config": {
 						"key": "BB_SIMPLE_CARRY_ITEM"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"config": {
+							"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+							"key": "BB_DEPOSIT_POSITION"
+						},
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"args": ["BB_DEPOSIT_POSITION"]
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
+									"args": [],
+									"vars": {
+										"target_key": "BB_MATERIAL_STAND_TARGET",
+										"always_reset_target": true,
+										"behavior_combat_mode": false
+									}
+								}
+							]
+						}
 					}
 				},
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"config": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 						"invert": true,
 						"key": "BB_SIMPLE_CARRY_ITEM"
 					},
 					"child": {
-						"type": "decorator",
-						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
-							"invert": true,
-							"key": "BB_SIMPLE_CARRY_ITEM"
-						},
-						"child": {
-							"type": "selector",
-							"children": [
-								{
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/bb_key_set",
-									"config": {
-										"invert": false,
-										"key": "BB_ORE_TARGET"
-									},
-									"child": {
-										"type": "sequence",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_ORE_TARGET"]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
-												"args": ["BB_ORE_TARGET", "BB_SIMPLE_CARRY_ITEM"]
-											}
-										]
-									}
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"config": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"invert": false,
+									"key": "BB_ORE_TARGET"
 								},
-								{
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/bb_key_set",
-									"config": {
-										"invert": false,
-										"key": "BB_TARGET_MINERAL_WALL"
-									},
-									"child": {
-										"type": "sequence",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_TARGET_MINERAL_WALL"]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/mine_wall",
-												"args": ["BB_TARGET_MINERAL_WALL"]
-											}
-										]
-									}
-								},
-								{
+								"child": {
 									"type": "sequence",
 									"children": [
 										{
 											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/calculate_wander_destination",
-											"args": []
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"args": ["BB_ORE_TARGET"]
 										},
 										{
 											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": ["BB_WANDER_DESTINATION"]
+											"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
+											"args": ["BB_ORE_TARGET", "BB_SIMPLE_CARRY_ITEM"]
 										}
 									]
 								}
-							]
-						}
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"config": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"invert": false,
+									"key": "BB_TARGET_MINERAL_WALL"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"args": ["BB_TARGET_MINERAL_WALL"]
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/mine_wall",
+											"args": ["BB_TARGET_MINERAL_WALL"]
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/find_ore",
+											"args": [],
+											"vars": {
+												"time_between_perform": "0.5 SECONDS"
+											}
+										}
+									]
+								}
+							},
+							{
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/calculate_wander_destination",
+										"args": []
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"args": ["BB_WANDER_DESTINATION"]
+									}
+								]
+							},
+							{
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/random_walk"
+							}
+						]
 					}
 				}
 			]

@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ))
 
 /datum/ai_controller/basic_controller/mook
-	behavior_tree_json = 'mook.bt.json'
+	behavior_tree_json = "mook.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	can_idle = FALSE // these guys are intended to operate even if nobody's around
+	can_run_without_clients_on_zlevel = TRUE
 
 ///check for faction if not a ash walker, otherwise just attack
 /datum/targeting_strategy/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
@@ -198,22 +199,12 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///bard mook plays nice music for the village
 /datum/ai_controller/basic_controller/mook/bard
+	behavior_tree_json = "bard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
-	)
-	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/look_for_village,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/play_music_for_visitor,
-		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
-		/datum/ai_planning_subtree/generic_play_instrument,
 	)
 
 

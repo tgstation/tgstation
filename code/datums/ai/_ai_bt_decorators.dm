@@ -44,7 +44,9 @@
 		child.append_active_nodes(lines, "[indent]  ")
 
 /datum/bt_node/decorator/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
-	child = controller.get_or_build_node(children_descs[1])
+	var/datum/bt_node/resolved = controller.get_or_build_node(children_descs[1])
+	if(!isnull(resolved))
+		child = resolved
 
 /datum/bt_node/decorator/collect_reset_children(list/to_visit)
 	if(child)
@@ -79,6 +81,8 @@
 
 	var/child_ticked = FALSE
 	var/result
+	if(!child)
+		return BT_FAILURE
 	var/no_ticking_condition = observer_abort == BT_ABORT_NONE || has_observer_signals
 	if((no_ticking_condition || is_polled) && child_active)
 		child_ticked = TRUE

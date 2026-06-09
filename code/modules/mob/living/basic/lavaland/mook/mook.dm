@@ -58,7 +58,6 @@
 
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
-	AddElement(/datum/element/ai_held_item)
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
 	if(is_healer)
