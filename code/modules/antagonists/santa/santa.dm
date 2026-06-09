@@ -13,7 +13,7 @@
 
 	owner.add_traits(list(TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_PRESENT_VISION), TRAIT_SANTA)
 
-	santa_prayers = owner.AddComponent(/datum/component/listen_prayers, CALLBACK(src, PROC_REF(check_if_santa_prayer)), "Santa Claus", "Allows you to listen for prayers that mention your jolly name.")
+	santa_prayers = owner.AddComponent(/datum/component/listen_prayers, CALLBACK(src, PROC_REF(check_if_santa_prayer)), "Santa Claus", "Allows you to listen for prayers that mention you or Christmas.")
 
 /datum/antagonist/santa/proc/check_if_santa_prayer(list/arguments)
 	SIGNAL_HANDLER
