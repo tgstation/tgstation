@@ -213,7 +213,7 @@
 	for(var/gas_id in environment.moles)
 		var/gas_moles = environment.moles[gas_id]
 		if(gas_moles)
-			t += "[span_notice("[GUS_META(META_GAS_NAME)[gas_id]]: [gas_moles] ")]\n"
+			t += "[span_notice("[GAS_META(META_GAS_NAME)[gas_id]]: [gas_moles] ")]\n"
 
 	to_chat(usr, t)
 

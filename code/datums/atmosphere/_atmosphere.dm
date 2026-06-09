@@ -63,6 +63,6 @@
 	var/list/gas_string_builder = list()
 
 	for(var/gas_id in cached_moles)
-		gas_string_builder += "[GUS_META(META_GAS_ID)[gas_id]]=[cached_moles[gas_id]]"
+		gas_string_builder += "[GAS_META(META_GAS_ID)[gas_id]]=[cached_moles[gas_id]]"
 	gas_string_builder += "TEMP=[gasmix.temperature]"
 	gas_string = gas_string_builder.Join(";")

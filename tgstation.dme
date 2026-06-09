@@ -113,7 +113,6 @@
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\fov.dm"
-#include "code\__DEFINES\_gas_mixture.dm"
 #include "code\__DEFINES\generators.dm"
 #include "code\__DEFINES\ghost.dm"
 #include "code\__DEFINES\gizmo.dm"

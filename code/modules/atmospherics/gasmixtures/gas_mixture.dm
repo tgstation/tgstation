@@ -4,13 +4,15 @@ Calculations are done using the archived variables with the results merged into 
 This prevents race conditions that arise based on the order of tile processing.
 */
 
-GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types.dm
+GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture
+	/// Associative list of moles for each gas. List key is /datum/gas/<gas_name>, value is amount in moles
 	var/list/moles[0]
+	/// Archived version of moles
 	var/list/moles_archive[0]
-	//var/static/list/gas_meta
-	var/static/list/gas_meta_soa
+	/// Static list of gas meta data like heat capacity (initialized globally)
+	var/static/list/gas_meta
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
 	var/temperature = TCMB
 	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
@@ -75,21 +77,21 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 
 ///joules per kelvin
 /datum/gas_mixture/proc/heat_capacity()
-	return values_dot(moles, GUS_META(META_GAS_SPECIFIC_HEAT))
+	return values_dot(moles, GAS_META(META_GAS_SPECIFIC_HEAT))
 
 ///joules per kelvin. Same as heat_capacity() for moles_archive.
 // Separate function to reduce branches in a hot function
 /datum/gas_mixture/proc/heat_capacity_archive()
-	return values_dot(moles_archive, GUS_META(META_GAS_SPECIFIC_HEAT))
+	return values_dot(moles_archive, GAS_META(META_GAS_SPECIFIC_HEAT))
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity()
-	return values_dot(moles, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+	return values_dot(moles, GAS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 // Separate function to reduce branches in a hot function
 /datum/gas_mixture/turf/heat_capacity_archive()
-	return values_dot(moles_archive, GUS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+	return values_dot(moles_archive, GAS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
 
 /// Calculate moles
 /datum/gas_mixture/proc/total_moles()
@@ -120,8 +122,8 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 	var/result = list();
 	var/cached_moles = moles
 	var/offset = GET_TURF_PLANE_OFFSET(z_context) + 1;
-	var/meta_moles_visible = GUS_META(META_GAS_MOLES_VISIBLE)
-	var/meta_gas_overlay = GUS_META(META_GAS_OVERLAY)
+	var/meta_moles_visible = GAS_META(META_GAS_MOLES_VISIBLE)
+	var/meta_gas_overlay = GAS_META(META_GAS_OVERLAY)
 	for(var/gas_id in cached_moles){
 		if(GLOB.nonoverlaying_gases[gas_id]) continue;
 		var/amount = cached_moles[gas_id];
@@ -397,7 +399,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		sharer_cached_moles[gas_id] = 0
 		sharer_cached_moles_archive[gas_id] = 0
 
-	var/cached_heat_capacity = GUS_META(META_GAS_SPECIFIC_HEAT)
+	var/cached_heat_capacity = GAS_META(META_GAS_SPECIFIC_HEAT)
 	for(var/gas_id in cached_moles) //transfer gases
 		var/delta = QUANTIZE(cached_moles_archive[gas_id] - sharer_cached_moles_archive[gas_id]) //the amount of gas that gets moved between the mixtures
 
@@ -781,7 +783,7 @@ GLOBAL_LIST_INIT(meta_gas_info_soa, meta_gas_soa()) //see ATMOSPHERICS/gas_types
 		var/gas_moles = cached_moles[gas_id]
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)
-			atmos_contents += "[GUS_META(META_GAS_ID)[gas_id]]=[num2text(gas_moles)]"
+			atmos_contents += "[GAS_META(META_GAS_ID)[gas_id]]=[num2text(gas_moles)]"
 
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")

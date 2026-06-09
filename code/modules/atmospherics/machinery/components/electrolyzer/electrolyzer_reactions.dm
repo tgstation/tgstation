@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	air_mixture.adjust_gas(/datum/gas/hypernoblium, -electrolysed)
 	air_mixture.adjust_gas(/datum/gas/antinoblium, electrolysed)
 
-	var/new_heat_capacity = old_heat_capacity + electrolysed * (GUS_META(META_GAS_SPECIFIC_HEAT)[/datum/gas/antinoblium] - GUS_META(META_GAS_SPECIFIC_HEAT)[/datum/gas/hypernoblium])
+	var/new_heat_capacity = old_heat_capacity + electrolysed * (GAS_META(META_GAS_SPECIFIC_HEAT)[/datum/gas/antinoblium] - GAS_META(META_GAS_SPECIFIC_HEAT)[/datum/gas/hypernoblium])
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
