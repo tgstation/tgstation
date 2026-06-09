@@ -119,19 +119,9 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /// Gets the gas visuals for everything in this mixture
 /datum/gas_mixture/proc/return_visuals(turf/z_context)
-	var/result = list();
-	var/cached_moles = moles
-	var/offset = GET_TURF_PLANE_OFFSET(z_context) + 1;
-	var/meta_moles_visible = GAS_META(META_GAS_MOLES_VISIBLE)
-	var/meta_gas_overlay = GAS_META(META_GAS_OVERLAY)
-	for(var/gas_id in cached_moles){
-		if(GLOB.nonoverlaying_gases[gas_id]) continue;
-		var/amount = cached_moles[gas_id];
-		if(amount <= meta_moles_visible[gas_id]) continue;
-		var/gas_overlay = meta_gas_overlay[gas_id][offset];
-		result += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(amount / MOLES_GAS_VISIBLE_STEP, 1))];
-	}
-	return result
+	var/list/output
+	GAS_OVERLAYS(moles, output, z_context)
+	return output
 
 /// Calculate thermal energy in joules
 /datum/gas_mixture/proc/thermal_energy()

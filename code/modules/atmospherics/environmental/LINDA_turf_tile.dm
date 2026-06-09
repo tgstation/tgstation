@@ -173,7 +173,9 @@
 			src.atmos_overlay_types = null
 		return
 
-	var/list/new_overlay_types = air.return_visuals(src)
+	var/list/moles = air.moles
+	var/list/new_overlay_types
+	GAS_OVERLAYS(moles, new_overlay_types, src)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
