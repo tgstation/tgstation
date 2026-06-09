@@ -57,7 +57,7 @@ export const AntagInfoRevolution = () => {
                     </Stack.Item>
                   )}
                   <Stack.Item>
-                    - Convert the crew to your cause with a flash - Any flash
+                    - Convert the crew to your cause with a flash - any flash
                     will work.
                   </Stack.Item>
                   <Stack.Item>
@@ -85,20 +85,23 @@ export const AntagInfoRevolution = () => {
                 </Stack>
               )}
             </Stack.Item>
-            <Stack.Item>
-              {heads.length > 0 && (
-                <Stack vertical>
-                  <Stack.Item fontSize="16px" textAlign="center">
-                    You must kill or exile the heads of staff:
-                  </Stack.Item>
-                  {heads.map((head, i) => (
-                    <Stack.Item key={`head-${i}`}>
-                      - {head.name}, the {head.role}
+            {heads.length > 0 && (
+              <>
+                <Stack.Divider />
+                <Stack.Item>
+                  <Stack vertical>
+                    <Stack.Item fontSize="16px" textAlign="center">
+                      You must kill or exile the heads of staff:
                     </Stack.Item>
-                  ))}
-                </Stack>
-              )}
-            </Stack.Item>
+                    {heads.map((head, i) => (
+                      <Stack.Item key={`head-${i}`}>
+                        - {head.name}, the {head.role}
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                </Stack.Item>
+              </>
+            )}
             {code_phrases?.length && code_responses?.length && (
               <>
                 <Stack.Divider />

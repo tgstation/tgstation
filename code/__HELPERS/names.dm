@@ -191,14 +191,11 @@ GLOBAL_VAR(command_name)
 	var/static/list/station_area_names
 	if(!station_area_names)
 		station_area_names = list()
-		for(var/area/area_type as anything in GLOB.the_station_areas)
-			station_area_names |= format_text(area_type::name)
+		for(var/area/area_type as anything in valid_subtypesof(/area/station))
+			if(area_type::area_flags & VALID_TERRITORY)
+				station_area_names |= format_text(area_type::name)
 
 	return station_area_names
-
-// Really don't want code phrase generation to runtime
-// Which, it CAN happen because strings() will return no list if it is admin proc called
-#define SAFE_PICK(some_list) LOWER_TEXT(length(some_list) ? pick(some_list) : "Bug")
 
 //Traitors and traitor silicons will get these. Revs will not.
 GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
@@ -278,29 +275,27 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += SAFE_PICK(pick(drinks))
+						. += pick(drinks)
 					if(2)
-						. += SAFE_PICK(pick(foods))
+						. += pick(foods)
 					if(3)
-						. += SAFE_PICK(pick(locations))
+						. += pick(locations)
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += SAFE_PICK(pick(nouns))
+						. += pick(nouns)
 					if(2)
-						. += SAFE_PICK(pick(objects))
+						. += pick(objects)
 					if(3)
-						. += SAFE_PICK(pick(adjectives))
+						. += pick(adjectives)
 					if(4)
-						. += SAFE_PICK(pick(threats))
+						. += pick(threats)
 		if(!return_list)
 			if(words == 1)
 				. += "."
 			else
 				. += ", "
-
-#undef SAFE_PICK
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
