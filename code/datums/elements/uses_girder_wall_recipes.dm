@@ -83,7 +83,7 @@
 	stack.add_fingerprint(user)
 
 	// Save refernce to the materials for the case when we place last tile in the stack
-	var/list/saved_mats_per_unit = mats_per_unit
+	var/list/saved_mats_per_unit = stack.mats_per_unit
 	if (!stack.use_tool(structure, user, recipe.make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
 		return
 
