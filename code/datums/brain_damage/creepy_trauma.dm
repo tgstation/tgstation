@@ -127,8 +127,12 @@
 /datum/brain_trauma/special/obsessed/proc/grab_resisting(datum/source, mob/living/grabbed, list/grab_stats)
 	SIGNAL_HANDLER
 
-	// We always grab our obsession with extra strength
-	if(grabbed == obsession)
+	var/list/datum/mind/all_assassination_targets = list()
+	for(var/datum/objective/assassinate/objective in antagonist?.objectives)
+		all_assassination_targets += objective.target
+
+	// We always grab our obsession, or similar targets, with extra strength
+	if(grabbed == obsession || (grabbed.mind in all_assassination_targets))
 		grab_stats[GRAB_STAT_EFFECTIVE_STATE] += 1
 		grab_stats[GRAB_STAT_FAIL_DAMAGE] += 5
 
