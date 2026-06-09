@@ -778,6 +778,32 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
 
+/// Sets gas mixture from string (ie. "o2=22;n2=82;TEMP=180") inplace
+/// Throws an exception if any of the gases is invalid
+/datum/gas_mixture/proc/from_string(gas_string)
+	RETURN_TYPE(/datum/gas_mixture)
+	var/list/gas = params2list(gas_string)
+
+	var/temp = T20C
+	if (gas["TEMP"])
+		temp = text2num(gas["TEMP"])
+		gas -= "TEMP"
+
+	var/list/gas_moles[0]
+	for(var/id in gas)
+		var/path = id
+		if(!ispath(path))
+			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
+		if(!ispath(path))
+			CRASH("Invalid gas id or path: [id]")
+		gas_moles[path] = text2num(gas[id])
+
+	temperature = temperature_archived = temp
+	moles.Cut()
+	moles_archive.Cut()
+	for (var/gas_id in gas_moles)
+		moles[gas_id] = moles_archive[gas_id] = gas_moles[gas_id]
+	return src
 
 /**
  * A simple helper proc that checks if the contents of a list of gases are within acceptable terms.
