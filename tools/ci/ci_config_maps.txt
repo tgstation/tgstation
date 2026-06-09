@@ -1,0 +1,32 @@
+map deltastation
+endmap
+
+map icebox
+endmap
+
+map catwalkstation
+endmap
+
+map metastation
+endmap
+
+map tramstation
+endmap
+
+map nebulastation
+endmap
+
+map wawastation
+endmap
+
+map gateway_test
+endmap
+
+map multiz_debug
+endmap
+
+map runtimestation
+endmap
+
+map runtimestation_minimal
+endmap
