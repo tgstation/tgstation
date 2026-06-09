@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/guaranteed_side_tier2
 	/// Knowledge guaranteed to show up in the third draft
 	var/guaranteed_side_tier3
+	/// Discount applied to shop knowledge costs for this path (subtracted from each tier cost, minimum 1)
+	var/shop_cost_discount = 0
 
 
 /datum/heretic_knowledge_tree_column/proc/get_ui_data(datum/antagonist/heretic/our_heretic, category)
@@ -232,6 +234,10 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	/// costs by index mapped to depth
 	var/list/shop_costs = list(1, 2, 2, 2, 3)
+	var/discount = heretic_path.shop_cost_discount
+	if(discount)
+		for(var/i in 1 to length(shop_costs))
+			shop_costs[i] = max(1, shop_costs[i] - discount)
 
 	// Relevant variables that we pull from the path
 	var/knowledge_tier1 = heretic_path.knowledge_tier1

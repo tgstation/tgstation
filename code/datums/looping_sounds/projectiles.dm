@@ -2,3 +2,4 @@
 	mid_sounds = list('sound/effects/moon_parade_soundloop.ogg' = 1)
 	mid_length = 2 SECONDS
 	volume = 20
+	use_sound_tokens = TRUE

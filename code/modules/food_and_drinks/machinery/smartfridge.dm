@@ -14,6 +14,7 @@
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	integrity_failure = 0.5
 	can_atmos_pass = ATMOS_PASS_NO
+	pass_flags_self = PASSCLOSEDTURF
 	/// Icon state part for contents display
 	var/contents_overlay_icon = "plant"
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
@@ -131,8 +132,7 @@
 	. = ..()
 	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
 		welded_down = FALSE
-	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
-	air_update_turf(TRUE, anchorvalue)
+	recheck_atmos_passing()
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
@@ -188,6 +188,14 @@
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 	. += structure_examine()
+
+/obj/machinery/smartfridge/on_set_machine_stat(old_value)
+	. = ..()
+	recheck_atmos_passing()
+	if(machine_stat & BROKEN)
+		pass_flags_self = PASSMACHINE
+		return
+	pass_flags_self = PASSCLOSEDTURF
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()
@@ -421,6 +429,13 @@
 			return TRUE
 
 	return FALSE
+
+/obj/machinery/smartfridge/proc/recheck_atmos_passing()
+	if(machine_stat & BROKEN)
+		can_atmos_pass = ATMOS_PASS_YES
+	else
+		can_atmos_pass = anchored ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, anchored)
 
 // ----------------------------
 //  Drying 'smartfridge'

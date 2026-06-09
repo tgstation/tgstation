@@ -214,6 +214,18 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return NONE
 
+//Checks blockchance of any items in any module slots
+/mob/living/silicon/robot/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	. = ..()
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
+
+	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/module in held_items)
+		var/final_block_chance = module.block_chance - (clamp((armour_penetration - module.armour_penetration) / 2, 0, 100)) + block_chance_modifier
+		if(module.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
+			return SUCCESSFUL_BLOCK
+
 // This has to go at the very end of interaction so we don't block every interaction with ID-like items
 /mob/living/silicon/robot/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -522,6 +534,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return TRUE
 
 /mob/living/silicon/robot/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	if(check_block(hitting_projectile, hitting_projectile.damage, "\the [hitting_projectile]", PROJECTILE_ATTACK, hitting_projectile.armour_penetration, hitting_projectile.damage_type))
+		return ..(hitting_projectile, def_zone, piercing_hit, 100)
 	. = ..()
 	if(prob(25) || . != BULLET_ACT_HIT)
 		return

@@ -51,6 +51,7 @@ function selectRemappedStaticData(data: TechWebData) {
       unlock_ids: map(node.unlock_ids || [], remapId),
       required_experiments: node.required_experiments || [],
       discount_experiments: node.discount_experiments || [],
+      discount_boosts: node.discount_boosts || [],
     };
   }
 

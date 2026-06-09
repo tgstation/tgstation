@@ -73,7 +73,7 @@
 			return
 
 		if(W == A)
-			W.attack_self(src)
+			W.attack_self(src, modifiers)
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)

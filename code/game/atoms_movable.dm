@@ -246,12 +246,6 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
-#endif
-
 	. = ..()
 
 	for(var/movable_content in contents)
