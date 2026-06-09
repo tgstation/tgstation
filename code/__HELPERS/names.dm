@@ -186,25 +186,6 @@ GLOBAL_VAR(command_name)
 
 	return name
 
-/// Returns a cached list of names of all the areas on the station, ie list("Medbay Lobby", "Engineering", "Bar", ...)
-/proc/get_all_station_area_names()
-	var/static/list/station_area_names
-	if(!station_area_names)
-		station_area_names = list()
-		for(var/area/area_type as anything in valid_subtypesof(/area/station))
-			if(area_type::area_flags & VALID_TERRITORY)
-				station_area_names |= format_text(area_type::name)
-
-	return station_area_names
-
-//Traitors and traitor silicons will get these. Revs will not.
-GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
-GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
-
-//Cached regex search - for checking if codewords are used.
-GLOBAL_DATUM(syndicate_code_phrase_regex, /regex)
-GLOBAL_DATUM(syndicate_code_response_regex, /regex)
-
 	/*
 	Should be expanded.
 	How this works:
@@ -240,7 +221,10 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/list/threats = strings(ION_FILE, "ionthreats")
 	var/list/foods = strings(ION_FILE, "ionfood")
 	var/list/drinks = strings(ION_FILE, "iondrinks")
-	var/list/locations = get_all_station_area_names()
+	var/list/locations = list()
+	for(var/area/area_type as anything in GLOB.the_station_areas)
+		if(area_type::area_flags & VALID_TERRITORY)
+			locations |= format_text(area_type::name)
 
 	var/list/names = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
@@ -275,22 +259,22 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += pick(drinks)
+						. += LOWER_TEXT(pick(drinks))
 					if(2)
-						. += pick(foods)
+						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += pick(locations)
+						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += pick(nouns)
+						. += LOWER_TEXT(pick(nouns))
 					if(2)
-						. += pick(objects)
+						. += LOWER_TEXT(pick(objects))
 					if(3)
-						. += pick(adjectives)
+						. += LOWER_TEXT(pick(adjectives))
 					if(4)
-						. += pick(threats)
+						. += LOWER_TEXT(pick(threats))
 		if(!return_list)
 			if(words == 1)
 				. += "."
