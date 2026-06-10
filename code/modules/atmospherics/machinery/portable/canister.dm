@@ -710,8 +710,7 @@
 	var/danger = FALSE
 	for(var/gas_index in 1 to length(cached_moles))
 		var/gas_id = cached_moles[gas_index]
-		var/list/meta = GAS_META(gas_id)
-		var/name = meta[META_GAS_NAME]
+		var/name = GAS_META(META_GAS_NAME)[gas_id]
 		var/moles = cached_moles[gas_id]
 
 		output += "[name]: [moles] moles."
@@ -720,7 +719,7 @@
 		else if(gas_index == 6) // anddd the warning
 			admin_output += "Too many gases to log. Check investigate log."
 		//if moles_visible is undefined, default to default visibility
-		if(meta[META_GAS_DANGER] && moles > (meta[META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE))
+		if(GAS_META(META_GAS_DANGER)[gas_id] && moles > (GAS_META(META_GAS_MOLES_VISIBLE)[gas_id] || MOLES_GAS_VISIBLE))
 			danger = TRUE
 
 	if(danger) //sent to admin's chat if contains dangerous gases
