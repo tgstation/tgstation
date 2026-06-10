@@ -22,6 +22,8 @@
 	VAR_FINAL/time_spent_away = 0 SECONDS
 	/// Tracks the current period of time spent near the target (resetting when away)
 	VAR_FINAL/time_spend_creeping = 0 SECONDS
+	/// If we've seen our obsession be dead
+	VAR_FINAL/witnessed_death = FALSE
 
 /datum/brain_trauma/special/obsessed/on_gain()
 	//setup, linking, etc//
@@ -30,6 +32,7 @@
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			return FALSE
+
 	gain_text = span_warning("You hear a sickening, raspy voice in your head. It wants one small task of you...")
 	antagonist = owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src
@@ -46,34 +49,40 @@
 	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(on_mind_lost))
 	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_mind_gain))
 	owner.apply_status_effect(/datum/status_effect/desensitized, REF(src), DESENSITIZED_THRESHOLD)
+	owner.apply_status_effect(/datum/status_effect/speech/stutter/obsession, INFINITY)
 
 /datum/brain_trauma/special/obsessed/on_life(seconds_per_tick)
-	if(isnull(obsession) || obsession.stat == DEAD)
-		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
+	if(isnull(obsession))
+		viewing = FALSE
 		return
-	if(get_dist(get_turf(owner), get_turf(obsession)) > 7)
-		viewing = FALSE //they are further than our view range they are not viewing us
-		out_of_view(seconds_per_tick)
-		return//so we're not searching everything in view every tick
 
-	viewing = (owner in viewers(7, obsession))
-	if(viewing)
-		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += seconds_per_tick SECONDS
-		time_spend_creeping += seconds_per_tick SECONDS
-		time_spent_away = 0 SECONDS
-		for(var/datum/objective/spendtime/objective in antagonist?.objectives)
-			objective.timer -= seconds_per_tick SECONDS
-	else
-		out_of_view(seconds_per_tick)
+	// viewing needs to be updated regardless of the obsession's state
+	viewing = IN_GIVEN_RANGE(owner, obsession, 7) && (owner in viewers(7, obsession))
+	if(!viewing)
+		if(witnessed_death)
+			return
 
-/datum/brain_trauma/special/obsessed/proc/out_of_view(seconds_per_tick)
-	time_spent_away += seconds_per_tick SECONDS
-	time_spend_creeping = 0 SECONDS
-	if(time_spent_away > 3 MINUTES) //3 minutes
-		owner.add_mood_event("creeping", /datum/mood_event/notcreepingsevere, obsession.name)
-	else
-		owner.add_mood_event("creeping", /datum/mood_event/notcreeping, obsession.name)
+		time_spent_away += seconds_per_tick SECONDS
+		time_spend_creeping = 0 SECONDS
+		if(time_spent_away > 3 MINUTES) //3 minutes
+			owner.add_mood_event("creeping", /datum/mood_event/notcreepingsevere, obsession.name)
+		else
+			owner.add_mood_event("creeping", /datum/mood_event/notcreeping, obsession.name)
+		return
+
+	if(obsession.stat == DEAD)
+		if(!witnessed_death)
+			witnessed_death = TRUE
+			owner.add_mood_event("creeping", /datum/mood_event/creeping/dead)
+		return
+
+	witnessed_death = FALSE
+	owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
+	total_time_creeping += seconds_per_tick SECONDS
+	time_spend_creeping += seconds_per_tick SECONDS
+	time_spent_away = 0 SECONDS
+	for(var/datum/objective/spendtime/objective in antagonist?.objectives)
+		objective.timer -= seconds_per_tick SECONDS
 
 /datum/brain_trauma/special/obsessed/on_lose()
 	. = ..()
@@ -98,20 +107,15 @@
 		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
 	))
 	owner.remove_status_effect(/datum/status_effect/desensitized, REF(src))
+	owner.remove_status_effect(/datum/status_effect/speech/stutter/obsession)
 
 /datum/brain_trauma/special/obsessed/proc/obession_deleted(datum/source)
 	SIGNAL_HANDLER
 	obsession = null
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
-	if(!viewing)
-		return
-	if(prob(25)) // 25% chances to be nervous and stutter.
-		if(prob(50)) // 12.5% chance (previous check taken into account) of doing something suspicious.
-			addtimer(CALLBACK(src, PROC_REF(on_failed_social_interaction)), rand(1 SECONDS, 3 SECONDS))
-		else if(!owner.has_status_effect(/datum/status_effect/speech/stutter))
-			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
-		owner.set_stutter_if_lower(6 SECONDS)
+	if(viewing && !witnesed_death && prob(12))
+		addtimer(CALLBACK(src, PROC_REF(do_something_nervous)), rand(1 SECONDS, 3 SECONDS))
 
 /// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
 /datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugged)
@@ -127,6 +131,9 @@
 /datum/brain_trauma/special/obsessed/proc/grab_resisting(datum/source, mob/living/grabbed, list/grab_stats)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
+
 	var/list/datum/mind/all_targets = list()
 	for(var/datum/objective/objective in antagonist?.objectives)
 		if(isnull(objective.target))
@@ -139,7 +146,7 @@
 		grab_stats[GRAB_STAT_FAIL_DAMAGE] += 5
 
 	// If we're hanging with our obsession for a while, the bonus applies to any mob (though to a lesser extent)
-	else if(time_spend_creeping >= 20 SECONDS)
+	else if(is_defensive())
 		grab_stats[GRAB_STAT_EFFECTIVE_STATE] += 1
 		grab_stats[GRAB_STAT_ESCAPE_CHANCE] += 10 // 10% EASIER to escape
 
@@ -147,29 +154,41 @@
 /datum/brain_trauma/special/obsessed/proc/on_damage_mod(datum/source, list/damage_mods, damage, damage_type, ...)
 	SIGNAL_HANDLER
 
-	if(time_spend_creeping >= 20 SECONDS && damage_type == STAMINA)
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
+
+	if(damage_type == STAMINA && is_defensive())
 		damage_mods += 0.75
 
-/datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
-	SIGNAL_HANDLER
+/// Checks if if we're being defensive over our obsession
+/datum/brain_trauma/special/obsessed/proc/is_defensive()
+	if(time_spend_creeping >= 20 SECONDS)
+		return TRUE
+	if(obsession.stat >= UNCONSCIOUS)
+		return (owner in viewers(7, obsession))
+	return FALSE
 
-	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)
+/datum/brain_trauma/special/obsessed/proc/do_something_nervous()
+	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	switch(rand(1, 100))
-		if(1 to 40)
-			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), pick("blink", "blink_r"))
-			owner.set_eye_blur_if_lower(20 SECONDS)
-			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
-		if(41 to 80)
-			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")
-			shake_camera(owner, 15, 1)
-			owner.adjust_stamina_loss(70)
-			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
-		if(81 to 100)
+	if(prob(100 * max(1 - (time_spend_creeping / (40 SECONDS)), 0.01) )) // the longer we creep, the less likely we are to fail interactions
+		return
+
+	switch(rand(1, 10))
+		if(1 to 4)
+			owner.adjust_jitter_up_to(10 SECONDS, 20 SECONDS)
+			owner.adjust_dizzy_up_to(10 SECONDS, 20 SECONDS)
+			to_chat(owner, span_warning("You feel a bit nervous."))
+		if(5 to 8)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")
-			owner.adjust_dizzy(20 SECONDS)
-			owner.adjust_disgust(5)
-			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
+			to_chat(owner, span_warning("You clear your throat."))
+		if(9)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "laugh")
+			to_chat(owner, span_warning("You chuckle nervously."))
+		if(10)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "blink")
+			owner.adjust_eye_blur_up_to(10 SECONDS, 20 SECONDS)
+			to_chat(owner, span_warning("You forget to blink for a moment."))
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
