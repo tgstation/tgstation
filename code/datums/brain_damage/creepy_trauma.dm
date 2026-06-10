@@ -114,7 +114,7 @@
 	obsession = null
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
-	if(viewing && !witnessed_death && prob(12))
+	if(viewing && !witnessed_death && prob(12 * max(1 - (time_spend_creeping / (40 SECONDS)), 0.02) ))
 		addtimer(CALLBACK(src, PROC_REF(do_something_nervous)), rand(1 SECONDS, 3 SECONDS))
 
 /// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
@@ -171,8 +171,7 @@
 /datum/brain_trauma/special/obsessed/proc/do_something_nervous()
 	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(prob(100 * max(1 - (time_spend_creeping / (40 SECONDS)), 0.02) )) // the longer we creep, the less likely we are to fail interactions
-		return
+
 
 	switch(rand(1, 10))
 		if(1 to 4)
