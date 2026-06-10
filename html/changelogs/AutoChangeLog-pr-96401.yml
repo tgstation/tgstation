@@ -1,4 +1,0 @@
-author: "georgebothways"
-delete-after: True
-changes:
-  - bugfix: "Trays can now unload eight items onto griddles properly."

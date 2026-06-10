@@ -253,5 +253,9 @@
   - spellcheck: The sphere module now clarifies that the modsuit need to be insulated
       with bileworm skin in order to wade through lava safely.
   - spellcheck: Corrects sphere modules micromissle to micromissles
+  btcbuster:
+  - balance: Baseball bats do more damage and fit on the back slot now.
   cacogen:
   - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
+  georgebothways:
+  - bugfix: Trays can now unload eight items onto griddles properly.
