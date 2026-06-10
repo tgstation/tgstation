@@ -100,7 +100,7 @@
 		return FALSE
 
 	for(var/gas in env_gases)
-		if(!(gas in scrubbing))
+		if(!(gas in scrubbing) || !environment.has_gas(gas))
 			continue
 
 		var/transferred_moles = env_gases[gas][MOLES]
