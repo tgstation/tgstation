@@ -44,6 +44,8 @@
 		/datum/pet_command/attack,
 		/datum/pet_command/fetch,
 	)
+	/// Things we want to find to heal
+	var/static/list/heal_targets = list(/mob/living/basic/mining/mook/worker)
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
@@ -64,6 +66,8 @@
 		grant_healer_abilities()
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	ai_controller?.set_blackboard_key(BB_MOOK_HEAL_TARGETS, typecacheof(heal_targets))
+
 
 /// Returns a list of actions and blackboard keys to pass into `grant_actions_by_list`.
 /mob/living/basic/mining/mook/proc/get_innate_abilities()

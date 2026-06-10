@@ -8,6 +8,10 @@
 		"b0ymbjo1": {
 			"label": "Targetting Behavior",
 			"default": "/datum/bt_node/subtree"
+		},
+		"bk7ixti3": {
+			"label": "high_priority_behavior",
+			"default": "/datum/bt_node/subtree"
 		}
 	},
 	"type": "selector",
@@ -24,6 +28,11 @@
 				"behavior": "/datum/bt_node/ai_behavior/find_village",
 				"args": []
 			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
 		},
 		{
 			"type": "subtree",
@@ -65,7 +74,7 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
-												"args": ["BB_MOOK_MUSIC_AUDIENCE"]
+												"args": ["BB_INJURED_MOOK"]
 											},
 											{
 												"type": "leaf",
@@ -76,11 +85,20 @@
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
 												"args": ["BB_TARGET_MINERAL_WALL"]
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"args": ["BB_MOOK_MUSIC_AUDIENCE"]
 											}
 										]
 									}
 								}
 							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "$bk7ixti3"
 						},
 						{
 							"type": "decorator",
@@ -136,56 +154,6 @@
 						{
 							"type": "subtree",
 							"subtype": "$b1kiiayf"
-						}
-					]
-				},
-				{
-					"type": "selector",
-					"children": [
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-							"args": [
-								"BB_CURRENT_TARGET",
-								"BB_TARGETING_STRATEGY",
-								"BB_CURRENT_TARGET_HIDING_LOCATION"
-							]
-						},
-						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
-								"invert": true,
-								"key": "BB_MOOK_TRIBAL_CHIEF"
-							},
-							"child": {
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
-										"args": [
-											"BB_MOOK_TRIBAL_CHIEF",
-											"/mob/living/basic/mining/mook/worker/tribal_chief"
-										]
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-										"args": ["BB_MOOK_TRIBAL_CHIEF"]
-									}
-								]
-							}
-						},
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person_near_anchor",
-							"args": ["BB_MOOK_MUSIC_AUDIENCE"],
-							"vars": {
-								"time_between_perform": "1 SECONDS",
-								"anchor_key": "BB_HOME_VILLAGE",
-								"max_distance_key": "BB_MAXIMUM_DISTANCE_TO_VILLAGE"
-							}
 						}
 					]
 				},

@@ -125,15 +125,37 @@
 /datum/bt_node/subtree/generic_mook_behavior
 	behavior_tree_json = "generic_mook_behavior.bt.json"
 
-/datum/bt_node/subtree/worker_find_targets
 
+///Worker trees
+/datum/bt_node/subtree/worker_find_targets
+	behavior_tree_json = "worker_find_targets.bt.json"
+
+/datum/bt_node/subtree/go_mining
+	behavior_tree_json = "go_mining.bt.json"
+
+
+///Bard trees
 /datum/bt_node/subtree/bard_play_music
 	behavior_tree_json = "bard_play_music.bt.json"
 
 /datum/bt_node/subtree/bard_find_targets
 	behavior_tree_json = "bard_find_targets.bt.json"
 
-/datum/bt_node/subtree/go_mining
-	behavior_tree_json = "go_mining.bt.json"
+
+///Support trees
+/datum/bt_node/subtree/heal_injured
+	behavior_tree_json = "heal_injured.bt.json"
+
+/datum/bt_node/subtree/support_find_targets
+	behavior_tree_json = "support_find_targets.bt.json"
+
+///Chief trees
+/datum/bt_node/subtree/chief_issue_commands
+	behavior_tree_json = "chief_issue_commands.bt.json"
+
+/datum/bt_node/subtree/chief_manage_village
+	behavior_tree_json = "chief_manage_village.bt.json"
 
 
+/datum/bt_node/subtree/chief_find_targets
+	behavior_tree_json = "chief_find_targets.bt.json"

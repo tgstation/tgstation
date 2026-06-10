@@ -243,6 +243,8 @@
 #define BB_DEPOSIT_POSITION "BB_deposit_position"
 /// list of /datum/pet_command instances the chief can issue
 #define BB_MOOK_COMMANDS "BB_mook_commands"
+/// list of things we can heal
+#define BB_MOOK_HEAL_TARGETS "heal targets"
 
 //gutlunch keys
 ///the trough we will eat from

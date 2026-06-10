@@ -1,0 +1,18 @@
+{
+	"dm_type": "/datum/bt_node/subtree/chief_find_targets",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"key": "BB_SIMPLE_CARRY_ITEM"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_deposit_position",
+				"args": []
+			}
+		}
+	]
+}

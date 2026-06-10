@@ -1,0 +1,24 @@
+{
+	"dm_type": "/datum/bt_node/subtree/worker_find_targets",
+	"type": "selector",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+			"args": [
+				"BB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/update_targets",
+			"args": [
+				"BB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		}
+	]
+}

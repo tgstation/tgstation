@@ -249,18 +249,6 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_STORM_APPROACHING = FALSE,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
-	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/look_for_village,
-		/datum/ai_planning_subtree/acknowledge_chief,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/injured_mooks,
-	)
 
 ///tree to find and register our leader
 /datum/ai_planning_subtree/acknowledge_chief/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -302,6 +290,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///the chief would rather command his mooks to attack people than attack them himself
 /datum/ai_controller/basic_controller/mook/tribal_chief
+	behavior_tree_json = "tribal_chief.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_STORM_APPROACHING = FALSE,
