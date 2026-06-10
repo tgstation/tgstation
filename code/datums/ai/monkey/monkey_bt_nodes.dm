@@ -9,8 +9,9 @@
 
 /// Base equip behavior; handles blacklist updates and key cleanup on finish
 /datum/bt_node/ai_behavior/monkey_equip
+	var/target_key
 
-/datum/bt_node/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	if(!success) // Don't try to pick this item up again
 		controller.set_blackboard_key_assoc(BB_MONKEY_BLACKLISTITEMS, controller.blackboard[target_key], TRUE)
@@ -20,11 +21,11 @@
 /// Equip a weapon off the ground
 /datum/bt_node/ai_behavior/monkey_equip/ground
 
-/datum/bt_node/ai_behavior/monkey_equip/ground/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/ground/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/bt_node/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(equip_item(controller))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -32,11 +33,11 @@
 /// Pickpocket a weapon from a mob
 /datum/bt_node/ai_behavior/monkey_equip/pickpocket
 
-/datum/bt_node/ai_behavior/monkey_equip/pickpocket/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/pickpocket/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/bt_node/ai_behavior/monkey_equip/pickpocket/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/pickpocket/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) // mid-snatch; wait
 		return AI_BEHAVIOR_DELAY
 	INVOKE_ASYNC(src, PROC_REF(attempt_pickpocket), controller)
@@ -70,7 +71,7 @@
 
 	finish_action(controller, success)
 
-/datum/bt_node/ai_behavior/monkey_equip/pickpocket/finish_action(datum/ai_controller/controller, success, target_key)
+/datum/bt_node/ai_behavior/monkey_equip/pickpocket/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	controller.set_blackboard_key(BB_MONKEY_PICKPOCKETING, FALSE)
 
@@ -152,8 +153,10 @@
 
 /// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive
 /datum/bt_node/ai_behavior/monkey_set_combat_target
+	var/attack_target_key
+	var/enemies_key
 
-/datum/bt_node/ai_behavior/monkey_set_combat_target/perform(seconds_per_tick, datum/ai_controller/controller, attack_target_key, enemies_key)
+/datum/bt_node/ai_behavior/monkey_set_combat_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/enemies = controller.blackboard[enemies_key]
 
@@ -191,9 +194,10 @@
 
 /// Attacks the target mob; SUCCEEDED when target is gone, FAILED when target goes down (triggers disposal fallthrough)
 /datum/bt_node/ai_behavior/monkey_attack_mob
+	var/target_key
 	time_between_perform = CLICK_CD_MELEE
 
-/datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
@@ -228,7 +232,7 @@
 	controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded) // disposal path clears the key on failure
 		controller.clear_blackboard_key(target_key)
@@ -266,8 +270,9 @@
 
 /// Rallies nearby monkeys against the current attack target
 /datum/bt_node/ai_behavior/recruit_monkeys
+	var/target_key
 
-/datum/bt_node/ai_behavior/recruit_monkeys/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/recruit_monkeys/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/mob/living/attack_target = controller.blackboard[target_key]
 
@@ -284,8 +289,10 @@
 
 /// Scans nearby humans for patrons to serve; fails if bartender present or fewer than 1 patron found
 /datum/bt_node/ai_behavior/monkey_find_patrons
+	var/patrons_key
+	var/give_target_key
 
-/datum/bt_node/ai_behavior/monkey_find_patrons/perform(seconds_per_tick, datum/ai_controller/controller, patrons_key, give_target_key)
+/datum/bt_node/ai_behavior/monkey_find_patrons/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/nearby_patrons = list()
 
@@ -309,9 +316,10 @@
 
 /// Finds a press target: uses BB_MONKEY_PRESS_TYPEPATH if set, else a random nearby atom
 /datum/bt_node/ai_behavior/monkey_find_press_target
+	var/target_key
 	time_between_perform = 2 SECONDS
 
-/datum/bt_node/ai_behavior/monkey_find_press_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/monkey_find_press_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(controller.blackboard_key_exists(target_key))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

@@ -13,12 +13,14 @@
 
 /// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
+	var/ability_key = BB_GENERIC_ACTION
+	var/target_key
 	/// Maximum distance at which the ability can fire
 	var/maximum_distance = 0
 	///Does this require adjacency?
 	var/require_adjacency = FALSE
 
-/datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key = BB_GENERIC_ACTION, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
@@ -43,13 +45,13 @@
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/and_plan_execute
 
-/datum/bt_node/ai_behavior/targeted_mob_ability/and_plan_execute/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/and_plan_execute/finish_action(datum/ai_controller/controller, succeeded)
 	controller.set_blackboard_key(BB_BASIC_MOB_EXECUTION_TARGET, controller.blackboard[target_key])
 	return ..()
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target
 
-/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 

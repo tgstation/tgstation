@@ -95,10 +95,14 @@
 
 ///Pick a target from our retaliate list
 /datum/bt_node/ai_behavior/target_from_retaliate_list
+	var/target_key
+	var/targeting_strategy_key
+	var/hiding_location_key
+	var/check_faction = FALSE
 	time_between_perform = 2 SECONDS
 	var/vision_range = 9
 
-/datum/bt_node/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, check_faction = FALSE)
+/datum/bt_node/ai_behavior/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy)
@@ -148,7 +152,7 @@
 		return pick(enemies_list)
 	return priority_strategy.select_target(controller, enemies_list)
 
-/datum/bt_node/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key, check_faction = FALSE)
+/datum/bt_node/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded || check_faction)
 		return

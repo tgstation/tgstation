@@ -44,9 +44,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_person_on_fire
+	var/target_key
 	time_between_perform = 2 SECONDS
 
-/datum/bt_node/ai_behavior/find_person_on_fire/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_person_on_fire/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/basic/bot/firebot/living_bot = controller.pawn
 	if(!(living_bot.firebot_mode_flags & FIREBOT_EXTINGUISH_PEOPLE))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -69,9 +70,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/search_burning_turfs
+	var/target_key
 	time_between_perform = 2 SECONDS
 
-/datum/bt_node/ai_behavior/search_burning_turfs/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/search_burning_turfs/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/basic/bot/firebot/living_bot = controller.pawn
 	if(!(living_bot.firebot_mode_flags & FIREBOT_EXTINGUISH_FLAMES))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -97,7 +99,7 @@
 
 /datum/bt_node/ai_behavior/bot_interact/extinguish
 
-/datum/bt_node/ai_behavior/bot_interact/extinguish/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/bot_interact/extinguish/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	// if we couldn't reach OR we emagged a living target, blacklist them
 	var/atom/target = controller.blackboard[target_key]

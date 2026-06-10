@@ -28,7 +28,7 @@
 	SIGNAL_HANDLER
 	movement_failed = TRUE
 
-/datum/bt_node/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
+/datum/bt_node/ai_behavior/move_to_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(movement_failed)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/atom/target = controller.blackboard[target_key]
@@ -40,7 +40,7 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_INSTANT
 
-/datum/bt_node/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded, target_key, required_dist = 1, finish_on_arrival = TRUE, movement_type = null)
+/datum/bt_node/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded)
 	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
 	movement_failed = FALSE
 	controller.ai_movement.stop_moving_towards(controller)

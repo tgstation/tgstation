@@ -22,9 +22,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/commence_trashtalk
+	var/target_key
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/commence_trashtalk/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/commence_trashtalk/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!controller.blackboard_key_exists(target_key))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -41,9 +42,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_valid_wash_targets
+	var/target_key
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/find_valid_wash_targets/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_valid_wash_targets/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	var/atom/found_target
@@ -69,7 +71,7 @@
 	controller.set_blackboard_key(target_key, found_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/find_valid_wash_targets/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/find_valid_wash_targets/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(!succeeded)
 		return
@@ -81,8 +83,9 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/wash_target
+	var/target_key
 
-/datum/bt_node/ai_behavior/wash_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/wash_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/carbon/human/unclean_target = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(QDELETED(unclean_target))
@@ -92,7 +95,7 @@
 	living_pawn.melee_attack(unclean_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/wash_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/wash_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 	var/wash_frustration = controller.blackboard[BB_WASH_FRUSTRATION]

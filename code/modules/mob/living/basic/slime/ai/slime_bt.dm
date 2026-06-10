@@ -86,8 +86,9 @@
  * Returns FAILURE if the target is gone, buckled (slime), or not feedable in context.
  */
 /datum/bt_node/ai_behavior/feed_on_slime_target
+	var/target_key
 
-/datum/bt_node/ai_behavior/feed_on_slime_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/feed_on_slime_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(!istype(slime_pawn) || slime_pawn.buckled)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

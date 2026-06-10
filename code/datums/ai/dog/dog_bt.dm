@@ -10,7 +10,7 @@
  */
 /datum/bt_node/ai_behavior/basic_melee_attack/dog
 
-/datum/bt_node/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	if(!(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK)))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -24,7 +24,7 @@
 		paw_harmlessly(living_pawn, target, seconds_per_tick)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	return ..(seconds_per_tick, controller, target_key, targeting_strategy_key, hiding_location_key)
+	return ..()
 
 /// Swat at someone we don't like but won't hurt
 /datum/bt_node/ai_behavior/basic_melee_attack/dog/proc/paw_harmlessly(mob/living/living_pawn, atom/target, seconds_per_tick)
@@ -42,8 +42,10 @@
  * Combine with a cooldown decorator or embed the SPT_PROB gate in the parent tree.
  */
 /datum/bt_node/ai_behavior/find_hated_dog_target
+	var/target_key
+	var/targeting_strategy_key
 
-/datum/bt_node/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key)
+/datum/bt_node/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(10, seconds_per_tick))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 

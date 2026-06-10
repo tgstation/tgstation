@@ -61,14 +61,14 @@
 
 /datum/bt_node/ai_behavior/bot_interact/tip_robot
 
-/datum/bt_node/ai_behavior/bot_interact/tip_robot/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_interact/tip_robot/setup(datum/ai_controller/controller)
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/pawn = controller.pawn
 	if(QDELETED(target) || pawn.pulling != target)
 		return FALSE
 	return ..()
 
-/datum/bt_node/ai_behavior/bot_interact/tip_robot/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/bot_interact/tip_robot/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded)
 		var/mob/living/living_pawn = controller.pawn
@@ -92,13 +92,14 @@
 /datum/bt_node/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
 
-/datum/bt_node/ai_behavior/bot_search/deconstructable/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/deconstructable/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/things_to_deconstruct = typecacheof(list(
 		/obj/structure/window,
 		/turf/open/floor,
 		/turf/closed/wall,
 	))
-	return ..(seconds_per_tick, controller, target_key, things_to_deconstruct, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = things_to_deconstruct
+	return ..()
 
 // =============================================================================
 // Refill materials — pick up stacks when running low
@@ -123,7 +124,7 @@
 			return TRUE
 	return FALSE
 
-/datum/bt_node/ai_behavior/bot_search/refillable_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/refillable_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/refillable_items = typecacheof(list(
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -136,12 +137,13 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf
+	turf_search = TRUE
 	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/proc/get_turf_type_filter()
 	return typecacheof(list(/turf/open/floor/plating))
 
-/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_REPLACE_TILES))
 		return FALSE
@@ -149,7 +151,7 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = TRUE)
+/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	return ..(seconds_per_tick, controller, target_key, get_turf_type_filter(), radius, pathing_distance, bypass_add_blacklist, turf_search)
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/open/my_target)
@@ -172,7 +174,7 @@
 /// Breach variant: searches /turf/open/space instead, requires REPAIRBOT_FIX_BREACHES flag.
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached
 
-/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_BREACHES))
 		return FALSE
@@ -190,7 +192,7 @@
 /datum/bt_node/ai_behavior/bot_search/valid_girder
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/bot_search/valid_girder/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_girder/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_GIRDERS))
 		return FALSE
@@ -199,7 +201,7 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_girder/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/valid_girder/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_girder = typecacheof(list(/obj/structure/girder))
 	return ..(seconds_per_tick, controller, target_key, searchable_girder, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
@@ -215,7 +217,7 @@
 /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder
 	maximum_distance = 1
 
-/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder/setup(datum/ai_controller/controller, ability_key, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_BUILD_GIRDERS))
 		return FALSE
@@ -227,15 +229,16 @@
 		return FALSE
 	return ..()
 
-/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
 /// Search for open turfs adjacent to space (valid girder build locations).
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target
+	turf_search = TRUE
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/bot_search/valid_wall_target/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_wall_target/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_BUILD_GIRDERS))
 		return FALSE
@@ -244,7 +247,7 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_wall_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = TRUE)
+/datum/bt_node/ai_behavior/bot_search/valid_wall_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_turfs = typecacheof(list(/turf/open))
 	return ..(seconds_per_tick, controller, target_key, searchable_turfs, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
@@ -273,7 +276,7 @@
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/bot_search/valid_grille_target/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_search/valid_grille_target/setup(datum/ai_controller/controller)
 	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.repairbot_flags & REPAIRBOT_REPLACE_WINDOWS))
 		return FALSE
@@ -281,7 +284,7 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/bot_search/valid_grille_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/valid_grille_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille))
 	return ..(seconds_per_tick, controller, target_key, searchable_grilles, radius, pathing_distance, bypass_add_blacklist, turf_search)
 
@@ -299,7 +302,7 @@
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))
 	return ..(seconds_per_tick, controller, target_key, searchable_objects, radius, pathing_distance, bypass_add_blacklist, turf_search)
 

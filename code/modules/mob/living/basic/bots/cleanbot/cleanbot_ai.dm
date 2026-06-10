@@ -34,9 +34,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_clean_target
+	var/target_key
 	time_between_perform = 3 SECONDS
 
-/datum/bt_node/ai_behavior/find_clean_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/cleanbot/controller, target_key)
+/datum/bt_node/ai_behavior/find_clean_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/cleanbot/controller)
 	var/list/final_hunt_list = list()
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
 	var/list/flag_list = controller.clean_flags
@@ -75,8 +76,9 @@
 
 ///clean that shit bro fr fr 67
 /datum/bt_node/ai_behavior/execute_clean
+	var/target_key
 
-/datum/bt_node/ai_behavior/execute_clean/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/execute_clean/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -88,7 +90,7 @@
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/execute_clean/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/execute_clean/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	controller.set_blackboard_key(BB_POST_CLEAN_COOLDOWN, POST_CLEAN_COOLDOWN + world.time)
 	var/atom/target = controller.blackboard[target_key]
@@ -113,9 +115,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_spray_target
+	var/target_key
 	time_between_perform = 30 SECONDS
 
-/datum/bt_node/ai_behavior/find_spray_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_spray_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(5, controller.pawn))
 		if(LAZYACCESS(ignore_list, human_target))
@@ -134,9 +137,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_friendly_janitor
+	var/target_key
 	time_between_perform = 30 SECONDS
 
-/datum/bt_node/ai_behavior/find_friendly_janitor/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_friendly_janitor/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/human/human_target in oview(5, living_pawn))
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))

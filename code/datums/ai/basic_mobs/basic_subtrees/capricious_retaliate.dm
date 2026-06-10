@@ -1,8 +1,10 @@
 ///Random chance to add things to our retaliate list
 /datum/bt_node/ai_behavior/capricious_retaliate
+	var/targeting_strategy_key
+	var/ignore_faction
 	time_between_perform = 1 SECONDS
 
-/datum/bt_node/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
+/datum/bt_node/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/pawn = controller.pawn
 
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
@@ -46,7 +48,7 @@
 /datum/bt_node/ai_behavior/capricious_retaliate/proc/failed_targeting(atom/pawn)
 	pawn.visible_message(span_notice("[pawn] grumbles."))
 
-/datum/bt_node/ai_behavior/capricious_retaliate/finish_action(datum/ai_controller/controller, succeeded, targeting_strategy_key, ignore_faction)
+/datum/bt_node/ai_behavior/capricious_retaliate/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded || !ignore_faction)
 		return

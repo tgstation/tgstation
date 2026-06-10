@@ -45,9 +45,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_party_friends
+	var/target_key
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/find_party_friends/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_party_friends/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/type_to_search = typecacheof(list(/mob/living/carbon/human))
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/target in oview(5, controller.pawn))
@@ -67,8 +68,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/vibebot_party
+	var/ability_key
+	var/target_key
 
-/datum/bt_node/ai_behavior/vibebot_party/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, ability_key, target_key)
+/datum/bt_node/ai_behavior/vibebot_party/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -81,7 +84,7 @@
 	living_pawn.emote("flip")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, ability_key, target_key)
+/datum/bt_node/ai_behavior/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(!isnull(target))

@@ -128,9 +128,10 @@
 /// Applies full-body brute damage to BB_CUSTOMER_CURRENT_TARGET while pulling them.
 /// Clears the target key on success so the customer returns to normal behavior.
 /datum/bt_node/ai_behavior/robot_customer/break_spine_attack
+	var/target_key
 	var/give_up_distance = 10
 
-/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn
 
@@ -148,7 +149,7 @@
 
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded)
 		var/mob/living/bane = controller.pawn

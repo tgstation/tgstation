@@ -6,6 +6,8 @@
 // DEPRECATED — kept for non-standard callers (monkey, scatter pet) that cannot use the subtree.
 // New BT trees should use /datum/bt_node/subtree/run_away_from_target instead.
 /datum/bt_node/ai_behavior/run_away_from_target
+	var/target_key
+	var/hiding_location_key
 	/// Distance to the current escape waypoint at which we consider it reached and plot the next one.
 	var/required_distance = 0
 	/// How far do we try to run?
@@ -13,7 +15,7 @@
 	/// Clear target when fleeing finishes unsuccessfully (couldn't find escape path).
 	var/clear_failed_targets = TRUE
 
-/datum/bt_node/ai_behavior/run_away_from_target/setup(datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/bt_node/ai_behavior/run_away_from_target/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
@@ -22,7 +24,7 @@
 		return FALSE
 	return ..()
 
-/datum/bt_node/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/bt_node/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller)
 
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target) || !can_see(controller.pawn, target, run_distance))
@@ -64,7 +66,7 @@
 		return_turf = test_destination
 	return return_turf
 
-/datum/bt_node/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
+/datum/bt_node/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.set_movement_target(src, null)
 	if(!succeeded && clear_failed_targets)
@@ -73,7 +75,7 @@
 /datum/bt_node/ai_behavior/run_away_from_target/run_and_shoot
 	clear_failed_targets = FALSE
 
-/datum/bt_node/ai_behavior/run_away_from_target/run_and_shoot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/bt_node/ai_behavior/run_away_from_target/run_and_shoot/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

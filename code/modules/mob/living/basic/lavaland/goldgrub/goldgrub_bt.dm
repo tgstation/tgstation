@@ -154,9 +154,10 @@
 
 /// Eats/interacts with a target at the given blackboard key. Must be adjacent.
 /datum/bt_node/ai_behavior/grub_eat
+	var/target_key
 	time_between_perform = 3 SECONDS
 
-/datum/bt_node/ai_behavior/grub_eat/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/grub_eat/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -165,14 +166,15 @@
 	controller.ai_interact(target = target, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/grub_eat/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/grub_eat/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
 /// Pulls a grub egg toward the grub when adjacent. Starts pulling when close enough.
 /datum/bt_node/ai_behavior/pull_grub_egg
+	var/target_key
 
-/datum/bt_node/ai_behavior/pull_grub_egg/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/pull_grub_egg/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -182,7 +184,7 @@
 	grub_pawn.start_pulling(target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/pull_grub_egg/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/pull_grub_egg/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 

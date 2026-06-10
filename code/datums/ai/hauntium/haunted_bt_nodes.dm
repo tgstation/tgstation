@@ -30,8 +30,10 @@
 
 ///Find someone to haunt
 /datum/bt_node/ai_behavior/pick_haunt_target
+	var/target_key
+	var/haunt_list_key
 
-/datum/bt_node/ai_behavior/pick_haunt_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, haunt_list_key)
+/datum/bt_node/ai_behavior/pick_haunt_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!prob(HAUNTED_ITEM_ATTACK_HAUNT_CHANCE))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/obj/item/item_pawn = controller.pawn
@@ -48,11 +50,12 @@
 /// Haunted variant: decrements haunt list aggro when throws are exhausted.
 /// BT args: target_key, throw_count_key, haunt_list_key
 /datum/bt_node/ai_behavior/throw_attack/haunted
+	var/haunt_list_key
 	max_attempts = HAUNTED_MAX_THROW_ATTEMPTS
 	/// Cached from perform args so on_throws_exhausted can access haunt_list_key.
 	var/active_haunt_list_key
 
-/datum/bt_node/ai_behavior/throw_attack/haunted/perform(seconds_per_tick, datum/ai_controller/controller, target_key, throw_count_key, haunt_list_key)
+/datum/bt_node/ai_behavior/throw_attack/haunted/perform(seconds_per_tick, datum/ai_controller/controller)
 	active_haunt_list_key = haunt_list_key
 	return ..()
 

@@ -3,8 +3,11 @@
 
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
+	var/target_key
+	var/targeting_strategy_key
+	var/hiding_location_key
 
-/datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller)
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
@@ -12,7 +15,7 @@
 	if(QDELETED(target))
 		return FALSE
 
-/datum/bt_node/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	if (isnull(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -50,7 +53,7 @@
 /// Single-hit variant: terminates after one successful attack and always clears the target key.
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
 
-/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
@@ -73,6 +76,9 @@
 
 //Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
+	var/target_key
+	var/targeting_strategy_key
+	var/hiding_location_key
 	time_between_perform = 0.6 SECONDS
 	/// Max range at which we can fire. Make sure your movement actually gets you this lcose please
 	var/max_range = 3
@@ -81,7 +87,7 @@
 	/// Avoid shooting through friendlies.
 	var/avoid_friendly_fire = FALSE
 
-/datum/bt_node/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller)
 	. = ..()
 	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
 		return FALSE
@@ -90,7 +96,7 @@
 		return FALSE
 	return TRUE
 
-/datum/bt_node/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/basic_mob = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])

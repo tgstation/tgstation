@@ -6,10 +6,16 @@
  * looking_for is an optional typecache pre-filter; pass null to check all atoms via valid_target().
  */
 /datum/bt_node/ai_behavior/bot_search
+	var/target_key
+	var/looking_for = null
+	var/radius = 5
+	var/pathing_distance = 10
+	var/bypass_add_blacklist = FALSE
+	var/turf_search = FALSE
 	time_between_perform = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for = null, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
+/datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -44,10 +50,12 @@
 
 ///Performs bot speech from a list of options
 /datum/bt_node/ai_behavior/bot_speech
+	var/list/list_to_pick_from
+	var/announce_key
 	time_between_perform = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/bot_speech/perform(seconds_per_tick, datum/ai_controller/controller, list/list_to_pick_from, announce_key)
+/datum/bt_node/ai_behavior/bot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[announce_key]
 	if(isnull(announcement) || !length(list_to_pick_from))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -57,9 +65,10 @@
 
 ///Interact with an object. Could probably be moved to a generic behavior as the only unique thing is the blacklist.
 /datum/bt_node/ai_behavior/bot_interact
+	var/target_key
 	var/clear_target = TRUE
 
-/datum/bt_node/ai_behavior/bot_interact/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/bot_interact/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -69,7 +78,7 @@
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/bot_interact/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/bot_interact/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(clear_target)
@@ -84,8 +93,9 @@
 
 ///Find the closest beacon and set it as the target
 /datum/bt_node/ai_behavior/find_first_beacon_target
+	var/target_key
 
-/datum/bt_node/ai_behavior/find_first_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_first_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/closest_distance = INFINITY
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
@@ -109,9 +119,10 @@
 
 ///Find the next beacon from a previous target and set it as the new target
 /datum/bt_node/ai_behavior/find_next_beacon_target
+	var/target_key
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
 	var/obj/machinery/navbeacon/prev_beacon = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
@@ -145,8 +156,9 @@
 
 /// Records the beacon as visited and clears the target key once the bot is on the same turf.
 /datum/bt_node/ai_behavior/arrive_at_beacon
+	var/target_key
 
-/datum/bt_node/ai_behavior/arrive_at_beacon/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/arrive_at_beacon/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/obj/machinery/navbeacon/beacon = controller.blackboard[target_key]
 	if(QDELETED(beacon))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -159,8 +171,9 @@
 
 /// Completes summon travel once the bot reaches the summon target's turf.
 /datum/bt_node/ai_behavior/complete_summon_travel
+	var/target_key
 
-/datum/bt_node/ai_behavior/complete_summon_travel/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/complete_summon_travel/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	if(QDELETED(bot_pawn))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -174,9 +187,10 @@
 
 ///Find a valid authority to salute and set them as the target
 /datum/bt_node/ai_behavior/find_valid_authority
+	var/target_key
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/find_valid_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_valid_authority/perform(seconds_per_tick, datum/ai_controller/controller)
 	for(var/mob/living/nearby_mob in oview(7, controller.pawn))
 		if(!HAS_TRAIT(nearby_mob, TRAIT_COMMISSIONED))
 			continue
@@ -186,8 +200,10 @@
 
 ///Salute the authority /(o.o)
 /datum/bt_node/ai_behavior/salute_authority
+	var/target_key
+	var/salute_keys
 
-/datum/bt_node/ai_behavior/salute_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
+/datum/bt_node/ai_behavior/salute_authority/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!controller.blackboard_key_exists(target_key))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/list/salute_list = controller.blackboard[salute_keys]
@@ -200,7 +216,7 @@
 	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]!")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/salute_authority/finish_action(datum/ai_controller/controller, succeeded, target_key, salute_keys)
+/datum/bt_node/ai_behavior/salute_authority/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 

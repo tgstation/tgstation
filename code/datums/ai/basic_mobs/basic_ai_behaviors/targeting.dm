@@ -8,6 +8,9 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 ///Use the targetting strategy to find a target
 /datum/bt_node/ai_behavior/update_targets
+	var/target_key
+	var/targeting_strategy_key
+	var/hiding_location_key
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -24,7 +27,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return 60 SECONDS
 	return ..()
 
-/datum/bt_node/ai_behavior/update_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
@@ -168,7 +171,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/bt_node/ai_behavior/update_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/update_targets/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]

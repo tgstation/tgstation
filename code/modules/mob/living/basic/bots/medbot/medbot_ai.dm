@@ -38,9 +38,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_suitable_patient
+	var/target_key
 	time_between_perform = 2 SECONDS
 
-/datum/bt_node/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	var/threshold = bot_pawn.heal_threshold
 	var/heal_type = bot_pawn.damage_type_healer
@@ -68,7 +69,7 @@
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_suitable_patient: no patient found in range [search_range] (threshold=[threshold], heal_type=[heal_type], emagged=[!!(access_flags & BOT_COVER_EMAGGED)])")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/datum/bt_node/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(!succeeded || QDELETED(controller.pawn) || get_dist(controller.pawn, controller.blackboard[target_key]) <= 1)
 		return
@@ -80,8 +81,9 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/tend_to_patient
+	var/target_key
 
-/datum/bt_node/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/carbon/human/patient = controller.blackboard[target_key]
 	if(QDELETED(patient) || patient.stat == DEAD)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] tend_to_patient: patient gone (deleted=[QDELETED(patient)], stat=[patient?.stat])")
@@ -99,7 +101,7 @@
 	bot_pawn.melee_attack(patient)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
@@ -126,10 +128,11 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/handle_medbot_speech
+	var/announce_key
 	time_between_perform = 20 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, announce_key)
+/datum/bt_node/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	var/currently_tipped = bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE
 	var/speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || currently_tipped) ? 15 : 5
@@ -156,8 +159,9 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_patient_in_crit
+	var/target_key
 
-/datum/bt_node/ai_behavior/find_patient_in_crit/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_patient_in_crit/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/source = controller.pawn
 	for(var/mob/living/carbon/human/patient in oview(7, source))
 		if(patient.stat < UNCONSCIOUS || isnull(patient.mind))
@@ -172,10 +176,11 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/bt_node/ai_behavior/announce_patient
+	var/target_key
 	time_between_perform = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/bt_node/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -186,7 +191,7 @@
 	announcement.announce(text_to_announce, controller.blackboard[BB_RADIO_CHANNEL])
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 

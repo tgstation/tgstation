@@ -1,13 +1,14 @@
 
 ///Destroy shit int he way
 /datum/bt_node/ai_behavior/attack_obstructions
+	var/target_key
 	time_between_perform = 2 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
 	var/can_attack_dense_objects = FALSE
 
-/datum/bt_node/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/basic_mob = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 

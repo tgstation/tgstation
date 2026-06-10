@@ -5,10 +5,12 @@
 
 /// Searches nearby tiles for a valid living target and sets the given BB key. Sets tilt cooldown and fails if none found.
 /datum/bt_node/ai_behavior/find_vendor_target
+	var/target_key
+	var/vision_range
 	/// Cooldown applied to BB_VENDING_TILT_COOLDOWN when no valid target is in range
 	var/search_cooldown = 2 SECONDS
 
-/datum/bt_node/ai_behavior/find_vendor_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, vision_range)
+/datum/bt_node/ai_behavior/find_vendor_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	for(var/mob/living/living_target in oview(vision_range, controller.pawn))
 		if(living_target.stat || living_target.incorporeal_move)
 			continue
@@ -20,12 +22,13 @@
 
 /// Telegraphs and tilts onto the target. Returns success once the machine is tilted.
 /datum/bt_node/ai_behavior/vendor_crush
+	var/target_key
 	/// Time to telegraph before tilting
 	var/time_to_tilt = 0.8 SECONDS
 	/// Time before machine can untilt after a tilt attempt
 	var/untilt_cooldown = 1 SECONDS
 
-/datum/bt_node/ai_behavior/vendor_crush/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/vendor_crush/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	if(vendor_pawn.tilted)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

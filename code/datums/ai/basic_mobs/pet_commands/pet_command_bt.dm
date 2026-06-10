@@ -24,12 +24,13 @@
 
 /// Validates a fetch item at target_key; adds to ignore list and clears keys on failure.
 /datum/bt_node/ai_behavior/fetch_seek
+	var/target_key
 
-/datum/bt_node/ai_behavior/fetch_seek/setup(datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/fetch_seek/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/bt_node/ai_behavior/fetch_seek/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/fetch_seek/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/item/fetch_thing = controller.blackboard[target_key]
 	if(QDELETED(fetch_thing))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -37,7 +38,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/fetch_seek/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/fetch_seek/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded)
 		return

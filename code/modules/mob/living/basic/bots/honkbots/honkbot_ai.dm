@@ -42,7 +42,7 @@
 
 /datum/bt_node/ai_behavior/use_mob_ability/random_honk
 
-/datum/bt_node/ai_behavior/use_mob_ability/random_honk/perform(seconds_per_tick, datum/ai_controller/controller, ability_key)
+/datum/bt_node/ai_behavior/use_mob_ability/random_honk/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(5, seconds_per_tick))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return ..()
@@ -66,8 +66,9 @@
 
 // Positions the pulled victim onto the slippery item by stepping away, then releases.
 /datum/bt_node/ai_behavior/release_and_slip
+	var/victim_key
 
-/datum/bt_node/ai_behavior/release_and_slip/perform(seconds_per_tick, datum/ai_controller/controller, victim_key)
+/datum/bt_node/ai_behavior/release_and_slip/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/victim = controller.blackboard[victim_key]
 	var/mob/living/our_mob = controller.pawn
 	if(QDELETED(victim) || our_mob.pulling != victim)
@@ -90,9 +91,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_slippery_item
+	var/target_key
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/find_slippery_item/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_slippery_item/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	var/list/slippery_items = controller.blackboard[BB_SLIPPERY_ITEMS]
@@ -118,9 +120,10 @@
 // =============================================================================
 
 /datum/bt_node/ai_behavior/find_clown_friend
+	var/target_key
 	time_between_perform = 5 SECONDS
 
-/datum/bt_node/ai_behavior/find_clown_friend/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+/datum/bt_node/ai_behavior/find_clown_friend/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/nearby_mob in oview(5, controller.pawn))
 		if(LAZYACCESS(ignore_list, nearby_mob))
@@ -139,8 +142,9 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/bt_node/ai_behavior/play_with_clown
+	var/target_key
 
-/datum/bt_node/ai_behavior/play_with_clown/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/play_with_clown/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -154,7 +158,7 @@
 	living_pawn.emote("beep")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/play_with_clown/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/play_with_clown/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(!isnull(living_target))

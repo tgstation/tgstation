@@ -24,8 +24,10 @@
 
 /// Searches for and moves to a parent mob (of types in BB_FIND_MOM_TYPES), sets BB_FOUND_MOM.
 /datum/bt_node/ai_behavior/find_parent
+	var/mom_types_key
+	var/found_mom_key
 
-/datum/bt_node/ai_behavior/find_parent/perform(seconds_per_tick, datum/ai_controller/controller, mom_types_key, found_mom_key)
+/datum/bt_node/ai_behavior/find_parent/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living_pawn = controller.pawn
 	var/list/mom_types = controller.blackboard[mom_types_key]
 	if(!length(mom_types))
