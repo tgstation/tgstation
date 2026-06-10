@@ -1118,6 +1118,7 @@
 
 		oursoil.transfer_soil(src, inside_tray = TRUE)
 
+		current_soil = locate(/obj/machinery/hydroponics/soil) in contents
 		RefreshParts()
 		tray_flags = current_soil.tray_flags
 
