@@ -104,8 +104,8 @@
 			continue
 
 		var/transferred_moles = env_gases[gas]
-		//somehow gases with 0 moles can creep into our list which gets removed with `adjust_gas()`
-		// That compounded with the fact our for loop copies our list means it never gets updated so we may
+		// somehow gases with 0 moles can creep into our list which gets removed with `adjust_gas()`
+		// that compounded with the fact our for loop copies our list means it never gets updated so we may
 		// end up with an GC'd gas and that's bad so let's not
 		if(!transferred_moles)
 			continue
