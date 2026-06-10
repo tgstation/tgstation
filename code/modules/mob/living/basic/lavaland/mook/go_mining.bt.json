@@ -13,13 +13,13 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"key": "BB_SIMPLE_CARRY_ITEM"
 					},
 					"child": {
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
+						"vars": {
 							"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 							"key": "BB_DEPOSIT_POSITION"
 						},
@@ -29,7 +29,6 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": [],
 									"vars": {
 										"target_key": "BB_DEPOSIT_POSITION"
 									}
@@ -37,7 +36,6 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/clear_key",
-									"args": [],
 									"vars": {
 										"key": "BB_DEPOSIT_POSITION"
 									}
@@ -45,7 +43,6 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/ai_interact",
-									"args": [],
 									"vars": {
 										"target_key": "BB_MATERIAL_STAND_TARGET"
 									}
@@ -57,7 +54,7 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 						"invert": true,
 						"key": "BB_SIMPLE_CARRY_ITEM"
@@ -68,7 +65,7 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": {
+								"vars": {
 									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 									"invert": false,
 									"key": "BB_ORE_TARGET"
@@ -79,7 +76,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": [],
 											"vars": {
 												"target_key": "BB_ORE_TARGET"
 											}
@@ -87,7 +83,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
-											"args": [],
 											"vars": {
 												"target_key": "BB_ORE_TARGET",
 												"storage_key": "BB_SIMPLE_CARRY_ITEM"
@@ -99,7 +94,7 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": {
+								"vars": {
 									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 									"invert": false,
 									"key": "BB_TARGET_MINERAL_WALL"
@@ -110,7 +105,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": [],
 											"vars": {
 												"target_key": "BB_TARGET_MINERAL_WALL"
 											}
@@ -118,7 +112,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/mine_wall",
-											"args": [],
 											"vars": {
 												"target_key": "BB_TARGET_MINERAL_WALL",
 												"time_between_perform": "1 SECONDS"
@@ -127,7 +120,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/find_ore",
-											"args": [],
 											"vars": {
 												"time_between_perform": "0.5 SECONDS"
 											}
@@ -140,13 +132,11 @@
 								"children": [
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/calculate_wander_destination",
-										"args": []
+										"behavior": "/datum/bt_node/ai_behavior/calculate_wander_destination"
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": [],
 										"vars": {
 											"target_key": "BB_WANDER_DESTINATION"
 										}
@@ -168,19 +158,18 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"key": "BB_SIMPLE_CARRY_ITEM"
 					},
 					"child": {
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/find_deposit_position",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/find_deposit_position"
 					}
 				},
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"invert": true,
 						"key": "BB_SIMPLE_CARRY_ITEM"
 					},
@@ -189,20 +178,18 @@
 						"children": [
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/find_ore",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/find_ore"
 							},
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/cooldown",
-								"config": {
+								"vars": {
 									"cooldown_key": "BB_MOOK_MINING_COOLDOWN",
 									"cooldown_duration": "10 SECONDS"
 								},
 								"child": {
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall/mook",
-									"args": [],
 									"vars": {
 										"target_key": "BB_TARGET_MINERAL_WALL"
 									}
