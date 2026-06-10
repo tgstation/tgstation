@@ -100,10 +100,16 @@
 		return FALSE
 
 	for(var/gas in env_gases)
-		if(!(gas in scrubbing) || !environment.has_gas(gas))
+		if(!(gas in scrubbing))
 			continue
 
-		var/transferred_moles = env_gases[gas][MOLES]
+		var/transferred_moles = env_gases[gas]
+		//somehow gases with 0 moles can creep into our list which gets removed with `adjust_gas()`
+		// That compounded with the fact our for loop copies our list means it never gets updated so we may
+		// end up with an GC'd gas and that's bad so let's not
+		if(!transferred_moles)
+			continue
+		transferred_moles = transferred_moles[MOLES]
 		transferred_moles = max(QUANTIZE(transferred_moles * removal_ratio * (transferred_moles / total_moles_to_remove)), min(MOLAR_ACCURACY * 1000, transferred_moles))
 
 		filtered_out.adjust_gas(gas, transferred_moles)
