@@ -237,3 +237,9 @@
   - bugfix: Fixed some of the Big Manipulator behavior such as not working in strict
       mode, putting items inside itself and incorrectly targeting items due to misconfigured
       filters.
+2026-06-10:
+  SmArtKar:
+  - qol: RND Techweb now displays where a design can be printed and how much it'd
+      cost to print
+  cacogen:
+  - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
