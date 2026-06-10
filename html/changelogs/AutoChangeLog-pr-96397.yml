@@ -1,0 +1,4 @@
+author: "btcbuster"
+delete-after: True
+changes:
+  - balance: "Baseball bats do more damage and fit on the back slot now."
