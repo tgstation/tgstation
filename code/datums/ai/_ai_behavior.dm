@@ -6,9 +6,6 @@
 	var/behavior_flags = NONE
 	///Cooldown between perform() calls; do not read directly — use get_cooldown()
 	var/time_between_perform = 0
-	/// Positional args passed to setup()/perform()/finish_action() after the fixed args.
-	/// Set by BT_LEAF at build time via configure().
-	var/list/default_behavior_args = null
 	/// TRUE after setup() has been called and before finish_action() completes.
 	var/running = FALSE
 	/// world.time when perform() may next be called.
@@ -34,15 +31,15 @@
 	return time_between_perform
 
 /// Called when this behavior first activates on a controller. Return FALSE to abort (returns BT_FAILURE).
-/datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
+/datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller)
 	return TRUE
 
 /// Called each tick while the behavior is running. Returns AI_BEHAVIOR_* flags.
-/datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
+/datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller)
 	return
 
 /// Called when the behavior finishes (succeeded or failed). Subtypes should call ..().
-/datum/bt_node/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
+/datum/bt_node/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
 	return
 
 /**
@@ -62,19 +59,13 @@
 			controller.bt_execution_log += execution_index
 
 	if(!running)
-		var/list/setup_args = list(controller)
-		if(LAZYLEN(default_behavior_args))
-			setup_args += default_behavior_args
-		if(!setup(arglist(setup_args)))
+		if(!setup(controller))
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: setup() failed")
 			return BT_FAILURE
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] starting [type]")
 		running = TRUE
 
-	var/list/perform_args = list(seconds_per_tick, controller)
-	if(LAZYLEN(default_behavior_args))
-		perform_args += default_behavior_args
-	var/process_flags = perform(arglist(perform_args))
+	var/process_flags = perform(seconds_per_tick, controller)
 
 	if(process_flags & AI_BEHAVIOR_DELAY)
 		next_perform_time = world.time + get_cooldown(controller)
@@ -95,12 +86,9 @@
 	next_perform_time = new_next_perform_time
 
 
-/// Calls finish_action() with args and clears per-controller state.
+/// Calls finish_action() and clears per-controller state.
 /datum/bt_node/ai_behavior/proc/_finish_behavior(datum/ai_controller/controller, succeeded)
-	var/list/finish_args = list(controller, succeeded)
-	if(LAZYLEN(default_behavior_args))
-		finish_args += default_behavior_args
-	finish_action(arglist(finish_args))
+	finish_action(controller, succeeded)
 	running = FALSE
 
 /datum/bt_node/ai_behavior/reset_tick_state()

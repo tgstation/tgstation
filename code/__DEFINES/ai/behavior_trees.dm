@@ -58,8 +58,6 @@
 #define BT_DESC_TYPE "type"
 /// Key storing the children list in a descriptor list
 #define BT_DESC_CHILDREN "children"
-/// Key storing the default behavior args list in a leaf descriptor
-#define BT_DESC_BEHAVIOR_ARGS "default_behavior_args"
 /// Key storing the override slot ID in a subtree descriptor
 #define BT_DESC_OVERRIDE_ID "override_id"
 /// Key storing bindable parameter declarations in a compiled subtree descriptor

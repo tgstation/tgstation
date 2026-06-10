@@ -130,7 +130,8 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/tile,
 	))
-	return ..(seconds_per_tick, controller, target_key, refillable_items, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = refillable_items
+	return ..()
 
 // =============================================================================
 // Floor repair — find and fix plateless / breached floors
@@ -152,7 +153,8 @@
 	return TRUE
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	return ..(seconds_per_tick, controller, target_key, get_turf_type_filter(), radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = get_turf_type_filter()
+	return ..()
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/open/my_target)
 	var/static/list/blacklist_objects = typecacheof(list(
@@ -203,7 +205,8 @@
 
 /datum/bt_node/ai_behavior/bot_search/valid_girder/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_girder = typecacheof(list(/obj/structure/girder))
-	return ..(seconds_per_tick, controller, target_key, searchable_girder, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = searchable_girder
+	return ..()
 
 /datum/bt_node/ai_behavior/bot_search/valid_girder/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	if(!istype(my_target, /obj/structure/girder))
@@ -249,7 +252,8 @@
 
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_turfs = typecacheof(list(/turf/open))
-	return ..(seconds_per_tick, controller, target_key, searchable_turfs, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = searchable_turfs
+	return ..()
 
 /datum/bt_node/ai_behavior/bot_search/valid_wall_target/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/my_target)
 	if(!istype(my_target, /turf/open))
@@ -286,7 +290,8 @@
 
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille))
-	return ..(seconds_per_tick, controller, target_key, searchable_grilles, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = searchable_grilles
+	return ..()
 
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/structure/my_target)
 	if(!istype(my_target, /obj/structure/grille))
@@ -304,7 +309,8 @@
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))
-	return ..(seconds_per_tick, controller, target_key, searchable_objects, radius, pathing_distance, bypass_add_blacklist, turf_search)
+	looking_for = searchable_objects
+	return ..()
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	if(!istype(my_target, /obj/structure/window))

@@ -187,7 +187,6 @@ def compile_node(src: dict, defines: dict) -> dict:
     # Read structural keys from defines
     desc_type     = defines.get('BT_DESC_TYPE',          'type')
     desc_children = defines.get('BT_DESC_CHILDREN',      'children')
-    desc_args     = defines.get('BT_DESC_BEHAVIOR_ARGS', 'default_behavior_args')
 
     node_type = src.get('type', '')
     out: dict = {}
@@ -214,9 +213,9 @@ def compile_node(src: dict, defines: dict) -> dict:
     for key, val in src.get('config', {}).items():
         out[key] = resolve_value(val, defines)
 
-    # Behavior perform() args — "" means null (DM uses the parameter default)
+    # Positional "args" are no longer supported — behaviors are configured via "vars".
     if 'args' in src:
-        out[desc_args] = [None if (rv := resolve_value(a, defines)) == '' else rv for a in src['args']]
+        raise ValueError(f'"args" is no longer supported in node {node_type!r} — use "vars"')
 
     # Instance vars — "" means omit the key (DM uses the type var default)
     for key, val in src.get('vars', {}).items():

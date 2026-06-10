@@ -24,7 +24,6 @@ multiple modular subtrees with behaviors
 	var/alist/planned_behaviors = alist()
 	var/alist/current_behaviors = alist()
 	var/alist/behavior_cooldowns = alist()
-	var/alist/behavior_args = alist()
 	// DEPRECATED idle behavior — port idle logic to a BT_SELECTOR tail entry.
 	var/datum/idle_behavior/idle_behavior = null
 	///Current status of AI (OFF/ON)
