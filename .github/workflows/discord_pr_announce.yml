@@ -24,8 +24,6 @@ jobs:
           github.event.pull_request.author_association != 'FIRST_TIME_CONTRIBUTOR'
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          title: ${{ github.event.pull_request.user.login }} - ${{ github.event.pull_request.title }}
-          message: GET_ACTION
           include_image: false
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
