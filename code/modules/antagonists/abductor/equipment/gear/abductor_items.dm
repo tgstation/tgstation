@@ -284,15 +284,14 @@
 
 /obj/item/gun/energy/shrink_ray/can_shoot()
     if(!COOLDOWN_FINISHED(src, shrink_cooldown))
-        return FALSE
+    	return FALSE
     return ..()
 
 /obj/item/gun/energy/shrink_ray/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
-    . = ..()
-    if(.)
-        COOLDOWN_START(src, shrink_cooldown, 2 SECONDS)
-        playsound(src, "sound/items/eshield_recharge.ogg", 30, TRUE)
-
+	. = ..()
+	if(.)
+		COOLDOWN_START(src, shrink_cooldown, 2 SECONDS)
+		playsound(src, "sound/items/eshield_recharge.ogg", 30, TRUE)
 
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
