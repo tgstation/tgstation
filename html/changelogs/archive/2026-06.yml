@@ -220,7 +220,38 @@
       medical crutches reduce it by 60%.
   - refactor: Refactor cane and crutch code logic into a modular walking aid component
 2026-06-09:
+  EnterTheJake:
+  - rscadd: Tactical Maps have been added to the game!
+  - rscadd: Nuclear Operatives implants now grant the ability to open a Minimap, this
+      map will display and show the names of various areas of the station, and the
+      positioning of the Nukeops team,borgs,mechs,Cayenne and the nuke disk in real
+      time!
+  - rscadd: Nukie leaders and OW agents can also draw and apply labels to the map.
+  - rscadd: the "Recoinassance Platform" has been added to the Nukie Base, it allows
+      displaying of the Tactical maps while on the Syndicate Base Z level.
+  - map: The briefing room in the NukeOps base has been remapped to better accomodate
+      the new Holographic table.
+  - map: Changed the front shutters on the Syndicate Infiltrator to the more fitting
+      Syndicate Shutters.
   mcbalaam:
   - bugfix: Fixed some of the Big Manipulator behavior such as not working in strict
       mode, putting items inside itself and incorrectly targeting items due to misconfigured
       filters.
+2026-06-10:
+  Ghommie:
+  - balance: You should now be able to walk around while eating about any vending
+      machine snack, no longer just chips and a couple others.
+  SmArtKar:
+  - qol: RND Techweb now displays where a design can be printed and how much it'd
+      cost to print
+  - balance: Tendrils have had their health reduced and attack cooldowns, delays and
+      telegraph durations increased. Damage of some attacks has been slightly increased
+      (by 5) but they can no longer multihit.
+  - bugfix: Tendril spikes now animate properly
+  - image: Tendril shots now have a fancy retraction animation
+  Wisemonster:
+  - spellcheck: The sphere module now clarifies that the modsuit need to be insulated
+      with bileworm skin in order to wade through lava safely.
+  - spellcheck: Corrects sphere modules micromissle to micromissles
+  cacogen:
+  - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
