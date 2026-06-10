@@ -4,8 +4,10 @@
 /datum/bt_node/ai_behavior/find_unwebbed_turf
 	/// How many tiles outward to scan for valid turfs.
 	var/scan_range = 3
+	/// Blackboard key holding/storing the unwebbed turf.
+	var/target_key
 
-/datum/bt_node/ai_behavior/find_unwebbed_turf/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_unwebbed_turf/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/spider = controller.pawn
 	var/atom/current_target = controller.blackboard[target_key]
 	if(current_target && !(locate(/obj/structure/spider/stickyweb) in current_target))

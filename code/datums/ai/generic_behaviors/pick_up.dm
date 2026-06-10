@@ -1,12 +1,16 @@
 /// Picks up a blackboard-keyed item. Pair with move_to_target in the BT tree for navigation.
 /datum/bt_node/ai_behavior/pick_up
 	time_between_perform = 2 SECONDS
+	/// Blackboard key holding the item to pick up.
+	var/target_key
+	/// Whether to drop a currently-held item to free a hand.
+	var/drop_held = TRUE
 
-/datum/bt_node/ai_behavior/pick_up/setup(datum/ai_controller/controller, target_key, drop_held = TRUE)
+/datum/bt_node/ai_behavior/pick_up/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/bt_node/ai_behavior/pick_up/perform(seconds_per_tick, datum/ai_controller/controller, target_key, drop_held = TRUE)
+/datum/bt_node/ai_behavior/pick_up/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target))

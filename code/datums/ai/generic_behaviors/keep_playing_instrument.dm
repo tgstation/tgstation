@@ -2,8 +2,10 @@
 /// Returns SUCCEEDED while the song is playing correctly, FAILED when it needs setup or restart.
 /datum/bt_node/ai_behavior/keep_playing_instrument
 	time_between_perform = 1 SECONDS
+	/// Blackboard key holding the instrument being played.
+	var/song_instrument_key
 
-/datum/bt_node/ai_behavior/keep_playing_instrument/perform(seconds_per_tick, datum/ai_controller/controller, song_instrument_key)
+/datum/bt_node/ai_behavior/keep_playing_instrument/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/item/instrument/song_player = controller.blackboard[song_instrument_key]
 	if(QDELETED(song_player))
 		controller.clear_blackboard_key(song_instrument_key)

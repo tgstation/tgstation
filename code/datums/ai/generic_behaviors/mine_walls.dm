@@ -1,8 +1,10 @@
 /// Searches for a nearby mineral wall the pawn can mine and sets the target key.
 /datum/bt_node/ai_behavior/find_mineral_wall
 	time_between_perform = 2 SECONDS
+	/// Blackboard key to store the found mineral wall in.
+	var/target_key
 
-/datum/bt_node/ai_behavior/find_mineral_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/find_mineral_wall/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living_pawn = controller.pawn
 	for(var/turf/closed/mineral/potential_wall in oview(9, living_pawn))
 		if(!check_if_mineable(controller, potential_wall))
@@ -30,8 +32,10 @@
 /// Mines the mineral wall at target_key when adjacent. Clears the target key on finish.
 /datum/bt_node/ai_behavior/mine_wall
 	time_between_perform = 15 SECONDS
+	/// Blackboard key holding the mineral wall to mine.
+	var/target_key
 
-/datum/bt_node/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/closed/mineral/target = controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -45,6 +49,6 @@
 		living_pawn.manual_emote("sighs...")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/mine_wall/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/mine_wall/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)

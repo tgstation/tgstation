@@ -5,8 +5,14 @@
  */
 /datum/bt_node/ai_behavior/find_and_set
 	time_between_perform = 2 SECONDS
+	/// Blackboard key to store the found atom in.
+	var/set_key
+	/// Typepath (or blackboard key) describing what to look for.
+	var/locate_path
+	/// How far out to search; null re-defaults to SEARCH_TACTIC_DEFAULT_RANGE.
+	var/search_range
 
-/datum/bt_node/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
+/datum/bt_node/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller)
 	if (controller.blackboard_key_exists(set_key))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if(QDELETED(controller.pawn))
@@ -71,7 +77,7 @@
 /datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat
 
 // Gates on hunger level and a random eat cooldown before searching for food
-/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
+/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	if(!isliving(living_pawn) || living_pawn.nutrition > NUTRITION_LEVEL_HUNGRY)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

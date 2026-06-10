@@ -1,8 +1,12 @@
 /// Uses the pawn's held food/drink item on themselves until consumed.
 /datum/bt_node/ai_behavior/consume
 	time_between_perform = 2 SECONDS
+	/// Blackboard key holding the food/drink item to consume.
+	var/target_key
+	/// Blackboard key used to store the next-hunger time once finished.
+	var/hunger_timer_key
 
-/datum/bt_node/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hunger_timer_key)
+/datum/bt_node/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target) || !living_pawn.is_holding(target))
@@ -12,7 +16,7 @@
 
 	return AI_BEHAVIOR_DELAY | (is_content(living_pawn, target) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
-/datum/bt_node/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
+/datum/bt_node/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(!succeeded)
 		return

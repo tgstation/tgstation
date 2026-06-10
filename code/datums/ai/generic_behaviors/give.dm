@@ -1,7 +1,9 @@
 /// gives the pawn's active held item to a blackboard-keyed target.
 /datum/bt_node/ai_behavior/give
+	/// Blackboard key holding the mob to give the held item to.
+	var/target_key
 
-/datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
@@ -56,6 +58,6 @@
 		target.put_in_hands(held_item)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)

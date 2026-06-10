@@ -5,8 +5,10 @@
  * Use move_to_target after this to drag the pulled mob/item to a destination.
  */
 /datum/bt_node/ai_behavior/drag_target
+	/// Blackboard key holding the atom to drag.
+	var/target_key
 
-/datum/bt_node/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/our_mob = controller.pawn
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.anchored || target.pulledby)

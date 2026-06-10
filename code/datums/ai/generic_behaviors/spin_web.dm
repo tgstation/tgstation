@@ -3,18 +3,22 @@
 /// Clears BB_SPIDER_WEB_TARGET on finish.
 /datum/bt_node/ai_behavior/spin_web
 	time_between_perform = 15 SECONDS
+	/// Blackboard key holding the web-spinning action.
+	var/action_key
+	/// Blackboard key holding the target turf to web.
+	var/target_key
 
-/datum/bt_node/ai_behavior/spin_web/setup(datum/ai_controller/controller, action_key, target_key)
+/datum/bt_node/ai_behavior/spin_web/setup(datum/ai_controller/controller)
 	if(!controller.blackboard_key_exists(action_key) || !controller.blackboard_key_exists(target_key))
 		return FALSE
 	return ..()
 
-/datum/bt_node/ai_behavior/spin_web/perform(seconds_per_tick, datum/ai_controller/controller, action_key, target_key)
+/datum/bt_node/ai_behavior/spin_web/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/datum/action/cooldown/web_action = controller.blackboard[action_key]
 	if(web_action?.Trigger())
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-/datum/bt_node/ai_behavior/spin_web/finish_action(datum/ai_controller/controller, succeeded, action_key, target_key)
+/datum/bt_node/ai_behavior/spin_web/finish_action(datum/ai_controller/controller, succeeded)
 	controller.clear_blackboard_key(target_key)
 	return ..()
