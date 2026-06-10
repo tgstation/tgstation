@@ -87,6 +87,6 @@
 		mix[path] = text2num(gas[id])
 
 	for(var/gas_id in mix)
-		moles[gas_id] = mix[gas_id]
+		moles[gas_id] = moles_archive[gas_id] = mix[gas_id]
 
 

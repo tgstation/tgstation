@@ -32,7 +32,10 @@
 	if (cached_moles[/datum/gas/oxygen] < 0.5)
 		return
 
-	var/plas_trit_h2_threshold = (cached_moles[/datum/gas/plasma] > 0.5 || cached_moles[/datum/gas/tritium] > 0.5 || cached_moles[/datum/gas/hydrogen])
+	var/plas_trit_h2_threshold = (\
+		   cached_moles[/datum/gas/plasma] > 0.5\
+		|| cached_moles[/datum/gas/tritium] > 0.5\
+		|| cached_moles[/datum/gas/hydrogen] > 0.5)
 	var/freon_threshold = (cached_moles[/datum/gas/freon] > 0.5)
 	if(active_hotspot)
 		if(soh)
