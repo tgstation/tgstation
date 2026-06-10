@@ -259,3 +259,5 @@
   - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
   georgebothways:
   - bugfix: Trays can now unload eight items onto griddles properly.
+  timothymtorres:
+  - sound: Books now make paper sound when opened
