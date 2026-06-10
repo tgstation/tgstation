@@ -285,8 +285,7 @@
 /obj/item/gun/energy/shrink_ray/can_shoot()
 	if(!COOLDOWN_FINISHED(src, shrink_cooldown))
 		return FALSE
-
-    return ..()
+	return ..()
 
 /obj/item/gun/energy/shrink_ray/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	. = ..()
