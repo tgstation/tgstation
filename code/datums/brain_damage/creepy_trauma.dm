@@ -171,7 +171,7 @@
 /datum/brain_trauma/special/obsessed/proc/do_something_nervous()
 	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(prob(100 * max(1 - (time_spend_creeping / (40 SECONDS)), 0.01) )) // the longer we creep, the less likely we are to fail interactions
+	if(prob(100 * max(1 - (time_spend_creeping / (40 SECONDS)), 0.02) )) // the longer we creep, the less likely we are to fail interactions
 		return
 
 	switch(rand(1, 10))
