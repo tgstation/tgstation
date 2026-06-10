@@ -238,8 +238,15 @@
       mode, putting items inside itself and incorrectly targeting items due to misconfigured
       filters.
 2026-06-10:
+  Ghommie:
+  - balance: You should now be able to walk around while eating about any vending
+      machine snack, no longer just chips and a couple others.
   SmArtKar:
   - qol: RND Techweb now displays where a design can be printed and how much it'd
       cost to print
+  Wisemonster:
+  - spellcheck: The sphere module now clarifies that the modsuit need to be insulated
+      with bileworm skin in order to wade through lava safely.
+  - spellcheck: Corrects sphere modules micromissle to micromissles
   cacogen:
   - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
