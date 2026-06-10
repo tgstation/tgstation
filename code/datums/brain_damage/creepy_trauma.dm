@@ -114,7 +114,7 @@
 	obsession = null
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
-	if(viewing && !witnesed_death && prob(12))
+	if(viewing && !witnessed_death && prob(12))
 		addtimer(CALLBACK(src, PROC_REF(do_something_nervous)), rand(1 SECONDS, 3 SECONDS))
 
 /// Singal proc for [COMSIG_CARBON_HELPED], when our obsessed helps (hugs) our obsession, increases hug count
