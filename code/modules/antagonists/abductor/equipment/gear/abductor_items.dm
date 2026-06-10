@@ -280,11 +280,11 @@
 	user.gib(DROP_ALL_REMAINS)
 
 /obj/item/gun/energy/shrink_ray
-    COOLDOWN_DECLARE(shrink_cooldown)
+	COOLDOWN_DECLARE(shrink_cooldown)
 
 /obj/item/gun/energy/shrink_ray/can_shoot()
 	if(!COOLDOWN_FINISHED(src, shrink_cooldown))
-    	return FALSE
+		return FALSE
 
     return ..()
 
