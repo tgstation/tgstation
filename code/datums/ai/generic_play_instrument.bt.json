@@ -1,5 +1,11 @@
 {
 	"dm_type": "/datum/bt_node/subtree/generic_play_instrument",
+	"bindings": {
+		"bulu13xf": {
+			"label": "volume",
+			"default": "50"
+		}
+	},
 	"type": "selector",
 	"children": [
 		{
@@ -39,7 +45,10 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/play_instrument",
-								"args": ["BB_SONG_INSTRUMENT"]
+								"args": ["BB_SONG_INSTRUMENT"],
+								"vars": {
+									"volume": "$bulu13xf"
+								}
 							}
 						]
 					}

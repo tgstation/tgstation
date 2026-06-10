@@ -122,5 +122,18 @@
 
 
 
+/datum/bt_node/subtree/generic_mook_behavior
+	behavior_tree_json = "generic_mook_behavior.bt.json"
+
+/datum/bt_node/subtree/worker_find_targets
+
+/datum/bt_node/subtree/bard_play_music
+	behavior_tree_json = "bard_play_music.bt.json"
+
+/datum/bt_node/subtree/bard_find_targets
+	behavior_tree_json = "bard_find_targets.bt.json"
+
 /datum/bt_node/subtree/go_mining
 	behavior_tree_json = "go_mining.bt.json"
+
+

@@ -1,5 +1,15 @@
 {
-	"dm_type": "/datum/ai_controller/basic_controller/mook/bard",
+	"dm_type": "/datum/bt_node/subtree/generic_mook_behavior",
+	"bindings": {
+		"b1kiiayf": {
+			"label": "Idle Behavior",
+			"default": "/datum/bt_node/subtree"
+		},
+		"b0ymbjo1": {
+			"label": "Targetting Behavior",
+			"default": "/datum/bt_node/subtree"
+		}
+	},
 	"type": "selector",
 	"children": [
 		{
@@ -124,47 +134,8 @@
 							}
 						},
 						{
-							"type": "parallel",
-							"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-							"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-							"repeat_secondary": true,
-							"finish_on_primary": true,
-							"children": [
-								{
-									"type": "subtree",
-									"subtype": "/datum/bt_node/subtree/generic_play_instrument",
-									"bindings": {
-										"bulu13xf": "75"
-									}
-								},
-								{
-									"type": "selector",
-									"children": [
-										{
-											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/bb_key_set",
-											"config": {
-												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-												"key": "BB_MOOK_MUSIC_AUDIENCE"
-											},
-											"child": {
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_MOOK_MUSIC_AUDIENCE", 2, false]
-											}
-										},
-										{
-											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
-											"args": [],
-											"vars": {
-												"target_key": "BB_HOME_VILLAGE",
-												"walk_chance": 75
-											}
-										}
-									]
-								}
-							]
+							"type": "subtree",
+							"subtype": "$b1kiiayf"
 						}
 					]
 				},
@@ -217,6 +188,10 @@
 							}
 						}
 					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "$b0ymbjo1"
 				}
 			]
 		}

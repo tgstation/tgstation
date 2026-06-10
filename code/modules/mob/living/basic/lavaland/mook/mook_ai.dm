@@ -242,6 +242,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
+	behavior_tree_json = "support.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
