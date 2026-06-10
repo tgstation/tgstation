@@ -244,6 +244,11 @@
   SmArtKar:
   - qol: RND Techweb now displays where a design can be printed and how much it'd
       cost to print
+  - balance: Tendrils have had their health reduced and attack cooldowns, delays and
+      telegraph durations increased. Damage of some attacks has been slightly increased
+      (by 5) but they can no longer multihit.
+  - bugfix: Tendril spikes now animate properly
+  - image: Tendril shots now have a fancy retraction animation
   Wisemonster:
   - spellcheck: The sphere module now clarifies that the modsuit need to be insulated
       with bileworm skin in order to wade through lava safely.
