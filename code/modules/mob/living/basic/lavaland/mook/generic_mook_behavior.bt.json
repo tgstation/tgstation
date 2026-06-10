@@ -10,7 +10,7 @@
 			"default": "/datum/bt_node/subtree"
 		},
 		"bk7ixti3": {
-			"label": "high_priority_behavior",
+			"label": "High Priority Behavior",
 			"default": "/datum/bt_node/subtree"
 		}
 	},

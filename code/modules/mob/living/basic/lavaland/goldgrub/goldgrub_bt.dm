@@ -72,9 +72,8 @@
 	phased.forceMove(selected_turf)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
 
-/// Finds an ore pile the goldgrub can eat. Sets BB_ORE_TARGET. Skips forbidden types and fetch targets.
+/// Finds an ore pile. Sets BB_ORE_TARGET. Skips forbidden types and fetch targets.
 /datum/bt_node/ai_behavior/find_ore
 	time_between_perform = 5 SECONDS
 	var/range = 9

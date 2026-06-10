@@ -249,6 +249,9 @@
 #define BB_COMMAND_COOLDOWN "command cooldown"
 ///Things to light on fire
 #define BB_BONFIRE_TARGETS "bonfire targets"
+///Mook mining cooldown
+#define BB_MOOK_MINING_COOLDOWN "mining cooldown"
+
 
 //gutlunch keys
 ///the trough we will eat from
