@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher,
 	/obj/item/gun/ballistic/automatic/pistol/deagle,
 	/obj/item/gun/ballistic/automatic/pistol/deagle/regal,
-	/obj/item/gun/ballistic/automatic/pistol/doorhickey,
+	/obj/item/gun/ballistic/automatic/pistol/doohickey,
 	/obj/item/gun/ballistic/automatic/pistol/m1911,
 	/obj/item/gun/ballistic/automatic/proto/unrestricted,
 	/obj/item/gun/ballistic/automatic/smartgun,

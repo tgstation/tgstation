@@ -167,7 +167,7 @@
 	/// Return to skip oxyloss and similar effects from blood level
 	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
 
-/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced): (var/obj/item/bodypart/limping_leg)
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
 
