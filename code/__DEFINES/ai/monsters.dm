@@ -245,6 +245,10 @@
 #define BB_MOOK_COMMANDS "BB_mook_commands"
 /// list of things we can heal
 #define BB_MOOK_HEAL_TARGETS "heal targets"
+/// Cooldown on giving commands
+#define BB_COMMAND_COOLDOWN "command cooldown"
+///Things to light on fire
+#define BB_BONFIRE_TARGETS "bonfire targets"
 
 //gutlunch keys
 ///the trough we will eat from

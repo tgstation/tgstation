@@ -13,6 +13,9 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
+	/// TRUE when the last perform() failed and we are waiting out next_perform_time.
+	/// While set, tick() reports BT_FAILURE instead of BT_RUNNING so parent selectors can try other branches.
+	var/failed_last_perform = FALSE
 
 /datum/bt_node/ai_behavior/has_active_descendants()
 	return running
@@ -49,6 +52,8 @@
  */
 /datum/bt_node/ai_behavior/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(next_perform_time > world.time)
+		if(!running && failed_last_perform)
+			return BT_FAILURE
 		controller.active_execution_index = execution_index
 		return BT_RUNNING
 
@@ -75,10 +80,12 @@
 		next_perform_time = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
+		failed_last_perform = FALSE
 		_finish_behavior(controller, TRUE)
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
+		failed_last_perform = TRUE
 		_finish_behavior(controller, FALSE)
 		return BT_FAILURE
 	controller.active_execution_index = execution_index

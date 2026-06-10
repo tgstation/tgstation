@@ -32,7 +32,10 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-						"args": ["BB_MOOK_TRIBAL_CHIEF"]
+						"args": ["BB_MOOK_TRIBAL_CHIEF"],
+						"vars": {
+							"long_range_friendship": true
+						}
 					}
 				]
 			}

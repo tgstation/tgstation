@@ -322,9 +322,10 @@
 				failed++
 
 	if(finish_on_primary && primary_result != BT_RUNNING)
+		// Secondaries may be mid-RUNNING here, so the reset must recurse to cancel any deeper active behaviors.
 		for(var/i in 2 to length(children))
 			var/datum/bt_node/child = children[i]
-			child.reset_tick_state()
+			child.reset_subtree_tick_states()
 		if(tick_rate)
 			tick_cooldown = world.time
 			tick_result = primary_result

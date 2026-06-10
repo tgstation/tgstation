@@ -3,6 +3,22 @@
 	"type": "selector",
 	"children": [
 		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"invert": true,
+				"key": "BB_MATERIAL_STAND_TARGET"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+				"args": [
+					"BB_MATERIAL_STAND_TARGET",
+					"/obj/structure/ore_container/material_stand"
+				]
+			}
+		},
+		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
 			"args": [
@@ -19,6 +35,35 @@
 				"BB_TARGETING_STRATEGY",
 				"BB_CURRENT_TARGET_HIDING_LOCATION"
 			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"invert": true,
+				"key": "BB_MOOK_TRIBAL_CHIEF"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
+						"args": [
+							"BB_MOOK_TRIBAL_CHIEF",
+							"/mob/living/basic/mining/mook/worker/tribal_chief"
+						]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
+						"args": ["BB_MOOK_TRIBAL_CHIEF"],
+						"vars": {
+							"long_range_friendship": true
+						}
+					}
+				]
+			}
 		}
 	]
 }

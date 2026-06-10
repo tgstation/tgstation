@@ -1,11 +1,12 @@
 /datum/bt_node/ai_behavior/befriend_target
+	var/long_range_friendship = FALSE
 
 /datum/bt_node/ai_behavior/befriend_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, befriend_message)
 	var/mob/living/living_pawn = controller.pawn
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(get_dist(living_pawn, living_target) > 1)
+	if(!long_range_friendship && get_dist(living_pawn, living_target) > 1)
 		return AI_BEHAVIOR_INSTANT
 	living_pawn.befriend(living_target)
 	var/befriend_text = controller.blackboard[befriend_message]

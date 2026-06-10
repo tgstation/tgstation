@@ -32,8 +32,7 @@
 ///Wander in a random direction to find ore
 /datum/bt_node/ai_behavior/calculate_wander_destination
 	/// Blackboard key holding the anchor atom to wander away from.
-	var/anchor_key = BB_HOME_VILLAGE
-	/// Blackboard key to write the chosen turf into.
+	var/anchor_key = BB_HOME_VILLAGE/// Blackboard key to write the chosen turf into.
 	var/destination_key = BB_WANDER_DESTINATION
 	/// How far we try to wander from the anchor.
 	var/wander_distance = 9

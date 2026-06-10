@@ -41,6 +41,15 @@
 	tick_cooldown = 0
 	tick_result = BT_FAILURE
 
+/// Resets this node and all of its descendants, cancelling any behaviors still running in the subtree.
+/datum/bt_node/proc/reset_subtree_tick_states()
+	var/list/to_visit = list(src)
+	var/index = 1
+	while(index <= length(to_visit))
+		var/datum/bt_node/node = to_visit[index++]
+		node.reset_tick_state()
+		node.collect_reset_children(to_visit)
+
 /**
  * Assigns pre-order depth-first execution indices to this node and its subtree.
  * Called once per controller tree by finalize_tree().

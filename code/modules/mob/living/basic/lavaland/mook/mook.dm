@@ -281,10 +281,12 @@
 	var/static/mutable_appearance/chief_active = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_leap")
 	///overlay in our warmup state
 	var/static/mutable_appearance/chief_warmup = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_warmup")
+	var/static/list/bonfire_targets = list(/obj/structure/bonfire)
 
 /mob/living/basic/mining/mook/worker/tribal_chief/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	ai_controller?.set_blackboard_key(BB_BONFIRE_TARGETS, typecacheof(bonfire_targets))
 
 /mob/living/basic/mining/mook/worker/tribal_chief/update_overlays()
 	. = ..()

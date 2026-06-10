@@ -1,5 +1,55 @@
 {
 	"dm_type": "/datum/bt_node/subtree/chief_issue_commands",
-	"type": "selector",
-	"children": []
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cooldown",
+	"config": {
+		"cooldown_key": "BB_COMMAND_COOLDOWN",
+		"cooldown_duration": "10 SECONDS",
+		"lock_on_succeed": true
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/bb_key_set",
+				"config": {
+					"observer_abort": "BT_ABORT_BOTH",
+					"key": "BB_CURRENT_TARGET"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/issue_pet_command",
+					"args": [],
+					"vars": {
+						"command_list_key": "BB_MOOK_COMMANDS",
+						"command_type": "/datum/pet_command/attack",
+						"target_key": "BB_CURRENT_TARGET",
+						"commandable_mob_type": "/mob/living/basic/mining/mook",
+						"command_distance": 7
+					}
+				}
+			},
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/bb_key_set",
+				"config": {
+					"observer_abort": "BT_ABORT_BOTH",
+					"key": "BB_ORE_TARGET"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/issue_pet_command",
+					"args": [],
+					"vars": {
+						"command_list_key": "BB_MOOK_COMMANDS",
+						"command_type": "/datum/pet_command/fetch",
+						"target_key": "BB_ORE_TARGET",
+						"commandable_mob_type": "/mob/living/basic/mining/mook",
+						"command_distance": 7
+					}
+				}
+			}
+		]
+	}
 }

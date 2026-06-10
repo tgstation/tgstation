@@ -13,6 +13,57 @@
 				"behavior": "/datum/bt_node/ai_behavior/find_deposit_position",
 				"args": []
 			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+			"args": [
+				"BB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/update_targets",
+			"args": [
+				"BB_CURRENT_TARGET",
+				"BB_TARGETING_STRATEGY",
+				"BB_CURRENT_TARGET_HIDING_LOCATION"
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"invert": true,
+				"key": "BB_SIMPLE_CARRY_ITEM"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_ore",
+				"args": [],
+				"vars": {
+					"time_between_perform": "1 SECONDS",
+					"range": 1
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"config": {
+				"invert": true,
+				"key": "BB_MATERIAL_STAND_TARGET"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+				"args": [
+					"BB_MATERIAL_STAND_TARGET",
+					"/obj/structure/ore_container/material_stand"
+				]
+			}
 		}
 	]
 }

@@ -33,13 +33,13 @@
 								},
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
-									"args": [],
-									"vars": {
-										"target_key": "BB_MATERIAL_STAND_TARGET",
-										"always_reset_target": true,
-										"behavior_combat_mode": false
-									}
+									"behavior": "/datum/bt_node/ai_behavior/clear_key",
+									"args": ["BB_DEPOSIT_POSITION"]
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+									"args": ["BB_MATERIAL_STAND_TARGET"]
 								}
 							]
 						}

@@ -11,6 +11,9 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if(QDELETED(controller.pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	// Trees may omit the range arg, which would pass an explicit null past search_tactic()'s own default
+	if(isnull(search_range))
+		search_range = SEARCH_TACTIC_DEFAULT_RANGE
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(isnull(find_this_thing))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

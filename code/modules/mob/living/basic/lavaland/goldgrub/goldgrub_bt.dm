@@ -77,19 +77,18 @@
 /// Finds an ore pile the goldgrub can eat. Sets BB_ORE_TARGET. Skips forbidden types and fetch targets.
 /datum/bt_node/ai_behavior/find_ore
 	time_between_perform = 5 SECONDS
+	var/range = 9
 
 /datum/bt_node/ai_behavior/find_ore/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(!SPT_PROB(90, seconds_per_tick))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/grub_pawn = controller.pawn
 	var/list/forbidden = controller.blackboard[BB_ORE_IGNORE_TYPES]
 	var/pet_target = controller.blackboard[BB_CURRENT_PET_TARGET]
-	for(var/obj/item/stack/ore/candidate in oview(9, grub_pawn))
+	for(var/obj/item/stack/ore/candidate in oview(range, grub_pawn))
 		if(is_type_in_list(candidate, forbidden) || !isturf(candidate.loc))
 			continue
 		if(candidate == pet_target)
 			continue
-		if(!can_see(grub_pawn, candidate, 9))
+		if(!can_see(grub_pawn, candidate, range))
 			continue
 		controller.set_blackboard_key(BB_ORE_TARGET, candidate)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
