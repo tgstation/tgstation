@@ -121,7 +121,7 @@
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
 /// If uncommented, Dreamluau will be fully disabled.
-// #define DISABLE_DREAMLUAU
+#define DISABLE_DREAMLUAU
 
 // OpenDream currently doesn't support byondapi, so automatically disable it on OD,
 // unless CIBUILDING is defined - we still want to lint dreamluau-related code.
