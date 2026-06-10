@@ -32,7 +32,12 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_CURRENT_TARGET", 1, true, "/datum/ai_movement/jps"]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"required_dist": 1,
+								"finish_on_arrival": true,
+								"movement_type": "/datum/ai_movement/jps"
+							}
 						},
 						{
 							"type": "selector",
@@ -47,7 +52,9 @@
 									"child": {
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_interact",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								},
 								{
@@ -60,7 +67,10 @@
 									"child": {
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/build_girder",
-										"args": ["BB_GIRDER_BUILD_ABILITY", "BB_CURRENT_TARGET"]
+										"vars": {
+											"ability_key": "BB_GIRDER_BUILD_ABILITY",
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								}
 							]

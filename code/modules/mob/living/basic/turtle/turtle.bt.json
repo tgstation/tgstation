@@ -30,7 +30,9 @@
 							"child": {
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-								"args": ["BB_GENERIC_ACTION"]
+								"vars": {
+									"ability_key": "BB_GENERIC_ACTION"
+								}
 							}
 						},
 						{
@@ -56,17 +58,22 @@
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-														"args": ["BB_TURTLE_HEADBUTT_VICTIM", 1]
+														"vars": {
+															"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
+															"required_dist": 1
+														}
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-														"args": ["BB_TURTLE_HEADBUTT_COOLDOWN", "1 MINUTES"]
+														"vars": {
+															"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN",
+															"cooldown_duration": "1 MINUTES"
+														}
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/hunt_target/headbutt_leg",
-														"args": [],
 														"vars": {
 															"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
 															"always_reset_target": true
@@ -88,17 +95,22 @@
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-														"args": ["BB_TURTLE_FLORA_TARGET", 1]
+														"vars": {
+															"target_key": "BB_TURTLE_FLORA_TARGET",
+															"required_dist": 1
+														}
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-														"args": ["BB_TURTLE_FLORA_COOLDOWN", "1 MINUTES"]
+														"vars": {
+															"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN",
+															"cooldown_duration": "1 MINUTES"
+														}
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/hunt_target/sniff_flora",
-														"args": [],
 														"vars": {
 															"target_key": "BB_TURTLE_FLORA_TARGET",
 															"always_reset_target": true
@@ -115,7 +127,6 @@
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-													"args": [],
 													"vars": {
 														"walk_chance": 10
 													}
@@ -133,10 +144,10 @@
 									"child": {
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/human_to_headbutt",
-										"args": [
-											"BB_TURTLE_HEADBUTT_VICTIM",
-											"BB_TURTLE_HEADBUTT_TYPES"
-										]
+										"vars": {
+											"set_key": "BB_TURTLE_HEADBUTT_VICTIM",
+											"locate_path": "BB_TURTLE_HEADBUTT_TYPES"
+										}
 									}
 								},
 								{
@@ -148,7 +159,10 @@
 									"child": {
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/sniff_flora",
-										"args": ["BB_TURTLE_FLORA_TARGET", "BB_TURTLE_FLORA_TYPES"]
+										"vars": {
+											"set_key": "BB_TURTLE_FLORA_TARGET",
+											"locate_path": "BB_TURTLE_FLORA_TYPES"
+										}
 									}
 								}
 							]
@@ -158,14 +172,16 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
-					"args": ["BB_TARGET_FOOD", "BB_BASIC_FOODS"]
+					"vars": {
+						"set_key": "BB_TARGET_FOOD",
+						"locate_path": "BB_BASIC_FOODS"
+					}
 				}
 			]
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/express_happiness",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/express_happiness"
 		}
 	]
 }

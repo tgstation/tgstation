@@ -8,8 +8,7 @@
 			"config": {},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/exit_vent",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/exit_vent"
 			}
 		},
 		{
@@ -32,12 +31,13 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_ENTRY_VENT_TARGET"]
+							"vars": {
+								"target_key": "BB_ENTRY_VENT_TARGET"
+							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/enter_vent",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/enter_vent"
 						}
 					]
 				}

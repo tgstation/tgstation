@@ -9,6 +9,9 @@
 	"child": {
 		"type": "leaf",
 		"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
-		"args": ["BB_TARGET_FOOD", "BB_BASIC_FOODS"]
+		"vars": {
+			"set_key": "BB_TARGET_FOOD",
+			"locate_path": "BB_BASIC_FOODS"
+		}
 	}
 }

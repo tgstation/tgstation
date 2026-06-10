@@ -24,12 +24,14 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-								"args": ["BB_TARGETED_ACTION", "BB_CURRENT_PET_TARGET"]
+								"vars": {
+									"ability_key": "BB_TARGETED_ACTION",
+									"target_key": "BB_CURRENT_PET_TARGET"
+								}
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
 							}
 						]
 					}
@@ -38,7 +40,11 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_CURRENT_PET_TARGET", 1, false]
+				"vars": {
+					"target_key": "BB_CURRENT_PET_TARGET",
+					"required_dist": 1,
+					"finish_on_arrival": false
+				}
 			}
 		]
 	}

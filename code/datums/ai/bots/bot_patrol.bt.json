@@ -26,13 +26,17 @@
 							"child": {
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/find_next_beacon_target",
-								"args": ["BB_BEACON_TARGET"]
+								"vars": {
+									"target_key": "BB_BEACON_TARGET"
+								}
 							}
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_first_beacon_target",
-							"args": ["BB_BEACON_TARGET"]
+							"vars": {
+								"target_key": "BB_BEACON_TARGET"
+							}
 						}
 					]
 				},
@@ -48,12 +52,18 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_BEACON_TARGET", 0, true]
+								"vars": {
+									"target_key": "BB_BEACON_TARGET",
+									"required_dist": 0,
+									"finish_on_arrival": true
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/arrive_at_beacon",
-								"args": ["BB_BEACON_TARGET"]
+								"vars": {
+									"target_key": "BB_BEACON_TARGET"
+								}
 							}
 						]
 					}

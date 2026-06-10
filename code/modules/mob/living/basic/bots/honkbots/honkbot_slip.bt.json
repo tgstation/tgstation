@@ -23,17 +23,19 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": [
-							"BB_SLIP_TARGET",
-							1,
-							true,
-							"/datum/ai_movement/basic_avoidance"
-						]
+						"vars": {
+							"target_key": "BB_SLIP_TARGET",
+							"required_dist": 1,
+							"finish_on_arrival": true,
+							"movement_type": "/datum/ai_movement/basic_avoidance"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/grab_target",
-						"args": ["BB_SLIP_TARGET"]
+						"vars": {
+							"target_key": "BB_SLIP_TARGET"
+						}
 					},
 					{
 						"type": "decorator",
@@ -45,23 +47,27 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": [
-								"BB_SLIPPERY_TARGET",
-								0,
-								true,
-								"/datum/ai_movement/basic_avoidance"
-							]
+							"vars": {
+								"target_key": "BB_SLIPPERY_TARGET",
+								"required_dist": 0,
+								"finish_on_arrival": true,
+								"movement_type": "/datum/ai_movement/basic_avoidance"
+							}
 						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/release_and_slip",
-						"args": ["BB_SLIP_TARGET"]
+						"vars": {
+							"victim_key": "BB_SLIP_TARGET"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/perform_emote",
-						"args": ["flip"]
+						"vars": {
+							"emote": "flip"
+						}
 					}
 				]
 			}

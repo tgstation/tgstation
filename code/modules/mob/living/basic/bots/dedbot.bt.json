@@ -29,17 +29,20 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": [
-											"BB_CURRENT_TARGET",
-											1,
-											true,
-											"/datum/ai_movement/basic_avoidance"
-										]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": true,
+											"movement_type": "/datum/ai_movement/basic_avoidance"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/melee",
-										"args": ["BB_DEDBOT_SLASH", "BB_CURRENT_TARGET"]
+										"vars": {
+											"ability_key": "BB_DEDBOT_SLASH",
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								]
 							}
@@ -57,11 +60,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				}
 			]
 		}

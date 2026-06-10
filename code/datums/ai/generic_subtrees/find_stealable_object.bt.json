@@ -17,14 +17,12 @@
 						},
 						"child": {
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/stop_dragging",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/stop_dragging"
 						}
 					},
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/succeed",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/succeed"
 					}
 				]
 			}
@@ -45,7 +43,10 @@
 				"child": {
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-					"args": ["BB_WANTS_TO_COMMIT_THEFT", true]
+					"vars": {
+						"target_key": "BB_WANTS_TO_COMMIT_THEFT",
+						"value": true
+					}
 				}
 			}
 		},
@@ -58,8 +59,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/succeed",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/succeed"
 			}
 		},
 		{
@@ -68,7 +68,6 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_stealable",
-					"args": [],
 					"vars": {
 						"target_key": "BB_ITEM_TO_STEAL"
 					}
@@ -76,7 +75,10 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-					"args": ["BB_WANTS_TO_COMMIT_THEFT", false]
+					"vars": {
+						"target_key": "BB_WANTS_TO_COMMIT_THEFT",
+						"value": false
+					}
 				}
 			]
 		}

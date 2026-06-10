@@ -24,12 +24,19 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_FRIENDLY_CULTIST", 1, false]
+						"vars": {
+							"target_key": "BB_FRIENDLY_CULTIST",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-						"args": ["BB_FRIENDLY_CULTIST", "BB_FRIENDLY_MESSAGE"]
+						"vars": {
+							"target_key": "BB_FRIENDLY_CULTIST",
+							"befriend_message": "BB_FRIENDLY_MESSAGE"
+						}
 					}
 				]
 			}
@@ -47,12 +54,15 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_OCCUPIED_RUNE", 1, false]
+						"vars": {
+							"target_key": "BB_OCCUPIED_RUNE",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
 					},
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/activate_rune",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/activate_rune"
 					}
 				]
 			}
@@ -70,22 +80,34 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_DEAD_CULTIST", 1, false]
+						"vars": {
+							"target_key": "BB_DEAD_CULTIST",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/drag_target",
-						"args": ["BB_DEAD_CULTIST"]
+						"vars": {
+							"target_key": "BB_DEAD_CULTIST"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_NEARBY_RUNE", 0, false]
+						"vars": {
+							"target_key": "BB_NEARBY_RUNE",
+							"required_dist": 0,
+							"finish_on_arrival": false
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/clear_key",
-						"args": ["BB_DEAD_CULTIST"]
+						"vars": {
+							"key": "BB_DEAD_CULTIST"
+						}
 					}
 				]
 			}
@@ -123,18 +145,22 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-												"args": [
-													"BB_CURRENT_TARGET",
-													"BB_TARGETING_STRATEGY",
-													"BB_CURRENT_TARGET_HIDING_LOCATION"
-												]
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+												}
 											}
 										]
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_CURRENT_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									}
 								]
 							}
@@ -146,8 +172,7 @@
 							"children": [
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 								}
 							]
 						}
@@ -159,26 +184,23 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/update_targets",
-							"args": [
-								"BB_CURRENT_TARGET",
-								"BB_TARGETING_STRATEGY",
-								"BB_CURRENT_TARGET_HIDING_LOCATION"
-							]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_friendly_cultist",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_friendly_cultist"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_occupied_rune",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_occupied_rune"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_dead_cultist",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_dead_cultist"
 						}
 					]
 				}

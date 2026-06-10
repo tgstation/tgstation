@@ -14,18 +14,19 @@
 				"children": [
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_exit_portal",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_exit_portal"
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_CUSTOMER_EXIT_PORTAL", 0]
+						"vars": {
+							"target_key": "BB_CUSTOMER_EXIT_PORTAL",
+							"required_dist": 0
+						}
 					},
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/robot_customer/leave_venue",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/robot_customer/leave_venue"
 					}
 				]
 			}
@@ -43,12 +44,17 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_CUSTOMER_CURRENT_TARGET", 1]
+						"vars": {
+							"target_key": "BB_CUSTOMER_CURRENT_TARGET",
+							"required_dist": 1
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/robot_customer/break_spine_attack",
-						"args": ["BB_CUSTOMER_CURRENT_TARGET"]
+						"vars": {
+							"target_key": "BB_CUSTOMER_CURRENT_TARGET"
+						}
 					}
 				]
 			}
@@ -70,8 +76,7 @@
 				},
 				"child": {
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_seat",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_seat"
 				}
 			}
 		},
@@ -87,7 +92,10 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_CUSTOMER_MY_SEAT", 0]
+						"vars": {
+							"target_key": "BB_CUSTOMER_MY_SEAT",
+							"required_dist": 0
+						}
 					},
 					{
 						"type": "selector",
@@ -101,14 +109,12 @@
 								},
 								"child": {
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/robot_customer/order_food",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/robot_customer/order_food"
 								}
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/robot_customer/wait_for_food",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/robot_customer/wait_for_food"
 							}
 						]
 					}

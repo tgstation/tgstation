@@ -12,7 +12,11 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_eat",
-				"args": ["bb_food_target", "/obj/item", 2]
+				"vars": {
+					"set_key": "bb_food_target",
+					"locate_path": "/obj/item",
+					"search_range": 2
+				}
 			}
 		},
 		{
@@ -27,7 +31,10 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/consume",
-						"args": ["bb_food_target", "BB_NEXT_HUNGRY"]
+						"vars": {
+							"target_key": "bb_food_target",
+							"hunger_timer_key": "BB_NEXT_HUNGRY"
+						}
 					},
 					{
 						"type": "sequence",
@@ -35,12 +42,19 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["bb_food_target", 1, true]
+								"vars": {
+									"target_key": "bb_food_target",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/pick_up",
-								"args": ["bb_food_target", true]
+								"vars": {
+									"target_key": "bb_food_target",
+									"drop_held": true
+								}
 							}
 						]
 					}

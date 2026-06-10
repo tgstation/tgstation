@@ -32,15 +32,20 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_VIBEBOT_PARTY_TARGET", 1, true, ""]
+										"vars": {
+											"target_key": "BB_VIBEBOT_PARTY_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": true,
+											"movement_type": null
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/vibebot_party",
-										"args": [
-											"BB_VIBEBOT_PARTY_ABILITY",
-											"BB_VIBEBOT_PARTY_TARGET"
-										]
+										"vars": {
+											"ability_key": "BB_VIBEBOT_PARTY_ABILITY",
+											"target_key": "BB_VIBEBOT_PARTY_TARGET"
+										}
 									}
 								]
 							}
@@ -54,7 +59,9 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_party_friends",
-					"args": ["BB_VIBEBOT_PARTY_TARGET"]
+					"vars": {
+						"target_key": "BB_VIBEBOT_PARTY_TARGET"
+					}
 				}
 			]
 		}

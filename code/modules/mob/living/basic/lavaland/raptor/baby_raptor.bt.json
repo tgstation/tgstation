@@ -8,8 +8,7 @@
 			"config": {},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/exit_vent",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/exit_vent"
 			}
 		},
 		{
@@ -23,8 +22,7 @@
 				"children": [
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/enter_vent",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/enter_vent"
 					}
 				]
 			}

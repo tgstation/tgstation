@@ -8,8 +8,7 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/dig_away_from_danger",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/dig_away_from_danger"
 		},
 		{
 			"type": "parallel",
@@ -47,12 +46,18 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_ORE_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_ORE_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"args": ["BB_ORE_TARGET"]
+										"vars": {
+											"target_key": "BB_ORE_TARGET"
+										}
 									}
 								]
 							}
@@ -67,7 +72,11 @@
 							"child": {
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_FOUND_MOM", 1, true]
+								"vars": {
+									"target_key": "BB_FOUND_MOM",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
 							}
 						},
 						{
@@ -77,8 +86,7 @@
 							"children": [
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 								}
 							]
 						}
@@ -90,21 +98,23 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/update_targets",
-							"args": [
-								"BB_CURRENT_TARGET",
-								"BB_TARGETING_STRATEGY",
-								"BB_CURRENT_TARGET_HIDING_LOCATION"
-							]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_ore",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_ore"
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_parent",
-							"args": ["BB_FIND_MOM_TYPES", "BB_FOUND_MOM"]
+							"vars": {
+								"mom_types_key": "BB_FIND_MOM_TYPES",
+								"found_mom_key": "BB_FOUND_MOM"
+							}
 						}
 					]
 				}

@@ -39,23 +39,24 @@
 										"children": [
 											{
 												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/announce_fire_detected",
-												"args": []
+												"behavior": "/datum/bt_node/ai_behavior/announce_fire_detected"
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": [
-													"BB_CURRENT_TARGET",
-													1,
-													true,
-													"/datum/ai_movement/basic_avoidance"
-												]
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"required_dist": 1,
+													"finish_on_arrival": true,
+													"movement_type": "/datum/ai_movement/basic_avoidance"
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/bot_interact/extinguish",
-												"args": ["BB_CURRENT_TARGET"]
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET"
+												}
 											}
 										]
 									}
@@ -79,12 +80,16 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/find_person_on_fire",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/search_burning_turfs",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								]
 							}
@@ -105,8 +110,7 @@
 				"children": [
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/handle_firebot_speech",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/handle_firebot_speech"
 					},
 					{
 						"type": "subtree",

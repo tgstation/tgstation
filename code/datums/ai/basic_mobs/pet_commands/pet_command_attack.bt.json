@@ -24,18 +24,22 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-								"args": [
-									"BB_CURRENT_PET_TARGET",
-									"BB_PET_TARGETING_STRATEGY",
-									"BB_PET_ATTACK_HIDING_LOCATION"
-								]
+								"vars": {
+									"target_key": "BB_CURRENT_PET_TARGET",
+									"targeting_strategy_key": "BB_PET_TARGETING_STRATEGY",
+									"hiding_location_key": "BB_PET_ATTACK_HIDING_LOCATION"
+								}
 							}
 						]
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_CURRENT_PET_TARGET", 1, false]
+						"vars": {
+							"target_key": "BB_CURRENT_PET_TARGET",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
 					}
 				]
 			}

@@ -7,8 +7,7 @@
 			"children": [
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/forget_failed_fetches",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/forget_failed_fetches"
 				},
 				{
 					"type": "decorator",
@@ -23,17 +22,26 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_CURRENT_PET_TARGET", 1, true]
+								"vars": {
+									"target_key": "BB_CURRENT_PET_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/fetch_seek",
-								"args": ["BB_CURRENT_PET_TARGET"]
+								"vars": {
+									"target_key": "BB_CURRENT_PET_TARGET"
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
-								"args": ["BB_CURRENT_PET_TARGET", "BB_SIMPLE_CARRY_ITEM"]
+								"vars": {
+									"target_key": "BB_CURRENT_PET_TARGET",
+									"storage_key": "BB_SIMPLE_CARRY_ITEM"
+								}
 							}
 						]
 					}
@@ -60,17 +68,23 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_FETCH_DELIVER_TO", 1, true]
+							"vars": {
+								"target_key": "BB_FETCH_DELIVER_TO",
+								"required_dist": 1,
+								"finish_on_arrival": true
+							}
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/pass_item_virtual",
-							"args": ["BB_FETCH_DELIVER_TO", "BB_SIMPLE_CARRY_ITEM"]
+							"vars": {
+								"delivery_key": "BB_FETCH_DELIVER_TO",
+								"storage_key": "BB_SIMPLE_CARRY_ITEM"
+							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
 						}
 					]
 				}
@@ -86,8 +100,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/wait",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/wait"
 			}
 		}
 	]

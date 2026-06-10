@@ -18,8 +18,7 @@
 			"children": [
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 				}
 			]
 		}

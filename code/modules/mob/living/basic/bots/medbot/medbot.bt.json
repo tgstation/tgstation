@@ -57,7 +57,9 @@
 							"child": {
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/handle_medbot_speech",
-								"args": ["BB_ANNOUNCE_ABILITY"]
+								"vars": {
+									"announce_key": "BB_ANNOUNCE_ABILITY"
+								}
 							}
 						},
 						{

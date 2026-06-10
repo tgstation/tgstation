@@ -13,22 +13,32 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_CURRENT_HOME", 1]
+				"vars": {
+					"target_key": "BB_CURRENT_HOME",
+					"required_dist": 1
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/ai_interact",
-				"args": ["BB_CURRENT_HOME"]
+				"vars": {
+					"target_key": "BB_CURRENT_HOME"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/clear_key",
-				"args": ["BB_CURRENT_TARGET"]
+				"vars": {
+					"key": "BB_CURRENT_TARGET"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-				"args": ["BB_WANTS_TO_TRANSITION_HIVE", false]
+				"vars": {
+					"target_key": "BB_WANTS_TO_TRANSITION_HIVE",
+					"value": false
+				}
 			}
 		]
 	}

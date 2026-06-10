@@ -26,13 +26,17 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-							"args": ["BB_SONG_INSTRUMENT"]
+							"vars": {
+								"target_key": "BB_SONG_INSTRUMENT"
+							}
 						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/keep_playing_instrument",
-						"args": ["BB_SONG_INSTRUMENT"]
+						"vars": {
+							"song_instrument_key": "BB_SONG_INSTRUMENT"
+						}
 					},
 					{
 						"type": "sequence",
@@ -40,13 +44,16 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/setup_instrument",
-								"args": ["BB_SONG_INSTRUMENT", "song_lines"]
+								"vars": {
+									"song_instrument_key": "BB_SONG_INSTRUMENT",
+									"song_lines_key": "song_lines"
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/play_instrument",
-								"args": ["BB_SONG_INSTRUMENT"],
 								"vars": {
+									"song_instrument_key": "BB_SONG_INSTRUMENT",
 									"volume": "$bulu13xf"
 								}
 							}
@@ -65,7 +72,10 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_hands",
-				"args": ["BB_SONG_INSTRUMENT", "/obj/item/instrument"]
+				"vars": {
+					"set_key": "BB_SONG_INSTRUMENT",
+					"locate_path": "/obj/item/instrument"
+				}
 			}
 		}
 	]

@@ -12,12 +12,17 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_valid_authority",
-				"args": ["BB_SALUTE_TARGET"]
+				"vars": {
+					"target_key": "BB_SALUTE_TARGET"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/salute_authority",
-				"args": ["BB_SALUTE_TARGET", "BB_SALUTE_MESSAGES"]
+				"vars": {
+					"target_key": "BB_SALUTE_TARGET",
+					"salute_keys": "BB_SALUTE_MESSAGES"
+				}
 			}
 		]
 	}

@@ -12,17 +12,20 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_ITEM_TO_STEAL"]
+				"vars": {
+					"target_key": "BB_ITEM_TO_STEAL"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/drag_target",
-				"args": ["BB_ITEM_TO_STEAL"]
+				"vars": {
+					"target_key": "BB_ITEM_TO_STEAL"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/copy_bb_key",
-				"args": [],
 				"vars": {
 					"dest_key": "BB_LAST_STOLEN_ITEM",
 					"source_key": "BB_ITEM_TO_STEAL"
@@ -31,7 +34,9 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/clear_key",
-				"args": ["BB_ITEM_TO_STEAL"]
+				"vars": {
+					"key": "BB_ITEM_TO_STEAL"
+				}
 			}
 		]
 	}

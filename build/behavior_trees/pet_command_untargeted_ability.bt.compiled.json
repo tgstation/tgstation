@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/use_mob_ability","default_behavior_args":["BB_pet_active_ability"]},{"type":"/datum/bt_node/ai_behavior/clear_pet_command","default_behavior_args":[]}]}
+{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/use_mob_ability","ability_key":"BB_pet_active_ability"},{"type":"/datum/bt_node/ai_behavior/clear_pet_command"}]}

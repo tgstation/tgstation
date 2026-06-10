@@ -20,11 +20,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				},
 				{
 					"type": "selector",
@@ -46,30 +46,30 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": [
-												"BB_CURRENT_TARGET",
-												1,
-												"",
-												"/datum/ai_movement/basic_avoidance"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"required_dist": 1,
+												"finish_on_arrival": null,
+												"movement_type": "/datum/ai_movement/basic_avoidance"
+											}
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_CURRENT_TARGET_HIDING_LOCATION"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+											}
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_CURRENT_TARGET_HIDING_LOCATION"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+											}
 										}
 									]
 								}

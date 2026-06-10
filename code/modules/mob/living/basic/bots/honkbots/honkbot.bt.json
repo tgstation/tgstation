@@ -37,30 +37,30 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": [
-												"BB_CURRENT_TARGET",
-												1,
-												true,
-												"/datum/ai_movement/basic_avoidance"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"required_dist": 1,
+												"finish_on_arrival": true,
+												"movement_type": "/datum/ai_movement/basic_avoidance"
+											}
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_CURRENT_TARGET_HIDING_LOCATION"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+											}
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
-											"args": [
-												"BB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_CURRENT_TARGET_HIDING_LOCATION"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+											}
 										}
 									]
 								}
@@ -91,17 +91,19 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": [
-											"BB_CLOWN_FRIEND",
-											1,
-											true,
-											"/datum/ai_movement/basic_avoidance"
-										]
+										"vars": {
+											"target_key": "BB_CLOWN_FRIEND",
+											"required_dist": 1,
+											"finish_on_arrival": true,
+											"movement_type": "/datum/ai_movement/basic_avoidance"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/play_with_clown",
-										"args": ["BB_CLOWN_FRIEND"]
+										"vars": {
+											"target_key": "BB_CLOWN_FRIEND"
+										}
 									}
 								]
 							}
@@ -123,11 +125,11 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/update_targets",
-											"args": [
-												"BB_CURRENT_TARGET",
-												"BB_TARGETING_STRATEGY",
-												"BB_CURRENT_TARGET_HIDING_LOCATION"
-											]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+											}
 										},
 										{
 											"type": "sequence",
@@ -135,19 +137,25 @@
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/find_slippery_item",
-													"args": ["BB_SLIPPERY_TARGET"]
+													"vars": {
+														"target_key": "BB_SLIPPERY_TARGET"
+													}
 												},
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/bot_search/find_slip_victim",
-													"args": ["BB_SLIP_TARGET"]
+													"vars": {
+														"target_key": "BB_SLIP_TARGET"
+													}
 												}
 											]
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/find_clown_friend",
-											"args": ["BB_CLOWN_FRIEND"]
+											"vars": {
+												"target_key": "BB_CLOWN_FRIEND"
+											}
 										}
 									]
 								}

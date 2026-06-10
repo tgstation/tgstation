@@ -11,12 +11,18 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_BOT_SUMMON_TARGET", 0, true]
+				"vars": {
+					"target_key": "BB_BOT_SUMMON_TARGET",
+					"required_dist": 0,
+					"finish_on_arrival": true
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/complete_summon_travel",
-				"args": ["BB_BOT_SUMMON_TARGET"]
+				"vars": {
+					"target_key": "BB_BOT_SUMMON_TARGET"
+				}
 			}
 		]
 	}

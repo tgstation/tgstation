@@ -21,13 +21,14 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/wait",
-							"args": [0]
+							"vars": {
+								"duration": 0
+							}
 						}
 					},
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/item_escape_grasp",
-						"args": []
+						"behavior": "/datum/bt_node/ai_behavior/item_escape_grasp"
 					}
 				]
 			}
@@ -66,33 +67,39 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/throw_attack/haunted",
-												"args": [
-													"BB_HAUNT_TARGET",
-													"BB_HAUNTED_THROW_ATTEMPT_COUNT",
-													"BB_TO_HAUNT_LIST"
-												]
+												"vars": {
+													"target_key": "BB_HAUNT_TARGET",
+													"throw_count_key": "BB_HAUNTED_THROW_ATTEMPT_COUNT",
+													"haunt_list_key": "BB_TO_HAUNT_LIST"
+												}
 											}
 										]
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_HAUNT_TARGET", 3, false]
+										"vars": {
+											"target_key": "BB_HAUNT_TARGET",
+											"required_dist": 3,
+											"finish_on_arrival": false
+										}
 									}
 								]
 							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/idle_ghost_item",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/idle_ghost_item"
 						}
 					]
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/pick_haunt_target",
-					"args": ["BB_HAUNT_TARGET", "BB_TO_HAUNT_LIST"]
+					"vars": {
+						"target_key": "BB_HAUNT_TARGET",
+						"haunt_list_key": "BB_TO_HAUNT_LIST"
+					}
 				}
 			]
 		}

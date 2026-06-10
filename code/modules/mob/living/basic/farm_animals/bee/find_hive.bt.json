@@ -20,17 +20,22 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-					"args": ["BB_CURRENT_HOME", 1, false]
+					"vars": {
+						"target_key": "BB_CURRENT_HOME",
+						"required_dist": 1,
+						"finish_on_arrival": false
+					}
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/inhabit_hive",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/inhabit_hive"
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/clear_key",
-					"args": ["BB_TARGET_HOME"]
+					"vars": {
+						"key": "BB_TARGET_HOME"
+					}
 				}
 			]
 		}

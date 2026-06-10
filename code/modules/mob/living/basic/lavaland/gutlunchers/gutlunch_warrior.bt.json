@@ -12,8 +12,7 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/befriend_ashwalkers",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/befriend_ashwalkers"
 		},
 		{
 			"type": "subtree",

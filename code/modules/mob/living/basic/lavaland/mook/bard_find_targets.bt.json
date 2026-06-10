@@ -5,11 +5,11 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-			"args": [
-				"BB_CURRENT_TARGET",
-				"BB_TARGETING_STRATEGY",
-				"BB_CURRENT_TARGET_HIDING_LOCATION"
-			]
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
 		},
 		{
 			"type": "decorator",
@@ -24,16 +24,16 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
-						"args": [
-							"BB_MOOK_TRIBAL_CHIEF",
-							"/mob/living/basic/mining/mook/worker/tribal_chief"
-						]
+						"vars": {
+							"set_key": "BB_MOOK_TRIBAL_CHIEF",
+							"locate_path": "/mob/living/basic/mining/mook/worker/tribal_chief"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-						"args": ["BB_MOOK_TRIBAL_CHIEF"],
 						"vars": {
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
 							"long_range_friendship": true
 						}
 					}
@@ -43,8 +43,8 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person_near_anchor",
-			"args": ["BB_MOOK_MUSIC_AUDIENCE"],
 			"vars": {
+				"set_key": "BB_MOOK_MUSIC_AUDIENCE",
 				"time_between_perform": "1 SECONDS",
 				"anchor_key": "BB_HOME_VILLAGE",
 				"max_distance_key": "BB_MAXIMUM_DISTANCE_TO_VILLAGE"

@@ -40,17 +40,19 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": [
-													"BB_WASH_TARGET",
-													0,
-													false,
-													"/datum/ai_movement/basic_avoidance"
-												]
+												"vars": {
+													"target_key": "BB_WASH_TARGET",
+													"required_dist": 0,
+													"finish_on_arrival": false,
+													"movement_type": "/datum/ai_movement/basic_avoidance"
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/wash_target",
-												"args": ["BB_WASH_TARGET"]
+												"vars": {
+													"target_key": "BB_WASH_TARGET"
+												}
 											}
 										]
 									},
@@ -68,7 +70,9 @@
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/commence_trashtalk",
-													"args": ["BB_WASH_TARGET"]
+													"vars": {
+														"target_key": "BB_WASH_TARGET"
+													}
 												}
 											]
 										}
@@ -89,7 +93,9 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_valid_wash_targets",
-					"args": ["BB_WASH_TARGET"]
+					"vars": {
+						"target_key": "BB_WASH_TARGET"
+					}
 				}
 			]
 		}

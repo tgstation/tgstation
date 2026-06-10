@@ -15,12 +15,13 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_INJURED_MOOK"]
+						"vars": {
+							"target_key": "BB_INJURED_MOOK"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
-						"args": [],
 						"vars": {
 							"always_reset_target": true,
 							"target_key": "BB_INJURED_MOOK"
@@ -32,7 +33,6 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
-			"args": [],
 			"vars": {
 				"target_key": "BB_HOME_VILLAGE",
 				"walk_chance": 75

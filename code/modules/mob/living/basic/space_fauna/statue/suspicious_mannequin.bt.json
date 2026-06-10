@@ -33,8 +33,7 @@
 								"children": [
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/wait",
-										"args": []
+										"behavior": "/datum/bt_node/ai_behavior/wait"
 									},
 									{
 										"type": "subplan",
@@ -44,7 +43,11 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_CURRENT_TARGET", 1, false]
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"required_dist": 1,
+													"finish_on_arrival": false
+												}
 											}
 										]
 									},
@@ -56,11 +59,11 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-												"args": [
-													"BB_CURRENT_TARGET",
-													"BB_TARGETING_STRATEGY",
-													"BB_CURRENT_TARGET_HIDING_LOCATION"
-												]
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+												}
 											}
 										]
 									}
@@ -69,20 +72,17 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/wait",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/wait"
 						}
 					]
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					],
 					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
 						"vision_range": 14
 					}
 				},
@@ -102,7 +102,9 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/perform_emote",
-							"args": ["\"scream\""]
+							"vars": {
+								"emote": "\"scream\""
+							}
 						}
 					}
 				}

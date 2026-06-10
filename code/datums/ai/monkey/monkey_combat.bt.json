@@ -22,7 +22,9 @@
 				"child": {
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-					"args": ["BB_CURRENT_TARGET"]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET"
+					}
 				}
 			},
 			{
@@ -53,7 +55,9 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/recruit_monkeys",
-							"args": ["BB_CURRENT_TARGET"]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET"
+							}
 						}
 					]
 				}
@@ -76,43 +80,60 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-									"args": [
-										"BB_monkey_target_disposal",
-										"/obj/machinery/disposal",
-										9
-									]
+									"vars": {
+										"set_key": "BB_monkey_target_disposal",
+										"locate_path": "/obj/machinery/disposal",
+										"search_range": 9
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_CURRENT_TARGET", 1, true]
+									"vars": {
+										"target_key": "BB_CURRENT_TARGET",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/grab_target",
-									"args": ["BB_CURRENT_TARGET"]
+									"vars": {
+										"target_key": "BB_CURRENT_TARGET"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_target_disposal", 1, true]
+									"vars": {
+										"target_key": "BB_monkey_target_disposal",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/stuff_in_disposal",
-									"args": ["BB_CURRENT_TARGET", "BB_monkey_target_disposal"]
+									"vars": {
+										"attack_target_key": "BB_CURRENT_TARGET",
+										"disposal_target_key": "BB_monkey_target_disposal"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-									"args": ["BB_CURRENT_TARGET"]
+									"vars": {
+										"target_key": "BB_CURRENT_TARGET"
+									}
 								}
 							]
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-							"args": ["BB_CURRENT_TARGET"]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET"
+							}
 						}
 					]
 				}
@@ -139,14 +160,20 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/monkey_attack_mob",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								]
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_CURRENT_TARGET", 1, true]
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
 							}
 						]
 					},
@@ -165,8 +192,7 @@
 							},
 							"child": {
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/battle_screech/monkey"
 							}
 						}
 					}

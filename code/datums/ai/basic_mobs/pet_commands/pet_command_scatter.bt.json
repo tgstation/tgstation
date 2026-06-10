@@ -11,8 +11,7 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
 		}
 	]
 }

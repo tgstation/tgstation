@@ -35,8 +35,7 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen"
 						}
 					]
 				}
@@ -51,8 +50,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/find_hive",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/find_hive"
 			}
 		}
 	]

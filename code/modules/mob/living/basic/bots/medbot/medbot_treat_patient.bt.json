@@ -12,19 +12,25 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/announce_patient",
-					"args": ["BB_CURRENT_TARGET"]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/tend_to_patient",
-					"args": ["BB_CURRENT_TARGET"]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET"
+					}
 				}
 			]
 		},
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/find_suitable_patient",
-			"args": ["BB_CURRENT_TARGET"]
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET"
+			}
 		}
 	]
 }

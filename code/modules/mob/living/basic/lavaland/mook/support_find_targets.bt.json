@@ -5,11 +5,11 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-			"args": [
-				"BB_CURRENT_TARGET",
-				"BB_TARGETING_STRATEGY",
-				"BB_CURRENT_TARGET_HIDING_LOCATION"
-			]
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
 		},
 		{
 			"type": "decorator",
@@ -24,16 +24,16 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
-						"args": [
-							"BB_MOOK_TRIBAL_CHIEF",
-							"/mob/living/basic/mining/mook/worker/tribal_chief"
-						]
+						"vars": {
+							"set_key": "BB_MOOK_TRIBAL_CHIEF",
+							"locate_path": "/mob/living/basic/mining/mook/worker/tribal_chief"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-						"args": ["BB_MOOK_TRIBAL_CHIEF"],
 						"vars": {
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
 							"long_range_friendship": true
 						}
 					}
@@ -50,7 +50,10 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/injured_mooks",
-				"args": ["BB_INJURED_MOOK", "BB_MOOK_HEAL_TARGETS"]
+				"vars": {
+					"set_key": "BB_INJURED_MOOK",
+					"locate_path": "BB_MOOK_HEAL_TARGETS"
+				}
 			}
 		}
 	]

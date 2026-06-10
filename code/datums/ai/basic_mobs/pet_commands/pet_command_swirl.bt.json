@@ -13,8 +13,7 @@
 		"children": [
 			{
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/swirl_around_target",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/swirl_around_target"
 			}
 		]
 	}

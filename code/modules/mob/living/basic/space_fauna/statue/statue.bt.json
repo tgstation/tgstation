@@ -30,15 +30,14 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_LOW_PRIORITY_HUNTING_TARGET"],
 										"vars": {
+											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
 											"movement_failed": false
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
-										"args": [],
 										"vars": {
 											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
 											"hunt_cooldown": "10 SECONDS",
@@ -78,18 +77,22 @@
 												{
 													"type": "leaf",
 													"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-													"args": [
-														"BB_CURRENT_TARGET",
-														"BB_TARGETING_STRATEGY",
-														"BB_CURRENT_TARGET_HIDING_LOCATION"
-													]
+													"vars": {
+														"target_key": "BB_CURRENT_TARGET",
+														"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+														"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+													}
 												}
 											]
 										},
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-											"args": ["BB_CURRENT_TARGET", 1, false]
+											"vars": {
+												"target_key": "BB_CURRENT_TARGET",
+												"required_dist": 1,
+												"finish_on_arrival": false
+											}
 										}
 									]
 								}
@@ -100,16 +103,20 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/light_fixtures",
-					"args": ["BB_LOW_PRIORITY_HUNTING_TARGET", "BB_HUNT_TARGET_LIST", 7]
+					"vars": {
+						"set_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"locate_path": "BB_HUNT_TARGET_LIST",
+						"search_range": 7
+					}
 				}
 			]
 		}

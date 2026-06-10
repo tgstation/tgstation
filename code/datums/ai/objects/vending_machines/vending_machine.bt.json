@@ -14,8 +14,7 @@
 				},
 				"child": {
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/vendor_rise_up",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/vendor_rise_up"
 				}
 			}
 		},
@@ -37,17 +36,26 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_vendor_target",
-							"args": ["BB_VENDING_CURRENT_TARGET", 7]
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET",
+								"vision_range": 7
+							}
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"args": ["BB_VENDING_CURRENT_TARGET", 1, true]
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET",
+								"required_dist": 1,
+								"finish_on_arrival": true
+							}
 						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/vendor_crush",
-							"args": ["BB_VENDING_CURRENT_TARGET"]
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET"
+							}
 						}
 					]
 				}

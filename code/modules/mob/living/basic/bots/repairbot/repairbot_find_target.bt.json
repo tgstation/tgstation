@@ -14,12 +14,16 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_robot",
-						"args": ["BB_ROBOT_TARGET"]
+						"vars": {
+							"target_key": "BB_ROBOT_TARGET"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_search/deconstructable",
-						"args": ["BB_DECONSTRUCT_TARGET"]
+						"vars": {
+							"target_key": "BB_DECONSTRUCT_TARGET"
+						}
 					}
 				]
 			}
@@ -44,47 +48,58 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_grille_target",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								]
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-								"args": [
-									"BB_REPAIRBOT_INTERACTION_TYPE",
-									"REPAIRBOT_INTERACTION_INTERACT"
-								]
+								"vars": {
+									"target_key": "BB_REPAIRBOT_INTERACTION_TYPE",
+									"value": "REPAIRBOT_INTERACTION_INTERACT"
+								}
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan"
 							}
 						]
 					},
@@ -94,20 +109,21 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
-								"args": ["BB_CURRENT_TARGET"]
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET"
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-								"args": [
-									"BB_REPAIRBOT_INTERACTION_TYPE",
-									"REPAIRBOT_INTERACTION_BUILD_GIRDERS"
-								]
+								"vars": {
+									"target_key": "BB_REPAIRBOT_INTERACTION_TYPE",
+									"value": "REPAIRBOT_INTERACTION_BUILD_GIRDERS"
+								}
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan",
-								"args": []
+								"behavior": "/datum/bt_node/ai_behavior/cancel_current_plan"
 							}
 						]
 					}

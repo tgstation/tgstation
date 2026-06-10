@@ -26,7 +26,11 @@
 					"child": {
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_MOOK_MUSIC_AUDIENCE", 2, false]
+						"vars": {
+							"target_key": "BB_MOOK_MUSIC_AUDIENCE",
+							"required_dist": 2,
+							"finish_on_arrival": false
+						}
 					}
 				},
 				{
@@ -38,7 +42,6 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
-							"args": [],
 							"vars": {
 								"target_key": "BB_HOME_VILLAGE",
 								"walk_chance": 75

@@ -12,17 +12,24 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_TARGET_FOOD", 1]
+				"vars": {
+					"target_key": "BB_TARGET_FOOD",
+					"required_dist": 1
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/perform_emote",
-				"args": ["eats up happily!"]
+				"vars": {
+					"emote": "eats up happily!"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/ai_interact",
-				"args": ["BB_TARGET_FOOD"]
+				"vars": {
+					"target_key": "BB_TARGET_FOOD"
+				}
 			}
 		]
 	}

@@ -12,29 +12,29 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-				"args": [
-					"BB_MATERIAL_STAND_TARGET",
-					"/obj/structure/ore_container/material_stand"
-				]
+				"vars": {
+					"set_key": "BB_MATERIAL_STAND_TARGET",
+					"locate_path": "/obj/structure/ore_container/material_stand"
+				}
 			}
 		},
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-			"args": [
-				"BB_CURRENT_TARGET",
-				"BB_TARGETING_STRATEGY",
-				"BB_CURRENT_TARGET_HIDING_LOCATION"
-			]
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
 		},
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/update_targets",
-			"args": [
-				"BB_CURRENT_TARGET",
-				"BB_TARGETING_STRATEGY",
-				"BB_CURRENT_TARGET_HIDING_LOCATION"
-			]
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
 		},
 		{
 			"type": "decorator",
@@ -49,16 +49,16 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
-						"args": [
-							"BB_MOOK_TRIBAL_CHIEF",
-							"/mob/living/basic/mining/mook/worker/tribal_chief"
-						]
+						"vars": {
+							"set_key": "BB_MOOK_TRIBAL_CHIEF",
+							"locate_path": "/mob/living/basic/mining/mook/worker/tribal_chief"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
-						"args": ["BB_MOOK_TRIBAL_CHIEF"],
 						"vars": {
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
 							"long_range_friendship": true
 						}
 					}

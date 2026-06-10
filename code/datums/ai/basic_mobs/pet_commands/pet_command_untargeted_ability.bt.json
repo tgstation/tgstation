@@ -5,12 +5,13 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-			"args": ["BB_PET_ACTIVE_ABILITY"]
+			"vars": {
+				"ability_key": "BB_PET_ACTIVE_ABILITY"
+			}
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
 		}
 	]
 }

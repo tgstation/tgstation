@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/decorator/key_off_cooldown","children":[{"type":"/datum/bt_node/ai_behavior/find_and_set/in_list","default_behavior_args":["BB_TARGET_FOOD","BB_basic_foods"]}],"observer_abort":1,"cooldown_key":"BB_eat_food_cooldown"}
+{"type":"/datum/bt_node/decorator/key_off_cooldown","children":[{"type":"/datum/bt_node/ai_behavior/find_and_set/in_list","set_key":"BB_TARGET_FOOD","locate_path":"BB_basic_foods"}],"observer_abort":1,"cooldown_key":"BB_eat_food_cooldown"}

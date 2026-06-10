@@ -53,16 +53,18 @@
 																	{
 																		"type": "leaf",
 																		"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-																		"args": [
-																			"BB_CURRENT_TARGET",
-																			"BB_TARGETING_STRATEGY",
-																			"BB_CURRENT_TARGET_HIDING_LOCATION"
-																		]
+																		"vars": {
+																			"target_key": "BB_CURRENT_TARGET",
+																			"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+																			"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+																		}
 																	},
 																	{
 																		"type": "leaf",
 																		"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-																		"args": ["BB_CURRENT_TARGET"]
+																		"vars": {
+																			"target_key": "BB_CURRENT_TARGET"
+																		}
 																	}
 																]
 															}
@@ -81,7 +83,10 @@
 															{
 																"type": "leaf",
 																"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-																"args": ["BB_CURRENT_TARGET", 1]
+																"vars": {
+																	"target_key": "BB_CURRENT_TARGET",
+																	"required_dist": 1
+																}
 															}
 														]
 													}
@@ -103,12 +108,18 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"args": ["BB_SPIDER_WEB_TARGET", 0]
+												"vars": {
+													"target_key": "BB_SPIDER_WEB_TARGET",
+													"required_dist": 0
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/spin_web",
-												"args": ["BB_SPIDER_WEB_ACTION", "BB_SPIDER_WEB_TARGET"]
+												"vars": {
+													"action_key": "BB_SPIDER_WEB_ACTION",
+													"target_key": "BB_SPIDER_WEB_TARGET"
+												}
 											}
 										]
 									}
@@ -121,16 +132,18 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest",
-									"args": [
-										"BB_CURRENT_TARGET",
-										"BB_TARGETING_STRATEGY",
-										"BB_CURRENT_TARGET_HIDING_LOCATION"
-									]
+									"vars": {
+										"target_key": "BB_CURRENT_TARGET",
+										"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+										"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_unwebbed_turf",
-									"args": ["BB_SPIDER_WEB_TARGET"]
+									"vars": {
+										"target_key": "BB_SPIDER_WEB_TARGET"
+									}
 								}
 							]
 						}
@@ -138,8 +151,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/random_speech/insect",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/random_speech/insect"
 				}
 			]
 		}

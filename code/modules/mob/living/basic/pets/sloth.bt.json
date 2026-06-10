@@ -44,8 +44,7 @@
 									"children": [
 										{
 											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-											"args": []
+											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 										}
 									]
 								}
@@ -53,24 +52,26 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/random_speech/sloth",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/random_speech/sloth"
 						}
 					]
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-					"args": ["BB_CLIMBED_TREE", "/obj/structure/flora/tree"]
+					"vars": {
+						"set_key": "BB_CLIMBED_TREE",
+						"locate_path": "/obj/structure/flora/tree"
+					}
 				}
 			]
 		}

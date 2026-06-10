@@ -12,12 +12,15 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_CURRENT_PET_TARGET", 0, true]
+				"vars": {
+					"target_key": "BB_CURRENT_PET_TARGET",
+					"required_dist": 0,
+					"finish_on_arrival": true
+				}
 			},
 			{
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/clear_pet_command",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
 			}
 		]
 	}

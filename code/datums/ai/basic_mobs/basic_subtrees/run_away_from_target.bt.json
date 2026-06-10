@@ -19,16 +19,20 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
-				"args": [
-					"$byk9gqj4",
-					"BB_CURRENT_TARGET_HIDING_LOCATION",
-					"BB_FLEE_LOCATION"
-				]
+				"vars": {
+					"target_key": "$byk9gqj4",
+					"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+					"destination_key": "BB_FLEE_LOCATION"
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_FLEE_LOCATION", 0, true]
+				"vars": {
+					"target_key": "BB_FLEE_LOCATION",
+					"required_dist": 0,
+					"finish_on_arrival": true
+				}
 			}
 		]
 	}

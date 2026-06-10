@@ -46,8 +46,12 @@
 	var/attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
 	/// Maximum throws before the attack is exhausted.
 	var/max_attempts = 4
+	/// Blackboard key holding the throw target.
+	var/target_key
+	/// Blackboard key tracking how many throws have happened.
+	var/throw_count_key
 
-/datum/bt_node/ai_behavior/throw_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, throw_count_key)
+/datum/bt_node/ai_behavior/throw_attack/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/obj/item/item_pawn = controller.pawn
 	var/atom/throw_target = controller.blackboard[target_key]
 	if(QDELETED(throw_target))

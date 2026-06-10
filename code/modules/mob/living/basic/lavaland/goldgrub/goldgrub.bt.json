@@ -12,8 +12,7 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/dig_away_from_danger",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/dig_away_from_danger"
 		},
 		{
 			"type": "decorator",
@@ -24,8 +23,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/burrow_through_ground",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/burrow_through_ground"
 			}
 		},
 		{
@@ -64,12 +62,18 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_BOULDER_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_BOULDER_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"args": ["BB_BOULDER_TARGET"]
+										"vars": {
+											"target_key": "BB_BOULDER_TARGET"
+										}
 									}
 								]
 							}
@@ -87,12 +91,18 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_ORE_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_ORE_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"args": ["BB_ORE_TARGET"]
+										"vars": {
+											"target_key": "BB_ORE_TARGET"
+										}
 									}
 								]
 							}
@@ -110,12 +120,18 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_VENT_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_VENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"args": ["BB_VENT_TARGET"]
+										"vars": {
+											"target_key": "BB_VENT_TARGET"
+										}
 									}
 								]
 							}
@@ -126,12 +142,16 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/mine_wall",
-									"args": ["BB_TARGET_MINERAL_WALL"]
+									"vars": {
+										"target_key": "BB_TARGET_MINERAL_WALL"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
-									"args": ["BB_TARGET_MINERAL_WALL"]
+									"vars": {
+										"target_key": "BB_TARGET_MINERAL_WALL"
+									}
 								}
 							]
 						},
@@ -148,12 +168,18 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_LOW_PRIORITY_HUNTING_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/pull_grub_egg",
-										"args": ["BB_LOW_PRIORITY_HUNTING_TARGET"]
+										"vars": {
+											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+										}
 									}
 								]
 							}
@@ -165,8 +191,7 @@
 							"children": [
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 								}
 							]
 						}
@@ -178,31 +203,27 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/update_targets",
-							"args": [
-								"BB_CURRENT_TARGET",
-								"BB_TARGETING_STRATEGY",
-								"BB_CURRENT_TARGET_HIDING_LOCATION"
-							]
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_ore",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_ore"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_boulder",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_boulder"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_ore_vent",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_ore_vent"
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_grub_egg",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/find_grub_egg"
 						}
 					]
 				}

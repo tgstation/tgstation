@@ -10,8 +10,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/use_in_hand",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/use_in_hand"
 			}
 		},
 		{
@@ -26,7 +25,9 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/monkey_find_press_target",
-						"args": ["BB_monkey_current_press_target"]
+						"vars": {
+							"target_key": "BB_monkey_current_press_target"
+						}
 					},
 					{
 						"type": "decorator",
@@ -46,17 +47,25 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_monkey_current_press_target", 1, true]
+										"vars": {
+											"target_key": "BB_monkey_current_press_target",
+											"required_dist": 1,
+											"finish_on_arrival": true
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/use_on_object",
-										"args": ["BB_monkey_current_press_target"]
+										"vars": {
+											"target_key": "BB_monkey_current_press_target"
+										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-										"args": ["BB_monkey_current_press_target"]
+										"vars": {
+											"target_key": "BB_monkey_current_press_target"
+										}
 									}
 								]
 							}
@@ -71,11 +80,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set/pawn_must_hold_item",
-					"args": [
-						"BB_monkey_current_give_target",
-						"/mob/living/carbon/human",
-						2
-					]
+					"vars": {
+						"set_key": "BB_monkey_current_give_target",
+						"locate_path": "/mob/living/carbon/human",
+						"search_range": 2
+					}
 				},
 				{
 					"type": "decorator",
@@ -95,12 +104,18 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_current_give_target", 1, true]
+									"vars": {
+										"target_key": "BB_monkey_current_give_target",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/give",
-									"args": ["BB_monkey_current_give_target"]
+									"vars": {
+										"target_key": "BB_monkey_current_give_target"
+									}
 								}
 							]
 						}

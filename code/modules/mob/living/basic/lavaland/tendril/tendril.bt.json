@@ -45,12 +45,16 @@
 														{
 															"type": "leaf",
 															"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-															"args": ["BB_TENDRIL_SPIKES"]
+															"vars": {
+																"ability_key": "BB_TENDRIL_SPIKES"
+															}
 														},
 														{
 															"type": "leaf",
 															"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-															"args": ["BB_TENDRIL_LASH"]
+															"vars": {
+																"ability_key": "BB_TENDRIL_LASH"
+															}
 														}
 													]
 												}
@@ -58,7 +62,10 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-												"args": ["BB_TENDRIL_CHASER", "BB_CURRENT_TARGET"]
+												"vars": {
+													"ability_key": "BB_TENDRIL_CHASER",
+													"target_key": "BB_CURRENT_TARGET"
+												}
 											}
 										]
 									}
@@ -74,8 +81,7 @@
 								},
 								"child": {
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining"
 								}
 							}
 						]
@@ -83,8 +89,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/wait",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/wait"
 				}
 			]
 		},
@@ -94,25 +99,21 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION",
-						true
-					],
 					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+						"check_faction": true,
 						"vision_range": 5
 					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					],
 					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
 						"aggro_loss_distance": 9,
 						"vision_range": 5
 					}

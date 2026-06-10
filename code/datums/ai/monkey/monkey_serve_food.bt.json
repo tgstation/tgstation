@@ -11,7 +11,10 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/monkey_find_patrons",
-				"args": ["BB_monkey_patrons_nearby", "BB_monkey_current_give_target"]
+				"vars": {
+					"patrons_key": "BB_monkey_patrons_nearby",
+					"give_target_key": "BB_monkey_current_give_target"
+				}
 			},
 			{
 				"type": "selector",
@@ -26,7 +29,11 @@
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_serve",
-							"args": ["BB_monkey_current_served_item", "/obj/item", 2]
+							"vars": {
+								"set_key": "BB_monkey_current_served_item",
+								"locate_path": "/obj/item",
+								"search_range": 2
+							}
 						}
 					},
 					{
@@ -41,12 +48,18 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_current_give_target", 1, true]
+									"vars": {
+										"target_key": "BB_monkey_current_give_target",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/give",
-									"args": ["BB_monkey_current_give_target"]
+									"vars": {
+										"target_key": "BB_monkey_current_give_target"
+									}
 								}
 							]
 						}
@@ -64,12 +77,19 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_current_served_item", 1, true]
+									"vars": {
+										"target_key": "BB_monkey_current_served_item",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/pick_up",
-									"args": ["BB_monkey_current_served_item", true]
+									"vars": {
+										"target_key": "BB_monkey_current_served_item",
+										"drop_held": true
+									}
 								}
 							]
 						}

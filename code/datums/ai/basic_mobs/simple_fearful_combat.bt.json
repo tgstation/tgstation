@@ -25,11 +25,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets/nearest",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				}
 			]
 		},
@@ -41,8 +41,7 @@
 			"children": [
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 				}
 			]
 		}

@@ -25,17 +25,23 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-					"args": ["BB_CLIMBED_TREE"]
+					"vars": {
+						"target_key": "BB_CLIMBED_TREE"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/ai_interact",
-					"args": ["BB_CLIMBED_TREE"]
+					"vars": {
+						"target_key": "BB_CLIMBED_TREE"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/clear_key",
-					"args": ["BB_CLIMBED_TREE"]
+					"vars": {
+						"key": "BB_CLIMBED_TREE"
+					}
 				}
 			]
 		}

@@ -25,8 +25,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/find_village",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/find_village"
 			}
 		},
 		{
@@ -74,22 +73,30 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
-												"args": ["BB_INJURED_MOOK"]
+												"vars": {
+													"key": "BB_INJURED_MOOK"
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
-												"args": ["BB_MOOK_JUMP_ABILITY"]
+												"vars": {
+													"ability_key": "BB_MOOK_JUMP_ABILITY"
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
-												"args": ["BB_TARGET_MINERAL_WALL"]
+												"vars": {
+													"key": "BB_TARGET_MINERAL_WALL"
+												}
 											},
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/clear_key",
-												"args": ["BB_MOOK_MUSIC_AUDIENCE"]
+												"vars": {
+													"key": "BB_MOOK_MUSIC_AUDIENCE"
+												}
 											}
 										]
 									}
@@ -125,19 +132,19 @@
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-														"args": [
-															"BB_MOOK_LEAP_ABILITY",
-															"BB_CURRENT_TARGET"
-														]
+														"vars": {
+															"ability_key": "BB_MOOK_LEAP_ABILITY",
+															"target_key": "BB_CURRENT_TARGET"
+														}
 													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-														"args": [
-															"BB_CURRENT_TARGET",
-															"BB_TARGETING_STRATEGY",
-															"BB_CURRENT_TARGET_HIDING_LOCATION"
-														]
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
 													}
 												]
 											}
@@ -146,7 +153,11 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_CURRENT_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									}
 								]
 							}

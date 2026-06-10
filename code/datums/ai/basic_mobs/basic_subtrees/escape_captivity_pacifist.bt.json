@@ -10,8 +10,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/resist",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/resist"
 			}
 		},
 		{
@@ -22,8 +21,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/resist",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/resist"
 			}
 		},
 		{
@@ -34,8 +32,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/resist",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/resist"
 			}
 		},
 		{
@@ -46,8 +43,7 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/resist",
-				"args": []
+				"behavior": "/datum/bt_node/ai_behavior/resist"
 			}
 		}
 	]

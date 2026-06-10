@@ -29,17 +29,23 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_DEPOSIT_POSITION"]
+									"vars": {
+										"target_key": "BB_DEPOSIT_POSITION"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/clear_key",
-									"args": ["BB_DEPOSIT_POSITION"]
+									"vars": {
+										"key": "BB_DEPOSIT_POSITION"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/ai_interact",
-									"args": ["BB_MATERIAL_STAND_TARGET"]
+									"vars": {
+										"target_key": "BB_MATERIAL_STAND_TARGET"
+									}
 								}
 							]
 						}
@@ -59,12 +65,13 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_MOOK_BONFIRE_TARGET"]
+								"vars": {
+									"target_key": "BB_MOOK_BONFIRE_TARGET"
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
-								"args": [],
 								"vars": {
 									"target_key": "BB_MOOK_BONFIRE_TARGET",
 									"always_reset_target": true,
@@ -96,12 +103,17 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_ORE_TARGET"]
+									"vars": {
+										"target_key": "BB_ORE_TARGET"
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
-									"args": ["BB_ORE_TARGET", "BB_SIMPLE_CARRY_ITEM"]
+									"vars": {
+										"target_key": "BB_ORE_TARGET",
+										"storage_key": "BB_SIMPLE_CARRY_ITEM"
+									}
 								}
 							]
 						}
@@ -116,7 +128,6 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
-							"args": [],
 							"vars": {
 								"target_key": "BB_HOME_VILLAGE",
 								"walk_chance": 75
@@ -129,7 +140,10 @@
 		{
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/bonfire",
-			"args": ["BB_MOOK_BONFIRE_TARGET", "BB_BONFIRE_TARGETS"]
+			"vars": {
+				"set_key": "BB_MOOK_BONFIRE_TARGET",
+				"locate_path": "BB_BONFIRE_TARGETS"
+			}
 		}
 	]
 }

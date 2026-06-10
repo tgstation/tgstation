@@ -4,8 +4,7 @@
 	"children": [
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
 		}
 	]
 }

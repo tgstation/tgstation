@@ -14,22 +14,26 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": [
-							"BB_ROBOT_TARGET",
-							0,
-							true,
-							"/datum/ai_movement/basic_avoidance"
-						]
+						"vars": {
+							"target_key": "BB_ROBOT_TARGET",
+							"required_dist": 0,
+							"finish_on_arrival": true,
+							"movement_type": "/datum/ai_movement/basic_avoidance"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_interact/tip_robot",
-						"args": ["BB_ROBOT_TARGET"]
+						"vars": {
+							"target_key": "BB_ROBOT_TARGET"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/grab_target",
-						"args": ["BB_ROBOT_TARGET"]
+						"vars": {
+							"target_key": "BB_ROBOT_TARGET"
+						}
 					}
 				]
 			}
@@ -46,17 +50,19 @@
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": [
-							"BB_DECONSTRUCT_TARGET",
-							0,
-							true,
-							"/datum/ai_movement/basic_avoidance"
-						]
+						"vars": {
+							"target_key": "BB_DECONSTRUCT_TARGET",
+							"required_dist": 0,
+							"finish_on_arrival": true,
+							"movement_type": "/datum/ai_movement/basic_avoidance"
+						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_interact",
-						"args": ["BB_DECONSTRUCT_TARGET"]
+						"vars": {
+							"target_key": "BB_DECONSTRUCT_TARGET"
+						}
 					}
 				]
 			}

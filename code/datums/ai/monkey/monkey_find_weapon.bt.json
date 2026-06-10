@@ -4,8 +4,7 @@
 	"children": [
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/monkey_find_weapon",
-			"args": []
+			"behavior": "/datum/bt_node/ai_behavior/monkey_find_weapon"
 		},
 		{
 			"type": "decorator",
@@ -28,12 +27,18 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-									"args": ["BB_monkey_pickuptarget", 1, true]
+									"vars": {
+										"target_key": "BB_monkey_pickuptarget",
+										"required_dist": 1,
+										"finish_on_arrival": true
+									}
 								},
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/monkey_equip/pickpocket",
-									"args": ["BB_monkey_pickuptarget"]
+									"vars": {
+										"target_key": "BB_monkey_pickuptarget"
+									}
 								}
 							]
 						}
@@ -44,12 +49,18 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"args": ["BB_monkey_pickuptarget", 1, true]
+								"vars": {
+									"target_key": "BB_monkey_pickuptarget",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
 							},
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/monkey_equip/ground",
-								"args": ["BB_monkey_pickuptarget"]
+								"vars": {
+									"target_key": "BB_monkey_pickuptarget"
+								}
 							}
 						]
 					}

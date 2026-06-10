@@ -51,7 +51,6 @@
 										{
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-											"args": [],
 											"vars": {
 												"walk_chance": 10
 											}
@@ -62,28 +61,27 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/random_speech/insect",
-							"args": []
+							"behavior": "/datum/bt_node/ai_behavior/random_speech/insect"
 						}
 					]
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set",
-					"args": [
-						"BB_ENTRY_VENT_TARGET",
-						"/obj/machinery/atmospherics/components/unary/vent_pump",
-						7
-					]
+					"vars": {
+						"set_key": "BB_ENTRY_VENT_TARGET",
+						"locate_path": "/obj/machinery/atmospherics/components/unary/vent_pump",
+						"search_range": 7
+					}
 				}
 			]
 		}

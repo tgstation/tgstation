@@ -24,14 +24,20 @@
 							{
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/feed_on_slime_target",
-								"args": ["BB_CURRENT_PET_TARGET"]
+								"vars": {
+									"target_key": "BB_CURRENT_PET_TARGET"
+								}
 							}
 						]
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"args": ["BB_CURRENT_PET_TARGET", 1, false]
+						"vars": {
+							"target_key": "BB_CURRENT_PET_TARGET",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
 					}
 				]
 			}

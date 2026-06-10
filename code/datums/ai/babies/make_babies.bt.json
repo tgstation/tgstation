@@ -12,12 +12,19 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_BABIES_TARGET", 1, true]
+				"vars": {
+					"target_key": "BB_BABIES_TARGET",
+					"required_dist": 1,
+					"finish_on_arrival": true
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/make_babies",
-				"args": ["BB_BABIES_TARGET", "BB_BABIES_CHILD_TYPES"]
+				"vars": {
+					"target_key": "BB_BABIES_TARGET",
+					"child_types_key": "BB_BABIES_CHILD_TYPES"
+				}
 			}
 		]
 	}

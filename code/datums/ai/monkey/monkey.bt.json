@@ -35,8 +35,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/monkey_idle",
-					"args": []
+					"behavior": "/datum/bt_node/ai_behavior/monkey_idle"
 				}
 			]
 		},
@@ -50,7 +49,10 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
-				"args": ["BB_CURRENT_TARGET", "BB_monkey_enemies"]
+				"vars": {
+					"attack_target_key": "BB_CURRENT_TARGET",
+					"enemies_key": "BB_monkey_enemies"
+				}
 			}
 		}
 	]

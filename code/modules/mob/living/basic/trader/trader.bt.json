@@ -39,12 +39,10 @@
 											{
 												"type": "leaf",
 												"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
-												"args": [
-													"BB_CURRENT_TARGET",
-													"BB_TARGETING_STRATEGY",
-													"BB_CURRENT_TARGET_HIDING_LOCATION"
-												],
 												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
 													"avoid_friendly_fire": true,
 													"time_between_perform": "3 SECONDS"
 												}
@@ -54,7 +52,11 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"args": ["BB_CURRENT_TARGET", 1, false]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
 									}
 								]
 							}
@@ -90,20 +92,21 @@
 													"child": {
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-														"args": ["BB_FIRST_CUSTOMER", 1]
+														"vars": {
+															"target_key": "BB_FIRST_CUSTOMER",
+															"required_dist": 1
+														}
 													}
 												},
 												{
 													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/succeed",
-													"args": []
+													"behavior": "/datum/bt_node/ai_behavior/succeed"
 												}
 											]
 										},
 										{
 											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/setup_shop",
-											"args": []
+											"behavior": "/datum/bt_node/ai_behavior/setup_shop"
 										}
 									]
 								}
@@ -118,7 +121,6 @@
 								{
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/not_while_on_target",
-									"args": [],
 									"vars": {
 										"target_key": "BB_SHOP_SPOT"
 									}
@@ -130,16 +132,18 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				},
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person",
-					"args": ["BB_FIRST_CUSTOMER"]
+					"vars": {
+						"set_key": "BB_FIRST_CUSTOMER"
+					}
 				}
 			]
 		}

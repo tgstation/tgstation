@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/composite/subplan","children":[{"type":"/datum/bt_node/ai_behavior/idle_random_walk","default_behavior_args":[],"walk_chance":"$bf07i8ep"}],"__bindings":{"bf07i8ep":{"label":"walk_chance","default":25}},"success_policy":1,"failure_policy":0,"loop_delay":15.0}
+{"type":"/datum/bt_node/composite/subplan","children":[{"type":"/datum/bt_node/ai_behavior/idle_random_walk","walk_chance":"$bf07i8ep"}],"__bindings":{"bf07i8ep":{"label":"walk_chance","default":25}},"success_policy":1,"failure_policy":0,"loop_delay":15.0}

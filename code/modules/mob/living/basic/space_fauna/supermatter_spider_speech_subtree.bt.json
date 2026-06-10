@@ -2,7 +2,6 @@
 	"dm_type": "/datum/bt_node/subtree/supermatter_spider_speech_subtree",
 	"type": "leaf",
 	"behavior": "/datum/bt_node/ai_behavior/random_speech",
-	"args": [],
 	"vars": {
 		"speech_chance": 7,
 		"emote_hear": "list(\"clinks\", \"clanks\")",

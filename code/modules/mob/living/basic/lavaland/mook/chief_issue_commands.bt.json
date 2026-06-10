@@ -20,7 +20,6 @@
 				"child": {
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/issue_pet_command",
-					"args": [],
 					"vars": {
 						"command_list_key": "BB_MOOK_COMMANDS",
 						"command_type": "/datum/pet_command/attack",
@@ -40,7 +39,6 @@
 				"child": {
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/issue_pet_command",
-					"args": [],
 					"vars": {
 						"command_list_key": "BB_MOOK_COMMANDS",
 						"command_type": "/datum/pet_command/fetch",

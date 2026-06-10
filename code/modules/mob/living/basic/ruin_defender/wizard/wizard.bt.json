@@ -50,30 +50,26 @@
 														{
 															"type": "leaf",
 															"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-															"args": [
-																"BB_WIZARD_TARGETED_SPELL",
-																"BB_CURRENT_TARGET"
-															]
+															"vars": {
+																"ability_key": "BB_WIZARD_TARGETED_SPELL",
+																"target_key": "BB_CURRENT_TARGET"
+															}
 														},
 														{
 															"type": "leaf",
 															"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-															"args": [
-																"BB_WIZARD_SECONDARY_SPELL",
-																"BB_CURRENT_TARGET"
-															],
 															"vars": {
+																"ability_key": "BB_WIZARD_SECONDARY_SPELL",
+																"target_key": "BB_CURRENT_TARGET",
 																"min_distance": 0
 															}
 														},
 														{
 															"type": "leaf",
 															"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-															"args": [
-																"BB_WIZARD_BLINK_SPELL",
-																"BB_CURRENT_TARGET"
-															],
 															"vars": {
+																"ability_key": "BB_WIZARD_BLINK_SPELL",
+																"target_key": "BB_CURRENT_TARGET",
 																"min_distance": 0
 															}
 														}
@@ -85,7 +81,9 @@
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/maintain_distance/cover_minimum_distance",
-										"args": ["BB_CURRENT_TARGET"]
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET"
+										}
 									}
 								]
 							}
@@ -98,8 +96,7 @@
 							"children": [
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-									"args": []
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
 								}
 							]
 						}
@@ -108,11 +105,11 @@
 				{
 					"type": "leaf",
 					"behavior": "/datum/bt_node/ai_behavior/update_targets",
-					"args": [
-						"BB_CURRENT_TARGET",
-						"BB_TARGETING_STRATEGY",
-						"BB_CURRENT_TARGET_HIDING_LOCATION"
-					]
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
 				}
 			]
 		}

@@ -12,12 +12,18 @@
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-				"args": ["BB_BASIC_MOB_REINFORCEMENT_TARGET", 0, false]
+				"vars": {
+					"target_key": "BB_BASIC_MOB_REINFORCEMENT_TARGET",
+					"required_dist": 0,
+					"finish_on_arrival": false
+				}
 			},
 			{
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/clear_key",
-				"args": ["BB_BASIC_MOB_REINFORCEMENT_TARGET"]
+				"vars": {
+					"key": "BB_BASIC_MOB_REINFORCEMENT_TARGET"
+				}
 			}
 		]
 	}

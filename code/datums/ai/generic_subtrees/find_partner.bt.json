@@ -21,11 +21,11 @@
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/find_partner",
-				"args": [
-					"BB_BABIES_TARGET",
-					"BB_BABIES_PARTNER_TYPES",
-					"BB_BABIES_CHILD_TYPES"
-				]
+				"vars": {
+					"target_key": "BB_BABIES_TARGET",
+					"partner_types_key": "BB_BABIES_PARTNER_TYPES",
+					"child_types_key": "BB_BABIES_CHILD_TYPES"
+				}
 			}
 		}
 	}
