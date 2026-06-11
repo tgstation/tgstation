@@ -31147,9 +31147,15 @@
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "jRv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/cargo/miningdock)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "jRx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -72125,16 +72131,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse/upper)
-"wTS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/structure/sign/poster/contraband/random/directional/east,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
 "wTU" = (
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
@@ -114055,7 +114051,7 @@ qny
 uKa
 jgf
 lyb
-wTS
+jRv
 qeX
 mFb
 qeX
@@ -114330,7 +114326,7 @@ xJc
 nEl
 scJ
 qeX
-wTS
+jRv
 mFb
 xvM
 cFq
@@ -121993,7 +121989,7 @@ acK
 aaa
 aaa
 acm
-jRv
+xPT
 vQK
 cZo
 vFL
