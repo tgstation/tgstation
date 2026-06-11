@@ -97,7 +97,7 @@
 			"location" = fax_info["area_name"],
 			"muted" = fax_info["muted"],
 		)
-		data["faxes_info"] += list(fax_info)
+		data["faxes_info"] += list(fax_data)
 	return data
 
 /datum/computer_file/program/faxbond/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
