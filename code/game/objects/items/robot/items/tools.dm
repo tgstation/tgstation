@@ -191,10 +191,8 @@
 	if (!issilicon(user))
 		return
 
-	var/mob/living/silicon/robot/as_cyborg = user
-	if (!(src in as_cyborg.held_items))
-		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
-		return CONTEXTUAL_SCREENTIP_SET
+	context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/borg/cyborg_omnitool/examine(mob/user)
 	. = ..()
@@ -256,10 +254,12 @@
 	//build the radial menu options
 	var/list/radial_menu_options = list()
 	var/list/tool_map = list()
-	for(var/obj/item as anything in omni_toolkit)
-		var/tool_name = initial(item.name)
-		radial_menu_options[tool_name] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
-		tool_map[tool_name] = item
+	for(var/obj/item/tool as anything in omni_toolkit)
+		if(initial(tool.tool_behaviour) == tool_behaviour)
+			continue
+		var/tool_name = initial(tool.name)
+		radial_menu_options[tool_name] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+		tool_map[tool_name] = tool
 
 	//assign the new tool behaviour
 	var/internal_tool_name = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
@@ -319,7 +319,6 @@
 	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
-
 	omni_toolkit = list(
 		/obj/item/wrench/cyborg,
 		/obj/item/wirecutters/cyborg,
@@ -329,9 +328,8 @@
 		/obj/item/weldingtool/largetank/cyborg,
 	)
 
-/obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
+	//Is the omnitool welder currently on
+	var/welder_on = FALSE
 
 /obj/item/borg/cyborg_omnitool/engineering/update_overlays()
 	. = ..()
@@ -342,15 +340,23 @@
 
 /obj/item/borg/cyborg_omnitool/engineering/attack_self(mob/user, modifiers)
 	if(tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, LEFT_CLICK))
-		welder_toggle(src, null, user)
+		//Turn off the other guy welding tool cause we only have one shared welder and we don't want overlays to appear on both
+		var/mob/living/silicon/robot/borg = user
+		for(var/obj/item/borg/cyborg_omnitool/engineering/omni_tool in borg.model.basic_modules)
+			if(omni_tool == src || omni_tool.tool_behaviour != TOOL_WELDER || !omni_tool.welder_on)
+				continue
+			omni_tool.welder_toggle(TRUE)
+
+		//Toggle this welder
+		welder_toggle()
 
 		return NONE
 
 	return ..()
 
 /obj/item/borg/cyborg_omnitool/engineering/set_internal_tool(obj/item/tool)
-	if(tool_behaviour == TOOL_WELDER)
-		welder_toggle(src, FALSE)
+	if(tool_behaviour == TOOL_WELDER && welder_on)
+		welder_toggle(TRUE)
 
 	return ..()
 
@@ -362,24 +368,23 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 ///Toggles welder on/off when module slot is selected/deselected
-/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(datum/omnitool, state, mob/self_user)
+/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(force_off)
 	PRIVATE_PROC(TRUE)
-	SIGNAL_HANDLER
 
-	if(tool_behaviour == TOOL_WELDER)
-		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, usr)
-		if(isnull(state))
-			state = !tool.welding
-		if(state == tool.welding)
-			return
+	var/mob/living/silicon/robot/borgy = get(loc, /mob/living/silicon/robot)
+	var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, borgy)
+	if(force_off)
+		tool.switched_off()
+		welder_on = FALSE
+	else
+		tool.switched_on(borgy)
+		welder_on = tool.welding
 
-		if(state)
-			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update), override = TRUE)
-			if(self_user)
-				tool.switched_on(self_user)
-		else
-			tool.switched_off()
-			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
+	if(welder_on)
+		RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update), override = TRUE)
+	else
+		UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"
