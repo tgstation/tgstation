@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Losing your limbs via the cursed quirk now gives you limb stumps (so you can get your limbs back afterwards)"
