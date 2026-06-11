@@ -15223,12 +15223,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "fdp" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /obj/machinery/power/smes{
 	capacity = 9e+006;
 	charge = 10000
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
@@ -34150,6 +34150,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/navigate_destination,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "kXp" = (
@@ -69527,13 +69528,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"wog" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/cryo_cell,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/station/medical/cryo)
 "woj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -95319,7 +95313,7 @@ xOg
 mCk
 ocS
 pVz
-wog
+fWK
 lFN
 lBU
 hpQ
