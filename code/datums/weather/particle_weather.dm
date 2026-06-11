@@ -85,7 +85,7 @@
 			new_severity = clamp(new_severity, min(new_severity, min_severity), max_severity)
 		if (WIND_DOWN_STAGE)
 			// Slowly goes down to zero
-			new_severity += rand() * -severity_variation * (severity / min_severity)
+			new_severity += rand() * -severity_variation * 4 * max(severity / min_severity, 1)
 
 	animate_severity(new_severity)
 
@@ -101,6 +101,9 @@
 
 /datum/weather/particle/generate_overlay_cache()
 	. = ..()
+	if (stage == END_STAGE)
+		return
+
 	for (var/offset in 0 to SSmapping.max_plane_offset)
 		. += mutable_appearance('icons/effects/weather_overlay.dmi', "weather_overlay", overlay_layer, null, WEATHER_MASK_PLANE, offset_const = offset)
 
