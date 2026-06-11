@@ -45127,14 +45127,12 @@
 /area/station/hallway/primary/port)
 "oAJ" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "QMLoad";
-	name = "off ramp";
-	inverted = 1
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "QMLoad"
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
