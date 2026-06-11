@@ -16,7 +16,7 @@ endmap
 map nebulastation
 endmap
 
-map wawastation
+map kilostation
 endmap
 
 map gateway_test

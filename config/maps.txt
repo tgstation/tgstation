@@ -52,9 +52,9 @@ map nebulastation
 	votable
 endmap
 
-map wawastation
+map kilostation
 	votable
-	minplayers 40
+	maxplayers 40
 endmap
 
 # Debug-only maps.
