@@ -37218,7 +37218,7 @@
 /obj/machinery/smartfridge/organ,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Morgue Privacy Shutters";
-	id = morgueprivacy
+	id = "morgueprivacy"
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/office)
