@@ -15238,10 +15238,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/power/smes{
-	capacity = 9e+006;
-	charge = 10000
-	},
+/obj/machinery/power/smes,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "fdA" = (
