@@ -19,9 +19,9 @@
 /area/shuttle/syndicate/hallway)
 "ae" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "Blast Shutters"
+/obj/machinery/door/poddoor/shutters/syndicate{
+	name = "Blast Shutters";
+	id = "syndieshutters"
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
@@ -191,10 +191,6 @@
 	},
 /area/shuttle/syndicate/airlock)
 "aY" = (
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "Outer Blast Door"
-	},
 /obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/machinery/button/door/directional/north{
@@ -204,6 +200,11 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/syndicate/indestructible{
+	id = "smindicate";
+	name = "Outer Blast Door";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
@@ -601,9 +602,7 @@
 /obj/item/storage/box/zipties,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/dark/smooth_corner,
 /area/shuttle/syndicate/airlock)
 "iE" = (
 /obj/structure/closet/syndicate/nuclear,

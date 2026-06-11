@@ -468,6 +468,9 @@
 
 /mob/living/basic/bot/medbot/nukie/Initialize(mapload, new_skin)
 	. = ..()
+	var/datum/action/minimap/nuclear/tacmap_action = new
+	tacmap_action.Grant(src)
+	add_minimap_blip(src, MINIMAP_NUKEOP_BLIP, "mediborg")
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))

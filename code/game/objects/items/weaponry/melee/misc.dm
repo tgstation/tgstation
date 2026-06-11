@@ -387,6 +387,7 @@
 		force_unwielded = 10, \
 		force_wielded = 14, \
 	)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/bambostaff/update_icon_state()
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
@@ -414,6 +415,10 @@
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
+
+/obj/item/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/staff/broom
 	name = "broom"

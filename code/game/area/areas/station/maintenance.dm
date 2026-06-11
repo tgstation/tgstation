@@ -7,6 +7,7 @@
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 20
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /*
 * Departmental Maintenance
@@ -248,6 +249,7 @@
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/space_hut
 	name = "\improper Space Hut"
