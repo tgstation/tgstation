@@ -143,6 +143,10 @@ other types of metals and chemistry for reagents).
 /datum/design/proc/transfer_materials(list/custom_materials, multiplier, atom/target_object)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	ASSERT(islist(custom_materials), "design/transfer_materials() called with invalid 'custom_materials' arg value")
+	ASSERT(multiplier, "design/transfer_materials() called with invalid 'multiplier' arg value")
+	ASSERT(isatom(target_object), "design/transfer_materials() called with invalid 'target_object' arg value")
+
 	if(!length(transfered_materials)) //most common case where the object is just one thing and 'transferred_materials' is null
 		simple_transfer_materials(custom_materials, multiplier, target_object)
 		return
@@ -160,6 +164,7 @@ other types of metals and chemistry for reagents).
 ///Called by [proc/transfer_materials] in two places and it's basically the meat and bone of the function. Having it as a separate proc reduces copypaste a little.
 /datum/design/proc/simple_transfer_materials(list/custom_materials, multiplier, atom/target_object)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 
 	if(isstack(target_object))
 		var/obj/item/stack/stack = target_object
