@@ -10,8 +10,7 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
-	/// TRUE when the last perform() failed and we are waiting out next_perform_time.
-	/// While set, tick() reports BT_FAILURE instead of BT_RUNNING so parent selectors can try other branches.
+	/// TRUE when the last perform() failed and we are waiting out next_perform_time to say we failed
 	var/failed_last_perform = FALSE
 
 /datum/bt_node/ai_behavior/has_active_descendants()

@@ -7,18 +7,311 @@
 			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
 		},
 		{
-			"type": "subtree",
-			"subtype": "/datum/bt_node/subtree",
-			"override_id": "SUBPLAN_ID_PET_COMMAND"
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/override_id_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+				"override_id": "SUBPLAN_ID_PET_COMMAND"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree",
+				"override_id": "SUBPLAN_ID_PET_COMMAND"
+			}
 		},
 		{
-			"type": "subplan",
-			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-			"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+			"finish_on_primary": true,
 			"children": [
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/target_has_reagent",
+							"vars": {
+								"invert": false,
+								"key": "BB_WATERCAN_TARGET",
+								"reagent_type": "/datum/reagent/water"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"key": "BB_HYDROPLANT_TARGET",
+									"observer_abort": "BT_ABORT_BOTH"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"vars": {
+												"target_key": "BB_HYDROPLANT_TARGET",
+												"required_dist": 1
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+											"vars": {
+												"target_key": "BB_HYDROPLANT_TARGET"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/clear_key",
+											"vars": {
+												"key": "BB_HYDROPLANT_TARGET"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/ability_available",
+							"vars": {
+								"ability_key": "BB_SOLARBEAM_ABILITY",
+								"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"key": "BB_BEAMABLE_HYDROPLANT_TARGET",
+									"observer_abort": "BT_ABORT_BOTH"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"vars": {
+												"target_key": "BB_BEAMABLE_HYDROPLANT_TARGET",
+												"required_dist": 2
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+											"vars": {
+												"ability_key": "BB_SOLARBEAM_ABILITY",
+												"target_key": "BB_BEAMABLE_HYDROPLANT_TARGET"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/clear_key",
+											"vars": {
+												"key": "BB_BEAMABLE_HYDROPLANT_TARGET"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/item_inside_pawn",
+							"vars": {
+								"key": "BB_WATERCAN_TARGET"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/target_has_reagent",
+								"vars": {
+									"invert": true,
+									"key": "BB_WATERCAN_TARGET",
+									"reagent_type": "/datum/reagent/water"
+								},
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"observer_abort": "BT_ABORT_BOTH",
+										"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"vars": {
+													"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+													"required_dist": 1
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+												"vars": {
+													"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"vars": {
+													"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+												}
+											}
+										]
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/item_inside_pawn",
+							"vars": {
+								"invert": true,
+								"key": "BB_WATERCAN_TARGET"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"key": "BB_WATERCAN_TARGET",
+									"observer_abort": "BT_ABORT_BOTH"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/validate_target_on_turf",
+											"vars": {
+												"observer_abort": "BT_ABORT_SELF",
+												"key": "BB_WATERCAN_TARGET"
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"vars": {
+													"target_key": "BB_WATERCAN_TARGET",
+													"required_dist": 1
+												}
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+											"vars": {
+												"target_key": "BB_WATERCAN_TARGET"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"loop_delay": "IDLE_BEHAVIOR_RATE",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_WATERCAN_TARGET",
+								"invert": true
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+								"vars": {
+									"set_key": "BB_WATERCAN_TARGET",
+									"locate_path": "/obj/item/reagent_containers/cup/watering_can"
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/item_inside_pawn",
+							"vars": {
+								"key": "BB_WATERCAN_TARGET"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/target_has_reagent",
+								"vars": {
+									"invert": true,
+									"key": "BB_WATERCAN_TARGET",
+									"reagent_type": "/datum/reagent/water"
+								},
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+										"invert": true
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/find_and_set/suitable_water_dispenser",
+										"vars": {
+											"set_key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+										}
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_HYDROPLANT_TARGET",
+								"invert": true
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_and_set/treatable_hydro"
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/ability_available",
+							"vars": {
+								"ability_key": "BB_SOLARBEAM_ABILITY"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"key": "BB_BEAMABLE_HYDROPLANT_TARGET",
+									"invert": true
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_and_set/beamable_hydroplants",
+									"vars": {
+										"time_between_perform": "4 SECONDS"
+									}
+								}
+							}
+						}
+					]
 				}
 			]
 		}
