@@ -1,0 +1,4 @@
+author: "AtomTheProphet"
+delete-after: True
+changes:
+  - rscadd: "Adds \"Conserved Genetics\", a plant trait which prevents the plant from having its instability be altered by cross-pollination."
