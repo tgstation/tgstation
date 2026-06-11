@@ -29921,11 +29921,12 @@
 /area/station/cargo/warehouse)
 "jwB" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/light/small/directional/north,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock)
 "jwV" = (
@@ -31145,6 +31146,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
+"jRv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/closed/wall,
+/area/station/cargo/miningdock)
 "jRx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -34605,12 +34610,7 @@
 /area/station/maintenance/starboard)
 "kYE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump/on/layer4{
-	dir = 4;
-	name = "Airlock Pump";
-	target_pressure = 300;
-	hide = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "kYG" = (
@@ -47757,7 +47757,7 @@
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "pra" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "pri" = (
@@ -48650,7 +48650,12 @@
 /area/station/security/courtroom)
 "pIb" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/binary/pump/on/layer4{
+	dir = 4;
+	name = "Airlock Pump";
+	target_pressure = 300;
+	hide = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "pIl" = (
@@ -62140,6 +62145,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tRw" = (
@@ -68638,7 +68644,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -118131,7 +118136,7 @@ eGD
 rcI
 lDu
 xZL
-sJS
+vOX
 pNY
 bRx
 izu
@@ -118388,7 +118393,7 @@ djo
 cGr
 oLH
 kxT
-sJS
+rZV
 rBq
 udJ
 gmb
@@ -118645,7 +118650,7 @@ rPl
 uwq
 oLH
 wCY
-sJS
+rZV
 lSg
 tIe
 twd
@@ -121731,7 +121736,7 @@ xrA
 rZV
 jgC
 mjW
-ksJ
+jgC
 ksJ
 iVn
 xPT
@@ -121988,7 +121993,7 @@ acK
 aaa
 aaa
 acm
-xPT
+jRv
 vQK
 cZo
 vFL
@@ -122245,11 +122250,11 @@ qDp
 aaa
 aaa
 aaQ
-xPT
+mjW
 jwB
 lzF
 dFj
-xPT
+mjW
 aaQ
 aaa
 acm
