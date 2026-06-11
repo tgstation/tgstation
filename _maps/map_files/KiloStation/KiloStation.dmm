@@ -29671,7 +29671,6 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/structure/cable,
 /obj/machinery/duct,
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "jre" = (
