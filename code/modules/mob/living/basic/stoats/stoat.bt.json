@@ -21,7 +21,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"key": "BB_CURRENT_TARGET",
 								"observer_abort": "BT_ABORT_SELF"
 							},
@@ -71,7 +71,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/is_dragging",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_SELF"
 							},
 							"child": {
@@ -120,7 +120,7 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-					"config": {
+					"vars": {
 						"observer_abort": "BT_ABORT_SELF",
 						"cooldown_key": "BB_EAT_FOOD_COOLDOWN"
 					},

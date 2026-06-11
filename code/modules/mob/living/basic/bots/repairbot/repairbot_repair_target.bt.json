@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_BOTH"
 			},
 			"child": {
@@ -16,14 +16,14 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_SELF",
 				"invert": true
 			},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"config": {
+				"vars": {
 					"key": "BB_CURRENT_TARGET"
 				},
 				"child": {
@@ -45,7 +45,7 @@
 								{
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/bb_key_equals",
-									"config": {
+									"vars": {
 										"key": "BB_REPAIRBOT_INTERACTION_TYPE",
 										"value": "REPAIRBOT_INTERACTION_INTERACT"
 									},
@@ -60,7 +60,7 @@
 								{
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/bb_key_equals",
-									"config": {
+									"vars": {
 										"key": "BB_REPAIRBOT_INTERACTION_TYPE",
 										"value": "REPAIRBOT_INTERACTION_BUILD_GIRDERS"
 									},

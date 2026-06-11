@@ -2,21 +2,21 @@
 	"dm_type": "/datum/bt_node/subtree/thing_aoe",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_true",
-	"config": {
+	"vars": {
 		"invert": true,
 		"key": "BB_THETHING_NOAOE"
 	},
 	"child": {
 		"type": "decorator",
 		"decorator": "/datum/bt_node/decorator/bb_key_true",
-		"config": {
+		"vars": {
 			"invert": true,
 			"key": "BB_THETHING_MELEEMODE"
 		},
 		"child": {
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_has_trait_from",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_SELF",
 				"invert": true,
 				"trait": "TRAIT_IMMOBILIZED",
@@ -53,7 +53,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/random_chance",
-						"config": {
+						"vars": {
 							"chance": 0.6
 						},
 						"child": {

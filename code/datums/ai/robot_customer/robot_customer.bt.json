@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_CUSTOMER_LEAVING",
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
@@ -34,7 +34,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_CUSTOMER_CURRENT_TARGET",
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
@@ -62,14 +62,14 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_CUSTOMER_MY_SEAT",
 				"invert": true
 			},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/cooldown",
-				"config": {
+				"vars": {
 					"cooldown_key": "BB_CUSTOMER_FIND_SEAT_COOLDOWN",
 					"cooldown_duration": "8 SECONDS",
 					"lock_on_succeed": false
@@ -83,7 +83,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_CUSTOMER_MY_SEAT"
 			},
 			"child": {
@@ -103,7 +103,7 @@
 							{
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": {
+								"vars": {
 									"key": "BB_CUSTOMER_CURRENT_ORDER",
 									"invert": true
 								},

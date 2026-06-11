@@ -14,7 +14,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_FRIENDLY_CULTIST",
 				"observer_abort": "BT_ABORT_BOTH"
 			},
@@ -44,7 +44,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_OCCUPIED_RUNE",
 				"observer_abort": "BT_ABORT_BOTH"
 			},
@@ -70,7 +70,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_DEAD_CULTIST",
 				"observer_abort": "BT_ABORT_BOTH"
 			},
@@ -126,7 +126,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},

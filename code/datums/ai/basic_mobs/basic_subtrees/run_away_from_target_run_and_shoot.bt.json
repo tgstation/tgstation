@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/run_away_from_target/run_and_shoot",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_BASIC_MOB_STOP_FLEEING",
 		"invert": true,
 		"observer_abort": "BT_ABORT_BOTH"

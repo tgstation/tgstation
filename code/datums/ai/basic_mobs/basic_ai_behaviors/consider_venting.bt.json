@@ -5,7 +5,6 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/is_in_vent",
-			"config": {},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/exit_vent"
@@ -14,14 +13,14 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_BOTH",
 				"key": "BB_ENTRY_VENT_TARGET"
 			},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/cooldown",
-				"config": {
+				"vars": {
 					"cooldown_key": "BB_VENTING_COOLDOWN",
 					"cooldown_duration": "BB_VENTCRAWL_COOLDOWN"
 				},

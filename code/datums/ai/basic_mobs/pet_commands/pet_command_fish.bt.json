@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/pet_command/fish",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_CURRENT_PET_TARGET",
 		"observer_abort": "BT_ABORT_BOTH"
 	},

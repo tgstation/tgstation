@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/pet_command/swirl",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_SWARM_TARGET",
 		"observer_abort": "BT_ABORT_BOTH"
 	},

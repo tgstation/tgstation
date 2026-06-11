@@ -23,7 +23,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_WASH_TARGET"
 							},
@@ -59,7 +59,7 @@
 									{
 										"type": "decorator",
 										"decorator": "/datum/bt_node/decorator/cooldown",
-										"config": {
+										"vars": {
 											"observer_abort": "BT_ABORT_NONE",
 											"cooldown_key": "BB_TRASH_TALK_COOLDOWN",
 											"cooldown_duration": 4

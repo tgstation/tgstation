@@ -2,21 +2,20 @@
 	"dm_type": "/datum/bt_node/subtree/honkbot_slip",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/can_see_target",
-	"config": {
+	"vars": {
 		"key": "BB_SLIPPERY_TARGET",
 		"range": 5
 	},
 	"child": {
 		"type": "decorator",
 		"decorator": "/datum/bt_node/decorator/can_see_target",
-		"config": {
+		"vars": {
 			"key": "BB_SLIP_TARGET",
 			"range": 5
 		},
 		"child": {
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_has_gravity",
-			"config": {},
 			"child": {
 				"type": "sequence",
 				"children": [
@@ -40,7 +39,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/is_grabbing_target",
-						"config": {
+						"vars": {
 							"observer_abort": "BT_ABORT_SELF",
 							"key": "BB_SLIP_TARGET"
 						},

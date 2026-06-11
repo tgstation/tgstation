@@ -11,7 +11,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_SONG_INSTRUMENT"
 			},
 			"child": {
@@ -20,7 +20,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/is_holding_target",
-						"config": {
+						"vars": {
 							"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 						},
 						"child": {
@@ -65,7 +65,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_SONG_INSTRUMENT",
 				"invert": true
 			},

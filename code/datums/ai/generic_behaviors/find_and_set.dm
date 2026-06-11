@@ -6,11 +6,11 @@
 /datum/bt_node/ai_behavior/find_and_set
 	time_between_perform = 2 SECONDS
 	/// Blackboard key to store the found atom in.
-	var/set_key
+	var/set_key = BB_CURRENT_TARGET
 	/// Typepath (or blackboard key) describing what to look for.
 	var/locate_path
 	/// How far out to search; null re-defaults to SEARCH_TACTIC_DEFAULT_RANGE.
-	var/search_range
+	var/search_range = SEARCH_TACTIC_DEFAULT_RANGE
 
 /datum/bt_node/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller)
 	if (controller.blackboard_key_exists(set_key))

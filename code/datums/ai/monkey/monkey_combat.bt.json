@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/monkey_combat",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_CURRENT_TARGET",
 		"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 	},
@@ -12,7 +12,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/is_at_distance",
-				"config": {
+				"vars": {
 					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 					"invert": true,
 					"target_key": "BB_CURRENT_TARGET",
@@ -30,7 +30,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/pawn_health_below",
-				"config": {
+				"vars": {
 					"health_threshold": 40
 				},
 				"child": {
@@ -45,7 +45,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/cooldown",
-				"config": {
+				"vars": {
 					"cooldown_key": "BB_monkey_recruit_cooldown",
 					"cooldown_duration": 60
 				},
@@ -65,7 +65,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
-				"config": {
+				"vars": {
 					"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 					"invert": false,
 					"key": "BB_CURRENT_TARGET",
@@ -180,14 +180,14 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/cooldown",
-						"config": {
+						"vars": {
 							"cooldown_key": "BB_BATTLE_SCREECH_COOLDOWN",
 							"cooldown_duration": 5
 						},
 						"child": {
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/random_chance",
-							"config": {
+							"vars": {
 								"chance": 0.25
 							},
 							"child": {

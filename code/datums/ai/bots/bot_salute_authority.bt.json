@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/bot_salute_authority",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/cooldown",
-	"config": {
+	"vars": {
 		"cooldown_key": "BB_SALUTE_COOLDOWN",
 		"cooldown_duration": 60
 	},

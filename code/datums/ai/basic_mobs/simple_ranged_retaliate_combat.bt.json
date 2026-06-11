@@ -13,7 +13,7 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"key": "BB_CURRENT_TARGET",
 						"observer_abort": "BT_ABORT_SELF"
 					},

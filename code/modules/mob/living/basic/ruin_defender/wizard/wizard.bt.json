@@ -20,7 +20,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"invert": false,
 								"key": "BB_CURRENT_TARGET"
@@ -40,7 +40,7 @@
 											{
 												"type": "decorator",
 												"decorator": "/datum/bt_node/decorator/cooldown",
-												"config": {
+												"vars": {
 													"cooldown_key": "BB_WIZARD_SPELL_COOLDOWN",
 													"cooldown_duration": "WIZARD_SPELL_COOLDOWN"
 												},

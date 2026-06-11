@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/thing_melee",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/true_for_time",
-	"config": {
+	"vars": {
 		"observer_abort": "BT_ABORT_SELF",
 		"duration": "5 SECONDS"
 	},
@@ -32,7 +32,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/is_at_distance",
-						"config": {
+						"vars": {
 							"target_key": "BB_CURRENT_TARGET",
 							"min_distance": 3
 						},
@@ -48,7 +48,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/pawn_has_trait_from",
-						"config": {
+						"vars": {
 							"observer_abort": "BT_ABORT_SELF",
 							"invert": true,
 							"trait": "TRAIT_IMMOBILIZED",

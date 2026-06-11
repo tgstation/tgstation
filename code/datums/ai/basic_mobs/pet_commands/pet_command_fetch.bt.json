@@ -12,7 +12,7 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"key": "BB_CURRENT_PET_TARGET",
 						"observer_abort": "BT_ABORT_BOTH"
 					},
@@ -51,14 +51,14 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_SIMPLE_CARRY_ITEM",
 				"observer_abort": "BT_ABORT_BOTH"
 			},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"config": {
+				"vars": {
 					"key": "BB_FETCH_DELIVER_TO",
 					"observer_abort": "BT_ABORT_BOTH"
 				},
@@ -93,7 +93,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_BOTH",
 				"invert": true,
 				"key": "BB_CURRENT_PET_TARGET"

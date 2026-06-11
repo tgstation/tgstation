@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/dog_harassment",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/random_chance",
-	"config": {
+	"vars": {
 		"chance": 0.1
 	},
 	"child": {

@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/transition_hive_status",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_equals",
-	"config": {
+	"vars": {
 		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 		"key": "BB_WANTS_TO_TRANSITION_HIVE",
 		"value": true

@@ -20,7 +20,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},
@@ -64,7 +64,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_NONE",
 								"invert": true,
 								"key": "BB_SHOP_SPOT"
@@ -72,7 +72,7 @@
 							"child": {
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/bb_key_set",
-								"config": {
+								"vars": {
 									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 									"key": "BB_FIRST_CUSTOMER"
 								},
@@ -85,7 +85,7 @@
 												{
 													"type": "decorator",
 													"decorator": "/datum/bt_node/decorator/bb_key_equals",
-													"config": {
+													"vars": {
 														"key": "BB_TRADER_RUSH_TO_SELL",
 														"value": true
 													},

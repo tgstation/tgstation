@@ -19,7 +19,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"invert": true,
 				"key": "BB_HOME_VILLAGE"
 			},
@@ -51,20 +51,20 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/pawn_same_z_as_key",
-							"config": {
+							"vars": {
 								"key": "BB_HOME_VILLAGE"
 							},
 							"child": {
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/pawn_farther_than_from_key",
-								"config": {
+								"vars": {
 									"anchor_key": "BB_HOME_VILLAGE",
 									"distance_key": "BB_MAXIMUM_DISTANCE_TO_VILLAGE"
 								},
 								"child": {
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/mook_has_flee_reason",
-									"config": {
+									"vars": {
 										"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 									},
 									"child": {
@@ -110,7 +110,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},

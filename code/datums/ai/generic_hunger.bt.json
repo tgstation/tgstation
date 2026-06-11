@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "bb_food_target",
 				"invert": true
 			},
@@ -22,7 +22,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "bb_food_target"
 			},
 			"child": {

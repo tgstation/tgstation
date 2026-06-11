@@ -23,14 +23,13 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},
 							"child": {
 								"type": "decorator",
 								"decorator": "/datum/bt_node/decorator/secbot_target_valid",
-								"config": {},
 								"child": {
 									"type": "sequence",
 									"children": [
@@ -69,7 +68,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_SLIPPERY_TARGET"
 							},
@@ -81,7 +80,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CLOWN_FRIEND"
 							},

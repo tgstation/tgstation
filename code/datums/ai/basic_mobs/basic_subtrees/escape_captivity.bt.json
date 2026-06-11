@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {
@@ -14,7 +14,6 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/buckle_target_dangerous",
-						"config": {},
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/break_out_of_object/from_bb",
@@ -33,7 +32,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_contained_in_obj",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {
@@ -42,7 +41,6 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/container_attackable",
-						"config": {},
 						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/break_out_of_object/from_bb",
@@ -61,7 +59,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {
@@ -72,7 +70,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {

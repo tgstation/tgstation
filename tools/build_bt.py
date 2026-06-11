@@ -42,7 +42,7 @@ STATIC_NODES: dict[str, str] = {
 }
 
 # Source JSON structural keys that are consumed/transformed during compilation.
-_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'args', 'config', 'vars', 'subtype', 'dm_type', 'bindings'})
+_CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'vars', 'subtype', 'dm_type', 'bindings'})
 
 
 
@@ -209,13 +209,12 @@ def compile_node(src: dict, defines: dict) -> dict:
     elif 'child' in src:
         out[desc_children] = [compile_node(src['child'], defines)]
 
-    # Add config
-    for key, val in src.get('config', {}).items():
-        out[key] = resolve_value(val, defines)
-
-    # Positional "args" are no longer supported — behaviors are configured via "vars".
+    # Positional "args" and "config" are no longer supported — every node
+    # (leaf, decorator, composite) is configured via "vars".
     if 'args' in src:
         raise ValueError(f'"args" is no longer supported in node {node_type!r} — use "vars"')
+    if 'config' in src:
+        raise ValueError(f'"config" is no longer supported in node {node_type!r} — use "vars"')
 
     # Instance vars — "" means omit the key (DM uses the type var default)
     for key, val in src.get('vars', {}).items():

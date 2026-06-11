@@ -2,20 +2,20 @@
 	"dm_type": "/datum/bt_node/subtree/find_partner",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 		"key": "BB_FUCKS"
 	},
 	"child": {
 		"type": "decorator",
 		"decorator": "/datum/bt_node/decorator/bb_key_set",
-		"config": {
+		"vars": {
 			"key": "BB_BREED_READY"
 		},
 		"child": {
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-			"config": {
+			"vars": {
 				"cooldown_key": "BB_PARTNER_SEARCH_TIMEOUT"
 			},
 			"child": {

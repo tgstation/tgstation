@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/monkey_serve_food",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_monkey_tamed"
 	},
 	"child": {
@@ -22,7 +22,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
+						"vars": {
 							"key": "BB_monkey_current_served_item",
 							"invert": true
 						},
@@ -39,7 +39,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/is_holding_target",
-						"config": {
+						"vars": {
 							"key": "BB_monkey_current_served_item"
 						},
 						"child": {
@@ -67,7 +67,7 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
+						"vars": {
 							"invert": false,
 							"key": "BB_monkey_current_served_item"
 						},

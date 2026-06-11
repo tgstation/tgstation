@@ -23,7 +23,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/ability_available",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 								"ability_key": "BB_GENERIC_ACTION"
 							},
@@ -48,7 +48,7 @@
 										{
 											"type": "decorator",
 											"decorator": "/datum/bt_node/decorator/bb_key_set",
-											"config": {
+											"vars": {
 												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 												"key": "BB_TURTLE_HEADBUTT_VICTIM"
 											},
@@ -85,7 +85,7 @@
 										{
 											"type": "decorator",
 											"decorator": "/datum/bt_node/decorator/bb_key_set",
-											"config": {
+											"vars": {
 												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 												"key": "BB_TURTLE_HEADBUTT_VICTIM"
 											},
@@ -138,7 +138,7 @@
 								{
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-									"config": {
+									"vars": {
 										"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN"
 									},
 									"child": {
@@ -153,7 +153,7 @@
 								{
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-									"config": {
+									"vars": {
 										"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN"
 									},
 									"child": {

@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bot_is_emagged",
-			"config": {
+			"vars": {
 				"invert": false
 			},
 			"child": {
@@ -31,7 +31,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_NONE",
 				"invert": true,
 				"key": "BB_CURRENT_TARGET"

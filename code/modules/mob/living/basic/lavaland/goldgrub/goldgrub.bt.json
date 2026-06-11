@@ -8,6 +8,7 @@
 		},
 		{
 			"type": "subtree",
+			"subtype": "",
 			"override_id": "SUBPLAN_ID_PET_COMMAND"
 		},
 		{
@@ -17,7 +18,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"observer_abort": "BT_ABORT_BOTH",
 				"key": "BB_CURRENT_TARGET"
 			},
@@ -40,7 +41,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},
@@ -52,7 +53,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"key": "BB_BOULDER_TARGET",
 								"observer_abort": "BT_ABORT_BOTH"
 							},
@@ -81,7 +82,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"key": "BB_ORE_TARGET",
 								"observer_abort": "BT_ABORT_BOTH"
 							},
@@ -110,7 +111,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"key": "BB_VENT_TARGET",
 								"observer_abort": "BT_ABORT_BOTH"
 							},
@@ -158,7 +159,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
 								"observer_abort": "BT_ABORT_BOTH"
 							},

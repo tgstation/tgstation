@@ -8,7 +8,7 @@
 	},
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"key": "BB_BASIC_MOB_STOP_FLEEING",
 		"invert": true,
 		"observer_abort": "BT_ABORT_BOTH"

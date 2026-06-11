@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"invert": true,
 				"key": "BB_MATERIAL_STAND_TARGET"
 			},
@@ -39,7 +39,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"invert": true,
 				"key": "BB_MOOK_TRIBAL_CHIEF"
 			},
@@ -59,7 +59,8 @@
 						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
 						"vars": {
 							"target_key": "BB_MOOK_TRIBAL_CHIEF",
-							"long_range_friendship": true
+							"long_range_friendship": true,
+							"forget_target": false
 						}
 					}
 				]

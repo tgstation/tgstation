@@ -14,7 +14,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/cooldown",
-			"config": {
+			"vars": {
 				"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
 				"cooldown_duration": "30 SECONDS",
 				"lock_on_succeed": true
@@ -38,7 +38,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"config": {
+							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
 								"key": "BB_CURRENT_TARGET"
 							},

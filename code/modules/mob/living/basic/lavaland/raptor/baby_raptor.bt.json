@@ -5,7 +5,6 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/is_in_vent",
-			"config": {},
 			"child": {
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/exit_vent"
@@ -14,7 +13,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/cooldown",
-			"config": {
+			"vars": {
 				"cooldown_key": "BB_VENTING_COOLDOWN"
 			},
 			"child": {

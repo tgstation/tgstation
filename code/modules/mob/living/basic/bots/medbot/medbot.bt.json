@@ -23,7 +23,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-							"config": {
+							"vars": {
 								"flag": "MEDBOT_DECLARE_CRIT"
 							},
 							"child": {
@@ -34,7 +34,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-							"config": {
+							"vars": {
 								"flag": "MEDBOT_TIPPED_MODE",
 								"invert": true
 							},
@@ -51,7 +51,7 @@
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bot_medical_flag",
-							"config": {
+							"vars": {
 								"flag": "MEDBOT_SPEAK_MODE"
 							},
 							"child": {

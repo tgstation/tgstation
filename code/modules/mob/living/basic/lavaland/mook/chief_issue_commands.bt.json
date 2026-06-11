@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/chief_issue_commands",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/cooldown",
-	"config": {
+	"vars": {
 		"cooldown_key": "BB_COMMAND_COOLDOWN",
 		"cooldown_duration": "10 SECONDS",
 		"lock_on_succeed": true
@@ -13,7 +13,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"config": {
+				"vars": {
 					"observer_abort": "BT_ABORT_BOTH",
 					"key": "BB_CURRENT_TARGET"
 				},
@@ -32,7 +32,7 @@
 			{
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"config": {
+				"vars": {
 					"observer_abort": "BT_ABORT_BOTH",
 					"key": "BB_ORE_TARGET"
 				},

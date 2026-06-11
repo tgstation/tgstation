@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/random_chance",
-			"config": {
+			"vars": {
 				"chance": 0.05
 			},
 			"child": {
@@ -16,7 +16,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/random_chance",
-			"config": {
+			"vars": {
 				"chance": 0.2
 			},
 			"child": {
@@ -32,13 +32,13 @@
 					{
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/bb_key_set",
-						"config": {
+						"vars": {
 							"key": "BB_monkey_current_press_target"
 						},
 						"child": {
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/random_chance",
-							"config": {
+							"vars": {
 								"chance": 0.5
 							},
 							"child": {
@@ -89,13 +89,13 @@
 				{
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"config": {
+					"vars": {
 						"key": "BB_monkey_current_give_target"
 					},
 					"child": {
 						"type": "decorator",
 						"decorator": "/datum/bt_node/decorator/random_chance_from_key",
-						"config": {
+						"vars": {
 							"chance_key": "BB_monkey_give_chance"
 						},
 						"child": {
@@ -126,7 +126,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_equals",
-			"config": {
+			"vars": {
 				"key": "BB_monkey_tamed",
 				"value": false
 			},

@@ -5,7 +5,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"key": "BB_SIMPLE_CARRY_ITEM"
 			},
 			"child": {
@@ -34,7 +34,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"invert": true,
 				"key": "BB_SIMPLE_CARRY_ITEM"
 			},
@@ -50,7 +50,7 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
-			"config": {
+			"vars": {
 				"invert": true,
 				"key": "BB_MATERIAL_STAND_TARGET"
 			},

@@ -5,11 +5,10 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/vending_is_tilted",
-			"config": {},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-				"config": {
+				"vars": {
 					"cooldown_key": "BB_VENDING_UNTILT_COOLDOWN"
 				},
 				"child": {
@@ -21,13 +20,13 @@
 		{
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/vending_is_tilted",
-			"config": {
+			"vars": {
 				"invert": true
 			},
 			"child": {
 				"type": "decorator",
 				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-				"config": {
+				"vars": {
 					"cooldown_key": "BB_VENDING_TILT_COOLDOWN"
 				},
 				"child": {

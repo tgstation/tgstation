@@ -2,7 +2,7 @@
 	"dm_type": "/datum/bt_node/subtree/move_to_reinforce",
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/bb_key_set",
-	"config": {
+	"vars": {
 		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 		"key": "BB_BASIC_MOB_REINFORCEMENT_TARGET"
 	},

@@ -2,6 +2,7 @@
 	var/target_key
 	var/befriend_message
 	var/long_range_friendship = FALSE
+	var/forget_target = TRUE
 
 /datum/bt_node/ai_behavior/befriend_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
@@ -38,4 +39,5 @@
 
 /datum/ai_behavior/befriend_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	controller.clear_blackboard_key(target_key)
+	if(forget_target)
+		controller.clear_blackboard_key(target_key)
