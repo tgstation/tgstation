@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "Changing the species of most monkeys, whose names were changed to those of individuals on the manifest, will no longer cause the names on those individuals' records to be changed to the name the monkey ends up with."
