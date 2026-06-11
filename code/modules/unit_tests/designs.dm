@@ -87,7 +87,7 @@
 /datum/unit_test/design_mats/Run()
 	var/list/special_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
 
-	for (var/design_id as anything in SSresearch.techweb_designs)
+	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_id]
 
 		var/mat_requirement_design = length(special_types & design.materials)
