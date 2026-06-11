@@ -2,18 +2,11 @@
 /datum/bt_node/subtree/pet_command/attack/slime
 	behavior_tree_json = "code/modules/mob/living/basic/slime/ai/pet_command_attack_slime.bt.json"
 
-// =============================================================================
-// Slime BT-native behaviors
-// =============================================================================
-
-/**
- * Updates the slime's facial overlay based on current mood (hunger, rabid, retaliate, hunting).
- * 5% chance per tick. Returns FAILURE if not triggered so the selector passes through.
- */
+///give them the chud face if they dont feed us, basically select a nice face
 /datum/bt_node/ai_behavior/change_slime_face
 
 /datum/bt_node/ai_behavior/change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(!SPT_PROB(5, seconds_per_tick))
+	if(!prob(5))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
@@ -78,36 +71,40 @@
 		return can_see(slime_pawn, candidate, 7)
 	return FALSE
 
-// =============================================================================
 
-/**
- * Attempt to feed on the target at BB_CURRENT_TARGET.
- * If the target is feedable, calls start_feeding. Otherwise attacks.
- * Returns FAILURE if the target is gone, buckled (slime), or not feedable in context.
- */
+///im about to eat this guy up
 /datum/bt_node/ai_behavior/feed_on_slime_target
 	var/target_key
 
 /datum/bt_node/ai_behavior/feed_on_slime_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	if(!istype(slime_pawn) || slime_pawn.buckled)
+	if(!istype(slime_pawn)) //bro lmao comeon
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
+	if(slime_pawn.buckled)
+		if(slime_pawn.buckled == target) //we got em boys
+			return AI_BEHAVIOR_DELAY
+		else
+			return AI_BEHAVIOR_FAILED //epic fail; try again
+
 	if(!slime_pawn.can_feed_on(target))
-		slime_pawn.UnarmedAttack(target, TRUE)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if((target.body_position != STANDING_UP) || prob(20))
 		slime_pawn.start_feeding(target)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY
 
 	if(target.client && target.health >= 20)
-		slime_pawn.UnarmedAttack(target, TRUE)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	slime_pawn.start_feeding(target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY
+
+
+/datum/bt_node/ai_behavior/feed_on_slime_target/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	slime_pawn.stop_feeding()

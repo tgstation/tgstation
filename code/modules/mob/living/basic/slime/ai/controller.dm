@@ -14,11 +14,3 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	behavior_tree_json = "code/modules/mob/living/basic/slime/ai/slime.bt.json"
-
-/datum/ai_controller/basic_controller/slime/CancelActions()
-	..()
-	if(QDELETED(pawn))
-		return
-
-	var/mob/living/basic/slime/slime_pawn = pawn
-	slime_pawn.stop_feeding()
