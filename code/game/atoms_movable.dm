@@ -1738,6 +1738,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	VV_DROPDOWN_OPTION(VV_HK_ASSIGN_TTS_VOICE, "Set TTS Voice")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
@@ -1793,6 +1794,12 @@
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
+
+	if(href_list[VV_HK_ASSIGN_TTS_VOICE])
+		var/new_voice = tgui_input_list(usr, "Select a new TTS voice for this mob.", "TTS Voice", SStts.available_speakers, "invalid")
+		if(!new_voice)
+			return
+		src.voice = new_voice
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.
