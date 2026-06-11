@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed diamond and bluespace artifact boulders not containing any diamonds/bluespace crystals"

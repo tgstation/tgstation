@@ -262,11 +262,16 @@
   timothymtorres:
   - sound: Books now make paper sound when opened
 2026-06-11:
+  AtomTheProphet:
+  - rscadd: Adds "Conserved Genetics", a plant trait which prevents the plant from
+      having its instability be altered by cross-pollination.
   Melbert:
   - bugfix: Losing your limbs via the cursed quirk now gives you limb stumps (so you
       can get your limbs back afterwards)
   SmArtKar:
   - bugfix: Fixed debug overlays on new biome rocks on lavaland
+  - bugfix: Fixed diamond and bluespace artifact boulders not containing any diamonds/bluespace
+      crystals
   TealSeer:
   - refactor: security camera construction/item interaction has been rewritten, report
       any weirdness
