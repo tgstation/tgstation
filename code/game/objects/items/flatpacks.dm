@@ -103,6 +103,7 @@
 	icon_state = "flatcart"
 	density = TRUE
 	opacity = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/flatpack_cart/Initialize(mapload)
 	. = ..()
@@ -170,6 +171,11 @@
 	name = "flatpacker"
 	board = /obj/item/circuitboard/machine/flatpacker
 	custom_premium_price = PAYCHECK_COMMAND
+
+/obj/item/flatpack/shuttle_engine
+	name = "shuttle propulsion engine"
+	board = /obj/item/circuitboard/machine/engine/propulsion
+	custom_premium_price = PAYCHECK_CREW * 2
 
 // Cargo flatpacks
 

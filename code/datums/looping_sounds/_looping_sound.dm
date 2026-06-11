@@ -67,8 +67,18 @@
 	var/reserve_random_channel = FALSE
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
+	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
+	var/use_sound_tokens = FALSE
+	///The sound token instance for this looping sound.
+	var/datum/sound_token/sound_token_instance
 
-/datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
+/datum/looping_sound/New(
+	_parent,
+	start_immediately = FALSE,
+	_direct = FALSE,
+	_skip_starting_sounds = FALSE,
+	sound_channel,
+)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
@@ -76,6 +86,8 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
+	if(sound_channel)
+		src.sound_channel = sound_channel
 
 	if(start_immediately)
 		start()
@@ -96,11 +108,11 @@
 	if(timer_id)
 		return
 
-	if(!sound_channel && reserve_random_channel)
-		sound_channel = SSsounds.reserve_sound_channel_datumless()
+	if(!use_sound_tokens && !sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel()
 		reserved_channel = sound_channel
-
 	on_start()
+
 
 /**
  * The proc to call to stop the sound loop.
@@ -163,10 +175,18 @@
  * * volume_override - The volume we want to play the sound at, overriding the `volume` variable.
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
+
+	if(use_sound_tokens)
+		if(sound_token_instance)
+			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
+			sound_token_instance.update_sound(soundfile, TRUE)
+		else
+			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance)
+		return
 	var/sound/sound_to_play = sound(soundfile)
+	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
+	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 	if(direct)
-		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
-		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
 		playsound(
@@ -176,6 +196,7 @@
 			vary,
 			extra_range,
 			falloff_exponent = falloff_exponent,
+			channel = sound_to_play.channel,
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
@@ -239,6 +260,7 @@
 
 /// Stops sound playing on current channel, if specified
 /datum/looping_sound/proc/stop_current()
+	QDEL_NULL(sound_token_instance)
 	if(!sound_channel || !ismob(parent))
 		return
 	var/mob/mob_parent = parent

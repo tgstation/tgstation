@@ -751,7 +751,7 @@
 "RY" = (
 /obj/item/cautery/alien,
 /obj/structure/closet/crate,
-/obj/item/stack/sticky_tape/super,
+/obj/item/stack/medical/wrap/sticky_tape/super,
 /obj/item/clothing/head/wizard/tape,
 /obj/item/bikehorn/golden{
 	pixel_x = -8;

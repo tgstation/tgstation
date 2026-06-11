@@ -26,6 +26,8 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.3
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/item/crowbar/red/caravan
 	icon_state = "crowbar_caravan"

@@ -4,8 +4,13 @@
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1622" = "Bug breaking rendering can lead to wallhacks.",
-	))
-
+))
+GLOBAL_LIST_INIT(unrecommended_builds, list(
+	"1670" = "Bug breaking in-world text rendering.",
+	"1671" = "Bug breaking in-world text rendering.",
+	"1675" = "Frequent crashing.",
+	"1676" = "Frequent crashing.",
+))
 #define LIMITER_SIZE 5
 #define CURRENT_SECOND 1
 #define SECOND_COUNT 2
@@ -265,8 +270,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client = new(ckey)
 	persistent_client.set_client(src)
 
-	if(byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -320,30 +324,47 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(!joined_player_preferences)
 				continue //this shouldn't happen.
 
-			var/client/C = GLOB.directory[joined_player_ckey]
-			var/in_round = ""
-			if (joined_players[joined_player_ckey])
-				in_round = " who has played in the current round"
-			var/message_type = "Notice"
+			var/client/potential_match = GLOB.directory[joined_player_ckey]
 
-			var/matches
+			var/matched_ip = null
+			var/matched_cid = null
+			var/same_round = FALSE
+
 			if(joined_player_preferences.last_ip == address)
-				matches += "IP ([address])"
+				matched_ip = "IP [address]"
+
 			if(joined_player_preferences.last_id == computer_id)
-				if(matches)
-					matches = "BOTH [matches] and "
-					alert_admin_multikey = TRUE
-					message_type = "MULTIKEY"
-				matches += "Computer ID ([computer_id])"
+				matched_cid = "Computer ID [computer_id]"
 				alert_mob_dupe_login = TRUE
 
-			if(matches)
-				if(C)
-					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [key_name_admin(C)]<b>[in_round]</b>."))
-					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [key_name(C)][in_round].")
-				else
-					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [joined_player_ckey](no longer logged in)<b>[in_round]</b>. "))
-					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [joined_player_ckey](no longer logged in)[in_round].")
+			if(isnull(matched_ip) && isnull(matched_cid))
+				continue
+
+			if (joined_players[joined_player_ckey])
+				same_round = TRUE
+
+			var/double_match = !isnull(matched_ip) && !isnull(matched_cid)
+
+			if(double_match && same_round)
+				alert_admin_multikey = TRUE
+
+			var/list/concatables = list()
+			concatables += span_danger(span_bold("[double_match ? "MULTIKEY" : "Notice"]:"))
+			concatables += "<span class='notice'>Connecting player [key_name_admin(src)] has the same"
+			if(double_match)
+				concatables += "!BOTH! [matched_ip] and [matched_cid]"
+			else
+				concatables += (!isnull(matched_ip) ? matched_ip : matched_cid)
+			concatables += "as [isnull(potential_match) ? "[joined_player_ckey] (no longer logged in)" : "[key_name_admin(potential_match)]"]"
+			if(same_round)
+				concatables += span_bold("in the current round")
+
+			concatables += "</span>"
+
+			var/sendable_string = jointext(concatables, " ")
+
+			message_admins(sendable_string)
+			log_admin_private(strip_html_full(sendable_string, MAX_MESSAGE_LEN))
 
 	. = ..() //calls mob.Login()
 
@@ -536,8 +557,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, span_info("You have unread updates in the changelog."))
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
-		else
-			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -557,19 +576,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if (!interviewee)
-		initialize_menus()
-
 	loot_panel = new(src)
 
 	view_size = new(src)
-	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	view_size.apply()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
+	set_fullscreen()
 
 //////////////
 //DISCONNECT//
@@ -619,13 +635,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
+	SSsound_tokens.clients_needing_update -= src
+	SSsound_tokens.currentrun -= src
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(parallax_rock)
-	QDEL_LIST(parallax_layers_cached)
-	parallax_layers = null
 	seen_messages = null
 	Master.UpdateTickRate()
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
@@ -1055,11 +1071,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, announcement)
 
 ///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
-/client/proc/give_award(achievement_type, mob/user, value = 1)
-	return persistent_client.achievements.unlock(achievement_type, user, value)
+/client/proc/give_award(achievement_type, mob/user, value = 1, ...)
+	return persistent_client.achievements.unlock(arglist(args))
 
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
-/client/proc/get_award_status(achievement_type, mob/user, value = 1)
+/client/proc/get_award_status(achievement_type)
 	return persistent_client.achievements.get_achievement_status(achievement_type)
 
 ///Gives someone hearted status for OOC, from behavior commendations
@@ -1099,33 +1115,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
-/**
- * Initializes dropdown menus on client
- */
-/client/proc/initialize_menus()
-	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
-	for (var/thing in topmenus)
-		var/datum/verbs/menu/topmenu = thing
-		var/topmenuname = "[topmenu]"
-		if (topmenuname == "[topmenu.type]")
-			var/list/tree = splittext(topmenuname, "/")
-			topmenuname = tree[tree.len]
-		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
-		var/list/entries = topmenu.Generate_list(src)
-		for (var/child in entries)
-			winset(src, "[child]", "[entries[child]]")
-			if (!ispath(child, /datum/verbs/menu))
-				var/procpath/verbpath = child
-				if (verbpath.name[1] != "@")
-					new child(src)
-
-	// Place Help back at the end.
-	winset(src, "help-menu", "index=1000")
-
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
-		holder.filteriffic = new /datum/filter_editor(in_atom)
-		holder.filteriffic.ui_interact(mob)
+		holder.filterrific = new /datum/filter_editor(in_atom)
+		holder.filterrific.ui_interact(mob)
 
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)
@@ -1135,13 +1128,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
-		winset(src, "mapwindow.map", "right-click=true")
-		winset(src, "ShiftUp", "is-disabled=false")
-		winset(src, "Shift", "is-disabled=false")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=false")
 	else
-		winset(src, "mapwindow.map", "right-click=false")
-		winset(src, "default.Shift", "is-disabled=true")
-		winset(src, "default.ShiftUp", "is-disabled=true")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=true")
 
 /client/proc/update_ambience_pref(value)
 	if(value)
@@ -1210,27 +1203,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
 	set_fullscreen()
 
-/client/proc/set_fullscreen(logging_in = FALSE)
-	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
-	//no need to set every login to not fullscreen, they already aren't.
-	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
-	if(logging_in)
-		if(fullscreen)
-			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
-		return
-	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+/client/proc/set_fullscreen()
+	winset(src, SKIN_MAINWINDOW, "is-fullscreen=[prefs?.read_preference(/datum/preference/toggle/fullscreen_mode) ? "true" : "false"]")
 	attempt_auto_fit_viewport()
-
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
-
-	show_status_bar = !show_status_bar
-
-	if (show_status_bar)
-		winset(src, "mapwindow.status_bar", "is-visible=true")
-	else
-		winset(src, "mapwindow.status_bar", "is-visible=false")
 
 /// Clears the client's screen, aside from ones that opt out
 /client/proc/clear_screen()

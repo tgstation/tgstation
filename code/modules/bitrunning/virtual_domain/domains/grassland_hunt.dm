@@ -6,6 +6,7 @@
 	key = "grasslands_hunt"
 	map_name = "grasslands_hunt"
 	mob_modules = list(/datum/modular_mob_segment/deer)
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 
 /datum/lazy_template/virtual_domain/grasslands_hunt/setup_domain(list/created_atoms)

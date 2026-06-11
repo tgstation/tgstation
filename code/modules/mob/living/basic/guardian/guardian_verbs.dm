@@ -43,15 +43,6 @@
 		to_chat(src, span_notice("You deactivate your light."))
 		set_light_on(FALSE)
 
-
-/// Prints what type of guardian we are and what we can do.
-/mob/living/basic/guardian/verb/check_type()
-	set name = "Check Guardian Type"
-	set category = "Guardian"
-	set desc = "Check what type you are."
-	to_chat(src, playstyle_string)
-
-
 /// Speak with our boss at a distance
 /mob/living/basic/guardian/proc/communicate()
 	if (isnull(summoner))

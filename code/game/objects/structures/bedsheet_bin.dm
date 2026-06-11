@@ -37,7 +37,7 @@ LINEN BINS
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
+	AddElement(/datum/element/surgery_aid, "bedsheet")
 	AddElement(/datum/element/bed_tuckable, mapload, 0, 0, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
@@ -581,6 +581,7 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	anchored_tabletop_offset = 6
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	/// The number of bedsheets in the bin
 	var/amount = 10
 	/// A list of actual sheets within the bin

@@ -368,10 +368,11 @@
 	l_hand = /obj/item/gun/ballistic/shotgun/hook
 	r_hand = /obj/item/gun/ballistic/shotgun/hook
 	uniform = /obj/item/clothing/under/costume/skeleton
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	suit = /obj/item/clothing/suit/chaplainsuit/armor/heretic
 	mask = /obj/item/clothing/mask/gas/cyborg
 	shoes = /obj/item/clothing/shoes/sandal
 	belt = /obj/item/melee/cleric_mace
+	head = /obj/item/clothing/head/helmet/chaplain/heretic
 
 /datum/outfit/deathmatch_loadout/battler/cowboy
 	name = "Deathmatch: Cowboy"
@@ -849,7 +850,7 @@
 		/obj/item/etherealballdeployer,
 	)
 
-	mutations_to_add = list(/obj/item/dnainjector/shock) // pretend ethereals are interesting
+	mutations_to_add = list(/datum/mutation/shock) // pretend ethereals are interesting
 
 /datum/outfit/deathmatch_loadout/plasmamen
 	name = "Deathmatch: Plasmaman Species"
@@ -867,6 +868,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/atmos
 	shoes = /obj/item/clothing/shoes/workboots
 	r_pocket = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_RPOCKET
 
 	back = /obj/item/storage/backpack/industrial
 
@@ -890,7 +892,7 @@
 	head = /obj/item/clothing/head/soft/rainbow
 	glasses = null
 	ears = /obj/item/radio/headset
-	neck = /obj/item/clothing/neck/petcollar
+	neck = /obj/item/clothing/neck/petcollar/wearable
 	//suit
 	uniform = /obj/item/clothing/under/color/rainbow
 	l_pocket = /obj/item/toy/cattoy
@@ -1002,7 +1004,7 @@
 /datum/outfit/deathmatch_loadout/heresy/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_HERETIC, REF(src))
-	user.AddElement(/datum/element/leeching_walk)
+	user.AddElement(/datum/element/rust_healing)
 
 	// Creates the knowledge as an isolated datum inside the target, allowing passive knowledges to work still.
 	for(var/datum/heretic_knowledge/knowhow as anything in knowledge_to_grant)
@@ -1016,9 +1018,9 @@
 	display_name = "Heretic Warrior"
 	desc = "Prove the furious strength of the Mansus!"
 
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	neck = /obj/item/clothing/neck/heretic_focus
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade
 	suit_store = /obj/item/melee/sickly_blade/dark
 	uniform = /obj/item/clothing/under/color/darkgreen
 	id_trim = null
@@ -1041,8 +1043,7 @@
 	// I mean is it really that bad if they don't even know half this stuff is added to them.
 	// It's like, forbidden knowledge. It fits with the mansus theme - great excuse for poor design!
 	knowledge_to_grant = list(
-		/datum/heretic_knowledge/blade_grasp,
-		/datum/heretic_knowledge/blade_dance,
+		/datum/heretic_knowledge/limited_amount/starting/base_blade,
 		/datum/heretic_knowledge/blade_upgrade/blade,
 	)
 
@@ -1084,7 +1085,7 @@
 	)
 
 	knowledge_to_grant = list(
-		/datum/heretic_knowledge/cosmic_grasp,
+		/datum/heretic_knowledge/limited_amount/starting/base_cosmic,
 	)
 
 	spells_to_add = list(
@@ -1143,3 +1144,107 @@
 	shoes = /obj/item/clothing/shoes/bronze
 	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named // they used to turn their dmg into tox with a spell. close enough
 	r_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named
+
+//syndicate spaceman
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman
+	name = "DM: Syndicate Spaceman"
+	display_name = "Syndicate Spaceman"
+	desc = "A syndicate operative suited up for some space reconnaissance."
+
+	uniform = /obj/item/clothing/under/syndicate
+	belt = /obj/item/storage/belt/holster
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+	l_pocket = /obj/item/knife/combat/survival
+	internals_slot = ITEM_SLOT_RPOCKET
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/tank/jetpack/harness
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	if(user.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/syndicate/skirt
+	// pick a random syndicate spess suit
+	suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	head = GLOB.syndicate_space_suits_to_helmets[suit]
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman/post_equip(mob/living/carbon/human/syndicate_spaceman, visuals_only)
+	. = ..()
+	var/obj/item/card/id/id_card = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_ID)
+	var/obj/item/storage/belt/belt = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_BELT)
+	if(belt)
+		new /obj/item/gun/ballistic/automatic/pistol/m1911(belt)
+	if(id_card)
+		SSid_access.apply_trim_to_card(id_card, /datum/id_trim/syndicom/crew)
+		id_card.registered_name = syndicate_spaceman.real_name
+		id_card.update_label()
+		id_card.update_appearance()
+
+//cargo spaceman
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman
+	name = "DM: Spaceman"
+	display_name = "Spaceman"
+	desc = "A spaceman from spacestation 13 equipped for space."
+
+	uniform = /obj/item/clothing/under/rank/cargo/tech
+	belt = /obj/item/storage/belt/utility/full
+	suit =  /obj/item/clothing/suit/space
+	head = /obj/item/clothing/head/helmet/space
+	internals_slot = ITEM_SLOT_SUITSTORE
+	r_pocket = /obj/item/ammo_casing/strilka310
+	suit_store = /obj/item/tank/internals/oxygen/yellow
+	shoes = /obj/item/clothing/shoes/sneakers
+	gloves = /obj/item/clothing/gloves/fingerless
+	back = /obj/item/gun/ballistic/rifle/boltaction
+	id = /obj/item/card/id/advanced
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman/pre_equip(mob/living/carbon/human/cargo_spaceman, visualsOnly = FALSE)
+	if(cargo_spaceman.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/rank/cargo/tech/skirt
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman/post_equip(mob/living/carbon/human/cargo_spaceman, visuals_only)
+	. = ..()
+	var/obj/item/card/id/id_card = cargo_spaceman.get_item_by_slot(ITEM_SLOT_ID)
+	if(id_card)
+		SSid_access.apply_trim_to_card(id_card, /datum/id_trim/job/cargo_technician)
+		id_card.registered_name = cargo_spaceman.real_name
+		id_card.update_label()
+		id_card.update_appearance()
+
+//spacetider
+
+/datum/outfit/deathmatch_loadout/spacetider
+	name = "DM: Assistant (Spaceworthy)"
+	display_name = "Assistant (Spaceworthy)"
+	desc = "A spacetiding assistant."
+
+	uniform = /obj/item/clothing/under/color/grey
+	mask = /obj/item/clothing/mask/breath
+	belt = /obj/item/gun/energy/disabler/smoothbore
+	suit = /obj/item/clothing/suit/utility/fire/firefighter
+	head = /obj/item/clothing/head/utility/hardhat/red
+	r_pocket = /obj/item/reagent_containers/cup/glass/coffee
+	l_pocket = /obj/item/knife
+	internals_slot = ITEM_SLOT_SUITSTORE
+	suit_store = /obj/item/tank/internals/oxygen/red
+	shoes = /obj/item/clothing/shoes/sneakers
+	gloves = /obj/item/clothing/gloves/color/grey/protects_cold
+	back = /obj/item/gun/energy/laser/musket
+	id = /obj/item/card/id/advanced
+
+/datum/outfit/deathmatch_loadout/spacetider/pre_equip(mob/living/carbon/human/spacetider, visualsOnly = FALSE)
+	if(spacetider.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey
+
+/datum/outfit/deathmatch_loadout/spacetider/post_equip(mob/living/carbon/human/spacetider, visuals_only)
+	. = ..()
+	spacetider.reagents.add_reagent(/datum/reagent/consumable/coffee, 30) //pre prime the coffee
+	var/obj/item/card/id/id_card = spacetider.get_item_by_slot(ITEM_SLOT_ID)
+	if(!id_card)
+		return
+	SSid_access.apply_trim_to_card(id_card, /datum/id_trim/job/assistant)
+	id_card.registered_name = spacetider.real_name
+	id_card.update_label()
+	id_card.update_appearance()

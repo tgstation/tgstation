@@ -396,7 +396,7 @@
 		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 	else if(istype(parent, /obj/item/radio))
-		returnable_code = pick(GLOB.phonetic_alphabet)
+		returnable_code = "[pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)]"
 
 	else if(istype(parent, /obj/item/pen))
 		returnable_code = list()

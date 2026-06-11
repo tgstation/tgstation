@@ -33,12 +33,12 @@
 "hR" = (
 /obj/item/shard/titanium,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "if" = (
 /obj/structure/lattice,
 /obj/structure/mecha_wreckage/gygax,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "is" = (
 /turf/template_noop,
 /area/template_noop)
@@ -98,12 +98,12 @@
 	pixel_x = 12
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lc" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lB" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
@@ -172,7 +172,7 @@
 "wJ" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "xJ" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -268,7 +268,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
@@ -298,7 +298,7 @@
 "PG" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Qc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
@@ -322,7 +322,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Vl" = (
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,

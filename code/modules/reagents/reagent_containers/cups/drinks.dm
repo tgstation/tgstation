@@ -18,6 +18,8 @@
 	. = ..()
 	if(!.) //if the bottle wasn't caught
 		var/mob/thrower = throwingdatum?.get_thrower()
+		if(!istype(thrower))
+			return
 		smash(hit_atom, thrower, throwingdatum)
 
 /obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
@@ -27,11 +29,10 @@
 		return
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
 	B.mimic_broken(src, target, break_top)
 	qdel(src)
-	target.Bumped(B)
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -233,7 +234,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -302,7 +303,7 @@
 	if(prob(flip_chance)) // landed upright
 		src.visible_message(span_notice("[src] lands upright!"))
 		var/mob/living/thrower = throwingdatum?.get_thrower()
-		if(thrower)
+		if(istype(thrower))
 			thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
 	else // landed on its side
 		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
@@ -318,7 +319,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -351,6 +352,7 @@
 	possible_transfer_amounts = list(10)
 	volume = 10
 	isGlass = FALSE
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/sillycup/update_icon_state()
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
@@ -363,6 +365,7 @@
 	icon_state = "juicebox"
 	volume = 15
 	drink_type = NONE
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
@@ -376,11 +379,10 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)
-	target.Bumped(bottle_shard)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
@@ -388,7 +390,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
@@ -405,6 +407,13 @@
 	icon_state = "colocup[rand(0, 6)]"
 	if(icon_state == "colocup6")
 		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
+
+/obj/item/reagent_containers/cup/glass/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
+	random_sprite = FALSE
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink

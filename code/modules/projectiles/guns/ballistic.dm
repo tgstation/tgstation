@@ -9,7 +9,8 @@
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
-	unique_reskin_changes_base_icon_state = TRUE
+
+	min_recoil = 0.1
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/items/weapons/gun/general/magazine_insert_full.ogg'
@@ -142,6 +143,8 @@
 	var/selector_switch_icon = FALSE
 	/// Suppressor attached to the gun, if any
 	var/obj/item/suppressor/suppressor = null
+	/// Sound played when the burst mode is changed
+	var/burst_select_sound = SFX_FIRE_MODE_SWITCH
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -218,11 +221,10 @@
 	. = ..()
 
 	if(selector_switch_icon)
-		switch(burst_fire_selection)
-			if(FALSE)
-				. += "[initial(icon_state)]_semi"
-			if(TRUE)
-				. += "[initial(icon_state)]_burst"
+		if(burst_fire_selection)
+			. += "[initial(icon_state)]_burst"
+		else
+			. += "[initial(icon_state)]_semi"
 
 	if(show_bolt_icon)
 		if (bolt_type == BOLT_TYPE_LOCKING)
@@ -284,14 +286,17 @@
 	burst_fire_selection = !burst_fire_selection
 	if(!burst_fire_selection)
 		burst_size = 1
-		fire_delay = 0
+		fire_delay = 0 SECONDS
 		balloon_alert(user, "switched to semi-automatic")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	if(burst_select_sound)
+		playsound(user, burst_select_sound, 50, TRUE)
+	else
+		playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	update_item_action_buttons()
 
@@ -554,7 +559,7 @@
 /obj/item/gun/ballistic/proc/load_gun(obj/item/ammo, mob/living/user)
 	if (chambered && !chambered.loaded_projectile)
 		chambered.forceMove(drop_location())
-		if(chambered != magazine?.stored_ammo[1])
+		if(length(magazine?.stored_ammo) && chambered != magazine.stored_ammo[1])
 			magazine.stored_ammo -= chambered
 		chambered = null
 
@@ -602,6 +607,7 @@
 	suppressor = new_suppressor
 	suppressed = suppressor.suppression
 	update_weight_class(w_class + suppressor.w_class) //so pistols do not fit in pockets when suppressed
+	can_muzzle_flash = FALSE
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -611,6 +617,7 @@
 	if(suppressor)
 		update_weight_class(w_class - suppressor.w_class)
 		suppressor = null
+	can_muzzle_flash = initial(can_muzzle_flash)
 	update_appearance()
 
 /obj/item/gun/ballistic/click_alt(mob/user)

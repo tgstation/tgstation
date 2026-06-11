@@ -91,12 +91,7 @@
 
 /obj/item/mod/module/pepper_shoulders/on_use(mob/activator)
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	var/datum/reagents/capsaicin_holder = new(10)
-	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
-	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
-	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
-	smoke.start(log = TRUE)
-	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
+	do_chem_smoke(1, src, get_turf(src), /datum/reagent/consumable/condensedcapsaicin, 10, log = TRUE, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/quick)
 
 /obj/item/mod/module/pepper_shoulders/proc/on_check_block()
 	SIGNAL_HANDLER
@@ -303,8 +298,8 @@
 	. = ..()
 	do_sparks(rand(3, 6), FALSE, src)
 	if(thrower)
-		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
-		mirage.Copy_Parent(thrower, 15 SECONDS)
+		var/mob/living/basic/illusion/mirage/mirage = new(get_turf(src))
+		mirage.mock_as(thrower, 15 SECONDS)
 	qdel(src)
 
 ///Projectile Dampener - Weakens projectiles in range.

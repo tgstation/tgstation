@@ -144,7 +144,7 @@
 // Bileworm
 /obj/item/crusher_trophy/bileworm_spewlet
 	name = "bileworm spewlet"
-	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
@@ -179,24 +179,38 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_projectile_hit_mineral(turf/closed/mineral, mob/living/user)
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, mineral) - mineral)
-		mineral_turf.gets_drilled(user, 1)
+		mineral_turf.drill_aoe(user, 0.2)
 
 //yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet
 	check_flags = NONE
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid/crusher
+	projectile_type = /obj/projectile/bileworm_acid
 	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
 
-/obj/projectile/bileworm_acid/crusher
+/obj/projectile/bileworm_acid // basically only used by the crusher trophy
+	name = "acidic bile"
+	damage = 20
+	speed = 0.5
+	range = 20
+	hitsound = 'sound/items/weapons/sear.ogg'
+	pass_flags = PASSTABLE
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "bile_glob"
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	damage_type = BRUTE // Otherwise the mobs take heavily reduced damage
 
-/obj/projectile/bileworm_acid/crusher/prehit_pierce(atom/target)
+/obj/projectile/bileworm_acid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
+/obj/projectile/bileworm_acid/prehit_pierce(atom/target)
 	if (!isliving(target))
 		return ..()
 	var/mob/living/as_living = target
@@ -231,7 +245,7 @@
 	for(var/i in 1 to summon_amount)
 		var/turf/drop_off = find_dropoff_turf(target, user)
 		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
-		friend.faction = list(FACTION_NEUTRAL)
+		friend.set_faction(list(FACTION_NEUTRAL))
 		friend.befriend(user)
 		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)

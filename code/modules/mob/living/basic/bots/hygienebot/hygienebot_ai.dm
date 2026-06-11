@@ -86,7 +86,7 @@
 			found_target = wash_potential
 			break
 
-		for(var/atom/clothing in wash_potential.get_equipped_items())
+		for(var/atom/clothing in wash_potential.get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
 			if(GET_ATOM_BLOOD_DNA_LENGTH(clothing))
 				found_target = wash_potential
 				break

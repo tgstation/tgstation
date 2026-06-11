@@ -24,6 +24,7 @@
 	layer = MOB_LAYER
 	max_integrity = 100
 	slowdown = 2
+	clothing_traits = list(TRAIT_SOFTSPOKEN)
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
@@ -42,6 +43,7 @@
 	AddElement(/datum/element/muffles_speech)
 
 	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, PROC_REF(react_to_mob))
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
@@ -188,7 +190,9 @@
 	if(!sterile)
 		victim.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 	if(real && !sterile)
-		victim.Knockdown(5 SECONDS)
+		victim.Paralyze(1 SECONDS)
+		victim.adjust_confusion(20 SECONDS)
+		victim.Knockdown(10 SECONDS)
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
@@ -257,13 +261,12 @@
 	// chest maybe because getting slammed in the chest would knock it off your face while dead
 	AddComponent(/datum/component/knockoff, knockoff_chance = 40, target_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST), slots_knockoffable = slot_flags)
 
-/obj/item/clothing/mask/facehugger/allow_attack_hand_drop(mob/living/carbon/human/user)
-	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
+/obj/item/clothing/mask/facehugger/can_mob_unequip(mob/user)
+	if(!real || sterile || stat == DEAD || user.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
 		return ..()
-	if(istype(user) && ishuman(loc) && stat != DEAD)
-		if(user == loc && user.get_item_by_slot(slot_flags) == src)
-			to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
-			return FALSE
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		return FALSE
 	return ..()
 
 /obj/item/clothing/mask/facehugger/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
@@ -292,9 +295,17 @@
 		return TRUE
 	return FALSE
 
+/obj/item/clothing/mask/facehugger/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(stat != CONSCIOUS)
+		return NONE
+	to_chat(user, span_danger("There's something moving inside of \the [letter]!"))
+	Leap(user)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
+
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
+	desc = "The Research Director's pet, a domesticated and debeaked alien. Friendly, but may still try to couple with your head."
 	sterile = TRUE
 	slowdown = 1.5 //lamarr is too fat after being fed in captivity to effectively slow people down or something
 

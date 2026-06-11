@@ -157,10 +157,8 @@
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	for(var/I in typesof(/datum/config_entry)) //typesof is faster in this case
+	for(var/I in valid_subtypesof(/datum/config_entry)) //typesof is faster in this case
 		var/datum/config_entry/E = I
-		if(initial(E.abstract_type) == I)
-			continue
 		E = new I
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
@@ -367,12 +365,13 @@ Example config:
 */
 /datum/controller/configuration/proc/LoadPolicy()
 	policy = list()
-	var/rawpolicy = file2text("[directory]/policy.json")
+	var/json_path = CONFIG_GET(string/policy_json_path)
+	var/rawpolicy = file2text("[directory]/[json_path]")
 	if(rawpolicy)
 		var/parsed = safe_json_decode(rawpolicy)
 		if(!parsed)
-			log_config("JSON parsing failure for policy.json")
-			DelayedMessageAdmins("JSON parsing failure for policy.json")
+			log_config("JSON parsing failure for policy.json {[json_path]}")
+			DelayedMessageAdmins("JSON parsing failure for policy.json {[json_path]}")
 		else
 			policy = parsed
 

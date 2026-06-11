@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "You can now bind certain items like briefcases, toolboxes, medkits, shields, jerrycans etc. to your hand with a pair of handcuffs, preventing them from being dropped. You can remove said binds at any time unless incapacitated, and so can others through the strip inventory menu."
-  - qol: "The appearance of a screen alert now updates if the object it represents (like, an item offered by another player) changes appearance."

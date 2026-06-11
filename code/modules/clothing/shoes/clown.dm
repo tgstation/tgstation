@@ -15,7 +15,7 @@
 	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
 	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3) //Goofy
+	AddElement(/datum/element/adjust_fishing_difficulty, 3) //Goofy
 	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
@@ -49,7 +49,13 @@
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
-	icon_state = "jester_shoes"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/clown_shoes/jester"
+	post_init_icon_state = "jester_map"
+	greyscale_config = /datum/greyscale_config/jester_shoes
+	greyscale_config_worn = /datum/greyscale_config/jester_shoes/worn
+	greyscale_colors = "#E10000#E1E100"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/clown_shoes/meown_shoes
 	name = "meown shoes"
@@ -62,3 +68,75 @@
 	desc = "No moths were harmed in the making of these slippers."
 	icon_state = "moffers"
 	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears
+
+
+//COMBAT CLOWN SHOES
+//Clown shoes with combat stats and noslip. Of course they still squeak.
+/obj/item/clothing/shoes/clown_shoes/combat
+	name = "combat clown shoes"
+	desc = "Advanced Clown Shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
+	slowdown = SHOES_SLOWDOWN
+	body_parts_covered = FEET|LEGS
+	armor_type = /datum/armor/clown_shoes_combat
+	strip_delay = 7 SECONDS
+	resistance_flags = NONE
+
+/datum/armor/clown_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50
+
+/obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+/// Recharging rate in PPS (peels per second)
+#define BANANA_SHOES_RECHARGE_RATE 17
+#define BANANA_SHOES_MAX_CHARGE 3000
+
+//The super annoying version
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
+	name = "mk-honk combat shoes"
+	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
+	slowdown = SHOES_SLOWDOWN
+	armor_type = /datum/armor/banana_shoes_combat
+	strip_delay = 7 SECONDS
+	resistance_flags = NONE
+	always_noslip = TRUE
+	body_parts_covered = FEET|LEGS
+
+/datum/armor/banana_shoes_combat
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 50
+	fire = 90
+	acid = 50
+
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
+
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(seconds_per_tick)
+	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
+	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
+		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * seconds_per_tick, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
+
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
+	ui_action_click(user)
+
+#undef BANANA_SHOES_RECHARGE_RATE
+#undef BANANA_SHOES_MAX_CHARGE

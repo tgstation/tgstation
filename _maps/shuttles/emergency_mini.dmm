@@ -28,6 +28,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "h" = (
@@ -136,6 +137,7 @@
 /area/shuttle/escape)
 "G" = (
 /obj/structure/table/optable,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "H" = (

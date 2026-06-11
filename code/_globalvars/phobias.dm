@@ -2,29 +2,29 @@
 
 /// Phobia types that can be pulled randomly for brain traumas.
 /// Also determines what phobias you can choose as your preference with the quirk.
-GLOBAL_LIST_INIT(phobia_types, sort_list(list(
-	"aliens",
-	"anime",
-	"authority",
-	"birds",
-	"blood",
-	"clowns",
-	"doctors",
-	"falling",
-	"fish",
-	"greytide",
-	"guns",
-	"insects",
-	"lizards",
-	"robots",
-	"security",
-	"skeletons",
-	"snakes",
-	"space",
-	"spiders",
-	"strangers",
-	"the supernatural",
-)))
+GLOBAL_LIST_INIT(phobia_types, list(
+	"aliens" = "Astroxenophobia",
+	"anime" = "Nihongophobia",
+	"authority" = "Authoritophobia",
+	"birds" = "Ornithophobia",
+	"blood" = "Hemophobia",
+	"clowns" = "Coulrophobia",
+	"doctors" = "Iatrophobia",
+	"falling" = "Basiphobia",
+	"fish" = "Ichthyophobia",
+	"greytide" = "Glaucophobia",
+	"guns" = "Ballistophobia",
+	"insects" = "Entomophobia",
+	"lizards" = "Herpetophobia",
+	"robots" = "Automatonophobia",
+	"security" = "Scopophobia",
+	"skeletons" = "Osteophobia",
+	"snakes" = "Ophidiophobia",
+	"space" = "Astrophobia",
+	"spiders" = "Arachnophobia",
+	"strangers" = "Xenophobia",
+	"the supernatural" = "Phasmophobia",
+))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
 	"aliens" = construct_phobia_regex("aliens"),
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"authority" = typecacheof(list(
 		/mob/living/basic/trooper/nanotrasen,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"doctors" = typecacheof(list(/mob/living/basic/bot/medbot)),
 	"fish" = typecacheof(list(
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
 	)),
-	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+	"security" = typecacheof(list(/mob/living/basic/bot/secbot)),
 	"spiders" = typecacheof(list(
 		/mob/living/basic/flesh_spider,
 		/mob/living/basic/mega_arachnid,
@@ -174,6 +174,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/food/sashimi,
 		/obj/item/highfrequencyblade,
 		/obj/item/katana,
+		/obj/item/storage/belt/sheath/katana,
+		/obj/item/storage/belt/sheath/ninja,
+		/obj/item/storage/belt/sheath/hanzo_katana,
 		/obj/item/nullrod/claymore/katana,
 		/obj/item/nullrod/vibro,
 		/obj/item/reagent_containers/cup/glass/bottle/sake,
@@ -389,7 +392,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/grenade/clusterbuster/spawner_spesscarp,
 		/obj/item/grenade/spawnergrenade/spesscarp,
 		/obj/item/knife/carp,
-		/obj/item/nullrod/carp,
 		/obj/item/organ/brain/carp,
 		/obj/item/organ/heart/carp,
 		/obj/item/organ/liver/fish,

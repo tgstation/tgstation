@@ -16,6 +16,13 @@
 	. = ..()
 	set_holdable(/obj/item/food/donkpocket)
 
+/datum/storage/box/donk_bullets/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(list(
+		/obj/item/food/donkpocket,
+		/obj/item/ammo_casing/shotgun,
+	))
+
 ///Coffee box
 /datum/storage/box/coffee
 	max_slots = 5
@@ -176,3 +183,14 @@
 	max_total_storage = WEIGHT_CLASS_SMALL * slots
 	. = ..()
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
+
+/datum/storage/box/ramen_beef
+	max_slots = 2
+
+/datum/storage/box/ramen_beef/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(list(
+		/obj/item/reagent_containers/condiment/pack/beef_flavour,
+		/obj/item/food/spaghetti/ramen_dry,
+	))
+

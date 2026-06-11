@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/energy/laser,
+	/obj/item/gun/energy/laser/soul,
+	/obj/item/gun/energy/laser/pistol,
+	/obj/item/gun/energy/laser/assault,
 	/obj/item/gun/energy/laser/hellgun,
 	/obj/item/gun/energy/laser/captain,
 	/obj/item/gun/energy/laser/scatter,
@@ -74,6 +77,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	/obj/item/gun/magic/wand/door,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/storage/belt/wands/full,
+	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/gun/magic/staff/door,
@@ -185,7 +189,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	presented_item.vis_flags = VIS_INHERIT_PLANE
 	vis_contents += presented_item
 	presented_item.start_animation(src)
-	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	current_sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 	if(user.mind)

@@ -326,7 +326,7 @@
 		return
 
 	// Find any leg of our human and add that to the footprint, instead of the default which is to just add the human type
-	for(var/obj/item/bodypart/leg/affecting in wielder.bodyparts)
+	for(var/obj/item/bodypart/leg/affecting in wielder.get_bodyparts())
 		if(!affecting.bodypart_disabled)
 			LAZYSET(footprint.species_types, affecting.limb_id, TRUE)
 

@@ -5,6 +5,9 @@
 	icon_state = "beekeeper"
 	inhand_icon_state = null
 	clothing_flags = THICKMATERIAL | SNUG_FIT
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /obj/item/clothing/suit/utility/beekeeper_suit
 	name = "beekeeper suit"

@@ -144,11 +144,11 @@
 /area/ruin/comms_agent)
 "M" = (
 /obj/structure/filingcabinet,
-/obj/item/paperwork,
 /obj/item/paper/monitorkey,
 /obj/item/paper/fluff/ruins/listeningstation/briefing{
 	pixel_x = -2
 	},
+/obj/item/folder/syndicate/mining,
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "N" = (

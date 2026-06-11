@@ -9,7 +9,6 @@
 	program_icon = "book"
 	can_run_on_flags = PROGRAM_ALL
 	circuit_comp_type = /obj/item/circuit_component/mod_program/notepad
-
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
 		bringing you the best in electronics and software since 2467!\n\
 		To help with navigation, we have provided the following definitions:\n\

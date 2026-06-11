@@ -8,6 +8,7 @@
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()
@@ -156,6 +157,12 @@
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
@@ -176,11 +183,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.adjustFireLoss(3)
+				M.adjust_fire_loss(3)
 				to_chat(M, span_userdanger("Your [name] feels warmer."))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.adjustFireLoss(10)
+				M.adjust_fire_loss(10)
 				reactor_overloaded = TRUE
 				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
 

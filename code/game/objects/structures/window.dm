@@ -17,6 +17,8 @@
 	set_dir_on_move = FALSE
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	tacmap_color = TACMAP_WINDOW
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -68,7 +70,7 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM, post_rotation_proccall = PROC_REF(post_rotation))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -105,7 +107,7 @@
 	return FALSE
 
 /obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
@@ -345,7 +347,7 @@
 
 ///Spawns shard and debris decal based on the glass_material_datum, spawns rods if window is reinforned and number of shards/rods is determined by the window being fulltile or not.
 /obj/structure/window/proc/spawn_debris(location)
-	var/datum/material/glass_material_ref = GET_MATERIAL_REF(glass_material_datum)
+	var/datum/material/glass_material_ref = SSmaterials.get_material(glass_material_datum)
 	var/obj/item/shard_type = glass_material_ref.shard_type
 	var/obj/effect/decal/debris_type = glass_material_ref.debris_type
 	var/list/dropped_debris = list()
@@ -421,7 +423,7 @@
 		QUEUE_SMOOTH(src)
 
 	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
+	ratio = ceil(ratio*4) * 25
 	if(ratio > 75)
 		return
 	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
@@ -495,6 +497,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_LIGHT_INSULATION
 	receive_ricochet_chance_mod = 1.1
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
@@ -618,14 +621,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner, 0)
 
-// You can't rust glass! So only reinforced glass can be impacted.
-/obj/structure/window/reinforced/rust_heretic_act()
-	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
-	AddElement(/datum/element/rust)
-	set_armor(/datum/armor/none)
-	take_damage(get_integrity() * 0.5)
-	modify_max_integrity(initial(max_integrity) * 0.2)
-
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
@@ -638,6 +633,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/plasmaglass
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/window_plasma
 	melee = 80
@@ -668,6 +664,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 	glass_type = /obj/item/stack/sheet/plasmarglass
 	rad_insulation = RAD_HEAVY_INSULATION
 	glass_material_datum = /datum/material/alloy/plasmaglass
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/reinforced_plasma
 	melee = 80
@@ -713,6 +710,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -734,6 +732,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
@@ -751,6 +750,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/window/reinforced/plasma/fulltile/unanchored
 	anchored = FALSE
@@ -771,6 +771,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -849,17 +850,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/window/reinforced/shuttle/indestructible/welder_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
+/obj/structure/window/reinforced/shuttle/indestructible/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
@@ -985,11 +981,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
-	if(W.get_temperature())
+	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		fire_act(W.get_temperature())
 		return
+
 	if(user.combat_mode)
 		return ..()
+
 	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 2 SECONDS, target = src))
@@ -1008,6 +1006,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon = 'icons/obj/smooth_structures/structure_variations.dmi'
 	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 1)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
 
@@ -1026,6 +1025,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
 	obj_flags = CAN_BE_HIT
 	max_integrity = 50
 	glass_amount = 2
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/bronze/fulltile/unanchored
 	anchored = FALSE

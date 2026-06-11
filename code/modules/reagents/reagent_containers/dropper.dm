@@ -10,6 +10,7 @@
 	volume = 5
 	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)
@@ -60,7 +61,8 @@
 			log_combat(user, M, "squirted", reagents.get_reagent_log_string())
 
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		if(trans)
+			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -74,8 +76,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 	update_appearance()
 	target.update_appearance()

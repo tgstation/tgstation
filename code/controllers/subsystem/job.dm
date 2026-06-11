@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(job)
 	dependencies = list(
 		/datum/controller/subsystem/processing/station,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// List of all jobs.
 	var/list/datum/job/all_occupations = list()

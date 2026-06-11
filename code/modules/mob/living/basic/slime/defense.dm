@@ -103,7 +103,7 @@
 
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
+	adjust_brute_loss(rand(15,20))
 	discipline_slime()
 
 ///Stops the slime from feeding, and might remove rabidity and targets

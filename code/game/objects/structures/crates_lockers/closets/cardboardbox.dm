@@ -9,6 +9,8 @@
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
 	material_drop = /obj/item/stack/sheet/cardboard
+	material_drop_amount = 4
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	open_sound = 'sound/machines/cardboard_box.ogg'
@@ -89,18 +91,20 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /// Does the MGS ! animation
-/atom/proc/do_alert_animation()
+/atom/proc/do_alert_animation(duration = 1 SECONDS)
 	var/mutable_appearance/alert = mutable_appearance('icons/obj/storage/closet.dmi', "cardboard_special")
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
-	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, 1 SECONDS)
+	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, duration)
 	exclamation.alpha = 0
 	exclamation.pixel_x = -pixel_x
-	animate(exclamation, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
+	animate(exclamation, pixel_z = 32, alpha = 255, time = duration * 0.5, easing = ELASTIC_EASING)
+	animate(time = duration * 0.35)
+	animate(pixel_z = 64, alpha = 0, time = duration * 0.15, easing = SINE_EASING)
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(
 	LAZYADD(update_on_z, exclamation)
 	// Intentionally less time then the flick so we don't get weird shit
-	addtimer(CALLBACK(src, PROC_REF(forget_alert), exclamation), 0.8 SECONDS, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(forget_alert), exclamation), max(0.05 SECONDS, duration - 0.1 SECONDS), TIMER_CLIENT_TIME)
 
 /atom/proc/forget_alert(atom/movable/flick_visual/exclamation)
 	LAZYREMOVE(update_on_z, exclamation)
@@ -118,4 +122,5 @@
 	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 	material_drop = /obj/item/stack/sheet/plasteel

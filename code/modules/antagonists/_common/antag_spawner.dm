@@ -63,7 +63,7 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD_MIDROUND, role = ROLE_WIZARD_MIDROUND, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
 	polling = FALSE
 	if(isnull(chosen_one))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
@@ -139,7 +139,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE_MIDROUND, role = ROLE_OPERATIVE_MIDROUND, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -185,8 +185,8 @@
 
 /obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
 	. = ..()
-	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
-		spawn_location = pick(GLOB.nukeop_overwatch_start)
+	if(length(GLOB.nukeop_base_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_base_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
@@ -272,7 +272,7 @@
 		return
 	if(used)
 		return
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, poll_time = 5 SECONDS, checked_target = src, alert_pic = demon_type, jump_target = src, role_name_text = initial(demon_type.name))
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, alert_pic = demon_type, jump_target = src, role_name_text = initial(demon_type.name))
 	if(chosen_one)
 		if(used || QDELETED(src))
 			return
@@ -323,8 +323,6 @@
 	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// The antag role we check if the ghosts have enabled to get the poll.
-	var/poll_role_check = ROLE_TRAITOR
 	/// The mind's special role.
 	var/role_to_play = ROLE_SYNDICATE_MONKEY
 	/// What category to ignore the poll
@@ -351,8 +349,7 @@
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
-		check_jobban = poll_role_check,
-		role = poll_role_check,
+		check_jobban = role_to_play,
 		poll_time = 10 SECONDS,
 		ignore_category = poll_ignore_category,
 		alert_pic = src,
@@ -409,7 +406,7 @@
 	outfit = /datum/outfit/contractor_partner
 	use_subtypes = FALSE
 	antag_datum = /datum/antagonist/traitor/contractor_support
-	poll_ignore_category = ROLE_TRAITOR
+	poll_ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT
 	role_to_play = ROLE_CONTRACTOR_SUPPORT
 
 /obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
@@ -426,9 +423,8 @@
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
-	poll_role_check = ROLE_TRAITOR
 	role_to_play = ROLE_SYNDICATE_MONKEY
-	poll_ignore_category = POLL_IGNORE_SYNDICATE
+	poll_ignore_category = POLL_IGNORE_SYNDICATE_MONKEY
 	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)

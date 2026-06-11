@@ -10,6 +10,7 @@
 	preview_outfit = /datum/outfit/clown_operative_elite
 	preview_outfit_behind = /datum/outfit/clown_operative
 	nuke_icon_state = "bananiumbomb_base"
+	infiltrator_id = "infiltrator_clown"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
@@ -47,6 +48,7 @@
 	nukeop_outfit = /datum/outfit/syndicate/clownop/leader
 	challengeitem = /obj/item/nuclear_challenge/clownops
 	suicide_cry = "HAPPY BIRTHDAY!!"
+	infiltrator_id = "infiltrator_clown"
 
 /datum/antagonist/nukeop/leader/clownop/apply_innate_effects(mob/living/mob_override)
 	. = ..()

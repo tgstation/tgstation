@@ -20,7 +20,7 @@
 
 	if(length(user.held_items) < 0 || iscyborg(user) || source.anchored)
 		return
-	examine_list += span_smallnotice("You could bind [source.p_they()] to your wrist with a pair of handcuffs...")
+	examine_list += span_smallnotice("You could bind [source.p_them()] to your wrist with a pair of handcuffs...")
 
 ///Give context to players holding a pair of handcuffs when hovering the item
 /datum/element/cuffable_item/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
@@ -47,11 +47,22 @@
 	if(cuffs.used || DOING_INTERACTION_WITH_TARGET(user, source))
 		return
 
-	if(HAS_TRAIT_FROM(source, TRAIT_NODROP, CUFFED_ITEM_TRAIT))
-		to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
+	for(var/datum/status_effect/cuffed_item/effect in user.status_effects)
+		if(effect.cuffed == source)
+			to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
+			return
+		if(effect.cuffed_to == user.get_inactive_hand())
+			to_chat(user, span_warning("You already have something cuffed to your opposite wrist!"))
+			return
+
+	if(!user.get_inactive_hand())
+		to_chat(user, span_warning("You don't have another hand to cuff [source] to!"))
 		return
 
 	if(cuffs.handcuffs_clumsiness_check(user))
+		return
+
+	if(SEND_SIGNAL(source, COMSIG_ITEM_PRE_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
 		return
 
 	source.balloon_alert(user, "cuffing item...")

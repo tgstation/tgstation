@@ -44,6 +44,14 @@
 	cost = 6
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/carnivorous_blood
+	name = "Carnivorous Blood"
+	desc = "A bottle of Carnivorous Blood, an Interdyne bioweapon that, once mixed with a potential victim's blood and then inserted into their bloodstream, \
+		will rapidly consume its victim's supply of usable blood. Feed it high-protein meat to let it cultivate."
+	item = /obj/item/storage/box/syndie_kit/carnivorous_blood
+	cost = 3
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
@@ -80,10 +88,12 @@
 
 
 /datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
+	name = "Martial Arts Scroll and Martial Arts Outfit"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat \
-			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/book/granter/martial/carp
+			and gain the ability to swat bullets from the air, and if in the correct attire, avoid attacks. But you will \
+			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
+			Comes prepackaged with a set of martial arts clothing!"
+	item = /obj/item/storage/box/syndicate/sleeping_carp
 	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17

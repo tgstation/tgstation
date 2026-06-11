@@ -9,6 +9,11 @@
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/lube/superlube
+	results = list(/datum/reagent/lube/superlube = 3)
+	required_reagents = list(/datum/reagent/lube = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/banana = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
 /datum/chemical_reaction/spraytan
 	results = list(/datum/reagent/spraytan = 2)
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/fuel/oil = 1)
@@ -37,8 +42,7 @@
 /datum/chemical_reaction/sodiumchloride
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD
-	required_other = TRUE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
 	. = ..()
@@ -228,14 +232,27 @@
 	var/level_min = 1
 	var/level_max = 2
 	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B?.data)
-		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
-		if(D)
-			D.Evolve(level_min, level_max)
+	if(!B)
+		return
+	if(!B.data)
+		B.data = list()
 
+	var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+	if(D)
+		D.Evolve(level_min, level_max)
+
+	// All blood duplicated via this reaction is synthetic.
+	var/added_synth_volume = created_volume
+
+	// Blood reagents handle their merger code BEFORE this code runs. So the existing synth volume is already averaged into the total volume.
+	var/existing_synth_volume = B.volume * B.data[BLOOD_DATA_SYNTH_CONTENT]
+
+	// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of the blood is synthetic"
+	B.data[BLOOD_DATA_SYNTH_CONTENT] = (added_synth_volume + existing_synth_volume) / B.volume
 
 /datum/chemical_reaction/mix_virus/mix_virus_2
 	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
@@ -327,11 +344,37 @@
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
+	// Does the foam slip you?
+	var/slippery = TRUE
+	// How long the foam lasts for
+	var/lifetime = 8 SECONDS
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/foam/hollow
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/hollowwater = 1)
+	lifetime = 24 SECONDS
+
+/datum/chemical_reaction/foam/salt
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/salt = 1)
+	lifetime = 1 SECONDS
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/ice
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/ice = 1)
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/soda
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/sodawater = 1)
+	lifetime = 1 SECONDS
+
+/datum/chemical_reaction/foam/holy
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/holywater = 1)
+	lifetime = 24 SECONDS
+	slippery = FALSE
+
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE)
+	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE, lifetime = src.lifetime, slippery = src.slippery)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalfoam
@@ -381,18 +424,18 @@
 	optimal_ph_min = 1  // Lets increase our range for this basic chem
 	optimal_ph_max = 12
 	H_ion_release = -0.02 //handmade is more neutral
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/diethylamine
 	results = list(/datum/reagent/diethylamine = 2)
 	required_reagents = list (/datum/reagent/ammonia = 1, /datum/reagent/consumable/ethanol = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/water = 1)
 	rate_up_lim = 40
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/plantbgone
 	results = list(/datum/reagent/toxin/plantbgone = 5)
@@ -413,14 +456,14 @@
 /datum/chemical_reaction/drying_agent
 	results = list(/datum/reagent/drying_agent = 3)
 	required_reagents = list(/datum/reagent/stable_plasma = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/sodium = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_COMPONENT
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
 /datum/chemical_reaction/acetone
 	results = list(/datum/reagent/acetone = 3)
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/oxygen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/carpet
 	results = list(/datum/reagent/carpet = 2)
@@ -521,18 +564,18 @@
 /datum/chemical_reaction/oil
 	results = list(/datum/reagent/fuel/oil = 3)
 	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/phenol
 	results = list(/datum/reagent/phenol = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/chlorine = 1, /datum/reagent/fuel/oil = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/ash
 	results = list(/datum/reagent/ash = 1)
 	required_reagents = list(/datum/reagent/fuel/oil = 1)
 	required_temp = 480
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
@@ -638,19 +681,19 @@
 /datum/chemical_reaction/electrolysis
 	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/electrolysis2
 	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1, /datum/reagent/water = 5)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 //salt electrolysis
 /datum/chemical_reaction/saltelectrolysis
 	results = list(/datum/reagent/chlorine = 2.5, /datum/reagent/sodium = 2.5)
 	required_reagents = list(/datum/reagent/consumable/salt = 5)
 	required_catalysts = list(/datum/reagent/consumable/liquidelectricity = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/saltelectrolysis/enriched
 	required_catalysts = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
@@ -717,18 +760,18 @@
 /datum/chemical_reaction/saltpetre
 	results = list(/datum/reagent/saltpetre = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 3)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/lye
 	results = list(/datum/reagent/lye = 3)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 	required_temp = 10 //So hercuri still shows life.
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/lye2
 	results = list(/datum/reagent/lye = 2)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/royal_bee_jelly
 	results = list(/datum/reagent/royal_bee_jelly = 5)
@@ -896,7 +939,7 @@
 	purity_min = 0
 	mix_message = "The solution freezes up into ice!"
 	reaction_flags = REACTION_COMPETITIVE
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_DRINK
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_DRINK | REACTION_TAG_COMPONENT | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/water
 	results = list(/datum/reagent/water = 0.92)//rough density excahnge
@@ -1088,4 +1131,21 @@
 	glitter.data["colors"] = list("[accumulated_color]" = 100)
 	glitter.color = accumulated_color
 
+/datum/chemical_reaction/pair_carnivorous_blood
+	results = list(/datum/reagent/toxin/carnivorousblood = 1)
+	required_reagents = list(/datum/reagent/toxin/carnivorousblood = 1, /datum/reagent/blood = 1)
+	mix_message = "the mixture jumps and sloshes around."
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/pair_carnivorous_blood/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/datum/reagent/toxin/carnivorousblood/hungryblood = holder.has_reagent(/datum/reagent/toxin/carnivorousblood)
+	var/list/new_blood_dna = list()
+	for(var/datum/reagent/blood/bloodinstance in holder.reagent_list)
+		new_blood_dna += bloodinstance.data["blood_DNA"]
+	hungryblood.feed_dna_list(new_blood_dna)
+
+/datum/chemical_reaction/feed_carnivorous_blood
+	results = list(/datum/reagent/toxin/carnivorousblood = 1)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
+	required_catalysts = list(/datum/reagent/toxin/carnivorousblood = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE

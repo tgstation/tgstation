@@ -26,7 +26,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
@@ -207,7 +207,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets{
 	pixel_y = 5
@@ -303,7 +303,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "na" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable,
@@ -532,7 +532,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "vB" = (
@@ -850,7 +850,7 @@
 "JI" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -991,7 +991,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "Pu" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
 	},
@@ -1214,7 +1214,7 @@
 	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned)
 "ZT" = (

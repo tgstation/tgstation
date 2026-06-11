@@ -82,7 +82,7 @@
 	var/blood_cost = (cooldown_remaining - new_cooldown ) * COOLDOWN_TO_BLOOD_RATIO
 
 	spell.StartCooldown(new_cooldown)
-	source.blood_volume -= blood_cost
+	source.adjust_blood_volume(-blood_cost)
 
 	var/cost_desc
 

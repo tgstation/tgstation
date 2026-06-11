@@ -49,16 +49,20 @@
 	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 	return ..()
 
-/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, mob/living/target, mob/living/user)
+/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(iscarbon(target)) //Removing restraints takes precedence
-		var/mob/living/carbon/carbon_target = target
+	if(!isliving(target)) //Removing restraints takes precedence
+		return NONE
+	var/mob/living/living_target = target
+	if(iscarbon(living_target))
+		var/mob/living/carbon/carbon_target = living_target
 		if(carbon_target.handcuffed)
 			context[SCREENTIP_CONTEXT_RMB] = "Cut Restraints"
 			return CONTEXTUAL_SCREENTIP_SET
-	if(target.has_status_effect(/datum/status_effect/cuffed_item))
+	if(living_target.has_status_effect(/datum/status_effect/cuffed_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Binds From Item"
 		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 ///signal called on parent being examined
 /datum/element/cuffsnapping/proc/on_examine(datum/target, mob/user, list/examine_list)
@@ -103,7 +107,8 @@
 
 ///Check that the type of restraints can be cut by this element.
 /datum/element/cuffsnapping/proc/check_cuffs_strength(obj/item/cutter, mob/living/target, mob/living/cutter_user, obj/item/restraints/handcuffs/cuffs, message)
-	if(cuffs.restraint_strength ? snap_time_strong : snap_time_weak)
+	var/snap_time = cuffs.restraint_strength ? snap_time_strong : snap_time_weak
+	if(!isnull(snap_time))
 		return TRUE
 	cutter_user.visible_message(message)
 	playsound(source = get_turf(cutter), soundin = cutter.usesound || cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
@@ -135,8 +140,8 @@
 		var/mob/living/carbon/carbon_target = target
 		target_was_restrained = carbon_target.handcuffed
 
-	if(snap_time)
-		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter)) // If 0 just do it. This to bypass the do_after() creating a needless progress bar.
+	if(!isnull(snap_time) && snap_time > 0)
+		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter)) //No doafter if time = 0
 			return
 		if(target_was_restrained) //Removing restraints takes priority over cuffed items. This only applies for carbon mobs, but we need to make sure the restraints are still the same.
 			var/mob/living/carbon/carbon_target = target

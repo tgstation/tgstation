@@ -4,7 +4,7 @@
 /datum/component/storm_hating
 	/// Types of weather which trigger the effect
 	var/static/list/stormy_weather = list(
-		/datum/weather/ash_storm,
+		/datum/weather/particle/ash_storm,
 		/datum/weather/snow_storm,
 		/datum/weather/void_storm,
 	)
@@ -19,6 +19,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(on_area_entered))
 	RegisterSignal(parent, COMSIG_EXIT_AREA, PROC_REF(on_area_exited))
+	RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 /datum/component/storm_hating/UnregisterFromParent()
 	. = ..()
@@ -45,4 +46,8 @@
 	if (!isturf(parent_atom.loc))
 		return
 	parent_atom.fade_into_nothing(life_time = 3 SECONDS, fade_time = 2 SECONDS)
+	qdel(src)
+
+/datum/component/storm_hating/proc/on_login(datum/source)
+	SIGNAL_HANDLER
 	qdel(src)

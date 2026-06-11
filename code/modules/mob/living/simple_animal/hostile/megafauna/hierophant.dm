@@ -53,7 +53,7 @@ Difficulty: Hard
 	armour_penetration = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL|MOB_MINING
+	mob_biotypes = MOB_SPECIAL|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -102,7 +102,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', 145 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET) in basic conversion
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon_ref)
@@ -730,7 +730,7 @@ Difficulty: Hard
 					else
 						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
-			L.adjustBruteLoss(damage)
+			L.adjust_brute_loss(damage)
 		if(caster)
 			log_combat(caster, L, "struck with a [name]")
 	for(var/obj/vehicle/sealed/mecha/M in T.contents - hit_things) //also damage mechs.

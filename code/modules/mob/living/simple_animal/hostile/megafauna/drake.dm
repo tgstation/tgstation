@@ -154,7 +154,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
 	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
-	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
+	adjust_brute_loss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	set_light_range(10)
@@ -213,27 +213,34 @@
 	animate(src, alpha = 255, time = duration)
 
 /obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/effects/magic/fleshtostone.ogg', 80, TRUE)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf,'sound/effects/magic/fleshtostone.ogg', 80, TRUE)
 	sleep(duration)
-	playsound(T,'sound/effects/magic/fireball.ogg', 200, TRUE)
+	playsound(our_turf,'sound/effects/magic/fireball.ogg', 200, TRUE)
+	var/can_transform_turf = !isclosedturf(our_turf) && !islava(our_turf)
 
-	for(var/mob/living/L in T.contents - owner)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+	for(var/mob/living/victim in our_turf)
+		if(istype(victim, /mob/living/simple_animal/hostile/megafauna/dragon) || victim == owner)
 			continue
-		L.adjustFireLoss(10)
-		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
+		victim.adjust_fire_loss(10)
+		if(can_transform_turf)
+			to_chat(victim, span_userdanger("You fall directly into the pool of lava!"))
+		else
+			to_chat(victim, span_userdanger("You are set ablaze by a fireball from above!"))
 
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		M.take_damage(45, BRUTE, MELEE, 1)
+	for(var/obj/vehicle/sealed/mecha/mech in our_turf)
+		mech.take_damage(45, BRUTE, MELEE, 1)
 
-	// changes turf to lava temporarily
-	if(!isclosedturf(T) && !islava(T))
-		var/lava_turf = /turf/open/lava/smooth
-		var/reset_turf = T.type
-		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
-		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
+	// changes turf to lava temporarily if possible, create a fire visual otherwise
+	if(!can_transform_turf)
+		new /obj/effect/temp_visual/fire/light(our_turf)
+		return
+
+	var/lava_turf = /turf/open/lava/smooth
+	var/reset_turf = our_turf.type
+	our_turf.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+	addtimer(CALLBACK(our_turf, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
@@ -296,11 +303,11 @@
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		if(islist(flame_hit) && !flame_hit[L])
-			L.adjustFireLoss(40)
+			L.adjust_fire_loss(40)
 			to_chat(L, span_userdanger("You're hit by the drake's fire breath!"))
 			flame_hit[L] = TRUE
 		else
-			L.adjustFireLoss(10) //if we've already hit them, do way less damage
+			L.adjust_fire_loss(10) //if we've already hit them, do way less damage
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"

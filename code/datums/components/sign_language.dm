@@ -310,6 +310,10 @@
 
 /// Send a visible message depending on the tone of the message that the sender is trying to convey to the world.
 /datum/component/sign_language/proc/emote_tone(mob/living/carbon/carbon_parent, emote_tone)
+	if(ishuman(carbon_parent))
+		var/mob/living/carbon/human/human_parent = carbon_parent
+		if(human_parent.is_face_obscured())
+			return // You can't see someone's expression if their face is obscured (or disfigured)
 	switch(emote_tone)
 		if(TONE_INQUISITIVE)
 			carbon_parent.visible_message(span_bold("quirks [carbon_parent.p_their()] brows quizzically."), visible_message_flags = EMOTE_MESSAGE|BLOCK_SELF_HIGHLIGHT_MESSAGE)

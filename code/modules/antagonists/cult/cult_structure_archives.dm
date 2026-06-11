@@ -14,6 +14,7 @@
 	light_color = LIGHT_COLOR_FIRE
 	break_message = span_warning("The books and tomes of the archives burn into ash as the desk shatters!")
 	mansus_conversion_path = /obj/item/codex_cicatrix
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/destructible/cult/item_dispenser/archives/setup_options()
 	var/static/list/archive_items = list(

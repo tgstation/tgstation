@@ -61,8 +61,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	/// The list of strains the blob can reroll for.
 	var/list/strain_choices
 
-	///The HUD given to blobs with their power
-	var/atom/movable/screen/blob_power_display/blob_power_hud
+	/// Adminbus potential - if this is set to FALSE, the blob won't end the round upon reaching critical mass.
+	var/end_round_on_victory = TRUE
 
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
@@ -84,14 +84,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
-
-/mob/eye/blob/create_mob_hud()
-	. = ..()
-	if(!.)
-		return
-	blob_power_hud = new(null, src)
-	hud_used.infodisplay += blob_power_hud
-	hud_used.show_hud(hud_used.hud_version)
 
 /mob/eye/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -171,16 +163,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
-		victory_in_progress = TRUE
-		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+		begin_victory()
 
-		// Set status displays to biohazard alert - critical level
-		send_status_display_biohazard_alert()
-
-		max_blob_points = INFINITY
-		blob_points = INFINITY
-		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
@@ -198,7 +182,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
-	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf, blob_borne = TRUE)
 	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
 
@@ -210,6 +194,22 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/proc/clear_biohazard_display()
 	clear_status_display_biohazard()
 
+/// Announce the blob's victory! Tell everyone that they're about to explode and/or turn into biomass soup and give the overmind a victory lap.
+/mob/eye/blob/proc/begin_victory()
+	victory_in_progress = TRUE
+	priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+
+	// Set status displays to biohazard alert - critical level
+	send_status_display_biohazard_alert()
+	if(end_round_on_victory) // Assuming they actually *are* about to turn the station into soup...
+		max_blob_points = INFINITY
+		blob_points = INFINITY
+	else
+		to_chat(src, span_blob("You've reached critical mass, but something feels terribly wrong, stopping you from expanding further. All you can do now is fight as long as you can..."))
+	addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
+
+/// Actually *do* the blob's victory: give them their greentext and, depending on the end_round_on_victory variable, decide if everyone dies or if it's just a jumpscare.
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
@@ -218,13 +218,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(main_objective)
 			main_objective.completed = TRUE
 
-	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = FORCE_END_ROUND
+	if(end_round_on_victory)
+		to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
+		SSticker.news_report = BLOB_WIN
+		SSticker.force_ending = FORCE_END_ROUND
 
-	// Handle the heavy victory operations asynchronously
-	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+		// Handle the heavy victory operations (where everyone dies) asynchronously
+		INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+	else
+		// Is the station going boom? No. But is the station still going to get yelled at? Yes.
+		priority_announce("Experimental, classified, and very expensive emergency countermeasures have been activated to prevent total station loss, \
+			but the initial failure to contain the viral biohazard will be noted on the station's performance report. Expect further penalties.", \
+			"Emergency Biohazard Countermeasure Alert")
 
+/// Kill everyone who's still on the station area and not already part of the blob's faction, and cover every station area with blob icons. Everyone's soup now.
 /mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 	sleep(10 SECONDS)
@@ -240,7 +247,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!(blob_area.area_flags & BLOBS_ALLOWED))
 			continue
 
-		if(!(ROLE_BLOB in live_guy.faction))
+		if(!live_guy.has_faction(ROLE_BLOB))
 			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
@@ -263,7 +270,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/eye/blob/Destroy()
 	QDEL_NULL(blobstrain)
-	QDEL_NULL(blob_power_hud)
 
 	// Clear references immediately without iterating to avoid blocking
 	all_blobs = null
@@ -304,15 +310,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 	var/new_maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
-	hud_used.healths.maptext = new_maptext
+	hud_used.screen_objects[HUD_MOB_HEALTH].maptext = new_maptext
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		if(isnull(blobbernaut.overmind_hud))
-			continue
-		blobbernaut.overmind_hud.maptext = new_maptext
+		var/atom/movable/screen/overmind_hud = blobbernaut.hud_used?.screen_objects[HUD_BLOBBERNAUT_OVERMIND]
+		if (overmind_hud)
+			overmind_hud.maptext = new_maptext
 
 /mob/eye/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
-	blob_power_hud.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
+	hud_used.screen_objects[HUD_BLOB_POWER_DISPLAY].maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
 /mob/eye/blob/say(
 	message,

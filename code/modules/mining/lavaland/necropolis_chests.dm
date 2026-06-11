@@ -94,8 +94,8 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/proj)
-	if(istype(proj, /obj/projectile/colossus))
+/obj/structure/closet/crate/necropolis/colossus/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(istype(hitting_projectile, /obj/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
@@ -134,3 +134,4 @@
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "skeleton_key"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)

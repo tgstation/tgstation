@@ -18,10 +18,7 @@
 	// Requires a obsession target
 	trauma_blacklist += typesof(/datum/brain_trauma/special/obsessed)
 
-	for(var/datum/brain_trauma/trauma as anything in typesof(/datum/brain_trauma) - trauma_blacklist)
-		if(trauma == initial(trauma.abstract_type))
-			continue
-
+	for(var/datum/brain_trauma/trauma as anything in valid_subtypesof(/datum/brain_trauma) - trauma_blacklist)
 		test_trauma(dummy, trauma)
 
 /datum/unit_test/trauma_granting/proc/test_trauma(mob/living/carbon/human/dummy, trauma)

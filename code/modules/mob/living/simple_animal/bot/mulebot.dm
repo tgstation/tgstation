@@ -164,46 +164,46 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	cell.add_fingerprint(user)
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(cell)
-	else
-		cell.forceMove(drop_location())
 	user.visible_message(
 		span_notice("[user] crowbars [cell] out from [src]."),
 		span_notice("You pry [cell] out of [src]."),
 	)
-	cell = null
-	diag_hud_set_mulebotcell()
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(cell)
+	else
+		cell.forceMove(drop_location())
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
+/mob/living/simple_animal/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/power_store/cell) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
-			return TRUE
-		if(!user.transferItemToLoc(I, src))
-			return TRUE
-		cell = I
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		cell = tool
 		diag_hud_set_mulebotcell()
 		user.visible_message(
 			span_notice("[user] inserts \a [cell] into [src]."),
 			span_notice("You insert [cell] into [src]."),
 		)
+		return ITEM_INTERACT_SUCCESS
+	if(is_wire_tool(tool) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
+		attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(ismob(load) && prob(1 + attacking_item.force * 2))
+		user.visible_message(
+			span_danger("[user] knocks [load] off [src] with \the [attacking_item]!"),
+			span_danger("You knock [load] off [src] with \the [attacking_item]!"),
+		)
+		unload(0)
 		return TRUE
-	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		return attack_hand(user)
-	else if(load && ismob(load))  // chance to knock off rider
-		if(prob(1 + I.force * 2))
-			unload(0)
-			user.visible_message(span_danger("[user] knocks [load] off [src] with \the [I]!"),
-									span_danger("You knock [load] off [src] with \the [I]!"))
-		else
-			to_chat(user, span_warning("You hit [src] with \the [I] but to no effect!"))
-			return ..()
-	else
-		return ..()
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
@@ -451,11 +451,11 @@
 	unbuckle_all_mobs()
 
 	if(load) //don't have to do any of this for mobs.
-		load.forceMove(loc)
-		load.pixel_y = initial(load.pixel_y)
-		load.layer = initial(load.layer)
-		SET_PLANE_EXPLICIT(load, initial(load.plane), src)
 		load = null
+		cached_load.forceMove(loc)
+		cached_load.pixel_y = initial(cached_load.pixel_y)
+		cached_load.layer = initial(cached_load.layer)
+		SET_PLANE_EXPLICIT(cached_load, initial(cached_load.plane), src)
 
 	if(dirn) //move the thing to the delivery point.
 		cached_load.Move(get_step(loc,dirn), dirn)
@@ -500,7 +500,7 @@
 	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return
 
-	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
+	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 2) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 1)
 	if(!speed)//Devide by zero man bad
 		return
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut

@@ -5,6 +5,7 @@
 
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "navbeacon0"
+	base_icon_state = "navbeacon"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
@@ -25,7 +26,7 @@
 	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/codes_txt = ""
 
-	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_CARGO, ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
 /datum/armor/machinery_navbeacon
 	melee = 70
@@ -106,14 +107,17 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/crowbar_act(mob/living/user, obj/item/I)
-	if(default_deconstruction_crowbar(I))
-		return TRUE
+	return default_deconstruction_crowbar(user, I)
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!panel_open && cover_locked)
 		balloon_alert(user, "hatch locked!")
-		return TRUE
-	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/navbeacon/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][panel_open]"
 
 /obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/turf/our_turf = loc

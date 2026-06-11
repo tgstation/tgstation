@@ -2,7 +2,7 @@
 	name = "\improper Crew Facilities"
 	icon_state = "commons"
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /*
 * Dorm Areas
@@ -87,6 +87,7 @@
 	mood_message = "I love being in the bar!"
 	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+	tacmap_color = TACMAP_AREA_SERVICE
 
 /area/station/commons/fitness
 	name = "\improper Fitness Room"

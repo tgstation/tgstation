@@ -61,3 +61,12 @@
 	category = LOG_CATEGORY_GAME_ACCESS
 	config_flag = /datum/config_entry/flag/log_access
 	master_category = /datum/log_category/game
+
+/datum/log_category/game_blood_worm
+	category = LOG_CATEGORY_GAME_BLOOD_WORM
+	config_flag = /datum/config_entry/flag/log_blood_worm
+	master_category = /datum/log_category/game
+
+/datum/log_category/minimap_drawing
+	category = LOG_CATEGORY_GAME_MINIMAP_DRAWING
+	master_category = /datum/log_category/game

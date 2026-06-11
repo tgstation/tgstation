@@ -11,9 +11,6 @@
 	/// If set, the flora will have this as its description after being harvested. When the flora becomes harvestable again, it regerts to its initial(desc)
 	var/harvested_desc
 
-	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
-	/// Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
-	var/product_types
 	/// If the user is able to harvest this with their hands
 	var/harvest_with_hands = FALSE
 	/// The "verb" to use when the user harvests the flora
@@ -27,9 +24,9 @@
 
 	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
 	var/harvestable = TRUE
-	/// The low end of how many product_type items you get
+	/// The low end of how many harvested items you get
 	var/harvest_amount_low = 1
-	/// The high end of how many product_type items you get
+	/// The high end of how many harvested items you get
 	var/harvest_amount_high = 3
 
 	//Messages to show to the user depending on how many items they get when harvesting the flora
@@ -133,24 +130,34 @@
 	if(use_default_sound)
 		return ..()
 
-/*
+/**
+ * A helper proc for getting the products that could be created when harvesting this flora, list syntax is (type = weight)
+ * Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
+ * Returns: An assoc list of obj typepaths and their weights e.g. list(/obj/item/food/grass = 1), or null
+ */
+/obj/structure/flora/proc/get_potential_products()
+	return null
+
+/**
  * A helper proc for getting a random amount of products, associated with the flora's product list.
- * Returns: A list where each value is (product_type = amount_of_products)
+ * Returns: A list where each value is (harvested_item_typepath = amount_of_products)
  */
 /obj/structure/flora/proc/get_products_list()
-	if(!LAZYLEN(product_types))
-		return list()
+	var/list/potential_product_list = get_potential_products()
+	if(isnull(potential_product_list))
+		return
+
 	var/list/product_list = list()
 
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
 	for(var/iteration in 1 to harvest_amount)
-		var/chosen_product = pick_weight(product_types)
+		var/chosen_product = pick_weight(potential_product_list)
 		if(!product_list[chosen_product])
 			product_list[chosen_product] = 0
 		product_list[chosen_product]++
 	return product_list
 
-/*
+/**
  * A helper proc that determines if a user can currently harvest this flora with whatever tool they're trying to use.
  * Returns: TRUE if they can harvest, FALSE if not. Null if it's not harvestable at all.
  */
@@ -177,7 +184,7 @@
 
 	return FALSE
 
-/*
+/**
  * This gets called after a mob tries to harvest this flora with the correct tool.
  * It displays a flavor message to whoever's harvesting this flora, then creates new products depending on the flora's product list.
  * Also renames the flora if harvested_name or harvested_desc is set in the variables
@@ -185,11 +192,11 @@
  */
 /obj/structure/flora/proc/harvest(user, product_amount_multiplier = 1)
 	. = FALSE
-	if(harvested && !LAZYLEN(product_types))
+	if(harvested)
 		return FALSE
 
 	var/list/products_to_create = get_products_list()
-	if(!products_to_create.len)
+	if(!LAZYLEN(products_to_create))
 		return FALSE
 
 	var/products_created = 0
@@ -250,7 +257,7 @@
 	desc = initial(desc)
 	harvested = FALSE
 
-/*
+/**
  * Called after the user uproots the flora with a shovel.
  */
 /obj/structure/flora/proc/uproot(mob/living/user)
@@ -260,7 +267,7 @@
 	previous_rotation = pick(-90, 90)
 	transform = M.Turn(previous_rotation)
 
-/*
+/**
  * Called after the user plants the flora back into the ground after uprooted
  */
 /obj/structure/flora/proc/replant(mob/living/user)
@@ -289,7 +296,6 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	drag_slowdown = 1.5
-	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 6
 	harvest_amount_high = 10
 	harvest_message_low = "You manage to gather a few logs from the tree."
@@ -302,7 +308,11 @@
 
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/seethrough, get_seethrough_map())
+	if(get_seethrough_map())
+		AddComponent(/datum/component/seethrough, get_seethrough_map())
+
+/obj/structure/flora/tree/get_potential_products()
+	return list(/obj/item/grown/log/tree = 1)
 
 ///Return a see_through_map, examples in seethrough.dm
 /obj/structure/flora/tree/proc/get_seethrough_map()
@@ -335,6 +345,9 @@
 	..()
 	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
+
+/obj/structure/flora/tree/stump/get_seethrough_map()
+	return FALSE
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/fluff/flora/deadtrees.dmi'
@@ -448,7 +461,7 @@
 	update_appearance()
 
 /obj/structure/flora/tree/pine/xmas
-	name = "xmas tree"
+	name = "\improper Christmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 
@@ -536,7 +549,6 @@
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/fluff/flora/snowflora.dmi'
 	gender = PLURAL //"this is grass" not "this is a grass"
-	product_types = list(/obj/item/food/grown/grass = 10, /obj/item/seeds/grass = 1)
 	harvest_with_hands = TRUE
 	harvest_amount_low = 0
 	harvest_amount_high = 2
@@ -545,6 +557,9 @@
 	harvest_message_high = "You gather up a handful grass."
 	can_uproot = TRUE
 	flora_flags = FLORA_HERBAL
+
+/obj/structure/flora/grass/get_potential_products()
+	return list(/obj/item/food/grown/grass = 10, /obj/item/seeds/grass = 1)
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -1006,7 +1021,6 @@
 	icon = 'icons/obj/fluff/flora/rocks.dmi'
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	product_types = list(/obj/item/stack/ore/glass/basalt = 1)
 	harvest_amount_low = 10
 	harvest_amount_high = 20
 	harvest_message_med = "You finish mining the rock."
@@ -1014,6 +1028,9 @@
 	flora_flags = FLORA_STONE
 	can_uproot = FALSE
 	delete_on_harvest = TRUE
+
+/obj/structure/flora/rock/get_potential_products()
+	return list(/obj/item/stack/ore/glass/basalt = 1)
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"
@@ -1046,8 +1063,81 @@
 
 /obj/structure/flora/rock/pile/style_random/Initialize(mapload)
 	. = ..()
-	icon_state = "lavarocks[rand(1, 3)]"
+	icon_state = "lavarocks[pick(3;1,3;2,1;3)]"
 	update_appearance()
+
+/obj/structure/flora/rock/pile/siderite
+	icon_state = "lavarocks_siderite1"
+
+/obj/structure/flora/rock/pile/siderite/get_potential_products()
+	return list(/obj/item/stack/ore/glass/siderite = 1)
+
+/obj/structure/flora/rock/pile/siderite/style_2
+	icon_state = "lavarocks_siderite2"
+
+/obj/structure/flora/rock/pile/siderite/style_3
+	icon_state = "lavarocks_siderite3"
+
+/obj/structure/flora/rock/pile/siderite/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "lavarocks_siderite[pick(3;1,3;2,1;3)]"
+	update_appearance()
+
+/obj/structure/flora/rock/pile/shale
+	icon_state = "lavarocks_shale1"
+
+/obj/structure/flora/rock/pile/shale/style_2
+	icon_state = "lavarocks_shale2"
+
+/obj/structure/flora/rock/pile/shale/style_3
+	icon_state = "lavarocks_shale3"
+
+/obj/structure/flora/rock/pile/shale/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "lavarocks_shale[pick(3;1,3;2,1;3)]"
+	update_appearance()
+
+/obj/structure/flora/rock/siderite_growth
+	name = "siderite growth"
+	desc = "A natural stalagmite formed of siderite, with thin pointy strands of dirty metal sticking out of the top."
+	icon_state = "siderite_growth1"
+	base_icon_state = "siderite_growth"
+	icon = 'icons/obj/mining_zones/terrain.dmi'
+	harvest_message_med = "You finish mining the growth."
+
+/obj/structure/flora/rock/siderite_growth/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state][pick(3;1,3;2,1;3)]"
+	update_appearance()
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT)
+
+/obj/structure/flora/rock/siderite_growth/get_potential_products()
+	return list(/obj/item/stack/ore/glass/siderite = 1)
+
+/obj/structure/flora/rock/volcano
+	name = "volcanic pore"
+	desc = "A miniature volcano-like rock formed of the lava slowly pouring from it."
+	icon_state = "volcano_1"
+	base_icon_state = "volcano"
+	harvest_message_med = "You finish mining the pore buildup."
+	light_range = 3
+	light_power = 2.5
+	light_color = LIGHT_COLOR_LAVA
+
+/obj/structure/flora/rock/volcano/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 4)]"
+	update_appearance()
+
+/obj/structure/flora/rock/volcano/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src, alpha = 200)
+
+/obj/structure/flora/rock/volcano/after_harvest(user)
+	var/turf/open/our_turf = loc
+	if (istype(our_turf))
+		our_turf.ChangeTurf(/turf/open/lava/smooth, flags = CHANGETURF_INHERIT_AIR)
+	return ..()
 
 /obj/structure/flora/rock/pile/jungle
 	icon_state = "rock1"

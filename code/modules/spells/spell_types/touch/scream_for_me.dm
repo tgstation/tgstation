@@ -28,7 +28,7 @@
 		return
 	var/mob/living/carbon/human/human_victim = victim
 	human_victim.emote("scream")
-	for(var/obj/item/bodypart/to_wound as anything in human_victim.bodyparts)
+	for(var/obj/item/bodypart/to_wound as anything in human_victim.get_bodyparts())
 		human_victim.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
 	return TRUE
 

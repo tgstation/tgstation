@@ -54,6 +54,17 @@
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
+/client/verb/config()
+	set name = "config"
+	set desc = "View the server configuration files."
+	set hidden = TRUE
+
+	var/configurl = CONFIG_GET(string/configurl)
+	if(!configurl)
+		to_chat(src, span_danger("The Config URL is not set in the server configuration."))
+		return
+	DIRECT_OUTPUT(src, link(configurl))
+
 /client/verb/reportissue()
 	set name = "report-issue"
 	set desc = "Report an issue"
@@ -109,13 +120,24 @@
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
-		winset(src, "infobuttons.changelog", "font-style=;")
 
 /client/verb/hotkeys_help()
 	set name = "Hotkeys Help"
-	set category = "OOC"
+	set hidden = TRUE
 
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
+
+/client/verb/emote_panel()
+	set name = "Emote Panel"
+	set hidden = TRUE
+
+	if(!isliving(mob))
+		to_chat(mob, span_notice("You can only use this while you're alive!"))
+		return
+
+	if(!GLOB.emote_panel)
+		GLOB.emote_panel = new /datum/emote_panel()
+	GLOB.emote_panel.ui_interact(mob)

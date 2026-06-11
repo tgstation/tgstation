@@ -11,16 +11,18 @@
 	name = "Choking"
 	desc = "The virus causes inflammation of the host's air conduits, leading to intermittent choking."
 	illness = "Pneumatic Tubes"
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -2
+	stealth = -1
+	resistance = 0
+	stage_speed = -1
+	transmittable = -1
 	level = 3
 	severity = 3
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	required_organ = ORGAN_SLOT_LUNGS
+	symptom_cure = /datum/reagent/medicine/c2/tirimol
+	cure_color = "orange"
 	threshold_descs = list(
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
@@ -60,11 +62,11 @@
 			infected_mob.emote("gasp")
 
 /datum/symptom/choking/proc/Choke_stage_3_4(mob/living/M, datum/disease/advance/A)
-	M.adjustOxyLoss(rand(6,13))
+	M.adjust_oxy_loss(rand(6,13))
 	return 1
 
 /datum/symptom/choking/proc/Choke(mob/living/M, datum/disease/advance/A)
-	M.adjustOxyLoss(rand(10,18))
+	M.adjust_oxy_loss(rand(10,18))
 	return 1
 
 /*
@@ -89,7 +91,7 @@ Bonus
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	illness = "Iron Lungs"
 	stealth = -2
-	resistance = -0
+	resistance = 0
 	stage_speed = -1
 	transmittable = -2
 	level = 7
@@ -98,6 +100,8 @@ Bonus
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	required_organ = ORGAN_SLOT_LUNGS
+	symptom_cure = /datum/reagent/toxin/bonehurtingjuice // It'll be funny I swear
+	cure_color = "orange" // The only level 7 symptom without a red color
 	threshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."
@@ -128,25 +132,25 @@ Bonus
 			to_chat(M, span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"))
 			Asphyxiate(M, A)
 			M.emote("gasp")
-			if(M.getOxyLoss() >= (M.maxHealth / (200/120)))
+			if(M.get_oxy_loss() >= (M.maxHealth / (200/120)))
 				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
 				Asphyxiate_death(M, A)
 	return
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_stage_3_4(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(10,15) * power
-	M.adjustOxyLoss(get_damage)
+	M.adjust_oxy_loss(get_damage)
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,21) * power
-	M.adjustOxyLoss(get_damage)
+	M.adjust_oxy_loss(get_damage)
 	if(paralysis)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/pancuronium = 3, /datum/reagent/toxin/sodium_thiopental = 3))
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(25,35) * power
-	M.adjustOxyLoss(get_damage)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, get_damage/2)
+	M.adjust_oxy_loss(get_damage)
+	M.adjust_organ_loss(ORGAN_SLOT_BRAIN, get_damage/2)
 	return 1

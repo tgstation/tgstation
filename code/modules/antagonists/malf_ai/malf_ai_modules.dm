@@ -85,6 +85,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/Trigger(mob/clicker, trigger_flags)
 	. = ..()
+	if(!.)
+		return
 	if(auto_use_uses)
 		adjust_uses(-1)
 	if(cooldown_period)
@@ -158,13 +160,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		Obtaining control of the weapon will be easier if Head of Staff office APCs are already under your control."
 	cost = 130
 	one_purchase = TRUE
-	minimum_apcs = 15 // So you cant speedrun delta
+	minimum_apcs = 10 // So you cant speedrun delta
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = span_notice("You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.")
 	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
 	var/list/discount_areas = list(
 		/area/station/command/heads_quarters,
-		/area/station/ai_monitored/command/nuke_storage
+		/area/station/command/vault
 	)
 	///List of hacked head of staff office areas. Includes the vault too. Provides a 20 PT discount per (Min 50 PT cost)
 	var/list/hacked_command_areas = list()
@@ -505,10 +507,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cooldown_period = 10 SECONDS
 
 /datum/action/innate/ai/destroy_rcds/Activate()
-	for(var/I in GLOB.rcd_list)
-		if(!istype(I, /obj/item/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			var/obj/item/construction/rcd/RCD = I
-			RCD.detonate_pulse()
+	for(var/potential_rcd in GLOB.rcd_list)
+		if(istype(potential_rcd, /obj/item/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			continue
+		var/obj/item/construction/rcd/definite_rcd = potential_rcd
+		definite_rcd.detonate_pulse()
 	to_chat(owner, span_danger("RCD detonation pulse emitted."))
 	owner.playsound_local(owner, 'sound/machines/beep/twobeep.ogg', 50, 0)
 
@@ -630,11 +633,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
 		playsound(found_intercom, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
-		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
+		for(var/mob/living/honk_victim in ohearers(6, found_intercom))
+			if(issilicon(honk_victim))
+				continue
 			var/turf/victim_turf = get_turf(honk_victim)
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
 				continue
-			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
+			if(honk_victim.soundbang_act(SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
 				honk_victim.set_jitter_if_lower(120 SECONDS)
 				to_chat(honk_victim, span_clown("HOOOOONK!"))
 
@@ -643,7 +648,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	name = "Robotic Factory (Removes Shunting)"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-	minimum_apcs = 10 // So you can't speedrun this
 	power_type = /datum/action/innate/ai/place_transformer
 	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
 	unlock_sound = 'sound/machines/ping.ogg'
@@ -697,8 +701,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		var/turf/T = turfs[n]
 		if(!isfloorturf(T))
 			success = FALSE
-		var/datum/camerachunk/C = GLOB.cameranet.getCameraChunk(T.x, T.y, T.z)
-		if(!C.visibleTurfs[T])
+		if(!SScameras.is_visible_by_cameras(T))
 			alert_msg = "You don't have camera vision of this location!"
 			success = FALSE
 		for(var/atom/movable/AM in T.contents)
@@ -750,7 +753,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = span_notice("You replace the thermal sensing capabilities of all fire alarms with a manual override, \
 		allowing you to turn them off at will.")
-	unlock_sound = 'sound/machines/fire_alarm/FireAlarm1.ogg'
+	unlock_sound = 'sound/machines/fire_alarm/fire_alarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"
@@ -823,7 +826,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		if(!uses)
 			break
 		if(!C.camera_enabled || C.view_range != initial(C.view_range))
@@ -855,13 +858,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	AI.update_sight()
 
 	var/upgraded_cameras = 0
-	for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/camera as anything in SScameras.cameras)
 		var/upgraded = FALSE
 
 		if(!camera.isXRay())
 			camera.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
 			//Update what it can see.
-			GLOB.cameranet.updateVisibility(camera, 0)
 			upgraded = TRUE
 
 		if(!camera.isEmpProof())

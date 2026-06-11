@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = FIRE_PRIORITY_GARBAGE
 	wait = 2 SECONDS
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
+	ss_flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_stage = INITSTAGE_FIRST
 
@@ -374,7 +374,7 @@ SUBSYSTEM_DEF(garbage)
 	var/start_time = world.time
 	var/start_tick = world.tick_usage
 	SEND_SIGNAL(to_delete, COMSIG_QDELETING, force) // Let the (remaining) components know about the result of Destroy
-	var/hint = to_delete.Destroy(force) // Let our friend know they're about to get fucked up.
+	var/hint = UNLINT(to_delete.Destroy(force)) // Let our friend know they're about to get fucked up.
 
 	if(world.time != start_time)
 		trash.slept_destroy++

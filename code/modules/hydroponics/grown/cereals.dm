@@ -22,11 +22,13 @@
 	icon_state = "wheat"
 	bite_consumption_mod = 0.5 // Chewing on wheat grains?
 	foodtypes = GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
 	slot_flags = ITEM_SLOT_MASK
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+
+/obj/item/food/grown/wheat/grind_results()
+	return list(/datum/reagent/consumable/flour = 0)
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -46,9 +48,11 @@
 	icon_state = "oat"
 	bite_consumption_mod = 0.5
 	foodtypes = GRAIN
-	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
+
+/obj/item/food/grown/oat/grind_results()
+	return list(/datum/reagent/consumable/flour = 0)
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -72,9 +76,11 @@
 	icon_state = "rice"
 	bite_consumption_mod = 0.5
 	foodtypes = GRAIN
-	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
+
+/obj/item/food/grown/rice/grind_results()
+	return list(/datum/reagent/consumable/rice = 0)
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -94,11 +100,13 @@
 	bite_consumption_mod = 0.5
 	seed = /obj/item/seeds/wheat/meat
 	foodtypes = MEAT
-	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
 	slot_flags = ITEM_SLOT_MASK
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+
+/obj/item/food/grown/meatwheat/grind_results()
+	return list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))

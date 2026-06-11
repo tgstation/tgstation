@@ -8,10 +8,12 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
-///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick, times_fired)
+///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick)
 #define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)
+	///Allows for most on_life calls BUT metabolize()
+	#define COMSIG_MOB_STOP_REAGENT_METABOLISM (1<<1)
 ///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
@@ -49,8 +51,6 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move(): (new_loc, direction)
-#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -88,8 +88,7 @@
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
-///from the component /datum/component/simple_access
-#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
+#define	COMSIG_MOB_RETRIEVE_ACCESS "retrieve_access"
 
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
@@ -106,6 +105,7 @@
 #define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
+	#define COMPONENT_BLOCK_INVIS_CHANGE (1<<0)
 
 /// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 /// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
@@ -121,7 +121,7 @@
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
-///from base of /mob/verb/examinate(): (atom/target, list/examine_strings)
+///from base of /mob/verb/examinate(): (atom/target, list/examine_strings, list/examine_overrides)
 #define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
@@ -226,12 +226,12 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
-/// from /obj/item/assembly/flash/flash_carbon, to the mob being flashed
+/// from /obj/item/assembly/flash/flash_mob, to the mob being flashed
 #define COMSIG_MOB_FLASH_OVERRIDE_CHECK "mob_flash_override_check"
 	/// Has the flash effect been overridden?
 	#define FLASH_OVERRIDDEN (1<<0)
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
-#define COMSIG_MOB_PRE_FLASHED_CARBON "mob_pre_flashed_carbon"
+#define COMSIG_MOB_PRE_FLASHED_MOB "mob_pre_flashed_mob"
 	/// Return to override deviation to be full deviation (fail the flash, usually)
 	#define DEVIATION_OVERRIDE_FULL (1<<0)
 	/// Return to override deviation to be partial deviation
@@ -240,9 +240,9 @@
 	#define DEVIATION_OVERRIDE_NONE (1<<2)
 	/// Return to stop the flash entirely
 	#define STOP_FLASH (1<<3)
-/// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+/// from /obj/item/assembly/flash/flash_mob, to the mob flashing another carbon
 /// (mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation (from code/__DEFINES/mobs.dm))
-#define COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON "mob_success_flashed_carbon"
+#define COMSIG_MOB_SUCCESSFUL_FLASHED_MOB "mob_success_flashed_mob"
 
 /// from mob/get_status_tab_items(): (list/items)
 #define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"

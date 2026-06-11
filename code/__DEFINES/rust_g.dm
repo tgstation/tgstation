@@ -96,6 +96,32 @@
 #define rustg_acreplace_with_replacements(key, text, replacements) RUSTG_CALL(RUST_G, "acreplace_with_replacements")(key, text, json_encode(replacements))
 
 /**
+ * Generates a procedural dungeon map using BSP tree partitioning, prefab placement,
+ * MST corridor generation, and Cellular Automata smoothing.
+ *
+ * Returns a plain binary grid string (matching cellularnoise format):
+ * A width*height string of '0' (wall) and '1' (floor) characters in row-major order.
+ *
+ * Arguments:
+ * * width - Grid width
+ * * height - Grid height
+ * * prefabs_json - JSON array of prefab configs: [{"x":55,"y":65,"w":10,"h":10,"isEnclosed":true},...] (if none use "[]") x = bottom-left turf x, y = bottom-left turf y, w = prefab width, h = prefab height, isEnclosed = whether prefab should be treated like its wall or floor by the generation
+ * * min_bsp_size - Minimum BSP leaf dimension
+ * * max_ratio - Maximum aspect ratio for BSP splits
+ * * padding - Room edge padding within BSP leaf
+ * * room_fill_percent - How much of each BSP leaf a room fills, 1-100
+ * * corridor_width - Width of corridors between rooms
+ * * loop_percent - Chance to add extra MST edges for loops
+ * * noise_percent - Initial random floor density
+ * * ca_steps - Cellular Automata smoothing iterations
+ * * birth_limit - Neighbors to create floor (>=)
+ * * survival_limit - Neighbors to survive as floor (>=)
+ * * edge_is_alive - Whether out-of-bounds cells count as ALIVE (floor) for CA neighbor counts
+ */
+#define rustg_cave_system_generator_generate(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit, edge_is_alive) \
+	RUSTG_CALL(RUST_G, "cave_system_generator_generate")(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit, edge_is_alive)
+
+/**
  * This proc generates a cellular automata noise grid which can be used in procedural generation methods.
  *
  * Returns a single string that goes row by row, with values of 1 representing an alive cell, and a value of 0 representing a dead cell.
@@ -168,6 +194,9 @@
  */
 #define rustg_dmi_inject_metadata(path, metadata) RUSTG_CALL(RUST_G, "dmi_inject_metadata")(path, metadata)
 
+#define rustg_create_qr_code_png(path, data) RUSTG_CALL(RUST_G, "create_qr_code_png")(path, data)
+#define rustg_create_qr_code_svg(data) RUSTG_CALL(RUST_G, "create_qr_code_svg")(data)
+
 #define rustg_file_read(fname) RUSTG_CALL(RUST_G, "file_read")(fname)
 #define rustg_file_exists(fname) (RUSTG_CALL(RUST_G, "file_exists")(fname) == "true")
 #define rustg_file_write(text, fname) RUSTG_CALL(RUST_G, "file_write")(text, fname)
@@ -200,20 +229,69 @@
 
 #define rustg_hash_string(algorithm, text) RUSTG_CALL(RUST_G, "hash_string")(algorithm, text)
 #define rustg_hash_file(algorithm, fname) RUSTG_CALL(RUST_G, "hash_file")(algorithm, fname)
-#define rustg_hash_generate_totp(seed) RUSTG_CALL(RUST_G, "generate_totp")(seed)
-#define rustg_hash_generate_totp_tolerance(seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(seed, tolerance)
+
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+#define rustg_hash_generate_totp(algorithm, seed) RUSTG_CALL(RUST_G, "generate_totp")(algorithm, seed)
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+/// Tolerance is the number of codes +-30sec from the current one that are allowed.
+#define rustg_hash_generate_totp_tolerance(algorithm, seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(algorithm, seed, tolerance)
+
+/// Creates a cryptographically-secure pseudorandom number generator using the OS-level PRNG as a seed
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_csprng_chacha20(format, n_bytes) RUSTG_CALL(RUST_G, "csprng_chacha20")(format, "[n_bytes]")
+
+/// Creates a seeded pseudorandom number generator using the SHA256 hash output bytes of the seed string
+/// Note that this function is NOT suitable for use in cryptography and is intended for high-quality **predictable** RNG
+/// Use rustg_csprng_chacha20 for a cryptographically-secure PRNG.
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_prng_chacha20_seeded(format, n_bytes, seed) RUSTG_CALL(RUST_G, "prng_chacha20_seeded")(format, "[n_bytes]", seed)
+
+#define RUSTG_RNG_FORMAT_HEX "hex"
+#define RUSTG_RNG_FORMAT_ALPHANUMERIC "alphanumeric"
+#define RUSTG_RNG_FORMAT_BASE32 "base32_rfc4648"
+#define RUSTG_RNG_FORMAT_BASE32_PADDED "base32_rfc4648_pad"
+#define RUSTG_RNG_FORMAT_BASE64 "base64"
 
 #define RUSTG_HASH_MD5 "md5"
 #define RUSTG_HASH_SHA1 "sha1"
 #define RUSTG_HASH_SHA256 "sha256"
 #define RUSTG_HASH_SHA512 "sha512"
 #define RUSTG_HASH_XXH64 "xxh64"
+#define RUSTG_HASH_BASE32 "base32_rfc4648"
+#define RUSTG_HASH_BASE32_PADDED "base32_rfc4648_pad"
 #define RUSTG_HASH_BASE64 "base64"
 
 /// Encode a given string into base64
 #define rustg_encode_base64(str) rustg_hash_string(RUSTG_HASH_BASE64, str)
-/// Decode a given base64 string
+/// Decode a given base64 string. This expects padding.
+/// Returns a blank string if the string is not valid base64.
 #define rustg_decode_base64(str) RUSTG_CALL(RUST_G, "decode_base64")(str)
+
+/// Encode a given string into base32 (RFC4648)
+/// If padding set to FALSE, will not output padding characters.
+#define rustg_encode_base32(str, padding) rustg_hash_string(padding ? RUSTG_HASH_BASE32_PADDED : RUSTG_HASH_BASE32, str)
+/// Decode a given base32 (RFC4648) string
+/// If padding set to FALSE, decoding will not support padding characters.
+/// Returns a blank string if the string is not valid base32.
+#define rustg_decode_base32(str, padding) RUSTG_CALL(RUST_G, "decode_base32")(str, "[padding ? 1 : 0]")
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
 	#define md5(thing) (isfile(thing) ? rustg_hash_file(RUSTG_HASH_MD5, "[thing]") : rustg_hash_string(RUSTG_HASH_MD5, thing))
@@ -280,6 +358,21 @@
 #define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns a job_id for use with rustg_iconforge_check()
 #define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
+/// Creates a single DMI or PNG using 'sprites' as a list of icon states / images.
+/// This function is intended for generating icons with only a few states that have little in common with each other, and only one size.
+/// For icons with a large number of states, potentially variable sizes, that re-use sets of transforms more than once, or that benefit from caching, use rustg_iconforge_generate.
+/// sprites - follows the same format as rustg_iconforge_generate.
+/// file_path - the full relative path at which the PNG or DMI will be written. It must be a full filepath such as tmp/my_icon.dmi or my_icon.png
+/// flatten - boolean (0 or 1) determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+///
+/// Returns a HeadlessResult, decoded to a BYOND list (always, it's not possible for this to panic unless rustg itself has an issue) containing the following fields:
+/// list(
+///     "file_path" = "tmp/my_icon.dmi" // [whatever you input returned back to you, null if there was a fatal error]
+///     "width" = 32 // the width, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "height" = 32 // the height, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "error" = "[A string, null if there were no errors.]"
+/// )
+#define rustg_iconforge_generate_headless(file_path, sprites, flatten) json_decode(RUSTG_CALL(RUST_G, "iconforge_generate_headless")(file_path, sprites, "[flatten]"))
 /// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
 #define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.
@@ -482,4 +575,20 @@
 	#define url_encode(text) rustg_url_encode(text)
 	#define url_decode(text) rustg_url_decode(text)
 #endif
+
+/// Generates a version 4 UUID.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.4 for specifics on version 4 UUIDs.
+#define rustg_generate_uuid_v4(...) RUSTG_CALL(RUST_G, "uuid_v4")()
+
+/// Generates a version 7 UUID, with the current time.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.7 for specifics on version 7 UUIDs.
+#define rustg_generate_uuid_v7(...) RUSTG_CALL(RUST_G, "uuid_v7")()
+
+/// Generates a random version 2 CUID.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2(...) RUSTG_CALL(RUST_G, "cuid2")()
+
+/// Generates a random version 2 CUID with the given length.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
 

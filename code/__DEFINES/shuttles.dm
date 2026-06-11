@@ -14,7 +14,7 @@
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
-#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall()) || EMERGENCY_AT_LEAST_DOCKED)
+#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.past_restriction_point()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
@@ -81,9 +81,10 @@
 #define DOCKING_NULL_SOURCE (1<<4)
 
 //Docking turf movements
-#define MOVE_TURF 1
-#define MOVE_AREA 2
-#define MOVE_CONTENTS 4
+#define MOVE_TURF (1<<0)
+#define MOVE_AREA (1<<1)
+#define MOVE_CONTENTS (1<<2)
+#define MOVE_SPECIAL (1<<3)
 
 //Rotation params
 #define ROTATE_DIR 1

@@ -29,6 +29,7 @@ export default defineConfig({
     tgui: './packages/tgui',
     'tgui-panel': './packages/tgui-panel',
     'tgui-say': './packages/tgui-say',
+    'tgui-chat-dark': './packages/tgui-chat-dark',
   },
   mode: 'production',
   module: {
@@ -99,7 +100,7 @@ export default defineConfig({
     emitOnErrors: false,
   },
   output: {
-    path: 'public',
+    path: path.resolve(dirname, 'public'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',
     chunkLoadTimeout: 15000,
@@ -116,6 +117,14 @@ export default defineConfig({
     }),
     new rspack.EnvironmentPlugin({
       NODE_ENV: 'production',
+    }),
+    new rspack.CircularDependencyRspackPlugin({
+      failOnError: true,
+      exclude: /node_modules/,
+    }),
+    new rspack.IgnorePlugin({
+      resourceRegExp: /\.test\.tsx?$/,
+      contextRegExp: /__mocks__/,
     }),
   ],
   resolve: {

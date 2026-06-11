@@ -15,7 +15,7 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -35,7 +35,7 @@
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddElement(/datum/element/adjust_fishing_difficulty, -7)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)
 	. = ..()
@@ -58,4 +58,4 @@
 
 /obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)

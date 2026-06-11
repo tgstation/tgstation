@@ -10,6 +10,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/wet_floor_sign
+	name = "Wet Floor Sign"
+	id = "wet_floor_sign"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/clothing/suit/caution
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/watering_can
 	name = "Watering Can"
 	id = "watering_can"
@@ -184,19 +196,6 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray/cafeteria
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
-/datum/design/soup_pot
-	name = "Soup Pot"
-	id = "souppot"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*5, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT*4)
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
-	build_path = /obj/item/reagent_containers/cup/soup_pot
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
@@ -472,7 +471,7 @@
 	id = "sticky_tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/sticky_tape
+	build_path = /obj/item/stack/medical/wrap/sticky_tape
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,
@@ -543,7 +542,7 @@
 	name = "Material Fishing Rod"
 	id = "fishing_rod_material"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SMALL_MATERIAL_AMOUNT * 4)
+	materials = list(/datum/material_requirement/solid_material = SMALL_MATERIAL_AMOUNT * 4)
 	build_path = /obj/item/fishing_rod/material
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -616,6 +615,27 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/telescreen_monastery
+	name = "Monastery Telescreen"
+	id = "telescreen_monastery"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	build_path = /obj/item/wallframe/telescreen/monastery
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/telescreen_monastery/New()
+	var/has_monastery = CHECK_MAP_JOB_CHANGE(JOB_CHAPLAIN, "has_monastery")
+	if(!has_monastery)
+		id = DESIGN_ID_IGNORE
+	return ..()
+
 /datum/design/entertainment_radio
 	name = "Entertainment Radio"
 	id = "radio_entertainment"
@@ -641,3 +661,20 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/rdd
+	name = "Rapid Decoration Device (RDD)"
+	id = "rdd"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/construction/rdd/loaded
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+

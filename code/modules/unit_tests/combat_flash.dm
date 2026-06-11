@@ -18,7 +18,7 @@
 	victim.face_atom(attacker)
 
 /datum/unit_test/flash_click/proc/check_results(mob/living/carbon/human/attacker, mob/living/carbon/human/victim)
-	TEST_ASSERT_NOTEQUAL(victim.getStaminaLoss(), 0, "Victim should have sustained stamina loss from being flashed head-on [apply_verb].")
+	TEST_ASSERT_NOTEQUAL(victim.get_stamina_loss(), 0, "Victim should have sustained stamina loss from being flashed head-on [apply_verb].")
 
 /// Tests that flashes flash on combat mode.
 /datum/unit_test/flash_click/combat_mode
@@ -38,4 +38,4 @@
 	victim.equip_to_appropriate_slot(glasses)
 
 /datum/unit_test/flash_click/flash_protection/check_results(mob/living/carbon/human/attacker, mob/living/carbon/human/victim)
-	TEST_ASSERT_EQUAL(victim.getStaminaLoss(), 0, "Victim should not have sustained stamina loss from being flashed head-on [apply_verb].")
+	TEST_ASSERT_EQUAL(victim.get_stamina_loss(), 0, "Victim should not have sustained stamina loss from being flashed head-on [apply_verb].")

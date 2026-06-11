@@ -39,6 +39,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	var/fertile = TRUE
 
 /datum/emote/chicken
+	abstract_type = /datum/emote/chicken
 	mob_type_allowed_typecache = /mob/living/basic/chicken
 	mob_type_blacklist_typecache = list()
 

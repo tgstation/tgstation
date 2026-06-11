@@ -8,6 +8,12 @@
 	database_id = MEDAL_METEOR
 	icon_state = "meteors"
 
+/datum/award/achievement/misc/meteor_punch
+	name = "Your Life In Your Hands"
+	desc = "Give some space debris a piece of your mind"
+	database_id = MEDAL_METEOR_PUNCH
+	icon_state = "punchmeteors"
+
 /datum/award/achievement/misc/pulse
 	name = "Jackpot"
 	desc = "Win a pulse rifle from an arcade machine"
@@ -244,3 +250,10 @@
 	desc = "Nutritionists often recommend a balanced and varied diet. However that clearly isn't the case for some creatures."
 	database_id = MEDAL_SHARKDRAGON
 	icon_state = "dragon_plus_fish"
+
+/datum/award/achievement/misc/desensitized
+	name = "In Flanders Fields"
+	desc = "You have witnessed more death and despair in one shift than most TerraGov marines have seen across an entire tour of duty. \
+		Perhaps one day you'll find peace. But not today."
+	database_id = MEDAL_DESENSITIZED
+	icon_state = "desensitized"

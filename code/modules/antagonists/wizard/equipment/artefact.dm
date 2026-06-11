@@ -284,7 +284,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
-			H.dust(TRUE)
+			H.dust(just_ash = TRUE)
 			spooky_scaries.Remove(X)
 			continue
 	list_clear_nulls(spooky_scaries)
@@ -304,7 +304,7 @@
 	uniform = /obj/item/clothing/under/costume/roman
 	shoes = /obj/item/clothing/shoes/roman
 	back = /obj/item/spear
-	r_hand = /obj/item/claymore
+	belt = /obj/item/storage/belt/sheath/gladius
 	l_hand = /obj/item/shield/roman
 
 /datum/outfit/roman/pre_equip(mob/living/carbon/human/H, visuals_only)

@@ -20,9 +20,7 @@
 
 /obj/machinery/ctf/Initialize(mapload)
 	. = ..()
-	ctf_game = GLOB.ctf_games[game_id]
-	if(isnull(ctf_game))
-		ctf_game = create_ctf_game(game_id)
+	ctf_game = create_ctf_game(game_id)
 
 ///A spawn point for CTF, ghosts can interact with this to vote for CTF or spawn in if a game is running.
 /obj/machinery/ctf/spawner
@@ -157,7 +155,6 @@
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \
-			old_body = new_member_mind.current, \
 		)
 
 	player_mob.ckey = new_team_member.ckey
@@ -166,7 +163,7 @@
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
-	player_mob.faction += team
+	player_mob.add_faction(team)
 	player_mob.equipOutfit(chosen_class)
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
@@ -249,7 +246,7 @@
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
 		return
-	if(team in user.faction)
+	if(user.has_faction(team))
 		to_chat(user, span_warning("You can't move your own flag!"))
 		return
 	if(loc == user)
@@ -408,7 +405,7 @@
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))
 		return
-	if(!(src.team in living.faction))
+	if(!living.has_faction(team))
 		to_chat(living, span_bolddanger("Stay out of the enemy spawn!"))
 		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
 		living.apply_damage(200) //Damage instead of instant death so we trigger the damage signal.
@@ -448,10 +445,10 @@
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id]
-	ctf_game.barricades += src
+	ctf_game?.barricades += src
 
 /obj/effect/ctf/dead_barricade/Destroy()
-	ctf_game.barricades -= src
+	ctf_game?.barricades -= src
 	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
@@ -462,11 +459,10 @@
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/structure/table/reinforced/ctf/wrench_act_secondary(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/table/reinforced/ctf/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	return NONE
+/obj/structure/table/reinforced/ctf/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_SECONDARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1
@@ -475,10 +471,8 @@
 ///Proc that handles toggling and unloading CTF.
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
 	var/static/loading = CTF_LOADING_UNLOADED
-	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
-	if(isnull(ctf_controller))
-		ctf_controller = create_ctf_game(activated_id)
-	if(unload == TRUE)
+	var/datum/ctf_controller/ctf_controller = create_ctf_game(activated_id)
+	if(unload)
 		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
 		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
 		if(loading == CTF_LOADING_UNLOADED)

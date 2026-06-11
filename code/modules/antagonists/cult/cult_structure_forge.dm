@@ -1,6 +1,5 @@
 /// Some defines for items the daemon forge can create.
 #define NARSIE_ARMOR "Nar'Sien Hardened Armor"
-#define FLAGELLANT_ARMOR "Flagellant's Robe"
 #define ELDRITCH_SWORD "Eldritch Longsword"
 #define CURSED_BLADE "Cursed Ritual Blade"
 
@@ -8,12 +7,13 @@
 /obj/structure/destructible/cult/item_dispenser/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."
-	cult_examine_tip = "Can be used to create Nar'Sien hardened armor, flagellant's robes, and eldritch longswords."
+	cult_examine_tip = "Can be used to create Nar'Sien hardened armor and eldritch longswords."
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
 	break_message = span_warning("The forge breaks apart into shards with a howling scream!")
 	mansus_conversion_path = /obj/structure/destructible/eldritch_crucible
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/destructible/cult/item_dispenser/forge/setup_options()
 	var/static/list/forge_items = list(
@@ -55,6 +55,5 @@
 	debris = list()
 
 #undef NARSIE_ARMOR
-#undef FLAGELLANT_ARMOR
 #undef ELDRITCH_SWORD
 #undef CURSED_BLADE

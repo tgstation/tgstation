@@ -2,13 +2,13 @@
 /datum/component/shuttle_move_deferred_checks
 	dupe_mode = COMPONENT_DUPE_SOURCES
 	/// An list of targets to listen for the movements of
-	var/list/targets = list()
+	var/list/targets
 
 	/// The check to call on the parent when a target moves. Can be the name of a proc on the parent, or a `/datum/callback`.
 	var/check
 
 	/// A list of each target currently being moved by a shuttle - if this list is not empty, checks will not be run.
-	var/list/moving_targets = list()
+	var/list/moving_targets
 
 /datum/component/shuttle_move_deferred_checks/Initialize(check)
 	. = ..()
@@ -27,7 +27,7 @@
 	var/atom/movable/movable = locate(source)
 	if(!istype(movable) || (check != src.check))
 		return COMPONENT_INCOMPATIBLE
-	targets += movable
+	LAZYADD(targets, movable)
 	RegisterSignal(movable, COMSIG_MOVABLE_MOVED, PROC_REF(on_target_moved))
 	RegisterSignal(movable, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_target_shuttle_move))
 	RegisterSignal(movable, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_target_shuttle_move))
@@ -37,8 +37,8 @@
 	var/atom/movable/movable = locate(source)
 	if(!istype(movable))
 		return
-	targets -= movable
-	moving_targets -= movable
+	LAZYREMOVE(targets, movable)
+	LAZYREMOVE(moving_targets, movable)
 	UnregisterSignal(movable, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, COMSIG_QDELETING))
 	return ..()
 
@@ -51,18 +51,18 @@
 
 /datum/component/shuttle_move_deferred_checks/proc/on_target_moved(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
-	if(length(moving_targets))
+	if(LAZYLEN(moving_targets))
 		return
 	call_check()
 
 /datum/component/shuttle_move_deferred_checks/proc/before_target_shuttle_move(atom/source)
 	SIGNAL_HANDLER
-	moving_targets |= source
+	LAZYOR(moving_targets, source)
 
 /datum/component/shuttle_move_deferred_checks/proc/after_target_shuttle_move(atom/source)
 	SIGNAL_HANDLER
-	moving_targets -= source
-	if(!length(moving_targets))
+	LAZYOR(moving_targets, source)
+	if(!LAZYLEN(moving_targets))
 		call_check()
 
 /datum/component/shuttle_move_deferred_checks/proc/on_target_deleted(datum/source)

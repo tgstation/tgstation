@@ -109,6 +109,11 @@
 	template_id = "holodeck_card_battle"
 	mappath = "_maps/templates/holodeck_card_battle.dmm"
 
+/datum/map_template/holodeck/fitness
+	name = "Holodeck - Gymnasium"
+	template_id = "holodeck_fitness"
+	mappath = "_maps/templates/holodeck_fitness.dmm"
+
 //bad evil no good programs
 
 /datum/map_template/holodeck/medicalsim
@@ -151,4 +156,10 @@
 	name = "Holodeck - Refueling Station"
 	template_id = "holodeck_refuelingstation"
 	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
+	restricted = TRUE
+
+/datum/map_template/holodeck/prison
+	name = "Holodeck - Prison Block"
+	template_id = "holodeck_prison"
+	mappath = "_maps/templates/holodeck_prison.dmm"
 	restricted = TRUE

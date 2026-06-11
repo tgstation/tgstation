@@ -2,7 +2,6 @@
 	title = JOB_BRIDGE_ASSISTANT
 	description = "Watch over the Bridge, command its consoles, and spend your days brewing coffee for higher-ups."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD //not really a head but close enough
-	department_head = list(JOB_CAPTAIN)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
@@ -80,3 +79,4 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/assembly/flash/handheld
+	pda_slot = ITEM_SLOT_BACK

@@ -180,15 +180,32 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	icon_state = "wm_1_0"
 	density = TRUE
 	state_open = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	circuit = /obj/item/circuitboard/machine/washing_machine
 	var/busy = FALSE
 	var/bloody_mess = FALSE
 	var/obj/item/color_source
-	var/max_wash_capacity = 5
+	/// The max amount of items that can be washed per load
+	var/max_wash_capacity
+	/// The time it takes to wash a load of laundry
+	var/time_to_wash
+	/// The current number of items inserted
+	var/total_load = 0
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
 		. += span_notice("<b>Right-click</b> with an empty hand to start a wash cycle.")
+
+/obj/machinery/washing_machine/RefreshParts()
+	. = ..()
+	var/total_volume = 0
+	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
+		total_volume += beaker.reagents.maximum_volume
+	max_wash_capacity = floor(total_volume/20)
+
+	for(var/datum/stock_part/servo/servo in component_parts)
+		time_to_wash = 20 SECONDS / servo.tier
 
 /obj/machinery/washing_machine/process(seconds_per_tick)
 	if(!busy)
@@ -290,7 +307,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
 	adjust_wet_stacks(8)
 	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
-	adjustOxyLoss(12)
+	adjust_oxy_loss(12)
 	log_combat(user, src, "machine washed (oxy)")
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
@@ -329,7 +346,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		icon_state = "wm_[state_open]_blood"
 		return ..()
 
-	var/full = contents.len ? 1 : 0
+	var/full = total_load ? 1 : 0
 	icon_state = "wm_[state_open]_[full]"
 	return ..()
 
@@ -339,18 +356,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		. += "wm_panel"
 
 /obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(!panel_open || busy)
-		return FALSE
+		return NONE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	if (!state_open)
-		default_deconstruction_screwdriver(user, null, null, tool)
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(state_open)
+		return NONE
+
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(user.combat_mode)
@@ -361,7 +376,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(bloody_mess)
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return ITEM_INTERACT_BLOCKING
-	if(contents.len >= max_wash_capacity)
+	if(total_load >= max_wash_capacity)
 		to_chat(user, span_warning("The washing machine is full!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
@@ -369,6 +384,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return ITEM_INTERACT_BLOCKING
 	if(item.dye_color)
 		color_source = item
+	total_load++
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -431,7 +447,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), time_to_wash)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -445,3 +461,4 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null
+	total_load = 0

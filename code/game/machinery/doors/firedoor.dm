@@ -21,7 +21,7 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	armor_type = /datum/armor/door_firedoor
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-
+	can_open_with_hands = FALSE
 	COOLDOWN_DECLARE(activation_cooldown)
 
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
@@ -472,9 +472,6 @@
 		return ..()
 	return FALSE
 
-/obj/machinery/door/firedoor/bumpopen(mob/living/user)
-	return FALSE //No bumping to open, not even in mechs
-
 /obj/machinery/door/firedoor/proc/on_power_loss()
 	SIGNAL_HANDLER
 
@@ -534,7 +531,7 @@
 	boltslocked = !boltslocked
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	return
 
 /obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
@@ -743,12 +740,16 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	adjust_lights_starting_offset()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
-
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/door/firedoor/border_only/close()
+	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
 	light_xoffset = 0
@@ -815,6 +816,7 @@
 	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
 	/// Is this a border_only firelock? Used in several checks during construction
@@ -951,7 +953,7 @@
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.balloon_alert(user, "circuit installed")
 			constructionStep = CONSTRUCTION_PANEL_OPEN
@@ -971,10 +973,11 @@
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	directional = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/firelock_frame/border_only/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),

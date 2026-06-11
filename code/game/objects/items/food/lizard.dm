@@ -73,7 +73,7 @@
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/headcheese/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/headcheese_slice
 	name = "headcheese slice"
@@ -451,7 +451,7 @@
 	AddComponent(/datum/component/bakeable, bread_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, flat_type, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, flat_type, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/rootdough/egg
 	desc = "A root based dough, made with nuts, tubers and eggs. Used in a wide range of Tiziran cooking."
@@ -472,7 +472,7 @@
 	var/grill_type = /obj/item/food/root_flatbread
 
 /obj/item/food/flatrootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, process_type, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, process_type, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/flatrootdough/make_grillable()
 	AddComponent(/datum/component/grillable, grill_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -499,7 +499,7 @@
 	foodtypes = parent_type::foodtypes | MEAT
 
 /obj/item/food/rootdoughslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/rootdoughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -661,7 +661,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("bread" = 1, "liver" = 1, "family" = 1)
-	foodtypes = VEGETABLES | NUTS | MEAT
+	foodtypes = VEGETABLES | NUTS | MEAT | EGG
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/fish
@@ -743,7 +743,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
-	foodtypes = MEAT | BREAKFAST | GORE
+	foodtypes = MEAT | BREAKFAST | GORE | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -759,7 +759,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("eggs" = 1, "tomato" = 1, "heat" = 1)
-	foodtypes = VEGETABLES | MEAT | BREAKFAST
+	foodtypes = VEGETABLES | MEAT | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -969,7 +969,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("muffin" = 2, "bacon" = 3)
-	foodtypes = NUTS | MEAT | BREAKFAST | VEGETABLES | FRIED
+	foodtypes = NUTS | MEAT | BREAKFAST | VEGETABLES | FRIED | EGG
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
@@ -1010,7 +1010,7 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/rootfish
-	name = "Fish rootwich"
+	name = "fish rootwich"
 	desc = "Lightly battered fish, sandwiched in a rootroll."
 	icon_state = "rootfish"
 	icon = 'icons/obj/food/lizard.dmi'

@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
-	initial_reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER | NO_SPLASH
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -30,6 +30,7 @@
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/reagents_item_heatable)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -138,7 +139,6 @@
 
 /obj/item/reagent_containers/spray/verb/empty()
 	set name = "Empty Spray Bottle"
-	set category = "Object"
 	set src in usr
 	if(usr.incapacitated)
 		return
@@ -149,6 +149,16 @@
 		reagents.expose(usr.loc)
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
 		src.reagents.clear_reagents()
+
+/obj/item/reagent_containers/spray/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(reagents.total_volume < amount_per_transfer_from_this)
+		return
+	to_chat(user, span_danger("As you open [letter], a mist spritzes out from inside!"))
+	spray(user, user)
+	playsound(user, spray_sound, 50, TRUE, -6)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /// Handles updating the spray distance when the reagents change.
 /obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
@@ -225,12 +235,6 @@
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 
-// Fix pepperspraying yourself
-/obj/item/reagent_containers/spray/pepper/try_spray(atom/target, mob/user)
-	if (target.loc == user)
-		return FALSE
-	return ..()
-
 //water flower
 /obj/item/reagent_containers/spray/waterflower
 	name = "water flower"
@@ -241,11 +245,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
+	initial_reagent_flags = OPENCONTAINER
 	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
+
+/obj/item/reagent_containers/spray/waterflower/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	return ..(hit_atom, throwingdatum, do_splash = FALSE)
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
@@ -313,11 +321,6 @@
 	stream_range = 7
 	amount_per_transfer_from_this = 10
 	volume = 600
-
-/obj/item/reagent_containers/spray/chemsprayer/try_spray(atom/target, mob/user)
-	if (target.loc == user)
-		return FALSE
-	return ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)
@@ -420,6 +423,23 @@
 	. = ..()
 	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
 
+// Spray bottle skins
+/datum/atom_skin/med_spray
+	abstract_type = /datum/atom_skin/med_spray
+	change_inhand_icon_state = TRUE
+
+/datum/atom_skin/med_spray/red
+	preview_name = "Red"
+	new_icon_state = "sprayer_med_red"
+
+/datum/atom_skin/med_spray/yellow
+	preview_name = "Yellow"
+	new_icon_state = "sprayer_med_yellow"
+
+/datum/atom_skin/med_spray/blue
+	preview_name = "Blue"
+	new_icon_state = "sprayer_med_blue"
+
 /obj/item/reagent_containers/spray/medical
 	name = "medical spray bottle"
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -428,20 +448,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
-	unique_reskin = list("Red" = "sprayer_med_red",
-						"Yellow" = "sprayer_med_yellow",
-						"Blue" = "sprayer_med_blue")
 
-/obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
-	..()
-	switch(icon_state)
-		if("sprayer_med_red")
-			inhand_icon_state = "sprayer_med_red"
-		if("sprayer_med_yellow")
-			inhand_icon_state = "sprayer_med_yellow"
-		if("sprayer_med_blue")
-			inhand_icon_state = "sprayer_med_blue"
-	M.update_held_items()
+/obj/item/reagent_containers/spray/medical/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)
 
 /obj/item/reagent_containers/spray/hercuri
 	name = "medical spray (hercuri)"

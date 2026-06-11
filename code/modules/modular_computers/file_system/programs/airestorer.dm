@@ -41,9 +41,9 @@
 	if(stored_card.flush)
 		restoring = FALSE
 		return
-	A.adjustOxyLoss(-5, FALSE)
-	A.adjustFireLoss(-5, FALSE)
-	A.adjustBruteLoss(-5, FALSE)
+	A.adjust_oxy_loss(-5, FALSE)
+	A.adjust_fire_loss(-5, FALSE)
+	A.adjust_brute_loss(-5, FALSE)
 
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()

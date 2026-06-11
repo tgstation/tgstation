@@ -160,6 +160,7 @@
 		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_EMP_PROOF
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeEmpProof(ignore_malf_upgrades)
 	if(ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
@@ -167,6 +168,7 @@
 	RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 	RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_EMP_PROOF
+	calculate_active_power()
 
 /obj/machinery/camera/proc/isXRay(ignore_malf_upgrades)
 	return (camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY) && (!(ignore_malf_upgrades && malf_xray_firmware_active))
@@ -185,11 +187,14 @@
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_XRAY
 	update_appearance()
+	SScameras.update_visibility(src)
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeXRay(ignore_malf_upgrades)
 	if(!ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		camera_upgrade_bitflags &= ~CAMERA_UPGRADE_XRAY
 	update_appearance()
+	calculate_active_power()
 
 /obj/machinery/camera/proc/isMotion()
 	return camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION
@@ -204,6 +209,7 @@
 		proximity_monitor = new(src)
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_MOTION
 	create_prox_monitor()
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
@@ -211,3 +217,4 @@
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_MOTION
 	if(!area_motion)
 		QDEL_NULL(proximity_monitor)
+	calculate_active_power()

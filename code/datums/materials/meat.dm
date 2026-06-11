@@ -4,27 +4,21 @@
 	desc = "Meat"
 	id = /datum/material/meat // So the bespoke versions are categorized under this
 	color = rgb(214, 67, 67)
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 5,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 5,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_BEAUTY = -0.3, // EWW
+	)
 	sheet_type = /obj/item/stack/sheet/meat
-	value_per_unit = 0.05
-	beauty_modifier = -0.3
-	strength_modifier = 0.7
-	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
-	fishing_difficulty_modifier = 13
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.8
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 0.9
-	fishing_gravity_mult = 0.85
 	var/list/blood_dna
 
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
@@ -40,7 +34,7 @@
 		if(!(organ::organ_flags & ORGAN_ORGANIC))
 			organ.organ_flags |= ORGAN_ORGANIC
 
-/datum/material/meat/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/meat/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
@@ -98,7 +92,7 @@
 		blood_dna_info = blood_dna,\
 	)
 
-/datum/material/meat/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/meat/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)
 	qdel(source.GetComponent(/datum/component/blood_walk))

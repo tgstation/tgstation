@@ -65,9 +65,7 @@
 /mob/living/carbon/proc/get_visible_items()
 	var/list/visible_items = list()
 	var/obscured_item_slots = hidden_slots_to_inventory_slots(obscured_slots)
-	for (var/obj/item/held in held_items)
-		visible_items += held
-	for(var/obj/item/thing in get_equipped_items())
+	for(var/obj/item/thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
 		if(!(get_slot_by_item(thing) & obscured_item_slots))
 			visible_items += thing
 	return visible_items
@@ -114,13 +112,12 @@
 	if(equipping.pulledby)
 		equipping.pulledby.stop_pulling()
 
-	equipping.screen_loc = null
-	client?.screen -= equipping
+	hud_used?.update_inventory_slot(slot)
 
 	for(var/mob/dead/observe as anything in observers)
 		observe.client?.screen -= equipping
 
-	equipping.forceMove(src)
+	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 	equipping.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
@@ -165,31 +162,30 @@
 
 	return not_handled
 
-/mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_equipped_items()
-
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
 	if(item.hair_mask)
-		update_body()
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
+		update_body() // this is solely for lizard frills
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
-	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
+	. = ..()
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
-		update_body()
+		LAZYREMOVE(hair_masks, item.hair_mask)
+		update_hair()
+		update_body() // this is solely for lizard frills
 	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
@@ -263,18 +259,27 @@
  * * removed_slots - slots that were removed from obscured_slots
  */
 /mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
+	SEND_SIGNAL(src, COMSIG_CARBON_ITEM_COVERAGE_CHANGED, added_slots, removed_slots)
 	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
-	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+	if((added_slots|removed_slots) & HIDESNOUT)
+		synchronize_bodyshapes()
+	if((added_slots|removed_slots) & (HIDEHAIR|HIDEFACIALHAIR))
+		update_hair()
+	if((added_slots|removed_slots) & HIDEEYES)
+		update_eyes()
+	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, HIDEHAIR is for felinid ears and lizard horns, the others should be obvious
+	// future todo; we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
-	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
+	if (astype(head, /obj/item/clothing)?.clothing_flags & HEADINTERNALS)
 		return head
 
 /// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
-	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
+	if (astype(wear_mask, /obj/item/clothing)?.clothing_flags & MASKINTERNALS)
 		return wear_mask
 
 /// Returns the tube if a breathing tube is equipped.
@@ -425,23 +430,47 @@
 	RETURN_TYPE(/list)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
-	for(var/obj/item/worn_item in all_worn_items)
-		covered_flags |= worn_item.body_parts_covered
-
-	return cover_flags2body_zones(covered_flags)
+	return cover_flags2body_zones(get_all_covered_flags())
 
 ///Returns a bitfield of all zones covered by clothing
 /mob/living/carbon/proc/get_all_covered_flags()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
-	for(var/obj/item/worn_item in all_worn_items)
+	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		covered_flags |= worn_item.body_parts_covered
 
 	return covered_flags
+
+/mob/living/carbon/is_location_accessible(location, exluded_equipment_slots = NONE)
+	switch(location)
+		// Snowflake checks for these precise zones
+		if(BODY_ZONE_PRECISE_EYES)
+			if(is_eyes_covered(~exluded_equipment_slots) || (obscured_slots & (HIDEEYES|HIDEFACE)))
+				return FALSE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			if(is_mouth_covered(~exluded_equipment_slots) || (obscured_slots & HIDEFACE))
+				return FALSE
+
+	var/covered_flags = NONE
+	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
+		if(worn_item.slot_flags & exluded_equipment_slots)
+			continue
+		if(worn_item.flags_cover & ALLOW_SURGERY_THROUGH)
+			continue
+		covered_flags |= worn_item.body_parts_covered
+
+	// NB: we have to convert covered_flags via cover_flags2body_zones here
+	// instead of converting location via body_zones2cover_flags
+	//
+	// our coverage might look something like GROIN|LEGS, which would convert to list(BODY_ZONE_GROIN, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	// so if we were checking "is BODY_ZONE_CHEST accessible", we would pass - this is correct!
+	//
+	// however, if we convert the location to body zone, we would get CHEST|GROIN
+	// then we would check (CHEST|GROIN) & (GROIN|LEGS) and return FALSE - which is incorrect, the chest is perfectly accessible!
+	// checking for ((CHEST|GROIN) & (GROIN|LEGS)) == (CHEST|GROIN) would also be incorrect,
+	// as it would imply your chest is accessible from lacking groin coverage
+	return !(location in cover_flags2body_zones(covered_flags))
 
 /// Attempts to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item

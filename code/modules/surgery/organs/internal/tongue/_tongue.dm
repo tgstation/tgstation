@@ -8,6 +8,7 @@
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	voice_filter = ""
+	visual = FALSE
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *
@@ -30,6 +31,8 @@
 	///for temporary overrides of the above variable.
 	var/temp_say_mod = ""
 
+	/// Whether the owner of this tongue can speak clearly. Being set to FALSE means they mumble and slur things
+	var/speakable_with = TRUE
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
@@ -51,6 +54,10 @@
 	// - then we cache it via string list
 	// this results in tongues with identical possible languages sharing a cached list instance
 	languages_possible = string_list(get_possible_languages())
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
+	if(!sense_of_taste)
+		add_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/examine(mob/user)
 	. = ..()
@@ -137,40 +144,25 @@
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(receiver, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	apply_tongue_effects()
 
 /obj/item/organ/tongue/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	temp_say_mod = ""
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
-	REMOVE_TRAIT(organ_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	REMOVE_TRAIT(organ_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	organ_owner.voice_filter = initial(organ_owner.voice_filter)
 
-/obj/item/organ/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
-	. = ..()
-	if(!owner)
-		return FALSE
-	apply_tongue_effects()
+/obj/item/organ/tongue/on_begin_failure()
+	remove_organ_trait(TRAIT_SPEAKS_CLEARLY)
+	add_organ_trait(TRAIT_AGEUSIA)
 
-/// Applies effects to our owner based on how damaged our tongue is
-/obj/item/organ/tongue/proc/apply_tongue_effects()
+/obj/item/organ/tongue/on_failure_recovery()
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
 	if(sense_of_taste)
-		//tongues can't taste food when they are failing
-		if(organ_flags & ORGAN_FAILING)
-			ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-		else
-			REMOVE_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	else
-		//tongues can't taste food when they lack a sense of taste
-		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	if(organ_flags & ORGAN_FAILING)
-		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	else
-		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+		remove_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
@@ -428,6 +420,14 @@
 	disliked_foodtypes = NONE
 	// List of english words that translate to zombie phrases
 	var/static/list/english_to_zombie = list()
+	/// Spooky growls we sometimes play while alive
+	var/static/list/spooks = list(
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg',
+	)
 
 /obj/item/organ/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
 	english_to_zombie[english_word] = zombie_word
@@ -482,6 +482,11 @@
 		message = new_words.Join(" ")
 		message = capitalize(message)
 		speech_args[SPEECH_MESSAGE] = message
+
+/obj/item/organ/tongue/zombie/on_life(seconds_per_tick)
+	. = ..()
+	if(owner.stat == CONSCIOUS && SPT_PROB(2, seconds_per_tick))
+		playsound(owner, pick(spooks), 50, TRUE, 10)
 
 /obj/item/organ/tongue/alien
 	name = "alien tongue"

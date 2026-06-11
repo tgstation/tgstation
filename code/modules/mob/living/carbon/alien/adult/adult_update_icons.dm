@@ -3,12 +3,14 @@
 	cut_overlays()
 	for(var/I in overlays_standing)
 		add_overlay(I)
+	for(var/I in managed_overlays)
+		add_overlay(I)
 
 	var/are_we_drooling = istype(click_intercept, /datum/action/cooldown/alien/acid)
 
 	if(stat == DEAD)
 		//If we mostly took damage from fire
-		if(getFireLoss() > 125)
+		if(get_fire_loss() > 125)
 			icon_state = "alien[caste]_husked"
 		else
 			icon_state = "alien[caste]_dead"
@@ -75,7 +77,6 @@
 	. = ..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
-
 	var/obj/item/l_hand = get_item_for_held_index(1)
 	if(l_hand)
 		var/itm_state = l_hand.inhand_icon_state

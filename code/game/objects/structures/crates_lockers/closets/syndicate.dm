@@ -30,6 +30,8 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/mod/module/plasma_stabilizer(src)
 	new /obj/item/climbing_hook/syndicate(src)
+	new /obj/item/mod/module/thermal_regulator(src)
+	new /obj/item/mod/module/plasma_stabilizer(src)
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."

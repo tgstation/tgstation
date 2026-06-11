@@ -166,10 +166,10 @@
 		var/final_x = segment.x
 		var/final_y = segment.y
 		if(abs(Pixel_x)>32)
-			final_x += Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
+			final_x += Pixel_x > 0 ? round(Pixel_x/32) : ceil(Pixel_x/32)
 			Pixel_x %= 32
 		if(abs(Pixel_y)>32)
-			final_y += Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
+			final_y += Pixel_y > 0 ? round(Pixel_y/32) : ceil(Pixel_y/32)
 			Pixel_y %= 32
 
 		segment.forceMove(locate(final_x, final_y, segment.z))

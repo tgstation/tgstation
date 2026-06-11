@@ -5,7 +5,7 @@ import type { ServerWebSocket } from 'bun';
 import { createLogger, directLog } from '../logging';
 import { retrace } from './retrace';
 
-let server: Bun.Server;
+let server: Bun.Server<unknown>;
 const logger = createLogger('link');
 const DEBUG = process.argv.includes('--debug');
 
@@ -98,7 +98,7 @@ function handleLinkMessage(
   logger.log('unhandled message', JSON.stringify(message));
 }
 
-function upgradeServer(req: Request, srv: Bun.Server) {
+function upgradeServer(req: Request, srv: Bun.Server<unknown>) {
   const client = crypto.randomUUID();
 
   const upgraded = srv.upgrade(req, {

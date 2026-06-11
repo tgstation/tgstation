@@ -29,12 +29,12 @@
 
 // Check if the slime can drain the target
 /datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
+	var/static/list/slime_faction
+	if(isnull(slime_faction)) // This might look silly but by having this list pointer precached we can take advantage of the faster inline macro for this hot proc.
+		slime_faction = string_list(list(FACTION_SLIME))
 
-	if(REF(dinner) in hunter.faction) //Don't eat our friends...
-		return FALSE
-
-	var/static/list/slime_faction = list(FACTION_SLIME)
-	if(faction_check(slime_faction, dinner.faction)) //Don't try to eat slimy things, no matter how hungry we are. Anyone else can be betrayed.
+	// Macro here to squeeze as much speed as possible because this code gets exponentially HOT if people are doing a lot of xenobio.
+	if(FAST_FACTION_CHECK(slime_faction, dinner.get_faction(), hunter.allies, dinner.allies, FALSE)) // Don't try to eat our friends, or slimy things, no matter how hungry we are. Anyone else can be betrayed.
 		return FALSE
 
 	if(!hunter.can_feed_on(dinner, check_adjacent = FALSE)) //Are they tasty to slimes?

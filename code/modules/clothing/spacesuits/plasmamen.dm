@@ -59,11 +59,11 @@
 	if (!istype(tool, /obj/item/extinguisher_refill))
 		return
 
-	if (extinguishes_left == 5)
+	if (extinguishes_left == initial(extinguishes_left))
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))
 		return ITEM_INTERACT_BLOCKING
 
-	extinguishes_left = 5
+	extinguishes_left = initial(extinguishes_left)
 	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
 	check_fire_state()
 	qdel(tool)
@@ -75,7 +75,7 @@
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
+	clothing_flags = parent_type::clothing_flags | PLASMAMAN_PREVENT_IGNITION
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 8 SECONDS
@@ -90,10 +90,9 @@
 	light_on = FALSE
 	fishing_modifier = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
-	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	visor_flags_inv = HIDEEYES|HIDEFACE
+	visor_flags = NONE
+	visor_flags_inv = HIDEEYES|HIDEFACE|HIDESNOUT
+	visor_flags_cover = NONE
 	visor_dirt = null
 	var/helmet_on = FALSE
 	var/smile = FALSE
@@ -123,8 +122,8 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	if(user.can_perform_action(src))
-		adjust_visor(user)
+	adjust_visor(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
@@ -141,7 +140,6 @@
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		set_light_on(FALSE)
 		helmet_on = FALSE
-	playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()

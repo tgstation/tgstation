@@ -27,7 +27,7 @@
 
 /datum/ai_behavior/find_and_set/hoard_location
 
-/datum/ai_behavior/find_and_set/hoard_location/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/hoard_location/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/turf/open/candidate in oview(search_range, controller.pawn))
 		if(is_space_or_openspace(candidate))
 			continue
@@ -41,7 +41,7 @@
 	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/find_and_set/hoard_item/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/hoard_item/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	if(!controller.blackboard_key_exists(BB_HOARD_LOCATION))
 		return null
 	var/turf/nest_turf = controller.blackboard[BB_HOARD_LOCATION]
@@ -57,7 +57,7 @@
 				return potential_victim
 		if(!ishuman(potential_victim))
 			continue
-		if(living_pawn.faction.Find(REF(potential_victim)))
+		if(living_pawn.has_ally(potential_victim))
 			continue //dont steal from friends
 		if(holding_valuable(controller, potential_victim))
 			controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, TRUE)

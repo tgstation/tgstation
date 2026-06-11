@@ -41,8 +41,8 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		CRASH("cause_hallucination called with no arguments.")
 
 	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
-	if(!ispath(hallucination_type))
-		CRASH("cause_hallucination was given a non-hallucination type.")
+	if(!ispath(hallucination_type, /datum/hallucination))
+		CRASH("cause_hallucination was given a non-hallucination type. (Got: [hallucination_type || "null"])")
 
 	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
 	var/datum/hallucination/new_hallucination
@@ -293,9 +293,9 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 
 /// Lines the bubblegum hallucinatoin uses when it pops up
 #define BUBBLEGUM_HALLUCINATION_LINES list( \
-		span_colossus("I AM IMMORTAL."), \
-		span_colossus("I SHALL TAKE YOUR WORLD."), \
-		span_colossus("I SEE YOU."), \
-		span_colossus("YOU CANNOT ESCAPE ME FOREVER."), \
-		span_colossus("NOTHING CAN HOLD ME."), \
+		"I AM IMMORTAL.", \
+		"I SHALL TAKE YOUR WORLD.", \
+		"I SEE YOU.", \
+		"YOU CANNOT ESCAPE ME FOREVER.", \
+		"NOTHING CAN HOLD ME.", \
 	)

@@ -1,11 +1,11 @@
 // Pizza (Whole)
 /obj/item/food/pizza
-	name = "pizza"
+	name = "bugged pizza"
+	desc = "This pizza should not be."
 	icon = 'icons/obj/food/pizza.dmi'
 	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
-	icon_state = "pizzamargherita"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 28,
 		/datum/reagent/consumable/nutriment/protein = 3,
@@ -73,7 +73,7 @@
 	. = ..()
 	if(!sliced)
 		return
-	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
+	user.visible_message(span_notice("[user] takes a slice of [src]."), span_notice("You take a slice of [src]."))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
@@ -103,6 +103,11 @@
 	slice.pixel_x += rand(-6, 6)
 	slice.pixel_y += rand(-6, 6)
 	user?.put_in_active_hand(slice)
+
+	slice.reagents.remove_all()
+	reagents.trans_to(slice, amount = reagents.total_volume / slices_left, no_react = TRUE)
+	SEND_SIGNAL(src, COMSIG_PIZZA_SLICE_TAKEN, user, slice)
+
 	slices_left--
 	if(slices_left <= 0)
 		qdel(src)
@@ -112,29 +117,31 @@
 	remove_filter("pizzaslices")
 	add_filter("pizzaslices", 1, get_slices_filter())
 
-// Raw Pizza
-/obj/item/food/pizza/raw
-	foodtypes = GRAIN | RAW
-	slice_type = null
-	crafting_complexity = FOOD_COMPLEXITY_2
-
-/obj/item/food/pizza/raw/make_bakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
-
 // Pizza Slice
 /obj/item/food/pizzaslice
-	name = "pizza slice"
+	name = "bugged pizza slice"
+	desc = "This slice of pizza should not be"
 	icon = 'icons/obj/food/pizza.dmi'
 	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizzaslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
+
+/obj/item/food/pizza/custom
+	name = "pizza"
+	desc = "A fancy custom pizza."
+	icon_state = "pizzamargherita" // Colored by the ingredient_holder component
+	slice_type = /obj/item/food/pizzaslice/custom
+
+/obj/item/food/pizzaslice/custom
+	name = "pizza slice"
+	desc = "A slice of custom fancy pizza."
+	icon_state = "pizzamargheritaslice"
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"

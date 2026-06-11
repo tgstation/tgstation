@@ -40,6 +40,8 @@
 	var/ticking_oxy_damage = 2
 	var/exhaust_swimmer_prob = 30
 
+	var/datum/reagent/reagent_to_extract = /datum/reagent/water
+
 /turf/open/water/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
@@ -47,6 +49,8 @@
 	if(!isnull(fishing_datum))
 		add_lazy_fishing(fishing_datum)
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
+	if(reagent_to_extract)
+		AddElement(/datum/element/reagent_scoopable_atom, reagent_to_extract)
 
 ///We lazily add the immerse element when something is spawned or crosses this turf and not before.
 /turf/open/water/proc/on_atom_inited(datum/source, atom/movable/movable)
@@ -109,6 +113,7 @@
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
 	fishing_datum = /datum/fish_source/ocean/beach
+	reagent_to_extract = /datum/reagent/water/salt
 
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
@@ -133,6 +138,68 @@
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
+/turf/open/water/lavaland_atmos/basalt
+	icon = 'icons/turf/floors/water_lavaland.dmi'
+	icon_state = "water_lavaland-255"
+	base_icon_state = "water_lavaland"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_WATER_LAVALAND
+	canSmoothWith = SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_FLOOR_BASALT + SMOOTH_GROUP_MINERAL_WALLS + SMOOTH_GROUP_RED_ROCK_WALLS + SMOOTH_GROUP_SHALE_WALLS
+	fishing_datum = /datum/fish_source/ocean
+	/// *Inverse* smoothing bitflag for basalt overlays
+	var/basalt_junction = NONE
+	/// *Inverse* smoothing bitflag for siderite overlays
+	var/siderite_junction = NONE
+	/// *Inverse* smoothing bitflag for shale overlays
+	var/shale_junction = NONE
+
+/turf/open/water/lavaland_atmos/basalt/bitmask_smooth()
+	. = ..()
+	basalt_junction = ALL_SMOOTHING_JUNCTIONS
+	siderite_junction = ALL_SMOOTHING_JUNCTIONS
+	shale_junction = ALL_SMOOTHING_JUNCTIONS
+	// We need to convert basalt/siderite/shale groups into a readable format
+	var/static/basalt_group = null
+	var/static/siderite_group = null
+	var/static/shale_group = null
+	if (isnull(basalt_group))
+		SET_SMOOTHING_GROUPS(SMOOTH_GROUP_FLOOR_BASALT + SMOOTH_GROUP_MINERAL_WALLS, basalt_group)
+		SET_SMOOTHING_GROUPS(SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_RED_ROCK_WALLS, siderite_group)
+		SET_SMOOTHING_GROUPS(SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_SHALE_WALLS, shale_group)
+	// After smoothing normally we can check our smoothed directions for possible basalt/siderite/shale tiles
+	for (var/check_dir in GLOB.alldirs)
+		var/junction = dir_to_junction(check_dir) | all_junctions_of_dir(check_dir)
+		if (!(junction & smoothing_junction))
+			continue
+		var/turf/to_smooth = get_step(src, check_dir)
+		if (!istype(to_smooth) || !to_smooth.smoothing_groups)
+			continue
+		for(var/key, group in to_smooth.smoothing_groups)
+			if (group & basalt_group[key])
+				basalt_junction &= ~junction
+			else if (group & siderite_group[key])
+				siderite_junction &= ~junction
+			else if (group & shale_group[key])
+				shale_junction &= ~junction
+
+/turf/open/water/lavaland_atmos/basalt/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
+
+/turf/open/water/lavaland_atmos/basalt/update_overlays()
+	. = ..()
+	if (basalt_junction != ALL_SMOOTHING_JUNCTIONS)
+		. += mutable_appearance('icons/turf/floors/basalt_outline.dmi', "basalt_outline-[basalt_junction]")
+	if (siderite_junction != ALL_SMOOTHING_JUNCTIONS)
+		. += mutable_appearance('icons/turf/floors/siderite_outline.dmi', "siderite_outline-[siderite_junction]")
+	if (shale_junction != ALL_SMOOTHING_JUNCTIONS)
+		. += mutable_appearance('icons/turf/floors/shale_outline.dmi', "shale_outline-[shale_junction]")
+
+/turf/open/water/lavaland_atmos/basalt/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = /turf/open/misc/asteroid/basalt::icon
+	underlay_appearance.icon_state = /turf/open/misc/asteroid/basalt::icon_state
+	return TRUE
+
 /turf/open/water/beach/tizira
 	desc = "Shallow water. It somehow reminds you of lizardfolk."
 	icon_state = "tizira_water"
@@ -154,6 +221,7 @@
 	planetary_atmos = FALSE
 	immerse_overlay_alpha = 190
 	fishing_datum = /datum/fish_source/hot_spring
+	reagent_to_extract = /datum/reagent/water/mineral
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()

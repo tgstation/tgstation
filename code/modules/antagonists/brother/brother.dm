@@ -54,7 +54,7 @@
 	if (!istype(carbon_owner))
 		return
 	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
+	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_mob_successful_flashed_mob))
 
 /// Take away the ability to add more brothers
 /datum/antagonist/brother/proc/remove_conversion_skills()
@@ -62,12 +62,12 @@
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
 	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
 
-/datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
+/datum/antagonist/brother/proc/on_mob_successful_flashed_mob(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash)
 	SIGNAL_HANDLER
 
-	if (flashed.stat == DEAD)
+	if (flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 
 	if (flashed.stat != CONSCIOUS)
@@ -93,7 +93,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_UNCONVERTABLE))
+	if (HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE))
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
@@ -141,20 +141,20 @@
 	brother2.dna.features[FEATURE_MOTH_WINGS] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
-	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
-	var/icon/brother1_blood_icon = icon('icons/effects/blood.dmi', "maskblood")
-	brother1_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
-	brother1_icon.Blend(brother1_blood_icon, ICON_OVERLAY)
-	brother1_icon.Shift(WEST, 8)
+	var/datum/universal_icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
+	var/datum/universal_icon/brother1_blood_icon = uni_icon('icons/effects/blood.dmi', "maskblood")
+	brother1_blood_icon.blend_color(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother1_icon.blend_icon(brother1_blood_icon, ICON_OVERLAY)
+	brother1_icon.shift(WEST, 8)
 
-	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
-	var/icon/brother2_blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
-	brother2_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
-	brother2_icon.Blend(brother2_blood_icon, ICON_OVERLAY)
-	brother2_icon.Shift(EAST, 8)
+	var/datum/universal_icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
+	var/datum/universal_icon/brother2_blood_icon = uni_icon('icons/effects/blood.dmi', "uniformblood")
+	brother2_blood_icon.blend_color(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother2_icon.blend_icon(brother2_blood_icon, ICON_OVERLAY)
+	brother2_icon.shift(EAST, 8)
 
-	var/icon/final_icon = brother1_icon
-	final_icon.Blend(brother2_icon, ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = brother1_icon
+	final_icon.blend_icon(brother2_icon, ICON_OVERLAY)
 
 	qdel(brother1)
 	qdel(brother2)

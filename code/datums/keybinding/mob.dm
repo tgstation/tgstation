@@ -9,7 +9,7 @@
 	description = ""
 	keybind_signal = COMSIG_KB_MOB_STOPPULLING_DOWN
 
-/datum/keybinding/mob/stop_pulling/down(client/user, turf/target)
+/datum/keybinding/mob/stop_pulling/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -21,13 +21,13 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("X")
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
 	keybind_signal = COMSIG_KB_MOB_SWAPHANDS_DOWN
 
-/datum/keybinding/mob/swap_hands/down(client/user, turf/target)
+/datum/keybinding/mob/swap_hands/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -39,20 +39,20 @@
 	var/hand_index = NONE
 
 /datum/keybinding/mob/select_hand/right
-	hotkey_keys = list("Q")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_right_hand"
 	full_name = "Swap to Right Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN
 	hand_index = RIGHT_HANDS
 
 /datum/keybinding/mob/select_hand/left
-	hotkey_keys = list("E")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_left_hand"
 	full_name = "Swap to Left Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTLEFTHAND_DOWN
 	hand_index = LEFT_HANDS
 
-/datum/keybinding/mob/select_hand/down(client/user, turf/target)
+/datum/keybinding/mob/select_hand/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -72,7 +72,7 @@
 	description = "Uses whatever item you have inhand"
 	keybind_signal = COMSIG_KB_MOB_ACTIVATEINHAND_DOWN
 
-/datum/keybinding/mob/activate_inhand/down(client/user, turf/target)
+/datum/keybinding/mob/activate_inhand/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -81,27 +81,52 @@
 	return TRUE
 
 /datum/keybinding/mob/drop_item
-	hotkey_keys = list("X")
+	hotkey_keys = list("Q")
 	name = "drop_item"
 	full_name = "Drop Item"
-	description = ""
+	description = "Drops the item in your active hand to the ground."
 	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
 
-/datum/keybinding/mob/drop_item/down(client/user, turf/target)
+/datum/keybinding/mob/drop_item/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
 	if(iscyborg(user.mob)) //cyborgs can't drop items
 		return FALSE
-	var/mob/M = user.mob
-	var/obj/item/I = M.get_active_held_item()
-	if(!I)
+	var/mob/user_mob = user.mob
+	var/obj/item/item_dropped = user_mob.get_active_held_item()
+	if(!item_dropped)
 		to_chat(user, span_warning("You have nothing to drop in your hand!"))
-	else
-		user.mob.dropItemToGround(I)
+		return TRUE
+	user.mob.dropItemToGround(item_dropped)
 	return TRUE
 
-/datum/keybinding/mob/target/down(client/user, turf/target)
+/datum/keybinding/mob/drop_item_specific
+	hotkey_keys = list("CtrlX")
+	name = "drop_item_specific"
+	full_name = "Drop Item (Specific)"
+	description = "Drops the item in your active where your mouse cursor is, if in range."
+	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
+
+/datum/keybinding/mob/drop_item_specific/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	if(iscyborg(user.mob)) //cyborgs can't drop items
+		return FALSE
+	var/mob/user_mob = user.mob
+	var/obj/item/item_dropped = user_mob.get_active_held_item()
+	if(!item_dropped)
+		to_chat(user, span_warning("You have nothing to drop in your hand!"))
+		return TRUE
+	if(!user_mob.Adjacent(target) || target.is_blocked_turf(source_atom = item_dropped))
+		return TRUE
+	var/x_value = (mousepos_x >= 0) ? mousepos_x - ICON_SIZE_X / 2 : mousepos_x + ICON_SIZE_X / 2
+	var/y_value = (mousepos_y >= 0) ? mousepos_y - ICON_SIZE_Y / 2 : mousepos_y + ICON_SIZE_Y / 2
+	user_mob.transfer_item_to_turf(item_dropped, target, x_value, y_value)
+	return TRUE
+
+/datum/keybinding/mob/target/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return .
@@ -136,12 +161,12 @@
 /datum/keybinding/mob/target/head_cycle
 	hotkey_keys = list("Numpad8")
 	name = "target_head_cycle"
-	full_name = "Target: Cycle Head"
+	full_name = "Target: Cycle head"
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target/head
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "target_head"
 	full_name = "Target: Head"
 	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
@@ -164,7 +189,7 @@
 /datum/keybinding/mob/target/r_arm
 	hotkey_keys = list("Numpad4")
 	name = "target_r_arm"
-	full_name = "Target: right arm"
+	full_name = "Target: Right arm"
 	description = "Pressing this key targets the right arm. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTARM_DOWN
 
@@ -178,7 +203,7 @@
 /datum/keybinding/mob/target/left_arm
 	hotkey_keys = list("Numpad6")
 	name = "target_left_arm"
-	full_name = "Target: left arm"
+	full_name = "Target: Left arm"
 	description = "Pressing this key targets the body. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTARM_DOWN
 
@@ -199,7 +224,7 @@
 /datum/keybinding/mob/target/left_leg
 	hotkey_keys = list("Numpad3")
 	name = "target_left_leg"
-	full_name = "Target: left leg"
+	full_name = "Target: Left leg"
 	description = "Pressing this key targets the left leg. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
 
@@ -210,7 +235,7 @@
 	description = "Prevents you from moving"
 	keybind_signal = COMSIG_KB_MOB_BLOCKMOVEMENT_DOWN
 
-/datum/keybinding/mob/prevent_movement/down(client/user, turf/target)
+/datum/keybinding/mob/prevent_movement/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -221,10 +246,3 @@
 	if(.)
 		return
 	user.movement_locked = FALSE
-
-/datum/keybinding/living/view_pet_data
-	hotkey_keys = list("Shift")
-	name = "view_pet_commands"
-	full_name = "View Pet Commands"
-	description = "Hold down to see all the commands you can give your pets!"
-	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS

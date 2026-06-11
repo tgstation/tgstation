@@ -7,6 +7,9 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
+	///Boolean on whether players are able to edit this keybinding. Used for BYOND built-in binds we wish to
+	///tell the player of its existence, but don't want it being edited because BYOND doesn't let us.
+	var/can_edit = TRUE
 
 /datum/keybinding/New()
 	if(!keybind_signal)
@@ -16,7 +19,7 @@
 	if(LAZYLEN(hotkey_keys) && !LAZYLEN(classic_keys))
 		classic_keys = hotkey_keys.Copy()
 
-/datum/keybinding/proc/down(client/user, turf/target)
+/datum/keybinding/proc/down(client/user, turf/target, mousepos_x, mousepos_y)
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(user.mob, keybind_signal, target) & COMSIG_KB_ACTIVATED
 

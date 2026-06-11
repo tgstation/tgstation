@@ -15,7 +15,6 @@
 	abstract_type = /obj/item/circuitboard
 	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/silicon = 20)
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/build_path = null
 	/// whether or not the circuit board will build into a vendor whose products cost nothing (used for offstation vending machines mostly)
@@ -29,6 +28,9 @@
 	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
 		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
+
+/obj/item/circuitboard/grind_results()
+	return list(/datum/reagent/silicon = 20)
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
 	if(LAZYLEN(machine.component_parts))
@@ -61,6 +63,14 @@
  */
 /obj/item/circuitboard/proc/configure_machine(obj/machinery/machine)
 	return
+
+/**
+ * This proc is called during /obj/structure/frame/machine/finalize_construction in case there's anything else that needs to be met before completion.
+ * Arguments:
+ * * install_frame - The frame the circuit has been installed into for reference.
+ */
+/obj/item/circuitboard/proc/completion_requirements(obj/structure/frame/install_frame)
+	return TRUE
 
 // Circuitboard/machine
 /*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,

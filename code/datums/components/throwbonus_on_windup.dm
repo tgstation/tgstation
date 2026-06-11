@@ -45,13 +45,17 @@
 		start_windup()
 
 /datum/component/throwbonus_on_windup/proc/start_windup()
+	if(!QDELETED(our_bar))
+		CRASH("throwbonus_on_windup component attempted to start windup while already winding up a throw!")
 
 	throwforce_bonus = initial(throwforce_bonus)
 	var/mob/living/our_holder = holder?.resolve()
 	if(isnull(holder))
 		return
+
 	if(throw_text)
 		to_chat(our_holder, span_warning(throw_text))
+
 	var/x_position = CEILING(our_holder.get_visual_width() * 0.5, 1)
 	our_bar = new()
 	our_bar.maximum_count = maximum_bonus
@@ -76,15 +80,18 @@
 	holder = null
 	return ..()
 
-/datum/component/throwbonus_on_windup/proc/throw_change(datum/source, throw_mode)
+/datum/component/throwbonus_on_windup/proc/throw_change(mob/living/source, throw_mode)
 	SIGNAL_HANDLER
+
+	if (source.get_active_held_item() != parent)
+		return
 
 	if(throw_mode)
 		start_windup()
 	else
 		end_windup()
 
-/datum/component/throwbonus_on_windup/proc/on_hands_swap(mob/living/source)
+/datum/component/throwbonus_on_windup/proc/on_hands_swap(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
 	if(source.get_active_held_item() != parent)
@@ -156,7 +163,7 @@
 	. = ..()
 	var/static/list/bar_positions = list(0, 2, 4, 6, 8)
 	var/current_percentage = current_count / maximum_count
-	var/bars_to_add = CEILING(length(bar_positions) * current_percentage, 1)
+	var/bars_to_add = ceil(length(bar_positions) * current_percentage)
 	for(var/curr_number in 1 to bars_to_add)
 		var/bar_color
 		switch(curr_number)

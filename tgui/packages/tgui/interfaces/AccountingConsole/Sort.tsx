@@ -30,6 +30,10 @@ export const SortButton = (props: SortButtonProps) => {
           otherSorter(SORTING.none);
         }
       }}
+      onContextMenu={() => {
+        act('typesound');
+        setSorting(SORTING.none);
+      }}
     >
       {sorting === SORTING.ascending ? '^' : ''}
       {sorting === SORTING.descending ? 'v' : ''}

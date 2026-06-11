@@ -45,7 +45,7 @@
 			message_admins("Aurora Caelus event caused an oven to ignite at [ADMIN_VERBOSEJMP(ruined_roast)].")
 			log_game("Aurora Caelus event caused an oven to ignite at [loc_name(ruined_roast)].")
 			announce_to_ghosts(roast_ruiner)
-			for(var/mob/living/carbon/human/seymour in viewers(roast_ruiner, 7))
+			for(var/mob/living/carbon/human/seymour in viewers(7, roast_ruiner))
 				if (seymour in human_blacklist)
 					continue
 				human_blacklist += seymour

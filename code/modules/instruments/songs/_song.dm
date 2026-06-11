@@ -120,6 +120,10 @@
 	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
 
+
+	///Rate at which volume goes down to 0. Not controlled in menu.
+	var/exponential_falloff = 4
+
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
 	SSinstruments.on_song_new(src)
 	lines = list()
@@ -216,19 +220,19 @@
 	music_player = user
 	START_PROCESSING(SSinstruments, src)
 	if(id)
-		sync_play()
+		sync_play(user)
 
 /**
  * Attempts to find other instruments with the same ID and syncs them to our song.
  */
-/datum/song/proc/sync_play()
+/datum/song/proc/sync_play(atom/user)
 	for(var/datum/song/other_instrument as anything in SSinstruments.songs)
 		if(other_instrument == src || other_instrument.id != id)
 			continue
 		if(other_instrument.playing)
 			continue
 		var/atom/other_player = other_instrument.find_sync_player()
-		if(isnull(other_player) || !(other_player in view(parent)))
+		if(isnull(other_player) || !(other_player in view(user || parent)))
 			continue
 		// copies the main song info to target songs
 		other_instrument.lines = lines.Copy()
@@ -432,7 +436,7 @@
 /datum/song/stationary/should_stop_playing(atom/player)
 	. = ..()
 	if(. == STOP_PLAYING || . == IGNORE_INSTRUMENT_CHECKS)
-		return TRUE
+		return
 	var/obj/structure/musician/M = parent
 	return M.can_play(player) ? NONE : STOP_PLAYING
 

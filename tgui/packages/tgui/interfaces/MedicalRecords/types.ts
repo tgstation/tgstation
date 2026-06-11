@@ -20,6 +20,7 @@ export type MedicalRecord = {
   major_disabilities: string;
   minor_disabilities: string;
   physical_status: string;
+  cause_of_death: string;
   mental_status: string;
   name: string;
   notes: MedicalNote[];

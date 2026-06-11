@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -13,20 +12,18 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
-import {
-  moveChatPageLeft,
-  moveChatPageRight,
-  removeChatPage,
-  toggleAcceptedType,
-  updateChatPage,
-} from './actions';
 import { MESSAGE_TYPES } from './constants';
-import { selectCurrentChatPage } from './selectors';
+import { useChatPages } from './use-chat-pages';
 
 export function ChatPageSettings(props) {
-  const page = useSelector(selectCurrentChatPage);
-  const dispatch = useDispatch();
+  const {
+    page,
+    moveChatLeft,
+    moveChatRight,
+    updateChatPage,
+    removeChatPage,
+    toggleAcceptedType,
+  } = useChatPages();
 
   return (
     <Section>
@@ -37,13 +34,7 @@ export function ChatPageSettings(props) {
               color="blue"
               icon="angles-left"
               tooltip="Reorder tab to the left"
-              onClick={() =>
-                dispatch(
-                  moveChatPageLeft({
-                    pageId: page.id,
-                  }),
-                )
-              }
+              onClick={moveChatLeft}
             />
           </Stack.Item>
         )}
@@ -52,12 +43,9 @@ export function ChatPageSettings(props) {
             fluid
             value={page.name}
             onBlur={(value) =>
-              dispatch(
-                updateChatPage({
-                  pageId: page.id,
-                  name: value,
-                }),
-              )
+              updateChatPage({
+                name: value,
+              })
             }
           />
         </Stack.Item>
@@ -67,13 +55,7 @@ export function ChatPageSettings(props) {
               color="blue"
               icon="angles-right"
               tooltip="Reorder tab to the right"
-              onClick={() =>
-                dispatch(
-                  moveChatPageRight({
-                    pageId: page.id,
-                  }),
-                )
-              }
+              onClick={moveChatRight}
             />
           </Stack.Item>
         )}
@@ -83,12 +65,9 @@ export function ChatPageSettings(props) {
             icon={page.hideUnreadCount ? 'bell-slash' : 'bell'}
             tooltip="Disables unread counter"
             onClick={() =>
-              dispatch(
-                updateChatPage({
-                  pageId: page.id,
-                  hideUnreadCount: !page.hideUnreadCount,
-                }),
-              )
+              updateChatPage({
+                hideUnreadCount: !page.hideUnreadCount,
+              })
             }
           >
             Mute
@@ -96,17 +75,7 @@ export function ChatPageSettings(props) {
         </Stack.Item>
         {!page.isMain && (
           <Stack.Item>
-            <Button
-              color="red"
-              icon="times"
-              onClick={() =>
-                dispatch(
-                  removeChatPage({
-                    pageId: page.id,
-                  }),
-                )
-              }
-            >
+            <Button color="red" icon="times" onClick={removeChatPage}>
               Remove
             </Button>
           </Stack.Item>
@@ -120,14 +89,7 @@ export function ChatPageSettings(props) {
           <Button.Checkbox
             key={typeDef.type}
             checked={page.acceptedTypes[typeDef.type]}
-            onClick={() =>
-              dispatch(
-                toggleAcceptedType({
-                  pageId: page.id,
-                  type: typeDef.type,
-                }),
-              )
-            }
+            onClick={() => toggleAcceptedType(typeDef.type)}
           >
             {typeDef.name}
           </Button.Checkbox>
@@ -139,14 +101,7 @@ export function ChatPageSettings(props) {
             <Button.Checkbox
               key={typeDef.type}
               checked={page.acceptedTypes[typeDef.type]}
-              onClick={() =>
-                dispatch(
-                  toggleAcceptedType({
-                    pageId: page.id,
-                    type: typeDef.type,
-                  }),
-                )
-              }
+              onClick={() => toggleAcceptedType(typeDef.type)}
             >
               {typeDef.name}
             </Button.Checkbox>

@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   autowiki:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: "Check for AUTOWIKI_USERNAME"
         id: secrets_set
@@ -20,7 +20,7 @@ jobs:
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Install BYOND
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: ./.github/actions/restore_or_install_byond

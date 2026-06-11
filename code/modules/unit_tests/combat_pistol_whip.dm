@@ -18,14 +18,14 @@
 	// Combat mode in melee range with RMB -> pistol whip
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim, list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
-	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being pistol-whipped.")
+	TEST_ASSERT_NOTEQUAL(victim.get_brute_loss(), 0, "Victim did not take brute damage from being pistol-whipped.")
 	TEST_ASSERT_EQUAL(gun.get_ammo(countchambered = TRUE), expected_ammo, "The gun fired a shot when it was used for a pistol whip.")
 	victim.fully_heal()
 
 	// Combat mode LMB -> point blank shot
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim)
-	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being fired upon point-blank.")
+	TEST_ASSERT_NOTEQUAL(victim.get_brute_loss(), 0, "Victim did not take brute damage from being fired upon point-blank.")
 	TEST_ASSERT(locate(/obj/item/ammo_casing/c9mm) in attacker.loc, "The gun did not eject a casing when it was used for a point-blank shot.")
 	TEST_ASSERT_EQUAL(gun.get_ammo(countchambered = TRUE), expected_ammo - 1, "The gun did not fire a shot when it was used for a point-blank shot.")
 	victim.fully_heal()
@@ -36,7 +36,7 @@
 
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim, list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
-	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being bayonet stabbed.")
+	TEST_ASSERT_NOTEQUAL(victim.get_brute_loss(), 0, "Victim did not take brute damage from being bayonet stabbed.")
 	victim.fully_heal()
 
 /// Test that bayonetted weapons can be used to butcher
@@ -57,4 +57,4 @@
 
 	butcher.put_in_active_hand(gun, forced = TRUE)
 	click_wrapper(butcher, meat, list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
-	TEST_ASSERT(DOING_INTERACTION(butcher, meat), "The butcher did not start butchering the monkey when using a bayonetted weapon.")
+	TEST_ASSERT(QDELETED(meat), "The butcher did not butchering the monkey when using a bayonetted weapon.")

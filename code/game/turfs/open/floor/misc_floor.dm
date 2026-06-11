@@ -7,6 +7,7 @@
 	base_icon_state = "bcircuit"
 	light_color = LIGHT_COLOR_BABY_BLUE
 	floor_tile = /obj/item/stack/tile/circuit
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	/// If we want to ignore our area's power status and just be always off
 	/// Mostly for mappers doing asthetic things, or cases where the floor should be broken
 	var/always_off = FALSE
@@ -74,6 +75,9 @@
 	icon_state = "bcircuitoff"
 	always_off = TRUE
 
+/turf/open/floor/circuit/no_light
+	always_off = TRUE
+
 /turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -117,6 +121,9 @@
 
 /turf/open/floor/circuit/red/off
 	icon_state = "rcircuitoff"
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/no_power
 	always_off = TRUE
 
 /turf/open/floor/circuit/red/anim
@@ -237,6 +244,7 @@
 	desc = "This one takes you back."
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/eighties/broken_states()
 	return list("eighties_damaged")
@@ -343,7 +351,7 @@
 
 /turf/open/floor/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	set_custom_materials(list(SSmaterials.get_material(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/open/floor/material/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS

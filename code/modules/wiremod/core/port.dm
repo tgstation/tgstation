@@ -141,7 +141,7 @@
 
 /datum/port/input/proc/disconnect(datum/port/output/output)
 	SIGNAL_HANDLER
-	connected_ports -= output
+	LAZYREMOVE(connected_ports, output)
 	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
 	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
 	UnregisterSignal(output, COMSIG_PORT_DISCONNECT)
@@ -174,7 +174,6 @@
 	set_value(default)
 	if(trigger)
 		src.trigger = trigger
-	src.connected_ports = list()
 
 /**
  * Connects an input port to an output port.
@@ -185,7 +184,7 @@
 /datum/port/input/proc/connect(datum/port/output/output)
 	if(output in connected_ports)
 		return
-	connected_ports += output
+	LAZYADD(connected_ports, output)
 	RegisterSignal(output, COMSIG_PORT_SET_VALUE, PROC_REF(receive_value))
 	RegisterSignal(output, COMSIG_PORT_SET_TYPE, PROC_REF(check_type))
 	RegisterSignal(output, COMSIG_PORT_DISCONNECT, PROC_REF(disconnect))

@@ -164,9 +164,7 @@
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, holder = src, location = get_turf(src))
-		smoke.start()
+		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
 		qdel(clong)
@@ -247,6 +245,7 @@
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
+	sound_to_playing_players('sound/items/handling/lead_pipe/lead_pipe_drop.ogg')
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
 

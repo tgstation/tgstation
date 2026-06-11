@@ -14,18 +14,18 @@
 	// They are not wearing botany gloves (have plant protection), so they should take damage = the flower's force.
 	weapon.attack_hand(botanist)
 	TEST_ASSERT_EQUAL(botanist.get_active_held_item(), weapon, "The botanist failed to pick up [weapon].")
-	TEST_ASSERT_EQUAL(botanist.getFireLoss(), weapon.force, "The botanist picked up [weapon] with their bare hands, and took an incorrect amount of fire damage.")
+	TEST_ASSERT_EQUAL(botanist.get_fire_loss(), weapon.force, "The botanist picked up [weapon] with their bare hands, and took an incorrect amount of fire damage.")
 
 	// Heal our attacker for easy comparison later
-	botanist.adjustFireLoss(-100)
+	botanist.adjust_fire_loss(-100)
 	// And give them the plant safe trait so we don't have to worry about attacks being cancelled
 	ADD_TRAIT(botanist, TRAIT_PLANT_SAFE, "unit_test")
 
 	// Now, let's get a smack with the novaflower and see what happens.
 	weapon.melee_attack_chain(botanist, victim)
 
-	TEST_ASSERT(botanist.getFireLoss() <= 0, "The botanist took fire damage from [weapon], even though they were plant safe.")
-	TEST_ASSERT_EQUAL(victim.getFireLoss(), initial_force, "The target took an incorrect amount of fire damage after being hit with [weapon].")
+	TEST_ASSERT(botanist.get_fire_loss() <= 0, "The botanist took fire damage from [weapon], even though they were plant safe.")
+	TEST_ASSERT_EQUAL(victim.get_fire_loss(), initial_force, "The target took an incorrect amount of fire damage after being hit with [weapon].")
 	TEST_ASSERT(weapon.force < initial_force, "[weapon] didn't lose any force after an attack.")
 	TEST_ASSERT(victim.fire_stacks > 0, "[weapon] didn't apply any firestacks to the target after an attack.")
 	TEST_ASSERT(victim.on_fire, "[weapon] didn't set the target on fire after an attack.")

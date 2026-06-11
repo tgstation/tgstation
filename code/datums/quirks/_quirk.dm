@@ -1,6 +1,7 @@
 //every quirk in this folder should be coded around being applied on spawn
 //these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
 /datum/quirk
+	abstract_type = /datum/quirk
 	/// The name of the quirk
 	var/name = "Test Quirk"
 	/// The description of the quirk
@@ -17,6 +18,8 @@
 	var/lose_text
 	///This text will appear on medical records for the trait.
 	var/medical_record_text
+	///Appears in medical guides for this quirk, but only if the quirk has QUIRK_TRAUMALIKE flag.
+	var/medical_symptom_text
 	/// if applicable, apply and remove this mob trait
 	var/mob_trait
 	/// Amount of points this trait is worth towards the hardcore character mode.
@@ -24,8 +27,6 @@
 	/// This is used to pick the quirks assigned to a hardcore character.
 	//// 0 means its not available to hardcore draws.
 	var/hardcore_value = 0
-	/// When making an abstract quirk (in OOP terms), don't forget to set this var to the type path for that abstract quirk.
-	var/abstract_parent_type = /datum/quirk
 	/// The icon to show in the preferences menu.
 	/// This references a tgui icon, so it can be FontAwesome or a tgfont (with a tg- prefix).
 	var/icon
@@ -209,7 +210,7 @@
 	var/list/where_items_spawned
 	/// If true, the backpack automatically opens on post_add(). Usually set to TRUE when an item is equipped inside the player's backpack.
 	var/open_backpack = FALSE
-	abstract_parent_type = /datum/quirk/item_quirk
+	abstract_type = /datum/quirk/item_quirk
 
 /**
  * Handles inserting an item in any of the valid slots provided, then allows for post_add notification.
@@ -247,43 +248,3 @@
 		to_chat(quirk_holder, chat_string)
 
 	where_items_spawned = null
-
-/**
- * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
- *
- * Arguments:
- * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
- * * Category- Which types of quirks we want to print out. Defaults to everything
- * * from_scan- If the source of this call is like a health analyzer or HUD, in which case QUIRK_HIDE_FROM_MEDICAL hides the quirk.
- */
-/mob/living/proc/get_quirk_string(medical = FALSE, category = CAT_QUIRK_ALL, from_scan = FALSE)
-	var/list/dat = list()
-	for(var/datum/quirk/candidate as anything in quirks)
-		if(from_scan && (candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN))
-			continue
-		switch(category)
-			if(CAT_QUIRK_MAJOR_DISABILITY)
-				if(candidate.value >= -4)
-					continue
-			if(CAT_QUIRK_MINOR_DISABILITY)
-				if(!ISINRANGE(candidate.value, -4, -1))
-					continue
-			if(CAT_QUIRK_NOTES)
-				if(candidate.value < 0)
-					continue
-		dat += medical ? candidate.medical_record_text : candidate.name
-
-	if(!length(dat))
-		return medical ? "No issues have been declared." : "None"
-	return medical ?  dat.Join("<br>") : dat.Join(", ")
-
-/mob/living/proc/cleanse_quirk_datums() //removes all trait datums
-	QDEL_LAZYLIST(quirks)
-
-/mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
-	// We could be done before the client was moved or after the client was moved
-	var/datum/preferences/to_pass = client || to_mob.client
-
-	for(var/datum/quirk/quirk as anything in quirks)
-		quirk.remove_from_current_holder(quirk_transfer = TRUE)
-		quirk.add_to_holder(to_mob, quirk_transfer = TRUE, client_source = to_pass)

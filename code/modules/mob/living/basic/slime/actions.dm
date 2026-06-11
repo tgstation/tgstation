@@ -112,7 +112,7 @@
 
 	var/list/created_slimes = list(src)
 	var/list/slime_friends = list()
-	for(var/faction_member in faction)
+	for(var/faction_member in get_faction())
 		var/mob/living/possible_friend = locate(faction_member) in GLOB.mob_living_list
 		if(QDELETED(possible_friend))
 			continue

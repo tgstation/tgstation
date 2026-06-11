@@ -56,13 +56,13 @@
 
 /obj/item/blood_scanner/proc/scan_blood(mob/living/scanner, mob/living/carbon/scanned_person)
 	var/render_list = list()
-	var/oxy_loss = scanned_person.getOxyLoss()
-	var/tox_loss = scanned_person.getToxLoss()
+	var/oxy_loss = scanned_person.get_oxy_loss()
+	var/tox_loss = scanned_person.get_tox_loss()
 	render_list += span_info("You read the [src]'s screen:\n")
 	render_list += "<span class='notice ml-1'>Blood Type: [scanned_person?.dna?.blood_type]</span>\n"
 	if(oxy_loss > 50)//if they have knockout levels of suffocation damage
 		render_list += "<span class='danger ml-1'>Warning: Hypoxic blood oxygen levels.</span>\n"
-	if(scanned_person.blood_volume <= BLOOD_VOLUME_SAFE)
+	if(scanned_person.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_SAFE)
 		render_list += "<span class='danger ml-1'>Warning: Dangerously low blood flow.</span>\n"
 	if(tox_loss > 10)
 		render_list += "<span class='danger ml-1'>Warning: Toxic buildup detected in bloodstream.</span>\n"

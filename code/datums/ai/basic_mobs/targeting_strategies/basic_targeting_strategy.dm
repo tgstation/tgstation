@@ -154,3 +154,16 @@
 	if(!istype(target) || target.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
 	return ..()
+
+/datum/targeting_strategy/basic/exact_match
+	check_factions_exactly = TRUE
+
+/datum/targeting_strategy/basic/exact_match/ignore_friends
+
+/datum/targeting_strategy/basic/exact_match/ignore_friends/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (living_mob.ai_controller.blackboard[BB_FRIENDS_LIST] && (the_target in living_mob.ai_controller.blackboard[BB_FRIENDS_LIST]))
+		return FALSE
+	return TRUE

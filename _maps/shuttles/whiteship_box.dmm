@@ -190,7 +190,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -280,7 +280,7 @@
 /area/shuttle/abandoned/medbay)
 "aJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -396,7 +396,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aW" = (
@@ -497,7 +497,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bh" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bi" = (
@@ -553,7 +553,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -656,7 +656,7 @@
 /area/shuttle/abandoned/medbay)
 "bA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/structure/closet/secure_closet/medical2{
 	anchored = 1
 	},
@@ -670,7 +670,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/sleeper,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
@@ -705,7 +705,7 @@
 /area/shuttle/abandoned/medbay)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /turf/open/floor/iron/white/side{
@@ -930,7 +930,7 @@
 "ce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/structure/closet/secure_closet/medical3{
 	anchored = 1
 	},
@@ -979,7 +979,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
@@ -995,7 +995,7 @@
 /area/shuttle/abandoned/medbay)
 "cl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -1009,7 +1009,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/button/door/directional/south{
 	id = "whiteship_windows";
@@ -1190,7 +1190,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white/side{
 	dir = 1
@@ -1245,7 +1245,7 @@
 /obj/machinery/shower/directional/south,
 /obj/item/soap,
 /obj/structure/curtain,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cL" = (
@@ -1372,7 +1372,7 @@
 "cX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/structure/table,
 /obj/machinery/door/window/left/directional/west{
 	name = "Medical Equipment Storage"
@@ -1554,7 +1554,7 @@
 /area/shuttle/abandoned/medbay)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -1599,7 +1599,7 @@
 "ds" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dt" = (
@@ -1615,7 +1615,7 @@
 /obj/item/storage/box/zipties,
 /obj/item/assembly/flash/handheld,
 /obj/item/melee/baton/telescopic,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -1680,7 +1680,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/donkpockets,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
@@ -1733,7 +1733,7 @@
 "Pz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/bed{
 	dir = 4
 	},
@@ -1755,7 +1755,7 @@
 "Uq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/bed,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,

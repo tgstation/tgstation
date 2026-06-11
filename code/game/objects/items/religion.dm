@@ -9,6 +9,8 @@
 	attack_verb_simple = list("forcefully inspire", "violently encourage", "relentlessly galvanize")
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	item_flags = NO_PIXEL_RANDOM_DROP
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
@@ -66,8 +68,8 @@
 
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_brute_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_fire_loss(-15, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.AdjustStun(-4 SECONDS)
@@ -129,8 +131,8 @@
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_tox_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.set_oxy_loss(0, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
@@ -335,6 +337,10 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
+/obj/item/godstaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 /obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
@@ -404,8 +410,12 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 24
-	armour_penetration = 10
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "claymore_old"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "claymore"
+	force = 30
+	armour_penetration = 15
 
 /obj/item/claymore/weak/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)

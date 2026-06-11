@@ -1,6 +1,7 @@
 /// Verifies that an area's perception of their "turfs" is correct, and no other area overlaps with them
 /// Quite slow, but needed
 /datum/unit_test/maptest_area_contents
+	test_flags = UNIT_TEST_MAP_TEST
 	priority = TEST_LONGER
 
 /datum/unit_test/maptest_area_contents/Run()
@@ -19,16 +20,16 @@
 				if (turf_to_check.in_contents_of)
 					var/area/existing = turf_to_check.in_contents_of
 					if (existing == turf_to_check.loc)
-						TEST_FAIL("Found a duplicate turf [turf_to_check.type] inside [area_to_test.type]'s turf listing")
+						TEST_FAIL("Found a duplicate turf [turf_to_check.type] [COORD(turf_to_check)] inside [area_to_test.type]'s turf listing")
 					else
-						TEST_FAIL("Found a shared turf [turf_to_check.type] between [area_to_test.type] and [existing.type]'s turf listings")
+						TEST_FAIL("Found a shared turf [turf_to_check.type] [COORD(turf_to_check)] between [area_to_test.type] and [existing.type]'s turf listings")
 
 				var/area/turfs_actual_area = turf_to_check.loc
 				if (turfs_actual_area != area_to_test)
-					TEST_FAIL("Found a turf [turf_to_check.type] which is IN [turfs_actual_area.type], but is registered as being in [area_to_test.type]")
+					TEST_FAIL("Found a turf [turf_to_check.type] [COORD(turf_to_check)] which is IN [turfs_actual_area.type], but is registered as being in [area_to_test.type]")
 
 				turf_to_check.in_contents_of = turfs_actual_area
 
 	for(var/turf/position in ALL_TURFS())
 		if(!position.in_contents_of)
-			TEST_FAIL("Found a turf [position.type] inside [position.loc.type] that is NOT stored in any area's turf listing")
+			TEST_FAIL("Found a turf [position.type] [COORD(position)] inside [position.loc.type] that is NOT stored in any area's turf listing")

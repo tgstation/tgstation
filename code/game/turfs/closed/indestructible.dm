@@ -4,6 +4,7 @@
 	icon = 'icons/turf/walls.dmi'
 	explosive_resistance = 50
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = IS_SOLID | NO_RUST
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
@@ -17,12 +18,6 @@
 
 /turf/closed/indestructible/singularity_act()
 	return
-
-/turf/closed/indestructible/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	if(istype(attacking_item, /obj/item/poster) && Adjacent(user))
-		return place_poster(attacking_item, user)
-
-	return ..()
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"

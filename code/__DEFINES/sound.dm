@@ -18,33 +18,9 @@
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
-/// This is the lowest volume that can be used by playsound otherwise it gets ignored
-/// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
-/// This is to prevent sound being spammed at really low volumes due to distance calculations
-/// Recommend setting this to anywhere from 10-3 (or 0 to disable any sound minimum volume restrictions)
-/// Ex. For a 70 volume sound, 17 tile range, 3 exponent, 2 falloff_distance:
-/// Setting SOUND_AUDIBLE_VOLUME_MIN to 0 for the above will result in 17x17 radius (289 turfs)
-/// Setting SOUND_AUDIBLE_VOLUME_MIN to 5 for the above will result in 14x14 radius (196 turfs)
-/// Setting SOUND_AUDIBLE_VOLUME_MIN to 10 for the above will result in 11x11 radius (121 turfs)
-#define SOUND_AUDIBLE_VOLUME_MIN 3
-
-/* Calculates the max distance of a sound based on audible volume
- *
- * Note - you should NEVER pass in a volume that is lower than SOUND_AUDIBLE_VOLUME_MIN otherwise distance will be insanely large (like +250,000)
- *
- * Arguments:
- * * volume: The initial volume of the sound being played
- * * max_distance: The range of the sound in tiles (technically not real max distance since the furthest areas gets pruned due to SOUND_AUDIBLE_VOLUME_MIN)
- * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
- * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
- * Returns: The max distance of a sound based on audible volume range
- */
-#define CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(volume, max_distance, falloff_distance, falloff_exponent)\
-	floor(((((-(max(max_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / volume) * (SOUND_AUDIBLE_VOLUME_MIN - volume)) ** falloff_exponent) + falloff_distance))
-
 /* Calculates the volume of a sound based on distance
  *
- * https://www.desmos.com/calculator/sqdfl8ipgf
+ * https://www.desmos.com/calculator/ing6lxgd0m Update this when changed please
  *
  * Arguments:
  * * volume: The initial volume of the sound being played
@@ -53,20 +29,20 @@
  * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
  * Returns: The max distance of a sound based on audible volume range
  */
-#define CALCULATE_SOUND_VOLUME(volume, distance, max_distance, falloff_distance, falloff_exponent)\
-	((max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
+#define CALCULATE_SOUND_VOLUME_RATIO(volume, distance, max_distance, falloff_distance, falloff_exponent)\
+	((max(distance - falloff_distance, 0) / (max(max_distance, distance) - falloff_distance)) ** (1 / falloff_exponent))
 
 ///Default range of a sound.
-#define SOUND_RANGE 17
-#define MEDIUM_RANGE_SOUND_EXTRARANGE -5
+#define SOUND_RANGE 15
+#define MEDIUM_RANGE_SOUND_EXTRARANGE -3
 ///default extra range for sounds considered to be quieter
-#define SHORT_RANGE_SOUND_EXTRARANGE -9
+#define SHORT_RANGE_SOUND_EXTRARANGE -7
 ///The range deducted from sound range for things that are considered silent / sneaky
-#define SILENCED_SOUND_EXTRARANGE -11
+#define SILENCED_SOUND_EXTRARANGE -10
 ///Percentage of sound's range where no falloff is applied
-#define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
+#define SOUND_DEFAULT_FALLOFF_DISTANCE 0 //Disabled because it doesn't actually have a nice effect, it just makes the jump to fall-off more shocking. maybe delete
 ///The default exponent of sound falloff
-#define SOUND_FALLOFF_EXPONENT 6
+#define SOUND_FALLOFF_EXPONENT 2.5
 
 #define SOUND_MINIMUM_PRESSURE 10
 
@@ -286,6 +262,41 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_CIG_PACK_RUSTLE "cig_pack_rustle"
 #define SFX_CIG_PACK_THROW_DROP "cig_pack_throw_drop"
 #define	SFX_RORO_WARBLE "roro_warble"
+#define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
+#define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_GOGGLES_PICKUP "goggles_pickup"
+#define SFX_GOGGLES_DROP "goggles_drop"
+#define SFX_GOGGLES_EQUIP "goggles_equip"
+#define SFX_GLASSES_PICKUP "glasses_pickup"
+#define SFX_GLASSES_DROP "glasses_drop"
+#define SFX_GLASSES_EQUIP "glasses_equip"
+#define SFX_FOOD_PLATE_PICKUP "food_plate_pickup"
+#define SFX_FOOD_PLATE_DROP "food_plate_drop"
+#define SFX_TRAY_PICKUP "tray_pickup"
+#define SFX_TRAY_DROP "tray_drop"
+#define SFX_TRAY_INSERT "tray_insert"
+#define SFX_CUTLERY_PICKUP "generic_cutlery_pickup"
+#define SFX_CUTLERY_DROP "generic_cutlery_drop"
+#define SFX_KNIFE_PICKUP "knife_pickup"
+#define SFX_KNIFE_DROP "knife_drop"
+#define SFX_KNIFE_SLICE "knife_slice"
+#define SFX_POT_PICKUP "pot_pickup"
+#define SFX_POT_DROP "pot_drop"
+#define SFX_ROLLING_PIN_PICKUP "rolling_pin_pickup"
+#define SFX_ROLLING_PIN_DROP "rolling_pin_drop"
+#define SFX_ROLLING_PIN_ROLLING "rolling_pin_rolling"
+#define SFX_FIRE_MODE_SWITCH "fire_mode_switch"
+#define SFX_REMOTE_MODE_SWITCH "remote_mode_switch"
+#define SFX_REMOTE_ACTION "remote_action"
+#define SFX_GAS_MASK_PICKUP "gas_mask_pickup"
+#define SFX_GAS_MASK_DROP "gas_mask_drop"
+#define SFX_GAS_MASK_EQUIP "gas_mask_equip"
+#define SFX_GENERIC_DEVICE_PICKUP "generic_device_pickup"
+#define SFX_GENERIC_DEVICE_DROP "generic_device_drop"
+#define SFX_HARD_HAT_PICKUP "hard_hat_pickup"
+#define SFX_HARD_HAT_DROP "hard_hat_drop"
+#define SFX_HARD_HAT_EQUIP "hard_hat_equip"
+#define SFX_ALIEN_SPIT_ACID "alien_split_acid"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

@@ -1,0 +1,10 @@
+{
+	"sweatervest": [
+		{
+			"type": "icon_state",
+			"icon_state": "sweatervest",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

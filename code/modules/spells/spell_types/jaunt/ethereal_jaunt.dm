@@ -165,8 +165,7 @@
 
 /// Does some steam effects from the jaunt at passed loc.
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_steam_effects(turf/loc)
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(10, FALSE, loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(loc, 10, FALSE)
 	steam.start()
 
 

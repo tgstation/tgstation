@@ -463,7 +463,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 				subtypesof(/area/station/service), \
 				subtypesof(/area/station/command), \
 				subtypesof(/area/station/hallway), \
-				subtypesof(/area/station/ai_monitored), \
+				subtypesof(/area/station/ai), \
 				subtypesof(/area/station/cargo)
 			)
 
@@ -550,4 +550,32 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src))
 		if(turf_adjacent.planetary_atmos)
 			return TRUE
+	return FALSE
+
+/**
+ * Check if the turf has access to the sun, by checking for opaque turfs in the direction of the sun.
+ *
+ * occlusion_distance - determines how far away we check to see if the sun is blocked
+ *
+ * Returns TRUE if the sun is blocked
+ * Returns FALSE otherwise
+ */
+/turf/proc/is_sunlight_blocked(occlusion_distance = 20)
+	if(HAS_TRAIT(src, TRAIT_TURF_SUN_BLOCKED))
+		return TRUE
+
+	var/target_x = round(sin(SSsun.azimuth), 0.01)
+	var/target_y = round(cos(SSsun.azimuth), 0.01)
+	var/x_hit = x
+	var/y_hit = y
+	var/turf/hit
+	for(var/run in 1 to occlusion_distance)
+		x_hit += target_x
+		y_hit += target_y
+		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
+		if(IS_OPAQUE_TURF(hit))
+			return TRUE
+		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) // edge of the map
+			break
+
 	return FALSE

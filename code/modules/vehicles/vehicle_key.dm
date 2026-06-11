@@ -77,7 +77,7 @@
 		user.visible_message(span_suicide("[user] forgot [user.p_they()] isn't actually a janicart! That's a paddlin'!"))
 		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE)
 
 /obj/item/key/lasso
@@ -93,3 +93,4 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/whip.ogg'
 	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)

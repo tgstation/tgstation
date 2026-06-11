@@ -1,16 +1,14 @@
+///Helper to ensure a constant is applied regardless of reagent metabolization rate to get 100% effect
+///Use for parent reagent types when subtypes alter metabolization rates
+#define METABOLIZE_FREE_CONSTANT(value)((value * REAGENTS_METABOLISM) / metabolization_rate)
+
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
 	//We have to check to see if either is competitive so can ignore it (competitive reagents are supposed to conflict)
 	if((r1.reaction_flags & REACTION_COMPETITIVE) || (r2.reaction_flags & REACTION_COMPETITIVE))
 		return FALSE
 
 	//do the non-list tests first, because they are cheaper
-	if(r1.required_container != r2.required_container)
-		return FALSE
-	if(r1.is_cold_recipe == r2.is_cold_recipe)
-		if(r1.required_temp != r2.required_temp)
-			//one reaction requires a more extreme temperature than the other, so there is no conflict
-			return FALSE
-	else
+	if(r1.is_cold_recipe != r2.is_cold_recipe)
 		var/datum/chemical_reaction/cold_one = r1.is_cold_recipe ? r1 : r2
 		var/datum/chemical_reaction/warm_one = r1.is_cold_recipe ? r2 : r1
 		if(cold_one.required_temp < warm_one.required_temp)
@@ -36,55 +34,53 @@
 			long_req = r2
 			short_req = r1
 
+	//if short one has a container requirement and it's not the same as the long one's, there's no conflict
+	if(short_req.required_container && short_req.required_container != long_req.required_container)
+		return FALSE
+
+	//if short one has a more extreme temperature requirement, there's no conflict
+	if(short_req.is_cold_recipe == long_req.is_cold_recipe)
+		if(short_req.is_cold_recipe && short_req.required_temp < long_req.required_temp)
+			return FALSE
+		if(!short_req.is_cold_recipe && short_req.required_temp > long_req.required_temp)
+			return FALSE
 
 	//check if the shorter reaction list is a subset of the longer one
-	var/list/overlap = r1.required_reagents & r2.required_reagents
-	if(overlap.len != short_req.required_reagents.len)
+	var/list/reagent_overlap = long_req.required_reagents & short_req.required_reagents
+	if(reagent_overlap.len != short_req.required_reagents.len)
 		//there is at least one reagent in the short list that is not in the long list, so there is no conflict
 		return FALSE
 
 	//check to see if the shorter reaction's catalyst list is also a subset of the longer reaction's catalyst list
 	//if the longer reaction's catalyst list is a subset of the shorter ones, that is fine
 	//if the reaction lists are the same, the short reaction will have the shorter required_catalysts list, so it will register as a conflict
-	var/list/short_minus_long_catalysts = short_req.required_catalysts - long_req.required_catalysts
-	if(short_minus_long_catalysts.len)
+	var/list/catalyst_overlap = long_req.required_catalysts & short_req.required_catalysts
+	if(catalyst_overlap.len != short_req.required_catalysts.len)
 		//there is at least one unique catalyst for the short reaction, so there is no conflict
 		return FALSE
+
+	//if the list of reagents&catalysts is exactly the same, don't bother comparing the amounts, just call it an overlap
+	if(reagent_overlap.len == long_req.required_reagents.len && catalyst_overlap.len == long_req.required_catalysts.len)
+		return TRUE
+
+	for(var/datum/reagent/ingredient as anything in reagent_overlap)
+		//if longer reaction requires lower reagent quantity, there's no conflict
+		if(reagent_overlap[ingredient] < short_req.required_reagents[ingredient])
+			return FALSE
+	for(var/datum/reagent/catalyst as anything in catalyst_overlap)
+		//if longer reaction requires lower catalys quantity, there's no conflict
+		if(catalyst_overlap[catalyst] < short_req.required_catalysts[catalyst])
+			return FALSE
 
 	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
 
-/proc/get_chemical_reaction(id)
-	if(!GLOB.chemical_reactions_list_reactant_index)
-		return
-	for(var/reagent in GLOB.chemical_reactions_list_reactant_index)
-		for(var/R in GLOB.chemical_reactions_list_reactant_index[reagent])
-			var/datum/reac = R
-			if(reac.type == id)
-				return R
-
-/proc/remove_chemical_reaction(datum/chemical_reaction/R)
-	if(!GLOB.chemical_reactions_list_reactant_index || !R)
-		return
-	for(var/rid in R.required_reagents)
-		GLOB.chemical_reactions_list_reactant_index[rid] -= R
-
-//see build_chemical_reactions_list in holder.dm for explanations
-/proc/add_chemical_reaction(datum/chemical_reaction/add)
-	if(!GLOB.chemical_reactions_list_reactant_index || !add.required_reagents || !add.required_reagents.len)
-		return
-	var/rand_reagent = pick(add.required_reagents)
-	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
-		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
-	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += add
-
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
-/datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
+/datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE, lifetime, slippery)
 	var/location = get_turf(my_atom)
 
-	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
-	foam.set_up(amount = foam_volume, holder = my_atom, location = location, carry = src, result_type = result_type)
-	foam.start(log = log)
+	var/datum/effect_system/fluid_spread/foam/foam = new foamtype(location, null, foam_volume, my_atom, carry = src, result_type = result_type)
+	foam.start(log = log, lifetime = lifetime, slippery = slippery)
 
 	clear_reagents()
 	if(!notification)
@@ -163,51 +159,21 @@
 	if(shortcuts[input_reagent])
 		input_reagent = shortcuts[input_reagent]
 	else
-		input_reagent = find_reagent(input_reagent)
+		input_reagent = get_chem_id(input_reagent)
 	return input_reagent
 
-///Returns reagent datum from typepath
-/proc/find_reagent(input)
-	. = FALSE
-	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		return input
-	else
-		return get_chem_id(input)
-
-/proc/find_reagent_object_from_type(input)
-	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		return GLOB.chemical_reagents_list[input]
-	else
-		return null
-
 ///Returns a random reagent object, with the option to blacklist reagents.
-/proc/get_random_reagent_id(list/blacklist)
-	var/static/list/reagent_static_list = list() //This is static, and will be used by default if a blacklist is not passed.
-	var/list/reagent_list_to_process
-	if(blacklist) //If we do have a blacklist, we recompile a new list with the excluded reagents not present and pick from there.
-		reagent_list_to_process = list()
-	else
-		reagent_list_to_process = reagent_static_list
+/proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist, list/whitelist)
+	var/list/reagent_list_to_process = list()
 
-	if(!reagent_list_to_process.len)
-		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			if(is_path_in_list(reagent_path, blacklist))
-				continue
-			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				reagent_list_to_process += reagent_path
+	whitelist ||= subtypesof(/datum/reagent)
 
-	var/picked_reagent = pick(reagent_list_to_process)
-	return picked_reagent
-
-///Returns a random reagent consumable ethanol object minus blacklisted reagents
-/proc/get_random_drink_id()
-	var/static/list/random_drinks = list()
-	if(!random_drinks.len)
-		for(var/datum/reagent/drink_path as anything in subtypesof(/datum/reagent/consumable/ethanol))
-			if(initial(drink_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				random_drinks += drink_path
-	var/picked_drink = pick(random_drinks)
-	return picked_drink
+	for(var/datum/reagent/reagent_path as anything in whitelist)
+		if(is_path_in_list(reagent_path, blacklist))
+			continue
+		if(reagent_path::randomized_spawns & randomization_flags)
+			reagent_list_to_process += reagent_path
+	return pick(reagent_list_to_process)
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
@@ -215,13 +181,6 @@
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
 		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
-
-///Takes a type in and returns a list of associated recipes
-/proc/get_recipe_from_reagent_product(input_type)
-	if(!input_type)
-		return
-	var/list/matching_reactions = GLOB.chemical_reactions_list_product_index[input_type]
-	return matching_reactions
 
 /proc/reagent_paths_list_to_text(list/reagents, addendum)
 	var/list/temp = list()

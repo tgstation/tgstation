@@ -17,29 +17,24 @@
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
+	playsound(limb_owner, 'sound/effects/dismember.ogg', 80, TRUE)
 	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
-	if (can_bleed())
-		limb_owner.bleed(rand(20, 40))
-
 	drop_limb(dismembered = TRUE)
-
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
-	var/turf/owner_location = limb_owner.loc
-	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
-		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
 	if(dam_type == BURN)
 		burn()
 		return TRUE
-	if (can_bleed())
+
+	// Assume we had our limb sliced/punched off by this point
+	if(can_bleed())
 		limb_owner.bleed(rand(20, 40))
 
 	var/direction = pick(GLOB.cardinals)
@@ -106,12 +101,6 @@
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
 
-	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
-		if(surgery.operated_bodypart == src)
-			phantom_owner.surgeries -= surgery
-			qdel(surgery)
-			break
-
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -129,7 +118,7 @@
 	if(!special)
 		phantom_owner.hud_used?.update_locked_slots()
 
-	if(bodypart_flags & BODYPART_PSEUDOPART)
+	if(bodypart_flags & (BODYPART_PSEUDOPART|BODYPART_STUMP))
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		if(!QDELING(src)) // we might be removed as a part of something qdeling us
 			qdel(src)
@@ -209,9 +198,7 @@
 		var/obj/item/lost_cuffs = arm_owner.handcuffed
 		arm_owner.set_handcuffed(null)
 		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
-	if(arm_owner.hud_used)
-		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
-		associated_hand?.update_appearance()
+	arm_owner.hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
@@ -246,17 +233,17 @@
 
 	return ..()
 
-///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
+///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails. Returns TRUE on success, FALSE on failure.
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner)
 	if(!istype(limb_owner))
-		return
+		return FALSE
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
-	if(old_limb)
-		old_limb.drop_limb(TRUE)
+	old_limb?.drop_limb(TRUE)
 
-	. = try_attach_limb(limb_owner, special)
-	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.try_attach_limb(limb_owner, TRUE)
+	if(!try_attach_limb(limb_owner, TRUE)) //If it failed to replace, re-attach their old limb as if nothing happened.
+		old_limb?.try_attach_limb(limb_owner, TRUE)
+		return FALSE
+	return TRUE
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
@@ -287,6 +274,13 @@
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
+	var/obj/item/bodypart/existing_limb = new_limb_owner.get_bodypart(body_zone, include_stumps = TRUE)
+	if(existing_limb)
+		if(existing_limb.type != stump_typepath)
+			stack_trace("Attempted to attach a limb to [new_limb_owner] in zone [body_zone] where they already have a non-stump limb")
+		existing_limb.drop_limb(special = TRUE)
+		qdel(existing_limb)
+
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
 	new_limb_owner.add_bodypart(src)
@@ -295,15 +289,10 @@
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
 		if(special) //non conventional limb attachment
-			for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
-				var/surgery_zone = check_zone(attach_surgery.location)
-				if(surgery_zone == body_zone)
-					new_limb_owner.surgeries -= attach_surgery
-					qdel(attach_surgery)
-					break
-
 			for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
 				if(deprecise_zone(organ.zone) != body_zone)
+					continue
+				if(organ.bodypart_owner == src) // someone manually updated the organs already
 					continue
 				organ.bodypart_insert(src)
 
@@ -313,7 +302,7 @@
 			LAZYREMOVE(wounds, wound)
 			wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
-		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
+		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]") && !(bodypart_flags & BODYPART_STUMP))
 			new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 			new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
@@ -332,7 +321,7 @@
 		// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 		new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 		new_limb_owner.updatehealth()
-		new_limb_owner.update_body()
+		new_limb_owner.update_body() // updates lips + hair + eyes
 		new_limb_owner.update_damage_overlays()
 		if(!special)
 			new_limb_owner.hud_used?.update_locked_slots()
@@ -370,13 +359,13 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles.Copy()
-		sexy_chad.grad_color = gradient_colors.Copy()
+		sexy_chad.grad_style = LAZYCOPY(gradient_styles)
+		sexy_chad.grad_color = LAZYCOPY(gradient_colors)
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 
 	new_head_owner.updatehealth()
-	new_head_owner.update_body()
+	new_head_owner.update_body() // updates lips + hair + eyes
 	new_head_owner.update_damage_overlays()
 
 /obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special, lazy)

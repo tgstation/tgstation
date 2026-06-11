@@ -3,7 +3,8 @@
 /atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
-	icon_state = "wounded"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "wounded"
 
 /datum/status_effect/determined
 	id = "determined"
@@ -67,6 +68,7 @@
 /atom/movable/screen/alert/status_effect/limp
 	name = "Limping"
 	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least in a sling of gauze!"
+	icon_state = "injury"
 
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
@@ -77,17 +79,25 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
-	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
-		return
-
+	var/obj/item/bodypart/leg_about_to_limp
+	var/limp_chance
+	var/limp_slowdown
 	if(next_leg == left)
-		if(prob(limp_chance_left * determined_mod))
-			owner.client.move_delay += slowdown_left * determined_mod
+		leg_about_to_limp = left
+		limp_chance = limp_chance_left
+		limp_slowdown = slowdown_left
 		next_leg = right
 	else
-		if(prob(limp_chance_right * determined_mod))
-			owner.client.move_delay += slowdown_right * determined_mod
+		leg_about_to_limp = right
+		limp_chance = limp_chance_right
+		limp_slowdown = slowdown_right
 		next_leg = left
+
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, leg_about_to_limp) & COMPONENT_CANCEL_LIMP)
+		return
+
+	if(prob(limp_chance * determined_mod))
+		owner.client.move_delay += limp_slowdown * determined_mod
 
 /// We need to make sure that we properly clear these refs if one of the owner's limbs gets deleted
 /datum/status_effect/limp/proc/on_limb_removed(datum/source, obj/item/bodypart/limb_lost, special, dismembered)
@@ -134,6 +144,31 @@
 	if(!slowdown_left && !slowdown_right)
 		carbon_mob.remove_status_effect(src)
 		return
+
+//Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
+/datum/status_effect/limp/quirk
+	id = "limp_quirk"
+	alert_type = null
+
+/datum/status_effect/limp/quirk/update_limp(datum/source)
+	var/mob/living/carbon/carbon_mob = owner
+	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
+	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)	
+
+	slowdown_left = 0
+	slowdown_right = 0
+	limp_chance_left = 0
+	limp_chance_right = 0
+
+	
+	if(left)
+		slowdown_left = 7 //Same as compound fracture
+		limp_chance_left = 70
+
+	else if(right)
+		slowdown_right = 7
+		limp_chance_right = 70
+	
 
 /////////////////////////
 //////// WOUNDS /////////

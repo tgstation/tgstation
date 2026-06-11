@@ -28,6 +28,7 @@
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -60,7 +61,6 @@
 
 /obj/item/watertank/verb/toggle_mister_verb()
 	set name = "Toggle Mister"
-	set category = "Object"
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()
@@ -89,12 +89,6 @@
 		toggle_mister(user)
 	else
 		return ..()
-
-/obj/item/watertank/mouse_drop_dragged(atom/over_object)
-	var/mob/M = loc
-	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == noz)
@@ -363,9 +357,7 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
-	foaming.start()
+	do_foam(4, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin)
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 

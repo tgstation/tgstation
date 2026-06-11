@@ -245,8 +245,10 @@
 		setDir(mimiced_atom.dir)
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom)
+/obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom, start_alpha)
 	. = ..()
+	if (start_alpha)
+		alpha = start_alpha
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/decoy/fading/threesecond
@@ -271,6 +273,10 @@
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
+
+/obj/effect/temp_visual/fire/light
+	icon_state = "light"
+	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
@@ -779,17 +785,17 @@
 	pixel_x = -16
 	pixel_y = -16
 	duration = 0.5 SECONDS
-	color = COLOR_LIME
 	var/max_alpha = 255
 	///How far the effect would scale in size
 	var/amount_to_scale = 2
 
-/obj/effect/temp_visual/circle_wave/Initialize(mapload)
+/obj/effect/temp_visual/circle_wave/Initialize(mapload, color)
 	transform = matrix().Scale(0.1)
 	animate(src, transform = matrix().Scale(amount_to_scale), time = duration, flags = ANIMATION_PARALLEL)
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
+	src.color ||= color
 	return ..()
 
 /obj/effect/temp_visual/circle_wave/bioscrambler
@@ -802,3 +808,32 @@
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE
+
+/obj/effect/temp_visual/circle_wave/vortex
+	color = COLOR_BLACK
+	duration = 3 SECONDS
+	amount_to_scale = 4
+
+/obj/effect/temp_visual/circle_wave/vortex/small
+	amount_to_scale = 2
+
+/obj/effect/temp_visual/focus_ring
+	randomdir = FALSE
+	name = "ring"
+	icon_state = "focus_ring"
+	layer = BELOW_MOB_LAYER
+	duration = 2.5 SECONDS
+	pixel_y = -4
+	alpha = 0
+
+/obj/effect/temp_visual/focus_ring/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 100, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 2 SECONDS)
+
+
+/obj/effect/temp_visual/focus_ring/proc/dissipate()
+	animate(src, alpha = 0, time = 0.5 SECONDS, easing = QUAD_EASING|EASE_OUT)

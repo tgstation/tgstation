@@ -21,19 +21,38 @@
 		if(!istype(thing))
 			stack_trace("Non-atom in the contents of [source_turf]!")
 			continue
-		if(QDELETED(thing))
-			continue
-		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
-			continue
-		if(thing.IsObscured())
-			continue
-		if(thing.invisibility > owner.mob.see_invisible)
-			continue
 
-		// convert
-		var/datum/search_object/index = new(owner, thing)
-		add_to_index(index)
+		add_new_searchable(thing, FALSE)
 
+	queue_update()
+
+/datum/lootpanel/proc/on_source_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	// async because the same move handler we register with this can trigger on the /datum/search_object later in this event
+	// deleting it just as we added it
+	addtimer(CALLBACK(src, PROC_REF(add_new_searchable), arrived, TRUE), 0)
+
+/datum/lootpanel/proc/add_new_searchable(atom/movable/thing, from_signal)
+	if(QDELETED(thing))
+		return
+	if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
+		return
+	if(thing.IsObscured())
+		return
+	if(thing.invisibility > owner.mob.see_invisible)
+		return
+	if(from_signal && (!source_turf || !(thing in source_turf.contents)))
+		return
+
+	// convert
+	var/datum/search_object/index = new(owner, thing)
+	add_to_index(index)
+
+	if(from_signal)
+		queue_update()
+
+/datum/lootpanel/proc/queue_update()
 	var/datum/tgui/window = SStgui.get_open_ui(owner.mob, src)
 	window?.send_update()
 

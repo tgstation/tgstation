@@ -44,6 +44,23 @@
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_CARGO)
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
+	door.close()
+	subject.last_bumped = 0
+
+	// Now, let's test emergency access. Same access and keycard as the last step.
+	door.emergency = TRUE
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open airlock set to emergency access!")
+	door.close()
+	subject.last_bumped = 0
+
+	// Red alert access. Same access and keycard as the last step.
+	door.emergency = FALSE
+	door.red_alert_access = TRUE
+	SSsecurity_level.set_level(SEC_LEVEL_RED)
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to bypass airlock ID requirements during red alert!")
+	SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 
 /// Tests that the AI can open doors
 /datum/unit_test/door_access_ai
@@ -156,3 +173,55 @@
 	door.req_access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject opened access-locked airlock while hands blocked!")
+
+/// Checks that doors with the id wire cut are inaccessible
+/datum/unit_test/door_require_id_wire_cut
+
+/datum/unit_test/door_require_id_wire_cut/Run()
+	var/obj/machinery/door/airlock/instant/door = EASY_ALLOCATE()
+	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+	door.req_access = list(ACCESS_ENGINEERING)
+
+	var/mob/living/carbon/human/subject = EASY_ALLOCATE()
+	subject.equipOutfit(/datum/outfit/job/assistant/consistent)
+	var/obj/item/card/id/advanced/keycard = subject.wear_id
+	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-locked airlock before id wire cut!")
+	door.close()
+	door.wires.pulse(WIRE_OPEN, subject)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Pulsing the door's open wire allowed the subject to open the access-locked airlock without cutting the id wire!")
+	door.wires.cut(WIRE_IDSCAN, subject)
+	subject.last_bumped = 0
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject opened access-locked airlock with id wire cut!")
+	door.wires.pulse(WIRE_OPEN, subject)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-locked airlock with id wire cut and open wire pulsed!")
+	door.close()
+	door.wires.cut(WIRE_IDSCAN, subject) // mend
+	subject.last_bumped = 0
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open access-locked airlock after mending id wire!")
+
+/// Same as above but testing throwing the item at the door
+/datum/unit_test/door_require_id_wire_cut/item_only
+
+/datum/unit_test/door_require_id_wire_cut/item_only/Run()
+	var/obj/machinery/door/airlock/instant/door = EASY_ALLOCATE()
+	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+	door.req_access = list(ACCESS_ENGINEERING)
+
+	var/obj/item/card/id/advanced/keycard = EASY_ALLOCATE()
+	keycard.access = list(ACCESS_ENGINEERING, ACCESS_MAINT_TUNNELS)
+
+	keycard.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Throwing an ID at an access-locked airlock failed to open it before id wire cut!")
+	door.close()
+	door.wires.cut(WIRE_IDSCAN)
+	keycard.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, TRUE, "Throwing an ID at an access-locked airlock succeeded in opening it after id wire cut!")
+	door.close()
+	door.wires.cut(WIRE_IDSCAN) // mend
+	keycard.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Throwing an ID at an access-locked airlock failed to open it after mending the id wire!")

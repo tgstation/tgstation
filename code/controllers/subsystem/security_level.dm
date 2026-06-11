@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(security_level)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE
 		return
-	sound_to_playing_players(current_security_level.looping_sound)
+	sound_to_playing_players(current_security_level.looping_sound, volume_preference = /datum/preference/numeric/volume/sound_ambience_volume)
 
 
 /**
@@ -41,9 +41,6 @@ SUBSYSTEM_DEF(security_level)
 
 	if(!selected_level)
 		CRASH("set_level was called with an invalid security level([new_level])")
-
-	if(SSnightshift.can_fire && (selected_level.number_level >= SEC_LEVEL_RED || current_security_level.number_level >= SEC_LEVEL_RED))
-		SSnightshift.next_fire = world.time + 7 SECONDS // Fire nightshift after the security level announcement is complete
 
 	if(announce)
 		level_announce(selected_level, current_security_level.number_level) // We want to announce BEFORE updating to the new level

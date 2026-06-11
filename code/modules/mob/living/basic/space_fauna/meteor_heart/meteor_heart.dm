@@ -21,7 +21,6 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes"
 	response_disarm_simple = "gently push"
-	faction = list()
 	ai_controller = /datum/ai_controller/basic_controller/meteor_heart
 	habitable_atmos = null
 	minimum_survivable_temperature = 0

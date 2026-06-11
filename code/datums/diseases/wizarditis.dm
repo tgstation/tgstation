@@ -2,7 +2,7 @@
 	name = "Wizarditis"
 	max_stages = 4
 	spread_text = "Airborne"
-	cure_text = "The Manly Dorf"
+	cure_text = /datum/reagent/consumable/ethanol/manly_dorf::name + ", abated by magical grounding"
 	cures = list(/datum/reagent/consumable/ethanol/manly_dorf)
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
@@ -47,7 +47,7 @@
 	QDEL_LIST(random_targeted_spells)
 	return ..()
 
-/datum/disease/wizarditis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/wizarditis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

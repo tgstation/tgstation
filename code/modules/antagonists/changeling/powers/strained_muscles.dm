@@ -6,6 +6,7 @@
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like space suits, still apply. Cannot be used in lesser form."
 	button_icon_state = "strained_muscles"
+	category = "utility"
 	chemical_cost = 0
 	dna_cost = 1
 	req_human = TRUE
@@ -49,7 +50,7 @@
 
 		stacks++
 
-		user.adjustStaminaLoss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		user.adjust_stamina_loss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, span_warning("Our legs are really starting to hurt..."))

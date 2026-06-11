@@ -50,7 +50,7 @@
 /datum/hallucination/fake_health_doll/proc/add_fake_limb(obj/item/bodypart/specific_limb, severity)
 	var/mob/living/carbon/human/human_mob = hallucinator
 
-	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.bodyparts)
+	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.get_bodyparts())
 	if(!(picked in bodyparts))
 		RegisterSignals(picked, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
 		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))

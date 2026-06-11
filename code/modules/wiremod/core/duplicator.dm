@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/list/input_ports_stored_data = list()
 		for(var/datum/port/input/input as anything in component.input_ports)
 			var/list/connection_data = list()
-			if(!length(input.connected_ports))
+			if(!LAZYLEN(input.connected_ports))
 				if(isnull(input.value) || !(input.datatype in GLOB.circuit_dupe_whitelisted_types))
 					continue
 				connection_data["stored_data"] = input.value

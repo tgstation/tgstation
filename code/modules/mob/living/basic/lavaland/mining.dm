@@ -1,5 +1,6 @@
 ///prototype for mining mobs
 /mob/living/basic/mining
+	abstract_type = /mob/living/basic/mining
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	combat_mode = TRUE
 	status_flags = NONE //don't inherit standard basicmob flags
@@ -39,7 +40,7 @@
 			drop_mod = crusher_drop_chance,\
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
-	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_ashwalker_peace_violation))
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
 	// handling for retaliation and attack special cases
 	AddElement(/datum/element/relay_attackers)
@@ -54,9 +55,9 @@
 		throw_blocked_message = throw_blocked_message,\
 	)
 
-/mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/carbon/human/possible_ashwalker)
+/mob/living/basic/mining/proc/on_attacked(datum/source, atom/attacker, attack_flags)
 	SIGNAL_HANDLER
 
-	if(!isashwalker(possible_ashwalker) || !(FACTION_ASHWALKER in faction))
+	if(!isashwalker(attacker) || !has_faction(FACTION_ASHWALKER))
 		return
-	faction.Remove(FACTION_ASHWALKER)
+	remove_faction(FACTION_ASHWALKER)

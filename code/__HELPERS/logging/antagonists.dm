@@ -25,3 +25,7 @@
 /// Logs bounties completed by spies and their rewards
 /proc/log_spy(text, list/data)
 	logger.Log(LOG_CATEGORY_UPLINK_SPY, text, data)
+
+/// Logs blood worm events like entering/leaving a host.
+/proc/log_blood_worm(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_BLOOD_WORM, text, data)

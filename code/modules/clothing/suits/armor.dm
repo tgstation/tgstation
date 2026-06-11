@@ -301,7 +301,7 @@
 
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
 /obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
@@ -428,7 +428,7 @@
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
 /obj/item/clothing/suit/armor/swat/proc/init_rustle_component()
@@ -552,7 +552,7 @@
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS // Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
 /datum/armor/knight_greyscale
@@ -634,7 +634,7 @@
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
 	inhand_icon_state = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -724,7 +724,7 @@
 
 /obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 
 /datum/armor/military
 	melee = 45

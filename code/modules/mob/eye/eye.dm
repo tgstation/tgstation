@@ -27,16 +27,10 @@
 	return FALSE
 
 /mob/eye/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
 	if(zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
 /mob/eye/down()
-	set name = "Move Down"
-	set category = "IC"
-
 	if(zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 
@@ -44,7 +38,7 @@
 	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
 	return ..()
 
-/mob/eye/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
+/mob/eye/emote(act, type_override = EMOTE_VISIBLE, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
 	if(has_emotes)
 		return ..()
 	return FALSE

@@ -567,7 +567,7 @@ em {
 }
 
 .green {
-  color: hsl(132.8, 93.4%, 29.6%);
+  color: hsl(132.9, 100%, 50.6%);
 }
 
 .grey {
@@ -908,6 +908,13 @@ em {
   font-size: 125%;
 }
 
+.policy {
+  text-align: center;
+  font-size: 125%;
+  color: hsl(276, 70%, 52%);
+  font-style: italic;
+}
+
 .abductor {
   color: hsl(300, 96%, 38.8%);
   font-style: italic;
@@ -925,7 +932,9 @@ em {
 }
 
 .drone {
-  color: hsl(60, 0.8%, 51.4%);
+  color: hsl(60, 100%, 50%);
+  background-color: hsl(287 62% 36%);
+  font-style: italic;
 }
 
 .monkey {
@@ -943,6 +952,11 @@ em {
 .upside_down {
   transform: rotate(180deg);
   display: inline-block;
+}
+
+.cyan {
+  color: #bde0dc;
+  text-shadow: 0 0 6px #bde0dc;
 }
 
 .connectionClosed,

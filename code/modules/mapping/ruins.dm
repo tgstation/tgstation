@@ -206,7 +206,14 @@
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
 
-			log_mapping("Successfully placed [current_pick.name] ruin.")
+			var/bottom_left_x = placed_turf.x - round(current_pick.width/2)
+			var/bottom_left_y = placed_turf.y - round(current_pick.height/2)
+			var/top_right_x = bottom_left_x + current_pick.width - 1
+			var/top_right_y = bottom_left_y + current_pick.height - 1
+			log_mapping("Successfully placed [current_pick.name] ruin ([bottom_left_x],[bottom_left_y],[placed_turf.z] to [top_right_x],[top_right_y],[placed_turf.z]).")
+
+			///Keep track of the active ruins so we can take it in account for map generation. Using bottom lef turf as key
+			SSmapping.active_ruins[locate(bottom_left_x, bottom_left_y, placed_turf.z)] = current_pick
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)

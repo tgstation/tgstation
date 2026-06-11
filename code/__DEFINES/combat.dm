@@ -42,13 +42,13 @@
 #define ARMOR_ALL "all_damage_types"
 
 /// Armor values that are used for damage
-#define ARMOR_LIST_DAMAGE(...) list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE, WOUND)
+#define ARMOR_LIST_DAMAGE list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE, WOUND)
 
 /// Armor values that are used for durability
-#define ARMOR_LIST_DURABILITY(...) list(ACID, FIRE)
+#define ARMOR_LIST_DURABILITY list(ACID, FIRE)
 
 /// All armors, preferable in the order as seen above
-#define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
+#define ARMOR_LIST_ALL list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
@@ -118,6 +118,11 @@ DEFINE_BITFIELD(status_flags, list(
 #define GRAB_AGGRESSIVE 1
 #define GRAB_NECK 2
 #define GRAB_KILL 3
+
+// Grab attack chain results
+#define GRAB_SKIP 0
+#define GRAB_FAILURE 1
+#define GRAB_SUCCESS 2
 
 //Grab breakout odds
 #define BASE_GRAB_RESIST_CHANCE 60 //base chance for whether or not you can escape from a grab
@@ -285,11 +290,6 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define BODY_ZONE_L_LEG "l_leg"
 #define BODY_ZONE_R_LEG "r_leg"
 
-GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-
 #define BODY_ZONE_PRECISE_EYES "eyes"
 #define BODY_ZONE_PRECISE_MOUTH "mouth"
 #define BODY_ZONE_PRECISE_GROIN "groin"
@@ -297,6 +297,13 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define BODY_ZONE_PRECISE_R_HAND "r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT "l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT "r_foot"
+
+// These lists are ordered as bodyparts would be ordered
+GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT))
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
@@ -354,7 +361,7 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Armor can't block more than this as a percentage
 #define ARMOR_MAX_BLOCK 90
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
-#define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
+#define PENETRATE_ARMOUR(armour, penetration) (penetration >= 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
 // Defines for combo attack component
 /// LMB Attack

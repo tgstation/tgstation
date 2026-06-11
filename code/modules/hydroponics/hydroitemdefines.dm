@@ -64,7 +64,7 @@
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
@@ -172,11 +172,9 @@
 
 /obj/item/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 9 SECONDS, \
-	effectiveness = 105, \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
+	AddComponent(/datum/component/butchering, speed = 9 SECONDS, effectiveness = 105)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

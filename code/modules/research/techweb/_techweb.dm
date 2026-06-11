@@ -22,8 +22,6 @@
 	var/list/researched_designs = list()
 	/// Custom inserted designs like from disks that should survive recalculation.
 	var/list/custom_designs = list()
-	/// Already boosted nodes that can't be boosted again. node id = path of boost object.
-	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
 	/// List of items already deconstructed for research points, preventing infinite research point generation.
@@ -321,6 +319,7 @@
 		result_text += points_rewarded
 	result_text += "!"
 
+	SEND_SIGNAL(src, COMSIG_TECHWEB_EXPERIMENT_COMPLETED, completed_experiment)
 	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""][points_rewarded].")
 	return result_text
 
@@ -432,9 +431,10 @@
 /datum/techweb/proc/boost_techweb_node(datum/techweb_node/node, list/pointlist)
 	if(!istype(node))
 		return FALSE
-	LAZYINITLIST(boosted_nodes[node.id])
-	for(var/point_type in pointlist)
-		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
+	LAZYINITLIST(node.discount_boosts)
+	for(var/point_type in pointlist) // Essentially applies the greater boost(s) between the newer and any existing.
+		node.discount_boosts[point_type] = max(node.discount_boosts[point_type], pointlist[point_type])
+	node.discount_boosted = TRUE
 	unhide_node(node)
 	update_node_status(node)
 	return TRUE
@@ -558,10 +558,13 @@
 		if(experiment.type != paper_to_add.experiment_path)
 			continue
 
-		experiment.completed = TRUE
-		var/announcetext = complete_experiment(experiment)
-		if(length(GLOB.experiment_handlers))
-			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
-			handler.announce_message_to_all(announcetext)
+		experiment.finish_experiment(linked_web_override = src)
 
 	return TRUE
+
+/// Returns a flat list of all design datums this techweb has researched.
+/datum/techweb/proc/get_researched_design_datums()
+	var/list/designs = list()
+	for(var/id in researched_designs)
+		designs += SSresearch.techweb_design_by_id(id)
+	return designs

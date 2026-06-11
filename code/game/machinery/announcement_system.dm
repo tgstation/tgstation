@@ -62,15 +62,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return ..()
 
 /obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
-	var/icon_state_assemble = "[base_icon_state]_[is_operational && !(machine_stat & EMPED) ? "On" : "Off"]"
-	if(default_deconstruction_screwdriver(user, "[icon_state_assemble]_Open", icon_state_assemble, tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !(machine_stat & EMPED))
@@ -122,6 +117,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		))
 	return list("config_entries" = configs)
 
+/obj/machinery/announcement_system/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["max_announcement_len"] = MAX_AAS_LENGTH
+
+	return data
+
 /obj/machinery/announcement_system/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -148,7 +150,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [html_encode(params["lineKey"])]")
 				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [params["lineKey"]]")
 				return
-			var/new_message = trim(html_encode(params["newText"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_AAS_LENGTH)
 			if(new_message)
 				config.announcement_lines_map[params["lineKey"]] = new_message
 				usr.log_message("updated [params["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)

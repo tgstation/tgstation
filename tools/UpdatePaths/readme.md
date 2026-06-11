@@ -180,7 +180,7 @@ So, let's assume we have the following map file:
 	name = "really large big chungus"
 	},
 /turf/open/floor/iron,
-/area/station/maintainence/fore/greater),
+/area/station/maintenance/fore/greater),
 ```
 
 Running the script will update this into:
@@ -195,7 +195,7 @@ Running the script will update this into:
 	name = "really large big chungus"
 	},
 /turf/open/floor/iron,
-/area/station/maintainence/fore/greater),
+/area/station/maintenance/fore/greater),
 ```
 
 Note how since you kept in `{@OLD}`, it was able to retain the re-named variables of the subtypes.

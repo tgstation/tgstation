@@ -1,4 +1,4 @@
-#define HAS_SCREEN_OVERLAY(mob, type) (locate(type) in flatten_list(mob.screens))
+#define HAS_SCREEN_OVERLAY(mob, type) (locate(type) in assoc_to_values(mob.screens))
 #define HAS_CLIENT_COLOR(mob, type) (locate(type) in mob.client_colours)
 
 /**
@@ -52,14 +52,14 @@
 	// Check for the status effect, duh
 	TEST_ASSERT(dummy.is_blind(), "Dummy, [status_message], did not have the blind status effect.")
 	// Being more technical, we need to check for client color and screen overlays
-	TEST_ASSERT(HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome), "Dummy, [status_message], did not have the monochrome client color.")
+	TEST_ASSERT(HAS_CLIENT_COLOR(dummy, /datum/client_colour/blindness), "Dummy, [status_message], did not have the monochrome client color.")
 	TEST_ASSERT(HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/blind), "Dummy, [status_message], did not have a blind screen overlay in their list of screens.")
 
 /datum/unit_test/blindness/proc/check_if_not_blind(mob/living/carbon/human/dummy, status_message = "after being cured of blindness")
 	// Check for no status effect
 	TEST_ASSERT(!dummy.is_blind(), "Dummy, [status_message], still had the blindness status effect.")
 	// Check that the client color and screen overlay are gone
-	TEST_ASSERT(!HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome), "Dummy, [status_message], still had the monochrome client color.")
+	TEST_ASSERT(!HAS_CLIENT_COLOR(dummy, /datum/client_colour/blindness), "Dummy, [status_message], still had the monochrome client color.")
 	TEST_ASSERT(!HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/blind), "Dummy, [status_message], still had the blind sceen overlay.")
 
 /**

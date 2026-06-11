@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/odysseus
-	desc = "These exosuits are developed and produced by Vey-Med. (&copy; All rights reserved)."
+	desc = "A nimble DeForest Odysseus exosuit, designed and outfitted for frontline medical support and rapid response."
 	name = "\improper Odysseus"
 	icon_state = "odysseus"
 	base_icon_state = "odysseus"

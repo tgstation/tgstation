@@ -1,4 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
+import type { ExperimentData } from '../ExperimentConfigure';
+import type { MaterialMap } from '../Fabrication/Types';
 
 type StoredDesigns = Record<string, 1>;
 
@@ -10,22 +12,12 @@ type TechDisk = {
   stored_research: StoredDesigns;
 };
 
-type ProgressTuple = [string, string, number, number];
-
-type Experiment = {
-  name: string;
-  description: string;
-  tag: string;
-  progress: ProgressTuple[];
-  completed: BooleanLike;
-  performance_hint: string;
-};
-
 // Base node type
 export type NodeCache = {
   description: string;
   design_ids: string[];
   discount_experiments: Record<string, number>;
+  discount_boosts: Record<string, number>;
   name: string;
   prereq_ids: string[];
   required_experiments?: string[];
@@ -42,6 +34,7 @@ export type TechwebNode = {
   can_unlock: BooleanLike;
   enqueued_by_user: BooleanLike;
   have_experiments_done: BooleanLike;
+  discount_boosted: BooleanLike;
   id: string;
   is_free: BooleanLike;
   tier: number;
@@ -49,14 +42,17 @@ export type TechwebNode = {
 
 // Unmapped static data
 type StaticData = {
-  design_cache: Record<string, [string, string]>;
+  design_cache: Record<string, [string, MaterialMap, number, number, string]>;
   id_cache: string[];
   node_cache: Record<string, DefaultNode>;
+  build_types: Record<string, string>;
+  department_flags: Record<string, string>;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 export type TechWebData = {
   d_disk: DesignDisk | null;
-  experiments: Record<string, Experiment>;
+  experiments: Record<string, ExperimentData>;
   locked: BooleanLike;
   nodes: TechwebNode[];
   point_types_abbreviations: Record<string, string>;

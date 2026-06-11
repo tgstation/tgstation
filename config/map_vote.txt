@@ -10,3 +10,6 @@ MAP_VOTE_MAXIMUM_TALLIES 200
 
 ## The percentage of tallies that are carried over between rounds.
 MAP_VOTE_TALLY_CARRYOVER_PERCENTAGE 100
+
+## Pop requirement to exclude recently played maps from votes.
+MAP_VOTE_MIN_POP_TO_REMEMBER_MAP 0

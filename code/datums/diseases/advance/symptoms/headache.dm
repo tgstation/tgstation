@@ -19,6 +19,7 @@
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 30
+	symptom_cure = /datum/reagent/drug/space_drugs
 	threshold_descs = list(
 		"Stage Speed 6" = "Headaches will cause severe pain, that weakens the host.",
 		"Stage Speed 9" = "Headaches become less frequent but far more intense, preventing any action from the host.",
@@ -50,7 +51,7 @@
 			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 	if(power >= 2 && A.stage >= 4)
 		to_chat(M, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
-		M.adjustStaminaLoss(25)
+		M.adjust_stamina_loss(25)
 	if(power >= 3 && A.stage >= 5)
 		to_chat(M, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))
 		M.Stun(35)

@@ -73,7 +73,7 @@
 
 /datum/component/fearful/proc/add_handler(handler_type, source)
 	for (var/datum/terror_handler/existing as anything in terror_handlers)
-		if (existing.type == handler_type)
+		if (existing.type == handler_type && !existing.bespoke)
 			terror_handlers[existing] += source
 			return
 
@@ -83,6 +83,7 @@
 		if (!overriden_handlers[override_type])
 			overriden_handlers[override_type] = list()
 		overriden_handlers[override_type][handler_type] = TRUE
+	return handler
 
 /datum/component/fearful/proc/get_fear_multiplier()
 	var/multiplier = 1
@@ -168,11 +169,12 @@
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
-	for (var/datum/brain_trauma/mild/phobia/phobia in source.get_traumas())
-		if (!phobia.is_scary_mob(hugger))
-			continue
+	var/hug_buildup = 0
+	for (var/datum/terror_handler/handler as anything in terror_handlers)
+		hug_buildup += handler.on_hug(hugger)
 
-		terror_buildup += HUG_TERROR_AMOUNT
+	if (hug_buildup > 0)
+		terror_buildup += hug_buildup
 		source.visible_message(
 			span_warning("[source] recoils in fear as [hugger] attempts to hug [source.p_them()]!"),
 			span_boldwarning("You recoil in terror as [hugger] attempts to hug you!"),

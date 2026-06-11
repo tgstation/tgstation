@@ -6,13 +6,6 @@
 /datum/unit_test/stack_singular_name
 
 /datum/unit_test/stack_singular_name/Run()
-	var/list/blacklist = list( // all of these are generally parents that exist to be overridden; ex. /obj/item/stack/license_plates exists to branch into /filled and /empty
-		/obj/item/stack/sheet,
-		/obj/item/stack/sheet/mineral,
-		/obj/item/stack/license_plates,
-		/obj/item/stack/sheet/animalhide,
-	)
-
-	for(var/obj/item/stack/stack_check as anything in subtypesof(/obj/item/stack) - blacklist)
+	for(var/obj/item/stack/stack_check as anything in valid_subtypesof(/obj/item/stack))
 		if(!initial(stack_check.singular_name))
 			TEST_FAIL("[stack_check] is missing a singular name!")

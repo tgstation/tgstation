@@ -19,10 +19,10 @@
 
 /datum/station_goal/dna_vault/New()
 	..()
-	animal_count = rand(10,15) //might be too few given ~15 roundstart stationside ones
+	animal_count = rand(16, 20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.2 * non_standard_plants),round(0.4 * non_standard_plants))
+	plant_count = rand(round(0.15 * non_standard_plants), round(0.3 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
@@ -33,7 +33,7 @@
 
 /datum/station_goal/dna_vault/get_report()
 	return list(
-		"<blockquote>Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.",
+		"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.",
 		"We need you to construct a DNA Vault aboard your station.",
 		"",
 		"The DNA Vault needs to contain samples of:",
@@ -41,16 +41,16 @@
 		"* [plant_count] unique non-standard plant data",
 		"* [human_count] unique sapient humanoid DNA data",
 		"",
-		"Base vault parts are available for shipping via cargo.</blockquote>",
+		"Base vault parts are available for shipping via cargo.",
 	).Join("\n")
 
 
 /datum/station_goal/dna_vault/on_report()
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/dna_vault]
-	P.special_enabled = TRUE
+	P.order_flags |= ORDER_SPECIAL_ENABLED
 
 	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/dna_probes]
-	P.special_enabled = TRUE
+	P.order_flags |= ORDER_SPECIAL_ENABLED
 
 /datum/station_goal/dna_vault/check_completion()
 	if(..())

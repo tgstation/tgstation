@@ -65,6 +65,7 @@
 	ricochet_shoots_firer = FALSE
 	shrapnel_type = null
 	embed_type = null
+	armour_penetration = 30
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -177,7 +178,7 @@
 /obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	if(istype(target) && blocked != 100)
 		if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
-			target.adjustBruteLoss(15)
+			target.adjust_brute_loss(15)
 		if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 			..()
 			reagents.trans_to(target, reagents.total_volume, methods = INJECT)

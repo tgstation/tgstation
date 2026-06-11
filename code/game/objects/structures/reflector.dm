@@ -5,6 +5,7 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/deflector_icon_state
 	var/mutable_appearance/deflector_overlay
 	var/finished = FALSE
@@ -36,9 +37,7 @@
 	if(admin)
 		can_rotate = FALSE
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/reflector,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/reflector), only_root_path = TRUE))
 
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
@@ -209,6 +208,7 @@
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/rglass
 	buildstackamount = 10
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/structure/reflector/double/anchored
 	anchored = TRUE
@@ -234,6 +234,7 @@
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/mineral/diamond
 	buildstackamount = 1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/reflector/box/anchored
 	anchored = TRUE

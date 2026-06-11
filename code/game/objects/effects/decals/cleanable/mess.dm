@@ -82,7 +82,7 @@
 	if(!isnull(broken_flooring))
 		return
 	var/turf/T = get_turf(src)
-	if(T.tiled_dirt && is_tileable)
+	if(T.tiled_turf && is_tileable)
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = "dirt-0"
 		smoothing_flags = SMOOTH_BITMASK
@@ -194,7 +194,8 @@
 	if(. || !ishuman(user))
 		return
 	var/mob/living/carbon/human/as_human = user
-	if(!isflyperson(as_human))
+	var/obj/item/organ/tongue/user_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!istype(user_tongue, /obj/item/organ/tongue/fly))
 		return
 	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
 	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
@@ -288,7 +289,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	if(!isnull(oldname))
-		desc = "The sad remains of what used to be [oldname]"
+		desc = "The sad remains of what used to be \a [oldname]."
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
@@ -382,3 +383,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	flick("rubble_bounce", src)
 	icon_state = "rubble"
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/effect/decal/cleanable/can_bits
+	name = "shredded can"
+	desc = "This story doesn't hold water anymore."

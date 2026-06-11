@@ -24,20 +24,20 @@
 	var/id_trim = null
 
 	/// Type path of item to go in uniform slot
-	var/uniform = null
+	var/obj/item/uniform = null
 
 	/// Type path of item to go in suit slot
-	var/suit = null
+	var/obj/item/suit = null
 
 	/**
 	  * Type path of item to go in suit storage slot
 	  *
 	  * (make sure it's valid for that suit)
 	  */
-	var/suit_store = null
+	var/obj/item/suit_store = null
 
 	/// Type path of item to go in back slot
-	var/back = null
+	var/obj/item/back = null
 
 	/**
 	  * list of items that should go in the backpack of the user
@@ -47,7 +47,7 @@
 	var/list/backpack_contents = null
 
 	/// Type path of item to go in belt slot
-	var/belt = null
+	var/obj/item/belt = null
 
 	/**
 	  * list of items that should go in the belt of the user
@@ -125,9 +125,9 @@
 	var/preload = FALSE
 
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
-	var/datum/sprite_accessory/undershirt = null
-	var/datum/sprite_accessory/underwear = null
-	var/datum/sprite_accessory/socks = null
+	var/datum/sprite_accessory/clothing/undershirt = null
+	var/datum/sprite_accessory/clothing/underwear = null
+	var/datum/sprite_accessory/clothing/socks = null
 
 /**
  * Called at the start of the equip proc
@@ -231,7 +231,7 @@
 		var/obj/item/clothing/under/U = user.w_uniform
 		if(U)
 			U.attach_accessory(SSwardrobe.provide_type(accessory, user))
-		else
+		else if(!visuals_only)
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
@@ -505,7 +505,7 @@
 	for(var/item in beltpack)
 		var/itype = text2path(item)
 		if(itype)
-			belt_contents[itype] = belt[item]
+			belt_contents[itype] = beltpack[item]
 	box = text2path(outfit_data["box"])
 	var/list/impl = outfit_data["implants"]
 	implants = list()
@@ -518,7 +518,7 @@
 
 /datum/outfit/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION("", "--- /outfit ---")
 	VV_DROPDOWN_OPTION(VV_HK_TO_OUTFIT_EDITOR, "Outfit Editor")
 
 /datum/outfit/vv_do_topic(list/href_list)
@@ -528,6 +528,4 @@
 		return
 
 	if(href_list[VV_HK_TO_OUTFIT_EDITOR])
-		if(!check_rights(NONE))
-			return
 		usr.client.open_outfit_editor(src)

@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - rscadd: "Added an emag interaction to door control remotes. Emagged remotes can shock and depower doors."

@@ -300,6 +300,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(!mob_allowed_typecache)
 			mob_allowed_typecache = typecacheof(list(
 				/mob/eye,
+				/mob/living/basic/boss,
 				/mob/living/basic/regal_rat,
 				/mob/living/simple_animal/bot,
 				/mob/living/simple_animal/hostile/megafauna,

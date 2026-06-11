@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			balloon_alert(user, "expose the wires first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/cable_coil/coil = tool
-		if (getFireLoss() <= 0)
+		if (get_fire_loss() <= 0)
 			balloon_alert(user, "wires are fine!")
 			return ITEM_INTERACT_BLOCKING
 		if(src == user)
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if (!coil.use(1))
 			balloon_alert(user, "not enough cable!")
 			return ITEM_INTERACT_BLOCKING
-		adjustFireLoss(-30)
+		adjust_fire_loss(-30)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		balloon_alert(user, "wires repaired")
 		user.visible_message(
@@ -206,13 +206,25 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "headlamp repaired")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/computer_disk))
+	if(istype(tool, /obj/item/disk/computer))
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
 		return modularInterface.computer_disk_act(user, tool)
 
 	return NONE
+
+//Checks blockchance of any items in any module slots
+/mob/living/silicon/robot/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	. = ..()
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
+
+	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/module in held_items)
+		var/final_block_chance = module.block_chance - (clamp((armour_penetration - module.armour_penetration) / 2, 0, 100)) + block_chance_modifier
+		if(module.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
+			return SUCCESSFUL_BLOCK
 
 // This has to go at the very end of interaction so we don't block every interaction with ID-like items
 /mob/living/silicon/robot/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -227,7 +239,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return ITEM_INTERACT_BLOCKING
 	locked = !locked
 	update_icons()
-	balloon_alert(user, "chassis cover lock [emagged ? "glitches" : "toggled"]")
+	balloon_alert(user, "chassis cover [emagged ? "lock glitches" : "[locked ? "locked" : "unlocked"]"]")
 	logevent("[emagged ? "ChÃ¥vÃis" : "Chassis"] cover lock has been [locked ? "engaged" : "released"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -321,7 +333,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return NONE
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!getBruteLoss())
+	if (!get_brute_loss())
 		balloon_alert(user, "no dents to fix!")
 		return ITEM_INTERACT_BLOCKING
 	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
@@ -331,10 +343,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!tool.use_tool(src, user, delay = 5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 	else
-		if(!tool.use_tool(src, user, delay = 0 SECONDS, amount = 1, volume = 50))
+		if(!tool.use_tool(src, user, delay = 0.5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 
-	adjustBruteLoss(-30)
+	adjust_brute_loss(-30)
 	add_fingerprint(user)
 	balloon_alert(user, "dents fixed")
 	user.visible_message(
@@ -453,7 +465,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		ResetModel()
 		return TRUE
 
-	SetEmagged(1)
+	SetEmagged(TRUE)
+	Paralyze(10 SECONDS) //Make cyborgs actually unconscious. Without this they can scream for help over the radio mid-emag, which doesn't make much sense
 	SetStun(10 SECONDS) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = FALSE
 	set_connected_ai(null)
@@ -498,7 +511,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)
-		adjustBruteLoss(30)
+		adjust_brute_loss(30)
 	else
 		investigate_log("has been gibbed by a blob.", INVESTIGATE_DEATHS)
 		gib(DROP_ALL_REMAINS)
@@ -512,15 +525,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return TRUE
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				adjust_brute_loss(60)
+				adjust_fire_loss(60)
 		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
-				adjustBruteLoss(30)
+				adjust_brute_loss(30)
 
 	return TRUE
 
 /mob/living/silicon/robot/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	if(check_block(hitting_projectile, hitting_projectile.damage, "\the [hitting_projectile]", PROJECTILE_ATTACK, hitting_projectile.armour_penetration, hitting_projectile.damage_type))
+		return ..(hitting_projectile, def_zone, piercing_hit, 100)
 	. = ..()
 	if(prob(25) || . != BULLET_ACT_HIT)
 		return
@@ -536,7 +551,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		. = TRUE
 	return ..() || .
 
-/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
 	var/mob/living/silicon/robot/borg = src
 	var/obj/item/shield_module/shield = locate() in borg
 	if(!shield)

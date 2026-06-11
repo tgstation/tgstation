@@ -2,9 +2,9 @@
 
 /obj/item/hierophant_club
 	name = "hierophant club"
-	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
-	icon_state = "hierophant_club_ready_beacon"
-	inhand_icon_state = "hierophant_club_ready_beacon"
+	desc = "The shriveled remains of the Hierophant hold some remnant of its power. It used it to beat you, but now you can set the beat."
+	icon_state = "hierophant_club"
+	inhand_icon_state = "hierophant_club"
 	icon_angle = -135
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -33,6 +33,9 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	blink = new(src)
+	update_appearance(UPDATE_OVERLAYS)
+
+	RegisterSignals(blink, list(COMSIG_DASH_ACTION_CHARGED, COMSIG_DASH_ACTION_DASHED), PROC_REF(on_action_updated))
 
 /obj/item/hierophant_club/Destroy(force)
 	QDEL_NULL(blink)
@@ -91,9 +94,23 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready" : ""][!QDELETED(beacon) ? "" : "_beacon"]"
-	return ..()
+/// When dash action is used or recharges, update icon state
+/obj/item/hierophant_club/proc/on_action_updated()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/hierophant_club/update_overlays()
+	. = ..()
+	if (QDELETED(beacon))
+		. += "hierophant_beacon"
+	if (blink?.current_charges)
+		. += "hierophant_ready"
+
+/obj/item/hierophant_club/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if (blink?.current_charges)
+		. += "hierophant_ready"
+
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if (teleporting)
@@ -212,7 +229,7 @@
 	user.update_mob_action_buttons()
 	user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!"))
 	to_chat(user, span_hierophant("You can remove the beacon to place it again by striking it with the club."))
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/hierophant_club/proc/beacon_destroyed(datum/source)
 	SIGNAL_HANDLER
@@ -222,7 +239,7 @@
 	else
 		visible_message(span_hierophant("With a loud snap, a new beacon appears at [src]'s pommel."))
 	playsound(src, 'sound/effects/magic/blind.ogg', 50, TRUE, -4)
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_OVERLAYS)
 
 #define HIEROPHANT_BLINK_RANGE 5
 #define HIEROPHANT_BLINK_COOLDOWN (15 SECONDS)
@@ -240,14 +257,10 @@
 /datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		user.balloon_alert(user, "destination out of range!")
+		user.balloon_alert(user, "too far!")
 		return FALSE
 
-	. = ..()
-
-	var/obj/item/hierophant_club/club = target
-	if(!istype(club))
-		club.update_appearance(UPDATE_ICON_STATE)
+	return ..()
 
 /datum/action/innate/dash/hierophant/charge()
 	. = ..()

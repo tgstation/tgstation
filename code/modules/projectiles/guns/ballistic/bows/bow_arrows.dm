@@ -11,6 +11,7 @@
 	throwforce = 1
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	///Whether the bullet type spawns another casing of the same type or not.
 	var/reusable = TRUE
 
@@ -116,8 +117,8 @@
 
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
-	//50 damage to revenants
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 30)
+	// 50 damage to revenants
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 30)
 
 /// plastic arrows
 // completely dogshit quality and they break when they hit something.
@@ -131,6 +132,7 @@
 	base_icon_state = "plastic_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/plastic
 	reusable = FALSE //cheap shit
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /// plastic arrow projectile
 /obj/projectile/bullet/arrow/plastic
@@ -179,6 +181,7 @@
 	inhand_icon_state = "ashen_arrow"
 	base_icon_state = "ashen_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/ashen
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 
 /// ashen arrow projectile
 /obj/projectile/bullet/arrow/ashen
@@ -187,5 +190,4 @@
 
 /obj/projectile/bullet/arrow/ashen/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 40)
-
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_MINING, added_damage = 40)

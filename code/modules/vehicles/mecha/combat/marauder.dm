@@ -59,7 +59,8 @@
 	button_icon_state = "mech_smoke"
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
@@ -73,7 +74,8 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!owner.client || !chassis || !(owner in chassis.occupants))
 		return
@@ -133,7 +135,7 @@
 	armor_type = /datum/armor/mecha_mauler
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
-	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
@@ -158,6 +160,10 @@
 	bomb = 50
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/marauder/mauler/Initialize(mapload)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	equip_by_category = list(

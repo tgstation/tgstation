@@ -62,7 +62,7 @@
 		if(!engraving.persistent_save)
 			continue
 		var/area/engraved_area = get_area(engraving.parent)
-		if(!(engraved_area.area_flags & PERSISTENT_ENGRAVINGS))
+		if(!(engraved_area.area_flags_mapping & PERSISTENT_ENGRAVINGS))
 			continue
 		saved_data["entries"] += engraving.save_persistent()
 

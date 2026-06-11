@@ -187,6 +187,7 @@
 "hr" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "hw" = (
@@ -218,6 +219,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "iQ" = (
@@ -1584,7 +1586,7 @@ Xv
 Xv
 EZ
 EZ
-QS
+aB
 "}
 (8,1,1) = {"
 Xv
@@ -1642,7 +1644,7 @@ Xv
 Xv
 EZ
 cc
-aB
+QS
 "}
 (10,1,1) = {"
 sS

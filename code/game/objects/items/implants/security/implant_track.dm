@@ -8,17 +8,15 @@
 	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
 
-/obj/item/implant/tracking/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR> \
-		<b>Life:</b> 10 minutes after death of host.<BR> \
-		<HR> \
-		<b>Implant Details:</b> <BR> \
-		<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR> \
-		<b>Special Features:</b><BR> \
-		<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if \
-		a malfunction occurs thereby securing safety of subject. The implant will melt and \
-		disintegrate into bio-safe elements.<BR>"
+	implant_info = "Automatically activates upon implantation. Acts as a dedicated, tracking-only beacon \
+		and direct-to-brain prisoner messaging system. \
+		Deactivates ten minutes after host's death, but remains within the body."
+
+	implant_lore = "The Robust Corp EYE-5 Convict Parole Monitoring Implant is a subdermal tracking beacon \
+		designed for interfacing with prisoner management equipment, serving as both a beacon that can \
+		be tracked via locator equipment, and a provider of one-way communication from prisoner management staff \
+		to implanted subjects, relaying messages directly to subjects' brains. \
+		Automatically deactivates ten minutes after the host's death."
 
 /obj/item/implant/tracking/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
 	if(imp_in.stat == DEAD && imp_in.timeofdeath + lifespan_postmortem < world.time)
@@ -66,6 +64,18 @@
 	var/lifespan = 5 MINUTES
 	///The id of the timer that's qdeleting us
 	var/timerid
+
+	implant_info = "Automatically activates upon implantation, typically via firearm. \
+		Acts as a dedicated, tracking-only beacon and direct-to-brain prisoner messaging system. \
+		Dissolves into absorbable elements after 5 minutes."
+
+	implant_lore = "The Robust Corp EYE-5/TRAC Fugitive Monitoring Implant is a subdermal tracking beacon \
+		designed to be delivered via high-velocity projectile. \
+		Much like the original EYE-5 Convict Parole Monitoring Implant, \
+		interfaces with prisoner management equipment, serving as both a beacon that can \
+		be tracked via locator equipment, and a provider of one-way communication from prisoner management staff \
+		to implanted targets, relaying messages directly to targets' brains. \
+		Dissolves into bio-safe elements after five minutes."
 
 /obj/item/implant/tracking/c38/implant(mob/living/target, mob/user, silent, force)
 	. = ..()

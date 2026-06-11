@@ -1,12 +1,13 @@
 /area/station/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 20
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /*
 * Departmental Maintenance
@@ -94,7 +95,7 @@
 /area/station/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
 
 /*
 * Generic Maintenance Tunnels
@@ -165,6 +166,9 @@
 	name = "Central Starboard Maintenance"
 	icon_state = "centralstarboardmaint"
 
+/area/station/maintenance/starboard/central/upper
+	name = "Upper Central Starboard Maintenance"
+
 /area/station/maintenance/starboard/greater
 	name = "Greater Starboard Maintenance"
 	icon_state = "greaterstarboardmaint"
@@ -177,9 +181,15 @@
 	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
+/area/station/maintenance/starboard/aft/upper
+	name = "Upper Aft Starboard Maintenance"
+
 /area/station/maintenance/starboard/fore
 	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
+
+/area/station/maintenance/starboard/fore/upper
+	name = "Upper Fore Starboard Maintenance"
 
 /area/station/maintenance/port
 	name = "Port Maintenance"
@@ -239,6 +249,7 @@
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/space_hut
 	name = "\improper Space Hut"

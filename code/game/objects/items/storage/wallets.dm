@@ -35,7 +35,7 @@
 			is_magnetic_found = TRUE
 
 		if(!is_magnetic_found)
-			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
+			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_PRV_COMMAND)
 			if(card_tally > winning_tally)
 				winning_tally = card_tally
 				front_id = id_card

@@ -133,7 +133,7 @@
 				var/obj/item/stack/picked_stack = nearby_atom
 				if(!stack_reqs[req_type])
 					stack_reqs[req_type] = requirements_list[req_type]
-				requirements_list[req_type] -= min(picked_stack.amount || requirements_list[req_type])
+				requirements_list[req_type] -= min(picked_stack.amount, requirements_list[req_type])
 
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
@@ -177,7 +177,7 @@
 			for(var/stack_path in stack_reqs)
 				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
 					continue
-				var/amount_to_give = min(nearby_stack.amount || stack_reqs[stack_path])
+				var/amount_to_give = min(nearby_stack.amount, stack_reqs[stack_path])
 				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
 				if(!our_stack)
 					our_stack = nearby_stack.split_stack(amount = amount_to_give)
@@ -189,7 +189,7 @@
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
 	flick("[icon_state]_active", src)
-	playsound(user, 'sound/effects/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
+	playsound(user, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -213,6 +213,10 @@
 		if(QDELETED(to_appear))
 			continue
 		to_appear.RemoveInvisibility(type)
+		// Stacks are split off into nullspace and need to be brought back
+		if (isstack(to_appear) && isnull(to_appear.loc))
+			var/obj/item/stack/as_stack = to_appear
+			as_stack.forceMove(loc)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -

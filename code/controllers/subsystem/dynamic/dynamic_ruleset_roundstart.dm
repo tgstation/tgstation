@@ -49,7 +49,7 @@
 	pref_flag = ROLE_MALF
 	preview_antag_datum = /datum/antagonist/malf_ai
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -98,6 +98,40 @@
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
 
+// Quick thing about this event, it turns out roundstart blood worms, despite being granted a host, are worse at antaggery in practice.
+// They have their static, so unlike blood worms who spawn in the middle of the round, they just kinda tend to do nothing. So having at least 2 is ideal.
+// This way, if one ends up being a fluke, the other can hopefully pick up the slack. It's a semi-rare event, so having a massive chance to just fizzle out isn't ideal.
+/datum/dynamic_ruleset/roundstart/blood_worm
+	name = "Blood Worms"
+	config_tag = "Roundstart Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm
+	pref_flag = ROLE_BLOOD_WORM
+	weight = 1
+	min_pop = 10 // Resource limited, spawning on lowpop is fine.
+	max_antag_cap = list("denominator" = 29) // +1 blood worm per 30 pop.
+	repeatable = FALSE // Yeah no.
+
+/datum/dynamic_ruleset/roundstart/blood_worm/is_valid_candidate(mob/living/candidate, client/candidate_client)
+	if (!..())
+		return FALSE
+
+	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+
+	return !(TRAIT_NOBLOOD in species.inherent_traits)
+
+/datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
+	if (!CAN_HAVE_BLOOD(candidate.current))
+		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
+
+	var/mob/living/carbon/human/host = candidate.current
+	var/mob/living/basic/blood_worm/hatchling/worm = new(get_turf(host))
+
+	candidate.transfer_to(worm)
+	candidate.add_antag_datum(/datum/antagonist/blood_worm/infestation)
+
+	worm.enter_host(host, silent = TRUE, gain_progress = FALSE)
+
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
 	config_tag = "Roundstart Heretics"
@@ -116,7 +150,7 @@
 	preview_antag_datum = /datum/antagonist/wizard
 	pref_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -147,7 +181,7 @@
 	preview_antag_datum = /datum/antagonist/cult
 	pref_flag = ROLE_CULTIST
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -208,7 +242,7 @@
 	preview_antag_datum = /datum/antagonist/nukeop
 	pref_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -216,11 +250,75 @@
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
-	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEELEVATOR)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
+	// they all get the normal operative job, even the leader. (leader's job is updated when they get the antag datum)
+	// all this ultimately matters for is 1. ensuring they *don't* get a normal job and 2. spawning them in the elevator
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative)
+
+/datum/dynamic_ruleset/roundstart/nukies/execute()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(load_nukie_base)), 3 SECONDS)
+
+#define ELEVATOR_WIDTH 6
+#define ELEVATOR_HEIGHT 5
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/load_nukie_base()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	addtimer(CALLBACK(src, PROC_REF(teleport_elevator_contents)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open_nukie_elevator)), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(call_infiltrator)), 5 SECONDS)
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/teleport_elevator_contents()
+	var/obj/effect/landmark/nukeop_elevator/interior/interior = locate() in GLOB.landmarks_list
+	var/obj/effect/landmark/nukeop_elevator/exterior/exterior = locate() in GLOB.landmarks_list
+	if(isnull(interior) || isnull(exterior))
+		stack_trace("Failed to find nukie elevator landmarks during load!")
+		message_admins("Failed to find nukie elevator landmarks during load, you might have some stuck nukies that need help.")
+		return
+
+	var/turf/top_right_interior = get_turf(interior)
+	var/turf/top_right_exterior = get_turf(exterior)
+
+	var/list/turf/elevator_turfs = block(
+		top_right_interior.x,
+		top_right_interior.y,
+		top_right_interior.z,
+		top_right_interior.x - ELEVATOR_WIDTH + 1,
+		top_right_interior.y - ELEVATOR_HEIGHT + 1,
+		top_right_interior.z,
+	)
+
+	for(var/turf/elevator_turf as anything in elevator_turfs)
+		var/turf/destination_turf = locate(
+			top_right_exterior.x - (top_right_interior.x - elevator_turf.x),
+			top_right_exterior.y - (top_right_interior.y - elevator_turf.y),
+			top_right_exterior.z,
+		)
+		if(isnull(destination_turf))
+			stack_trace("Failed to find destination turf for nukie elevator!")
+			message_admins("Failed to find corresponding elevator turf for nuke ops, you might have some stuck nukies that need help.")
+			continue
+
+		for(var/atom/movable/thing in elevator_turf)
+			if(thing.anchored || thing.orbit_target)
+				continue
+			thing.forceMove(destination_turf)
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/open_nukie_elevator()
+	for(var/obj/machinery/door/poddoor/shutter in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(shutter.id_tag == "nukiespawnlift")
+			shutter.open()
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/call_infiltrator()
+	for(var/datum/mind/leader_mind as anything in selected_minds)
+		var/datum/antagonist/nukeop/leader/nuke_leader = leader_mind.has_antag_datum(/datum/antagonist/nukeop/leader)
+		nuke_leader?.spawn_infiltrator()
+
+#undef ELEVATOR_WIDTH
+#undef ELEVATOR_HEIGHT
 
 /datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
 	return list(
@@ -230,9 +328,14 @@
 
 /datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate, datum/team/nuke_team, datum/mind/most_experienced)
 	if(most_experienced == candidate)
-		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
+		var/datum/antagonist/nukeop/leader/nuke_leader = new()
+		nuke_leader.send_to_spawnpoint = FALSE // because they get spawned in the elevator
+		nuke_leader.spawn_ship = FALSE // spawned manually later
+		candidate.add_antag_datum(nuke_leader, nuke_team)
 	else
-		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
+		var/datum/antagonist/nukeop/nukie = new()
+		nukie.send_to_spawnpoint = FALSE // ditto
+		candidate.add_antag_datum(nukie, nuke_team)
 
 /datum/dynamic_ruleset/roundstart/nukies/round_result()
 	var/datum/antagonist/nukeop/nukie = selected_minds[1].has_antag_datum(/datum/antagonist/nukeop)
@@ -292,7 +395,7 @@
 	preview_antag_datum = /datum/antagonist/rev/head
 	pref_flag = ROLE_REV_HEAD
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -329,7 +432,7 @@
 		addtimer(CALLBACK(src, PROC_REF(revs_execution_failed)), 1 MINUTES, TIMER_UNIQUE|TIMER_DELETE_ME)
 		return
 
-	if(!can_be_headrev(candidate))
+	if(!can_be_headrev(candidate, TRUE))
 		log_dynamic("[config_tag]: [key_name(candidate)] was not eligible to be a headrev after the timer expired - finding a replacement.")
 		find_another_headrev()
 		return
@@ -344,7 +447,7 @@
 
 /datum/dynamic_ruleset/roundstart/revolution/proc/find_another_headrev()
 	for(var/mob/living/carbon/human/upstanding_citizen in GLOB.player_list)
-		if(!can_be_headrev(upstanding_citizen.mind))
+		if(!can_be_headrev(upstanding_citizen.mind, TRUE))
 			continue
 		reveal_head(upstanding_citizen.mind)
 		log_dynamic("[config_tag]: [key_name(upstanding_citizen)] was selected as a replacement headrev.")
@@ -367,7 +470,7 @@
 	config_tag = "Roundstart Spies"
 	preview_antag_datum = /datum/antagonist/spy
 	pref_flag = ROLE_SPY
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,

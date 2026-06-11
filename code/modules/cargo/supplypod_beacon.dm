@@ -10,6 +10,7 @@
 	armor_type = /datum/armor/supplypod_beacon
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	/// The linked console
 	var/obj/machinery/computer/cargo/express/express_console
 	/// If linked
@@ -34,7 +35,7 @@
 			launched = TRUE
 			playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
-			addtimer(CALLBACK(src, PROC_REF(endLaunch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
+			addtimer(CALLBACK(src, PROC_REF(end_launch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
 			playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
@@ -54,7 +55,7 @@
 		. += "sp_orange"
 		return
 
-/obj/item/supplypod_beacon/proc/endLaunch()
+/obj/item/supplypod_beacon/proc/end_launch()
 	launched = FALSE
 	update_status()
 
@@ -103,17 +104,3 @@
 		return CLICK_ACTION_BLOCKING
 	unlink_console()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/supplypod_beacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!IS_WRITING_UTENSIL(tool))
-		return NONE
-
-	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
-	if(isnull(new_beacon_name))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!user.can_perform_action(src) || !user.can_write(tool))
-		return ITEM_INTERACT_BLOCKING
-
-	name = "[initial(name)] ([new_beacon_name])"
-	return ITEM_INTERACT_SUCCESS

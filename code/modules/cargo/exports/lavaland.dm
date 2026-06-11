@@ -1,6 +1,7 @@
 //Tendril chest artifacts and ruin loot.
 //Consumable or one-use items like the magic D20 and gluttony's blessing are omitted
 /datum/export/lavaland
+	abstract_type = /datum/export/lavaland
 	unit_name = "lava planet artifact"
 	/// Prefix to add to our unit name after generation
 	var/prefix = null
@@ -44,6 +45,7 @@
 		/obj/item/jacobs_ladder,
 		/obj/item/borg/upgrade/modkit/lifesteal,
 		/obj/item/clockwork_alloy,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/bdm,
 	)
 
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot

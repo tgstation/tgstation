@@ -16,8 +16,8 @@
 	description = "Who would have known being more gentle with a hemostat decreases patient pain?"
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
-		"surgery_heal_brute_upgrade",
-		"surgery_heal_burn_upgrade",
+		"surgery_heal_upgrade",
+		"medibot_upgrade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
@@ -29,15 +29,15 @@
 	prereq_ids = list(TECHWEB_NODE_SURGERY)
 	design_ids = list(
 		"harvester",
-		"surgery_heal_brute_upgrade_femto",
-		"surgery_heal_burn_upgrade_femto",
+		"medibot_upgrade_two",
 		"surgery_heal_combo",
+		"surgery_heal_upgrade_femto",
 		"surgery_lobotomy",
 		"surgery_lobotomy_mechanic",
 		"surgery_wing_reconstruction",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-	required_experiments = list(/datum/experiment/autopsy/human)
+	discount_experiments = list(/datum/experiment/autopsy/human = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/surgery_exp
@@ -46,6 +46,7 @@
 	description = "When evolution isn't fast enough."
 	prereq_ids = list(TECHWEB_NODE_SURGERY_ADV)
 	design_ids = list(
+		"medibot_upgrade_three",
 		"surgery_cortex_folding",
 		"surgery_cortex_folding_mechanic",
 		"surgery_cortex_imprint",

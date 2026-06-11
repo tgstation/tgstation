@@ -124,7 +124,6 @@
 
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy
-	grind_results = list()
 	average_weight = FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 2
 	average_size = FISH_SIZE_BULKY_MAX
 	num_fillets = 2
@@ -133,7 +132,12 @@
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
-	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+	///used to know how many fillets should be gotten out of this fish
+	var/expected_num_fillets = 0
+
+/obj/item/fish/testdummy/fish_grind_results()
+	return null
 
 /obj/item/fish/testdummy/small
 	// The parent type is too big to reproduce inside the more compact fish tank

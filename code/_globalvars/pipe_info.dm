@@ -57,7 +57,7 @@
 	var/list/rows = list()
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
-		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE) || (dirtype == PIPE_ONEDIR_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
+		var/flipped = ((dirtype == PIPE_TRIN_M && !ispath(id, /obj/structure/disposalpipe)) || (dirtype == PIPE_UNARY_FLIPPABLE) || (dirtype == PIPE_ONEDIR_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		var/is_variant_selected = selected && (!selected_dir ? FALSE : (dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir)))
 		rows += list(list(
 			"selected" = is_variant_selected,

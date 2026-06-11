@@ -5,6 +5,7 @@
 	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	harmful = FALSE
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
+	muzzle_flash_color = LIGHT_COLOR_DIM_YELLOW
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
@@ -26,6 +27,7 @@
 	fire_sound = 'sound/items/weapons/taser2.ogg'
 	harmful = FALSE
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	muzzle_flash_color = LIGHT_COLOR_CYAN
 
 /obj/item/ammo_casing/energy/disabler/smg
 	projectile_type = /obj/projectile/beam/disabler/weak

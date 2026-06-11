@@ -106,7 +106,7 @@
 
 		var/obj/item/bodypart/old_bodypart = victim.get_bodypart(target_zone)
 		var/obj/item/bodypart/new_bodypart = new part_type()
-		new_bodypart.replace_limb(victim, TRUE)
+		new_bodypart.replace_limb(victim)
 		qdel(old_bodypart)
 
 /// Contaminated sample
@@ -143,7 +143,7 @@
 	weight = CLONER_FAILURE_RARE
 
 /datum/experimental_cloner_fuckup/total_failure/post_emerged(mob/living/carbon/human/victim)
-	victim.slow_psykerize(blind_them = TRUE)
+	victim.slow_psykerize()
 
 /// Just fuck me up
 /datum/experimental_cloner_fuckup/total_failure

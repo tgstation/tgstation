@@ -470,7 +470,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/brownie_sheet/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/brownie
 	name = "brownie"
@@ -519,7 +519,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/peanut_butter_brownie_sheet/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/peanut_butter_brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/peanut_butter_brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/peanut_butter_brownie
 	name = "peanut butter brownie"
@@ -597,5 +597,20 @@
 	tastes = list("cookie" = 2, "cherry jelly" = 3)
 	foodtypes = GRAIN|DAIRY|SUGAR|FRUIT
 	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/apple_fritter
+	name = "apple fritter"
+	desc = "For something that looks like a pile of glazed dirt, it's suprisingly tart. It smells sweet enough to knock you unconscious."
+	icon_state = "apple_fritter"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/sugar = 1,
+		/datum/reagent/consumable/applejuice = 1,
+	)
+	tastes = list("apple" = 1, "glaze" = 1)
+	foodtypes = GRAIN|FRUIT|FRIED|DAIRY|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3

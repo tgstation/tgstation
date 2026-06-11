@@ -8,9 +8,10 @@
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | UNIQUE_RENAME | RENAME_NO_DESC
 	set_dir_on_move = FALSE
 	can_atmos_pass = ATMOS_PASS_PROC
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
@@ -46,7 +47,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -219,21 +220,21 @@
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/electronics/airlock))
-				if(!user.transferItemToLoc(W, src))
-					return
+
 				W.play_tool_sound(src, 100)
 				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
 					span_notice("You start to install electronics into the airlock assembly..."))
 
 				if(do_after(user, 4 SECONDS, target = src))
+
+					if(!user.transferItemToLoc(W, src))
+						return
 					if(!src || electronics)
 						W.forceMove(drop_location())
 						return
 					to_chat(user, span_notice("You install the airlock electronics."))
 					name = "near finished windoor assembly"
 					electronics = W
-				else
-					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -250,17 +251,6 @@
 					ae = electronics
 					electronics = null
 					ae.forceMove(drop_location())
-
-			else if(IS_WRITING_UTENSIL(W))
-				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, max_length = MAX_NAME_LEN)
-				if(!t)
-					return
-				if(!in_range(src, usr) && loc != usr)
-					return
-				created_name = t
-				return
-
-
 
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(W.tool_behaviour == TOOL_CROWBAR)
@@ -335,7 +325,7 @@
 			if(EAST,WEST)
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
-		windoor.unres_sensor = TRUE
+		windoor.unres_latch = TRUE
 	electronics.forceMove(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE
@@ -348,7 +338,6 @@
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
 	set name = "Flip Windoor Assembly"
-	set category = "Object"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
@@ -367,3 +356,10 @@
 
 	update_appearance()
 	return
+
+/obj/structure/windoor_assembly/nameformat(input, user)
+	created_name = input
+	return input
+
+/obj/structure/windoor_assembly/rename_reset()
+	created_name = initial(created_name)

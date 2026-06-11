@@ -11,18 +11,34 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 
+	/// Modified to damage caused from injection, currently unused though
 	var/damage_coeff = 1
-	var/list/fields
-	var/list/add_mutations = list()
-	var/list/remove_mutations = list()
+	/// Adds all mutations in this list to the injected mob, activating it rather than mutating it if possible.
+	var/list/add_mutations
+	/// If the injected mob has any mutations in this list activated or mutated, they will be removed.
+	var/list/remove_mutations
+	/// Tracks if it's been used
+	VAR_FINAL/used = FALSE
+	/// Duration of the mutations added/activated or DNA changes. Does not affect removed mutations.
+	var/duration = INFINITY
+	/// A DNA datum that has its fields copied to the target on injection.
+	var/datum/dna/stored_dna
 
-	var/used = FALSE
-
-/obj/item/dnainjector/Initialize(mapload)
+/obj/item/dnainjector/Initialize(mapload, datum/dna/stored_dna, damage_coeff = 1)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	if(used)
 		update_appearance()
+	src.stored_dna = stored_dna
+	src.damage_coeff = damage_coeff
+
+/obj/item/dnainjector/Destroy()
+	if(stored_dna?.holder)
+		stack_trace("DNA injector got owned DNA somehow")
+		stored_dna = null
+	else
+		QDEL_NULL(stored_dna)
+	return ..()
 
 /obj/item/dnainjector/vv_edit_var(vname, vval)
 	. = ..()
@@ -43,27 +59,26 @@
 /obj/item/dnainjector/proc/inject(mob/living/carbon/target, mob/user)
 	if(!target.can_mutate())
 		return FALSE
+	if(target.stat == DEAD) //prevents dead people from having their DNA changed
+		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
+		return FALSE
 	for(var/removed_mutation in remove_mutations)
-		target.dna.remove_mutation(removed_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
-	for(var/added_mutation in add_mutations)
-		if(added_mutation == /datum/mutation/race)
-			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with \the [src] [span_danger("(MONKEY)")]")
+		target.dna.remove_mutation(removed_mutation, GLOB.standard_mutation_sources)
+
+	for(var/datum/mutation/added_mutation as anything in add_mutations)
+		if(added_mutation::warn_admins_on_inject && target != user && !ismonkey(target))
+			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with [src] containing [added_mutation::name].")
 		if(target.dna.mutation_in_sequence(added_mutation))
 			target.dna.activate_mutation(added_mutation)
+			if(duration != INFINITY)
+				addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), added_mutation, MUTATION_SOURCE_ACTIVATED), duration)
 		else
 			target.dna.add_mutation(added_mutation, MUTATION_SOURCE_MUTATOR)
-	if(fields)
-		if(fields["name"] && fields["UE"] && fields["blood_type"])
-			target.real_name = fields["name"]
-			target.dna.unique_enzymes = fields["UE"]
-			target.name = target.real_name
-			target.set_blood_type(fields["blood_type"])
-		if(fields["UI"]) //UI+UE
-			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
-		if(fields["UF"])
-			target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
-		if(fields["UI"] || fields["UF"])
-			target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+			if(duration != INFINITY)
+				addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), added_mutation, MUTATION_SOURCE_MUTATOR), duration)
+
+	if(stored_dna)
+		target.apply_status_effect(/datum/status_effect/temporary_transformation/dna_injector, duration, stored_dna)
 	return TRUE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
@@ -100,50 +115,7 @@
 	update_appearance()
 
 /obj/item/dnainjector/timed
-	var/duration = 60 SECONDS
-
-/obj/item/dnainjector/timed/inject(mob/living/carbon/target, mob/user)
-	if(target.stat == DEAD) //prevents dead people from having their DNA changed
-		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
-		return FALSE
-	if(!target.can_mutate())
-		return FALSE
-	var/endtime = world.time + duration
-	for(var/mutation in remove_mutations)
-		target.dna.remove_mutation(mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
-	for(var/mutation in add_mutations)
-		if(target.dna.get_mutation(mutation))
-			continue //Skip permanent mutations we already have.
-		if(mutation == /datum/mutation/race && !ismonkey(target))
-			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with \the [src] [span_danger("(MONKEY)")]")
-		target.dna.add_mutation(mutation, MUTATION_SOURCE_TIMED_INJECTOR)
-		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
-	if(fields)
-		if(fields["name"] && fields["UE"] && fields["blood_type"])
-			if(!target.dna.previous["name"])
-				target.dna.previous["name"] = target.real_name
-			if(!target.dna.previous["UE"])
-				target.dna.previous["UE"] = target.dna.unique_enzymes
-			if(!target.dna.previous["blood_type"])
-				target.dna.previous["blood_type"] = target.get_bloodtype()
-			target.real_name = fields["name"]
-			target.dna.unique_enzymes = fields["UE"]
-			target.name = target.real_name
-			target.set_blood_type(fields["blood_type"])
-			target.dna.temporary_mutations[UE_CHANGED] = endtime
-		if(fields["UI"]) //UI+UE
-			if(!target.dna.previous["UI"])
-				target.dna.previous["UI"] = target.dna.unique_identity
-			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
-			target.dna.temporary_mutations[UI_CHANGED] = endtime
-		if(fields["UF"]) //UI+UE
-			if(!target.dna.previous["UF"])
-				target.dna.previous["UF"] = target.dna.unique_features
-			target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
-			target.dna.temporary_mutations[UF_CHANGED] = endtime
-		if(fields["UI"] || fields["UF"])
-			target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-	return TRUE
+	duration = 60 SECONDS
 
 /obj/item/dnainjector/timed/hulk
 	name = "\improper DNA injector (Hulk)"

@@ -181,10 +181,11 @@
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/shovel/serrated/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_ORGANIC, damage_multiplier = 1) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_ORGANIC, damage_multiplier = 2) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
 
 /obj/item/shovel/serrated/examine(mob/user)
 	. = ..()
@@ -322,6 +323,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.

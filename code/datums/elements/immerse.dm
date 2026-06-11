@@ -198,6 +198,8 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 
 /// Generate a mask filter mutable to use as render_source for the alpha filter based on provided width, height and immersion state
 /datum/element/immerse/proc/generate_immerse_mask(width, height, is_below_water)
+	if (!width || !height)
+		return
 	var/clean_height = height
 	width = ceil(width / ICON_SIZE_X) * ICON_SIZE_X
 	height = ceil(height / ICON_SIZE_Y) * ICON_SIZE_Y
@@ -245,6 +247,8 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
 	// Tall mobs still only get covered to their feet, unless they're offset down
 	var/mutable_appearance/immerse_mask = generate_immerse_mask(movable.get_cached_width(), max(ICON_SIZE_Y - movable.pixel_z, ICON_SIZE_Y), is_below_water)
+	if (!immerse_mask)
+		return
 	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[movable]
 	if (!effect_relay)
 		effect_relay = new(movable)

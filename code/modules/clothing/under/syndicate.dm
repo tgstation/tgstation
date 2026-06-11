@@ -36,7 +36,7 @@
 
 /obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //extra-tactical
+	AddElement(/datum/element/adjust_fishing_difficulty, -4) //extra-tactical
 
 /datum/armor/clothing_under/syndicate_bloodred
 	melee = 10
@@ -114,6 +114,15 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 
+/obj/item/clothing/under/syndicate/cybersun
+	name = "\improper Cybersun businesswear"
+	desc = "This black and orange businesswear appears to be made of some kind of protective lightweight material. \
+		Perfect for hostile takeovers and budget meetings."
+	icon_state = "cybersun_suit"
+	inhand_icon_state = "bl_suit"
+	can_adjust = FALSE
+	supports_variations_flags = NONE
+
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floortile camouflage fatigues"
 	desc = "The newest floortile camouflage fatigues used for hallway warfare. \
@@ -125,7 +134,7 @@
 
 /obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+	AddElement(/datum/element/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
@@ -170,7 +179,7 @@
 
 /obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /datum/armor/clothing_under/syndicate_scrubs
 	melee = 10

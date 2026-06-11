@@ -10,13 +10,14 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA|NO_GRAVITY
+	area_flags = NO_GRAVITY
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 	allow_shuttle_docking = TRUE
+	skip_minimap_rendering = TRUE
 
 /area/space/nearstation
 	icon_state = "space_near"

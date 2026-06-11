@@ -2,7 +2,9 @@
 /// Get displayed variable in VV variable list
 /proc/debug_variable(name, value, level, datum/owner, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	if(owner)
-		if(islist(owner))
+		if(isalist(owner))
+			. = "<li style='backgroundColor:white'>(READ ONLY) "
+		else if(islist(owner))
 			var/list/list_owner = owner
 			var/index = name
 			if (isnull(value))
@@ -64,6 +66,18 @@
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
 
+	if(isalist(value))
+		var/alist/alist_value = value
+		var/list/items = list()
+
+		var/link_vars = "Vars=[REF(value)]"
+
+		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && alist_value.len > 0 && alist_value.len <= VV_NORMAL_LIST_NO_EXPAND_THRESHOLD)
+			for(var/key, val in alist_value)
+				items += debug_variable(key, val, level + 1, sanitize = sanitize)
+			return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/alist ([alist_value.len])</a><ul>[items.Join()]</ul>"
+		return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/alist ([alist_value.len])</a>"
+
 	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists aren't detectable as a list through istype
 		var/list/list_value = value
 		var/list/items = list()
@@ -89,20 +103,14 @@
 		return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a>"
 
 	// if it's a number, is it a bitflag?
-	var/list/valid_bitflags
-	if(!isnum(name))
-		valid_bitflags = get_valid_bitflags(name)
+	var/list/matching_bitflags = get_matching_bitflags(name, value)
 
-	if(!length(valid_bitflags))
-		return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
+	if(!isnull(matching_bitflags))
+		if(length(matching_bitflags))
+			return "[VV_HTML_ENCODE(matching_bitflags.Join(", "))]"
+		return "NONE"
 
-	var/list/flags = list()
-	for (var/bit_name in valid_bitflags)
-		if (value & valid_bitflags[bit_name])
-			flags += bit_name
-	if(length(flags))
-		return "[VV_HTML_ENCODE(flags.Join(", "))]"
-	return "NONE"
+	return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
 /datum/proc/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	if("[src]" != "[type]") // If we have a name var, let's use it.

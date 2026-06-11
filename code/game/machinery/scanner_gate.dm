@@ -11,6 +11,7 @@
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate"
+	base_icon_state = "scangate"
 	layer = ABOVE_MOB_LAYER
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 	COOLDOWN_DECLARE(next_beep)
@@ -87,7 +88,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_REQUIRE_WRENCH|ROTATION_NEEDS_UNBLOCKED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_REQUIRE_WRENCH|ROTATION_NEEDS_UNBLOCKED)
 	register_context()
 
 /obj/machinery/scanner_gate/Destroy(force)
@@ -145,27 +146,39 @@
 		return
 	set_scanline("passive")
 
-/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/obj/item/card/id/card = attacking_item.GetID()
-	if(card)
-		if(locked)
-			if(allowed(user))
-				locked = FALSE
-				req_access = list()
-				to_chat(user, span_notice("You unlock [src]."))
-		else if(!(obj_flags & EMAGGED))
-			to_chat(user, span_notice("You lock [src] with [attacking_item]."))
-			var/list/access = attacking_item.GetAccess()
-			req_access = access
-			locked = TRUE
-		else
-			to_chat(user, span_warning("You try to lock [src] with [attacking_item], but nothing happens."))
-	else
-		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), attacking_item))
-			return
-		if(panel_open && is_wire_tool(attacking_item))
-			wires.interact(user)
-	return ..()
+/obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(panel_open && is_wire_tool(tool))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/card/id/card = tool.GetID()
+	if(isnull(card))
+		return NONE
+
+	if(locked)
+		if(!allowed(user))
+			return ITEM_INTERACT_BLOCKING
+
+		locked = FALSE
+		req_access = list()
+		balloon_alert(user, "unlocked")
+		return ITEM_INTERACT_SUCCESS
+
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "nothing happens!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "locked")
+	req_access = tool.GetAccess() // returns a copy so this is chill
+	locked = TRUE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/scanner_gate/screwdriver_act(mob/living/user, obj/item/tool)
+	return locked ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/scanner_gate/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

@@ -436,15 +436,15 @@
 	incubation_time = round(world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS))
 	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
-	stage_prob = max(0.4 * properties["stage_rate"], 1)
+	cure_chance = clamp(10 * (0.94 ** properties["resistance"]), 3.5, 12)
+	stage_prob = max(0.4 * properties["stage_rate"], 1) // 33% faster than regular advanced diseases
 	set_severity(properties["severity"])
 
 	//If we have an advanced (high stage) disease, add it to the name.
 	if(properties["stage_rate"] >= 7)
 		name = "Advanced [name]"
 
-	generate_cure(properties)
+	cure_text = "If you can see this, something has gone wrong."
 
 /**
  * Set the transmission methods on the generated virus
@@ -462,23 +462,6 @@
 		if(DISEASE_SPREAD_AIRBORNE)
 			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE)
 			spread_text = "Respiration"
-
-/**
- * Determine the cure
- *
- * Rolls one of five possible cure groups, then selects a cure from it and applies it to the virus.
- */
-/datum/disease/advance/random/event/generate_cure()
-	if(!length(properties))
-		stack_trace("Advanced virus properties were empty or null!")
-		return
-
-	var/res = rand(4, 7)
-	cures = list(pick(advance_cures[res]))
-	oldres = res
-	// Get the cure name from the cure_id
-	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
-	cure_text = cure.name
 
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS

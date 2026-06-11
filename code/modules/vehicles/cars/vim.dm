@@ -19,6 +19,7 @@
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
 	interaction_flags_mouse_drop = NONE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -128,7 +129,7 @@
 	var/datum/port/output/are_headlights_on
 
 /obj/item/circuit_component/vim/populate_ports()
-	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_NUMBER)
+	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_BOOLEAN)
 	chime = add_output_port("On Chime Used", PORT_TYPE_SIGNAL)
 	buzz = add_output_port("On Buzz Used", PORT_TYPE_SIGNAL)
 

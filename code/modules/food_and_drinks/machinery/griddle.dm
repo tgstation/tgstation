@@ -27,7 +27,8 @@
 	. = ..()
 	grill_loop = new(src, FALSE)
 	if(isnum(variant))
-		variant = rand(1,3)
+		variant = rand(1, 3)
+		update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_expose_reagent))
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 
@@ -36,10 +37,15 @@
 	return ..()
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
+	. = default_deconstruction_crowbar(user, I)
+	if(.)
 		return
-	variant = rand(1,3)
+	// this is dead code... default_deconstruction_crowbar will never fail
+	variant = rand(1, 3)
+	update_appearance()
+
+/obj/machinery/griddle/can_crowbar_deconstruct()
+	return TRUE
 
 /obj/machinery/griddle/IsContainedAtomAccessible(atom/contained, atom/movable/user)
 	return ..() || (contained in griddled_objects)
@@ -89,7 +95,7 @@
 	if(isnull(item.atom_storage))
 		return NONE
 
-	if(length(contents) >= max_items)
+	if(length(griddled_objects) >= max_items)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -103,7 +109,7 @@
 	for(var/obj/tray_item in item)
 		if(!IS_EDIBLE(tray_item))
 			continue
-		if(length(contents) >= max_items)
+		if(length(griddled_objects) >= max_items)
 			break
 		if(item.atom_storage.attempt_remove(tray_item, src))
 			loaded++

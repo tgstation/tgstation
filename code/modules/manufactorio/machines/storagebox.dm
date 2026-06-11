@@ -2,6 +2,7 @@
 	name = "manufacturing storage unit"
 	desc = "Its basically a box. Receives resources (if anchored). Needs a machine to take stuff out of without dumping everything out."
 	icon_state = "box"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	/// how much can we hold
 	var/max_stuff = 16
 

@@ -6,7 +6,7 @@
 	var/always_unlocked = FALSE
 
 /datum/storage/pod/open_storage(mob/to_show)
-	if(isliving(to_show) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)
+	if(locked && isliving(to_show)) //Observers get to see anyway
 		to_chat(to_show, span_warning("The storage unit will only unlock during a Red or Delta security alert."))
 		return FALSE
 	return ..()

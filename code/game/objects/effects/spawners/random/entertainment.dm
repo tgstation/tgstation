@@ -12,6 +12,23 @@
 		/obj/machinery/computer/arcade/amputation = 2,
 	)
 
+/obj/effect/spawner/random/entertainment/slot_machine
+	name = "spawn random slot machine"
+	desc = "Automagically transforms into a random slot machine. If you see this while in a shift, please create a bug report."
+	icon_state = "arcade"
+	loot = list( // syndie slots omitted
+		/obj/machinery/computer/slot_machine = 20,
+		/obj/machinery/computer/slot_machine/security = 10,
+		/obj/machinery/computer/slot_machine/medical = 10,
+		/obj/machinery/computer/slot_machine/engineering = 10,
+		/obj/machinery/computer/slot_machine/cargo = 10,
+		/obj/machinery/computer/slot_machine/service = 10,
+		/obj/machinery/computer/slot_machine/science = 10,
+		/obj/machinery/computer/slot_machine/command = 10,
+		/obj/machinery/computer/slot_machine/clown = 5,
+		/obj/machinery/computer/slot_machine/mime = 5,
+	)
+
 /obj/effect/spawner/random/entertainment/musical_instrument
 	name = "musical instrument spawner"
 	icon_state = "eguitar"
@@ -283,10 +300,13 @@
 		/obj/item/toy/plush/shark = 3,
 		/obj/item/toy/plush/unicorn = 3,
 		/obj/item/toy/plush/monkey = 3,
+		/obj/item/toy/plush/donkpocket = 3,
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+		/obj/item/toy/plush/whiny_plushie = 2,
+		/obj/item/toy/plush/rouny = 2,
 	)
 
 /obj/effect/spawner/random/entertainment/colorful_grenades

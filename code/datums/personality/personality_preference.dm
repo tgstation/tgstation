@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = TRUE
 	randomize_by_default = FALSE
+	should_update_preview = FALSE
 
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
 	if(isdummy(target) || !ishuman(target) || isnull(target.mob_mood))
@@ -13,7 +14,7 @@
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		personality.apply_to_mob(target)
 
-/datum/preference/personality/is_valid(value)
+/datum/preference/personality/is_valid(value, datum/preferences/preferences)
 	return islist(value) || isnull(value)
 
 /datum/preference/personality/deserialize(input, datum/preferences/preferences)

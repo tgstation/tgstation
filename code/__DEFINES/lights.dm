@@ -1,5 +1,5 @@
 ///How much power emergency lights will consume per tick
-#define LIGHT_EMERGENCY_POWER_USE (0.0001 * STANDARD_CELL_RATE)
+#define LIGHT_EMERGENCY_POWER_USE (0.0002 * STANDARD_CELL_RATE)
 // status values shared between lighting fixtures and items
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1

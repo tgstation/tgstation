@@ -59,6 +59,10 @@
 #define GAUNTLET_SEAL_MESSAGE "tighten around your fingers and wrists"
 #define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
 #define BOOT_SEAL_MESSAGE "seal around your feet"
+#define GLASSES_UNSEAL_MESSAGE "moves away from your eyes"
+#define GLASSES_SEAL_MESSAGE "settle onto your eyes"
+#define NECKWEAR_UNSEAL_MESSAGE "looses around your neck"
+#define NECKWEAR_SEAL_MESSAGE "tightens around your neck"
 
 /// Global list of all /datum/mod_theme
 GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())

@@ -288,7 +288,7 @@
 		if(!enemies[possible_enemy]) //We don't hate this creature! But we might still attack it!
 			if(!controller.blackboard[BB_MONKEY_AGGRESSIVE]) //We are not aggressive either, so we won't attack!
 				continue
-			if(faction_check(possible_enemy.faction, list(FACTION_MONKEY, FACTION_JUNGLE), exact_match = FALSE) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) // do not target your team. includes monkys gorillas etc.
+			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) // do not target your team. includes monkys gorillas etc.
 				continue
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[possible_enemy] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
@@ -296,5 +296,10 @@
 	if(!length(valids))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	controller.set_blackboard_key(set_key, pick_weight(valids))
+	var/mob/living/target = pick_weight(valids)
+
+	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [set_key]! Behavior: [src]", get_turf(target), "Target: [target]")
+	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
+
+	controller.set_blackboard_key(set_key, target)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

@@ -19,13 +19,11 @@
 	VAR_PRIVATE/datum/weakref/current_target
 
 	/// Path to verb to display help text for this martial art.
-	var/help_verb
+	var/help_verb = "Remember the Basics"
 	/// If TRUE, this martial art smashes tables when performing table slams and head smashes
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
 	var/display_combos = FALSE
-	///The Combo HUD given to display comboes, if we're set to display them.
-	var/atom/movable/screen/combo/combo_display
 	/// The length of time until streaks are auto-reset.
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
@@ -276,8 +274,11 @@
 	streak += element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
-	if(display_combos)
-		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+	if(!display_combos)
+		return
+	timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+	var/atom/movable/screen/combo/combo_display = holder.hud_used?.screen_objects[HUD_MOB_COMBO]
+	if(istype(combo_display))
 		combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /**
@@ -292,7 +293,8 @@
 		deltimer(timerid)
 	current_target = WEAKREF(new_target)
 	streak = ""
-	if(display_combos && update_icon)
+	var/atom/movable/screen/combo/combo_display = holder.hud_used?.screen_objects[HUD_MOB_COMBO]
+	if(istype(combo_display) && display_combos && update_icon)
 		combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/smash_table(mob/living/source, mob/living/pushed_mob, obj/structure/table/table)
@@ -325,9 +327,11 @@
 		LAZYINSERT(new_holder.martial_arts, 2, src)
 	else
 		LAZYADD(new_holder.martial_arts, src)
+
+	if(LAZYLEN(new_holder.martial_arts) == 1 ? get_style_help() : !(locate(/datum/action/swap_arts) in new_holder.actions))
+		var/datum/action/swap_arts/new_action = new(new_holder, src)
+		new_action.Grant(new_holder)
 	if(LAZYLEN(new_holder.martial_arts) >= 2)
-		// newly learned martials are preferred to be the active one
-		add_verb(new_holder, /mob/living/proc/verb_switch_style)
 		// if the active one is locked, this will no-op, which is fine
 		new_holder.switch_style(GET_ACTIVE_MARTIAL_ART(new_holder), src)
 	else if(!active)
@@ -367,8 +371,9 @@
 		UnregisterSignal(old_holder, COMSIG_QDELETING)
 	LAZYREMOVE(old_holder.martial_arts, src)
 	holder = null
-	if(LAZYLEN(old_holder.martial_arts) <= 1)
-		remove_verb(old_holder, /mob/living/proc/verb_switch_style)
+	if(LAZYLEN(old_holder.martial_arts) < 1) //no more arts, we check above to switch style already.
+		var/datum/action/swap_arts/swap_button = locate() in old_holder.actions
+		qdel(swap_button)
 	return TRUE
 
 /**
@@ -377,16 +382,13 @@
 /datum/martial_art/proc/activate_style(mob/living/new_holder)
 	SHOULD_CALL_PARENT(TRUE)
 	active = TRUE
-	if(help_verb)
-		add_verb(new_holder, help_verb)
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
 	if(display_combos)
+		RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 		if(new_holder.hud_used)
 			on_hud_created(new_holder)
-		else
-			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -394,28 +396,15 @@
 /datum/martial_art/proc/deactivate_style(mob/living/remove_from)
 	SHOULD_CALL_PARENT(TRUE)
 	active = FALSE
-	if(help_verb)
-		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
-	if(!isnull(combo_display))
-		var/datum/hud/hud_used = remove_from.hud_used
-		hud_used.infodisplay -= combo_display
-		hud_used.show_hud(hud_used.hud_version)
-		QDEL_NULL(combo_display)
+	remove_from.hud_used?.remove_screen_object(HUD_MOB_COMBO)
 
 ///Gives the owner of the martial art the combo HUD.
 /datum/martial_art/proc/on_hud_created(mob/source)
 	SIGNAL_HANDLER
-	var/datum/hud/hud_used = source.hud_used
-	combo_display = new(null, hud_used)
-	hud_used.infodisplay += combo_display
-	hud_used.show_hud(hud_used.hud_version)
+	source.hud_used.add_screen_object(/atom/movable/screen/combo, HUD_MOB_COMBO, HUD_GROUP_INFO, update_screen = TRUE)
 
-/mob/living/proc/verb_switch_style()
-	set name = "Swap Style"
-	set desc = "Switch to a different martial arts style."
-	set category = "IC"
-
+/mob/living/proc/cycle_style()
 	var/datum/martial_art/current = GET_ACTIVE_MARTIAL_ART(src)
 	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 
@@ -423,7 +412,7 @@
 		to_chat(src, span_warning("You can't stop practicing [current]! It's too ingrained in your muscle memory."))
 		return
 
-	switch_style(GET_ACTIVE_MARTIAL_ART(src), GET_NEXT_MARTIAL_ART(src))
+	switch_style(current, next)
 	to_chat(src, span_notice("You stop practicing [current] and start practicing [next]."))
 
 /// Deactivates the current martial art and activates the next one.
@@ -434,6 +423,9 @@
 	if(!current_martial.active || next_martial.active)
 		return
 
+	var/datum/action/swap_arts/swap_button = locate() in actions
+	swap_button.current_used_art = next_martial
+
 	current_martial.deactivate_style(src)
 	next_martial.activate_style(src)
 	// front of the list with ye
@@ -442,3 +434,7 @@
 	// back of the list with ye
 	LAZYREMOVE(martial_arts, current_martial)
 	LAZYADD(martial_arts, current_martial)
+
+///To be overwritten for artstyle help.
+/datum/martial_art/proc/get_style_help()
+	return FALSE

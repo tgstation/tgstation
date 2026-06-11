@@ -14,7 +14,7 @@
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 
-/datum/computer_file/program/alarm_monitor/on_install()
+/datum/computer_file/program/alarm_monitor/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	//We want to send an alarm if we're in one of the mining home areas
 	//Or if we're on station. Otherwise, die.

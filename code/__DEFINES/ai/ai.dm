@@ -1,5 +1,6 @@
 #define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
 #define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
+#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_behaviors.target_priority_strategies[targeting_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags
@@ -76,6 +77,8 @@
 
 //Generic subtree defines
 
+/// default search range (tiles, passed to oview) when using find_and_set
+#define SEARCH_TACTIC_DEFAULT_RANGE 7
 /// probability that the pawn should try resisting out of restraints
 #define RESIST_SUBTREE_PROB 50
 ///macro for whether it's appropriate to resist right now, used by resist subtree
