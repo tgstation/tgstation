@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Blood spraying from hitting existing wounds works"
