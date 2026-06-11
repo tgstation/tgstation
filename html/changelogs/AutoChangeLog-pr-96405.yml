@@ -1,4 +1,0 @@
-author: "oranges"
-delete-after: True
-changes:
-  - bugfix: "fixed arguments for wound recieve damage"
