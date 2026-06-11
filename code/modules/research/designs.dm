@@ -116,6 +116,14 @@ other types of metals and chemistry for reagents).
 
 	materials = temp_list
 
+	for(var/object, mats in transfered_materials)
+		temp_list = list()
+		var/list/mat_list = mats
+		for(var/mat_type in mat_list)
+			var/datum/material/mat = SSmaterials.get_material(mat_type)
+			temp_list[mat] = mat_list[mat_type]
+		transfered_materials[object] = temp_list
+
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	sheet.send(user)
