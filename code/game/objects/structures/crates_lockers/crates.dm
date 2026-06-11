@@ -243,7 +243,7 @@
 
 /obj/structure/closet/crate/interdyne_normal
 	name = "\improper Interdyne Pharmaceutics crate"
-	desc = "Crate belonging to Interdyne Pharmaceutics. Probably contains medical supplies?"
+	desc = "An Interdyne Pharmaceutics brand crate. Probably contains helpful chemicals? Hopefully contains helpful chemicals."
 	icon_state = "interdynecrate"
 	base_icon_state = "interdynecrate"
 
