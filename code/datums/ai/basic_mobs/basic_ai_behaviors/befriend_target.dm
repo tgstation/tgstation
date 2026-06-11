@@ -19,6 +19,7 @@
 
 /datum/bt_node/ai_behavior/befriend_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	if(forget_target)
 	controller.clear_blackboard_key(target_key)
 
 ///behavior to befriend any targets
@@ -39,5 +40,4 @@
 
 /datum/ai_behavior/befriend_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	if(forget_target)
-		controller.clear_blackboard_key(target_key)
+	controller.clear_blackboard_key(target_key)
