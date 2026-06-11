@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - sound: "Add on/off sound to light switches in rooms"
