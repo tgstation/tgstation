@@ -292,12 +292,24 @@
   - sound: Add keypad sounds to secure safes
   - sound: Add drill sound to surgical drill
 2026-06-12:
+  Absolucy, Flleeppyy:
+  - rscadd: Added a websocket client, you can now forward incoming chat messages to
+      an external program, i.e allowing you to change music playlists based on events,
+      or such.
   Ghommie:
   - admin: Prayers from players are now boxed (like examine messages and some health
       readouts for example), making them easier to tell apart from the constant stream
       of text in your chat tabs.
   - rscadd: Santa Claus can now hear prayers that mention him or Christmas. He won't
       know who's praying unless told, though he can tell if they're naughty.
+  Hatterhat:
+  - spellcheck: Butterbean plants are now capitalized properly when planted.
+  TymSha:
+  - qol: Ooze mobs from cytology now have the same type of HUD as other mobs, allowing
+      them to see their health
+  - qol: The abilities of shoolean grapes now have their cost specified in their description
+  - bugfix: The mending globule ability used by shoolean grapes no longer can be cast
+      while there isn't enough nutrition to do so
   antropod:
   - bugfix: fixed material tiles and walls not having material when constructed from
       last item in the stack

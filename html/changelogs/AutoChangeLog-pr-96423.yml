@@ -1,6 +1,0 @@
-author: "TymSha"
-delete-after: True
-changes:
-  - qol: "Ooze mobs from cytology now have the same type of HUD as other mobs, allowing them to see their health"
-  - qol: "The abilities of shoolean grapes now have their cost specified in their description"
-  - bugfix: "The mending globule ability used by shoolean grapes no longer can be cast while there isn't enough nutrition to do so"
