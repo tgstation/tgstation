@@ -37,7 +37,7 @@
 	if(CONFIG_GET(flag/ghost_interaction))
 		say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
 	else
-		ballon_alert_to_viewers("[pick(world.file2list("strings/spook_levels.txt"))] level of paranormal activity")
+		balloon_alert_to_viewers("[pick(world.file2list("strings/spook_levels.txt"))] level of paranormal activity")
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
 		addtimer(CALLBACK(src, PROC_REF(clear_residue), activator.ckey), 15 SECONDS)
