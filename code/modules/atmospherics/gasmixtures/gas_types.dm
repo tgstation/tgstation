@@ -3,7 +3,10 @@
 	for (var/array_idx in 1 to gas_info.len)
 		gas_info[array_idx] = list()
 
-	for(var/gas_path in subtypesof(/datum/gas))
+	var/list/gas_types = subtypesof(/datum/gas)
+	ASSERT(GAS_TYPE_COUNT == length(gas_types),\
+		"GAS_TYPE_COUNT != length(subtypesof(gas_types)), if you added new gas please increment GAS_TYPE_COUNT")
+	for(var/gas_path in gas_types)
 		var/datum/gas/gas = gas_path
 		gas_info[META_GAS_SPECIFIC_HEAT][gas_path] = initial(gas.specific_heat)
 		gas_info[META_GAS_NAME][gas_path] = initial(gas.name)

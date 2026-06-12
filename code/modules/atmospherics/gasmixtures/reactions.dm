@@ -144,8 +144,8 @@
 
 /datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/water_vapor_moles = cached_moles[/datum/gas/water_vapor]
-	var/list/miasma_moles = cached_moles[/datum/gas/miasma]
+	var/water_vapor_moles = cached_moles[/datum/gas/water_vapor]
+	var/miasma_moles = cached_moles[/datum/gas/miasma]
 	// As the name says it, it needs to be dry
 	if(water_vapor_moles && water_vapor_moles / air.total_moles() > MIASTER_STERILIZATION_MAX_HUMIDITY)
 		return NO_REACTION
@@ -201,8 +201,8 @@
 	var/plasma_burn_rate = 0
 	var/super_saturation = FALSE // Whether we should make tritium.
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
-	var/list/oxygen_moles = cached_moles[/datum/gas/oxygen] || 0
-	var/list/plasma_moles = cached_moles[/datum/gas/plasma] || 0
+	var/oxygen_moles = cached_moles[/datum/gas/oxygen] || 0
+	var/plasma_moles = cached_moles[/datum/gas/plasma] || 0
 	switch(oxygen_moles / plasma_moles)
 		if(SUPER_SATURATION_THRESHOLD to INFINITY)
 			plasma_burn_rate = (plasma_moles / PLASMA_BURN_RATE_DELTA) * temperature_scale
@@ -604,9 +604,9 @@
 
 /datum/gas_reaction/pluox_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
-	var/list/oxygen_moles = cached_moles[/datum/gas/oxygen]
-	var/list/tritium_moles = cached_moles[/datum/gas/tritium]
+	var/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
+	var/oxygen_moles = cached_moles[/datum/gas/oxygen]
+	var/tritium_moles = cached_moles[/datum/gas/tritium]
 	var/produced_amount = min(PLUOXIUM_FORMATION_MAX_RATE, carbon_dioxide_moles, oxygen_moles * INVERSE(0.5), tritium_moles * INVERSE(0.01))
 	if (produced_amount <= 0 || carbon_dioxide_moles - produced_amount < 0 || oxygen_moles - produced_amount * 0.5 < 0 || tritium_moles - produced_amount * 0.01 < 0)
 		return NO_REACTION
@@ -651,9 +651,9 @@
 
 /datum/gas_reaction/nitrium_formation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
-	var/list/tritium_moles = cached_moles[/datum/gas/tritium]
-	var/list/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
-	var/list/bz_moles = cached_moles[/datum/gas/bz]
+	var/tritium_moles = cached_moles[/datum/gas/tritium]
+	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
+	var/bz_moles = cached_moles[/datum/gas/bz]
 	var/temperature = air.temperature
 	var/heat_efficiency = min(temperature / NITRIUM_FORMATION_TEMP_DIVISOR, tritium_moles, nitrogen_moles, bz_moles * INVERSE(0.05))
 
@@ -697,7 +697,7 @@
 
 /datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
-	var/list/nitrium_moles = cached_moles[/datum/gas/nitrium]
+	var/nitrium_moles = cached_moles[/datum/gas/nitrium]
 	var/temperature = air.temperature
 
 	//This reaction is aggressively slow. like, a tenth of a mole per fire slow. Keep that in mind
@@ -742,9 +742,9 @@
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
-	var/list/plasma_moles = cached_moles[/datum/gas/plasma]
-	var/list/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
-	var/list/bz_moles = cached_moles[/datum/gas/bz]
+	var/plasma_moles = cached_moles[/datum/gas/plasma]
+	var/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
+	var/bz_moles = cached_moles[/datum/gas/bz]
 	var/temperature = air.temperature
 	var/minimal_mole_factor = min(plasma_moles *  INVERSE(0.6), bz_moles *  INVERSE(0.1), carbon_dioxide_moles *  INVERSE(0.3))
 
@@ -796,12 +796,12 @@
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
-	var/list/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
-	var/list/tritium_moles = cached_moles[/datum/gas/tritium]
+	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
+	var/tritium_moles = cached_moles[/datum/gas/tritium]
 	/// List of gases we will assert, and possibly garbage collect.
 	var/list/asserted_gases = list(/datum/gas/hypernoblium, /datum/gas/bz)
 	air.assert_gases(arglist(asserted_gases))
-	var/list/bz_moles = cached_moles[/datum/gas/bz]
+	var/bz_moles = cached_moles[/datum/gas/bz]
 	var/reduction_factor = clamp(tritium_moles / (tritium_moles + bz_moles), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
 	var/nob_formed = min((nitrogen_moles + tritium_moles) * 0.01, tritium_moles * INVERSE(5 * reduction_factor), nitrogen_moles * INVERSE(10))
 
@@ -848,8 +848,8 @@
 /datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
-	var/list/halon_moles = cached_moles[/datum/gas/halon]
-	var/list/oxygen_moles = cached_moles[/datum/gas/oxygen]
+	var/halon_moles = cached_moles[/datum/gas/halon]
+	var/oxygen_moles = cached_moles[/datum/gas/oxygen]
 	var/temperature = air.temperature
 
 	var/heat_efficiency = min(temperature / HALON_COMBUSTION_TEMPERATURE_SCALE, halon_moles, oxygen_moles * INVERSE(20))
@@ -901,8 +901,8 @@
 
 /datum/gas_reaction/healium_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/bz_moles = cached_moles[/datum/gas/bz]
-	var/list/freon_moles = cached_moles[/datum/gas/freon]
+	var/bz_moles = cached_moles[/datum/gas/bz]
+	var/freon_moles = cached_moles[/datum/gas/freon]
 	var/temperature = air.temperature
 	var/heat_efficiency = min(temperature * 0.3, freon_moles * INVERSE(2.75), bz_moles * INVERSE(0.25))
 	if (heat_efficiency <= 0 || (freon_moles - heat_efficiency * 2.75 < 0 ) || (bz_moles - heat_efficiency * 0.25 < 0)) //Shouldn't produce gas from nothing.
@@ -942,8 +942,8 @@
 
 /datum/gas_reaction/zauker_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/hypernoblium_moles = cached_moles[/datum/gas/hypernoblium]
-	var/list/nitrium_moles = cached_moles[/datum/gas/nitrium]
+	var/hypernoblium_moles = cached_moles[/datum/gas/hypernoblium]
+	var/nitrium_moles = cached_moles[/datum/gas/nitrium]
 	var/temperature = air.temperature
 
 	var/heat_efficiency = min(temperature * ZAUKER_FORMATION_TEMPERATURE_SCALE, hypernoblium_moles * INVERSE(0.01), nitrium_moles * INVERSE(0.5))
@@ -983,8 +983,8 @@
 
 /datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
-	var/list/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
-	var/list/zauker_moles = cached_moles[/datum/gas/zauker]
+	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
+	var/zauker_moles = cached_moles[/datum/gas/zauker]
 	var/burned_fuel = min(ZAUKER_DECOMPOSITION_MAX_RATE, nitrogen_moles, zauker_moles)
 	if (burned_fuel <= 0 || zauker_moles - burned_fuel < 0)
 		return NO_REACTION
@@ -1025,8 +1025,8 @@
 
 /datum/gas_reaction/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/pluoxium_moles = cached_moles[/datum/gas/pluoxium]
-	var/list/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
+	var/pluoxium_moles = cached_moles[/datum/gas/pluoxium]
+	var/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
 	var/temperature = air.temperature
 
 	var/heat_efficiency = min(temperature * 0.005, pluoxium_moles * INVERSE(0.2), hydrogen_moles * INVERSE(2))
@@ -1065,8 +1065,8 @@
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
-	var/list/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
-	var/list/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
+	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
+	var/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
 	var/produced_amount = min(PN_HYDROGEN_CONVERSION_MAX_RATE, hydrogen_moles, proto_nitrate_moles)
 	if (produced_amount <= 0 || hydrogen_moles - produced_amount < 0)
 		return NO_REACTION
@@ -1106,8 +1106,8 @@
 /datum/gas_reaction/proto_nitrate_tritium_response/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
-	var/list/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
-	var/list/tritium_moles = cached_moles[/datum/gas/tritium]
+	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
+	var/tritium_moles = cached_moles[/datum/gas/tritium]
 	var/temperature = air.temperature
 	var/produced_amount = min(temperature / 34 * (tritium_moles * proto_nitrate_moles) / (tritium_moles + 10 * proto_nitrate_moles), tritium_moles, proto_nitrate_moles * INVERSE(0.01))
 	if(tritium_moles - produced_amount < 0 || proto_nitrate_moles - produced_amount * 0.01 < 0)
@@ -1159,8 +1159,8 @@
 /datum/gas_reaction/proto_nitrate_bz_response/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
-	var/list/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
-	var/list/bz_moles = cached_moles[/datum/gas/bz]
+	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
+	var/bz_moles = cached_moles[/datum/gas/bz]
 	var/temperature = air.temperature
 	var/consumed_amount = min(temperature / 2240 * bz_moles * proto_nitrate_moles / (bz_moles + proto_nitrate_moles), bz_moles, proto_nitrate_moles)
 	if (consumed_amount <= 0 || bz_moles - consumed_amount < 0)

@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs) // Is this even fired?
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
 
@@ -281,12 +281,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		for(var/giver_id in mix.moles)
-			total.adjust_gas(giver_id, mix.moles[giver_id])
+		var/list/cached_mix_moles = mix.moles
+		for(var/giver_id in cached_mix_moles)
+			total.adjust_gas(giver_id, cached_mix_moles[giver_id])
 
 	total.temperature = energy / heat_cap
-	for(var/id in total.moles)
-		total.moles[id] /= turflen
+	var/list/cached_total_moles = total.moles
+	for(var/id in cached_total_moles)
+		cached_total_moles[id] /= turflen
 
 	for(var/turf/open/turf in turf_list)
 		turf.air.copy_from(total)

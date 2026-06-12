@@ -2,6 +2,7 @@
 /proc/log_atmos(text, datum/gas_mixture/gas_mixture)
 	var/message = "[text]\"[print_gas_mixture(gas_mixture)]\""
 	//Cache commonly accessed information.
+	var/list/cached_moles = gas_mixture.moles
 	var/heat_capacity = gas_mixture.heat_capacity()
 	var/temperature = gas_mixture.return_temperature()
 	var/thermal_energy = temperature * heat_capacity
@@ -13,8 +14,8 @@
 	var/list/specific_gas_data = list()
 
 	//Gas specific information assigned to each gas.
-	for(var/datum/gas/gas_path as anything in gas_mixture.moles)
-		var/moles = gas_mixture.moles[gas_path]
+	for(var/datum/gas/gas_path as anything in cached_moles)
+		var/moles = cached_moles[gas_path]
 		var/composition = moles / total_moles
 		var/energy = temperature * moles * GAS_META(META_GAS_SPECIFIC_HEAT)[gas_path]
 		var/value = initial(gas_path.base_value) * moles
