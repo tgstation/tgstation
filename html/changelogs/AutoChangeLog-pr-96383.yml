@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "You can now preview what different emotes sound like via the emote panel."
