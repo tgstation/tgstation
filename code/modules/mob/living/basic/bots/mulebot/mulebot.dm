@@ -111,15 +111,6 @@
 /mob/living/basic/bot/mulebot/get_cell()
 	return cell
 
-/mob/living/basic/bot/mulebot/get_status_tab_items()
-	. = ..()
-	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
-	else
-		. += "No Cell Inserted!"
-	if(load)
-		. += "Current Load: [get_load_name()]"
-
 /mob/living/basic/bot/mulebot/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!can_unarmed_attack())
 		return
