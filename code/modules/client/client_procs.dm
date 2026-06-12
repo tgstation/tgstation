@@ -632,6 +632,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
+	sound_tokens = null
+
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
