@@ -9,18 +9,19 @@
 	var/volume = gas_mixture.return_volume()
 	var/pressure = gas_mixture.return_pressure()
 	var/total_moles = gas_mixture.total_moles()
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
 	///The total value of the gas mixture in credits.
 	var/total_value = 0
 	var/list/specific_gas_data = list()
 
 	//Gas specific information assigned to each gas.
-	for(var/datum/gas/gas_path as anything in cached_moles)
-		var/moles = cached_moles[gas_path]
+	for(var/datum/gas/gas_path as anything, moles in cached_moles)
 		var/composition = moles / total_moles
-		var/energy = temperature * moles * GAS_META(META_GAS_SPECIFIC_HEAT)[gas_path]
+		var/energy = temperature * moles * cached_specific_heat[gas_path]
 		var/value = initial(gas_path.base_value) * moles
 		total_value += value
-		specific_gas_data[GAS_META(META_GAS_NAME)[gas_path]] = list(
+		specific_gas_data[cached_gas_name[gas_path]] = list(
 			"moles" = moles,
 			"composition" = composition,
 			"molar concentration" = moles / volume,

@@ -83,21 +83,21 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 ///joules per kelvin
 /datum/gas_mixture/proc/heat_capacity()
-	return values_dot(moles, GAS_META(META_GAS_SPECIFIC_HEAT))
+	return values_dot(moles, GAS_META[META_GAS_SPECIFIC_HEAT])
 
 ///joules per kelvin. Same as heat_capacity() for moles_archive.
 // Separate function to reduce branches in a hot function
 /datum/gas_mixture/proc/heat_capacity_archive()
-	return values_dot(moles_archive, GAS_META(META_GAS_SPECIFIC_HEAT))
+	return values_dot(moles_archive, GAS_META[META_GAS_SPECIFIC_HEAT])
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 /datum/gas_mixture/turf/heat_capacity()
-	return values_dot(moles, GAS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+	return values_dot(moles, GAS_META[META_GAS_SPECIFIC_HEAT]) || HEAT_CAPACITY_VACUUM
 
 /// Same as above except vacuums return HEAT_CAPACITY_VACUUM
 // Separate function to reduce branches in a hot function
 /datum/gas_mixture/turf/heat_capacity_archive()
-	return values_dot(moles_archive, GAS_META(META_GAS_SPECIFIC_HEAT)) || HEAT_CAPACITY_VACUUM
+	return values_dot(moles_archive, GAS_META[META_GAS_SPECIFIC_HEAT]) || HEAT_CAPACITY_VACUUM
 
 /// Calculate moles
 /datum/gas_mixture/proc/total_moles()
@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 		sharer_cached_moles[gas_id] = 0
 		sharer_cached_moles_archive[gas_id] = 0
 
-	var/cached_heat_capacity = GAS_META(META_GAS_SPECIFIC_HEAT)
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
 	for(var/gas_id in cached_moles) //transfer gases
 		var/delta = QUANTIZE(cached_moles_archive[gas_id] - sharer_cached_moles_archive[gas_id]) //the amount of gas that gets moved between the mixtures
 
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 			delta = delta * sharer_coeff
 
 		if(temp_delta_threshold)
-			var/gas_heat_capacity = delta * cached_heat_capacity[gas_id]
+			var/gas_heat_capacity = delta * cached_specific_heat[gas_id]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
@@ -773,11 +773,11 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	if(!length(cached_moles) || total_moles() < 0.01)
 		return temperature_str
 
-	for(var/gas_id in cached_moles)
-		var/gas_moles = cached_moles[gas_id]
+	var/list/cached_gas_id = GAS_META[META_GAS_ID]
+	for(var/gas_id, gas_moles in cached_moles)
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)
-			atmos_contents += "[GAS_META(META_GAS_ID)[gas_id]]=[num2text(gas_moles)]"
+			atmos_contents += "[cached_gas_id[gas_id]]=[num2text(gas_moles)]"
 
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
