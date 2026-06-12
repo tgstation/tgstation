@@ -59,11 +59,10 @@ GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 	do { \
 		out_var = list();\
 		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
-		var/list/_META_MOLES_VISIBLE = GAS_META(META_GAS_MOLES_VISIBLE);\
-		var/list/_META_GAS_OVERLAY = GAS_META(META_GAS_OVERLAY);\
-		for(var/gas_id in moles){\
+		var/list/_META_MOLES_VISIBLE = GAS_META[META_GAS_MOLES_VISIBLE];\
+		var/list/_META_GAS_OVERLAY = GAS_META[META_GAS_OVERLAY];\
+		for(var/gas_id, amount in moles){\
 			if(GLOB.nonoverlaying_gases[gas_id]) continue;\
-			var/amount = moles[gas_id];\
 			if(amount <= _META_MOLES_VISIBLE[gas_id]) continue;\
 			var/_GAS_OVERLAY = _META_GAS_OVERLAY[gas_id][offset];\
 			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(amount / MOLES_GAS_VISIBLE_STEP, 1))];\

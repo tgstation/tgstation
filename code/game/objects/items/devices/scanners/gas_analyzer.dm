@@ -213,9 +213,10 @@
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
 
 			var/list/cached_moles = air.moles
-			for(var/id in cached_moles)
-				var/gas_concentration = cached_moles[id] / total_moles
-				message += span_notice("[GAS_META(META_GAS_NAME)[id]]: [round(cached_moles[id], 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
+			var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+			for(var/id, amount in cached_moles)
+				var/gas_concentration = amount / total_moles
+				message += span_notice("[cached_gas_name[id]]: [round(amount, 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")

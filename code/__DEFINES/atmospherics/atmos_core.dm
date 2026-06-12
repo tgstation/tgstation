@@ -177,5 +177,5 @@
 #define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
 /// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
-/// Helper function for retrieving gas meta info
-#define GAS_META(key) (/datum/gas_mixture::gas_meta[key])
+/// Helper function for retrieving gas meta info for use in performace critical places
+#define GAS_META /datum/gas_mixture::gas_meta

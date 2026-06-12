@@ -210,10 +210,10 @@
 
 	var/t = "[span_notice("Coordinates: [x],[y] ")]\n"
 	t += "[span_danger("Temperature: [environment.temperature] ")]\n"
-	for(var/gas_id in environment.moles)
-		var/gas_moles = environment.moles[gas_id]
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	for(var/gas_id, gas_moles in environment.moles)
 		if(gas_moles)
-			t += "[span_notice("[GAS_META(META_GAS_NAME)[gas_id]]: [gas_moles] ")]\n"
+			t += "[span_notice("[cached_gas_name[gas_id]]: [gas_moles] ")]\n"
 
 	to_chat(usr, t)
 

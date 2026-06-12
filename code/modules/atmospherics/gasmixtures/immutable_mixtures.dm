@@ -61,14 +61,8 @@
 // Intentionally duplicate code to save microseconds on a call to parent
 /datum/gas_mixture/immutable/planetary/garbage_collect()
 	temperature = temperature_archived = initial_temperature
-	var/cached_initial_gas = initial_gas
-	var/list/cached_moles = moles
-	var/list/cached_moles_archive = moles_archive
-
-	cached_moles.Cut()
-	cached_moles_archive.Cut()
-	for(var/gas_id in cached_initial_gas)
-		cached_moles[gas_id] = cached_moles_archive[gas_id] = cached_initial_gas[gas_id]
+	moles = initial_gas.Copy()
+	moles_archive = initial_gas.Copy()
 
 /datum/gas_mixture/immutable/planetary/proc/parse_string_immutable(gas_string) //I know I know, I need this tho
 	gas_string = SSair.preprocess_gas_string(gas_string)
@@ -87,7 +81,9 @@
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		mix[path] = text2num(gas[id])
 
+	var/list/cached_moles = moles
+	var/list/cached_moles_archive = moles_archive
 	for(var/gas_id in mix)
-		moles[gas_id] = moles_archive[gas_id] = mix[gas_id]
+		cached_moles[gas_id] = cached_moles_archive[gas_id] = mix[gas_id]
 
 

@@ -257,18 +257,20 @@
 		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	var/list/cached_gas_id = GAS_META[META_GAS_ID]
 	if(internal.total_moles())
-		for(var/gasid in internal.moles)
+		for(var/gasid, amount in internal.moles)
 			internal_gas_data.Add(list(list(
-			"name"= GAS_META(META_GAS_NAME)[gasid],
-			"id" = GAS_META(META_GAS_ID)[gasid],
-			"amount" = round(internal.moles[gasid], 0.01),
+			"name"= cached_gas_name[gasid],
+			"id" = cached_gas_id[gasid],
+			"amount" = round(amount, 0.01),
 			)))
 	else
 		for(var/gasid in internal.moles)
 			internal_gas_data.Add(list(list(
-				"name"= GAS_META(META_GAS_NAME)[gasid],
-				"id" = GAS_META(META_GAS_ID)[gasid],
+				"name"= cached_gas_name[gasid],
+				"id" = cached_gas_id[gasid],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data

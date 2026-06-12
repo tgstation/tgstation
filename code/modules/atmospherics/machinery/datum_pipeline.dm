@@ -260,6 +260,7 @@
 	process_id = WRAP_UID(process_id + 1)
 	var/datum/gas_mixture/total_gas_mixture = new
 	var/list/total_cached_moles = total_gas_mixture.moles
+	var/list/cached_specific_heat = GAS_META[META_GAS_SPECIFIC_HEAT]
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice
@@ -272,7 +273,7 @@
 		// This is sort of a combined merge + heat_capacity calculation
 
 		var/list/giver_cached_moles = gas_mixture.moles
-		var/heat_capacity = values_dot(giver_cached_moles, GAS_META(META_GAS_SPECIFIC_HEAT))
+		var/heat_capacity = values_dot(giver_cached_moles, cached_specific_heat)
 		//gas transfer
 		for(var/gas_id in giver_cached_moles)
 			total_cached_moles[gas_id] += giver_cached_moles[gas_id]
