@@ -91,18 +91,13 @@
 	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 	var/total_moles_to_remove = 0
-	for(var/gas in env_gases)
-		if(!(gas in scrubbing))
-			continue
+	for(var/gas in env_gases & scrubbing)
 		total_moles_to_remove += env_gases[gas][MOLES]
 
 	if(!total_moles_to_remove)//no gases to remove
 		return FALSE
 
-	for(var/gas in env_gases)
-		if(!(gas in scrubbing))
-			continue
-
+	for(var/gas in env_gases & scrubbing)
 		var/transferred_moles = env_gases[gas]
 		// somehow gases with 0 moles can creep into our list which gets removed with `adjust_gas()`
 		// that compounded with the fact our for loop copies our list means it never gets updated so we may
