@@ -7,6 +7,7 @@
 	equip_delay_other = 14 SECONDS
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
+	clothing_traits = list(TRAIT_DONT_HEAR_PRAYERS) //stops you from hearing prayers as well, yes
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 	interaction_flags_mouse_drop = NEED_HANDS

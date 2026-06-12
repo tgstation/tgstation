@@ -291,3 +291,15 @@
   - sound: Add valve sound to portable canisters
   - sound: Add keypad sounds to secure safes
   - sound: Add drill sound to surgical drill
+2026-06-12:
+  Ghommie:
+  - admin: Prayers from players are now boxed (like examine messages and some health
+      readouts for example), making them easier to tell apart from the constant stream
+      of text in your chat tabs.
+  - rscadd: Santa Claus can now hear prayers that mention him or Christmas. He won't
+      know who's praying unless told, though he can tell if they're naughty.
+  antropod:
+  - bugfix: fixed material tiles and walls not having material when constructed from
+      last item in the stack
+  timothymtorres:
+  - sound: Add on/off sound to light switches in rooms
