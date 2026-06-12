@@ -150,6 +150,12 @@
 		animate(time = 100 MILLISECONDS, pixel_z = 0, easing = QUAD_EASING | EASE_IN)
 		animate(time = 250 MILLISECONDS, pixel_x = rand(-6, 6), pixel_y = rand(-4, 4), flags = ANIMATION_PARALLEL)
 
+/obj/item/soil_sack/Exited(atom/movable/gone)
+	. = ..()
+	if(gone == stored_soil)
+		stored_soil = null
+		qdel(src)
+
 /obj/item/soil_sack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isopenturf(interacting_with) || isgroundlessturf(interacting_with))
 		return ..()
@@ -161,19 +167,24 @@
 	if(!do_after(user, 1 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 
+	transfer_soil(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+//Proc responsible for placing the soil inside track onto the turf or inside a hydroponic tray
+/obj/item/soil_sack/proc/transfer_soil(atom/target, inside_tray = FALSE)
 	if(ispath(stored_soil))
 		stored_soil = new stored_soil(src)
+		if(inside_tray)
+			STOP_PROCESSING(SSmachines, stored_soil)
 		stored_soil.reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, stored_soil.maxnutri / 2)
 		stored_soil.waterlevel = stored_soil.maxwater
-	else
+	else if(!inside_tray)
 		START_PROCESSING(SSmachines, stored_soil)
 
-
-	stored_soil.forceMove(interacting_with)
-	playsound(stored_soil, placement_sound, 65, vary = TRUE)
-	stored_soil.on_place()
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
+	playsound(target, placement_sound, 65, vary = TRUE)
+	if(!inside_tray)
+		stored_soil.on_place()
+	stored_soil.forceMove(target) //stored_soil is set to null at this point, and the soil sack is deleted when that happens
 
 /obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)

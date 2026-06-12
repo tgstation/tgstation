@@ -252,7 +252,7 @@
 
 	return tool
 
-/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user, modifiers)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
 	var/list/tool_map = list()
@@ -277,9 +277,8 @@
 		return ..()
 	var/mob/living/silicon/robot/user = usr
 	if (!(src in user.held_items))
-		attack_self(user)
-	. = ..()
-	user.select_module(user.held_items.Find(src))
+		attack_self(user, modifiers)
+	return ..()
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
@@ -334,19 +333,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
 
-/obj/item/borg/cyborg_omnitool/engineering/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if (!issilicon(user) || tool_behaviour != TOOL_WELDER)
-		return
-
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle welder"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
-	. = ..()
-	if(tool_behaviour == TOOL_WELDER)
-		. += span_notice("Use [EXAMINE_HINT("Ctrl Click")] to toggle welder")
-
 /obj/item/borg/cyborg_omnitool/engineering/update_overlays()
 	. = ..()
 	if(tool_behaviour == TOOL_WELDER)
@@ -354,24 +340,19 @@
 		if(tool?.welding)
 			. |= tool.update_overlays()
 
+/obj/item/borg/cyborg_omnitool/engineering/attack_self(mob/user, modifiers)
+	if(tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, LEFT_CLICK))
+		welder_toggle(src, null, user)
+
+		return NONE
+
+	return ..()
+
 /obj/item/borg/cyborg_omnitool/engineering/set_internal_tool(obj/item/tool)
 	if(tool_behaviour == TOOL_WELDER)
 		welder_toggle(src, FALSE)
 
-	. = ..()
-
-	if(tool_behaviour == TOOL_WELDER)
-		welder_toggle(src, TRUE)
-
-/obj/item/borg/cyborg_omnitool/engineering/item_ctrl_click(mob/user)
-	. = NONE
-	if(tool_behaviour == TOOL_WELDER)
-		var/mob/living/silicon/robot/borgy = loc
-		if(!istype(borgy) || borgy.module_active != src)
-			return
-
-		welder_toggle(src, null)
-		return CLICK_ACTION_SUCCESS
+	return ..()
 
 ///Reflects internal welder icon onto the omnitool
 /obj/item/borg/cyborg_omnitool/engineering/proc/welder_update(source)
@@ -381,7 +362,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 ///Toggles welder on/off when module slot is selected/deselected
-/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(datum/omnitool, state)
+/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(datum/omnitool, state, mob/self_user)
 	PRIVATE_PROC(TRUE)
 	SIGNAL_HANDLER
 
@@ -393,8 +374,9 @@
 			return
 
 		if(state)
-			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update))
-			tool.switched_on(usr)
+			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update), override = TRUE)
+			if(self_user)
+				tool.switched_on(self_user)
 		else
 			tool.switched_off()
 			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)

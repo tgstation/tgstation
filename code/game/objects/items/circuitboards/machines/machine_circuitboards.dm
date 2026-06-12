@@ -1318,24 +1318,23 @@
 
 /obj/item/circuitboard/machine/hydroponics/proc/changeindicators(mob/living/user, obj/item/I)
 	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
-		name = "Hydroponics Tray"
+		name = "Hydroponics Tray [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable
-		balloon_alert(user, "defaulting indicator location.")
+		balloon_alert(user, "defaulting indicator location")
 	else
-		name = "Old-Designed Hydropoincs Tray"
+		name = "Hydroponics Tray (Alt) [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable/oldstyle
-		balloon_alert(user, "moving the indicators...")
-	return TRUE
+		balloon_alert(user, "moved indicators location")
 
 /obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
 	if(istype(I, /obj/item/plant_analyzer))
 		changeindicators(user)
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
-	src.changeindicators(user)
-	return
+	changeindicators(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade

@@ -72,6 +72,45 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), blend_override = BLEND_MULTIPLY)
 
+/atom/movable/screen/plane_master/rendering_plate/particle_weather
+	name = "Particle Weather"
+	documentation = "Plane used to render particle weather, masked by WEATHER_MASK_PLANE. \
+		Cannot be a single screen object as it needs to be a planemaster in order to be properly masked by the weather mask."
+	plane = RENDER_PLANE_PARTICLE_WEATHER
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// We can actually do this just fine as we do not render anything onto ourselves but our particles
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
+	SSweather.particle_planemasters += src
+	// And add all ongoing weather to ourselves
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			if (holder.plane == plane)
+				vis_contents += holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
+	SSweather.particle_planemasters -= src
+	return ..()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
+	name = "Emissive Particle Weather"
+	documentation = "Secondary particle weather plane for emissive parts of weather, which is additionally rendered onto the emissive plane after being masked."
+	plane = RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// Render a copy of ourselves onto the emissive plane encoded into the bloom channel
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_PLANE, offset), relay_color = GLOB.emissive_color)
+
 /atom/movable/screen/plane_master/rendering_plate/turf_lighting
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
