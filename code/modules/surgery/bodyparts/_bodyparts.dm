@@ -297,7 +297,7 @@
 
 	owner = null
 
-	if(length(applied_items))
+	if(LAZYLEN(applied_items))
 		QDEL_LIST_ASSOC_VAL(applied_items)
 	QDEL_LAZYLIST(scars)
 
