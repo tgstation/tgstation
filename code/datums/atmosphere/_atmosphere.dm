@@ -28,10 +28,10 @@
 	// We make the string from a gasmix in this proc because gases need to calculate their pressure
 	var/datum/gas_mixture/gasmix = new
 	gasmix.temperature = rand(minimum_temp, maximum_temp)
+	var/list/cached_moles = gasmix.moles
 	for(var/i in base_gases)
-		gasmix.moles[i] = base_gases[i]
+		cached_moles[i] = base_gases[i]
 
-	var/cached_moles = gasmix.moles
 	// Now let the random choices begin
 	var/datum/gas/gastype
 	var/amount

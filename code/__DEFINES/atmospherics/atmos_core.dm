@@ -1,9 +1,4 @@
 //LISTMOS
-//indices of values in gas lists.
-///Amount of total moles in said gas mixture
-#define MOLES 1
-///Archived version of MOLES
-#define ARCHIVE 2
 ///Gas specific heat per mole
 #define META_GAS_SPECIFIC_HEAT 1
 ///Name of the gas

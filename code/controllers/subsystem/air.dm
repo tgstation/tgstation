@@ -791,11 +791,12 @@ GLOBAL_LIST_EMPTY(colored_images)
 		gas -= "TEMP"
 	else // if we do not have a temp in the new gas mix lets assume room temp.
 		canonical_mix.temperature = T20C
+	var/list/cached_moles = canonical_mix.moles
 	for(var/id in gas)
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		canonical_mix.moles[path] = text2num(gas[id])
+		cached_moles[path] = text2num(gas[id])
 
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix

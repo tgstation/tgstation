@@ -58,6 +58,7 @@
 /datum/gas_mixture/immutable/planetary
 	var/list/initial_gas = list()
 
+// Intentionally duplicate code to save microseconds on a call to parent
 /datum/gas_mixture/immutable/planetary/garbage_collect()
 	temperature = temperature_archived = initial_temperature
 	var/cached_initial_gas = initial_gas

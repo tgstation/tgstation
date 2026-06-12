@@ -8,9 +8,9 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture
 	/// Associative list of moles for each gas. List key is /datum/gas/<gas_name>, value is amount in moles
-	var/list/moles[0]
+	var/list/moles
 	/// Archived version of moles
-	var/list/moles_archive[0]
+	var/list/moles_archive
 	/// Static list of gas meta data like heat capacity (initialized globally)
 	var/static/list/gas_meta
 	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/pipeline_cycle = -1
 
 /datum/gas_mixture/New(volume)
+	moles = list()
+	moles_archive = list()
 	if(!isnull(volume))
 		src.volume = volume
 	if(src.volume <= 0)
@@ -48,9 +50,11 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 ///assert_gases(args) - shorthand for calling assert_gas(gas_id) once for each gas type.
 /datum/gas_mixture/proc/assert_gases(...)
+	var/cached_moles = moles
+	var/cached_moles_archive = moles_archive
 	for(var/gas_id in args)
-		moles[gas_id] += 0
-		moles_archive[gas_id] += 0
+		cached_moles[gas_id] += 0
+		cached_moles_archive[gas_id] += 0
 
 ///add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
 ///Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
@@ -60,9 +64,11 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 ///add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases(...)
+	var/cached_moles = moles
+	var/cached_moles_archive = moles_archive
 	for(var/gas_id in args)
-		moles[gas_id] = 0
-		moles_archive[gas_id] = 0
+		cached_moles[gas_id] = 0
+		cached_moles_archive[gas_id] = 0
 
 ///garbage_collect() - removes any gas list which is empty.
 ///If called with a list as an argument, only removes gas lists with IDs from that list.
@@ -177,8 +183,9 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 ///gases_moles is an associative list of gas species to their amount to be added
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
+	var/cached_moles = moles
 	for(var/gas_id in gases_moles)
-		moles[gas_id] += gases_moles[gas_id]
+		cached_moles[gas_id] += gases_moles[gas_id]
 	garbage_collect()
 
 
@@ -244,7 +251,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	amount = min(amount, cached_moles[gas_id])
 	if(amount <= 0)
 		return null
-	var/datum/gas_mixture/removed = new type // TODO(antropod): forgot volume here?
+	var/datum/gas_mixture/removed = new type
 	removed.temperature = temperature
 	removed.moles[gas_id] = amount
 	cached_moles[gas_id] -= amount
@@ -259,14 +266,13 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	ratio = min(ratio, 1)
 
 	var/list/cached_moles = moles
-	var/datum/gas_mixture/removed = new type // TODO(antropod): forgot volume here?
+	var/datum/gas_mixture/removed = new type
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	cached_removed_moles[gas_id] = QUANTIZE(cached_moles[gas_id] * ratio)
 	cached_moles[gas_id] -= cached_removed_moles[gas_id]
 
-	// TODO(antropod): maybe use if (cached_moles[gas_id] < MOLAR_ACCURACY) cached_moles -= gas_id?
 	garbage_collect()
 
 	return removed
@@ -304,14 +310,12 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 ///Returns: duplicate gas mixture
 /datum/gas_mixture/proc/copy()
 	var/list/cached_moles = moles
-	var/datum/gas_mixture/copy = new type // TODO(antropod): forgot volume here?
+	var/datum/gas_mixture/copy = new type
 	var/list/copy_cached_moles = copy.moles
 	var/list/copy_cached_moles_archive = copy.moles_archive
 
 	copy.temperature = temperature
 	for(var/gas_id in cached_moles)
-		// Sort of a sideways way of doing ADD_GAS()
-		// Faster tho, gotta save those cpu cycles
 		copy_cached_moles[gas_id] = cached_moles[gas_id]
 		copy_cached_moles_archive[gas_id] = 0
 
@@ -552,8 +556,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /**
  * Returns the partial pressure of the gas in the breath based on BREATH_VOLUME
  * eg:
- * Plas_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/plasma][MOLES])
- * O2_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/oxygen][MOLES])
+ * Plas_PP = get_breath_partial_pressure(gas_mixture.moles[/datum/gas/plasma])
+ * O2_PP = get_breath_partial_pressure(gas_mixture.moles[/datum/gas/oxygen])
  * get_breath_partial_pressure(gas_mole_count) --> PV = nRT, P = nRT/V
  *
  * 10/20*5 = 2.5
@@ -778,33 +782,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
 
-/// Sets gas mixture from string (ie. "o2=22;n2=82;TEMP=180") inplace
-/// Throws an exception if any of the gases is invalid
-/datum/gas_mixture/proc/from_string(gas_string)
-	RETURN_TYPE(/datum/gas_mixture)
-	var/list/gas = params2list(gas_string)
-
-	var/temp = T20C
-	if (gas["TEMP"])
-		temp = text2num(gas["TEMP"])
-		gas -= "TEMP"
-
-	var/list/gas_moles[0]
-	for(var/id in gas)
-		var/path = id
-		if(!ispath(path))
-			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		if(!ispath(path))
-			CRASH("Invalid gas id or path: [id]")
-		gas_moles[path] = text2num(gas[id])
-
-	temperature = temperature_archived = temp
-	moles.Cut()
-	moles_archive.Cut()
-	for (var/gas_id in gas_moles)
-		moles[gas_id] = moles_archive[gas_id] = gas_moles[gas_id]
-	return src
-
 /**
  * A simple helper proc that checks if the contents of a list of gases are within acceptable terms.
  *
@@ -819,8 +796,9 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	SHOULD_BE_PURE(TRUE)
 
 	var/list/gases_to_check = acceptable_gas_bounds.Copy() // thank you spaceman
-	for(var/id in moles)
-		var/gas_moles = moles[id]
+	var/list/cached_moles = moles
+	for(var/id in cached_moles)
+		var/gas_moles = cached_moles[id]
 		if(!(id in gases_to_check))
 			if(gas_moles > extraneous_gas_limit)
 				return FALSE
