@@ -1,4 +1,0 @@
-author: "Profakos (originally pulled from their branch, did massive chunk of this), Ben10omintrix"
-delete-after: True
-changes:
-  - refactor: "mulebots have been refactored. please report any bugs"

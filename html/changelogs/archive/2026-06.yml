@@ -304,6 +304,8 @@
       know who's praying unless told, though he can tell if they're naughty.
   Hatterhat:
   - spellcheck: Butterbean plants are now capitalized properly when planted.
+  Profakos (originally pulled from their branch, did massive chunk of this), Ben10omintrix:
+  - refactor: mulebots have been refactored. please report any bugs
   TymSha:
   - qol: Ooze mobs from cytology now have the same type of HUD as other mobs, allowing
       them to see their health
