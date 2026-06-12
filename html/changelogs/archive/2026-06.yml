@@ -291,3 +291,9 @@
   - sound: Add valve sound to portable canisters
   - sound: Add keypad sounds to secure safes
   - sound: Add drill sound to surgical drill
+2026-06-12:
+  antropod:
+  - bugfix: fixed material tiles and walls not having material when constructed from
+      last item in the stack
+  timothymtorres:
+  - sound: Add on/off sound to light switches in rooms

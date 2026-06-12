@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes:
-  - bugfix: "fixed material tiles and walls not having material when constructed from last item in the stack"
