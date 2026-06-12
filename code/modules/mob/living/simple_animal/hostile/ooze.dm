@@ -11,7 +11,7 @@
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	atmos_requirements = null
-	hud_type = /datum/hud/ooze
+	hud_type = /datum/hud/living/ooze
 	minbodytemp = 250
 	maxbodytemp = INFINITY
 	faction = list(FACTION_SLIME)
@@ -322,7 +322,7 @@
 ///Ability that allows the owner to fire healing globules at mobs, targeting specific limbs.
 /datum/action/cooldown/globules
 	name = "Fire Mending globule"
-	desc = "Fires a mending globule at someone, healing a specific limb of theirs."
+	desc = "Fires a mending globule at someone, healing a specific limb of theirs. Costs 5 nutrition."
 	background_icon_state = "bg_hive"
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -332,10 +332,16 @@
 	click_to_activate = TRUE
 
 /datum/action/cooldown/globules/set_click_ability(mob/on_who)
+	var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
+	if(istype(oozy_owner))
+		if(oozy_owner.ooze_nutrition < 5)
+			to_chat(oozy_owner, span_warning("You need at least 5 nutrition to launch a mending globule."))
+			return
 	. = ..()
 	if(!.)
 		return
 
+	oozy_owner.adjust_ooze_nutrition(-5)
 	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
 
 /datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
@@ -344,20 +350,9 @@
 		return
 
 	if(refund_cooldown)
+		var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
+		oozy_owner.adjust_ooze_nutrition(5)
 		to_chat(on_who, span_notice("You stop preparing your mending globules."))
-
-/datum/action/cooldown/globules/Activate(atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
-	if(istype(oozy_owner))
-		if(oozy_owner.ooze_nutrition < 5)
-			to_chat(oozy_owner, span_warning("You need at least 5 nutrition to launch a mending globule."))
-			return FALSE
-
-	return TRUE
 
 /datum/action/cooldown/globules/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()
@@ -426,7 +421,7 @@
 ///This action lets you put a mob inside of a cacoon that will inject it with some chemicals.
 /datum/action/cooldown/gel_cocoon
 	name = "Gel Cocoon"
-	desc = "Puts a mob inside of a cocoon, allowing it to slowly heal."
+	desc = "Puts a mob inside of a cocoon, allowing it to slowly heal. Costs 30 nutrition."
 	background_icon_state = "bg_hive"
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'

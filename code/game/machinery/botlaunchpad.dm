@@ -65,12 +65,8 @@
 		user.balloon_alert(user, "no bots sent from the pad!")
 		return
 	user.balloon_alert(user, "bot sent back to pad")
-	if(isbasicbot(our_bot))
-		var/mob/living/basic/bot/basic_bot = our_bot
-		basic_bot.summon_bot(src)
-		return
-	var/mob/living/simple_animal/bot/simple_bot = our_bot
-	simple_bot.call_bot(src,  get_turf(src))
+	var/mob/living/basic/bot/basic_bot = our_bot
+	basic_bot.summon_bot(src)
 
 /obj/structure/closet/supplypod/transport/botpod
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=FALSE)
