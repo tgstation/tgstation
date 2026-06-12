@@ -4,7 +4,9 @@
 	can_run_on_flags = PROGRAM_PDA
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "generic"
-	extended_desc = "A lightweight piece of software designed to decrease fax response time. Will send a notification as soon as one of connected faxes recieves a message. Recommended by 9 out of 10 CentCom officers."
+	extended_desc = "A lightweight piece of software designed to decrease fax response time. \
+		Will send a notification as soon as one of connected faxes receives a message. \
+		Recommended by 9 out of 10 CentCom officers."
 	size = 1
 	tgui_id = "NtosFaxBond"
 	program_icon = "fa-fax"
