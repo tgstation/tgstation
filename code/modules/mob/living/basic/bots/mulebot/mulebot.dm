@@ -32,6 +32,7 @@
 
 	additional_access = /datum/id_trim/job/cargo_technician
 	path_image_color = "#7F5200"
+	hud_type = /datum/hud/living/mulebot
 
 	hackables = "obstacle detection circuits"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
@@ -68,7 +69,8 @@
 		return INITIALIZE_HINT_QDEL
 
 	set_wires(new /datum/wires/mulebot(src))
-	cell = new /obj/item/stock_parts/power_store/cell/upgraded(src)
+	var/obj/item/stock_parts/power_store/cell/upgraded/new_cell = new(src)
+	assign_cell(new_cell)
 	ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, "")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
@@ -88,6 +90,12 @@
 	unload()
 	QDEL_NULL(cell)
 	return ..()
+
+/mob/living/basic/bot/mulebot/proc/assign_cell(atom/new_cell)
+	cell = new_cell
+	var/atom/movable/screen/mob_charge/charge_hud = hud_used?.screen_objects[HUD_MULEBOT_CHARGE]
+	charge_hud?.update_battery_overlay(new_cell)
+	charge_hud?.calculate_charge()
 
 /mob/living/basic/bot/mulebot/examine(mob/user)
 	. = ..()
