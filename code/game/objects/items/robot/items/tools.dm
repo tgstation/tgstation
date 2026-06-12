@@ -211,6 +211,8 @@
 		if(internal_tool == tool)
 			reference = internal_tool
 			tool_behaviour = initial(internal_tool.tool_behaviour)
+			update_appearance(UPDATE_ICON_STATE)
+			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 			break
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
@@ -266,10 +268,8 @@
 	if(!internal_tool_name)
 		return
 
-	//set the reference & update icons
+	//set the reference
 	set_internal_tool(tool_map[internal_tool_name])
-	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -339,7 +339,7 @@
 			. |= tool.update_overlays()
 
 /obj/item/borg/cyborg_omnitool/engineering/attack_self(mob/user, modifiers)
-	if(tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, LEFT_CLICK))
+	if(tool_behaviour == TOOL_WELDER && (LAZYACCESS(modifiers, LEFT_CLICK) || LAZYACCESS(modifiers, ACTIVATE_INHAND_ITEM)))
 		//Turn off the other guy welding tool cause we only have one shared welder and we don't want overlays to appear on both
 		var/mob/living/silicon/robot/borg = user
 		for(var/obj/item/borg/cyborg_omnitool/engineering/omni_tool in borg.model.basic_modules)

@@ -1126,3 +1126,6 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 	/datum/pet_command/follow,
 	/datum/pet_command/attack/mouse
 ))
+
+/// Modifier for when attack_self() is called to activate the object in hand
+#define ACTIVATE_INHAND_ITEM "activate_inhand_item"
