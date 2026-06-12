@@ -1,0 +1,93 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/bot/mulebot",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/bot_respond_to_summon"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/bot_salute_authority"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_MULEBOT_TRAVEL_TARGET"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_MULEBOT_TRAVEL_TARGET",
+							"required_dist": 0,
+							"finish_on_arrival": true
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/handle_delivery",
+						"vars": {
+							"target_key": "BB_MULEBOT_TRAVEL_TARGET"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bot_wire_cut",
+			"vars": {
+				"wire": "WIRE_BEACON",
+				"invert": true
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/bb_key_set",
+				"vars": {
+					"key": "BB_MULEBOT_TRAVEL_TARGET",
+					"invert": true
+				},
+				"child": {
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bot_mode",
+							"vars": {
+								"mode": "BOT_DELIVER"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_delivery_beacon",
+								"vars": {
+									"target_key": "BB_MULEBOT_TRAVEL_TARGET",
+									"tag_key": "BB_MULEBOT_DESTINATION_BEACON"
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bot_mode",
+							"vars": {
+								"mode": "BOT_GO_HOME"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_delivery_beacon",
+								"vars": {
+									"target_key": "BB_MULEBOT_TRAVEL_TARGET",
+									"tag_key": "BB_MULEBOT_HOME_BEACON"
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
+}

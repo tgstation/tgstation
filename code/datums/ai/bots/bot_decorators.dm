@@ -20,6 +20,22 @@
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	return !!(bot_pawn.bot_mode_flags & flag)
 
+/// Gates child on the pawn's current mode matching `mode` (e.g. BOT_DELIVER). Use invert = TRUE for the opposite. Checked each tick.
+/datum/bt_node/decorator/bot_mode
+	var/mode
+
+/datum/bt_node/decorator/bot_mode/check_condition(datum/ai_controller/controller)
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	return bot_pawn.mode == mode
+
+/// Gates child on the pawn's `wire` being cut. Use invert = TRUE to gate on the wire being intact. Checked each tick.
+/datum/bt_node/decorator/bot_wire_cut
+	var/wire
+
+/datum/bt_node/decorator/bot_wire_cut/check_condition(datum/ai_controller/controller)
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	return !!(bot_pawn.wires?.is_cut(wire))
+
 /// Gates child when pawn has the specified medical mode flag. Use invert = TRUE for the opposite. Checked each tick.
 /datum/bt_node/decorator/bot_medical_flag
 	var/flag

@@ -91,6 +91,25 @@
 	clear_target = FALSE
 
 
+/// Searches GLOB.deliverybeacons for a beacon whose location matches the tag in tag_key, and sets it as target_key.
+/datum/bt_node/ai_behavior/find_delivery_beacon
+	var/target_key
+	/// Blackboard key holding the location tag string to match against beacon.location.
+	var/tag_key
+	time_between_perform = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+
+/datum/bt_node/ai_behavior/find_delivery_beacon/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/beacon_tag = controller.blackboard[tag_key]
+	if(isnull(beacon_tag))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.deliverybeacons)
+		if(beacon.location != beacon_tag)
+			continue
+		controller.set_blackboard_key(target_key, beacon)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 ///Find the closest beacon and set it as the target
 /datum/bt_node/ai_behavior/find_first_beacon_target
 	var/target_key

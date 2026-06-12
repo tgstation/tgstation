@@ -182,6 +182,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	skip_minimap_rendering = TRUE
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
@@ -393,6 +394,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
+	skip_minimap_rendering = TRUE
 
 /// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm

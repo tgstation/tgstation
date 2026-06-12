@@ -141,3 +141,11 @@
 
 #define REPAIRBOT_INTERACTION_INTERACT 1
 #define REPAIRBOT_INTERACTION_BUILD_GIRDERS 2
+
+//mulebots
+///key that holds our delivery destination's name
+#define BB_MULEBOT_DESTINATION_BEACON "mulebot_destination"
+///key that holds our home port's name
+#define BB_MULEBOT_HOME_BEACON "mulebot_home_beacon"
+///key that holds our current delivery target atom
+#define BB_MULEBOT_TRAVEL_TARGET "mulebot_travel_target"

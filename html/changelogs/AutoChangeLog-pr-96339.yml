@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "beams now animate when moving tile to tile, this is mostly noticeable for constant beam effects"
+  - bugfix: "beam emissives now work"
