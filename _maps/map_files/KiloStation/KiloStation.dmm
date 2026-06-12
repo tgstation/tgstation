@@ -39230,7 +39230,6 @@
 /area/station/service/kitchen)
 "mwf" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/mob/living/simple_animal/bot/mulebot,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	location = "QM #2"
@@ -39238,6 +39237,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/delivery,
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "mwj" = (
@@ -45642,7 +45642,6 @@
 "oJa" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/light/small/directional/north,
-/mob/living/simple_animal/bot/mulebot,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	location = "QM #1"
@@ -45651,6 +45650,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/blood/oil,
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/dark,
 /area/station/cargo/warehouse)
 "oJd" = (
