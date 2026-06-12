@@ -7,11 +7,15 @@
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
 	max_capacity = parent_type::max_capacity * 2
+	/// Fax type for a relevant head's tp connect their PDA to (for use with fax notification app)
+	var/fax_type = null
+
 	var/static/list/datum/computer_file/head_programs = list(
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/faxbond,
 	)
 
 /obj/item/modular_computer/pda/heads/Initialize(mapload)
@@ -19,6 +23,11 @@
 	for(var/programs in head_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
+
+	if (fax_type)
+		var/datum/computer_file/program/faxbond/fax_notifier = locate() in stored_files
+		var/obj/machinery/fax/heads_fax = pick(SSmachines.get_machines_by_type(fax_type)) //there really shouldnt be more than one
+		fax_notifier.connect_fax(heads_fax)
 
 /obj/item/modular_computer/pda/heads/captain
 	name = "captain PDA"
