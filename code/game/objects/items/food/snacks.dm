@@ -70,6 +70,7 @@
 	tastes = list("dried meat" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_1
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
@@ -96,6 +97,7 @@
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtypes = VEGETABLES|JUNKFOOD|FRIED
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/chips/make_leave_trash()
@@ -115,6 +117,7 @@
 	)
 	tastes = list("salt" = 1, "shrimp" = 1)
 	foodtypes = JUNKFOOD | FRIED | SEAFOOD
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
@@ -190,6 +193,7 @@
 	junkiness = 25
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtypes = JUNKFOOD | DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/syndicake
@@ -203,6 +207,7 @@
 	)
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtypes = GRAIN | FRUIT | VEGETABLES
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/energybar
@@ -227,6 +232,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
+	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
@@ -322,6 +328,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("chocolate candy" = 3)
 	junkiness = 25
 	foodtypes = JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cnds/suicide_act(mob/living/user)
@@ -396,6 +403,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	) //a healthy but expensive snack
 	tastes = list("pistachios" = 4, "subtle sweetness" = 1)
 	foodtypes = JUNKFOOD | NUTS
+	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
 	junkiness = 10 //on par with peanuts
 	w_class = WEIGHT_CLASS_SMALL
@@ -414,6 +422,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	) //1 cornoil is equal to 1.33 nutriment
 	tastes = list("sunflowers" = 5)
 	foodtypes = JUNKFOOD | NUTS
+	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_LOWER * 0.4 //sunflowers are cheap in real life.
 	bite_consumption = 1
 	junkiness = 25
@@ -448,6 +457,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	custom_price = PAYCHECK_LOWER * 0.8  //we are filled to the brim with flavor
 	tastes = list("fried corn" = 1)
 	foodtypes = JUNKFOOD | FRIED
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cornchips/make_leave_trash()
@@ -540,6 +550,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	)
 	tastes = list("popcorn" = 1, "caramel" = 1, "peanuts" = 1)
 	foodtypes = JUNKFOOD | SUGAR | NUTS
+	food_flags = FOOD_FINGER_FOOD
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -558,6 +569,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("biscuit" = 1, "chocolate" = 1)
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sticko/matcha
@@ -635,6 +647,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 		/datum/reagent/consumable/liquidelectricity/enriched = 2,
 		/datum/reagent/consumable/sugar = 3
 	)
+	food_flags = FOOD_FINGER_FOOD
 	tastes = list("sugar" = 1, "lightning" = 1)
 
 /obj/item/food/shok_roks/citrus

@@ -429,8 +429,8 @@
 		color = COLOR_BLUE
 	else
 		color = BlendRGB(COLOR_GREEN, COLOR_RED, clamp((open_turf_distance - 1) / 5, 0, 0.99))
-	maptext_x = 4
-	maptext_y = 4
+	maptext_x = -transform.c
+	maptext_y = -transform.f
 	maptext = MAPTEXT_TINY_UNICODE("[open_turf_distance]")
 #endif
 

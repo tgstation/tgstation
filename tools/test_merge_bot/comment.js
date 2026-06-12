@@ -13,7 +13,7 @@ export const createComment = (servers, existingComment) => {
         servers[serverName] = server;
       }
 
-      for (const line of entries.split("\n")) {
+      for (const line of entries.split('\n')) {
         const match = line.match(ENTRY_PATTERN);
         if (!match) {
           continue;
@@ -39,7 +39,7 @@ export const createComment = (servers, existingComment) => {
     .flat()
     .map(({ round_id }) => round_id)
     .sort()
-    .join(", ");
+    .join(', ');
 
   const newHeader = `<!-- test_merge_bot: ${roundIds} -->`;
 
@@ -48,30 +48,30 @@ export const createComment = (servers, existingComment) => {
   }
 
   let totalRounds = 0;
-  let listOfRounds = "";
+  let listOfRounds = '';
 
   for (const [server, rounds] of Object.entries(servers).sort(
     ([a], [b]) => b - a,
   )) {
     totalRounds += rounds.length;
 
-    listOfRounds += `${"\n"}### ${server}`;
+    listOfRounds += `${'\n'}### ${server}`;
 
     for (const { datetime, round_id, url } of rounds.sort(
       (a, b) => b.round_id - a.round_id,
     )) {
-      listOfRounds += `${"\n"}- [${round_id} @ ${datetime}](${url})`;
+      listOfRounds += `${'\n'}- [${round_id} @ ${datetime}](${url})`;
     }
 
-    listOfRounds += "\n";
+    listOfRounds += '\n';
   }
 
   return (
     newHeader +
     `\nThis pull request was test merged in ${totalRounds} round(s).` +
-    "\n" +
-    "<details><summary>Round list</summary>\n\n" +
+    '\n' +
+    '<details><summary>Round list</summary>\n\n' +
     listOfRounds +
-    "\n</details>\n"
+    '\n</details>\n'
   );
 };

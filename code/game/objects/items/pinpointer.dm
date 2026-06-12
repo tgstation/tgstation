@@ -17,12 +17,23 @@
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+	/// Is the pinpointer on?
 	var/active = FALSE
-	var/atom/movable/target //The thing we're searching for
-	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
-	var/alert = FALSE // TRUE to display things more seriously
-	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
-	var/icon_suffix = "" // for special pinpointer icons
+	///The thing we're searching for
+	var/atom/movable/target
+	/// TRUE to display things more seriously
+	var/alert = FALSE
+	/// Some pinpointers change target every time they scan, which means we can't have it change every process() but instead when it turns on.
+	var/process_scan = TRUE
+	/// Icon_state suffix for special pinpointer icons
+	var/icon_suffix = ""
+
+	/// At what range the pinpointer declares you to be at your destination. Use to hide the exact location of your target.
+	var/minimum_range = 0
+	/// From 1 to this value, the sprite will display as though you're close.
+	var/close_range = 8
+	/// From close_range + 1 to this value, the sprite will display as though you're medium distance away. Past this value, we'll display as though you're far.
+	var/medium_range = 16
 
 /obj/item/pinpointer/Initialize(mapload)
 	. = ..()
@@ -85,13 +96,13 @@
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
-		switch(get_dist(here, there))
-			if(1 to 8)
-				return "pinon[alert ? "alert" : "close"][icon_suffix]"
-			if(9 to 16)
-				return "pinon[alert ? "alert" : "medium"][icon_suffix]"
-			if(16 to INFINITY)
-				return "pinon[alert ? "alert" : "far"][icon_suffix]"
+		var/current_distance = get_dist(here, there)
+		if(current_distance >= 1 && current_distance <= close_range)
+			return "pinon[alert ? "alert" : "close"][icon_suffix]"
+		else if(current_distance > (close_range + 1) && current_distance <= medium_range)
+			return "pinon[alert ? "alert" : "medium"][icon_suffix]"
+		else if(current_distance > medium_range)
+			return "pinon[alert ? "alert" : "far"][icon_suffix]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
@@ -100,9 +111,14 @@
 	worn_icon_state = "pinpointer_crew"
 	custom_price = PAYCHECK_CREW * 6
 	custom_premium_price = PAYCHECK_CREW * 6
-	var/has_owner = FALSE
+	/// The mob that the pinpointer is owned by.
 	var/pinpointer_owner = null
-	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
+	/// Do we find people even if their suit sensors are turned off
+	var/ignore_suit_sensor_level = FALSE
+
+/obj/item/pinpointer/crew/Destroy()
+	. = ..()
+	pinpointer_owner = null
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
@@ -120,7 +136,7 @@
 		user.visible_message(span_notice("[user] deactivates [user.p_their()] pinpointer."), span_notice("You deactivate your pinpointer."))
 		return
 
-	if (has_owner && !pinpointer_owner)
+	if (!pinpointer_owner)
 		pinpointer_owner = user
 
 	if (pinpointer_owner && pinpointer_owner != user)
@@ -173,6 +189,7 @@
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"
 	desc = "A handheld tracking device that locks onto its other half of the matching pair."
+	/// Reference to the other, specific pinpointer that it's bought with. Assigned on /obj/item/storage/box/pinpointer_pairs.
 	var/other_pair
 
 /obj/item/pinpointer/pair/Destroy()
@@ -197,6 +214,7 @@
 	icon_state = "pinpointer_hunter"
 	worn_icon_state = "pinpointer_black"
 	icon_suffix = "_hunter"
+	/// Reference to the bounty hunter shuttle's docking port.
 	var/obj/docking_port/mobile/shuttleport
 
 /obj/item/pinpointer/shuttle/Initialize(mapload)

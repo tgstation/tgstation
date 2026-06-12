@@ -679,7 +679,7 @@
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
 
-/datum/spy_bounty/some_bot/finish_cleanup(mob/living/simple_animal/bot/stealing)
+/datum/spy_bounty/some_bot/finish_cleanup(mob/living/basic/bot/stealing)
 	if(stealing.client)
 		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
 		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
