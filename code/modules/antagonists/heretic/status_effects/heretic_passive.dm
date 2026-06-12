@@ -562,7 +562,7 @@
 	id = "void_passive"
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
-		"You no longer need to breathe.",
+		"Immunity to suffocation.",
 		"Water, ice and slippery surfaces no slip you."
 	)
 
