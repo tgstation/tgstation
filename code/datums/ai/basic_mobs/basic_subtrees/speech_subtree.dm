@@ -371,6 +371,18 @@
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
 
+/datum/bt_node/ai_behavior/random_speech/goat
+	speech_chance = 3
+	speak = list("EHEHEHEHEH", "eh?")
+	emote_hear = list("brays.")
+	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
+
+/datum/bt_node/ai_behavior/random_speech/goose
+	speech_chance = 3
+	speak = list("Honk!")
+	emote_hear = list("honks.", "honks loudly.", "honks aggressively.")
+	emote_see = list("flaps.", "preens.", "glares around.")
+
 /datum/bt_node/ai_behavior/random_speech/faithless
 	speech_chance = 1
 	emote_see = list("wails.")

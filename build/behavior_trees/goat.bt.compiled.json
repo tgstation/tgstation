@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/composite/parallel","children":[{"type":"/datum/bt_node/composite/subplan","children":[{"type":"/datum/bt_node/subtree/forage_and_retaliate"}],"success_policy":1,"failure_policy":1},{"type":"/datum/bt_node/ai_behavior/random_speech/goat"}],"failure_policy":0,"success_policy":0,"repeat_secondary":true,"repeat_secondary_delay":10,"finish_on_primary":true}
