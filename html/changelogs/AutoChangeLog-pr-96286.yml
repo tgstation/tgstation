@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Blood-drunk miner now drops an infernal PKA with an in-built improved rapid repeater modification"
-  - balance: "Blood-drunk miner has been reworked with new attacks and patterns"
-  - bugfix: "Blood-drunk miner's combos are no longer guaranteed to land even if you move away from it"

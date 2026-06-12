@@ -1126,7 +1126,7 @@
 
 /obj/structure/flora/rock/volcano/Initialize(mapload)
 	. = ..()
-	icon_state = "[base_icon_state]_[rand(1, 5)]"
+	icon_state = "[base_icon_state]_[rand(1, 4)]"
 	update_appearance()
 
 /obj/structure/flora/rock/volcano/update_overlays()

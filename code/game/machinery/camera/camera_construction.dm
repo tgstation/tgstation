@@ -71,177 +71,171 @@
 	return ..()
 
 /obj/machinery/camera/wrench_act(mob/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_WRENCHED)
-		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You detach [src] from its place."))
-		deconstruct(TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_WRENCHED)
+		return NONE
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You detach [src] from its place."))
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/camera/crowbar_act(mob/living/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_FINISHED)
-		if(!panel_open)
-			return ITEM_INTERACT_BLOCKING
-		var/list/droppable_parts = list()
-		if(xray_module)
-			droppable_parts += xray_module
-		if(emp_module)
-			droppable_parts += emp_module
-		if(proximity_monitor)
-			droppable_parts += proximity_monitor
-		if(!length(droppable_parts))
-			return ITEM_INTERACT_BLOCKING
-		var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
-		if(isnull(choice))
-			return ITEM_INTERACT_BLOCKING
-		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You remove [choice] from [src]."))
-		if(choice == xray_module)
-			drop_upgrade(xray_module)
-			removeXRay()
-		if(choice == emp_module)
-			drop_upgrade(emp_module)
-			removeEmpProof()
-		if(choice == proximity_monitor)
-			drop_upgrade(proximity_monitor)
-			removeMotion()
-		tool.play_tool_sound(src)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
+		return NONE
+	var/list/droppable_parts = list()
+	if(xray_module)
+		droppable_parts += xray_module
+	if(emp_module)
+		droppable_parts += emp_module
+	if(proximity_monitor)
+		droppable_parts += proximity_monitor
+	if(!length(droppable_parts))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You remove [choice] from [src]."))
+	if(choice == xray_module)
+		drop_upgrade(xray_module)
+		removeXRay()
+	if(choice == emp_module)
+		drop_upgrade(emp_module)
+		removeEmpProof()
+	if(choice == proximity_monitor)
+		drop_upgrade(proximity_monitor)
+		removeMotion()
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/camera/multitool_act(mob/living/user, obj/item/tool)
-	if(camera_construction_state == CAMERA_STATE_FINISHED)
-		if(!panel_open)
-			return ITEM_INTERACT_BLOCKING
-		setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-		to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(camera_construction_state != CAMERA_STATE_FINISHED || !panel_open)
+		return NONE
+	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
+	to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/camera/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(camera_construction_state != CAMERA_STATE_FINISHED || panel_open)
-		if(attacking_item.tool_behaviour == TOOL_ANALYZER)
-			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
-					return
-				upgradeXRay(FALSE, TRUE)
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
-				qdel(attacking_item)
+/obj/machinery/camera/proc/gas_analyzer_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return NONE
+	if(isXRay(TRUE))
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool, newloc = src))
+		return ITEM_INTERACT_BLOCKING
+	upgradeXRay(FALSE, TRUE)
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/plasma_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return NONE
+	if(isEmpProof(TRUE))
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 0, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	upgradeEmpProof(FALSE, TRUE)
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/prox_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state == CAMERA_STATE_FINISHED && !panel_open)
+		return NONE
+	if(isMotion())
+		to_chat(user, span_warning("[src] already has that upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool, newloc = src))
+		return ITEM_INTERACT_BLOCKING
+	upgradeMotion()
+	to_chat(user, span_notice("You attach [tool] into [src]'s inner circuits."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/cable_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_WELDED)
+		return NONE
+	if(!astype(tool, /obj/item/stack/cable_coil)?.use(2))
+		to_chat(user, span_warning("You need two lengths of cable to wire [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You add wires to [src]."))
+	camera_construction_state = CAMERA_STATE_WIRED
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/computer_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_FINISHED)
+		return NONE
+	var/obj/item/modular_computer/computer = tool
+	var/note_name = sanitize(computer.name)
+	var/datum/computer_file/program/notepad/notepad_app = locate() in computer.stored_files
+	if(!notepad_app)
+		return ITEM_INTERACT_BLOCKING
+	var/note_text = sanitize(notepad_app.written_note)
+	if(!note_text)
+		return ITEM_INTERACT_BLOCKING
+	display_note(user, note_name, note_text, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/paper_act(mob/living/user, obj/item/tool)
+	if(camera_construction_state != CAMERA_STATE_FINISHED)
+		return NONE
+	var/obj/item/paper/paper = tool
+	last_shown_paper = paper.copy(paper.type, null)
+	var/note_name = sanitize(last_shown_paper.name)
+	last_shown_paper.camera_holder = WEAKREF(src)
+	display_note(user, note_name, null, FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/camera/proc/display_note(mob/living/user, title, text, is_computer)
+	to_chat(user, span_notice("You hold up \the [title] up to the camera..."))
+	user.log_talk(title, LOG_GAME, "Pressed to camera", TRUE)
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	// Iterate over all living mobs and check if anyone is elibile to view the paper.
+	// This is backwards, but cameras don't store a list of people that are looking through them,
+	// and we'll have to iterate this list anyway so we can use it to pull out AIs too.
+	for(var/mob/potential_viewer as anything in GLOB.player_list)
+		// All AIs view through cameras, so we need to check them regardless.
+		if(isAI(potential_viewer))
+			var/mob/living/silicon/ai/ai = potential_viewer
+			if(ai.control_disabled || ai.stat == DEAD)
+				continue
+
+			ai.log_talk(title, LOG_VICTIM, "Pressed to camera from [key_name(user)]", FALSE)
+			if(is_computer)
+				ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[title]</TITLE></HEAD><BODY><TT>[text]</TT></BODY></HTML>"
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
-		else if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
-			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(attacking_item.use_tool(src, user, 0, amount=1))
-					upgradeEmpProof(FALSE, TRUE)
-					to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
+				log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
+
+			var/href_string = is_computer ? "show_tablet_note=1" : "show_paper_note=[REF(last_shown_paper)]"
+			if(user.name == "Unknown")
+				to_chat(ai, "[span_name("[user]")] holds <a href='byond://?_src_=usr;[href_string];'>\a [title]</a> up to one of your cameras...")
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
-		else if(isprox(attacking_item))
-			if(!isMotion())
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
-					return
-				upgradeMotion()
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
-				qdel(attacking_item)
+				to_chat(ai, "[span_name("<a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a>")] holds <a href='byond://?_src_=usr;[href_string];'>\a [title]</a> up to one of your cameras...")
+
+		// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
+		else if(potential_viewer.client?.eye == src)
+			potential_viewer.log_talk(title, LOG_VICTIM, "Pressed to camera from [key_name(user)]", FALSE)
+			if(!is_computer)
+				log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
+				to_chat(potential_viewer, "[span_name("[user]")] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [title]</a> up to your camera...")
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
-			return
-	switch(camera_construction_state)
-		if(CAMERA_STATE_WELDED)
-			if(istype(attacking_item, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/attacking_cable = attacking_item
-				if(attacking_cable.use(2))
-					to_chat(user, span_notice("You add wires to [src]."))
-					camera_construction_state = CAMERA_STATE_WIRED
-				else
-					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
-				return
-		if(CAMERA_STATE_FINISHED)
-			if(istype(attacking_item, /obj/item/modular_computer))
-				var/itemname = ""
-				var/info = ""
+				potential_viewer << browse("<HTML><HEAD><TITLE>[title]</TITLE></HEAD><BODY><TT>[text]</TT></BODY></HTML>", "window=[title]")
 
-				var/obj/item/modular_computer/computer = attacking_item
-				for(var/datum/computer_file/program/notepad/notepad_app in computer.stored_files)
-					info = notepad_app.written_note
-					break
-
-				if(!info)
-					return
-
-				itemname = computer.name
-				itemname = sanitize(itemname)
-				info = sanitize(info)
-				to_chat(user, span_notice("You hold \the [itemname] up to the camera..."))
-				user.log_talk(itemname, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
-				user.changeNext_move(CLICK_CD_MELEE)
-
-				for(var/mob/potential_viewer as anything in GLOB.player_list)
-					if(isAI(potential_viewer))
-						var/mob/living/silicon/ai/ai = potential_viewer
-						if(ai.control_disabled || (ai.stat == DEAD))
-							continue
-
-						ai.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-
-						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet_note=1;'>\a [itemname]</a> up to one of your cameras ...")
-						else
-							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_tablet_note=1;'>\a [itemname]</a> up to one of your cameras ...")
-						continue
-
-					if (potential_viewer.client?.eye == src)
-						to_chat(potential_viewer, "[span_name("[user]")] holds \a [itemname] up to one of the cameras ...")
-						potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						potential_viewer << browse("<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>", "window=[itemname]")
-				return
-
-			if(istype(attacking_item, /obj/item/paper))
-				// Grab the paper, sanitise the name as we're about to just throw it into chat wrapped in HTML tags.
-				var/obj/item/paper/paper = attacking_item
-
-				// Make a complete copy of the paper, store a ref to it locally on the camera.
-				last_shown_paper = paper.copy(paper.type, null)
-
-				// Then sanitise the name because we're putting it directly in chat later.
-				var/item_name = sanitize(last_shown_paper.name)
-
-				// Start the process of holding it up to the camera.
-				to_chat(user, span_notice("You hold \the [item_name] up to the camera..."))
-				user.log_talk(item_name, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
-				user.changeNext_move(CLICK_CD_MELEE)
-
-				// And make a weakref we can throw around to all potential viewers.
-				last_shown_paper.camera_holder = WEAKREF(src)
-
-				// Iterate over all living mobs and check if anyone is elibile to view the paper.
-				// This is backwards, but cameras don't store a list of people that are looking through them,
-				// and we'll have to iterate this list anyway so we can use it to pull out AIs too.
-				for(var/mob/potential_viewer in GLOB.player_list)
-					// All AIs view through cameras, so we need to check them regardless.
-					if(isAI(potential_viewer))
-						var/mob/living/silicon/ai/ai = potential_viewer
-						if(ai.control_disabled || (ai.stat == DEAD))
-							continue
-
-						ai.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
-
-						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user.name)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
-						else
-							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
-						continue
-
-					// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
-					if (potential_viewer.client?.eye == src)
-						log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
-						potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-						to_chat(potential_viewer, "[span_name(user)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
-				return
-
-	return ..()
+/obj/machinery/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
+		return plasma_act(user, tool)
+	if(istype(tool, /obj/item/analyzer))
+		return gas_analyzer_act(user, tool)
+	if(isprox(tool))
+		return prox_act(user, tool)
+	if(istype(tool, /obj/item/stack/cable_coil))
+		return cable_act(user, tool)
+	if(istype(tool, /obj/item/modular_computer))
+		return computer_act(user, tool)
+	if(istype(tool, /obj/item/paper))
+		return paper_act(user, tool)
+	return NONE
