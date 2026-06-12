@@ -5420,6 +5420,7 @@
 #include "code\modules\mob\living\basic\drone\inventory.dm"
 #include "code\modules\mob\living\basic\drone\verbs.dm"
 #include "code\modules\mob\living\basic\drone\visuals_icons.dm"
+#include "code\modules\mob\living\basic\farm_animals\_farm_animal_ai.dm"
 #include "code\modules\mob\living\basic\farm_animals\pig.dm"
 #include "code\modules\mob\living\basic\farm_animals\pony.dm"
 #include "code\modules\mob\living\basic\farm_animals\rabbit.dm"
