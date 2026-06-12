@@ -572,7 +572,7 @@
 
 /datum/status_effect/heretic_passive/void/heretic_level_upgrade()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_NOBREATH, REF(src))
+	ADD_TRAIT(owner, TRAIT_NO_BREATHLESS_DAMAGE, REF(src))
 
 /datum/status_effect/heretic_passive/void/heretic_level_final()
 	. = ..()
@@ -580,7 +580,7 @@
 
 /datum/status_effect/heretic_passive/void/on_remove()
 	. = ..()
-	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NOBREATH, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
+	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NO_BREATHLESS_DAMAGE, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
 
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE
