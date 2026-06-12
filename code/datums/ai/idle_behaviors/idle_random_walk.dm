@@ -153,6 +153,16 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return ..()
 
+// Walk more when healthy and on rust (explore for more), or damaged and off rust (seek healing rust).
+/datum/bt_node/ai_behavior/idle_random_walk/rust
+
+/datum/bt_node/ai_behavior/idle_random_walk/rust/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	var/on_rust = HAS_TRAIT(get_turf(living_pawn), TRAIT_RUSTY)
+	var/damaged = living_pawn.health < living_pawn.maxHealth
+	try_random_step(living_pawn, seconds_per_tick, (on_rust == damaged) ? 10 : 50)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
 // Walk randomly, but stay near a target when possible.
 /datum/bt_node/ai_behavior/idle_random_walk/walk_near_target
 	/// Distance we are allowed to stay from the target.

@@ -191,7 +191,7 @@ One feature of subtrees is that if you are making a subtree, and want to change 
 
 ## Editor
 
-The behavior tree editor can be opened via opening one of our .bt.json files. These .bt.json files are specialized json files that format our (sub)trees. In theory these jsons are human-readable, but the editor makes it much easier to parse them and provides a way of baking them into .DM code.
+The behavior tree editor can be opened via opening one of our .bt.json files. These .bt.json files are specialized json files that format our (sub)trees. In theory these jsons are human-readable, but the editor makes it much easier to parse them. The editor only edits the .bt.json file itself.
 
 When opening the editor, you should press "Refresh Types" at the top, this will make the editor parse through all the relevant .dm files to find defined behaviors, decorators, subtrees and ai controllers. You should also run this if you modify or add new nodes, else your cache will be out of date.
 
@@ -209,4 +209,4 @@ You can drag these nodes into the node-graph to place them.
 
 You can also change the nodes connections by dragging from either end to another node. This system is currently a bit fidgetty while I figure out how to become a better editor programmer.
 
-Once you are done with your tree, be sure to save the file. The behavior tree will now automatically be used in-game
+Once you are done with your tree, be sure to save the file. You can now compile and the JSON will be converted automatically

@@ -54,39 +54,9 @@
 
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
+	behavior_tree_json = "rust_walker.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/rust
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/use_mob_ability/rust_walker,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/// Moves a lot if healthy and on rust (to find more tiles to rust) or unhealthy and not on rust (to find healing rust)
-/// Still moving in random directions though we're not really seeking it out
-/datum/idle_behavior/idle_random_walk/rust
-
-/datum/idle_behavior/idle_random_walk/rust/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/our_mob = controller.pawn
-	var/turf/our_turf = get_turf(our_mob)
-	if (HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		walk_chance = (our_mob.health < our_mob.maxHealth) ? 10 : 50
-	else
-		walk_chance = (our_mob.health < our_mob.maxHealth) ? 50 : 10
-	return ..()
-
-/// Use if we're not stood on rust right now
-/datum/ai_planning_subtree/use_mob_ability/rust_walker
-
-/datum/ai_planning_subtree/use_mob_ability/rust_walker/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/turf/our_turf = get_turf(controller.pawn)
-	if (HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		return
-	return ..()
