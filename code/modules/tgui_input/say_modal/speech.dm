@@ -29,16 +29,23 @@
  * Arguments:
  * 	entry - the text to broadcast
  * 	channel - the channel to broadcast in
+ * 	forced - if TRUE, bypasses verb queuing and calls say() directly (required when not called from player input)
  * Returns:
  *  boolean - on success or failure
  */
-/datum/tgui_say/proc/delegate_speech(entry, channel)
+/datum/tgui_say/proc/delegate_speech(entry, channel, forced = FALSE)
 	switch(channel)
 		if(SAY_CHANNEL)
-			client.mob.say_verb(entry)
+			if(forced)
+				client.mob.say(entry)
+			else
+				client.mob.say_verb(entry)
 			return TRUE
 		if(RADIO_CHANNEL)
-			client.mob.say_verb(";" + entry)
+			if(forced)
+				client.mob.say(";" + entry)
+			else
+				client.mob.say_verb(";" + entry)
 			return TRUE
 		if(ME_CHANNEL)
 			client.mob.me_verb(entry)
@@ -134,7 +141,7 @@
 		var/target_channel = payload["channel"]
 		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL || target_channel == PRAY_CHANNEL)
 			target_channel = SAY_CHANNEL // No ooc leaks
-		delegate_speech(alter_entry(payload), target_channel)
+		delegate_speech(alter_entry(payload), target_channel, forced = TRUE)
 		return TRUE
 	if(type == "save")
 		saved_text = "" // so we can differentiate null (nothing saved) and empty (nothing typed)
