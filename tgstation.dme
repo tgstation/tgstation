@@ -5266,6 +5266,7 @@
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_hud.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_movement.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_paranormal.dm"
+#include "code\modules\mob\living\basic\bots\mulebot\mulebot_tool_interactions.dm"
 #include "code\modules\mob\living\basic\bots\repairbot\repairbot.dm"
 #include "code\modules\mob\living\basic\bots\repairbot\repairbot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\repairbot\repairbot_ai.dm"

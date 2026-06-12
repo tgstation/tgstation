@@ -97,6 +97,16 @@
 	charge_hud?.update_battery_overlay(new_cell)
 	charge_hud?.calculate_charge()
 
+
+/mob/living/basic/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN && !HAS_AI_ACCESS(user))
+		wires.interact(user)
+		return
+	if(wires.is_cut(WIRE_RX) && HAS_AI_ACCESS(user))
+		return
+
+	return ..()
+
 /mob/living/basic/bot/mulebot/examine(mob/user)
 	. = ..()
 	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
