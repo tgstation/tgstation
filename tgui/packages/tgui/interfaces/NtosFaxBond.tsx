@@ -43,10 +43,16 @@ export const NtosFaxBondContent = (props) => {
             </Table.Row>
             {faxes_info.map((fax) => (
               <Table.Row className="candystripe" key={fax.id}>
-                <Table.Cell>{fax.id}</Table.Cell>
-                <Table.Cell>{fax.name}</Table.Cell>
-                <Table.Cell>{fax.location}</Table.Cell>
-                <Table.Cell collapsing>
+                <Table.Cell py={1} verticalAlign="middle">
+                  {fax.id}
+                </Table.Cell>
+                <Table.Cell py={1} verticalAlign="middle">
+                  {fax.name}
+                </Table.Cell>
+                <Table.Cell py={1} verticalAlign="middle">
+                  {fax.location}
+                </Table.Cell>
+                <Table.Cell py={1} verticalAlign="middle" collapsing>
                   <Stack>
                     <Button
                       fluid

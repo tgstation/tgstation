@@ -24,7 +24,7 @@
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
-	if (fax_type)
+	if (ispath(fax_type, /obj/machinery/fax))
 		var/datum/computer_file/program/faxbond/fax_notifier = locate() in stored_files
 		var/obj/machinery/fax/heads_fax = pick(SSmachines.get_machines_by_type(fax_type)) //there really shouldnt be more than one
 		fax_notifier.connect_fax(heads_fax)
@@ -35,6 +35,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
 	inserted_item = /obj/item/pen/fountain/captain
+	fax_type = /obj/machinery/fax/heads/captain
 
 /obj/item/modular_computer/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -51,6 +52,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/hop"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
+	fax_type = /obj/machinery/fax/heads/hop
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
@@ -62,6 +64,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
 	inserted_item = /obj/item/pen/red/security
+	fax_type = /obj/machinery/fax/heads/hos
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 	)
@@ -71,6 +74,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/ce"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
+	fax_type = /obj/machinery/fax/heads/ce
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
@@ -82,6 +86,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/cmo"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
+	fax_type = /obj/machinery/fax/heads/cmo
 	starting_programs = list(
 		/datum/computer_file/program/maintenance/phys_scanner,
 		/datum/computer_file/program/records/medical,
@@ -93,6 +98,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	inserted_item = /obj/item/pen/fountain
+	fax_type = /obj/machinery/fax/heads/rd
 	starting_programs = list(
 		/datum/computer_file/program/borg_monitor,
 		/datum/computer_file/program/scipaper_program,
@@ -106,6 +112,7 @@
 	greyscale_colors = "#c4b787#18191e#8b4c31"
 	inserted_item = /obj/item/pen/survival
 	stored_paper = 20
+	fax_type = /obj/machinery/fax/heads/qm
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/restock_tracker,

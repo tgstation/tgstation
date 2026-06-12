@@ -26,9 +26,10 @@
 		RegisterSignal(target, COMSIG_FAX_MESSAGE_RECEIVED, PROC_REF(on_fax_message_received))
 
 	var/list/fax_info = list()
+	var/area/our_area = get_area(target)
 	fax_info["ref"] = WEAKREF(target)
 	fax_info["name"] = target.fax_name
-	fax_info["area_name"] = get_area(target)
+	fax_info["area_name"] = our_area.name
 	fax_info["muted"] = FALSE
 	connected_faxes[our_id] += fax_info
 

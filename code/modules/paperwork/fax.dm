@@ -75,7 +75,6 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 /obj/machinery/fax/heads/Initialize(mapload)
 	. = ..()
-	// All maps should have at least 1 of each head of staff stamp
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/machinery/fax/heads/captain
