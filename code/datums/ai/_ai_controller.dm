@@ -949,6 +949,8 @@ multiple modular subtrees with behaviors
 				continue
 
 			var/associated_value = next_to_clear[inner_value]
+			if(!associated_value) //This wasn't an associated list! we lied! its all been a trick. Try again next time.
+				continue
 			// We are an assoc lists of lists, the list at the next value so we can handle references in there
 			// (But again, we only need to bother checking the list if it's not empty.)
 			if(islist(associated_value) && length(associated_value))
