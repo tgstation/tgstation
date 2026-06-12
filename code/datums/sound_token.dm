@@ -51,6 +51,8 @@
 	update_tracked_cells()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
+
 
 /datum/sound_token/Destroy(force, ...)
 	for(var/listener in listeners)
@@ -198,6 +200,11 @@
 	if(get_dist_euclidean(source_turf, player_turf) > range)
 		return
 	add_or_update_listener(player)
+
+/// Respond to any cliented mob becoming uncliented
+/datum/sound_token/proc/player_logout(datum/source, mob/player)
+	SIGNAL_HANDLER
+	remove_listener(player)
 
 /// If the sound source moves, update tracked cells then refresh all listener positions.
 /datum/sound_token/proc/source_moved()

@@ -645,9 +645,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(parallax_rock)
 	seen_messages = null
-	for(var/tokiewokie in sound_tokens)
-		var/datum/sound_token/sound_token = tokiewokie
-		sound_token.remove_listener(player)
 	sound_tokens = null
 	Master.UpdateTickRate()
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
