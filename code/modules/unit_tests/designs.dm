@@ -29,19 +29,15 @@
 		if (isnull(path::desc) && isnull(path::surgery::rnd_desc) && isnull(path::surgery::desc))
 			TEST_FAIL("Surgery Design [path] has no desc set or inferable from surgery type")
 
+///Check that all designs have a corresponding id and viceversa, and that they're actually implemented (techweb or disks)
 /datum/unit_test/design_source
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
 
-	for (var/datum/design/design_type as anything in subtypesof(/datum/design))
-		var/design_id = design_type::id
-		if (design_id == DESIGN_ID_IGNORE)
-			continue
-		if (design_id in all_designs)
-			TEST_FAIL("Design [design_type] shares an ID \"[design_id]\" with another design")
-			continue
-		all_designs[design_id] = design_type
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/design = SSresearch.techweb_designs[id]
+		all_designs[design.id] = design.type
 
 	for (var/node_id in SSresearch.techweb_nodes)
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
