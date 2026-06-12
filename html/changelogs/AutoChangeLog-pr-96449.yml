@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Changed tendril regeneration outlinefrom bright green to maroon red"
