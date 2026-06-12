@@ -1922,7 +1922,6 @@
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/retractor = 1,
 		/obj/item/scalpel = 1,
 	)
 
