@@ -99,7 +99,7 @@
 
 
 /mob/living/basic/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN && !HAS_AI_ACCESS(user))
+	if(bot_access_flags & BOT_COVER_MAINTS_OPEN && !HAS_AI_ACCESS(user))
 		wires.interact(user)
 		return
 	if(wires.is_cut(WIRE_RX) && HAS_AI_ACCESS(user))
