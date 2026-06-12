@@ -15,6 +15,7 @@
 			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 			"repeat_secondary": true,
+			"repeat_secondary_delay": "1 SECONDS",
 			"finish_on_primary": false,
 			"children": [
 				{

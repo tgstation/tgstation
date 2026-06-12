@@ -4,7 +4,7 @@
 	"decorator": "/datum/bt_node/decorator/cooldown",
 	"vars": {
 		"cooldown_key": "BB_SALUTE_COOLDOWN",
-		"cooldown_duration": 60
+		"cooldown_duration": "60 SECONDS"
 	},
 	"child": {
 		"type": "sequence",
