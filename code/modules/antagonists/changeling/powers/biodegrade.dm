@@ -1,10 +1,10 @@
 /datum/action/changeling/biodegrade
 	name = "Biodegrade"
-	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
+	desc = "Dissolves restraints or other objects preventing free movement. Costs 15 chemicals."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. Works against grabs."
 	button_icon_state = "biodegrade"
 	category = "utility"
-	chemical_cost = 20
+	chemical_cost = 15
 	dna_cost = CHANGELING_POWER_INNATE
 	req_human = TRUE
 	disabled_by_fire = FALSE
