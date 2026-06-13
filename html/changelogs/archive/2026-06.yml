@@ -319,3 +319,14 @@
       last item in the stack
   timothymtorres:
   - sound: Add on/off sound to light switches in rooms
+2026-06-13:
+  Absolucy:
+  - qol: You can now preview what different emotes sound like via the emote panel.
+  Arturlang:
+  - rscadd: beams now animate when moving tile to tile, this is mostly noticeable
+      for constant beam effects
+  - bugfix: beam emissives now work
+  SmArtKar:
+  - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  timothymtorres:
+  - code_imp: Reorganize shuttle maps into separate folders
