@@ -32,6 +32,11 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS

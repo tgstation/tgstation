@@ -3,7 +3,7 @@
 	"bindings": {
 		"f17iiafz": {
 			"label": "Speech Behavior",
-			"default": "/datum/bt_node/ai_behavior/random_speech"
+			"default": "/datum/bt_node/ai_behavior/random_speech_blackboard"
 		}
 	},
 	"type": "parallel",

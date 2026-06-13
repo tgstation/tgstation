@@ -12,6 +12,10 @@
 /mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom, granted_experience = 500, milked_reagent = null)
 	src.milked_reagent = milked_reagent
 	. = ..()
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, list(
+		BB_EMOTE_SAY = GLOB.wisdoms,
+		BB_SPEAK_CHANCE = 15,
+	))
 	src.granted_wisdom = granted_wisdom
 	if(!granted_wisdom)
 		src.granted_wisdom = pick(GLOB.skill_types)
@@ -33,6 +37,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
+		BB_BASIC_MOB_SPEAK_LINES = null,
 	)
 
 ///Give intense wisdom to the attacker if they're being friendly about it

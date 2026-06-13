@@ -62,6 +62,12 @@
 	behavior_tree_json = "rabbit.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Mrrp.", "CHIRP!", "Mrrp?"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -96,6 +102,15 @@
 
 /datum/ai_controller/basic_controller/rabbit/easter
 	behavior_tree_json = "rabbit_easter.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Hop into Easter!", "Come get your eggs!", "Prizes for everyone!"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
+	)
 
 
 /// Same deal as the standard easter subtype, but these ones are able to brave the cold of space with their handy gas mask.
@@ -112,3 +127,12 @@
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
 	behavior_tree_json = "rabbit_easter_space.bt.json"
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Hmph mmph mmmph!", "Mmphe mmphe mmphe!", "Hmm mmm mmm!"),
+			BB_EMOTE_HEAR = list("hops."),
+			BB_EMOTE_SEE = list("hops around.", "bounces up and down."),
+			BB_SPEAK_CHANCE = 10,
+		),
+	)

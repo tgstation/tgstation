@@ -70,6 +70,11 @@
 	blackboard = list(
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("groans.", "moans.", "grunts."),
+			BB_EMOTE_SEE = list("twitches.", "shudders."),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

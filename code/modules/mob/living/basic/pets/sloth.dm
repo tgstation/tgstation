@@ -90,6 +90,11 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("snores.", "yawns."),
+			BB_EMOTE_SEE = list("dozes off.", "looks around sleepily."),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS

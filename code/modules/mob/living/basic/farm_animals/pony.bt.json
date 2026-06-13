@@ -36,24 +36,8 @@
 			]
 		},
 		{
-			"type": "selector",
-			"children": [
-				{
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"vars": {
-						"key": "BB_TAMED"
-					},
-					"child": {
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/random_speech/pony/tamed"
-					}
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/random_speech/pony"
-				}
-			]
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
 		}
 	]
 }

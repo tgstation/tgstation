@@ -52,7 +52,7 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/random_speech/sloth"
+							"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
 						}
 					]
 				},

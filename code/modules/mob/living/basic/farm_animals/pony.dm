@@ -65,6 +65,13 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
+	var/static/list/tamed_emotes = list(
+		BB_EMOTE_HEAR = list("snorts."),
+		BB_EMOTE_SEE = list("snorts."),
+		BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/pony/snort.ogg'),
+		BB_SPEAK_CHANCE = 3,
+	)
+	ai_controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, tamed_emotes)
 
 	if(unique_tamer)
 		my_owner = WEAKREF(tamer)
@@ -121,6 +128,12 @@
 	behavior_tree_json = "pony.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("whinnies!"),
+			BB_EMOTE_SEE = list("horses around."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/pony/whinny01.ogg', 'sound/mobs/non-humanoids/pony/whinny02.ogg', 'sound/mobs/non-humanoids/pony/whinny03.ogg'),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS

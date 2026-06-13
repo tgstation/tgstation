@@ -48,7 +48,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/random_speech/cow"
+					"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
 				}
 			]
 		}

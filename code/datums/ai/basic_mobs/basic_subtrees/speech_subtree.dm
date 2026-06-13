@@ -287,11 +287,6 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/random_speech/insect
-	speech_chance = 5
-	sound = list('sound/mobs/non-humanoids/insect/chitter.ogg')
-	emote_hear = list("chitters.")
-
 /datum/bt_node/ai_behavior/random_speech/mothroach
 	speech_chance = 15
 	emote_hear = list("flutters.")
@@ -312,76 +307,12 @@
 	emote_hear = list("stamps around some.", "hisses a bit.")
 	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
 
-/datum/bt_node/ai_behavior/random_speech/sheep
-	speech_chance = 5
-	speak = list("baaa", "baaaAAAAAH!", "baaah")
-	sound = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg')
-	emote_hear = list("bleats.")
-	emote_see = list("shakes her head.", "stares into the distance.")
-
-/datum/bt_node/ai_behavior/random_speech/rabbit
-	speech_chance = 10
-	speak = list("Mrrp.", "CHIRP!", "Mrrp?")
-	emote_hear = list("hops.")
-	emote_see = list("hops around.", "bounces up and down.")
-
-/datum/bt_node/ai_behavior/random_speech/rabbit/easter
-	speak = list("Hop into Easter!", "Come get your eggs!", "Prizes for everyone!")
-
-/datum/bt_node/ai_behavior/random_speech/rabbit/easter/space
-	speak = list("Hmph mmph mmmph!", "Mmphe mmphe mmphe!", "Hmm mmm mmm!")
-
-/datum/bt_node/ai_behavior/random_speech/chicken
-	speech_chance = 15
-	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
-	sound = list('sound/mobs/non-humanoids/chicken/clucks.ogg', 'sound/mobs/non-humanoids/chicken/bagawk.ogg')
-	emote_hear = list("clucks.", "croons.")
-	emote_see = list("pecks at the ground.", "flaps her wings viciously.")
-
-/datum/bt_node/ai_behavior/random_speech/zombie
-	speech_chance = 3
-	emote_hear = list("groans.", "moans.", "grunts.")
-	emote_see = list("twitches.", "shudders.")
-
 /datum/bt_node/ai_behavior/random_speech/chick
 	speech_chance = 4
 	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
 	sound = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg')
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.", "flaps her tiny wings.")
-
-/datum/bt_node/ai_behavior/random_speech/cow
-	speech_chance = 1
-	speak = list("moo?", "moo", "MOOOOOO")
-	sound = list('sound/mobs/non-humanoids/cow/cow.ogg')
-	emote_hear = list("brays.")
-	emote_see = list("shakes her head.")
-
-/datum/bt_node/ai_behavior/random_speech/cow/wisdom
-	speech_chance = 15
-
-/datum/bt_node/ai_behavior/random_speech/cow/wisdom/New()
-	. = ..()
-	speak = GLOB.wisdoms
-	sound = list()
-
-/datum/bt_node/ai_behavior/random_speech/deer
-	speech_chance = 1
-	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
-	emote_hear = list("brays.")
-	emote_see = list("shakes her head.")
-
-/datum/bt_node/ai_behavior/random_speech/goat
-	speech_chance = 3
-	speak = list("EHEHEHEHEH", "eh?")
-	emote_hear = list("brays.")
-	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
-
-/datum/bt_node/ai_behavior/random_speech/goose
-	speech_chance = 3
-	speak = list("Honk!")
-	emote_hear = list("honks.", "honks loudly.", "honks aggressively.")
-	emote_see = list("flaps.", "preens.", "glares around.")
 
 /datum/bt_node/ai_behavior/random_speech/faithless
 	speech_chance = 1
@@ -392,28 +323,6 @@
 	speak = list("Gnot a gnelf!", "Gnot a gnoblin!", "Howdy chum!")
 	emote_hear = list("snores.", "burps.")
 	emote_see = list("blinks.")
-
-/datum/bt_node/ai_behavior/random_speech/tree
-	speech_chance = 3
-	emote_see = list("photosynthesizes angrily.")
-
-/datum/bt_node/ai_behavior/random_speech/pig
-	speech_chance = 3
-	speak = list("oink?", "oink", "snurf")
-	sound = list('sound/mobs/non-humanoids/pig/pig1.ogg', 'sound/mobs/non-humanoids/pig/pig2.ogg')
-	emote_hear = list("snorts.")
-	emote_see = list("sniffs around.")
-
-/datum/bt_node/ai_behavior/random_speech/pony
-	speech_chance = 3
-	sound = list('sound/mobs/non-humanoids/pony/whinny01.ogg', 'sound/mobs/non-humanoids/pony/whinny02.ogg', 'sound/mobs/non-humanoids/pony/whinny03.ogg')
-	emote_hear = list("whinnies!")
-	emote_see = list("horses around.")
-
-/datum/bt_node/ai_behavior/random_speech/pony/tamed
-	sound = list('sound/mobs/non-humanoids/pony/snort.ogg')
-	emote_hear = list("snorts.")
-	emote_see = list("snorts.")
 
 /datum/bt_node/ai_behavior/random_speech/killer_tomato
 	speech_chance = 3
@@ -456,21 +365,8 @@
 	emote_see = list("meows.")
 
 
-/datum/bt_node/ai_behavior/random_speech/snake
-	speech_chance = 5
-	speak = list("hsssss","sssSSsssss...","hiisssss")
-	sound = list('sound/mobs/non-humanoids/snake/snake_hissing1.ogg', 'sound/mobs/non-humanoids/snake/snake_hissing2.ogg')
-	emote_hear = list("hisses.")
-	emote_see = list("slithers around.", "glances.", "stares.")
-
-/datum/bt_node/ai_behavior/random_speech/sloth
-	speech_chance = 1
-	emote_hear = list("snores.", "yawns.")
-	emote_see = list("dozes off.", "looks around sleepily.")
-
 ///Speech behavior that reads from a blackboard to pick what to say. Useful for things with dynamic speech behaviors
 /datum/bt_node/ai_behavior/random_speech_blackboard
-	time_between_perform = 1 SECONDS
 
 /datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]

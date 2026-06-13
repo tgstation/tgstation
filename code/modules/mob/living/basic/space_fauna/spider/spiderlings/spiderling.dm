@@ -65,6 +65,11 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS

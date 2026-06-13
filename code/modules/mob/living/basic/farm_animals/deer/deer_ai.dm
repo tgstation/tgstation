@@ -3,6 +3,12 @@
 	blackboard = list(
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO"),
+			BB_EMOTE_HEAR = list("brays."),
+			BB_EMOTE_SEE = list("shakes her head."),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
