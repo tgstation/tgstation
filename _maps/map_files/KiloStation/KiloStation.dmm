@@ -30217,15 +30217,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"jBh" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "robotics_shutters";
-	name = "Robotics Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "jBi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -47050,6 +47041,10 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/pen,
+/obj/machinery/door/window/left/directional/south{
+	name = "Cargo Desk";
+	req_access = list("shipping")
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "pfM" = (
@@ -76059,6 +76054,10 @@
 /area/station/maintenance/port/greater)
 "ycy" = (
 /obj/structure/plasticflaps/opaque,
+/obj/machinery/door/window/left/directional/south{
+	name = "Cargo Delivery Access";
+	req_access = list("shipping")
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ycF" = (
@@ -113480,7 +113479,7 @@ lko
 oHP
 xjT
 bBF
-jBh
+gkv
 lYg
 app
 gkv
