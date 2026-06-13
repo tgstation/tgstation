@@ -326,6 +326,9 @@
   - rscadd: beams now animate when moving tile to tile, this is mostly noticeable
       for constant beam effects
   - bugfix: beam emissives now work
+  CabinetOnFire:
+  - bugfix: You can now hear the outside world when you're inside of something again
+      (e.g. lockers, mechs
   SmArtKar:
   - image: Changed tendril regeneration outlinefrom bright green to maroon red
   timothymtorres:
