@@ -809,3 +809,6 @@
 
 /datum/config_entry/string/policy_json_path
 	default = "policy.json"
+
+/datum/config_entry/str_list/ignored_cids
+	protection = CONFIG_ENTRY_LOCKED
