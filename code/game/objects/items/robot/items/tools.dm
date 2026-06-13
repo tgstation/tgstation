@@ -335,7 +335,6 @@
 	desc = "A set of botanical tools used by cyborgs to do gardening."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili"
-
 	omni_toolkit = list(
 		/obj/item/secateurs/cyborg,
 		/obj/item/cultivator/cyborg,
