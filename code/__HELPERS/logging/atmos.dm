@@ -17,7 +17,7 @@
 
 	//Gas specific information assigned to each gas.
 	for(var/datum/gas/gas_path as anything in cached_moles)
-		var/moles = cached_moles[gas_id]
+		var/moles = cached_moles[gas_path]
 		var/composition = moles / total_moles
 		var/energy = temperature * moles * cached_specific_heat[gas_path]
 		var/value = initial(gas_path.base_value) * moles
