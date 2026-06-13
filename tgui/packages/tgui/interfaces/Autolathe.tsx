@@ -101,33 +101,32 @@ export const Autolathe = (props) => {
                                 </ProgressBar>
                               </Stack.Item>
                               <Stack.Item>Eject:</Stack.Item>
-                              {(material.amount >= SHEET_MATERIAL_AMOUNT * 6
-                                ? [
-                                    1,
-                                    5,
-                                    Math.floor(
-                                      material.amount / SHEET_MATERIAL_AMOUNT,
-                                    ),
-                                  ]
-                                : [1, 5]
-                              ).map((amt) => (
-                                <Stack.Item key={amt}>
-                                  <Button
-                                    disabled={
-                                      material.amount <
-                                      SHEET_MATERIAL_AMOUNT * amt
-                                    }
-                                    onClick={() =>
-                                      act('eject', {
-                                        ref: material.ref,
-                                        amount: amt,
-                                      })
-                                    }
-                                  >
-                                    x{amt}
-                                  </Button>
-                                </Stack.Item>
-                              ))}
+                              {[
+                                1,
+                                5,
+                                Math.floor(
+                                  material.amount / SHEET_MATERIAL_AMOUNT,
+                                ),
+                              ]
+                                .sort()
+                                .map((amt) => (
+                                  <Stack.Item key={amt}>
+                                    <Button
+                                      disabled={
+                                        material.amount <
+                                        SHEET_MATERIAL_AMOUNT * amt
+                                      }
+                                      onClick={() =>
+                                        act('eject', {
+                                          ref: material.ref,
+                                          amount: amt,
+                                        })
+                                      }
+                                    >
+                                      x{amt}
+                                    </Button>
+                                  </Stack.Item>
+                                ))}
                             </Stack>
                           </LabeledList.Item>
                         ))}
