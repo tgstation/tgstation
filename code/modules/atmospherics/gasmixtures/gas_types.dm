@@ -1,21 +1,25 @@
 /proc/meta_gas_list()
-	. = subtypesof(/datum/gas)
-	for(var/gas_path in .)
-		var/list/gas_info = new(8)
+	var/list/gas_info = new (META_GAS_LENGTH)
+	for (var/array_idx in 1 to gas_info.len)
+		gas_info[array_idx] = list()
+
+	var/list/gas_types = subtypesof(/datum/gas)
+	ASSERT(GAS_TYPE_COUNT == length(gas_types),\
+		"GAS_TYPE_COUNT != length(subtypesof(gas_types)), if you added new gas please increment GAS_TYPE_COUNT")
+	for(var/gas_path in gas_types)
 		var/datum/gas/gas = gas_path
+		gas_info[META_GAS_SPECIFIC_HEAT][gas_path] = initial(gas.specific_heat)
+		gas_info[META_GAS_NAME][gas_path] = initial(gas.name)
+		gas_info[META_GAS_MOLES_VISIBLE][gas_path] = initial(gas.moles_visible)
+		if (gas_info[META_GAS_MOLES_VISIBLE][gas_path])
+			gas_info[META_GAS_OVERLAY][gas_path] += generate_gas_overlays(0, SSmapping.max_plane_offset, gas)
+		gas_info[META_GAS_FUSION_POWER][gas_path] = initial(gas.fusion_power)
+		gas_info[META_GAS_DANGER][gas_path] = initial(gas.dangerous)
+		gas_info[META_GAS_ID][gas_path] = initial(gas.id)
+		gas_info[META_GAS_DESC][gas_path] = initial(gas.desc)
 
-		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME] = initial(gas.name)
-
-		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
-		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = generate_gas_overlays(0, SSmapping.max_plane_offset, gas)
-
-		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
-		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
-		gas_info[META_GAS_ID] = initial(gas.id)
-		gas_info[META_GAS_DESC] = initial(gas.desc)
-		.[gas_path] = gas_info
+	/datum/gas_mixture::gas_meta = gas_info // save the reference to the list
+	return gas_info
 
 /proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
 	var/list/to_return = list()
@@ -28,11 +32,11 @@
 	return to_return
 
 /proc/gas_id2path(id)
-	var/list/meta_gas = GLOB.meta_gas_info
-	if(id in meta_gas)
+	var/list/meta_gas_id = GLOB.meta_gas_info[META_GAS_ID]
+	if(id in meta_gas_id)
 		return id
-	for(var/path in meta_gas)
-		if(meta_gas[path][META_GAS_ID] == id)
+	for(var/path in meta_gas_id)
+		if(meta_gas_id[path] == id)
 			return path
 	return ""
 
