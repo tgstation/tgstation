@@ -67,3 +67,7 @@
 		/datum/gizmodes/bad = 1,
 	)
 	max_modes = 1
+
+/datum/gizmo_interface/moo
+	guaranteed_active_gizmodes = list(/datum/gizmodes/code_crack/moo)
+	max_modes = 1

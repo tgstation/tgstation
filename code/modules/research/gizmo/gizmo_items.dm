@@ -20,3 +20,7 @@
 
 	controller = new controller(src)
 	controller.generate_interfaces(src)
+
+/// Hard-mode code-crack gizmo
+/obj/item/gizmo/moo
+	controller = /datum/gizmo_controller/moo
