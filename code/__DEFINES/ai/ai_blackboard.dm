@@ -85,6 +85,12 @@
 /// Are we a panicking goose?
 #define BB_GOOSE_VOMIT_CHANCE "BB_goose_vomit_chance"
 
+/// Set TRUE to suppress a mob's idle wandering (e.g. while under external/deadchat control).
+#define BB_DISABLE_IDLE "BB_disable_idle"
+
+/// Set TRUE on a mob's controller by /datum/component/tameable once it has been tamed.
+#define BB_TAMED "BB_tamed"
+
 //Hunting BB keys
 ///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"

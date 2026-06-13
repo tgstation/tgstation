@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/cow
+	behavior_tree_json = "cow.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
@@ -7,9 +8,3 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/random_speech/cow,
-	)

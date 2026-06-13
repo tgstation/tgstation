@@ -118,9 +118,11 @@
 /datum/bt_node/ai_behavior/find_and_set/in_list
 	/// If TRUE, excludes items on the pawn's current turf from results.
 	var/exclude_loc = FALSE
+	/// Optional static typecache; if null, locate_path is read as a blackboard key.
+	var/list/find_typecache
 
 /datum/bt_node/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	var/foods_list = controller.blackboard[locate_paths]
+	var/foods_list = find_typecache || controller.blackboard[locate_paths]
 	var/mob/living/living_pawn = controller.pawn
 	var/list/found = typecache_filter_list(oview(search_range, living_pawn), foods_list)
 	if(exclude_loc)
@@ -136,6 +138,23 @@
 /// Override in subtypes to add custom filtering.
 /datum/bt_node/ai_behavior/find_and_set/in_list/proc/valid_target(datum/ai_controller/controller, atom/candidate, search_range)
 	return TRUE
+
+/// Variant that searches for turf types in range rather than movable atoms.
+/// Subtypes may set a static turf_typecache instead of reading locate_path from the blackboard.
+/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types
+	/// Optional static typecache of turf types; if null, locate_path is read as a blackboard key.
+	var/list/turf_typecache
+
+/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
+	var/list/types = turf_typecache || controller.blackboard[locate_paths]
+	var/list/found = RANGE_TURFS(search_range, controller.pawn)
+	shuffle_inplace(found)
+	for(var/turf/possible_turf as anything in found)
+		if(!is_type_in_typecache(possible_turf, types))
+			continue
+		if(can_see(controller.pawn, possible_turf, search_range))
+			return possible_turf
+	return null
 
 /// Only picks items that are edible or made of plastic.
 /datum/bt_node/ai_behavior/find_and_set/in_list/goose_food

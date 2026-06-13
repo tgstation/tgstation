@@ -1,0 +1,9 @@
+{
+	"dm_type": "/datum/bt_node/subtree/forage_for_food",
+	"type": "leaf",
+	"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
+	"vars": {
+		"set_key": "BB_TARGET_FOOD",
+		"locate_path": "BB_BASIC_FOODS"
+	}
+}

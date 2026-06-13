@@ -28,15 +28,11 @@
 	return ..()
 
 /datum/ai_controller/basic_controller/cow/wisdom
+	behavior_tree_json = "cow_wisdom.bt.json"
 	//don't give a targeting strategy
 	blackboard = list(
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
-	)
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/random_speech/cow/wisdom,
 	)
 
 ///Give intense wisdom to the attacker if they're being friendly about it

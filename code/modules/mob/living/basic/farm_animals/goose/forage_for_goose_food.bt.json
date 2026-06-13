@@ -1,0 +1,10 @@
+{
+	"dm_type": "/datum/bt_node/subtree/forage_for_goose_food",
+	"type": "leaf",
+	"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/goose_food",
+	"vars": {
+		"set_key": "BB_TARGET_FOOD",
+		"locate_path": "BB_BASIC_FOODS",
+		"search_range": 1
+	}
+}

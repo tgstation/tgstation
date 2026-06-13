@@ -66,12 +66,6 @@
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
 
-	ai_controller.replace_behavior_nodes(list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/pony/tamed,
-	))
-
 	if(unique_tamer)
 		my_owner = WEAKREF(tamer)
 		RegisterSignal(src, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_prebuckle))
@@ -124,21 +118,13 @@
 	. |= SHOVE_CAN_STAGGER
 
 /datum/ai_controller/basic_controller/pony
+	behavior_tree_json = "pony.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pony,
-	)
 
 // A stronger horse is required for our strongest cowboys.
 /mob/living/basic/pony/syndicate

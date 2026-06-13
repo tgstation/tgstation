@@ -322,6 +322,8 @@
 #define BB_DEER_GRASS_TARGET "deer_grass_target"
 ///our tree target
 #define BB_DEER_TREE_TARGET "deer_tree_target"
+///set when we roll the urge to go find another deer to play with
+#define BB_DEER_WANTS_TO_PLAY "deer_wants_to_play"
 ///our temporary playmate
 #define BB_DEER_PLAYFRIEND "deer_playfriend"
 ///our home target
@@ -330,6 +332,10 @@
 #define BB_DEER_RESTING "deer_resting"
 ///time till our next rest duration
 #define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
+///cooldowns gating how often we graze, drink and mark territory
+#define BB_DEER_GRAZE_COOLDOWN "deer_graze_cooldown"
+#define BB_DEER_DRINK_COOLDOWN "deer_drink_cooldown"
+#define BB_DEER_MARK_COOLDOWN "deer_mark_cooldown"
 
 //the thing boss
 #define BB_THETHING_CHARGE "BB_THETHING_CHARGE"

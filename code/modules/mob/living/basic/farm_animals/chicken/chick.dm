@@ -78,6 +78,7 @@
 	grow_as = null
 
 /datum/ai_controller/basic_controller/chick
+	behavior_tree_json = "chick.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
@@ -85,8 +86,3 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/look_for_adult,
-	)

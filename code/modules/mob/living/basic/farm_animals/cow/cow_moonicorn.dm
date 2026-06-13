@@ -40,21 +40,11 @@
 	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
+	behavior_tree_json = "cow_moonicorn.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
-	)
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/random_speech/cow,
-		//finds someone to kill
-		/datum/ai_planning_subtree/simple_find_target,
-		//...or something to eat, possibly. both types of target handled by melee attack subtree
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 ///moonicorns will not attack people holding something that could tame them.

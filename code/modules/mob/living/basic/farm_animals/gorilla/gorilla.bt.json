@@ -1,0 +1,140 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/gorilla",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_ENEMY_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+							"children": [
+								{
+									"type": "selector",
+									"children": [
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
+											"vars": {
+												"observer_abort": "BT_ABORT_BOTH",
+												"key": "BB_CURRENT_TARGET"
+											},
+											"child": {
+												"type": "parallel",
+												"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+												"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+												"repeat_secondary": true,
+												"finish_on_primary": true,
+												"children": [
+													{
+														"type": "subplan",
+														"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+														"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+														"children": [
+															{
+																"type": "selector",
+																"children": [
+																	{
+																		"type": "leaf",
+																		"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+																		"vars": {
+																			"target_key": "BB_CURRENT_TARGET",
+																			"can_attack_turfs": true
+																		}
+																	},
+																	{
+																		"type": "leaf",
+																		"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+																		"vars": {
+																			"target_key": "BB_CURRENT_TARGET",
+																			"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+																			"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"required_dist": 1,
+															"finish_on_arrival": false
+														}
+													}
+												]
+											}
+										},
+										{
+											"type": "subtree",
+											"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+										},
+										{
+											"type": "subplan",
+											"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+											"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+											"loop_delay": "IDLE_BEHAVIOR_RATE",
+											"children": [
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance_from_key",
+							"vars": {
+								"chance_key": "BB_EMOTE_CHANCE"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/run_emote",
+								"vars": {
+									"emote_key": "BB_EMOTE_KEY"
+								}
+							}
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/update_targets",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/forage_for_food"
+				}
+			]
+		}
+	]
+}

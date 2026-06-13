@@ -3,7 +3,7 @@
 	"bindings": {
 		"q8w3rtv1": {
 			"label": "Food Finder",
-			"default": "/datum/bt_node/ai_behavior/find_and_set/in_list"
+			"default": "/datum/bt_node/subtree/forage_for_food"
 		},
 		"z4n9bk7p": {
 			"label": "Retaliate Manager",
@@ -67,16 +67,24 @@
 					"subtype": "/datum/bt_node/subtree/move_to_and_eat"
 				},
 				{
-					"type": "subplan",
-					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-					"loop_delay": "IDLE_BEHAVIOR_RATE",
-					"children": [
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
-						}
-					]
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_DISABLE_IDLE",
+						"invert": true
+					},
+					"child": {
+						"type": "subplan",
+						"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+						"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+						"loop_delay": "IDLE_BEHAVIOR_RATE",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+							}
+						]
+					}
 				}
 			]
 		},
@@ -85,12 +93,8 @@
 			"subtype": "$z4n9bk7p"
 		},
 		{
-			"type": "leaf",
-			"behavior": "$q8w3rtv1",
-			"vars": {
-				"set_key": "BB_TARGET_FOOD",
-				"locate_path": "BB_BASIC_FOODS"
-			}
+			"type": "subtree",
+			"subtype": "$q8w3rtv1"
 		}
 	]
 }
