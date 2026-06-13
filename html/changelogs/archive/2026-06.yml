@@ -331,5 +331,10 @@
       (e.g. lockers, mechs
   SmArtKar:
   - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  SyncIt21:
+  - rscdel: removes the welder from the engiborg omnitool. They are now separate entities
+      again
+  - qol: The omnitool radial menu won't show the same selected tool again reducing
+      clutter
   timothymtorres:
   - code_imp: Reorganize shuttle maps into separate folders
