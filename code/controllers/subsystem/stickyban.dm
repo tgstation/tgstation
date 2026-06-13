@@ -4,11 +4,18 @@ SUBSYSTEM_DEF(stickyban)
 
 	var/list/cache = list()
 	var/list/dbcache = list()
-	var/list/ignored_cids = list()
+	var/list/ignored_cids = list() // will be used as numeric-keyed map
 	var/dbcacheexpire = 0
 
 
 /datum/controller/subsystem/stickyban/Initialize()
+	// load IGNORED_CIDS as number_list into a fast lookup map
+	var/list/ignored_conf = CONFIG_GET(number_list/ignored_cids)
+	if (ignored_conf && ignored_conf.len)
+		for (var/num in ignored_conf)
+			if (isnum(num))
+				ignored_cids[num2text(num)] = TRUE
+
 	if (length(GLOB.stickybanadminexemptions))
 		restore_stickybans()
 
@@ -218,19 +225,5 @@ SUBSYSTEM_DEF(stickyban)
 	if (length(sqlips))
 		SSdbcore.MassInsert(format_table_name("stickyban_matched_ip"), sqlips, ignore_errors = TRUE)
 
-
-	return TRUE
-
-
-/datum/controller/subsystem/stickyban/proc/add_matched_cid(existing_ban_id, cid)
-	// Skip configured ignored CIDs
-	if ((("" + cid) in ignored_cids))
-		return TRUE
-
-	// Insert and let DB or periodic cache refresh handle duplicates
-	var/list/sqlcid = list()
-	sqlcid["stickyban"] = existing_ban_id
-	sqlcid["matched_cid"] = cid
-	SSdbcore.MassInsert(format_table_name("stickyban_matched_cid"), list(sqlcid), ignore_errors = TRUE)
 
 	return TRUE
