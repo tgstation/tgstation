@@ -343,6 +343,5 @@
 		/obj/item/shovel/spade/cyborg,
 	)
 
-
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
