@@ -1,0 +1,5 @@
+# Apsis-Station felinid whitelist
+# One BYOND ckey per line (lowercase, no spaces)
+# Lines starting with # are ignored
+# exampleckey
+# anotherckey
