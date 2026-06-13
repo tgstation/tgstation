@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "You can now deconstruct first aid stations with a screwdriver and a crowbar."
+  - rscadd: "You can now buy first aid station circuitboards from cargo for 1200 credits."
+  - rscadd: "Most medical supplies ordered from cargo now come in DeForest crates. Sansufentanyl comes in an Interdyne create."
+  - balance: "As they can now be replaced, first aid station armor has been reduced."
+  - balance: "Emergency first aid stations now heal twice as fast but also take twice as long to recharge."
