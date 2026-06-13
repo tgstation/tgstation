@@ -67,7 +67,7 @@
 	return FALSE
 
 // Proc that checks if code is valid or not (matches the restrictions)
-/datum/gizmodes/code_crack/proc/validate_code(var/list/code)
+/datum/gizmodes/code_crack/proc/validate_code(list/code)
 	// Restrictions are defined by the subtype
 	return TRUE
 
@@ -251,7 +251,7 @@
 	var/max_code_length = 4
 
 // All digits must be unique
-/datum/gizmodes/code_crack/moo/validate_code(var/code)
+/datum/gizmodes/code_crack/moo/validate_code(code)
 	for(var/i in 1 to code_length)
 		for(var/j in 1 to i-1)
 			if(code[i] == code[j])
