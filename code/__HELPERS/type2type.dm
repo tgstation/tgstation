@@ -320,6 +320,15 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 					if(var_source.vars.Find(A))
 						. += A
 
+/// Converts a screen loc param to a x,y coordinate pixel on the screen.
+/proc/params2screenpixel(scr_loc)
+	var/list/x_and_y = splittext(scr_loc, ",")
+	var/list/x_dirty = splittext(x_and_y[1], ":")
+	var/list/y_dirty = splittext(x_and_y[2], ":")
+	var/x = (text2num(x_dirty[1]) - 1) * ICON_SIZE_X + text2num(x_dirty[2])
+	var/y = (text2num(y_dirty[1]) - 1) * ICON_SIZE_Y + text2num(y_dirty[2])
+	return list(x, y)
+
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)
 	var/length = length(string)

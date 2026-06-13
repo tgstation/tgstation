@@ -260,7 +260,7 @@
 	var/healing_budget = 35 * heal_multiplier
 	// Transfer damage from each limb to the mendicant's counterpart.
 	for(var/obj/item/bodypart/affected_limb as anything in hurtguy.get_bodyparts())
-		if(!(affected_limb & BODYTYPE_ORGANIC))
+		if(!(affected_limb.bodytype & BODYTYPE_ORGANIC))
 			continue
 		var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_bodypart(affected_limb.body_zone)
 		var/list/mendicant_organic_limbs = list()

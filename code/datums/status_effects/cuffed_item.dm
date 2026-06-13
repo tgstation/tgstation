@@ -323,7 +323,7 @@
 	var/atom/movable/movable_parent = parent
 	link_effect = movable_parent.AddComponent(/datum/component/leash, owner = chained_to, distance = 1)
 	tug_effect  = movable_parent.AddComponent(/datum/component/tug_towards, tugging_to = chained_to, strength = 0.66)
-	beam_effect = movable_parent.Beam(chained_to, "chain")
+	beam_effect = movable_parent.Beam(chained_to, "chain", animate = FALSE)
 	RegisterSignal(link_effect, COMSIG_QDELETING, PROC_REF(delete_self))
 	RegisterSignal(tug_effect,  COMSIG_QDELETING, PROC_REF(delete_self))
 	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
@@ -345,7 +345,7 @@
 
 	UnregisterSignal(beam_effect, COMSIG_QDELETING)
 	var/atom/movable/movable_parent = parent
-	beam_effect = movable_parent.Beam(chained_to_weakref.resolve(), "chain")
+	beam_effect = movable_parent.Beam(chained_to_weakref.resolve(), "chain", animate = FALSE)
 	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
 
 /datum/component/chained_together/proc/delete_self(datum/source)

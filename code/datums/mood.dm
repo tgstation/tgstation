@@ -495,6 +495,9 @@
 	else
 		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]<br>"
 
+	if(LAZYLEN(mob_parent.personalities))
+		msg += span_notice("You know yourself to be [mob_parent.get_parsonality_string()].<br>")
+
 	if(LAZYLEN(mob_parent.quirks))
 		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
 

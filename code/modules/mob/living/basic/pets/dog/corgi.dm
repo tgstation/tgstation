@@ -270,7 +270,8 @@
 ///Handler for COMSIG_MOB_RETRIEVE_ACCESS
 /mob/living/basic/pet/dog/corgi/proc/retrieve_access(mob/accessor, list/player_access)
 	SIGNAL_HANDLER
-	player_access += access_card.GetAccess()
+	if(access_card)
+		player_access += access_card.GetAccess()
 
 ///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
 /mob/living/basic/pet/dog/corgi/proc/on_appearance_change()

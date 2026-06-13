@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ruins_templates = list()
 
+	///Assoc list of all ruins spawned, key center of ruin spawn -> value ruin instance
+	var/list/active_ruins = alist()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -141,7 +144,7 @@ SUBSYSTEM_DEF(mapping)
 	if(current_map.wilderness_levels)
 		var/list/FailedZs = list()
 
-		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
