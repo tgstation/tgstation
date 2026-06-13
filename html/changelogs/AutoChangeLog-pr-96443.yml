@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - rscdel: "removes the welder from the engiborg omnitool. They are now separate entities again"
+  - qol: "The omnitool radial menu won't show the same selected tool again reducing clutter"
