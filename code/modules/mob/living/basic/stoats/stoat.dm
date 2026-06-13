@@ -87,7 +87,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 10 MINUTES,\
+		growth_time = 20 MINUTES,\
 		growth_probability = 100,\
 		lower_growth_value = 0.5,\
 		upper_growth_value = 1,\
