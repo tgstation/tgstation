@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - balance: "Bitrunners can't back out of domains via the ladder while bitrunning glitches remain in them"

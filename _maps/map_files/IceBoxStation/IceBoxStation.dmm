@@ -7708,12 +7708,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cdr" = (
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
-	name = "Securiy Firing Range";
-	req_access = list("security");
+	name = "Security Firing Range";
 	security_level = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "cef" = (
@@ -24246,15 +24245,15 @@
 /area/station/medical/virology)
 "gSo" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/airlock/maintenance{
-	name = "Securiy Maintenance"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/maintenance{
+	name = "Security Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/security/brig/upper)
 "gSq" = (
@@ -28876,7 +28875,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance{
-	name = "Securiy Maintenance"
+	name = "Security Maintenance"
 	},
 /turf/open/floor/plating,
 /area/station/security/range)
@@ -32820,15 +32819,14 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "jsm" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Mech Bay";
-	req_access = list("security")
-	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Mech Bay"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "jsq" = (

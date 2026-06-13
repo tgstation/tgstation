@@ -119,16 +119,34 @@ GLOBAL_LIST_EMPTY(radial_menus)
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
 	var/atom/movable/AM = anchor
-	if(!istype(AM) || !AM.screen_loc)
+	if(!istype(AM))
 		return
-	if(AM in user.client.screen)
-		if(hudfix_method)
-			anchor = user
-		else
-			py_shift = 32
-			restrict_to_dir(NORTH) //I was going to parse screen loc here but that's more effort than it's worth.
-	else if(hudfix_method && AM.loc)
-		anchor = get_atom_on_turf(anchor)
+
+	var/in_screen = AM.screen_loc && (AM in user.client.screen)
+	if (!in_screen)
+		var/list/check_locs = AM.vis_locs.Copy()
+		var/i = 1
+		while (i <= length(check_locs))
+			var/atom/movable/other_check = check_locs[i]
+			i += 1
+			if (!istype(other_check))
+				continue
+			if (other_check.screen_loc && (other_check in user.client.screen))
+				in_screen = TRUE
+				break
+			check_locs |= other_check.vis_locs
+
+		if(!in_screen)
+			if(hudfix_method && AM.loc)
+				anchor = get_atom_on_turf(anchor)
+			return
+
+	if(hudfix_method)
+		anchor = user
+		return
+
+	py_shift = 32
+	restrict_to_dir(NORTH) //I was going to parse screen loc here but that's more effort than it's worth.
 
 //Sets defaults
 //These assume 45 deg min_angle
