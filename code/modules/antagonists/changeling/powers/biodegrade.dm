@@ -4,8 +4,8 @@
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. Works against grabs."
 	button_icon_state = "biodegrade"
 	category = "utility"
-	chemical_cost = 30
-	dna_cost = 2
+	chemical_cost = 20
+	dna_cost = CHANGELING_POWER_INNATE
 	req_human = TRUE
 	disabled_by_fire = FALSE
 	var/static/bio_acid_path = /datum/reagent/toxin/acid/bio_acid
