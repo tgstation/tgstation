@@ -795,7 +795,7 @@
 
 	var/obj/item/I = get_active_held_item()
 	if(I)
-		I.attack_self(src, list(ACTIVATE_INHAND_ITEM = TRUE))
+		I.attack_self(src)
 		update_held_items()
 		return
 

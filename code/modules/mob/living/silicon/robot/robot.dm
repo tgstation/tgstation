@@ -398,7 +398,7 @@
 		return
 	var/obj/item/W = get_active_held_item()
 	if(W)
-		W.attack_self(src, list(ACTIVATE_INHAND_ITEM = TRUE))
+		W.attack_self(src)
 
 
 /mob/living/silicon/robot/proc/SetLockdown(state = TRUE)
