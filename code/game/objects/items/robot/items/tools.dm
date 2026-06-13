@@ -328,7 +328,7 @@
 	if(tool_behaviour == TOOL_MULTITOOL)
 		var/obj/item/multitool/tool = atoms[/obj/item/multitool/cyborg]
 		if(tool?.buffer)
-			. += span_notice("Multitool contains [tool.buffer].")
+			. += span_notice("Multitool buffer contains [tool.buffer].")
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"
