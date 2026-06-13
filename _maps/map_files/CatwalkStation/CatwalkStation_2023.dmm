@@ -7042,7 +7042,7 @@
 /obj/machinery/status_display/supply{
 	pixel_y = 32
 	},
-/obj/machinery/disposal/delivery_chute{
+/obj/structure/disposaloutlet{
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/south,
@@ -21404,7 +21404,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Cargo Storage4"
 	},
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	name = "Old Yeller"
 	},
 /turf/open/floor/iron/recharge_floor,
@@ -33958,7 +33958,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Cargo Storage-2"
 	},
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	name = "Parcel Pete"
 	},
 /obj/item/radio/intercom/directional/west,
@@ -66111,10 +66111,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
-"rDG" = (
-/obj/effect/turf_decal/tile/red,
-/turf/closed/wall/r_wall,
-/area/station/engineering/lobby)
 "rDN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -197861,7 +197857,7 @@ weC
 lDI
 kOk
 kOk
-rDG
+kOk
 kOk
 kOk
 mAH

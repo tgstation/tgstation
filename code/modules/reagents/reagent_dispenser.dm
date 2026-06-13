@@ -35,6 +35,8 @@
 	var/last_rigger = ""
 	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
+	/// Flags passed to the reagents datum upon creation
+	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
@@ -152,7 +154,7 @@
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
-	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
+	create_reagents(tank_volume, reagent_flags)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
@@ -358,6 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
+	reagent_flags = DRAINABLE | TRANSPARENT
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
