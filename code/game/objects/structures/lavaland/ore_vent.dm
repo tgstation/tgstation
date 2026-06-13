@@ -555,7 +555,7 @@
 	Shake(duration = 1.5 SECONDS)
 
 	//decorate the boulder with materials
-	var/list/mats_list = list()
+	var/list/mats_list = new_rock.custom_materials?.Copy() || list()
 	for(var/iteration in 1 to MINERALS_PER_BOULDER)
 		var/datum/material/material = pick_weight(mineral_breakdown)
 		mats_list[material] += ore_quantity_function(iteration)

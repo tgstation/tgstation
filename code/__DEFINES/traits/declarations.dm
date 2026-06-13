@@ -381,6 +381,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
+/// For mobs / minds with the listening_prayers trait, this stops them from hearing prayers
+#define TRAIT_DONT_HEAR_PRAYERS "dont_hear_prayers"
 #define TRAIT_FEARLESS "fearless"
 /// Ignores darkness for hearing
 #define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"

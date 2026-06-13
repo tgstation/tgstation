@@ -184,7 +184,9 @@
 	playsound(target, placement_sound, 65, vary = TRUE)
 	if(!inside_tray)
 		stored_soil.on_place()
+	var/obj/machinery/hydroponics/soil_ref = stored_soil
 	stored_soil.forceMove(target) //stored_soil is set to null at this point, and the soil sack is deleted when that happens
+	return soil_ref
 
 /obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)

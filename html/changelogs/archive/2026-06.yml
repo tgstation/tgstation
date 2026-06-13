@@ -259,3 +259,77 @@
   - rscadd: Adds packets of beef ramen as an uncommon maintenance spawn
   georgebothways:
   - bugfix: Trays can now unload eight items onto griddles properly.
+  timothymtorres:
+  - sound: Books now make paper sound when opened
+2026-06-11:
+  AtomTheProphet:
+  - rscadd: Adds "Conserved Genetics", a plant trait which prevents the plant from
+      having its instability be altered by cross-pollination.
+  Melbert:
+  - bugfix: Losing your limbs via the cursed quirk now gives you limb stumps (so you
+      can get your limbs back afterwards)
+  SmArtKar:
+  - bugfix: Fixed debug overlays on new biome rocks on lavaland
+  - bugfix: Fixed diamond and bluespace artifact boulders not containing any diamonds/bluespace
+      crystals
+  TealSeer:
+  - refactor: security camera construction/item interaction has been rewritten, report
+      any weirdness
+  Y0SH1M4S73R:
+  - bugfix: Changing the species of most monkeys, whose names were changed to those
+      of individuals on the manifest, will no longer cause the names on those individuals'
+      records to be changed to the name the monkey ends up with.
+  cool20141:
+  - bugfix: fixed TTX healing
+  lelandkemble:
+  - bugfix: fixed a runtime when trying to pull a turf
+  - bugfix: Blood spraying from hitting existing wounds works
+  - bugfix: Corgis no longer runtime when trying to open doors without an ID
+  oranges:
+  - bugfix: fixed arguments for wound recieve damage
+  timothymtorres:
+  - sound: Add valve sound to portable canisters
+  - sound: Add keypad sounds to secure safes
+  - sound: Add drill sound to surgical drill
+2026-06-12:
+  Absolucy, Flleeppyy:
+  - rscadd: Added a websocket client, you can now forward incoming chat messages to
+      an external program, i.e allowing you to change music playlists based on events,
+      or such.
+  Ghommie:
+  - admin: Prayers from players are now boxed (like examine messages and some health
+      readouts for example), making them easier to tell apart from the constant stream
+      of text in your chat tabs.
+  - rscadd: Santa Claus can now hear prayers that mention him or Christmas. He won't
+      know who's praying unless told, though he can tell if they're naughty.
+  Hatterhat:
+  - spellcheck: Butterbean plants are now capitalized properly when planted.
+  Profakos (originally pulled from their branch, did massive chunk of this), Ben10omintrix:
+  - refactor: mulebots have been refactored. please report any bugs
+  SmArtKar:
+  - bugfix: Fixed broken area overlays for particle weather
+  TymSha:
+  - qol: Ooze mobs from cytology now have the same type of HUD as other mobs, allowing
+      them to see their health
+  - qol: The abilities of shoolean grapes now have their cost specified in their description
+  - bugfix: The mending globule ability used by shoolean grapes no longer can be cast
+      while there isn't enough nutrition to do so
+  antropod:
+  - bugfix: fixed material tiles and walls not having material when constructed from
+      last item in the stack
+  timothymtorres:
+  - sound: Add on/off sound to light switches in rooms
+2026-06-13:
+  Absolucy:
+  - qol: You can now preview what different emotes sound like via the emote panel.
+  Arturlang:
+  - rscadd: beams now animate when moving tile to tile, this is mostly noticeable
+      for constant beam effects
+  - bugfix: beam emissives now work
+  CabinetOnFire:
+  - bugfix: You can now hear the outside world when you're inside of something again
+      (e.g. lockers, mechs
+  SmArtKar:
+  - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  timothymtorres:
+  - code_imp: Reorganize shuttle maps into separate folders
