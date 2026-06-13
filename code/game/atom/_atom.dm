@@ -147,6 +147,9 @@
 	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
 	var/spawn_blacklisted = FALSE
 
+	/// What color this shows up as on the tactical map
+	var/tacmap_color = TACMAP_SOLID
+
 /**
  * Top level of the destroy chain for most atoms
  *
@@ -436,6 +439,10 @@
 
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
+	return
+
+/// has a previously nearby atom moved away
+/atom/proc/OnProximityExit(atom/movable/proximity_check_mob as mob|obj)
 	return
 
 /// Sets the wire datum of an atom

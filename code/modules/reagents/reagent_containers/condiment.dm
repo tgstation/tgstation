@@ -493,7 +493,7 @@
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
-		desc = "A small condiment pack. The label says it contains [originalname]"
+		desc = "A small condiment pack. The label says it contains [originalname]."
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup
@@ -541,3 +541,9 @@
 	originalname = "mayonnaise"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/mayonnaise = 5)
+
+/obj/item/reagent_containers/condiment/pack/beef_flavour
+	name = "beef space ramen flavouring"
+	originalname = "beef flavour"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/beef_flavour = 5)

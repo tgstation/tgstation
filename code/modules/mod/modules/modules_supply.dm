@@ -576,8 +576,8 @@
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
-	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
-		The sphere can move quickly, even through lava, and launch mining micromissile to decimate terrain and fauna alike."
+	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. If the modsuit is insulated with bileworm skin, the user will be protected from lava while active. \
+		The sphere can move quickly, even through lava, and launch mining micromissiles to decimate terrain and fauna alike."
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE

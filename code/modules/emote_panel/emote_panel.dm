@@ -44,11 +44,23 @@
 			if(emote.message_param && use_params)
 				emote_param = tgui_input_text(ui.user, "Add params to the emote...", emote.message_param, max_length = MAX_MESSAGE_LEN)
 			ui.user.emote(emote_key, message = emote_param, intentional = TRUE)
+		if("preview_sound")
+			var/emote_key = params["emote_key"]
+			if(isnull(emote_key) || !GLOB.emote_list[emote_key])
+				return
+			var/datum/emote/emote = GLOB.emote_list[emote_key][1]
+			var/emote_sound = get_sfx(emote.get_sound(ui.user))
+			if(!emote_sound)
+				to_chat(ui.user, span_warning("Couldn't get a preview sound for [emote.name]."), type = MESSAGE_TYPE_INFO)
+				return
+			SEND_SOUND(ui.user, sound(emote_sound, volume = 75))
+			to_chat(ui.user, span_warning("Previewed sound for [emote.name]."), type = MESSAGE_TYPE_INFO)
 
 /datum/emote_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "EmotePanel")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/emote_panel/ui_state(mob/user)
