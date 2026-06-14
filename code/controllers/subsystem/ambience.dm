@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(ambience)
 
 		// skip them this tick if they're on the lobby screen or somehow dont have a mob??
 		var/mob/client_mob = client_iterator?.mob
-		if(client_mob || isnewplayer(client_mob))
+		if(!client_mob || isnewplayer(client_mob))
 			continue
 
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
