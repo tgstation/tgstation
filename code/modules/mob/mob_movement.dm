@@ -599,3 +599,8 @@
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()
+
+/mob/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(client?.sound_tokens.len)
+		SSsound_tokens.clients_needing_update[client] = TRUE

@@ -15,7 +15,8 @@
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/safe_instability)
+	graft_gene = /datum/plant_gene/trait/safe_instability
 	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
 
@@ -53,7 +54,7 @@
 	product = /obj/item/food/grown/grass/fairy
 	icon_grow = "fairygrass-grow"
 	icon_dead = "fairygrass-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue, /datum/plant_gene/trait/safe_instability)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
 	graft_gene = /datum/plant_gene/trait/glow/blue
 	mutatelist = null

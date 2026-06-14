@@ -81,6 +81,8 @@
 	var/power_consumption_rate = 20
 	///break if moved, if false also makes it ignore if the wall its on breaks
 	var/break_if_moved = TRUE
+	/// If TRUE we can break on init
+	var/allow_break_on_init = TRUE
 
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
@@ -126,13 +128,14 @@
 /obj/machinery/light/post_machine_initialize()
 	. = ..()
 #ifndef MAP_TEST
-	switch(fitting)
-		if("tube")
-			if(prob(2))
-				break_light_tube(TRUE)
-		if("bulb")
-			if(prob(5))
-				break_light_tube(TRUE)
+	if(allow_break_on_init)
+		switch(fitting)
+			if("tube")
+				if(prob(2))
+					break_light_tube(TRUE)
+			if("bulb")
+				if(prob(5))
+					break_light_tube(TRUE)
 #endif
 	update(trigger = FALSE)
 
@@ -674,17 +677,19 @@
 	var/obj/item/light/light_tube = drop_light_tube()
 	return light_tube.attack_tk(user)
 
-// break the light and make sparks if was on
+// break the light and make sparks if was on, state is mutated BEFORE firing side-effects to prevent re-entrancy loops from synchronous signals.
 /obj/machinery/light/proc/break_light_tube(skip_sound_and_sparks = FALSE)
 	if(status == LIGHT_EMPTY || status == LIGHT_BROKEN)
 		return
 
+	var/was_ok = (status == LIGHT_OK || status == LIGHT_BURNED)
+	status = LIGHT_BROKEN
+
 	if(!skip_sound_and_sparks)
-		if(status == LIGHT_OK || status == LIGHT_BURNED)
+		if(was_ok)
 			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
-	status = LIGHT_BROKEN
 	update()
 
 /obj/machinery/light/proc/fix()

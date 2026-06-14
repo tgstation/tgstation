@@ -12,16 +12,17 @@ Difficulty: Medium
 /mob/living/basic/boss/blood_drunk_miner
 	name = "blood-drunk miner"
 	desc = "A miner destined to wander forever, engaged in an endless hunt."
-	health = 900
-	maxHealth = 900
+	health = 1300
+	maxHealth = 1300
 	icon_state = "miner"
 	icon_living = "miner"
+	base_icon_state = "miner"
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	speak_emote = list("roars")
-	speed = 3
+	speed = 2.5
 	pixel_x = -16
 	base_pixel_x = -16
 	basic_mob_flags = DEL_ON_DEATH
@@ -43,7 +44,7 @@ Difficulty: Medium
 	victor_memory_type = /datum/memory/megafauna_slayer
 
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
-	regular_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
+	regular_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator/bdm)
 
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
@@ -87,9 +88,9 @@ Difficulty: Medium
 
 /// Returns a list of innate actions for the blood-drunk miner.
 /mob/living/basic/boss/blood_drunk_miner/proc/get_innate_actions()
-	var/static/list/innate_abilities = list(
-		/datum/action/cooldown/mob_cooldown/dash = BB_BDM_DASH_ABILITY,
-		/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator = BB_BDM_KINETIC_ACCELERATOR_ABILITY,
+	var/list/innate_abilities = list(
+		/datum/action/cooldown/mob_cooldown/charge/basic_charge/blood_drunk_miner = BB_BDM_DASH_ABILITY,
+		/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/kinetic_accelerator = BB_BDM_KINETIC_ACCELERATOR_ABILITY,
 		/datum/action/cooldown/mob_cooldown/dash_attack = BB_BDM_DASH_ATTACK_ABILITY,
 		/datum/action/cooldown/mob_cooldown/transform_weapon = BB_BDM_TRANSFORM_WEAPON_ABILITY,
 	)
@@ -100,6 +101,13 @@ Difficulty: Medium
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(ai_controller.blackboard[BB_BDM_TRANSFORM_WEAPON_ABILITY], TYPE_PROC_REF(/datum/action, Trigger), src, NONE)
+
+/mob/living/basic/boss/blood_drunk_miner/proc/transform_saw()
+	miner_saw.attack_self(src)
+	var/saw_open = HAS_TRAIT(miner_saw, TRAIT_TRANSFORM_ACTIVE)
+	rapid_melee_hits = saw_open ? 3 : 5
+	icon_state = "[base_icon_state][saw_open ? "_transformed":""]"
+	icon_living = "[base_icon_state][saw_open ? "_transformed":""]"
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	var/datum/action/cooldown/mob_cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
@@ -145,13 +153,22 @@ Difficulty: Medium
 /// Namely, we just use the miner saw to rapidly hit the target multiple times
 /mob/living/basic/boss/blood_drunk_miner/proc/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
-	if(!istype(target, /mob/living))
+
+	if(!isliving(target))
 		return
 
 	var/mob/living/victim = target
-	if(should_devour(target))
-		devour(target)
+	if(should_devour(victim))
+		devour(victim)
 		return COMPONENT_HOSTILE_NO_ATTACK
+
+	do_chain_attack(victim, modifiers)
+	return COMPONENT_HOSTILE_NO_ATTACK
+
+/mob/living/basic/boss/blood_drunk_miner/proc/do_chain_attack(mob/living/victim, modifiers, sequence_hit = 1)
+	if (!Adjacent(victim))
+		post_attack_effects(victim, modifiers)
+		return
 
 	changeNext_move(CLICK_CD_MELEE)
 	victim.visible_message(
@@ -159,14 +176,35 @@ Difficulty: Medium
 		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
 	)
 
-	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)
-	var/delay = 0.2 SECONDS
-	for(var/i in 1 to rapid_melee_hits)
-		addtimer(melee_callback, (i - 1) * delay)
+	var/delay = HAS_TRAIT(miner_saw, TRAIT_TRANSFORM_ACTIVE) ? 0.5 SECONDS : 0.3 SECONDS
+	apply_status_effect(/datum/status_effect/saw_slashes_slowdown, delay)
+	INVOKE_ASYNC(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)
 
-	post_attack_effects(victim, modifiers)
+	if (sequence_hit >= rapid_melee_hits)
+		post_attack_effects(victim, modifiers)
+		return
 
-	return COMPONENT_HOSTILE_NO_ATTACK
+	addtimer(CALLBACK(src, PROC_REF(do_chain_attack), victim, modifiers, sequence_hit + 1), delay)
+
+/datum/status_effect/saw_slashes_slowdown
+	id = "saw_slashes_slowdown"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/saw_slashes_slowdown/on_creation(mob/living/new_owner, new_duration)
+	duration = new_duration
+	return ..()
+
+/datum/status_effect/saw_slashes_slowdown/refresh(effect, new_duration)
+	duration = new_duration
+
+/datum/status_effect/saw_slashes_slowdown/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/saw_slashes_slowdown)
+
+/datum/status_effect/saw_slashes_slowdown/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/saw_slashes_slowdown)
 
 /// Hook for potential additional behaviors after attacking
 /mob/living/basic/boss/blood_drunk_miner/proc/post_attack_effects(mob/living/victim, list/modifiers)

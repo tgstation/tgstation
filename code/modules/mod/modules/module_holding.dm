@@ -58,10 +58,12 @@
 	storage_type = /datum/storage/bag_of_holding
 	create_storage(storage_type = /datum/storage/bag_of_holding)
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	item_flags |= BLUESPACE_INTERFERENCE
 
 /obj/item/mod/module/storage/holding/proc/on_core_removed()
 	QDEL_NULL(atom_storage)
 	storage_type = null
+	item_flags &= ~BLUESPACE_INTERFERENCE
 
 /obj/item/mod/module/storage/holding/proc/try_install(_source, obj/item/mod/control/suit, mob/user)
 	SIGNAL_HANDLER
@@ -92,6 +94,7 @@
 
 /obj/item/mod/module/storage/holding/prebuilt
 	prebuilt = TRUE
+	item_flags = BLUESPACE_INTERFERENCE
 
 /obj/item/mod/module/storage/holding/prebuilt/locked
 	core_removable = FALSE
