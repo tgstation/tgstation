@@ -29,6 +29,34 @@
 	///An active alert
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
+	alternate_worn_layer = UNDER_UNIFORM_LAYER
+
+/obj/item/clothing/shoes/Initialize(mapload)
+	. = ..()
+	alternate_worn_layer = NONE
+	register_context()
+
+/obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle shoes under uniforms"
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/shoes/click_alt(mob/user)
+    return ..()
+
+/obj/item/clothing/shoes/click_alt_secondary(mob/user)
+    if(alternate_worn_layer == UNDER_UNIFORM_LAYER)
+        alternate_worn_layer = NONE
+    else
+        alternate_worn_layer = UNDER_UNIFORM_LAYER
+
+    if(istype(loc, /mob/living))
+        var/mob/living/L = loc
+        L.update_clothing(ITEM_SLOT_FEET)
+
+    balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
+    return CLICK_ACTION_SUCCESS
 
 /datum/armor/clothing_shoes
 	bio = 50
