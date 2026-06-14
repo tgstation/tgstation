@@ -126,7 +126,6 @@
 	puzzle_holder.puzzles_left--
 	puzzle_holder.active = TRUE
 	puzzle_holder.reset_input()
-	playsound(holder, "sound/announcer/vox_fem/ten.ogg", 100)
 
 // Gizpulse to cycle the currently selected position
 // Example (if code_input is 0000):
