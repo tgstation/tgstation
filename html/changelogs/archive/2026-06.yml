@@ -262,11 +262,16 @@
   timothymtorres:
   - sound: Books now make paper sound when opened
 2026-06-11:
+  AtomTheProphet:
+  - rscadd: Adds "Conserved Genetics", a plant trait which prevents the plant from
+      having its instability be altered by cross-pollination.
   Melbert:
   - bugfix: Losing your limbs via the cursed quirk now gives you limb stumps (so you
       can get your limbs back afterwards)
   SmArtKar:
   - bugfix: Fixed debug overlays on new biome rocks on lavaland
+  - bugfix: Fixed diamond and bluespace artifact boulders not containing any diamonds/bluespace
+      crystals
   TealSeer:
   - refactor: security camera construction/item interaction has been rewritten, report
       any weirdness
@@ -286,3 +291,75 @@
   - sound: Add valve sound to portable canisters
   - sound: Add keypad sounds to secure safes
   - sound: Add drill sound to surgical drill
+2026-06-12:
+  Absolucy, Flleeppyy:
+  - rscadd: Added a websocket client, you can now forward incoming chat messages to
+      an external program, i.e allowing you to change music playlists based on events,
+      or such.
+  Ghommie:
+  - admin: Prayers from players are now boxed (like examine messages and some health
+      readouts for example), making them easier to tell apart from the constant stream
+      of text in your chat tabs.
+  - rscadd: Santa Claus can now hear prayers that mention him or Christmas. He won't
+      know who's praying unless told, though he can tell if they're naughty.
+  Hatterhat:
+  - spellcheck: Butterbean plants are now capitalized properly when planted.
+  Profakos (originally pulled from their branch, did massive chunk of this), Ben10omintrix:
+  - refactor: mulebots have been refactored. please report any bugs
+  SmArtKar:
+  - bugfix: Fixed broken area overlays for particle weather
+  TymSha:
+  - qol: Ooze mobs from cytology now have the same type of HUD as other mobs, allowing
+      them to see their health
+  - qol: The abilities of shoolean grapes now have their cost specified in their description
+  - bugfix: The mending globule ability used by shoolean grapes no longer can be cast
+      while there isn't enough nutrition to do so
+  antropod:
+  - bugfix: fixed material tiles and walls not having material when constructed from
+      last item in the stack
+  timothymtorres:
+  - sound: Add on/off sound to light switches in rooms
+2026-06-13:
+  Absolucy:
+  - qol: You can now preview what different emotes sound like via the emote panel.
+  Arturlang:
+  - rscadd: beams now animate when moving tile to tile, this is mostly noticeable
+      for constant beam effects
+  - bugfix: beam emissives now work
+  CabinetOnFire:
+  - bugfix: You can now hear the outside world when you're inside of something again
+      (e.g. lockers, mechs
+  SmArtKar:
+  - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  SyncIt21:
+  - rscdel: removes the welder from the engiborg omnitool. They are now separate entities
+      again
+  - qol: The omnitool radial menu won't show the same selected tool again reducing
+      clutter
+  timothymtorres:
+  - code_imp: Reorganize shuttle maps into separate folders
+2026-06-14:
+  CabinetOnFire:
+  - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
+      a regular list
+  Ghommie:
+  - bugfix: You no longer waddle when buckled to something.
+  Melbert:
+  - rscadd: You can now deconstruct first aid stations with a screwdriver and a crowbar.
+  - rscadd: You can now buy first aid station circuitboards from cargo for 1200 credits.
+  - rscadd: Most medical supplies ordered from cargo now come in DeForest crates.
+      Sansufentanyl comes in an Interdyne create.
+  - balance: As they can now be replaced, first aid station armor has been reduced.
+  - balance: Emergency first aid stations now heal twice as fast but also take twice
+      as long to recharge.
+  SmArtKar:
+  - bugfix: Fixed rugs runtiming when cleaning objects
+  - bugfix: Fixed harddels in escape menu
+  carshalash:
+  - qol: Made certain cocktails reflect real-world ratios. Including gin fizz, rum
+      and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
+  lelandkemble:
+  - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
+  remove32:
+  - bugfix: statpanel uses year offset
