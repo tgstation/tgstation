@@ -84,6 +84,22 @@
 	. = ..()
 	// We can actually do this just fine as we do not render anything onto ourselves but our particles
 	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+	update_state(home.our_hud?.mymob)
+
+/// Updates ourselves based on our mob's preferences state
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
+	SSweather.particle_planemasters -= src
+	vis_contents.Cut()
+
+	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
+		return
+
 	SSweather.particle_planemasters += src
 	// And add all ongoing weather to ourselves
 	for (var/holder_offset, holder_list in SSweather.particle_holders)
@@ -94,12 +110,6 @@
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
 	SSweather.particle_planemasters -= src
 	return ..()
-
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
 	name = "Emissive Particle Weather"
