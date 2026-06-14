@@ -19,7 +19,7 @@
 	target_trait = ZTRAIT_STATION
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
-	overlay_plane = FLOOR_PLANE
+	overlay_planes = list(FLOOR_PLANE)
 	immunity_type = TRAIT_LAVA_IMMUNE
 	/// We don't draw on walls, so this ends up lookin weird
 	/// Can't really use like, the emissive system here because I am not about to make
