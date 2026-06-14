@@ -191,28 +191,28 @@ SUBSYSTEM_DEF(tts)
 			)
 	if(target)
 		new /datum/threed_sound(
-			target,
-			audio,
-			voice_hearers,
-			FALSE,
-			85 + volume_offset,
-			SOUND_RANGE,
-			audio_length,
-			channel,
-			volume_preference,
-			volume_signal
+			new_parent = target,
+			new_sound = audio,
+			current_listeners = voice_hearers,
+			can_add_new_listeners = FALSE,
+			volume = 85 + volume_offset,
+			sound_range = SOUND_RANGE,
+			sound_length = audio_length,
+			channel = channel,
+			preference_volume = volume_preference,
+			preference_signal = volume_signal
 		)
 		new /datum/threed_sound(
-			target,
-			audio_blips,
-			blips_hearers,
-			FALSE,
-			85 + volume_offset,
-			SOUND_RANGE,
-			audio_length_blips,
-			channel,
-			volume_preference,
-			volume_signal
+			new_parent = target,
+			new_sound = audio_blips,
+			current_listeners = blips_hearers,
+			can_add_new_listeners = FALSE,
+			volume = 85 + volume_offset,
+			sound_range = SOUND_RANGE,
+			sound_length = audio_length_blips,
+			channel = channel,
+			preference_volume = volume_preference,
+			preference_signal = volume_signal
 		)
 
 
