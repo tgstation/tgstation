@@ -58,7 +58,12 @@
 											},
 											{
 												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack"
+												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+												"vars": {
+													"target_key": "BB_BASIC_MOB_FLEE_TARGET",
+													"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+													"hiding_location_key": "BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION"
+												}
 											}
 										]
 									}

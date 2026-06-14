@@ -125,7 +125,6 @@
  * * Convert nearby mice into aggressive rats.
  * * Convert nearby roaches into aggressive roaches.
  * * Convert nearby frogs into aggressive frogs.
- * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
 	playsound(owner, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', vol = 150, frequency = 10000)
