@@ -58,3 +58,15 @@
 		return tank.return_analyzable_air()
 	else
 		return null
+
+/obj/structure/closet/crate/critter/stasis
+	name = "stasis critter crate"
+	desc = "A crate designed for safe transport of specific animals in stasis to prevent them from growing."
+
+/obj/structure/closet/crate/critter/stasis/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(HAS_TRAIT(gone, TRAIT_STASIS))
+		remove_stasis(gone)
+
+/obj/structure/closet/crate/critter/stasis/proc/remove_stasis(mob/living/target)
+	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CRATE_EFFECT)
