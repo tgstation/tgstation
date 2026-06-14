@@ -26,7 +26,7 @@
 								"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/dog",
 								"vars": {
 									"target_key": "BB_CURRENT_PET_TARGET",
-									"targeting_strategy_key": "BB_PET_TARGETING_STRATEGY",
+									"targeting_strategy": "BB_PET_TARGETING_STRATEGY",
 									"hiding_location_key": "BB_PET_ATTACK_HIDING_LOCATION"
 								}
 							}

@@ -4,12 +4,17 @@
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
 	var/target_key
-	var/targeting_strategy_key
+	var/targeting_strategy
 	var/hiding_location_key
 
 /datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller)
 	. = ..()
-	if(!controller.blackboard[targeting_strategy_key])
+
+
+	if(!ispath(targeting_strategy))
+		targeting_strategy = controller.blackboard[targeting_strategy]
+
+	if(!targeting_strategy)
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -37,12 +42,12 @@
 		if (world.time < pawn.next_move)
 			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(!targeting_strategy.is_valid_target(controller.pawn, target))
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy])
+	if(!strategy.is_valid_target(controller.pawn, target))
 		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
@@ -77,7 +82,7 @@
 //Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
 	var/target_key
-	var/targeting_strategy_key
+	var/targeting_strategy
 	var/hiding_location_key
 	time_between_perform = 0.6 SECONDS
 	/// Max range at which we can fire. Make sure your movement actually gets you this lcose please
@@ -99,13 +104,17 @@
 /datum/bt_node/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/basic_mob = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
-	if(!targeting_strategy.is_valid_target(basic_mob, target, chase_range))
+	if(!ispath(targeting_strategy))
+		targeting_strategy = controller.blackboard[targeting_strategy]
+
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(targeting_strategy)
+
+	if(!strategy.is_valid_target(basic_mob, target, chase_range))
 		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/atom/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target)
+	var/atom/hiding_target = strategy.find_hidden_mobs(basic_mob, target)
 	var/atom/final_target = hiding_target ? hiding_target : target
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 

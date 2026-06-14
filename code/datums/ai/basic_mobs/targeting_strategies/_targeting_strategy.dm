@@ -10,6 +10,12 @@
 /datum/targeting_strategy/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
 	return null
 
+/// Returns TRUE if we should keep tracking an existing target when no new candidates are visible.
+/// Called with the loss range (typically larger than vision_range).
+/// Default delegates to is_valid_target so all normal checks still apply.
+/datum/targeting_strategy/proc/can_keep_target(mob/living/living_mob, atom/target, range)
+	return is_valid_target(living_mob, target, range)
+
 /// Simply always returns true if you have a target, so only use this if you're pre-checking the targets somewhere else
 /datum/targeting_strategy/anything
 

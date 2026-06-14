@@ -22,7 +22,7 @@
 					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
 					"vars": {
 						"target_key": "BB_CURRENT_TARGET",
-						"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
 						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 					}
 				},
@@ -57,7 +57,7 @@
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
 											"vars": {
 												"target_key": "BB_CURRENT_TARGET",
-												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"targeting_strategy": "BB_TARGETING_STRATEGY",
 												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 											}
 										},
@@ -66,7 +66,7 @@
 											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/bot",
 											"vars": {
 												"target_key": "BB_CURRENT_TARGET",
-												"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+												"targeting_strategy": "BB_TARGETING_STRATEGY",
 												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 											}
 										}

@@ -39,14 +39,19 @@
  */
 /datum/bt_node/ai_behavior/find_hated_dog_target
 	var/target_key
-	var/targeting_strategy_key
+	var/targeting_strategy
 
 /datum/bt_node/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(10, seconds_per_tick))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/dog = controller.pawn
-	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+
+	if(!ispath(targeting_strategy))
+		targeting_strategy = controller.blackboard[targeting_strategy]
+
+
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(targeting_strategy)
 	for(var/mob/living/iter_living in oview(2, dog))
 		if(iter_living.stat != CONSCIOUS || !HAS_TRAIT(iter_living, TRAIT_HATED_BY_DOGS))
 			continue

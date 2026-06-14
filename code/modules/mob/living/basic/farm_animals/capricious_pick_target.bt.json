@@ -6,7 +6,7 @@
 			"type": "leaf",
 			"behavior": "/datum/bt_node/ai_behavior/capricious_retaliate",
 			"vars": {
-				"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
 				"ignore_faction": true
 			}
 		},

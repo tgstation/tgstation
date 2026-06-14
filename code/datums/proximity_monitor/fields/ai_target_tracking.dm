@@ -7,8 +7,8 @@
 	var/datum/ai_controller/controller
 	/// The target key we're trying to fill
 	var/target_key
-	/// The targeting strategy KEY we're using
-	var/targeting_strategy_key
+	/// The targeting_strategy var value from the owning behavior — either a typepath or a BB key string
+	var/targeting_strategy
 	/// The hiding location key we're using
 	var/hiding_location_key
 
@@ -20,20 +20,25 @@
 
 // Initially, run the check manually
 // If that fails, set up a field and have it manage the behavior fully
-/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/bt_node/ai_behavior/acquire_target/update_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/bt_node/ai_behavior/acquire_target/update_combat_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy, hiding_location_key)
 	. = ..()
 	src.owning_behavior = owning_behavior
 	src.controller = controller
 	src.target_key = target_key
-	src.targeting_strategy_key = targeting_strategy_key
+	src.targeting_strategy = targeting_strategy
 	src.hiding_location_key = hiding_location_key
-	src.filter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+
+	if(ispath(targeting_strategy))
+		src.filter = GET_TARGETING_STRATEGY(targeting_strategy)
+	else
+		src.filter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy])
+		RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targeting_strategy), PROC_REF(targeting_datum_changed))
+		RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targeting_strategy), PROC_REF(targeting_datum_cleared))
+
 	RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(controller_deleted))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_POSSESSED_PAWN, PROC_REF(pawn_changed))
 	RegisterSignal(controller, AI_CONTROLLER_BEHAVIOR_QUEUED(owning_behavior.type), PROC_REF(behavior_requeued))
-	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targeting_strategy_key), PROC_REF(targeting_datum_changed))
-	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targeting_strategy_key), PROC_REF(targeting_datum_cleared))
 	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
@@ -43,7 +48,7 @@
 	owning_behavior = null
 	controller = null
 	target_key = null
-	targeting_strategy_key = null
+	targeting_strategy = null
 	hiding_location_key = null
 	filter = null
 
@@ -87,12 +92,12 @@
 	check_new_args(arglist(new_arguments))
 
 /// Ensure our args and locals are up to date
-/datum/proximity_monitor/advanced/ai_target_tracking/proc/check_new_args(target_key, targeting_strategy_key, hiding_location_key)
+/datum/proximity_monitor/advanced/ai_target_tracking/proc/check_new_args(target_key, targeting_strategy, hiding_location_key)
 	var/update_filter = FALSE
 	if(src.target_key != target_key)
 		src.target_key = target_key
-	if(src.targeting_strategy_key != targeting_strategy_key)
-		src.targeting_strategy_key = targeting_strategy_key
+	if(src.targeting_strategy != targeting_strategy)
+		src.targeting_strategy = targeting_strategy
 		update_filter = TRUE
 	if(src.hiding_location_key != hiding_location_key)
 		src.hiding_location_key = hiding_location_key
@@ -101,7 +106,10 @@
 
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/targeting_datum_changed(datum/source)
 	SIGNAL_HANDLER
-	filter = controller.blackboard[targeting_strategy_key]
+	if(ispath(targeting_strategy))
+		filter = GET_TARGETING_STRATEGY(targeting_strategy)
+	else
+		filter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy])
 	// Filter changed, need to do a full reparse
 	// Fucking 9 * 9 out here I stg
 	for(var/turf/in_field as anything in field_turfs + edge_turfs)

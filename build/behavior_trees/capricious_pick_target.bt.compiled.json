@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/capricious_retaliate","targeting_strategy_key":"targeting_strategy","ignore_faction":true},{"type":"/datum/bt_node/subtree/pick_retaliate_target"}]}
+{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/capricious_retaliate","targeting_strategy":"targeting_strategy","ignore_faction":true},{"type":"/datum/bt_node/subtree/pick_retaliate_target"}]}

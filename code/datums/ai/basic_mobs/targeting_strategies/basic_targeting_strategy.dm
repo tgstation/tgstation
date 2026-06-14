@@ -81,6 +81,9 @@
 		return target.loc
 	return null
 
+/datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range)
+	return can_see(living_mob, target, range)
+
 /// Returns true if the mob and target share factions
 /datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
