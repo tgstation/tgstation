@@ -14,7 +14,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med

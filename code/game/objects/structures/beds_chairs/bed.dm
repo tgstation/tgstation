@@ -128,6 +128,7 @@
 	elevation = 0
 	buckle_sound = SFX_SEATBELT_BUCKLE
 	unbuckle_sound = SFX_SEATBELT_UNBUCKLE
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7)
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -254,6 +255,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7)
 
 /obj/item/emergency_bed/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/emergency_bed/silicon))

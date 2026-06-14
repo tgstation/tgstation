@@ -12,6 +12,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/reagent_scanner/on_activation(mob/activator)
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, REF(src))
@@ -60,6 +61,7 @@
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/anomaly_locked/antigrav)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_activation(mob/activator)
 	if(mod.wearer.has_gravity())
@@ -93,6 +95,7 @@
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/teleporter)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	/// Time it takes to teleport
 	var/teleport_time = 1 SECONDS
 	/// Maximum turf range

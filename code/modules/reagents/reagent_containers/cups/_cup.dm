@@ -470,7 +470,7 @@
 		300 units."
 	icon_state = "beakerbluespace"
 	inhand_icon_state = "beaker_bluespace"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -729,6 +729,7 @@
 	icon_state = "coffeepot"
 	fill_icon_state = "coffeepot"
 	fill_icon_thresholds = list(0, 1, 30, 60, 100)
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace
 	name = "bluespace coffeepot"
@@ -736,6 +737,7 @@
 	volume = 240
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = null
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube

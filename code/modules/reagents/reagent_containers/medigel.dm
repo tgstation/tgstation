@@ -46,6 +46,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10)
 	volume = 60
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
 	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.

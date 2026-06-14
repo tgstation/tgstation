@@ -399,7 +399,7 @@
 	name = "Paramedic Penlight"
 	id = "penlight_paramedic"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*1)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/flashlight/pen/paramedic
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -780,7 +780,7 @@
 	desc = "A glass case for containing an implant."
 	id = "implantcase"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/implantcase
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
@@ -792,7 +792,11 @@
 	desc = "Makes death amusing."
 	id = "implant_trombone"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/bananium =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT)
+	transfered_materials = list(
+		/obj/item/implantcase/sad_trombone = /datum/design/implantcase::materials,
+		/obj/item/implant/sad_trombone = list(/datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT),
+	)
 	build_path = /obj/item/implantcase/sad_trombone
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
@@ -804,7 +808,11 @@
 	desc = "A glass case containing a chemical implant."
 	id = "implant_chem"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 7)
+	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.7)
+	transfered_materials = list(
+		/obj/item/implantcase/chem = /datum/design/implantcase::materials,
+		/obj/item/implant/chem = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2),
+	)
 	build_path = /obj/item/implantcase/chem
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
@@ -816,7 +824,11 @@
 	desc = "A glass case containing a tracking implant."
 	id = "implant_tracking"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
+	transfered_materials = list(
+		/obj/item/implantcase/tracking = /datum/design/implantcase::materials,
+		/obj/item/implant/tracking = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT),
+	)
 	build_path = /obj/item/implantcase/tracking
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
@@ -828,7 +840,11 @@
 	desc = "A glass case containing a beacon implant."
 	id = "implant_beacon"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
+	transfered_materials = list(
+		/obj/item/implantcase/beacon = /datum/design/implantcase::materials,
+		/obj/item/implant/beacon = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3),
+	)
 	build_path = /obj/item/implantcase/beacon
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
@@ -840,7 +856,11 @@
 	desc = "A glass case containing a teleport blocker implant."
 	id = "implant_bluespace"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
+	transfered_materials = list(
+		/obj/item/implantcase/teleport_blocker = /datum/design/implantcase::materials,
+		/obj/item/implant/teleport_blocker = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3),
+	)
 	build_path = /obj/item/implantcase/teleport_blocker
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
@@ -852,7 +872,11 @@
 	desc = "A glass case containing an exile implant."
 	id = "implant_exile"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
+	transfered_materials = list(
+		/obj/item/implantcase/exile = /datum/design/implantcase::materials,
+		/obj/item/implant/exile = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3),
+	)
 	build_path = /obj/item/implantcase/exile
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY

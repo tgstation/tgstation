@@ -574,6 +574,7 @@
 	desc = "This is a red ink pen exclusively provided to members of the Security Department. Its opposite end features a built-in holographic projector designed for issuing arrest prompts to individuals."
 	icon_state = "pen_sec"
 	COOLDOWN_DECLARE(holosign_cooldown)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/pen/red/security/examine(mob/user)
 	. = ..()

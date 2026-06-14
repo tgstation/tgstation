@@ -27,6 +27,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -62,6 +63,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -98,6 +100,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -148,6 +151,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -197,6 +201,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -375,6 +380,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -558,6 +564,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/arm/right/robot/advanced
 	name = "advanced robotic right arm"
@@ -570,6 +577,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/left/robot/advanced
 	name = "advanced robotic left leg"
@@ -582,6 +590,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/right/robot/advanced
 	name = "advanced robotic right leg"
@@ -594,6 +603,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

@@ -17,6 +17,7 @@
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
 	block_sound = 'sound/items/weapons/block_shield.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4.8)
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -204,7 +205,7 @@
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.1, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4.35)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4.8)
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
@@ -393,7 +394,7 @@
 	icon_state = "teleriot"
 	inhand_icon_state = "teleriot"
 	worn_icon_state = "teleriot"
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2.7, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 1.8)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
 	slot_flags = null
 	force = 3
 	throwforce = 3
@@ -481,7 +482,7 @@
 	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
 	icon_state = "improvised"
 	inhand_icon_state = "improvised"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised

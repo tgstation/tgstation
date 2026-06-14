@@ -26,6 +26,7 @@
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
 	new frame_type(loc)

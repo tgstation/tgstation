@@ -23,6 +23,7 @@
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
 	laws = list("Only SUBJECT is human.")
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/zeroth/onehuman/attack_self(mob/user)
 	var/targName = tgui_input_text(user, "Enter the subject who is the only human.", "One Human", user.real_name, max_length = MAX_NAME_LEN)

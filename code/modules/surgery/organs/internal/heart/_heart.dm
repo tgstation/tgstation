@@ -211,6 +211,7 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 	failing_desc = "seems to be broken."
 	beat_noise = "a steady fsssh of hydraulics"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
 	/// How long our stabilization lasts for.
@@ -298,6 +299,7 @@
 	toxification_probability = 0
 	bleed_prevention = TRUE
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"

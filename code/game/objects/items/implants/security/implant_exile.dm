@@ -7,6 +7,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_exile"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
 
 	implant_info = "Automatically activates upon implantation. \
 		Prevents returning through Nanotrasen gateway systems, and prevents usage of Nanotrasen mining shuttle controls."

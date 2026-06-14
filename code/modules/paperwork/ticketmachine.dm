@@ -77,6 +77,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable

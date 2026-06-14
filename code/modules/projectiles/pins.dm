@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	var/fail_message = "invalid user!"
 	/// Explode when user check is failed.
 	var/selfdestruct = FALSE
@@ -131,6 +132,7 @@
 	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
 	req_implant = /obj/item/implant/mindshield
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
@@ -147,6 +149,7 @@
 	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/firing_pin/clown/pin_auth(mob/living/user)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -344,6 +347,7 @@
 	desc = "A firing pin used by the Australian defense force, retrofit to prevent weapon discharge on the station."
 	icon_state = "firing_pin_explorer"
 	fail_message = "cannot fire while on station, mate!"
+	custom_materials = list(/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 // This checks that the user isn't on the station Z-level.
 /obj/item/firing_pin/explorer/pin_auth(mob/living/user)

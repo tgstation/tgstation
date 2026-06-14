@@ -518,6 +518,7 @@
 	possible_transfer_amounts = list(5, 10)
 	amount_per_transfer_from_this = 5
 	can_lid = FALSE
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/Initialize(mapload)
 	. = ..()
