@@ -19,13 +19,21 @@
 					"children": [
 						{
 							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/pawn_turf_has_trait",
+							"decorator": "/datum/bt_node/decorator/ability_available",
 							"vars": {
-								"trait": "TRAIT_RUSTY"
+								"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 							},
 							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/use_mob_ability"
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/pawn_turf_has_trait",
+								"vars": {
+									"observer_abort": "BT_ABORT_NONE",
+									"trait": "TRAIT_RUSTY"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/use_mob_ability"
+								}
 							}
 						},
 						{
