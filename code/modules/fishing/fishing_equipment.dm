@@ -286,7 +286,7 @@
 		if(/obj/item/assembly/signaler/anomaly/vortex)
 			rod.bounciness_mult *= 0.2
 		else
-			rod.balloon_alert_to_viewers("no core effect!")
+			rod.balloon_alert_to_viewers("no core effect!", vision_distance = 2)
 
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
