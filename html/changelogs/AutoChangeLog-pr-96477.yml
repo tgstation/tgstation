@@ -1,0 +1,4 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - bugfix: "Fixes bug where sig_remove_from_blackboard would try to numerically index a regular list"
