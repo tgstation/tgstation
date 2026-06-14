@@ -6,6 +6,9 @@
  * Carpet floor
  * Fake pits
  * Fake space
+ * "Fake" sand
+ * Fake coastline
+ * Fake water
  */
 
 /turf/open/floor/wood
@@ -902,3 +905,33 @@
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	generate_space_underlay(underlay_appearance, asking_turf)
 	return TRUE
+
+/turf/open/floor/fakesand
+	desc = "This is just sand scattered on the ground!"
+	icon = 'icons/turf/sand.dmi'
+	icon_state = "sand"
+	floor_tile = /obj/item/stack/tile/fakesand
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/fakewater
+	desc = "If it looks like a duck, feels like a duck, and sounds like a duck, it's not a duck?"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "water"
+	floor_tile = /obj/item/stack/tile/fakewater
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
+
+/turf/open/floor/fakecoastline
+	desc = "The fake water is invading the real sand!"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "beach"
+	floor_tile = /obj/item/stack/tile/fakecoastline
+	footstep = FOOTSTEP_WATER
+	barefootstep = FOOTSTEP_WATER
+	clawfootstep = FOOTSTEP_WATER
+	heavyfootstep = FOOTSTEP_WATER
