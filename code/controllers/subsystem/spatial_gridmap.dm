@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(spatial_grid)
  * * type - the type of grid contents you are looking for, see __DEFINES/spatial_grid.dm
  * * range - the bigger this is, the more spatial grid cells the search space intersects
  */
-/datum/controller/subsystem/spatial_grid/proc/orthogonal_range_search(atom/center, type, range, use_weakref = FALSE)
+/datum/controller/subsystem/spatial_grid/proc/orthogonal_range_search(atom/center, type, range)
 	var/turf/center_turf = get_turf(center)
 
 	var/center_x = center_turf.x//used inside the macros
@@ -245,9 +245,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
 				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
-					if(use_weakref)
-						for(var/ref in grid_level[row][x_index].client_contents)
-							. += WEAKREF(ref)
+
 					. += grid_level[row][x_index].client_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
