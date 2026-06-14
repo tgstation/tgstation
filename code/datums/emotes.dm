@@ -61,12 +61,18 @@
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
-	/// How long is the shared emote cooldown triggered by this emote?
-	var/general_emote_audio_cooldown = 2 SECONDS
-	/// How long is the specific emote cooldown triggered by this emote?
-	var/specific_emote_audio_cooldown = 5 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote when used intentionally?
+	var/manual_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when used intentionally?
+	var/manual_specific_emote_audio_cooldown = 5 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote when forced?
+	var/forced_general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote when forced?
+	var/forced_specific_emote_audio_cooldown = 2 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
+	///Does this emote use sound tokens? this means it also ignores walls.
+	var/use_sound_tokens = FALSE
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -112,15 +118,27 @@
 		user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
-		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
+	if(tmp_sound && should_play_sound(user, intentional))
+		if(intentional)
+			if(!TIMER_COOLDOWN_FINISHED(user, "manual_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "manual_specific_emote_audio_cooldown_[type]") || !TIMER_COOLDOWN_FINISHED(user, "forced_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "forced_specific_emote_audio_cooldown_[type]"))
+				return FALSE
+		else
+			if(!TIMER_COOLDOWN_FINISHED(user, "forced_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "forced_specific_emote_audio_cooldown_[type]"))
+				return FALSE
+		TIMER_COOLDOWN_START(user, "manual_specific_emote_audio_cooldown_[type]", manual_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, "manual_general_emote_audio_cooldown", manual_general_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, "forced_specific_emote_audio_cooldown_[type]", forced_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, "forced_general_emote_audio_cooldown", forced_general_emote_audio_cooldown)
+
 		var/frequency = null
 		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * sign(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
 		else if(vary)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
-		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
+		if(use_sound_tokens && sound_wall_ignore)
+			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = 50)
+		else
+			playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
