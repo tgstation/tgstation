@@ -272,3 +272,36 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
+
+/obj/item/bodypart/head/blood_worm
+	icon = 'icons/mob/human/bodyparts.dmi'
+	icon_static = 'icons/mob/human/bodyparts.dmi'
+	icon_state = "blood_worm_head"
+	limb_id = BODYPART_ID_BLOOD_WORM
+	is_dimorphic = FALSE
+	dmg_overlay_type = null
+	should_draw_greyscale = FALSE
+	biological_state = (BIO_FLESH|BIO_BLOODED)
+	head_flags = NONE
+
+	icon_husk = 'icons/mob/human/bodyparts.dmi'
+	husk_type = "blood_worm"
+
+/obj/item/bodypart/head/blood_worm/Initialize(mapload)
+	. = ..()
+	worn_head_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HEAD,
+		offset_y = list("south" = 0),
+	)
+	worn_glasses_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_GLASSES,
+		offset_y = list("south" = 0),
+	)
+
+/obj/item/bodypart/head/proc/blood_worm_head_growth_animation()
+	var/growth_overlay = new /datum/bodypart_overlay/simple/growth_blood_worm_head
+	playsound(src, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
+	add_bodypart_overlay(growth_overlay, update = TRUE)
+

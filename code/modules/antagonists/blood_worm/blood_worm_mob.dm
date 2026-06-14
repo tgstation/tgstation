@@ -82,6 +82,8 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm/eject/eject_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm/revive/revive_action
+	/// What is Typed? So need to give proper arg with type?
+	var/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/worm_head_action
 
 	/// List of actions outside of a host.
 	var/list/innate_actions = list()
@@ -124,11 +126,19 @@
 		transfuse_action = new transfuse_action(src)
 		host_actions += transfuse_action
 
+	if (ispath(worm_head_action, /datum/action/cooldown/mob_cooldown/blood_worm/worm_head))
+		worm_head_action = new worm_head_action(src)
+		host_actions += worm_head_action
+
+
 	eject_action = new(src)
 	host_actions += eject_action
 
 	revive_action = new(src)
 	host_actions += revive_action
+
+	worm_head_action = new(src)
+	host_actions += worm_head_action
 
 	grant_actions(src, innate_actions)
 
@@ -160,6 +170,7 @@
 
 	innate_actions = null
 	host_actions = null
+	worm_head_action = null
 
 	return ..()
 
@@ -231,6 +242,46 @@
 /mob/living/basic/blood_worm/proc/remove_actions(mob/target, list/actions)
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
+
+
+// its must collect\save all old organs, rip off head, then attach blood worm head, then insert all organs(brain, implants, hud, damaged ears and stuff)
+// all organs\content from the head must be saved with their state(damage or another vars)
+// so its must be the same content, which is collected and then inserted
+/mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target)
+	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	current_host_head:blood_worm_head_growth_animation()
+	new_worm_head_to_attach.replace_limb(target, TRUE)
+	target.update_body()
+
+/mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target)
+	var/list/saved_head_content = list() // organs, implants, huds
+	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
+	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
+
+	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
+		if(istype(organ_to_juggle, /obj/item/organ))
+			saved_head_content += organ_to_juggle
+			organ_to_juggle.Remove(target, special = TRUE)
+
+	current_worm_head:drop_limb(special = TRUE)
+
+	// now it will be with DNA of the owner, but also
+	// it will not loose the implants, cause they will be inserted
+	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
+	// so new head will get these fucked implants and organs
+	target:regenerate_limb(BODY_ZONE_HEAD)
+	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
+		if(istype(organ_to_trash, /obj/item/organ))
+			organ_to_trash.Remove(target, special = TRUE)
+
+	for(var/obj/item/organ/organ_to_juggle in saved_head_content) // inserting at worm head
+		organ_to_juggle.Insert(target, special = TRUE)
+
+	qdel(current_worm_head)
+
+	target.update_body()
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
@@ -399,6 +450,11 @@
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 
 	regen_rate = 0.5 // 360 seconds to recover from 0 to 180, or exactly 6 minutes.
+
+/mob/living/basic/blood_worm/adult/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/wall_holer, allow_reinforced = FALSE, hole_making_time = 10 SECONDS, do_after_key = "blood_worm_wall_tear")
 
 /mob/living/basic/blood_worm/hatchling/polymorph
 	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
