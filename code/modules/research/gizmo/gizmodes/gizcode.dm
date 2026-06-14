@@ -61,7 +61,7 @@
 	solution = new/list(code_length)
 	for(var/i in 1 to MAX_CODEGEN_RETRY_ATTEMPTS)
 		for(var/j in 1 to code_length)
-			solution[j] = pick(0, 9) // Randomize every digit
+			solution[j] = rand(0, 9) // Randomize every digit
 		if(validate_code(solution))
 			return TRUE
 	return FALSE
@@ -92,6 +92,7 @@
 	return
 
 // Proc that produces feedback when the user inputs an incorrect code
+// By default, all of these gizmos tell the user how many attempts are left
 /datum/gizmodes/code_crack/proc/feedback(atom/movable/holder)
 	SHOULD_CALL_PARENT(TRUE)
 	// This is kind of ass, but there's probably no way around it
@@ -181,18 +182,21 @@
 	if(!puzzle_holder.active) // If the puzzle is inactive, produce a loud buzz and get out
 		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
 		return
-	var/validity = puzzle_holder.validate_code(puzzle_holder.code_input)
+
 	// If the input is invalid, emit an invalid-input sound and let the user make corrections
+	var/validity = puzzle_holder.validate_code(puzzle_holder.code_input)
 	if(!validity)
 		playsound(holder, "sound/machines/terminal/terminal_error.ogg", 100)
 		return
-	var/correctness = puzzle_holder.check_code()
+
 	// If the input is correct, dispense a reward and reset the puzzle
+	var/correctness = puzzle_holder.check_code()
 	if(correctness)
 		puzzle_holder.dispense_reward()
 		puzzle_holder.attempts_left = initial(puzzle_holder.attempts_left)
 		puzzle_holder.active = FALSE
 		return
+
 	// If the input is incorrect..
 	puzzle_holder.attempts_left--
 	if(puzzle_holder.attempts_left <= 0)
@@ -259,7 +263,7 @@
 	return TRUE
 
 /datum/gizmodes/code_crack/moo/generate_code()
-	code_length = pick(min_code_length, max_code_length)
+	code_length = rand(min_code_length, max_code_length)
 	return ..()
 
 /datum/gizmodes/code_crack/moo/feedback(atom/movable/holder)
