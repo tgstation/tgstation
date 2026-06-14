@@ -128,10 +128,8 @@
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
 		var/turf/T = target
-		T.drill_act(src, source)
-		equip_cooldown *= 0.1
 		. = ..()
-		equip_cooldown *= 10
+		T.drill_act(src, source)
 		return
 
 	// Drilling objects and mobs is a repeating procedure.
@@ -154,6 +152,11 @@
 			break
 
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/drill/get_equip_cooldown(atom/target)
+	if (isturf(target))
+		return equip_cooldown * 0.1
+	return equip_cooldown
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	return
@@ -250,7 +253,7 @@
 		return
 	if(!LAZYLEN(chassis.occupants))
 		return
-	scanning_time = world.time + equip_cooldown
+	scanning_time = world.time + get_equip_cooldown()
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()
