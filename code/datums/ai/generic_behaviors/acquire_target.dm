@@ -1,13 +1,4 @@
-/**
- * Base behavior for all target-acquisition behaviors.
- *
- * Pipeline: abort check → revalidation → collect_candidates (via target_source) → fallback
- * → filter_candidates → pick_final_target → set blackboard keys.
- *
- * Subtypes:
- *   update_combat_targets      — enemy scanning via hearers + detection field
- *   update_interaction_target  — nearby atom scanning via oview
- */
+///Baseline for target picking behaviors
 /datum/bt_node/ai_behavior/acquire_target
 	/// Blackboard key to write the found target into.
 	var/target_key

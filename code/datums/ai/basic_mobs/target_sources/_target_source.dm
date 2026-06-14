@@ -58,7 +58,7 @@
 /datum/target_source/held_items
 
 /datum/target_source/held_items/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	return pawn.held_items?.Copy() || list()
+	return pawn.held_items || list()
 
 /// Reads a typecache from BB_BASIC_FOODS and filters oview candidates by it.
 /// For mobs whose food list varies by species (set in Initialize via set_blackboard_key).
@@ -70,7 +70,7 @@
 	var/list_key
 
 /datum/target_source/from_bb_list/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	return controller.blackboard[list_key]?.Copy() || list()
+	return controller.blackboard[list_key] || list()
 
 /// Reads from BB_BASIC_MOB_RETALIATE_LIST.
 /datum/target_source/from_bb_list/retaliate_list
