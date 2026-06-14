@@ -251,11 +251,11 @@
 
 /obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	ADD_TRAIT(rod, TRAIT_ROD_SHINY_LOVER, REF(src))
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(rod, TRAIT_ROD_SHINY_LOVER, REF(src))
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_hook/anomaly
 	name = "anomalous lure hook"
