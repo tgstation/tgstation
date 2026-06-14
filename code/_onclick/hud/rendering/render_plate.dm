@@ -90,7 +90,12 @@
 	if(!.)
 		return
 	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	update_state(new_hud?.mymob)
 
 /// Updates ourselves based on our mob's preferences state
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
