@@ -22,9 +22,13 @@ SUBSYSTEM_DEF(ambience)
 
 		//Check to see if the client exists and isn't held by a new player
 		var/mob/client_mob = client_iterator?.mob
-		if(isnull(client_iterator) || !client_mob || isnewplayer(client_mob))
+		if(isnull(client_iterator) || !client_mob)
 			ambience_listening_clients -= client_iterator
 			client_old_areas -= client_iterator
+			continue
+
+		// skip them this tick if they're on the lobby screen
+		if(isnewplayer(client_mob))
 			continue
 
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
