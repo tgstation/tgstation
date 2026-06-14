@@ -7165,7 +7165,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cpC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -12518,12 +12518,12 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/vitals_reader/advanced/directional/south,
 /obj/machinery/stasis{
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
 /obj/machinery/light/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "eeb" = (
@@ -14845,13 +14845,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
-"eQx" = (
-/obj/machinery/cryo_cell,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/medical/cryo)
 "eQD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21204,6 +21197,20 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"gMZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/purple,
+/obj/machinery/duct,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science)
 "gNq" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /obj/effect/turf_decal/bot,
@@ -23025,6 +23032,13 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/station/commons/locker)
+"hrw" = (
+/obj/machinery/cryo_cell,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/medical/cryo)
 "hrN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -32499,11 +32513,11 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/stasis,
-/obj/machinery/vitals_reader/advanced/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "knR" = (
@@ -37464,7 +37478,7 @@
 	name = "Auxiliary Dock"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lSt" = (
 /obj/structure/cable,
@@ -50912,11 +50926,11 @@
 	dir = 4
 	},
 /obj/machinery/defibrillator_mount/directional/west,
-/obj/machinery/vitals_reader/advanced/directional/north,
 /obj/machinery/stasis{
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "qqJ" = (
@@ -53727,20 +53741,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"rnA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/effect/turf_decal/tile/purple,
-/obj/machinery/duct,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science)
 "rnB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -96284,7 +96284,7 @@ xOg
 mCk
 ocS
 pVz
-eQx
+hrw
 lFN
 lBU
 hpQ
@@ -113501,7 +113501,7 @@ kXJ
 gRg
 uRT
 tcn
-rnA
+gMZ
 lZi
 lko
 oHP
