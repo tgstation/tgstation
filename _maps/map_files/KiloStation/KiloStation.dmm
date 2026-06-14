@@ -4567,6 +4567,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bAc" = (
@@ -6588,6 +6589,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /obj/machinery/duct,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "chO" = (
@@ -7031,6 +7033,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/auxlab)
 "cne" = (
@@ -8829,6 +8832,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "cVr" = (
@@ -14841,6 +14845,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"eQx" = (
+/obj/machinery/cryo_cell,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/medical/cryo)
 "eQD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15890,9 +15901,6 @@
 /area/station/ai/upload/chamber)
 "fjn" = (
 /obj/structure/sink/directional/south,
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 26
-	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -17476,6 +17484,7 @@
 /obj/structure/chair/sofa/right/brown,
 /obj/effect/landmark/start/psychologist,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "fFK" = (
@@ -22197,6 +22206,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/dna_console,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "hgf" = (
@@ -25581,6 +25591,7 @@
 	name = "Morgue"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
 "ieb" = (
@@ -36609,7 +36620,8 @@
 	name = "Auxiliary Base"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
-/turf/open/floor/iron,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "lDa" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45786,6 +45798,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/paramedic)
 "oJU" = (
@@ -52062,7 +52075,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
-/turf/open/floor/iron,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "qMC" = (
 /obj/structure/disposalpipe/segment,
@@ -53713,6 +53727,20 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"rnA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/purple,
+/obj/machinery/duct,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science)
 "rnB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -57193,6 +57221,7 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/duct,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science)
 "soL" = (
@@ -96255,7 +96284,7 @@ xOg
 mCk
 ocS
 pVz
-fWK
+eQx
 lFN
 lBU
 hpQ
@@ -113472,7 +113501,7 @@ kXJ
 gRg
 uRT
 tcn
-vEW
+rnA
 lZi
 lko
 oHP
