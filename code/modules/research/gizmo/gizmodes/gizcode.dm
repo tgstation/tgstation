@@ -103,6 +103,8 @@
 // Proc that resets user input
 /datum/gizmodes/code_crack/proc/reset_input()
 	code_input = new/list(code_length)
+	for(var/i in 1 to code_length)
+		code_input[i] = 0
 	position = initial(position)
 
 // Gizpulses
@@ -143,9 +145,8 @@
 	if(puzzle_holder.position != 0)
 		playsound(holder, "sound/machines/eject.ogg", 100)
 		return
-	// Otherwise, produce many piston-move sounds quickly, indicating the position has been reset
-	for(var/i in 1 to puzzle_holder.code_length - 1)
-		addtimer(CALLBACK(GLOBAL_PROC, PROC_REF(playsound), holder, "sound/machines/eject.ogg", 100), 0.15 * (i-1) SECONDS)
+	// Otherwise, produce a different sound, indicating the position has been reset
+	playsound(holder, "sound/items/weapons/autoguninsert.ogg", 100)
 
 // Gizpulse to cycle the currently selected digit
 // Example (if second digit is selected and code_input is 0000):
@@ -169,10 +170,8 @@
 	if(previous_digit != DIGIT_COUNT - 1)
 		playsound(holder, "sound/machines/creak.ogg", 100)
 		return
-	// Otherwise, produce many clicks quickly, indicating the digit has been reset
-	// 9 clicks to go from 0 to 9, 9 clicks to go from 9 to 0
-	for(var/i in 1 to DIGIT_COUNT - 1)
-		addtimer(CALLBACK(GLOBAL_PROC, PROC_REF(playsound), holder, "sound/machines/creak.ogg", 100), 0.15 * i SECONDS)
+	// Otherwise, produce a different sound, indicating the digit has been reset
+	playsound(holder, "sound/items/reel/reel4.ogg", 100)
 
 // Gizpulse that actually cracks the code
 /datum/gizpulse/try_crack/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
@@ -231,6 +230,7 @@
 			playsound(holder, "sound/machines/defib/defib_saftyOn.ogg", 100)
 		else
 			playsound(holder, "sound/machines/defib/defib_ready.ogg", 100)
+		sleep(0.25 SECONDS)
 	..()
 
 /datum/gizmodes/code_crack/tutorial/punishment(atom/movable/holder)
