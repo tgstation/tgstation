@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "End of round mapvotes will now properly default to the only option if only one map is votable."
