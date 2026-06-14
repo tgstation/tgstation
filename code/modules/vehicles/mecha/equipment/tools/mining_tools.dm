@@ -11,7 +11,7 @@
 	icon_state = "mecha_drill"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
@@ -129,8 +129,10 @@
 	if(isturf(target))
 		var/turf/T = target
 		T.drill_act(src, source)
-
-		return ..()
+		equip_cooldown *= 0.1
+		. = ..()
+		equip_cooldown *= 10
+		return
 
 	// Drilling objects and mobs is a repeating procedure.
 	while(do_after_mecha(target, source, drill_delay))
