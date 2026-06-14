@@ -788,6 +788,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/rust_heretic_act()
 	adjust_brute_loss(400)
+	return TRUE
 
 /mob/living/basic/bot/proc/retrieve_access(mob/bot, list/player_access)
 	SIGNAL_HANDLER

@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -883,6 +882,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			balloon_alert(user, "set to [choice]")
 
 	else if(opened)
+		if(resistance_flags & INDESTRUCTIBLE)
+			to_chat(user, span_warning("You can't cut apart [src]!"))
+			return
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount=1))

@@ -315,6 +315,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	metabolized_traits = list(TRAIT_HOLY)
+	COOLDOWN_DECLARE(spell_clear_cd)
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -350,14 +351,26 @@
 	affected_mob.adjust_jitter_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
 	var/need_mob_update = FALSE
 
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+	if(COOLDOWN_FINISHED(src, spell_clear_cd))
+		if(IS_CULTIST(affected_mob))
+			for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+				var/removed_any = FALSE
+				for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+					removed_any = TRUE
+					qdel(BS)
+				if(removed_any)
+					to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+					COOLDOWN_START(src, spell_clear_cd, 3 SECONDS)
+
+		if(IS_HERETIC(affected_mob))
+			var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(affected_mob)
 			var/removed_any = FALSE
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				removed_any = TRUE
-				qdel(BS)
+			for(var/datum/heretic_knowledge/spell/spell in heretic_datum.get_researched_knowledge())
+				if(spell.remove_charges(ceil(spell.max_charges * spell.holywater_drain_amount)))
+					removed_any = TRUE
 			if(removed_any)
-				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+				to_chat(affected_mob, span_mansus("Your intricate rituals are distrupted by the holy water scouring your body!"))
+				COOLDOWN_START(src, spell_clear_cd, 3 SECONDS)
 
 	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)

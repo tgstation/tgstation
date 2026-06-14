@@ -229,6 +229,7 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_BLADE_BARRIER_TRIGGERED)
+	SEND_SIGNAL(source, COMSIG_MOB_BLADE_BARRIER_TRIGGERED, src)
 	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id))
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 0.1 SECONDS)
 
@@ -298,7 +299,6 @@
 /datum/status_effect/caretaker_refuge/on_apply()
 	animate(owner, alpha = 45, time = 0.5 SECONDS)
 	owner.set_density(FALSE)
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
@@ -310,7 +310,6 @@
 	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
-	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
 	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
 	UnregisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED)
@@ -328,11 +327,6 @@
 	playsound(get_turf(owner), 'sound/effects/curse/curse1.ogg', 80, TRUE)
 	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
 	owner.remove_status_effect(type)
-
-/datum/status_effect/caretaker_refuge/proc/on_focus_lost()
-	SIGNAL_HANDLER
-	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
-	qdel(src)
 
 /datum/status_effect/caretaker_refuge/proc/no_strip(atom/source, mob/user, obj/item/equipping)
 	SIGNAL_HANDLER
