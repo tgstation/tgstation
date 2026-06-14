@@ -336,6 +336,7 @@
 #define BB_DEER_GRAZE_COOLDOWN "deer_graze_cooldown"
 #define BB_DEER_DRINK_COOLDOWN "deer_drink_cooldown"
 #define BB_DEER_MARK_COOLDOWN "deer_mark_cooldown"
+#define BB_DEER_PLAY_COOLDOWN "deer_play_cooldown"
 
 //the thing boss
 #define BB_THETHING_CHARGE "BB_THETHING_CHARGE"

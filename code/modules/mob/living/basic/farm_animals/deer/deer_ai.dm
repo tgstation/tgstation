@@ -78,17 +78,30 @@
 	/// Minimum/maximum time before we want to rest again.
 	var/minimum_time = 2 MINUTES
 	var/maximum_time = 4 MINUTES
+	///ID for the rest timer
+	var/timerid
+	///Are we napping?
+	var/sleeping
 
-/datum/bt_node/ai_behavior/deer_rest/get_cooldown(datum/ai_controller/cooldown_for)
-	return rest_duration
+/datum/bt_node/ai_behavior/deer_rest/setup(datum/ai_controller/controller)
+	. = ..()
+	timerid = addtimer(CALLBACK(src, PROC_REF(finish_action), controller, TRUE), rest_duration, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /datum/bt_node/ai_behavior/deer_rest/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(sleeping)
+		return AI_BEHAVIOR_DELAY
 	var/mob/living/living_pawn = controller.pawn
 	var/static/list/possible_emotes = list("rests its legs...", "yawns and naps...", "curls up and rests...")
 	living_pawn.manual_emote(pick(possible_emotes))
-	controller.set_blackboard_key(BB_DEER_NEXT_REST_TIMER, world.time + rand(minimum_time, maximum_time))
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	sleeping = TRUE
+	return AI_BEHAVIOR_DELAY
 
+/datum/bt_node/ai_behavior/deer_rest/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	deltimer(timerid)
+	timerid = null
+	sleeping = FALSE
+	controller.set_blackboard_key(BB_DEER_NEXT_REST_TIMER, world.time + rand(minimum_time, maximum_time))
 
 /// Plays with another deer, spinning around them.
 /datum/bt_node/ai_behavior/deer_play

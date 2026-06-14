@@ -60,6 +60,7 @@
 												"type": "decorator",
 												"decorator": "/datum/bt_node/decorator/bb_key_set",
 												"vars": {
+													"observer_abort": "BT_ABORT_SELF",
 													"key": "BB_DEER_TREEHOME"
 												},
 												"child": {
@@ -82,120 +83,77 @@
 											}
 										},
 										{
-											"type": "selector",
-											"children": [
-												{
-													"type": "decorator",
-													"decorator": "/datum/bt_node/decorator/bb_key_set",
-													"vars": {
-														"key": "BB_DEER_PLAYFRIEND"
-													},
-													"child": {
-														"type": "sequence",
-														"children": [
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-																"vars": {
-																	"target_key": "BB_DEER_PLAYFRIEND",
-																	"required_dist": 1
-																}
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/deer_play"
-															}
-														]
-													}
-												},
-												{
-													"type": "decorator",
-													"decorator": "/datum/bt_node/decorator/bb_key_true",
-													"vars": {
-														"key": "BB_DEER_WANTS_TO_PLAY"
-													},
-													"child": {
-														"type": "sequence",
-														"children": [
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/valid_deer",
-																"vars": {
-																	"set_key": "BB_DEER_PLAYFRIEND"
-																}
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
-																"vars": {
-																	"target_key": "BB_DEER_WANTS_TO_PLAY",
-																	"value": false
-																}
-															}
-														]
-													}
-												}
-											]
-										},
-										{
 											"type": "decorator",
 											"decorator": "/datum/bt_node/decorator/bb_key_set",
 											"vars": {
-												"key": "BB_DEER_TREEHOME",
-												"invert": true
-											},
-											"child": {
-												"type": "decorator",
-												"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-												"vars": {
-													"cooldown_key": "BB_DEER_MARK_COOLDOWN"
-												},
-												"child": {
-													"type": "sequence",
-													"children": [
-														{
-															"type": "leaf",
-															"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/deer_tree",
-															"vars": {
-																"set_key": "BB_DEER_TREE_TARGET"
-															}
-														},
-														{
-															"type": "leaf",
-															"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-															"vars": {
-																"target_key": "BB_DEER_TREE_TARGET",
-																"required_dist": 1
-															}
-														},
-														{
-															"type": "leaf",
-															"behavior": "/datum/bt_node/ai_behavior/hunt_target/deer_mark",
-															"vars": {
-																"target_key": "BB_DEER_TREE_TARGET",
-																"cooldown_key": "BB_DEER_MARK_COOLDOWN"
-															}
-														}
-													]
-												}
-											}
-										},
-										{
-											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-											"vars": {
-												"cooldown_key": "BB_DEER_GRAZE_COOLDOWN"
+												"observer_abort": "BT_ABORT_BOTH",
+												"key": "BB_DEER_PLAYFRIEND"
 											},
 											"child": {
 												"type": "sequence",
 												"children": [
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_grass",
+														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 														"vars": {
-															"set_key": "BB_DEER_GRASS_TARGET"
+															"target_key": "BB_DEER_PLAYFRIEND",
+															"required_dist": 1
 														}
 													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+														"vars": {
+															"cooldown_key": "BB_DEER_PLAY_COOLDOWN",
+															"cooldown_duration": "10 SECONDS"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/deer_play"
+													}
+												]
+											}
+										},
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
+											"vars": {
+												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+												"key": "BB_DEER_TREE_TARGET"
+											},
+											"child": {
+												"type": "sequence",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+														"vars": {
+															"target_key": "BB_DEER_TREE_TARGET",
+															"required_dist": 1
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/hunt_target/deer_mark",
+														"vars": {
+															"target_key": "BB_DEER_TREE_TARGET",
+															"cooldown_key": "BB_DEER_MARK_COOLDOWN"
+														}
+													}
+												]
+											}
+										},
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
+											"vars": {
+												"observer_abort": "BT_ABORT_BOTH",
+												"key": "BB_DEER_GRASS_TARGET"
+											},
+											"child": {
+												"type": "sequence",
+												"children": [
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
@@ -217,20 +175,14 @@
 										},
 										{
 											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
 											"vars": {
-												"cooldown_key": "BB_DEER_DRINK_COOLDOWN"
+												"observer_abort": "BT_ABORT_BOTH",
+												"key": "BB_DEER_WATER_TARGET"
 											},
 											"child": {
 												"type": "sequence",
 												"children": [
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_water",
-														"vars": {
-															"set_key": "BB_DEER_WATER_TARGET"
-														}
-													},
 													{
 														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
@@ -272,16 +224,125 @@
 						},
 						{
 							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/random_chance",
+							"decorator": "/datum/bt_node/decorator/key_off_cooldown",
 							"vars": {
-								"chance": 0.03
+								"cooldown_key": "BB_DEER_PLAY_COOLDOWN"
 							},
 							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/random_chance",
 								"vars": {
-									"target_key": "BB_DEER_WANTS_TO_PLAY",
-									"value": true
+									"chance": 0.03
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+									"vars": {
+										"target_key": "BB_DEER_WANTS_TO_PLAY",
+										"value": true
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_true",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_DEER_WANTS_TO_PLAY"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/valid_deer",
+										"vars": {
+											"set_key": "BB_DEER_PLAYFRIEND"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+										"vars": {
+											"target_key": "BB_DEER_WANTS_TO_PLAY",
+											"value": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"invert": true,
+								"key": "BB_DEER_TREEHOME"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"invert": true,
+									"key": "BB_DEER_TREE_TARGET"
+								},
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+									"vars": {
+										"cooldown_key": "BB_DEER_MARK_COOLDOWN"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/deer_tree",
+										"vars": {
+											"set_key": "BB_DEER_TREE_TARGET"
+										}
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"invert": true,
+								"key": "BB_DEER_GRASS_TARGET"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+								"vars": {
+									"cooldown_key": "BB_DEER_GRAZE_COOLDOWN"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_grass",
+									"vars": {
+										"set_key": "BB_DEER_GRASS_TARGET"
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"invert": true,
+								"key": "BB_DEER_WATER_TARGET"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+								"vars": {
+									"cooldown_key": "BB_DEER_DRINK_COOLDOWN"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_water",
+									"vars": {
+										"set_key": "BB_DEER_WATER_TARGET"
+									}
 								}
 							}
 						}
