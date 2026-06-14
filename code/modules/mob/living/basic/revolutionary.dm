@@ -78,7 +78,7 @@
 	var/static/list/display_emote = list(
 		BB_EMOTE_SAY = phrases,
 		BB_EMOTE_SOUND = monkey_screeches,
-		BB_SPEAK_CHANCE = 5,
+		BB_SPEAK_CHANCE = 15,
 	)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
 	var/obj/item/weapon_of_choice = pick(possible_weapons)
@@ -123,24 +123,8 @@
 
 
 /datum/ai_controller/basic_controller/revolutionary
+	behavior_tree_json = "revolutionary.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/random_speech/blackboard/revolutionary,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-
-/datum/ai_planning_subtree/random_speech/blackboard/revolutionary
-
-
-/datum/ai_planning_subtree/random_speech/blackboard/revolutionary/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_CURRENT_TARGET))
-		return
-
-	return ..()

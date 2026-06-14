@@ -96,7 +96,7 @@
 ///Dog speech updates the BB keys based on the dogs swag
 /datum/bt_node/ai_behavior/random_speech_blackboard/dog_random_speech
 
-/datum/bt_node/ai_behavior/random_speech_blackboard/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/random_speech_blackboard/dog/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/pet/dog/dog_pawn = controller.pawn
 	if(!istype(dog_pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
