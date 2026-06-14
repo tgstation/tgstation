@@ -254,13 +254,13 @@
 /obj/item/fishing_hook/anomaly/examine(mob/user)
 	. = ..()
 	if(!isnull(core))
-		. += "There's \a [core] slotted into it."
+		. += span_info("There's \a [core] slotted into it.")
 
 /obj/item/fishing_hook/anomaly/examine_more(mob/user)
 	. = ..()
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/dimensional::name] adds a chance for your catch to have its materials altered."
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/bioscrambler::name] adds a chance for your catch to have its traits or stats altered."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/pyro::name] automatically cooks anything you catch."
+	. += "&bull; A [/obj/item/assembly/signaler/anomaly/pyro::name] adds a chance for your catch to be cooked."
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/ectoplasm::name] adds a chance to catch haunted fish."
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/hallucination::name] adds a chance to cause your catches to randomly grow or shrink in size."
 	. += "&bull; A [/obj/item/assembly/signaler/anomaly/grav::name] reduces the gravity of the bobber, causing it to fall slower."
@@ -270,7 +270,7 @@
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 
-	switch(core.type)
+	switch(core?.type)
 		if(/obj/item/assembly/signaler/anomaly/dimensional)
 			RegisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(dimensional_catch_bonus))
 		if(/obj/item/assembly/signaler/anomaly/bioscrambler)
@@ -282,29 +282,24 @@
 		if(/obj/item/assembly/signaler/anomaly/hallucination)
 			RegisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(hallucination_catch_effect))
 		if(/obj/item/assembly/signaler/anomaly/grav)
-			rod.gravity_mult *= 0.5
+			rod.gravity_mult *= 0.4
 		if(/obj/item/assembly/signaler/anomaly/vortex)
-			rod.bounciness_mult *= 0.5
+			rod.bounciness_mult *= 0.2
 		else
 			rod.balloon_alert_to_viewers("no core effect!")
 
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 
-	switch(core.type)
+	switch(core?.type)
 		if(/obj/item/assembly/signaler/anomaly/grav)
-			rod.gravity_mult /= 0.5
+			rod.gravity_mult /= 0.4
 		if(/obj/item/assembly/signaler/anomaly/vortex)
-			rod.bounciness_mult /= 0.5
+			rod.bounciness_mult /= 0.2
 
 	UnregisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
-/obj/item/fishing_hook/anomaly/proc/dimensional_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
-	SIGNAL_HANDLER
-
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED))
-		return
-
+/obj/item/fishing_hook/anomaly/proc/get_probability_bonuses(obj/item/fishing_rod/rod, mob/living/user)
 	var/skill_modifier = user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
 	var/bait_modifier = 0
 	if(!isnull(rod.bait))
@@ -315,22 +310,50 @@
 		else if(HAS_TRAIT(rod.bait, TRAIT_BASIC_QUALITY_BAIT))
 			bait_modifier += 4
 
-	if(!prob(12 + skill_modifier + bait_modifier))
+	return skill_modifier + bait_modifier
+
+/obj/item/fishing_hook/anomaly/proc/dimensional_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED))
+		return
+
+	if(!prob(12 + get_probability_bonuses(rod, user)))
 		return
 
 	var/obj/item/fish/caught_fish = caught
+	// number of materials applies to the fish
+	var/list/material_amounts = alist(
+		1 = 16,
+		2 = 3,
+		3 = 1,
+	)
+	// generic list of materials we may apply
+	var/list/material_weights = alist(
+		/datum/material/gold = 20,
+		/datum/material/silver = 20,
+		/datum/material/plastic = 10,
+		/datum/material/uranium = 5,
+		/datum/material/plasma = 5,
+	)
 
-	if((rod.material_flags & MATERIAL_EFFECTS) && length(rod.custom_materials))
-		var/datum/material/material = rod.get_master_material()
-		caught_fish.set_custom_materials(list(material.type = caught_fish.weight))
-	else
-		var/datum/material/random_material = pick(/datum/material/gold, /datum/material/silver, /datum/material/plastic, /datum/material/uranium, /datum/material/plasma)
-		caught_fish.set_custom_materials(list(random_material = caught_fish.weight))
+	// adds chance of inheriting rod materials
+	if((rod.material_flags & MATERIAL_EFFECTS))
+		for(var/rod_material_type, rod_material_amount in rod.custom_materials)
+			material_weights[rod_material_type] = 40 * (rod_material_amount / values_sum(rod.custom_materials))
+
+	// select a number of materials, then select what materials to apply
+	var/num_materials = pick_weight(material_amounts)
+	var/list/material_setup = list()
+	for(var/i in 1 to num_materials)
+		material_setup[pick_weight(material_weights)] += round(caught_fish.weight * (1 / num_materials))
+
+	caught_fish.set_custom_materials(material_setup)
 
 /obj/item/fishing_hook/anomaly/proc/bioscrambler_catch_bonus(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
 		return
 
 	var/list/random_pool = list()
@@ -338,49 +361,54 @@
 		if(random_trait.bioscramble_weight > 0)
 			random_pool[random_trait.bioscramble_weight] = random_trait
 
-	var/datum/fish_trait/random_trait = pick_weight(random_pool)
-	random_trait.apply_to_fish(caught_fish)
-
 	var/obj/item/fish/caught_fish = caught
 	caught_fish.update_size_and_weight(new_weight = caught_fish.weight * pick(0.6, 0.8, 1, 1.2, 1.4))
+
+	var/datum/fish_trait/random_trait = pick_weight(random_pool)
+	random_trait.apply_to_fish(caught_fish)
 
 /obj/item/fishing_hook/anomaly/proc/pyro_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(80 + get_probability_bonuses(rod, user)))
 		return
 
-	caught.AddElement(/datum/element/fried_item)
+	var/alist/fry_times = alist(
+		FRYING_TIME_FRIED = 2,
+		FRYING_TIME_PERFECT = 5,
+		FRYING_TIME_BURNT = 3,
+	)
+
+	caught.AddElement(/datum/element/fried_item, pick_weight(fry_times))
 
 /obj/item/fishing_hook/anomaly/proc/ectoplasm_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
 		return
 
 	caught.AddComponent(/datum/component/haunted_item, \
 		haunt_color = "#52336e", \
-		haunt_duration = 2 MINUTES, \
-		aggro_radius = 5, \
+		haunt_duration = 6 MINUTES, \
 		spawn_message = span_revenwarning("[caught] slowly rises upward, flopping menacingly in the air..."), \
-		despawn_message = span_revenwarning("[caught] settles to the floor, looking like a normal fish again...")
+		despawn_message = span_revenwarning("[caught] settles to the floor, looking like a normal fish again..."), \
 	)
 
 /obj/item/fishing_hook/anomaly/proc/hallucination_catch_effect(obj/item/fishing_rod/rod, obj/item/caught, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20))
+	if(!isfish(caught) || !HAS_TRAIT(caught, TRAIT_FISH_JUST_SPAWNED) || !prob(20 + get_probability_bonuses(rod, user)))
 		return
 
 	caught.transform = caught.transform.Scale(pick(0.5, 0.75, 1, 1.25, 1.5))
 
 /obj/item/fishing_hook/anomaly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/assembly/signaler/anomaly/core))
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly))
 		return NONE
 	if(!isnull(core))
 		balloon_alert(user, "already has a core!")
 		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(tool, src))
+	if(user.is_holding(tool) && !user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
 	core = tool
@@ -412,14 +440,14 @@
 	if(isnull(core))
 		return
 
-	var/mutable_appearance/core_base = mutable_appearance(icon, "anom_overlay_base", alpha = src.area)
+	var/mutable_appearance/core_base = mutable_appearance(icon, "anom_overlay_base", alpha = src.alpha)
 	. += core_base
 
-	var/mutable_appearance/core_color = mutable_appearance(icon, "anom_overlay_light", alpha = src.area)
+	var/mutable_appearance/core_color = mutable_appearance(icon, "anom_overlay_light", alpha = src.alpha)
 	core_color.color = core.core_color
 	. += core_color
 
-	var/mutable_appearance/core_esmissive = emissive_appearance(icon, "anom_overlay_light", src, alpha = src.area)
+	var/mutable_appearance/core_esmissive = emissive_appearance(icon, "anom_overlay_light", src, alpha = src.alpha)
 	. += core_esmissive
 
 /obj/item/fishing_hook/weighted
