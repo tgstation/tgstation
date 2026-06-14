@@ -5,6 +5,7 @@
 
 /obj/item/storage/box/fishing_hooks/PopulateContents()
 	new /obj/item/fishing_hook/magnet(src)
+	new /obj/item/fishing_hook/shiny(src)
 	new /obj/item/fishing_hook/weighted(src)
 
 /obj/item/storage/box/fishing_hooks/master/PopulateContents()

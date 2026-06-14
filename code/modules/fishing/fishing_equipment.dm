@@ -238,6 +238,25 @@
 	// We multiply the odds by five for everything that's not a fish nor a dud
 	return MAGNET_HOOK_BONUS_MULTIPLIER
 
+/obj/item/fishing_hook/shiny
+	name = "shiny lure hook"
+	icon_state = "gold_shiny"
+	rod_overlay_icon_state = "hook_shiny_overlay"
+	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
+
+/obj/item/fishing_hook/shiny/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_SHINY_LOVER, REF(src))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_SHINY_LOVER, REF(src))
+
 /obj/item/fishing_hook/anomaly
 	name = "anomalous lure hook"
 	icon_state = "anom"

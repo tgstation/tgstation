@@ -10,6 +10,7 @@
 	custom_materials = null
 	assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT
 	var/obj/effect/anomaly/anomaly_type = /obj/effect/anomaly
+	/// Color of the core's glow
 	var/core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
