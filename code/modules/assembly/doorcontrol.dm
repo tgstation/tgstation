@@ -7,6 +7,7 @@
 	/// Cooldown of the controller. Updates when pressed (activate())
 	var/cooldown = FALSE
 	/// Should we toggle open/close of doors based on their current state
+	/// Also used for curtains
 	var/sync_doors = TRUE
 	/// If this controller's ID should be adjustable by players through multitools.
 	var/generically_adjustable = FALSE
@@ -57,10 +58,6 @@
 		balloon_alert(user, "id changed")
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/assembly/control/activate()
-	if(cooldown)
-		return
-
 /obj/item/assembly/control/blast_door
 	name = "blast door controller"
 	desc = "A small electronic device able to control blast doors or shutters remotely."
@@ -104,6 +101,8 @@
 
 /obj/item/assembly/control/blast_door/activate()
 	var/openclose
+	if(cooldown)
+		return
 	cooldown = TRUE
 	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(M.id == src.id)
