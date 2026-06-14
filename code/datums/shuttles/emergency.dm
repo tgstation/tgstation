@@ -3,6 +3,7 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
+	prefix = "_maps/shuttles/emergency/"
 	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
 	var/list/events
 	///pick all events instead of random

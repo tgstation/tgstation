@@ -1,0 +1,4 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - bugfix: "Fixes a hard-del and signal override with sound tokens"

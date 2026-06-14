@@ -110,12 +110,13 @@
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
 /mob/proc/_pointed(atom/pointing_at)
 	if(client) //Clientless mobs can just go ahead and point
+		var/atom/atom_to_view_verify = pointing_at
 		if(ismovable(pointing_at))
 			var/atom/movable/pointed_movable = pointing_at
 			if(HAS_TRAIT(pointed_movable, TRAIT_SKIP_BASIC_REACH_CHECK) || pointing_at.loc.IsContainedAtomAccessible(pointing_at, src))
-				pointing_at = pointed_movable.loc
+				atom_to_view_verify = pointed_movable.loc
 
-		if(!(pointing_at in view(client.view, src)))
+		if(!(atom_to_view_verify in view(client.view, src)))
 			return FALSE
 	if(iscarbon(src)) // special interactions for carbons
 		var/mob/living/carbon/our_carbon = src

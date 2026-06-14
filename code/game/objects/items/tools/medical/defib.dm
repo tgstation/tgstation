@@ -122,12 +122,12 @@
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
 		if(user.get_slot_by_item(src) & slot_flags)
-			ui_action_click()
+			ui_action_click(user, modifiers)
 		else
 			balloon_alert(user, "equip the unit first!")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
-		ui_action_click() //checks for this are handled in defibrillator.mount.dm
+		ui_action_click(user, modifiers) //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)

@@ -174,8 +174,7 @@
 		update_global_bounty_list(round(CIV_BOUNTY_BASELINE + (SSeconomy.civ_bounty_tracker / 3)), FALSE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
-	flick(pad.sending_state,pad)
-	pad.icon_state = pad.idle_state
+	pad.finish_sending()
 	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 	return TRUE

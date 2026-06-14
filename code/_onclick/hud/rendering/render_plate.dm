@@ -72,6 +72,45 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), blend_override = BLEND_MULTIPLY)
 
+/atom/movable/screen/plane_master/rendering_plate/particle_weather
+	name = "Particle Weather"
+	documentation = "Plane used to render particle weather, masked by WEATHER_MASK_PLANE. \
+		Cannot be a single screen object as it needs to be a planemaster in order to be properly masked by the weather mask."
+	plane = RENDER_PLANE_PARTICLE_WEATHER
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// We can actually do this just fine as we do not render anything onto ourselves but our particles
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
+	SSweather.particle_planemasters += src
+	// And add all ongoing weather to ourselves
+	for (var/holder_offset, holder_list in SSweather.particle_holders)
+		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
+			if (holder.plane == plane)
+				vis_contents += holder
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
+	SSweather.particle_planemasters -= src
+	return ..()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
+	name = "Emissive Particle Weather"
+	documentation = "Secondary particle weather plane for emissive parts of weather, which is additionally rendered onto the emissive plane after being masked."
+	plane = RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// Render a copy of ourselves onto the emissive plane encoded into the bloom channel
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_PLANE, offset), relay_color = GLOB.emissive_color)
+
 /atom/movable/screen/plane_master/rendering_plate/turf_lighting
 	name = "Turf lighting post-processing plate"
 	documentation = "Used by overlay lighting, and possibly over plates, to mask out turf lighting."
@@ -132,7 +171,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(O_LIGHTING_VISUAL_PLANE)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
@@ -154,6 +193,35 @@
 	render_target = SPECULAR_MASK_RENDER_TARGET
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light
+	name = "Overlight plate"
+	documentation = "Combines overlay lights with emissives.\
+		<br>We draw to the generic lighting plate, do some funky stuff with turf lighting to sort of \"cut out\" a bit of space for ourselves there, and do some junk to speculars"
+	plane = RENDER_PLANE_O_LIGHTING
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// I'd love for this to be HSL but filters don't work with blend modes
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
+		1, 1, 1, 0,
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
+		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
+		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
+	))
 
 /atom/movable/screen/plane_master/rendering_plate/specular
 	name = "Specular plate"

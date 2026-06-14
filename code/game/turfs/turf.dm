@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/lighting_corners_initialised = FALSE
 
 	///Our lighting object.
-	var/tmp/datum/lighting_object/lighting_object
+	var/tmp/atom/movable/lighting_object/lighting_object
 	///Lighting Corner datums.
 	var/tmp/datum/lighting_corner/lighting_corner_NE
 	var/tmp/datum/lighting_corner/lighting_corner_SE
@@ -112,6 +112,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
+
+	/// If TRUE, then this turf will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 
 /turf/vv_edit_var(var_name, new_value)

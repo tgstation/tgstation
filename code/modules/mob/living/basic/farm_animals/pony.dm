@@ -119,6 +119,10 @@
 
 	whinny_angrily()
 
+/mob/living/basic/pony/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	. |= SHOVE_CAN_STAGGER
+
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,

@@ -13,6 +13,11 @@
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
 	box = /obj/item/storage/box/survival/syndie
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear,
+	)
 	/// Amount of TC to automatically store in this outfit's uplink.
 	var/tc = 25
 	/// Enables big voice on this outfit's headset, used for nukie leaders.
@@ -32,6 +37,12 @@
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	command_radio = TRUE
+
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/leader,
+	)
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
@@ -84,6 +95,11 @@
 /datum/outfit/syndicate/full/loneop
 	name = "Syndicate Operative - Full Kit (Loneop)"
 	uplink_type = /obj/item/uplink/loneop
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/leader,
+	)
 
 /datum/outfit/syndicate/full/plasmaman
 	name = "Syndicate Operative - Full Kit (Plasmaman)"
@@ -144,11 +160,10 @@
 
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/jacket/oversized
-	gloves = /obj/item/clothing/gloves/fingerless
-	glasses = /obj/item/clothing/glasses/sunglasses
-	mask = /obj/item/cigarette/cigar
+	uniform = /obj/item/clothing/under/syndicate/cybersun
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/laceup
+	mask = /obj/item/clothing/mask/gas/syndicate/cybersun
 	faction = "Cybersun Industries"
 
 /datum/outfit/syndicate/reinforcement/donk
@@ -214,3 +229,8 @@
 	command_radio = TRUE
 	tc = 0
 	uplink_type = null
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/offbase,
+	)

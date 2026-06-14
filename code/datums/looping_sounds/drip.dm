@@ -7,3 +7,4 @@
 	vary = TRUE
 	ignore_walls = FALSE
 	falloff_distance = 5
+	use_sound_tokens = TRUE

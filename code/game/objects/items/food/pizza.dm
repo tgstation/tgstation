@@ -106,6 +106,7 @@
 
 	slice.reagents.remove_all()
 	reagents.trans_to(slice, amount = reagents.total_volume / slices_left, no_react = TRUE)
+	SEND_SIGNAL(src, COMSIG_PIZZA_SLICE_TAKEN, user, slice)
 
 	slices_left--
 	if(slices_left <= 0)
@@ -115,15 +116,6 @@
 		return
 	remove_filter("pizzaslices")
 	add_filter("pizzaslices", 1, get_slices_filter())
-
-// Raw Pizza
-/obj/item/food/pizza/raw
-	foodtypes = GRAIN | RAW
-	slice_type = null
-	crafting_complexity = FOOD_COMPLEXITY_2
-
-/obj/item/food/pizza/raw/make_bakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 // Pizza Slice
 /obj/item/food/pizzaslice
@@ -139,6 +131,17 @@
 
 /obj/item/food/pizzaslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
+
+/obj/item/food/pizza/custom
+	name = "pizza"
+	desc = "A fancy custom pizza."
+	icon_state = "pizzamargherita" // Colored by the ingredient_holder component
+	slice_type = /obj/item/food/pizzaslice/custom
+
+/obj/item/food/pizzaslice/custom
+	name = "pizza slice"
+	desc = "A slice of custom fancy pizza."
+	icon_state = "pizzamargheritaslice"
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"

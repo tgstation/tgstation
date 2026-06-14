@@ -22,6 +22,7 @@
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, PROC_REF(on_host_pre_update_blood_status))
 	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
+	client?.set_stat_panel()
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
 
 	START_PROCESSING(SSfastprocess, src)
@@ -118,6 +119,7 @@
 		COMSIG_MOB_EXAMINING,
 		COMSIG_MOB_HUD_CREATED,
 	))
+	client?.set_stat_panel()
 
 	STOP_PROCESSING(SSfastprocess, src)
 

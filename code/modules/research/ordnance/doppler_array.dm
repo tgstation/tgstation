@@ -63,16 +63,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
-		return FALSE
+	. = default_deconstruction_screwdriver(user, tool)
 	power_change()
-	update_appearance()
-	return TRUE
+	return .
 
 /obj/machinery/doppler_array/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return FALSE
-	return TRUE
+	return default_deconstruction_crowbar(user, tool)
 
 /// Printing of a record into a disk.
 /obj/machinery/doppler_array/proc/print(mob/user, datum/data/tachyon_record/record)
@@ -173,7 +169,7 @@
 
 	var/datum/data/tachyon_record/new_record = new /datum/data/tachyon_record()
 	new_record.name = "Log Recording #[record_number]"
-	new_record.timestamp = station_time_timestamp()
+	new_record.timestamp = "[server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
 	new_record.coordinates = "[epicenter.x], [epicenter.y]"
 	new_record.displacement = took
 	new_record.factual_radius["epicenter_radius"] = devastation_range

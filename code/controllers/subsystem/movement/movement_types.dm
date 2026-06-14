@@ -74,6 +74,7 @@
 /datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
 	status &= ~MOVELOOP_STATUS_RUNNING
+	EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Moveloop stopped")
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -127,6 +128,10 @@
 
 	owner?.processing_move_loop_flags = flags
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+
+	if(result)
+		EVLOG_PATH(moving, EVLOG_CATEGORY_MOVELOOPS, "Moved using [src]", list(old_loc, moving.loc)) //You might think, this runs a lot; but if not logging, it only does a lookup on the event logger.
+
 	if(moving)
 		var/direction = get_dir(old_loc, moving.loc)
 		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
@@ -414,6 +419,7 @@
 	. = ..()
 	movement_path = null
 
+
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
 	on_finish_callbacks = null
@@ -432,6 +438,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
+	EVLOG_PATH(moving, EVLOG_CATEGORY_JPS, "Planned AI path", movement_path)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
@@ -439,6 +446,7 @@
 		if(is_pathing)
 			return MOVELOOP_NOT_READY
 		else
+			EVLOG_TEXT(moving, EVLOG_CATEGORY_JPS, "Path recalculating due to lack of path")
 			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return MOVELOOP_FAILURE
 
@@ -453,6 +461,95 @@
 		if(length(movement_path))
 			movement_path.Cut(1,2)
 	else
+		return handle_move_attempt_failure()
+
+
+/datum/move_loop/has_target/jps/proc/handle_move_attempt_failure()
+	EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
+	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+	return MOVELOOP_FAILURE
+
+/datum/move_loop/has_target/jps/frustrations
+	///maximum amount of frustrations before we recalculate path
+	var/maximum_frustrations
+	///what is our current frustration?
+	var/current_frustrations = 0
+	///how long before we're able to increment frustration?
+	var/frustration_delay
+	///have we drawn our initial path?
+	var/initial_path_drawn = FALSE
+	///cooldown between frustration increments
+	COOLDOWN_DECLARE(frustration_cooldown)
+
+
+/datum/move_manager/proc/frustrations_move(moving,
+	chasing,
+	delay,
+	timeout,
+	repath_delay,
+	max_path_length,
+	minimum_distance,
+	list/access,
+	simulated_only,
+	turf/avoid,
+	skip_first,
+	subsystem,
+	diagonal_handling,
+	priority,
+	flags,
+	datum/extra_info,
+	initial_path)
+	return add_to_loop(moving,
+		subsystem,
+		/datum/move_loop/has_target/jps/frustrations,
+		priority,
+		flags,
+		extra_info,
+		delay,
+		timeout,
+		chasing,
+		repath_delay,
+		max_path_length,
+		minimum_distance,
+		access,
+		simulated_only,
+		avoid,
+		skip_first,
+		diagonal_handling,
+		initial_path)
+
+/datum/move_loop/has_target/jps/frustrations/setup(delay, timeout, atom/chasing, maximum_frustrations = 10, frustration_delay = 2 SECONDS)
+	. = ..()
+	if(!.)
+		return
+	src.maximum_frustrations = maximum_frustrations
+	src.frustration_delay = frustration_delay
+
+/datum/move_loop/has_target/jps/frustrations/recalculate_path()
+	if(initial_path_drawn && current_frustrations < maximum_frustrations)
+		return
+	return ..()
+
+/datum/move_loop/has_target/jps/frustrations/loop_stopped()
+	. = ..()
+
+/datum/move_loop/has_target/jps/frustrations/on_finish_pathing(list/path)
+	. = ..()
+	if(movement_path)
+		initial_path_drawn = TRUE
+
+/datum/move_loop/has_target/jps/frustrations/handle_move_attempt_failure()
+	if(!initial_path_drawn)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
+	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
+		return NONE
+	COOLDOWN_START(src, frustration_cooldown, frustration_delay)
+	current_frustrations++
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED, current_frustrations)
+	if(current_frustrations >= maximum_frustrations)
+		current_frustrations = 0
+		EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 

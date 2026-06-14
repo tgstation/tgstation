@@ -9,9 +9,11 @@
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
 	/// do we check for faction?
 	var/check_faction = FALSE
+	/// Behavior to use to select our target
+	var/target_behavior = /datum/ai_behavior/target_from_retaliate_list
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
+	controller.queue_behavior(target_behavior, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
 	check_faction = TRUE
@@ -43,6 +45,12 @@
 	var/list/shitlist = controller.blackboard[shitlist_key]
 	var/atom/existing_target = controller.blackboard[target_key]
 
+	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[BB_TARGET_PRIORITY_STRATEGY])
+	var/existing_priority = 0
+	// If we have an existing target and its priority is higher than our new target's, don't switch focus
+	if (priority_strategy && existing_target)
+		existing_priority = priority_strategy.get_target_priority(controller, existing_target)
+
 	if (!check_faction)
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 
@@ -53,13 +61,12 @@
 	for(var/mob/living/potential_target as anything in shitlist)
 		if(!targeting_strategy.can_attack(living_mob, potential_target, vision_range))
 			continue
+		// Strict comparasion because priority strategies might not care about retaliation, so this makes existing targets not override potential retaliates
+		if (priority_strategy && priority_strategy.get_target_priority(controller, potential_target) < existing_priority)
+			continue
 		enemies_list += potential_target
 
 	if(!length(enemies_list))
-
-		if(existing_target)
-			controller.clear_blackboard_key(target_key)
-
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
@@ -74,7 +81,10 @@
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
-	return pick(enemies_list)
+	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[BB_TARGET_PRIORITY_STRATEGY])
+	if (!priority_strategy)
+		return pick(enemies_list)
+	return priority_strategy.select_target(controller, enemies_list)
 
 /datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, shitlist_key, target_key, targeting_strategy_key, hiding_location_key, check_faction)
 	. = ..()

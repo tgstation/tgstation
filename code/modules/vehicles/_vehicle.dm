@@ -24,9 +24,9 @@
 	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component
 	  * Eventually the remaining checks should be moved to the component and this var removed.
 	  */
-	var/key_type
+	var/obj/item/key_type
 	///The inserted key, needed on some vehicles to start the engine
-	var/obj/item/key/inserted_key
+	var/obj/item/inserted_key
 	/// Whether the vehicle is currently able to move
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths

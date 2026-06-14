@@ -23,11 +23,11 @@
 	#define COMSIG_MOB_CANCEL_CLICKON (1<<0)
 ///from base of mob/alt_click_on_secodary(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON_SECONDARY "mob_altclickon_secondary"
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_PRE_STEP "mob_bot_pre_step"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
 	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
 /// From base of /mob/proc/update_held_items
@@ -105,6 +105,7 @@
 #define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
+	#define COMPONENT_BLOCK_INVIS_CHANGE (1<<0)
 
 /// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 /// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage

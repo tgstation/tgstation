@@ -3,6 +3,7 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "autolathe"
+	base_icon_state = "autolathe"
 	density = TRUE
 	///Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
 	active_power_usage = 0.025 * STANDARD_CELL_RATE
@@ -88,14 +89,14 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/autolathe/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/autolathe/update_icon_state()
+	. = ..()
+	icon_state = busy ? "[base_icon_state]_n" : panel_open ? "[base_icon_state]_t" : base_icon_state
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
@@ -320,7 +321,7 @@
 
 	//do the printing sequentially
 	busy = TRUE
-	icon_state = "autolathe_n"
+	update_appearance()
 	SStgui.update_uis(src)
 	// play this after all checks passed individually for each item.
 	print_sound.start()
@@ -427,8 +428,8 @@
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
 	print_sound.stop()
-	icon_state = initial(icon_state)
 	busy = FALSE
+	update_appearance()
 	SStgui.update_uis(src)
 
 /obj/machinery/autolathe/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)

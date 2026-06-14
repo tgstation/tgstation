@@ -127,6 +127,26 @@
 ///The mob is all boney
 #define MOB_SKELETAL (1 << 15)
 
+/// Readable biotypes, keep this in the same order as the flags are
+#define MOB_BIOTYPES_READABLE list(\
+	"organic", \
+	"mineral", \
+	"robotic", \
+	"undead", \
+	"humanoid", \
+	"insectoid", \
+	"beast", \
+	"monstrous", \
+	"reptile", \
+	"spirit", \
+	"plant", \
+	"slime", \
+	"aquatic", \
+	"mining", \
+	"crustacean", \
+	"skeletal", \
+)
+
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
@@ -152,6 +172,8 @@
 #define BODYTYPE_SHADOW (1<<7)
 //This limb is a ghost limb and can phase through walls.
 #define BODYTYPE_GHOST (1<<8)
+/// Analagous to BODYSHAPE_DIGITIGRADE, though this one is not removed if the mob's shape changed
+#define BODYTYPE_DIGITIGRADE (1<<9)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -165,8 +187,10 @@
 /// Golem's wacky rocky limbs
 #define BODYSHAPE_GOLEM (1<<4)
 
+/// List of body part flags that can not be bioscrambled
 #define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
-#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
+/// Check to see if a bodypart limb can be bioscrambled
+#define BODYPART_CAN_BE_BIOSCRAMBLED(bodypart) (!(bodypart.bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE) && !(bodypart.flags_1 & HOLOGRAM_1))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -181,6 +205,7 @@
 #define SPECIES_HUMAN "human"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
+#define SPECIES_SPIRIT "spirit"
 #define SPECIES_LUMINESCENT "luminescent"
 #define SPECIES_STARGAZER "stargazer"
 #define SPECIES_LIZARD "lizard"
@@ -198,6 +223,7 @@
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_INFECTIOUS_MINDLESS "mindless_memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_VOIDWALKER "voidwalker"
 
@@ -835,7 +861,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[HEAD_LAYER]" = UPPER_BODY,
 	// Hair will get cut off by filter
 	"[HAIR_LAYER]" = UPPER_BODY,
-	"[BENEATH_HAIR_LAYER]" = UPPER_BODY,
+	// Doesn't do much
+	"[EYES_LAYER]" = UPPER_BODY,
 	// Long belts (sabre sheathe) will get cut off by filter
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
@@ -852,6 +879,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	"[LOW_FACEMASK_LAYER]" = UPPER_BODY,
+	"[BENEATH_HAIR_LAYER]" = UPPER_BODY, // alt mask layer
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
@@ -860,7 +888,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_LAYER (body markings (full body), underwear (full body))
-	// EYES_LAYER,
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
@@ -967,6 +994,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NO_BUCKLE_LYING -1
 /// Possible value of [/atom/movable/buckle_dir]. If set to a different (positive-or-zero) value than this, the buckling thing will force a dir on the buckled.
 #define BUCKLE_MATCH_DIR -1
+
+// Defines for [/datum/component/riding/var/other_unbuckle]
+/// Other mobs cannot force riders to unbuckle in any means
+#define CANNOT_FORCE_UNBUCKLE 0
+/// Other mobs can force riders to unbuckle by simply clicking on the parent
+#define CAN_FORCE_UNBUCKLE 1
+/// Other mobs can force riders to unbuckle by disarming the parent or the rider minimum twice
+#define CAN_DISARM_UNBUCKLE 2
 
 // Flags for fully_heal().
 

@@ -356,18 +356,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		. += "wm_panel"
 
 /obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(!panel_open || busy)
-		return FALSE
+		return NONE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	if (!state_open)
-		default_deconstruction_screwdriver(user, null, null, tool)
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(state_open)
+		return NONE
+
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(user.combat_mode)
