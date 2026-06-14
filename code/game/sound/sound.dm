@@ -154,14 +154,7 @@
 
 		sound_to_use.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
-		// Sounds can't have their own environment. A sound's environment will be:
-		// 1. the mob's
-		// 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
-		if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
-			sound_to_use.environment = sound_environment_override
-		else
-			var/area/A = get_area(src)
-			sound_to_use.environment = A.sound_environment
+		sound_to_use.environment = get_sound_enviroment()
 
 		if(!use_reverb || sound_to_use.environment == SOUND_ENVIRONMENT_NONE)
 			sound_to_use.echo ||= new /list(18)
@@ -180,6 +173,19 @@
 
 	SEND_SOUND(src, sound_to_use)
 	return TRUE
+
+/**
+ * Sounds can't have their own environment. A sound's environment will be:
+ * 1. the mob's
+ * 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
+ */
+/mob/proc/get_sound_enviroment()
+	if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
+		return sound_environment_override
+	else
+		var/area/my_area = get_area(src)
+		return my_area.sound_environment
+
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S, datum/preference/numeric/volume/volume_preference = null)
 	if(!S)
