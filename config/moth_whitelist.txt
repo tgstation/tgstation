@@ -1,5 +1,5 @@
 # Apsis-Station moth whitelist
-# One BYOND ckey per line (lowercase, no spaces)
+# One BYOND ckey per line (lowercase, no spaces, no underscores)
 # Lines starting with # are ignored
 # exampleckey
 # anotherckey

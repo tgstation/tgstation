@@ -72,9 +72,6 @@
 /datum/sprite_accessory/facial_hair/dwarf
 	lore_banned = TRUE
 
-/datum/sprite_accessory/facial_hair/dwarf
-	lore_banned = TRUE
-
 /datum/sprite_accessory/facial_hair/fullbeard
 	lore_banned = TRUE
 
@@ -141,12 +138,23 @@
 // Add or remove styles to taste. Stubble/moustache/goatee left allowed
 // as they don't break mask seal.
 
-// Runs at world start, removes lore_banned styles from the global list
-// so they never appear in character creation UI or DNA encoding
-/hook/startup/proc/remove_lore_banned_facial_hair()
-    for(var/style_name in GLOB.facial_hairstyles_list)
-        var/datum/sprite_accessory/facial_hair/style = GLOB.facial_hairstyles_list[style_name]
-        if(style?.lore_banned)
-            GLOB.facial_hairstyles_list.Remove(style_name)
-            GLOB.facial_hairstyles_male_list?.Remove(style_name)
-            GLOB.facial_hairstyles_female_list?.Remove(style_name)
+// Removes lore_banned styles after SSaccessories populates its lists
+/datum/controller/subsystem/accessories/PreInit()
+	. = ..()
+	remove_lore_banned_styles()
+
+/datum/controller/subsystem/accessories/proc/remove_lore_banned_styles()
+	for(var/style_name in hairstyles_list)
+		var/datum/sprite_accessory/style = hairstyles_list[style_name]
+		if(style?.lore_banned)
+			hairstyles_list.Remove(style_name)
+			hairstyles_male_list?.Remove(style_name)
+			hairstyles_female_list?.Remove(style_name)
+
+	for(var/style_name in facial_hairstyles_list)
+		var/datum/sprite_accessory/style = facial_hairstyles_list[style_name]
+		if(style?.lore_banned)
+			facial_hairstyles_list.Remove(style_name)
+			facial_hairstyles_male_list?.Remove(style_name)
+			facial_hairstyles_female_list?.Remove(style_name)
+
