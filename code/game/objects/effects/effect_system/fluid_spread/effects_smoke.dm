@@ -241,6 +241,15 @@
 /datum/effect_system/fluid_spread/smoke/bad/green
 	effect_type = /obj/effect/particle_effect/fluid/smoke/bad/green
 
+/datum/effect_system/fluid_spread/smoke/bad/lime
+	effect_type = /obj/effect/particle_effect/fluid/smoke/bad/lime
+
+/obj/effect/particle_effect/fluid/smoke/bad/lime
+	name = "green smoke"
+	color = "#4cf368d8"
+	opacity = FALSE
+	lifetime = 1 SECONDS
+
 /// Black smoke that makes you cough. (Actually dark grey)
 /obj/effect/particle_effect/fluid/smoke/bad/black
 	name = "black smoke"
