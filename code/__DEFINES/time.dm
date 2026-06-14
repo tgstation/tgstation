@@ -39,6 +39,11 @@
 #define HOTDOG_DAY "National Hot Dog Day"
 #define ICE_CREAM_DAY "National Ice Cream Day"
 #define CHERNOBYL_ANNIVERSARY "Chernobyl Disaster Remembrance Day"
+#define LIZARD_ATRAKOR_DAY "Festival of Atrakor's Might"
+#define MOTH_FLEET_DAY "Fleet Day"
+#define BEE_DAY "Bee Day"
+#define BEER_DAY "Beer Day"
+#define VEGAN_DAY "Vegan Day"
 /*
 
 Days of the week to make it easier to reference them.

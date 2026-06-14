@@ -2561,6 +2561,7 @@
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\costume.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
+#include "code\game\objects\effects\spawners\holiday.dm"
 #include "code\game\objects\effects\spawners\message_in_a_bottle.dm"
 #include "code\game\objects\effects\spawners\structure.dm"
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
