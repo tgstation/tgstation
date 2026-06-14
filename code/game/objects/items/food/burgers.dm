@@ -693,11 +693,29 @@
 
 /obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()
+	add_shared_particles(/particles/smoke/steam/crazy, "crazy_burger_smoke")
 	START_PROCESSING(SSobj, src)
 
-/obj/item/food/burger/crazy/process(seconds_per_tick) // DIT EES HORRIBLE
+/obj/item/food/burger/crazy/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	remove_shared_particles("crazy_burger_smoke")
+	if(ismob(loc))
+		var/mob/M = loc
+		M.remove_shared_particles("crazy_burger_smoke")
+	return ..()
+
+/obj/item/food/burger/crazy/process(seconds_per_tick)
 	if(SPT_PROB(2.5, seconds_per_tick))
-		do_smoke(0, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/green)
+		do_smoke(0, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/lime, effect_type = /obj/effect/particle_effect/fluid/smoke/bad/lime)
+
+/obj/item/food/burger/crazy/equipped(mob/equipee, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HANDS)
+		equipee.add_shared_particles(/particles/smoke/steam/crazy, "crazy_burger_smoke")
+
+/obj/item/food/burger/crazy/dropped(mob/dropee)
+	. = ..()
+	dropee.remove_shared_particles("crazy_burger_smoke")
 
 // empty burger you can customize
 /obj/item/food/burger/empty
