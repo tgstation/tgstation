@@ -360,5 +360,6 @@
       and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
   lelandkemble:
   - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
   remove32:
   - bugfix: statpanel uses year offset
