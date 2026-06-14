@@ -408,8 +408,11 @@
 	if(!isnull(core))
 		balloon_alert(user, "already has a core!")
 		return ITEM_INTERACT_BLOCKING
-	if(user.is_holding(tool) && !user.transferItemToLoc(tool, src))
-		return ITEM_INTERACT_BLOCKING
+	if(user.is_holding(tool))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+	else
+		tool.forceMove(src)
 
 	core = tool
 	balloon_alert(user, "core installed")
