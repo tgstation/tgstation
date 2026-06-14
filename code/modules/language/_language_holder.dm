@@ -225,9 +225,9 @@ Key procs
 /// Checks if you have the language passed.
 /datum/language_holder/proc/has_language(language, flag_to_check = UNDERSTOOD_LANGUAGE)
 	var/list/langs_to_check = list()
-	if(flag_to_check & SPOKEN_LANGUAGE && LAZYACCESS(spoken_languages, language))
+	if(flag_to_check & SPOKEN_LANGUAGE && !LAZYACCESS(blocked_speaking, language))
 		langs_to_check |= spoken_languages
-	if(flag_to_check & UNDERSTOOD_LANGUAGE && LAZYACCESS(understood_languages, language))
+	if(flag_to_check & UNDERSTOOD_LANGUAGE && !LAZYACCESS(blocked_understanding, language))
 		langs_to_check |= understood_languages
 
 	return language in langs_to_check

@@ -435,14 +435,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			listening |= player_mob
 
 	var/tts_message_to_use = tts_message || message_raw
-	var/list/filter = list()
-	var/list/special_filter = list()
-	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
-		if(length(voice_filter) > 0)
-			filter += voice_filter
-
-		if(length(tts_filter) > 0)
-			filter += tts_filter.Join(",")
 
 	// this signal ignores whispers or language translations (only used by beetlejuice component)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
@@ -462,9 +454,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(M.client)
 			if(!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES)))
 				speech_bubble_recipients.Add(M.client)
-	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, get_tts_voice(filter, special_filter), filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"), blip_base = blip_base, blip_number = blip_number, identifier = message_mods[MODE_TTS_IDENTIFIER])
-
+	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
 	say_popup.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -472,7 +462,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	LAZYADD(update_on_z, say_popup)
 	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
 
-/mob/living/proc/get_tts_voice(list/filter, list/special_filter)
+/mob/living/get_tts_voice(list/filter, list/special_filter)
 	. = voice
 	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
 	if(!istype(mask) || mask.up)

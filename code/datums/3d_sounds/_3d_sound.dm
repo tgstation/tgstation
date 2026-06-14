@@ -51,7 +51,8 @@
 	z_cutoff = ceil(worldviewsize[2] / 2)
 	for(var/listener in current_listeners)
 		if(!ismob(listener))
-			current_listeners -= current_listeners
+			stack_trace("[listener] found in current listeners list and is NOT A MOB!!!!!1! report this on github thx")
+			current_listeners -= listener
 			continue
 		register_listener(listener)
 	starting_listeners = current_listeners
@@ -59,10 +60,7 @@
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_delete))
-	deletion_timer = addtimer(CALLBACK(src, PROC_REF(delete_self)), sound_length, TIMER_STOPPABLE | TIMER_DELETE_ME)
-
-/datum/threed_sound/proc/delete_self()
-	qdel(src)
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(selfdelete)), sound_length, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /datum/threed_sound/Destroy()
 	unlisten_all()
