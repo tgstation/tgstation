@@ -13,8 +13,8 @@
 	return get_closest_atom(/atom/, enemies_list, our_position)
 
 /// BT version of update_targets/nearest — picks the closest valid target.
-/datum/bt_node/ai_behavior/update_targets/nearest
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest
 
-/datum/bt_node/ai_behavior/update_targets/nearest/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	var/turf/our_position = get_turf(controller.pawn)
 	return get_closest_atom(/atom/, filtered_targets, our_position)

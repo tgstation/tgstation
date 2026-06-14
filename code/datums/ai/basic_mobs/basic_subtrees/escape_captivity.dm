@@ -35,7 +35,7 @@
 		var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 		var/friends_list = controller.blackboard[BB_FRIENDS_LIST] || list()
 		// Only resist grabs from mobs that aren't in our faction
-		if (targeting_strategy?.can_attack(living_pawn, puller) && !(puller in friends_list))
+		if (targeting_strategy?.is_valid_target(living_pawn, puller) && !(puller in friends_list))
 			controller.queue_behavior(/datum/ai_behavior/resist)
 			return SUBTREE_RETURN_FINISH_PLANNING
 

@@ -1,6 +1,5 @@
 /datum/ai_controller/basic_controller/trader
 	behavior_tree_json = "trader.bt.json"
-	behavior_tree_json = "trader.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TRADER_RUSH_TO_SELL = FALSE

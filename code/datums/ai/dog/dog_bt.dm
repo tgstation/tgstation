@@ -14,7 +14,7 @@
 
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(QDELETED(target) || !targeting_strategy?.can_attack(living_pawn, target))
+	if(QDELETED(target) || !targeting_strategy?.is_valid_target(living_pawn, target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(!controller.blackboard[BB_DOG_HARASS_HARM])
@@ -53,7 +53,7 @@
 		if(!isnull(dog.buckled))
 			dog.audible_message(span_notice("[dog] growls at [iter_living], yet [dog.p_they()] [dog.p_are()] much too comfy to move."), hearing_distance = COMBAT_MESSAGE_RANGE)
 			continue
-		if(!strategy?.can_attack(dog, iter_living))
+		if(!strategy?.is_valid_target(dog, iter_living))
 			continue
 		dog.audible_message(span_warning("[dog] growls at [iter_living], seemingly annoyed by [iter_living.p_their()] presence."), hearing_distance = COMBAT_MESSAGE_RANGE)
 		controller.set_blackboard_key(target_key, iter_living)

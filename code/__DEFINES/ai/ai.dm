@@ -1,6 +1,15 @@
 #define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
 #define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
 #define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_behaviors.target_priority_strategies[targeting_type]
+#define GET_TARGET_SOURCE(source_type) SSai_behaviors.target_sources[source_type]
+
+// Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
+/// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.
+#define TARGET_REVALIDATE 1
+/// If a target is already set, return SUCCESS immediately without re-checking.
+#define TARGET_KEEP_IF_SET 2
+/// Always run the full candidate search, ignoring any existing target.
+#define TARGET_ALWAYS_SEARCH 3
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags

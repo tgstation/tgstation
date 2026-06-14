@@ -202,7 +202,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
 
-	if(QDELETED(target) || !strategy.can_attack(living_pawn, target))
+	if(QDELETED(target) || !strategy.is_valid_target(living_pawn, target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/obj/item/holding_weapon

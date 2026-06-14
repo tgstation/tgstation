@@ -63,7 +63,7 @@
 		return
 	if(victim.loc == loc) //guaranteed bite
 		var/datum/targeting_strategy/basic/targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
-		if(targeting.can_attack(src, victim))
+		if(targeting.is_valid_target(src, victim))
 			melee_attack(victim)
 	icon_state = icon_aggro
 	desc = desc_aggro

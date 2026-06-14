@@ -164,7 +164,7 @@
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[targeting_strategy_key])
 	if (!targeter)
 		return FALSE
-	if (!targeter.can_attack(living_parent, target))
+	if (!targeter.is_valid_target(living_parent, target))
 		refuse_target(parent, target)
 		return FALSE
 	return ..()

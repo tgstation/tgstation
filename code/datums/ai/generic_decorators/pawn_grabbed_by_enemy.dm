@@ -16,7 +16,7 @@
 	if(isnull(puller) || puller.grab_state <= GRAB_PASSIVE)
 		return FALSE
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(!strategy?.can_attack(pawn, puller))
+	if(!strategy?.is_valid_target(pawn, puller))
 		return FALSE
 	var/list/friends = controller.blackboard[BB_FRIENDS_LIST] || list()
 	return !(puller in friends)

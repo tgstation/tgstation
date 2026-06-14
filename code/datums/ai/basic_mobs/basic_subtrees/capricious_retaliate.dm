@@ -33,7 +33,7 @@
 	var/mob/living/final_target = null
 	while(isnull(final_target) && length(potential_targets))
 		var/mob/living/test_target = pick_n_take(potential_targets)
-		if(target_helper.can_attack(pawn, test_target, vision_range = aggro_range))
+		if(target_helper.is_valid_target(pawn, test_target, vision_range = aggro_range))
 			final_target = test_target
 
 	if(isnull(final_target))
@@ -100,7 +100,7 @@
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 	while (isnull(final_target) && length(potential_targets))
 		var/mob/living/test_target = pick_n_take(potential_targets)
-		if (target_helper.can_attack(pawn, test_target, vision_range = aggro_range))
+		if (target_helper.is_valid_target(pawn, test_target, vision_range = aggro_range))
 			final_target = test_target
 
 	if (isnull(final_target))

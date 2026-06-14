@@ -24,7 +24,7 @@
 		if(!isnull(dog.buckled))
 			dog.audible_message(span_notice("[dog] growls at [iter_living], yet [dog.p_they()] [dog.p_are()] much too comfy to move."), hearing_distance = COMBAT_MESSAGE_RANGE)
 			continue
-		if(!targeting_strategy.can_attack(dog, iter_living))
+		if(!targeting_strategy.is_valid_target(dog, iter_living))
 			continue
 
 		dog.audible_message(span_warning("[dog] growls at [iter_living], seemingly annoyed by [iter_living.p_their()] presence."), hearing_distance = COMBAT_MESSAGE_RANGE)

@@ -140,9 +140,12 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target",
 					"vars": {
-						"set_key": "BB_FIRST_CUSTOMER"
+						"target_key": "BB_FIRST_CUSTOMER",
+						"target_source": "/datum/target_source/oview",
+						"targeting_strategy": "/datum/targeting_strategy/conscious_human",
+						"revalidation_mode": "TARGET_REVALIDATE"
 					}
 				}
 			]

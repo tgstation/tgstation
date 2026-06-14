@@ -10,7 +10,7 @@
 	/// If this blackboard key is TRUE, makes us only target wounded mobs
 	var/target_wounded_key
 
-/datum/targeting_strategy/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
 	if(isnull(our_controller))
@@ -60,7 +60,7 @@
 	if(ismecha(the_target)) //Targeting vs mechas
 		var/obj/vehicle/sealed/mecha/M = the_target
 		for(var/occupant in M.occupants)
-			if(can_attack(living_mob, occupant)) //Can we attack any of the occupants?
+			if(is_valid_target(living_mob, occupant)) //Can we attack any of the occupants?
 				return TRUE
 
 	if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
@@ -75,6 +75,12 @@
 
 	return FALSE
 
+/datum/targeting_strategy/basic/find_hidden_mobs(mob/living/living_mob, atom/target)
+	. = ..()
+	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
+		return target.loc
+	return null
+
 /// Returns true if the mob and target share factions
 /datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
@@ -85,7 +91,7 @@
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
 /datum/targeting_strategy/basic/allow_items
 
-/datum/targeting_strategy/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(isitem(the_target))
 		// trust fall exercise
@@ -93,7 +99,7 @@
 
 /datum/targeting_strategy/basic/require_traits
 
-/datum/targeting_strategy/basic/require_traits/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/require_traits/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -113,7 +119,7 @@
 	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
 
-/datum/targeting_strategy/basic/of_size/can_attack(mob/living/owner, atom/target, vision_range)
+/datum/targeting_strategy/basic/of_size/is_valid_target(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()
@@ -146,7 +152,7 @@
 
 /datum/targeting_strategy/basic/allow_turfs
 
-/datum/targeting_strategy/basic/allow_turfs/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_turfs/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	if(isturf(the_target))
 		return TRUE
 	return ..()
@@ -154,7 +160,7 @@
 /// Subtype which searches for mobs that havent been gutted by megafauna
 /datum/targeting_strategy/basic/no_gutted_mobs
 
-/datum/targeting_strategy/basic/no_gutted_mobs/can_attack(mob/living/owner, mob/living/target, vision_range)
+/datum/targeting_strategy/basic/no_gutted_mobs/is_valid_target(mob/living/owner, mob/living/target, vision_range)
 	if(!istype(target) || target.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
 	return ..()
@@ -164,7 +170,7 @@
 
 /datum/targeting_strategy/basic/exact_match/ignore_friends
 
-/datum/targeting_strategy/basic/exact_match/ignore_friends/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/exact_match/ignore_friends/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if (!.)
 		return FALSE

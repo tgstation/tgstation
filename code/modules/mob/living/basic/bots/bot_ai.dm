@@ -21,7 +21,7 @@
 		BB_BOT_SUMMON_TARGET,
 	)
 
-/datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/bot/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/bot/my_controller = living_mob.ai_controller
 	if(isnull(my_controller))
 		return FALSE

@@ -57,7 +57,7 @@
 ///moonicorns will not attack people holding something that could tame them.
 /datum/targeting_strategy/basic/allow_items/moonicorn
 
-/datum/targeting_strategy/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/moonicorn/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(!.)
 		return FALSE

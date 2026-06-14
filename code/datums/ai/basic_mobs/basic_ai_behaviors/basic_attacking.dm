@@ -38,7 +38,7 @@
 			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(!targeting_strategy.can_attack(controller.pawn, target))
+	if(!targeting_strategy.is_valid_target(controller.pawn, target))
 		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
@@ -101,7 +101,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
-	if(!targeting_strategy.can_attack(basic_mob, target, chase_range))
+	if(!targeting_strategy.is_valid_target(basic_mob, target, chase_range))
 		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -123,7 +123,7 @@
 	var/list/turfs_list = calculate_trajectory(source, target)
 	for(var/turf/possible_turf as anything in turfs_list)
 		for(var/mob/living/potential_friend in possible_turf)
-			if(!targeting_strategy.can_attack(source, potential_friend))
+			if(!targeting_strategy.is_valid_target(source, potential_friend))
 				return TRUE
 	return FALSE
 

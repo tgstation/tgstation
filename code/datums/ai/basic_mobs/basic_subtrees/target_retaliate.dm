@@ -54,12 +54,12 @@
 	if (!check_faction)
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 
-	if (!QDELETED(existing_target) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
+	if (!QDELETED(existing_target) && targeting_strategy.is_valid_target(living_mob, existing_target, vision_range))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/list/enemies_list = list()
 	for(var/mob/living/potential_target as anything in shitlist)
-		if(!targeting_strategy.can_attack(living_mob, potential_target, vision_range))
+		if(!targeting_strategy.is_valid_target(living_mob, potential_target, vision_range))
 			continue
 		// Strict comparasion because priority strategies might not care about retaliation, so this makes existing targets not override potential retaliates
 		if (priority_strategy && priority_strategy.get_target_priority(controller, potential_target) < existing_priority)
@@ -120,12 +120,12 @@
 	if(priority_strategy && existing_target)
 		existing_priority = priority_strategy.get_target_priority(controller, existing_target)
 
-	if(!QDELETED(existing_target) && targeting_strategy.can_attack(living_mob, existing_target, vision_range))
+	if(!QDELETED(existing_target) && targeting_strategy.is_valid_target(living_mob, existing_target, vision_range))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/list/enemies_list = list()
 	for(var/mob/living/potential_target as anything in shitlist)
-		if(!targeting_strategy.can_attack(living_mob, potential_target, vision_range))
+		if(!targeting_strategy.is_valid_target(living_mob, potential_target, vision_range))
 			continue
 		if(priority_strategy && priority_strategy.get_target_priority(controller, potential_target) < existing_priority)
 			continue

@@ -31,7 +31,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(!targeting_strategy.can_attack(controller.pawn, target))
+	if(!targeting_strategy.is_valid_target(controller.pawn, target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target)
