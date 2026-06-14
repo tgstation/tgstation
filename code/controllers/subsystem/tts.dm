@@ -120,22 +120,30 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, volume_preference = /datum/preference/numeric/volume/sound_tts_volume, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
-	var/turf/turf_source = get_turf(target)
-	if(!turf_source && target) // if there's a target, we better have a turf
+/datum/controller/subsystem/tts/proc/play_tts(datum/weakref/target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, volume_preference = /datum/preference/numeric/volume/sound_tts_volume, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
+	var/atom/actual_target = target?.resolve()
+	var/turf/turf_source
+	if(actual_target)
+		turf_source = get_turf(actual_target)
+	if(!turf_source && actual_target) // if there's a target, we better have a turf
 		return
 
 	var/channel = SSsounds.random_available_channel()
 	var/list/final_listeners = listeners
-	if(!ignore_observers && target)
+	if(!ignore_observers && actual_target)
 		final_listeners += SSmobs.dead_players_by_zlevel[turf_source.z] //observers always hear through walls
 	var/list/blips_hearers = list()
 	var/list/voice_hearers = list()
 	for(var/hearer in final_listeners)
 		if(isnull(hearer))
 			continue
-		var/atom/movable/hearer_atom = hearer
-		if(QDELING(hearer_atom))
+		var/atom/movable/hearer_atom
+		if(isweakref(hearer))
+			var/datum/weakref/weakref = hearer
+			hearer_atom = weakref?.resolve()
+		else
+			hearer_atom = hearer
+		if(!hearer_atom || QDELING(hearer_atom))
 			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
 		if(!ismob(hearer_atom))
@@ -150,7 +158,7 @@ SUBSYSTEM_DEF(tts)
 		if(listening_mob == source_speaker && !hear_self_pref)
 			continue // don't hear your own radio tts if you got it turned off
 
-		var/sound_volume = ((hearer == target)? 60 : 85) + volume_offset
+		var/sound_volume = ((listening_mob == actual_target)? 60 : 85) + volume_offset
 		sound_volume = sound_volume*volume_modifier
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		var/sound/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
@@ -159,7 +167,7 @@ SUBSYSTEM_DEF(tts)
 				continue
 			else
 				audio_to_use = audio_blips
-		if(target && get_dist(hearer, turf_source) <= range)
+		if(actual_target && get_dist(listening_mob, turf_source) <= range)
 			if(tts_pref == TTS_SOUND_BLIPS || !holder.has_language(language))
 				blips_hearers += listening_mob
 			else
@@ -176,7 +184,7 @@ SUBSYSTEM_DEF(tts)
 				distance_multiplier = 1,
 				use_reverb = TRUE
 			)
-		else if(!target)
+		else if(!actual_target)
 			listening_mob.playsound_local(
 				null, //play it locally
 				vol = sound_volume,
@@ -189,9 +197,9 @@ SUBSYSTEM_DEF(tts)
 				distance_multiplier = 1,
 				use_reverb = TRUE
 			)
-	if(target)
+	if(actual_target)
 		new /datum/threed_sound(
-			new_parent = target,
+			new_parent = actual_target,
 			new_sound = audio,
 			current_listeners = voice_hearers,
 			can_add_new_listeners = FALSE,
@@ -203,7 +211,7 @@ SUBSYSTEM_DEF(tts)
 			preference_signal = volume_signal
 		)
 		new /datum/threed_sound(
-			new_parent = target,
+			new_parent = actual_target,
 			new_sound = audio_blips,
 			current_listeners = blips_hearers,
 			can_add_new_listeners = FALSE,
@@ -383,9 +391,10 @@ SUBSYSTEM_DEF(tts)
 			var/list/all_radios = queued_radio_messages[identifier]
 			for(var/radio in all_radios)
 				var/list/hearers = all_radios[radio]
-				if(!istext(radio))
-					var/obj/radio_obj = radio
-					if(QDELETED(radio_obj))
+				if(!istext(radio) && isweakref(radio))
+					var/datum/weakref/weakref = radio
+					var/obj/radio_obj = weakref?.resolve()
+					if(radio_obj && QDELETED(radio_obj))
 						queued_radio_messages[identifier].Remove(radio)
 						queued_radio_messages_compression[identifier].Remove(radio)
 						continue
@@ -432,7 +441,9 @@ SUBSYSTEM_DEF(tts)
 	var/shell_scrubbed_input = tts_speech_filter(message)
 	if(!(speaker in available_speakers))
 		return
-
+	var/list/listener_weakrefs = list()
+	for(var/listener in listeners)
+		listener_weakrefs += WEAKREF(listener)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
@@ -451,11 +462,11 @@ SUBSYSTEM_DEF(tts)
 	request_radio.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_radio, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_blips_radio.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch, blips = TRUE)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]&blip_base=[blip_base]&blip_number=[blip_number]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips_radio, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_radio_gibberish.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("raw_text" = shell_scrubbed_input, "gibberish_text" = shell_scrubbed_input)), headers, file_name_radio_gibberish, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, request_radio, request_blips_radio, request_radio_gibberish, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch, force_blips)
-	var/list/player_queued_tts_messages = queued_tts_messages[target]
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, request_radio, request_blips_radio, request_radio_gibberish, shell_scrubbed_input, target, local, language, message_range, volume_offset, listener_weakrefs, pitch, force_blips)
+	var/list/player_queued_tts_messages = queued_tts_messages[WEAKREF(target)]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
-		queued_tts_messages[target] = player_queued_tts_messages
+		queued_tts_messages[WEAKREF(target)] = player_queued_tts_messages
 	player_queued_tts_messages += current_request
 	if(length(in_process_http_messages) < max_concurrent_requests)
 		current_request.start_requests()
@@ -625,18 +636,21 @@ SUBSYSTEM_DEF(tts)
 	if(!SStts.tts_enabled || !listeners)
 		return
 
-	if(ismob(listeners))
+	if(isweakref(listeners))
 		listeners = list(listeners)
 	var/list/filtered_listeners = list()
 
-	for(var/mob/listener as anything in listeners)
-		if(!ismob(listener) || !listener.client)
+	for(var/datum/weakref/listener as anything in listeners)
+		if(!isweakref(listener))
 			continue
-		var/tts_pref = listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		var/radio_tts_pref = listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio)
+		var/mob/possible_listener = listener?.resolve()
+		if(!ismob(possible_listener) || !possible_listener.client)
+			continue
+		var/tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
+		var/radio_tts_pref = possible_listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio)
 		if(tts_pref == TTS_SOUND_OFF)
 			continue
-		if(isliving(listener) && (listener.stat >= UNCONSCIOUS || HAS_TRAIT(listener, TRAIT_DEAF)))
+		if(isliving(possible_listener) && (possible_listener.stat >= UNCONSCIOUS || HAS_TRAIT(possible_listener, TRAIT_DEAF)))
 			continue
 		if(radio_tts_pref == TTS_SOUND_NO_RADIO)
 			continue

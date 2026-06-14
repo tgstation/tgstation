@@ -9,7 +9,6 @@
 	var/atom/parent
 	var/sound/our_sound
 	var/sound_path
-	var/list/mob/starting_listeners
 	var/can_add_new_listeners = TRUE
 	var/list/mob/listeners = list()
 	var/volume = 50
@@ -55,7 +54,6 @@
 			current_listeners -= listener
 			continue
 		register_listener(listener)
-	starting_listeners = current_listeners
 
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
@@ -71,7 +69,7 @@
 
 /datum/threed_sound/proc/parent_delete(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	selfdelete()
 
 /**
  * Sets the sound's range to a new value. This can be a number or a view size string "XxY".
