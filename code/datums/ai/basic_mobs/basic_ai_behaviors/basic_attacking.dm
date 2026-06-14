@@ -42,7 +42,7 @@
 		if (world.time < pawn.next_move)
 			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy])
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(targeting_strategy)
 	if(!strategy.is_valid_target(controller.pawn, target))
 		controller.clear_blackboard_key(target_key)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED

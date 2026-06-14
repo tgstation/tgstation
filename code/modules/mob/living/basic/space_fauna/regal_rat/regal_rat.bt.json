@@ -86,7 +86,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
 					"vars": {
 						"target_key": "BB_BASIC_MOB_FLEE_TARGET",
 						"targeting_strategy": "BB_FLEE_TARGETING_STRATEGY",

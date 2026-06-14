@@ -131,7 +131,7 @@
 							"children": [
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/target_from_retaliate_list/nearest",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/nearest",
 									"vars": {
 										"target_key": "BB_CURRENT_TARGET",
 										"targeting_strategy": "BB_TARGETING_STRATEGY",

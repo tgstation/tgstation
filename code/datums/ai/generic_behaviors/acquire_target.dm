@@ -33,7 +33,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
-	if(!isnum(vision_range)) //If theres a blackboard override use that
+	if(!isnum(vision_range)) //If there's a blackboard override, use that
 		vision_range = controller.blackboard[vision_range] || vision_range
 
 	return find_and_set_target(controller, strategy, vision_range)

@@ -13,8 +13,12 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-	if(QDELETED(target) || !targeting_strategy?.is_valid_target(living_pawn, target))
+
+	if(!ispath(targeting_strategy))
+		targeting_strategy = controller.blackboard[targeting_strategy]
+
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(targeting_strategy)
+	if(QDELETED(target) || !strategy?.is_valid_target(living_pawn, target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(!controller.blackboard[BB_DOG_HARASS_HARM])

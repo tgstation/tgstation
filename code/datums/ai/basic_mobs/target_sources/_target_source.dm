@@ -64,3 +64,14 @@
 /// For mobs whose food list varies by species (set in Initialize via set_blackboard_key).
 /datum/target_source/oview_typed/from_bb_key/basic_foods
 	typecache_key = BB_BASIC_FOODS
+
+/// Reads candidates directly from a blackboard list. No spatial filtering; range is ignored.
+/datum/target_source/from_bb_list
+	var/list_key
+
+/datum/target_source/from_bb_list/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	return controller.blackboard[list_key]?.Copy() || list()
+
+/// Reads from BB_BASIC_MOB_RETALIATE_LIST.
+/datum/target_source/from_bb_list/retaliate_list
+	list_key = BB_BASIC_MOB_RETALIATE_LIST
