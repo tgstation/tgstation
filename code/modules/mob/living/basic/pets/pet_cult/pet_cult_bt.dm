@@ -1,6 +1,3 @@
-// =============================================================================
-// Pet cult BT-native behaviors
-// =============================================================================
 
 /**
  * Finds a nearby cultist that isn't already befriended and sets BB_FRIENDLY_CULTIST.
@@ -19,7 +16,6 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /**
  * Checks whether the cult has enough souls to revive and finds a raise_dead rune
@@ -47,7 +43,6 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /**
  * Activates a raise_dead rune at BB_OCCUPIED_RUNE, reviving the dead cultist on it.
@@ -73,7 +68,6 @@
 	. = ..()
 	controller.clear_blackboard_key(BB_OCCUPIED_RUNE)
 
-// =============================================================================
 
 /**
  * Finds a dead cultist that can be dragged to a rune for revival. Sets BB_DEAD_CULTIST.
@@ -105,7 +99,3 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-// =============================================================================
-
-// drag_target is in code/datums/ai/basic_mobs/basic_ai_behaviors/drag_target.dm

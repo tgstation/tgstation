@@ -20,9 +20,7 @@
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
 
-// =============================================================================
-// Announce fire detected
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/announce_fire_detected
 
@@ -39,9 +37,6 @@
 	COOLDOWN_START(controller, announcement_cooldown, ANNOUNCEMENT_TIMER)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Find person on fire
-// =============================================================================
 
 /datum/bt_node/ai_behavior/find_person_on_fire
 	var/target_key
@@ -65,9 +60,6 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Search burning turfs
-// =============================================================================
 
 /datum/bt_node/ai_behavior/search_burning_turfs
 	var/target_key
@@ -93,9 +85,7 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Extinguish interact (bot_interact variant)
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/bot_interact/extinguish
 
@@ -107,9 +97,7 @@
 	if(!succeeded || (isliving(target) && (living_bot.bot_access_flags & BOT_COVER_EMAGGED)))
 		controller.add_to_blacklist(target)
 
-// =============================================================================
-// Firebot idle speech
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/handle_firebot_speech
 	time_between_perform = 20 SECONDS

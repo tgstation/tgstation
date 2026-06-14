@@ -1,6 +1,4 @@
-// =============================================================================
-// Bee BT-native behaviors
-// =============================================================================
+
 
 /**
  * Searches for a valid beebox home. Skipped if the bee is already inside its home.
@@ -27,7 +25,6 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /**
  * Moves to BB_CURRENT_HOME and inhabits it (ai_interact). Clears BB_CURRENT_HOME on failure.
@@ -78,7 +75,6 @@
 	flyback_chance = 85
 	exit_chance = 5
 
-// =============================================================================
 
 /// Finds a hydroponics tray that can be pollinated. Sets BB_TARGET_HYDRO.
 /datum/bt_node/ai_behavior/find_pollination_target
@@ -99,7 +95,6 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /// Pollinates the hydro tray at BB_TARGET_HYDRO. Must be adjacent.
 /datum/bt_node/ai_behavior/pollinate_hydro
@@ -117,7 +112,6 @@
 	. = ..()
 	controller.clear_blackboard_key(BB_TARGET_HYDRO)
 
-// =============================================================================
 
 /// Swirls around BB_SWARM_TARGET, moving to random nearby turfs. Always returns RUNNING.
 /datum/bt_node/ai_behavior/swirl_around_target
@@ -141,7 +135,6 @@
 		controller.set_movement_target(src, pick(possible_turfs))
 	return AI_BEHAVIOR_DELAY
 
-// =============================================================================
 
 /// Scatter command: runs away from BB_CURRENT_PET_TARGET then clears the command.
 /datum/bt_node/subtree/pet_command/scatter

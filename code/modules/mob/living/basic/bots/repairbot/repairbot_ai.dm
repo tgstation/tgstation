@@ -22,9 +22,7 @@
 	)
 	minimum_distance = 1
 
-// =============================================================================
-// Repairbot speech (parallel track — announces work-in-progress)
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/repairbot_speech
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -43,7 +41,7 @@
 
 /datum/bt_node/ai_behavior/repairbot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
-	// determine speech type: emagged → emagged speech, otherwise normal
+	// determine speech type: emagged -> emagged speech, otherwise normal
 	var/list/speech_to_pick_from
 	if(controller.blackboard_key_exists(BB_DECONSTRUCT_TARGET))
 		speech_to_pick_from = controller.blackboard[BB_REPAIRBOT_EMAGGED_SPEECH]
@@ -55,9 +53,7 @@
 	controller.set_blackboard_key(BB_REPAIRBOT_SPEECH_COOLDOWN, world.time + REPAIRBOT_SPEECH_TIMER)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Mug robot — grab and tip robots when emagged
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/bot_interact/tip_robot
 
@@ -82,9 +78,7 @@
 		return FALSE
 	return (!HAS_TRAIT(my_target, TRAIT_MOB_TIPPED)) && can_see(controller.pawn, my_target)
 
-// =============================================================================
-// Deconstruct — find deconstructable targets when emagged
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/bot_search/deconstructable
 	time_between_perform = 5 SECONDS
@@ -101,9 +95,7 @@
 	looking_for = things_to_deconstruct
 	return ..()
 
-// =============================================================================
-// Refill materials — pick up stacks when running low
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/bot_search/refillable_target
 	time_between_perform = 10 SECONDS
@@ -133,9 +125,6 @@
 	looking_for = refillable_items
 	return ..()
 
-// =============================================================================
-// Floor repair — find and fix plateless / breached floors
-// =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf
 	turf_search = TRUE
@@ -187,10 +176,6 @@
 /datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached/get_turf_type_filter()
 	return typecacheof(list(/turf/open/space))
 
-// =============================================================================
-// Girder to wall — place iron sheets on girders
-// =============================================================================
-
 /datum/bt_node/ai_behavior/bot_search/valid_girder
 	time_between_perform = 5 SECONDS
 
@@ -213,9 +198,6 @@
 		return FALSE
 	return isfloorturf(my_target.loc)
 
-// =============================================================================
-// Build girder — targeted_mob_ability with prerequisite checks
-// =============================================================================
 
 /datum/bt_node/ai_behavior/targeted_mob_ability/build_girder
 	maximum_distance = 1
@@ -273,10 +255,6 @@
 			return TRUE
 	return FALSE
 
-// =============================================================================
-// Window replacement — find grilles missing a window pane
-// =============================================================================
-
 /datum/bt_node/ai_behavior/bot_search/valid_grille_target
 	time_between_perform = 5 SECONDS
 
@@ -299,10 +277,6 @@
 	if(locate(/obj/structure/window) in get_turf(my_target))
 		return FALSE
 	return (!istype(get_area(my_target), /area/space))
-
-// =============================================================================
-// Window repair — find damaged or unanchored windows
-// =============================================================================
 
 /datum/bt_node/ai_behavior/bot_search/valid_window_fix
 	time_between_perform = 5 SECONDS

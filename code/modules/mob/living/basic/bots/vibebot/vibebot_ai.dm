@@ -40,9 +40,6 @@
 	song.start_playing(pawn)
 	addtimer(CALLBACK(song, TYPE_PROC_REF(/datum/song, stop_playing)), 10 SECONDS) //in 10 seconds, stop playing music
 
-// =============================================================================
-// Find party friends
-// =============================================================================
 
 /datum/bt_node/ai_behavior/find_party_friends
 	var/target_key
@@ -62,10 +59,6 @@
 			controller.set_blackboard_key(target_key, target)
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-// =============================================================================
-// Vibebot party
-// =============================================================================
 
 /datum/bt_node/ai_behavior/vibebot_party
 	var/ability_key

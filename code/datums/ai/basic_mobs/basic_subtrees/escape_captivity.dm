@@ -46,16 +46,8 @@
 /datum/ai_planning_subtree/escape_captivity/pacifist
 	pacifist = TRUE
 
-// =============================================================================
-// Re-usable BT subtree composites
-// =============================================================================
 
-/**
- * Selector that replicates escape_captivity logic using BT decorator nodes.
- * Priority order: buckled > contained > grabbed by enemy > restrained.
- * The first matching condition queues the appropriate behavior and returns BT_RUNNING.
- * If none match, returns BT_FAILURE so the next behavior_nodes entry is tried.
- */
+///Tries to escape activity, has observers to cancel if needed
 /datum/bt_node/subtree/escape_captivity
 	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/escape_captivity.bt.json"
 

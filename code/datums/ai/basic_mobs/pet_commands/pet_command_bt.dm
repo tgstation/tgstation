@@ -66,10 +66,6 @@
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Override subtrees — installed by execute_action via set_behavior_tree_override.
-// behavior_nodes for each is generated from the corresponding .bt.json file.
-// =============================================================================
 
 /// Waits forever; blocks normal AI while stay/idle is active.
 /datum/bt_node/subtree/pet_command/stay
@@ -111,7 +107,7 @@
 /datum/bt_node/subtree/pet_command/untargeted_ability
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_untargeted_ability.bt.json"
 
-/// Fetch: seek → pick up → deliver. Falls back to clear_pet_command if nothing to do.
+/// Fetch: seek > pick up > deliver. Falls back to clear_pet_command if nothing to do.
 /datum/bt_node/subtree/pet_command/fetch
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_fetch.bt.json"
 

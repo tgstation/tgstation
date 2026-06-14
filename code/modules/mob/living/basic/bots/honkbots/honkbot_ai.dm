@@ -29,16 +29,12 @@
 	add_to_blacklist(slip_target)
 	clear_blackboard_key(BB_SLIP_TARGET)
 
-// =============================================================================
-// Slip subtree
-// =============================================================================
+
 
 /datum/bt_node/subtree/honkbot_slip
 	behavior_tree_json = "code/modules/mob/living/basic/bots/honkbots/honkbot_slip.bt.json"
 
-// =============================================================================
-// Random honk (prob-gated use_mob_ability)
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/use_mob_ability/random_honk
 
@@ -47,9 +43,7 @@
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return ..()
 
-// =============================================================================
-// Find slip victim
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/bot_search/find_slip_victim
 
@@ -60,9 +54,6 @@
 	var/mob/living/carbon/human/candidate = my_target
 	return !candidate.buckled && candidate.has_gravity()
 
-// =============================================================================
-// Release and slip
-// =============================================================================
 
 // Positions the pulled victim onto the slippery item by stepping away, then releases.
 /datum/bt_node/ai_behavior/release_and_slip
@@ -86,9 +77,6 @@
 	our_mob.stop_pulling()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Find slippery item
-// =============================================================================
 
 /datum/bt_node/ai_behavior/find_slippery_item
 	var/target_key
@@ -115,9 +103,7 @@
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] find_slippery_item: no slippery item in range")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Clown friend search and play
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/find_clown_friend
 	var/target_key

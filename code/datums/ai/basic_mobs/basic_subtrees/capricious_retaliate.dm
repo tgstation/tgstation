@@ -55,7 +55,7 @@
 	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
 	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
 
-// =============================================================================
+//
 
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_planning_subtree/capricious_retaliate

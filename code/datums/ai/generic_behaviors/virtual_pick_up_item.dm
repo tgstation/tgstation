@@ -58,9 +58,6 @@
 	controller.clear_blackboard_key(storage_key)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Legacy planning types
-// =============================================================================
 
 /**
  * Simple behaviour for picking up an item we are already in range of.

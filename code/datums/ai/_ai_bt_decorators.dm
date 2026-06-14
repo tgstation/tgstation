@@ -132,8 +132,8 @@
  * Called by the controller's observer handler when a watched blackboard key changes.
  * Re-evaluates evaluate_for_observer() and aborts based on observer_abort policy.
  *
- * BT_ABORT_SELF:            condition became FALSE and we're running our children → cancel actions
- * BT_ABORT_LOWER_PRIORITY:  condition became TRUE and we're running lower priority nodes → cancel actions
+ * BT_ABORT_SELF:            condition became FALSE and we're running our children > cancel actions
+ * BT_ABORT_LOWER_PRIORITY:  condition became TRUE and we're running lower priority nodes > cancel actions
  */
 /// Called by the controller's polling loop for decorators that have no signal observers.
 /// Sets a baseline on first call, then fires on_observed_change() only when the result changes.

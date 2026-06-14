@@ -20,7 +20,6 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /// Searches for and moves to a parent mob (of types in BB_FIND_MOM_TYPES), sets BB_FOUND_MOM.
 /datum/bt_node/ai_behavior/find_parent
@@ -39,8 +38,8 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
+//
 
-/// Mine walls pet command subtree: find mineral wall → move to it → mine it → clear command.
+/// Mine walls pet command subtree: find mineral wall -> move to it -> mine it -> clear command.
 /datum/bt_node/subtree/pet_command/mine_walls
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_mine_walls.bt.json"

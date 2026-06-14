@@ -33,9 +33,7 @@
 /datum/ai_movement/jps/bot/medbot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 
-// =============================================================================
-// Find suitable patient (pure search)
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/find_suitable_patient
 	var/target_key
@@ -76,9 +74,7 @@
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement?.announce(pick(controller.blackboard[BB_WAIT_SPEECH]))
 
-// =============================================================================
-// Tend to patient
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/tend_to_patient
 	var/target_key
@@ -123,9 +119,7 @@
 	var/patient_damage = (damage_type_healer == HEAL_ALL_DAMAGE) ? patient.get_total_damage() : patient.get_current_damage_of_type(damagetype = damage_type_healer)
 	return (patient_damage <= threshold)
 
-// =============================================================================
-// Medbot speech
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/handle_medbot_speech
 	var/announce_key
@@ -154,9 +148,7 @@
 	announcement.announce(pick(speech_to_pick_from))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Critical patient finder + announcer
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/find_patient_in_crit
 	var/target_key

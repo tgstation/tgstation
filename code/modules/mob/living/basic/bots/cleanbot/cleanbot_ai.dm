@@ -29,9 +29,6 @@
 		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
 
-// =============================================================================
-// Clean target search
-// =============================================================================
 
 /datum/bt_node/ai_behavior/find_clean_target
 	var/target_key
@@ -110,9 +107,6 @@
 			living_pawn.say(pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
-// =============================================================================
-// Acid spray target search (emagged)
-// =============================================================================
 
 /datum/bt_node/ai_behavior/find_spray_target
 	var/target_key
@@ -132,9 +126,7 @@
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] find_spray_target: no valid human in range")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
-// Friendly janitor search
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/find_friendly_janitor
 	var/target_key

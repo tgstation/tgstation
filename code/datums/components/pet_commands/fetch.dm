@@ -92,6 +92,6 @@
 	var/mob/living/parent = weak_parent.resolve()
 	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, pointing_friend)
 
-// Install the fetch BT subtree. The subtree itself handles all phases (seek → pick up → deliver).
+// Install the fetch BT subtree. The subtree itself handles all phases (seek > pick up > deliver).
 /datum/pet_command/fetch/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/fetch)

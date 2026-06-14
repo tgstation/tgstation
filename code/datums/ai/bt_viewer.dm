@@ -39,7 +39,7 @@ GLOBAL_DATUM_INIT(bt_viewer, /datum/bt_viewer, new())
 	data["active_execution_index"] = viewing_controller ? viewing_controller.active_execution_index : 0
 	if(viewing_controller?.bt_execution_log != null)
 		data["fired_indices"] = viewing_controller.bt_execution_log.Copy()
-		viewing_controller.bt_execution_log.Cut()
+		viewing_controller.bt_execution_log.Cut() //Clear the list every time we update
 	else
 		data["fired_indices"] = list()
 	data["awaiting_pick"] = awaiting_pick

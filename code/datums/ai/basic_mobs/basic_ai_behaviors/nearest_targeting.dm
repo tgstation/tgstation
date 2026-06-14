@@ -12,10 +12,6 @@
 	var/turf/our_position = get_turf(controller.pawn)
 	return get_closest_atom(/atom/, enemies_list, our_position)
 
-// =============================================================================
-// BT-native nearest-target variants
-// =============================================================================
-
 /// BT version of update_targets/nearest — picks the closest valid target.
 /datum/bt_node/ai_behavior/update_targets/nearest
 

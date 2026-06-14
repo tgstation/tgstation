@@ -17,9 +17,7 @@
 		BB_BOT_SUMMON_TARGET,
 	)
 
-// =============================================================================
-// Handle trash talk (runs alongside wash — says threatening lines when frustrated)
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/commence_trashtalk
 	var/target_key
@@ -37,9 +35,7 @@
 	announcement?.announce(pick(controller.blackboard[BB_WASH_THREATS]))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// =============================================================================
-// Find wash target
-// =============================================================================
+
 
 /datum/bt_node/ai_behavior/find_valid_wash_targets
 	var/target_key
@@ -78,9 +74,6 @@
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement.announce(pick(controller.blackboard[BB_WASH_FOUND]))
 
-// =============================================================================
-// Wash target
-// =============================================================================
 
 /datum/bt_node/ai_behavior/wash_target
 	var/target_key

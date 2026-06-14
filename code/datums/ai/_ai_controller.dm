@@ -49,7 +49,7 @@ multiple modular subtrees with behaviors
 	var/cancelled_during_tick = FALSE
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
 	var/list/bt_execution_log = null
-	/// assoc list of override_id → /datum/bt_node/subtree for runtime subtree replacement.
+	/// assoc list of override_id -> /datum/bt_node/subtree for runtime subtree replacement.
 	/// Populated by finalize_tree() when subtrees with override_id are found. Null until then.
 	var/list/override_slots = null
 	/// Decorators in polling mode (observer_abort set, no signal registered). Iterated after each SelectBehaviors tick so their condition is re-evaluated even when skipped by composite resume logic.

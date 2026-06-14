@@ -2,9 +2,9 @@
 /datum/bt_node/ai_behavior/express_happiness
 	/// Probability (%) of emoting per per second
 	var/emote_probability = 5
-	/// Happiness >= this threshold → happy emotions
+	/// Happiness >= this threshold -> happy emotions
 	var/high_happiness_threshold = 0.7
-	/// Happiness >= this threshold → moderate emotions
+	/// Happiness >= this threshold -> moderate emotions
 	var/moderate_happiness_threshold = 0.5
 	/// Blackboard key holding the happiness value
 	var/happiness_key = BB_BASIC_HAPPINESS

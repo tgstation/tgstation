@@ -965,6 +965,7 @@
 #include "code\datums\ai\_ai_bt_composites.dm"
 #include "code\datums\ai\_ai_bt_decorators.dm"
 #include "code\datums\ai\_ai_bt_node.dm"
+#include "code\datums\ai\_ai_bt_subtree.dm"
 #include "code\datums\ai\_ai_controller.dm"
 #include "code\datums\ai\_ai_planning_subtree.dm"
 #include "code\datums\ai\_item_behaviors.dm"

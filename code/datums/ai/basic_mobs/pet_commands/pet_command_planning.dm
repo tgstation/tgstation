@@ -13,10 +13,6 @@
 		return // Do something else
 	return command.execute_action(controller)
 
-// =============================================================================
-// BT-native pet planning — DEPRECATED
-// =============================================================================
-
 /**
  * DEPRECATED. The pet command dispatch model no longer uses this leaf.
  * Pet command trees now use an override slot subtree (override_id = SUBPLAN_ID_PET_COMMAND).

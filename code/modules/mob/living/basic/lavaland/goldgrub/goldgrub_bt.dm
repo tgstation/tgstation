@@ -1,8 +1,5 @@
 #define BURROW_RANGE 5
 
-// =============================================================================
-// Goldgrub BT-native behaviors
-// =============================================================================
 
 /**
  * Burrows underground (or stays underground) when danger is present or a storm is approaching.
@@ -36,7 +33,6 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /**
  * While jaunting (underground) with a target, moves the grub's phased form further away.

@@ -54,9 +54,7 @@
 /datum/bt_node/subtree/simple_hostile_obstacles_combat
 	behavior_tree_json = "code/datums/ai/basic_mobs/simple_hostile_obstacles_combat.bt.json"
 
-// =============================================================================
-// Ported simple_* controllers
-// =============================================================================
+
 
 /// Find a target, walk at target, attack intervening obstacles
 /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles

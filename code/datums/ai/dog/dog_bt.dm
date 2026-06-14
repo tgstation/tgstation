@@ -1,6 +1,3 @@
-// =============================================================================
-// Dog BT-native behaviors
-// =============================================================================
 
 /**
  * BT version of basic_melee_attack/dog.
@@ -34,7 +31,6 @@
 	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
 
-// =============================================================================
 
 /**
  * Searches for a target with TRAIT_HATED_BY_DOGS within 2 tiles. Sets BB_DOG_HARASS_TARGET and
@@ -67,7 +63,6 @@
 	controller.clear_blackboard_key(target_key)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-// =============================================================================
 
 /**
  * Dog-specific idle: random walks at a dog-appropriate rate, and occasionally spins/tail-chases.

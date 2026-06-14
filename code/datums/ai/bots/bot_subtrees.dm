@@ -250,7 +250,7 @@
 
 /**
  * Patrol to navbeacons in sequence when autopatrol is enabled and not on cooldown.
- * Priority: travel to current target → find next in chain → find first (nearest) beacon.
+ * Priority: travel to current target -> find next in chain -> find first (nearest) beacon.
  */
 /datum/bt_node/subtree/bot_patrol
 	behavior_tree_json = "code/datums/ai/bots/bot_patrol.bt.json"
