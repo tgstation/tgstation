@@ -10,9 +10,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
 	target_source = /datum/target_source/hearers
 	targeting_strategy = BB_TARGETING_STRATEGY
-	/// How far can we see stuff?
 	vision_range = 9
-	/// How far a target can run before we give up chasing
 	target_loss_distance = 16
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE

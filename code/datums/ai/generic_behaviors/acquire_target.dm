@@ -11,7 +11,7 @@
 	/// How to behave when a target is already set. See TARGET_* defines in ai.dm.
 	var/revalidation_mode = TARGET_REVALIDATE
 	/// Extended range for retaining an existing target when candidates run dry. 0 = disabled.
-	var/target_loss_distance = 0
+	var/target_loss_distance = 10
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!can_search(controller))

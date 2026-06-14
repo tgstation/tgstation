@@ -36,7 +36,6 @@
 	return typecache_filter_list(oview(range, pawn), bb_typecache)
 
 /// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level.
-/// This is the enemy-scanning source used by update_targets.
 /datum/target_source/hearers
 
 /datum/target_source/hearers/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
