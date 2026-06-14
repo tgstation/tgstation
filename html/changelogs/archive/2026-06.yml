@@ -339,6 +339,9 @@
   timothymtorres:
   - code_imp: Reorganize shuttle maps into separate folders
 2026-06-14:
+  CabinetOnFire:
+  - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
+      a regular list
   Ghommie:
   - bugfix: You no longer waddle when buckled to something.
   Melbert:
