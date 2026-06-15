@@ -59,9 +59,10 @@
 /datum/gizmodes/code_crack/proc/generate_code()
 	SHOULD_CALL_PARENT(TRUE)
 	solution.Cut()
+	solution.len = code_length
 	for(var/i in 1 to MAX_CODEGEN_RETRY_ATTEMPTS)
 		for(var/j in 1 to code_length)
-			solution.Add(rand(0, 9)) // Randomize every digit
+			solution[j] = rand(0, 9) // Randomize every digit
 		if(validate_code(solution))
 			return TRUE
 	return FALSE
@@ -100,12 +101,14 @@
 	if(attempts_left <= 0 || attempts_left >= 10)
 		return
 	playsound(holder, "sound/announcer/vox_fem/[digit_to_name[attempts_left]].ogg", 100)
+	holder.say(digit_to_name[attempts_left])
 
 // Proc that resets user input
 /datum/gizmodes/code_crack/proc/reset_input()
 	code_input.Cut()
+	code_input.len = code_length // stretch it
 	for(var/i in 1 to code_length)
-		code_input.Add(0) // Fill it with zeroes
+		code_input[i] = 0 // Fill it with zeroes
 	position = initial(position)
 
 // Gizpulses
@@ -127,6 +130,7 @@
 	puzzle_holder.puzzles_left--
 	puzzle_holder.active = TRUE
 	puzzle_holder.reset_input()
+	puzzle_holder.attempts_left = initial(puzzle_holder.attempts_left)
 
 // Gizpulse to cycle the currently selected position
 // Example (if code_input is 0000):
@@ -161,7 +165,7 @@
 		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
 		return
 
-	// List indices start with 0, so we add 1 here
+	// List indices start with 1, so we add 1 here
 	var/position = puzzle_holder.position + 1
 	var/previous_digit = puzzle_holder.code_input[position]
 	// Cycle the digit
@@ -192,7 +196,7 @@
 	// If the input is correct, dispense a reward and reset the puzzle
 	var/correctness = puzzle_holder.check_code()
 	if(correctness)
-		puzzle_holder.dispense_reward()
+		puzzle_holder.dispense_reward(holder)
 		puzzle_holder.attempts_left = initial(puzzle_holder.attempts_left)
 		puzzle_holder.active = FALSE
 		return
@@ -219,13 +223,13 @@
 			/obj/item/food/cheese/firm_cheese_slice = 1,
 			/obj/item/food/cheese/wedge = 1,
 		) = 39,
-		/obj/item/food/cheese/wheel = 30, // Normal cheese
+		/obj/item/food/cheese/wheel = 20, // Normal cheese
 		list( // Firm cheese
 			/obj/item/food/cheese/curd_cheese = 1,
 			/obj/item/food/cheese/cheese_curds = 1,
 			/obj/item/food/cheese/firm_cheese = 1,
-		) = 30,
-		/obj/item/food/cheese/mozzarella = 30, // Mozzarella
+		) = 20,
+		/obj/item/food/cheese/mozzarella = 20, // Mozzarella
 		/obj/item/food/cheese/royal = 1, // Royal
 	)
 	var/dispensed_hardmode = FALSE
@@ -241,10 +245,13 @@
 	for(var/i in 1 to code_length)
 		if(code_input[i] < solution[i])
 			playsound(holder, "sound/machines/defib/defib_saftyOff.ogg", 100)
+			holder.visible_message(span_notice("[holder] pings low."))
 		else if(code_input[i] > solution[i])
 			playsound(holder, "sound/machines/defib/defib_saftyOn.ogg", 100)
+			holder.visible_message(span_notice("[holder] pings high."))
 		else
 			playsound(holder, "sound/machines/defib/defib_ready.ogg", 100)
+			holder.visible_message(span_notice("[holder] pings affirmatively."))
 		sleep(0.5 SECONDS)
 	..()
 
@@ -254,7 +261,7 @@
 
 // Hardmode
 // Restrictions: all digits must be unique
-// Code length: 2-4
+// Code length: 2-3
 // Feedback: bulls and cows (number of correctly placed digits, number of incorrectly placed digits that are included in the code)
 // Punishment: explosion
 // Loot: all sorts of stuff
@@ -295,6 +302,8 @@
 	for(var/i in 1 to cows)
 		playsound(holder, "sound/machines/synth/synth_no.ogg", 100)
 		sleep(0.25 SECONDS)
+
+	holder.visible_message(span_notice("[holder] emits [bulls] high-pitched beeps and [cows] low-pitched ones."))
 
 	..()
 

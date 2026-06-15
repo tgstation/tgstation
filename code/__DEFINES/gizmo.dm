@@ -38,5 +38,4 @@
 	/datum/gizmodes/copier = 1,\
 	/datum/gizmodes/bad = 1,\
 	/datum/gizmodes/code_crack/tutorial = 1,\
-	/datum/gizmodes/code_crack/moo = 0.2,\
 )
