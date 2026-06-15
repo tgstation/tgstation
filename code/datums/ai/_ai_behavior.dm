@@ -25,22 +25,6 @@
 	if(running)
 		lines += "[indent][span_bold("● [get_label()]")]"
 
-/// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
-/datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
-	return time_between_perform
-
-/// Called when this behavior first activates on a controller. Return FALSE to abort (returns BT_FAILURE).
-/datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller)
-	return TRUE
-
-/// Called each tick while the behavior is running. Returns AI_BEHAVIOR_* flags.
-/datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller)
-	return
-
-/// Called when the behavior finishes (succeeded or failed). Subtypes should call ..().
-/datum/bt_node/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
-	return
-
 /**
  * ai behavior tick. Runs setup() once on first activation, then perform() each tick.
  * Respects per-controller cooldowns set by AI_BEHAVIOR_DELAY.
@@ -71,31 +55,40 @@
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		failed_last_perform = FALSE
-		_finish_behavior(controller, TRUE)
+		finish_action(controller, TRUE)
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
 		failed_last_perform = TRUE
-		_finish_behavior(controller, FALSE)
+		finish_action(controller, FALSE)
 		return BT_FAILURE
 	controller.active_execution_index = execution_index
 	return BT_RUNNING
 
+/// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.
+/datum/bt_node/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
+	return time_between_perform
+
+/// Called when this behavior first activates on a controller. Return FALSE to abort (returns BT_FAILURE).
+/datum/bt_node/ai_behavior/proc/setup(datum/ai_controller/controller)
+	return TRUE
+
+/// Called each tick while the behavior is running. Returns AI_BEHAVIOR_* flags.
+/datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller)
+	return
+
+/// Called when the behavior finishes (succeeded or failed). Subtypes should call ..().
+/datum/bt_node/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
+	SHOULD_CALL_PARENT(TRUE)
+	running = FALSE
+
+
 /datum/bt_node/ai_behavior/proc/modify_cooldown(new_next_perform_time)
 	next_perform_time = new_next_perform_time
 
-
-/// Calls finish_action() and clears per-controller state.
-/datum/bt_node/ai_behavior/proc/_finish_behavior(datum/ai_controller/controller, succeeded)
-	finish_action(controller, succeeded)
-	running = FALSE
-
 /datum/bt_node/ai_behavior/reset_tick_state()
 	if(running)
-		if(!(behavior_flags & AI_BEHAVIOR_UNINTERRUPTIBLE))
-			_finish_behavior(owning_controller, FALSE)
-		else
-			running = FALSE
+		finish_action(owning_controller, FALSE)
 	..()
 
 // DEPRECATED — port behaviors to /datum/bt_node/ai_behavior

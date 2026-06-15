@@ -52,9 +52,6 @@
 
 #define AI_BEHAVIOR_INSTANT (NONE)
 
-/// Prevent reset_tick_state() from calling finish_action() when the behavior is interrupted.
-#define AI_BEHAVIOR_UNINTERRUPTIBLE (1<<5)
-
 // DEPRECATED movement flags — the BT system handles movement via dedicated move_to_target nodes.
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)

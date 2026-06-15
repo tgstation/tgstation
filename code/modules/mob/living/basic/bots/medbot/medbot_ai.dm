@@ -42,7 +42,7 @@
 		return
 	return ..()
 
-/// Gathers nearby humans as patients; range is clamped to adjacent tiles when the medbot is in stationary mode.
+/// Gathers nearby humans as patients; range is clamped to adjacent tiles when the medbot is in stationary mode. I should probably just make this a blackboard thing but I cannot be arsed right now.
 /datum/target_source/oview_single_type/human_mob/medbot_patient
 
 /datum/target_source/oview_single_type/human_mob/medbot_patient/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)

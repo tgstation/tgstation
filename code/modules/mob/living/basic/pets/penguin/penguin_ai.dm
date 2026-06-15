@@ -1,5 +1,6 @@
 
 /datum/ai_controller/basic_controller/penguin
+	behavior_tree_json = "penguin.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_ONLY_FISH_WHILE_HUNGRY = TRUE,
@@ -61,7 +62,6 @@
 
 ///ai controller for the baby penguin
 /datum/ai_controller/basic_controller/penguin/baby
-	behavior_tree_json = "baby.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/pet/penguin),

@@ -66,6 +66,9 @@
 			continue
 		enemies_list += potential_target
 
+	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
+	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
+
 	if(!length(enemies_list))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -105,9 +108,12 @@
 	var/check_faction = FALSE
 
 /datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(!check_faction)
+	. = ..()
+	if(!check_faction) // This is lame, but comeon man the polar bears kept killing each other
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
-	return ..()
+	. = ..()
+	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
+	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
 
 /datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/filter_candidates(datum/ai_controller/controller, list/candidates, datum/targeting_strategy/strategy, atom/current_target)
 	var/mob/living/pawn = controller.pawn
@@ -136,13 +142,6 @@
 	if(!priority_strategy)
 		return pick(filtered_targets)
 	return priority_strategy.select_target(controller, filtered_targets)
-
-/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	if(succeeded || check_faction)
-		return
-	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
-	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
 
 /// Nearest-attacker variant
 /datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/nearest
