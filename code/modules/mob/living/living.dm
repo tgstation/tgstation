@@ -972,10 +972,10 @@
 	if(heal_flags & HEAL_STAM)
 		set_stamina_loss(0, updating_stamina = FALSE, forced = TRUE)
 
-	// I don't really care to keep this under a flag
-	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	overeatduration = 0
-	satiety = 0
+	if(heal_flags & HEAL_HUNGER)
+		set_nutrition(NUTRITION_LEVEL_FED + 50)
+		overeatduration = 0
+		satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
