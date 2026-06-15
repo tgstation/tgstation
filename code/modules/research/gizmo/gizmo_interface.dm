@@ -70,4 +70,5 @@
 
 /datum/gizmo_interface/moo
 	guaranteed_active_gizmodes = list(/datum/gizmodes/code_crack/moo)
-	max_modes = 1
+	min_modes = 0
+	max_modes = 0

@@ -45,9 +45,9 @@
 	// Code length
 	var/code_length = 2
 	// Solution to current puzzle
-	var/solution = list(0, 0, 0, 0)
+	var/list/solution = list(0, 0, 0, 0,)
 	// Current code cracking input
-	var/code_input = list(0, 0, 0, 0)
+	var/list/code_input = list(0, 0, 0, 0,)
 	// Which position in the code is currently being cycled
 	var/position = 0
 
@@ -58,10 +58,10 @@
 // Returns TRUE if generation was successful and FALSE otherwise
 /datum/gizmodes/code_crack/proc/generate_code()
 	SHOULD_CALL_PARENT(TRUE)
-	solution = new/list(code_length)
+	solution.Cut()
 	for(var/i in 1 to MAX_CODEGEN_RETRY_ATTEMPTS)
 		for(var/j in 1 to code_length)
-			solution[j] = rand(0, 9) // Randomize every digit
+			solution.Add(rand(0, 9)) // Randomize every digit
 		if(validate_code(solution))
 			return TRUE
 	return FALSE
@@ -103,9 +103,9 @@
 
 // Proc that resets user input
 /datum/gizmodes/code_crack/proc/reset_input()
-	code_input = new/list(code_length)
+	code_input.Cut()
 	for(var/i in 1 to code_length)
-		code_input[i] = 0
+		code_input.Add(0) // Fill it with zeroes
 	position = initial(position)
 
 // Gizpulses
@@ -123,6 +123,7 @@
 	if(!puzzle_holder.generate_code()) // Code generation may fail, if the restrictions are too severe
 		playsound(holder, "sound/items/ceramic_break.ogg", 100)
 		return
+	playsound(holder, puzzle_holder.init_jingle, 100)
 	puzzle_holder.puzzles_left--
 	puzzle_holder.active = TRUE
 	puzzle_holder.reset_input()
@@ -210,11 +211,22 @@
 // Code length: 2
 // Feedback: over/under
 // Punishment: evil rat
-// Loot: sweet
+// Loot: cheese
 // Also, dispenses a hard-mode code-crack gizmo upon completion
 /datum/gizmodes/code_crack/tutorial
 	loot_table = list(
-		/obj/item/food/candy = 1,
+		list( // Cheese slices
+			/obj/item/food/cheese/firm_cheese_slice = 1,
+			/obj/item/food/cheese/wedge = 1,
+		) = 39,
+		/obj/item/food/cheese/wheel = 30, // Normal cheese
+		list( // Firm cheese
+			/obj/item/food/cheese/curd_cheese = 1,
+			/obj/item/food/cheese/cheese_curds = 1,
+			/obj/item/food/cheese/firm_cheese = 1,
+		) = 30,
+		/obj/item/food/cheese/mozzarella = 30, // Mozzarella
+		/obj/item/food/cheese/royal = 1, // Royal
 	)
 	var/dispensed_hardmode = FALSE
 
@@ -222,7 +234,7 @@
 	if(!dispensed_hardmode)
 		dispensed_hardmode = TRUE
 		// Hard-mode
-		new /obj/item/gizmo/moo(get_turf(holder))
+		new /obj/machinery/gizmo/moo(get_turf(holder))
 	..()
 
 /datum/gizmodes/code_crack/tutorial/feedback(atom/movable/holder)
@@ -233,7 +245,7 @@
 			playsound(holder, "sound/machines/defib/defib_saftyOn.ogg", 100)
 		else
 			playsound(holder, "sound/machines/defib/defib_ready.ogg", 100)
-		sleep(0.25 SECONDS)
+		sleep(0.5 SECONDS)
 	..()
 
 /datum/gizmodes/code_crack/tutorial/punishment(atom/movable/holder)
