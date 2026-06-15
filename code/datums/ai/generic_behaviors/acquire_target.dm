@@ -67,12 +67,14 @@
 	if(!length(candidates))
 		candidates = on_no_candidates(controller, current_target, targeting_strategy, range)
 		if(!length(candidates))
+			clear_stale_target(controller, current_target)
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/filtered = filter_candidates(controller, candidates, targeting_strategy, current_target)
 
 	if(!length(filtered))
 		on_no_valid_candidates(controller, current_target)
+		clear_stale_target(controller, current_target)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/target = pick_final_target(controller, filtered)
@@ -86,6 +88,12 @@
 	on_target_found(controller, target, targeting_strategy)
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/// Clears the target key when revalidating and the search turned up nothing, so a stale target doesn't linger.
+/datum/bt_node/ai_behavior/acquire_target/proc/clear_stale_target(datum/ai_controller/controller, atom/current_target)
+	if(revalidation_mode != TARGET_REVALIDATE || isnull(current_target))
+		return
+	controller.clear_blackboard_key(target_key)
 
 ///Fallback for no targets found.
 /datum/bt_node/ai_behavior/acquire_target/proc/on_no_candidates(datum/ai_controller/controller, atom/current_target, datum/targeting_strategy/strategy, range)
