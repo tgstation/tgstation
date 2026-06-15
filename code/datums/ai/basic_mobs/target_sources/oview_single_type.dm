@@ -7,8 +7,6 @@
 	for(var/atom/candidate as anything in oview(range, pawn))
 		if(istype(candidate, single_typepath))
 			candidates += candidate
-	if(candidates.len)
-		candidates = reverse_range(candidates)
 	return candidates
 
 /datum/target_source/oview_single_type/carbon_mob
