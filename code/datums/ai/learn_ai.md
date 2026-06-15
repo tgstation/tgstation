@@ -189,6 +189,8 @@ Subtrees are essentially modularized pieces of tree that can be re-used in diffe
 
 One feature of subtrees is that if you are making a subtree, and want to change something when using the subtree depending on the AI, you can assign any field in the subtree as a binding; this makes it editable in any controller (or subtree) that the subtree is used.
 
+You can also re-assign subtrees by setting an "Override ID". By doing this you can call `controller.set_behavior_tree_override()` with the same ID to change what subtree is used in this node. Used in for example pet commands to tell a dog to go fetch dynamically.
+
 ## Editor
 
 The behavior tree editor can be opened via opening one of our .bt.json files. These .bt.json files are specialized json files that format our (sub)trees. In theory these jsons are human-readable, but the editor makes it much easier to parse them. The editor only edits the .bt.json file itself.
@@ -210,3 +212,35 @@ You can drag these nodes into the node-graph to place them.
 You can also change the nodes connections by dragging from either end to another node. This system is currently a bit fidgetty while I figure out how to become a better editor programmer.
 
 Once you are done with your tree, be sure to save the file. You can now compile and the JSON will be converted automatically
+
+## Targeting
+
+A huge amount of AI work boils down to finding a thing nearby and remembering it. Finding an enemy, finding food, finding a beacon to walk to. Instead of writing a brand new "find" leaf every time, we have one generic leaf that you configure with two helpers. You almost never need to write a new leaf for this.
+
+The three pieces:
+
+1. **The leaf** is `update_interaction_target` or `update_targets`. Its job is to look around, find something, and write it to a blackboard key.
+2. **A target source** answers the question "what candidates exist?". It gathers a list of nearby things, such as everything in view, only things of a certain type, or items in your hands.
+3. **A targeting strategy** answers the question "is this specific candidate valid?". It looks at one candidate at a time and says yes or no.
+
+So the flow is: the **source** hands the leaf a list of candidates, the leaf runs each one past the **strategy**, and the first one that passes gets written to your target key.
+
+You configure all of this on the leaf node.
+
+```text
+LEAF: update_interaction_target
+	target_key:          BB_TARGET_FOOD          (where to store what we found)
+	target_source:       .../held_items_then_oview/basic_foods   (what to look at)
+	targeting_strategy:  .../anything            (how to decide it's valid)
+	vision_range:        7                        (how far to look, optional)
+```
+
+A few pitfalls:
+
+- **Finding nothing is just a FAILURE.** If the source returns an empty list, the leaf simply fails.
+- **Use `/datum/targeting_strategy/anything` if you don't filter for specifics.** With this strategy the only thing we check is `get_dist`, which is enough when the source already gives you the specific candidates you want.
+- **Reuse before you build.** There are many existing sources and strategies. Use these before adding new ones.
+
+Once the target key is set, the rest of your tree reacts to it the way you've already seen. A `decorator` gates the combat branch behind "is the target key set?". An observer on this decorator can cancel lower priority behavior when the target is set, or cancel its own behavior when the target is lost.
+
+> Note: combat target _searching_ during a fight is usually done by the `update_targets` leaf, which keeps `BB_CURRENT_TARGET` refreshed while you fight. `update_interaction_target` is the general-purpose "go find a thing" leaf for everything else.

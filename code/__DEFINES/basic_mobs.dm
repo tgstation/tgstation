@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN 2
 
 ///Delay between trying to update target selection
-#define BASIC_MOB_FIND_ENEMY_RATE 1 SECONDS
+#define BASIC_MOB_FIND_TARGET_RATE 1 SECONDS
 
 ///Time between idle behavior execution
 #define IDLE_BEHAVIOR_RATE 1.5 SECONDS
