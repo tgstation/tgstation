@@ -21,23 +21,21 @@
 
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if (circuit.obj_flags & EMAGGED)
+	if(circuit.obj_flags & EMAGGED)
 		return FALSE
 	circuit.obj_flags |= EMAGGED
-	if(islist(circuit.req_access))
-		circuit.req_access.Cut()
-	if(islist(circuit.req_one_access))
-		circuit.req_one_access.Cut()
-
 	set_locked(FALSE, user)
+	circuit.req_access = null
+	circuit.req_one_access = null
+
 	if(user)
 		balloon_alert(user, "access restrictions removed!")
 	return TRUE
 
 /obj/machinery/computer/upload/proc/should_have_lock()
-    if(!circuit)
-        return FALSE
-    return length(circuit.req_access) || length(circuit.req_one_access)
+	if(isnull(circuit))
+		return FALSE
+	return length(circuit.req_access) || length(circuit.req_one_access)
 
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
 	if(locked == locked_state)

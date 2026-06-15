@@ -18,7 +18,7 @@
 
 /obj/item/circuitboard/computer/aiupload/no_lock
 	build_path = /obj/machinery/computer/upload/ai/no_lock
-	req_one_access = list()
+	req_one_access = null
 
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
@@ -27,7 +27,7 @@
 	build_path = /obj/machinery/computer/upload/borg
 
 /obj/item/circuitboard/computer/borgupload/no_lock
-	req_one_access = list()
+	req_one_access = null
 	build_path = /obj/machinery/computer/upload/borg/no_lock
 
 /obj/item/circuitboard/computer/bsa_control
