@@ -42,6 +42,12 @@
 	spawning = 2
 	velocity = list(0, 0.25, 0)
 
+/particles/smoke/steam/crazy
+	icon_state = list("steam_1" = 1, "smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
+	spawning = 2
+	velocity = list(0, 0.25, 0)
+	color = "#10fa5ee3"
+
 /particles/smoke/steam/mald
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	velocity = list(0, 0.25, 0)
