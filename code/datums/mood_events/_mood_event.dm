@@ -97,6 +97,9 @@
 			mood_change *= 0.75
 
 	add_effects(arglist(mood_args))
+	if(who.mind?.holy_role && GLOB.deity)
+		replacetext(description, "god, ", "[GLOB.deity], ")
+		replacetext(description, "god ", "[GLOB.deity] ")
 
 	mood_change = floor(mood_change)
 
