@@ -3,6 +3,7 @@
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/can_see_target",
 	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
 		"key": "BB_SLIPPERY_TARGET",
 		"range": 5
 	},
@@ -10,6 +11,7 @@
 		"type": "decorator",
 		"decorator": "/datum/bt_node/decorator/can_see_target",
 		"vars": {
+			"observer_abort": "BT_ABORT_BOTH",
 			"key": "BB_SLIP_TARGET",
 			"range": 5
 		},

@@ -20,7 +20,6 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_CURRENT_TARGET,
 	)
-	minimum_distance = 1
 
 
 

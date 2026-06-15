@@ -14,45 +14,40 @@
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"vars": {
-						"key": "BB_BASIC_MOB_RETALIATE_LIST",
-						"observer_abort": "BT_ABORT_SELF"
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_BASIC_MOB_RETALIATE_LIST"
 					},
 					"child": {
-						"type": "sequence",
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
 						"children": [
 							{
-								"type": "parallel",
-								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
-								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-								"repeat_secondary": true,
-								"finish_on_primary": true,
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 								"children": [
 									{
-										"type": "subplan",
-										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"targeting_strategy": "BB_TARGETING_STRATEGY",
-													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-												}
-											}
-										]
-									},
-									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
 										"vars": {
 											"target_key": "BB_CURRENT_TARGET",
-											"required_dist": 1,
-											"finish_on_arrival": false
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 										}
 									}
 								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": false
+								}
 							}
 						]
 					}

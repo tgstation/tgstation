@@ -1,9 +1,9 @@
 {
 	"dm_type": "/datum/bt_node/subtree/simple_ranged_combat",
 	"bindings": {
-		"bpnckxev": {
-			"label": "time_between_ranged_attacks",
-			"default": "0.6 SECONDS"
+		"bsjjwub2": {
+			"label": "idle_behavior",
+			"default": "/datum/bt_node/subtree/random_walk"
 		}
 	},
 	"type": "parallel",
@@ -20,8 +20,8 @@
 					"type": "decorator",
 					"decorator": "/datum/bt_node/decorator/bb_key_set",
 					"vars": {
-						"key": "BB_CURRENT_TARGET",
-						"observer_abort": "BT_ABORT_SELF"
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_CURRENT_TARGET"
 					},
 					"child": {
 						"type": "parallel",
@@ -32,49 +32,35 @@
 						"children": [
 							{
 								"type": "subplan",
-								"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 								"children": [
 									{
-										"type": "selector",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"targeting_strategy": "BB_TARGETING_STRATEGY",
-													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
-													"time_between_perform": "$bpnckxev"
-												}
-											}
-										]
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
+										"vars": {
+											"time_between_perform": "0.6 SECONDS",
+											"target_key": "BB_CURRENT_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
 									}
 								]
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
 								"vars": {
 									"target_key": "BB_CURRENT_TARGET",
-									"required_dist": 1,
-									"finish_on_arrival": false
+									"approach_movement_type": "/datum/ai_movement/basic_avoidance"
 								}
 							}
 						]
 					}
 				},
 				{
-					"type": "subplan",
-					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-					"loop_delay": "IDLE_BEHAVIOR_RATE",
-					"children": [
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
-						}
-					]
+					"type": "subtree",
+					"subtype": "$bsjjwub2"
 				}
 			]
 		},

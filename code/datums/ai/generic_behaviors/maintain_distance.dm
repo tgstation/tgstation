@@ -8,6 +8,8 @@
 	var/min_dist_key = BB_RANGED_SKIRMISH_MIN_DISTANCE
 	/// Blackboard key holding the maximum desired distance.
 	var/max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE
+	/// Movement type to use while approaching a target that's too far. Null falls back to the controller's default movement type. Reset on finish.
+	var/approach_movement_type = null
 
 /datum/bt_node/ai_behavior/maintain_distance/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
@@ -39,7 +41,7 @@
 		if(!retreat(controller, target, minimum_distance))
 			return AI_BEHAVIOR_FAILED
 	else
-		controller.change_ai_movement_type(initial(controller.ai_movement))
+		controller.change_ai_movement_type(approach_movement_type || initial(controller.ai_movement))
 		controller.ai_movement.start_moving_towards(controller, target, maximum_distance)
 
 	return AI_BEHAVIOR_INSTANT

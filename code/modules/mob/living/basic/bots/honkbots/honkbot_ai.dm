@@ -45,13 +45,14 @@
 
 
 
-/datum/bt_node/ai_behavior/bot_search/find_slip_victim
-
-/datum/bt_node/ai_behavior/bot_search/find_slip_victim/get_looking_for_typecache()
-	return typecacheof(list(/mob/living/carbon/human))
-
-/datum/bt_node/ai_behavior/bot_search/find_slip_victim/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
-	var/mob/living/carbon/human/candidate = my_target
+/// Valid if the target is a visible human who isn't buckled and has gravity — someone a slip can actually knock over.
+/datum/targeting_strategy/can_see/slip_victim/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/candidate = target
+	if(!istype(candidate))
+		return FALSE
 	return !candidate.buckled && candidate.has_gravity()
 
 
@@ -78,54 +79,36 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
-/datum/bt_node/ai_behavior/find_slippery_item
-	var/target_key
-	time_between_perform = 5 SECONDS
+/// Gathers nearby atoms matching the slippery-item typepaths stored in BB_SLIPPERY_ITEMS.
+/datum/target_source/honkbot_slippery
 
-/datum/bt_node/ai_behavior/find_slippery_item/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/mob/living/living_pawn = controller.pawn
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
+/datum/target_source/honkbot_slippery/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/list/slippery_items = controller.blackboard[BB_SLIPPERY_ITEMS]
 	if(!length(slippery_items))
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] find_slippery_item: BB_SLIPPERY_ITEMS is empty")
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/list/type_cache = typecacheof(slippery_items)
-	for(var/atom/potential in oview(5, living_pawn))
-		if(!is_type_in_typecache(potential, type_cache))
-			continue
-		if(LAZYACCESS(ignore_list, potential))
-			continue
-		if(!can_see(living_pawn, potential, 5))
-			continue
-		EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] found slippery item: [potential]", get_turf(potential), "Slippery!")
-		controller.set_blackboard_key(target_key, potential)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] find_slippery_item: no slippery item in range")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return list()
+	return typecache_filter_list(oview(range, pawn), typecacheof(slippery_items))
 
+/// Valid only if the target is within line of sight (not just within range).
+/datum/targeting_strategy/can_see/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	return can_see(living_mob, target, vision_range)
 
-
-/datum/bt_node/ai_behavior/find_clown_friend
-	var/target_key
-	time_between_perform = 5 SECONDS
-
-/datum/bt_node/ai_behavior/find_clown_friend/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/mob/living/nearby_mob in oview(5, controller.pawn))
-		if(LAZYACCESS(ignore_list, nearby_mob))
-			continue
-		if(nearby_mob.stat != CONSCIOUS)
-			continue
-		var/is_clown = HAS_TRAIT(nearby_mob, TRAIT_PERCEIVED_AS_CLOWN)
-		if(!is_clown && istype(nearby_mob, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/robot_target = nearby_mob
-			is_clown = istype(robot_target.model, /obj/item/robot_model/clown)
-		if(!is_clown)
-			continue
-		if(controller.set_if_can_reach(key = target_key, target = nearby_mob))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] find_clown_friend: no clown in range")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/// Valid if the target is a conscious clown (by trait, or a borg running the clown model).
+/datum/targeting_strategy/clown_friend/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/target_mob = target
+	if(!isliving(target_mob) || target_mob.stat != CONSCIOUS)
+		return FALSE
+	if(HAS_TRAIT(target_mob, TRAIT_PERCEIVED_AS_CLOWN))
+		return TRUE
+	if(istype(target_mob, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/robot_target = target_mob
+		return istype(robot_target.model, /obj/item/robot_model/clown)
+	return FALSE
 
 /datum/bt_node/ai_behavior/play_with_clown
 	var/target_key

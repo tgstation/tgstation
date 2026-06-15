@@ -1,36 +1,28 @@
 {
 	"dm_type": "/datum/bt_node/subtree/medbot_treat_patient",
-	"type": "parallel",
-	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-	"repeat_secondary": true,
-	"finish_on_primary": true,
-	"children": [
-		{
-			"type": "sequence",
-			"children": [
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/announce_patient",
-					"vars": {
-						"target_key": "BB_CURRENT_TARGET"
-					}
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/tend_to_patient",
-					"vars": {
-						"target_key": "BB_CURRENT_TARGET"
-					}
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_CURRENT_TARGET"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_CURRENT_TARGET"
 				}
-			]
-		},
-		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/find_suitable_patient",
-			"vars": {
-				"target_key": "BB_CURRENT_TARGET"
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/tend_to_patient",
+				"vars": {
+					"target_key": "BB_CURRENT_TARGET"
+				}
 			}
-		}
-	]
+		]
+	}
 }

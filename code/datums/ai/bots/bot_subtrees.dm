@@ -12,6 +12,8 @@
 	var/pathing_distance = 10
 	var/bypass_add_blacklist = FALSE
 	var/turf_search = FALSE
+	/// How close the path must get to the target (0 = onto/adjacent). Repairbot raises this so it stops next to the walls/girders it repairs.
+	var/minimum_distance = 0
 	time_between_perform = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
@@ -36,7 +38,7 @@
 			continue
 		if(!can_see(controller.pawn, potential_target, radius))
 			continue
-		if(controller.set_if_can_reach(key = target_key, target = potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
+		if(controller.set_if_can_reach(key = target_key, target = potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist, minimum_distance = minimum_distance))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no valid target found in radius [radius]")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

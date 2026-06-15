@@ -12,6 +12,14 @@
 	var/revalidation_mode = TARGET_REVALIDATE
 	/// Extended range for retaining an existing target when candidates run dry. 0 = disabled.
 	var/target_loss_distance = 10
+	/// Optional blackboard key holding a lazylist of atoms to skip while filtering candidates.
+	var/ignore_list_key
+	/// If TRUE, only candidates the controller can path to are eligible; unreachable ones are reported via note_unreachable_target.
+	var/must_be_reachable = FALSE
+	/// Pathfinding distance limit used when must_be_reachable is set.
+	var/reach_distance = 10
+	/// How close the reachability path must get to the target (0 = onto/adjacent). Passed to can_reach_target when must_be_reachable is set.
+	var/minimum_distance = 0
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!can_search(controller))
@@ -79,6 +87,11 @@
 
 	var/atom/target = pick_final_target(controller, filtered)
 
+	if(isnull(target))
+		on_no_valid_candidates(controller, current_target)
+		clear_stale_target(controller, current_target)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [target_key]! Behavior: [src]", get_turf(target), "Target: [target]")
 	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
 
@@ -106,8 +119,11 @@
 /// Filters the candidate list to valid targets. Override to add priority filtering or other per-candidate criteria.
 /datum/bt_node/ai_behavior/acquire_target/proc/filter_candidates(datum/ai_controller/controller, list/candidates, datum/targeting_strategy/strategy, atom/current_target)
 	var/mob/living/pawn = controller.pawn
+	var/list/ignore_list = ignore_list_key ? controller.blackboard[ignore_list_key] : null
 	var/list/filtered = list()
 	for(var/atom/candidate as anything in candidates)
+		if(LAZYACCESS(ignore_list, candidate))
+			continue
 		if(!strategy.is_valid_target(pawn, candidate, vision_range, controller))
 			continue
 		filtered += candidate
@@ -121,9 +137,16 @@
 /datum/bt_node/ai_behavior/acquire_target/proc/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
 	return
 
-/// Picks the final target from filtered candidates.
+/// Picks the final target from filtered candidates. With must_be_reachable, walks the list in order and returns the first
+/// reachable candidate, reporting the unreachable ones it skips; otherwise picks one at random.
 /datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
-	return pick(filtered_targets)
+	if(!must_be_reachable)
+		return pick(filtered_targets)
+	for(var/atom/candidate as anything in filtered_targets)
+		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
+			return candidate
+		controller.note_unreachable_target(candidate)
+	return null
 
 ///Finds a nearby target to interact with, used as a baseline for behaviors that need to interact with something nearby.
 /datum/bt_node/ai_behavior/acquire_target/update_interaction_target

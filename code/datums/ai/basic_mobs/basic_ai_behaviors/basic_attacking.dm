@@ -85,10 +85,8 @@
 	var/targeting_strategy
 	var/hiding_location_key
 	time_between_perform = 0.6 SECONDS
-	/// Max range at which we can fire. Make sure your movement actually gets you this lcose please
-	var/max_range = 3
-	/// Max chase range — give up if target moves further than this.
-	var/chase_range = 9
+	/// Max range at which we can fire. Make sure your movement actually gets you this close please
+	var/max_range = 9
 	/// Avoid shooting through friendlies.
 	var/avoid_friendly_fire = FALSE
 
@@ -109,10 +107,6 @@
 		targeting_strategy = controller.blackboard[targeting_strategy]
 
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(targeting_strategy)
-
-	if(!strategy.is_valid_target(basic_mob, target, chase_range))
-		controller.clear_blackboard_key(target_key)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/hiding_target = strategy.find_hidden_mobs(basic_mob, target)
 	var/atom/final_target = hiding_target ? hiding_target : target

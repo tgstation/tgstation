@@ -12,6 +12,12 @@
 /datum/target_source/oview_single_type/carbon_mob
 	single_typepath = /mob/living/carbon
 
+/datum/target_source/oview_single_type/human_mob
+	single_typepath = /mob/living/carbon/human
+
+/datum/target_source/oview_single_type/living_mob
+	single_typepath = /mob/living
+
 /datum/target_source/oview_single_type/disposal_unit
 	single_typepath = /obj/machinery/disposal
 

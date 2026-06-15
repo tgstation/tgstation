@@ -12,8 +12,6 @@
 	ai_movement = /datum/ai_movement/jps/bot
 	max_target_distance = AI_BOT_PATH_LENGTH
 	can_idle = FALSE
-	///minimum distance we need to be from our target in path calculations
-	var/minimum_distance = 0
 	///keys to be reset when the bot is reset
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,
@@ -32,9 +30,8 @@
 		return FALSE
 	if(get_turf(living_mob) == get_turf(living_target))
 		return ..()
-	var/list/path = get_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_distance = 10, access = my_controller.get_access())
-	if(!length(path) || QDELETED(living_mob))
-		my_controller?.add_to_blacklist(living_target)
+	if(!my_controller.can_reach_target(living_target, distance = 10))
+		my_controller.add_to_blacklist(living_target)
 		return FALSE
 	return ..()
 
@@ -61,6 +58,10 @@
 	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
 	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(remove_from_blacklist), target), final_duration)
+
+/// Unreachable targets get added to the temporary ignore list so we stop pathing to them. Subtypes override to skip blacklisting in stationary mode.
+/datum/ai_controller/basic_controller/bot/note_unreachable_target(atom/target)
+	add_to_blacklist(target)
 
 /datum/ai_controller/basic_controller/bot/proc/remove_from_blacklist(atom/target)
 	if(QDELETED(target))
@@ -100,8 +101,8 @@
 		clear_blackboard_key(key)
 
 ///set the target if we can reach them
-/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, duration, distance = 10, bypass_add_to_blacklist = FALSE)
-	if(can_reach_target(target, distance))
+/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, duration, distance = 10, bypass_add_to_blacklist = FALSE, minimum_distance = 0)
+	if(can_reach_target(target, distance, minimum_distance))
 		EVLOG_MAPTEXT(src, EVLOG_CATEGORY_AI_TARGETING, "[pawn] has selected [target] as a target for blackboard key [key]!", get_turf(target), "Target: [target]")
 		EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
 		set_blackboard_key(key, target)
@@ -113,11 +114,3 @@
 	EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
 	add_to_blacklist(target, final_duration)
 	return FALSE
-
-/datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
-	if(!isdatum(target)) //we dont need to check if its not a datum!
-		return TRUE
-	if(get_turf(pawn) == get_turf(target))
-		return TRUE
-	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
-	return (!!length(path))

@@ -38,52 +38,56 @@
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 
-/datum/bt_node/ai_behavior/find_person_on_fire
-	var/target_key
-	time_between_perform = 2 SECONDS
+/// Firebot skips blacklisting unreachable targets while stationary, matching the old set_if_can_reach bypass.
+/datum/ai_controller/basic_controller/bot/firebot/note_unreachable_target(atom/target)
+	var/mob/living/basic/bot/firebot/bot_pawn = pawn
+	if(bot_pawn.firebot_mode_flags & FIREBOT_STATIONARY_MODE)
+		return
+	return ..()
 
-/datum/bt_node/ai_behavior/find_person_on_fire/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/mob/living/basic/bot/firebot/living_bot = controller.pawn
-	if(!(living_bot.firebot_mode_flags & FIREBOT_EXTINGUISH_PEOPLE))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/range = living_bot.firebot_mode_flags & FIREBOT_STATIONARY_MODE ? 1 : 5
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/can_extinguish = controller.blackboard[BB_FIREBOT_CAN_EXTINGUISH]
-	for(var/mob/living/nearby_mob in oview(range, living_bot))
-		if(LAZYACCESS(ignore_list, nearby_mob))
-			continue
-		if(!nearby_mob.on_fire && !(living_bot.bot_access_flags & BOT_COVER_EMAGGED))
-			continue
-		if(!is_type_in_list(nearby_mob, can_extinguish))
-			continue
-		if(controller.set_if_can_reach(key = target_key, target = nearby_mob, bypass_add_to_blacklist = (range == 1)))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/// Gathers nearby living mobs to extinguish; empty unless people-extinguishing is on, range clamped to adjacent tiles when stationary.
+/datum/target_source/oview_single_type/living_mob/firebot_people
+
+/datum/target_source/oview_single_type/living_mob/firebot_people/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	var/mob/living/basic/bot/firebot/bot_pawn = pawn
+	if(!(bot_pawn.firebot_mode_flags & FIREBOT_EXTINGUISH_PEOPLE))
+		return list()
+	if(bot_pawn.firebot_mode_flags & FIREBOT_STATIONARY_MODE)
+		range = 1
+	return ..(pawn, controller, range)
+
+/// Valid if the mob is on fire (or anyone, while emagged) and is a type this firebot is allowed to extinguish.
+/datum/targeting_strategy/extinguishable_person/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/target_mob = target
+	if(!isliving(target_mob))
+		return FALSE
+	var/mob/living/basic/bot/firebot/bot_pawn = living_mob
+	if(!target_mob.on_fire && !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+		return FALSE
+	return is_type_in_list(target_mob, controller.blackboard[BB_FIREBOT_CAN_EXTINGUISH])
 
 
-/datum/bt_node/ai_behavior/search_burning_turfs
-	var/target_key
-	time_between_perform = 2 SECONDS
+/// Gathers turfs in range; empty unless flame-extinguishing is enabled.
+/datum/target_source/range_turfs/firebot_hotspots
 
-/datum/bt_node/ai_behavior/search_burning_turfs/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/mob/living/basic/bot/firebot/living_bot = controller.pawn
-	if(!(living_bot.firebot_mode_flags & FIREBOT_EXTINGUISH_FLAMES))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/bypass_blacklist = !!(living_bot.firebot_mode_flags & FIREBOT_STATIONARY_MODE)
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/turf/possible_turf as anything in RANGE_TURFS(5, living_bot))
-		if(QDELETED(living_bot))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-		if(!isopenturf(possible_turf))
-			continue
-		var/turf/open/open_turf = possible_turf
-		if(!open_turf.active_hotspot)
-			continue
-		if(LAZYACCESS(ignore_list, possible_turf))
-			continue
-		if(controller.set_if_can_reach(key = target_key, target = possible_turf, bypass_add_to_blacklist = bypass_blacklist))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/datum/target_source/range_turfs/firebot_hotspots/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	var/mob/living/basic/bot/firebot/bot_pawn = pawn
+	if(!(bot_pawn.firebot_mode_flags & FIREBOT_EXTINGUISH_FLAMES))
+		return list()
+	return ..(pawn, controller, range)
+
+/// Valid if the turf is an open turf with an active fire.
+/datum/targeting_strategy/burning_hotspot/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isopenturf(target))
+		return FALSE
+	var/turf/open/open_turf = target
+	return !!open_turf.active_hotspot
 
 
 

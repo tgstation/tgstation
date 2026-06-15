@@ -26,32 +26,25 @@
 						"children": [
 							{
 								"type": "subplan",
-								"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
 								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 								"children": [
 									{
-										"type": "selector",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"targeting_strategy": "BB_TARGETING_STRATEGY",
-													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-												}
-											}
-										]
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
 									}
 								]
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
 								"vars": {
-									"target_key": "BB_CURRENT_TARGET",
-									"required_dist": 1,
-									"finish_on_arrival": false
+									"target_key": "BB_CURRENT_TARGET"
 								}
 							}
 						]

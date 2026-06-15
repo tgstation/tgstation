@@ -30,46 +30,21 @@
 	)
 
 
-/datum/bt_node/ai_behavior/find_clean_target
-	var/target_key
-	time_between_perform = 3 SECONDS
+/// Gathers nearby cleanable atoms: decals plus whatever types the cleanbot's currently enabled janitor mode flags allow.
+/datum/target_source/cleanbot_cleanables
 
-/datum/bt_node/ai_behavior/find_clean_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/cleanbot/controller)
+/datum/target_source/cleanbot_cleanables/collect_candidates(mob/living/pawn, datum/ai_controller/basic_controller/bot/cleanbot/controller, range)
 	var/list/final_hunt_list = list()
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
-	var/list/flag_list = controller.clean_flags
-	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-	for(var/list_key in flag_list)
-		if(!(bot_pawn.janitor_mode_flags & flag_list[list_key]))
+	var/mob/living/basic/bot/cleanbot/bot_pawn = pawn
+	for(var/list_key in controller.clean_flags)
+		if(!(bot_pawn.janitor_mode_flags & controller.clean_flags[list_key]))
 			continue
 		final_hunt_list += controller.blackboard[list_key]
-
 	if(!length(final_hunt_list))
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_clean_target: no cleanable types enabled (janitor_mode_flags=[bot_pawn.janitor_mode_flags])")
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
+		return list()
 	var/list/type_filter = typecacheof(final_hunt_list)
-	var/list/found = typecache_filter_list(oview(5, controller.pawn), type_filter)
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/atom/found_item in found)
-		if(QDELETED(controller.pawn))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-		if(LAZYACCESS(ignore_list, found_item))
-			continue
-		if(get_turf(found_item) == get_turf(controller.pawn))
-			EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] clean target (same turf): [found_item]", get_turf(found_item), "Clean")
-			controller.set_blackboard_key(target_key, found_item)
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
-		if(!length(path))
-			controller.add_to_blacklist(found_item)
-			continue
-		EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] clean target: [found_item]", get_turf(found_item), "Clean")
-		EVLOG_LINES(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "Clean path", get_turf(bot_pawn), get_turf(found_item))
-		controller.set_blackboard_key(target_key, found_item)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_clean_target: no reachable clean target in range ([length(found)] candidates, [length(ignore_list)] ignored)")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	return typecache_filter_list(oview(range, pawn), type_filter)
 
 ///clean that shit bro fr fr 67
 /datum/bt_node/ai_behavior/execute_clean
@@ -108,42 +83,14 @@
 	controller.clear_blackboard_key(target_key)
 
 
-/datum/bt_node/ai_behavior/find_spray_target
-	var/target_key
-	time_between_perform = 30 SECONDS
-
-/datum/bt_node/ai_behavior/find_spray_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/mob/living/carbon/human/human_target in oview(5, controller.pawn))
-		if(LAZYACCESS(ignore_list, human_target))
-			continue
-		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
-			continue
-		EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] acid spray target: [human_target]", get_turf(human_target), "Spray")
-		EVLOG_LINES(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "Spray target", get_turf(controller.pawn), get_turf(human_target))
-		controller.set_blackboard_key(target_key, human_target)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] find_spray_target: no valid human in range")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-
-
-/datum/bt_node/ai_behavior/find_friendly_janitor
-	var/target_key
-	time_between_perform = 30 SECONDS
-
-/datum/bt_node/ai_behavior/find_friendly_janitor/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-	for(var/mob/living/carbon/human/human_target in oview(5, living_pawn))
-		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
-			continue
-		if(!HAS_TRAIT(human_target, TRAIT_CLEANBOT_WHISPERER))
-			continue
-		if(living_pawn.has_ally(REF(human_target)))
-			continue
-		controller.set_blackboard_key(target_key, human_target)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/// Valid if the target is a conscious human janitor-whisperer the cleanbot hasn't already befriended.
+/datum/targeting_strategy/conscious_human/cleanbot_whisperer/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_CLEANBOT_WHISPERER))
+		return FALSE
+	return !living_mob.has_ally(REF(target))
 
 
 /datum/bt_node/subtree/clean_pet_target

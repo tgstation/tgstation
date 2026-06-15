@@ -689,6 +689,20 @@ multiple modular subtrees with behaviors
 	var/mob/living/living_pawn = pawn
 	return living_pawn.get_access()
 
+/// Returns TRUE if the pawn can path to the target. minimum_distance is how close the path must get (0 = onto/adjacent to the target's turf); searches pass it from their own acquire_target leaf.
+/datum/ai_controller/proc/can_reach_target(atom/target, distance = 10, minimum_distance = 0)
+	if(!isdatum(target)) //we dont need to check if its not a datum!
+		return TRUE
+	if(get_turf(pawn) == get_turf(target))
+		return TRUE
+	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
+	return (!!length(path))
+
+
+/// Called when a target was found but couldn't be reached. Base no-op; override to record the target (e.g. add it to an ignore list).
+/datum/ai_controller/proc/note_unreachable_target(atom/target)
+	return
+
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
 	var/datum/key_value = blackboard[key]

@@ -37,40 +37,27 @@
 
 
 
-/datum/bt_node/ai_behavior/find_valid_wash_targets
-	var/target_key
-	time_between_perform = 5 SECONDS
-
-/datum/bt_node/ai_behavior/find_valid_wash_targets/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/atom/found_target
-	for(var/mob/living/carbon/human/wash_potential in oview(5, bot_pawn))
-		if(found_target)
-			break
-		if(isnull(wash_potential.mind) || wash_potential.stat != CONSCIOUS)
-			continue
-		if(LAZYACCESS(ignore_list, wash_potential))
-			continue
-		if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
-			controller.add_to_blacklist(wash_potential)
-			found_target = wash_potential
-			break
-		for(var/atom/clothing in wash_potential.get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
-			if(GET_ATOM_BLOOD_DNA_LENGTH(clothing))
-				found_target = wash_potential
-				break
-
-	if(isnull(found_target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	controller.set_blackboard_key(target_key, found_target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/bt_node/ai_behavior/find_valid_wash_targets/finish_action(datum/ai_controller/controller, succeeded)
+/// Valid if the target is a conscious human with bloodied clothing (or anyone, while emagged).
+/datum/targeting_strategy/conscious_human/washable_human/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
-	if(!succeeded)
-		return
+	if(!.)
+		return FALSE
+	var/mob/living/basic/bot/bot_pawn = living_mob
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+		return TRUE
+	var/mob/living/carbon/human/human_target = target
+	for(var/atom/clothing in human_target.get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
+		if(GET_ATOM_BLOOD_DNA_LENGTH(clothing))
+			return TRUE
+	return FALSE
+
+/// Finds someone to wash and announces it; while emagged the target is blacklisted so the bot washes each person only once.
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/hygiene_wash
+
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/hygiene_wash/on_target_found(datum/ai_controller/basic_controller/bot/controller, atom/target, datum/targeting_strategy/strategy)
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+		controller.add_to_blacklist(target)
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement.announce(pick(controller.blackboard[BB_WASH_FOUND]))
 

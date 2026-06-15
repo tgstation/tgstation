@@ -55,11 +55,9 @@
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
 								"vars": {
-									"target_key": "BB_CURRENT_TARGET",
-									"required_dist": 3,
-									"finish_on_arrival": false
+									"target_key": "BB_CURRENT_TARGET"
 								}
 							}
 						]

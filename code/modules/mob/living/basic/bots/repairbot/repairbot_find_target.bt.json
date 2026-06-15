@@ -15,14 +15,16 @@
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_robot",
 						"vars": {
-							"target_key": "BB_ROBOT_TARGET"
+							"target_key": "BB_ROBOT_TARGET",
+							"minimum_distance": 1
 						}
 					},
 					{
 						"type": "leaf",
 						"behavior": "/datum/bt_node/ai_behavior/bot_search/deconstructable",
 						"vars": {
-							"target_key": "BB_DECONSTRUCT_TARGET"
+							"target_key": "BB_DECONSTRUCT_TARGET",
+							"minimum_distance": 1
 						}
 					}
 				]
@@ -49,42 +51,48 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf/breached",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/refillable_target",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_grille_target",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_plateless_turf",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_window_fix",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									},
 									{
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_girder",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"minimum_distance": 1
 										}
 									}
 								]
@@ -110,7 +118,8 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/bot_search/valid_wall_target",
 								"vars": {
-									"target_key": "BB_CURRENT_TARGET"
+									"target_key": "BB_CURRENT_TARGET",
+									"minimum_distance": 1
 								}
 							},
 							{

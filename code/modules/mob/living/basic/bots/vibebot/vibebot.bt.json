@@ -15,6 +15,7 @@
 			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
 			"finish_on_primary": true,
 			"children": [
 				{
@@ -35,8 +36,7 @@
 										"vars": {
 											"target_key": "BB_VIBEBOT_PARTY_TARGET",
 											"required_dist": 1,
-											"finish_on_arrival": true,
-											"movement_type": null
+											"finish_on_arrival": true
 										}
 									},
 									{
@@ -58,9 +58,14 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_party_friends",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"target_key": "BB_VIBEBOT_PARTY_TARGET"
+						"target_key": "BB_VIBEBOT_PARTY_TARGET",
+						"target_source": "/datum/target_source/oview_single_type/human_mob",
+						"targeting_strategy": "/datum/targeting_strategy/conscious_human/party_friend",
+						"ignore_list_key": "BB_TEMPORARY_IGNORE_LIST",
+						"vision_range": 5,
+						"time_between_perform": "5 SECONDS"
 					}
 				}
 			]

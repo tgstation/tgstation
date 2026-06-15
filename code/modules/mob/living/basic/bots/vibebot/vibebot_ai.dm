@@ -41,24 +41,13 @@
 	addtimer(CALLBACK(song, TYPE_PROC_REF(/datum/song, stop_playing)), 10 SECONDS) //in 10 seconds, stop playing music
 
 
-/datum/bt_node/ai_behavior/find_party_friends
-	var/target_key
-	time_between_perform = 5 SECONDS
-
-/datum/bt_node/ai_behavior/find_party_friends/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	var/static/list/type_to_search = typecacheof(list(/mob/living/carbon/human))
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/mob/living/carbon/human/target in oview(5, controller.pawn))
-		if(LAZYACCESS(ignore_list, target))
-			continue
-		if(target.stat != CONSCIOUS || isnull(target.mind))
-			continue
-		if(!is_type_in_typecache(target, type_to_search))
-			continue
-		if(target.mob_mood.mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(target, TRAIT_BIRTHDAY_BOY))
-			controller.set_blackboard_key(target_key, target)
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/// Valid if the target is a conscious human who's in a bad mood or having a birthday — someone who could use cheering up.
+/datum/targeting_strategy/conscious_human/party_friend/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+	return human_target.mob_mood?.mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(human_target, TRAIT_BIRTHDAY_BOY)
 
 /datum/bt_node/ai_behavior/vibebot_party
 	var/ability_key
