@@ -7,7 +7,7 @@
 
 	/// Are we currently burning our mob?
 	var/active = TRUE
-	/// What stare of fire are we in?
+	/// What stage of fire are we in?
 	var/stage = 0
 
 	/// What icon file to use for our hallucinator
@@ -113,10 +113,17 @@
 	else
 		clear_fire()
 
+/// Handling the making you feel hot(hallucinationally hot), if you are suffering fake_fire hallucination
 /datum/hallucination/fire/proc/update_temp()
 	if(stage <= 0)
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 		if(!active)
+			// so, if you agree, i will add here the some alerts, cause if hallucination is !active
+			// its means that fake fire is extinguished
+			// so after that, we will give fake_hot_temp alert for like 10 second, f. e.
+			// and than its done, nothing else will happen, alert will be removed after 10 secs
+			// should i make it like that?
+			hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, override = TRUE) // seems like need to add timeout_override or something, so it fake alert will be removed after time
 			qdel(src)
 	else
 		hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
@@ -128,6 +135,7 @@
 
 	active = FALSE
 	hallucinator.clear_alert(ALERT_FIRE, clear_override = TRUE)
+	hallucinator.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, override = TRUE)
 	hallucinator.client?.images -= fire_overlay
 	fire_overlay = null
 	fire_clearing = TRUE
@@ -143,3 +151,4 @@
 
 /atom/movable/screen/alert/fire/fake/handle_stop_drop_roll(mob/living/roller)
 	return !!roller.apply_status_effect(/datum/status_effect/stop_drop_roll/hallucinating, hallucination_weakref)
+
