@@ -19,7 +19,12 @@
 	//if permanent, replace any existing omen
 	if(incidents == INFINITY)
 		qdel(target.GetComponent(/datum/component/omen))
-	target.AddComponent(/datum/component/omen/smite, incidents_left = incidents, on_death = CALLBACK(src, PROC_REF(on_death)), bless_fixable = incidents != INFINITY)
+	target.AddComponent( \
+		/datum/component/omen, \
+		incidents_left = incidents, \
+		on_death = CALLBACK(src, PROC_REF(on_death)), \
+		bless_fixable = incidents != INFINITY, \
+	)
 	if(silent)
 		return
 	to_chat(target, span_warning("You get a bad feeling..."))
