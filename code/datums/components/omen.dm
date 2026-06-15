@@ -177,7 +177,7 @@
 /datum/component/omen/proc/check_break_zap(obj/machinery/light/evil_light, was_ok)
 	SIGNAL_HANDLER
 
-	if(was_ok && !HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) && roll_for_accident(10))
+	if(was_ok && !HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) && roll_for_accident(25))
 		evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it breaks!"))
 		light_zap(evil_light)
 		consume_omen()
@@ -188,7 +188,7 @@
 /datum/component/omen/proc/check_toggle_zap(obj/machinery/light/evil_light, new_status)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) || !roll_for_accident(20))
+	if(HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) || !roll_for_accident(10))
 		return
 
 	evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it turns [new_status ? "on" : "off"]!"))
