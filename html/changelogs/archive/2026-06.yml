@@ -342,6 +342,9 @@
   CabinetOnFire:
   - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
       a regular list
+  FalloutFalcon:
+  - bugfix: Clients who sit in the lobby after pregame will no longer have there ambience
+      disabled till they reconnect
   Ghommie:
   - bugfix: You no longer waddle when buckled to something.
   Melbert:
@@ -360,6 +363,8 @@
       and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
   lelandkemble:
   - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
+  - bugfix: '"fixed" a runtime with gas mask filters'
   remove32:
   - bugfix: statpanel uses year offset
 2026-06-15:
