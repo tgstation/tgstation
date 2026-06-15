@@ -14,7 +14,7 @@
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
-	if(circuit.obj_flags & EMAGGED)
+	if(circuit && circuit.obj_flags & EMAGGED)
 		set_locked(FALSE)
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
