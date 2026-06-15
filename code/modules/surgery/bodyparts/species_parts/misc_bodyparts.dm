@@ -434,6 +434,7 @@
 	limb_id = BODYPART_ID_BONE
 	// These are always disabled
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/head/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -442,6 +443,7 @@
 /obj/item/bodypart/chest/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/chest/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -460,6 +462,7 @@
 /obj/item/bodypart/arm/left/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/arm/left/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -468,6 +471,7 @@
 /obj/item/bodypart/arm/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/arm/right/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -476,6 +480,7 @@
 /obj/item/bodypart/leg/left/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/leg/left/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
@@ -484,6 +489,7 @@
 /obj/item/bodypart/leg/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+	bodypart_disabled = TRUE
 
 /obj/item/bodypart/leg/right/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
