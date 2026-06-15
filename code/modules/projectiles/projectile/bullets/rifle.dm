@@ -139,7 +139,7 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 50 //if someone gets this they deserve to twotap with it, metal H2 is that rough to make.
+	damage = 40 //if someone gets this they deserve to twotap with it, metal H2 is that rough to make.
 	speed = 2
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
