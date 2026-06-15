@@ -1,0 +1,2 @@
+output_name = "carpet_polite_green"
+template = "bitmask/diagonal_32x32.toml"

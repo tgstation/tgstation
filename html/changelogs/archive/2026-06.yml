@@ -362,3 +362,6 @@
   - bugfix: fixed a runtime in pathfinding
   remove32:
   - bugfix: statpanel uses year offset
+2026-06-15:
+  lelandkemble:
+  - bugfix: fixed a runtime when breaking a moneybot without money

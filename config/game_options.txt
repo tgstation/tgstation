@@ -89,7 +89,7 @@ STATION_GOAL_BUDGET 1
 ## If TRUE / 1, station is raised to blue alert at roundstart.
 ## If FALSE / 0, station remains at green alert.
 ## Roundstart command report and greendshift announcements are unaffected.
-ROUNDSTART_BLUE_ALERT 1
+ROUNDSTART_BLUE_ALERT 0
 
 ## GAME MODES ###
 
@@ -370,15 +370,15 @@ SILICON_MAX_LAW_AMOUNT 12
 ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
-ROUNDSTART_RACES felinid
-ROUNDSTART_RACES lizard
-#ROUNDSTART_RACES fly
-ROUNDSTART_RACES moth
-ROUNDSTART_RACES plasmaman
-#ROUNDSTART_RACES shadow
+#ROUNDSTART_RACES felinid
+#ROUNDSTART_RACES lizard
+ROUNDSTART_RACES fly
+#ROUNDSTART_RACES moth
+#ROUNDSTART_RACES plasmaman
+ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
-ROUNDSTART_RACES ethereal
+#ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
 #ROUNDSTART_RACES snail
@@ -390,7 +390,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES ghost
 
 ## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
-#ROUNDSTART_RACES android
+ROUNDSTART_RACES android
 #ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------

@@ -349,7 +349,9 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
               </Box>
 
               <Box mt={1}>
-                <Section title="Lore">
+                <Section title="Roleplay Standards & Lore">
+                  {' '}
+                  {/* IRIDIUM EDIT */}
                   <BlockQuote>
                     {currentSpecies.lore.map((text, index) => (
                       <Box key={index} maxWidth="100%">

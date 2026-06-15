@@ -1,5 +1,10 @@
 ###Files and folders specified here will never be tracked.
 
+/code/modules/mob/living/carbon/human/species_types/android.dm
+/code/modules/mob/living/carbon/human/species_types/flypeople.dm
+/code/modules/mob/living/carbon/human/species_types/human.dm
+/code/modules/mob/living/carbon/human/species_types/shadowpeople.dm
+
 # Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
 /config/dev_overrides.txt
 /config/dev_preferences.json

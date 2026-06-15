@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings
 	var/real_name
+
 	///All mutations are from now on here
 	var/list/mutations
 	var/mob/living/holder
@@ -83,6 +84,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_features = unique_features
 	new_dna.features = features.Copy()
 	new_dna.real_name = real_name
+	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION
+	new_dna.mutant_bodyparts = LAZYCOPY(mutant_bodyparts)
+	new_dna.body_markings = body_markings.Copy()
+	new_dna.update_body_size()
+	//NOVA EDIT ADDITION END
 	if(transfer_flags & COPY_DNA_SE)
 		new_dna.mutation_index = mutation_index
 		new_dna.default_mutation_genes = default_mutation_genes
@@ -93,10 +99,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			as_carbon.set_blood_type(blood_type)
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.holder.set_species(species.type, icon_update = FALSE)
+		// new_dna.holder.set_species(species.type, icon_update = 0) // NOVA EDIT REMOVAL
+		new_dna.species.copy_properties_from(species) // OCULIS EDIT ADDITION
 	else
 		new_dna.blood_type = blood_type
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.species = new species.type
+			new_dna.species.copy_properties_from(species) // OCULIS EDIT ADDITION
 	if(transfer_flags & COPY_DNA_MUTATIONS && holder?.can_mutate())
 		// Mutations aren't gc managed, but they still aren't templates
 		// Let's do a proper copy
@@ -346,7 +355,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				features[feature] = new_features[feature]
 
 		features[FEATURE_MUTANT_COLOR] = "#[random_color()]"
+		body_markings = species.get_random_body_markings(features) // NOVA EDIT ADDITION
 
+	mutant_bodyparts = species.get_mutant_bodyparts(features, existing_mutant_bodyparts = randomize_features ? list() : mutant_bodyparts) // NOVA EDIT ADDITION
 	update_dna_identity()
 
 /datum/dna/stored //subtype used by brain mob's stored_dna and the crew manifest
@@ -380,7 +391,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE)
+/mob/living/
+
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE, list/override_features, list/override_mutantparts)
+// IRIDIUM EDIT: /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE, list/override_features, list/override_mutantparts, list/override_markings)
+// NOVA EDIT CHANGE - ORIGINAL: /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE)
 	if(QDELETED(src))
 		CRASH("You're trying to change your species post deletion, this is a recipe for madness")
 	if(isnull(mrace))
@@ -405,6 +420,32 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if (old_species.properly_gained)
 		old_species.on_species_loss(src, new_race, pref_load)
+
+	// NOVA EDIT ADDITION START - BODYPARTS AND FEATURES
+	if(LAZYLEN(override_mutantparts))
+		for(var/feature in dna.mutant_bodyparts)
+			override_mutantparts[feature] = dna.mutant_bodyparts[feature]
+		dna.mutant_bodyparts = override_mutantparts
+
+	if(LAZYLEN(override_markings))
+		for(var/feature in dna.body_markings)
+			override_markings[feature] = dna.body_markings[feature]
+		dna.body_markings = override_markings
+
+	if(LAZYLEN(override_features))
+		for(var/feature in dna.features)
+			override_features[feature] = dna.features[feature]
+		dna.features = override_features
+
+	if(!dna.species.allow_customizable_dna_features) // for species where we do not want to carry anything like this over
+		dna.mutant_bodyparts = dna.species.get_mutant_bodyparts(dna.features)
+		dna.body_markings = list()
+	else
+		apply_customizable_dna_features_to_species()
+	dna.unique_features = dna.generate_unique_features()
+
+	dna.update_body_size()
+	// NOVA EDIT ADDITION END
 
 	dna.species.on_species_gain(src, old_species, pref_load, icon_update, replace_missing)
 	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")

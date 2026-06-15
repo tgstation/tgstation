@@ -1,3 +1,15 @@
+## Project Iridium
+
+Project Iridium is an unfinished fork of /tg/station.
+
+[Guide for features and maintenance](code\zz_modules_iridium\feature_guide.md)
+
+**Contributions from:**
+
+- [Oculis Station](https://github.com/Monkestation/OculisStation)
+- [Iris Station (archived)](https://github.com/IrisSS13/IrisStation)
+- [Nova Sector](https://github.com/NovaSector/NovaSector)
+
 ## /tg/station codebase
 
 [![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
