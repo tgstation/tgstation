@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "If your gun is empty, and you are on combat mode, and you are adjacent to someone, and you click on them: you will perform a gun bash rather than just dry firing."

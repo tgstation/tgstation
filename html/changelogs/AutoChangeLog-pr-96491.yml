@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "baby stoats can now become adults"
-  - rscadd: "baby stoats are added to the spawn pool of maints, (the overall chance of running into a stoat whether adult/baby remains the same)"
