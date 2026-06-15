@@ -4,7 +4,7 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command_locked"
 	time_to_unscrew = 6 SECONDS
-	var/locked = TRUE
+	var/locked = FALSE
 	var/lock_timer
 
 /obj/machinery/computer/upload/Initialize(mapload)
@@ -14,13 +14,17 @@
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
-	if(circuit && circuit.obj_flags & EMAGGED)
-		set_locked(FALSE)
+	if(isnull(circuit) || circuit.obj_flags & EMAGGED)
+		return
+
+	set_locked(TRUE)
+
 
 /obj/machinery/computer/upload/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (circuit.obj_flags & EMAGGED)
 		return FALSE
 	circuit.obj_flags |= EMAGGED
+	circuit.req_access.Cut()
 	circuit.req_one_access.Cut()
 
 	set_locked(FALSE, user)
@@ -28,8 +32,13 @@
 		balloon_alert(user, "access restrictions removed!")
 	return TRUE
 
+/obj/machinery/computer/upload/proc/should_have_lock()
+	return length(circuit.req_access) && length(circuit.req_one_access)
+
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
 	if(locked == locked_state)
+		return
+	if(!should_have_lock())
 		return
 	locked  = !!locked_state
 	icon_screen = locked ? "command_locked" : "command"
@@ -38,7 +47,7 @@
 		balloon_alert(user, locked ? "console locked!" : "console unlocked!")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/card/id))
+	if(istype(O, /obj/item/card/id) && should_have_lock())
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(circuit.obj_flags & EMAGGED)
@@ -134,3 +143,10 @@
 	if(B.scrambledcodes || B.emagged)
 		return FALSE
 	return ..()
+
+
+/obj/machinery/computer/upload/ai/no_lock
+	circuit = /obj/item/circuitboard/computer/aiupload/no_lock
+
+/obj/machinery/computer/upload/borg/no_lock
+	circuit = /obj/item/circuitboard/computer/borgupload
