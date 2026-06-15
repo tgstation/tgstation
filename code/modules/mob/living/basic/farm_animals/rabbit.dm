@@ -101,7 +101,6 @@
 	)
 
 /datum/ai_controller/basic_controller/rabbit/easter
-	behavior_tree_json = "rabbit_easter.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(
@@ -126,7 +125,6 @@
 	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
-	behavior_tree_json = "rabbit_easter_space.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(
