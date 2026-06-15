@@ -149,7 +149,7 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to prevent the nuclear operative leader from getting the war declaration item
 #DISABLE_WAROPS
 
-## Uncomment to disable Heretic ascension
+## Uncomment to disable Heretic ascension, will give the heretic 5 knowledge points of compensation if enabled.
 #DISABLE_ASCENSION
 
 ## Uncomment to enable dynamic ruleset config file.
