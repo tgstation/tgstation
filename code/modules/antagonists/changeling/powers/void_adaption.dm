@@ -7,7 +7,7 @@
 	category = "utility"
 	button_icon_state = "void_adaption"
 	owner_has_control = FALSE
-	dna_cost = 2
+	dna_cost = CHANGELING_POWER_INNATE
 
 	/// Traits we apply to become immune to the environment
 	var/static/list/gain_traits = list(TRAIT_NO_BREATHLESS_DAMAGE, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE)
