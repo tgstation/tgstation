@@ -368,6 +368,10 @@
   remove32:
   - bugfix: statpanel uses year offset
 2026-06-15:
+  Ben10Omintrix:
+  - bugfix: baby stoats can now become adults
+  - rscadd: baby stoats are added to the spawn pool of maints, (the overall chance
+      of running into a stoat whether adult/baby remains the same)
   CabinetOnFire:
   - bugfix: Fixes a hard-del and signal override with sound tokens
   LemonInTheDark:
@@ -375,3 +379,8 @@
       only one map is votable.
   Melbert:
   - qol: Gizmo sends a message when turning on and off
+  - qol: 'If your gun is empty, and you are on combat mode, and you are adjacent to
+      someone, and you click on them: you will perform a gun bash rather than just
+      dry firing.'
+  lelandkemble:
+  - bugfix: fixed a runtime when fishing up no fish
