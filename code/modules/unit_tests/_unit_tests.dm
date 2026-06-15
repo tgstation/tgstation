@@ -39,7 +39,7 @@
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
+#define TEST_FOCUS(test_path) ##test_path { test_flags = UNIT_TEST_FOCUS; }
 
 /// Run the test provided within the parentheses run_count times
 /// Useful for debugging flaky tests that only fail sometimes
@@ -66,6 +66,16 @@
  * Keep in mind tho that create and destroy will absolutely break the test platform, anything that relies on its shape cannot come after it.
  */
 #define TEST_AFTER_CREATE_AND_DESTROY INFINITY
+
+// Unit test bitflags
+
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+#define UNIT_TEST_FOCUS (1<<0)
+/// This unit test only runs on specially designated unit test maps (Should only ever be one).
+#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+
+#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
+#define UNIT_TEST_MAP_TEST (NONE)
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -212,6 +222,7 @@
 #include "keybinding_init.dm"
 #include "kinetic_crusher.dm"
 #include "knockoff_component.dm"
+#include "language_key_conflicts.dm"
 #include "language_transfer.dm"
 #include "leash.dm"
 #include "lesserform.dm"

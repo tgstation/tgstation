@@ -1097,7 +1097,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		/obj/structure,
 		/obj/item/radio/intercom,
 		/obj/item/modular_computer,
-		/mob/living/simple_animal/bot,
+		/mob/living/basic/bot,
 		/mob/living/silicon,
 	)
 

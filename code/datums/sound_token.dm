@@ -53,6 +53,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
 
+
 /datum/sound_token/Destroy(force, ...)
 	for(var/listener in listeners)
 		remove_listener(listener)
@@ -89,7 +90,8 @@
 
 	listeners[listener_mob] = NONE
 	listener_mob.client.sound_tokens += src
-	RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
+	if(source != listener_mob) //this is possible...yea... :/
+		RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
 	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
 	update_listener(listener_mob, FALSE)
 	return TRUE
@@ -123,7 +125,7 @@
 	if(source_turf.z != listener_turf.z)
 		should_be_muted = TRUE
 
-	var/distance = get_dist(source_turf, listener_turf)
+	var/distance = get_dist_euclidean(source_turf, listener_turf)
 	if(distance > range)
 		should_be_muted = TRUE
 		if(should_be_muted && is_muted)
@@ -195,7 +197,7 @@
 		return
 	if(player_turf.z != source_turf.z)
 		return
-	if(get_dist(source_turf, player_turf) > range)
+	if(get_dist_euclidean(source_turf, player_turf) > range)
 		return
 	add_or_update_listener(player)
 

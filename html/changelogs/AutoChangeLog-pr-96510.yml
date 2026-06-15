@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Particle weather can now be disabled in favor of old weather. !!! AMD GPU USERS NEED TO SWITCH TO OLD WEATHER TO FIX THE LAG!!!"
