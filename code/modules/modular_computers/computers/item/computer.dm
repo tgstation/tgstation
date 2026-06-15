@@ -161,7 +161,6 @@
 			voice = SStts.computer_voice
 
 /obj/item/modular_computer/LateInitialize()
-	. = ..()
 	if(SStts.tts_enabled)
 		voice = SStts.computer_voice
 
