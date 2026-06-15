@@ -56,8 +56,8 @@
 	)
 	/// Whether or not the heretic can make unlimited blades, but unable to blade break to teleport
 	var/unlimited_blades = FALSE
-	/// Whether we are allowed to ascend
-	var/feast_of_owls = FALSE
+	/// Whether we are allowed to ascend, enabled in on_gain()
+	var/feast_of_owls = TRUE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -339,6 +339,8 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
+	if(!CONFIG_GET(flag/disable_ascension))
+		feast_of_owls = FALSE
 	generate_heretic_starting_knowledge(heretic_shops[HERETIC_KNOWLEDGE_START])
 	if(!length(path_info))
 		for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))

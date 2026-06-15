@@ -149,6 +149,9 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to prevent the nuclear operative leader from getting the war declaration item
 #DISABLE_WAROPS
 
+## Uncomment to disable Heretic ascension
+#DISABLE_ASCENSION
+
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
