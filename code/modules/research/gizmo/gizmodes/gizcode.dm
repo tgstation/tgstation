@@ -234,7 +234,7 @@
 	if(!dispensed_hardmode)
 		dispensed_hardmode = TRUE
 		// Hard-mode
-		new /obj/machinery/gizmo/moo(get_turf(holder))
+		new /obj/item/gizmo/moo(get_turf(holder))
 	..()
 
 /datum/gizmodes/code_crack/tutorial/feedback(atom/movable/holder)
