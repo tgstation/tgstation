@@ -24,8 +24,10 @@
 	if (circuit.obj_flags & EMAGGED)
 		return FALSE
 	circuit.obj_flags |= EMAGGED
-	circuit.req_access.Cut()
-	circuit.req_one_access.Cut()
+	if(islist(circuit.req_access))
+		circuit.req_access.Cut()
+	if(islist(circuit.req_one_access))
+		circuit.req_one_access.Cut()
 
 	set_locked(FALSE, user)
 	if(user)
@@ -33,7 +35,9 @@
 	return TRUE
 
 /obj/machinery/computer/upload/proc/should_have_lock()
-	return length(circuit.req_access) || length(circuit.req_one_access)
+    if(!circuit)
+        return FALSE
+    return length(circuit.req_access) || length(circuit.req_one_access)
 
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
 	if(locked == locked_state)
@@ -149,4 +153,4 @@
 	circuit = /obj/item/circuitboard/computer/aiupload/no_lock
 
 /obj/machinery/computer/upload/borg/no_lock
-	circuit = /obj/item/circuitboard/computer/borgupload
+	circuit = /obj/item/circuitboard/computer/borgupload/no_lock
