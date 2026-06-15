@@ -187,19 +187,11 @@
 									"type": "sequence",
 									"children": [
 										{
-											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/validate_target_on_turf",
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 											"vars": {
-												"observer_abort": "BT_ABORT_SELF",
-												"key": "BB_WATERCAN_TARGET"
-											},
-											"child": {
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"vars": {
-													"target_key": "BB_WATERCAN_TARGET",
-													"required_dist": 1
-												}
+												"target_key": "BB_WATERCAN_TARGET",
+												"required_dist": 1
 											}
 										},
 										{
@@ -242,8 +234,8 @@
 								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 								"vars": {
 									"target_key": "BB_WATERCAN_TARGET",
-									"target_source": "/datum/target_source/oview_single_type/watering_can",
-									"targeting_strategy": "/datum/targeting_strategy/anything"
+									"targeting_strategy": "/datum/targeting_strategy/pickup_item",
+									"target_source": "/datum/target_source/oview_single_type/watering_can"
 								}
 							}
 						},

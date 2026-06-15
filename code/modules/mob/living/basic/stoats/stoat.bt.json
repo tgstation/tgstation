@@ -118,21 +118,8 @@
 					"subtype": "/datum/bt_node/subtree/find_stealable_object"
 				},
 				{
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-					"vars": {
-						"observer_abort": "BT_ABORT_SELF",
-						"cooldown_key": "BB_EAT_FOOD_COOLDOWN"
-					},
-					"child": {
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-						"vars": {
-							"target_key": "BB_TARGET_FOOD",
-							"targeting_strategy": "/datum/targeting_strategy/pickup_item",
-							"target_source": "/datum/target_source/oview_typed/from_bb_key/basic_foods"
-						}
-					}
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_food"
 				},
 				{
 					"type": "subtree",

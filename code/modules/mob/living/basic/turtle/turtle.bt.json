@@ -172,13 +172,8 @@
 					]
 				},
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-					"vars": {
-						"target_key": "BB_TARGET_FOOD",
-						"targeting_strategy": "/datum/targeting_strategy/pickup_item",
-						"target_source": "/datum/target_source/oview_typed/from_bb_key/basic_foods"
-					}
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_food"
 				}
 			]
 		},
