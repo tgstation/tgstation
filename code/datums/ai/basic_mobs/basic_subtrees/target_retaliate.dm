@@ -108,7 +108,6 @@
 	var/check_faction = FALSE
 
 /datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	if(!check_faction) // This is lame, but comeon man the polar bears kept killing each other
 		controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, TRUE)
 	. = ..()

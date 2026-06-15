@@ -1179,6 +1179,7 @@
 #include "code\datums\ai\generic_decorators\pawn_inside_mob.dm"
 #include "code\datums\ai\generic_decorators\pawn_is_restrained.dm"
 #include "code\datums\ai\generic_decorators\pawn_same_z_as_key.dm"
+#include "code\datums\ai\generic_decorators\pawn_turf_has_trait.dm"
 #include "code\datums\ai\generic_decorators\random_chance.dm"
 #include "code\datums\ai\generic_decorators\random_chance_from_key.dm"
 #include "code\datums\ai\generic_decorators\target_has_reagent.dm"
