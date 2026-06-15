@@ -56,10 +56,11 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 				"vars": {
-					"set_key": "BB_MATERIAL_STAND_TARGET",
-					"locate_path": "/obj/structure/ore_container/material_stand"
+					"target_key": "BB_MATERIAL_STAND_TARGET",
+					"target_source": "/datum/target_source/oview_single_type/ore_stand",
+					"targeting_strategy": "/datum/targeting_strategy/anything"
 				}
 			}
 		}

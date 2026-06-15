@@ -28,11 +28,12 @@
 						},
 						"child": {
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_and_set/food_or_drink/to_serve",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 							"vars": {
-								"set_key": "BB_monkey_current_served_item",
-								"locate_path": "/obj/item",
-								"search_range": 2
+								"target_key": "BB_monkey_current_served_item",
+								"target_source": "/datum/target_source/held_items_then_oview",
+								"targeting_strategy": "/datum/targeting_strategy/food_or_drink/include_drinks",
+								"vision_range": 2
 							}
 						}
 					},

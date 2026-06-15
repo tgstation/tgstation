@@ -67,10 +67,11 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_and_set",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"set_key": "BB_CLIMBED_TREE",
-						"locate_path": "/obj/structure/flora/tree"
+						"target_key": "BB_CLIMBED_TREE",
+						"target_source": "/datum/target_source/oview_single_type/flora_tree",
+						"targeting_strategy": "/datum/targeting_strategy/anything"
 					}
 				}
 			]

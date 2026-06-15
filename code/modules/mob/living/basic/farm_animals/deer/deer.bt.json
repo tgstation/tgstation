@@ -256,9 +256,11 @@
 								"children": [
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/valid_deer",
+										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 										"vars": {
-											"set_key": "BB_DEER_PLAYFRIEND"
+											"target_key": "BB_DEER_PLAYFRIEND",
+											"target_source": "/datum/target_source/oview_typed/deer_animals",
+											"targeting_strategy": "/datum/targeting_strategy/playable_deer"
 										}
 									},
 									{
@@ -294,9 +296,11 @@
 									},
 									"child": {
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/deer_tree",
+										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 										"vars": {
-											"set_key": "BB_DEER_TREE_TARGET"
+											"target_key": "BB_DEER_TREE_TARGET",
+											"target_source": "/datum/target_source/oview_single_type/flora_tree",
+											"targeting_strategy": "/datum/targeting_strategy/anything"
 										}
 									}
 								}
@@ -317,9 +321,11 @@
 								},
 								"child": {
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_grass",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
-										"set_key": "BB_DEER_GRASS_TARGET"
+										"target_key": "BB_DEER_GRASS_TARGET",
+										"target_source": "/datum/target_source/range_turfs/typecache_visible/deer_grass",
+										"targeting_strategy": "/datum/targeting_strategy/anything"
 									}
 								}
 							}
@@ -339,9 +345,11 @@
 								},
 								"child": {
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_water",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
-										"set_key": "BB_DEER_WATER_TARGET"
+										"target_key": "BB_DEER_WATER_TARGET",
+										"target_source": "/datum/target_source/range_turfs/typecache_visible/deer_water",
+										"targeting_strategy": "/datum/targeting_strategy/anything"
 									}
 								}
 							}
@@ -359,10 +367,11 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"set_key": "BB_STATIONARY_CAUSE",
-						"locate_path": "BB_STATIONARY_TARGETS"
+						"target_key": "BB_STATIONARY_CAUSE",
+						"target_source": "/datum/target_source/oview_typed/from_bb_key/stationary_targets",
+						"targeting_strategy": "/datum/targeting_strategy/anything"
 					}
 				}
 			]

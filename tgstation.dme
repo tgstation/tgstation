@@ -1180,6 +1180,7 @@
 #include "code\datums\ai\generic_decorators\pawn_has_gravity.dm"
 #include "code\datums\ai\generic_decorators\pawn_has_trait_from.dm"
 #include "code\datums\ai\generic_decorators\pawn_health_below.dm"
+#include "code\datums\ai\generic_decorators\pawn_nutrition_below.dm"
 #include "code\datums\ai\generic_decorators\pawn_inside_mob.dm"
 #include "code\datums\ai\generic_decorators\pawn_is_restrained.dm"
 #include "code\datums\ai\generic_decorators\pawn_same_z_as_key.dm"

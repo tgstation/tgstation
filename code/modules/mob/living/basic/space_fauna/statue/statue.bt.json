@@ -111,11 +111,12 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/light_fixtures",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"set_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-						"locate_path": "BB_HUNT_TARGET_LIST",
-						"search_range": 7
+						"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"target_source": "/datum/target_source/oview_typed/from_bb_key/hunt_target_list",
+						"targeting_strategy": "/datum/targeting_strategy/unbroken_light",
+						"vision_range": 7
 					}
 				}
 			]

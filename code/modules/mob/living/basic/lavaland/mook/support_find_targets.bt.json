@@ -23,10 +23,11 @@
 				"children": [
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 						"vars": {
-							"set_key": "BB_MOOK_TRIBAL_CHIEF",
-							"locate_path": "/mob/living/basic/mining/mook/worker/tribal_chief"
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
+							"target_source": "/datum/target_source/oview_single_type/tribal_chief",
+							"targeting_strategy": "/datum/targeting_strategy/anything"
 						}
 					},
 					{
@@ -50,10 +51,11 @@
 			},
 			"child": {
 				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/injured_mooks",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 				"vars": {
-					"set_key": "BB_INJURED_MOOK",
-					"locate_path": "BB_MOOK_HEAL_TARGETS"
+					"target_key": "BB_INJURED_MOOK",
+					"target_source": "/datum/target_source/oview_typed/from_bb_key/mook_heal_targets",
+					"targeting_strategy": "/datum/targeting_strategy/injured_mob"
 				}
 			}
 		}

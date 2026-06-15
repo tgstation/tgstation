@@ -79,11 +79,12 @@
 			"children": [
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_and_set/pawn_must_hold_item",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"set_key": "BB_monkey_current_give_target",
-						"locate_path": "/mob/living/carbon/human",
-						"search_range": 2
+						"target_key": "BB_monkey_current_give_target",
+						"target_source": "/datum/target_source/oview_single_type/human_while_holding",
+						"targeting_strategy": "/datum/targeting_strategy/anything",
+						"vision_range": 2
 					}
 				},
 				{

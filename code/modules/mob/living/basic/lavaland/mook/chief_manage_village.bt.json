@@ -139,10 +139,11 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/find_and_set/in_list/bonfire",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 			"vars": {
-				"set_key": "BB_MOOK_BONFIRE_TARGET",
-				"locate_path": "BB_BONFIRE_TARGETS"
+				"target_key": "BB_MOOK_BONFIRE_TARGET",
+				"target_source": "/datum/target_source/oview_typed/from_bb_key/bonfire_targets",
+				"targeting_strategy": "/datum/targeting_strategy/unlit_bonfire"
 			}
 		}
 	]

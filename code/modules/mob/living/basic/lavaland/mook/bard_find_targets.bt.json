@@ -23,10 +23,11 @@
 				"children": [
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/find_and_set/find_chief",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 						"vars": {
-							"set_key": "BB_MOOK_TRIBAL_CHIEF",
-							"locate_path": "/mob/living/basic/mining/mook/worker/tribal_chief"
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
+							"target_source": "/datum/target_source/oview_single_type/tribal_chief",
+							"targeting_strategy": "/datum/targeting_strategy/anything"
 						}
 					},
 					{
@@ -43,12 +44,12 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/find_and_set/conscious_person_near_anchor",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 			"vars": {
-				"set_key": "BB_MOOK_MUSIC_AUDIENCE",
-				"time_between_perform": "1 SECONDS",
-				"anchor_key": "BB_HOME_VILLAGE",
-				"max_distance_key": "BB_MAXIMUM_DISTANCE_TO_VILLAGE"
+				"target_key": "BB_MOOK_MUSIC_AUDIENCE",
+				"target_source": "/datum/target_source/near_village_humans",
+				"targeting_strategy": "/datum/targeting_strategy/conscious_human",
+				"time_between_perform": "1 SECONDS"
 			}
 		}
 	]
