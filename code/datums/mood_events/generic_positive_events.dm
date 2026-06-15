@@ -304,7 +304,7 @@
 	event_flags = MOOD_EVENT_SPIRITUAL
 
 /datum/mood_event/sacrifice_good/add_effects(...)
-	if(owner.mind?.hold_role && GLOB.deity)
+	if(owner.mind?.holy_role && GLOB.deity)
 		description = "[GLOB.deity] is pleased with this offering!"
 
 /datum/mood_event/artok
