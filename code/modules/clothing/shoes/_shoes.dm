@@ -43,20 +43,20 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/shoes/click_alt(mob/user)
-    return ..()
+	return ..()
 
 /obj/item/clothing/shoes/click_alt_secondary(mob/user)
-    if(alternate_worn_layer == UNDER_UNIFORM_LAYER)
-        alternate_worn_layer = NONE
-    else
-        alternate_worn_layer = UNDER_UNIFORM_LAYER
+	if(alternate_worn_layer == UNDER_UNIFORM_LAYER)
+		alternate_worn_layer = NONE
+	else
+		alternate_worn_layer = UNDER_UNIFORM_LAYER
 
-    if(istype(loc, /mob/living))
-        var/mob/living/L = loc
-        L.update_clothing(ITEM_SLOT_FEET)
+	if(istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.update_clothing(ITEM_SLOT_FEET)
 
-    balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
-    return CLICK_ACTION_SUCCESS
+	balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
+	return CLICK_ACTION_SUCCESS
 
 /datum/armor/clothing_shoes
 	bio = 50
