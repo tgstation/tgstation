@@ -25,7 +25,7 @@
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	if(maximum_distance && get_dist(controller.pawn, target) >= maximum_distance)
+	if(maximum_distance && get_dist(controller.pawn, target) > maximum_distance)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(require_adjacency && !controller.pawn.Adjacent(target))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
