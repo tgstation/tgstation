@@ -374,6 +374,21 @@
       of running into a stoat whether adult/baby remains the same)
   CabinetOnFire:
   - bugfix: Fixes a hard-del and signal override with sound tokens
+  Iamgoofball:
+  - rscadd: Added support for Radio TTS. You will now hear players over the radio
+      via the TTS system.
+  - rscadd: Configure this in Game Options under the Sound tab.
+  - sound: Re-did blips to be significantly nicer sounding and way better.
+  - sound: Alien speech you don't understand now comes through as Blips. If you have
+      TTS entirely disabled, you won't hear blips.
+  - sound: The Tram and Computers now utilize the TTS system. Configs have been added
+      to set a consistent voice.
+  - sound: TTS audio now utilizes 3D audio; you can now walk away from people saying
+      stupid shit and it gets quieter.
+  - sound: Blips also now include more customization options, and a dedicated Blips
+      preview button by clicking the leaf icon.
+  - rscdel: The configuration to disable TTS on whispering has been removed, as it
+      is no longer needed and also interferes with radio TTS functioning properly.
   LemonInTheDark:
   - bugfix: End of round mapvotes will now properly default to the only option if
       only one map is votable.
@@ -382,5 +397,10 @@
   - qol: 'If your gun is empty, and you are on combat mode, and you are adjacent to
       someone, and you click on them: you will perform a gun bash rather than just
       dry firing.'
+  SmArtKar:
+  - bugfix: Fixed weather on multi-z maps
+  - qol: Particle weather can now be disabled in favor of old weather. !!! AMD GPU
+      USERS NEED TO SWITCH TO OLD WEATHER TO FIX THE LAG!!!
+  - bugfix: Fixed recovered crew showing up as uncategorized antags
   lelandkemble:
   - bugfix: fixed a runtime when fishing up no fish
