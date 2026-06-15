@@ -8,7 +8,7 @@
 		if(istype(candidate, single_typepath))
 			candidates += candidate
 	if(candidates.len)
-		candidates = reverse(candidates)
+		candidates = reverse_range(candidates)
 	return candidates
 
 /datum/target_source/oview_single_type/carbon_mob

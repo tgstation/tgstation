@@ -13,7 +13,7 @@
 /datum/target_source/oview/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/list/candidates = oview(range, pawn)
 	if(candidates.len)
-		candidates = reverse(candidates)
+		candidates = reverse_range(candidates)
 	return candidates
 
 /// Gathers nearby atoms via oview(), pre-filtered by a typecache
@@ -26,7 +26,7 @@
 		CRASH("[pawn] using [controller] ran [src] with no typecache.")
 	var/list/candidates = typecache_filter_list(oview(range, pawn), typecache)
 	if(candidates.len)
-		candidates = reverse(candidates)
+		candidates = reverse_range(candidates)
 	return candidates
 
 /// Gathers nearby atoms via oview(), pre-filtered by a typecache stored in a blackboard key.
@@ -43,7 +43,7 @@
 	else
 		candidates = typecache_filter_list(oview(range, pawn), bb_typecache)
 	if(candidates.len)
-		candidates = reverse(candidates)
+		candidates = reverse_range(candidates)
 	return candidates
 
 /// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level.
@@ -57,7 +57,7 @@
 			if(can_see(pawn, hostile_machine, range))
 				candidates += hostile_machine
 	if(candidates.len)
-		candidates = reverse(candidates)
+		candidates = reverse_range(candidates)
 	return candidates
 
 /// Gathers turfs in range via RANGE_TURFS().

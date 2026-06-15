@@ -5,5 +5,5 @@
 	var/list/candidates = (pawn.held_items || list())
 	var/list/nearby = oview(range, pawn)
 	if(nearby.len)
-		candidates += reverse(nearby)
+		candidates += reverse_range(nearby)
 	return candidates

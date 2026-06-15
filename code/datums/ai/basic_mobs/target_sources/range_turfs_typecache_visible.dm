@@ -11,7 +11,7 @@
 		if(can_see(pawn, candidate, range))
 			valid += candidate
 	if(valid.len)
-		valid = reverse(valid)
+		valid = reverse_range(valid)
 	return valid
 
 /datum/target_source/range_turfs/typecache_visible/deer_grass
