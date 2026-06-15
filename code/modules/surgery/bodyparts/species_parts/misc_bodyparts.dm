@@ -206,12 +206,12 @@
 /obj/item/bodypart/leg/left/zombie/infectious
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
-	speed_modifier = 0.8 //braaaaains
+	speed_modifier = 0.5 //braaaaains
 
 /obj/item/bodypart/leg/right/zombie/infectious
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
-	speed_modifier = 0.8 //braaaaains
+	speed_modifier = 0.5 //braaaaains
 
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
