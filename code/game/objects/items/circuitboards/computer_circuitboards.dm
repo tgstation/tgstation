@@ -14,6 +14,7 @@
 	name = "AI Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/ai
+	req_one_access = list(ACCESS_AI_UPLOAD)
 
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
