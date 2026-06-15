@@ -39,7 +39,7 @@
 		if(TARGET_KEEP_IF_SET)
 			return !isnull(current_target)
 		if(TARGET_REVALIDATE)
-			return !isnull(current_target) && strategy.is_valid_target(controller.pawn, current_target, vision_range)
+			return !isnull(current_target) && strategy.is_valid_target(controller.pawn, current_target, vision_range, controller)
 	return FALSE
 
 ///Resolves the targeting strategy for this behavior
@@ -100,7 +100,7 @@
 	var/mob/living/pawn = controller.pawn
 	var/list/filtered = list()
 	for(var/atom/candidate as anything in candidates)
-		if(!strategy.is_valid_target(pawn, candidate))
+		if(!strategy.is_valid_target(pawn, candidate, vision_range, controller))
 			continue
 		filtered += candidate
 	return filtered

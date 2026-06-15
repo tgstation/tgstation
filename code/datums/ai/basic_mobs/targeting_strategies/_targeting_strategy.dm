@@ -3,7 +3,7 @@
 /datum/targeting_strategy
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targeting_strategy/proc/is_valid_target(mob/living/living_mob, atom/target, vision_range)
+/datum/targeting_strategy/proc/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	return
 
 /// Returns an atom the target might be hiding inside of, or null if none.
@@ -13,17 +13,17 @@
 /// Returns TRUE if we should keep tracking an existing target when no new candidates are visible.
 /// Called with the loss range (typically larger than vision_range).
 /// Default delegates to is_valid_target so all normal checks still apply.
-/datum/targeting_strategy/proc/can_keep_target(mob/living/living_mob, atom/target, range)
-	return is_valid_target(living_mob, target, range)
+/datum/targeting_strategy/proc/can_keep_target(mob/living/living_mob, atom/target, range, datum/ai_controller/controller = null)
+	return is_valid_target(living_mob, target, range, controller)
 
 /// Simply always returns true if you have a target, so only use this if you're pre-checking the targets somewhere else
 /datum/targeting_strategy/anything
 
-/datum/targeting_strategy/anything/is_valid_target(mob/living/living_mob, atom/target, vision_range)
+/datum/targeting_strategy/anything/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	return !!target
 
 ///A very simple targeting strategy that checks that the target is a valid fishing spot.
 /datum/targeting_strategy/fishing
 
-/datum/targeting_strategy/fishing/is_valid_target(mob/living/living_mob, atom/target, vision_range)
+/datum/targeting_strategy/fishing/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	return HAS_TRAIT(target, TRAIT_FISHING_SPOT)

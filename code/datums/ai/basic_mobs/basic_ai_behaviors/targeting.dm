@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/current_priority = priority_strategy ? priority_strategy.get_target_priority(controller, current_target) : 0
 	var/list/filtered = list()
 	for(var/atom/candidate as anything in candidates)
-		if(!strategy.is_valid_target(pawn, candidate))
+		if(!strategy.is_valid_target(pawn, candidate, vision_range, controller))
 			continue
 		if(priority_strategy && priority_strategy.get_target_priority(controller, candidate) < current_priority)
 			continue
