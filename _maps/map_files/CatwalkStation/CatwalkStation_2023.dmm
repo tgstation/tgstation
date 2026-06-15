@@ -46783,7 +46783,7 @@
 /turf/open/floor/plating,
 /area/station/ai/satellite/maintenance/storage)
 "mtC" = (
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/closet/crate/goldcrate/stocked,
 /turf/open/floor/glass/reinforced,
 /area/station/command/vault)
 "mtM" = (
