@@ -339,6 +339,9 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
+	if(CONFIG_GET(flag/disable_ascension))
+		feast_of_owls = TRUE
+		adjust_knowledge_points(5)
 	generate_heretic_starting_knowledge(heretic_shops[HERETIC_KNOWLEDGE_START])
 	if(!length(path_info))
 		for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
