@@ -21,8 +21,3 @@
 /// forgive a nearby mob. Used by animals that pick fights for no reason.
 /datum/bt_node/subtree/capricious_pick_target
 	behavior_tree_json = "capricious_pick_target.bt.json"
-
-/// Cowardly brawler combat: keep our distance from attackers, fleeing if they get close but
-/// turning to bite if they hang back just out of reach.
-/datum/bt_node/subtree/skittish_brawler_combat
-	behavior_tree_json = "skittish_brawler_combat.bt.json"

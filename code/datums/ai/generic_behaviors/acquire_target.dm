@@ -11,7 +11,7 @@
 	/// How to behave when a target is already set. See TARGET_* defines in ai.dm.
 	var/revalidation_mode = TARGET_REVALIDATE
 	/// Extended range for retaining an existing target when candidates run dry. 0 = disabled.
-	var/target_loss_distance = 10
+	var/target_loss_distance = 12
 	/// Optional blackboard key holding a lazylist of atoms to skip while filtering candidates.
 	var/ignore_list_key
 	/// If TRUE, only candidates the controller can path to are eligible; unreachable ones are reported via note_unreachable_target.
