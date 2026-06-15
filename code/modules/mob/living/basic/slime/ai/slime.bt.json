@@ -133,8 +133,19 @@
 							}
 						},
 						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_slime_food"
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/slime_wants_to_eat",
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"target_source": "/datum/target_source/oview",
+									"targeting_strategy": "/datum/targeting_strategy/slime_food",
+									"vision_range": 7,
+									"time_between_perform": "7.5 SECONDS"
+								}
+							}
 						}
 					]
 				},

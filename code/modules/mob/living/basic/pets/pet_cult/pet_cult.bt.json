@@ -192,7 +192,14 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_friendly_cultist"
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_FRIENDLY_CULTIST",
+								"target_source": "/datum/target_source/oview_single_type/carbon_mob",
+								"targeting_strategy": "/datum/targeting_strategy/befriendable_cultist",
+								"vision_range": 9,
+								"time_between_perform": "5 SECONDS"
+							}
 						},
 						{
 							"type": "leaf",

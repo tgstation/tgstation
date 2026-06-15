@@ -32,44 +32,21 @@
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /**
- * Searches for a living mob the slime can feed on and sets BB_CURRENT_TARGET.
- * Only runs when the slime is hungry, rabid, or already has a combat target.
+ * Gate for slime food searching: passes only when the slime is unbuckled and is
+ * hungry, rabid, or already has a combat target. Wrap the food acquire_target leaf
+ * (target_source = oview, targeting_strategy = slime_food) with this.
  */
-/datum/bt_node/ai_behavior/find_slime_food
-	time_between_perform = 7.5 SECONDS
+/datum/bt_node/decorator/slime_wants_to_eat
 
-/datum/bt_node/ai_behavior/find_slime_food/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/decorator/slime_wants_to_eat/check_condition(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(!istype(slime_pawn) || slime_pawn.buckled)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_NONE && !controller.blackboard[BB_SLIME_RABID] && isnull(controller.blackboard[BB_CURRENT_TARGET]))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/static/list/slime_faction
-	if(isnull(slime_faction))
-		slime_faction = string_list(list(FACTION_SLIME))
-
-	for(var/mob/living/candidate in oview(7, slime_pawn))
-		if(FAST_FACTION_CHECK(slime_faction, candidate.get_faction(), slime_pawn.allies, candidate.allies, FALSE))
-			continue
-		if(!slime_pawn.can_feed_on(candidate, check_adjacent = FALSE))
-			continue
-		if(!valid_slime_target(slime_pawn, candidate, controller, seconds_per_tick))
-			continue
-		controller.set_blackboard_key(BB_CURRENT_TARGET, candidate)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-/datum/bt_node/ai_behavior/find_slime_food/proc/valid_slime_target(mob/living/basic/slime/slime_pawn, mob/living/candidate, datum/ai_controller/controller, seconds_per_tick)
-	if(candidate == controller.blackboard[BB_CURRENT_TARGET])
-		return can_see(slime_pawn, candidate, 7)
-	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_STARVING && controller.blackboard[BB_SLIME_RABID])
-		return can_see(slime_pawn, candidate, 7)
-	if(islarva(candidate) || ismonkey(candidate) || ishuman(candidate) || (isalienadult(candidate) && SPT_PROB(2.5, seconds_per_tick)))
-		return can_see(slime_pawn, candidate, 7)
-	return FALSE
+		return FALSE
+	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] != SLIME_HUNGER_NONE)
+		return TRUE
+	if(controller.blackboard[BB_SLIME_RABID])
+		return TRUE
+	return !isnull(controller.blackboard[BB_CURRENT_TARGET])
 
 
 ///im about to eat this guy up

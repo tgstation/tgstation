@@ -1,23 +1,5 @@
 
 /**
- * Finds a nearby cultist that isn't already befriended and sets BB_FRIENDLY_CULTIST.
- * Uses a cooldown via time_between_perform.
- */
-/datum/bt_node/ai_behavior/find_friendly_cultist
-	time_between_perform = 5 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/bt_node/ai_behavior/find_friendly_cultist/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-	for(var/mob/living/carbon/possible_cultist in oview(9, living_pawn))
-		if(!IS_CULTIST(possible_cultist) || living_pawn.has_ally(possible_cultist))
-			continue
-		controller.set_blackboard_key(BB_FRIENDLY_CULTIST, possible_cultist)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-
-/**
  * Checks whether the cult has enough souls to revive and finds a raise_dead rune
  * with a dead cultist on it. Sets BB_OCCUPIED_RUNE.
  */

@@ -61,3 +61,6 @@
 
 /datum/target_source/oview_single_type/donut
 	single_typepath = /obj/item/food/donut
+
+/datum/target_source/oview_single_type/hydroponics
+	single_typepath = /obj/machinery/hydroponics

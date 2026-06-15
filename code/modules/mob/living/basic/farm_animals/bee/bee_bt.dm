@@ -76,26 +76,6 @@
 	exit_chance = 5
 
 
-/// Finds a hydroponics tray that can be pollinated. Sets BB_TARGET_HYDRO.
-/datum/bt_node/ai_behavior/find_pollination_target
-	time_between_perform = 10 SECONDS
-
-/datum/bt_node/ai_behavior/find_pollination_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/bee_pawn = controller.pawn
-	if(!isturf(bee_pawn.loc))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(!prob(85))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	for(var/obj/machinery/hydroponics/tray in oview(10, bee_pawn))
-		if(!tray.can_bee_pollinate())
-			continue
-		if(!can_see(bee_pawn, tray, 10))
-			continue
-		controller.set_blackboard_key(BB_TARGET_HYDRO, tray)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-
 /// Pollinates the hydro tray at BB_TARGET_HYDRO. Must be adjacent.
 /datum/bt_node/ai_behavior/pollinate_hydro
 	time_between_perform = 5 SECONDS

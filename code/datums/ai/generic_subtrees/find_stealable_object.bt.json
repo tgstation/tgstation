@@ -66,9 +66,11 @@
 			"children": [
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_stealable",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 					"vars": {
-						"target_key": "BB_ITEM_TO_STEAL"
+						"target_key": "BB_ITEM_TO_STEAL",
+						"target_source": "/datum/target_source/oview",
+						"targeting_strategy": "/datum/targeting_strategy/stealable_item"
 					}
 				},
 				{
