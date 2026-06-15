@@ -308,8 +308,10 @@
 	..()
 
 /datum/gizmodes/code_crack/moo/punishment(atom/movable/holder)
-	var/obj/item/grenade/clusterbuster/syndieminibomb/payback = new(get_turf(holder))
-	payback.arm_grenade(delayoverride = 0.2 SECONDS)
+	var/obj/item/grenade/syndieminibomb/punishment = new(get_turf(holder))
+	punishment.arm_grenade(null, 5 SECONDS)
+	// We can't allow the gizmo to stay after exploding
+	qdel(holder)
 
 #undef MAX_CODEGEN_RETRY_ATTEMPTS
 #undef DIGIT_COUNT
