@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
-	icon_screen = "command_locked"
+	icon_screen = "command"
 	time_to_unscrew = 6 SECONDS
 	var/locked = FALSE
 	var/lock_timer
@@ -33,7 +33,7 @@
 	return TRUE
 
 /obj/machinery/computer/upload/proc/should_have_lock()
-	return length(circuit.req_access) && length(circuit.req_one_access)
+	return length(circuit.req_access) || length(circuit.req_one_access)
 
 /obj/machinery/computer/upload/proc/set_locked(locked_state = TRUE, mob/user)
 	if(locked == locked_state)

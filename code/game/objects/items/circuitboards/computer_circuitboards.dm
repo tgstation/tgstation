@@ -23,6 +23,7 @@
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	req_one_access = list(ACCESS_AI_UPLOAD)
 	build_path = /obj/machinery/computer/upload/borg
 
 /obj/item/circuitboard/computer/borgupload/no_lock
