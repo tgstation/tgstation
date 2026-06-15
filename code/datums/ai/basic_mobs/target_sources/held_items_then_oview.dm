@@ -2,4 +2,8 @@
 /datum/target_source/held_items_then_oview
 
 /datum/target_source/held_items_then_oview/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	return (pawn.held_items || list()) + oview(range, pawn)
+	var/list/candidates = (pawn.held_items || list())
+	var/list/nearby = oview(range, pawn)
+	if(nearby.len)
+		candidates += reverse(nearby)
+	return candidates

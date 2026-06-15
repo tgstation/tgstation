@@ -2,6 +2,9 @@
 /datum/targeting_strategy/legged_conscious_human
 
 /datum/targeting_strategy/legged_conscious_human/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/mob/living/carbon/human/candidate = target
 	if(!istype(candidate) || candidate.stat != CONSCIOUS)
 		return FALSE

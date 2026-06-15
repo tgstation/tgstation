@@ -2,6 +2,9 @@
 /datum/targeting_strategy/food_or_drink
 
 /datum/targeting_strategy/food_or_drink/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/find_drinks = controller?.blackboard[BB_IGNORE_DRINKS]
 	return _is_food(target) || (find_drinks && _is_drink(target))
 
@@ -21,4 +24,7 @@
 /datum/targeting_strategy/food_or_drink/include_drinks
 
 /datum/targeting_strategy/food_or_drink/include_drinks/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
 	return _is_food(target) || _is_drink(target)

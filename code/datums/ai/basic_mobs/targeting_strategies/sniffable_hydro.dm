@@ -2,6 +2,9 @@
 /datum/targeting_strategy/sniffable_hydro
 
 /datum/targeting_strategy/sniffable_hydro/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/obj/machinery/hydroponics/candidate = target
 	if(!istype(candidate))
 		return FALSE

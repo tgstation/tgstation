@@ -11,7 +11,10 @@
 /datum/target_source/oview
 
 /datum/target_source/oview/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	return oview(range, pawn)
+	var/list/candidates = oview(range, pawn)
+	if(candidates.len)
+		candidates = reverse(candidates)
+	return candidates
 
 /// Gathers nearby atoms via oview(), pre-filtered by a typecache
 /datum/target_source/oview_typed
@@ -21,7 +24,10 @@
 /datum/target_source/oview_typed/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	if(isnull(typecache))
 		CRASH("[pawn] using [controller] ran [src] with no typecache.")
-	return typecache_filter_list(oview(range, pawn), typecache)
+	var/list/candidates = typecache_filter_list(oview(range, pawn), typecache)
+	if(candidates.len)
+		candidates = reverse(candidates)
+	return candidates
 
 /// Gathers nearby atoms via oview(), pre-filtered by a typecache stored in a blackboard key.
 /// Use this when the typecache varies per mob species (e.g. BB_BASIC_FOODS).
@@ -31,9 +37,14 @@
 
 /datum/target_source/oview_typed/from_bb_key/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/list/bb_typecache = controller.blackboard[typecache_key]
+	var/list/candidates
 	if(isnull(bb_typecache))
-		return oview(range, pawn)
-	return typecache_filter_list(oview(range, pawn), bb_typecache)
+		candidates = oview(range, pawn)
+	else
+		candidates = typecache_filter_list(oview(range, pawn), bb_typecache)
+	if(candidates.len)
+		candidates = reverse(candidates)
+	return candidates
 
 /// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level.
 /datum/target_source/hearers
@@ -45,6 +56,8 @@
 		for(var/atom/hostile_machine as anything in GLOB.hostile_machines_by_z[mob_turf.z])
 			if(can_see(pawn, hostile_machine, range))
 				candidates += hostile_machine
+	if(candidates.len)
+		candidates = reverse(candidates)
 	return candidates
 
 /// Gathers turfs in range via RANGE_TURFS().

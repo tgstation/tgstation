@@ -2,9 +2,17 @@
 ///Global, just like ai_behaviors
 /datum/targeting_strategy
 
-///Returns true or false depending on if the target can be attacked by the mob
+///Returns true or false depending on if the target can be attacked by the mob.
+///Base proc checks if target is within vision_range distance.
 /datum/targeting_strategy/proc/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
-	return
+
+	if(QDELETED(target))
+		return FALSE
+
+	if(!vision_range)
+		return TRUE
+
+	return get_dist(living_mob, target) <= vision_range
 
 /// Returns an atom the target might be hiding inside of, or null if none.
 /datum/targeting_strategy/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
@@ -20,10 +28,16 @@
 /datum/targeting_strategy/anything
 
 /datum/targeting_strategy/anything/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
-	return !!target
+	. = ..()
+	if(!.)
+		return FALSE
+	return TRUE
 
 ///A very simple targeting strategy that checks that the target is a valid fishing spot.
 /datum/targeting_strategy/fishing
 
 /datum/targeting_strategy/fishing/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
 	return HAS_TRAIT(target, TRAIT_FISHING_SPOT)

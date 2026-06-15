@@ -1074,6 +1074,7 @@
 #include "code\datums\ai\basic_mobs\targeting_strategies\water_dispenser.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\treatable_hydro.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\beamable_hydro.dm"
+#include "code\datums\ai\basic_mobs\targeting_strategies\pickup_item.dm"
 #include "code\datums\ai\bots\bot_decorators.dm"
 #include "code\datums\ai\bots\bot_subtrees.dm"
 #include "code\datums\ai\cursed\cursed_behaviors.dm"
