@@ -338,3 +338,49 @@
       clutter
   timothymtorres:
   - code_imp: Reorganize shuttle maps into separate folders
+2026-06-14:
+  CabinetOnFire:
+  - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
+      a regular list
+  FalloutFalcon:
+  - bugfix: Clients who sit in the lobby after pregame will no longer have there ambience
+      disabled till they reconnect
+  Ghommie:
+  - bugfix: You no longer waddle when buckled to something.
+  Melbert:
+  - rscadd: You can now deconstruct first aid stations with a screwdriver and a crowbar.
+  - rscadd: You can now buy first aid station circuitboards from cargo for 1200 credits.
+  - rscadd: Most medical supplies ordered from cargo now come in DeForest crates.
+      Sansufentanyl comes in an Interdyne create.
+  - balance: As they can now be replaced, first aid station armor has been reduced.
+  - balance: Emergency first aid stations now heal twice as fast but also take twice
+      as long to recharge.
+  SmArtKar:
+  - bugfix: Fixed rugs runtiming when cleaning objects
+  - bugfix: Fixed harddels in escape menu
+  carshalash:
+  - qol: Made certain cocktails reflect real-world ratios. Including gin fizz, rum
+      and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
+  lelandkemble:
+  - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
+  - bugfix: '"fixed" a runtime with gas mask filters'
+  remove32:
+  - bugfix: statpanel uses year offset
+2026-06-15:
+  Ben10Omintrix:
+  - bugfix: baby stoats can now become adults
+  - rscadd: baby stoats are added to the spawn pool of maints, (the overall chance
+      of running into a stoat whether adult/baby remains the same)
+  CabinetOnFire:
+  - bugfix: Fixes a hard-del and signal override with sound tokens
+  LemonInTheDark:
+  - bugfix: End of round mapvotes will now properly default to the only option if
+      only one map is votable.
+  Melbert:
+  - qol: Gizmo sends a message when turning on and off
+  - qol: 'If your gun is empty, and you are on combat mode, and you are adjacent to
+      someone, and you click on them: you will perform a gun bash rather than just
+      dry firing.'
+  lelandkemble:
+  - bugfix: fixed a runtime when fishing up no fish
