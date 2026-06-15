@@ -6,10 +6,10 @@
 	group = "Livestock (Stasis)"
 	crate_type = /obj/structure/closet/crate/critter/stasis
 
-/datum/supply_pack/critter/stasis/generate(atom/A, datum/bank_account/paying_account, crate_override)
+/datum/supply_pack/critter/stasis/fill(obj/container)
 	. = ..()
-	var/mob/living/stasis_mob = locate() in .
-	stasis_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CRATE_EFFECT)
+	for(var/mob/living/stasis_mob in container)
+		stasis_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CRATE_EFFECT)
 
 /datum/supply_pack/critter/parrot
 	name = "Bird Crate"
