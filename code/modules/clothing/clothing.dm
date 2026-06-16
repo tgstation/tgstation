@@ -504,12 +504,19 @@
 
 	is_laundered = TRUE
 	addtimer(VARSET_CALLBACK(src, is_laundered, FALSE), 2 MINUTES)
-	if(istype(src, /obj/item/clothing/under))
-		var/fresh_mood = AddComponent( \
-			/datum/component/onwear_mood, \
-			saved_event_type = /datum/mood_event/fresh_laundry, \
-		)
-		QDEL_IN(fresh_mood, 2 MINUTES)
+
+/obj/item/clothing/under/machine_wash()
+	. = ..()
+	if(stubborn_stains)
+		return
+
+	is_laundered = TRUE
+	addtimer(VARSET_CALLBACK(src, is_laundered, FALSE), 2 MINUTES)
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+	)
+	QDEL_IN(fresh_mood, 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
