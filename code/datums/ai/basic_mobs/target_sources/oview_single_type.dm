@@ -68,3 +68,9 @@
 
 /datum/target_source/oview_single_type/hydroponics
 	single_typepath = /obj/machinery/hydroponics
+
+/datum/target_source/oview_single_type/cheese
+	single_typepath = /obj/item/food/cheese
+
+/datum/target_source/oview_single_type/piano_synth
+	single_typepath = /obj/item/instrument/piano_synth

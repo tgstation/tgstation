@@ -3,4 +3,5 @@
 	var/key
 
 /datum/bt_node/decorator/bb_key_true/check_condition(datum/ai_controller/controller)
-	return controller.blackboard[key]
+	var/result = controller.blackboard[key]
+	return !!result

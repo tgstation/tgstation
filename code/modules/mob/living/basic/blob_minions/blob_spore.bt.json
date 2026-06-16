@@ -1,0 +1,5 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/blob_spore",
+	"type": "selector",
+	"children": []
+}

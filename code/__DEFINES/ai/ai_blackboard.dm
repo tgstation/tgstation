@@ -98,6 +98,12 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+///cooldown key for the mouse's cheese hunt
+#define BB_MOUSE_CHEESE_HUNT_COOLDOWN "BB_mouse_cheese_hunt_cooldown"
+///cooldown key for the mouse's cable hunt
+#define BB_MOUSE_CABLE_HUNT_COOLDOWN "BB_mouse_cable_hunt_cooldown"
+///Whether we're hungry for a cable
+#define BB_MOUSE_WANTS_TO_EAT_CABLE "BB_mouse_wants_to_eat_cable"
 
 ///Basic Mob Keys
 

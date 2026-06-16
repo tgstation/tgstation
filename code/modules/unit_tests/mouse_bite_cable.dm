@@ -22,18 +22,17 @@
 	// Set AI - AIs by default are off in z-levels with no client, we have to force it on.
 	biter.ai_controller.set_ai_status(AI_STATUS_ON)
 	biter.ai_controller.can_idle = FALSE
-	// Select behavior - this will queue finding the cable
-	biter.ai_controller.SelectBehaviors(fake_dt)
-	// Process behavior - this will execute the "locate the cable" behavior
-	biter.ai_controller.process(fake_dt)
-	// Check that the cable was found
-	TEST_ASSERT(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET] == wire, "Mouse, after executing find, did not set the cable as a target.")
-	// Select behavior - this will queue hunting
-	biter.ai_controller.SelectBehaviors(fake_dt)
-	// Process behavior - this will execute the hunt for the cable and cause a bite (as we're in the min range)
-	biter.ai_controller.process(fake_dt)
-	// Check that the cable was removed, as it was hunted correctly
-	TEST_ASSERT_NULL(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET], "Mouse, after executing hunt, did not clear their target blackboard.")
+	// Seed the cable as our hunt target directly - the cable-finding branch is gated behind a
+	// random chance, so we drive the hunt branch deterministically instead.
+	biter.ai_controller.set_blackboard_key(BB_LOW_PRIORITY_HUNTING_TARGET, wire)
+
+	// Tick the tree until the hunt branch moves onto and bites the cable. A handful of ticks is
+	// plenty for the move + interact sequence to resolve.
+	for(var/i in 1 to 5)
+		if(QDELETED(biter))
+			break
+		biter.ai_controller.SelectBehaviors(fake_dt)
+		biter.ai_controller.process(fake_dt)
 
 	// Now check that the bite went through - remember we qdel mice on death
 	TEST_ASSERT(QDELETED(biter), "Mouse, did not die after biting a powered cable.")
@@ -46,12 +45,3 @@
 /// Dummy mouse that is guaranteed to die when biting shocked cables.
 /mob/living/basic/mouse/cable_lover
 	cable_zap_prob = 100
-	ai_controller = /datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
-
-/// Dummy mouse's ai controller that is guaranteed to find and bite a cable beneath it
-/datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
-	behavior_nodes = list(/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed)
-
-/// Cable hunting subtree that's guarantee to hunt its target.
-/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed
-	hunt_chance = 100

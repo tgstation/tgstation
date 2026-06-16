@@ -41,6 +41,7 @@
  * As blob zombie but will prioritise attacking corpses to zombify them
  */
 /datum/ai_controller/basic_controller/blob_spore
+	behavior_tree_json = "blob_spore.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

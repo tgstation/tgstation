@@ -43,7 +43,7 @@
 		controller.clear_blackboard_key(target_key)
 
 /// Uses ai_interact() on the target instead of default kill/eat/qdel.
-/// behavior_combat_mode, always_reset_target, and hunt_cooldown are all configurable via vars in JSON.
+/// behavior_combat_mode, always_reset_target, and hunt_cooldown are all configurable
 /datum/bt_node/ai_behavior/hunt_target/interact_with_target
 	/// Combat mode to use when interacting with the target
 	var/behavior_combat_mode = TRUE
