@@ -20,16 +20,21 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
-	var/runner_count = length(config.maplist)
 
-	var/split_up_amount = floor(total_amount_to_check / runner_count)
-
+	var/runner_count = 0
 	var/what_map_index_are_we = 1
+	var/found_map_index = FALSE
 	for(var/map_name, _map_config in config.maplist)
 		var/datum/map_config/map_config = _map_config
-		if(SSmapping.current_map.map_name == map_config.map_name)
-			break
-		what_map_index_are_we++
+		if(map_config.exclude_from_ci)
+			continue
+		if(SSmapping.current_map.map_name == map_name)
+			found_map_index = TRUE
+		else if(!found_map_index)
+			what_map_index_are_we++
+		runner_count++
+
+	var/split_up_amount = floor(total_amount_to_check / runner_count)
 
 	var/start_index = (what_map_index_are_we - 1) * split_up_amount
 	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner

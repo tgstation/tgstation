@@ -376,9 +376,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/datum/map_config/map_config = _map_config
 		if(map_config.is_unit_test_map)
 			primary_unit_test_map = map_config
-		if(!LAZYLEN(map_config.skipped_tests) && !found_secondary_unit_test_map)
+		if(!LAZYLEN(map_config.skipped_tests) && !map_config.exclude_from_ci && !found_secondary_unit_test_map)
 			found_secondary_unit_test_map = TRUE
-			if(SSmapping.current_map.map_name == map_config.map_name)
+			if(SSmapping.current_map.map_name == map_name)
 				is_secondary_unit_test_map = TRUE
 
 	var/list/tests_to_run = list()
