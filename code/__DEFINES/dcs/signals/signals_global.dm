@@ -88,6 +88,14 @@
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
+/// global signal when someone prays via prayer verb.
+#define COMSIG_GLOB_SEND_PRAYER "!send_prayer"
+	#define ARG_PRAYING_MOB 1
+	#define ARG_PRAYER_MSG 2
+	#define ARG_PRAYER_TYPE 3
+	#define ARG_PRAYER_SYMBOL 4
+	#define ARG_PRAYED_DEITIES 5
+
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
 

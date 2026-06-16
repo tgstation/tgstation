@@ -1,4 +1,4 @@
-directory = "_maps/shuttles/emergency_scrapheap/"
+directory = "_maps/shuttles/emergency/emergency_scrapheap/"
 
 [rooms.shuttle]
 modules = ["classic1.dmm", "classic2.dmm"]
