@@ -963,8 +963,6 @@
 	law_slots = 10
 	max_slot_overlays = 10
 	first_slot_offset = 34
-	// Anyone can link a rack to an AI but only people with access can UNLINK it
-	req_one_access =  list(ACCESS_AI_UPLOAD)
 	/// Designations for the core law rack, used to name it
 	VAR_PRIVATE/static/list/core_designations
 

@@ -55,7 +55,7 @@ type Data = {
   // If we are a base: This is all silicons currently linked to us
   linked_mobs?: string[];
   // Number of modules in all linked racks
-  linked_rack_module_count: number;
+  linked_rack_module_count?: number;
   // If refresh is on cooldown
   refresh_cooldown: number;
 };
@@ -569,15 +569,17 @@ export const LawRack = () => {
                 <LawSlot slot={slot} index={index} />
               </Stack.Item>
             ))}
-            <Stack.Item
-              className="LawRack__Console"
-              mt={1}
-              p={0.5}
-              textAlign="center"
-            >
-              <b>{linked_rack_module_count}</b> other module(s) are being loaded
-              remotely.
-            </Stack.Item>
+            {linked_rack_module_count !== undefined && (
+              <Stack.Item
+                className="LawRack__Console"
+                mt={1}
+                p={0.5}
+                textAlign="center"
+              >
+                <b>{linked_rack_module_count}</b> other module(s) are being
+                loaded remotely.
+              </Stack.Item>
+            )}
           </Stack>
         </Section>
         <Section
