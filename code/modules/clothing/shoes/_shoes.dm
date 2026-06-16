@@ -42,8 +42,6 @@
 	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/clothing/shoes/click_alt(mob/user)
-	return ..()
 
 /obj/item/clothing/shoes/click_alt_secondary(mob/user)
 	if(alternate_worn_layer == UNDER_UNIFORM_LAYER)
