@@ -4,6 +4,8 @@ import { GenericUplink, type Item } from './Uplink/GenericUplink';
 
 type MalfModuleData = {
   name: string,
+  icon: string,
+  icon_state: string,
   cost: number,
   desc: string,
   category: string,
@@ -32,8 +34,8 @@ export function MalfunctionModulePicker(props) {
     disabled: processingTime < module.cost || hackedAPCs < module.minimumApcs,
     id: module.name,
     name: module.name,
-    icon: '',
-    icon_state: '',
+    icon: module.icon,
+    icon_state: module.icon_state,
     population_tooltip: '',
     insufficient_population: false,
   }))

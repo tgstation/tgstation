@@ -37,9 +37,19 @@
 	var/list/data = list()
 	data["categories"] = list()
 	data["modules"] = list()
+
 	for(var/datum/ai_module/module as anything in possible_modules)
+		var/icon_state = module.icon_state
+		var/icon = module.icon
+		if (!module.icon_state && !module.upgrade && module.power_type)
+			var/datum/action/innate/ai/active_ability = module.power_type
+			icon = active_ability.button_icon
+			icon_state = active_ability.button_icon_state
+
 		data["modules"] += list(list(
 			"name" = module.name,
+			"icon" = icon,
+  			"icon_state" = icon_state,
 			"cost" = module.cost,
 			"desc" = module.description,
 			"category" = module.category,
@@ -47,6 +57,7 @@
 		))
 		if (!(module.category in data["categories"]))
 			data["categories"] += module.category
+
 	return data
 
 /datum/module_picker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -72,11 +83,10 @@
 		return
 	if(AM.minimum_apcs > AI.hacked_apcs.len)
 		return
-	var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 	// Give the power and take away the money.
 	if(AM.upgrade) //upgrade and upgrade() are separate, be careful!
 		AM.upgrade(AI)
-		possible_modules[AM.category] -= AM
+		possible_modules -= AM
 		if(AM.unlock_text)
 			to_chat(AI, AM.unlock_text)
 		if(AM.unlock_sound)
@@ -84,12 +94,13 @@
 		update_static_data(AI)
 	else
 		if(AM.power_type)
+			var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 			if(!action) //Unlocking for the first time
 				var/datum/action/AC = new AM.power_type
 				AC.Grant(AI)
 				AI.current_modules += new AM.type
 				if(AM.one_purchase)
-					possible_modules[AM.category] -= AM
+					possible_modules -= AM
 					update_static_data(AI)
 				if(AM.unlock_text)
 					to_chat(AI, AM.unlock_text)
