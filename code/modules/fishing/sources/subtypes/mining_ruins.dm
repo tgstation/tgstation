@@ -60,8 +60,8 @@
 		/obj/item/skeleton_key = 1,
 		/obj/item/stack/sheet/mineral/runite = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1,
-		/mob/living/basic/mining/legion=1,
-		/mob/living/basic/mining/brimdemon=1,
+		/mob/living/basic/mining/legion= 1,
+		/mob/living/basic/mining/brimdemon= 1,
 
 	)
 	fish_counts = list(
