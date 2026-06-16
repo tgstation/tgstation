@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/name = "generic module"
 	var/category = "generic category"
 	var/description = "generic description"
-	/// Icons for module_picker. If icon_state is not set, module_picker will attempt to use the active ability's icon.
+	/// Icons for the module picker interface. If icon_state is not set, the interface will attempt to use the active ability's icon.
 	var/icon = 'icons/mob/actions/actions_AI.dmi'
 	var/icon_state = ""
 	var/cost = 5
