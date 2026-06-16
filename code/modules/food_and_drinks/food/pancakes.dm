@@ -22,6 +22,8 @@
 	tastes = list("milky batter" = 1)
 	stack_name = "rawpancakes"
 	crafting_complexity = FOOD_COMPLEXITY_1
+	foodtypes = GRAIN | SUGAR
+	foodtypes_added_when_cooked = BREAKFAST
 
 /obj/item/food/pancakes/raw/make_grillable()
 	AddComponent(/datum/component/grillable,\

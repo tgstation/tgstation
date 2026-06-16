@@ -610,6 +610,7 @@
 	)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
+	foodtypes_added_when_cooked = BREAKFAST
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
