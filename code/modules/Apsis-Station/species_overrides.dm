@@ -7,6 +7,10 @@
 		return serialize(/datum/species/human)
 	return ..()
 
+//It is recommended to just ban species via server config files so they don't appear in TGUI at all
+//but if you want a whitelist system TGUI will display the locked species that will remain unselectable.
+//It is apparently not easy to hide whitelisted species from players not on the list.
+//The chat message will inform players clicking on the species that it requires whitelisting rather than a bug.
 /datum/preference/choiced/species/is_valid(value, datum/preferences/preferences)
 	if(!..())
 		return FALSE
