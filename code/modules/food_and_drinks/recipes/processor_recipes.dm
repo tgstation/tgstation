@@ -37,6 +37,7 @@
 		/obj/item/food/meat/cutlet/chicken)
 	output = /obj/item/food/raw_meatball
 	removed_foodtypes = GORE
+	added_foodtypes = RAW //you know what? *uncooks your cutlet*
 
 /datum/food_processor_process/meat/human
 	input = /obj/item/food/meat/slab/human
@@ -92,11 +93,13 @@
 /datum/food_processor_process/potatowedges
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
+	added_foodtypes = FRIED
 
 /datum/food_processor_process/tempeh
 	input = /obj/item/food/tempehstarter
 	output = /obj/item/food/tempeh
 	food_multiplier = 2
+	removed_foodtypes = GROSS
 
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
@@ -126,10 +129,13 @@
 /datum/food_processor_process/corn
 	input = /obj/item/food/grown/corn
 	output = /obj/item/food/tortilla
+	added_foodtypes = GRAIN //classified as grain when processed
+	removed_foodtypes = VEGETABLES
 
 /datum/food_processor_process/tortilla
 	input = /obj/item/food/tortilla
 	output = /obj/item/food/cornchips
+	added_foodtypes = JUNKFOOD|FRIED
 
 /datum/food_processor_process/parsnip
 	input = /obj/item/food/grown/parsnip
