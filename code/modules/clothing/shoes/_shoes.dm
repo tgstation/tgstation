@@ -44,10 +44,7 @@
 
 
 /obj/item/clothing/shoes/click_alt_secondary(mob/user)
-	if(alternate_worn_layer == UNDER_UNIFORM_LAYER)
-		alternate_worn_layer = NONE
-	else
-		alternate_worn_layer = UNDER_UNIFORM_LAYER
+	alternate_worn_layer = (alternate_worn_layer == UNDER_UNIFORM_LAYER) ? NONE : UNDER_UNIFORM_LAYER
 
 	if(istype(loc, /mob/living))
 		var/mob/living/L = loc
