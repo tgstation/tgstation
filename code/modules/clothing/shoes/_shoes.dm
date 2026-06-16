@@ -29,19 +29,11 @@
 	///An active alert
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-	alternate_worn_layer = UNDER_UNIFORM_LAYER
-
-/obj/item/clothing/shoes/Initialize(mapload)
-	. = ..()
-	alternate_worn_layer = NONE
-	register_context()
 
 /obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle shoes under uniforms"
 	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
 	return CONTEXTUAL_SCREENTIP_SET
-
 
 /obj/item/clothing/shoes/click_alt_secondary(mob/user)
 	alternate_worn_layer = (alternate_worn_layer == UNDER_UNIFORM_LAYER) ? NONE : UNDER_UNIFORM_LAYER
