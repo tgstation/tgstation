@@ -1,20 +1,28 @@
 {
 	"dm_type": "/datum/bt_node/subtree/basic_carp_tree",
 	"bindings": {
-		"bxsa2rl5": {
-			"label": "escape_activity_tree",
+		"be5c4p10": {
+			"label": "escape_tree",
 			"default": "/datum/bt_node/subtree"
 		},
-		"b341cvkl": {
+		"bf1nd7r2": {
 			"label": "find_targets_tree",
-			"default": "/datum/bt_node/subtree"
+			"default": "/datum/bt_node/subtree/carp_target_selection"
+		},
+		"bc0mb4t9": {
+			"label": "combat_tree",
+			"default": "/datum/bt_node/subtree/carp_combat"
+		},
+		"bid1e6k3": {
+			"label": "idle_tree",
+			"default": "/datum/bt_node/subtree/carp_migration"
 		}
 	},
 	"type": "selector",
 	"children": [
 		{
 			"type": "subtree",
-			"subtype": "$bxsa2rl5"
+			"subtype": "$be5c4p10"
 		},
 		{
 			"type": "subtree",
@@ -33,6 +41,13 @@
 					"type": "selector",
 					"children": [
 						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/carp_flee",
+							"bindings": {
+								"bf3k9q2p": "$bfl33k88"
+							}
+						},
+						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"vars": {
@@ -40,69 +55,28 @@
 								"key": "BB_CURRENT_TARGET"
 							},
 							"child": {
-								"type": "selector",
-								"children": [
-									{
-										"type": "subtree",
-										"subtype": "/datum/bt_node/subtree/run_away_from_target"
-									},
-									{
-										"type": "parallel",
-										"failure_policy": "BT_PARALLEL_FAILURE_ANY",
-										"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-										"repeat_secondary": true,
-										"finish_on_primary": true,
-										"children": [
-											{
-												"type": "subplan",
-												"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-												"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
-												"children": [
-													{
-														"type": "selector",
-														"children": [
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-																"vars": {
-																	"target_key": "BB_CURRENT_TARGET"
-																}
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-																"vars": {
-																	"target_key": "BB_CURRENT_TARGET",
-																	"targeting_strategy": "BB_TARGETING_STRATEGY",
-																	"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-																}
-															}
-														]
-													}
-												]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"required_dist": 1,
-													"finish_on_arrival": false
-												}
-											}
-										]
-									}
-								]
+								"type": "subtree",
+								"subtype": "$bc0mb4t9"
 							}
 						},
 						{
-							"type": "subplan",
-							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"type": "selector",
 							"children": [
 								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+									"type": "subtree",
+									"subtype": "$bid1e6k3"
+								},
+								{
+									"type": "subplan",
+									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+									"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+									"loop_delay": "IDLE_BEHAVIOR_RATE",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+										}
+									]
 								}
 							]
 						}
@@ -110,7 +84,23 @@
 				},
 				{
 					"type": "subtree",
-					"subtype": "$b341cvkl"
+					"subtype": "$bf1nd7r2"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_MAGICARP_SPELL"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_magicarp_spell_target",
+						"vars": {
+							"ability_key": "BB_MAGICARP_SPELL",
+							"target_key": "BB_MAGICARP_SPELL_TARGET",
+							"targeting_strategy_key": "BB_TARGETING_STRATEGY"
+						}
+					}
 				}
 			]
 		}

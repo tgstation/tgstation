@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/subtree/simple_hostile_obstacles_combat","bindings":{"b95z0f0c":"/datum/bt_node/subtree/tree_speech_subtree"}}
+{"type":"/datum/bt_node/subtree/simple_hostile_obstacles_combat","bindings":{"b95z0f0c":"/datum/bt_node/subtree/random_speech_loop"}}

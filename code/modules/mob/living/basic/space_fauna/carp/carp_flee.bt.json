@@ -1,0 +1,58 @@
+{
+	"dm_type": "/datum/bt_node/subtree/carp_flee",
+	"bindings": {
+		"bf3k9q2p": {
+			"label": "flee_key",
+			"default": "BB_CURRENT_TARGET"
+		}
+	},
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/carp_should_flee",
+	"vars": {
+		"target_key": "$bf3k9q2p",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/ability_available",
+				"vars": {
+					"ability_key": "BB_CARP_RIFT"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/make_carp_rift/away",
+					"vars": {
+						"ability_key": "BB_CARP_RIFT",
+						"target_key": "$bf3k9q2p"
+					}
+				}
+			},
+			{
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
+						"vars": {
+							"target_key": "$bf3k9q2p",
+							"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+							"destination_key": "BB_FLEE_LOCATION"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_FLEE_LOCATION",
+							"required_dist": 0,
+							"finish_on_arrival": true
+						}
+					}
+				]
+			}
+		]
+	}
+}
