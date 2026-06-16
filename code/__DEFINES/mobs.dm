@@ -1044,8 +1044,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_CC_STATUS (1<<17)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
 #define HEAL_RESTRAINTS (1<<18)
-/// Fills the target's hunger up to being fed
-#define HEAL_HUNGER (1<<19)
 
 /// Combination flag to only heal the main damage types.
 #define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_STAM)
