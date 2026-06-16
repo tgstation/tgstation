@@ -270,7 +270,7 @@
 	init_jingle = "sound/mobs/non-humanoids/cow/cow.ogg"
 	loot_table = /obj/structure/closet/crate/secure/loot::possible_loot
 	var/min_code_length = 2
-	var/max_code_length = 4
+	var/max_code_length = 3
 
 // All digits must be unique
 /datum/gizmodes/code_crack/moo/validate_code(code)
