@@ -560,7 +560,7 @@ export const LawRack = () => {
   };
 
   return (
-    <Window title="Module Rack" width={400} height={slots.length * 36 + 250}>
+    <Window title="Module Rack" width={400} height={slots.length * 40 + 200}>
       <Window.Content>
         <Section>
           <Stack vertical>
