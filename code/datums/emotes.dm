@@ -120,15 +120,15 @@
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional))
 		if(intentional)
-			if(!TIMER_COOLDOWN_FINISHED(user, "manual_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "manual_specific_emote_audio_cooldown_[type]") || !TIMER_COOLDOWN_FINISHED(user, "forced_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "forced_specific_emote_audio_cooldown_[type]"))
+			if(!TIMER_COOLDOWN_FINISHED(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)) || !TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
 				return FALSE
 		else
-			if(!TIMER_COOLDOWN_FINISHED(user, "forced_general_emote_audio_cooldown") || !TIMER_COOLDOWN_FINISHED(user, "forced_specific_emote_audio_cooldown_[type]"))
+			if(!TIMER_COOLDOWN_FINISHED(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN) || !TIMER_COOLDOWN_FINISHED(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type)))
 				return FALSE
-		TIMER_COOLDOWN_START(user, "manual_specific_emote_audio_cooldown_[type]", manual_specific_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "manual_general_emote_audio_cooldown", manual_general_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "forced_specific_emote_audio_cooldown_[type]", forced_specific_emote_audio_cooldown)
-		TIMER_COOLDOWN_START(user, "forced_general_emote_audio_cooldown", forced_general_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), manual_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN, manual_general_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type), forced_specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN, forced_general_emote_audio_cooldown)
 
 		var/frequency = null
 		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
