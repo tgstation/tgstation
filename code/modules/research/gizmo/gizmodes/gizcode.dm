@@ -197,7 +197,6 @@
 	var/correctness = puzzle_holder.check_code()
 	if(correctness)
 		puzzle_holder.dispense_reward(holder)
-		puzzle_holder.attempts_left = initial(puzzle_holder.attempts_left)
 		puzzle_holder.active = FALSE
 		return
 
@@ -310,8 +309,7 @@
 /datum/gizmodes/code_crack/moo/punishment(atom/movable/holder)
 	var/obj/item/grenade/syndieminibomb/punishment = new(get_turf(holder))
 	punishment.arm_grenade(null, 5 SECONDS)
-	// We can't allow the gizmo to stay after exploding
-	qdel(holder)
+	active = FALSE
 
 #undef MAX_CODEGEN_RETRY_ATTEMPTS
 #undef DIGIT_COUNT
