@@ -16,6 +16,10 @@
 		"bid1e6k3": {
 			"label": "idle_tree",
 			"default": "/datum/bt_node/subtree/carp_migration"
+		},
+		"b7cm2s3z": {
+			"label": "flee_from_key",
+			"default": "BB_CURRENT_TARGET"
 		}
 	},
 	"type": "selector",
@@ -41,13 +45,6 @@
 					"type": "selector",
 					"children": [
 						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/carp_flee",
-							"bindings": {
-								"bf3k9q2p": "$bfl33k88"
-							}
-						},
-						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"vars": {
@@ -55,8 +52,20 @@
 								"key": "BB_CURRENT_TARGET"
 							},
 							"child": {
-								"type": "subtree",
-								"subtype": "$bc0mb4t9"
+								"type": "selector",
+								"children": [
+									{
+										"type": "subtree",
+										"subtype": "/datum/bt_node/subtree/carp_flee",
+										"bindings": {
+											"bf3k9q2p": "$b7cm2s3z"
+										}
+									},
+									{
+										"type": "subtree",
+										"subtype": "$bc0mb4t9"
+									}
+								]
 							}
 						},
 						{

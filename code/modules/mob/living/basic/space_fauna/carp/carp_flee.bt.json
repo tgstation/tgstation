@@ -1,16 +1,10 @@
 {
 	"dm_type": "/datum/bt_node/subtree/carp_flee",
-	"bindings": {
-		"bf3k9q2p": {
-			"label": "flee_key",
-			"default": "BB_CURRENT_TARGET"
-		}
-	},
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/carp_should_flee",
 	"vars": {
-		"target_key": "$bf3k9q2p",
-		"observer_abort": "BT_ABORT_BOTH"
+		"observer_abort": "BT_ABORT_BOTH",
+		"target_key": "BB_CURRENT_TARGET"
 	},
 	"child": {
 		"type": "selector",
@@ -26,7 +20,7 @@
 					"behavior": "/datum/bt_node/ai_behavior/make_carp_rift/away",
 					"vars": {
 						"ability_key": "BB_CARP_RIFT",
-						"target_key": "$bf3k9q2p"
+						"target_key": "BB_CURRENT_TARGET"
 					}
 				}
 			},

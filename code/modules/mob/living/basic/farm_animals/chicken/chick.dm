@@ -84,8 +84,8 @@
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
 		BB_BASIC_MOB_SPEAK_LINES = list(
 			BB_EMOTE_SAY =  list("Cherp.", "Cherp?", "Chirrup.", "Cheep!"),
-			BB_EMOTE_HEAR = list("cheeps.")
-			BB_EMOTE_SEE = list("pecks at the ground.","flaps her tiny wings.")
+			BB_EMOTE_HEAR = list("cheeps."),
+			BB_EMOTE_SEE = list("pecks at the ground.","flaps her tiny wings."),
 			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg'),
 			BB_SPEAK_CHANCE = 4,
 		),

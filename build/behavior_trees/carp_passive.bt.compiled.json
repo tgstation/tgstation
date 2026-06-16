@@ -1,1 +1,1 @@
-{"type":"/datum/bt_node/composite/selector","children":[{"type":"/datum/bt_node/subtree/basic_carp_tree","bindings":{"bf1nd7r2":"/datum/bt_node/subtree/carp_passive_selection","bfl33k88":"BB_basic_flee_target"}}]}
+{"type":"/datum/bt_node/subtree/basic_carp_tree","bindings":{"bf1nd7r2":"/datum/bt_node/subtree/carp_passive_selection","b7cm2s3z":"BB_basic_flee_target"}}
