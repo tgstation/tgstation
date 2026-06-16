@@ -4,6 +4,10 @@
 		"bxsa2rl5": {
 			"label": "escape_activity_tree",
 			"default": "/datum/bt_node/subtree"
+		},
+		"b341cvkl": {
+			"label": "find_targets_tree",
+			"default": "/datum/bt_node/subtree"
 		}
 	},
 	"type": "selector",
@@ -105,13 +109,8 @@
 					]
 				},
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
-					"vars": {
-						"target_key": "BB_CURRENT_TARGET",
-						"targeting_strategy": "BB_TARGETING_STRATEGY",
-						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-					}
+					"type": "subtree",
+					"subtype": "$b341cvkl"
 				}
 			]
 		}

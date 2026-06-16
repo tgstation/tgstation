@@ -1,0 +1,48 @@
+{
+	"dm_type": "/datum/bt_node/subtree/carp_target_selection",
+	"type": "selector",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest",
+			"vars": {
+				"target_key": "BB_BASIC_MOB_FLEE_TARGET"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_BASIC_MOB_STOP_FLEEING"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait"
+					},
+					{
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_true",
+								"vars": {
+									"key": "BB_CARPS_FEAR_FISHERMAN"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest",
+									"vars": {
+										"target_key": "BB_BASIC_MOB_FLEE_TARGET"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

@@ -1188,6 +1188,7 @@
 #include "code\datums\ai\generic_decorators\target_has_trait.dm"
 #include "code\datums\ai\generic_decorators\target_on_ground.dm"
 #include "code\datums\ai\generic_decorators\true_for_time.dm"
+#include "code\datums\ai\generic_subtrees\basic_find_target.dm"
 #include "code\datums\ai\generic_subtrees\capricious_pick_target.dm"
 #include "code\datums\ai\generic_subtrees\climb_tree.dm"
 #include "code\datums\ai\generic_subtrees\find_food.dm"

@@ -68,3 +68,11 @@
 
 /datum/bt_node/subtree/basic_carp_tree
 	behavior_tree_json = "basic_carp_tree.bt.json"
+
+/datum/bt_node/subtree/flee_fisherman
+
+/datum/bt_node/subtree/carp_target_selection
+	behavior_tree_json = "carp_target_selection.bt.json"
+
+/datum/bt_node/subtree/mega_carp_target_selection
+

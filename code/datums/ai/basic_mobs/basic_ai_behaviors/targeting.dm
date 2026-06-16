@@ -168,21 +168,27 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return living_targets[living_targets.len]
 	return ..()
 
-// DEPRECATED — port to /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
-/datum/ai_behavior/update_targets
-	parent_type = /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
+/// Prioritizes targets carrying the trait named by our trait_key blackboard key over the rest.
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait
+	/// Blackboard key holding the trait that marks a target as high-priority.
+	var/trait_key = BB_TARGET_PRIORITY_TRAIT
 
-/// Targets with the trait specified by the BB_TARGET_PRIORITY_TRAIT blackboard key will be prioritized over the rest.
-/datum/ai_behavior/update_targets/prioritize_trait
-
-/datum/ai_behavior/update_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets) // still compiles via deprecated stub
-	var/priority_targets = list()
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/list/priority_targets = list()
+	var/priority_trait = controller.blackboard[trait_key]
 	for(var/atom/target as anything in filtered_targets)
-		if(HAS_TRAIT(target, controller.blackboard[BB_TARGET_PRIORITY_TRAIT]))
+		if(HAS_TRAIT(target, priority_trait))
 			priority_targets += target
 	if(length(priority_targets))
 		return ..(controller, priority_targets)
 	return ..()
+
+// DEPRECATED — port to /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
+/datum/ai_behavior/update_targets
+	parent_type = /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
+
+/datum/ai_behavior/update_targets/prioritize_trait
+	parent_type = /datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait
 
 /datum/ai_behavior/update_targets/bigger_range
 	vision_range = 16
