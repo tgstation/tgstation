@@ -529,15 +529,17 @@
 
 /obj/item/paper/law_rack_tutorial
 	name = "read me, confused captain"
-	default_raw_text = "This is a test of a brand new way to interact with the wild, untamed silicon.<br><br>\
+	default_raw_text = "This is a brand new way to interact with the wild, untamed silicon.<br><br>\
 		How it works: Laws go in. Ai gets laws. Laws are in order of laws in rack. Simple, right?<br><br>\
 		The top law there is ALL of Asimov, all 3 laws. Additional laws are supplied by the single, using freeform law boards.<br><br>\
-		Modules can be screwed and welded in for extra security. You can see Asimov, there, is welded - concealing the name, but making it harder to remove.<br><br>\
+		Modules can be screwed and welded in for extra security. You can see Asimov, there, is welded - \
+		concealing the name, but making it harder to remove.<br><br>\
 		You can also install AI upgrades here if you have any. Either from RND or Lavaland.<br><br>\
 		Any number of silicons can be linked to this single rack, and they will all share the same laws. Cyborgs can still be linked to AIs as an intermediary.<br><br>\
 		Ion storms can damage rack modules. If damaged, you need to use a multitool on them. You can multitool them while they're still in the rack.<br><br>\
-		Silicons can be manually linked and unlinked from this location (rack), but it requires AI upload level access.<br><br>\
-		People can still subvert the AI by constructing \"portable law racks\", so don't get complacent.<br><br>\
+		Silicons can be manually linked and unlinked from this location (rack). \
+		Newly constructed silicons will automatically link to this rack unless they are supplied another rack via multitool.<br><br>\
+		People can still subvert the AI by constructing \"broadcast module racks\", so don't get complacent.<br><br>\
 		Refer any further questions to Central Command. Godspeed."
 
 // Broadcasts laws to another law rack, can't link directly to AIs
