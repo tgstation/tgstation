@@ -49,7 +49,7 @@
 		data["modules"] += list(list(
 			"name" = module.name,
 			"icon" = icon,
-  			"icon_state" = icon_state,
+			"icon_state" = icon_state,
 			"cost" = module.cost,
 			"desc" = module.description,
 			"category" = module.category,
