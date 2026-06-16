@@ -19,6 +19,11 @@
 		BB_ONLY_FISH_WHILE_HUNGRY = TRUE,
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -43,8 +48,12 @@
 		BB_BASIC_MOB_FLEE_DISTANCE = 4,
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("chitters."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/insect/chitter.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
-	behavior_tree_json = "code/modules/mob/living/basic/lavaland/lobstrosity/lobstrosity.bt.json"
 
 ///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm

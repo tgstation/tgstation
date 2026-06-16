@@ -9,6 +9,7 @@
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/cooldown",
 	"vars": {
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 		"cooldown_key": "BB_TREE_CLIMBING_COOLDOWN",
 		"cooldown_duration": "$bb0lcfol"
 	},

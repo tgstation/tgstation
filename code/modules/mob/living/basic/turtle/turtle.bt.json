@@ -1,25 +1,22 @@
 {
 	"dm_type": "/datum/ai_controller/basic_controller/turtle",
-	"type": "parallel",
-	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-	"repeat_secondary": true,
-	"finish_on_primary": true,
+	"type": "selector",
 	"children": [
 		{
 			"type": "parallel",
 			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
 			"finish_on_primary": true,
 			"children": [
 				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_food"
+				},
+				{
 					"type": "selector",
 					"children": [
-						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
-						},
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/ability_available",
@@ -36,150 +33,143 @@
 							}
 						},
 						{
-							"type": "parallel",
-							"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-							"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-							"repeat_secondary": true,
-							"finish_on_primary": true,
-							"children": [
-								{
-									"type": "selector",
-									"children": [
-										{
-											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/bb_key_set",
-											"vars": {
-												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-												"key": "BB_TURTLE_HEADBUTT_VICTIM"
-											},
-											"child": {
-												"type": "sequence",
-												"children": [
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-														"vars": {
-															"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
-															"required_dist": 1
-														}
-													},
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-														"vars": {
-															"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN",
-															"cooldown_duration": "1 MINUTES"
-														}
-													},
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/hunt_target/headbutt_leg",
-														"vars": {
-															"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
-															"always_reset_target": true
-														}
-													}
-												]
-											}
-										},
-										{
-											"type": "decorator",
-											"decorator": "/datum/bt_node/decorator/bb_key_set",
-											"vars": {
-												"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-												"key": "BB_TURTLE_HEADBUTT_VICTIM"
-											},
-											"child": {
-												"type": "sequence",
-												"children": [
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-														"vars": {
-															"target_key": "BB_TURTLE_FLORA_TARGET",
-															"required_dist": 1
-														}
-													},
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
-														"vars": {
-															"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN",
-															"cooldown_duration": "1 MINUTES"
-														}
-													},
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/hunt_target/sniff_flora",
-														"vars": {
-															"target_key": "BB_TURTLE_FLORA_TARGET",
-															"always_reset_target": true
-														}
-													}
-												]
-											}
-										},
-										{
-											"type": "subplan",
-											"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-											"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-											"children": [
-												{
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-													"vars": {
-														"walk_chance": 10
-													}
-												}
-											]
-										}
-									]
-								},
-								{
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-									"vars": {
-										"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN"
-									},
-									"child": {
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+								"key": "BB_TURTLE_HEADBUTT_VICTIM"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 										"vars": {
 											"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
-											"target_source": "/datum/target_source/oview_typed/from_bb_key/turtle_headbutt_types",
-											"targeting_strategy": "/datum/targeting_strategy/legged_conscious_human"
+											"required_dist": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+										"vars": {
+											"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN",
+											"cooldown_duration": "1 MINUTES"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/hunt_target/headbutt_leg",
+										"vars": {
+											"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
+											"always_reset_target": true
 										}
 									}
-								},
-								{
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/key_off_cooldown",
-									"vars": {
-										"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN"
-									},
-									"child": {
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+								"key": "BB_TURTLE_HEADBUTT_VICTIM"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 										"vars": {
 											"target_key": "BB_TURTLE_FLORA_TARGET",
-											"target_source": "/datum/target_source/oview_typed/from_bb_key/turtle_flora_types",
-											"targeting_strategy": "/datum/targeting_strategy/sniffable_hydro"
+											"required_dist": 1
 										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+										"vars": {
+											"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN",
+											"cooldown_duration": "1 MINUTES"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/hunt_target/sniff_flora",
+										"vars": {
+											"target_key": "BB_TURTLE_FLORA_TARGET",
+											"always_reset_target": true
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
+									"vars": {
+										"walk_chance": 10
 									}
 								}
 							]
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
 						}
 					]
 				},
 				{
-					"type": "subtree",
-					"subtype": "/datum/bt_node/subtree/find_food"
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+					"vars": {
+						"cooldown_key": "BB_TURTLE_HEADBUTT_COOLDOWN"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_TURTLE_HEADBUTT_VICTIM",
+							"target_source": "/datum/target_source/oview_typed/from_bb_key/turtle_headbutt_types",
+							"targeting_strategy": "/datum/targeting_strategy/legged_conscious_human"
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+					"vars": {
+						"cooldown_key": "BB_TURTLE_FLORA_COOLDOWN"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_TURTLE_FLORA_TARGET",
+							"target_source": "/datum/target_source/oview_typed/from_bb_key/turtle_flora_types",
+							"targeting_strategy": "/datum/targeting_strategy/sniffable_hydro"
+						}
+					}
+				},
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/express_happiness"
+						}
+					]
 				}
 			]
-		},
-		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/express_happiness"
 		}
 	]
 }

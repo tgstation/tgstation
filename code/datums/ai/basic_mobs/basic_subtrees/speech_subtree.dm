@@ -307,13 +307,6 @@
 	emote_hear = list("stamps around some.", "hisses a bit.")
 	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
 
-/datum/bt_node/ai_behavior/random_speech/chick
-	speech_chance = 4
-	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
-	sound = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg')
-	emote_hear = list("cheeps.")
-	emote_see = list("pecks at the ground.", "flaps her tiny wings.")
-
 /datum/bt_node/ai_behavior/random_speech/faithless
 	speech_chance = 1
 	emote_see = list("wails.")

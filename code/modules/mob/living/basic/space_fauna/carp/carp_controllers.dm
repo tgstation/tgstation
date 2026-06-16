@@ -64,3 +64,7 @@
 	)
 	ai_traits = PASSIVE_AI_FLAGS
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive.bt.json"
+
+
+/datum/bt_node/subtree/basic_carp_tree
+	behavior_tree_json = "basic_carp_tree.bt.json"

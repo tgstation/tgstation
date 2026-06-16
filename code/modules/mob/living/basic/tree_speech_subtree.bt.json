@@ -1,5 +1,0 @@
-{
-	"dm_type": "/datum/bt_node/subtree/tree_speech_subtree",
-	"type": "leaf",
-	"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
-}

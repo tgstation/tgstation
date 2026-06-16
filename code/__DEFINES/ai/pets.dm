@@ -29,6 +29,8 @@
 #define BB_FIND_MOM_TYPES "BB_find_mom_types"
 ///list of types of mobs we must ignore
 #define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+///cooldown between emoting at our parent
+#define BB_PARENT_EMOTE_COOLDOWN "BB_parent_emote_cooldown"
 
 /// The current string that this parrot will repeat back to someone
 #define BB_PARROT_REPEAT_STRING "BB_parrot_repeat_string"

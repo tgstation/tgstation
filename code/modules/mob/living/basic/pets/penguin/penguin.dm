@@ -40,8 +40,6 @@
 	AddElement(/datum/element/pet_bonus, "honk")
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 
-	var/static/list/fishable_objects = typecacheof(list(/turf/open/misc/ice))
-	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_objects)
 	var/static/list/delicious_food = list(/obj/item/fish)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = delicious_food)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(delicious_food))

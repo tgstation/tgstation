@@ -1,5 +1,14 @@
 {
 	"dm_type": "/datum/ai_controller/basic_controller/raw_prophet",
 	"type": "selector",
-	"children": []
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/simple_ability_ranged_combat"
+		}
+	]
 }

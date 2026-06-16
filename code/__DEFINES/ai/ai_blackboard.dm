@@ -224,7 +224,7 @@
 ///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
 #define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
-///currently only used by clowns, a list of what can the mob speak randomly
+///A list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
 #define BB_EMOTE_SAY "emote_say"
 #define BB_EMOTE_HEAR "emote_hear"

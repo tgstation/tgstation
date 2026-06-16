@@ -223,20 +223,12 @@
 					"type": "selector",
 					"children": [
 						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 							"vars": {
-								"key": "BB_WATERCAN_TARGET",
-								"invert": true
-							},
-							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-								"vars": {
-									"target_key": "BB_WATERCAN_TARGET",
-									"targeting_strategy": "/datum/targeting_strategy/pickup_item",
-									"target_source": "/datum/target_source/oview_single_type/watering_can"
-								}
+								"target_key": "BB_WATERCAN_TARGET",
+								"targeting_strategy": "/datum/targeting_strategy/pickup_item",
+								"target_source": "/datum/target_source/oview_single_type/watering_can"
 							}
 						},
 						{
@@ -254,40 +246,24 @@
 									"reagent_type": "/datum/reagent/water"
 								},
 								"child": {
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
-										"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-										"invert": true
-									},
-									"child": {
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-										"vars": {
-											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-											"target_source": "/datum/target_source/oview",
-											"targeting_strategy": "/datum/targeting_strategy/water_dispenser"
-										}
+										"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+										"target_source": "/datum/target_source/oview",
+										"targeting_strategy": "/datum/targeting_strategy/water_dispenser"
 									}
 								}
 							}
 						},
 						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 							"vars": {
-								"key": "BB_HYDROPLANT_TARGET",
-								"invert": true
-							},
-							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-								"vars": {
-									"target_key": "BB_HYDROPLANT_TARGET",
-									"target_source": "/datum/target_source/oview",
-									"targeting_strategy": "/datum/targeting_strategy/treatable_hydro",
-									"time_between_perform": "5 SECONDS"
-								}
+								"target_key": "BB_HYDROPLANT_TARGET",
+								"target_source": "/datum/target_source/oview",
+								"targeting_strategy": "/datum/targeting_strategy/treatable_hydro",
+								"time_between_perform": "5 SECONDS"
 							}
 						},
 						{
@@ -297,21 +273,13 @@
 								"ability_key": "BB_SOLARBEAM_ABILITY"
 							},
 							"child": {
-								"type": "decorator",
-								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 								"vars": {
-									"key": "BB_BEAMABLE_HYDROPLANT_TARGET",
-									"invert": true
-								},
-								"child": {
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-									"vars": {
-										"target_key": "BB_BEAMABLE_HYDROPLANT_TARGET",
-										"target_source": "/datum/target_source/oview",
-										"targeting_strategy": "/datum/targeting_strategy/beamable_hydro",
-										"time_between_perform": "4 SECONDS"
-									}
+									"target_key": "BB_BEAMABLE_HYDROPLANT_TARGET",
+									"target_source": "/datum/target_source/oview",
+									"targeting_strategy": "/datum/targeting_strategy/beamable_hydro",
+									"time_between_perform": "4 SECONDS"
 								}
 							}
 						}

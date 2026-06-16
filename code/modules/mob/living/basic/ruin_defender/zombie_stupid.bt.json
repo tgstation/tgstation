@@ -12,8 +12,8 @@
 			"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
 		},
 		{
-			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/random_speech_blackboard"
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/random_speech_loop"
 		}
 	]
 }

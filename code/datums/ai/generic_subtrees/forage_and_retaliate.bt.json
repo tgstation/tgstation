@@ -3,7 +3,7 @@
 	"bindings": {
 		"q8w3rtv1": {
 			"label": "Food Finder",
-			"default": "/datum/bt_node/subtree/forage_for_food"
+			"default": "/datum/bt_node/subtree/find_food"
 		},
 		"z4n9bk7p": {
 			"label": "Retaliate Manager",

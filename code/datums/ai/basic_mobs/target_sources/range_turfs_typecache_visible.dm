@@ -25,3 +25,10 @@
 /datum/target_source/range_turfs/typecache_visible/deer_water/New()
 	. = ..()
 	typecache = typecacheof(typecache)
+
+/datum/target_source/range_turfs/typecache_visible/ice
+	typecache = list(/turf/open/misc/ice)
+
+/datum/target_source/range_turfs/typecache_visible/ice/New()
+	. = ..()
+	typecache = typecacheof(typecache)

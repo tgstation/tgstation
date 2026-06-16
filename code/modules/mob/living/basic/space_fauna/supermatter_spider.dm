@@ -94,7 +94,3 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-
-/datum/bt_node/subtree/supermatter_spider_speech_subtree
-	behavior_tree_json = "supermatter_spider_speech_subtree.bt.json"
-

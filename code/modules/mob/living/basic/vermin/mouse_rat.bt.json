@@ -178,8 +178,11 @@
 					]
 				},
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/random_speech/mouse"
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_speech_loop",
+					"bindings": {
+						"bqdqne64": "/datum/bt_node/ai_behavior/random_speech/mouse"
+					}
 				},
 				{
 					"type": "decorator",

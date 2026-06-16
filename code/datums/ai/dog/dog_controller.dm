@@ -11,6 +11,8 @@
  * Same thing but with make tiny corgis and use access cards.
  */
 /datum/ai_controller/basic_controller/dog/corgi
+	behavior_tree_json = "code/datums/ai/dog/dog_corgi.bt.json"
+
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
@@ -22,7 +24,6 @@
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/dog/corgi/puppy),
 	)
-	behavior_tree_json = "code/datums/ai/dog/dog_corgi.bt.json"
 
 /datum/ai_controller/basic_controller/dog/corgi/get_access()
 	var/mob/living/basic/pet/dog/corgi/corgi_pawn = pawn
@@ -41,4 +42,3 @@
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 		BB_FUCKS = FALSE, // Puppies don't
 	)
-	behavior_tree_json = "code/datums/ai/dog/dog_corgi.bt.json"
