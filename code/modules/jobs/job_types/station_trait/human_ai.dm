@@ -143,7 +143,7 @@
 
 /obj/item/paper/default_lawset_list/LateInitialize()
 	var/datum/ai_laws/reported
-	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+	for(var/obj/machinery/ai_law_rack/base/core/rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack/base/core))
 		reported = rack.combined_lawset
 		break
 

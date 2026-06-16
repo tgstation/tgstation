@@ -1894,7 +1894,7 @@
 /obj/item/circuitboard/machine/ai_law_rack
 	name = "Standard Rack"
 	name_extension = "(Module Rack Board)"
-	build_path = /obj/machinery/ai_law_rack
+	build_path = /obj/machinery/ai_law_rack/base
 	req_components = list(
 		/datum/stock_part/amplifier = 1,
 		/datum/stock_part/transmitter = 1,
@@ -1903,11 +1903,15 @@
 
 /obj/item/circuitboard/machine/ai_law_rack/small
 	name = "Portable Rack"
-	build_path = /obj/machinery/ai_law_rack/small
+	build_path = /obj/machinery/ai_law_rack/base/small
 
 /obj/item/circuitboard/machine/ai_law_rack/core
 	name = "Core Rack"
-	build_path = /obj/machinery/ai_law_rack/core
+	build_path = /obj/machinery/ai_law_rack/base/core
+
+/obj/item/circuitboard/machine/ai_law_rack/broadcaster
+	name = "Broadcaster Rack"
+	build_path = /obj/machinery/ai_law_rack/broadcaster
 
 /obj/item/circuitboard/machine/quantum_server
 	name = "Quantum Server"

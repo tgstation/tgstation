@@ -56095,7 +56095,7 @@
 /area/station/tcommsat/server)
 "sFV" = (
 /obj/machinery/camera/motion/directional/east,
-/obj/machinery/ai_law_rack/core{
+/obj/machinery/ai_law_rack/base/core{
 	pixel_y = 12
 	},
 /turf/open/floor/circuit/green,

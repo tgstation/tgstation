@@ -1164,7 +1164,7 @@
 		return
 	priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
 	var/mob/living/silicon/new_malf_ai = candidate.current
-	var/obj/machinery/ai_law_rack/rack = new_malf_ai.get_law_rack()
+	var/obj/machinery/ai_law_rack/base/rack = new_malf_ai.get_law_rack()
 	rack?.scramble_ai_rack(
 		base_ion_prob = 100,
 		sub_ion_prob = 10,

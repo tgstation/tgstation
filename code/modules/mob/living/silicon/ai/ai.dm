@@ -8,7 +8,7 @@
  * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
  * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
  */
-/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/default_link)
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/base/default_link)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.

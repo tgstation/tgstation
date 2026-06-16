@@ -10190,7 +10190,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "dBL" = (
-/obj/machinery/ai_law_rack/core,
+/obj/machinery/ai_law_rack/base/core,
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)

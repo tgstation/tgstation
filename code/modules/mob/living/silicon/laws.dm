@@ -31,7 +31,7 @@
 
 /// Find the first law rack we can link to and link to it
 /mob/living/silicon/proc/link_to_first_rack()
-	for(var/obj/machinery/ai_law_rack/core/law_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+	for(var/obj/machinery/ai_law_rack/base/core/law_rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack/base/core))
 		if(!law_rack.can_link_to(src))
 			continue
 
@@ -39,8 +39,8 @@
 		return law_rack
 
 /// Returns the law rack this silicon is linked to, or null if not linked.
-/mob/living/silicon/proc/get_law_rack() as /obj/machinery/ai_law_rack
-	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+/mob/living/silicon/proc/get_law_rack() as /obj/machinery/ai_law_rack/base
+	for(var/obj/machinery/ai_law_rack/base/rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack/base))
 		for(var/name in rack.linked_mobs)
 			if(rack.linked_mobs[name] == src)
 				return rack

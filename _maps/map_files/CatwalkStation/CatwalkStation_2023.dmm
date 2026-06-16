@@ -52502,7 +52502,7 @@
 "nWR" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/ai_law_rack/core{
+/obj/machinery/ai_law_rack/base/core{
 	pixel_y = 12
 	},
 /turf/open/floor/circuit/green,

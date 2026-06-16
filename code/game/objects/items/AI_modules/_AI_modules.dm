@@ -134,10 +134,8 @@
 
 /// Update any racks we're installed in
 /obj/item/ai_module/law/proc/update_rack_laws()
-	if(!istype(loc, /obj/machinery/ai_law_rack))
-		return
-	var/obj/machinery/ai_law_rack/rack = loc
-	rack.update_lawset()
+	var/obj/machinery/ai_law_rack/base/rack_parent = astype(loc, /obj/machinery/ai_law_rack)?.get_parent_rack()
+	rack_parent?.update_lawset()
 
 /obj/item/ai_module/law/proc/multitool_cb(atom/start_loc, mob/living/user, obj/item/tool)
 	PRIVATE_PROC(TRUE)
@@ -209,11 +207,13 @@
 		combined_lawset.add_inherent_law(law)
 
 /obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
-	if(rack.get_parent_rack()) // If we are a sub rack, no stun
-		return
-	for(var/mob/living/bot in assoc_to_values(rack.linked_mobs))
+	var/obj/machinery/ai_law_rack/base/parent_rack = rack.get_parent_rack()
+	if(isnull(parent_rack) || rack != parent_rack)
+		return // if we are a child, no stun
+
+	for(var/mob/living/bot in assoc_to_values(parent_rack.linked_mobs))
 		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
-		if(bot.AmountStun() > 5 SECONDS || rack.is_rack_stun_immune(bot))
+		if(bot.AmountStun() > 5 SECONDS || parent_rack.is_rack_stun_immune(bot))
 			continue
 		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Core module removed. Recalculating directives..."))

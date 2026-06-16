@@ -32,10 +32,20 @@
 	desc += " Can hold [rack::law_slots] module\s[rack::has_core_slot ? ", including a core module slot" : ""]."
 
 /datum/design/board/ai_law_rack/portable
-	name = "Portable AI Module Rack Board"
-	desc = "Allows for the construction of a portable AI Module Rack."
+	name = "Small AI Module Rack Board"
+	desc = "Allows for the construction of a small AI Module Rack."
 	id = "airack_small"
 	build_path = /obj/item/circuitboard/machine/ai_law_rack/small
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/ai_law_rack/broadcaster
+	name = "Broadcaster AI Module Rack Board"
+	desc = "Allows for the construction of a Broadcaster AI Module Rack."
+	id = "airack_broadcaster"
+	build_path = /obj/item/circuitboard/machine/ai_law_rack/broadcaster
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE
 	)

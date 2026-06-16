@@ -31,6 +31,7 @@
 	design_ids = list(
 		"aicore",
 		"aifixer",
+		"airack_broadcaster",
 		"airack_normal",
 		"airack_small",
 		"asimov_module",

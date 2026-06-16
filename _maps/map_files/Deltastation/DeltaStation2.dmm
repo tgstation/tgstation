@@ -32381,7 +32381,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/ai_law_rack/core,
+/obj/machinery/ai_law_rack/base/core,
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
