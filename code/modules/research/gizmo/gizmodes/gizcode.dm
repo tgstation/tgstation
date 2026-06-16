@@ -309,7 +309,7 @@
 /datum/gizmodes/code_crack/moo/punishment(atom/movable/holder)
 	var/obj/item/grenade/syndieminibomb/punishment = new(get_turf(holder))
 	punishment.arm_grenade(null, 5 SECONDS)
-	active = FALSE
+	qdel(holder)
 
 #undef MAX_CODEGEN_RETRY_ATTEMPTS
 #undef DIGIT_COUNT
