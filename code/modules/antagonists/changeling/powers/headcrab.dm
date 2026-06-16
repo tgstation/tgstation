@@ -68,6 +68,7 @@
 			continue
 		blinded.visible_message(span_danger("[blinded] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
 		blinded.add_blood_DNA(user_DNA)
+		blinded.add_mood_event("splattered_with_blood", /datum/mood_event/splattered_with_blood)
 		playsound(blinded, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 		if(ishuman(blinded))

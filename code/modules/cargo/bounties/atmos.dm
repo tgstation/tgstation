@@ -17,6 +17,11 @@
 		return FALSE
 	return our_mix.gases[gas_type][MOLES] >= moles_required
 
+/datum/bounty/item/atmospherics/contribution_amount(obj/shipped)
+	var/obj/item/tank/shipped_tank = shipped
+	var/datum/gas_mixture/our_mix = shipped_tank.return_air()
+	return our_mix.gases[gas_type][MOLES]
+
 /datum/bounty/item/atmospherics/pluox_tank
 	name = "Full Tank of Pluoxium"
 	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated. (20 Moles)"

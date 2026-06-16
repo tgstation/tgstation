@@ -271,7 +271,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
-	return MANUAL_SUICIDE
+	REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+	if (user.stat == DEAD)
+		return MANUAL_SUICIDE
+	user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but fails to go through with it!"))
+	return SHAME
 
 /obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)
@@ -702,8 +706,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/multiplier = 1 / mats_len
 		var/unmodified_weight = weight
 		for(var/mat_type in custom_materials)
-			var/datum/material/material = GET_MATERIAL_REF(mat_type)
-			unmodified_weight /= GET_MATERIAL_MODIFIER(material.fish_weight_modifier, multiplier)
+			var/datum/material/material = SSmaterials.get_material(mat_type)
+			unmodified_weight /= GET_MATERIAL_MODIFIER(1 + (material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 		multiplier = unmodified_weight / weight
 		for(var/mat_type in new_mats_list)
 			new_mats_list[mat_type] *= multiplier
@@ -755,12 +759,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
+	throwforce = force
+
 	if(material_flags & MATERIAL_EFFECTS && length(custom_materials)) //struck by metal gen or something.
-		var/multiplier = 1 / length(custom_materials)
 		if(material_flags & MATERIAL_AFFECT_STATISTICS)
+			var/index = 1
 			for(var/current_material in custom_materials)
-				var/datum/material/material = GET_MATERIAL_REF(current_material)
-				force *= GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+				var/datum/material/material = SSmaterials.get_material(current_material)
+				change_material_strength(material, custom_materials[material], get_material_multiplier(material, custom_materials, index))
+				index += 1
+
 		var/datum/material/master = get_master_material()
 		if(master?.item_sound_override)
 			hitsound = master.item_sound_override
@@ -771,10 +779,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			drop_sound = master.item_sound_override
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
-
-	throwforce = force
-
-	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
+	if(force >= 15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
@@ -805,21 +810,20 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	//The materials are being increased/decreased along with the weight.
-	if(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT)
-		return
-	material_weight_mult *= GET_MATERIAL_MODIFIER(custom_material.fish_weight_modifier, multiplier)
+	if(!(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT))
+		material_weight_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /obj/item/fish/apply_material_effects()
 	. = ..()
 	//Either effects aren't applied of he materials are simply being increased/decreased along with the weight. Avoids recursion.
-	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT) || material_weight_mult == 1)
+	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT) )
 		return
 	maximum_weight *= material_weight_mult
 	update_size_and_weight(size, (temp_weight || weight) * material_weight_mult, update_materials = FALSE)
 
 /obj/item/fish/remove_material_effects(replace_mats = TRUE)
 	. = ..()
-	if(replace_mats || !(material_flags & MATERIAL_EFFECTS) || material_weight_mult == 1)
+	if(replace_mats || !(material_flags & MATERIAL_EFFECTS) )
 		return
 	maximum_weight /= material_weight_mult
 	update_size_and_weight(size, weight / material_weight_mult)

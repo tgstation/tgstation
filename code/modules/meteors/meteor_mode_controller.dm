@@ -9,8 +9,6 @@ GLOBAL_DATUM(meteor_mode, /datum/meteor_mode_controller)
 	var/rampupdelta = 5
 
 /datum/meteor_mode_controller/proc/start_meteor()
-	if(datum_flags & DF_ISPROCESSING)
-		return
 	START_PROCESSING(SSprocessing, src)
 
 /datum/meteor_mode_controller/process(seconds_per_tick)

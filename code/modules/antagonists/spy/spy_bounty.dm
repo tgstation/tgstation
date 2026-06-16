@@ -662,7 +662,7 @@
 
 /datum/spy_bounty/targets_person/some_item/limb_or_organ/find_desired_thing(mob/living/carbon/human/crewmember)
 	if(ispath(desired_type, /obj/item/bodypart))
-		return locate(desired_type) in crewmember.bodyparts
+		return locate(desired_type) in crewmember.get_bodyparts()
 	if(ispath(desired_type, /obj/item/organ))
 		return locate(desired_type) in crewmember.organs
 	return null
@@ -678,7 +678,7 @@
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
 
-/datum/spy_bounty/some_bot/finish_cleanup(mob/living/simple_animal/bot/stealing)
+/datum/spy_bounty/some_bot/finish_cleanup(mob/living/basic/bot/stealing)
 	if(stealing.client)
 		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
 		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
@@ -715,23 +715,23 @@
 
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
+	bot_type = /mob/living/basic/bot/secbot/beepsky/officer
 	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
 		Watch out, they may not take kindly to being scanned."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
+	bot_type = /mob/living/basic/bot/secbot/beepsky/ofitser
 	help = "Abduct Prison Ofitser - commonly found guarding the Gulag."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
+	bot_type = /mob/living/basic/bot/secbot/beepsky/armsky
 	help = "Abduct Sergeant-At-Armsky - commonly found guarding the station's Armory."
 
 /datum/spy_bounty/some_bot/pingsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
+	bot_type = /mob/living/basic/bot/secbot/pingsky
 	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
 
 /datum/spy_bounty/some_bot/scrubs

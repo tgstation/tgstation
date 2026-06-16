@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 #define GOODY_FREE_SHIPPING_MAX 5
 /// How much to charge oversized goody orders
 #define CRATE_TAX 700
+#define REFILL_RANGE_DEFAULT 10
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
@@ -123,11 +124,16 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
 		buy()
 		create_mail()
+		if(SSshuttle.renew_cargo_air)
+			refill_air()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
 	if(getDockedId() == "cargo_away") // Sell when we get home
 		sell()
+		if(SSshuttle.renew_cargo_air)
+			refill_air()
+
 
 /obj/docking_port/mobile/supply/proc/buy()
 	SEND_SIGNAL(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
@@ -292,6 +298,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				for(var/atom/movable/exporting_atom in shuttle_turf)
 					if(iseyemob(exporting_atom))
 						continue
+					if(isobserver(exporting_atom))
+						continue
 					if(exporting_atom.anchored)
 						continue
 					export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
@@ -340,5 +348,22 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	return similar_count
 
+
+/**
+ * This proc collects all turfs on a shuttle, then replaces the air with the initial gas mix across the shuttle.
+ * Used by the shuttle air upgrade.
+ */
+/obj/docking_port/mobile/supply/proc/refill_air()
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for(var/turf/open/floor/shuttle_floor in shuttle_area.get_turfs_from_all_zlevels())
+			if(shuttle_floor.blocks_air)
+			//skip walls
+				continue
+			var/datum/gas_mixture/GM = SSair.parse_gas_string(shuttle_floor.initial_gas_mix, /datum/gas_mixture/turf)
+			shuttle_floor.copy_air(GM)
+			shuttle_floor.temperature = initial(shuttle_floor.temperature)
+			shuttle_floor.update_visuals()
+
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX
+#undef REFILL_RANGE_DEFAULT

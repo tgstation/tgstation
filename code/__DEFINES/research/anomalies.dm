@@ -30,7 +30,6 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
 	/obj/item/organ/pod_hair,
 	/obj/item/organ/spines,
 	/obj/item/organ/wings,
-	/obj/item/organ/wings/functional,
 	/obj/item/organ/alien,
 	/obj/item/organ/brain,
 	/obj/item/organ/body_egg,

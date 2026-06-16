@@ -7,3 +7,4 @@
 	volume = 50
 	vary = TRUE
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
+	use_sound_tokens = TRUE

@@ -379,7 +379,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cake/slimecake
-	name = "Slime cake"
+	name = "slime cake"
 	desc = "A cake made of slimes. Probably not electrified."
 	icon_state = "slimecake"
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)

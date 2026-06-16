@@ -307,7 +307,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_eater = owner
-	for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.bodyparts)
+	for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.get_bodyparts())
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
 			break
@@ -543,7 +543,7 @@
 	var/mob/living/carbon/carbon_owner = source
 	if(passive_level < HERETIC_LEVEL_UPGRADE)
 		return
-	for(var/obj/item/bodypart/wounded_limb as anything in carbon_owner.bodyparts)
+	for(var/obj/item/bodypart/wounded_limb as anything in carbon_owner.get_bodyparts())
 		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
 			to_cure.remove_wound()
 	for(var/obj/item/organ/internal as anything in carbon_owner.organs)

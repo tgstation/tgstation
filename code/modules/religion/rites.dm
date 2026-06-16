@@ -72,6 +72,9 @@
 		return
 	GLOB.religious_sect.rites_list.Remove(src.type)
 
+/datum/religion_rites/proc/refund(percent = 1.0)
+	GLOB.religious_sect.adjust_favor(favor_cost * percent)
+
 /**** Mechanical God ****/
 
 /datum/religion_rites/synthconversion
@@ -241,7 +244,7 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning("You've already adapted.</b>"))
+		to_chat(user, span_warning("You've already adapted."))
 		return FALSE
 	return ..()
 
@@ -423,14 +426,24 @@
 	var/obj/item/stack/sheet/converted
 
 /datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
+	var/not_rigid = null
+	var/datum/material_requirement/requirement = SSmaterials.requirements[/datum/material_requirement/rigid_material]
 	for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
-		if(!(GET_MATERIAL_REF(could_blade.material_type) in SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
+		var/datum/material/blade_mat = SSmaterials.get_material(could_blade.material_type)
+		if(!blade_mat)
+			continue
+		if(!requirement.valid_material(blade_mat))
+			not_rigid = blade_mat
 			continue
 		if(could_blade.amount < 5)
 			continue
 		converted = could_blade
 		return ..()
-	to_chat(user, span_warning("You need at least 5 sheets of a material that can be made into items!"))
+	// We've found a material but it wasn't solid enough.
+	if(not_rigid)
+		to_chat(user, span_warning("[not_rigid] is not suitable for being made into gear!"))
+	else
+		to_chat(user, span_warning("You need at least 5 sheets of a rigid material that can be made into gear!"))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -446,7 +459,7 @@
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
 	var/obj/item/ceremonial_blade/blade = new(altar_turf)
-	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = SHEET_MATERIAL_AMOUNT * 5))
+	blade.set_custom_materials(list(SSmaterials.get_material(material_used) = SHEET_MATERIAL_AMOUNT * 5))
 	return TRUE
 
 /datum/religion_rites/unbreakable

@@ -231,7 +231,7 @@
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "drunk"
 
 #undef TIPSY_THRESHOLD

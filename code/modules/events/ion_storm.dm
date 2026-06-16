@@ -42,7 +42,7 @@
 			ion_message = ionMessage,
 		)
 
-	for(var/mob/living/bot as anything in GLOB.bots_list)
+	for(var/mob/living/basic/bot/bot as anything in GLOB.bots_list)
 		if(prob(botEmagChance))
 			bot.emag_act()
 

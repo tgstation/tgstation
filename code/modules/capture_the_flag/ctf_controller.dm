@@ -233,10 +233,7 @@
 
 ///Creates a CTF game with the provided team ID then returns a reference to the new controller. If a controller already exists provides a reference to it.
 /proc/create_ctf_game(game_id)
-	if(GLOB.ctf_games[game_id])
-		return GLOB.ctf_games[game_id]
-	var/datum/ctf_controller/CTF = new(game_id)
-	return CTF
+	return GLOB.ctf_games[game_id] || new /datum/ctf_controller(game_id)
 
 #undef CTF_DEFAULT_RESPAWN
 #undef CTF_INSTAGIB_RESPAWN

@@ -27,7 +27,7 @@
 	. = ..()
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTHSCAN)
 
-/datum/status_effect/genetic_damage/refresh(mob/living/owner, total_damage)
+/datum/status_effect/genetic_damage/refresh(effect, total_damage)
 	. = ..()
 	src.total_damage += total_damage
 

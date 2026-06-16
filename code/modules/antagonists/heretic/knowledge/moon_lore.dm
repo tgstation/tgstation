@@ -119,8 +119,9 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism). \
-			Acts as a focus while hooded."
+	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia. \
+			This robe will render the user fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and rendering them unable to use ranged weapons. \
+			A Moonlight Amulet will be necessary to use blades while wearing it."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
 				I observed, basking in the light, to find my self."
@@ -286,7 +287,7 @@
 		carbon_view.mob_mood.adjust_sanity(-20)
 
 		if(carbon_sanity >= 10)
-			return
+			continue
 		// So our sanity is dead, time to fuck em up
 		if(SPT_PROB(20, seconds_per_tick))
 			to_chat(carbon_view, span_warning("it echoes through you!"))
@@ -300,7 +301,7 @@
 			to_chat(carbon_view, span_boldbig(span_red(\
 				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
-			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
+			var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
 			if(!head?.dismember())
 				carbon_view.gib(DROP_ALL_REMAINS)
 			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)

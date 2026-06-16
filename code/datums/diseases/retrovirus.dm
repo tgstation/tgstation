@@ -3,9 +3,9 @@
 	max_stages = 4
 	spread_text = "Contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
-	cure_text = "Rest or an injection of mutadone"
+	cure_text = /datum/reagent/medicine/mutadone::name + " or rest"
 	cure_chance = 3
-	agent = ""
+	agent = "Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
 	severity = DISEASE_SEVERITY_HARMFUL

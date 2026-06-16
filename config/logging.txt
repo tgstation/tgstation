@@ -50,6 +50,9 @@ LOG_MECHA
 ## log OOC channel
 LOG_OOC
 
+## log minimap drawing
+LOG_MINIMAP_DRAWING
+
 ## log pda messages
 LOG_PDA
 
@@ -107,3 +110,6 @@ LOG_WORLD_TOPIC
 
 ## log manual target zone switching
 LOG_ZONE_SWITCH
+
+## log player image creation
+LOG_IMAGE

@@ -2,99 +2,12 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ac" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ad" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ae" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"af" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ag" = (
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ah" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ai" = (
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aj" = (
-/obj/structure/stone_tile/slab,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "ak" = (
 /turf/closed/indestructible/riveted/boss,
 /area/ruin/unpowered/ash_walkers)
-"al" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aq" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ar" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 9
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "as" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/unpowered/ash_walkers)
-"at" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "au" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -154,12 +67,6 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"aF" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aG" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -209,15 +116,6 @@
 /mob/living/basic/mining/gutlunch/milk,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"aR" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aS" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -323,19 +221,6 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"bh" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 5
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"bi" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "bj" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -444,11 +329,6 @@
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"bx" = (
-/obj/structure/stone_tile/slab/cracked,
-/obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/boss,
-/area/ruin/unpowered/ash_walkers)
 "by" = (
 /obj/structure/closet/crate,
 /obj/structure/stone_tile/block/cracked{
@@ -485,12 +365,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"bC" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "bG" = (
 /turf/closed/indestructible/riveted/boss/see_through,
 /area/ruin/unpowered/ash_walkers)
@@ -510,17 +384,37 @@
 /obj/structure/stone_tile/slab/cracked,
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"bJ" = (
+"bN" = (
+/obj/structure/stone_tile/block/cracked,
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/basic/mining/gutlunch/milk,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"cp" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
+"bQ" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"cy" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"cz" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "cF" = (
 /obj/structure/stone_tile/block{
@@ -579,45 +473,51 @@
 /obj/item/clothing/head/helmet/roman/legionnaire,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"cO" = (
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+"dj" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"cP" = (
-/obj/structure/stone_tile/block,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"cQ" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"cR" = (
-/obj/structure/stone_tile/surrounding_tile/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"cT" = (
-/obj/structure/stone_tile,
+"dm" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"du" = (
 /obj/structure/stone_tile/cracked{
-	dir = 1
+	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"dz" = (
+"et" = (
 /obj/structure/stone_tile/cracked{
-	dir = 1
+	dir = 8
 	},
-/obj/structure/stone_tile/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"dB" = (
+"eT" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"fg" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"ge" = (
+/obj/structure/bonfire/dense,
+/obj/structure/stone_tile/center,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"gz" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
@@ -628,85 +528,17 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/center/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"dC" = (
-/obj/structure/stone_tile,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"dD" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"dE" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"dP" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"eu" = (
+"gY" = (
 /obj/structure/stone_tile,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"eC" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/item/pickaxe,
+"hH" = (
+/obj/structure/stone_tile/block,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"eG" = (
-/obj/structure/closet/crate/radiation,
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/item/flashlight/flare/torch,
-/obj/item/flashlight/flare/torch,
-/obj/item/flashlight/flare/torch,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"fM" = (
-/obj/effect/mapping_helpers/no_lava,
-/mob/living/basic/mining/gutlunch/warrior,
-/obj/item/flashlight/lantern,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gi" = (
-/obj/structure/table/optable,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"hF" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"id" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ie" = (
 /obj/machinery/hydroponics/soil,
@@ -717,151 +549,17 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iy" = (
-/obj/structure/stone_tile/block{
+"iS" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"jj" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/railing/wooden_fence{
 	dir = 8
 	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"iW" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"kX" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/item/flashlight/flare/torch,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"mm" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood,
-/obj/item/crusher_trophy/retool_kit/ashenskull,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"mo" = (
-/obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"mp" = (
-/obj/structure/stone_tile/surrounding/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"mB" = (
-/obj/structure/stone_tile/surrounding/cracked{
-	dir = 1
-	},
-/obj/item/flashlight/lantern,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"mL" = (
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/effect/decal/cleanable/blood,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"nB" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"oI" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"pT" = (
-/obj/structure/stone_tile/surrounding_tile/cracked,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/center,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"qm" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"qn" = (
-/obj/item/storage/box/rxglasses,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"qw" = (
-/obj/structure/stone_tile/slab,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"qH" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"qV" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/center/cracked,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"qZ" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"rs" = (
+"jZ" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
@@ -872,20 +570,14 @@
 /obj/structure/stone_tile/center,
 /obj/item/hatchet/wooden,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"ry" = (
-/obj/structure/stone_tile/block,
+"ky" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/structure/ore_container/food_trough/gutlunch_trough,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"rZ" = (
-/obj/structure/stone_tile/slab/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"sd" = (
+"kW" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
@@ -898,254 +590,118 @@
 /obj/structure/stone_tile/center,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"sz" = (
-/obj/effect/mapping_helpers/no_lava,
+"kY" = (
 /obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"lK" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"lU" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"ty" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"tY" = (
+"lX" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"ua" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/item/spear,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"uv" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"vk" = (
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"vw" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/closet/crate,
-/obj/item/flashlight/flare/torch,
-/obj/item/flashlight/flare/torch,
-/obj/item/flashlight/flare/torch,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"vV" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"wB" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"wQ" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"xd" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/item/storage/toolbox/syndicate,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"xo" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/effect/decal/cleanable/blood,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"xH" = (
-/obj/item/spear,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"zD" = (
-/obj/item/stack/sheet/mineral/wood,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"zR" = (
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
+"mM" = (
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Aj" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
+"mS" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"AV" = (
-/obj/item/pickaxe,
-/obj/structure/stone_tile/cracked{
-	dir = 1
+"nb" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Bc" = (
-/obj/item/shovel,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Bl" = (
-/obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked,
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"nd" = (
+/obj/structure/stone_tile/block{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Bq" = (
-/obj/structure/stone_tile/cracked{
+/obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Cg" = (
+"nf" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"nk" = (
+/obj/effect/mapping_helpers/no_lava,
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"Dx" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/stone_tile/cracked{
-	dir = 8
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"np" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"nS" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"of" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"oy" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Dz" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Ee" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Fa" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Fg" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/item/spear,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"Fp" = (
-/obj/structure/stone_tile/slab,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"FJ" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/item/weldingtool/experimental,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"Go" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Gv" = (
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Gx" = (
+"oC" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile{
 	dir = 4
@@ -1159,30 +715,43 @@
 /obj/item/seeds/tower,
 /obj/item/seeds/bamboo,
 /obj/item/seeds/bamboo,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/ash_walkers)
-"GW" = (
+"oH" = (
 /obj/structure/stone_tile/cracked{
-	dir = 4
+	dir = 8
 	},
-/obj/structure/closet/crate/internals,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/item/pickaxe,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"HU" = (
-/obj/structure/stone_tile/block{
+/obj/item/ai_module/combat,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"oT" = (
+/obj/item/shovel,
+/obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Ic" = (
+"pu" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"pM" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/item/spear,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"pQ" = (
 /obj/machinery/hydroponics/soil,
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
@@ -1193,227 +762,304 @@
 	},
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Ie" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"If" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/item/ai_module/combat,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"Iy" = (
-/obj/structure/stone_tile/center,
-/obj/effect/mapping_helpers/no_lava,
-/obj/item/flashlight/flare/torch,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+"qq" = (
+/turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
-"IS" = (
-/obj/structure/stone_tile/block,
-/obj/item/spear,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"JD" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/ore_container/food_trough/gutlunch_trough,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Kg" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 10
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Kt" = (
-/obj/structure/water_source/puddle{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"KQ" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/bucket/wooden,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"KR" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Lb" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"LH" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"LN" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/center/cracked,
+"qv" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/ore_box,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"qW" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"rA" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"MD" = (
+"rD" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"rS" = (
+/obj/structure/closet/crate/radiation,
 /obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
 	dir = 8
 	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"sS" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"MY" = (
+"sX" = (
+/obj/effect/mapping_helpers/no_lava,
+/mob/living/basic/mining/gutlunch/warrior,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"sY" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"uz" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/ash_walkers)
-"Nv" = (
+"uF" = (
+/obj/structure/stone_tile/slab,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"uP" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"vf" = (
 /obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"NV" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Oe" = (
-/obj/effect/mapping_helpers/no_lava,
 /obj/structure/stone_tile{
-	dir = 8
+	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"OY" = (
-/obj/structure/stone_tile/surrounding_tile/cracked,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Pk" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/corner/end/wooden_fence,
-/obj/structure/railing/corner/end/flip/wooden_fence,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"PA" = (
-/obj/effect/mapping_helpers/no_lava,
-/mob/living/basic/mining/gutlunch/warrior,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"PK" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Rq" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 6
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"RE" = (
+"vm" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /obj/structure/stone_tile/block,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"RH" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
+"vJ" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Sf" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/item/reagent_containers/cup/bucket/wooden,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Sq" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
+"wa" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Th" = (
-/obj/structure/stone_tile/block/cracked{
+/obj/structure/closet/crate,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"wt" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"wL" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Tl" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/table/wood,
-/obj/item/flashlight/lantern,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Tr" = (
+"wM" = (
 /obj/machinery/hydroponics/soil,
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"TC" = (
+"wT" = (
+/obj/structure/stone_tile/slab,
+/obj/effect/decal/cleanable/blood,
 /obj/effect/mapping_helpers/no_lava,
-/obj/item/flashlight/lantern,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"TO" = (
+"wV" = (
+/obj/structure/stone_tile/slab,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"xM" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"yh" = (
+/obj/structure/stone_tile/cracked,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"ys" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"yw" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"yA" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"zw" = (
+/obj/structure/stone_tile,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"zG" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"AI" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"AL" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"AU" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Be" = (
+/obj/item/spear,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Bx" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"Cd" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"Dm" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Dq" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/railing/corner/end/wooden_fence,
+/obj/structure/railing/corner/end/flip/wooden_fence,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Dr" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"DX" = (
+/obj/item/pickaxe,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"EN" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"FM" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"GY" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Hn" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
@@ -1423,66 +1069,357 @@
 /obj/item/reagent_containers/blood/lizard,
 /obj/item/reagent_containers/blood/lizard,
 /obj/item/stack/sheet/cloth/ten,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/ash_walkers)
-"TY" = (
-/obj/structure/stone_tile/surrounding_tile{
+"HW" = (
+/obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/obj/structure/stone_tile/center,
-/obj/structure/stone_tile/surrounding_tile/cracked{
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"In" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"IJ" = (
+/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Uh" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"UI" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
-"UL" = (
 /obj/structure/stone_tile/cracked,
-/obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Wh" = (
+"Jz" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/item/weldingtool/experimental,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"JF" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Xp" = (
-/obj/structure/stone_tile/cracked{
+"JQ" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
 	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Kc" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Kt" = (
+/obj/structure/water_source/puddle{
+	pixel_x = -3;
+	pixel_y = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"YO" = (
-/obj/structure/bonfire/dense,
+"KI" = (
+/obj/structure/table/optable,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"LR" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"LV" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"ME" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"MQ" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/railing/wooden_fence,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"MT" = (
+/obj/effect/mapping_helpers/no_lava,
+/mob/living/basic/mining/gutlunch/warrior,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Nb" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"Zr" = (
-/obj/structure/stone_tile/surrounding_tile/cracked,
-/obj/structure/ore_box,
+"Nc" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Nz" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Ob" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Om" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"OA" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Pb" = (
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Qh" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Qp" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"Qs" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Si" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Sl" = (
+/obj/item/storage/box/rxglasses,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"Sx" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"SU" = (
+/obj/structure/stone_tile/block,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"UA" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"UD" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"UZ" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Vd" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Vy" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/item/pickaxe,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"VO" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Ws" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"WO" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/spear,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Xk" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Xt" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"XY" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/crusher_trophy/retool_kit/ashenskull,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"Yc" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"Yi" = (
+/obj/effect/mapping_helpers/no_lava,
+/mob/living/basic/mining/gutlunch/milk,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"YN" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"ZD" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"ZH" = (
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ash_walkers)
+"ZO" = (
+/obj/structure/stone_tile/block,
+/obj/item/spear,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"ZW" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
@@ -1490,49 +1427,49 @@ aa
 aa
 aa
 aa
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+ys
+ys
+ys
+ys
+ys
+ys
+ys
 aa
 aa
-ah
-ah
-ah
-ah
+ys
+ys
+ys
+ys
 aa
 aa
 aa
 "}
 (2,1,1) = {"
 aa
-ah
-ah
-ah
-ah
-ah
-ah
-bi
-ah
-bi
-cO
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+ys
+ys
+ys
+ys
+ys
+ys
+Vd
+ys
+Vd
+wL
+ys
+ys
+ys
+ys
+ys
+ys
+ys
 aa
 aa
 "}
 (3,1,1) = {"
 aa
 aa
-ah
+ys
 as
 as
 as
@@ -1540,131 +1477,131 @@ as
 ak
 as
 as
-cP
-ah
-ah
-eu
-oI
-AV
-ah
-ah
-ah
+SU
+ys
+ys
+gY
+Dm
+DX
+ys
+ys
+ys
 aa
 "}
 (4,1,1) = {"
 aa
 aa
-ah
+ys
 ak
-If
-MY
-dP
+oH
+uP
+Qp
 bj
-vw
+wa
 ak
-cP
-eu
-Bq
-ua
-Xp
-Xp
-xo
-ah
-ah
+SU
+gY
+oy
+WO
+FM
+FM
+Qs
+ys
+ys
 aa
 "}
 (5,1,1) = {"
 aa
 aa
-ac
+UA
 as
-Gx
-FJ
+oC
+Jz
 aY
 bk
 bw
 ak
-NV
-Sq
-Bl
-Fa
-LN
-oI
-RH
-NV
-ah
-ah
+nS
+eT
+ZW
+LV
+nb
+Dm
+UD
+nS
+ys
+ys
 "}
 (6,1,1) = {"
 aa
 aa
-cT
+cz
 ak
-xd
-qn
-mB
-Lb
-bx
-dP
-Fp
-MD
-KR
-YO
-tY
-id
-oI
-Xp
-ah
-ah
+Bx
+Sl
+uz
+Cd
+nf
+Qp
+wV
+ZD
+bN
+ge
+YN
+Si
+Dm
+FM
+ys
+ys
 "}
 (7,1,1) = {"
 aa
 aa
-ae
+lX
 as
-gi
-vk
-Ie
+KI
+ZH
+bQ
 bm
 by
 ak
-KR
-NV
-qV
-HU
-TY
-eu
-RH
-Go
-ah
-ah
+bN
+nS
+Nc
+yA
+AI
+gY
+UD
+Qh
+ys
+ys
 "}
 (8,1,1) = {"
 aa
 aa
-ae
+lX
 as
-TO
-UI
-wQ
-eG
+Hn
+LR
+fg
+rS
 bz
 ak
-NV
-Dx
-Aj
-Nv
-UL
-zD
-Sq
-Bc
-ah
-ah
+nS
+sY
+lK
+Ob
+yh
+pu
+eT
+oT
+ys
+ys
 "}
 (9,1,1) = {"
 aa
-ah
-ah
+ys
+ys
 as
 ak
 as
@@ -1672,42 +1609,42 @@ as
 as
 ak
 ak
-Bq
-NV
-Bq
-Wh
-RH
-pT
-Sf
-Ic
-dD
-ah
+oy
+nS
+oy
+JF
+UD
+zG
+VO
+pQ
+et
+ys
 "}
 (10,1,1) = {"
 aa
-ai
-aq
-at
-aF
-aR
-aR
-eC
-HU
-uv
-OY
-Bq
-NV
-nB
-qZ
-ry
-Iy
+AL
+rA
+qq
+qq
+qq
+qq
+Vy
+yA
+Xt
+Yc
+oy
+nS
+wt
+xM
+hH
+mM
 ie
-dE
-ah
+cy
+ys
 "}
 (11,1,1) = {"
-ab
-aj
+Xk
+uF
 ak
 ak
 ak
@@ -1715,20 +1652,20 @@ ak
 ak
 ak
 ak
-qw
-GW
-NV
-RH
-Nv
-NV
-rs
-Tr
-dB
-dC
+wT
+of
+nS
+UD
+Ob
+nS
+jZ
+wM
+gz
+zw
 aa
 "}
 (12,1,1) = {"
-ac
+UA
 ak
 ak
 ak
@@ -1738,19 +1675,19 @@ ak
 ak
 ak
 ak
-IS
-Gv
-ty
-Nv
+ZO
+dj
+iS
+Ob
 Kt
-du
-dz
-dC
-ah
+Dr
+IJ
+zw
+ys
 aa
 "}
 (13,1,1) = {"
-ad
+dm
 ak
 ak
 au
@@ -1760,19 +1697,19 @@ bc
 bp
 ak
 ak
-wB
-Gv
-mL
-iW
-ah
-ah
-ah
-ah
-ah
-ah
+Kc
+dj
+Pb
+yw
+ys
+ys
+ys
+ys
+ys
+ys
 "}
 (14,1,1) = {"
-ae
+lX
 ak
 ak
 av
@@ -1782,19 +1719,19 @@ bd
 bq
 ak
 bG
-zR
-LH
-Bq
-RE
-hF
-ah
-bi
-bi
-bi
-cO
+Nb
+JQ
+oy
+vm
+qW
+ys
+Vd
+Vd
+Vd
+wL
 "}
 (15,1,1) = {"
-ac
+UA
 ak
 ak
 aw
@@ -1804,19 +1741,19 @@ be
 br
 bB
 bH
-Fp
-iy
-qZ
-Th
+wV
+nd
+xM
+UZ
 ak
 ak
 as
 ak
 ak
-ah
+ys
 "}
 (16,1,1) = {"
-ac
+UA
 ak
 ak
 ax
@@ -1826,19 +1763,19 @@ bf
 bs
 ak
 bG
-sd
-LH
-Aj
-iW
+kW
+JQ
+lK
+yw
 as
-Fg
-kX
+pM
+kY
 cL
 as
-ah
+ys
 "}
 (17,1,1) = {"
-af
+OA
 ak
 ak
 ay
@@ -1848,19 +1785,19 @@ bg
 bt
 ak
 ak
-Ee
-Bq
-xH
-Fp
-Cg
-rZ
-mp
+vf
+oy
+Be
+wV
+HW
+ME
+In
 cM
 as
-ah
+ys
 "}
 (18,1,1) = {"
-ac
+UA
 ak
 ak
 ak
@@ -1870,20 +1807,20 @@ ak
 ak
 ak
 ak
-Zr
-Gv
-qm
-Gv
+qv
+dj
+nk
+dj
 as
-mm
+XY
 cF
 cN
 ak
-cP
+SU
 "}
 (19,1,1) = {"
-ag
-aj
+GY
+uF
 ak
 ak
 ak
@@ -1892,295 +1829,295 @@ ak
 ak
 ak
 bI
-Oe
-Gv
-qm
-Gv
+lU
+dj
+nk
+dj
 as
 as
 as
 ak
 ak
-cQ
+Om
 "}
 (20,1,1) = {"
-ah
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Dz
-qm
-Gv
-ah
-ah
-bC
-ah
-ah
-cR
+ys
+uF
+ak
+ak
+MT
+dj
+np
+dj
+MQ
+rD
+dj
+AU
+nk
+dj
+ys
+ys
+mS
+ys
+ys
+Ws
 "}
 (21,1,1) = {"
-ah
-Gv
-ar
-cp
-cp
-cp
-cp
-cp
-Kg
-Gv
-Gv
-Gv
-qm
-Gv
-ah
-ah
-ah
-ah
-ah
-ah
+aa
+uF
+ak
+ak
+dj
+dj
+dj
+sX
+MQ
+rD
+dj
+dj
+nk
+dj
+ys
+ys
+ys
+ys
+ys
+ys
 "}
 (22,1,1) = {"
-ah
-Gv
-al
-fM
-Gv
-Gv
-TC
-Gv
-qH
-KQ
-Gv
-Gv
-qm
-Gv
-Gv
-ah
-ah
-ah
-ah
-ah
+aa
+uF
+ak
+ak
+dj
+Yi
+Yi
+dj
+MQ
+sS
+dj
+dj
+nk
+dj
+dj
+ys
+ys
+ys
+ys
+ys
 "}
 (23,1,1) = {"
-ah
-Gv
-al
-Gv
-Gv
-Gv
-Gv
-PA
-qH
-KQ
-Gv
-Gv
-qm
-Gv
-PK
-ah
-ah
-ah
-ah
-ah
+aa
+uF
+ak
+ak
+Yi
+dj
+dj
+dj
+MQ
+dj
+Nz
+Nz
+nk
+dj
+vJ
+ys
+ys
+ys
+ys
+ys
 "}
 (24,1,1) = {"
-ah
-Gv
-al
-Gv
-bJ
-bJ
-Gv
-Gv
-qH
-Tl
-Gv
-Gv
-qm
-sz
-Gv
-ah
-ah
-ah
-ah
-ah
+aa
+aa
+ak
+ak
+dj
+Yi
+Yi
+dj
+Dq
+Nz
+dj
+lU
+nk
+Nz
+dj
+ys
+ys
+ys
+ys
+aa
 "}
 (25,1,1) = {"
-ah
-Gv
-al
-bJ
-Gv
-Gv
-Gv
-Gv
-qH
-Gv
-sz
-sz
-qm
-Gv
-Gv
-ah
-ah
-ah
-ah
-ah
+aa
+aa
+ak
+ak
+dj
+dj
+np
+dj
+MQ
+dj
+AU
+lU
+nk
+dj
+dj
+ys
+ys
+ys
+ys
+aa
 "}
 (26,1,1) = {"
-ah
-Gv
-al
-Gv
-bJ
-bJ
-Gv
-Gv
-Pk
-sz
-Gv
-Oe
-Gv
-Gv
-Gv
-ah
-ah
-ah
+aa
+ys
+ak
+ak
+dj
+ky
+dj
+dj
+MQ
+dj
+dj
+dj
+dj
+dj
+dj
+ys
+ys
+ys
 aa
 aa
 "}
 (27,1,1) = {"
-ah
-Gv
-al
-Gv
-Gv
-TC
-Gv
-Gv
-qH
-Gv
-Dz
-Oe
-Gv
-Gv
-Gv
-ah
-ah
-ah
+aa
+ys
+ak
+ak
+dj
+dj
+dj
+sX
+MQ
+dj
+dj
+dj
+dj
+dj
+dj
+ys
+ys
+ys
 aa
 aa
 "}
 (28,1,1) = {"
-ah
-Gv
-al
-Gv
-JD
-Gv
-Gv
-Gv
-qH
-Gv
-Gv
-Gv
-Gv
-Dz
-Gv
-ah
-ah
-ah
+ys
+ys
+ak
+ak
+np
+dj
+sX
+np
+MQ
+dj
+Sx
+ys
+dj
+AU
+dj
+ys
+ys
+ys
 aa
 aa
 "}
 (29,1,1) = {"
-ah
-Gv
-al
-Gv
-Gv
-Gv
-Gv
-PA
-qH
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-ah
-ah
-ah
+ys
+ys
+ak
+ak
+dj
+dj
+dj
+dj
+MQ
+EN
+iS
+ys
+dj
+dj
+dj
+ys
+ys
+ys
 aa
 aa
 "}
 (30,1,1) = {"
-ah
-Gv
-al
-TC
-Gv
-PA
-Gv
-TC
-qH
-Gv
-mo
-ah
-ah
-ah
-ah
-ah
-ah
+aa
+ys
+ak
+ak
+ak
+ak
+ak
+jj
+jj
+dj
+iS
+ys
+ys
+ys
+ys
+ys
+ys
 aa
 aa
 aa
 "}
 (31,1,1) = {"
-ah
-Gv
-bh
-vV
-vV
-vV
-vV
-vV
-Rq
-Uh
-ty
-ah
-ah
-ah
-ah
-ah
-ah
+aa
+aa
+aa
+ak
+ak
+ak
+ak
+ak
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
 aa
 aa
 aa
 "}
 (32,1,1) = {"
-ah
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-ty
-ah
-ah
+aa
+aa
+aa
+aa
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
 aa
 aa
 aa
@@ -2190,19 +2127,19 @@ aa
 aa
 "}
 (33,1,1) = {"
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ys
+ys
+ys
+ys
+ys
+aa
 aa
 aa
 aa

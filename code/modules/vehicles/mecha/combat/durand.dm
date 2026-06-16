@@ -141,7 +141,8 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	button_icon_state = "mech_defense_mode_off"
 
 /datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(mob/clicker, trigger_flags, forced_state = FALSE)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return

@@ -282,14 +282,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// This is pretty much meant for players, AI will use the task-specific procs instead.
 /mob/living/basic/parrot/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(isitem(target) && steal_from_ground(target))
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(iscarbon(target) && steal_from_mob(target))
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_ground(obj/item/target)
@@ -447,6 +447,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	return returnable_list
 
 /mob/living/basic/parrot/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(drop_location())
 
 /mob/living/basic/parrot/proc/drop_item_on_signal(mob/living/user)

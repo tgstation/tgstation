@@ -1,7 +1,7 @@
 /atom/movable/screen/alert/status_effect/slime_leech
 	name = "Covered in Slime"
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "slime_leech"
 
 /datum/status_effect/slime_leech
@@ -41,7 +41,10 @@
 	our_slime = null
 
 /datum/status_effect/slime_leech/tick(seconds_between_ticks)
-	if(our_slime.stat != CONSCIOUS)
+	if(QDELETED(our_slime))
+		qdel(src)
+		return
+	if(our_slime.stat != CONSCIOUS || !owner)
 		our_slime.stop_feeding(silent = TRUE)
 		return
 

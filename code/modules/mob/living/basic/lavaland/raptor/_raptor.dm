@@ -13,8 +13,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	icon_state = "raptor_red"
 	base_icon_state = "raptor"
-	pixel_w = -12
-	base_pixel_w = -12
+	pixel_w = -20
+	base_pixel_w = -20
 	speed = 0.5
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 200
@@ -42,8 +42,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	ai_controller = null
 	/// Can this raptor breed?
 	var/can_breed = TRUE
-	/// Should we change offsets on direction change?
-	var/change_offsets = TRUE
 	/// Pet commands when we tame the raptor
 	var/static/list/pet_commands = list(
 		/datum/pet_command/breed,
@@ -73,7 +71,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/slab/xeno = -15,
 		/obj/item/food/meat/steak = 50,
 		/obj/item/food/grown/ash_flora = 10,
-		/obj/item/fish = 15,
+		/obj/item/fish = 25,
 		/obj/item/organ = 25,
 	)
 	/// Inheritance datum we store our genetic data in
@@ -94,7 +92,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	else
 		change_growth_stage(growth_stage, RAPTOR_ADULT)
 
-	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), INNATE_TRAIT)
 	AddElement(\
 		/datum/element/crusher_loot,\
 		trophy_type = /obj/item/crusher_trophy/raptor_feather,\
@@ -105,7 +103,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if (!mapload)
 		GLOB.raptor_population += REF(src)
 
-	AddComponent(/datum/component/obeys_commands, pet_commands, list(0, -base_pixel_w))
+	AddComponent(/datum/component/obeys_commands, pet_commands, list(-base_pixel_w, 0))
 	AddElement(\
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
@@ -124,9 +122,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		update_blackboard()
 
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	RegisterSignal(src, COMSIG_LIVING_SCOOPED_UP, PROC_REF(on_picked_up))
-	adjust_offsets(dir)
 	add_happiness_component()
 
 /mob/living/basic/raptor/Destroy()
@@ -142,22 +138,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if(!iscarbon(target))
 		return
 	return ..()
-
-/mob/living/basic/raptor/proc/on_dir_change(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	adjust_offsets(new_dir)
-
-/mob/living/basic/raptor/proc/adjust_offsets(direction)
-	if (!change_offsets)
-		return
-
-	switch (direction)
-		if (NORTH, SOUTH)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 0, animate = FALSE)
-		if (EAST, SOUTHEAST, NORTHEAST)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
-		if (WEST, SOUTHWEST, NORTHWEST)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 8, animate = FALSE)
 
 /mob/living/basic/raptor/examine(mob/user)
 	. = ..()
@@ -189,16 +169,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
 		UnarmedAttack(ore_food, TRUE, modifiers)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if (!combat_mode && istype(target, /mob/living/basic/raptor))
@@ -385,7 +365,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)
-	change_offsets = initial(change_offsets)
 
 	if (new_stage == RAPTOR_ADULT)
 		// Adults need to be tamed with skill rather than snacks
@@ -395,15 +374,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		density = FALSE
 		can_breed = FALSE
 		move_resist = MOVE_RESIST_DEFAULT
-		change_offsets = FALSE
 
 		if (prev_stage == RAPTOR_ADULT)
 			AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, unique = TRUE)
-
-	if (change_offsets)
-		adjust_offsets(dir)
-	else
-		remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 
 	if (can_breed)
 		add_breeding_component()

@@ -69,6 +69,11 @@
 	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	AddComponent(/datum/component/defaceable, \
+		icon = 'icons/mob/silicon/aibot_faces.dmi', \
+		icon_states = list("minebot" = FALSE, "minebot_highlight" = TRUE), \
+		drawing_of = "a face", \
+	)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/missile_launcher = BB_MINEBOT_MISSILE_ABILITY,
@@ -250,13 +255,13 @@
 
 /mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	repair_node_drone(target)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)

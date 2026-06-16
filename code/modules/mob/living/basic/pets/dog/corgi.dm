@@ -123,7 +123,7 @@
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
 		if(do_after(user, 5 SECONDS, target = src))
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(get_turf(src), 'sound/items/tools/welder2.ogg', 20, TRUE)
+			playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
 			icon_dead = "[icon_living]_shaved_dead"
@@ -270,7 +270,8 @@
 ///Handler for COMSIG_MOB_RETRIEVE_ACCESS
 /mob/living/basic/pet/dog/corgi/proc/retrieve_access(mob/accessor, list/player_access)
 	SIGNAL_HANDLER
-	player_access += access_card.GetAccess()
+	if(access_card)
+		player_access += access_card.GetAccess()
 
 ///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
 /mob/living/basic/pet/dog/corgi/proc/on_appearance_change()

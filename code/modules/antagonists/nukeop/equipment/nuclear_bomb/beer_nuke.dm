@@ -3,6 +3,7 @@
 	name = "\improper Nanotrasen-brand nuclear fission explosive"
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
 	proper_bomb = FALSE
+	is_on_minimap = FALSE
 	/// The keg located within the beer nuke.
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 	/// Reagent that is produced once the nuke detonates.
@@ -32,13 +33,11 @@
 		weapon.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
 		return TRUE // pretend we handled the attack, too.
 
-	if(istype(weapon, /obj/item/nuke_core_container))
-		to_chat(user, span_notice("[src] has had its plutonium core removed as a part of being decommissioned."))
-		return TRUE
-
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
+	if(core)
+		return ..()
 	//Unblock roundend, we're not actually exploding.
 	SSticker.roundend_check_paused = FALSE
 	var/turf/bomb_location = get_turf(src)
@@ -61,6 +60,8 @@
 	disarm_nuke()
 
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
+	if(core)
+		return ..()
 	//if it's always hooked in it'll override admin choices
 	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 	disarm_nuke()

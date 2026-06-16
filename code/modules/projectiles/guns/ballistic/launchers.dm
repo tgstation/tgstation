@@ -2,19 +2,24 @@
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
 /obj/item/gun/ballistic/revolver/grenadelauncher
-	name = "grenade launcher"
-	desc = "A break-operated grenade launcher."
-	icon_state = "dshotgun_sawn"
-	inhand_icon_state = "gun"
+	name = "break-action grenade launcher"
+	desc = "A break-action grenade launcher. Archaic by modern standards, but it still works, so who can complain?"
+	icon_state = "grenade_launcher"
+	inhand_icon_state = "grenade_launcher"
+	worn_icon_state = "shotgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted/tear
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/tear
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/attackby(obj/item/A, mob/user, list/modifiers, list/attack_modifiers)
 	..()

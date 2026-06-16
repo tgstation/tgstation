@@ -93,8 +93,11 @@ ROUNDSTART_BLUE_ALERT 1
 
 ## GAME MODES ###
 
-## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+## Uncomment to not send a roundstart intercept report.
 #NO_INTERCEPT_REPORT
+
+## Uncomment to exclude dynamic info in the roundstart report.
+#NO_DYNAMIC_REPORT
 
 ## Percent weight reductions for three of the most recent modes
 
@@ -490,15 +493,6 @@ ROUNDSTART_TRAITS
 ## Enable night shifts
 #ENABLE_NIGHT_SHIFTS
 
-## The shift start hour in 24-hour (0-23) notation
-SHIFT_TIME_START_HOUR 7
-
-## Sets shift time to server time at roundstart. Overrides SHIFT_TIME_START_HOUR
-#SHIFT_TIME_REALTIME
-
-## Enable randomized shift start times. Overrides SHIFT_TIME_REALTIME and SHIFT_TIME_START_HOUR
-#RANDOMIZE_SHIFT_TIME
-
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
 
@@ -590,3 +584,6 @@ SPY_EASY_REWARD_TC_THRESHOLD 5
 ## Hard bounties grant uplink rewards that cost this much TC (or higher).
 ## Also functions as the upper end for medium bounties.
 SPY_HARD_REWARD_TC_THRESHOLD 15
+
+## Minimum time before a heretic can ascend, in minutes
+# MINIMUM_ASCENSION_TIME 3

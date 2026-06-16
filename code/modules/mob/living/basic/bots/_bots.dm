@@ -108,6 +108,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/original_allies
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
+	/// List of overlays to add to the bot if someone has drawn on it, index to a boolean of whether it should ignore paint colour
+	var/list/facepaint_overlays
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
@@ -149,6 +151,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT) && (bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION))
 		enable_possession(mapload = mapload)
 
+	if (length(facepaint_overlays))
+		AddComponent(/datum/component/defaceable, \
+			icon = 'icons/mob/silicon/aibot_faces.dmi', \
+			icon_states = facepaint_overlays, \
+			drawing_of = "a face", \
+		)
+
 	pa_system = (isnull(announcement_type)) ? new(src, automated_announcements = generate_speak_list()) : new announcement_type(src, automated_announcements = generate_speak_list())
 	pa_system.Grant(src)
 	ai_controller.set_blackboard_key(BB_ANNOUNCE_ABILITY, pa_system)
@@ -187,7 +196,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/get_emagged_message()
 	return get_policy(ROLE_EMAGGED_BOT) || "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
 
-/mob/living/basic/bot/proc/turn_on()
+/mob/living/basic/bot/proc/turn_on(mob/user)
 	if(stat == DEAD)
 		return FALSE
 	set_mode_flags(bot_mode_flags | BOT_MODE_ON)

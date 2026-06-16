@@ -268,6 +268,7 @@
 /datum/spacevine_mutation/transparency/on_birth(obj/structure/spacevine/holder)
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
+	holder.unblock_sunlight()
 
 /datum/spacevine_mutation/gas_eater
 	abstract_type = /datum/spacevine_mutation/gas_eater
@@ -287,7 +288,7 @@
 	if(!gas_mix.gases[gas_type])
 		return
 
-	gas_mix.gases[gas_type][MOLES] = max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+	gas_mix.set_gas(gas_type, max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0))
 	gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/gas_eater/oxy_eater

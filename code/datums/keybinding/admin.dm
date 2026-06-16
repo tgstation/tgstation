@@ -26,6 +26,20 @@
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	return TRUE
 
+/datum/keybinding/admin/jump_to_ghost
+	hotkey_keys = list("F4")
+	name = "jump_to_ghost"
+	full_name = "Jump to Aghost"
+	description = "Jump your body to your Aghost"
+	keybind_signal = COMSIG_KB_ADMIN_JUMPTOGHOST_DOWN
+
+/datum/keybinding/admin/jump_to_ghost/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/jump_to_ghost)
+	return TRUE
+
 /datum/keybinding/admin/player_panel_new
 	hotkey_keys = list("F6")
 	name = "player_panel_new"
@@ -97,7 +111,7 @@
 	return TRUE
 
 /datum/keybinding/admin/deadmin
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "deadmin"
 	full_name = "Deadmin"
 	description = "Shed your admin powers"
@@ -111,7 +125,7 @@
 	return TRUE
 
 /datum/keybinding/admin/readmin
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "readmin"
 	full_name = "Readmin"
 	description = "Regain your admin powers"

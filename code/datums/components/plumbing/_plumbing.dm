@@ -85,13 +85,6 @@
 /datum/component/plumbing/proc/recipient_reagents_holder()
 	return reagents
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
-/datum/component/plumbing/proc/get_original_direction(dir)
-	if(!dir)
-		return 0
-	var/atom/movable/parent_movable = parent
-	return turn(dir, dir2angle(parent_movable.dir) - 180)
-
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
 	if(demand_connects)
@@ -107,7 +100,7 @@
 			if(istype(duct))
 				if(duct.neighbours && (duct.duct_layer & ducting_layer))
 					duct.neighbours[parent] = opposite_dir
-					duct.update_appearance(UPDATE_ICON_STATE)
+					duct.update_appearance(UPDATE_ICON)
 					duct.net.add_plumber(src, direction)
 				continue
 
@@ -130,7 +123,7 @@
 		for(var/obj/machinery/duct/pipe as anything in net.ducts)
 			if(pipe.neighbours[parent])
 				pipe.neighbours -= parent
-				pipe.update_appearance(UPDATE_ICON_STATE)
+				pipe.update_appearance(UPDATE_ICON)
 
 		//remove ourself from this network and delete it if emtpy
 		if(net.remove_plumber(src))
@@ -140,7 +133,7 @@
 	SIGNAL_HANDLER
 
 	if(!active())
-		var/datum/overlap = ducting_layer_check(parent_obj)
+		var/datum/overlap = ducting_layer_check(parent_obj, -ducting_layer)
 		if(!isnull(overlap))
 			parent_obj.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
@@ -175,9 +168,7 @@
 	if(tile_covered)
 		return
 
-	//Copied from ducts handle_layer()
 	var/offset
-
 	switch(ducting_layer)
 		if(FIRST_DUCT_LAYER)
 			offset = -10
@@ -190,12 +181,12 @@
 		if(FIFTH_DUCT_LAYER)
 			offset = 10
 
-	var/duct_x = offset - parent_movable.pixel_x - parent_movable.pixel_w
-	var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 	var/duct_layer = PLUMBING_PIPE_VISIBILE_LAYER + ducting_layer * 0.0003
 
 	for(var/direction in GLOB.cardinals)
 		var/color
+		var/duct_x = offset - parent_movable.pixel_x - parent_movable.pixel_w
+		var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 		if(direction & initial(demand_connects))
 			color = demand_color
 		else if(direction & initial(supply_connects))
@@ -225,6 +216,7 @@
 				new_supply_connects |= turn(direction, angle)
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
+	parent_obj.update_appearance(UPDATE_OVERLAYS)
 
 	if(length(ducts))
 		disable()

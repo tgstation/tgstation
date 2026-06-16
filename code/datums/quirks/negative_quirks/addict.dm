@@ -95,16 +95,16 @@
 	associated_typepath = /datum/quirk/item_quirk/addict/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
-
-	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
-	if(addiction && (addiction != "Random"))
-		reagent_type = GLOB.possible_junkie_addictions[addiction]
+/datum/quirk/item_quirk/addict/junkie/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE, announce = TRUE)
+	if(!quirk_transfer)
+		var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+		if(addiction && (addiction != "Random"))
+			reagent_type = GLOB.possible_junkie_addictions[addiction]
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
 	if(!QDELETED(quirk_holder) && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
+		for(var/addiction_type in GLOB.addictions)
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/addict/smoker

@@ -402,7 +402,7 @@
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
-		for(var/damage_key in ARMOR_LIST_DAMAGE())
+		for(var/damage_key in ARMOR_LIST_DAMAGE)
 			var/rating = armor.get_rating(damage_key)
 			if(!rating)
 				continue
@@ -412,7 +412,7 @@
 			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
-		for(var/durability_key in ARMOR_LIST_DURABILITY())
+		for(var/durability_key in ARMOR_LIST_DURABILITY)
 			var/rating = armor.get_rating(durability_key)
 			if(!rating)
 				continue
@@ -572,7 +572,7 @@ BLIND     // can't see anything
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
-	if(up)
+	if(visor_flags_inv)
 		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
@@ -582,7 +582,6 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= visor_flags_cover
@@ -590,6 +589,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)

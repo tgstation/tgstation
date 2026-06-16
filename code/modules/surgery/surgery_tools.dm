@@ -160,7 +160,8 @@
 	inhand_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/tools/drill_hit.ogg'
+	usesound = 'sound/items/tools/drill_use.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
@@ -591,7 +592,7 @@
 /obj/item/shears/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
-	for(var/obj/item/bodypart/thing in user.bodyparts)
+	for(var/obj/item/bodypart/thing in user.get_bodyparts())
 		if(thing.body_part == CHEST)
 			continue
 		addtimer(CALLBACK(thing, TYPE_PROC_REF(/obj/item/bodypart/, dismember)), timer)
@@ -729,7 +730,7 @@
 
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_UNDEAD, damage_multiplier = 2) //Just in case one of the tennants get uppity
 
 /obj/item/surgicaldrill/cruel
 	name = "tearing drill"

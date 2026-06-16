@@ -44,7 +44,7 @@
 	return xeno_team
 
 /datum/antagonist/xeno/get_preview_icon()
-	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
+	return finish_preview_icon(uni_icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
 /datum/antagonist/xeno/forge_objectives()
 	var/datum/objective/advance_hive/objective = new

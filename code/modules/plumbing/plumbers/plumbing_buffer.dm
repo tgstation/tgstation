@@ -1,7 +1,3 @@
-#define UNREADY 0
-#define IDLE 1
-#define READY 2
-
 /obj/machinery/plumbing/buffer
 	name = "automatic buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
@@ -9,115 +5,158 @@
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
 
-	///Buffer net that connects multiple buffers
-	var/datum/buffer_net/buffer_net
+	///List of all buffers we are connected to
+	var/list/obj/machinery/plumbing/buffer/connections
 	///Volume of reagents at which which this buffer is ready to send
 	var/activation_volume = 100
 	///The state of this machine see defines
-	var/mode
+	var/mode = AB_UNREADY
 
 /obj/machinery/plumbing/buffer/Initialize(mapload, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/buffer, layer)
-
-/obj/machinery/plumbing/buffer/create_reagents(max_vol, flags)
-	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
+
+///Removes this buffer from the list of connected buffers
+/obj/machinery/plumbing/buffer/proc/disconnect()
+	PRIVATE_PROC(TRUE)
+	if(!connections)
+		return
+
+	connections -= src
+	for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+		node.on_reagent_change()
+	connections = null
+
+/obj/machinery/plumbing/buffer/Destroy(force)
+	disconnect()
+	return ..()
+
+/obj/machinery/plumbing/buffer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Reset connections"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return ..()
+
+/obj/machinery/plumbing/buffer/examine(mob/user)
+	. = ..()
+	. += span_notice("It activates at a threshold of [activation_volume]u of reagents")
+	switch(mode)
+		if(AB_UNREADY)
+			. += span_notice("It is filling up on reagents.")
+		if(AB_IDLE)
+			. += span_notice("It is waiting on other buffers to activate.")
+		if(AB_READY)
+			. += span_notice("It is sending reagents.")
+	. += span_notice("Its activation threshold can be changed with by [EXAMINE_HINT("hand")].")
+	. += span_notice("Its connections can be changed with a [EXAMINE_HINT("screwdriver")].")
+
+/obj/machinery/plumbing/buffer/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)
+	if(!anchored || !is_operational)
+		return
+
+	switch(mode)
+		if(AB_UNREADY)
+			icon_state += "_red"
+		if(AB_IDLE)
+			icon_state += "_yellow"
+		if(AB_READY)
+			icon_state += "_green"
 
 /obj/machinery/plumbing/buffer/proc/on_reagent_change()
 	SIGNAL_HANDLER
-	if(!buffer_net)
-		return
-	if(reagents.total_volume >= activation_volume && mode == UNREADY)
-		mode = IDLE
-		buffer_net.check_active()
 
-	else if(reagents.total_volume < activation_volume && mode != UNREADY)
-		mode = UNREADY
-		buffer_net.check_active()
+	if(mode == AB_UNREADY)
+		if(reagents.total_volume >= activation_volume)
+			mode = AB_IDLE
+			update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/plumbing/buffer/update_icon()
+	if(mode == AB_IDLE)
+		for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+			if(node.mode == AB_UNREADY)
+				return
+
+		for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+			node.mode = AB_READY
+			node.update_appearance(UPDATE_ICON_STATE)
+
+	if(mode == AB_READY)
+		for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+			if(node.reagents.total_volume)
+				return
+
+		for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+			node.mode = AB_UNREADY
+			node.update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/plumbing/buffer/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_SUCCESS
+
+	//clear existing connections and ourself to it for other machines
+	LAZYCLEARLIST(connections)
+
+	//Discover new connections
+	var/list/obj/machinery/plumbing/buffer/queue = list(src)
+	var/list/obj/machinery/plumbing/buffer/visited = list()
+	while(queue.len)
+		var/obj/machinery/plumbing/buffer/node = popleft(queue)
+		node.connections = connections
+		LAZYADD(connections, node)
+		visited[node] = TRUE
+
+		for(var/direction in GLOB.cardinals)
+			for(var/obj/machinery/plumbing/buffer/sub_node in get_step(node, direction))
+				if(!sub_node.anchored || visited[sub_node])
+					continue
+				queue += sub_node
+
+	//Ping the alert to the player
+	for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+		node.is_operational = FALSE
+		node.update_appearance(UPDATE_ICON_STATE)
+		node.add_overlay(icon_state + "_alert")
+		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 2 SECONDS)
+		node.is_operational = TRUE
+		node.mode = AB_UNREADY
+		node.on_reagent_change()
+		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom/, update_appearance), UPDATE_ICON_STATE), 2.5 SECONDS)
+
+/obj/machinery/plumbing/buffer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	icon_state = initial(icon_state)
-	if(buffer_net)
-		switch(mode)
-			if(UNREADY)
-				icon_state += "_red"
-			if(IDLE)
-				icon_state += "_yellow"
-			if(READY)
-				icon_state += "_green"
+	if(. == ITEM_INTERACT_SUCCESS)
+		disconnect()
+		update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/plumbing/buffer/proc/attempt_connect()
+/obj/machinery/plumbing/buffer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemAutomaticBuffer", name)
+		ui.open()
 
-	for(var/direction in GLOB.cardinals)
-		var/turf/T = get_step(src, direction)
-		for(var/atom/movable/movable in T)
-			if(istype(movable, /obj/machinery/plumbing/buffer))
-				var/obj/machinery/plumbing/buffer/neighbour = movable
-				if(neighbour.buffer_net != buffer_net)
-					neighbour.buffer_net?.destruct()
-					//we could put this on a proc, but its so simple I dont think its worth the overhead
-					buffer_net.buffer_list += neighbour
-					neighbour.buffer_net = buffer_net
-					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers
+/obj/machinery/plumbing/buffer/ui_data(mob/user)
+	return list(
+		threshold = activation_volume,
+		connections = max(LAZYLEN(connections) - 1, 0)
+	)
 
-	add_overlay(icon_state + "_alert")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 2 SECONDS)
-
-/obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
+/obj/machinery/plumbing/buffer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(.)
 		return
 
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	switch(action)
+		if("set_threshold")
+			var/value = params["threshold"]
+			value = text2num(value)
+			if(!value)
+				return FALSE
 
-	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
-	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	activation_volume = new_volume
-	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
-	return
+			activation_volume = clamp(value, 1, buffer)
+			return TRUE
 
-/obj/machinery/plumbing/buffer/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, span_notice("You reset the automatic buffer."))
-
-		//reset the net
-		buffer_net?.destruct()
-		buffer_net = new()
-		LAZYADD(buffer_net.buffer_list, src)
-
-		attempt_connect()
-	else
-		return . = ..()
-
-/obj/machinery/plumbing/buffer/doMove(destination)
-	. = ..()
-	buffer_net?.destruct()
-
-/datum/buffer_net
-	var/list/obj/machinery/plumbing/buffer/buffer_list
-
-/datum/buffer_net/proc/destruct()
-	for(var/obj/machinery/plumbing/buffer/buffer in buffer_list)
-		buffer.buffer_net = null
-	buffer_list.Cut()
-	qdel(src)
-
-/datum/buffer_net/proc/check_active()
-	var/ready = TRUE
-	for(var/obj/machinery/plumbing/buffer/buffer in buffer_list)
-		if(buffer.mode == UNREADY)
-			ready = FALSE
-			break
-	for(var/obj/machinery/plumbing/buffer/buffer in buffer_list)
-		if(buffer.mode == READY && !ready)
-			buffer.mode = IDLE
-		else if(buffer.mode == IDLE && ready)
-			buffer.mode = READY
-		buffer.update_icon()
-
-#undef UNREADY
-#undef IDLE
-#undef READY
+		if("sync")
+			for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+				node.activation_volume = activation_volume

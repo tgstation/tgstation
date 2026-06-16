@@ -149,7 +149,7 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.requester_ref.resolve()
+	var/atom/movable/our_movable = pass_info.requester_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
@@ -191,7 +191,7 @@
 	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
-	M.mineralAmt = 0
+	M.mineral_amt = 0
 	M.gets_drilled()
 	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 

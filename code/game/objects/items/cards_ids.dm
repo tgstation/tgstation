@@ -819,7 +819,7 @@
 /obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return NONE
-	if (registered_account.being_dumped)
+	if (LAZYLEN(registered_account.being_dumped))
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
@@ -905,7 +905,7 @@
 	REMOVE_TRAIT(src, TRAIT_NODROP, "psycho")
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
-	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
+	for(var/mob/living/carbon/human/viewing_mob in viewers(2, user))
 		if(viewing_mob.stat || viewing_mob == user)
 			continue
 		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")

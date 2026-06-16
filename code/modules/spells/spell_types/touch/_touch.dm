@@ -52,14 +52,6 @@
 /datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return !!attached_hand
 
-/datum/action/cooldown/spell/touch/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(attached_hand)
-		.[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)

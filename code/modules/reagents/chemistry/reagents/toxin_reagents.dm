@@ -8,6 +8,7 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	///The amount of toxin damage this will cause when metabolized (also used to calculate liver damage)
 	var/toxpwr = 1.5
 	///The amount to multiply the liver damage this toxin does by (Handled solely in liver code)
@@ -37,6 +38,7 @@
 	taste_description = "mushroom"
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable Mutagen"
@@ -49,6 +51,7 @@
 	taste_mult = 0.9
 	ph = 2.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
@@ -98,6 +101,7 @@
 	burning_temperature = 4500//plasma is hot!!
 	burning_volume = 0.3//But burns fast
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
@@ -193,6 +197,7 @@
 	toxpwr = 3
 	material = /datum/material/hot_ice
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -223,6 +228,7 @@
 	taste_description = "acid"
 	ph = 1.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -245,6 +251,54 @@
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_BLOCK_BREATH
 
+/datum/reagent/toxin/carnivorousblood
+	name = "Carnivorous Blood"
+	description = "An Interdyne-developed biological agent that consumes any blood similar to the blood it was trained on."
+	color ="#C80000"
+	toxpwr = 0
+	taste_description = "carbonated blood"
+	ph = 7.4
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	self_consuming = TRUE
+	// Will hold up to three DNA unique enzymes
+	data = list()
+
+/datum/reagent/toxin/carnivorousblood/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & INHALE)
+		data = list() // Being vaporized is generally undesirable for living creatures
+
+/datum/reagent/toxin/carnivorousblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(!CAN_HAVE_BLOOD(affected_mob) || affected_mob.blood_volume == 0)
+		affected_mob.reagents.remove_reagent(/datum/reagent/toxin/carnivorousblood, volume)
+		return
+	var/multiplier = 1
+	if(affected_mob.stat == DEAD)
+		multiplier *= 2
+	if(affected_mob.dna.unique_enzymes in data)
+		multiplier *= 3
+	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
+	. = ..()
+	feed_dna_list(mix_data)
+
+/// Given a list of DNA keys, adds new keys up to the limit of three distinct sequences.
+/datum/reagent/toxin/carnivorousblood/proc/feed_dna_list(list/adding_list)
+	for(var/dna in adding_list)
+		if(data.len >= 3)
+			return
+		if(dna in data)
+			continue
+		data += dna
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -254,6 +308,7 @@
 	taste_mult = 1.3
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -274,6 +329,7 @@
 	taste_description = "fish"
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/carpotoxin/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
@@ -292,6 +348,7 @@
 	penetrates_skin = NONE
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
@@ -340,7 +397,7 @@
 			need_mob_update = affected_mob.adjust_stamina_loss(20 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 		if(10 to INFINITY)
 			if(affected_mob.stat != DEAD)
-				affected_mob.fakedeath(type)
+				affected_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -354,6 +411,7 @@
 	taste_description = "death"
 	ph = 14.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_FAKEDEATH)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -372,7 +430,8 @@
 	ph = 11
 	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/hallucinogens = 60)
 	metabolized_traits = list(TRAIT_RDS_SUPPRESSED)
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -407,6 +466,7 @@
 	penetrates_skin = NONE
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 // Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -449,6 +509,7 @@
 	color = "#4B004B" // rgb: 75, 0, 75
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 //Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -462,6 +523,7 @@
 	toxpwr = 1
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/pestkiller/on_new(data)
 	. = ..()
@@ -483,6 +545,7 @@
 	color = "#4b2400" // rgb: 75, 0, 75
 	toxpwr = 1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -498,6 +561,7 @@
 	liver_damage_multiplier = 0.7
 	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/spore/expose_mob(mob/living/spore_lung_victim, methods, reac_volume, show_message, touch_protection)
 	. = ..()
@@ -526,6 +590,7 @@
 	taste_description = "burning"
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -544,6 +609,7 @@
 	ph = 11
 	inverse_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -566,6 +632,7 @@
 	taste_description = "piss water"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/glass_style/drinking_glass/fakebeer
 	required_drink_type = /datum/reagent/toxin/fakebeer
@@ -596,6 +663,7 @@
 	toxpwr = 0.5
 	ph = 4.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/teapowder
@@ -606,6 +674,7 @@
 	taste_description = "green tea"
 	ph = 4.9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/toxin/mushroom_powder
@@ -616,6 +685,7 @@
 	taste_description = "mushrooms"
 	ph = 8.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -628,6 +698,7 @@
 	taste_description = "silence"
 	ph = 12.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -642,6 +713,7 @@
 	data = 15
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -656,6 +728,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	/// How radioactive is this reagent
 	var/rad_power = 3
 
@@ -710,6 +783,7 @@
 	overdose_threshold = 30
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -751,6 +825,7 @@
 	ph = 2.0
 	inverse_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -758,15 +833,9 @@
 		if(affected_mob.adjust_tox_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
 			return UPDATE_MOB_HEALTH
 		return
-	else if(SPT_PROB(2.5, seconds_per_tick) && !HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
+	else if(SPT_PROB(2.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 2.4 * metabolization_ratio * seconds_per_tick)
-	return ..()
-
-/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
-	if(HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
-		return
-
 	return ..()
 
 /datum/reagent/toxin/venom
@@ -776,6 +845,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	///Mob Size of the current mob sprite.
 	var/current_size = RESIZE_DEFAULT_SIZE
 
@@ -810,6 +880,7 @@
 	toxpwr = 0
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/opioids = 25)
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -835,6 +906,7 @@
 	toxpwr = 1.25
 	ph = 9.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -857,6 +929,7 @@
 	toxpwr = 0.5
 	taste_description = "bad cooking"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
@@ -870,6 +943,7 @@
 	ph = 7
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/scratched = FALSE
@@ -901,6 +975,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -935,6 +1010,7 @@
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -952,6 +1028,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	added_traits = list(TRAIT_ANTICONVULSANT)
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -972,6 +1049,7 @@
 	toxpwr = 0.5
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -986,6 +1064,7 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/delayed_toxin_damage = 0
 
 /datum/reagent/toxin/amanitin/on_mob_life(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1010,6 +1089,7 @@
 	ph = 6
 	inverse_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1026,6 +1106,7 @@
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1041,6 +1122,7 @@
 	toxpwr = 0
 	taste_description = "vomit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1070,6 +1152,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1090,6 +1173,7 @@
 	toxpwr = 0
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_BLOOD_FOUNTAIN)
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1109,6 +1193,7 @@
 	ph = 6.2
 	taste_description = "spinning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1138,6 +1223,7 @@
 	toxpwr = 0.15
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/remove_amt = 5
@@ -1159,6 +1245,7 @@
 	self_consuming = TRUE
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
 // ...Why? I mean, clearly someone had to have done this and thought, well,
@@ -1208,6 +1295,7 @@
 	acidpwr = 42.0
 	ph = 0.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -1230,6 +1318,7 @@
 	acidpwr = 5.0
 	ph = 1.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1242,6 +1331,7 @@
 	metabolization_rate = 0 //stays in the system until active.
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1265,6 +1355,7 @@
 	ph = 1.7
 	taste_description = "stillness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_EMOTEMUTE)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch
@@ -1279,6 +1370,7 @@
 	taste_description = "bone hurting"
 	overdose_threshold = 50
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
 	. = ..()
@@ -1327,6 +1419,7 @@
 	toxpwr = 0
 	taste_description = "tannin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1351,6 +1444,7 @@
 	taste_mult = 1.3
 	taste_description = "sugary sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1392,6 +1486,7 @@
 	toxpwr = 0
 	taste_mult = 0
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/list/traits_not_applied = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
 		TRAIT_PARALYSIS_R_ARM = BODY_ZONE_R_ARM,
@@ -1406,7 +1501,7 @@
 		toxpwr = 0
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
-		remove_paralysis()
+		remove_paralysis(affected_mob)
 		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update = affected_mob.adjust_tox_loss(-3.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1522,3 +1617,148 @@
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
 	toxpwr = 1
+
+#define CRITICAL_CAPACITY 45
+
+/datum/reagent/toxin/acid/industrial_waste
+	name = "Industrial Waste"
+	description = "Industrial Waste produced as a side effect of efficient boulder refining. Highly toxic, corrosive, and hard to get rid of."
+	color = "#1eff00"
+	penetrates_skin = TOUCH|VAPOR
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
+	toxpwr = 2
+	acidpwr = 30.0
+	ph = 0.0
+
+/datum/reagent/toxin/acid/industrial_waste/on_new(data)
+	. = ..()
+	if(istype(holder.my_atom, /obj/machinery/plumbing/disposer))
+		RegisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(pre_disposal))
+
+/datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
+	. = ..()
+	var/merged_total = amount + volume
+	if(merged_total >= CRITICAL_CAPACITY)
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
+		var/atom/container = holder.my_atom
+		var/damage_mult = 1
+		if(ismachinery(container))
+			damage_mult = 2
+		container.take_damage(round(merged_total * damage_mult / WASTE_REACTION_THRESHOLD), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
+
+
+/datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
+	. = ..()
+	spew_waste(2) //Can't burn it...
+
+/datum/reagent/toxin/acid/industrial_waste/on_spark_act(power_charge, spark_flags)
+	if((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		return
+	spew_waste(2) //Can't electrify it...
+
+/datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
+	if(reac_volume < WASTE_REACTION_THRESHOLD)
+		return // There's too little waste to do anything.
+	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
+		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
+		goo.visible_message(span_warning("The new waste reactivates [goo]!"))
+		goo.pre_dissolve(FALSE)
+	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
+	var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
+	if(QDELETED(goo))
+		return
+
+	goo.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	goo.reagent_amount = rounded_volume
+
+	if(goo.lazy_init_reagents())
+		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
+		goo.reagents.add_reagent(type, rounded_volume)
+	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
+		goo.pre_dissolve()
+		return // Otherwise there's too little waste to do anything.
+	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste/proc/pre_disposal()
+	SIGNAL_HANDLER
+	var/atom/disaster_zone = holder?.my_atom
+	if(!disaster_zone)
+		return
+	if(prob(10))
+		disaster_zone.balloon_alert_to_viewers("hissssssss!")
+	spew_waste(5) //You can't just dump the industrial waste down the kitchen sink. High range to disincentivize using the chem disposaler.
+
+/**
+ * Pick a random turf in the spew range and split our total amount of waste there.
+ */
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+	if(!spew_range)
+		return
+
+	var/atom/atom_holder = holder.my_atom
+	var/turf/dropturf = get_turf(atom_holder)
+	if(!dropturf)
+		return //Check for at least an inital turf to start
+	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
+	greenboy.color = "#00ff00"
+	var/list/turf/turfs = list()
+	for(var/turf/open/floors in oview(spew_range, dropturf))
+		if(isgroundlessturf(floors))
+			continue
+		turfs += floors
+
+	if(!length(turfs))
+		return
+	dropturf = pick(turfs)
+
+	expose_turf(dropturf, volume/2)
+	volume = round(volume/2, 0.01)
+
+#undef CRITICAL_CAPACITY
+
+/// Gibs you (lol), after an easily curable disease because WERE COWARDS
+/datum/reagent/toxin/gibbium
+	name = "Gibbium"
+	description = "Guess what this does."
+	silent_toxin = TRUE
+	color = "#ff0000"
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "regret"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	/// On what cycle to gib the person
+	var/gib_cycle = 5
+
+/datum/reagent/toxin/gibbium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(current_cycle >= gib_cycle)
+		affected_mob.ForceContractDisease(new /datum/disease/gbs/no_transmission ())
+
+/datum/reagent/toxin/spider_serum
+	name = "Spider Serum"
+	description = "A horrible mutagen that transmutes flesh into spiders."
+	color = "#000000"
+	taste_description = "unending nightmares"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	toxpwr = 0
+	/// The cycle for when to do the "transformation"
+	var/transformation_cycle = 30
+
+/datum/reagent/toxin/spider_serum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(prob(10))
+		new /mob/living/basic/spider/growing/spiderling (get_turf(affected_mob))
+		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
+		to_chat(affected_mob, span_warning("You feel tiny legs climbing up your throat."))
+
+	if(current_cycle >= transformation_cycle)
+		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
+		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)

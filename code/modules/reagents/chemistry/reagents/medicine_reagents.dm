@@ -8,6 +8,7 @@
 
 /datum/reagent/medicine
 	taste_description = "bitterness"
+	abstract_type = /datum/reagent/medicine
 
 /datum/reagent/medicine/New()
 	. = ..()
@@ -20,6 +21,7 @@
 	ph = 8.4
 	color = "#DB90C6"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -84,6 +86,7 @@
 	color = COLOR_MAGENTA
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -103,6 +106,7 @@
 	color = "#EC536D" // rgb: 236, 83, 109
 	ph = 5.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -122,6 +126,7 @@
 	color = "#07e4d1"
 	ph = 6.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -144,13 +149,16 @@
 	burning_temperature = 20 //cold burning
 	burning_volume = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (affected_mob.bodytemperature ** 2) + 0.5)
-	if(affected_mob.bodytemperature >= T0C || !HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT))
+	if(affected_mob.bodytemperature >= T0C)
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
+	if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //Significantly more effective when unconscious
+		power *= 2
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -177,6 +185,7 @@
 	taste_description = "spicy jelly"
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -215,6 +224,7 @@
 	ph = 12.2
 	taste_description = "fish"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.25
 	inverse_chem = /datum/reagent/inverse/rezadone
 
@@ -258,6 +268,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/spaceacillin
 	added_traits = list(TRAIT_VIRUS_RESISTANCE)
@@ -272,6 +283,7 @@
 	overdose_threshold = 25
 	ph = 10.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/oxandrolone
 
@@ -300,6 +312,7 @@
 	taste_description = "sweetness and salt"
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 	/// Add about half this much extra blood regen per second.
 	var/extra_regen = 0.25
@@ -355,6 +368,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 2.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -402,6 +416,7 @@
 	overdose_threshold = 30
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -432,6 +447,7 @@
 	color = "#d8c7b7"
 	healing = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -442,6 +458,7 @@
 	overdose_threshold = 20
 	ph = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -470,6 +487,7 @@
 	overdose_threshold = 10
 	ph = 7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.50
 	inverse_chem = /datum/reagent/inverse/ammoniated_mercury
 
@@ -498,6 +516,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -513,6 +532,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 1 //One of the best buffers, NEVERMIND!
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/pen_acid
 	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
@@ -533,6 +553,7 @@
 	overdose_threshold = 25
 	ph = 2.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/sal_acid
 
@@ -559,6 +580,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.25
 	inverse_chem = /datum/reagent/inverse/salbutamol
 
@@ -585,6 +607,7 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/inhaler_canister
 
 	/// The decrement we will apply to the received_pressure_mult of our targets lungs.
@@ -665,7 +688,8 @@
 	ph = 12
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/stimulants = 150)
 	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_STIMULATED)
@@ -715,6 +739,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 11.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -732,7 +757,8 @@
 	overdose_threshold = 30
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 20) // 30 units of morphine may cause addition
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/opioids = 30)
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
@@ -787,6 +813,7 @@
 	purity = REAGENT_STANDARD_PURITY
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem = /datum/reagent/inverse/oculine
 	inverse_chem_val = 0.45
 	///The lighting alpha that the mob had on addition
@@ -868,6 +895,7 @@
 	purity = 1
 	ph = 0.01
 	chemical_flags = REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0
 	var/static/list/eye_types = list(/obj/item/organ/eyes/snail, /obj/item/organ/eyes/night_vision/mushroom)
@@ -922,6 +950,7 @@
 	ph = 2
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/impurity/inacusiate
 
@@ -956,6 +985,7 @@
 	overdose_threshold = 35
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/atropine
 	added_traits = list(TRAIT_NOCRITDAMAGE, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
@@ -994,6 +1024,7 @@
 	overdose_threshold = 30
 	ph = 10.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_NOCRITDAMAGE)
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1055,6 +1086,7 @@
 	taste_description = "magnets"
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	/// The amount of damage a single unit of this will heal
 	var/healing_per_reagent_unit = 5
 	/// The ratio of the excess reagent used to contribute to excess healing
@@ -1170,6 +1202,7 @@
 	taste_description = "magnetic scales"
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 // only revives fish.
 /datum/reagent/medicine/strange_reagent/fishy_reagent/pre_rez_check(atom/thing_to_rez)
@@ -1190,6 +1223,7 @@
 	ph = 10.4
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0.45
@@ -1223,10 +1257,12 @@
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = COLOR_SILVER //ditto
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/neurine
 	added_traits = list(TRAIT_ANTICONVULSANT)
+	self_consuming = TRUE
 	///brain damage level when we first started taking the chem
 	var/initial_bdamage = 200
 
@@ -1265,6 +1301,7 @@
 	taste_description = "acid"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/mutadone/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1274,7 +1311,7 @@
 	if (ismonkey(human_mob))
 		if (!HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
 			//This is the only time mutadone should remove monkeyism
-			human_mob.dna.remove_mutation(/datum/mutation/race, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+			human_mob.dna.remove_mutation(/datum/mutation/race, GLOB.standard_mutation_sources)
 	else if (HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
 		human_mob.monkeyize()
 
@@ -1296,6 +1333,7 @@
 	ph = 4
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/antihol
 	/// All status effects we remove on metabolize.
@@ -1331,7 +1369,8 @@
 	overdose_threshold = 60
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/stimulants = 150)
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
@@ -1344,17 +1383,18 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/need_mob_update
 	if(affected_mob.health < 50 && affected_mob.health > 0)
 		var/heal = -1 * metabolization_ratio * seconds_per_tick
-		var/need_mob_update
 		need_mob_update += affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
-		if(need_mob_update)
-			. = UPDATE_MOB_HEALTH
+
 	affected_mob.AdjustAllImmobility(-60  * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1371,6 +1411,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 6.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1385,6 +1426,7 @@
 	color = "#A4D8D8"
 	ph = 8.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1398,6 +1440,7 @@
 	color = "#CC23FF"
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
 
@@ -1428,6 +1471,7 @@
 	overdose_threshold = 30
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1453,7 +1497,8 @@
 	overdose_threshold = 25
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 14)
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	addiction_types = list(/datum/addiction/hallucinogens = 90)
 	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1515,6 +1560,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 4.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1586,6 +1632,7 @@
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1606,6 +1653,7 @@
 	color = "#FF3542"
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_STABLELIVER)
 
 /datum/reagent/medicine/cordiolis_hepatico
@@ -1614,6 +1662,7 @@
 	color = COLOR_BLACK
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/affected_mob)
 	. = ..()
@@ -1627,6 +1676,7 @@
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/affected_mob)
@@ -1646,6 +1696,7 @@
 	taste_description = "salt" // it actually does taste salty
 	ph = 7.89
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 	/// To track overdose progress
 	var/overdose_progress = 0
@@ -1711,6 +1762,7 @@
 	overdose_threshold = 30
 	ph = 9.12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_FEARLESS)
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1737,6 +1789,7 @@
 	inverse_chem_val = 0.1 //Shouldn't happen - but this is so looking up the chem will point to the failed type
 	inverse_chem = /datum/reagent/impurity/probital_failed
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
@@ -1753,6 +1806,7 @@
 	color = "#FFFFD0"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1767,6 +1821,7 @@
 	overdose_threshold = 50
 	taste_description = "numbing bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	. = ..()
@@ -1795,11 +1850,12 @@
 	overdose_threshold = 50
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //same as C2s
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/healamount = max(0.5 - round(0.01 * (affected_mob.get_brute_loss() + affected_mob.get_fire_loss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
+	var/healamount = max(1.5 - round(0.01 * (affected_mob.get_brute_loss() + affected_mob.get_fire_loss()), 0.2), 0.5) //base of 1.5 healing per cycle and loses 0.2 healing for every 10 combined brute/burn damage you have
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_brute_loss(-1 * healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_fire_loss(-1 * healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1828,6 +1884,7 @@
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_COAGULATING)
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/affected_mob)
@@ -1887,6 +1944,7 @@
 	clot_rate = 0.2
 	passive_bleed_modifier = 0.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/glass_style/drinking_glass/banana_peel
 	required_drink_type = /datum/reagent/medicine/coagulant/banana_peel
@@ -1916,6 +1974,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 10.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1934,6 +1993,7 @@
 	ph = 4
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_ADDICTIONRESILIENT)
 	var/static/list/opiates_to_clear = list(
 		/datum/reagent/medicine/morphine,

@@ -221,18 +221,16 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
 		if(facial_hairstyle)
 			var/datum/sprite_accessory/S = SSaccessories.facial_hairstyles_list[facial_hairstyle]
-			if(S)
-				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(facial_hair_color)
-					facial_hair_overlay.color = facial_hair_color
+			if(S && S.icon_state != SPRITE_ACCESSORY_NONE)
+				facial_hair_overlay = mutable_appearance(S.icon, S.icon_state, -HAIR_LAYER)
+				facial_hair_overlay.color = facial_hair_color
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
 			var/datum/sprite_accessory/hair/S = SSaccessories.hairstyles_list[hairstyle]
-			if(S)
-				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(hair_color)
-					hair_overlay.color = hair_color
+			if(S && S.icon_state != SPRITE_ACCESSORY_NONE)
+				hair_overlay = mutable_appearance(S.icon, S.icon_state, -HAIR_LAYER)
+				hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
 				hair_overlay.pixel_z = S.y_offset
 				add_overlay(hair_overlay)
@@ -256,18 +254,22 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		lum = max(read_color[3], 80)
 	return rgb(read_color[1], sat, lum, space = COLORSPACE_HSL)
 
-/*
-Transfer_mind is there to check if mob is being deleted/not going to have a body.
-Works together with spawning an observer, noted above.
-*/
-
-/mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
+/**
+ * # Ghostize
+ *
+ * Creates a /mob/dead/observer and moves the player's key into it (among other handling for player->observer)
+ * Ignores things like adminghosts and corpselocked (ethereal) players.
+ * Args:
+ * can_reenter_corse: Whether the new Ghost will be able to click "Re-enter body", TRUE by default.
+ * forced: Whether we are forcing this player to be ghosted, ignoring things like corpselocking, FALSE by default.
+ */
+/mob/proc/ghostize(can_reenter_corpse = TRUE, forced = FALSE)
 	if(!key)
 		return
 	if(IS_FAKE_KEY(key)) // Skip aghosts.
 		return
 
-	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
+	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !forced)
 		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
@@ -295,7 +297,7 @@ Works together with spawning an observer, noted above.
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
-/mob/living/ghostize(can_reenter_corpse = TRUE)
+/mob/living/ghostize(can_reenter_corpse = TRUE, forced = FALSE)
 	. = ..()
 	if(. && can_reenter_corpse)
 		var/mob/dead/observer/ghost = .
@@ -382,8 +384,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.view_size.resetToDefault()//Let's reset so people can't become allseeing gods
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
-		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
+	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
+		to_chat(src, span_warning("To leave your body again use the 'Ghost verb' (in the command bar)."))
 	mind.current.PossessByPlayer(key)
 	mind.current.client.init_verbs()
 	return TRUE
@@ -410,6 +412,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		// Update med huds
 		current_mob.med_hud_set_status()
 		current_mob.log_message("had their player ([key_name(src)]) do-not-resuscitate / DNR", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
+		SEND_SIGNAL(current_mob, COMSIG_LIVING_DNR, src)
+
 	log_message("has opted to do-not-resuscitate / DNR from their body ([current_mob])", LOG_GAME, color = COLOR_GREEN)
 
 	// Disassociates observer mind from the body mind
@@ -642,8 +646,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		remove_data_huds()
 	update_sight()
-	for(var/atom/movable/screen/ghost/hudbox/hud in hud_used?.static_inventory)
-		if(hud.relevant_flag & toggled)
+	for(var/hud_key in hud_used?.screen_objects)
+		var/atom/movable/screen/ghost/hudbox/hud = hud_used.screen_objects[hud_key]
+		if(istype(hud) && (hud.relevant_flag & toggled))
 			hud.update_appearance(UPDATE_ICON_STATE)
 
 // This is the ghost's follow verb with an argument

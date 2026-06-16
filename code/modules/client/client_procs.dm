@@ -557,8 +557,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		to_chat(src, span_info("You have unread updates in the changelog."))
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
-		else
-			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -578,19 +576,16 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if (!interviewee)
-		initialize_menus()
-
 	loot_panel = new(src)
 
 	view_size = new(src)
-	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	view_size.apply()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
+	set_fullscreen()
 
 //////////////
 //DISCONNECT//
@@ -637,17 +632,20 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
+	sound_tokens = null
+
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
+	SSsound_tokens.clients_needing_update -= src
+	SSsound_tokens.currentrun -= src
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(parallax_rock)
-	QDEL_LIST(parallax_layers_cached)
-	parallax_layers = null
 	seen_messages = null
+	sound_tokens = null
 	Master.UpdateTickRate()
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
@@ -1120,29 +1118,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		return
 	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
-/**
- * Initializes dropdown menus on client
- */
-/client/proc/initialize_menus()
-	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
-	for (var/thing in topmenus)
-		var/datum/verbs/menu/topmenu = thing
-		var/topmenuname = "[topmenu]"
-		if (topmenuname == "[topmenu.type]")
-			var/list/tree = splittext(topmenuname, "/")
-			topmenuname = tree[tree.len]
-		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
-		var/list/entries = topmenu.Generate_list(src)
-		for (var/child in entries)
-			winset(src, "[child]", "[entries[child]]")
-			if (!ispath(child, /datum/verbs/menu))
-				var/procpath/verbpath = child
-				if (verbpath.name[1] != "@")
-					new child(src)
-
-	// Place Help back at the end.
-	winset(src, "help-menu", "index=1000")
-
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
 		holder.filterrific = new /datum/filter_editor(in_atom)
@@ -1156,13 +1131,13 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
-		winset(src, "mapwindow.map", "right-click=true")
-		winset(src, "ShiftUp", "is-disabled=false")
-		winset(src, "Shift", "is-disabled=false")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=false")
 	else
-		winset(src, "mapwindow.map", "right-click=false")
-		winset(src, "default.Shift", "is-disabled=true")
-		winset(src, "default.ShiftUp", "is-disabled=true")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=true")
 
 /client/proc/update_ambience_pref(value)
 	if(value)
@@ -1231,27 +1206,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
 	set_fullscreen()
 
-/client/proc/set_fullscreen(logging_in = FALSE)
-	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
-	//no need to set every login to not fullscreen, they already aren't.
-	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
-	if(logging_in)
-		if(fullscreen)
-			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
-		return
-	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+/client/proc/set_fullscreen()
+	winset(src, SKIN_MAINWINDOW, "is-fullscreen=[prefs?.read_preference(/datum/preference/toggle/fullscreen_mode) ? "true" : "false"]")
 	attempt_auto_fit_viewport()
-
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
-
-	show_status_bar = !show_status_bar
-
-	if (show_status_bar)
-		winset(src, "mapwindow.status_bar", "is-visible=true")
-	else
-		winset(src, "mapwindow.status_bar", "is-visible=false")
 
 /// Clears the client's screen, aside from ones that opt out
 /client/proc/clear_screen()

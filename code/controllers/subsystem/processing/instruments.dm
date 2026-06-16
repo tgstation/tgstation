@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(instruments)
 	name = "Instruments"
 	wait = 0.5
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
 	/// List of all instrument data, associative id = datum
 	var/static/list/datum/instrument/instrument_data = list()
@@ -52,6 +52,6 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 /datum/controller/subsystem/processing/instruments/proc/reserve_instrument_channel(datum/instrument/I)
 	if(current_instrument_channels > max_instrument_channels)
 		return
-	. = SSsounds.reserve_sound_channel(I)
+	. = SSsounds.reserve_sound_channel_for_datum(I)
 	if(!isnull(.))
 		current_instrument_channels++

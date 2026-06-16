@@ -16,7 +16,6 @@
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
 		QUIRK_TRAIT, // Meant to be completely immutable
-		ECHOLOCATION_TRAIT, // Breaks the UI badly
 		UNCONSCIOUS_TRAIT, // Duh
 	)
 
@@ -73,7 +72,7 @@
 /atom/movable/screen/alert/status_effect/blind
 	name = "Blind"
 	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, or something covering your eyes."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "blind"
 
 /// This status effect handles applying a temporary blind to the mob.

@@ -161,7 +161,7 @@
 /atom/movable/screen/alert/aura_healing
 	name = "Aura Healing"
 	icon_state = "template"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	clickable_glow = TRUE
 	click_master = FALSE
 

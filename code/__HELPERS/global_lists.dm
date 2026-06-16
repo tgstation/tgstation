@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/light_construct,
+	/obj/structure/sink,
 )))
 
 /// A static typecache of all the money-based items that can be actively used as currency.

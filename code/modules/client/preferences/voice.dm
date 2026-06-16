@@ -3,6 +3,8 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "tts_voice"
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	should_update_preview = FALSE
 
 /datum/preference/choiced/voice/is_accessible(datum/preferences/preferences)
 	if(!SStts.tts_enabled)
@@ -22,7 +24,7 @@
 
 /datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled && !(value in SStts.available_speakers))
-		value = pick(SStts.available_speakers) // As a failsafe
+		value = SStts.random_tts_voice(target.gender) // As a failsafe
 	target.voice = value
 
 /datum/preference/numeric/tts_voice_pitch
@@ -31,6 +33,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	minimum = -12
 	maximum = 12
+	should_update_preview = FALSE
 
 /datum/preference/numeric/tts_voice_pitch/is_accessible(datum/preferences/preferences)
 	if(!SStts.tts_enabled || !SStts.pitch_enabled)

@@ -22,6 +22,8 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isgenerator(A) (istype(A, /generator))
 
+#define isalist(A) (istype(A, /alist))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -118,7 +120,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
-#define isghostspecies(A) (is_species(A, /datum/species/ghost))
+#define isspirit(A) (is_species(A, /datum/species/spirit))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
@@ -193,9 +195,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
-#define isbot(A) (istype(A, /mob/living/simple_animal/bot) || istype(A, /mob/living/basic/bot))
-
-#define isbasicbot(A) (istype(A, /mob/living/basic/bot))
+#define isbot(A) istype(A, /mob/living/basic/bot)
 
 #define ismouse(A) (istype(A, /mob/living/basic/mouse))
 

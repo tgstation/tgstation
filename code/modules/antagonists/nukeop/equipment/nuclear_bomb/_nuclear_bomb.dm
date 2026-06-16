@@ -53,6 +53,8 @@ GLOBAL_VAR(station_nuke_source)
 	var/proper_bomb = TRUE //Please
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
+	/// is this nuke on the MINIMAP_BOMB_BLIP tag minimap?
+	var/is_on_minimap = TRUE
 
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
@@ -62,6 +64,7 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
+	update_minimap_blip()
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -124,10 +127,22 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_INTACT)
 			if(istype(weapon, /obj/item/screwdriver/nuke))
 				to_chat(user, span_notice("You start removing [src]'s front panel's screws..."))
-				if(weapon.use_tool(src, user, 6 SECONDS, volume = 100))
-					deconstruction_state = NUKESTATE_UNSCREWED
-					to_chat(user, span_notice("You remove the screws from [src]'s front panel."))
-					update_appearance()
+				if(!weapon.use_tool(src, user, 6 SECONDS, volume = 100))
+					return TRUE
+				deconstruction_state = NUKESTATE_UNSCREWED
+				to_chat(user, span_notice("You remove the screws from [src]'s front panel."))
+				update_appearance()
+				return TRUE
+
+		if(NUKESTATE_UNSCREWED)
+			if(istype(weapon, /obj/item/screwdriver/nuke))
+				to_chat(user, span_notice("You start screwing [src]'s front panel back in..."))
+				if(!weapon.use_tool(src, user, 8 SECONDS, volume = 100))
+					return TRUE
+				deconstruction_state = NUKESTATE_INTACT
+				to_chat(user, span_notice("You screw [src]'s front panel back into place."))
+				deconstruction_state = NUKESTATE_INTACT
+				update_appearance()
 				return TRUE
 
 		if(NUKESTATE_PANEL_REMOVED)
@@ -135,24 +150,26 @@ GLOBAL_VAR(station_nuke_source)
 				if(!weapon.tool_start_check(user, amount = 1))
 					return TRUE
 				to_chat(user, span_notice("You start cutting [src]'s inner plate..."))
-				if(weapon.use_tool(src, user, 8 SECONDS, volume=100))
-					to_chat(user, span_notice("You cut [src]'s inner plate."))
-					deconstruction_state = NUKESTATE_WELDED
-					update_appearance()
+				if(!weapon.use_tool(src, user, 8 SECONDS, volume=100))
+					return TRUE
+				to_chat(user, span_notice("You cut [src]'s inner plate."))
+				deconstruction_state = NUKESTATE_WELDED
+				update_appearance()
 				return TRUE
 
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(weapon, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = weapon
 				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
-				if(do_after(user, 5 SECONDS, target = src, hidden = TRUE))
-					if(core_box.load(core, user))
-						to_chat(user, span_notice("You load the plutonium core into [core_box]."))
-						deconstruction_state = NUKESTATE_CORE_REMOVED
-						update_appearance()
-						core = null
-					else
-						to_chat(user, span_warning("You fail to load the plutonium core into [core_box]. [core_box] has already been used!"))
+				if(!do_after(user, 5 SECONDS, target = src, hidden = TRUE))
+					return TRUE
+				if(core_box.load(core, user))
+					to_chat(user, span_notice("You load the plutonium core into [core_box]."))
+					deconstruction_state = NUKESTATE_CORE_REMOVED
+					update_appearance()
+					core = null
+				else
+					to_chat(user, span_warning("You fail to load the plutonium core into [core_box]. [core_box] has already been used!"))
 				return TRUE
 
 			if(istype(weapon, /obj/item/stack/sheet/iron))
@@ -160,11 +177,37 @@ GLOBAL_VAR(station_nuke_source)
 					return TRUE
 
 				to_chat(user, span_notice("You begin repairing [src]'s inner metal plate..."))
-				if(weapon.use_tool(src, user, 10 SECONDS, amount = 20))
-					to_chat(user, span_notice("You repair [src]'s inner metal plate. The radiation is contained."))
-					deconstruction_state = NUKESTATE_PANEL_REMOVED
-					STOP_PROCESSING(SSobj, core)
-					update_appearance()
+				if(!weapon.use_tool(src, user, 10 SECONDS, amount = 20))
+					return TRUE
+				to_chat(user, span_notice("You repair [src]'s inner metal plate. The radiation is contained."))
+				deconstruction_state = NUKESTATE_PANEL_REMOVED
+				STOP_PROCESSING(SSobj, core)
+				update_appearance()
+				return TRUE
+
+		if(NUKESTATE_CORE_REMOVED)
+			if(astype(weapon, /obj/item/nuke_core_container)?.core && !istype(weapon, /obj/item/nuke_core_container/supermatter))
+				var/obj/item/nuke_core_container/core_box = weapon
+				to_chat(user, span_notice("You pry open [core_box] and begin placing [core_box.core] into [src]'s inner chamber..."))
+				if(!do_after(user, 15 SECONDS, src))
+					return TRUE
+				core_box.core.forceMove(src)
+				core = core_box.core
+				to_chat(user, span_notice("You place [core_box.core] into [src]'s inner chamber."))
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				update_appearance()
+				core_box.icon_state = core_box::icon_state
+				core_box.core = null
+				return TRUE
+			if(istype(weapon, /obj/item/nuke_core) && !istype(weapon, /obj/item/nuke_core/supermatter_sliver))
+				to_chat(user, span_notice("You begin placing [weapon] into [src]'s inner chamber..."))
+				if(!do_after(user, 6 SECONDS, src))
+					return TRUE
+				weapon.forceMove(src)
+				core = weapon
+				to_chat(user, span_notice("You place [weapon] into [src]'s inner chamber."))
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				update_appearance()
 				return TRUE
 
 	return ..()
@@ -173,21 +216,41 @@ GLOBAL_VAR(station_nuke_source)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
 			to_chat(user, span_notice("You start removing [src]'s front panel..."))
-			if(tool.use_tool(src, user, 30, volume=100))
-				to_chat(user, span_notice("You remove [src]'s front panel."))
-				deconstruction_state = NUKESTATE_PANEL_REMOVED
-				update_appearance()
+			if(!tool.use_tool(src, user, 30, volume=100))
+				return TRUE
+			to_chat(user, span_notice("You remove [src]'s front panel."))
+			deconstruction_state = NUKESTATE_PANEL_REMOVED
+			update_appearance()
 			return TRUE
 		if(NUKESTATE_WELDED)
 			to_chat(user, span_notice("You start prying off [src]'s inner plate..."))
-			if(tool.use_tool(src, user, 30, volume=100))
+			if(!tool.use_tool(src, user, 30, volume=100))
+				return TRUE
+			if(core)
 				to_chat(user, span_notice("You pry off [src]'s inner plate. You can see the core's green glow!"))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
-				update_appearance()
 				START_PROCESSING(SSobj, core)
+			else
+				to_chat(user, span_notice("You pry off [src]'s inner plate. The inner chamber is empty, save for some beer stains."))
+				deconstruction_state = NUKESTATE_CORE_REMOVED
+			update_appearance()
+			new /obj/item/stack/sheet/iron(loc, 15)
 			return TRUE
-
+		if(NUKESTATE_PANEL_REMOVED)
+			to_chat(user, span_notice("You start levering [src]'s inner panel back into place..."))
+			if(!tool.use_tool(src, user, 30, volume = 100))
+				return TRUE
+			to_chat(user, span_notice("You lever [src]'s inner panel back into place."))
+			deconstruction_state = NUKESTATE_UNSCREWED
+			update_appearance()
+			return TRUE
 	return FALSE
+
+/obj/machinery/nuclearbomb/attack_hand_secondary(mob/user, list/modifiers)
+	if(deconstruction_state != NUKESTATE_CORE_EXPOSED)
+		return ..()
+	to_chat(user, span_danger("You can't hold [core] with your bare hands!"))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/nuclearbomb/can_interact(mob/user)
 	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
@@ -463,6 +526,7 @@ GLOBAL_VAR(station_nuke_source)
 		arm_nuke(usr)
 	else
 		disarm_nuke(usr)
+	update_minimap_blip()
 
 /// Arms the nuke, making it active and triggering all pinpointers to start counting down (+delta alert)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
@@ -504,6 +568,12 @@ GLOBAL_VAR(station_nuke_source)
 	countdown.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
 	update_appearance()
+
+/obj/machinery/nuclearbomb/proc/update_minimap_blip()
+	if(!is_on_minimap)
+		return
+	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
+	add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_[timing ? "on" : "off"]", blip_icon, TRUE)
 
 /// If the nuke is active, gets how much time is left until it detonates, in seconds.
 /// If the nuke is not active, gets how much time the nuke is set for, in seconds.

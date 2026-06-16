@@ -1,10 +1,9 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-//Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
+//Transmit: the revenant's only direct way to communicate. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
 	name = "Revenant Transmit"
-	panel = "Revenant Abilities"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 
@@ -13,8 +12,15 @@
 
 	antimagic_flags = MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
+/datum/action/cooldown/spell/list_target/telepathy/revenant/get_list_targets(atom/center, target_radius = 7)
+	if(!istype(center, /mob/living/basic/revenant))
+		return ..()
+	var/mob/living/basic/revenant/revenant = center
+	if(!revenant.dormant)
+		return ..()
+	return ..(get_turf(revenant), 2)
+
 /datum/action/cooldown/spell/aoe/revenant
-	panel = "Revenant Abilities (Locked)"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 	button_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -22,13 +28,10 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	spell_requirements = NONE
 
-	/// If it's locked, and needs to be unlocked before use
-	var/locked = TRUE
 	/// How much essence it costs to unlock
 	var/unlock_amount = 100
 	/// How much essence it costs to use
 	var/cast_amount = 50
-
 	/// How long it reveals the revenant
 	var/reveal_duration = 8 SECONDS
 	// How long it stuns the revenant
@@ -36,65 +39,27 @@
 
 /datum/action/cooldown/spell/aoe/revenant/New(Target)
 	. = ..()
-	if(!isrevenant(target))
-		stack_trace("[type] was given to a non-revenant mob, please don't.")
-		qdel(src)
-		return
-
-	if(locked)
-		name = "[initial(name)] ([unlock_amount]SE)"
-	else
-		name = "[initial(name)] ([cast_amount]E)"
-
-/datum/action/cooldown/spell/aoe/revenant/can_cast_spell(feedback = TRUE)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!isrevenant(owner))
-		stack_trace("[type] was owned by a non-revenant mob, please don't.")
-		return FALSE
-
-	var/mob/living/basic/revenant/ghost = owner
-	if(ghost.dormant || HAS_TRAIT(ghost, TRAIT_REVENANT_INHIBITED))
-		return FALSE
-	if(locked && ghost.essence_excess <= unlock_amount)
-		return FALSE
-	if(ghost.essence <= cast_amount)
-		return FALSE
-
-	return TRUE
+	AddComponent(/datum/component/revenant_ability, \
+		unlock_amount = unlock_amount, \
+		cast_amount = cast_amount, \
+		reveal_duration = reveal_duration, \
+		stun_duration = stun_duration, \
+	)
 
 /datum/action/cooldown/spell/aoe/revenant/get_things_to_cast_on(atom/center)
 	return RANGE_TURFS(aoe_radius, center)
 
-/datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/basic/revenant/cast_on)
+/datum/action/cooldown/spell/aoe/revenant/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(. & SPELL_CANCEL_CAST)
-		return
-
-	if(locked)
-		if(!cast_on.unlock(unlock_amount))
-			to_chat(cast_on, span_revenwarning("You don't have enough essence to unlock [initial(name)]!"))
-			reset_spell_cooldown()
-			return . | SPELL_CANCEL_CAST
-
-		name = "[initial(name)] ([cast_amount]E)"
-		to_chat(cast_on, span_revennotice("You have unlocked [initial(name)]!"))
-		panel = "Revenant Abilities"
-		locked = FALSE
-		reset_spell_cooldown()
-		return . | SPELL_CANCEL_CAST
-
-	if(!cast_on.cast_check(-cast_amount))
-		reset_spell_cooldown()
-		return . | SPELL_CANCEL_CAST
-
-/datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/basic/revenant/cast_on)
-	. = ..()
-	if(reveal_duration > 0 SECONDS)
-		cast_on.apply_status_effect(/datum/status_effect/revenant/revealed, reveal_duration)
-	if(stun_duration > 0 SECONDS)
-		cast_on.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, stun_duration)
+	// gross getcomp, but this is solely to make life easier for badmins/debug. sue me
+	var/datum/component/revenant_ability/rev_comp = GetComponent(/datum/component/revenant_ability)
+	switch(var_name)
+		if(NAMEOF(src, unlock_amount))
+			rev_comp.set_unlock_amount(var_value)
+		if(NAMEOF(src, cast_amount))
+			rev_comp.set_cast_amount(var_value)
+		if(NAMEOF(src, reveal_duration), NAMEOF(src, stun_duration))
+			rev_comp.set_durations(reveal_duration, stun_duration)
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /datum/action/cooldown/spell/aoe/revenant/overload
@@ -191,6 +156,11 @@
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
 		light.flicker(rand(3, 5)) //spooky
+	for(var/obj/structure/mirror/mirror in victim)
+		if(istype(mirror, /obj/structure/mirror/magic))
+			continue
+		new /obj/effect/temp_visual/revenant(mirror.loc)
+		mirror.atom_break("magic")
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction
@@ -205,12 +175,6 @@
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
-	for(var/mob/living/simple_animal/bot/bot in victim)
-		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
-			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
-			bot.bot_cover_flags |= BOT_COVER_MAINTS_OPEN
-			bot.emag_act(caster)
 	for(var/mob/living/basic/bot/bot in victim)
 		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)

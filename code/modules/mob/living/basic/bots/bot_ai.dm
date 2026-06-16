@@ -12,7 +12,7 @@
 
 	ai_movement = /datum/ai_movement/jps/bot
 	planning_subtrees = list(
-/datum/ai_planning_subtree/escape_captivity/pacifist,
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -55,10 +55,16 @@
 
 /datum/ai_controller/basic_controller/bot/proc/on_movement_start(mob/living/basic/bot/source, atom/target)
 	SIGNAL_HANDLER
+
 	if(current_movement_target == blackboard[BB_BEACON_TARGET])
 		source.update_bot_mode(new_mode = BOT_PATROL)
+		return
+
+	source.clear_path_hud(remove_hud = FALSE)
 
 /datum/ai_controller/basic_controller/bot/proc/add_to_blacklist(atom/target, duration)
+	if(QDELETED(target))
+		return
 	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
 	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(remove_from_blacklist), target), final_duration)
@@ -103,11 +109,15 @@
 ///set the target if we can reach them
 /datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, duration, distance = 10, bypass_add_to_blacklist = FALSE)
 	if(can_reach_target(target, distance))
+		EVLOG_MAPTEXT(src, EVLOG_CATEGORY_AI_TARGETING, "[pawn] has selected [target] as a target for blackboard key [key]!", get_turf(target), "Target: [target]")
+		EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
 		set_blackboard_key(key, target)
 		return TRUE
 	if(bypass_add_to_blacklist)
 		return FALSE
 	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
+	EVLOG_MAPTEXT(src, EVLOG_CATEGORY_AI_TARGETING, "[pawn] has added [target] to its targetting blacklist!", get_turf(target), "Target: [target]")
+	EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
 	add_to_blacklist(target, final_duration)
 	return FALSE
 

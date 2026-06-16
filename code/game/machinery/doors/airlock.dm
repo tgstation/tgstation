@@ -483,28 +483,22 @@
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	set_backup_outage(0 SECONDS)
 
-// shock user with probability prb (if all connections & power are working)
-// returns TRUE if shocked, FALSE otherwise
-// The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
-	if(!istype(user) || !hasPower()) // unpowered, no shock
+/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(!hasPower()) // unpowered, no shock
 		return FALSE
-	if(HAS_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
+	if(!isliving(shocking))
+		return FALSE
+	if(HAS_TRAIT(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, shockCooldown))
 		return FALSE //Already shocked someone recently?
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	do_sparks(5, TRUE, src)
-	var/check_range = TRUE
-	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		COOLDOWN_START(src, shockCooldown, 1 SECONDS)
-		// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
-		ADD_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
-		addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src)), 1 SECONDS)
-		return TRUE
-	else
+	if(!..())
 		return FALSE
+	COOLDOWN_START(src, shockCooldown, 1 SECONDS)
+	// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
+	ADD_TRAIT(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
+	addtimer(TRAIT_CALLBACK_REMOVE(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src)), 1 SECONDS)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
@@ -1483,12 +1477,12 @@
 
 // gets called when a player uses an airlock painter on this airlock
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/airlock_painter/painter, mob/user)
-	if((!in_range(src, user) && loc != user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
+	if(!in_range(src, user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
 		return
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
 	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
-	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
+	if(isnull(current_paintjob) || !in_range(src, user) || !painter.can_use(user)) // if the user clicked cancel on the popup, or moved away, or ran out of ink, return
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
@@ -1581,7 +1575,7 @@
 		bolt() //Bolt it!
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
-			LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(origin)]")
+			LAZYADD(shockedby, "\[[server_timestamp()]\] [key_name(origin)]")
 
 
 /obj/machinery/door/airlock/disable_lockdown()
@@ -1605,7 +1599,7 @@
 		return
 	if(prob(severity*10 - 20) && (secondsElectrified < 30) && (secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT))
 		set_electrified(30)
-		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
+		LAZYADD(shockedby, "\[[server_timestamp()]\]EM Pulse")
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
@@ -1622,7 +1616,7 @@
 				message = "unshocked"
 			else
 				message = "temp shocked for [secondsElectrified] seconds"
-		LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(user)] - ([uppertext(message)])")
+		LAZYADD(shockedby, "\[[server_timestamp()]\] [key_name(user)] - ([uppertext(message)])")
 		log_combat(user, src, message)
 		add_hiddenprint(user)
 
@@ -2405,6 +2399,10 @@
 	normal_integrity = 500
 	security_level = 1
 	damage_deflection = 30
+
+/obj/machinery/door/airlock/highsecurity/syndicate
+	icon = 'icons/obj/doors/airlocks/syndicate/highsec.dmi'
+	overlays_file = null
 
 // Shuttle Airlocks
 

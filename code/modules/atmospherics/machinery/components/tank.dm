@@ -143,8 +143,8 @@
 	var/pressure_limit = max_pressure * safety_margin
 
 	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.assert_gas(gastype)
-	air_contents.gases[gastype][MOLES] += moles_to_add
+
+	air_contents.adjust_gas(gastype, moles_to_add)
 	air_contents.archive()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
@@ -593,8 +593,8 @@
 	. = FALSE
 	if(!stack.material_type)
 		balloon_alert(user, "invalid material!")
-	var/datum/material/stack_mat = GET_MATERIAL_REF(stack.material_type)
-	if(!(MAT_CATEGORY_RIGID in stack_mat.categories))
+	var/datum/material/stack_mat = SSmaterials.get_material(stack.material_type)
+	if(!(stack_mat.mat_flags & MATERIAL_CLASS_RIGID))
 		to_chat(user, span_notice("This material doesn't seem rigid enough to hold the shape of a tank..."))
 		return
 

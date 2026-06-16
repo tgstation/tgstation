@@ -49,16 +49,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
-/obj/structure/sink/get_turfs_to_mount_on()
-	return list(get_step(src, REVERSE_DIR(dir)))
+/obj/structure/sink/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
 
-/obj/structure/sink/get_moutable_objects()
-	var/static/list/sink_structures = null
-	if(isnull(sink_structures))
-		sink_structures = list()
-		sink_structures += ..()
-		sink_structures += /obj/machinery/smartfridge //medbay sometimes have sinks attached to fridges
-	return sink_structures
+/obj/structure/sink/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/structure/sink/get_mountable_objects()
+	return list()
 
 /obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
@@ -277,6 +275,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
+	wall_external = TRUE
 	result_path = /obj/structure/sink/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	pixel_shift = 16
@@ -298,10 +297,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/item/wallframe/sinkframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(istype(tool, /obj/item/stock_parts/water_recycler))
+	if(istype(tool, /obj/item/stock_parts/water_recycler) && result_path == /obj/structure/sink/greyscale)
 		qdel(tool)
 		result_path = /obj/structure/sink/greyscale/filled
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		balloon_alert(user, "water recycler installed!")
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/sinkframe/after_attach(obj/structure/sink/greyscale/attached_to)

@@ -75,6 +75,9 @@
 	icon_state = "bcircuitoff"
 	always_off = TRUE
 
+/turf/open/floor/circuit/no_light
+	always_off = TRUE
+
 /turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -118,6 +121,9 @@
 
 /turf/open/floor/circuit/red/off
 	icon_state = "rcircuitoff"
+	always_off = TRUE
+
+/turf/open/floor/circuit/red/no_power
 	always_off = TRUE
 
 /turf/open/floor/circuit/red/anim
@@ -345,7 +351,7 @@
 
 /turf/open/floor/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	set_custom_materials(list(SSmaterials.get_material(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/open/floor/material/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS

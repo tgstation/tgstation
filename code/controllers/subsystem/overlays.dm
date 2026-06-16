@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_NO_FIRE|SS_NO_INIT
+	ss_flags = SS_NO_FIRE|SS_NO_INIT
 	var/list/stats
 
 /datum/controller/subsystem/overlays/PreInit()

@@ -28,22 +28,16 @@
 
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
-			if(istype(teleatom, /obj/item/storage/backpack/holding))
-				precision = rand(1,100)
-
-			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding, /obj/item/mod/control, /obj/item/mod/module/storage)
-			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
-			for(var/obj/item/mod/modsuit_or_module in bagholding)
-				var/datum/storage/storage = modsuit_or_module.atom_storage
-				if(istype(storage, /datum/storage/bag_of_holding) && storage.real_location == storage.parent)
-					continue
-				bagholding -= modsuit_or_module
-			if(bagholding.len)
-				precision = max(rand(1,100)*bagholding.len,100)
+			var/interference = 0
+			for(var/obj/item/check as anything in teleatom.get_all_contents_type(/obj/item))
+				if(check.item_flags & BLUESPACE_INTERFERENCE)
+					interference += 1
+			if(interference)
+				precision = max(rand(1,100)*interference,100)
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
-					to_chat(MM, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
-
+					to_chat(MM, span_warning("The clashing pulls of bluespace interfere with your teleport!"))
+			
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/basic/spark_spread/sparks = new(teleatom, 5, TRUE)
@@ -267,3 +261,50 @@
 		return FALSE
 
 	return TRUE
+
+//Gets the topmost teleportable container
+/proc/get_teleportable_container(atom/movable/teleportable, container_flags = ALL)
+	while(ismovable(teleportable.loc))
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STORAGE) && isitem(teleportable))
+			var/obj/item/item = teleportable
+			if(item.item_flags & IN_STORAGE)
+				break
+		var/atom/movable/movable = teleportable.loc
+		if(movable.anchored)
+			break
+		if(isliving(movable))
+			var/mob/living/living = movable
+			if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_INVENTORY))
+				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
+				if((teleportable in equipped) && !HAS_TRAIT(teleportable, TRAIT_NODROP))
+					if(istype(teleportable, /obj/item/mod/control) && (container_flags & TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT))
+						var/obj/item/mod/control/modsuit = teleportable
+						var/sealed = TRUE
+						for(var/datum/mod_part/part as anything in modsuit.get_part_datums(TRUE))
+							if((part.part_item == modsuit || part.part_item.loc != modsuit) && !part.sealed)
+								sealed = FALSE
+								break
+						if(!sealed)
+							break
+					else
+						break
+			if(living.buckled)
+				if(living.buckled.anchored)
+					break
+				else
+					var/obj/buckled_obj = living.buckled
+					buckled_obj.unbuckle_mob(living)
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_CLOSET) && iscloset(movable))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT) && istype(movable, /obj/item/mecha_parts/mecha_equipment))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_VEHICLE) && isvehicle(movable))
+			var/obj/vehicle/vehicle = movable
+			if(vehicle.is_occupant(teleportable))
+				break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STOMACH) && istype(movable, /obj/item/organ/stomach))
+			var/obj/item/organ/stomach/stomach = movable
+			if(teleportable in stomach.stomach_contents)
+				break
+		teleportable = movable
+	return teleportable

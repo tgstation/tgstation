@@ -31,6 +31,7 @@
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	register_context()
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -59,9 +60,19 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(anchored)
-		. += span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")
+		. += span_notice("It's secured in place with [EXAMINE_HINT("screws")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
 	else
-		. += span_notice("The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.")
+		. += span_notice("The anchoring screws are [EXAMINE_HINT("unscrewed")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+
+/obj/structure/grille/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unanchor" : "Anchor"]"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -199,7 +210,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
+/obj/structure/grille/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
@@ -322,28 +333,21 @@
 	update_appearance()
 	return TRUE
 
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
-
-/obj/structure/grille/proc/shock(mob/user, prb)
+/obj/structure/grille/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
 	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
-	if(!prob(prb))
+	var/turf/grill_loc = get_turf(src)
+	if(grill_loc.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	var/obj/structure/cable/grill_cable = grill_loc.get_cable_node()
+	if(isnull(grill_cable))
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(T.overfloor_placed)//cant be a floor in the way!
+	shock_source = grill_cable
+	if(!..())
 		return FALSE
-
-	var/obj/structure/cable/cable_node = T.get_cable_node()
-	if(isnull(cable_node))
-		return FALSE
-	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
-		return FALSE
-	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+	// Shocking hurts the grille (to weaken monkey powersinks)
+	if(prob(50))
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	do_sparks(3, TRUE, src)
 	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

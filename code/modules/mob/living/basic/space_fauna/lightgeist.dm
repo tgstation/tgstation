@@ -41,18 +41,14 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
+	pull_force = MOVE_FORCE_NONE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist
 
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
-
-	remove_verb(src, /mob/living/verb/pulled)
-	remove_verb(src, /mob/verb/me_verb)
-
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_EMOTEMUTE), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
 		/datum/component/healing_touch,\
@@ -103,7 +99,7 @@
 	if (!iscarbon(target))
 		return target.get_brute_loss() > 0 || target.get_fire_loss() > 0
 	var/mob/living/carbon/carbon_target = target
-	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
+	for (var/obj/item/bodypart/part in carbon_target.get_bodyparts())
 		if (!part.brute_dam && !part.burn_dam)
 			continue
 		if (!(part.bodytype & required_bodytype))

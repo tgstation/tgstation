@@ -103,7 +103,7 @@
 		. += powered_state
 		if(!QDELETED(cell) && charge_state)
 			var/ratio = cell.charge / cell.maxcharge
-			ratio = CEILING(ratio*4, 1) * 25
+			ratio = ceil(ratio*4) * 25
 			. += "[charge_state][ratio]"
 	if(!cell && nocell_state)
 		. += "[nocell_state]"
@@ -115,19 +115,19 @@
 	cell = locate(/obj/item/stock_parts/power_store) in contents
 	update_power()
 
-/obj/item/defibrillator/ui_action_click()
-	INVOKE_ASYNC(src, PROC_REF(toggle_paddles))
+/obj/item/defibrillator/ui_action_click(mob/user, actiontype)
+	INVOKE_ASYNC(src, PROC_REF(toggle_paddles), user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
 		if(user.get_slot_by_item(src) & slot_flags)
-			ui_action_click()
+			ui_action_click(user, modifiers)
 		else
 			balloon_alert(user, "equip the unit first!")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
-		ui_action_click() //checks for this are handled in defibrillator.mount.dm
+		ui_action_click(user, modifiers) //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
@@ -143,7 +143,7 @@
 
 /obj/item/defibrillator/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(item == paddles)
-		toggle_paddles()
+		toggle_paddles(user)
 		return NONE
 	if(!istype(item, /obj/item/stock_parts/power_store/cell))
 		return NONE
@@ -181,15 +181,11 @@
 
 	update_power()
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+/obj/item/defibrillator/proc/toggle_paddles(mob/living/user)
 	on = !on
-
-	var/mob/living/carbon/user = usr
 	if(on)
 		//Detach the paddles into the user's hands
-		if(!usr.put_in_hands(paddles))
+		if(!user.put_in_hands(paddles))
 			on = FALSE
 			to_chat(user, span_warning("You need a free hand to hold the paddles!"))
 			update_power()

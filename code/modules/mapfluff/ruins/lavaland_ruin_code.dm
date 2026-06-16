@@ -62,6 +62,21 @@
 	new shell_type(get_turf(src), /* creator = */ user, /* made_of = */ stack_type)
 	qdel(src)
 
+/obj/item/golem_shell/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	to_chat(user, span_notice("You begin dislodging structurally integral chunks."))
+	playsound(src, 'sound/items/tools/crowbar.ogg',  70)
+	if(!do_after(user, delay = 1 SECONDS, target = src))
+		return
+	if(QDELETED(src))
+		return
+	new /obj/item/stack/sheet/mineral/adamantine(get_turf(src), 1) //Return less than was used to construct the shell
+	to_chat(user, span_notice("The shell collapses in on itself!"))
+	playsound(src, 'sound/effects/rock/rock_break.ogg', 40)
+	qdel(src)
+	return
+
 ///made with xenobiology, the golem obeys its creator
 /obj/item/golem_shell/servant
 	name = "incomplete servant golem shell"

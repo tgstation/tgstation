@@ -19,6 +19,7 @@
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	path_image_color = "#993299"
+	facepaint_overlays = list("cleanbot" = FALSE, "cleanbot_highlight" = TRUE)
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.

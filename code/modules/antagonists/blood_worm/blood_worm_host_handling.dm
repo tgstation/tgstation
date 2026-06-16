@@ -22,6 +22,7 @@
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, PROC_REF(on_host_pre_update_blood_status))
 	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
+	client?.set_stat_panel()
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
 
 	START_PROCESSING(SSfastprocess, src)
@@ -118,6 +119,7 @@
 		COMSIG_MOB_EXAMINING,
 		COMSIG_MOB_HUD_CREATED,
 	))
+	client?.set_stat_panel()
 
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -132,7 +134,7 @@
 	host.remove_blood_volume_modifier(REF(src))
 	sync_health(already_ejecting = TRUE)
 
-	remove_host_hud()
+	host.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
 
 	host.set_blood_volume(0)
 
@@ -245,16 +247,8 @@
 	UnregisterSignal(host, COMSIG_MOB_HUD_CREATED)
 
 	var/datum/hud/hud = host.hud_used
-	blood_display = new(null, hud)
-	hud.infodisplay += blood_display
-	hud.show_hud(hud.hud_version)
-
-/mob/living/basic/blood_worm/proc/remove_host_hud()
-	var/datum/hud/hud = host.hud_used
-
-	if (!hud)
-		QDEL_NULL(blood_display)
+	var/atom/movable/screen/blood_level/blood_display = hud.screen_objects[HUD_MOB_BLOOD_LEVEL]
+	if (blood_display)
 		return
 
-	hud.infodisplay -= blood_display
-	QDEL_NULL(blood_display)
+	blood_display = hud.add_screen_object(/atom/movable/screen/blood_level, HUD_MOB_BLOOD_LEVEL, HUD_GROUP_INFO, update_screen = TRUE)

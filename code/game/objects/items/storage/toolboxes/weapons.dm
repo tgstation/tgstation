@@ -232,6 +232,17 @@
 	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine (src)
 	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
 
+/obj/item/storage/toolbox/guncase/china_lake
+	name = "pump-action grenade launcher weapon case"
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/china_lake
+	extra_to_spawn = /obj/item/storage/belt/bandolier/china_lake_extra
+
+/obj/item/storage/toolbox/guncase/china_lake/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src)
+
 /obj/item/storage/toolbox/guncase/soviet
 	name = "ancient gun case"
 	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."

@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/lighting_corners_initialised = FALSE
 
 	///Our lighting object.
-	var/tmp/datum/lighting_object/lighting_object
+	var/tmp/atom/movable/lighting_object/lighting_object
 	///Lighting Corner datums.
 	var/tmp/datum/lighting_corner/lighting_corner_NE
 	var/tmp/datum/lighting_corner/lighting_corner_SE
@@ -112,6 +112,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
+
+	/// If TRUE, then this turf will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -177,12 +180,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
-	// apply materials properly from the default custom_materials value
-	if (!length(custom_materials))
-		set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	if (length(custom_materials))
+		set_custom_materials(custom_materials)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -786,14 +789,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
-/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(alpha < 255)
 		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
-/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)

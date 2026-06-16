@@ -60,6 +60,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
@@ -117,6 +118,10 @@
 		return
 
 	whinny_angrily()
+
+/mob/living/basic/pony/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	. |= SHOVE_CAN_STAGGER
 
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(

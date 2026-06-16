@@ -236,10 +236,16 @@
 	base_icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/deforest
-	name = "deforest medical crate"
+	name = "\improper DeForest Medical crate"
 	desc = "A DeForest brand crate of medical supplies."
 	icon_state = "deforest"
 	base_icon_state = "deforest"
+
+/obj/structure/closet/crate/interdyne_normal
+	name = "\improper Interdyne Pharmaceutics crate"
+	desc = "An Interdyne Pharmaceutics brand crate. Probably contains helpful chemicals? Hopefully contains helpful chemicals."
+	icon_state = "interdynecrate"
+	base_icon_state = "interdynecrate"
 
 /obj/structure/closet/crate/medical/department
 	icon_state = "medical"
@@ -500,3 +506,25 @@
 	icon_state = "lavender"
 	base_icon_state = "lavender"
 	glitter_color = "#db80ff"
+
+/obj/structure/closet/crate/market
+	name = "shield bubble"
+	desc = "A rippling blue energy bubble, capable of sustaining itself until it hits a solid wall."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield2"
+	base_icon_state = "shield2"
+
+/obj/structure/closet/crate/market/after_open(mob/living/user, force)
+	. = ..()
+	visible_message(span_notice("[src] pops as [user] touches it!"))
+	pop_crate()
+
+/obj/structure/closet/crate/market/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	pop_crate()
+
+/// Called when the bubble either arrives at the station, or is interacted with someone/something.
+/obj/structure/closet/crate/market/proc/pop_crate()
+	do_sparks(1, TRUE, get_turf(src))
+	dump_contents()
+	qdel(src)

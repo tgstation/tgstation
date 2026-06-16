@@ -4,14 +4,6 @@
 	opacity = TRUE
 	anchored = TRUE
 
-/obj/effect/particle_effect/expl_particles/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/particle_effect/expl_particles/LateInitialize()
-	var/step_amt = pick(25;1, 50;2, 100;3, 200;4)
-	var/datum/move_loop/loop = GLOB.move_manager.move(src, pick(GLOB.alldirs), 1, timeout = step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(end_particle))
 
 /obj/effect/particle_effect/expl_particles/proc/end_particle(datum/source)
 	SIGNAL_HANDLER
@@ -19,10 +11,20 @@
 		qdel(src)
 
 /datum/effect_system/basic/expl_particles
+	effect_type = /obj/effect/particle_effect/expl_particles
 	amount = 10
+	step_delay = 0.1 SECONDS
+	delete_on_stop = TRUE
 
-/datum/effect_system/basic/expl_particles/generate_effect()
-	new /obj/effect/particle_effect/expl_particles(location)
+/datum/effect_system/basic/expl_particles/get_step_count()
+	return pick(25;1, 50;2, 100;3, 200;4)
+
+/datum/effect_system/basic/expl_particles/loop_end(datum/move_loop/source)
+	. = ..()
+	var/obj/effect/explosion_particle = source.moving
+	if(QDELETED(explosion_particle))
+		return
+	qdel(explosion_particle)
 
 /obj/effect/explosion
 	name = "fire"

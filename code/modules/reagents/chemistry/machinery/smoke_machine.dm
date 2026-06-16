@@ -121,32 +121,28 @@
 		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/smoke_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/smoke_machine/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(on)
 		balloon_alert(user, "turn off first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/smoke_machine/process()
 	if(!reagents.total_volume || !anchored || !on || !is_operational)

@@ -145,6 +145,7 @@
 		return // We're already handling this
 
 	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
 	// Free (if possible) and drop all buckled mobs separately, so drivers can escape their doomed vehicle if they're not glued to it
@@ -184,6 +185,7 @@
 		if (get_turf(falling_mob) != get_turf(parent))
 			REMOVE_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
 			falling_mob.Paralyze(17 SECONDS, ignore_canstun = TRUE) // Wow nice job
+			LAZYREMOVE(falling_atoms, falling_ref)
 			return
 
 	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
@@ -213,6 +215,7 @@
 		storage = (locate() in parent) || new(parent)
 
 	if(storage.contains(dropped_thing))
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
 	dropped_thing.alpha = oldalpha

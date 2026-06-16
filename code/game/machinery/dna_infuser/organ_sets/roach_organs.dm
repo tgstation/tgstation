@@ -143,6 +143,7 @@
 /datum/bodypart_overlay/simple/roach_shell
 	icon_state = "roach_shell"
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 /datum/bodypart_overlay/simple/roach_shell/get_image(image_layer, obj/item/bodypart/limb)
 	return image(

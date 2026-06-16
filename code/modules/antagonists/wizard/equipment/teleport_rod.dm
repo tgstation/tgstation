@@ -214,7 +214,7 @@
 /atom/movable/screen/alert/status_effect/teleport_flux
 	name = "Teleport Flux"
 	desc = "Your body exists in a state of flux, making further teleportation dangerous."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "flux"
 
 /atom/movable/screen/alert/status_effect/teleport_flux/perma

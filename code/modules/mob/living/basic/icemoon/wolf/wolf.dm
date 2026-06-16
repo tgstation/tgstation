@@ -68,6 +68,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 15, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/wolf/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(src.loc)
 	// ride wolf, life good
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)

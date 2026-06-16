@@ -141,14 +141,13 @@
 
 	// A very elaborate way to suicide
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
-	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
 	if(head?.dismember())
 		head.forceMove(src) // stored for later fishage
 	else
 		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
-	var/datum/effect_system/reagents_explosion/explosion = new(get_turf(human_user), 1, 1, 1)
-	explosion.start(src)
+	dyn_explosion(get_turf(human_user), 1, flash_range = 1, flame_range = 1)
 
 /obj/effect/visible_heretic_influence/examine(mob/living/user)
 	. = ..()

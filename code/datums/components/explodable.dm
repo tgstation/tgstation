@@ -128,7 +128,7 @@
 	if(!(item in worn_items))
 		return FALSE
 
-	if(item.body_parts_covered & def_zone)
+	if(item.body_parts_covered & body_zone2cover_flags(def_zone))
 		return TRUE
 	return FALSE
 
@@ -136,7 +136,7 @@
 	if(!isitem(target))
 		return
 	var/obj/item/I = target
-	if(I.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		detonate() //If we're touching a hot item we go boom
 		return TRUE
 

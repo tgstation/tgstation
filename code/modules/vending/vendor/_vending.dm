@@ -213,9 +213,8 @@
 	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
-		var/static/vendor_voice_by_type = list()
-		if(!vendor_voice_by_type[type])
-			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		var/static/list/vendor_voice_by_type = list()
+		vendor_voice_by_type[type] ||= SStts.random_tts_voice()
 		voice = vendor_voice_by_type[type]
 
 	slogan_list = splittext(product_slogans, ";")
@@ -234,6 +233,7 @@
 					all_products_free = TRUE
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.

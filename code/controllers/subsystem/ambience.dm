@@ -1,7 +1,7 @@
 /// The subsystem used to play ambience to users every now and then, makes them real excited.
 SUBSYSTEM_DEF(ambience)
 	name = "Ambience"
-	flags = SS_BACKGROUND|SS_NO_INIT
+	ss_flags = SS_BACKGROUND|SS_NO_INIT
 	priority = FIRE_PRIORITY_AMBIENCE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 1 SECONDS
@@ -20,11 +20,15 @@ SUBSYSTEM_DEF(ambience)
 		var/client/client_iterator = cached_clients[cached_clients.len]
 		cached_clients.len--
 
-		//Check to see if the client exists and isn't held by a new player
-		var/mob/client_mob = client_iterator?.mob
-		if(isnull(client_iterator) || !client_mob || isnewplayer(client_mob))
+		//Check to see if the client exists
+		if(isnull(client_iterator))
 			ambience_listening_clients -= client_iterator
 			client_old_areas -= client_iterator
+			continue
+
+		// skip them this tick if they're on the lobby screen or somehow dont have a mob??
+		var/mob/client_mob = client_iterator?.mob
+		if(!client_mob || isnewplayer(client_mob))
 			continue
 
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU

@@ -77,7 +77,7 @@
 /atom/movable/screen/alert/status_effect/decloning
 	name = "Cellular Meltdown"
 	desc = "Your body is deforming, and doesn't feel like it's going to hold up much longer. You are going to need treatment soon."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "dna_melt"
 
 /datum/movespeed_modifier/decloning

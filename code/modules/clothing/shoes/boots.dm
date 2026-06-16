@@ -105,7 +105,7 @@
 	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
 	icon_state = "iceboots"
 	inhand_icon_state = null
-	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
+	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SNOWPRINTS)
 
 // A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
 /obj/item/clothing/shoes/winterboots/ice_boots/eva

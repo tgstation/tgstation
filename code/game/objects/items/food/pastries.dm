@@ -599,3 +599,18 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/apple_fritter
+	name = "apple fritter"
+	desc = "For something that looks like a pile of glazed dirt, it's suprisingly tart. It smells sweet enough to knock you unconscious."
+	icon_state = "apple_fritter"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/sugar = 1,
+		/datum/reagent/consumable/applejuice = 1,
+	)
+	tastes = list("apple" = 1, "glaze" = 1)
+	foodtypes = GRAIN|FRUIT|FRIED|DAIRY|BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

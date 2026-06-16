@@ -186,7 +186,7 @@
 		/obj/item/borg/upgrade/modkit/range,
 		/obj/item/borg/upgrade/modkit/damage,
 		/obj/item/borg/upgrade/modkit/cooldown,
-		/obj/item/borg/upgrade/modkit/aoe/mobs,
+		/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs,
 		/obj/item/borg/upgrade/modkit/human_passthrough,
 	)
 

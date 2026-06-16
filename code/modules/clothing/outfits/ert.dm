@@ -457,6 +457,9 @@
 	)
 
 /datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visuals_only = FALSE)
+	var/obj/item/organ/eyes/robotic/tacvisor/deathsquad/visor = new()
+	visor.Insert(squaddie, movement_flags = DELETE_IF_REPLACED)
+
 	if(visuals_only)
 		return
 

@@ -74,11 +74,11 @@
 	attached_to.update_accessory_overlay()
 
 /**
- * Actually attach this accessory to the passed clothing article.
+ * Try to attach this accessory to the passed clothing article.
  *
  * The accessory is not yet within the clothing's loc at this point, this hapens after success.
  */
-/obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/proc/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(atom_storage)
@@ -103,9 +103,12 @@
 
 	return TRUE
 
-/// Called after attach is completely successful and the accessory is in the clothing's loc
-/obj/item/clothing/accessory/proc/successful_attach(obj/item/clothing/under/attached_to)
+/// Called after try_attach returns TRUE and thus the accessory can be finally be moved into its target
+/obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
+
+	LAZYADD(attached_to.attached_accessories, src)
+	forceMove(attached_to)
 
 	if(!attached_to.accessory_overlay)
 		attached_to.accessory_overlay = mutable_appearance()
@@ -179,12 +182,14 @@
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	for(var/trait in clothing_traits) // Accessory don't have slot flags by def, but they still apply clothing traits when the suit is equipped in the right slot.
+		ADD_CLOTHING_TRAIT(user, trait)
 	user.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	dropped(user)
+	dropped(user) //This handles removing clothing traits from the user by default everytime.
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to
@@ -195,8 +200,7 @@
 	if(can_attach_accessory(source))
 		return
 
-	source.remove_accessory(src)
-	forceMove(source.drop_location())
+	forceMove(source.drop_location()) //This calls remove_accessory()
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon

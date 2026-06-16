@@ -10,16 +10,29 @@
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	material_flags = MATERIAL_EFFECTS
-	var/points = 0 //How many points this ore gets you from the ore redemption machine
-	var/refined_type = null //What this ore defaults to being refined into
-	var/mine_experience = 5 //How much experience do you get for mining this ore?
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
-	var/list/stack_overlays
-	var/scan_state = "" //Used by mineral turfs for their scan overlay.
-	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
 	drop_sound = SFX_STONE_DROP
 	pickup_sound = SFX_STONE_PICKUP
 	sound_vary = TRUE
+	/// How many points this ore gets you from the ore redemption machine
+	var/points = 0
+	/// What this ore defaults to being refined into
+	var/refined_type = null
+	/// How much experience do you get for mining this ore?
+	var/mine_experience = 5
+	var/list/stack_overlays
+	/// Used by mineral turfs for their scan overlay.
+	var/scan_state = ""
+	/// Chance that we'll spawn as a vein rather than a sole tile
+	var/spread_chance = 0
+	/// Type of ore vein we spawn, cluster/scatter/plain/branching
+	var/vein_type = ORE_VEIN_CLUSTER
+	/// Optimal distance from open turfs for us to spawn, 1 is next to an open tile
+	var/vein_distance = 1
+	/// Minimum distance that a vein can span, radius for cluster/scatter, maximum length for plain/branching
+	var/min_vein_size = 1
+	/// Minimum distance that a vein can span, radius for cluster/scatter, maximum length for plain/branching
+	var/max_vein_size = 2
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -52,29 +65,29 @@
 	return isnull(refined_type) ? null : src
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(!refined_type)
 		return TRUE
 
-	if(I.use_tool(src, user, 0, volume=50))
-		new refined_type(drop_location())
-		use(1)
+	if(!I.use_tool(src, user, 0, volume = 50))
+		return TRUE
 
+	var/sheets_made = values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT
+	new refined_type(drop_location(), max(1, floor(sheets_made)))
+	use(max(1, ceil(1 / sheets_made)))
 	return TRUE
 
 /obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(isnull(refined_type))
 		return
-	else
-		var/probability = (rand(0,100))/100
-		var/burn_value = probability*amount
-		var/amountrefined = round(burn_value, 1)
-		if(amountrefined < 1)
-			qdel(src)
-		else
-			new refined_type(drop_location(),amountrefined)
-			qdel(src)
+
+	var/probability = rand(0, 100) / 100
+	var/burn_value = probability * amount
+	var/amount_refined = floor(burn_value * values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT)
+	if(amount_refined > 1)
+		new refined_type(drop_location(), amount_refined)
+	qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
@@ -82,24 +95,30 @@
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = NONE
-	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
 	scan_state = "rock_uranium"
-	spreadChance = 5
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/uranium
+	vein_type = ORE_VEIN_PLAIN
+	vein_distance = 3
+	min_vein_size = 1
+	max_vein_size = 3
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "iron"
 	singular_name = "iron ore chunk"
 	points = 1
-	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
 	scan_state = "rock_iron"
-	spreadChance = 20
+	spread_chance = 65
 	merge_type = /obj/item/stack/ore/iron
+	min_vein_size = 1
+	max_vein_size = 3
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -142,7 +161,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		C.visible_message(span_danger("[C]'s eye protection blocks the sand!"), span_warning("Your eye protection blocks the sand!"))
 		return
 	C.adjust_eye_blur(12 SECONDS)
-	C.adjust_stamina_loss(15)//the pain from your eyes burning does stamina damage
+	C.adjust_stamina_loss(15) //the pain from your eyes burning does stamina damage
 	C.adjust_confusion(5 SECONDS)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
@@ -151,7 +170,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(severity)
 		qdel(src)
 		return TRUE
-
 	return FALSE
 
 /obj/item/stack/ore/glass/thirty
@@ -164,17 +182,27 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/basalt
 
+/obj/item/stack/ore/glass/siderite
+	name = "siderite dust"
+	icon_state = "siderite_sand"
+	singular_name = "siderite dust pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/siderite
+
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "plasma"
 	singular_name = "plasma ore chunk"
 	points = 15
-	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
 	scan_state = "rock_plasma"
-	spreadChance = 8
+	spread_chance = 45
 	merge_type = /obj/item/stack/ore/plasma
+	vein_type = ORE_VEIN_PLAIN
+	min_vein_size = 2
+	max_vein_size = 4
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, span_warning("You can't hit a high enough temperature to smelt [src] properly!"))
@@ -186,11 +214,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
-	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 	scan_state = "rock_silver"
-	spreadChance = 5
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/silver
+	vein_type = ORE_VEIN_BRANCH
+	min_vein_size = 0
+	max_vein_size = 2
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
@@ -198,22 +229,31 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
-	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 	scan_state = "rock_gold"
-	spreadChance = 5
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/gold
+	vein_type = ORE_VEIN_BRANCH
+	vein_distance = 2
+	min_vein_size = 0
+	max_vein_size = 2
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "diamond"
 	singular_name = "diamond ore chunk"
 	points = 50
-	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
 	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
+	vein_type = ORE_VEIN_SCATTER
+	spread_chance = 20
+	vein_distance = 4
+	min_vein_size = 1
+	max_vein_size = 2
 
 /obj/item/stack/ore/diamond/Initialize(mapload)
 	. = ..()
@@ -227,23 +267,30 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "bananium"
 	singular_name = "bananium ore chunk"
 	points = 60
-	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
+	vein_type = ORE_VEIN_PLAIN
+	spread_chance = 20
+	vein_distance = 4
+	min_vein_size = 1
+	max_vein_size = 2
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "titanium"
 	singular_name = "titanium ore chunk"
 	points = 50
-	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
 	scan_state = "rock_titanium"
-	spreadChance = 5
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/titanium
+	min_vein_size = 1
+	max_vein_size = 2
 
 /obj/item/stack/ore/slag
 	name = "slag"
@@ -438,7 +485,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
@@ -554,44 +600,26 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/gold/grind_results()
-	return list(/datum/reagent/gold = 4)
-
 /obj/item/coin/silver
 	custom_materials = list(/datum/material/silver = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/silver/grind_results()
-	return list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	custom_materials = list(/datum/material/diamond = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/diamond/grind_results()
-	return list(/datum/reagent/carbon = 4)
-
 /obj/item/coin/plasma
 	custom_materials = list(/datum/material/plasma = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/plasma/grind_results()
-	return list(/datum/reagent/toxin/plasma = 4)
-
 /obj/item/coin/uranium
 	custom_materials = list(/datum/material/uranium = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/uranium/grind_results()
-	return list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/titanium/grind_results()
-	return list(/datum/reagent/flash_powder = 4)
+	return list(/datum/reagent/flash_powder = 8)
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/bananium/grind_results()
-	return list(/datum/reagent/consumable/nutriment/soup/clown_tears = 4)
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = COIN_MATERIAL_AMOUNT)
@@ -600,19 +628,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/mythril/grind_results()
-	return list(/datum/reagent/medicine/omnizine/godblood = 4)
+	return list(/datum/reagent/medicine/omnizine/godblood = 8)
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/plastic/grind_results()
-	return list(/datum/reagent/plastic_polymers = 4)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/runite/grind_results()
-	return list(/datum/reagent/iron = 2, /datum/reagent/consumable/ethanol/ritual_wine = 2)
+	return list(/datum/reagent/iron = 4, /datum/reagent/consumable/ethanol/ritual_wine = 4)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -629,17 +654,17 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	override_material_worth = TRUE
 
 /obj/item/coin/antagtoken/grind_results()
-	return list(/datum/reagent/ants = 2, /datum/reagent/consumable/eggyolk = 2)
+	return list(/datum/reagent/ants = 4, /datum/reagent/consumable/eggyolk = 4)
 
-/obj/item/coin/iron/grind_results()
-	return list(/datum/reagent/iron = 4)
+/obj/item/coin/iron
+	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/grind_results()
-	return list(/datum/reagent/gold/cursed = 4)
+	return list(/datum/reagent/gold/cursed = 8)
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
 	if(cooldown < world.time)

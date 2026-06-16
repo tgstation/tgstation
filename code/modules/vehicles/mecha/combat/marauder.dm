@@ -59,7 +59,8 @@
 	button_icon_state = "mech_smoke"
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
@@ -73,7 +74,8 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(mob/clicker, trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!owner.client || !chassis || !(owner in chassis.occupants))
 		return
@@ -158,6 +160,10 @@
 	bomb = 50
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/marauder/mauler/Initialize(mapload)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	equip_by_category = list(

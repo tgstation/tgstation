@@ -8,7 +8,7 @@
 SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
 	wait = 10 // This is more like a queue then anything else
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/mapping,

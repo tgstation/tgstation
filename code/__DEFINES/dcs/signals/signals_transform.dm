@@ -8,3 +8,6 @@
 #define COMSIG_TRANSFORMING_ON_TRANSFORM "transforming_on_transform"
 	/// Return COMPONENT_NO_DEFAULT_MESSAGE to prevent the transforming component from displaying the default transform message / sound.
 	#define COMPONENT_NO_DEFAULT_MESSAGE (1<<0)
+
+/// From /datum/component/transforming/proc/on_transform_end(obj/item/source, mob/user): (mob/source, obj/item/transforming, active)
+#define COMSIG_MOB_TRANSFORMING_ITEM "mob_transforming_item"

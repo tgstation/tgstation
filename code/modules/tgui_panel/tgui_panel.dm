@@ -103,6 +103,10 @@
 		analyze_telemetry(payload)
 		return TRUE
 
+	if(type == "requestMetadata")
+		send_metadata()
+		return TRUE
+
 /**
  * public
  *
@@ -110,3 +114,32 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/**
+ * private
+ *
+ * Sent when a client requests metadata - used for websocket stuff.
+ */
+/datum/tgui_panel/proc/send_metadata()
+	var/static/list/webroot_asset_urls
+
+	var/list/metadata = list(
+		"game_version" = GLOB.game_version,
+		"server_name" = CONFIG_GET(string/servername),
+		"round_id" = GLOB.round_id,
+		"map_name" = SSmapping.current_map?.map_name,
+		"round_duration" = round(STATION_TIME_PASSED() / 10, 1),
+		"gamestate" = SSticker.current_state,
+	)
+	// if we're using webroot - also pass along the webroot url and such, so we can embed chat logs with the proper styles/images if desired
+	if(istype(SSassets.transport, /datum/asset_transport/webroot))
+		if(isnull(webroot_asset_urls))
+			webroot_asset_urls = list()
+			for(var/asset_type in list(/datum/asset/simple/tgui_panel, /datum/asset/simple/namespaced/fontawesome, /datum/asset/simple/namespaced/tgfont, /datum/asset/spritesheet_batched/chat))
+				var/datum/asset/asset = get_asset_datum(asset_type)
+				webroot_asset_urls += asset.get_url_mappings()
+		metadata["webroot"] = list(
+			"base_url" = CONFIG_GET(string/asset_cdn_url),
+			"assets" = webroot_asset_urls,
+		)
+	window.send_message("metadata", metadata)

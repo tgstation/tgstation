@@ -56,7 +56,7 @@
 
 	//Make the assoc list material reference -> amount
 	for(var/mat in init_mats)
-		var/mat_ref = GET_MATERIAL_REF(mat)
+		var/mat_ref = SSmaterials.get_material(mat)
 		if(isnull(mat_ref))
 			continue
 		var/mat_amt = init_mats[mat]
@@ -188,7 +188,7 @@
 	var/total_amount_saved = total_amount()
 	if(mat)
 		if(!istype(mat))
-			mat = GET_MATERIAL_REF(mat)
+			mat = SSmaterials.get_material(mat)
 		materials[mat] += amt
 	else
 		var/num_materials = length(materials)
@@ -559,7 +559,7 @@
  */
 /datum/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
-		mat = GET_MATERIAL_REF(mat)
+		mat = SSmaterials.get_material(mat)
 	return materials[mat]
 
 /**
@@ -616,7 +616,6 @@
 	for(var/x in mats) //Loop through all required materials
 		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
 		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
-			testing("didn't have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
@@ -639,7 +638,7 @@
 
 	//get ref if necessary
 	if(!istype(mat))
-		mat = GET_MATERIAL_REF(mat)
+		mat = SSmaterials.get_material(mat)
 
 	//check if sufficient is available
 	if(materials[mat] < amt)

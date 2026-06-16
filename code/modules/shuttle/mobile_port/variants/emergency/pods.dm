@@ -140,6 +140,10 @@
 	. = ..()
 	icon_state = "wall_safe[atom_storage?.locked ? "_locked" : ""]"
 
+/obj/item/storage/pod/create_storage(max_slots, max_specific_storage, max_total_storage, list/canhold, list/canthold, storage_type)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 
 /obj/item/storage/pod/PopulateContents()

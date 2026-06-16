@@ -1026,9 +1026,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/closet/verb/verb_toggleopen()
-	set src in view(1)
-	set category = "Object"
 	set name = "Toggle Open"
+	set src in view(1)
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
@@ -1057,7 +1056,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		movable_parent.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
-		open()
+		open(user)
 		return
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -1133,7 +1132,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(!secure || broken)
-		return
+		return FALSE
 
 	if(locked) //only apply checks while unlocking else allow anyone to lock it
 		var/error_msg = ""
@@ -1145,8 +1144,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				id_card = null
 				req_access = list()
 				req_one_access = null
-				togglelock(user, silent)
-				return
+				return togglelock(user, silent)
 			if(!can_unlock(user, user.get_idcard(), registered_id))
 				error_msg = "not your locker!"
 		else if(!can_unlock(user, user.get_idcard()))
@@ -1154,7 +1152,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(error_msg)
 			if(!silent)
 				balloon_alert(user, error_msg)
-			return
+			return TRUE
 
 	if(iscarbon(user))
 		add_fingerprint(user)
@@ -1165,6 +1163,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		span_notice("You [locked ? "locked" : "unlocked"] [src]."),
 	)
 	update_appearance()
+	return TRUE
 
 /// toggles the lock state of a closet
 /obj/structure/closet/proc/lock()

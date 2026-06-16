@@ -320,14 +320,10 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/microwave/wirecutter_act(mob/living/user, obj/item/tool)
 	if(broken != REALLY_BROKEN)
@@ -524,7 +520,7 @@
 
 	if(!length(ingredients))
 		if(HAS_AI_ACCESS(user))
-			examine(user)
+			user.examinate(src)
 		else
 			balloon_alert(user, "it's empty!")
 		return
@@ -547,7 +543,7 @@
 			vampire_charging_enabled = TRUE
 			start_cycle(user)
 		if("examine")
-			examine(user)
+			user.examinate(src)
 
 /obj/machinery/microwave/wash(clean_types)
 	. = ..()
@@ -750,7 +746,7 @@
 			else
 				dirty++
 
-		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
+		metal_amount += (cooked_item.custom_materials?[SSmaterials.get_material(/datum/material/iron)] || 0)
 
 	if(cursed_chef && (metal_amount || prob(5)))  // If we're unlucky and have metal, we're guaranteed to explode
 		spark()

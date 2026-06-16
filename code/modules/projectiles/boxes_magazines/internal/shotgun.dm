@@ -49,6 +49,12 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/shot/lake
+	name = "pump-action grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = CALIBER_40MM
+	max_ammo = 3
+
 /obj/item/ammo_box/magazine/internal/shot/bounty
 	name = "triple-barrel shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate

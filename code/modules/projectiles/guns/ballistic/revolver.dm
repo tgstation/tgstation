@@ -59,9 +59,6 @@
 
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
-	set category = "Object"
-	set desc = "Click to spin your revolver's chamber."
-
 	var/mob/user = usr
 
 	if(user.stat || !in_range(user, src))
@@ -368,6 +365,11 @@
 	)
 	shoot_self(user, check_zone(user.zone_selected))
 	return .
+
+/obj/item/gun/ballistic/revolver/russian/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	if((get_ammo(FALSE, FALSE) > 1) || (get_ammo(TRUE, TRUE) < 6))
+		return NONE
+	return ..()
 
 /// Called after successfully(if you can call it that) shooting ourselves
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)

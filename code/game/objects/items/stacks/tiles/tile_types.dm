@@ -50,7 +50,7 @@
 		. += span_notice("Use while in your hand to change what type of [src] you want.")
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/damage_value
-		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
+		switch(ceil(MAX_LIVING_HEALTH / throwforce)) //throws to crit a human
 			if(1 to 3)
 				damage_value = "superb"
 			if(4 to 6)
@@ -1162,9 +1162,11 @@
 	merge_type = /obj/item/stack/tile/material
 
 /obj/item/stack/tile/material/place_tile(turf/open/target_plating, mob/user)
+	// Save refernce to the materials for the case when we place last tile in the stack
+	var/list/saved_mats_per_unit = mats_per_unit
 	. = ..()
 	var/turf/open/floor/material/floor = .
-	floor?.set_custom_materials(mats_per_unit)
+	floor?.set_custom_materials(saved_mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"

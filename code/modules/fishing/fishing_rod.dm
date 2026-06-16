@@ -92,11 +92,12 @@
 		set_slot(new line(src), ROD_SLOT_LINE)
 
 	update_appearance()
-
-	//Bane effect that make it extra-effective against mobs with water adaptation (read: fish infusion)
-	AddElement(/datum/element/bane, target_type = /mob/living, damage_multiplier = 1.25)
-	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
-	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
+	AddComponent(/datum/component/bane, \
+		damage_multiplier = 2.25, \
+		should_bane_callback = CALLBACK(src, PROC_REF(should_bane_fish_infusions)), \
+		on_bane_callback = CALLBACK(src, PROC_REF(on_bane_fish_infusions)), \
+		label_text = "fishpeople", \
+	)
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
@@ -161,13 +162,7 @@
 	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
-		block = list()
-		block += span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials.")
-		var/datum/material/material = get_master_material()
-		if(material.fish_weight_modifier != 1)
-			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
-			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
-		. += boxed_message(block.Join("\n"))
+		. += boxed_message(span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials."))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -196,32 +191,19 @@
 
 /obj/item/fishing_rod/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	difficulty_modifier += custom_material.fishing_difficulty_modifier * multiplier
-	cast_range += custom_material.fishing_cast_range * multiplier
-	experience_multiplier *= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
-	completion_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
-	bait_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
-	deceleration_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
-	bounciness_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
-	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
-	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
-	if(height_mod > 1)
-		bait_height_mult *= height_mod**0.75
-
+	cast_range += round(2 - custom_material.get_property(MATERIAL_DENSITY) / 2) * multiplier
+	bait_speed_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_REFLECTIVITY) - 4) * 0.1, multiplier)
+	deceleration_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_HARDNESS) - 4) * 0.1, multiplier)
+	bounciness_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_FLEXIBILITY) - 4) * 0.1, multiplier)
+	gravity_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	difficulty_modifier -= custom_material.fishing_difficulty_modifier * multiplier
-	cast_range -= custom_material.fishing_cast_range * multiplier
-	experience_multiplier /= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
-	completion_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
-	bait_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
-	deceleration_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
-	bounciness_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
-	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
-	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
-	if(height_mod > 1)
-		bait_height_mult *= 1/(height_mod**0.75)
+	cast_range -= round(2 - custom_material.get_property(MATERIAL_DENSITY) / 2) * multiplier
+	bait_speed_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_REFLECTIVITY) - 4) * 0.1, multiplier)
+	deceleration_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_HARDNESS) - 4) * 0.1, multiplier)
+	bounciness_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_FLEXIBILITY) - 4) * 0.1, multiplier)
+	gravity_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
@@ -279,18 +261,13 @@
 	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
 	return material_chance
 
-///Fishing rodss should only bane fish DNA-infused spessman
-/obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
-	SIGNAL_HANDLER
-	if(!force || !HAS_TRAIT(fish, TRAIT_WATER_ADAPTATION))
-		return COMPONENT_CANCEL_BANING
+/obj/item/fishing_rod/proc/should_bane_fish_infusions(mob/living/target)
+	return force > 0 && HAS_TRAIT(target, TRAIT_WATER_ADAPTATION)
 
-///Fishing rods should hard-counter fish DNA-infused spessman
-/obj/item/fishing_rod/proc/bane_effects(datum/source, mob/living/fish)
-	SIGNAL_HANDLER
-	fish.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
-	fish.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
-	fish.adjust_wet_stacks(-4)
+/obj/item/fishing_rod/proc/on_bane_fish_infusions(mob/living/target, mob/living/attacker)
+	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
+	target.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+	target.adjust_wet_stacks(-4)
 
 /obj/item/fishing_rod/interact(mob/user)
 	if(currently_hooked)

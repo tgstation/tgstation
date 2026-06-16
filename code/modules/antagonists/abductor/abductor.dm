@@ -23,14 +23,14 @@
 	scientist.set_species(/datum/species/abductor)
 	agent.set_species(/datum/species/abductor)
 
-	var/icon/scientist_icon = render_preview_outfit(/datum/outfit/abductor/scientist, scientist)
-	scientist_icon.Shift(WEST, 8)
+	var/datum/universal_icon/scientist_icon = render_preview_outfit(/datum/outfit/abductor/scientist, scientist)
+	scientist_icon.shift(WEST, 8)
 
-	var/icon/agent_icon = render_preview_outfit(/datum/outfit/abductor/agent, agent)
-	agent_icon.Shift(EAST, 8)
+	var/datum/universal_icon/agent_icon = render_preview_outfit(/datum/outfit/abductor/agent, agent)
+	agent_icon.shift(EAST, 8)
 
-	var/icon/final_icon = scientist_icon
-	final_icon.Blend(agent_icon, ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = scientist_icon
+	final_icon.blend_icon(agent_icon, ICON_OVERLAY)
 
 	qdel(scientist)
 	qdel(agent)
@@ -99,7 +99,7 @@
 
 	// If we have a team skincolor, apply it here. Applied by admins or 2% chance of natural occurance
 	if(!isnull(team.team_skincolor))
-		for(var/obj/item/bodypart/part as anything in new_abductor.bodyparts)
+		for(var/obj/item/bodypart/part as anything in new_abductor.get_bodyparts())
 			part.should_draw_greyscale = TRUE
 			part.add_color_override(team.team_skincolor, LIMB_COLOR_AYYLMAO)
 

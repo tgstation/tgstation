@@ -163,6 +163,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 
 		RegisterSignal(new_viewer, COMSIG_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
 		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
+		RegisterSignal(new_viewer, COMSIG_LIVING_LOOK_Z_CHANGE, PROC_REF(on_look_z_level_changed), override = TRUE)
 
 		var/turf/their_turf = get_turf(new_viewer)
 		if(!their_turf)
@@ -194,6 +195,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 		if(!hud_atoms_all_z_levels[former_viewer])//make sure we aren't unregistering changes on a mob that's also a hud atom for this hud
 			UnregisterSignal(former_viewer, COMSIG_MOVABLE_Z_CHANGED)
 			UnregisterSignal(former_viewer, COMSIG_QDELETING)
+			UnregisterSignal(former_viewer, COMSIG_LIVING_LOOK_Z_CHANGE)
 
 		hud_users_all_z_levels -= former_viewer
 
@@ -322,6 +324,24 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 			hud_atoms[new_turf.z] |= moved_atom
 
 			add_atom_to_all_mob_huds(get_hud_users_for_z_level(new_turf.z), moved_atom)
+
+/// The same operations of on_atom_or_user_z_level_changed(), but without changing the mover's hud.
+/// (change the huds the user sees on other people, not the hud other people see on the user)
+/// Used for mobs that see through a separate eye mob, and looking up/down.
+/datum/atom_hud/proc/on_look_z_level_changed(atom/movable/user, turf/old_turf, turf/new_turf)
+	SIGNAL_HANDLER
+	// handle removing hud images from the old z-level
+	if (old_turf && hud_users_all_z_levels[user]) // old_turf can be null if we tried to look through the ceiling or through the floor
+		hud_users[old_turf.z] -= user
+
+		remove_all_atoms_from_single_hud(user, get_hud_atoms_for_z_level(old_turf.z))
+
+	// handle adding hud images from the new z-level
+	if (hud_users_all_z_levels[user])
+		hud_users[new_turf.z][user] = TRUE
+
+		add_all_atoms_to_single_mob_hud(user, get_hud_atoms_for_z_level(new_turf.z))
+
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to requesting_mob's client.images list
 /datum/atom_hud/proc/add_atom_to_single_mob_hud(mob/requesting_mob, atom/hud_atom) //unsafe, no sanity apart from client

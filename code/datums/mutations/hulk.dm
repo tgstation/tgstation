@@ -33,7 +33,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 		if (part.bodytype & BODYTYPE_ORGANIC)
 			part.add_color_override(bodypart_color, LIMB_COLOR_HULK)
 	owner.update_body_parts()
@@ -74,7 +74,7 @@
 /datum/mutation/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 		part.remove_color_override(LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")

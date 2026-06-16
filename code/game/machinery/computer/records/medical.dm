@@ -59,6 +59,7 @@
 			major_disabilities = target.major_disabilities_desc,
 			minor_disabilities = target.minor_disabilities_desc,
 			physical_status = target.physical_status,
+			cause_of_death = target.cause_of_death,
 			mental_status = target.mental_status,
 			name = target.name,
 			notes = notes,
@@ -99,7 +100,7 @@
 			if(!content)
 				return FALSE
 
-			var/datum/medical_note/new_note = new(usr.name, content, station_time_timestamp())
+			var/datum/medical_note/new_note = new(usr.name, content, round_timestamp())
 			while(length(target.medical_notes) > 2)
 				target.medical_notes.Cut(1, 2)
 
@@ -123,6 +124,8 @@
 				return FALSE
 
 			target.physical_status = physical_status
+			if(physical_status != PHYSICAL_DECEASED)
+				target.cause_of_death = null
 
 			return TRUE
 
@@ -133,6 +136,13 @@
 
 			target.mental_status = mental_status
 
+			return TRUE
+
+		if("set_cause_of_death")
+			var/death_text = reject_bad_name(params["cause"], allow_numbers = TRUE, max_length = MAX_DESC_LEN, strict = TRUE, cap_after_symbols = FALSE)
+			if(!death_text)
+				return FALSE
+			target.cause_of_death = death_text
 			return TRUE
 
 	return FALSE

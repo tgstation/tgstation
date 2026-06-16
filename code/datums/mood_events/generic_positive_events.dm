@@ -4,10 +4,6 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/hug/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
-		mood_change = -1
-		description = "A hug? Call HR!"
-		return
 	if(HAS_PERSONALITY(owner, /datum/personality/aloof))
 		mood_change = -1
 		description = "I would prefer not to be touched."
@@ -23,8 +19,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/bear_hug/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic) \
-		|| HAS_PERSONALITY(owner, /datum/personality/aloof) \
+	if(HAS_PERSONALITY(owner, /datum/personality/aloof) \
 		|| HAS_PERSONALITY(owner, /datum/personality/callous) \
 	)
 		mood_change = -2
@@ -37,10 +32,6 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/betterhug/add_effects(mob/friend)
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
-		mood_change = 1
-		description = "[friend.name] is nice, but that's it."
-		return
 	if(HAS_PERSONALITY(owner, /datum/personality/aloof))
 		mood_change = 1
 		description = "[friend.name] is nice, but I wish they'd stop touching me."
@@ -58,10 +49,6 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/besthug/add_effects(mob/friend)
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
-		mood_change = 2
-		description = "[friend.name] is great to be around, but that's it."
-		return
 	if(HAS_PERSONALITY(owner, /datum/personality/aloof))
 		mood_change = 2
 		description = "[friend.name] is great to be around, but I wish they'd stop touching me."
@@ -79,10 +66,6 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/warmhug/add_effects()
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
-		mood_change = 0
-		description = "I don't like hugs, but the warmth is nice...."
-		return
 	if(HAS_PERSONALITY(owner, /datum/personality/aloof))
 		mood_change = 0
 		description = "I would prefer not to be touched, but the warmth is nice...."
@@ -99,7 +82,6 @@
 
 /datum/mood_event/tailpulled/add_effects()
 	if(HAS_PERSONALITY(owner, /datum/personality/aloof) \
-		|| HAS_PERSONALITY(owner, /datum/personality/aromantic) \
 		|| HAS_PERSONALITY(owner, /datum/personality/callous) \
 	)
 		mood_change = -2
@@ -425,10 +407,6 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/kiss/add_effects(mob/beau, direct)
-	if(HAS_PERSONALITY(owner, /datum/personality/aromantic))
-		mood_change = -2
-		description = "A kiss? Call HR!"
-		return
 	if(!beau)
 		return
 	if(direct)
@@ -629,6 +607,8 @@
 	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/slots/win/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	if(istype(new_event, /datum/mood_event/slots/all_gone))
+		return ALLOW_NEW_MOOD
 	if(new_event.mood_change < mood_change)
 		return BLOCK_NEW_MOOD
 	return ..()
@@ -639,8 +619,18 @@
 
 /datum/mood_event/slots/win/jackpot
 	description = "JACKPOT! AW YEAH!"
-	mood_change = 6
-	timeout = 30 MINUTES
+	mood_change = 4
+
+/datum/mood_event/slots/all_gone
+	description = "NOOOOOOO! IT'S ALL GONE!!!"
+	mood_change = -2
+	timeout = 20 MINUTES
+
+/datum/mood_event/slots/all_gone/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	if(istype(new_event, /datum/mood_event/slots/win/jackpot))
+		return ALLOW_NEW_MOOD
+	description = "I'll never get it back..."
+	return BLOCK_NEW_MOOD
 
 /datum/mood_event/empathetic_happy
 	description = "Seeing happy people makes me happy."
@@ -679,7 +669,7 @@
 	mood_change = 1
 
 /datum/mood_event/slacking_off_lazy
-	description = "Boss makes a dollar, I make a dime. That's why I slack on job time."
+	description = "Boss makes a dollar, I make a dime. That's why I slack on company time."
 	mood_change = 1
 
 /datum/mood_event/working_diligent
@@ -711,3 +701,8 @@
 	description = "What a night! I can't wait to do it all again!"
 	mood_change = 2
 	timeout = 10 MINUTES
+
+/datum/mood_event/gizmo_positive
+	description = "I hear a voice whispering kind words in my ear!"
+	mood_change = 3
+	timeout = 30 SECONDS

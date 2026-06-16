@@ -66,7 +66,7 @@
 /atom/movable/screen/alert/status_effect/commanded
 	name = "Commanded"
 	desc = "You are inspired to do things faster!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "commanded"
 
 /obj/item/melee/chainofcommand/tailwhip

@@ -14,6 +14,9 @@
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(isnull(find_this_thing))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [find_this_thing] as a target for blackboard key [set_key]! Behavior: [src]", get_turf(find_this_thing), "Target: [find_this_thing]")
+	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(find_this_thing))
 	controller.set_blackboard_key(set_key, find_this_thing)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

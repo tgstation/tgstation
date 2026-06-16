@@ -5,6 +5,7 @@
 	Or you can just drop your plates on the floor, like civilized folk."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "synthesizer"
+	base_icon_state = "synthesizer"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
@@ -79,20 +80,27 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/dish_drive/attackby(obj/item/dish, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(is_type_in_list(dish, collectable_items) && !user.combat_mode)
-		if(!user.transferItemToLoc(dish, src))
-			return
-		LAZYADD(dish_drive_contents, dish)
-		balloon_alert(user, "[dish] placed in drive")
+/obj/machinery/dish_drive/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/dish_drive/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/dish_drive/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_type_in_list(tool, collectable_items) && !user.combat_mode)
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		LAZYADD(dish_drive_contents, tool)
+		balloon_alert(user, "[tool] placed in drive")
 		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
-		return
-	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), dish))
-		return
-	else if(default_deconstruction_crowbar(dish, FALSE))
-		return
-	..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/dish_drive/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
 
 /obj/machinery/dish_drive/RefreshParts()
 	. = ..()

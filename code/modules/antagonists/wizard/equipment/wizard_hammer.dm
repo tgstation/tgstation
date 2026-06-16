@@ -102,7 +102,7 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/mjollnir/proc/shock(mob/living/target)
+/obj/item/mjollnir/proc/yeet_shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
 	target.Knockdown(10 SECONDS)
 	var/datum/effect_system/basic/lightning_spread/lightning = new(target.loc, 5, TRUE)
@@ -113,16 +113,15 @@
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 
-/obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
-	..()
-	if(QDELETED(target_mob))
+/obj/item/mjollnir/afterattack(atom/target, mob/user)
+	if(QDELETED(target))
 		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		shock(target_mob)
+	if(HAS_TRAIT(src, TRAIT_WIELDED) && isliving(target))
+		yeet_shock(target)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(.)
+		return
 	if(!QDELETED(hit_atom) && isliving(hit_atom))
-		shock(hit_atom)
+		yeet_shock(hit_atom)

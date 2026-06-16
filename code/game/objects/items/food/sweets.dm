@@ -223,7 +223,7 @@
 	color = "#60A584"
 
 /obj/item/food/bubblegum/happiness
-	name = "HP+ gum"
+	name = "\improper HP+ gum"
 	desc = "A rubbery strip of gum. It smells funny."
 	food_reagents = list(/datum/reagent/drug/happiness = 15)
 	tastes = list("paint thinner" = 1)
@@ -258,7 +258,7 @@
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/bubblegum/bubblegum/suicide_act(mob/living/user)
-	user.say(";[pick(BUBBLEGUM_HALLUCINATION_LINES)]")
+	user.say(";[pick(BUBBLEGUM_HALLUCINATION_LINES)]", spans = list(SPAN_COLOSSUS))
 	return ..()
 
 /obj/item/food/gumball

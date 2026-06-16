@@ -120,7 +120,7 @@
 		return
 
 	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
-				span_userdanger("[chassis] starts to drill [target]..."), \
+				span_userdanger("[chassis] starts to drill you!"), \
 				span_hear("You hear drilling."))
 
 	log_message("Started drilling [target]", LOG_MECHA)
@@ -178,7 +178,7 @@
 
 /turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/misc/asteroid/floor in range(1, drill.chassis))
-		if((get_dir(drill.chassis, floor) & drill.chassis.dir) && !floor.dug)
+		if((get_dir(drill.chassis, floor) & drill.chassis.dir) && floor.can_dig())
 			floor.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
@@ -200,17 +200,19 @@
 		return
 
 	//drill makes a hole
-	var/def_zone = target.get_random_valid_zone(BODY_ZONE_CHEST)
-	var/obj/item/bodypart/target_part = target.get_bodypart(def_zone)
-	var/blocked = target.run_armor_check(def_zone, MELEE)
-	target.apply_damage(10, BRUTE, def_zone, blocked)
+	var/def_zone = target.get_random_valid_zone(user.zone_selected)
+	target.apply_damage(
+		10,
+		BRUTE,
+		def_zone,
+		blocked = target.run_armor_check(def_zone, MELEE),
+		wound_bonus = 30,
+		exposed_wound_bonus = 50,
+		sharpness = SHARP_POINTY
+	)
 
 	//blood splatters
 	target.create_splatter(get_dir(chassis, target))
-
-	//organs go everywhere
-	if(target_part && blocked < 100 && prob(10 * drill_level))
-		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"

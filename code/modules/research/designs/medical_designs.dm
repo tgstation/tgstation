@@ -165,7 +165,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/stasis_bag
-	name = "Stasis Bodybag"
+	name = "Stasis Body Bag"
 	desc = "A disposal bodybag designed to stabilize patients in the field in critical condition. \
 		The bag itself cannot maintain stasis for long, and will eventually fall apart."
 	id = "stasis_bodybag"
@@ -446,7 +446,7 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	id = "ci-surgery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (
+	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -463,7 +463,7 @@
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (
+	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -580,6 +580,25 @@
 	name = "Moth Thermal Eyes"
 	id = "ci-thermals-moth"
 	build_path = /obj/item/organ/eyes/robotic/thermals/moth
+
+/datum/design/cyberimp_tacvisor
+	name = "Tactical IFF Visor"
+	desc = "A sick IFF visor with an inbuilt LED display. May critically overload the user's prefrontal cortex."
+	id = "ci-tacvisor"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 6 SECONDS
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT * 4,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 6,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/organ/eyes/robotic/tacvisor
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cyberimp_antidrop
 	name = "Anti-Drop Implant"
@@ -1400,7 +1419,7 @@
 		Links to stasis beds, operating tables, and other machines that can hold patients \
 		such as cryo cells, sleepers, and more."
 	id = "vitals_monitor"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,

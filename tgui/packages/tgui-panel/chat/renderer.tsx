@@ -48,7 +48,7 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
 function createHighlightNode(text, color) {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', `background-color:${color}`);
+  node.setAttribute('style', `--highlight-color:${color}`);
   node.textContent = text;
   return node;
 }
@@ -205,6 +205,7 @@ class ChatRenderer {
       const highlightWholeMessage = setting.highlightWholeMessage;
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
+      const enabled = setting.enabled;
       const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
       const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
       const lines = String(text)
@@ -275,6 +276,7 @@ class ChatRenderer {
         this.highlightParsers = [];
       }
       this.highlightParsers.push({
+        enabled,
         highlightWords,
         highlightRegex,
         highlightColor,
@@ -420,10 +422,19 @@ class ChatRenderer {
             outputProps[canon_name] = working_value;
           }
           const oldHtml = { __html: childNode.innerHTML };
+          const Element = TGUI_CHAT_COMPONENTS[targetName];
+          if (!Element) {
+            logger.error(
+              `Error: unknown chat component "${targetName}" in message`,
+              message,
+            );
+            childNode.removeAttribute('data-component');
+            continue;
+          }
+
           while (childNode.firstChild) {
             childNode.removeChild(childNode.firstChild);
           }
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
 
           const reactRoot = createRoot(childNode);
 
@@ -436,17 +447,23 @@ class ChatRenderer {
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.forEach((parser) => {
-            const highlighted = highlightNode(
-              node,
-              parser.highlightRegex,
-              parser.highlightWords,
-              (text) => createHighlightNode(text, parser.highlightColor),
-            );
-            if (highlighted && parser.highlightWholeMessage) {
-              node.className += ' ChatMessage--highlighted';
-            }
-          });
+          this.highlightParsers
+            .filter((parser) => parser.enabled)
+            .forEach((parser) => {
+              const highlighted = highlightNode(
+                node,
+                parser.highlightRegex,
+                parser.highlightWords,
+                (text) => createHighlightNode(text, parser.highlightColor),
+              );
+              if (highlighted && parser.highlightWholeMessage) {
+                node.className += ' ChatMessage--highlighted';
+                node.style.setProperty(
+                  '--highlight-color',
+                  parser.highlightColor,
+                );
+              }
+            });
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');

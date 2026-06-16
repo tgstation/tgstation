@@ -98,6 +98,7 @@ The BYOND reference has a list [Here](https://secure.byond.com/docs/ref/#/DM/gar
 - Is on the map (always true for turfs)
 - Inside another atom's contents
 - Inside an atom's vis_contents
+- Has its overlays/underlays/vis_contents/vis_locs/contents list held by something 
 - A temporary value in a still-running proc
 - Is a mob with a key
 - Is an image object attached to an atom

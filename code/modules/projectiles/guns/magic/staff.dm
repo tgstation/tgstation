@@ -11,6 +11,10 @@
 	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
+/obj/item/gun/magic/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
@@ -113,6 +117,12 @@
 		user.death() // If you got put into crit by the mobs we'll finish you off
 	return MANUAL_SUICIDE
 
+/obj/item/gun/magic/staff/animate/animate_atom_living(mob/living/owner)
+	var/mob/living/basic/mimic/copy/ranged/living_staff = new(drop_location(), src, owner)
+	QDEL_NULL(living_staff.ai_controller)
+	living_staff.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_staff)
+	return living_staff
+
 /// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -188,6 +198,7 @@
 		/obj/projectile/magic/animate,
 		/obj/projectile/magic/antimagic,
 		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/babel,
 		/obj/projectile/magic/bounty,
 		/obj/projectile/magic/change,
 		/obj/projectile/magic/death,
@@ -195,15 +206,20 @@
 		/obj/projectile/magic/fetch,
 		/obj/projectile/magic/fireball,
 		/obj/projectile/magic/flying,
+		/obj/projectile/magic/freeze,
+		/obj/projectile/magic/levitate,
 		/obj/projectile/magic/locker,
 		/obj/projectile/magic/necropotence,
+		/obj/projectile/magic/plague,
+		/obj/projectile/magic/rebellion,
 		/obj/projectile/magic/resurrection,
-		/obj/projectile/magic/babel,
+		/obj/projectile/magic/shrink,
 		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/swap,
 		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/tentacle_staff,
 		/obj/projectile/magic/wipe,
-		/obj/projectile/temp/chill,
-		/obj/projectile/magic/shrink
+		/obj/projectile/temp/chill
 	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
@@ -292,7 +308,7 @@
 /obj/item/gun/magic/staff/door/do_suicide(mob/living/user)
 	. = ..()
 	var/obj/machinery/door/airlock/material/door = new(user.drop_location())
-	door.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	door.set_custom_materials(list(SSmaterials.get_material(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 	door.update_appearance(updates = UPDATE_ICON)
 	door.name = user.real_name
 	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/machinery/door, open)), 1.5 SECONDS)
@@ -362,7 +378,7 @@
 	if (!iscarbon(user))
 		return BRUTELOSS
 	var/mob/living/carbon/suicider = user
-	for (var/obj/item/bodypart/limb in suicider.bodyparts)
+	for (var/obj/item/bodypart/limb in suicider.get_bodyparts())
 		limb.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
 		sleep(0.25 SECONDS)
 

@@ -39,7 +39,11 @@
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
+#define TEST_FOCUS(test_path) ##test_path { test_flags = UNIT_TEST_FOCUS; }
+
+/// Run the test provided within the parentheses run_count times
+/// Useful for debugging flaky tests that only fail sometimes
+#define TEST_REPEAT(test_path, run_count) ##test_path { times_to_run = ##run_count; }
 
 /// Logs a noticable message on GitHub, but will not mark as an error.
 /// Use this when something shouldn't happen and is of note, but shouldn't block CI.
@@ -62,6 +66,16 @@
  * Keep in mind tho that create and destroy will absolutely break the test platform, anything that relies on its shape cannot come after it.
  */
 #define TEST_AFTER_CREATE_AND_DESTROY INFINITY
+
+// Unit test bitflags
+
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+#define UNIT_TEST_FOCUS (1<<0)
+/// This unit test only runs on specially designated unit test maps (Should only ever be one).
+#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+
+#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
+#define UNIT_TEST_MAP_TEST (NONE)
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -195,9 +209,12 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "icon_state.dm"
+#include "icon_state_inhand.dm"
+#include "icon_state_worn.dm"
+#include "icons_missing.dm"
 #include "id_access.dm"
 #include "id_card.dm"
-#include "inhands.dm"
 #include "interaction_door.dm"
 #include "interaction_silicon.dm"
 #include "interaction_structures.dm"
@@ -205,6 +222,7 @@
 #include "keybinding_init.dm"
 #include "kinetic_crusher.dm"
 #include "knockoff_component.dm"
+#include "language_key_conflicts.dm"
 #include "language_transfer.dm"
 #include "leash.dm"
 #include "lesserform.dm"
@@ -227,7 +245,6 @@
 #include "merge_type.dm"
 #include "metabolizing.dm"
 #include "mindbound_actions.dm"
-#include "missing_icons.dm"
 #include "mob_chains.dm"
 #include "mob_damage.dm"
 #include "mob_faction.dm"
@@ -261,12 +278,12 @@
 #include "preference_species.dm"
 #include "preferences.dm"
 #include "projectiles.dm"
+#include "punpun.dm"
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
 #include "reachable_soup.dm"
 #include "reagent_container_defaults.dm"
-#include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
@@ -281,6 +298,7 @@
 #include "screenshot_airlocks.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
+#include "screenshot_debrain.dm"
 #include "screenshot_digi.dm"
 #include "screenshot_dynamic_human_icons.dm"
 #include "screenshot_high_luminosity_eyes.dm"
@@ -311,6 +329,7 @@
 #include "spraycan.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "stacked_metab.dm"
 #include "station_trait_tests.dm"
 #include "status_effect_validity.dm"
 #include "stomach.dm"
@@ -319,6 +338,7 @@
 #include "strippable.dm"
 #include "stuns.dm"
 #include "style_hotswapping.dm"
+#include "subsystem_flags.dm"
 #include "subsystem_init.dm"
 #include "suit_sensor.dm"
 #include "suit_storage_icons.dm"
@@ -344,7 +364,6 @@
 #include "washing.dm"
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
-#include "worn_icons.dm"
 // END_INCLUDE
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

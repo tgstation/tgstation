@@ -139,6 +139,43 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 	return .
 
+/// Setter for whether or not this atom's light is on.
+/atom/proc/set_light_on(new_value)
+	if(new_value == light_on || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_on
+	light_on = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
+	return .
+
+/// Setter for the light flags of this atom.
+/atom/proc/set_light_flags(new_value)
+	if(new_value == light_flags || (light_flags & LIGHT_FROZEN && new_value & LIGHT_FROZEN))
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_flags
+	light_flags = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
+	return .
+
+// procs that only apply to OVERLAY_LIGHT
+
+/// Setter for an optional render_source to apply to this atom's light overlay
+/atom/proc/set_light_render_source(new_source)
+	if(new_source == light_flags || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RENDER_SOURCE, new_source) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_render_source
+	light_render_source = new_source
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RENDER_SOURCE, .)
+	return .
+
+// procs that only apply to COMPLEX_LIGHT
+
 /// Setter for the light angle of this atom
 /atom/proc/set_light_angle(new_value)
 	if(new_value == light_angle || light_flags & LIGHT_FROZEN)
@@ -162,17 +199,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_DIR, .)
 	return .
 
-/// Setter for whether or not this atom's light is on.
-/atom/proc/set_light_on(new_value)
-	if(new_value == light_on || light_flags & LIGHT_FROZEN)
-		return
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
-		return
-	. = light_on
-	light_on = new_value
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
-	return .
-
 /// Setter for the height of our light
 /atom/proc/set_light_height(new_value)
 	if(new_value == light_height || light_flags & LIGHT_FROZEN)
@@ -184,16 +210,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_HEIGHT, .)
 	return .
 
-/// Setter for the light flags of this atom.
-/atom/proc/set_light_flags(new_value)
-	if(new_value == light_flags || (light_flags & LIGHT_FROZEN && new_value & LIGHT_FROZEN))
-		return
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
-		return
-	. = light_flags
-	light_flags = new_value
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
-	return .
 
 /atom/proc/get_light_offset()
 	return list(0, 0)

@@ -75,7 +75,7 @@
 	if (explode_timer)
 		return
 	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), source), 0.5 SECONDS)
-	source.balloon_alert_to_viewers("beep")
+	source.balloon_alert_to_hearers("*beep*")
 	playsound(parent, triggered_sound, 50, FALSE)
 	return
 

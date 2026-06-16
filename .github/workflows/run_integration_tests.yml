@@ -27,7 +27,7 @@ jobs:
     # For example, `Run Tests (runtimestation; 515)`.
     name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v6
       - name: Restore BYOND from Cache
@@ -36,9 +36,9 @@ jobs:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
       - name: Download build outputs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
-          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR}}
+          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
           path: ./
       - name: Setup database
         env:
@@ -63,9 +63,9 @@ jobs:
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
-          name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
+          name: test_artifacts_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
       - name: On test fail, write a step summary

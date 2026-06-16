@@ -10,14 +10,14 @@
 	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = NONE
-	addiction_types = list(/datum/addiction/medicine = 3.5)
+	addiction_types = list(/datum/addiction/medicine = 350)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = NONE
-	addiction_types = list(/datum/addiction/medicine = 3)
+	addiction_types = list(/datum/addiction/medicine = 400)
 	tox_damage = 0
 
 // END SUBTYPES
@@ -29,7 +29,7 @@
 	name = "Insolvent Medicinal Precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
-	addiction_types = list(/datum/addiction/medicine = 7.5)
+	addiction_types = list(/datum/addiction/medicine = 400)
 	ph = 11
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
@@ -86,8 +86,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	spawn_hands(affected_mob)
-	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
-	seconds_per_tick = FLOOR(seconds_per_tick, 1)
+	lag_remainder += seconds_per_tick - floor(seconds_per_tick)
+	seconds_per_tick = floor(seconds_per_tick)
 	if(lag_remainder >= 1)
 		seconds_per_tick += 1
 		lag_remainder -= 1
@@ -127,7 +127,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Temporarily interferes with a patient's ability to process alcohol."
 	chemical_flags = NONE
 	ph = 13.5
-	addiction_types = list(/datum/addiction/medicine = 4)
+	addiction_types = list(/datum/addiction/medicine = 300)
 	tox_damage = 0
 
 /datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -177,7 +177,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#b3ff00"
 	overdose_threshold = 10
 	ph = 1
-	addiction_types = list(/datum/addiction/medicine = 5)
+	// this one is rather misleading due to it changing metabolism rate in overdose
+	addiction_types = list(/datum/addiction/medicine = 15)
 	liver_damage = 0
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M, metabolization_ratio)
@@ -201,7 +202,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/lentslurri //Okay maybe I should outsource names for these
 	name = "Lentslurri"//This is a really bad name please replace
 	description = "A highly addictive muscle relaxant that is made when Lenturi reactions go wrong, this will cause the patient to move slowly."
-	addiction_types = list(/datum/addiction/medicine = 8)
+	addiction_types = list(/datum/addiction/medicine = 150)
 	tox_damage = 0
 
 /datum/reagent/inverse/lentslurri/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -218,7 +219,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Aivime"
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
-	addiction_types = list(/datum/addiction/medicine = 1.5)
+	addiction_types = list(/datum/addiction/medicine = 800)
 	///The amount of blur applied per second. Given the average on_life interval is 2 seconds, that'd be 2.5s.
 	var/amount_of_blur_applied = 1.25 SECONDS
 	tox_damage = 0
@@ -240,7 +241,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	overdose_threshold = 25
 	reagent_weight = 0.6
 	taste_description = "heat! Ouch!"
-	addiction_types = list(/datum/addiction/medicine = 2.5)
+	addiction_types = list(/datum/addiction/medicine = 480)
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -279,7 +280,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DEAD_PROCESS
 	var/cached_reagent_list = list()
-	addiction_types = list(/datum/addiction/medicine = 5)
+	addiction_types = list(/datum/addiction/medicine = 240)
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
 /datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -324,7 +325,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "This reagent is known to coat the inside of a patient's lungs, providing greater protection against hot or cold air."
 	ph = 3.82
 	tox_damage = 0
-	addiction_types = list(/datum/addiction/medicine = 2.3)
+	addiction_types = list(/datum/addiction/medicine = 520)
 	//The heat damage levels of lungs when added (i.e. heat_level_1_threshold on lungs)
 	var/cached_heat_level_1
 	var/cached_heat_level_2
@@ -418,7 +419,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	chemical_flags = REAGENT_DEAD_PROCESS
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
-	addiction_types = list(/datum/addiction/medicine = 1.75)
+	addiction_types = list(/datum/addiction/medicine = 685)
 
 /datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/affected_mob, amount)
 	if(!(iscarbon(affected_mob)))
@@ -452,7 +453,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Monover"
 	description = "A toxin treating reagent, that only is effective if it's the only reagent present in the patient."
 	ph = 0.5
-	addiction_types = list(/datum/addiction/medicine = 3.5)
+	addiction_types = list(/datum/addiction/medicine = 350)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -475,7 +476,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
 	ph = 14
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	addiction_types = list(/datum/addiction/medicine = 12)
+	// this one is also slightly misleading due to changing metabolism rate
+	addiction_types = list(/datum/addiction/medicine = 12.5)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DEAD_PROCESS
@@ -573,7 +575,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Mannitoil"
 	description = "Gives the patient a temporary speech impediment."
 	color = "#CDCDFF"
-	addiction_types = list(/datum/addiction/medicine = 5)
+	addiction_types = list(/datum/addiction/medicine = 240)
 	ph = 12.4
 	liver_damage = 0
 	///The speech we're forcing on the affected mob
@@ -616,7 +618,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
 	ph = 13.4
-	addiction_types = list(/datum/addiction/medicine = 8)
+	addiction_types = list(/datum/addiction/medicine = 10)
 	metabolization_rate = 0.0625 * REAGENTS_METABOLISM
 	tox_damage = 0
 	//The temporary trauma passed to the affected mob
@@ -687,7 +689,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#5F5F5F"
 	self_consuming = TRUE
 	ph = 13.5
-	addiction_types = list(/datum/addiction/medicine = 2.5)
+	addiction_types = list(/datum/addiction/medicine = 1200)
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
@@ -715,7 +717,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	addiction_types = list(/datum/addiction/medicine = 4.5)
+	addiction_types = list(/datum/addiction/medicine = 30)
 	color = "#4C8000"
 	tox_damage = 0
 
@@ -728,7 +730,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Oculater"
 	description = "Temporarily blinds the patient."
 	color = "#DDDDDD"
-	addiction_types = list(/datum/addiction/medicine = 3)
+	addiction_types = list(/datum/addiction/medicine = 400)
 	taste_description = "funky toxin"
 	ph = 13
 	tox_damage = 0
@@ -754,7 +756,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/impurity/inacusiate
 	name = "Tinacusiate"
 	description = "Makes the patient's hearing temporarily funky."
-	addiction_types = list(/datum/addiction/medicine = 5.6)
+	addiction_types = list(/datum/addiction/medicine = 20)
 	color = "#DDDDFF"
 	taste_description = "the heat evaporating from your mouth."
 	ph = 1
@@ -941,7 +943,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	ph = 2.5
-	addiction_types = list(/datum/addiction/opioids = 30)
+	addiction_types = list(/datum/addiction/opioids = 10)
 	metabolized_traits = list(TRAIT_ANALGESIA)
 	tox_damage = 0
 
@@ -984,6 +986,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(is_simian(affected_mob))
 		affected_mob.gain_trauma(/datum/brain_trauma/special/primal_instincts, TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+		if(jungle_arts)
+			return
 		jungle_arts = new(src)
 		jungle_arts.locked_to_use = TRUE
 		jungle_arts.teach(affected_mob)
@@ -991,10 +995,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	QDEL_NULL(jungle_arts)
+	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+	affected_mob.Sleeping(30 SECONDS)
 	if(is_simian(affected_mob))
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
-		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
-		affected_mob.Sleeping(30 SECONDS)
+
 
 /datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1011,9 +1016,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
+		return
 
-	else if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("screech","scratch","jump","look"))
+
+	QDEL_NULL(jungle_arts)
+	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
@@ -1262,7 +1271,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
 		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.get_bodyparts())
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1311,22 +1320,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	switch(current_cycle)
 		if(10)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_MODERATE)
 			to_chat(affected_mob, span_warning("Your legs start to cave in to your overwhelming gravity!"))
 
 		if(20)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_SEVERE)
 			to_chat(affected_mob, span_warning("Your bones fragment horribly as the gravity pounds on you!"))
 
 		if(30)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
 			to_chat(affected_mob, span_warning("The gravity of this situation makes your bones snap like popsicle sticks!"))
 
 /datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
-	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+	for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 		affected_mob.cause_wound_of_type_and_severity(WOUND_SLASH, leg, WOUND_SEVERITY_SEVERE)

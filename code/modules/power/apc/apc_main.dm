@@ -100,7 +100,7 @@
 	var/long_term_power = 10
 	///Automatically name the APC after the area is in
 	var/auto_name = FALSE
-	///Time to allow the APC to regain some power and to turn the channels back online
+	///Time to allow the APC to regain some power and to turn the channels back online in seconds
 	var/failure_timer = 0
 	///Forces an update on the power use to ensure that the apc has enough power
 	var/force_update = FALSE
@@ -282,8 +282,8 @@
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
-	energy_fail(disrupt_duration)
+	// failure timer is in seconds, not deciseconds, so we need to convert
+	energy_fail(disrupt_duration * 0.1)
 	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
@@ -586,10 +586,10 @@
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	if(!area || !area.requires_power)
+	if(!area?.requires_power)
 		return
 	if(failure_timer)
-		failure_timer--
+		failure_timer = max(0, failure_timer - seconds_per_tick)
 		force_update = TRUE
 		return
 
@@ -631,6 +631,7 @@
 
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 		// set channels depending on how much charge we have left
+		var/cell_percent = cell.percent()
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -639,7 +640,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
+		else if(cell_percent < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -647,7 +648,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
+		else if(cell_percent < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -659,11 +660,13 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			if(nightshift_lights && low_power_nightshift_lights)
+			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
+			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
 				low_power_nightshift_lights = FALSE
-				if(!SSnightshift.nightshift_active)
+				if(nightshift_disabled)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
-			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
+			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
 	else // no cell, switch everything off

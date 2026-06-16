@@ -3,6 +3,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "prisoner_crime"
+	should_update_preview = FALSE
 
 /datum/preference/choiced/prisoner_crime/init_possible_values()
 	return assoc_to_keys(GLOB.prisoner_crimes) + "Random"
@@ -98,7 +99,7 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	name = "Identity Theft of High-Ranking Figure"
 	desc = "Impersonated a high-ranking figure."
 	tattoos = 0 //well, obviously can't impersonate people with tats. if they want to go back to doing that
-	
+
 /datum/prisoner_crime/jaywalker
 	name = "Jaywalker"
 	desc = "Jaywalked across non-green tram crossings, shuttle docking zones, and/or through space."

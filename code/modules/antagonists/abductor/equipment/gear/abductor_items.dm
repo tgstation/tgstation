@@ -265,6 +265,20 @@
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
+/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+	. = ..()
+	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
+	// we want an animation, so lets manually handle suicide.
+	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
+	return MANUAL_SUICIDE
+
+/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1,0.1)
+	animate(user, 30 SECONDS, transform=shrink)
+	// Have to wait until the animate is done
+	sleep(30 SECONDS)
+	user.gib(DROP_ALL_REMAINS)
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
@@ -278,13 +292,12 @@
 4.Apply scalpel to specimen's torso.<br>
 5.Retract skin of specimen's torso with a retractor.<br>
 6.Clamp bleeders on specimen's torso with a hemostat.<br>
-7.Apply scalpel again to specimen's torso.<br>
-8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
-9.Insert replacement gland (Retrieve one from gland storage).<br>
-10.Consider dressing the specimen back to not disturb the habitat. <br>
-11.Put the specimen in the experiment machinery.<br>
-12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
-13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
+7.Remove the subject's heart with a hemostat.<br>
+8.Insert replacement gland (Retrieve one from gland storage).<br>
+9.Consider dressing the specimen back to not disturb the habitat. <br>
+10.Put the specimen in the experiment machinery.<br>
+11.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
+12.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
 Congratulations! You are now trained for invasive xenobiology research!<br>
 <br>

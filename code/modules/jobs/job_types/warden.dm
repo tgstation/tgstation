@@ -47,7 +47,7 @@
 	if(!ishuman(spawned) || !prob(PIG_COP_PROBABILITY))
 		return
 	var/mob/living/carbon/human/piggy = spawned
-	for (var/obj/item/bodypart/ham as anything in piggy.bodyparts)
+	for (var/obj/item/bodypart/ham as anything in piggy.get_bodyparts())
 		// These are string lists
 		ham.butcher_drops = ham.butcher_drops.Copy()
 		for (var/meat_type in ham.butcher_drops)

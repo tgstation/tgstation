@@ -46,6 +46,7 @@
 	AddElement(/datum/element/pet_bonus, "oink")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PIG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	make_tameable()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
@@ -54,6 +55,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
 	visible_message(span_notice("[src] snorts respectfully."))
 

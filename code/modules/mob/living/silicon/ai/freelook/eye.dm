@@ -127,6 +127,7 @@
 	if(same_z_layer)
 		return
 	update_ai_detect_hud()
+	ai?.on_looking_z_level_change(old_turf, new_turf)
 
 /*----------------------------------------------------*/
 

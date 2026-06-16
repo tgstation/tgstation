@@ -35,6 +35,11 @@
 	desc = "A small bottle of cyanide. Bitter almonds?"
 	list_reagents = list(/datum/reagent/toxin/cyanide = 30)
 
+/obj/item/reagent_containers/cup/bottle/anacea
+	name = "anacea bottle"
+	desc = "A small bottle of anacea."
+	list_reagents = list(/datum/reagent/toxin/anacea = 30)
+
 /obj/item/reagent_containers/cup/bottle/spewium
 	name = "spewium bottle"
 	desc = "A small bottle of spewium."
@@ -217,6 +222,11 @@
 	name = "histamine bottle"
 	desc = "A small bottle. Contains Histamine."
 	list_reagents = list(/datum/reagent/toxin/histamine = 30)
+
+/obj/item/reagent_containers/cup/bottle/carnivorous_blood
+	name = "carnivorous blood bottle"
+	desc = "A small bottle. Contains carnivorous blood."
+	list_reagents = list(/datum/reagent/toxin/carnivorousblood = 30)
 
 /obj/item/reagent_containers/cup/bottle/diphenhydramine
 	name = "antihistamine bottle"

@@ -169,7 +169,8 @@
 		SEND_SOUND(cultist.current, sound(SFX_HALLUCINATION_OVER_HERE, 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 		if (cultist.current.hud_used)
-			new /atom/movable/screen/navigate_arrow(null, cultist.current.hud_used, get_turf(new_target), COLOR_CULT_RED)
+			var/atom/movable/screen/navigate_arrow/arrow = cultist.current.hud_used.add_screen_object(/atom/movable/screen/navigate_arrow, HUD_CULTIST_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
+			arrow.start_effect(get_turf(new_target), COLOR_CULT_RED)
 
 	if(duration != INFINITY)
 		blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)

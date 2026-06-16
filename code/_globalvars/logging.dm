@@ -80,7 +80,7 @@ GLOBAL_PROTECT(lawchanges)
 
 /// Adds something to the law change log
 /proc/log_law_change(mob/living/changer, log_message)
-	GLOB.lawchanges += "[time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)] <b>:</b> [changer ? key_name(changer) : "(No mob)"] [log_message]"
+	GLOB.lawchanges += "[round_timestamp()] <b>:</b> [changer ? key_name(changer) : "(No mob)"] [log_message]"
 
 #undef DECLARE_LOG
 #undef DECLARE_LOG_NAMED

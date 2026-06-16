@@ -35,7 +35,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		0, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
@@ -159,7 +159,7 @@
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
-	creation_efficiency = max(1.2, efficiency)
+	creation_efficiency = max(1.2, round(efficiency, 0.1))
 
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
@@ -261,15 +261,15 @@
 
 	return ..()
 
+/obj/machinery/flatpacker/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_o" : base_icon_state
+
 /obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/flatpacker/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/flatpacker/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
