@@ -7,7 +7,7 @@
 	emissive_type = /particles/weather/ash_storm/embers
 	min_severity = 60
 	optimal_severity = 80
-	weather_alpha = 100
+	particle_weather_alpha = 100
 	wind_sign = -1 // Always blows left to sync with the animated overlays
 
 	telegraph_message = span_boldwarning("Далёкий ветер разносит жуткий стон. Горизонт застилают тучи пепла и чёрного дыма. Поскорее найдите укрытие.")

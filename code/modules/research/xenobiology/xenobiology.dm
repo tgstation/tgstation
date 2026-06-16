@@ -1045,6 +1045,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return ITEM_INTERACT_BLOCKING
 
+	if(living_mob.mind)
+		if (!do_after(user, delay = 5 SECONDS, target = living_mob))
+			balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
+
 	if(living_mob.gender == MALE)
 		living_mob.gender = FEMALE
 		living_mob.visible_message(span_boldnotice("[living_mob] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))

@@ -50,11 +50,11 @@
 
 /datum/chemical_reaction/drink/gin_tonic
 	results = list(/datum/reagent/consumable/ethanol/gintonic = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/tonic = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/tonic = 2)
 
 /datum/chemical_reaction/drink/rum_coke
 	results = list(/datum/reagent/consumable/ethanol/rum_coke = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/space_cola = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/space_cola = 2)
 
 /datum/chemical_reaction/drink/cuba_libre
 	results = list(/datum/reagent/consumable/ethanol/cuba_libre = 4)
@@ -75,11 +75,11 @@
 
 /datum/chemical_reaction/drink/whiskey_cola
 	results = list(/datum/reagent/consumable/ethanol/whiskey_cola = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/space_cola = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 1, /datum/reagent/consumable/space_cola = 2)
 
 /datum/chemical_reaction/drink/screwdriver
 	results = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/orangejuice = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/orangejuice = 2)
 
 /datum/chemical_reaction/drink/bloody_mary
 	results = list(/datum/reagent/consumable/ethanol/bloody_mary = 4)
@@ -185,11 +185,11 @@
 
 /datum/chemical_reaction/drink/vodka_tonic
 	results = list(/datum/reagent/consumable/ethanol/vodkatonic = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/tonic = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/tonic = 2)
 
 /datum/chemical_reaction/drink/gin_fizz
 	results = list(/datum/reagent/consumable/ethanol/ginfizz = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/limejuice = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/sodawater = 2, /datum/reagent/consumable/limejuice = 1)
 
 /datum/chemical_reaction/drink/bahama_mama
 	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 5)

@@ -639,6 +639,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
+	sound_tokens = null
+
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
@@ -651,6 +653,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	QDEL_NULL(parallax_rock)
 	QDEL_NULL(who) // BANDASTATION ADDITION - TGUI Who
 	seen_messages = null
+	sound_tokens = null
 	Master.UpdateTickRate()
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW

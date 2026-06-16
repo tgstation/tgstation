@@ -4,7 +4,11 @@
 /obj/effect/landmark/transport/nav_beacon/tram
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
-
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
+	/// the looping sound effect that is played while moving
+	var/datum/looping_sound/tram/tram_loop
+	/// What sound do we play when we arrive at this station?
+	var/arrival_sound = 'sound/machines/tram/other_line_processed.ogg'
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// The ID of that particular destination
@@ -14,10 +18,12 @@
 
 /obj/effect/landmark/transport/nav_beacon/tram/Initialize(mapload)
 	. = ..()
+	tram_loop = new(src)
 	LAZYADDASSOCLIST(SStransport.nav_beacons, specific_transport_id, src)
 
 /obj/effect/landmark/transport/nav_beacon/tram/Destroy()
 	LAZYREMOVEASSOC(SStransport.nav_beacons, specific_transport_id, src)
+	QDEL_NULL(tram_loop)
 	return ..()
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav
@@ -45,19 +51,22 @@
 	dir = WEST
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/west
-	name = "West Wing"
+	name = "Arrivals Station"
 	platform_code = TRAMSTATION_WEST
 	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
+	arrival_sound = 'sound/machines/tram/arrivals_line_processed.ogg'
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/central
-	name = "Central Wing"
+	name = "Medical Station"
 	platform_code = TRAMSTATION_CENTRAL
 	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
+	arrival_sound = 'sound/machines/tram/medical_line_processed.ogg'
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/east
-	name = "East Wing"
+	name = "Escape Station"
 	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+	arrival_sound = 'sound/machines/tram/escape_line_processed.ogg'
 
 //birdshot
 
@@ -78,28 +87,32 @@
 	dir = WEST
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/sec_wing
-	name = "Security Wing"
+	name = "Security Station"
 	specific_transport_id = BIRDSHOT_LINE_1
 	platform_code = BIRDSHOT_SECURITY_WING
 	tgui_icons = list("Security" = "gavel")
+	arrival_sound = 'sound/machines/tram/medical_line_processed.ogg'
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/prison_wing
-	name = "Prison Wing"
+	name = "Prison Station"
 	specific_transport_id = BIRDSHOT_LINE_1
 	platform_code = BIRDSHOT_PRISON_WING
 	tgui_icons = list("Prison" = "box")
+	arrival_sound = 'sound/machines/tram/other_line_processed.ogg'
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_left
-	name = "Port Platform"
+	name = "Escape Station"
 	specific_transport_id = BIRDSHOT_LINE_2
 	platform_code = BIRDSHOT_MAINTENANCE_LEFT
 	tgui_icons = list("Port Platform" = "plane-departure")
+	arrival_sound = 'sound/machines/tram/escape_line_processed.ogg'
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/birdshot/maint_right
-	name = "Starboard Platform"
+	name = "Arrivals Station"
 	specific_transport_id = BIRDSHOT_LINE_2
 	platform_code = BRIDSHOT_MAINTENANCE_RIGHT
 	tgui_icons = list("Starboard Platform" = "plane-arrival")
+	arrival_sound = 'sound/machines/tram/arrivals_line_processed.ogg'
 
 //map-agnostic landmarks
 

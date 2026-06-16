@@ -144,7 +144,7 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] тихо посвистывает."))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
