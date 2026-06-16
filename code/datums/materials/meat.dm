@@ -80,7 +80,6 @@
 		blood_left = (protein_count + fat_count) * 0.3 * multiplier,\
 		blood_dna = blood_dna,\
 	)
-	RegisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_meat_complexity))
 
 	// Turfs can't handle the meaty goodness of blood walk.
 	if(!ismovable(source))
