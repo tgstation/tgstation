@@ -72,7 +72,8 @@
 		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = protein_count, /datum/reagent/consumable/nutriment/fat = fat_count), \
 		foodtypes = RAW | MEAT, \
 		eat_time = 3 SECONDS, \
-		tastes = list("meat" = 1))
+		tastes = list("meat" = 1)),\
+		handmade_complexity = /obj/item/food/meat/steak::crafting_complexity)
 
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
@@ -93,20 +94,12 @@
 		blood_dna_info = blood_dna,\
 	)
 
-/datum/material/meat/proc/add_meat_complexity(atom/source, list/complexity)
-	SIGNAL_HANDLER
-	if(!HAS_TRAIT(source, TRAIT_HANDMADE)) //It has to have been made by someone to count
-		return
-	var/meat_quality = /obj/item/food/meat/steak::crafting_complexity
-	complexity[1] = max(complexity[1], meat_quality) //Brings quality of food up to par with that of a steak (cuz it wouldn't have any otherwise) if lower.
-
 /datum/material/meat/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)
 	qdel(source.GetComponent(/datum/component/blood_walk))
 	qdel(source.GetComponent(/datum/component/bloody_spreader))
 	source.RemoveComponentSource(SOURCE_EDIBLE_MEAT_MAT, /datum/component/edible)
-	UnregisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY)
 
 /datum/material/meat/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()

@@ -52,20 +52,12 @@
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
 		foodtypes = GRAIN | DAIRY | VEGETABLES, \
 		eat_time = 3 SECONDS, \
-		tastes = /obj/item/food/pizza/margherita::tastes)
-	RegisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_pizza_complexity))
-
-/datum/material/pizza/proc/add_pizza_complexity(atom/source, list/complexity)
-	SIGNAL_HANDLER
-	if(!HAS_TRAIT(source, TRAIT_HANDMADE)) //It has to have been made by someone to count
-		return
-	var/pizza_quality = /obj/item/food/pizzaslice/margherita::crafting_complexity
-	complexity[1] = max(complexity[1], pizza_quality) //Brings quality of food up to par with pizza if lower.
+		tastes = /obj/item/food/pizza/margherita::tastes,\
+		handmade_complexity = /obj/item/food/pizzaslice/margherita::crafting_complexity)
 
 /datum/material/pizza/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.RemoveComponentSource(SOURCE_EDIBLE_PIZZA_MAT, /datum/component/edible)
-	UnregisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY)
 
 /datum/material/pizza/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
