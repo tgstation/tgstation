@@ -46,10 +46,7 @@
 /obj/item/clothing/shoes/click_alt_secondary(mob/user)
 	alternate_worn_layer = (alternate_worn_layer == UNDER_UNIFORM_LAYER) ? NONE : UNDER_UNIFORM_LAYER
 
-	if(istype(loc, /mob/living))
-		var/mob/living/L = loc
-		L.update_clothing(ITEM_SLOT_FEET)
-
+	update_slot_icon()
 	balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
 	return CLICK_ACTION_SUCCESS
 
