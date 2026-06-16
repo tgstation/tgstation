@@ -16,7 +16,8 @@
 	var/locked = FALSE
 
 /obj/structure/money_bot/atom_deconstruct(disassembled = TRUE)
-	new /obj/item/holochip(drop_location(), stored_money)
+	if(stored_money)
+		new /obj/item/holochip(drop_location(), stored_money)
 
 /obj/structure/money_bot/proc/add_money(to_add)
 	stored_money += to_add

@@ -8,20 +8,17 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/datum/weather/active_weather = list()
 	var/list/atom/movable/screen/plane_master/plane_masters = list()
-	/// Do we care about all weather or only particle weather?
-	var/particle_only = FALSE
 
-/datum/component/hide_weather_planes/Initialize(atom/movable/screen/plane_master/care_about, particle_only = FALSE)
+/datum/component/hide_weather_planes/Initialize(atom/movable/screen/plane_master/care_about)
 	if(!istype(parent, /datum/plane_master_group))
 		return COMPONENT_INCOMPATIBLE
-	src.particle_only = particle_only
 	var/datum/plane_master_group/home = parent
 	plane_masters += care_about
 	RegisterSignal(care_about, COMSIG_QDELETING, PROC_REF(plane_master_deleted))
 
 	var/list/starting_signals = list()
 	var/list/ending_signals = list()
-	for(var/datum/weather/weather_type as anything in valid_subtypesof(particle_only ? /datum/weather/particle : /datum/weather))
+	for(var/datum/weather/weather_type as anything in valid_subtypesof(/datum/weather))
 		starting_signals += COMSIG_WEATHER_TELEGRAPH(weather_type)
 		ending_signals += COMSIG_WEATHER_END(weather_type)
 
@@ -106,8 +103,6 @@
 
 	var/list/connected_levels = SSmapping.get_connected_levels(new_z)
 	for(var/datum/weather/active as anything in SSweather.processing)
-		if(particle_only && !istype(active, /datum/weather/particle))
-			continue
 		if(length(connected_levels & active.impacted_z_levels))
 			active_weather += WEAKREF(active)
 
