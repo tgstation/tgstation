@@ -85,7 +85,7 @@
 /obj/machinery/ai_law_rack/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone in ai_modules)
-		remove_law_module(gone)
+		remove_ai_module(gone)
 
 /obj/machinery/ai_law_rack/dump_inventory_contents()
 	. = ..()
@@ -221,7 +221,7 @@
 		card.pixel_z = first_slot_offset + ((i == 1 || !has_core_slot) ? 0 : -1) + ((i - 1) * -3)
 		. += card
 
-/obj/machinery/ai_law_rack/proc/add_law_module(obj/item/ai_module/module, slot = 1, security = MODULE_UNSECURED)
+/obj/machinery/ai_law_rack/proc/add_ai_module(obj/item/ai_module/module, slot = 1, security = MODULE_UNSECURED)
 	ASSERT(istype(module))
 	ASSERT(isnum(slot))
 	if(slot < 1 || slot > length(ai_modules))
@@ -239,7 +239,7 @@
 	parent_rack?.update_lawset()
 	return TRUE
 
-/obj/machinery/ai_law_rack/proc/remove_law_module(obj/item/ai_module/module)
+/obj/machinery/ai_law_rack/proc/remove_ai_module(obj/item/ai_module/module)
 	ASSERT(istype(module))
 	var/index = ai_modules.Find(module)
 	if(index == 0 || isnull(ai_modules[index]))
@@ -335,7 +335,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			module.pre_user_install_to_rack(user, src)
 			module.log_install(user, src)
-			return add_law_module(module, index)
+			return add_ai_module(module, index)
 
 		if("remove_module")
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
@@ -990,7 +990,7 @@
 
 	for(var/obj/item/ai_module/law/core/full/core as anything in subtypesof(/obj/item/ai_module/law/core/full))
 		if(core::law_id == default_laws::id)
-			add_law_module(new core(src), 1, MODULE_WELDED)
+			add_ai_module(new core(src), 1, MODULE_WELDED)
 
 /obj/machinery/ai_law_rack/base/small
 	name = "portable module rack"

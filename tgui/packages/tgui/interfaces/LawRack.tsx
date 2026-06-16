@@ -55,7 +55,7 @@ type Data = {
   // If we are a base: This is all silicons currently linked to us
   linked_mobs?: string[];
   // Number of modules in all linked racks
-  last_linked_rack_module_count: number;
+  linked_rack_module_count: number;
   // If refresh is on cooldown
   refresh_cooldown: number;
 };
@@ -546,7 +546,7 @@ export const LawRack = () => {
     slots,
     refresh_cooldown,
     has_core_slot,
-    last_linked_rack_module_count,
+    linked_rack_module_count,
   } = data;
 
   const screen_display = () => {
@@ -569,6 +569,15 @@ export const LawRack = () => {
                 <LawSlot slot={slot} index={index} />
               </Stack.Item>
             ))}
+            <Stack.Item
+              className="LawRack__Console"
+              mt={1}
+              p={0.5}
+              textAlign="center"
+            >
+              <b>{linked_rack_module_count}</b> other module(s) are being loaded
+              remotely.
+            </Stack.Item>
           </Stack>
         </Section>
         <Section
@@ -609,12 +618,6 @@ export const LawRack = () => {
                 )}
               </Stack>
             </Stack.Item>
-            {last_linked_rack_module_count > 0 && (
-              <Stack.Item>
-                ...<b>{last_linked_rack_module_count}</b> other modules are
-                being loaded from broadcasting racks.
-              </Stack.Item>
-            )}
           </Stack>
         </Section>
       </Window.Content>
