@@ -271,21 +271,22 @@
 	if(!istype(pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/sound_to_play = length(sound) ? pick(sound) : null
 	var/roll = rand(1, total)
 
 	if(roll <= audible)
 		pawn.manual_emote(pick(emote_hear))
-		if(sound_to_play)
-			playsound(pawn, sound_to_play, 80, vary = TRUE, pressure_affected = TRUE, ignore_walls = FALSE)
+		if(length(sound))
+			playsound(pawn, pick(sound), 80, vary = TRUE, pressure_affected = TRUE, ignore_walls = FALSE)
 	else if(roll <= audible + visible)
 		pawn.manual_emote(pick(emote_see))
 	else
-		pawn.say(pick(speak), forced = "AI Controller")
-		if(sound_to_play)
-			playsound(pawn, sound_to_play, 80, vary = TRUE)
-
+		speak(pawn, controller)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/bt_node/ai_behavior/random_speech/proc/speak(mob/living/pawn, datum/ai_controller/controller)
+	pawn.say(pick(speak), forced = "AI Controller")
+	if(length(sound))
+		playsound(pawn, pick(sound), 80, vary = TRUE)
 
 /datum/bt_node/ai_behavior/random_speech/mothroach
 	speech_chance = 15
@@ -357,6 +358,33 @@
 	emote_hear = list("meows.")
 	emote_see = list("meows.")
 
+/// Make spooky sounds, if we have a corpse inside then impersonate them
+/datum/bt_node/ai_behavior/random_speech/legion
+	speech_chance = 1
+	speak = list("Come...", "Legion...", "Why...?")
+	emote_hear = list("groans.", "wails.", "whimpers.")
+	emote_see = list("twitches.", "shudders.")
+	/// Stuff to specifically say into a radio
+	var/list/radio_speech = list("Come...", "Why...?")
+
+/datum/bt_node/ai_behavior/random_speech/legion/speak(mob/living/pawn, datum/ai_controller/controller)
+	var/mob/living/carbon/human/victim = controller.blackboard[BB_LEGION_CORPSE]
+	if (QDELETED(victim) || prob(30))
+		return ..()
+
+	if (HAS_MIND_TRAIT(victim, TRAIT_MIMING)) // mimes cant talk
+		return
+
+	var/list/remembered_speech = controller.blackboard[BB_LEGION_RECENT_LINES] || list()
+
+	if (length(remembered_speech) && prob(50)) // Don't spam the radio
+		pawn.say(pick(remembered_speech), forced = "AI Controller")
+		return
+
+	var/obj/item/radio/mob_radio = locate() in victim
+	if (QDELETED(mob_radio))
+		return ..() // No radio, just talk funny
+	mob_radio.talk_into(pawn, pick(radio_speech + remembered_speech), pick(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_COMMON))
 
 ///Speech behavior that reads from a blackboard to pick what to say. Useful for things with dynamic speech behaviors
 /datum/bt_node/ai_behavior/random_speech_blackboard
