@@ -493,7 +493,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/pride_week/New()
 	. = ..()
-	var/palette = rand(1, 7)
+	var/palette = rand(1, 8)
 	switch(palette)
 		if(1)
 			holiday_colors = list(
@@ -535,8 +535,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 				COLOR_PAN_YELLOW,
 				COLOR_PAN_MAGENTA,
 			)
-		if(7)
-			holiday_colors = /datum/holiday/pride_week::holiday_colors //default rainbow flag
+		if(7, 8) //give a bit more weight to the standard rainbow flag
+			holiday_colors = /datum/holiday/pride_week::holiday_colors
 
 // JULY
 
