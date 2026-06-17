@@ -318,9 +318,9 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = APRIL
 	holiday_hat = /obj/item/clothing/head/rasta
 	holiday_colors = list(
-		COLOR_ETHIOPIA_GREEN,
-		COLOR_ETHIOPIA_YELLOW,
 		COLOR_ETHIOPIA_RED,
+		COLOR_ETHIOPIA_YELLOW,
+		COLOR_ETHIOPIA_GREEN,
 	)
 	holiday_mail = list(/obj/item/cigarette/rollie/cannabis)
 
@@ -496,44 +496,44 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	var/palette = rand(1, 7)
 	switch(palette)
 		if(1)
-			holiday_colors += list(
-				COLOR_LESBIAN_RED,
-				COLOR_LESBIAN_ORANGE,
-				COLOR_LESBIAN_PINK,
+			holiday_colors = list(
 				COLOR_LESBIAN_MAGENTA,
+				COLOR_LESBIAN_PINK,
+				COLOR_LESBIAN_ORANGE,
+				COLOR_LESBIAN_RED,
 			)
 		if(2)
-			holiday_colors += list(
-				COLOR_GAY_GREEN,
-				COLOR_GAY_LIGHT_GREEN,
-				COLOR_GAY_LIGHT_BLUE,
+			holiday_colors = list(
 				COLOR_GAY_BLUE,
+				COLOR_GAY_LIGHT_BLUE,
+				COLOR_GAY_LIGHT_GREEN,
+				COLOR_GAY_GREEN,
 			)
 
 		if(3)
-			holiday_colors += list(
-				COLOR_BI_PINK,
-				COLOR_BI_PURPLE,
+			holiday_colors = list(
 				COLOR_BI_BLUE,
+				COLOR_BI_PURPLE,
+				COLOR_BI_PINK,
 			)
 		if(4)
 			holiday_colors = list(
-				COLOR_TRANS_BLUE,
-				COLOR_TRANS_PINK,
 				COLOR_WHITE,
+				COLOR_TRANS_PINK,
+				COLOR_TRANS_BLUE,
 			)
 		if(5)
 			holiday_colors = list(
-				COLOR_ACE_BLACK,
-				COLOR_ACE_GREY,
-				COLOR_WHITE,
 				COLOR_ACE_PURPLE,
+				COLOR_WHITE,
+				COLOR_ACE_GREY,
+				COLOR_ACE_BLACK,
 			)
 		if(6)
-			holiday_colors += list(
-				COLOR_PAN_MAGENTA,
-				COLOR_PAN_YELLOW,
+			holiday_colors = list(
 				COLOR_PAN_CYAN,
+				COLOR_PAN_YELLOW,
+				COLOR_PAN_MAGENTA,
 			)
 		if(7)
 			holiday_colors = /datum/holiday/pride_week::holiday_colors //default rainbow flag
@@ -574,11 +574,11 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	no_mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
 	holiday_colors = list(
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
 		COLOR_OLD_GLORY_BLUE,
-		COLOR_OLD_GLORY_RED,
-		COLOR_WHITE,
-		COLOR_OLD_GLORY_RED,
-		COLOR_WHITE,
 	)
 
 
