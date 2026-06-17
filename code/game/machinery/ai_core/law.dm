@@ -666,7 +666,7 @@
 
 // Links to AIs to provide their laws
 /obj/machinery/ai_law_rack/base
-	name = "main module rack"
+	name = "standard module rack"
 	desc = "A simple module rack. It has a slot for a core module, but far fewer slots than a core module rack."
 	has_core_slot = TRUE
 	drag_slowdown = 2
