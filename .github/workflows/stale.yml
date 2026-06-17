@@ -77,5 +77,3 @@ jobs:
           include_image: false
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
-          username: GitHub
-          title_url: "${{ matrix.pull_request.html_url }}"
