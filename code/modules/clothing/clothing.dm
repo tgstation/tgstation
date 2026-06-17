@@ -510,8 +510,6 @@
 	if(stubborn_stains)
 		return
 
-	is_laundered = TRUE
-	addtimer(VARSET_CALLBACK(src, is_laundered, FALSE), 2 MINUTES)
 	var/fresh_mood = AddComponent( \
 		/datum/component/onwear_mood, \
 		saved_event_type = /datum/mood_event/fresh_laundry, \
