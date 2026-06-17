@@ -421,3 +421,6 @@
   - bugfix: Fixed earthcracker not getting spent on mining z levels
   SyncIt21:
   - bugfix: Tooltips no longer cover the whole borgs hands held items
+  levels0:
+  - rscadd: new gizmode
+  - bugfix: you can now interact with item gizmo wires
