@@ -18,6 +18,9 @@
 	speed = 1
 
 	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 
 	sharpness = SHARP_EDGED
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -93,6 +96,12 @@
 	if(!isliving(entering) || !(entering in dview(7, src)))
 		return
 
+	addtimer(CALLBACK(src, PROC_REF(delayed_movement_reaction), entering), 3 SECOND, TIMER_UNIQUE)
+
+/mob/living/basic/boss/mechanical_spider/proc/delayed_movement_reaction(mob/living/entering)
+	if(entering.stat == DEAD || !(entering in dview(7, src)))
+		return
+
 	update_enraged()
 
 /mob/living/basic/boss/mechanical_spider/proc/update_enraged()
@@ -111,24 +120,43 @@
 			if(REF(nearby_mob) in impurity_list)
 				enraged = TRUE
 
-	if(enraged)
-		set_varspeed(3)
-		AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
-	else
-		RemoveElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
 
 	if(enraged != old_enraged)
 		update_appearance()
+		if(enraged)
+			set_varspeed(3)
+			AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+			to_chat(src, span_bolddanger("You enter a rage!"))
+
+		else
+			RemoveElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+			to_chat(src, span_boldnotice("Your rage subsides."))
 
 /mob/living/basic/boss/mechanical_spider/set_stat(new_stat)
 	. = ..()
+	if(stat == UNCONSCIOUS)
+		overlay_fullscreen(STAT_TRAIT, /atom/movable/screen/fullscreen/blind)
+	else
+		clear_fullscreen(STAT_TRAIT)
 	update_appearance()
+
+/mob/living/basic/boss/mechanical_spider/update_stat()
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
+		return
+	if(stat != DEAD)
+		if(health <= HEALTH_THRESHOLD_DEAD)
+			death()
+		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+			set_stat(UNCONSCIOUS)
+		else
+			set_stat(CONSCIOUS)
+	med_hud_set_status()
 
 /mob/living/basic/boss/mechanical_spider/update_icon_state()
 	. = ..()
 	switch(stat)
 		if(UNCONSCIOUS)
-			icon_state = "sleep"
+			icon_state = icon_sleep
 		if(DEAD)
 			icon_state = icon_dead
 		else
@@ -327,7 +355,7 @@
 
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', rand(15, 35), TRUE)
 	visible_message(span_danger("[src] consumes [victim]!"))
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 	adjust_nutrition(gained_nutriment)
 	adjust_brute_loss(-gained_nutriment * 1.5)
 	return TRUE
