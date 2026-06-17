@@ -2054,7 +2054,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			needs_update = TRUE
 
 	if(needs_update && !(hooman.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
-		hooman.update_bodyparts()
+		hooman.update_body_parts()
 
 /**
  * Calculates the expected height values for this species

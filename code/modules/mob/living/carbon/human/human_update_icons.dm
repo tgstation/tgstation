@@ -129,8 +129,6 @@ There are several things that need to be remembered:
 	remove_overlay(ID_LAYER)
 	hud_used?.update_inventory_slot(ITEM_SLOT_ID)
 
-	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
-
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 
@@ -138,11 +136,7 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/id.dmi'
-
-		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-
-		if(!id_overlay)
-			return
+		var/mutable_appearance/id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 
 		apply_height(id_overlay, UPPER_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
@@ -188,9 +182,7 @@ There are several things that need to be remembered:
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls
 	for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
-		var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
-		if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
-			feature_y_offset = glove_offset["y"]
+		feature_y_offset = max(my_hand.worn_glove_offset?.get_offset()["y"], feature_y_offset)
 
 	gloves_overlay.pixel_z += feature_y_offset
 	apply_height(gloves_overlay, LOWER_BODY)
@@ -290,13 +282,13 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		// apply_height(shoes_overlay, NO_MODIFY)
 		var/feature_y_offset = 0
 		for (var/body_zone in GLOB.leg_zones)
 			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
 			feature_y_offset = max(my_leg?.worn_foot_offset?.get_offset()["y"], feature_y_offset)
 
 		shoes_overlay.pixel_z += feature_y_offset
+		// apply_height(shoes_overlay, NO_MODIFY) // Shoes are rooted
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
