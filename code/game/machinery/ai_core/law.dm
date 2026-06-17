@@ -1001,6 +1001,7 @@
 	law_slots = 3
 	max_slot_overlays = 3
 	first_slot_offset = 12
+	has_core_slot = FALSE
 
 #undef MODULE_UNSECURED
 #undef MODULE_SCREWED
