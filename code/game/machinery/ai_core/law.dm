@@ -30,6 +30,7 @@
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	anchored = FALSE
+	drag_slowdown = 1
 
 	/// How many slots for laws
 	var/law_slots = 5
@@ -668,6 +669,7 @@
 	name = "main module rack"
 	desc = "A simple module rack. It has a slot for a core module, but far fewer slots than a core module rack."
 	has_core_slot = TRUE
+	drag_slowdown = 2
 	/// List of law racks which are linked to this law rack, contributing to our lawset
 	VAR_FINAL/list/obj/machinery/ai_law_rack/broadcaster/linked_racks
 	/// List of all silicons linked to this rack
@@ -964,6 +966,7 @@
 	law_slots = 10
 	max_slot_overlays = 10
 	first_slot_offset = 34
+	drag_slowdown = 3
 	/// Designations for the core law rack, used to name it
 	VAR_PRIVATE/static/list/core_designations
 
