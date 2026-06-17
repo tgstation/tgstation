@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bunch of runtimes caused when you try to perform surgery on cyborgs (which cannot be done in the first place)"

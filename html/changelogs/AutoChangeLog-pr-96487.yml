@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Materials can now be directly ejected from autolathes rather than needing to be printed."

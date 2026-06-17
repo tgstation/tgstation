@@ -410,3 +410,11 @@
   CabinetOnFire:
   - code_imp: Adds playsoundtoken() which lets you play one shot sound tokens
   - sound: You can now hear screams get louder as you get closer, spooky!
+2026-06-17:
+  SmArtKar:
+  - bugfix: Fixed slime feeding runtimes
+  - bugfix: Fixed wraith cloaking module runtimes
+  - qol: Materials can now be directly ejected from autolathes rather than needing
+      to be printed.
+  - bugfix: Fixed a bunch of runtimes caused when you try to perform surgery on cyborgs
+      (which cannot be done in the first place)
