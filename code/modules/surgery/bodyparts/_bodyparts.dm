@@ -1404,20 +1404,18 @@
 				. += actual_overlay
 
 	// Then texture everything at once, including bodypart overlays
-	apply_bodypart_textures(.)
-	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
-	return .
-
-/obj/item/bodypart/proc/apply_bodypart_textures(list/image/overlay_list)
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
 		if(!texture.can_texture_bodypart(src))
 			continue
-		for(var/image/overlay_image as anything in overlay_list)
-			var/appearance_plane = PLANE_TO_TRUE(overlay_image.plane)
+		for(var/image/generated_overlay as anything in .)
+			var/appearance_plane = PLANE_TO_TRUE(generated_overlay.plane)
 			if(appearance_plane != FLOAT_PLANE && appearance_plane != GAME_PLANE)
 				continue
 
-			texture.modify_bodypart_appearance(overlay_image)
+			texture.modify_bodypart_appearance(generated_overlay)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
+	return .
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
