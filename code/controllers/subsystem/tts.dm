@@ -198,29 +198,25 @@ SUBSYSTEM_DEF(tts)
 				use_reverb = TRUE
 			)
 	if(actual_target)
-		new /datum/threed_sound(
-			new_parent = actual_target,
-			new_sound = audio,
-			current_listeners = voice_hearers,
-			can_add_new_listeners = FALSE,
+		playsoundtoken(
+			source = actual_target,
+			soundin = audio,
 			volume = 85 + volume_offset,
-			sound_range = SOUND_RANGE,
-			sound_length = audio_length,
-			channel = channel,
+			range = SOUND_RANGE,
+			allowed_listeners = voice_hearers,
 			preference_volume = volume_preference,
-			preference_signal = volume_signal
+			sound_channel = channel,
+			sound_length = audio_length
 		)
-		new /datum/threed_sound(
-			new_parent = actual_target,
-			new_sound = audio_blips,
-			current_listeners = blips_hearers,
-			can_add_new_listeners = FALSE,
+		playsoundtoken(
+			source = actual_target,
+			soundin = audio_blips,
 			volume = 85 + volume_offset,
-			sound_range = SOUND_RANGE,
-			sound_length = audio_length_blips,
-			channel = channel,
+			range = SOUND_RANGE,
+			allowed_listeners = blips_hearers,
 			preference_volume = volume_preference,
-			preference_signal = volume_signal
+			sound_channel = channel,
+			sound_length = audio_length_blips
 		)
 
 

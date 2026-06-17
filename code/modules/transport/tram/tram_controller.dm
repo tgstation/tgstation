@@ -376,20 +376,15 @@
 		our_channel,
 		60
 	)
-	var/list/hearers = playsound(idle_platform, jingle, 50, FALSE, 0, extrarange= 10, ignore_walls = TRUE)
-	new /datum/threed_sound(
-		new_parent = idle_platform,
-		new_sound = jingle,
-		current_listeners = hearers,
-		can_add_new_listeners = FALSE,
-		volume = 60,
-		sound_range = SOUND_RANGE + 7,
+	playsoundtoken(
+		source = idle_platform,
+		soundin = jingle,
+		volume = 85,
+		range = SOUND_RANGE + 7,
+		preference_volume = /datum/preference/numeric/volume/sound_ambience_volume,
+		sound_channel = our_channel,
 		sound_length = 12 SECONDS,
-		channel = our_channel,
-		preference_volume = null,
-		preference_signal = null,
-		falloff_exponent = SOUND_FALLOFF_EXPONENT,
-		falloff_distance = 5
+		falloff_distance = 5,
 	)
 
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
