@@ -1,0 +1,5 @@
+author: "levels0"
+delete-after: True
+changes:
+  - rscadd: "new gizmode"
+  - bugfix: "you can now interact with item gizmo wires"
