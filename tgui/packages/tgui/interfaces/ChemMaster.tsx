@@ -53,6 +53,7 @@ type AnalyzableBeaker = {
 type Data = {
   categories: Category[];
   isPrinting: BooleanLike;
+  customTransferAmount: number;
   printingProgress: number;
   printingTotal: number;
   selectedPillDuration: number;
@@ -97,6 +98,7 @@ const ChemMasterContent = (props: {
   const { act, data } = useBackend<Data>();
   const {
     isPrinting,
+    customTransferAmount,
     printingProgress,
     printingTotal,
     selectedPillDuration,
@@ -126,6 +128,22 @@ const ChemMasterContent = (props: {
               <Box inline color="label" mr={2}>
                 <AnimatedNumber value={beaker.currentVolume} initial={0} />
                 {` / ${beaker.maxVolume} units`}
+              </Box>
+              <Box inline color="label" mr={2}>
+                <NumberInput
+                  width="55px"
+                  unit="u"
+                  step={5}
+                  stepPixelSize={3}
+                  value={customTransferAmount}
+                  minValue={0}
+                  maxValue={beaker.maxVolume}
+                  onChange={(value) =>
+                    act('setCustomTransfer', {
+                      target: value,
+                    })
+                  }
+                />
               </Box>
               <Button icon="eject" onClick={() => act('eject')}>
                 Eject
@@ -324,7 +342,7 @@ type ReagentProps = {
 const ReagentEntry = (props: ReagentProps) => {
   const { data, act } = useBackend<Data>();
   const { chemical, transferTo, analyze } = props;
-  const { isPrinting } = data;
+  const { isPrinting, customTransferAmount } = data;
   return (
     <Table.Row key={chemical.ref}>
       <Table.Cell color="label">
@@ -381,6 +399,18 @@ const ReagentEntry = (props: ReagentProps) => {
         >
           All
         </Button>
+        <Button
+          icon="ellipsis-v"
+          tooltip="Use custom"
+          disabled={isPrinting}
+          onClick={() =>
+            act('transfer', {
+              reagentRef: chemical.ref,
+              amount: customTransferAmount,
+              target: transferTo,
+            })
+          }
+        />
         <Button
           icon="ellipsis-h"
           tooltip="Custom amount"

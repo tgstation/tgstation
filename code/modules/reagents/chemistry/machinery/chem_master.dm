@@ -32,6 +32,8 @@
 	var/printing_speed = 0.75 SECONDS
 	/// Amount of layers which printed pills will be coated in
 	var/pill_layers = 3
+	/// Current custom transfer amount
+	var/custom_transfer_amount = 10
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -281,6 +283,7 @@
 	.["selectedPillDuration"] = pill_layers
 	var/obj/item/held_item = user.get_active_held_item()
 	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
+	.["customTransferAmount"] = custom_transfer_amount
 
 	//contents of source beaker
 	var/list/beaker_data = null
@@ -412,6 +415,18 @@
 			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, container)
 
+			return TRUE
+
+		if("setCustomTransfer")
+			var/target = params["target"]
+			if(isnull(target))
+				return FALSE
+
+			target = text2num(target)
+			if(isnull(target))
+				return FALSE
+
+			custom_transfer_amount = clamp(target, 0, beaker.volume)
 			return TRUE
 
 		if("transfer")
