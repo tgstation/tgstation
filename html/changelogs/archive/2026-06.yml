@@ -411,6 +411,11 @@
   - code_imp: Adds playsoundtoken() which lets you play one shot sound tokens
   - sound: You can now hear screams get louder as you get closer, spooky!
 2026-06-17:
+  Melbert:
+  - qol: Adds an antag info panel for revolution
+  - qol: Codewords can now consist of any station area, and excludes areas not on
+      the current station
+  - qol: Head Revolutionaries (not their underlings) get codewords
   SmArtKar:
   - bugfix: Fixed slime feeding runtimes
   - bugfix: Fixed wraith cloaking module runtimes
