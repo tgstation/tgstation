@@ -105,7 +105,7 @@ export const CutterTarget = new Juke.Target({
 export const RuNamesMergeTarget = new Juke.Target({
   inputs: ['tools/translations/ru_names_header.toml', `$modular_bandastation/translations/public/ru_names/**/*.toml`],
   executes: async () => {
-    const python = process.platform === 'win32' ? 'tools/bootstrap/python.bat' : 'tools/bootstrap/python';
+    const python = process.platform === 'win32' ? 'tools/bootstrap/python.bat' : 'python3';
     await Juke.exec(python, [
       'tools/translations/merge_ru_names.py',
       'tools/translations/ru_names_header.toml',
