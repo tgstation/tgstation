@@ -33,7 +33,7 @@
 	/// Amount of layers which printed pills will be coated in
 	var/pill_layers = 3
 	/// Current custom transfer amount
-	var/custom_transfer_amount = 10
+	var/custom_transfer_amount = 15
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
