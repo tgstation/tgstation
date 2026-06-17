@@ -9,40 +9,11 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements/mining,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic,
-		/datum/ai_planning_subtree/move_to_cardinal/brimdemon,
-		/datum/ai_planning_subtree/targeted_mob_ability/brimbeam,
-	)
+	behavior_tree_json = "brimdemon.bt.json"
 
-/datum/ai_planning_subtree/move_to_cardinal/brimdemon
-	move_behaviour = /datum/ai_behavior/move_to_cardinal/brimdemon
-
-/datum/ai_behavior/move_to_cardinal/brimdemon
-	minimum_distance = 2
-
-/datum/ai_behavior/move_to_cardinal/brimdemon/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	if(!succeeded)
-		return
+/// Brimdemon's beam only fires when the target is lined up on a cardinal direction.
+/datum/bt_node/ai_behavior/targeted_mob_ability/brimbeam/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/target = controller.blackboard[target_key]
-	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
-	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
-		return
-	ability.InterceptClickOn(clicker = controller.pawn, target = target)
-
-/datum/ai_planning_subtree/targeted_mob_ability/brimbeam
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/brimbeam
-
-/datum/ai_behavior/targeted_mob_ability/brimbeam
-	/// Don't shoot if too far away
-	var/max_target_distance = 9
-
-/datum/ai_behavior/targeted_mob_ability/brimbeam/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	var/mob/living/target = controller.blackboard[target_key]
-	if (QDELETED(target) || !(get_dir(controller.pawn, target) in GLOB.cardinals) || get_dist(controller.pawn, target) > max_target_distance)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(QDELETED(target) || !(get_dir(controller.pawn, target) in GLOB.cardinals))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return ..()

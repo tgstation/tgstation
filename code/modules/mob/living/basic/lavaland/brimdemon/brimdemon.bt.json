@@ -1,5 +1,5 @@
 {
-	"dm_type": "/datum/ai_controller/basic_controller/vatbeast",
+	"dm_type": "/datum/ai_controller/basic_controller/brimdemon",
 	"type": "selector",
 	"children": [
 		{
@@ -17,10 +17,6 @@
 				{
 					"type": "selector",
 					"children": [
-						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
-						},
 						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
@@ -45,35 +41,20 @@
 												"children": [
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-														"vars": {
-															"target_key": "BB_CURRENT_TARGET"
-														}
-													},
-													{
-														"type": "decorator",
-														"decorator": "/datum/bt_node/decorator/bb_key_at_least",
-														"vars": {
-															"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-															"key": "BB_BASIC_MOB_HAS_TARGET_TIME",
-															"minimum": "10 SECONDS"
-														},
-														"child": {
-															"type": "leaf",
-															"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/melee",
-															"vars": {
-																"ability_key": "BB_GENERIC_ACTION",
-																"target_key": "BB_CURRENT_TARGET"
-															}
-														}
-													},
-													{
-														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
 														"vars": {
 															"target_key": "BB_CURRENT_TARGET",
 															"targeting_strategy": "BB_TARGETING_STRATEGY",
 															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/brimbeam",
+														"vars": {
+															"ability_key": "BB_TARGETED_ACTION",
+															"target_key": "BB_CURRENT_TARGET",
+															"maximum_distance": 9
 														}
 													}
 												]
@@ -82,11 +63,24 @@
 									},
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_cardinal",
 										"vars": {
 											"target_key": "BB_CURRENT_TARGET",
-											"required_dist": 1,
-											"finish_on_arrival": false
+											"minimum_distance": 2,
+											"maximum_distance": 9
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/cooldown",
+										"vars": {
+											"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
+											"cooldown_duration": "30 SECONDS",
+											"lock_on_succeed": true
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining"
 										}
 									}
 								]
@@ -101,15 +95,6 @@
 				{
 					"type": "selector",
 					"children": [
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-							"vars": {
-								"target_key": "BB_TARGET_FOOD",
-								"targeting_strategy": "/datum/targeting_strategy/pickup_item",
-								"target_source": "/datum/target_source/oview_typed/from_bb_key/basic_foods"
-							}
-						},
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",

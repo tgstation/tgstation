@@ -107,22 +107,15 @@
 							}
 						},
 						{
-							"type": "subplan",
-							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-							"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-							"children": [
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/idle_random_walk",
-									"vars": {
-										"walk_chance": 10
-									}
-								}
-							]
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
 						},
 						{
 							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+							"subtype": "/datum/bt_node/subtree/random_walk",
+							"bindings": {
+								"bf07i8ep": "10"
+							}
 						}
 					]
 				},

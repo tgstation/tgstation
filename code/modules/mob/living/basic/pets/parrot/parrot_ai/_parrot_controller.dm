@@ -8,3 +8,7 @@
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
+
+
+/datum/bt_node/subtree/perching
+	behavior_tree_json = "perching.bt.json"

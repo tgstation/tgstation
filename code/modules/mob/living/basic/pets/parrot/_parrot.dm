@@ -322,12 +322,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		if(!victim.temporarilyRemoveItemFromInventory(stealable))
 			continue
 
+		pick_up_item(stealable)
+
 		visible_message(
 			span_notice("[src] grabs [held_item] out of [victim]'s hand!"),
 			span_notice("You snag [held_item] out of [victim]'s hand!"),
 			span_hear("You hear the sounds of wings flapping furiously."),
 		)
-		pick_up_item(stealable)
+
 		return TRUE
 
 	return FALSE
