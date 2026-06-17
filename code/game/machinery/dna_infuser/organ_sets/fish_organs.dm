@@ -301,16 +301,6 @@
 	else //otherwise get one from a set of faded out blue and some greys colors.
 		return pick("#B4B8DD", "#85C7D0", "#67BBEE", "#2F4450", "#55CCBB", "#999FD0", "#345066", "#585B69", "#7381A0", "#B6DDE5", "#4E4E50")
 
-/datum/bodypart_overlay/mutant/tail/fish/get_image(image_layer, obj/item/bodypart/limb)
-	var/mutable_appearance/appearance = ..()
-	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
-	// but most other organs don't want to inherit those so we do it here and not on parent
-	// for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
-	// 	if(texture.can_draw_on_bodypart(limb, limb.owner, limb.is_husked))
-	// 		texture.modify_bodypart_appearance(appearance)
-	#warn testme
-	return appearance
-
 ///Lungs that replace the need of oxygen with water vapor or being wet
 /obj/item/organ/lungs/fish
 	name = "mutated gills"

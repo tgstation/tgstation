@@ -302,6 +302,14 @@
 	QDEL_LIST_ASSOC_VAL(applied_items)
 	QDEL_LAZYLIST(scars)
 
+	// Overlays and textures may be owned by something else like a status effect,
+	// so we'll just remove them all rather than delete them
+	// Worst case scenario they'll just get swept up by GC and which is fine
+	for(var/datum/bodypart_overlay/remaining_overlay in bodypart_overlays)
+		remove_bodypart_overlay(remaining_overlay, update = FALSE)
+	for(var/datum/bodypart_texture/remaining_texture in bodypart_textures)
+		remove_bodypart_texture(remaining_texture, update = FALSE)
+
 	for(var/atom/movable/movable in contents)
 		qdel(movable)
 

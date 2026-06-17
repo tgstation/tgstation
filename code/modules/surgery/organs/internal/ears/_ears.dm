@@ -240,7 +240,6 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_image(image_layer, obj/item/bodypart/limb)
 	if (image_layer != all_layers[inner_layer])
 		return ..()
-	#warn testme
 	var/mutable_appearance/ear_holder = ..()
 	var/mutable_appearance/inner = ear_holder.overlays[2]
 	inner.color = inner_color
@@ -249,7 +248,6 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_overlay(layer, obj/item/bodypart/limb)
 	if (layer != all_layers[inner_layer])
 		return ..()
-	#warn testme
 	var/list/all_images = ..()
 	var/mutable_appearance/ear_holder = all_images[1]
 	var/mutable_appearance/inner = ear_holder.overlays[2]
