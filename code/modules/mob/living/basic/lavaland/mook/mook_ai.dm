@@ -14,8 +14,8 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	can_idle = FALSE // these guys are intended to operate even if nobody's around
-	can_run_without_clients_on_zlevel = TRUE
+	// these guys are intended to operate even if nobody's around
+	ai_traits = DEFAULT_AI_FLAGS | CANNOT_GO_IDLE | CAN_RUN_WITHOUT_CLIENTS
 
 ///check for faction if not a ash walker, otherwise just attack
 /datum/targeting_strategy/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)

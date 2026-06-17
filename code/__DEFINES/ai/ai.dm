@@ -75,6 +75,10 @@
 #define CAN_ACT_IN_STASIS (1<<3)
 /// Continue processing while aggressively grabbed
 #define CAN_ACT_WHILE_GRABBED (1<<4)
+/// Never pauses when off-station with no players nearby (replaces the old can_idle = FALSE)
+#define CANNOT_GO_IDLE (1<<5)
+/// Keeps running even when there are no clients on its z-level (replaces can_run_without_clients_on_zlevel)
+#define CAN_RUN_WITHOUT_CLIENTS (1<<6)
 
 /// Flags we expect for most AI controllers
 #define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)

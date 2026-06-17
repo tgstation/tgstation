@@ -66,8 +66,6 @@ multiple modular subtrees with behaviors
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time
 	var/paused_until = 0
-	///Can this AI idle?
-	var/can_idle = TRUE
 	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 	/// TRUE if we're able to run, FALSE if we aren't
@@ -75,9 +73,6 @@ multiple modular subtrees with behaviors
 	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
-
-	///Can run even if no clients are on the zlevel, used by
-	var/can_run_without_clients_on_zlevel = FALSE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -398,7 +393,12 @@ multiple modular subtrees with behaviors
 	recalculate_idle()
 
 /datum/ai_controller/proc/should_idle()
-	if(!can_idle || isnull(our_cells))
+	if(ai_traits & CANNOT_GO_IDLE)
+		return FALSE
+	if(isnull(our_cells))
+		return FALSE
+	var/turf/pawn_turf = get_turf(pawn)
+	if(isnull(pawn_turf) || is_station_level(pawn_turf.z))
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
@@ -467,7 +467,7 @@ multiple modular subtrees with behaviors
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if((!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !can_run_without_clients_on_zlevel)|| !able_to_run)
+	if((!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS))|| !able_to_run)
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_IDLE
@@ -671,7 +671,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
-	set_ai_status(AI_STATUS_IDLE) //Can't do anything while player is connected
+	reset_ai_status() //resume AI control now that the client is gone
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off if the pawn has been qdeleted
