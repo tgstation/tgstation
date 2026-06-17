@@ -6357,6 +6357,7 @@
 #include "code\modules\research\gizmo\gizmodes\giz_filler.dm"
 #include "code\modules\research\gizmo\gizmodes\gizactives.dm"
 #include "code\modules\research\gizmo\gizmodes\gizbad.dm"
+#include "code\modules\research\gizmo\gizmodes\gizcode.dm"
 #include "code\modules\research\gizmo\gizmodes\gizcopier.dm"
 #include "code\modules\research\gizmo\gizmodes\gizlectric.dm"
 #include "code\modules\research\gizmo\gizmodes\gizmisc.dm"
