@@ -509,7 +509,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 				COLOR_GAY_LIGHT_GREEN,
 				COLOR_GAY_GREEN,
 			)
-
 		if(3)
 			holiday_colors = list(
 				COLOR_BI_BLUE,
