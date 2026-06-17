@@ -496,15 +496,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	var/palette = rand(1, 7)
 	switch(palette)
 		if(1)
-			holiday_colors = list(
-				COLOR_PRIDE_PURPLE,
-				COLOR_PRIDE_BLUE,
-				COLOR_PRIDE_GREEN,
-				COLOR_PRIDE_YELLOW,
-				COLOR_PRIDE_ORANGE,
-				COLOR_PRIDE_RED,
-			)
-		if(1)
 			holiday_colors += list(
 				COLOR_LESBIAN_RED,
 				COLOR_LESBIAN_ORANGE,
