@@ -3051,12 +3051,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"ZI" = (
-/obj/effect/decal/cleanable/glass{
-	dir = 1
-	},
-/turf/closed/indestructible/syndicate,
-/area/ruin/space/has_grav/infested_frigate)
 "ZN" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris{
 	icon_state = "gibup"
@@ -3649,7 +3643,7 @@ zU
 fl
 fl
 fl
-ZI
+BO
 BO
 Fi
 BO
