@@ -24,14 +24,17 @@
 	icon_state = "sixpack"
 	layers = EXTERNAL_ADJACENT
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
+	offset_location = ENTIRE_BODY
 
 ///bags drawn beneath the eyes
 /datum/bodypart_overlay/simple/bags
 	icon_state = "bags"
 	draw_color = COLOR_WEBSAFE_DARK_GRAY
 	layers = EXTERNAL_ADJACENT
+	offset_location = UPPER_BODY
 
 ///PENDING eyes drawn on the face
 /datum/bodypart_overlay/simple/soul_pending_eyes
 	icon_state = "soul_pending_eyes"
 	layers = EXTERNAL_FRONT
+	offset_location = UPPER_BODY

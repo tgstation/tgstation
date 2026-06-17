@@ -160,7 +160,9 @@
 	var/list/applied_items
 
 	///A list of all bodypart overlays to draw
-	var/list/bodypart_overlays = list()
+	var/list/bodypart_overlays
+	///A list of all bodypart textures to apply
+	var/list/bodypart_textures
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -215,7 +217,7 @@
 	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 	/// A potential texturing overlay to put on the limb
-	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	var/datum/bodypart_texture/texture_bodypart_overlay
 	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
@@ -1369,32 +1371,38 @@
 			. += leg_source.generate_masked_leg(limb_image)
 
 	// Draw external organs like horns and frills
-	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
-			continue
-
-		// Some externals have multiple layers for background, foreground and between
-		for(var/external_layer in overlay.all_layers)
-			if(!(overlay.layers & external_layer))
+	// Only need to draw these if dropped, otherwise we they're applied via standing overlays
+	if(dropped)
+		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
 
-			var/external_overlay = overlay.get_overlay(external_layer, src, is_husked)
-			if (!dropped)
-				. += external_overlay
-				continue
+			// Some externals have multiple layers for background, foreground and between
+			for(var/external_layer, actual_layer in overlay.all_layers)
+				if(!(overlay.layers & external_layer))
+					continue
 
-			if (!islist(external_overlay))
-				. += image(external_overlay, dir = SOUTH)
-				continue
+				for (var/mutable_appearance/actual_overlay as anything in overlay.get_overlay(actual_layer, src))
+					. += image(actual_overlay, dir = SOUTH)
 
-			for (var/mutable_appearance/actual_overlay as anything in external_overlay)
-				. += image(actual_overlay, dir = SOUTH)
+	else if(!isnull(owner))
+		for(var/image/generated_overlay as anything in .)
+			owner.apply_height(generated_overlay, body_zone == BODY_ZONE_HEAD ? UPPER_BODY : ENTIRE_BODY)
 
-		for(var/datum/layer in .)
-			overlay.modify_bodypart_appearance(layer)
-
+	apply_bodypart_textures(.)
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .
+
+/obj/item/bodypart/proc/apply_bodypart_textures(list/image/overlay_list)
+	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+		if(!texture.can_texture_bodypart(src))
+			continue
+		for(var/image/overlay_image as anything in overlay_list)
+			var/appearance_plane = PLANE_TO_TRUE(overlay_image.plane)
+			if(appearance_plane != FLOAT_PLANE && appearance_plane != GAME_PLANE)
+				continue
+
+			texture.modify_bodypart_appearance(overlay_image)
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
@@ -1410,7 +1418,7 @@
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
-	bodypart_overlays += overlay
+	LAZYADD(bodypart_overlays, overlay)
 	overlay.added_to_limb(src)
 	if(!update)
 		return
@@ -1421,8 +1429,60 @@
 
 ///Remove a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
-	bodypart_overlays -= overlay
+	LAZYREMOVE(bodypart_overlays, overlay)
 	overlay.removed_from_limb(src)
+	if(!update)
+		return
+	if(!owner)
+		update_icon_dropped()
+	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		owner.update_body_parts()
+
+/obj/item/bodypart/proc/try_add_bodypart_overlay(overlay_type_or_instance, update)
+	if(istype(overlay_type_or_instance, /datum/bodypart_overlay))
+		add_bodypart_overlay(overlay_type_or_instance, update)
+		return overlay_type_or_instance
+
+	if(ispath(overlay_type_or_instance, /datum/bodypart_overlay))
+		if(locate(overlay_type_or_instance) in bodypart_overlays)
+			return null
+		var/datum/bodypart_overlay/overlay = new overlay_type_or_instance()
+		add_bodypart_overlay(overlay, update)
+		return overlay
+
+	return null
+
+/obj/item/bodypart/proc/try_remove_bodypart_overlay(overlay_type_or_instance, update)
+	if(istype(overlay_type_or_instance, /datum/bodypart_overlay))
+		return remove_bodypart_overlay(overlay_type_or_instance, update)
+
+	if(ispath(overlay_type_or_instance, /datum/bodypart_overlay))
+		var/datum/bodypart_overlay/overlay = locate(overlay_type_or_instance) in bodypart_overlays
+		if(isnull(overlay))
+			return null
+		return remove_bodypart_overlay(overlay, update)
+
+	return null
+
+/obj/item/bodypart/proc/add_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = new texture()
+
+	LAZYADD(bodypart_textures, texture)
+	if(!update)
+		return
+	if(!owner)
+		update_icon_dropped()
+	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		owner.update_body_parts()
+
+/obj/item/bodypart/proc/remove_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = locate(texture) in bodypart_textures
+		if(isnull(texture))
+			return
+
+	LAZYREMOVE(bodypart_textures, texture)
 	if(!update)
 		return
 	if(!owner)

@@ -3,34 +3,36 @@
 /datum/bodypart_overlay
 	/// Sometimes we need multiple layers, for like the back, middle and front of the person (EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 	var/layers
-	/// List of all possible layers. Used for looping through in drawing
-	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
+	/// List of all possible layers to their real layer. Used for looping through in drawing
+	var/static/alist/all_layers = alist(
+		EXTERNAL_FRONT = -BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = -BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = -BODY_BEHIND_LAYER,
+	)
 	/// Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 	/// Whether the overlay blocks emissive light
 	var/blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	/// Can this overlay be drawn on husked mobs?
 	var/draw_on_husks = HUSK_OVERLAY_NONE
+	/// Determines body area of the overlay for height offsets
+	var/offset_location = NO_MODIFY
 
 ///Wrapper for getting the proper image, colored and everything
-/datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb, is_husked = FALSE)
-	layer = bitflag_to_layer(layer)
+/datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
 	var/image/main_image = get_image(layer, limb)
 
-	if (is_husked && draw_on_husks != HUSK_OVERLAY_NORMAL)
+	if (limb?.is_husked && draw_on_husks != HUSK_OVERLAY_NORMAL)
 		main_image = huskify_image(main_image)
 		main_image.color = limb.husk_color
 	else
 		color_image(main_image, layer, limb)
 
-	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
-		return main_image
+	var/list/created_overlays = list(main_image)
+	if(blocks_emissive != EMISSIVE_BLOCK_NONE && !isnull(limb))
+		created_overlays += emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
 
-	var/list/all_images = list(
-		main_image,
-		emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
-	)
-	return all_images
+	return created_overlays
 
 /datum/bodypart_overlay/proc/huskify_image(image/main_image)
 	var/icon/husk_icon = new(main_image.icon)
@@ -70,20 +72,10 @@
 		if(-BODY_FRONT_LAYER)
 			return "FRONT"
 
-///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
-/datum/bodypart_overlay/proc/bitflag_to_layer(layer)
-	switch(layer)
-		if(EXTERNAL_BEHIND)
-			return -BODY_BEHIND_LAYER
-		if(EXTERNAL_ADJACENT)
-			return -BODY_ADJ_LAYER
-		if(EXTERNAL_FRONT)
-			return -BODY_FRONT_LAYER
-
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
-/datum/bodypart_overlay/proc/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/proc/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	SHOULD_CALL_PARENT(TRUE)
-	return !is_husked || draw_on_husks
+	return !bodypart_owner.is_husked || draw_on_husks
 
 ///Colorizes the limb it's inserted to, if required.
 /datum/bodypart_overlay/proc/override_color(obj/item/bodypart/bodypart_owner)
@@ -92,7 +84,3 @@
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache
 /datum/bodypart_overlay/proc/generate_icon_cache(obj/item/bodypart/limb)
 	return list()
-
-/// Additionally color or texture the limb
-/datum/bodypart_overlay/proc/modify_bodypart_appearance(datum/appearance)
-	return

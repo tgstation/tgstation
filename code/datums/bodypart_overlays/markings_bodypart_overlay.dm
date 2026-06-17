@@ -1,6 +1,7 @@
 /// For body markings applied on the species, which need some extra code
 /datum/bodypart_overlay/simple/body_marking
 	layers = EXTERNAL_ADJACENT
+	offset_location = ENTIRE_BODY
 	/// Listen to the gendercode, if the limb is bimorphic
 	var/use_gender = FALSE
 	/// Which dna feature key to draw from
@@ -34,7 +35,7 @@
 	. += use_gender
 	. += draw_color
 
-/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && icon_state != SPRITE_ACCESSORY_NONE
 
 /datum/bodypart_overlay/simple/body_marking/get_image(layer, obj/item/bodypart/limb)

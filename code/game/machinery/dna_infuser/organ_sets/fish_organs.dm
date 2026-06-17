@@ -26,7 +26,7 @@
 		TRAIT_WATER_ADAPTATION,
 		)
 	bonus_biotype = MOB_AQUATIC
-	limb_overlay = /datum/bodypart_overlay/texture/fishscale
+	limb_texture = /datum/bodypart_texture/fishscale
 	/// Are we at all five organs?
 	var/color_active = FALSE
 
@@ -305,9 +305,10 @@
 	var/mutable_appearance/appearance = ..()
 	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
 	// but most other organs don't want to inherit those so we do it here and not on parent
-	for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
-		if(texture.can_draw_on_bodypart(limb, limb.owner, limb.is_husked))
-			texture.modify_bodypart_appearance(appearance)
+	// for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
+	// 	if(texture.can_draw_on_bodypart(limb, limb.owner, limb.is_husked))
+	// 		texture.modify_bodypart_appearance(appearance)
+	#warn testme
 	return appearance
 
 ///Lungs that replace the need of oxygen with water vapor or being wet
