@@ -102,7 +102,7 @@
 	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/smartgun
 	name = "\improper Abielle Smart-SMG"
