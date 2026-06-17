@@ -17,7 +17,9 @@
 
 /datum/design/board/ai_law_rack
 	name = "AI Module Rack Board"
-	desc = "Allows for the construction of a new AI Module Rack."
+	desc = "Allows for the construction of an module rack. \
+		Used to upload laws or upgrades to a silicon. \
+		Gives off a GPS signal while active."
 	id = "airack_normal"
 	build_path = /obj/item/circuitboard/machine/ai_law_rack
 	category = list(
@@ -33,7 +35,6 @@
 
 /datum/design/board/ai_law_rack/portable
 	name = "Small AI Module Rack Board"
-	desc = "Allows for the construction of a small AI Module Rack."
 	id = "airack_small"
 	build_path = /obj/item/circuitboard/machine/ai_law_rack/small
 	category = list(
@@ -43,7 +44,9 @@
 
 /datum/design/board/ai_law_rack/broadcaster
 	name = "Broadcaster AI Module Rack Board"
-	desc = "Allows for the construction of a Broadcaster AI Module Rack."
+	desc = "Allows for the construction of a broadcaster module rack. \
+		Used to upload laws to a module rack remotely, but can't have silicons linked directly to it. \
+		Gives off a GPS signal while active."
 	id = "airack_broadcaster"
 	build_path = /obj/item/circuitboard/machine/ai_law_rack/broadcaster
 	category = list(

@@ -736,7 +736,8 @@
 
 	last_linked_rack_module_count = 0
 	for(var/obj/machinery/ai_law_rack/broadcaster/linked_rack as anything in linked_racks)
-		last_linked_rack_module_count += length(linked_rack.get_law_affecting_modules())
+		if(linked_rack.is_operational)
+			last_linked_rack_module_count += length(linked_rack.get_law_affecting_modules())
 
 /obj/machinery/ai_law_rack/base/ui_static_data(mob/user)
 	var/list/data = list()
