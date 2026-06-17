@@ -570,20 +570,20 @@
 
 /obj/machinery/ai_law_rack/broadcaster/refresh_linkable_lists()
 	last_linkable_rack_list = list()
-	for(var/obj/machinery/ai_law_rack/base/core_rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack/base))
-		if(!core_rack.is_operational)
+	for(var/obj/machinery/ai_law_rack/base/possible_parent_rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack/base))
+		if(!possible_parent_rack.is_operational)
 			continue
-		if(!can_broadcast_to(core_rack))
+		if(!can_broadcast_to(possible_parent_rack))
 			continue
-		last_linkable_rack_list += list(format_linkable(core_rack))
+		last_linkable_rack_list += list(format_linkable(possible_parent_rack))
 
 /obj/machinery/ai_law_rack/broadcaster/ui_static_data(mob/user)
 	var/list/data = list()
 	data["linkable_racks"] = last_linkable_rack_list || list()
 	data["parent_rack"] = null
-	var/obj/machinery/ai_law_rack/base/core/core_rack = get_parent_rack()
-	if(core_rack)
-		data["parent_rack"] = format_linkable(core_rack)
+	var/obj/machinery/ai_law_rack/base/parent_rack = get_parent_rack()
+	if(parent_rack)
+		data["parent_rack"] = format_linkable(parent_rack)
 	return data
 
 /obj/machinery/ai_law_rack/broadcaster/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -638,9 +638,9 @@
 	return "linked to [parent_rack.name]"
 
 /// Checks if we can broadcast to another rack
-/obj/machinery/ai_law_rack/broadcaster/proc/can_broadcast_to(obj/machinery/ai_law_rack/base/core_rack)
+/obj/machinery/ai_law_rack/broadcaster/proc/can_broadcast_to(obj/machinery/ai_law_rack/base/possible_parent_rack)
 	PRIVATE_PROC(TRUE)
-	if(!is_valid_z_level(get_turf(src), get_turf(core_rack)))
+	if(!is_valid_z_level(get_turf(src), get_turf(possible_parent_rack)))
 		return FALSE
 	return TRUE
 
@@ -648,20 +648,20 @@
 	. = ..()
 	if(QDELING(src))
 		return
-	var/obj/machinery/ai_law_rack/base/core_rack = get_parent_rack()
-	if(isnull(core_rack) || can_broadcast_to(core_rack))
+	var/obj/machinery/ai_law_rack/base/parent_rack = get_parent_rack()
+	if(isnull(parent_rack) || can_broadcast_to(parent_rack))
 		return
-	core_rack.unlink_child_law_rack(src)
+	parent_rack.unlink_child_law_rack(src)
 	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
 
 /obj/machinery/ai_law_rack/broadcaster/atom_break(damage_flag)
 	. = ..()
 	if(QDELING(src))
 		return
-	var/obj/machinery/ai_law_rack/base/core_rack = get_parent_rack()
-	if(isnull(core_rack))
+	var/obj/machinery/ai_law_rack/base/parent_rack = get_parent_rack()
+	if(isnull(parent_rack))
 		return
-	core_rack.unlink_child_law_rack(src)
+	parent_rack.unlink_child_law_rack(src)
 	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
 
 // Links to AIs to provide their laws
