@@ -416,6 +416,10 @@
   - qol: Codewords can now consist of any station area, and excludes areas not on
       the current station
   - qol: Head Revolutionaries (not their underlings) get codewords
+  Okram0:
+  - rscadd: Zombies are now stam resistant
+  - rscadd: Zombies no longer suffer from mood
+  - balance: Zombies are now moderately faster
   SmArtKar:
   - bugfix: Fixed slime feeding runtimes
   - bugfix: Fixed wraith cloaking module runtimes
@@ -426,6 +430,8 @@
   - bugfix: Fixed earthcracker not getting spent on mining z levels
   SyncIt21:
   - bugfix: Tooltips no longer cover the whole borgs hands held items
+  lelandkemble:
+  - bugfix: Being given a nonfunctional skeleton arm no longer disables both hands
   levels0:
   - rscadd: new gizmode
   - bugfix: you can now interact with item gizmo wires
