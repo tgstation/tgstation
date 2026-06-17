@@ -9,13 +9,13 @@
 	icon_dead = "dead"
 	var/icon_sleep = "sleep"
 	var/icon_enrage = "rage"
-	pixel_x = -16
-	base_pixel_x = -16
+	pixel_x = -4
+	base_pixel_x = -4
 
 	maxHealth = 1200
 	health = 1200
 
-	speed = 1
+	speed = 3
 
 	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -58,6 +58,8 @@
 
 	/// How long it takes to respawn after death
 	var/respawn_time = 5 MINUTES
+	/// How long it takes to pry a door
+	var/door_pry_time = 5 SECONDS
 
 	/// REFs to mobs that we cannot attack
 	VAR_PRIVATE/list/purity_list = list()
@@ -96,7 +98,7 @@
 	if(!isliving(entering) || !(entering in dview(7, src)))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(delayed_movement_reaction), entering), 3 SECOND, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(delayed_movement_reaction), entering), 3 SECONDS, TIMER_UNIQUE)
 
 /mob/living/basic/boss/mechanical_spider/proc/delayed_movement_reaction(mob/living/entering)
 	if(entering.stat == DEAD || !(entering in dview(7, src)))
@@ -108,8 +110,6 @@
 	var/old_enraged = enraged
 
 	enraged = FALSE
-	set_varspeed(1)
-
 	if(nutrition <= starvation_nutrition)
 		enraged = TRUE
 
@@ -120,17 +120,19 @@
 			if(REF(nearby_mob) in impurity_list)
 				enraged = TRUE
 
+	if(enraged == old_enraged)
+		return
 
-	if(enraged != old_enraged)
-		update_appearance()
-		if(enraged)
-			set_varspeed(3)
-			AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
-			to_chat(src, span_bolddanger("You enter a rage!"))
+	update_appearance()
+	if(enraged)
+		set_varspeed(1)
+		AddElement(/datum/element/door_pryer, pry_time = door_pry_time, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+		to_chat(src, span_bolddanger("You enter a rage!"))
 
-		else
-			RemoveElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
-			to_chat(src, span_boldnotice("Your rage subsides."))
+	else
+		set_varspeed(3)
+		RemoveElement(/datum/element/door_pryer, pry_time = door_pry_time, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+		to_chat(src, span_boldnotice("Your rage subsides."))
 
 /mob/living/basic/boss/mechanical_spider/set_stat(new_stat)
 	. = ..()
