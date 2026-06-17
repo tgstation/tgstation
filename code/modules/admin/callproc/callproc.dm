@@ -230,7 +230,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/thing as null|area|mob|obj|turf)
+ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", /datum)
+	VERB_ARG(thing, ADMIN_VERB_ARG_TYPE_AREA | ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /datum)
 	var/procname = input(user, "Proc name, eg: fake_blood","Proc:", null) as text|null
 	if(!procname)
 		return

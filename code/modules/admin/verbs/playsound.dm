@@ -3,7 +3,8 @@
 #define SHELLEO_STDOUT 2
 #define SHELLEO_STDERR 3
 
-ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, ADMIN_VERB_ARG_TYPE_SOUND, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/freq = 1
 	var/vol = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
 	if(!vol)
@@ -39,14 +40,17 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
 
-ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, ADMIN_VERB_ARG_TYPE_SOUND, ADMIN_VERB_ARG_SOURCE_INPUT)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
 	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
-ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
+ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, ADMIN_VERB_ARG_TYPE_SOUND, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	if(!target)
 		target = input(user, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
 	if(QDELETED(target))
@@ -200,7 +204,8 @@ ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given interne
 	else
 		web_sound(user.mob, null)
 
-ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, ADMIN_VERB_ARG_TYPE_SOUND, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/volume = tgui_input_number(user, "What volume would you like this sound to play at?", max_value = 100)
 	var/sound/admin_sound = sound(sound)
 	if(volume)

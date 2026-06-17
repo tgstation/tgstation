@@ -349,7 +349,8 @@ ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "Test Cardpack Distribution", "T
 ADMIN_VERB(print_cards, R_DEBUG, "Print Cards", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
 	SStrading_card_game.printAllCards()
 
-ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/ability_recipient)
+ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(ability_recipient, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/static/list/actions_by_name = list()
 	if (!length(actions_by_name))
@@ -395,7 +396,8 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 	log_admin("[key_name(user)] added mob ability [ability_type] to mob [ability_recipient].")
 	BLACKBOX_LOG_ADMIN_VERB("Add Mob Ability")
 
-ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
+ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(removal_target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/target_abilities = list()
 	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
 		target_abilities[ability.name] = ability
@@ -415,7 +417,8 @@ ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPT
 	message_admins("[key_name_admin(user)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Mob Ability")
 
-ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/spell_recipient)
+ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(spell_recipient, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/which = tgui_alert(user, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
@@ -462,7 +465,8 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 		to_chat(user, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
+ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(removal_target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -482,7 +486,8 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	message_admins("[key_name_admin(user)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
-ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
+ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(victim, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/datum/disease/disease = tgui_input_list(user, "Choose the disease to give to that guy", "ACHOO", sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(!disease)
 		return
@@ -491,7 +496,8 @@ ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	log_admin("[key_name(user)] gave [key_name(victim)] the disease [disease].")
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [disease]."))
 
-ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /obj)
+	VERB_ARG(speaker, ADMIN_VERB_ARG_TYPE_OBJ, ADMIN_VERB_ARG_SOURCE_WORLD, /obj)
 	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
@@ -538,7 +544,8 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
 
-ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
+ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(amount, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
@@ -727,7 +734,8 @@ ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of m
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
 
-ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
+ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(my_guy, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/static/list/controllers = subtypesof(/datum/admin_ai_template)
 	var/static/list/controllers_by_name = list()
 	if (!length(controllers_by_name))
@@ -765,7 +773,8 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear t
 		cleared++
 	to_chat(user, span_notice("Cleared [cleared] asset\s."))
 
-ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
+ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(my_guy, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
 	if (isnull(my_guy.ai_controller))
 		var/create_controller = tgui_alert(user, "Target has no AI controller, add one?", "Give AI?", list("Yes", "No")) == "Yes"
 		if (!create_controller)
@@ -868,7 +877,8 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
 	GLOB.event_logger.ui_interact(user.mob)
 
-ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
+ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS)
+	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
 	if(!object)
 		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
 		return
