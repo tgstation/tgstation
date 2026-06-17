@@ -36,7 +36,7 @@
 /datum/bt_node/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded && cooldown_key)
-			controller.set_blackboard_key(cooldown_key, world.time + hunt_cooldown)
+		controller.set_blackboard_key(cooldown_key, world.time + hunt_cooldown)
 	else if(target_key)
 		controller.clear_blackboard_key(target_key)
 	if(always_reset_target && target_key)

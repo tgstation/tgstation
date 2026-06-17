@@ -54,6 +54,8 @@
 #define BB_HOARD_LOCATION_RANGE "hoard_location_range"
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
+/// cooldown key throttling how often a parrot repeats a phrase
+#define BB_PARROT_SPEECH_COOLDOWN "BB_parrot_speech_cooldown"
 
 // Cultist pet keys
 ///our ability to summon runes

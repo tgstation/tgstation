@@ -1,6 +1,7 @@
-/datum/ai_behavior/unbuckle_mob
+/// Unbuckles the pawn from whatever it is buckled to.
+/datum/bt_node/ai_behavior/unbuckle_mob
 
-/datum/ai_behavior/unbuckle_mob/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/unbuckle_mob/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/atom/movable/buckled_to = living_pawn.buckled
 

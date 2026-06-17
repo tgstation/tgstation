@@ -38,6 +38,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/pet_bonus, "honk")
+	AddComponent(/datum/component/profound_fisher)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 
 	var/static/list/delicious_food = list(/obj/item/fish)

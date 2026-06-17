@@ -1169,6 +1169,7 @@
 #include "code\datums\ai\generic_decorators\is_in_vent.dm"
 #include "code\datums\ai\generic_decorators\is_target_stunned.dm"
 #include "code\datums\ai\generic_decorators\mob_stat_at_least.dm"
+#include "code\datums\ai\generic_decorators\pawn_buckled.dm"
 #include "code\datums\ai\generic_decorators\pawn_buckled_to_obj.dm"
 #include "code\datums\ai\generic_decorators\pawn_contained_in_obj.dm"
 #include "code\datums\ai\generic_decorators\pawn_farther_than_from_key.dm"

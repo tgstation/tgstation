@@ -1,0 +1,97 @@
+{
+	"dm_type": "/datum/bt_node/subtree/parrot_hoard",
+	"type": "sequence",
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": { "key": "BB_HOARD_LOCATION" },
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/succeed"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+					"vars": {
+						"target_key": "BB_HOARD_LOCATION",
+						"target_source": "/datum/target_source/range_turfs",
+						"targeting_strategy": "/datum/targeting_strategy/parrot_hoard_location",
+						"vision_range": "BB_HOARD_LOCATION_RANGE"
+					}
+				}
+			]
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/parrot_has_loot",
+					"child": {
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": { "target_key": "BB_HOARD_LOCATION", "required_dist": 0 }
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/parrot_drop_item"
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": { "key": "BB_HOARD_ITEM_TARGET" },
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": { "target_key": "BB_HOARD_ITEM_TARGET", "required_dist": 1 }
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack/interact_once/parrot",
+										"vars": {
+											"target_key": "BB_HOARD_ITEM_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
+								"vars": { "target_key": "BB_HOARD_ITEM_TARGET" }
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/random_chance",
+					"vars": { "chance": 0.05 },
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item",
+						"vars": { "target_key": "BB_HOARD_ITEM_TARGET" }
+					}
+				}
+			]
+		}
+	]
+}
