@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Tooltips no longer cover the whole borgs hands held items"

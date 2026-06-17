@@ -418,3 +418,6 @@
       to be printed.
   - bugfix: Fixed a bunch of runtimes caused when you try to perform surgery on cyborgs
       (which cannot be done in the first place)
+  - bugfix: Fixed earthcracker not getting spent on mining z levels
+  SyncIt21:
+  - bugfix: Tooltips no longer cover the whole borgs hands held items
