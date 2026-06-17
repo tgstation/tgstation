@@ -290,18 +290,11 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		if(!shoes_overlay)
-			return
-
-		apply_height(shoes_overlay, LOWER_BODY)
+		// apply_height(shoes_overlay, NO_MODIFY)
 		var/feature_y_offset = 0
-		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		for (var/body_zone in GLOB.leg_zones)
 			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
-			if(isnull(my_leg))
-				continue
-			var/list/foot_offset = my_leg.worn_foot_offset?.get_offset()
-			if (foot_offset && foot_offset["y"] > feature_y_offset)
-				feature_y_offset = foot_offset["y"]
+			feature_y_offset = max(my_leg?.worn_foot_offset?.get_offset()["y"], feature_y_offset)
 
 		shoes_overlay.pixel_z += feature_y_offset
 		overlays_standing[SHOES_LAYER] = shoes_overlay
@@ -684,46 +677,6 @@ generate/load female uniform sprites matching all previously decided variables
 			apply_height(overlay, ENTIRE_BODY)
 		overlays_standing[BODY_LAYER] = clothing_overlays
 		apply_overlay(BODY_LAYER)
-
-	// Assoc list of [layer] to [list of overlys], collected from all bodyparts
-	var/alist/body_overlays
-	for(var/obj/item/bodypart/part as anything in get_bodyparts())
-		if(part.is_invisible)
-			continue
-
-		// All overlays we applied with this specific bodypart
-		var/list/part_overlays
-		for(var/datum/bodypart_overlay/overlay as anything in part.bodypart_overlays)
-			if(!overlay.can_draw_on_bodypart(part, src))
-				continue
-
-			// Some externals have multiple layers for background, foreground and between
-			for(var/external_layer, actual_layer in overlay.all_layers)
-				if(!(overlay.layers & external_layer))
-					continue
-
-				var/list/external_overlay = overlay.get_overlay(actual_layer, part)
-				if(!length(external_overlay))
-					continue
-
-				body_overlays ||= alist()
-				body_overlays[abs(actual_layer)] ||= list()
-				body_overlays[abs(actual_layer)] += external_overlay
-
-				part_overlays ||= list()
-				part_overlays += external_overlay
-
-				for(var/image/generated_overlay as anything in external_overlay)
-					apply_height(generated_overlay, overlay.offset_location)
-
-		if(length(part_overlays))
-			part.apply_bodypart_textures(part_overlays)
-
-	for(var/layer, overlays in body_overlays)
-		remove_overlay(layer)
-		overlays_standing[layer] = overlays
-		apply_overlay(layer)
-
 	// parent call will update the actual bodyparts
 	return ..()
 
@@ -839,6 +792,9 @@ generate/load female uniform sprites matching all previously decided variables
 	return
 
 /mob/living/carbon/human/apply_height(image/appearance, body_area)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM)
+		return
+
 	switch(body_area)
 		if(LOWER_BODY, UPPER_BODY)
 			appearance.pixel_z += GLOB.human_heights_to_offsets[mob_height][body_area]

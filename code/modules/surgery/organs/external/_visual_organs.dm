@@ -148,7 +148,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
-/datum/bodypart_overlay/mutant/frills/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/frills/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	if(LAZYLEN(limb?.owner?.hair_masks))
 		. += jointext(limb.owner.hair_masks, ",")

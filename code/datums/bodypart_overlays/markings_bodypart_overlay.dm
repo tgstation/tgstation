@@ -30,7 +30,7 @@
 	use_gender = accessory.gender_specific
 	draw_color = accessory.color_src ? set_color : null
 
-/datum/bodypart_overlay/simple/body_marking/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/body_marking/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += use_gender
 	. += draw_color

@@ -15,7 +15,7 @@
 
 	overlay.color = draw_color
 
-/datum/bodypart_overlay/simple/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += icon_state
 

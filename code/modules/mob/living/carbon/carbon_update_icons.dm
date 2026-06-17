@@ -491,9 +491,12 @@
 		. += draw_color
 	if(is_invisible)
 		. += "invisible"
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(overlay.can_draw_on_bodypart(src, owner))
+			. += overlay.icon_render_key(src)
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
 		if(texture.can_texture_bodypart(src))
-			. += texture.render_key()
+			. += texture.icon_render_key()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
@@ -518,6 +521,9 @@
 	. += body_zone
 	if(is_invisible)
 		. += "invisible"
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(overlay.can_draw_on_bodypart(src, owner))
+			. += overlay.icon_render_key(src)
 	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner

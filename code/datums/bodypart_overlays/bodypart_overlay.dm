@@ -82,5 +82,5 @@
 	CRASH("External organ color set to override with no override proc.")
 
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache
-/datum/bodypart_overlay/proc/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/proc/icon_render_key(obj/item/bodypart/limb)
 	return list()

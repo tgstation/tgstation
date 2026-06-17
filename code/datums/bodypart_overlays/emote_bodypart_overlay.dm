@@ -40,7 +40,7 @@
  */
 /mob/living/carbon/human/proc/give_emote_overlay(datum/bodypart_overlay/simple/emote/overlay_typepath)
 	var/obj/item/bodypart/bodypart = get_bodypart(overlay_typepath::attached_body_zone)
-	return bodypart?.try_add_bodypart_overlay(overlay_typepath)
+	return bodypart?.add_bodypart_overlay(overlay_typepath)
 
 /datum/bodypart_overlay/simple/emote/tongue
 	icon_state = "tongue"

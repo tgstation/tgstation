@@ -59,7 +59,7 @@
 	implant = null
 	return ..()
 
-/datum/bodypart_overlay/augment/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/augment/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += implant.get_overlay_state()
 

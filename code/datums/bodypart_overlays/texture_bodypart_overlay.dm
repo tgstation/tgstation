@@ -16,11 +16,11 @@
 /datum/bodypart_texture/proc/modify_bodypart_appearance(image/appearance)
 	appearance.add_filter("bodypart_texture_[texture_icon_state]", 1, layering_filter(icon = cached_texture_icon, blend_mode = BLEND_INSET_OVERLAY))
 
-/datum/bodypart_texture/proc/render_key()
+/datum/bodypart_texture/proc/icon_render_key()
 	return type
 
 /datum/bodypart_texture/proc/can_texture_bodypart(obj/item/bodypart/bodypart_owner)
-	for (var/datum/bodypart_texture/other_texture in bodypart_owner.bodypart_textures)
+	for (var/datum/bodypart_texture/other_texture as anything in bodypart_owner.bodypart_textures)
 		if (other_texture.overlay_priority > overlay_priority)
 			return FALSE
 	return TRUE
