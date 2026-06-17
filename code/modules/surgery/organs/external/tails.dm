@@ -105,7 +105,7 @@
 	accessory.wagging = TRUE
 	if(tail_spines_overlay) //if there are spines, they should wag with the tail
 		tail_spines_overlay.wagging = TRUE
-	organ_owner.update_body()
+	organ_owner.update_body_parts()
 	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
 	return TRUE
 
