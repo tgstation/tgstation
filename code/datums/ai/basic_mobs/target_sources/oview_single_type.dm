@@ -21,6 +21,9 @@
 /datum/target_source/oview_single_type/disposal_unit
 	single_typepath = /obj/machinery/disposal
 
+/datum/target_source/oview_single_type/paper
+	single_typepath = /obj/item/paper
+
 /datum/target_source/oview_single_type/watering_can
 	single_typepath = /obj/item/reagent_containers/cup/watering_can
 

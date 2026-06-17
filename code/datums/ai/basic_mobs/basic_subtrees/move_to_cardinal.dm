@@ -8,6 +8,8 @@
 	var/minimum_distance = 1
 	/// How far away is too far.
 	var/maximum_distance = 9
+	/// The cardinal tile of our target we are currently moving toward.
+	var/atom/destination
 	/// Set by on_movement_failed() when the movement system gives up pathing.
 	var/movement_failed = FALSE
 
@@ -39,6 +41,7 @@
 	if(isnull(move_target))
 		move_target = target
 	controller.ai_movement.start_moving_towards(controller, move_target, 0)
+	destination = move_target
 
 /datum/bt_node/ai_behavior/move_to_cardinal/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(movement_failed)

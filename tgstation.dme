@@ -1072,6 +1072,7 @@
 #include "code\datums\ai\basic_mobs\targeting_strategies\decorated_donut.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\dont_target_friends.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\drillable_ice.dm"
+#include "code\datums\ai\basic_mobs\targeting_strategies\empty_paper.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\finished_stove.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\huntable_mouse.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\slime_food.dm"

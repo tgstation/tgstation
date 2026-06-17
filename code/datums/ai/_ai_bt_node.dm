@@ -34,6 +34,7 @@
  * Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING.
  */
 /datum/bt_node/proc/tick(datum/ai_controller/controller, seconds_per_tick)
+	SHOULD_NOT_SLEEP(TRUE)
 	return BT_FAILURE
 
 /// Resets tick timing and cached result for this node instance.

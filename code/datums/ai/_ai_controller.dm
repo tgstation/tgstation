@@ -565,7 +565,7 @@ multiple modular subtrees with behaviors
 	var/run_flags = get_able_to_run()
 	if(run_flags & AI_UNABLE_TO_RUN)
 		able_to_run = FALSE
-		GLOB.move_manager.stop_looping(pawn) //stop moving
+		ai_movement.fail_movement(src)
 	else
 		able_to_run = TRUE
 	set_ai_status(get_expected_ai_status(), run_flags)
