@@ -392,6 +392,18 @@ const ReagentEntry = (props: ReagentProps) => {
           onClick={() =>
             act('transfer', {
               reagentRef: chemical.ref,
+              amount: customTransferAmount,
+              target: transferTo,
+            })
+          }
+        >
+          {customTransferAmount}
+        </Button>
+        <Button
+          disabled={isPrinting}
+          onClick={() =>
+            act('transfer', {
+              reagentRef: chemical.ref,
               amount: 1000,
               target: transferTo,
             })
@@ -399,18 +411,6 @@ const ReagentEntry = (props: ReagentProps) => {
         >
           All
         </Button>
-        <Button
-          icon="ellipsis-v"
-          tooltip="Use custom"
-          disabled={isPrinting}
-          onClick={() =>
-            act('transfer', {
-              reagentRef: chemical.ref,
-              amount: customTransferAmount,
-              target: transferTo,
-            })
-          }
-        />
         <Button
           icon="ellipsis-h"
           tooltip="Custom amount"
