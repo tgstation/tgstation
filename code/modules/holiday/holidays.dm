@@ -101,11 +101,12 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
 		if(PATTERN_RAINBOW)
-			var/datum/holiday/pride_week/rainbow_datum = new()
+			var/static/datum/holiday/rainbow_datum = new()
+			rainbow_datum.holiday_colors = /datum/holiday/pride_week::holiday_colors
 			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
 	if(!length(GLOB.holidays))
 		return
-	for(var/holiday_key in GLOB.holidays)
+	for(var/holiday_key in shuffle(GLOB.holidays))
 		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
 		if(!holiday_real.holiday_colors)
 			continue
@@ -489,6 +490,62 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/food/snowcones/rainbow,
 		/obj/item/toy/crayon/rainbow,
 	)
+
+/datum/holiday/pride_week/New()
+	. = ..()
+	var/palette = rand(1, 7)
+	switch(palette)
+		if(1)
+			holiday_colors = list(
+				COLOR_PRIDE_PURPLE,
+				COLOR_PRIDE_BLUE,
+				COLOR_PRIDE_GREEN,
+				COLOR_PRIDE_YELLOW,
+				COLOR_PRIDE_ORANGE,
+				COLOR_PRIDE_RED,
+			)
+		if(1)
+			holiday_colors += list(
+				COLOR_LESBIAN_RED,
+				COLOR_LESBIAN_ORANGE,
+				COLOR_LESBIAN_PINK,
+				COLOR_LESBIAN_MAGENTA,
+			)
+		if(2)
+			holiday_colors += list(
+				COLOR_GAY_GREEN,
+				COLOR_GAY_LIGHT_GREEN,
+				COLOR_GAY_LIGHT_BLUE,
+				COLOR_GAY_BLUE,
+			)
+
+		if(3)
+			holiday_colors += list(
+				COLOR_BI_PINK,
+				COLOR_BI_PURPLE,
+				COLOR_BI_BLUE,
+			)
+		if(4)
+			holiday_colors = list(
+				COLOR_TRANS_BLUE,
+				COLOR_TRANS_PINK,
+				COLOR_WHITE,
+			)
+		if(5)
+			holiday_colors = list(
+				COLOR_ACE_BLACK,
+				COLOR_ACE_GREY,
+				COLOR_WHITE,
+				COLOR_ACE_PURPLE,
+			)
+		if(6)
+			holiday_colors += list(
+				COLOR_PAN_MAGENTA,
+				COLOR_PAN_YELLOW,
+				COLOR_PAN_CYAN,
+			)
+		if(7)
+			holiday_colors = /datum/holiday/pride_week::holiday_colors //default rainbow flag
 
 // JULY
 
