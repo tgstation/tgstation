@@ -259,6 +259,9 @@
 ///key that holds the next time we will start fishing
 #define BB_FISHING_TIMER "BB_fishing_timer"
 
+///key that holds the next time we will start drilling ice
+#define BB_ICE_DRILLING_TIMER "BB_ice_drilling_timer"
+
 ///are we ONLY allowed to fish when we're hungry?
 #define BB_ONLY_FISH_WHILE_HUNGRY "BB_only_fish_while_hungry"
 

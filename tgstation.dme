@@ -1195,6 +1195,7 @@
 #include "code\datums\ai\generic_subtrees\find_stealable_object.dm"
 #include "code\datums\ai\generic_subtrees\forage_and_retaliate.dm"
 #include "code\datums\ai\generic_subtrees\move_to_and_eat.dm"
+#include "code\datums\ai\generic_subtrees\move_to_and_hunt.dm"
 #include "code\datums\ai\generic_subtrees\move_to_reinforce.dm"
 #include "code\datums\ai\generic_subtrees\pick_retaliate_target.dm"
 #include "code\datums\ai\generic_subtrees\random_walk.dm"
