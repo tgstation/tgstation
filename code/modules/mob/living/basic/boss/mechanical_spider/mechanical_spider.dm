@@ -306,6 +306,9 @@
 		to_chat(src, span_warning("We cannot decide if they are pure or not just yet..."))
 		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
+	if(DOING_INTERACTION(src, DOAFTER_SOURCE_MECHSPIDER))
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+
 	// parent call handles devour logic
 	return ..()
 
