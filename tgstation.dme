@@ -5236,6 +5236,7 @@
 #include "code\modules\mob\living\basic\boss\blood_drunk_miner\blood_drunk_ai.dm"
 #include "code\modules\mob\living\basic\boss\blood_drunk_miner\blood_drunk_objects.dm"
 #include "code\modules\mob\living\basic\boss\blood_drunk_miner\blood_drunk_subtypes.dm"
+#include "code\modules\mob\living\basic\boss\mechanical_spider\mechanical_spider.dm"
 #include "code\modules\mob\living\basic\boss\thing\thing.dm"
 #include "code\modules\mob\living\basic\boss\thing\thing_abilities.dm"
 #include "code\modules\mob\living\basic\boss\thing\thing_ai.dm"
