@@ -1,5 +1,7 @@
 ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(debug_air_status, R_DEBUG, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target in world)
+
+ADMIN_VERB(debug_air_status, R_DEBUG, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_TURF, ADMIN_VERB_ARG_SOURCE_WORLD, /turf)
 	atmos_scan(user.mob, target, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
 
