@@ -177,7 +177,7 @@
 				heretic_text += "countless warriors grappling in an endless war"
 				heretic_text += "the sound of clashing steel and cries of the fallen fill the air"
 			if(PATH_LOCK)
-				heretic_text += "beyond it, you see an endless " + "[prob(10) ? "furniture store" : "labyrinth"]"
+				heretic_text += "beyond it, you see an endless labyrinth"
 				heretic_text += "the walls shifting and changing as you navigate it"
 				heretic_text += "no matter which turn you take, you cannot find an exit"
 			if(PATH_MOON)
