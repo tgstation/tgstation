@@ -25,8 +25,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
 
 	var/what_map_index_are_we = 1
-	for(var/map_name, _map_config in config.maplist)
-		var/datum/map_config/map_config = _map_config
+	for(var/map_name in config.maplist)
 		if(SSmapping.current_map.map_name == map_name)
 			break
 		what_map_index_are_we++
