@@ -639,7 +639,7 @@
 
 /obj/item/emitter_disk/stamina
 	name = "\improper Diode Disk: Electrodisruptive"
-	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will increase the integrity of supermatter crystals and exhaust living creatures. The disk will be consumed in the process."
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will electrically disrupt the engine. The disk will be consumed in the process."
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bluelens
 	consumed_on_removal = FALSE
 	consumable = FALSE

@@ -186,6 +186,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// If the SM is decorated with holiday lights
 	var/holiday_lights = FALSE
 
+	var/last_hit_by_anger_beam
+	var/angry = FALSE
+	var/datum/looping_sound/supermatter_angry/angry_noises
+
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
 
@@ -204,6 +208,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
+	angry_noises = new(src)
 	investigate_log("has been created.", INVESTIGATE_ENGINE)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
@@ -240,6 +245,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	absorbed_gasmix = null
 	QDEL_NULL(radio)
 	QDEL_NULL(countdown)
+	QDEL_NULL(angry_noises)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
 	QDEL_NULL(soundloop)
@@ -283,7 +289,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(!isclosedturf(did_it_melt)) //In case some joker finds way to place these on indestructible walls
 			visible_message(span_warning("[src] melts through [local_turf]!"))
 		return
-
+	// PART 1.5: TAKE A CHILL PILL
+	if(angry && world.time > last_hit_by_anger_beam + 60 SECONDS)
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIVID_RED)
+		angry = FALSE
+		transform = initial(transform)
+		angry_noises.stop()
+		set_light_on(FALSE)
 	// PART 2: GAS PROCESSING
 	var/datum/gas_mixture/env = local_turf.return_air()
 	absorbed_gasmix = env?.remove_ratio(absorption_ratio) || new()
@@ -301,19 +313,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	zap_factors = calculate_zap_transmission_rate()
 	var/delta_time = (SSmachines.times_fired - last_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
 	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
-	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	var/time_til_next_zap = ((4 - internal_energy * 0.001) SECONDS)
+	if(accumulated_energy && angry ? (last_power_zap + time_til_next_zap) : (last_power_zap + time_til_next_zap / 4) < world.time)
 		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
 		playsound(src, 'sound/items/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
-			range = 3,
-			zap_str = discharged_energy,
-			zap_flags = ZAP_SUPERMATTER_FLAGS,
+			range = angry ? 14 : 3,
+			zap_str = angry ? discharged_energy * 4 : discharged_energy,
+			zap_flags = angry ? ZAP_ANGRYMATTER_FLAGS : ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 240 KILO JOULES,
-			power_level = internal_energy,
-			color = zap_color,
+			power_level = angry ? internal_energy * 4 : internal_energy,
+			color = angry ? COLOR_VIVID_RED : zap_color,
 		)
 
 		last_power_zap = world.time
@@ -667,14 +680,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/datum/sm_gas/sm_gas = current_gas_behavior[gas_path]
 		if(!sm_gas)
 			continue
-		gas_power_transmission_rate += sm_gas.power_transmission * gas_percentage[gas_path]
-		gas_heat_modifier += sm_gas.heat_modifier * gas_percentage[gas_path]
-		gas_heat_resistance += sm_gas.heat_resistance * gas_percentage[gas_path]
-		gas_heat_power_generation += sm_gas.heat_power_generation * gas_percentage[gas_path]
-		gas_powerloss_inhibition += sm_gas.powerloss_inhibition * gas_percentage[gas_path]
+		gas_power_transmission_rate += angry ? (sm_gas.power_transmission * gas_percentage[gas_path]) * 4 : sm_gas.power_transmission * gas_percentage[gas_path]
+		gas_heat_modifier += angry ? (sm_gas.heat_modifier * gas_percentage[gas_path]) * 4 : sm_gas.heat_modifier * gas_percentage[gas_path]
+		gas_heat_resistance += angry ? (sm_gas.heat_resistance * gas_percentage[gas_path]) * 4 : sm_gas.heat_resistance * gas_percentage[gas_path]
+		gas_heat_power_generation += angry ? (sm_gas.heat_power_generation * gas_percentage[gas_path]) * 4 : sm_gas.heat_power_generation * gas_percentage[gas_path]
+		gas_powerloss_inhibition += angry ? (sm_gas.powerloss_inhibition * gas_percentage[gas_path]) * 4 : sm_gas.powerloss_inhibition * gas_percentage[gas_path]
 
-	gas_heat_power_generation = clamp(gas_heat_power_generation, 0, 1)
-	gas_powerloss_inhibition = clamp(gas_powerloss_inhibition, 0, 1)
+	gas_heat_power_generation = angry ? gas_heat_power_generation : clamp(gas_heat_power_generation, 0, 1)
+	gas_powerloss_inhibition = angry ? gas_powerloss_inhibition : clamp(gas_powerloss_inhibition, 0, 1)
 
 /**
  * Perform calculation for power lost and gained this tick.
@@ -1116,6 +1129,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(new_turf)
 		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
 		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
 
 /atom/movable/warp_effect/Destroy(force)
 	// Just in case I've forgotten how the movement api works

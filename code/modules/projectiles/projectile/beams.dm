@@ -284,7 +284,7 @@
 	muzzle_flash_color_override = COLOR_BLUE_LIGHT
 	impact_light_color_override = COLOR_BLUE_LIGHT
 	damage_type = STAMINA
-	integrity_heal = 0.25
+	integrity_heal = -0.5
 	energy_reduction = 60
 
 /obj/projectile/beam/emitter/hitscan/bioregen

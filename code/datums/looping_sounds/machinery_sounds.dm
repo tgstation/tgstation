@@ -233,3 +233,14 @@
 	mid_length = 5 SECONDS
 	volume = 50
 	use_sound_tokens = TRUE
+
+/datum/looping_sound/supermatter_angry
+	start_sound = 'sound/machines/sm/loops/angry_engine_start_end.ogg'
+	start_length = 0.495 SECONDS
+	mid_sounds = 'sound/machines/sm/loops/angry_engine_loop.ogg'
+	mid_length = 7.890 SECONDS
+	end_sound = 'sound/machines/sm/loops/angry_engine_start_end.ogg'
+	volume = 85
+	extra_range = 7
+	falloff_distance = 5
+	use_sound_tokens = TRUE

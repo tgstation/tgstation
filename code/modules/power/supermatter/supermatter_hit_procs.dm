@@ -41,12 +41,26 @@
 			internal_energy = max(0, internal_energy - mahlaser?.energy_reduction)
 		if(mahlaser?.psi_change)
 			psy_coeff = clamp(psy_coeff + mahlaser?.psi_change, 0, 1)
+		if(istype(projectile, /obj/projectile/beam/emitter/hitscan/bluelens))
+			get_MAD()
 	external_power_immediate += projectile.damage * bullet_energy + kiss_power
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/magnetic))
 		absorption_ratio = clamp(absorption_ratio + 0.05, 0.15, 1)
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED
+
+/obj/machinery/power/supermatter_crystal/proc/get_MAD()
+	if(!angry)
+		balloon_alert_to_viewers("gets mad!")
+		angry = TRUE
+		transform *= 2
+		add_atom_colour(color_transition_filter(COLOR_VIVID_RED, SATURATION_MULTIPLY), TEMPORARY_COLOUR_PRIORITY)
+		angry_noises.start()
+		set_light_color(COLOR_VIVID_RED)
+		set_light_range(7)
+		set_light_on(TRUE)
+	last_hit_by_anger_beam = world.time
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
