@@ -26,8 +26,8 @@
 	move_force = MOVE_FORCE_EXTREMELY_WEAK
 	move_resist = MOVE_FORCE_VERY_WEAK
 	density = FALSE
-	pass_flags = PASSVEHICLE | PASSMOB
-	pass_flags_self = PASSVEHICLE | PASSMOB
+	pass_flags = PASSVEHICLE | PASSMOB | PASSTABLE
+	pass_flags_self = PASSVEHICLE | PASSMOB | PASSTABLE
 	inertia_force_weight = 0.5 // lighter than other mechs and people
 	accesses = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	ui_theme = PDA_THEME_CAT // since the mech is for pets ~NYAAAA~
