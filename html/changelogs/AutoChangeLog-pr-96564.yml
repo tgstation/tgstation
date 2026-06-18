@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Alien welding tools no longer have mixed directions when held in the right hand."

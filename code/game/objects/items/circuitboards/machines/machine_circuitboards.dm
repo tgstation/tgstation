@@ -36,7 +36,7 @@
 		/datum/stock_part/servo/tier3 = 5,
 		/obj/item/stack/cable_coil = 2)
 
-/obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame)
+/obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
 	var/turf/center = get_turf(install_frame)
 	var/blocked = FALSE
 	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -2))
@@ -1318,24 +1318,23 @@
 
 /obj/item/circuitboard/machine/hydroponics/proc/changeindicators(mob/living/user, obj/item/I)
 	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
-		name = "Hydroponics Tray"
+		name = "Hydroponics Tray [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable
-		balloon_alert(user, "defaulting indicator location.")
+		balloon_alert(user, "defaulting indicator location")
 	else
-		name = "Old-Designed Hydropoincs Tray"
+		name = "Hydroponics Tray (Alt) [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable/oldstyle
-		balloon_alert(user, "moving the indicators...")
-	return TRUE
+		balloon_alert(user, "moved indicators location")
 
 /obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
 	if(istype(I, /obj/item/plant_analyzer))
 		changeindicators(user)
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
-	src.changeindicators(user)
-	return
+	changeindicators(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
@@ -1934,3 +1933,46 @@
 		/datum/stock_part/water_recycler = 1,
 		/datum/stock_part/servo = 1,
 	)
+
+/obj/item/circuitboard/machine/wall_healer
+	name = "DeForest First Aid Station"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/wall_healer
+	req_components = list(
+		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/scalpel = 1,
+	)
+
+/obj/item/circuitboard/machine/wall_healer/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("The safety chip looks fried.")
+
+/obj/item/circuitboard/machine/wall_healer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "safeties disabled")
+	obj_flags |= EMAGGED
+	return TRUE
+
+// Someone please add generic support for constructing wall mounted objects thanks
+/obj/item/circuitboard/machine/wall_healer/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
+	if(locate(/obj/machinery/wall_healer) in install_frame.loc) // for subtypes support
+		install_frame.balloon_alert(user, "identical machine present!")
+		return FALSE
+
+	var/turf/facing_wall = get_step(install_frame, user.dir)
+	if(!is_mountable_turf(facing_wall))
+		install_frame.balloon_alert(user, "no wall to install on!")
+		return FALSE
+
+	return TRUE
+
+/obj/item/circuitboard/machine/wall_healer/free
+	name = "DeForest Emergency First Aid Station"
+	build_path = /obj/machinery/wall_healer/free

@@ -7,8 +7,9 @@
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
 	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
-	var/datum/team/revolution/rev_team
+	ui_name = "AntagInfoRevolution"
 
+	var/datum/team/revolution/rev_team
 	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
 	var/deconversion_source
 
@@ -20,18 +21,6 @@
 	return ..()
 
 /datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
-	// No revolution exists which means admin adding this will create a new revolution team
-	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
-	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
-		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
-			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
-			Are you sure?", "Be Wary", list("Yes", "No"))
-		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
-			return
-
-	go_through_with_admin_add(new_owner, admin)
-
-/datum/antagonist/rev/proc/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has rev'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has rev'ed [key_name(new_owner)].")
@@ -57,11 +46,6 @@
 	. = ..()
 	equip_rev()
 	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
-
-/datum/antagonist/rev/greet()
-	. = ..()
-	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
-	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
 	if(!new_team)
@@ -98,7 +82,20 @@
 	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
 	log_admin("[key_name(admin)] has head-rev'ed [O].")
 
-/datum/antagonist/rev/head/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
+/datum/antagonist/rev/ui_static_data(mob/user)
+	. = ..()
+	.["leader"] = (pref_flag == ROLE_REV_HEAD)
+	.["heads"] = list()
+	for(var/datum/mind/head_of_staff as anything in SSjob.get_all_heads())
+		.["heads"] += list(list("name" = head_of_staff.name, "role" = head_of_staff.assigned_role.title))
+
+/datum/antagonist/rev/head/ui_static_data(mob/user)
+	. = ..()
+	.["code_phrases"] = rev_team.head_chose_phrase_raw
+	.["code_responses"] = rev_team.head_code_responses_raw
+	.["lone_wolf"] = !roundstart || length(rev_team.get_head_revolutionaries()) == 1
+
+/datum/antagonist/rev/head/admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
@@ -161,6 +158,7 @@
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
+	var/roundstart = FALSE
 
 /datum/antagonist/rev/head/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_RESISTED
@@ -182,11 +180,17 @@
 	real_mob.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
 	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_flash_success))
 
+	real_mob.AddComponent(/datum/component/codeword_hearing, rev_team.head_code_phrases, "blue", src)
+	real_mob.AddComponent(/datum/component/codeword_hearing, rev_team.head_code_responses, "red", src)
+
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
 	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
+
+	for(var/datum/component/codeword_hearing/component as anything in real_mob.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
 
 /// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_MOB].
 /// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
@@ -370,6 +374,23 @@
 
 	/// List of all ex-revs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/datum/mind/ex_revs = list()
+
+	/// List of code phrases
+	VAR_FINAL/list/head_chose_phrase_raw
+	/// Regex for code phrases that only headrevs hear
+	VAR_FINAL/regex/head_code_phrases
+	/// List of code responses
+	VAR_FINAL/list/head_code_responses_raw
+	/// Regex for code responses that only headrevs hear
+	VAR_FINAL/regex/head_code_responses
+
+/datum/team/revolution/New(starting_members)
+	. = ..()
+	head_chose_phrase_raw = generate_code_phrase(return_list = TRUE)
+	head_code_phrases = new("([jointext(head_chose_phrase_raw, "|")])", "ig")
+
+	head_chose_phrase_raw = generate_code_phrase(return_list = TRUE)
+	head_code_responses = new("([jointext(head_chose_phrase_raw, "|")])", "ig")
 
 /// Saves all current headrevs and revs
 /datum/team/revolution/proc/save_members()

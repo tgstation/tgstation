@@ -1,6 +1,7 @@
 /// Verifies that an area's perception of their "turfs" is correct, and no other area overlaps with them
 /// Quite slow, but needed
 /datum/unit_test/maptest_area_contents
+	test_flags = UNIT_TEST_MAP_TEST
 	priority = TEST_LONGER
 
 /datum/unit_test/maptest_area_contents/Run()

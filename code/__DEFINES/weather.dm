@@ -67,3 +67,6 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_FORCED_TELEGRAPH "Telegraph Duration"
 #define WEATHER_FORCED_END "End Duration"
 #define WEATHER_FORCED_DURATION "Weather Duration"
+
+/// Maximum possible weather severity value
+#define MAXIMUM_WEATHER_SEVERITY 100

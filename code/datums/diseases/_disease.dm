@@ -77,8 +77,8 @@
 	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
 	D.after_add()
+	D.register_disease_signals()
 	infectee.med_hud_set_status()
-	register_disease_signals()
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")

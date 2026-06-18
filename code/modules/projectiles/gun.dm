@@ -413,7 +413,7 @@
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
-		return ITEM_INTERACT_BLOCKING
+		return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING
 
 	if(check_botched(user, target))
 		return NONE
@@ -481,33 +481,30 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered?.loaded_projectile)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-				firing_burst = FALSE
-				return FALSE
-		var/sprd
-		if(randomspread)
-			sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (random_spread))
-		else //Smart spread
-			sprd = round((((burst_spread_mult/burst_size) * iteration) - (0.5 + (burst_spread_mult * 0.25))) * (random_spread))
-		before_firing(target,user)
-		if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
-			shoot_with_empty_chamber(user)
-			firing_burst = FALSE
-			return FALSE
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, TRUE, target, message)
-			else
-				shoot_live_shot(user, FALSE, target, message)
-			if (iteration >= burst_size)
-				firing_burst = FALSE
-	else
+	if(!chambered?.loaded_projectile)
 		shoot_with_empty_chamber(user)
 		firing_burst = FALSE
 		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered.harmful) // Is the bullet chambered harmful?
+		to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+		firing_burst = FALSE
+		return FALSE
+
+	var/sprd = 0
+	if(randomspread)
+		sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (random_spread))
+	else //Smart spread
+		sprd = round((((burst_spread_mult/burst_size) * iteration) - (0.5 + (burst_spread_mult * 0.25))) * (random_spread))
+	before_firing(target,user)
+	if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
+		shoot_with_empty_chamber(user)
+		firing_burst = FALSE
+		return FALSE
+	shoot_live_shot(user, get_dist(user, target) <= 1, target, message)
+	if (iteration >= burst_size)
+		firing_burst = FALSE
+
 	process_chamber()
 	update_appearance()
 	return TRUE
@@ -579,25 +576,21 @@
 		for(var/i = 1 to burst_size)
 			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_burst_delay * (i - 1))
 			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay) // for the case of fire delay longer than burst
+
 	else
-		if(chambered)
-			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-					return NONE
-			var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
-			before_firing(target,user)
-			if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
-				shoot_with_empty_chamber(user)
-				return NONE
-			else
-				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-					shoot_live_shot(user, TRUE, target, message)
-				else
-					shoot_live_shot(user, FALSE, target, message)
-		else
+		if(!chambered)
 			shoot_with_empty_chamber(user)
+			return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : NONE
+		if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
 			return NONE
+		var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
+		before_firing(target,user)
+		if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
+			shoot_with_empty_chamber(user)
+			return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : NONE
+
+		shoot_live_shot(user, get_dist(user, target) <= 1, target, message)
 		// If gun gets destroyed as a result of firing
 		if (!QDELETED(src))
 			process_chamber()
@@ -605,10 +598,8 @@
 			fire_cd = TRUE
 			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay)
 
-	if(user)
-		user.update_held_items()
+	user?.update_held_items()
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
-
 	return TRUE
 
 /obj/item/gun/proc/reset_fire_cd()
@@ -698,7 +689,7 @@
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 
 	if(!chambered?.loaded_projectile)
-		shoot_with_empty_chamber()
+		shoot_with_empty_chamber(user)
 		return ITEM_INTERACT_BLOCKING
 
 	chambered.loaded_projectile.damage *= 5

@@ -1096,6 +1096,15 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Helper macro that determines if the mob is at the threshold to start vomitting due to high toxin levels
 #define AT_TOXIN_VOMIT_THRESHOLD(mob) (mob.get_tox_loss() > 45 && mob.nutrition > 20)
 
+/// Shared cooldown for manually triggered emote audio
+#define MANUAL_GENERAL_EMOTE_AUDIO_COOLDOWN "manual_general_emote_audio_cooldown"
+/// Per emote cooldown for manually triggered emote audio
+#define MANUAL_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type) "manual_specific_emote_audio_cooldown_[type]"
+/// Shared cooldown for forced emote audio
+#define FORCED_GENERAL_EMOTE_AUDIO_COOLDOWN "forced_general_emote_audio_cooldown"
+/// Per emote cooldown for forced emote audio
+#define FORCED_SPECIFIC_EMOTE_AUDIO_COOLDOWN(type) "forced_specific_emote_audio_cooldown_[type]"
+
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS
 ///The duration of a taunt emote, so how long they can deflect projectiles

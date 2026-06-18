@@ -381,6 +381,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
+/// For mobs / minds with the listening_prayers trait, this stops them from hearing prayers
+#define TRAIT_DONT_HEAR_PRAYERS "dont_hear_prayers"
 #define TRAIT_FEARLESS "fearless"
 /// Ignores darkness for hearing
 #define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"
@@ -501,6 +503,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLIFF_WALKER "cliff_walker"
 /// This means the user is currently holding/wearing a "tactical camouflage" item (like a potted plant).
 #define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged"
+/// This means the user is allowed to draw on minimap holotables.
+#define TRAIT_MINIMAP_TABLE_DRAW "minimap_table_draw"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"

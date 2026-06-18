@@ -6,6 +6,7 @@
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
  */
 /datum/unit_test/maptest_required_map_items
+	test_flags = UNIT_TEST_MAP_TEST
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
 

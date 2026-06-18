@@ -23,7 +23,7 @@
 	spill_organs(drop_bitflags)
 
 	if(drop_bitflags & DROP_BODYPARTS)
-		spread_bodyparts(drop_bitflags)
+		spread_bodyparts(drop_bitflags, gibbed = TRUE)
 
 	// failsafe for if we fuck up and leave our brain behind. (other organs are replaceable so we can ignore them.)
 	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -83,7 +83,7 @@
  * drop_bitflags: (see code/__DEFINES/blood.dm)
  * * DROP_BRAIN - Detaches the head from the mob and launches it away from the body
 **/
-/mob/living/proc/spread_bodyparts(drop_bitflags=NONE)
+/mob/living/proc/spread_bodyparts(drop_bitflags = NONE, gibbed = FALSE)
 	return
 
 /// Length of the animation in dust_animation.dmi

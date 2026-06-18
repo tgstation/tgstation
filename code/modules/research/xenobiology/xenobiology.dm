@@ -822,6 +822,8 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
+	implanter.implant(src, null, TRUE)
 
 /obj/item/slimepotion/sentience/nuclear/dangerous_horse
 	name = "dangerous pony potion"
@@ -1042,6 +1044,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(living_mob.gender != MALE && living_mob.gender != FEMALE)
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return ITEM_INTERACT_BLOCKING
+
+	if(living_mob.mind)
+		if (!do_after(user, delay = 5 SECONDS, target = living_mob))
+			balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
 
 	if(living_mob.gender == MALE)
 		living_mob.gender = FEMALE
