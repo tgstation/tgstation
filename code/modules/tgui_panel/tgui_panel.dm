@@ -86,6 +86,8 @@
 				),
 			),
 		))
+		if(client.holder)
+			SSadmin_verbs.send_verb_list_to_panel(client)
 		return TRUE
 
 	if(type == "audio/setAdminMusicVolume")
@@ -101,6 +103,53 @@
 
 	if(type == "telemetry")
 		analyze_telemetry(payload)
+		return TRUE
+
+	if(type == "admin/request_targets")
+		var/verb_type = text2path(payload["verb_type"])
+		if(!verb_type)
+			return TRUE
+		var/datum/admin_verb/verb = SSadmin_verbs.admin_verbs_by_type[verb_type]
+		if(!verb)
+			return TRUE
+		var/list/target_data = list()
+		// Reuse the admin verb panel's target building logic
+		var/datum/admin_verb_metadata/argument/entity_arg
+		for(var/datum/admin_verb_metadata/argument/arg in verb.metadata?.arguments)
+			if(arg.arg_type & (ADMIN_VERB_ARG_TYPE_MOB | ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_AREA | ADMIN_VERB_ARG_TYPE_DATUM | ADMIN_VERB_ARG_TYPE_ATOM))
+				entity_arg = arg
+				break
+		if(entity_arg)
+			var/list/source_atoms
+			if(entity_arg.source == ADMIN_VERB_ARG_SOURCE_VIEW && client.mob)
+				source_atoms = view(client.view, client.mob)
+			else if(entity_arg.arg_type & ADMIN_VERB_ARG_TYPE_MOB)
+				source_atoms = GLOB.mob_list
+			else if(entity_arg.arg_type & ADMIN_VERB_ARG_TYPE_AREA)
+				source_atoms = get_sorted_areas()
+			else if(client.mob)
+				source_atoms = view(client.view, client.mob)
+			for(var/atom/target in source_atoms)
+				target_data += list(list("name" = "[target]", "ref" = REF(target)))
+		window.send_message("admin/targets", list("targets" = target_data))
+		return TRUE
+
+	if(type == "admin/command")
+		var/verb_type = text2path(payload["verb_type"])
+		if(!verb_type)
+			return TRUE
+		var/list/raw_args = payload["args"]
+		if(!islist(raw_args))
+			raw_args = list()
+		var/list/structured_args = list()
+		for(var/key in raw_args)
+			var/value = raw_args[key]
+			if(istext(value))
+				var/located = locate(value)
+				if(located)
+					value = located
+			structured_args[key] = value
+		SSadmin_verbs.dynamic_invoke_verb(client, verb_type, structured_args)
 		return TRUE
 
 	if(type == "requestMetadata")
