@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - bugfix: "Turtles now come in the stasis crates and can no longer grow inside of a cargo shuttle (or, well, untill you open the crate in general). This allows you to ACTUALLY interact with turtles growing feature before they come grown up."
