@@ -35,5 +35,5 @@ GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 		if("playerPanel")
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, get_mob_by_ckey(params["ckey"]))
 
-ADMIN_VERB(sprite_auditor, R_ADMIN, "Audit Player-made Sprites", "View sprites created by players this round.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(sprite_auditor, R_ADMIN, "Audit Player-made Sprites", "View sprites created by players this round.", ADMIN_CATEGORY_PLAYERS)
 	GLOB.sprite_auditor.ui_interact(user.mob)

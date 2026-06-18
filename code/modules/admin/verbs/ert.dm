@@ -263,7 +263,7 @@
 	message_admins("[capitalize(ertemplate.polldesc)] has spawned with the mission: [ertemplate.mission]")
 	return TRUE
 
-ADMIN_VERB(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_EVENTS)
 	message_admins("[key_name_admin(user)] is creating a CentCom response team...")
 	if(user.holder?.make_emergency_response_team())
 		log_admin("[key_name(user)] created a CentCom response team.")

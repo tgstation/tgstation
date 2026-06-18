@@ -1,4 +1,4 @@
-ADMIN_VERB_AND_CONTEXT_MENU(machine_upgrade, R_DEBUG, "Tweak Component Ratings", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /obj/machinery)
+ADMIN_VERB_AND_CONTEXT_MENU(machine_upgrade, R_DEBUG, "Tweak Component Ratings", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_DEBUG, /obj/machinery)
 	VERB_ARG(machine, ADMIN_VERB_ARG_TYPE_OBJ, ADMIN_VERB_ARG_SOURCE_WORLD, /obj/machinery)
 	var/new_rating = tgui_input_number(user, "", "Enter new rating:")
 	if(new_rating && machine.component_parts)

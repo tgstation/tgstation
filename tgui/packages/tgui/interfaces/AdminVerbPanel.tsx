@@ -120,49 +120,78 @@ export function AdminVerbPanel() {
 
   const primitiveArgs = selectedVerb?.arguments.filter(isPrimitiveArg) ?? [];
 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    null,
+  );
+
+  const matchingCategories = searchText
+    ? categories.filter((cat) =>
+        filteredVerbs.some((v) => v.category === cat),
+      )
+    : categories;
+
+  const activeCategory = selectedCategory || '';
+
+  const visibleVerbs = searchText
+    ? filteredVerbs.filter((v) => !activeCategory || v.category === activeCategory)
+    : verbs.filter((v) => v.category === (activeCategory || categories[0]));
+
   return (
-    <Window title="Admin Verb Panel" width={750} height={520} theme="admin">
+    <Window title="Admin Verb Panel" width={800} height={520} theme="admin">
       <Window.Content>
         <Stack fill>
-          {/* Left: command list with collapsible categories */}
-          <Stack.Item basis="200px">
+          {/* Far left: category list */}
+          <Stack.Item basis="140px">
+            <Section fill scrollable title="Categories">
+              {matchingCategories.map((cat) => (
+                <Button
+                  key={cat}
+                  fluid
+                  color={cat === activeCategory ? 'good' : 'transparent'}
+                  textAlign="left"
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setSelectedVerb(null);
+                    setSelectedTarget(null);
+                  }}
+                >
+                  {cat}
+                </Button>
+              ))}
+            </Section>
+          </Stack.Item>
+          <Stack.Divider />
+          {/* Verb list */}
+          <Stack.Item basis="180px">
             <Stack fill vertical>
               <Stack.Item>
                 <Input
                   fluid
                   placeholder="Search..."
                   value={searchText}
-                  onChange={setSearchText}
+                  onChange={(val: string) => {
+                    setSearchText(val);
+                    setSelectedCategory(null);
+                  }}
                 />
               </Stack.Item>
               <Stack.Item grow>
                 <Section fill scrollable>
-                  {searchText
-                    ? filteredVerbs.map((verb) => (
-                        <Button
-                          key={verb.type}
-                          fluid
-                          color={
-                            selectedVerb?.type === verb.type
-                              ? 'good'
-                              : 'transparent'
-                          }
-                          textAlign="left"
-                          onClick={() => selectVerb(verb)}
-                        >
-                          {verb.name}
-                        </Button>
-                      ))
-                    : categories.map((cat, index) => (
-                        <CategoryGroup
-                          key={cat}
-                          category={cat}
-                          verbs={verbs.filter((v) => v.category === cat)}
-                          selectedVerb={selectedVerb}
-                          onSelectVerb={selectVerb}
-                          defaultOpen={index === 0}
-                        />
-                      ))}
+                  {visibleVerbs.map((verb) => (
+                    <Button
+                      key={verb.type}
+                      fluid
+                      color={
+                        selectedVerb?.type === verb.type
+                          ? 'good'
+                          : 'transparent'
+                      }
+                      textAlign="left"
+                      onClick={() => selectVerb(verb)}
+                    >
+                      {verb.name}
+                    </Button>
+                  ))}
                 </Section>
               </Stack.Item>
             </Stack>
@@ -263,48 +292,6 @@ export function AdminVerbPanel() {
         </Stack>
       </Window.Content>
     </Window>
-  );
-}
-
-type CategoryGroupProps = {
-  category: string;
-  verbs: Verb[];
-  selectedVerb: Verb | null;
-  onSelectVerb: (verb: Verb) => void;
-  defaultOpen: boolean;
-};
-
-function CategoryGroup(props: CategoryGroupProps) {
-  const { category, verbs, selectedVerb, onSelectVerb, defaultOpen } = props;
-  const [open, setOpen] = useState(defaultOpen);
-
-  return (
-    <>
-      <Button
-        fluid
-        icon={open ? 'chevron-down' : 'chevron-right'}
-        color="transparent"
-        bold
-        onClick={() => setOpen(!open)}
-      >
-        {category}
-      </Button>
-      {open &&
-        verbs.map((verb) => (
-          <Button
-            key={verb.type}
-            fluid
-            color={
-              selectedVerb?.type === verb.type ? 'good' : 'transparent'
-            }
-            textAlign="left"
-            style={{ paddingLeft: '1.5em' }}
-            onClick={() => onSelectVerb(verb)}
-          >
-            {verb.name}
-          </Button>
-        ))}
-    </>
   );
 }
 
