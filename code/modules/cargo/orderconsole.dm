@@ -150,11 +150,14 @@
 	data["supplies"] = list()
 
 	for(var/pack_id in SSshuttle.supply_packs)
+		var/list/packs = get_packs_data(pack.group)
+		if(!length(packs)) //No available packs, hide category
+			continue
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
+				"packs" = packs,
 			)
 
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
