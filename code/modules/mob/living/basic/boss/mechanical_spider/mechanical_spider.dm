@@ -24,9 +24,10 @@
 
 	sharpness = SHARP_EDGED
 	melee_attack_cooldown = CLICK_CD_MELEE
-	melee_damage_lower = 30
-	melee_damage_upper = 36
+	melee_damage_lower = 16
+	melee_damage_upper = 20
 	damage_coeff = list(BRUTE = 0.8, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	unsuitable_atmos_damage = 1.5
 
 	attack_verb_continuous = "eviscerates"
 	attack_verb_simple = "eviscerate"
@@ -43,6 +44,12 @@
 	death_message = "falls to the ground, beginning its reboot process..."
 
 	nutrition = 300
+
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 3
+	light_power = 1
+	light_color = COLOR_DARK_RED
+	light_on = FALSE
 
 	/// Beyond this nutrition, the spider is forced to sleep
 	var/sleep_nutrition = 640
@@ -69,6 +76,11 @@
 	/// Tracks if we are enraged or not
 	VAR_PRIVATE/enraged = FALSE
 
+	/// Looping sound when eating
+	var/datum/looping_sound/eat_sound/eat_sound
+	/// If the idle speech sound is playing
+	var/idle_sound = FALSE
+
 /mob/living/basic/boss/mechanical_spider/Initialize(mapload)
 	. = ..()
 	var/datum/action/adjust_vision/action = new(src)
@@ -86,19 +98,37 @@
 
 	AddComponent(/datum/component/connect_range, src, movement_triggers, 7, TRUE)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
+	RemoveElement(/datum/element/simple_flying)
+	RemoveElement(/datum/element/wall_tearer, tear_time = 1 SECONDS)
+	REMOVE_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_LAVA_IMMUNE, MEGAFAUNA_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 
+	eat_sound = new(src)
 	RegisterSignal(src, COMSIG_MOB_EXAMINING, PROC_REF(on_examining))
+	SetSleeping(INFINITY)
+
+/mob/living/basic/boss/mechanical_spider/Destroy()
+	QDEL_NULL(eat_sound)
+	return ..()
+
+/mob/living/basic/boss/mechanical_spider/Login()
+	. = ..()
+	// first login wakes up from infinite sleep
+	if(wakeup_health)
+		return
+	wake_up()
 
 /mob/living/basic/boss/mechanical_spider/proc/nearby_movement(datum/source, atom/entering)
 	SIGNAL_HANDLER
 
-	if(!isliving(entering) || !(entering in dview(7, src)))
+	if(!isliving(entering) || !(entering in dview(7, loc)))
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(delayed_movement_reaction), entering), 3 SECONDS, TIMER_UNIQUE)
 
 /mob/living/basic/boss/mechanical_spider/proc/delayed_movement_reaction(mob/living/entering)
-	if(entering.stat == DEAD || !(entering in dview(7, src)))
+	if(entering.stat == DEAD || !(entering in dview(7, loc)))
 		return
 
 	update_enraged()
@@ -111,7 +141,7 @@
 		enraged = TRUE
 
 	else
-		for(var/mob/living/nearby_mob in dview(7, src))
+		for(var/mob/living/nearby_mob in dview(7, loc))
 			if(nearby_mob == src)
 				continue
 			if(REF(nearby_mob) in impurity_list)
@@ -124,12 +154,20 @@
 	if(enraged)
 		set_varspeed(1)
 		AddElement(/datum/element/door_pryer, pry_time = door_pry_time, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+		AddElement(/datum/element/wall_tearer, tear_time = door_pry_time * 0.67)
 		to_chat(src, span_bolddanger("You enter a rage!"))
+		melee_damage_lower = 30
+		melee_damage_upper = 36
+		set_light_on(TRUE)
 
 	else
 		set_varspeed(3)
 		RemoveElement(/datum/element/door_pryer, pry_time = door_pry_time, interaction_key = DOAFTER_SOURCE_MECHSPIDER)
+		RemoveElement(/datum/element/wall_tearer, tear_time = door_pry_time * 0.67)
 		to_chat(src, span_boldnotice("Your rage subsides."))
+		melee_damage_lower = 16
+		melee_damage_upper = 20
+		set_light_on(FALSE)
 
 /mob/living/basic/boss/mechanical_spider/set_stat(new_stat)
 	. = ..()
@@ -171,7 +209,8 @@
 	if(IsSleeping())
 		return
 
-	wakeup_health = health - 50
+	wakeup_health = max(1, health - 50)
+	playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', vol = 75, vary = TRUE, frequency = 0.5)
 	visible_message(
 		span_notice("[src] falls asleep."),
 		span_notice("You fall asleep."),
@@ -184,7 +223,6 @@
 		return
 
 	SetSleeping(2 SECONDS)
-	revive()
 	set_nutrition(attacked ? 100 : 400) // If attacked or otherwise forced, it'll be very angry
 	playsound(src, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, frequency = 0.5)
 	visible_message(
@@ -196,6 +234,7 @@
 /mob/living/basic/boss/mechanical_spider/proc/finish_wake_up()
 	SetSleeping(0 SECONDS)
 	update_appearance()
+	update_enraged()
 
 /mob/living/basic/boss/mechanical_spider/proc/respawn()
 	if(stat != DEAD)
@@ -215,31 +254,30 @@
 	revive()
 	set_nutrition(100)
 
-/mob/living/basic/boss/mechanical_spider/proc/assess_purity(mob/living/to_assess)
+/mob/living/basic/boss/mechanical_spider/proc/assess_purity(mob/living/to_assess, force_impure = FALSE)
 	if(!istype(to_assess) || to_assess == src || to_assess.stat == DEAD)
 		return FALSE
 	if(stat >= UNCONSCIOUS || (REF(to_assess) in impurity_list | purity_list))
 		return
-	addtimer(CALLBACK(src, PROC_REF(finish_assess_purity), to_assess), 3 SECONDS, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(finish_assess_purity), to_assess, force_impure), 3 SECONDS, TIMER_UNIQUE)
 
-/mob/living/basic/boss/mechanical_spider/proc/finish_assess_purity(mob/living/to_assess)
+/mob/living/basic/boss/mechanical_spider/proc/finish_assess_purity(mob/living/to_assess, force_impure = FALSE)
 	var/assess_key = REF(to_assess)
 	if((assess_key in impurity_list | purity_list) || stat >= UNCONSCIOUS)
 		return
-	if(!(to_assess in dview(7, src)))
+	if(!(to_assess in dview(7, loc)))
 		return
-	// Good luck, lmao
-	if(rand(0, 10000) == 1)
+	if(prob(0.1) && !force_impure)
 		purity_list += assess_key
-		to_chat(to_assess, span_green("[src] looks at you surprised. It can grant any wish, right?"))
-		to_chat(src, span_green("[uppertext(src)] IS PURE. IMPOSSIBLE? PURE."))
-		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE)
+		to_chat(to_assess, span_green("[src] looks at you surprised."))
+		to_chat(src, span_green("[uppertext(to_assess.name)] IS PURE. IMPOSSIBLE? PURE."))
+		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = 0.5)
 		return
 
 	impurity_list += assess_key
 	to_chat(assess_key, span_userdanger("You feel unsafe near [src]..."))
-	to_chat(src, span_warning("[uppertext(assess_key)] IS IMPURE! IMPURE. IMPURE. IMPURE."))
-	playsound(src, 'sound/machines/synth/synth_no.ogg', 25, TRUE)
+	to_chat(src, span_warning("[uppertext(to_assess.name)] IS IMPURE! IMPURE. IMPURE. IMPURE."))
+	playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = 0.5)
 	update_enraged()
 
 //Overrides
@@ -250,9 +288,9 @@
 		return
 	if(isnull(mind) || stat >= UNCONSCIOUS)
 		return
-	if(SPT_PROB(2, seconds_per_tick)) // Random purity check!
+	if(SPT_PROB(2, seconds_per_tick))
 		var/list/to_check_pool = list()
-		for(var/mob/living/to_check in dview(7, src))
+		for(var/mob/living/to_check in dview(7, loc))
 			if(to_check.stat != CONSCIOUS || isnull(to_check.mind) || isnull(to_check.client) || to_check == src)
 				continue
 			var/to_check_key = REF(to_check)
@@ -262,8 +300,13 @@
 		if(length(to_check_pool))
 			assess_purity(pick(to_check_pool))
 
+	if(!idle_sound && SPT_PROB(20, seconds_per_tick))
+		playsound(src, 'sound/mobs/non-humanoids/mechspider.wav', vol = enraged ? 75 : 25, vary = TRUE, extrarange = enraged ? 0 : SHORT_RANGE_SOUND_EXTRARANGE)
+		idle_sound = TRUE
+		addtimer(VARSET_CALLBACK(src, idle_sound, FALSE), 12 SECONDS)
+
 	adjust_nutrition(-nutrition_per_second * seconds_per_tick)
-	if(nutrition <= 0) // Starvation, so you don't just run at mach 3 all the time
+	if(nutrition <= 0)
 		adjust_brute_loss(maxHealth * starvation_damage)
 
 /mob/living/basic/boss/mechanical_spider/get_status_tab_items()
@@ -286,8 +329,6 @@
 
 	if(!isliving(examinify))
 		return
-	if(get_dir(examinify, src) != examinify.dir) // Not looking in our direction
-		return
 
 	var/examine_key = REF(examinify)
 	if(examine_key in purity_list)
@@ -295,6 +336,8 @@
 		return
 	if(examine_key in impurity_list)
 		examine_list += "<hr>" + span_warning("THEY ARE IMPURE.")
+		return
+	if(get_dir(examinify, src) != examinify.dir) // Not looking in our direction
 		return
 
 	examine_list += "<hr>" + span_green("ASSESSING PURITY...")
@@ -339,18 +382,24 @@
 
 	return ..()
 
+/mob/living/basic/boss/mechanical_spider/should_devour(mob/living/victim)
+	return ..() && (ishuman(victim) || (victim.mob_biotypes & MOB_ORGANIC))
+
 /mob/living/basic/boss/mechanical_spider/devour(mob/living/victim)
 	visible_message(span_danger("[src] stabs [victim] with its two metal legs, ripping into [victim.p_them()]!"))
+	eat_sound.start()
 	if(!do_after(src, 4 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(should_devour), victim), interaction_key = DOAFTER_SOURCE_MECHSPIDER))
+		eat_sound.stop()
 		return FALSE
 
-	var/gained_nutriment = victim.mob_size
+	eat_sound.stop()
+	var/gained_nutriment = victim.mob_size * 10
 	if(istype(victim, /mob/living/basic/goat)) // Likes goats
 		gained_nutriment = round(sleep_nutrition * 0.5)
 	else if(ismonkey(victim))
-		gained_nutriment = round(sleep_nutrition * 0.05)
-	else if(ishuman(victim))
 		gained_nutriment = round(sleep_nutrition * 0.2)
+	else if(ishuman(victim))
+		gained_nutriment = round(sleep_nutrition * 0.4)
 
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', rand(15, 35), TRUE)
 	visible_message(span_danger("[src] consumes [victim]!"))
@@ -365,20 +414,27 @@
 	if(stat == UNCONSCIOUS)
 		. += span_notice("It is asleep now, but not for long...")
 	else
-		. += span_warning("You get the feeling you shouldn't stick around.")
-		assess_purity(user)
+		. += span_warning("You get the feeling you shouldn't stick around - Or look at it too closely...")
+		if(get_dir(user, src) == user.dir)
+			assess_purity(user)
 
 /mob/living/basic/boss/mechanical_spider/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(. && user.combat_mode)
-		assess_purity(user)
+		assess_purity(user, force_impure = TRUE)
 
 /mob/living/basic/boss/mechanical_spider/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. != ATTACK_FAILED && attacking_item.damtype != STAMINA)
-		assess_purity(user)
+		assess_purity(user, force_impure = TRUE)
 
 /mob/living/basic/boss/mechanical_spider/bullet_act(obj/projectile/proj, def_zone, piercing_hit, blocked)
 	. = ..()
 	if (. == BULLET_ACT_HIT && proj.firer && proj.is_hostile_projectile())
-		assess_purity(proj.firer)
+		assess_purity(proj.firer, force_impure = TRUE)
+
+/datum/looping_sound/eat_sound
+	mid_sounds = 'sound/effects/magic/demon_consume.ogg'
+	mid_length = 2 SECONDS
+	volume = 25
+	ignore_walls = FALSE
