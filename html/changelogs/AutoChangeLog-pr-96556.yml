@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "Camera can now take 1x1 photos so new records can be uploaded"
