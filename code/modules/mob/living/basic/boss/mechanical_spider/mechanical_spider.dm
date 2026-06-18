@@ -301,7 +301,7 @@
 			assess_purity(pick(to_check_pool))
 
 	if(!idle_sound && SPT_PROB(20, seconds_per_tick))
-		playsound(src, 'sound/mobs/non-humanoids/mechspider.wav', vol = enraged ? 75 : 25, vary = TRUE, extrarange = enraged ? 0 : SHORT_RANGE_SOUND_EXTRARANGE)
+		playsoundtoken(src, 'sound/mobs/non-humanoids/mechspider.wav', volume = enraged ? 75 : 25, range = enraged ? 12 : 7, sound_length = 10 SECONDS)
 		idle_sound = TRUE
 		addtimer(VARSET_CALLBACK(src, idle_sound, FALSE), 12 SECONDS)
 
