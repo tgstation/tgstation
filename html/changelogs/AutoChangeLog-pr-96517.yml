@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fish traits injected with the fish gene gun should work a little better in some cases."
