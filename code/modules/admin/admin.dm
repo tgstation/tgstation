@@ -35,7 +35,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_SPAWNING)
 	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/static/list/atom_types
 	if (isnull(atom_types))
@@ -75,7 +75,7 @@ ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG)
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 	return TRUE
 
-ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_SPAWNING)
 	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
@@ -96,7 +96,7 @@ ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop."
 	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_SPAWNING)
 	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)

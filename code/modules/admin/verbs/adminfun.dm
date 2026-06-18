@@ -1,4 +1,4 @@
-ADMIN_VERB(admin_explosion, R_ADMIN|R_FUN, "Explosion", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(admin_explosion, R_ADMIN|R_FUN, "Explosion", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
 	VERB_ARG(orignator, ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /atom)
 	var/devastation = input(user, "Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null)
@@ -26,7 +26,7 @@ ADMIN_VERB(admin_explosion, R_ADMIN|R_FUN, "Explosion", ADMIN_VERB_NO_DESCRIPTIO
 		message_admins("[key_name_admin(user)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(orignator)]")
 		BLACKBOX_LOG_ADMIN_VERB("Explosion")
 
-ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
 	VERB_ARG(orignator, ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /atom)
 	var/heavy = input(user, "Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null)
@@ -41,7 +41,7 @@ ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMI
 		message_admins("[key_name_admin(user)] created an EM Pulse ([heavy],[light]) at [AREACOORD(orignator)]")
 		BLACKBOX_LOG_ADMIN_VERB("EM Pulse")
 
-ADMIN_VERB(gib_them, R_ADMIN, "Gib", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(gib_them, R_ADMIN, "Gib", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
 	VERB_ARG(victim, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/confirm = tgui_alert(user, "Drop a brain?", "Confirm", list("Yes", "No","Cancel")) || "Cancel"
 	if(confirm == "Cancel")

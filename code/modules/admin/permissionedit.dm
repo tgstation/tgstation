@@ -1,5 +1,5 @@
 
-ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit admin permissions.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit admin permissions.", ADMIN_CATEGORY_PLAYERS)
 	user.holder.edit_admin_permissions(PERMISSIONS_PAGE_PERMISSIONS)
 
 #define PERMISSIONS_LOGS_PER_PAGE 20

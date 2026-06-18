@@ -216,7 +216,7 @@ ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound t
 	message_admins("[key_name_admin(user)] set the round end sound to [sound]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Round End Sound")
 
-ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_FUN)
 	log_admin("[key_name(user)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(user)] stopped all currently playing sounds.")
 	for(var/mob/player as anything in GLOB.player_list)

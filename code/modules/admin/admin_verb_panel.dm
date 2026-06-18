@@ -5,7 +5,7 @@
 	var/datum/admin_verb_panel/panel = new(src)
 	panel.ui_interact(mob)
 
-ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admin verbs.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admin verbs.", ADMIN_CATEGORY_EVENTS)
 	var/datum/admin_verb_panel/panel = new(user)
 	panel.ui_interact(user.mob)
 
@@ -117,7 +117,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 
 /datum/admin_verb_panel/proc/get_world_targets(arg_type)
 	if(arg_type & ADMIN_VERB_ARG_TYPE_MOB)
-		return GLOB.player_list
+		return GLOB.mob_list
 	if(arg_type & ADMIN_VERB_ARG_TYPE_AREA)
 		return get_sorted_areas()
 	if(arg_type & ADMIN_VERB_ARG_TYPE_TURF)
@@ -126,8 +126,10 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 		if(owner.mob)
 			return view(owner.view, owner.mob)
 		return list()
-	if(arg_type & (ADMIN_VERB_ARG_TYPE_DATUM | ADMIN_VERB_ARG_TYPE_ATOM))
-		return GLOB.player_list
+	if(arg_type & (ADMIN_VERB_ARG_TYPE_ATOM | ADMIN_VERB_ARG_TYPE_DATUM))
+		if(owner.mob)
+			return view(owner.view, owner.mob)
+		return list()
 	return list()
 
 /datum/admin_verb_panel/proc/get_notable_turfs()
@@ -181,7 +183,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			var/list/structured_args = list()
 			for(var/key in raw_args)
 				var/value = raw_args[key]
-				if(istext(value) && findtext(value, "\[0x"))
+				if(istext(value))
 					value = locate(value)
 				structured_args[key] = value
 			SSadmin_verbs.dynamic_invoke_verb(owner, verb_type, structured_args)

@@ -27,7 +27,7 @@ ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.",
 	log_admin("Announce: [key_name(user)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
-ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
 	VERB_ARG(prisoner, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	if(!is_centcom_level(prisoner.z))
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
@@ -38,7 +38,7 @@ ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEG
 	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
 	BLACKBOX_LOG_ADMIN_VERB("Unprison")
 
-ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player playtime.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player playtime.", ADMIN_CATEGORY_PLAYERS)
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(user, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
 		return
@@ -150,7 +150,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
 	VERB_ARG(dropee, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")

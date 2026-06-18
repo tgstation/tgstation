@@ -181,5 +181,5 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 	client << browse(HTML_SKELETON_TITLE("Known Alts", html), "window=known_alts;size=700x400")
 
-ADMIN_VERB(known_alts_panel, R_ADMIN, "Known Alts Panel", "View a panel of known alts.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(known_alts_panel, R_ADMIN, "Known Alts Panel", "View a panel of known alts.", ADMIN_CATEGORY_PLAYERS)
 	GLOB.known_alts.show_panel(user)

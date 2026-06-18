@@ -1,4 +1,4 @@
-ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area.", ADMIN_CATEGORY_PLAYERS)
 	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_AREA, ADMIN_VERB_ARG_SOURCE_WORLD, /area)
 	var/turf/drop_location
 	top_level:
@@ -18,21 +18,21 @@ ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area."
 	message_admins("[key_name_admin(user)] jumped to [AREACOORD(drop_location)]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Area")
 
-ADMIN_VERB_AND_CONTEXT_MENU(jump_to_turf, R_ADMIN, "Jump To Turf", "Jump to any turf in the game. This will lag your client.", ADMIN_CATEGORY_GAME, /turf)
+ADMIN_VERB_AND_CONTEXT_MENU(jump_to_turf, R_ADMIN, "Jump To Turf", "Jump to any turf in the game. This will lag your client.", ADMIN_CATEGORY_PLAYERS, /turf)
 	VERB_ARG(locale, ADMIN_VERB_ARG_TYPE_TURF, ADMIN_VERB_ARG_SOURCE_WORLD, /turf)
 	log_admin("[key_name(user)] jumped to [AREACOORD(locale)]")
 	message_admins("[key_name_admin(user)] jumped to [AREACOORD(locale)]")
 	user.mob.abstract_move(locale)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Turf")
 
-ADMIN_VERB_AND_CONTEXT_MENU(jump_to_mob, R_ADMIN, "Jump To Mob", "Jump to any mob in the game.", ADMIN_CATEGORY_GAME, /mob)
+ADMIN_VERB_AND_CONTEXT_MENU(jump_to_mob, R_ADMIN, "Jump To Mob", "Jump to any mob in the game.", ADMIN_CATEGORY_PLAYERS, /mob)
 	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	user.mob.abstract_move(target.loc)
 	log_admin("[key_name(user)] jumped to [key_name(target)]")
 	message_admins("[key_name_admin(user)] jumped to [ADMIN_LOOKUPFLW(target)] at [AREACOORD(target)]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Mob")
 
-ADMIN_VERB(jump_to_coord, R_ADMIN, "Jump To Coordinate", "Jump to a specific coordinate in the game world.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(jump_to_coord, R_ADMIN, "Jump To Coordinate", "Jump to a specific coordinate in the game world.", ADMIN_CATEGORY_PLAYERS)
 	VERB_ARG(cx, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
 	VERB_ARG(cy, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
 	VERB_ARG(cz, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
@@ -45,7 +45,7 @@ ADMIN_VERB(jump_to_coord, R_ADMIN, "Jump To Coordinate", "Jump to a specific coo
 	message_admins("[key_name_admin(user)] jumped to coordinates [cx], [cy], [cz]")
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Coordiate")
 
-ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", ADMIN_CATEGORY_PLAYERS)
 	if(!isobserver(user.mob))
 		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 
@@ -62,7 +62,7 @@ ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", AD
 	user.mob.abstract_move(M.loc)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Key")
 
-ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Aghost.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Aghost.", ADMIN_CATEGORY_PLAYERS)
 	var/mob/dead/observer/ghost = user.mob
 	if(!isobserver(ghost))
 		return
@@ -77,7 +77,7 @@ ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Agho
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Ghost")
 
-ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your location.", ADMIN_CATEGORY_GAME, /mob)
+ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your location.", ADMIN_CATEGORY_PLAYERS, /mob)
 	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/atom/loc = get_turf(user.mob)
 	target.admin_teleport(loc)
@@ -100,7 +100,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your
 	admin_ticket_log(src, msg)
 	return ..()
 
-ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided key to you.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided key to you.", ADMIN_CATEGORY_PLAYERS)
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
@@ -119,7 +119,7 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 		M.forceMove(get_turf(user))
 		BLACKBOX_LOG_ADMIN_VERB("Get Key")
 
-ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, /mob)
+ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_PLAYERS, /mob)
 	VERB_ARG(jumper, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/sorted_areas = get_sorted_areas()
 	if(!length(sorted_areas))

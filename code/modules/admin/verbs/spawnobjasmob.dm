@@ -1,4 +1,4 @@
-ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if it were a mob.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if it were a mob.", ADMIN_CATEGORY_SPAWNING)
 	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
 

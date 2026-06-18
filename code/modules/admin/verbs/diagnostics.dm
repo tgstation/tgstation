@@ -1,6 +1,6 @@
 ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 
-ADMIN_VERB(debug_air_status, R_DEBUG, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+ADMIN_VERB(debug_air_status, R_DEBUG, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_MAPPING)
 	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_TURF, ADMIN_VERB_ARG_SOURCE_WORLD, /turf)
 	atmos_scan(user.mob, target, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
@@ -63,7 +63,7 @@ ADMIN_VERB(radio_report, R_DEBUG, "Radio Report", "Shows a report of all radio d
 	browser.open()
 	BLACKBOX_LOG_ADMIN_VERB("Show Radio Report")
 
-ADMIN_VERB(reload_admins, R_NONE, "Reload Admins", "Reloads all admins from the database.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(reload_admins, R_NONE, "Reload Admins", "Reloads all admins from the database.", ADMIN_CATEGORY_SERVER)
 	var/confirm = tgui_alert(user, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

@@ -105,18 +105,21 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
 #define ADMIN_CATEGORY_HIDDEN null
 
 // Admin verb categories
-#define ADMIN_CATEGORY_MAIN "Admin"
-#define ADMIN_CATEGORY_EVENTS "Admin.Events"
-#define ADMIN_CATEGORY_FUN "Admin.Fun"
-#define ADMIN_CATEGORY_GAME "Admin.Game"
-#define ADMIN_CATEGORY_SHUTTLE "Admin.Shuttle"
-
-// Special categories that are separated
-#define ADMIN_CATEGORY_DEBUG "Debug"
+#define ADMIN_CATEGORY_PLAYERS "Players"
+#define ADMIN_CATEGORY_COMMUNICATION "Communication"
+#define ADMIN_CATEGORY_FUN "Fun"
+#define ADMIN_CATEGORY_EVENTS "Events"
+#define ADMIN_CATEGORY_SPAWNING "Spawning"
+#define ADMIN_CATEGORY_SHUTTLE "Shuttle"
 #define ADMIN_CATEGORY_SERVER "Server"
 #define ADMIN_CATEGORY_MAPPING "Mapping"
+#define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_PROFILE "Profile"
-#define ADMIN_CATEGORY_IPINTEL "Admin.IPIntel"
+#define ADMIN_CATEGORY_IPINTEL "IPIntel"
+
+// Legacy aliases — use the new names above for new verbs
+#define ADMIN_CATEGORY_MAIN ADMIN_CATEGORY_PLAYERS
+#define ADMIN_CATEGORY_GAME ADMIN_CATEGORY_PLAYERS
 
 // Visibility flags
 #define ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG "Map-Debug"

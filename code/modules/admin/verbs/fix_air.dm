@@ -2,6 +2,7 @@
 ADMIN_VERB_AND_CONTEXT_MENU(fix_air, R_ADMIN, "Fix Air", "Fixes air in a specified radius.", ADMIN_CATEGORY_GAME, /turf/open)
 	VERB_ARG(locale, ADMIN_VERB_ARG_TYPE_TURF, ADMIN_VERB_ARG_SOURCE_WORLD, /turf/open)
 	VERB_ARG(range, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
+
 	message_admins("[key_name_admin(user)] fixed air with range [range] in area [locale.loc.name]")
 	user.mob.log_message("fixed air with range [range] in area [locale.loc.name]", LOG_ADMIN)
 
