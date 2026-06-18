@@ -7,6 +7,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
+import { AdminCommandBar } from './admin/AdminCommandBar';
 import { visibleAtom } from './audio/atoms';
 import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel } from './chat/ChatPanel';
@@ -95,6 +96,9 @@ export function Panel(props) {
               )}
             </Notifications>
           </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <AdminCommandBar />
         </Stack.Item>
       </Stack>
     </Pane>

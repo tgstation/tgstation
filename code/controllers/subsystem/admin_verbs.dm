@@ -192,6 +192,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	for(var/datum/admin_verb/verb_singleton as anything in get_valid_verbs_for_admin(admin))
 		verb_singleton.assign_to_client(admin)
 	admin.init_verbs()
+	send_verb_list_to_panel(admin)
 
 /**
  * Unassosciates an admin from their admin verbs.
@@ -206,3 +207,25 @@ SUBSYSTEM_DEF(admin_verbs)
 	for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
 		admin_verbs_by_type[verb_type].unassign_from_client(admin)
 	admin_visibility_flags -= list(admin.ckey)
+
+/datum/controller/subsystem/admin_verbs/proc/send_verb_list_to_panel(client/admin)
+	if(!admin.tgui_panel)
+		return
+	if(!length(admin_verbs_by_type))
+		return
+	var/list/verb_data = list()
+	for(var/datum/admin_verb/verb_type as anything in admin_verbs_by_type)
+		var/datum/admin_verb/verb = admin_verbs_by_type[verb_type]
+		if(!verify_visibility(admin, verb))
+			continue
+		if(!admin.holder?.check_for_rights(verb.permissions))
+			continue
+		var/list/arg_names = list()
+		for(var/datum/admin_verb_metadata/argument/arg in verb.metadata?.arguments)
+			arg_names += list(arg.name)
+		verb_data += list(list(
+			"type" = "[verb_type]",
+			"name" = verb.name,
+			"args" = arg_names,
+		))
+	admin.tgui_panel.window.send_message("admin/verbs", list("verbs" = verb_data))
