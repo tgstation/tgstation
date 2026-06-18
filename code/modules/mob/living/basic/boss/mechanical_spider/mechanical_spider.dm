@@ -26,7 +26,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 30
 	melee_damage_upper = 36
-	damage_coeff = list(BRUTE = 0.75, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.8, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 
 	attack_verb_continuous = "eviscerates"
 	attack_verb_simple = "eviscerate"
@@ -331,6 +331,12 @@
 		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	// parent call handles devour logic
+	return ..()
+
+/mob/living/basic/boss/mechanical_spider/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	if(istype(attack_target, /obj/machinery/door/airlock) && !enraged)
+		return
+
 	return ..()
 
 /mob/living/basic/boss/mechanical_spider/devour(mob/living/victim)
