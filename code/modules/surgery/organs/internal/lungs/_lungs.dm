@@ -651,8 +651,8 @@
 
 	// Build out our partial pressures, for use as we go
 	var/list/partial_pressures = list()
-	for(var/gas_id in breath_moles)
-		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_moles[gas_id] * received_pressure_mult)
+	for(var/gas_id, amount in breath_moles)
+		partial_pressures[gas_id] = breath.get_breath_partial_pressure(amount * received_pressure_mult)
 
 	// Treat gas as other types of gas
 	for(var/list/conversion_packet in treat_as)

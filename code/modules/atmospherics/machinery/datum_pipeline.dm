@@ -275,8 +275,8 @@
 		var/list/giver_cached_moles = gas_mixture.moles
 		var/heat_capacity = values_dot(giver_cached_moles, cached_specific_heat)
 		//gas transfer
-		for(var/gas_id in giver_cached_moles)
-			total_cached_moles[gas_id] += giver_cached_moles[gas_id]
+		for(var/gas_id, amount in giver_cached_moles)
+			total_cached_moles[gas_id] += amount
 
 		total_heat_capacity += heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity

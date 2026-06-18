@@ -94,8 +94,7 @@
 	var/list/moderator_list = list()
 	/// Scaled down moles of gases, no less than 0
 	var/list/scaled_moderator_list = list()
-	for(var/gas_id in moderator_internal.moles)
-		var/amount = moderator_internal.moles[gas_id]
+	for(var/gas_id, amount in moderator_internal.moles)
 		moderator_list[gas_id] = amount
 		scaled_moderator_list[gas_id] = max((amount - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 

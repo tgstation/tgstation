@@ -499,9 +499,8 @@
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		var/list/giver_cached_moles = mix.moles
-		for(var/gas_id in giver_cached_moles)
-			shared_cached_moles[gas_id] += giver_cached_moles[gas_id]
+		for(var/gas_id, amount in mix.moles)
+			shared_cached_moles[gas_id] += amount
 
 	if(!imumutable_in_group)
 		shared_mix.temperature = energy / heat_cap

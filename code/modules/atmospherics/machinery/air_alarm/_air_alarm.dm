@@ -282,8 +282,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		"danger" = tlv_collection["temperature"].check_value(temp),
 	))
 	if(total_moles)
-		for(var/gas_path in environment.moles)
-			var/moles = environment.moles[gas_path]
+		for(var/gas_path, moles in environment.moles)
 			var/portion = moles / total_moles
 			data["envData"] += list(list(
 				"name" = GLOB.meta_gas_info[META_GAS_NAME][gas_path],

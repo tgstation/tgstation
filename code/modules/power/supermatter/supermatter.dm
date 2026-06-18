@@ -659,8 +659,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/total_moles = absorbed_gasmix.total_moles()
 	if(total_moles < MINIMUM_MOLE_COUNT) //it's not worth processing small amounts like these, total_moles can also be 0 in vacuume
 		return
-	for (var/gas_path in absorbed_gasmix.moles)
-		var/mole_count = absorbed_gasmix.moles[gas_path]
+	for (var/gas_path, mole_count in absorbed_gasmix.moles)
 		if(mole_count < MINIMUM_MOLE_COUNT) //save processing power from small amounts like these
 			continue
 		gas_percentage[gas_path] = mole_count / total_moles

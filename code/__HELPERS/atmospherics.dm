@@ -176,8 +176,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 
 /proc/print_gas_mixture(datum/gas_mixture/gas_mixture)
 	var/message = "TEMPERATURE: [gas_mixture.temperature]K, QUANTITY: [gas_mixture.total_moles()] mols, VOLUME: [gas_mixture.volume]L; "
-	var/list/cached_moles = gas_mixture.moles
 	var/list/cached_gas_id = GAS_META[META_GAS_ID]
-	for(var/gas_id in cached_moles)
-		message += "[cached_gas_id[gas_id]]=[gas_mixture.moles[gas_id]] mols;"
+	for(var/gas_id, amount in gas_mixture.moles)
+		message += "[cached_gas_id[gas_id]]=[amount] mols;"
 	return message

@@ -281,9 +281,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
-		var/list/cached_mix_moles = mix.moles
-		for(var/giver_id in cached_mix_moles)
-			total.adjust_gas(giver_id, cached_mix_moles[giver_id])
+		for(var/giver_id, amount in mix.moles)
+			total.adjust_gas(giver_id, amount)
 
 	total.temperature = energy / heat_cap
 	var/list/cached_total_moles = total.moles
