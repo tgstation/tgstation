@@ -66,9 +66,6 @@
 	/// REFs to mobs that we especially want to attack
 	VAR_PRIVATE/list/impurity_list = list()
 
-	/// If TRUE - The mob will automatically trigger attack when bumping a living mob
-	var/bump_attack = TRUE
-
 	/// Tracks if we are enraged or not
 	VAR_PRIVATE/enraged = FALSE
 
@@ -319,12 +316,6 @@
 
 /mob/living/basic/boss/mechanical_spider/gib()
 	return
-
-// If bump attack is enabled, we will automaticall attack mobs that we bump into
-/mob/living/basic/boss/mechanical_spider/Bump(atom/bumped_atom)
-	. = ..()
-	if(bump_attack && isliving(bumped_atom) && next_move > world.time)
-		UnarmedAttack(bumped_atom)
 
 /mob/living/basic/boss/mechanical_spider/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(REF(target) in purity_list)
