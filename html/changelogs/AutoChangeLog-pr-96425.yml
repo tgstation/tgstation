@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Adds an antag info panel for revolution"
-  - qol: "Codewords can now consist of any station area, and excludes areas not on the current station"
-  - qol: "Head Revolutionaries (not their underlings) get codewords"
