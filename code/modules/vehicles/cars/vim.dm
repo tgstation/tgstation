@@ -97,14 +97,6 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/sealed/car/vim/after_add_occupant(mob/living/basic_mob)
-	. = ..()
-	basic_mob.add_traits(list(TRAIT_WEATHER_IMMUNE, TRAIT_RESISTHEAT, TRAIT_RESISTCOLD, TRAIT_NOBREATH, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), VEHICLE_TRAIT)
-
-/obj/vehicle/sealed/car/vim/after_remove_occupant(mob/living/basic_mob)
-	. = ..()
-	basic_mob.remove_traits(list(TRAIT_WEATHER_IMMUNE, TRAIT_RESISTHEAT, TRAIT_RESISTCOLD, TRAIT_NOBREATH, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), VEHICLE_TRAIT)
-
 /obj/vehicle/sealed/car/vim/generate_actions()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/climb_out/vim, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/noise/chime, VEHICLE_CONTROL_DRIVE)
