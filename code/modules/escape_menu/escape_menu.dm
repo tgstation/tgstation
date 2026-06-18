@@ -72,10 +72,12 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	START_PROCESSING(SSescape_menu, src)
 
 /datum/escape_menu/Destroy(force)
+	// Deleted in page holder
+	detail_screen = null
+	resource_panels = null
 	STOP_PROCESSING(SSescape_menu, src)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
-	resource_panels = null // list contents were already qdeled in QDEL_NULL(page_holder), so we can safely null this
 
 	var/datum/our_hud = our_hud_ref?.resolve()
 	if(our_hud)

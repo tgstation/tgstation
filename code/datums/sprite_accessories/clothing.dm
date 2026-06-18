@@ -50,7 +50,7 @@
 		result = mutable_appearance(created)
 
 	else // no caching necessary
-		result = mutable_appearance(icon, icon_state)
+		result = mutable_appearance(icon, icon_state_to_use)
 
 	result.layer = -layer
 	result.color = use_static ? null : color

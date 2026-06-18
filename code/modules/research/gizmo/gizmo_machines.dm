@@ -120,13 +120,15 @@
 	SIGNAL_HANDLER
 
 	on_state = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON)
+	visible_message(span_smallnoticeital("[src] hums to life."))
 
 /obj/machinery/gizmo/toggle/proc/off_state(datum/source)
 	SIGNAL_HANDLER
 
 	on_state = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON)
+	visible_message(span_smallnoticeital("[src] powers down."))
 
 /// A gizmo with a voice activated interface
 /obj/machinery/gizmo/voice

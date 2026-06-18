@@ -76,8 +76,9 @@
 
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
-	/// Plane for the overlay
-	var/overlay_plane = WEATHER_PLANE
+	/// Planes for the overlay
+	/// Base visuals should always render to both particle and non-particle planes as to work regardless of the toggle
+	var/list/overlay_planes = list(WEATHER_PLANE, PARTICLE_WEATHER_PLANE)
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
@@ -586,9 +587,12 @@
 			glow_overlay.color = weather_color
 			gen_overlay_cache += glow_overlay
 
-		var/mutable_appearance/new_weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, alpha = weather_alpha, offset_const = offset)
-		new_weather_overlay.color = weather_color
-		gen_overlay_cache += new_weather_overlay
+		// By default we render ourselves to both particle and non-particle weather, as those are mutually exclusive
+		// So that particle weather can have full alpha overlays when the pref is disabled, but partially transparent overlays when its enabled
+		for (var/overlay_plane in overlay_planes)
+			var/mutable_appearance/new_weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, alpha = weather_alpha, offset_const = offset)
+			new_weather_overlay.color = weather_color
+			gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache
 

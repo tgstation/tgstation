@@ -16,6 +16,7 @@
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 	brightness_on = 0
+	voice_filter = "highpass=f=300,lowpass=f=3500,aecho=0.8:0.9:70|140:0.3|0.15,alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// What sign face prefixes we have icons for
 	var/static/list/available_faces = list()
 	/// The sign face we're displaying
@@ -232,22 +233,26 @@
 
 /obj/machinery/computer/tram_controls/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
-	switch(response_code)
-		if(REQUEST_SUCCESS)
-			say("Следующая станция: [response_info].")
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram)
+		if(SStts.tts_enabled)
+			tram.nav_beacon.voice = SStts.tram_voice
+		switch(response_code)
+			if(REQUEST_SUCCESS)
+				tram.nav_beacon.say("Следующая станция: [response_info]")
 
-		if(REQUEST_FAIL)
-			if(!LAZYFIND(relevant, src))
-				return
-
-			switch(response_info)
-				if(NOT_IN_SERVICE)
-					say("Трамвай в данный момент недоступен. Пожалуйста, свяжитесь с техническим специалистом.")
-				if(INVALID_PLATFORM)
-					say("Ошибка конфигурации. Пожалуйста, свяжитесь с техническим специалистом.")
-				if(INTERNAL_ERROR)
-					say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
-				else
+			if(REQUEST_FAIL)
+				if(!LAZYFIND(relevant, src))
 					return
+
+				switch(response_info)
+					if(NOT_IN_SERVICE)
+						tram.nav_beacon.say("Трамвай в данный момент недоступен. Пожалуйста, свяжитесь с техническим специалистом.")
+					if(INVALID_PLATFORM)
+						tram.nav_beacon.say("Ошибка конфигурации. Пожалуйста, свяжитесь с техническим специалистом.")
+					if(INTERNAL_ERROR)
+						tram.nav_beacon.say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
+					else
+						return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

@@ -36,10 +36,11 @@
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
 #define WEATHER_PLANE 1
-#define AREA_PLANE 2
-#define MASSIVE_OBJ_PLANE 3
-#define GHOST_PLANE 4
-#define POINT_PLANE 5
+#define PARTICLE_WEATHER_PLANE 2
+#define AREA_PLANE 3
+#define MASSIVE_OBJ_PLANE 4
+#define GHOST_PLANE 5
+#define POINT_PLANE 6
 
 //---------- LIGHTING -------------
 /// Normal 1 per turf dynamic lighting objects
