@@ -1,0 +1,4 @@
+author: "Goatto"
+delete-after: True
+changes:
+  - bugfix: "Fixes non `/obj/item/clothing/under` items from applying the `fresh_laundry` mood_event"
