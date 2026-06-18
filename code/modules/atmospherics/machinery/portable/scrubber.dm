@@ -66,19 +66,22 @@
 
 	var/turf/epicentre = get_turf(src)
 	if(isopenturf(epicentre))
-		scrub(epicentre.return_air())
+		if(scrub(epicentre.return_air()))
+			epicentre.air_update_turf(FALSE, FALSE)
 	for(var/turf/open/openturf as anything in epicentre.get_atmos_adjacent_turfs(alldir = TRUE))
-		scrub(openturf.return_air())
+		if(scrub(openturf.return_air()))
+			openturf.air_update_turf(FALSE, FALSE)
 	return ..()
 
 /**
  * Called in process_atmos(), handles the scrubbing of the given gas_mixture
  * Arguments:
  * * mixture: the gas mixture to be scrubbed
+ * Returns: TRUE if anything was scrubbed, FALSE otherwise
  */
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/environment)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
-		return
+		return FALSE
 
 	var/list/cached_moles = environment.moles
 
@@ -106,6 +109,7 @@
 	environment.garbage_collect()
 	//Remix the resulting gases
 	air_contents.merge(filtered_out)
+	return TRUE
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()
@@ -230,7 +234,8 @@
 	if(!holding)
 		var/turf/T = get_turf(src)
 		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
-			scrub(AT.return_air())
+			if(scrub(AT.return_air()))
+				AT.air_update_turf(FALSE, FALSE)
 
 	return ..()
 
