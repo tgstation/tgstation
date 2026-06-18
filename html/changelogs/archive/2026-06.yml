@@ -435,3 +435,31 @@
   levels0:
   - rscadd: new gizmode
   - bugfix: you can now interact with item gizmo wires
+2026-06-18:
+  Aliceee2ch:
+  - bugfix: Turtles now come in the stasis crates and can no longer grow inside of
+      a cargo shuttle (or, well, untill you open the crate in general). This allows
+      you to ACTUALLY interact with turtles growing feature before they come grown
+      up.
+  ArcaneMusic:
+  - bugfix: The Moon Outpost 19 away mission now correctly uses the same gray-sand
+      turf when mining rocks.
+  - map: Tweaked some minor object placements and names across Moon Outpost 19.
+  Ghommie:
+  - bugfix: Fish traits injected with the fish gene gun should work a little better
+      in some cases.
+  - bugfix: Fixed the e-katana not being linked to the recall module automatically
+      when rolling ninja.
+  - bugfix: Moved a recipe that has meat and eggs in it from mothic cuisine and into
+      martian cuisine.
+  Goatto:
+  - bugfix: Fixes non `/obj/item/clothing/under` items from applying the `fresh_laundry`
+      mood_event
+  Wisemonster:
+  - bugfix: Legion cores no longer feed the user.
+  - code_imp: The fully_heal proc now checks for the HEAL_ADMIN flag before restoring
+      hunger.
+  flleeppyy:
+  - bugfix: Camera can now take 1x1 photos so new records can be uploaded
+  timothymtorres:
+  - bugfix: Fix deep fryer to be refillable

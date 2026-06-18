@@ -1,5 +1,0 @@
-author: "Wisemonster"
-delete-after: True
-changes:
-  - bugfix: "Legion cores no longer feed the user."
-  - code_imp: "The fully_heal proc now checks for the HEAL_ADMIN flag before restoring hunger."
