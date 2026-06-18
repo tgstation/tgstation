@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "The Moon Outpost 19 away mission now correctly uses the same gray-sand turf when mining rocks."
+  - map: "Tweaked some minor object placements and names across Moon Outpost 19."
