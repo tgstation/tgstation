@@ -8,6 +8,9 @@ on:
       map:
         required: true
         type: string
+      map_config:
+        required: false
+        type: string
       major:
         required: false
         type: string
@@ -60,7 +63,7 @@ jobs:
         id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          bash tools/ci/run_server.sh ${{ inputs.map }}
+          bash tools/ci/run_server.sh "${{ matrix.map }}" "${{ inputs.map_config }}"
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v7
