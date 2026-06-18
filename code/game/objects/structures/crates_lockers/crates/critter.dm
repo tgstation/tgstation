@@ -61,7 +61,7 @@
 
 /obj/structure/closet/crate/critter/stasis
 	name = "stasis critter crate"
-	desc = "A crate designed for safe transport of specific animals in stasis to prevent them from growing."
+	desc = "A crate designed for safe transport of specific animals in stasis to prevent them from aging or starving."
 	var/stasis_sealed = TRUE
 
 /obj/structure/closet/crate/critter/stasis/Exited(atom/movable/gone, direction)
