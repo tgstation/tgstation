@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys"
