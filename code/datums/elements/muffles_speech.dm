@@ -62,4 +62,6 @@
 /datum/element/muffles_speech/proc/fail_spellcast(mob/living/source, datum/action/cooldown/spell/spell)
 	spell.invocation(source)
 	to_chat(source, span_warning("Your mouth covering is making it difficult to say the correct words to cast [spell]..."))
+	if(source.click_intercept == spell)
+		spell.unset_click_ability(source, refund_cooldown = TRUE)
 	spell.StartCooldown(2 SECONDS)
