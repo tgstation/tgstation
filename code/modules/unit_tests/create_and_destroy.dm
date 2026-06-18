@@ -20,21 +20,16 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
-
-	var/runner_count = 0
-	var/what_map_index_are_we = 1
-	var/found_map_index = FALSE
-	for(var/map_name, _map_config in config.maplist)
-		var/datum/map_config/map_config = _map_config
-		if(map_config.exclude_from_ci)
-			continue
-		if(SSmapping.current_map.map_name == map_name)
-			found_map_index = TRUE
-		else if(!found_map_index)
-			what_map_index_are_we++
-		runner_count++
+	var/runner_count = length(config.maplist)
 
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
+
+	var/what_map_index_are_we = 1
+	for(var/map_name, _map_config in config.maplist)
+		var/datum/map_config/map_config = _map_config
+		if(SSmapping.current_map.map_name == map_name)
+			break
+		what_map_index_are_we++
 
 	var/start_index = (what_map_index_are_we - 1) * split_up_amount
 	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
@@ -44,7 +39,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
 
 	log_world("Running create and destroy on [length(type_paths_to_check)] atoms out of the [total_amount_to_check] total")
-	log_world("([start_index] [type_paths_to_check[1]]) - ([end_index] [type_paths_to_check[length(type_paths_to_check)]])")
+	log_world("([start_index + 1] [type_paths_to_check[1]]) - ([end_index] [type_paths_to_check[length(type_paths_to_check)]])")
 
 	for(var/type_path in type_paths_to_check)
 		if(ispath(type_path, /turf))

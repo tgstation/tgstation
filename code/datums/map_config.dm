@@ -67,8 +67,6 @@
 	var/list/skipped_tests
 	/// If TRUE, only unit tests with UNIT_TEST_DEBUG_MAP_ONLY will run on this map
 	var/is_unit_test_map = FALSE
-	/// If TRUE, this map doesn't have integration tests ran on it, like at all
-	var/exclude_from_ci = FALSE
 #endif
 
 	/// Boolean that tells SSmapping to load all away missions in the codebase.
@@ -281,8 +279,6 @@
 
 	if ("is_unit_test_map" in json)
 		is_unit_test_map = json["is_unit_test_map"]
-	if ("exclude_from_ci" in json)
-		exclude_from_ci = json["exclude_from_ci"]
 #endif
 
 	defaulted = FALSE
