@@ -408,5 +408,5 @@
 		The DeForest Medical Corporation claims no liability for any mental and/or physical trauma caused to patients from the improper use of these devices."
 	cost = CARGO_CRATE_VALUE * 50 // These aren't meant to be bought en-masse.
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/blood_worm_tester = 4)
+	contains = list(/obj/item/blood_worm_tester = 12)
 	crate_name = "hemoparasite testing crate"
