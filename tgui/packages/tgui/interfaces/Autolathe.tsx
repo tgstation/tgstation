@@ -32,7 +32,7 @@ type AutolatheData = {
 };
 
 export const Autolathe = (props) => {
-  const { data } = useBackend<AutolatheData>();
+  const { act, data } = useBackend<AutolatheData>();
   const {
     materialtotal,
     materialsmax,
@@ -83,20 +83,51 @@ export const Autolathe = (props) => {
                             key={material.name}
                             label={capitalize(material.name)}
                           >
-                            <ProgressBar
-                              style={{
-                                transform: 'scaleX(-1) scaleY(1)',
-                              }}
-                              value={materialsmax - material.amount}
-                              maxValue={materialsmax}
-                              backgroundColor={material.color}
-                              color="black"
-                            >
-                              <div style={{ transform: 'scaleX(-1)' }}>
-                                {material.amount / SHEET_MATERIAL_AMOUNT +
-                                  ' листов'}
-                              </div>
-                            </ProgressBar>
+                            <Stack fill>
+                              <Stack.Item grow>
+                                <ProgressBar
+                                  style={{
+                                    transform: 'scaleX(-1) scaleY(1)',
+                                  }}
+                                  value={materialsmax - material.amount}
+                                  maxValue={materialsmax}
+                                  backgroundColor={material.color}
+                                  color="black"
+                                >
+                                  <div style={{ transform: 'scaleX(-1)' }}>
+                                    {material.amount / SHEET_MATERIAL_AMOUNT +
+                                      ' листов'}
+                                  </div>
+                                </ProgressBar>
+                              </Stack.Item>
+                              <Stack.Item>Eject:</Stack.Item>
+                              {[
+                                1,
+                                5,
+                                Math.floor(
+                                  material.amount / SHEET_MATERIAL_AMOUNT,
+                                ),
+                              ]
+                                .sort()
+                                .map((amt) => (
+                                  <Stack.Item key={amt}>
+                                    <Button
+                                      disabled={
+                                        material.amount <
+                                        SHEET_MATERIAL_AMOUNT * amt
+                                      }
+                                      onClick={() =>
+                                        act('eject', {
+                                          ref: material.ref,
+                                          amount: amt,
+                                        })
+                                      }
+                                    >
+                                      x{amt}
+                                    </Button>
+                                  </Stack.Item>
+                                ))}
+                            </Stack>
                           </LabeledList.Item>
                         ))}
                       </LabeledList>

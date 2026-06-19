@@ -216,6 +216,17 @@
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
 	return replace_icon_legs(base_icon, legs)
 
+/obj/item/clothing/under/machine_wash()
+	. = ..()
+	if(stubborn_stains)
+		return
+
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+	)
+	QDEL_IN(fresh_mood, 2 MINUTES)
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if(slot & ITEM_SLOT_ICLOTHING)
