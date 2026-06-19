@@ -134,10 +134,27 @@
 		var/verb_path = text2path(payload["verb_type"])
 		if(!verb_path)
 			return TRUE
-		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
-			return TRUE
 		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		// Check admin verbs too
+		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+		if(admin_meta)
+			var/list/raw_args = payload["args"]
+			if(!islist(raw_args))
+				raw_args = list()
+			var/list/resolved_args = list()
+			for(var/key in raw_args)
+				var/value = raw_args[key]
+				if(istext(value))
+					var/located = locate(value)
+					if(located)
+						value = located
+				resolved_args[key] = value
+			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
+			return TRUE
 		if(!meta)
+			return TRUE
+		var/target = resolve_verb_target(verb_path)
+		if(!target)
 			return TRUE
 		var/list/raw_args = payload["args"]
 		if(!islist(raw_args))
@@ -150,12 +167,19 @@
 				if(located)
 					value = located
 			resolved_args[key] = value
-		call(client.mob || client, meta.body_path)(arglist(resolved_args))
+		call(target, meta.body_path)(arglist(resolved_args))
 		return TRUE
 
 	if(type == "requestMetadata")
 		send_metadata()
 		return TRUE
+
+/datum/tgui_panel/proc/resolve_verb_target(verb_path)
+	if(verb_path in client.verbs)
+		return client
+	if(client.mob && (verb_path in client.mob.verbs))
+		return client.mob
+	return null
 
 /datum/tgui_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
 	var/list/targets = list()
