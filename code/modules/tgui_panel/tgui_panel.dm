@@ -132,11 +132,19 @@
 			return TRUE
 		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
 			return TRUE
+		// Check game verbs first, then admin verbs
+		var/list/arg_list
 		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
-		if(!meta || !length(meta.arguments))
+		if(meta)
+			arg_list = meta.arguments
+		else
+			var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+			if(av)
+				arg_list = av.metadata?.arguments
+		if(!length(arg_list))
 			return TRUE
 		var/datum/verb_arg_metadata/entity_arg
-		for(var/datum/verb_arg_metadata/arg in meta.arguments)
+		for(var/datum/verb_arg_metadata/arg in arg_list)
 			if(arg.arg_type & (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM))
 				entity_arg = arg
 				break

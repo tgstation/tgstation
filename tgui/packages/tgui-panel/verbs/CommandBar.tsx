@@ -1,14 +1,22 @@
 import { useAtomValue } from 'jotai';
-import { type KeyboardEvent, useRef, useState } from 'react';
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import {
   type AdminVerb,
-  type VerbArg,
   adminTargetsAtom,
   adminVerbsAtom,
   typepathsAtom,
+  type VerbArg,
 } from './atoms';
 
+const ARG_TYPE_MOB = 1 << 5;
+const ARG_TYPE_OBJ = 1 << 6;
+const ARG_TYPE_TURF = 1 << 7;
+const ARG_TYPE_AREA = 1 << 8;
+const ARG_TYPE_DATUM = 1 << 9;
+const ARG_TYPE_ATOM = 1 << 10;
 const ARG_TYPE_TYPEPATH = 1 << 11;
+const ARG_TYPE_ENTITY =
+  ARG_TYPE_MOB | ARG_TYPE_OBJ | ARG_TYPE_TURF | ARG_TYPE_AREA | ARG_TYPE_DATUM | ARG_TYPE_ATOM;
 
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
@@ -16,6 +24,10 @@ function toKebab(name: string): string {
 
 function isTypepathArg(arg: VerbArg): boolean {
   return (arg.arg_type & ARG_TYPE_TYPEPATH) !== 0;
+}
+
+function isEntityArg(arg: VerbArg): boolean {
+  return (arg.arg_type & ARG_TYPE_ENTITY) !== 0;
 }
 
 export function CommandBar() {
@@ -36,6 +48,10 @@ export function CommandBar() {
       ? verbArgs[currentArgIndex]
       : null;
   const isCurrentArgTypepath = currentArg ? isTypepathArg(currentArg) : false;
+
+  useEffect(() => {
+    Byond.sendMessage('verbs/request_verbs');
+  }, []);
 
   // Current token being typed
   const currentToken = selectedVerb
@@ -71,9 +87,10 @@ export function CommandBar() {
           .slice(0, 12)
       : [];
 
-  // Target suggestions
+  // Target suggestions — only for entity-type args
+  const isCurrentArgEntity = currentArg ? isEntityArg(currentArg) : false;
   const targetSuggestions =
-    selectedVerb && !isCurrentArgTypepath && currentArg && targets.length > 0
+    selectedVerb && isCurrentArgEntity && targets.length > 0
       ? targets
           .filter(
             (t) =>
@@ -105,11 +122,16 @@ export function CommandBar() {
     } else if (e.key === 'Tab') {
       e.preventDefault();
       if (!selectedVerb && verbSuggestions.length > 0) {
-        selectVerb(verbSuggestions[selectedIndex]);
+        // Autocomplete the verb name into the input without executing
+        setInput(toKebab(verbSuggestions[selectedIndex].name));
+        setSelectedIndex(0);
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex] as string);
       } else if (selectedVerb && targetSuggestions.length > 0) {
-        selectTarget(targetSuggestions[selectedIndex] as { name: string; ref: string });
+        // Autocomplete the target into the current arg
+        selectTarget(
+          targetSuggestions[selectedIndex] as { name: string; ref: string },
+        );
       }
     } else if (e.key === 'Enter') {
       e.preventDefault();
@@ -121,7 +143,9 @@ export function CommandBar() {
         // Accept what's typed as a typepath directly
         fillArg(currentToken);
       } else if (selectedVerb && targetSuggestions.length > 0) {
-        selectTarget(targetSuggestions[selectedIndex] as { name: string; ref: string });
+        selectTarget(
+          targetSuggestions[selectedIndex] as { name: string; ref: string },
+        );
       } else if (selectedVerb) {
         invokeVerb();
       }
@@ -160,7 +184,9 @@ export function CommandBar() {
         : '';
       if (token.endsWith('/') && token !== lastTypepathRequest) {
         setLastTypepathRequest(token);
-        Byond.sendMessage('verbs/request_typepaths', { parent: token.slice(0, -1) || '/datum' });
+        Byond.sendMessage('verbs/request_typepaths', {
+          parent: token.slice(0, -1) || '/datum',
+        });
       }
     }
   };
@@ -197,7 +223,14 @@ export function CommandBar() {
     // Update input to show the selected path with trailing /
     if (!selectedVerb) return;
     const kebab = toKebab(selectedVerb.name);
-    setInput(kebab + ' ' + filledArgs.join(' ') + (filledArgs.length > 0 ? ' ' : '') + path + '/');
+    setInput(
+      kebab +
+        ' ' +
+        filledArgs.join(' ') +
+        (filledArgs.length > 0 ? ' ' : '') +
+        path +
+        '/',
+    );
     setSelectedIndex(0);
   };
 
@@ -245,7 +278,7 @@ export function CommandBar() {
   };
 
   const placeholder = selectedVerb
-    ? `${toKebab(selectedVerb.name)} ${(verbArgs).map((a) => `<${a.name}>`).join(' ')}`
+    ? `${toKebab(selectedVerb.name)} ${verbArgs.map((a) => `<${a.name}>`).join(' ')}`
     : 'Type a command...';
 
   return (
