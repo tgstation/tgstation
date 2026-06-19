@@ -13,5 +13,5 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	controller.ai_interact(target, combat_mode)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target, combat_mode)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

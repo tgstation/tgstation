@@ -64,7 +64,7 @@
 	var/mob/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.stat != CONSCIOUS)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	controller.ai_interact(target = target, combat_mode = FALSE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target, FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded)

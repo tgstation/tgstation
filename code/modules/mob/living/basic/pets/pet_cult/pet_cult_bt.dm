@@ -43,7 +43,7 @@
 	var/mob/living/revive_mob = locate(/mob/living) in get_turf(target)
 	if(isnull(revive_mob) || revive_mob.stat != DEAD || !(revive_mob.mind in cult_team.members))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	controller.ai_interact(target = target)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/activate_rune/finish_action(datum/ai_controller/controller, succeeded, ...)

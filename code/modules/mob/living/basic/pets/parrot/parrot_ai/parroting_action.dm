@@ -36,7 +36,7 @@
 
 	if(SStts.tts_enabled)
 		modify_voice(speaking_pawn, speech)
-	speaking_pawn.say(modified_speech, forced = "AI Controller")
+	INVOKE_ASYNC(speaking_pawn, TYPE_PROC_REF(/atom/movable, say), modified_speech, forced = "AI Controller")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/parrot_repeat_speech/proc/modify_voice(mob/living/speaking_pawn, list/speech)

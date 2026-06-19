@@ -42,6 +42,7 @@
 
 /// Opportunistically hops in and out of vents, if it can find one and is not biting someone.
 /datum/ai_controller/basic_controller/legion_monkey
+	behavior_tree_json = "legion_monkey.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -51,14 +52,3 @@
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/random_speech/legion,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/opportunistic_ventcrawler,
-	)

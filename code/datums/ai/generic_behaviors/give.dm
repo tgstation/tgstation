@@ -2,8 +2,22 @@
 /datum/bt_node/ai_behavior/give
 	/// Blackboard key holding the mob to give the held item to.
 	var/target_key
+	/// Set while the do_after delay is gojng on
+	var/is_giving = FALSE
+	/// TRUE once the async give has finished.
+	var/async_give_done = FALSE
+	/// Result flags from the async give.
+	var/async_give_flags = NONE
 
 /datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
+	// do_after in flight — stay RUNNING.
+	if(is_giving)
+		return AI_BEHAVIOR_DELAY
+
+	// do_after just finished — consume result.
+	if(async_give_done)
+		return AI_BEHAVIOR_DELAY | async_give_flags
+
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
@@ -27,11 +41,20 @@
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
 		span_warning("[pawn] tries to give you [held_item]!")
 	)
-	if(!do_after(pawn, 1 SECONDS, living_target))
-		return AI_BEHAVIOR_DELAY | perform_flags
+	is_giving = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_give), controller, living_target, held_item, perform_flags)
+	return AI_BEHAVIOR_DELAY
 
-	perform_flags |= try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
-	return AI_BEHAVIOR_DELAY | perform_flags
+/datum/bt_node/ai_behavior/give/proc/async_give(datum/ai_controller/controller, mob/living/living_target, obj/item/held_item, base_flags)
+	var/mob/living/pawn = controller.pawn
+	var/result_flags = base_flags
+	if(do_after(pawn, 1 SECONDS, living_target))
+		result_flags |= try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
+	if(!is_giving || QDELETED(pawn))
+		return
+	async_give_flags = result_flags
+	async_give_done = TRUE
+	is_giving = FALSE
 
 /datum/bt_node/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
 	if(QDELETED(held_item) || QDELETED(target))
@@ -55,9 +78,12 @@
 	if(!has_valid_hand || prob(50))
 		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
 	else
-		target.put_in_hands(held_item)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, put_in_hands), held_item)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	is_giving = FALSE
+	async_give_done = FALSE
+	async_give_flags = NONE
 	controller.clear_blackboard_key(target_key)

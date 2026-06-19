@@ -6,5 +6,5 @@
 	var/obj/item/held = pawn.get_active_held_item()
 	if(!held)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	pawn.activate_hand()
+	INVOKE_ASYNC(pawn, TYPE_PROC_REF(/mob, activate_hand))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

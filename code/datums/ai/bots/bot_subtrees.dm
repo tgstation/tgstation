@@ -16,20 +16,34 @@
 	var/minimum_distance = 0
 	time_between_perform = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	/// Set while an async reachability search is going on
+	var/is_searching = FALSE
+	/// TRUE once the async search has written its result.
+	var/async_search_done = FALSE
+	/// Result of the async search: TRUE if a reachable target was found and set.
+	var/async_search_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/mob/living/living_pawn = controller.pawn
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn)
+	// Async search in flight — stay RUNNING.
+	if(is_searching)
+		return AI_BEHAVIOR_DELAY
+
+	// Async search just finished — consume result.
+	if(async_search_done)
+		return AI_BEHAVIOR_DELAY | (async_search_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+
 	if(isnull(looking_for))
 		looking_for = get_looking_for_typecache()
-	for(var/atom/potential_target as anything in objects_to_search)
-		if(QDELETED(living_pawn))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	// Build candidate list synchronously (no sleeping), then hand off to async.
+	var/mob/living/living_pawn = controller.pawn
+	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
+	var/list/candidates = list()
+	for(var/atom/potential_target as anything in (turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn)))
 		if(!isnull(looking_for) && !is_type_in_typecache(potential_target, looking_for))
 			continue
 		if(LAZYACCESS(ignore_list, potential_target))
@@ -38,10 +52,38 @@
 			continue
 		if(!can_see(controller.pawn, potential_target, radius))
 			continue
+		candidates += potential_target
+
+	if(!length(candidates))
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no valid target found in radius [radius]")
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	is_searching = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_search), controller, candidates)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/bot_search/proc/async_search(datum/ai_controller/basic_controller/bot/controller, list/candidates)
+	var/mob/living/living_pawn = controller.pawn
+	var/found = FALSE
+	for(var/atom/potential_target as anything in candidates)
+		if(!is_searching || QDELETED(living_pawn))
+			break
 		if(controller.set_if_can_reach(key = target_key, target = potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist, minimum_distance = minimum_distance))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no valid target found in radius [radius]")
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+			found = TRUE
+			break
+	if(!is_searching)
+		return
+	if(!found)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[living_pawn] bot_search ([type]): no reachable target found")
+	async_search_succeeded = found
+	async_search_done = TRUE
+	is_searching = FALSE
+
+/datum/bt_node/ai_behavior/bot_search/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_searching = FALSE
+	async_search_done = FALSE
+	async_search_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/bot_search/proc/get_looking_for_typecache()
 	return
@@ -142,15 +184,29 @@
 /datum/bt_node/ai_behavior/find_next_beacon_target
 	var/target_key
 	time_between_perform = 5 SECONDS
+	/// Set while an async reachability check is still going on
+	var/is_checking_reach = FALSE
+	/// TRUE once the async check has written its result.
+	var/async_check_done = FALSE
+	/// Result of the async check.
+	var/async_check_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
+	// Async check in flight — stay RUNNING.
+	if(is_checking_reach)
+		return AI_BEHAVIOR_DELAY
+
+	// Async check just finished — consume result.
+	if(async_check_done)
+		return AI_BEHAVIOR_DELAY | (async_check_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	var/atom/final_target
 	var/obj/machinery/navbeacon/prev_beacon = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
 	if(QDELETED(prev_beacon))
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: previous beacon is deleted")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
+	var/atom/final_target
 	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.navbeacons["[bot_pawn.z]"])
 		if(beacon.location == prev_beacon.codes[NAVBEACON_PATROL_NEXT])
 			final_target = beacon
@@ -168,12 +224,27 @@
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: [final_target] ignored or out of range (dist=[get_dist(bot_pawn, final_target)] max=[controller.max_target_distance])")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(controller.set_if_can_reach(key = target_key, target = final_target, duration = 3 MINUTES, distance = controller.max_target_distance))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	is_checking_reach = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_check_beacon_reach), controller, final_target)
+	return AI_BEHAVIOR_DELAY
 
-	EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: can't reach [final_target], applying cooldown")
-	controller.set_blackboard_key(BB_BOT_BEACON_COOLDOWN, world.time + BOT_NO_BEACON_PATH_PENALTY)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+/datum/bt_node/ai_behavior/find_next_beacon_target/proc/async_check_beacon_reach(datum/ai_controller/basic_controller/bot/controller, atom/final_target)
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	var/reached = controller.set_if_can_reach(key = target_key, target = final_target, duration = 3 MINUTES, distance = controller.max_target_distance)
+	if(!is_checking_reach || QDELETED(bot_pawn))
+		return
+	if(!reached)
+		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: can't reach [final_target], applying cooldown")
+		controller.set_blackboard_key(BB_BOT_BEACON_COOLDOWN, world.time + BOT_NO_BEACON_PATH_PENALTY)
+	async_check_succeeded = reached
+	async_check_done = TRUE
+	is_checking_reach = FALSE
+
+/datum/bt_node/ai_behavior/find_next_beacon_target/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_checking_reach = FALSE
+	async_check_done = FALSE
+	async_check_succeeded = FALSE
 
 /// Records the beacon as visited and clears the target key once the bot is on the same turf.
 /datum/bt_node/ai_behavior/arrive_at_beacon

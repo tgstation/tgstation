@@ -12,7 +12,7 @@
 	if(QDELETED(target) || !living_pawn.is_holding(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.ai_interact(target = living_pawn, combat_mode = FALSE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), living_pawn, FALSE)
 
 	return AI_BEHAVIOR_DELAY | (is_content(living_pawn, target) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 

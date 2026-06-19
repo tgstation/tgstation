@@ -23,12 +23,12 @@
 
 	if(currently_underground && !has_target)
 		// No target/danger while underground — emerge
-		dig_ability.Trigger()
+		INVOKE_ASYNC(dig_ability, TYPE_PROC_REF(/datum/action, Trigger))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	if(storm_approaching || has_target)
 		// Go underground to escape
-		dig_ability.Trigger()
+		INVOKE_ASYNC(dig_ability, TYPE_PROC_REF(/datum/action, Trigger))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -158,7 +158,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(!controller.pawn.Adjacent(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	controller.ai_interact(target = target, combat_mode = FALSE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target, FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/grub_eat/finish_action(datum/ai_controller/controller, succeeded)
@@ -176,7 +176,7 @@
 	var/mob/living/grub_pawn = controller.pawn
 	if(!grub_pawn.Adjacent(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	grub_pawn.start_pulling(target)
+	INVOKE_ASYNC(grub_pawn, TYPE_PROC_REF(/atom/movable, start_pulling), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/pull_grub_egg/finish_action(datum/ai_controller/controller, succeeded)

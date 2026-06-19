@@ -50,5 +50,5 @@
 	if(isnull(emote))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	living_pawn.emote(emote)
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), emote)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

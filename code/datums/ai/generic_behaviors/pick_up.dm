@@ -24,5 +24,5 @@
 		if(!drop_held || !living_pawn.dropItemToGround(living_pawn.get_active_held_item()))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.ai_interact(target, combat_mode = FALSE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target, FALSE)
 	return AI_BEHAVIOR_DELAY | (target.loc == living_pawn ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)

@@ -20,15 +20,41 @@
 
 /// Equip a weapon off the ground
 /datum/bt_node/ai_behavior/monkey_equip/ground
+	/// Set while equip_item is in flight.
+	var/is_equipping = FALSE
+	/// TRUE once the async equip has written its result.
+	var/async_equip_done = FALSE
+	/// Whether equip_item returned TRUE.
+	var/async_equip_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
 	return !QDELETED(target)
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(equip_item(controller))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(is_equipping)
+		return AI_BEHAVIOR_DELAY
+
+	if(async_equip_done)
+		return AI_BEHAVIOR_DELAY | (async_equip_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+
+	is_equipping = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_equip), controller)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/monkey_equip/ground/proc/async_equip(datum/ai_controller/controller)
+	var/result = equip_item(controller)
+	if(!is_equipping)
+		return
+	async_equip_succeeded = result
+	async_equip_done = TRUE
+	is_equipping = FALSE
+
+/datum/bt_node/ai_behavior/monkey_equip/ground/finish_action(datum/ai_controller/controller, success)
+	. = ..()
+	is_equipping = FALSE
+	async_equip_done = FALSE
+	async_equip_succeeded = FALSE
 
 /// Pickpocket a weapon from a mob
 /datum/bt_node/ai_behavior/monkey_equip/pickpocket
@@ -149,9 +175,8 @@
 	controller.set_blackboard_key(BB_MONKEY_PICKUP_IS_PICKPOCKET, pickpocket ? TRUE : null)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// --- Combat target selection ---
 
-/// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive
+/// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive.  This should be ported to new targetting but its so fkn bespoke
 /datum/bt_node/ai_behavior/monkey_set_combat_target
 	var/attack_target_key
 	var/enemies_key
@@ -190,14 +215,25 @@
 	controller.set_blackboard_key(attack_target_key, target)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// --- Attack ---
 
-/// Attacks the target mob; SUCCEEDED when target is gone, FAILED when target goes down (triggers disposal fallthrough)
+/// Attacks the target mob; SUCCEEDED when target is gone, FAILED when target goes down (Which lets us flush the fucker instead)
 /datum/bt_node/ai_behavior/monkey_attack_mob
 	var/target_key
 	time_between_perform = CLICK_CD_MELEE
+	/// Set while monkey_attack is in flight.
+	var/is_attacking = FALSE
+	/// TRUE once the async attack has written its result.
+	var/async_attack_done = FALSE
+	/// Whether the attack should be treated as succeeded.
+	var/async_attack_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(is_attacking)
+		return AI_BEHAVIOR_DELAY
+
+	if(async_attack_done)
+		return AI_BEHAVIOR_DELAY | (async_attack_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
+
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
@@ -211,29 +247,36 @@
 			holding_weapon = potential_weapon
 			break
 
+	is_attacking = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_attack), controller, living_pawn, target, seconds_per_tick, holding_weapon)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/monkey_attack_mob/proc/async_attack(datum/ai_controller/controller, mob/living/living_pawn, mob/living/target, seconds_per_tick, obj/item/holding_weapon)
 	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)
-
-	if(!attack_results || controller.blackboard[BB_MONKEY_AGGRESSIVE])
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
-	if(isnull(hatred_value))
-		hatred_value = 1
-		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
-
-	if(!SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	hatred_value--
-	if(hatred_value <= 0)
-		controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	if(!is_attacking || QDELETED(living_pawn))
+		return
+	var/succeeded = FALSE
+	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
+		succeeded = TRUE
+		var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
+		if(isnull(hatred_value))
+			hatred_value = 1
+			controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
+		if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
+			hatred_value--
+			if(hatred_value <= 0)
+				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
+			else
+				controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
+	async_attack_succeeded = succeeded
+	async_attack_done = TRUE
+	is_attacking = FALSE
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	is_attacking = FALSE
+	async_attack_done = FALSE
+	async_attack_succeeded = FALSE
 	if(succeeded) // disposal path clears the key on failure
 		controller.clear_blackboard_key(target_key)
 

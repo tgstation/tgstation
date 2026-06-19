@@ -60,10 +60,11 @@
 	if(get_dist(controller.pawn, living_target) > 1)
 		return AI_BEHAVIOR_INSTANT
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
-	ability?.Trigger(target = living_target)
+	if(ability)
+		INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action, Trigger), living_target)
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.manual_emote("celebrates with [living_target]!")
-	living_pawn.emote("flip")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), "flip")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)

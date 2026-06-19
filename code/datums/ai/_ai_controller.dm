@@ -579,19 +579,16 @@ multiple modular subtrees with behaviors
 	return NONE
 
 ///Can this pawn interact with objects?
-/datum/ai_controller/proc/ai_can_interact()
-	SHOULD_CALL_PARENT(TRUE)
-	return !QDELETED(pawn)
+/datum/ai_controller/proc/ai_can_interact(atom/target)
+	return !QDELETED(pawn) && !QDELETED(target)
 
 ///Interact with objects
 /datum/ai_controller/proc/ai_interact(target, combat_mode, list/modifiers)
-	if(!ai_can_interact())
-		return FALSE
-
 	var/atom/final_target = isdatum(target) ? target : blackboard[target] //incase we got a blackboard key instead
 
-	if(QDELETED(final_target))
+	if(!ai_can_interact(final_target))
 		return FALSE
+
 	var/params = list2params(modifiers)
 	var/mob/living/living_pawn = pawn
 	if(isnull(combat_mode))

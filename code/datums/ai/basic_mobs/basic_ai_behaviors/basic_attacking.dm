@@ -52,7 +52,7 @@
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	var/atom/final_target = hiding_target || target
-	controller.ai_interact(target = final_target, combat_mode = TRUE)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), final_target, TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Single-hit variant: terminates after one successful attack and always clears the target key.

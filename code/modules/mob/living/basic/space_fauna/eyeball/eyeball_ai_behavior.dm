@@ -76,11 +76,8 @@
 	if(direction_to_compare != target_direction)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/result = ability.InterceptClickOn(controller.pawn, null, target)
-	if(result == TRUE)
-		return AI_BEHAVIOR_INSTANT
-	else
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), controller.pawn, null, target)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/hunt_target/interact_with_target/carrot
 	hunt_cooldown = 2 SECONDS

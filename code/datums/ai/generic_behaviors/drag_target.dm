@@ -17,5 +17,5 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if(!our_mob.Adjacent(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	our_mob.start_pulling(target)
+	INVOKE_ASYNC(our_mob, TYPE_PROC_REF(/atom/movable, start_pulling), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

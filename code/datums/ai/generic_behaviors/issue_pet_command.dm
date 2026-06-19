@@ -36,6 +36,6 @@
 	var/datum/pet_command/cmd = locate(command_type) in commands
 	if(isnull(cmd))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	living_pawn.say(pick(cmd.speech_commands), forced = "controller")
-	living_pawn._pointed(target)
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), pick(cmd.speech_commands), forced = "controller")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, _pointed), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

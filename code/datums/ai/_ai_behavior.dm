@@ -75,6 +75,7 @@
 
 /// Called each tick while the behavior is running. Returns AI_BEHAVIOR_* flags.
 /datum/bt_node/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /// Called when the behavior finishes (succeeded or failed). Subtypes should call ..().

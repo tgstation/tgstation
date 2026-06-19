@@ -170,7 +170,8 @@
 	if(!controller.blackboard[BB_MINEBOT_PLANT_MINES])
 		return ..()
 	var/datum/action/cooldown/mine_ability = controller.blackboard[BB_MINEBOT_LANDMINE_ABILITY]
-	mine_ability?.Trigger()
+	if(mine_ability)
+		INVOKE_ASYNC(mine_ability, TYPE_PROC_REF(/datum/action, Trigger))
 	return ..()
 
 /datum/ai_behavior/basic_ranged_attack/minebot

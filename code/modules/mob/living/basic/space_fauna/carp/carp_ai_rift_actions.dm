@@ -7,6 +7,12 @@
 	var/ability_key = BB_CARP_RIFT
 	/// Blackboard key holding the atom we're teleporting relative to
 	var/target_key
+	/// Set while InterceptClickOn is being called
+	var/is_rifting = FALSE
+	/// TRUE once the async rift has written its result.
+	var/async_rift_done = FALSE
+	/// Result: TRUE = DELAY|SUCCEEDED, FALSE = INSTANT|FAILED, null = not done yet.
+	var/async_rift_succeeded = null
 
 /datum/bt_node/ai_behavior/make_carp_rift/setup(datum/ai_controller/controller)
 	. = ..()
@@ -14,6 +20,13 @@
 		return FALSE
 
 /datum/bt_node/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(is_rifting)
+		return AI_BEHAVIOR_DELAY
+
+	if(async_rift_done)
+		// Preserve the INSTANT flag on failure so a selector falls through without latching.
+		return async_rift_succeeded ? (AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED) : (AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED)
+
 	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
 	var/atom/target = controller.blackboard[target_key]
 
@@ -26,9 +39,23 @@
 	if(!target_destination)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(ability.InterceptClickOn(controller.pawn, null, target_destination))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	is_rifting = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_rift), controller, ability, target_destination)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/make_carp_rift/proc/async_rift(datum/ai_controller/controller, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability, turf/target_destination)
+	var/result = ability.InterceptClickOn(controller.pawn, null, target_destination)
+	if(!is_rifting)
+		return
+	async_rift_succeeded = !!result
+	async_rift_done = TRUE
+	is_rifting = FALSE
+
+/datum/bt_node/ai_behavior/make_carp_rift/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_rifting = FALSE
+	async_rift_done = FALSE
+	async_rift_succeeded = null
 
 /// Return true if your target is valid for the action
 /datum/bt_node/ai_behavior/make_carp_rift/proc/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)

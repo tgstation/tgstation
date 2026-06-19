@@ -20,13 +20,13 @@
 		break
 
 	if(found_seat)
-		customer_pawn.say(pick(customer_data.found_seat_lines))
+		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.found_seat_lines))
 		controller.set_blackboard_key(BB_CUSTOMER_MY_SEAT, found_seat)
 		attending_venue.linked_seats[found_seat] = customer_pawn
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || SPT_PROB(1.5, seconds_per_tick))
-		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
+		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.cant_find_seat_lines))
 		controller.set_blackboard_key(BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE, TRUE)
 
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -34,10 +34,19 @@
 
 /// Places the customer's food order once they are at their seat.
 /datum/bt_node/ai_behavior/robot_customer/order_food
+	/// Set while order_food is happening (sleeps)
+	var/is_ordering = FALSE
+	/// TRUE once the async order has completed.
+	var/async_order_done = FALSE
 
 /datum/bt_node/ai_behavior/robot_customer/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(is_ordering)
+		return AI_BEHAVIOR_DELAY
+
+	if(async_order_done)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
 	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
-	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 
 	if(get_turf(seat_marker) == get_turf(customer_pawn))
@@ -45,9 +54,27 @@
 		if(my_seat)
 			customer_pawn.setDir(my_seat.dir)
 
+	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-	controller.set_blackboard_key(BB_CUSTOMER_CURRENT_ORDER, attending_venue.order_food(customer_pawn, customer_data))
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	is_ordering = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_order), controller, customer_pawn, attending_venue, customer_data)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/robot_customer/order_food/proc/async_order(datum/ai_controller/controller, mob/living/basic/robot_customer/customer_pawn, datum/venue/attending_venue, datum/customer_data/customer_data)
+	var/order
+	if(!QDELETED(customer_pawn) && !QDELETED(attending_venue))
+		order = attending_venue.order_food(customer_pawn, customer_data)
+	if(!is_ordering)
+		return
+	if(!isnull(order))
+		controller.set_blackboard_key(BB_CUSTOMER_CURRENT_ORDER, order)
+	async_order_done = TRUE
+	is_ordering = FALSE
+
+/datum/bt_node/ai_behavior/robot_customer/order_food/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_ordering = FALSE
+	async_order_done = FALSE
 
 
 /// Waits at the seat for food to arrive. Ticks down patience and checks for food placed in front.
@@ -66,7 +93,7 @@
 	if(SPT_PROB(0.85, seconds_per_tick))
 		var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-		customer_pawn.say(pick(customer_data.wait_for_food_lines))
+		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.wait_for_food_lines))
 
 	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 	if(get_turf(seat_marker) == get_turf(controller.pawn))
@@ -141,7 +168,7 @@
 	if(batman.stat != CONSCIOUS)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-	big_guy.start_pulling(batman)
+	INVOKE_ASYNC(big_guy, TYPE_PROC_REF(/atom/movable, start_pulling), batman)
 	big_guy.face_atom(batman)
 	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
 	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)

@@ -41,10 +41,10 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(!living_pawn.Adjacent(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/is_gibtonite = istype(target, /turf/closed/mineral/gibtonite)
-	if(!controller.ai_interact(target = target))
+	if(!controller.ai_can_interact(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(is_gibtonite)
+	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
+	if(istype(target, /turf/closed/mineral/gibtonite))
 		living_pawn.manual_emote("sighs...")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

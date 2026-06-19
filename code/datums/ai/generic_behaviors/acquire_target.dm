@@ -20,8 +20,22 @@
 	var/reach_distance = 10
 	/// How close the reachability path must get to the target (0 = onto/adjacent). Passed to can_reach_target when must_be_reachable is set.
 	var/minimum_distance = 0
+	/// Set while an async reachability search is happening (yea, its a path check :( )
+	var/is_finding_target = FALSE
+	/// Result written by the async search proc before it clears is_finding_target: the found atom, or null for no result.
+	var/atom/async_target_result
+	/// TRUE once the async search has written its result and is ready to be consumed.
+	var/async_search_done = FALSE
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
+	// Async reachability search in flight — stay RUNNING until it completes.
+	if(is_finding_target)
+		return AI_BEHAVIOR_DELAY
+
+	// Async search just finished — consume the result.
+	if(async_search_done)
+		return AI_BEHAVIOR_DELAY | (isnull(async_target_result) ? AI_BEHAVIOR_FAILED : AI_BEHAVIOR_SUCCEEDED)
+
 	if(!can_search(controller))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -31,11 +45,22 @@
 	if(should_keep_target(controller, strategy, current_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-
 	if(!isnum(vision_range)) //If there's a blackboard override, use that
 		vision_range = controller.blackboard[vision_range] || vision_range
 
-	return find_and_set_target(controller, strategy, vision_range)
+	if(!must_be_reachable)
+		return find_and_set_target(controller, strategy, vision_range)
+
+	// Kick off async reachability search.
+	is_finding_target = TRUE
+	INVOKE_ASYNC(src, PROC_REF(async_find_and_set_target), controller, strategy, vision_range)
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/acquire_target/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_finding_target = FALSE
+	async_search_done = FALSE
+	async_target_result = null
 
 /// Returns TRUE to abort the search before it starts (e.g. a detection field is already active).
 /datum/bt_node/ai_behavior/acquire_target/proc/can_search(datum/ai_controller/controller)
@@ -137,16 +162,39 @@
 /datum/bt_node/ai_behavior/acquire_target/proc/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
 	return
 
-/// Picks the final target from filtered candidates. With must_be_reachable, walks the list in order and returns the first
-/// reachable candidate, reporting the unreachable ones it skips; otherwise picks one at random.
+/// Picks the final target from filtered candidates. Only valid for the non-reachable path; the reachable path goes async.
 /datum/bt_node/ai_behavior/acquire_target/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
-	if(!must_be_reachable)
-		return pick(filtered_targets)
-	for(var/atom/candidate as anything in filtered_targets)
+	return pick(filtered_targets)
+
+/// Async proc: walks filtered candidates checking reachability (may sleep), then writes the result and sets async_search_done.
+/datum/bt_node/ai_behavior/acquire_target/proc/async_find_and_set_target(datum/ai_controller/controller, datum/targeting_strategy/strategy, range)
+	var/mob/living/living_mob = controller.pawn
+	var/datum/target_source/source = GET_TARGET_SOURCE(target_source)
+	var/atom/current_target = controller.blackboard[target_key]
+	var/list/candidates = source.collect_candidates(living_mob, controller, range)
+	if(!length(candidates))
+		candidates = on_no_candidates(controller, current_target, strategy, range)
+	var/list/filtered = filter_candidates(controller, candidates, strategy, current_target)
+	var/atom/target
+	for(var/atom/candidate as anything in filtered)
+		// get_path_to may sleep here — check abort flag after it returns.
 		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
-			return candidate
+			target = candidate
+			break
 		controller.note_unreachable_target(candidate)
-	return null
+	// If finish_action fired while we were sleeping, bail without touching anything.
+	if(!is_finding_target || QDELETED(controller) || QDELETED(controller.pawn))
+		return
+	if(!isnull(target))
+		if(target != controller.blackboard[target_key])
+			controller.set_blackboard_key(target_key, target)
+		on_target_found(controller, target, strategy)
+	else
+		on_no_valid_candidates(controller, current_target)
+		clear_stale_target(controller, current_target)
+	async_target_result = target
+	async_search_done = TRUE
+	is_finding_target = FALSE
 
 ///Finds a nearby target to interact with, used as a baseline for behaviors that need to interact with something nearby.
 /datum/bt_node/ai_behavior/acquire_target/update_interaction_target
