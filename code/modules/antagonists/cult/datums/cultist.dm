@@ -67,7 +67,7 @@
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 	if(cult_team.cult_ascendent)
-		current.apply_status_effect(/datum/status_effect/cult_halo, initial_delay = 0 SECONDS)
+		current.apply_status_effect(/datum/status_effect/cult_halo, 0 SECONDS)
 
 	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 	add_team_hud(current)
