@@ -878,6 +878,8 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// (You ONLY need to update this if you add a standing overlay, adding an integer.)
 #define TOTAL_LAYERS 23
 
+// Legacy mutant bodypart layering defines for icon states
+// Don't change these without updating all relevant icon states
 #define EXTERNAL_FRONT "FRONT"
 #define EXTERNAL_ADJACENT "ADJ"
 #define EXTERNAL_BEHIND "BEHIND"
