@@ -80,3 +80,6 @@
 
 /datum/target_source/oview_single_type/orbie
 	single_typepath = /mob/living/basic/orbie
+
+/datum/target_source/oview_single_type/ore_vent
+	single_typepath = /obj/structure/ore_vent

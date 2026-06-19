@@ -26,7 +26,7 @@
 	var/result = using_action.Trigger()
 	if(!is_triggering)
 		return
-	async_trigger_succeeded = !!result
+	async_trigger_succeeded = result
 	async_trigger_done = TRUE
 	is_triggering = FALSE
 

@@ -88,12 +88,17 @@
 	var/atom/stand = controller.blackboard[stand_key]
 	if(QDELETED(stand))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	for(var/direction in list(SOUTH, SOUTHEAST))
+	var/mob/living/pawn = controller.pawn
+	var/list/candidates = list()
+	for(var/direction in list(SOUTH, SOUTHWEST, SOUTHEAST))
 		var/turf/candidate = get_step(stand, direction)
 		if(!candidate.is_blocked_turf())
-			controller.set_blackboard_key(destination_key, candidate)
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+			candidates += candidate
+	var/turf/destination = get_closest_atom(/turf/, candidates, pawn)
+	if(isnull(destination))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	controller.set_blackboard_key(destination_key, destination)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///OH SHIT STORM COMING (or maybe we found ore :3)
 /datum/bt_node/decorator/mook_has_flee_reason

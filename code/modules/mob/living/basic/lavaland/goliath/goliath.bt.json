@@ -1,0 +1,173 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/goliath",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/goliath_tentacles",
+														"vars": {
+															"ability_key": "BB_GOLIATH_TENTACLES",
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions"
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/cooldown",
+										"vars": {
+											"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
+											"cooldown_duration": "30 SECONDS"
+										},
+										"child": {
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/bb_key_set",
+											"vars": {
+												"key": "BB_CURRENT_TARGET"
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining",
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+						},
+						{
+							"type": "sequence",
+							"children": [
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_GOLIATH_HOLE_TARGET",
+										"invert": true
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/goliath_find_diggable_turf",
+										"vars": {
+											"target_key": "BB_GOLIATH_HOLE_TARGET"
+										}
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_GOLIATH_HOLE_TARGET",
+										"required_dist": 0
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/goliath_dig",
+									"vars": {
+										"target_key": "BB_GOLIATH_HOLE_TARGET"
+									}
+								}
+							]
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_walk"
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy_key": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+								"check_faction": true
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
