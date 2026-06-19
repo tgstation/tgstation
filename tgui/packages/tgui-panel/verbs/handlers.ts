@@ -4,6 +4,7 @@ import {
   type AdminVerb,
   adminTargetsAtom,
   adminVerbsAtom,
+  typepathsAtom,
 } from './atoms';
 
 export function handleVerbsInit(payload: { verbs: AdminVerb[] }) {
@@ -31,4 +32,8 @@ export function handleRemoveVerbs(payload: { names: string[] }) {
 
 export function handleTargets(payload: { targets: AdminTarget[] }) {
   store.set(adminTargetsAtom, payload.targets || []);
+}
+
+export function handleTypepaths(payload: { paths: string[] }) {
+  store.set(typepathsAtom, payload.paths || []);
 }
