@@ -117,3 +117,29 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 #define INVOKE_GAME_VERB(target, owner_type, verb_path_name, args...) SSverbs.invoke(target, /datum/verb_metadata##owner_type/##verb_path_name, ##args)
 #define ASSIGN_GAME_VERB(target, owner_type, verb_path_name) SSverbs.assign_verb(target, /datum/verb_metadata##owner_type/##verb_path_name)
 #define UNASSIGN_GAME_VERB(target, owner_type, verb_path_name) SSverbs.unassign_verb(target, /datum/verb_metadata##owner_type/##verb_path_name)
+
+/// Self-registers argument metadata at world init and extracts value from structured_args at runtime.
+/// For typed args, pass the type path as the last argument: VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
+/// For untyped args (primitives), omit it: VERB_ARG(count, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+#define VERB_ARG(name, arg_type, source, type_path...) \
+	var/static/____reg_##name = ____register_verb_arg(__TYPE__, #name, arg_type, ##type_path, source); \
+	var##type_path/##name = structured_args[#name]
+
+// Argument type bitflags. Combine with | for multi-type args.
+#define VERB_ARG_TYPE_TEXT (1<<0)
+#define VERB_ARG_TYPE_NUM (1<<1)
+#define VERB_ARG_TYPE_MESSAGE (1<<2)
+#define VERB_ARG_TYPE_SOUND (1<<3)
+#define VERB_ARG_TYPE_ICON (1<<4)
+#define VERB_ARG_TYPE_MOB (1<<5)
+#define VERB_ARG_TYPE_OBJ (1<<6)
+#define VERB_ARG_TYPE_TURF (1<<7)
+#define VERB_ARG_TYPE_AREA (1<<8)
+#define VERB_ARG_TYPE_DATUM (1<<9)
+#define VERB_ARG_TYPE_ATOM (1<<10)
+
+// Argument source constants
+#define VERB_ARG_SOURCE_INPUT "input"
+#define VERB_ARG_SOURCE_WORLD "world"
+#define VERB_ARG_SOURCE_VIEW "view"
+>>>>>>> 3b9f03367c3 (rebase changes)

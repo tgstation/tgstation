@@ -1,12 +1,12 @@
 import { useAtomValue } from 'jotai';
-import { type KeyboardEvent, useRef, useState } from 'react';
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { type AdminVerb, adminTargetsAtom, adminVerbsAtom } from './atoms';
 
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
 }
 
-export function AdminCommandBar() {
+export function CommandBar() {
   const verbs = useAtomValue(adminVerbsAtom);
   const targets = useAtomValue(adminTargetsAtom);
   const [input, setInput] = useState('');
@@ -14,6 +14,12 @@ export function AdminCommandBar() {
   const [selectedVerb, setSelectedVerb] = useState<AdminVerb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    Byond.sendMessage('verbs/request_verbs');
+  }, []);
+
+  console.log(verbs);
 
   // Current token being typed (after verb + filled args)
   const currentToken = selectedVerb
@@ -115,9 +121,9 @@ export function AdminCommandBar() {
     const kebab = toKebab(verb.name);
     if (verb.args.length > 0) {
       setInput(kebab + ' ');
-      Byond.sendMessage('admin/request_targets', { verb_type: verb.type });
+      Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
     } else {
-      Byond.sendMessage('admin/command', {
+      Byond.sendMessage('verbs/invoke', {
         verb_type: verb.type,
         args: {},
       });
@@ -151,7 +157,7 @@ export function AdminCommandBar() {
     for (let i = 0; i < selectedVerb.args.length && i < allArgs.length; i++) {
       argValues[selectedVerb.args[i]] = allArgs[i];
     }
-    Byond.sendMessage('admin/command', {
+    Byond.sendMessage('verbs/invoke', {
       verb_type: selectedVerb.type,
       args: argValues,
     });
@@ -202,9 +208,7 @@ export function AdminCommandBar() {
                   onMouseEnter={() => setSelectedIndex(i)}
                   onClick={() => selectVerb(verb)}
                 >
-                  <span style={{ color: '#6cb6ff' }}>
-                    {toKebab(verb.name)}
-                  </span>
+                  <span style={{ color: '#6cb6ff' }}>{toKebab(verb.name)}</span>
                   {verb.args.length > 0 && (
                     <span style={{ color: '#666', marginLeft: '8px' }}>
                       {verb.args.map((a) => `<${a}>`).join(' ')}

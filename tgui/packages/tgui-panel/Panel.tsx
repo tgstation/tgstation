@@ -7,7 +7,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
-import { AdminCommandBar } from './admin/AdminCommandBar';
 import { visibleAtom } from './audio/atoms';
 import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel } from './chat/ChatPanel';
@@ -21,6 +20,7 @@ import { ReconnectButton } from './reconnect';
 import { settingsVisibleAtom } from './settings/atoms';
 import { SettingsPanel } from './settings/SettingsPanel';
 import { useSettings } from './settings/use-settings';
+import { CommandBar } from './verbs/CommandBar';
 
 export function Panel(props) {
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
@@ -98,7 +98,7 @@ export function Panel(props) {
           </Section>
         </Stack.Item>
         <Stack.Item>
-          <AdminCommandBar />
+          <CommandBar />
         </Stack.Item>
       </Stack>
     </Pane>

@@ -1,10 +1,5 @@
-GLOBAL_LIST_INIT(____avd_pending_verb_args, list())
-
-/proc/____avd_register_arg(verb_type, arg_name, arg_type, arg_type_path, arg_source)
-	if(!GLOB.____avd_pending_verb_args[verb_type])
-		GLOB.____avd_pending_verb_args[verb_type] = list()
-	GLOB.____avd_pending_verb_args[verb_type] += list(new /datum/admin_verb_metadata/argument(arg_name, arg_type, arg_type_path, arg_source))
-	return TRUE
+// Admin verb metadata is now shared via /datum/verb_metadata in code/datums/verb_metadata.dm
+// This file remains for the admin_verb_metadata type alias used by existing admin verb code.
 
 /datum/admin_verb_metadata
 	var/list/arguments = list()
