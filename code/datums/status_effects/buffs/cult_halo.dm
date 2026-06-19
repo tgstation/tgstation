@@ -1,3 +1,4 @@
+/// Adds the cult halo effect vfx to the mob (instantly/after a delay)
 /datum/status_effect/cult_halo
 	id = "cult_halo"
 	alert_type = null
@@ -32,11 +33,6 @@
 	owner.update_appearance(UPDATE_OVERLAYS)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(owner), owner.dir)
 
-/**
- * Halo setter proc
- *
- * Adds the cult halo overlays, and adds the halo trait to the mob.
- */
 /datum/status_effect/cult_halo/proc/add_halo(datum/source, list/overlay_list)
 	SIGNAL_HANDLER
 
