@@ -113,29 +113,10 @@
 	return TRUE
 
 /datum/ai_controller/basic_controller/netguardian
+	behavior_tree_json = "netguardian.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate/check_faction,
-		/datum/ai_planning_subtree/simple_find_wounded_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/netguardian
-
-/datum/ai_behavior/basic_ranged_attack/netguardian
-	time_between_perform = 1 SECONDS
-	avoid_friendly_fire = TRUE
-
-/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets
-	ability_key = BB_NETGUARDIAN_ROCKET_ABILITY
-	finish_planning = FALSE

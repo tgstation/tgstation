@@ -120,3 +120,7 @@
 /datum/ai_controller/basic_controller/talk
 	behavior_tree_json = "code/datums/ai/basic_mobs/talk.bt.json"
 	idle_behavior = null
+
+
+/datum/bt_node/subtree/simple_hostile_combat_with_retaliate
+	behavior_tree_json = "simple_hostile_combat_with_retaliate.bt.json"

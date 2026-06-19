@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/mothroach
+	behavior_tree_json = "mothroach.bt.json"
 	blackboard = list(
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -8,18 +9,3 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/find_food/mothroach,
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/random_speech/mothroach,
-	)
-
-/datum/ai_planning_subtree/find_food/mothroach
-	finding_behavior = /datum/ai_behavior/find_and_set/in_list/mothroach_food
-
-/datum/ai_behavior/find_and_set/in_list/mothroach_food
-	parent_type = /datum/bt_node/ai_behavior/find_and_set/in_list
-	exclude_loc = TRUE

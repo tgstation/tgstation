@@ -83,3 +83,6 @@
 
 /datum/target_source/oview_single_type/ore_vent
 	single_typepath = /obj/structure/ore_vent
+
+/datum/target_source/oview_single_type/mushroom_food
+	single_typepath = /obj/item/food/grown/mushroom
