@@ -21,18 +21,6 @@ const ARG_TYPE_TYPEPATH = 1 << 11;
 const ARG_TYPE_ENTITY =
   ARG_TYPE_MOB | ARG_TYPE_OBJ | ARG_TYPE_TURF | ARG_TYPE_AREA | ARG_TYPE_DATUM | ARG_TYPE_ATOM;
 
-function longestCommonPrefix(strings: string[]): string {
-  if (strings.length === 0) return '';
-  let prefix = strings[0];
-  for (let i = 1; i < strings.length; i++) {
-    while (!strings[i].startsWith(prefix)) {
-      prefix = prefix.slice(0, -1);
-      if (!prefix) return '';
-    }
-  }
-  return prefix;
-}
-
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
 }
@@ -123,7 +111,7 @@ export function CommandBar() {
       : '';
   const inQuotedArg = selectedVerb ? isInQuotedArg(argPortion) : false;
 
-  // Verb suggestions
+  // Verb suggestions — sorted by name length so Tab picks the shortest match
   const verbSuggestions: AdminVerb[] =
     !selectedVerb && input.length > 0
       ? verbs
@@ -132,6 +120,7 @@ export function CommandBar() {
               v.name &&
               toKebab(v.name).toLowerCase().startsWith(input.toLowerCase()),
           )
+          .sort((a, b) => a.name.length - b.name.length)
           .slice(0, 8)
       : [];
 
@@ -174,18 +163,21 @@ export function CommandBar() {
     } else if (e.key === 'ArrowUp' && hasSuggestions) {
       e.preventDefault();
       setSelectedIndex((i) => Math.max(i - 1, 0));
-    } else if (e.key === ' ' && !selectedVerb) {
-      e.preventDefault();
-      if (verbSuggestions.length > 0) {
-        selectVerb(verbSuggestions[selectedIndex]);
+    } else if (e.key === ' ' && !inQuotedArg) {
+      // Space outside quotes: autocomplete verb or prevent double spaces
+      if (!selectedVerb) {
+        e.preventDefault();
+        if (verbSuggestions.length > 0) {
+          selectVerb(verbSuggestions[selectedIndex]);
+        }
+      } else if (input.endsWith(' ')) {
+        // Prevent multiple consecutive spaces
+        e.preventDefault();
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
       if (!selectedVerb && verbSuggestions.length > 0) {
-        const names = verbSuggestions.map((v) => toKebab(v.name));
-        const prefix = longestCommonPrefix(names);
-        setInput(prefix);
-        setSelectedIndex(0);
+        selectVerb(verbSuggestions[selectedIndex]);
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex] as string);
       } else if (selectedVerb && targetSuggestions.length > 0) {
