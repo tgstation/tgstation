@@ -9,7 +9,7 @@ export type VerbArg = {
 export type AdminVerb = {
   type: string;
   name: string;
-  args?: VerbArg[];
+  args: VerbArg[];
 };
 
 export type AdminTarget = {

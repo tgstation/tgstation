@@ -102,32 +102,25 @@ SUBSYSTEM_DEF(verbs)
 	meta.unassign_from(target)
 
 /datum/controller/subsystem/verbs/proc/serialize_verb(procpath/verb_path)
+	var/list/arg_data = list()
 	var/list/entry = list(
 		"name" = verb_path.name,
 		"category" = verb_path.category,
 		"type" = "[verb_path]",
+		"args" = arg_data,
 	)
 
 	// Check game verbs first, then admin verbs
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(meta)
 		entry["type"] = "[meta.verb_path]"
-		var/list/arg_data = list()
 		for(var/datum/verb_arg_metadata/arg in meta.arguments)
 			arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
-		if(length(arg_data))
-			entry["args"] = arg_data
 	else
 		var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(av)
 			entry["type"] = "[av.verb_path]"
-			var/list/arg_data = list()
-			for(var/datum/admin_verb_metadata/argument/arg in av.metadata?.arguments)
+			for(var/datum/verb_arg_metadata/arg in av.metadata?.arguments)
 				arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
-			if(length(arg_data))
-				entry["args"] = arg_data
-			log_world("DEBUG serialize_verb: admin verb [verb_path] found, metadata args=[length(av.metadata?.arguments)], serialized args=[length(arg_data)]")
-		else
-			log_world("DEBUG serialize_verb: [verb_path] NOT found in game verbs ([length(verbs_by_verb_path)] entries) or admin verbs ([length(SSadmin_verbs.admin_verbs_by_verb_path)] entries)")
 
 	return entry
