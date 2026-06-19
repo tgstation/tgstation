@@ -473,6 +473,7 @@
       booze-o-mat.
   SmArtKar:
   - qol: TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys
+  - bugfix: Removed DNA infuser sprite from gizmo icon pool
   lelandkemble:
   - bugfix: fixed a runtime with bluespace meteors
   - bugfix: fixed connecting a tank to a TTV the other way around
