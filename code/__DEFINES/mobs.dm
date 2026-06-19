@@ -844,6 +844,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define ID_LAYER 18
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 19
+	/// The layer underneath the uniform
+	#define UNDER_UNIFORM_LAYER 19.1
 /// Damage indicators (cuts and burns)
 #define DAMAGE_LAYER 20
 	/// Mutations that should appear above everything else (e.g. laser eyes)
