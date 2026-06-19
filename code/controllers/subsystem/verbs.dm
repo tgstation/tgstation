@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(verbs)
 		return
 	var/list/structured_args = list()
 	// Check for context menu target
-	var/context_target = positional_args?["__context_target__"]
+	var/context_target = length(positional_args) ? positional_args["__context_target__"] : null
 	if(context_target)
 		positional_args -= "__context_target__"
 	// Map positional args to metadata arg names
