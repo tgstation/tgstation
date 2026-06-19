@@ -51,8 +51,10 @@ export function CommandBar() {
   const verbSuggestions: AdminVerb[] =
     !selectedVerb && input.length > 0
       ? verbs
-          .filter((v) =>
-            toKebab(v.name).toLowerCase().startsWith(input.toLowerCase()),
+          .filter(
+            (v) =>
+              v.name &&
+              toKebab(v.name).toLowerCase().startsWith(input.toLowerCase()),
           )
           .slice(0, 8)
       : [];
