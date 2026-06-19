@@ -20,7 +20,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
-	var/runner_count = length(config.maplist)
+	var/runner_count = max(length(config.maplist), 1)
 
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
 

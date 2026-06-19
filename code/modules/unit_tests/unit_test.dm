@@ -386,7 +386,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
 		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
 		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
-		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map && \
+		// If we didn't find a primary unit test map then we are likely a solo runner.
+		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && \
+			!isnull(primary_unit_test_map) && \
+			!SSmapping.current_map.is_unit_test_map && \
 			!(primary_unit_test_map.skipped_tests?.Find(potential_test) && is_secondary_unit_test_map) \
 		)
 			continue
