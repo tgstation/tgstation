@@ -1,8 +1,6 @@
 ///Bodypart ovarlay datum. These can be added to any limb to give them a proper overlay, that'll even stay if the limb gets removed
 ///This is the abstract parent, don't use it!!
 /datum/bodypart_overlay
-	///
-	///
 	/**
 	 * Assoc list [icon state postfix] to [layer of overlay].
 	 *
@@ -14,6 +12,8 @@
 	 * layers = list("adjacent" = BODY_LAYER_ADJACENT, "behind" = BODY_LAYER_BEHIND) // - two layers, one is "[iconstate]_adjacent", the other is "[iconstate]_behind"
 	 * layers = list("layer1" = BODY_LAYER_ADJACENT, "layer2" = BODY_LAYER_BEHIND) // - two layers, with icon states "[iconstate]_layer1" and "[iconstate]_layer2"
 	 * layers = list("" = BODY_LAYER_FRONT) // - one layer, with icon state "[iconstate]"
+	 *
+	 * This is cached, so be careful editing it at runtime
 	 */
 	var/list/layers
 	/// Whether the overlay blocks emissive light
@@ -22,6 +22,11 @@
 	var/draw_on_husks = HUSK_OVERLAY_NONE
 	/// Determines body area of the overlay for height offsets
 	var/offset_location = NO_MODIFY
+
+/datum/bodypart_overlay/New()
+	. = ..()
+	if(length(layers))
+		layers = string_assoc_list(layers)
 
 /**
  * Returns a list of overlays that this overlay datum draws
@@ -123,7 +128,7 @@
  */
 /datum/bodypart_overlay/proc/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	SHOULD_CALL_PARENT(TRUE)
-	return !bodypart_owner.is_husked || draw_on_husks
+	return !bodypart_owner.is_husked || draw_on_husks != HUSK_OVERLAY_NONE
 
 /**
  * Used in human rendering to cache generated bodyparts.

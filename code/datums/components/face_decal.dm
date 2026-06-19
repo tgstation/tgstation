@@ -38,9 +38,8 @@
 		if(!my_head) //just to be sure
 			qdel(src)
 			return
-		#warn fixme
 		bodypart_overlay = new()
-		bodypart_overlay.layers = layers
+		bodypart_overlay.layers = string_assoc_lists(layers)
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "[icon_state]_lizard"
 		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
