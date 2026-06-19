@@ -45,7 +45,7 @@
 		limb.remove_bodypart_overlay(bodypart_aug)
 
 /datum/bodypart_overlay/augment
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	draw_on_husks = HUSK_OVERLAY_NORMAL
 	offset_location = ENTIRE_BODY
 	/// Implant that owns this overlay
@@ -63,8 +63,8 @@
 	. = ..()
 	. += implant.get_overlay_state()
 
-/datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
-	var/list/imageset = implant.get_overlay(layer, limb)
+/datum/bodypart_overlay/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	var/list/imageset = implant.get_overlay(layer_real, limb)
 	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
 		return imageset
 

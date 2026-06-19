@@ -38,6 +38,7 @@
 		if(!my_head) //just to be sure
 			qdel(src)
 			return
+		#warn fixme
 		bodypart_overlay = new()
 		bodypart_overlay.layers = layers
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
