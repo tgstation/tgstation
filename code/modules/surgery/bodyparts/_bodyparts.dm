@@ -1382,7 +1382,9 @@
 	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
 	if(!dropped && !isnull(owner))
 		for(var/image/generated_overlay as anything in .)
-			owner.apply_height(generated_overlay, body_zone == BODY_ZONE_HEAD ? UPPER_BODY : ENTIRE_BODY)
+			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+			// it's more important to keep it consistent for things like getflaticon
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
 
 	// Draw external organs like horns and frills
 	// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
