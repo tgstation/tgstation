@@ -126,5 +126,8 @@ SUBSYSTEM_DEF(verbs)
 				arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
 			if(length(arg_data))
 				entry["args"] = arg_data
+			log_world("DEBUG serialize_verb: admin verb [verb_path] found, metadata args=[length(av.metadata?.arguments)], serialized args=[length(arg_data)]")
+		else
+			log_world("DEBUG serialize_verb: [verb_path] NOT found in game verbs ([length(verbs_by_verb_path)] entries) or admin verbs ([length(SSadmin_verbs.admin_verbs_by_verb_path)] entries)")
 
 	return entry
