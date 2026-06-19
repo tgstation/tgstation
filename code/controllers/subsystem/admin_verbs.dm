@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
+	/// A list of all admin verbs indexed by their verb_path.
+	var/list/datum/admin_verb/admin_verbs_by_verb_path = list()
 	/// A list of all admin verbs indexed by their visibility flag.
 	var/list/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
 	/// A map of all assosciated admins and their visibility flags.
@@ -45,6 +47,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		if(pending)
 			verb_singleton.metadata.arguments = pending
 		admin_verbs_by_type[verb_type] = verb_singleton
+		admin_verbs_by_verb_path[verb_singleton.verb_path] = verb_singleton
 		if(verb_singleton.visibility_flag)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()

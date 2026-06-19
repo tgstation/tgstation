@@ -666,7 +666,8 @@ GAME_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as num)
+GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range")
+	VERB_ARG(input, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))

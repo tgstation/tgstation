@@ -543,7 +543,8 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+GAME_VERB_CONTEXT(/mob, examinate, "Examine", null, /atom)
+	VERB_ARG(examinify, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -882,10 +883,14 @@ GAME_VERB(/mob, reset_ui_positions_for_mob, "Reset UI Positions", "OOC")
 	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-GAME_VERB_HIDDEN(/mob, DisClick, ".click", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".click"
+	set hidden = TRUE
 	return
 
-GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
 	return
 
 /// Adds this list to the output to the stat browser

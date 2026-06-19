@@ -2,7 +2,8 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
-GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
+GAME_VERB(/client, ooc, VERB_OOC, null)
+	VERB_ARG(msg, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -410,7 +411,9 @@ GAME_VERB_DESC(/client, policy, "Show Policy", "Show special server rules relate
 	browser.set_content(policytext.Join(""))
 	browser.open()
 
-GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
+/client/verb/fix_stat_panel()
+	set name = "Fix Stat Panel"
+	set hidden = TRUE
 	init_verbs()
 
 GAME_VERB_PROC_DESC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")

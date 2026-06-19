@@ -183,7 +183,9 @@
  *
  * required uiref ref The UI that was closed.
  */
-GAME_VERB_HIDDEN(/client, uiclose, "uiclose", window_id as text)
+/client/verb/uiclose(window_id as text)
+	set name = "uiclose"
+	set hidden = TRUE
 	var/mob/user = src?.mob
 	if(!user)
 		return
