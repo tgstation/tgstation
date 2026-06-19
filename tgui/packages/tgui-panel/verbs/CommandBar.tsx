@@ -8,6 +8,9 @@ import {
   type VerbArg,
 } from './atoms';
 
+const ARG_TYPE_TEXT = 1 << 0;
+const ARG_TYPE_NUM = 1 << 1;
+const ARG_TYPE_MESSAGE = 1 << 2;
 const ARG_TYPE_MOB = 1 << 5;
 const ARG_TYPE_OBJ = 1 << 6;
 const ARG_TYPE_TURF = 1 << 7;
@@ -28,6 +31,49 @@ function isTypepathArg(arg: VerbArg): boolean {
 
 function isEntityArg(arg: VerbArg): boolean {
   return (arg.arg_type & ARG_TYPE_ENTITY) !== 0;
+}
+
+function isTextArg(arg: VerbArg): boolean {
+  return (arg.arg_type & (ARG_TYPE_TEXT | ARG_TYPE_MESSAGE)) !== 0;
+}
+
+function parseArgs(raw: string): string[] {
+  const result: string[] = [];
+  let i = 0;
+  while (i < raw.length) {
+    if (raw[i] === ' ') {
+      i++;
+      continue;
+    }
+    if (raw[i] === '"') {
+      const end = raw.indexOf('"', i + 1);
+      if (end === -1) {
+        result.push(raw.slice(i + 1));
+        break;
+      }
+      result.push(raw.slice(i + 1, end));
+      i = end + 1;
+    } else {
+      const end = raw.indexOf(' ', i);
+      if (end === -1) {
+        result.push(raw.slice(i));
+        break;
+      }
+      result.push(raw.slice(i, end));
+      i = end;
+    }
+  }
+  return result;
+}
+
+function isInQuotedArg(raw: string): boolean {
+  let inQuote = false;
+  for (let i = 0; i < raw.length; i++) {
+    if (raw[i] === '"') {
+      inQuote = !inQuote;
+    }
+  }
+  return inQuote;
 }
 
 export function CommandBar() {
@@ -53,15 +99,17 @@ export function CommandBar() {
     Byond.sendMessage('verbs/request_verbs');
   }, []);
 
-  // Current token being typed
-  const currentToken = selectedVerb
-    ? input.slice(
-        toKebab(selectedVerb.name).length +
-          1 +
-          filledArgs.join(' ').length +
-          (filledArgs.length > 0 ? 1 : 0),
-      )
-    : input;
+  // Raw arg portion after verb name
+  const argPortion = selectedVerb
+    ? input.slice(toKebab(selectedVerb.name).length + 1)
+    : '';
+  // Parse filled + current token from the arg portion
+  const parsedArgs = selectedVerb ? parseArgs(argPortion) : [];
+  const currentToken =
+    parsedArgs.length > filledArgs.length
+      ? parsedArgs[filledArgs.length]
+      : '';
+  const inQuotedArg = selectedVerb ? isInQuotedArg(argPortion) : false;
 
   // Verb suggestions
   const verbSuggestions: AdminVerb[] =
@@ -172,6 +220,35 @@ export function CommandBar() {
     setInput(value);
     setSelectedIndex(0);
 
+    // When closing quote typed, fill the text arg
+    if (selectedVerb && currentArg && isTextArg(currentArg)) {
+      const afterVerb = value.slice(toKebab(selectedVerb.name).length + 1);
+      const parsed = parseArgs(afterVerb);
+      if (parsed.length > filledArgs.length && !isInQuotedArg(afterVerb)) {
+        const completedValue = parsed[filledArgs.length];
+        const newFilled = [...filledArgs, completedValue];
+        setFilledArgs(newFilled);
+
+        const kebab = toKebab(selectedVerb.name);
+        const serialized = newFilled
+          .map((a, i) => {
+            const arg = verbArgs[i];
+            if (arg && isTextArg(arg)) return `"${a}"`;
+            return a;
+          })
+          .join(' ');
+
+        if (newFilled.length < verbArgs.length) {
+          const nextArg = verbArgs[newFilled.length];
+          if (nextArg && isTextArg(nextArg)) {
+            setInput(kebab + ' ' + serialized + ' "');
+          } else {
+            setInput(kebab + ' ' + serialized + ' ');
+          }
+        }
+      }
+    }
+
     // For typepath args, request children when user types /
     if (selectedVerb && isCurrentArgTypepath) {
       const token = selectedVerb
@@ -198,12 +275,16 @@ export function CommandBar() {
     setLastTypepathRequest('');
     const kebab = toKebab(verb.name);
     if (verb.args.length > 0) {
-      setInput(kebab + ' ');
       const firstArg = verb.args[0];
+      if (isTextArg(firstArg)) {
+        setInput(kebab + ' "');
+      } else {
+        setInput(kebab + ' ');
+      }
       if (isTypepathArg(firstArg)) {
         Byond.sendMessage('verbs/request_typepaths', { parent: '/datum' });
         setLastTypepathRequest('/');
-      } else {
+      } else if (isEntityArg(firstArg)) {
         Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
       }
     } else {
@@ -245,10 +326,23 @@ export function CommandBar() {
     setSelectedIndex(0);
 
     const kebab = toKebab(selectedVerb.name);
+    const serializedArgs = newFilledArgs
+      .map((a, i) => {
+        const arg = verbArgs[i];
+        if (arg && isTextArg(arg)) return `"${a}"`;
+        return a;
+      })
+      .join(' ');
+
     if (newFilledArgs.length < verbArgs.length) {
-      setInput(kebab + ' ' + newFilledArgs.join(' ') + ' ');
+      const nextArg = verbArgs[newFilledArgs.length];
+      if (nextArg && isTextArg(nextArg)) {
+        setInput(kebab + ' ' + serializedArgs + ' "');
+      } else {
+        setInput(kebab + ' ' + serializedArgs + ' ');
+      }
     } else {
-      setInput(kebab + ' ' + newFilledArgs.join(' '));
+      setInput(kebab + ' ' + serializedArgs);
     }
   };
 
