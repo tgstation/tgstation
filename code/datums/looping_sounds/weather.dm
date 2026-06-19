@@ -51,6 +51,7 @@
 	mid_length = 166.9 SECONDS // exact length of the music in ticks
 	volume = 100
 	extra_range = 30
+	pressure_affected = FALSE
 
 /datum/looping_sound/snowstorm
 	mid_sounds = list(
