@@ -463,3 +463,18 @@
   - bugfix: Camera can now take 1x1 photos so new records can be uploaded
   timothymtorres:
   - bugfix: Fix deep fryer to be refillable
+2026-06-19:
+  Hatterhat:
+  - bugfix: Alien welding tools no longer have mixed directions when held in the right
+      hand.
+  RusselNotSCP:
+  - qol: Bottles in the booze-o-mat vending machine have been re-alphabetized.
+  - bugfix: Jester's Grenadine has been moved to the non-alcoholic section of the
+      booze-o-mat.
+  SmArtKar:
+  - qol: TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys
+  lelandkemble:
+  - bugfix: fixed a runtime with bluespace meteors
+  - bugfix: fixed connecting a tank to a TTV the other way around
+  timothymtorres:
+  - code_imp: Add immunity checks for atmos traits for simple/basic mobs

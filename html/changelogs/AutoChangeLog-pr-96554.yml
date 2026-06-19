@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Add immunity checks for atmos traits for simple/basic mobs"
