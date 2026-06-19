@@ -36,16 +36,32 @@ SUBSYSTEM_DEF(verbs)
 	meta.unassign_from(target)
 
 /datum/controller/subsystem/verbs/proc/serialize_verb(procpath/verb_path)
-	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	var/list/entry = list(
 		"name" = verb_path.name,
 		"category" = verb_path.category,
-		"type" = "[meta.verb_path]",
+		"type" = "[verb_path]",
 	)
 
-	var/list/arg_names = list()
-	for(var/datum/verb_arg_metadata/arg in meta.arguments)
-		arg_names += arg.name
-	entry["args"] = arg_names
+	// Check game verbs first, then admin verbs
+	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
+	if(meta)
+		entry["type"] = "[meta.verb_path]"
+		var/list/arg_names = list()
+		for(var/datum/verb_arg_metadata/arg in meta.arguments)
+			arg_names += arg.name
+		if(length(arg_names))
+			entry["args"] = arg_names
+	else
+		// Check admin verbs — their verb_path is /client/proc/__avd_name
+		for(var/datum/admin_verb/av_type as anything in SSadmin_verbs.admin_verbs_by_type)
+			var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_type[av_type]
+			if(av.verb_path == verb_path)
+				entry["type"] = "[av_type]"
+				var/list/arg_names = list()
+				for(var/datum/admin_verb_metadata/argument/arg in av.metadata?.arguments)
+					arg_names += arg.name
+				if(length(arg_names))
+					entry["args"] = arg_names
+				break
 
 	return entry

@@ -108,61 +108,89 @@
 		return TRUE
 
 	if(type == "verbs/request_targets")
-		var/verb_type = text2path(payload["verb_type"])
-		if(!verb_type)
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
 			return TRUE
-		var/datum/admin_verb/verb = SSadmin_verbs.admin_verbs_by_type[verb_type]
-		if(!verb)
+		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
 			return TRUE
-		var/list/target_data = list()
-		// Reuse the admin verb panel's target building logic
-		var/datum/admin_verb_metadata/argument/entity_arg
-		for(var/datum/admin_verb_metadata/argument/arg in verb.metadata?.arguments)
-			if(arg.arg_type & (ADMIN_VERB_ARG_TYPE_MOB | ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_AREA | ADMIN_VERB_ARG_TYPE_DATUM | ADMIN_VERB_ARG_TYPE_ATOM))
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(!meta || !length(meta.arguments))
+			return TRUE
+		var/datum/verb_arg_metadata/entity_arg
+		for(var/datum/verb_arg_metadata/arg in meta.arguments)
+			if(arg.arg_type & (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM))
 				entity_arg = arg
 				break
-		if(entity_arg)
-			var/list/source_atoms
-			if(entity_arg.source == ADMIN_VERB_ARG_SOURCE_VIEW && client.mob)
-				source_atoms = view(client.view, client.mob)
-			else if(entity_arg.arg_type & ADMIN_VERB_ARG_TYPE_MOB)
-				source_atoms = GLOB.mob_list
-			else if(entity_arg.arg_type & ADMIN_VERB_ARG_TYPE_AREA)
-				source_atoms = get_sorted_areas()
-			else if(client.mob)
-				source_atoms = view(client.view, client.mob)
-			for(var/atom/target in source_atoms)
-				target_data += list(list("name" = "[target]", "ref" = REF(target)))
+		if(!entity_arg)
+			return TRUE
+		var/list/target_data = list()
+		var/list/source_atoms = get_targets_for_arg(entity_arg)
+		for(var/atom/target in source_atoms)
+			target_data += list(list("name" = "[target]", "ref" = REF(target)))
 		window.send_message("verbs/targets", list("targets" = target_data))
 		return TRUE
 
 	if(type == "verbs/invoke")
-		var/verb_type = text2path(payload["verb_type"])
-		if(!verb_type)
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
+			return TRUE
+		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
+			return TRUE
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(!meta)
 			return TRUE
 		var/list/raw_args = payload["args"]
 		if(!islist(raw_args))
 			raw_args = list()
-		var/list/structured_args = list()
+		var/list/resolved_args = list()
 		for(var/key in raw_args)
 			var/value = raw_args[key]
 			if(istext(value))
 				var/located = locate(value)
 				if(located)
 					value = located
-			structured_args[key] = value
-		SSadmin_verbs.dynamic_invoke_verb(client, verb_type, structured_args)
+			resolved_args[key] = value
+		call(client.mob || client, meta.body_path)(arglist(resolved_args))
 		return TRUE
 
 	if(type == "requestMetadata")
 		send_metadata()
 		return TRUE
 
-/**
- * public
- *
- * Sends a round restart notification.
- */
+/datum/tgui_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
+	var/list/targets = list()
+	switch(arg.source)
+		if(VERB_ARG_SOURCE_WORLD)
+			if(arg.arg_type & VERB_ARG_TYPE_MOB)
+				return GLOB.mob_list
+			if(arg.arg_type & VERB_ARG_TYPE_AREA)
+				return get_sorted_areas()
+			if(arg.arg_type & VERB_ARG_TYPE_TURF)
+				for(var/mob/player in GLOB.player_list)
+					var/turf/player_turf = get_turf(player)
+					if(player_turf)
+						targets |= player_turf
+				return targets
+			if(arg.arg_type & (VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM))
+				if(client.mob)
+					return view(client.view, client.mob)
+		if(VERB_ARG_SOURCE_VIEW)
+			if(!client.mob)
+				return targets
+			var/list/visible = view(client.view, client.mob)
+			if(arg.arg_type & VERB_ARG_TYPE_MOB)
+				for(var/mob/target in visible)
+					targets += target
+			else if(arg.arg_type & VERB_ARG_TYPE_OBJ)
+				for(var/obj/target in visible)
+					targets += target
+			else if(arg.arg_type & VERB_ARG_TYPE_TURF)
+				for(var/turf/target in visible)
+					targets += target
+			else
+				return visible
+	return targets
+
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
 
