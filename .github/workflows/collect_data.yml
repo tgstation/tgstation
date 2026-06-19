@@ -43,8 +43,8 @@ jobs:
               map_name=$(basename "$file" .json)
 
               echo "\"$map_name\"" >> maps_output.txt
-              echo "map $map_name" >> map_config.txt
-              echo "endmap" >> map_config.txt
+              echo "map $map_name" >> map_configs.txt
+              echo "endmap" >> map_configs.txt
             else
               echo "Excluded: $file"
             fi
