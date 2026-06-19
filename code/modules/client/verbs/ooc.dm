@@ -2,9 +2,7 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
-/client/verb/ooc(msg as text)
-	set name = VERB_OOC
-
+GAME_VERB(/client, ooc, VERB_OOC, "", null, msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -179,21 +177,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
-/client/verb/admin_notice()
-	set name = "Adminnotice"
-	set category = "Admin"
-	set desc = "Check the admin notice if it has been set"
-
+GAME_VERB(/client, admin_notice, "Adminnotice", "Check the admin notice if it has been set", "Admin")
 	if(GLOB.admin_notice)
 		to_chat(src, "[span_boldnotice("Admin Notice:")]\n \t [GLOB.admin_notice]")
 	else
 		to_chat(src, span_notice("There are no admin notices at the moment."))
 
-/client/verb/motd()
-	set name = "MOTD"
-	set category = "OOC"
-	set desc ="Check the Message of the Day"
-
+GAME_VERB(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
@@ -223,11 +213,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
-/client/verb/select_ignore()
-	set name = "Ignore"
-	set category = "OOC"
-	set desc ="Ignore a player's messages on the OOC channel"
-
+GAME_VERB(/client, select_ignore, "Ignore", "Ignore a player's messages on the OOC channel", "OOC")
 	// Make a list to choose players from
 	var/list/players = list()
 
@@ -305,11 +291,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC channel."))
 
 // Unignore verb
-/client/verb/select_unignore()
-	set name = "Unignore"
-	set category = "OOC"
-	set desc = "Stop ignoring a player's messages on the OOC channel"
-
+GAME_VERB(/client, select_unignore, "Unignore", "Stop ignoring a player's messages on the OOC channel", "OOC")
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
@@ -356,11 +338,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
-/client/verb/fit_viewport()
-	set name = "Fit Viewport"
-	set category = "OOC"
-	set desc = "Fit the width of the map window to match the viewport"
-
+GAME_VERB(/client, fit_viewport, "Fit Viewport", "Fit the width of the map window to match the viewport", "OOC")
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
 	var/aspect_ratio = view_size[1] / view_size[2]
@@ -439,11 +417,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 
-/client/verb/policy()
-	set name = "Show Policy"
-	set desc = "Show special server rules related to your current character."
-	set category = "OOC"
-
+GAME_VERB(/client, policy, "Show Policy", "Show special server rules related to your current character.", "OOC")
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
@@ -462,10 +436,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	browser.set_content(policytext.Join(""))
 	browser.open()
 
-/client/verb/fix_stat_panel()
-	set name = "Fix Stat Panel"
-	set hidden = TRUE
-
+GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
 	init_verbs()
 
 /client/proc/export_preferences()
@@ -477,18 +448,11 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	prefs.savefile.export_json_to_client(usr, ckey)
 
-/client/verb/map_vote_tally_count()
-	set name = "Show Map Vote Tallies"
-	set desc = "View the current map vote tally counts."
-	set category = "OOC"
+GAME_VERB(/client, map_vote_tally_count, "Show Map Vote Tallies", "View the current map vote tally counts.", "OOC")
 	to_chat(mob, SSmap_vote.tally_printout)
 
 
-/client/verb/linkforumaccount()
-	set category = "OOC"
-	set name = "Link Forum Account"
-	set desc = "Validates your byond account to your forum account. Required to post on the forums."
-
+GAME_VERB(/client, linkforumaccount, "Link Forum Account", "Validates your byond account to your forum account. Required to post on the forums.", "OOC")
 	var/uri = CONFIG_GET(string/forum_link_uri)
 	if(!uri)
 		to_chat(src, span_warning("This feature is disabled."))

@@ -99,8 +99,7 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-/mob/verb/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	set name = "Point To"
+GAME_VERB(/mob, pointed, "Point To", "", null, atom/A as mob|obj|turf in view(client.view, src))
 
 	if(isnull(A) || istype(A, /obj/effect/temp_visual/point) || isarea(A))
 		return FALSE

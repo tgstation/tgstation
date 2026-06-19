@@ -224,10 +224,7 @@
 		ai_display.emotion = emote
 		ai_display.update()
 
-/mob/living/silicon/ai/verb/pick_icon()
-	set category = "AI Commands"
-	set name = "Set AI Core Display"
-	set desc = "Choose what appears on your AI core display"
+GAME_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", "AI Commands")
 
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
@@ -241,10 +238,7 @@
 		var/obj/item/aicard/card = loc
 		card.update_appearance()
 
-/mob/living/silicon/ai/verb/pick_status_display()
-	set category = "AI Commands"
-	set name = "Set AI Status Display"
-	set desc = "Choose what appears on status displays around the station"
+GAME_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display", "Choose what appears on status displays around the station", "AI Commands")
 
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
@@ -335,9 +329,7 @@
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 
-/mob/living/silicon/ai/verb/ai_camera_track()
-	set name = "track"
-	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
 	ai_tracking_tool.track_input(src)
 
@@ -355,9 +347,7 @@
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
 
-/mob/living/silicon/ai/verb/toggle_anchor()
-	set category = "AI Commands"
-	set name = "Toggle Floor Bolts"
+GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI Commands")
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(stat == DEAD)
@@ -982,10 +972,7 @@
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-/mob/living/silicon/ai/verb/deploy_to_shell()
-	set category = "AI Commands"
-	set desc = "Transfer to an available remote body."
-	set name = "Deploy to Shell"
+GAME_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", "AI Commands")
 
 	select_shell()
 

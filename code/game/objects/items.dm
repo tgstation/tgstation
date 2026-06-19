@@ -399,9 +399,7 @@
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
-/obj/item/verb/move_to_top()
-	set name = "Move To Top"
-	set src in oview(1)
+GAME_VERB(/obj/item, move_to_top, "Move To Top", "", null)
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
 		return
@@ -820,9 +818,7 @@
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action = indirect_action)
 
-/obj/item/verb/verb_pickup()
-	set src in oview(1)
-	set name = "Pick up"
+GAME_VERB(/obj/item, verb_pickup, "Pick up", "", null)
 
 	if(usr.incapacitated || !Adjacent(usr))
 		return

@@ -70,9 +70,7 @@
 	else
 		return ..()
 
-/obj/item/modular_computer/laptop/verb/open_computer()
-	set name = "Toggle Open"
-	set src in view(1)
+GAME_VERB(/obj/item/modular_computer/laptop, open_computer, "Toggle Open", "", null)
 
 	try_toggle_open(usr)
 

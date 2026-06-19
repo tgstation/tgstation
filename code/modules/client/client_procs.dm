@@ -1190,17 +1190,12 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "OOC"
-	set desc = "Stop Current Sounds"
+GAME_VERB(/client, stop_client_sounds, "Stop Sounds", "Stop Current Sounds", "OOC")
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
+GAME_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "", "OOC")
 
 	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)

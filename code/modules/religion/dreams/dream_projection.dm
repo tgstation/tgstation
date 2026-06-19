@@ -166,10 +166,7 @@
 /mob/eye/imaginary_friend/dream_projection/greet()
 	return
 
-/mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
-	set category = "IC"
-	set name = "Stop Projection"
-	set desc = "Stop astrally projecting and return to your body."
+GAME_VERB(/mob/eye/imaginary_friend/dream_projection, stop_projection, "Stop Projection", "Stop astrally projecting and return to your body.", "IC")
 
 	qdel(src)
 
