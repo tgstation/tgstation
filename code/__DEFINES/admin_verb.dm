@@ -73,13 +73,6 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
 /// Used to define the visibility flag of the verb. If the admin does not have this flag enabled they will not see the verb.
 #define ADMIN_VERB_VISIBILITY(verb_path_name, verb_visibility) /datum/admin_verb/##verb_path_name/visibility_flag = ##verb_visibility
 
-/// Declares a verb argument. Use in the body of an ADMIN_VERB. Self-registers metadata at world init and extracts value from structured_args at runtime.
-/// For typed args, pass the type path as the last argument: VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
-/// For untyped args (primitives), omit it: VERB_ARG(count, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
-#define VERB_ARG(name, arg_type, source, type_path...) \
-	var/static/____reg_##name = ____avd_register_arg(__TYPE__, #name, arg_type, ##type_path, source); \
-	var##type_path/##name = structured_args[#name]
-
 // These are put here to prevent the "procedure override precedes definition" error.
 /datum/admin_verb/proc/__avd_get_verb_path()
 	CRASH("__avd_get_verb_path not defined. use the macro")
@@ -92,7 +85,7 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
  * This is an example of how to use the above macro:
  * ```
  * ADMIN_VERB(name_of_verb, R_ADMIN, "Verb Name", "Verb Desc", "Verb Category")
- *     VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+ *     VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
  *     to_chat(user, "Hello [target]!")
  * ```
  * Note the implied `client/user` argument that is injected into the verb.
@@ -125,20 +118,18 @@ _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb
 #define ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG "Map-Debug"
 #define ADMIN_VERB_VISIBLITY_FLAG_LOCALHOST "Localhost"
 
-// Argument type bitflags for admin verb metadata. Combine with | for multi-type args.
-#define ADMIN_VERB_ARG_TYPE_TEXT (1<<0)
-#define ADMIN_VERB_ARG_TYPE_NUM (1<<1)
-#define ADMIN_VERB_ARG_TYPE_MESSAGE (1<<2)
-#define ADMIN_VERB_ARG_TYPE_SOUND (1<<3)
-#define ADMIN_VERB_ARG_TYPE_ICON (1<<4)
-#define ADMIN_VERB_ARG_TYPE_MOB (1<<5)
-#define ADMIN_VERB_ARG_TYPE_OBJ (1<<6)
-#define ADMIN_VERB_ARG_TYPE_TURF (1<<7)
-#define ADMIN_VERB_ARG_TYPE_AREA (1<<8)
-#define ADMIN_VERB_ARG_TYPE_DATUM (1<<9)
-#define ADMIN_VERB_ARG_TYPE_ATOM (1<<10)
-
-// Argument source constants for admin verb metadata
-#define ADMIN_VERB_ARG_SOURCE_INPUT "input"
-#define ADMIN_VERB_ARG_SOURCE_WORLD "world"
-#define ADMIN_VERB_ARG_SOURCE_VIEW "view"
+// Legacy aliases for admin verb arg types — use VERB_ARG_TYPE_* and VERB_ARG_SOURCE_* for new code
+#define ADMIN_VERB_ARG_TYPE_TEXT VERB_ARG_TYPE_TEXT
+#define ADMIN_VERB_ARG_TYPE_NUM VERB_ARG_TYPE_NUM
+#define ADMIN_VERB_ARG_TYPE_MESSAGE VERB_ARG_TYPE_MESSAGE
+#define ADMIN_VERB_ARG_TYPE_SOUND VERB_ARG_TYPE_SOUND
+#define ADMIN_VERB_ARG_TYPE_ICON VERB_ARG_TYPE_ICON
+#define ADMIN_VERB_ARG_TYPE_MOB VERB_ARG_TYPE_MOB
+#define ADMIN_VERB_ARG_TYPE_OBJ VERB_ARG_TYPE_OBJ
+#define ADMIN_VERB_ARG_TYPE_TURF VERB_ARG_TYPE_TURF
+#define ADMIN_VERB_ARG_TYPE_AREA VERB_ARG_TYPE_AREA
+#define ADMIN_VERB_ARG_TYPE_DATUM VERB_ARG_TYPE_DATUM
+#define ADMIN_VERB_ARG_TYPE_ATOM VERB_ARG_TYPE_ATOM
+#define ADMIN_VERB_ARG_SOURCE_INPUT VERB_ARG_SOURCE_INPUT
+#define ADMIN_VERB_ARG_SOURCE_WORLD VERB_ARG_SOURCE_WORLD
+#define ADMIN_VERB_ARG_SOURCE_VIEW VERB_ARG_SOURCE_VIEW

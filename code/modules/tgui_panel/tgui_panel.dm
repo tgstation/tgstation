@@ -86,8 +86,6 @@
 				),
 			),
 		))
-		if(client.holder)
-			SSadmin_verbs.send_verb_list_to_panel(client)
 		return TRUE
 
 	if(type == "audio/setAdminMusicVolume")
@@ -105,7 +103,11 @@
 		analyze_telemetry(payload)
 		return TRUE
 
-	if(type == "admin/request_targets")
+	if(type == "verbs/request_verbs")
+		client.init_verbs()
+		return TRUE
+
+	if(type == "verbs/request_targets")
 		var/verb_type = text2path(payload["verb_type"])
 		if(!verb_type)
 			return TRUE
@@ -131,10 +133,10 @@
 				source_atoms = view(client.view, client.mob)
 			for(var/atom/target in source_atoms)
 				target_data += list(list("name" = "[target]", "ref" = REF(target)))
-		window.send_message("admin/targets", list("targets" = target_data))
+		window.send_message("verbs/targets", list("targets" = target_data))
 		return TRUE
 
-	if(type == "admin/command")
+	if(type == "verbs/invoke")
 		var/verb_type = text2path(payload["verb_type"])
 		if(!verb_type)
 			return TRUE
