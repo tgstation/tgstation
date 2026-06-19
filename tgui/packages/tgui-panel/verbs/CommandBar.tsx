@@ -171,7 +171,7 @@ export function CommandBar() {
     setSelectedIndex(0);
     setLastTypepathRequest('');
     const kebab = toKebab(verb.name);
-    if (verb.args && verb.args.length > 0) {
+    if (verb.args.length > 0) {
       setInput(kebab + ' ');
       const firstArg = verb.args[0];
       if (isTypepathArg(firstArg)) {
@@ -282,7 +282,7 @@ export function CommandBar() {
                   onClick={() => selectVerb(verb)}
                 >
                   <span style={{ color: '#6cb6ff' }}>{toKebab(verb.name)}</span>
-                  {verb.args && verb.args.length > 0 && (
+                  {verb.args.length > 0 && (
                     <span style={{ color: '#666', marginLeft: '8px' }}>
                       {verb.args.map((a) => `<${a.name}>`).join(' ')}
                     </span>

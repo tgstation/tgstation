@@ -46,12 +46,8 @@ SUBSYSTEM_DEF(admin_verbs)
 		var/list/pending = GLOB.____pending_verb_args[verb_type]
 		if(pending)
 			verb_singleton.metadata.arguments = pending
-			log_world("DEBUG SSadmin_verbs: [verb_type] has [length(pending)] args from pending")
-		else
-			log_world("DEBUG SSadmin_verbs: [verb_type] has NO pending args. Pending keys: [json_encode(GLOB.____pending_verb_args)]")
 		admin_verbs_by_type[verb_type] = verb_singleton
 		admin_verbs_by_verb_path[verb_singleton.verb_path] = verb_singleton
-		log_world("DEBUG SSadmin_verbs: registered [verb_type] with verb_path=[verb_singleton.verb_path]")
 		if(verb_singleton.visibility_flag)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
