@@ -464,11 +464,18 @@
   timothymtorres:
   - bugfix: Fix deep fryer to be refillable
 2026-06-19:
+  Ghommie:
+  - refactor: Refactored a couple things around food/recipe complexity (what food
+      buffs depend on). Technically, you can now kiss that pizza toilet, which you
+      crafted (right?), with the chef kiss skillchip enabled to add "love" to its
+      reagents.
   Hatterhat:
   - bugfix: Alien welding tools no longer have mixed directions when held in the right
       hand.
   - bugfix: Inactive transforming weapons should now use their base throwspeeds properly
       when turned off.
+  Macaroni:
+  - rscadd: Alt + Right Click now toggles shoe layers above or below uniforms.
   Melbert:
   - balance: Muzzles prevent verbal spellcasting
   RusselNotSCP:
