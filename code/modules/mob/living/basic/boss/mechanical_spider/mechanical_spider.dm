@@ -27,7 +27,6 @@
 	melee_damage_lower = 16
 	melee_damage_upper = 20
 	damage_coeff = list(BRUTE = 0.8, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	unsuitable_atmos_damage = 1.5
 
 	attack_verb_continuous = "eviscerates"
 	attack_verb_simple = "eviscerate"
@@ -267,7 +266,7 @@
 		return
 	if(!(to_assess in dview(7, loc)))
 		return
-	if(prob(0.1) && !force_impure)
+	if(prob(1.33) && !force_impure)
 		purity_list += assess_key
 		to_chat(to_assess, span_green("[src] looks at you surprised."))
 		to_chat(src, span_green("[uppertext(to_assess.name)] IS PURE. IMPOSSIBLE? PURE."))
