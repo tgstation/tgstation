@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored a couple things around food/recipe complexity (what food buffs depend on). Technically, you can now kiss that pizza toilet, which you crafted (right?), with the chef kiss skillchip enabled to add \"love\" to its reagents."
