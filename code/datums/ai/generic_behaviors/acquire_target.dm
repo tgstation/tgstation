@@ -21,11 +21,11 @@
 	/// How close the reachability path must get to the target (0 = onto/adjacent). Passed to can_reach_target when must_be_reachable is set.
 	var/minimum_distance = 0
 	/// Set while an async reachability search is happening (yea, its a path check :( )
-	var/is_finding_target = FALSE
+	VAR_FINAL/is_finding_target = FALSE
 	/// Result written by the async search proc before it clears is_finding_target: the found atom, or null for no result.
-	var/atom/async_target_result
+	VAR_FINAL/atom/async_target_result
 	/// TRUE once the async search has written its result and is ready to be consumed.
-	var/async_search_done = FALSE
+	VAR_FINAL/async_search_done = FALSE
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	// Async reachability search in flight — stay RUNNING until it completes.

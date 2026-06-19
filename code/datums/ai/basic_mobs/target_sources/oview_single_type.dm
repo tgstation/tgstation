@@ -86,3 +86,12 @@
 
 /datum/target_source/oview_single_type/mushroom_food
 	single_typepath = /obj/item/food/grown/mushroom
+
+/datum/target_source/oview_single_type/ore
+	single_typepath = /obj/item/stack/ore
+
+/datum/target_source/oview_single_type/minebot_target
+	single_typepath = /obj/effect/temp_visual/minebot_target
+
+/datum/target_source/oview_single_type/node_drone
+	single_typepath = /mob/living/basic/node_drone

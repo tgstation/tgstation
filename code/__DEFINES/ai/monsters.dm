@@ -180,6 +180,8 @@
 #define BB_MINEBOT_REPAIR_DRONE "minebot_repair_drone"
 ///should we plant mines?
 #define BB_MINEBOT_PLANT_MINES "minebot_plant_mines"
+///should we plant mines?
+#define BB_MINEBOT_CRIT_ALERT_COOLDOWN "minebot callcrit cooldown"
 
 //seedling keys
 /// the water can we will pick up

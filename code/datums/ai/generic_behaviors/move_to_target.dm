@@ -4,7 +4,7 @@
 /datum/bt_node/ai_behavior/move_to_target
 	time_between_perform = 0
 	/// Set by on_movement_failed() when the movement system gives up pathing.
-	var/movement_failed = FALSE
+	VAR_FINAL/movement_failed = FALSE
 	/// Blackboard key holding the atom to move toward.
 	var/target_key
 	/// Distance at which arrival is considered reached.
