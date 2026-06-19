@@ -1,9 +1,15 @@
 import { atom } from 'jotai';
 
+export type VerbArg = {
+  name: string;
+  arg_type: number;
+  source: string | null;
+};
+
 export type AdminVerb = {
   type: string;
   name: string;
-  args: string[];
+  args?: VerbArg[];
 };
 
 export type AdminTarget = {
@@ -13,3 +19,4 @@ export type AdminTarget = {
 
 export const adminVerbsAtom = atom<AdminVerb[]>([]);
 export const adminTargetsAtom = atom<AdminTarget[]>([]);
+export const typepathsAtom = atom<string[]>([]);

@@ -110,19 +110,19 @@ SUBSYSTEM_DEF(verbs)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(meta)
 		entry["type"] = "[meta.verb_path]"
-		var/list/arg_names = list()
+		var/list/arg_data = list()
 		for(var/datum/verb_arg_metadata/arg in meta.arguments)
-			arg_names += arg.name
-		if(length(arg_names))
-			entry["args"] = arg_names
+			arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
+		if(length(arg_data))
+			entry["args"] = arg_data
 	else
 		var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(av)
 			entry["type"] = "[av.verb_path]"
-			var/list/arg_names = list()
+			var/list/arg_data = list()
 			for(var/datum/admin_verb_metadata/argument/arg in av.metadata?.arguments)
-				arg_names += arg.name
-			if(length(arg_names))
-				entry["args"] = arg_names
+				arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
+			if(length(arg_data))
+				entry["args"] = arg_data
 
 	return entry

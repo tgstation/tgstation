@@ -107,6 +107,25 @@
 		client.init_verbs()
 		return TRUE
 
+	if(type == "verbs/request_typepaths")
+		var/parent_text = payload["parent"]
+		var/parent_type = text2path(parent_text)
+		if(isnull(parent_type))
+			parent_type = /datum
+		var/list/children = list()
+		for(var/child_type in typesof(parent_type))
+			if(child_type == parent_type)
+				continue
+			// Only include direct children (one level deeper)
+			var/child_text = "[child_type]"
+			var/parent_len = length(parent_text || "/datum")
+			var/remainder = copytext(child_text, parent_len + 1)
+			if(findtext(remainder, "/", 2))
+				continue
+			children += child_text
+		window.send_message("verbs/typepaths", list("parent" = parent_text, "paths" = children))
+		return TRUE
+
 	if(type == "verbs/request_targets")
 		var/verb_path = text2path(payload["verb_type"])
 		if(!verb_path)

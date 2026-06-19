@@ -189,6 +189,7 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 #define VERB_ARG_TYPE_AREA (1<<8)
 #define VERB_ARG_TYPE_DATUM (1<<9)
 #define VERB_ARG_TYPE_ATOM (1<<10)
+#define VERB_ARG_TYPE_TYPEPATH (1<<11)
 
 // Argument source constants
 #define VERB_ARG_SOURCE_INPUT "input"
