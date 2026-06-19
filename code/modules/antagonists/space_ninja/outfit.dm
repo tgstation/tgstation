@@ -22,8 +22,8 @@
 	var/obj/item/mod/module/dna_lock/reinforced/lock = locate(/obj/item/mod/module/dna_lock/reinforced) in mod.modules
 	lock.dna = ninja.dna.unique_enzymes
 	var/obj/item/mod/module/weapon_recall/recall = locate(/obj/item/mod/module/weapon_recall) in mod.modules
-	var/obj/item/weapon = ninja.belt
-	if(!istype(weapon, recall.accepted_type))
+	var/obj/item/weapon = locate(recall.accepted_type) in ninja.get_all_contents()
+	if(!weapon)
 		return
 	recall.set_weapon(weapon)
 
