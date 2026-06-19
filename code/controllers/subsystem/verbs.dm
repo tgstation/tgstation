@@ -30,8 +30,10 @@ SUBSYSTEM_DEF(verbs)
 		call(target, verb_path)(arglist(positional_args))
 		return
 	var/list/structured_args = list()
-	// Check for context menu target
-	var/context_target = length(positional_args) ? positional_args["__context_target__"] : null
+	// Check for context menu target (only present in assoc lists from context menu stubs)
+	var/context_target
+	if(length(positional_args) && ("__context_target__" in positional_args))
+		context_target = positional_args["__context_target__"]
 	if(context_target)
 		positional_args -= "__context_target__"
 	// Map positional args to metadata arg names
