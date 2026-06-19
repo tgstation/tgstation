@@ -21,6 +21,18 @@ const ARG_TYPE_TYPEPATH = 1 << 11;
 const ARG_TYPE_ENTITY =
   ARG_TYPE_MOB | ARG_TYPE_OBJ | ARG_TYPE_TURF | ARG_TYPE_AREA | ARG_TYPE_DATUM | ARG_TYPE_ATOM;
 
+function longestCommonPrefix(strings: string[]): string {
+  if (strings.length === 0) return '';
+  let prefix = strings[0];
+  for (let i = 1; i < strings.length; i++) {
+    while (!strings[i].startsWith(prefix)) {
+      prefix = prefix.slice(0, -1);
+      if (!prefix) return '';
+    }
+  }
+  return prefix;
+}
+
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
 }
@@ -170,8 +182,9 @@ export function CommandBar() {
     } else if (e.key === 'Tab') {
       e.preventDefault();
       if (!selectedVerb && verbSuggestions.length > 0) {
-        // Autocomplete the verb name into the input without executing
-        setInput(toKebab(verbSuggestions[selectedIndex].name));
+        const names = verbSuggestions.map((v) => toKebab(v.name));
+        const prefix = longestCommonPrefix(names);
+        setInput(prefix);
         setSelectedIndex(0);
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex] as string);
