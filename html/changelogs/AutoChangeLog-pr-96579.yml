@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Inactive transforming weapons should now use their base throwspeeds properly when turned off."

@@ -467,6 +467,8 @@
   Hatterhat:
   - bugfix: Alien welding tools no longer have mixed directions when held in the right
       hand.
+  - bugfix: Inactive transforming weapons should now use their base throwspeeds properly
+      when turned off.
   RusselNotSCP:
   - qol: Bottles in the booze-o-mat vending machine have been re-alphabetized.
   - bugfix: Jester's Grenadine has been moved to the non-alcoholic section of the
@@ -474,6 +476,8 @@
   SmArtKar:
   - qol: TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys
   - bugfix: Removed DNA infuser sprite from gizmo icon pool
+  - bugfix: Fixed bioscrambler runtiming when the target is missing bodyparts
+  - bugfix: Made fire overlay properly mask when using mining sphere MODule
   lelandkemble:
   - bugfix: fixed a runtime with bluespace meteors
   - bugfix: fixed connecting a tank to a TTV the other way around

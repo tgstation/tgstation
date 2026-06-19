@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Made fire overlay properly mask when using mining sphere MODule"
