@@ -21,6 +21,12 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 
+/datum/bt_node/subtree/minebot_combat
+	behavior_tree_json = "minebot_combat.bt.json"
+
+/datum/bt_node/subtree/minebot_mining
+	behavior_tree_json = "minebot_mining.bt.json"
+
 /// Mineral wall finder that skips turfs in the blacklist and the previously unreachable wall.
 /datum/bt_node/ai_behavior/find_mineral_wall/minebot
 
@@ -217,6 +223,10 @@
 
 /datum/pet_command/minebot_ability/dump/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to dump its ore!"
+
+/datum/pet_command/minebot_ability/dump/execute_action(datum/ai_controller/controller)
+	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE) //else bro will just pick it up
+	return ..()
 
 /datum/pet_command/attack/minebot
 	attack_subtree = /datum/bt_node/subtree/pet_command/attack/minebot

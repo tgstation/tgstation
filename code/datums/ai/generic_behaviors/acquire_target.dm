@@ -3,7 +3,7 @@
 	/// Blackboard key to write the found target into.
 	var/target_key
 	/// Either a /datum/targeting_strategy typepath (resolved directly) or a blackboard key string
-	var/targeting_strategy
+	var/targeting_strategy = BB_TARGETING_STRATEGY
 	/// Typepath of the /datum/target_source singleton used to gather candidates.
 	var/target_source = /datum/target_source/oview
 	/// How far to scan for candidates (passed to the target source). Can be a key too.
