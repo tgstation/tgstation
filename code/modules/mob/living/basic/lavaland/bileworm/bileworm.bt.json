@@ -19,6 +19,32 @@
 					"children": [
 						{
 							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/ability_available",
+							"vars": {
+								"ability_key": "BB_BILEWORM_DEVOUR"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
+								"vars": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"invert": false,
+									"key": "BB_BASIC_MOB_EXECUTION_TARGET",
+									"min_stat": "UNCONSCIOUS"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
+									"vars": {
+										"ability_key": "BB_BILEWORM_DEVOUR",
+										"target_key": "BB_BASIC_MOB_EXECUTION_TARGET",
+										"maximum_distance": 16
+									}
+								}
+							}
+						},
+						{
+							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"vars": {
 								"observer_abort": "BT_ABORT_BOTH",
@@ -73,29 +99,6 @@
 															"vars": {
 																"ability_key": "BB_BILEWORM_SPEW_BILE",
 																"target_key": "BB_CURRENT_TARGET"
-															}
-														}
-													},
-													{
-														"type": "decorator",
-														"decorator": "/datum/bt_node/decorator/ability_available",
-														"vars": {
-															"ability_key": "BB_BILEWORM_DEVOUR"
-														},
-														"child": {
-															"type": "decorator",
-															"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
-															"vars": {
-																"key": "BB_BASIC_MOB_EXECUTION_TARGET",
-																"min_stat": "UNCONSCIOUS"
-															},
-															"child": {
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
-																"vars": {
-																	"ability_key": "BB_BILEWORM_DEVOUR",
-																	"target_key": "BB_BASIC_MOB_EXECUTION_TARGET"
-																}
 															}
 														}
 													}

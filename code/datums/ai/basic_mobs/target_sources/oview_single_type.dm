@@ -77,3 +77,6 @@
 
 /datum/target_source/oview_single_type/piano_synth
 	single_typepath = /obj/item/instrument/piano_synth
+
+/datum/target_source/oview_single_type/orbie
+	single_typepath = /mob/living/basic/orbie

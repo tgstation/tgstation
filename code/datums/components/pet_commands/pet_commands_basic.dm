@@ -322,9 +322,6 @@
 	return ..()
 
 /datum/pet_command/move/execute_action(datum/ai_controller/controller)
-	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
-		return
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/move_to)
 
 /datum/pet_command/move/retrieve_command_text(atom/living_pet, atom/target)

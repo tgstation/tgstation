@@ -1,4 +1,4 @@
-/// Passes when the mob held in a blackboard key has a stat value at that is at least X
+/// Passes when the mob held in a blackboard key has a stat value at that is at least X. Higher is more dead.
 /datum/bt_node/decorator/mob_stat_at_least
 	/// Blackboard key holding the mob to check.
 	var/key = null

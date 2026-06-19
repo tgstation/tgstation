@@ -2,6 +2,7 @@
 #define MESSAGE_EXPIRY_TIME (30 SECONDS)
 
 /datum/ai_controller/basic_controller/orbie
+	behavior_tree_json = "orbie.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -10,12 +11,6 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/find_playmates,
-		/datum/ai_planning_subtree/relay_pda_message,
-		/datum/ai_planning_subtree/pet_planning,
-	)
 
 /datum/ai_controller/basic_controller/orbie/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -28,42 +23,36 @@
 
 	addtimer(CALLBACK(src, PROC_REF(clear_blackboard_key), BB_LAST_RECEIVED_MESSAGE), MESSAGE_EXPIRY_TIME)
 
-///ai behavior that lets us search for other orbies to play with
-/datum/ai_planning_subtree/find_playmates
+/// Finds a nearby free orbie to play with and mutually registers as playmates.
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/find_playmate
+	target_key = BB_NEARBY_PLAYMATE
+	target_source = /datum/target_source/oview_single_type/orbie
+	targeting_strategy = /datum/targeting_strategy/playmate
 
-/datum/ai_planning_subtree/find_playmates/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard[BB_NEXT_PLAYDATE] > world.time)
-		return
-	if(controller.blackboard_key_exists(BB_NEARBY_PLAYMATE))
-		controller.queue_behavior(/datum/ai_behavior/interact_with_playmate, BB_NEARBY_PLAYMATE)
-		return SUBTREE_RETURN_FINISH_PLANNING
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/find_playmate/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
+	var/mob/living/basic/orbie/playmate = target
+	playmate.ai_controller.set_blackboard_key(BB_NEARBY_PLAYMATE, controller.pawn)
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/find_playmate, BB_NEARBY_PLAYMATE, /mob/living/basic/orbie)
+/// Accepts an orbie that is free to play (no current playmate and not on playdate cooldown).
+/datum/targeting_strategy/playmate
 
-/datum/ai_behavior/find_and_set/find_playmate
-
-/datum/ai_behavior/find_and_set/find_playmate/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	for(var/mob/living/basic/orbie/playmate in oview(search_range, controller.pawn))
-		if(playmate == controller.pawn || playmate.stat == DEAD || isnull(playmate.ai_controller))
-			continue
-		if(playmate.ai_controller.blackboard[BB_NEARBY_PLAYMATE] || playmate.ai_controller.blackboard[BB_NEXT_PLAYDATE] > world.time) //they already have a playmate...
-			continue
-		playmate.ai_controller.set_blackboard_key(BB_NEARBY_PLAYMATE, controller.pawn)
-		return playmate
-	return null
-
-
-/datum/ai_behavior/interact_with_playmate
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/interact_with_playmate/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/turf/target = controller.blackboard[target_key]
-	if(isnull(target))
+/datum/targeting_strategy/playmate/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	if(!istype(target, /mob/living/basic/orbie))
 		return FALSE
-	set_movement_target(controller, target)
+	var/mob/living/basic/orbie/orbie_target = target
+	if(orbie_target == living_mob || orbie_target.stat == DEAD || isnull(orbie_target.ai_controller))
+		return FALSE
+	if(orbie_target.ai_controller.blackboard[BB_NEARBY_PLAYMATE])
+		return FALSE
+	if(orbie_target.ai_controller.blackboard[BB_NEXT_PLAYDATE] > world.time)
+		return FALSE
+	return TRUE
 
-/datum/ai_behavior/interact_with_playmate/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+///plays with a nearby orbie
+/datum/bt_node/ai_behavior/interact_with_playmate
+	var/target_key = "BB_NEARBY_PLAYMATE"
+
+/datum/bt_node/ai_behavior/interact_with_playmate/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 
@@ -72,33 +61,32 @@
 
 	living_pawn.manual_emote("plays with [target]!")
 	living_pawn.spin(spintime = 4, speed = 1)
-	living_pawn.ClickOn(target)
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, ClickOn), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/interact_with_playmate/finish_action(datum/ai_controller/controller, success, target_key)
+/datum/bt_node/ai_behavior/interact_with_playmate/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 	controller.set_blackboard_key(BB_NEXT_PLAYDATE, world.time + PET_PLAYTIME_COOLDOWN)
 
-/datum/ai_planning_subtree/relay_pda_message
+///relays a pda message if orbie is level 2+
+/datum/bt_node/ai_behavior/relay_pda_message
+	var/target_key = "BB_LAST_RECEIVED_MESSAGE"
 
-/datum/ai_planning_subtree/relay_pda_message/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2 || isnull(controller.blackboard[BB_LAST_RECEIVED_MESSAGE]))
-		return
+/datum/bt_node/ai_behavior/relay_pda_message/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECEIVED_MESSAGE)
-
-/datum/ai_behavior/relay_pda_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/text_to_say = controller.blackboard[target_key]
 	if(isnull(text_to_say))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	living_pawn.say(text_to_say, forced = "AI controller")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), text_to_say, forced = "AI controller")
 	living_pawn.spin(spintime = 4, speed = 1)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/relay_pda_message/finish_action(datum/ai_controller/controller, success, target_key)
+/datum/bt_node/ai_behavior/relay_pda_message/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
