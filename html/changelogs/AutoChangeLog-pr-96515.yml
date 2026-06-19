@@ -1,0 +1,4 @@
+author: "Macaroni"
+delete-after: True
+changes:
+  - rscadd: "Alt + Right Click now toggles shoe layers above or below uniforms."
