@@ -291,3 +291,191 @@
   - sound: Add valve sound to portable canisters
   - sound: Add keypad sounds to secure safes
   - sound: Add drill sound to surgical drill
+2026-06-12:
+  Absolucy, Flleeppyy:
+  - rscadd: Added a websocket client, you can now forward incoming chat messages to
+      an external program, i.e allowing you to change music playlists based on events,
+      or such.
+  Ghommie:
+  - admin: Prayers from players are now boxed (like examine messages and some health
+      readouts for example), making them easier to tell apart from the constant stream
+      of text in your chat tabs.
+  - rscadd: Santa Claus can now hear prayers that mention him or Christmas. He won't
+      know who's praying unless told, though he can tell if they're naughty.
+  Hatterhat:
+  - spellcheck: Butterbean plants are now capitalized properly when planted.
+  Profakos (originally pulled from their branch, did massive chunk of this), Ben10omintrix:
+  - refactor: mulebots have been refactored. please report any bugs
+  SmArtKar:
+  - bugfix: Fixed broken area overlays for particle weather
+  TymSha:
+  - qol: Ooze mobs from cytology now have the same type of HUD as other mobs, allowing
+      them to see their health
+  - qol: The abilities of shoolean grapes now have their cost specified in their description
+  - bugfix: The mending globule ability used by shoolean grapes no longer can be cast
+      while there isn't enough nutrition to do so
+  antropod:
+  - bugfix: fixed material tiles and walls not having material when constructed from
+      last item in the stack
+  timothymtorres:
+  - sound: Add on/off sound to light switches in rooms
+2026-06-13:
+  Absolucy:
+  - qol: You can now preview what different emotes sound like via the emote panel.
+  Arturlang:
+  - rscadd: beams now animate when moving tile to tile, this is mostly noticeable
+      for constant beam effects
+  - bugfix: beam emissives now work
+  CabinetOnFire:
+  - bugfix: You can now hear the outside world when you're inside of something again
+      (e.g. lockers, mechs
+  SmArtKar:
+  - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  SyncIt21:
+  - rscdel: removes the welder from the engiborg omnitool. They are now separate entities
+      again
+  - qol: The omnitool radial menu won't show the same selected tool again reducing
+      clutter
+  timothymtorres:
+  - code_imp: Reorganize shuttle maps into separate folders
+2026-06-14:
+  CabinetOnFire:
+  - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
+      a regular list
+  FalloutFalcon:
+  - bugfix: Clients who sit in the lobby after pregame will no longer have there ambience
+      disabled till they reconnect
+  Ghommie:
+  - bugfix: You no longer waddle when buckled to something.
+  Melbert:
+  - rscadd: You can now deconstruct first aid stations with a screwdriver and a crowbar.
+  - rscadd: You can now buy first aid station circuitboards from cargo for 1200 credits.
+  - rscadd: Most medical supplies ordered from cargo now come in DeForest crates.
+      Sansufentanyl comes in an Interdyne create.
+  - balance: As they can now be replaced, first aid station armor has been reduced.
+  - balance: Emergency first aid stations now heal twice as fast but also take twice
+      as long to recharge.
+  SmArtKar:
+  - bugfix: Fixed rugs runtiming when cleaning objects
+  - bugfix: Fixed harddels in escape menu
+  carshalash:
+  - qol: Made certain cocktails reflect real-world ratios. Including gin fizz, rum
+      and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
+  lelandkemble:
+  - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
+  - bugfix: '"fixed" a runtime with gas mask filters'
+  remove32:
+  - bugfix: statpanel uses year offset
+2026-06-15:
+  Ben10Omintrix:
+  - bugfix: baby stoats can now become adults
+  - rscadd: baby stoats are added to the spawn pool of maints, (the overall chance
+      of running into a stoat whether adult/baby remains the same)
+  CabinetOnFire:
+  - bugfix: Fixes a hard-del and signal override with sound tokens
+  Iamgoofball:
+  - rscadd: Added support for Radio TTS. You will now hear players over the radio
+      via the TTS system.
+  - rscadd: Configure this in Game Options under the Sound tab.
+  - sound: Re-did blips to be significantly nicer sounding and way better.
+  - sound: Alien speech you don't understand now comes through as Blips. If you have
+      TTS entirely disabled, you won't hear blips.
+  - sound: The Tram and Computers now utilize the TTS system. Configs have been added
+      to set a consistent voice.
+  - sound: TTS audio now utilizes 3D audio; you can now walk away from people saying
+      stupid shit and it gets quieter.
+  - sound: Blips also now include more customization options, and a dedicated Blips
+      preview button by clicking the leaf icon.
+  - rscdel: The configuration to disable TTS on whispering has been removed, as it
+      is no longer needed and also interferes with radio TTS functioning properly.
+  LemonInTheDark:
+  - bugfix: End of round mapvotes will now properly default to the only option if
+      only one map is votable.
+  Melbert:
+  - qol: Gizmo sends a message when turning on and off
+  - qol: 'If your gun is empty, and you are on combat mode, and you are adjacent to
+      someone, and you click on them: you will perform a gun bash rather than just
+      dry firing.'
+  SmArtKar:
+  - bugfix: Fixed weather on multi-z maps
+  - qol: Particle weather can now be disabled in favor of old weather. !!! AMD GPU
+      USERS NEED TO SWITCH TO OLD WEATHER TO FIX THE LAG!!!
+  - bugfix: Fixed recovered crew showing up as uncategorized antags
+  lelandkemble:
+  - bugfix: fixed a runtime when fishing up no fish
+2026-06-16:
+  Aliceee2ch:
+  - balance: Gender changing potion has a 5 seconds do_after now.
+  CabinetOnFire:
+  - code_imp: Adds playsoundtoken() which lets you play one shot sound tokens
+  - sound: You can now hear screams get louder as you get closer, spooky!
+2026-06-17:
+  Melbert:
+  - qol: Adds an antag info panel for revolution
+  - qol: Codewords can now consist of any station area, and excludes areas not on
+      the current station
+  - qol: Head Revolutionaries (not their underlings) get codewords
+  Okram0:
+  - rscadd: Zombies are now stam resistant
+  - rscadd: Zombies no longer suffer from mood
+  - balance: Zombies are now moderately faster
+  SmArtKar:
+  - bugfix: Fixed slime feeding runtimes
+  - bugfix: Fixed wraith cloaking module runtimes
+  - qol: Materials can now be directly ejected from autolathes rather than needing
+      to be printed.
+  - bugfix: Fixed a bunch of runtimes caused when you try to perform surgery on cyborgs
+      (which cannot be done in the first place)
+  - bugfix: Fixed earthcracker not getting spent on mining z levels
+  SyncIt21:
+  - bugfix: Tooltips no longer cover the whole borgs hands held items
+  lelandkemble:
+  - bugfix: Being given a nonfunctional skeleton arm no longer disables both hands
+  levels0:
+  - rscadd: new gizmode
+  - bugfix: you can now interact with item gizmo wires
+2026-06-18:
+  Aliceee2ch:
+  - bugfix: Turtles now come in the stasis crates and can no longer grow inside of
+      a cargo shuttle (or, well, untill you open the crate in general). This allows
+      you to ACTUALLY interact with turtles growing feature before they come grown
+      up.
+  ArcaneMusic:
+  - bugfix: The Moon Outpost 19 away mission now correctly uses the same gray-sand
+      turf when mining rocks.
+  - map: Tweaked some minor object placements and names across Moon Outpost 19.
+  Ghommie:
+  - bugfix: Fish traits injected with the fish gene gun should work a little better
+      in some cases.
+  - bugfix: Fixed the e-katana not being linked to the recall module automatically
+      when rolling ninja.
+  - bugfix: Moved a recipe that has meat and eggs in it from mothic cuisine and into
+      martian cuisine.
+  Goatto:
+  - bugfix: Fixes non `/obj/item/clothing/under` items from applying the `fresh_laundry`
+      mood_event
+  Wisemonster:
+  - bugfix: Legion cores no longer feed the user.
+  - code_imp: The fully_heal proc now checks for the HEAL_ADMIN flag before restoring
+      hunger.
+  flleeppyy:
+  - bugfix: Camera can now take 1x1 photos so new records can be uploaded
+  timothymtorres:
+  - bugfix: Fix deep fryer to be refillable
+2026-06-19:
+  Hatterhat:
+  - bugfix: Alien welding tools no longer have mixed directions when held in the right
+      hand.
+  RusselNotSCP:
+  - qol: Bottles in the booze-o-mat vending machine have been re-alphabetized.
+  - bugfix: Jester's Grenadine has been moved to the non-alcoholic section of the
+      booze-o-mat.
+  SmArtKar:
+  - qol: TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys
+  - bugfix: Removed DNA infuser sprite from gizmo icon pool
+  lelandkemble:
+  - bugfix: fixed a runtime with bluespace meteors
+  - bugfix: fixed connecting a tank to a TTV the other way around
+  timothymtorres:
+  - code_imp: Add immunity checks for atmos traits for simple/basic mobs

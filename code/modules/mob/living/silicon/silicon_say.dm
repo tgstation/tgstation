@@ -31,7 +31,6 @@
 	if(istype(brain))
 		namepart = brain.mainframe.name
 		designation = brain.mainframe.job
-
 	for(var/mob/hearing_mob in GLOB.player_list)
 		if(hearing_mob.binarycheck())
 			if(isAI(hearing_mob))
@@ -88,14 +87,16 @@
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
 	if(.)
+		do_tts_message(message, language, message_mods, list(), list())
 		return
 	if(message_mods[MODE_HEADSET])
 		if(radio)
-			radio.talk_into(src, message, , spans, language, message_mods)
+			radio.talk_into(src, message, null, spans, language, message_mods)
+			do_tts_message(message, language, message_mods, list(), list())
 		return NOPASS
 	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			do_tts_message(message, language, message_mods, list(), list())
 			return NOPASS
-
 	return FALSE

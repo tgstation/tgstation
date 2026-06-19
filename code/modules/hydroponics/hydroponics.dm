@@ -1117,8 +1117,7 @@
 		if(!do_after(user, 2 SECONDS, src))
 			return
 
-		oursoil.transfer_soil(src, inside_tray = TRUE)
-
+		current_soil = oursoil.transfer_soil(src, inside_tray = TRUE)
 		RefreshParts()
 		tray_flags = current_soil.tray_flags
 

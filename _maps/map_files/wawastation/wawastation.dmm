@@ -3278,7 +3278,7 @@
 	codes_txt = "delivery;dir=8";
 	location = "QM #2"
 	},
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "beO" = (
@@ -16365,7 +16365,7 @@
 	codes_txt = "delivery;dir=8";
 	location = "QM #1"
 	},
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)

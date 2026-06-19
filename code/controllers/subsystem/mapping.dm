@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(mapping)
 	if(current_map.wilderness_levels)
 		var/list/FailedZs = list()
 
-		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
