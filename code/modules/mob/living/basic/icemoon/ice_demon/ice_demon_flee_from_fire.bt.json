@@ -3,9 +3,9 @@
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/target_holding_lit_item",
 	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
 		"key": "BB_CURRENT_TARGET",
-		"item_types_key": "BB_LIST_SCARY_ITEMS",
-		"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+		"item_types_key": "BB_LIST_SCARY_ITEMS"
 	},
 	"child": {
 		"type": "parallel",

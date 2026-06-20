@@ -17,3 +17,7 @@
 /// Flees from a target holding a lit scary item, slipping them on the way out.
 /datum/bt_node/subtree/ice_demon_flee_from_fire
 	behavior_tree_json = "ice_demon_flee_from_fire.bt.json"
+
+
+/datum/bt_node/subtree/ice_demon_combat
+	behavior_tree_json = "ice_demon_combat.bt.json"
