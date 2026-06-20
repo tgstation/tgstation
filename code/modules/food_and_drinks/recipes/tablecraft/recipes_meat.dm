@@ -240,6 +240,15 @@
 	added_foodtypes = FRIED
 	dish_category = DISH_MEAT
 
+/datum/crafting_recipe/food/cfc_bucket
+	name = "Chef-Fried-Chicken Bucket"
+	reqs = list(
+		/obj/item/stack/sheet/cardboard = 1,
+		/obj/item/food/fried_chicken = 5
+	)
+	result = /obj/item/storage/box/cfc_bucket
+	dish_category = DISH_MEAT
+
 /datum/crafting_recipe/food/beef_stroganoff
 	name = "Beef Stroganoff"
 	reqs = list(

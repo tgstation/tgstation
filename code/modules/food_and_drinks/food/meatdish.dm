@@ -996,6 +996,47 @@
 	if(prob(50))
 		icon_state = "fried_chicken2"
 
+/obj/item/storage/box/cfc_bucket
+	name = "Chef-Fried-Chicken bucket"
+	desc = "We both got buckets of chicken. Wanna robust the Captain?"
+	icon = 'icons/obj/storage/box.dmi'
+	icon_state = "cfc_bucket"
+	inhand_icon_state = "cfc_bucket"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/cfc_bucket
+
+/obj/item/storage/box/cfc_bucket/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/item/storage/box/cfc_bucket/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	for(var/obj/item/food/fried_chicken/chicken in components)
+		chicken.forceMove(src)
+	update_appearance()
+	return ..()
+
+/obj/item/storage/box/cfc_bucket/update_icon_state()
+	var/suffix = ""
+	if(!contents.len)
+		suffix = "-e"
+	else
+		suffix = "-[contents.len]"
+	icon_state = "[initial(icon_state)][suffix]"
+	return ..()
+
+/datum/storage/cfc_bucket
+	max_specific_storage = WEIGHT_CLASS_SMALL
+	max_total_storage = 15
+	max_slots = 5
+
+/datum/storage/cfc_bucket/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(list(
+		/obj/item/food/fried_chicken,
+	))
+
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
 	desc = "A Russian dish that consists of beef and sauce. Really popular in Japan, or at least that's what my animes would allude to."
