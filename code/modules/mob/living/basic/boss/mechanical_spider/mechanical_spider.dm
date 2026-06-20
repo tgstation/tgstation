@@ -437,3 +437,5 @@
 	mid_length = 2 SECONDS
 	volume = 25
 	ignore_walls = FALSE
+
+#undef DOAFTER_SOURCE_MECHSPIDER
