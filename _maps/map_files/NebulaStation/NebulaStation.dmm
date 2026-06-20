@@ -135869,11 +135869,6 @@
 	dir = 1
 	},
 /area/station/command)
-"tYE" = (
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/space/openspace,
-/area/station/maintenance/solars/port/fore)
 "tYH" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/structure/window/spawner/directional/north,
@@ -250538,7 +250533,7 @@ bsn
 bsn
 bsn
 cGq
-tYE
+bsn
 bsn
 bsn
 bsn

@@ -58,3 +58,24 @@
 		return tank.return_analyzable_air()
 	else
 		return null
+
+/obj/structure/closet/crate/critter/stasis
+	name = "stasis critter crate"
+	desc = "A crate designed for safe transport of specific animals in stasis to prevent them from aging or starving."
+	var/stasis_sealed = TRUE
+
+/obj/structure/closet/crate/critter/stasis/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(HAS_TRAIT(gone, TRAIT_STASIS))
+		remove_stasis(gone)
+
+/obj/structure/closet/crate/critter/stasis/proc/remove_stasis(mob/living/target)
+	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CRATE_EFFECT)
+
+/obj/structure/closet/crate/critter/stasis/after_open(mob/living/user, force)
+	. = ..()
+	if(!stasis_sealed)
+		return
+	stasis_sealed = FALSE
+	do_sparks(3, FALSE, src)
+	to_chat(user, span_warning("[src] one-use stasis mechanism has been triggered! It will not work again."))

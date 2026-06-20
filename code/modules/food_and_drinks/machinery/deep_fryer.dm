@@ -118,6 +118,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK // allow a thwack
 
+	if(tool.is_drainable())
+		return NONE // pour it in
+
 	if(!reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE))
 		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] не имеет жира или масла для жарки!"))
 		return ITEM_INTERACT_BLOCKING
@@ -125,9 +128,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(tool.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, span_warning("Вы полагате, что будет глупо жарить [tool.declent_ru(ACCUSATIVE)]..."))
 		return ITEM_INTERACT_BLOCKING
-
-	if(tool.is_drainable())
-		return NONE // pour it in
 
 	var/deepfry_blacklisted = is_type_in_typecache(tool, deepfry_blacklisted_items) || is_type_in_typecache(tool, GLOB.oilfry_blacklisted_items)
 	var/is_storage = !!tool.atom_storage

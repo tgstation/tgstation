@@ -241,6 +241,24 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
+/obj/item/food/bowled/hua_mulan_congee
+	name = "\improper Hua Mulan congee"
+	desc = "Nobody is quite sure why this smiley bowl of rice porridge with eggs and bacon is named after a mythological Chinese figure- \
+		it's just sorta what it's always been called."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "hua_mulan_congee"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("bacon" = 1, "eggs" = 1)
+	foodtypes = MEAT|GRAIN|FRIED|EGG
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
+
 /obj/item/food/salad/ikareis
 	name = "ikareis"
 	desc = "A spicy rice dish made with squid-ink, peppers, onions, sausage, and flavourful chillis."

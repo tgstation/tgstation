@@ -54,7 +54,7 @@
 
 		SEND_SIGNAL(owner, COMSIG_SLIME_DRAINED, our_slime)
 
-		if(prob(60) && owner.client && ishuman(owner) && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
+		if(prob(60) && ishuman(owner) && owner.client && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
 			our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
 
 		our_slime.stop_feeding()

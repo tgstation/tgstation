@@ -37,4 +37,5 @@
 	/datum/gizmodes/sputter = 1,\
 	/datum/gizmodes/copier = 1,\
 	/datum/gizmodes/bad = 1,\
+	/datum/gizmodes/code_crack/tutorial = 1,\
 )
