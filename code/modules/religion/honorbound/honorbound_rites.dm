@@ -84,7 +84,7 @@
 	<br>
 	2.) Thou shalt not attack the just!<br>
 	Those who fight for justice and good must not be harmed. Security is uncorruptable and must
-	be respected. Healers are mostly uncorruptable and if you are truly sure Medical has fallen
+	be respected. Healers are mostly uncorruptable, and if you are truly sure medical has fallen
 	to the scourge of evil, use a declaration of evil.
 	<br>
 	<br>
@@ -98,7 +98,7 @@
 	4.) Thou shalt not use profane magicks!<br>
 	You are not a warlock, you are an honorable warrior. There is nothing more corruptive than
 	the vile magicks used by witches, warlocks, and necromancers. There are exceptions to this rule.<br>
-	You may use holy magic, and, if you recruit one, the mime may use holy mimery. Restoration has also
+	You may use holy magic, and (if you recruit one) a mime may use holy mimery. Restoration has also
 	been allowed as it is a school focused on the light and mending of this world.
 	"}
 	return ..()
@@ -117,7 +117,7 @@
  */
 /datum/religion_rites/deaconize/crusader
 	name = "Join Crusade"
-	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will only prompt them to join. \
 	They will become honorbound like you, and you will gain a massive favor boost!"
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(

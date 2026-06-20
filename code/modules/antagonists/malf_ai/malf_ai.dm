@@ -118,8 +118,8 @@
 	if(istype(datum_owner))
 		datum_owner.hack_software = TRUE
 
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, SStraitor.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, SStraitor.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
@@ -135,8 +135,8 @@
 	if(!owner.current)
 		return
 
-	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
-	var/responses = jointext(GLOB.syndicate_code_response, ", ")
+	var/phrases = jointext(SStraitor.syndicate_code_phrase, ", ")
+	var/responses = jointext(SStraitor.syndicate_code_response, ", ")
 
 	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
 	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
@@ -176,8 +176,8 @@
 
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)
-		data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
-		data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
+		data["phrases"] = jointext(SStraitor.syndicate_code_phrase, ", ")
+		data["responses"] = jointext(SStraitor.syndicate_code_response, ", ")
 	data["intro"] = malfunction_flavor["introduction"]
 	data["allies"] = malfunction_flavor["allies"]
 	data["goal"] = malfunction_flavor["goal"]

@@ -664,7 +664,7 @@
 
 /obj/item/fish_gene/proc/inject_into_fish(obj/item/fish/fish, mob/living/user, obj/item/tool = src)
 	var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-	if(!trait.apply_to_fish(fish))
+	if(!trait.apply_to_fish(fish, initial = FALSE))
 		to_chat(user, span_warning("You can't inject the \"[trait_type::name]\" trait into [fish]. [fish.p_they(TRUE)] either [fish.p_have()] it or [fish.p_are()] incompatible with it."))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] injects [fish] with [tool]."), span_notice("You inject the \"[trait_type::name]\" trait into [fish]."))
