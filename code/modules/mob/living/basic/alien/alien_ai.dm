@@ -4,40 +4,21 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2
-		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
-	)
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3,
 	)
 
 	movement_delay = 0.8 SECONDS
 
 /datum/ai_controller/basic_controller/alien/sentinel
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/alien,
-	)
+	behavior_tree_json = "sentinel.bt.json"
+
 
 /datum/ai_controller/basic_controller/alien/drone
-	idle_behavior = /datum/idle_behavior/idle_random_walk/plant_weeds
+	behavior_tree_json = "drone.bt.json"
 
 /datum/ai_controller/basic_controller/alien/queen
-	idle_behavior = /datum/idle_behavior/idle_random_walk/plant_weeds/queen
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/alien,
-	)
-
+	behavior_tree_json = "queen.bt.json"
 /**
  * Alien projectile
  * Try to avoid friendly fire, and has a 3 second delay.
@@ -61,30 +42,27 @@
 /datum/bt_node/subtree/melee_alien_combat
 	behavior_tree_json = "melee_alien_combat.bt.json"
 
-/datum/idle_behavior/idle_random_walk/plant_weeds
-	var/plant_cooldown = 30
-	var/plants_off = 0
+/datum/bt_node/subtree/plant_alien_weeds
+	behavior_tree_json = "plant_alien_weeds.bt.json"
 
-/datum/idle_behavior/idle_random_walk/plant_weeds/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-	if(!.)
-		return .
-	plant_cooldown--
+/datum/bt_node/subtree/lay_alien_egg
+	behavior_tree_json = "lay_alien_egg.bt.json"
+
+
+/// Plants alien weeds on the pawn's current turf. Fails if the pawn can't plant or weeds couldn't be placed.
+/datum/bt_node/ai_behavior/plant_alien_weeds
+
+/datum/bt_node/ai_behavior/plant_alien_weeds/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/alien/alien_pawn = controller.pawn
-	if(alien_pawn.can_plant_weeds && !plants_off && plant_cooldown <= 0)
-		plant_cooldown = initial(plant_cooldown)
-		alien_pawn.place_weeds()
+	if(!alien_pawn.can_plant_weeds || !alien_pawn.place_weeds())
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/idle_behavior/idle_random_walk/plant_weeds/queen
-	var/eggs_off = 0
-	var/egg_cooldown = 30
+/// Lays an alien egg on the pawn's current turf. Fails if the pawn can't lay eggs or an egg couldn't be placed.
+/datum/bt_node/ai_behavior/lay_alien_egg
 
-/datum/idle_behavior/idle_random_walk/plant_weeds/queen/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-	if(!.)
-		return .
-	egg_cooldown--
+/datum/bt_node/ai_behavior/lay_alien_egg/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/alien/alien_pawn = controller.pawn
-	if(alien_pawn.can_lay_eggs && !eggs_off && egg_cooldown <= 0)
-		egg_cooldown = initial(egg_cooldown)
-		alien_pawn.lay_alien_egg()
+	if(!alien_pawn.can_lay_eggs || !alien_pawn.lay_alien_egg())
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

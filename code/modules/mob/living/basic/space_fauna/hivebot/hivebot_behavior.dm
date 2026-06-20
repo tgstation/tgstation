@@ -1,3 +1,8 @@
+/// Moves to the hive partner in BB_HIVE_PARTNER, relays a message, then clears the key.
+/// The partner is found by a separate acquire_target leaf in the controller tree.
+/datum/bt_node/subtree/relay_to_hive_partner
+	behavior_tree_json = "relay_to_hive_partner.bt.json"
+
 /// Says a random binary string to a hive partner. Movement to the partner is handled
 /// in the tree via a move_to_target leaf; the target key is cleared by a clear_bb_key leaf.
 /datum/bt_node/ai_behavior/relay_message

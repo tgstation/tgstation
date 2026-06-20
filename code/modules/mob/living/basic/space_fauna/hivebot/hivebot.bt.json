@@ -70,39 +70,8 @@
 							}
 						},
 						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"vars": {
-								"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-								"key": "BB_HIVE_PARTNER"
-							},
-							"child": {
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"vars": {
-											"target_key": "BB_HIVE_PARTNER",
-											"required_dist": 1
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/relay_message",
-										"vars": {
-											"target_key": "BB_HIVE_PARTNER"
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
-										"vars": {
-											"target_key": "BB_HIVE_PARTNER"
-										}
-									}
-								]
-							}
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/relay_to_hive_partner"
 						},
 						{
 							"type": "subtree",
@@ -122,29 +91,29 @@
 			}
 		},
 		{
-			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/random_chance",
-			"vars": {
-				"chance": 0.1
-			},
-			"child": {
-				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"vars": {
-					"key": "BB_HIVE_PARTNER",
-					"invert": true
-				},
-				"child": {
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+			"type": "subplan",
+			"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+			"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+			"loop_delay": "1 SECONDS",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/random_chance",
 					"vars": {
-						"target_key": "BB_HIVE_PARTNER",
-						"target_source": "/datum/target_source/oview_single_type/hivebot",
-						"targeting_strategy": "/datum/targeting_strategy/living_not_dead",
-						"vision_range": 10
+						"chance": 0.1
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_HIVE_PARTNER",
+							"target_source": "/datum/target_source/oview_single_type/hivebot",
+							"targeting_strategy": "/datum/targeting_strategy/living_not_dead",
+							"vision_range": 10
+						}
 					}
 				}
-			}
+			]
 		}
 	]
 }

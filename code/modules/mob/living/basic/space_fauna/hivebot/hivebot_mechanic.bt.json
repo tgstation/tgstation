@@ -105,39 +105,8 @@
 									}
 								},
 								{
-									"type": "decorator",
-									"decorator": "/datum/bt_node/decorator/bb_key_set",
-									"vars": {
-										"observer_abort": "BT_ABORT_LOWER_PRIORITY",
-										"key": "BB_HIVE_PARTNER"
-									},
-									"child": {
-										"type": "sequence",
-										"children": [
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"vars": {
-													"target_key": "BB_HIVE_PARTNER",
-													"required_dist": 1
-												}
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/relay_message",
-												"vars": {
-													"target_key": "BB_HIVE_PARTNER"
-												}
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
-												"vars": {
-													"target_key": "BB_HIVE_PARTNER"
-												}
-											}
-										]
-									}
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/relay_to_hive_partner"
 								},
 								{
 									"type": "subtree",
