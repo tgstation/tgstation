@@ -13,34 +13,6 @@
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 
-
-/// Finds a patch of grass to graze on.
-/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_grass
-	turf_typecache = list(/turf/open/floor/grass, /turf/open/misc/grass)
-
-/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_grass/New()
-	. = ..()
-	turf_typecache = typecacheof(turf_typecache)
-
-
-/// Finds water to splash around in.
-/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_water
-	turf_typecache = list(/turf/open/water)
-
-/datum/bt_node/ai_behavior/find_and_set/in_list/turf_types/deer_water/New()
-	. = ..()
-	turf_typecache = typecacheof(turf_typecache)
-
-
-/// Finds a tree to claim as home.
-/datum/bt_node/ai_behavior/find_and_set/in_list/deer_tree
-	find_typecache = list(/obj/structure/flora/tree)
-
-/datum/bt_node/ai_behavior/find_and_set/in_list/deer_tree/New()
-	. = ..()
-	find_typecache = typecacheof(find_typecache)
-
-
 /// Munches grass with a happy little emote.
 /datum/bt_node/ai_behavior/hunt_target/deer_graze
 	always_reset_target = TRUE

@@ -20,12 +20,6 @@
 		return FALSE
 	return ..()
 
-///find the chief. why we dont do this in the basic mob? dont ask me.
-/datum/bt_node/ai_behavior/find_and_set/find_chief
-
-/datum/bt_node/ai_behavior/find_and_set/find_chief/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	return locate(/mob/living/basic/mining/mook/worker/tribal_chief) in oview(search_range, controller.pawn)
-
 ///Wander in a random direction to find ore
 /datum/bt_node/ai_behavior/calculate_wander_destination
 	/// Blackboard key holding the anchor atom to wander away from.
