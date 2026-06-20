@@ -11,11 +11,11 @@
 #define ID_HUD "3"
 /// wanted, released, parroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// shows loyality implant if we have one
 #define IMPLOYAL_HUD "5"
-/// chemical implant
+/// shows implant type installled
 #define IMPSEC_FIRST_HUD "6"
-/// tracking implant
+/// shows implant type installled if we have multiple. most recently implanted.
 #define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
