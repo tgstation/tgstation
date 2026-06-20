@@ -65,7 +65,10 @@
 
 	null_sound = sound(channel = sound_channel)
 
-	if(!allowed_listeners)
+	if(allowed_listeners)
+		for(var/allowed_mob in allowed_listeners)
+			add_or_update_listener(allowed_mob)
+	else
 		cell_tracker = new /datum/cell_tracker(range, range)
 		update_tracked_cells()
 
