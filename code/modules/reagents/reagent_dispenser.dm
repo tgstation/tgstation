@@ -633,7 +633,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/keg/gold
 	name = "gold keg"
 	desc = "A gaudy, gold-coated keg. It's easy to assume that whatever is inside it must be quite valuable indeed."
-	icon_state = "gold_keg"
+	icon_state = "keg_gold"
 
 /obj/structure/reagent_dispensers/keg/gold/rum
 	name = "vintage rum keg"
