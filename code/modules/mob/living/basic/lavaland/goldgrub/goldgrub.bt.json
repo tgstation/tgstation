@@ -3,8 +3,42 @@
 	"type": "selector",
 	"children": [
 		{
-			"type": "subtree",
-			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				}
+			]
 		},
 		{
 			"type": "subtree",
@@ -51,11 +85,38 @@
 							}
 						},
 						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_BOULDER_TARGET",
+								"bj13tsp3": "BB_BOULDER_TARGET",
+								"bjwb8dxm": "BB_BOULDER_TARGETBB_BOULDER_TARGET"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_ORE_TARGET",
+								"bj13tsp3": "BB_ORE_TARGET",
+								"bjwb8dxm": "BB_ORE_TARGET"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/grub_eat_target",
+							"bindings": {
+								"b6t594ql": "BB_VENT_TARGET",
+								"bj13tsp3": "BB_VENT_TARGET",
+								"bjwb8dxm": "BB_VENT_TARGET"
+							}
+						},
+						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"vars": {
-								"key": "BB_BOULDER_TARGET",
-								"observer_abort": "BT_ABORT_BOTH"
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_TARGET_MINERAL_WALL"
 							},
 							"child": {
 								"type": "sequence",
@@ -64,97 +125,18 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 										"vars": {
-											"target_key": "BB_BOULDER_TARGET",
-											"required_dist": 1,
-											"finish_on_arrival": false
+											"target_key": "BB_TARGET_MINERAL_WALL"
 										}
 									},
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
+										"behavior": "/datum/bt_node/ai_behavior/mine_wall",
 										"vars": {
-											"target_key": "BB_BOULDER_TARGET"
+											"target_key": "BB_TARGET_MINERAL_WALL"
 										}
 									}
 								]
 							}
-						},
-						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"vars": {
-								"key": "BB_ORE_TARGET",
-								"observer_abort": "BT_ABORT_BOTH"
-							},
-							"child": {
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"vars": {
-											"target_key": "BB_ORE_TARGET",
-											"required_dist": 1,
-											"finish_on_arrival": false
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"vars": {
-											"target_key": "BB_ORE_TARGET"
-										}
-									}
-								]
-							}
-						},
-						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"vars": {
-								"key": "BB_VENT_TARGET",
-								"observer_abort": "BT_ABORT_BOTH"
-							},
-							"child": {
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"vars": {
-											"target_key": "BB_VENT_TARGET",
-											"required_dist": 1,
-											"finish_on_arrival": false
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/grub_eat",
-										"vars": {
-											"target_key": "BB_VENT_TARGET"
-										}
-									}
-								]
-							}
-						},
-						{
-							"type": "selector",
-							"children": [
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/mine_wall",
-									"vars": {
-										"target_key": "BB_TARGET_MINERAL_WALL"
-									}
-								},
-								{
-									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
-									"vars": {
-										"target_key": "BB_TARGET_MINERAL_WALL"
-									}
-								}
-							]
 						},
 						{
 							"type": "decorator",
@@ -177,9 +159,16 @@
 									},
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/pull_grub_egg",
+										"behavior": "/datum/bt_node/ai_behavior/grab_target",
 										"vars": {
 											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/clear_key",
+										"vars": {
+											"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
 										}
 									}
 								]
@@ -214,6 +203,13 @@
 						{
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/find_ore_vent"
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
+							"vars": {
+								"target_key": "BB_TARGET_MINERAL_WALL"
+							}
 						},
 						{
 							"type": "leaf",

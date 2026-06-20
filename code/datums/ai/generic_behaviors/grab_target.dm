@@ -27,6 +27,7 @@
 	var/mob/living/our_mob = controller.pawn
 	if(our_mob.pulling == target)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
 	is_grabbing = TRUE
 	INVOKE_ASYNC(src, PROC_REF(async_grab), controller, our_mob, target)
 	return AI_BEHAVIOR_DELAY

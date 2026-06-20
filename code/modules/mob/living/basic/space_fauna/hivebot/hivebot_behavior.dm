@@ -20,7 +20,7 @@
 	var/message_relayed = ""
 	for(var/i in 1 to length_of_message)
 		message_relayed += prob(50) ? "1" : "0"
-	living_pawn.say(message_relayed, forced = "AI Controller")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), message_relayed, forced = "AI Controller")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Repairs a damaged machine once in range. Finding the machine is a separate

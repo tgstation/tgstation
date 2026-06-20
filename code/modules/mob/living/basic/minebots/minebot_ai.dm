@@ -107,7 +107,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(target.health >= target.maxHealth * repair_threshold)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	living_pawn.say("REPAIRING [target]!")
+	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), "REPAIRING [target]!")
 	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
