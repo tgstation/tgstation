@@ -492,3 +492,7 @@
   - bugfix: fixed connecting a tank to a TTV the other way around
   timothymtorres:
   - code_imp: Add immunity checks for atmos traits for simple/basic mobs
+2026-06-20:
+  lelandkemble:
+  - bugfix: fixed a runtime when an exodrone rolls the shrubbery crate cargo crate
+      chip from the abandoned cargo ship
