@@ -38,9 +38,9 @@
 #define AI_DETECT_HUD "17"
 /// Displays launchpads' targeting reticle
 #define DIAG_LAUNCHPAD_HUD "18"
-//for antag huds. these are used at the /mob level
+/// for antag huds. these are used at the /mob level
 #define ANTAG_HUD "19"
-// for fans to identify pins
+/// for fans to identify pins
 #define FAN_HUD "20"
 /// Mech camera HUD
 #define DIAG_CAMERA_HUD "21"
