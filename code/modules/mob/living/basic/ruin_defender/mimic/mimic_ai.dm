@@ -41,7 +41,7 @@
 		BB_GUNMIMIC_GUN_EMPTY = FALSE,
 		BB_BASIC_MOB_SPEAK_LINES = list(
 			BB_EMOTE_SEE = list("aims menacingly!"),
-			BB_SPEAK_CHANCE = 30,
+			BB_SPEAK_CHANCE = 20,
 		),
 	)
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/mimic/mimic_gun.bt.json"
@@ -54,7 +54,7 @@
 		BB_GUNMIMIC_GUN_EMPTY = FALSE,
 		BB_BASIC_MOB_SPEAK_LINES = list(
 			BB_EMOTE_SEE = list("aims menacingly!"),
-			BB_SPEAK_CHANCE = 30,
+			BB_SPEAK_CHANCE = 20,
 		),
 	)
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/mimic/mimic_animator.bt.json"
