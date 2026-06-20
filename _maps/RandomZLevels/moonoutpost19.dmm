@@ -1928,11 +1928,6 @@
 /obj/structure/fluff/minepost,
 /turf/open/misc/asteroid/moon,
 /area/awaymission/moonoutpost19/mines)
-"mR" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/baseturf_helper/asteroid/moon,
-/turf/open/misc/asteroid/moon,
-/area/awaymission/moonoutpost19/arrivals)
 "mS" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/bar,
@@ -3066,6 +3061,11 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/syndicate)
+"ua" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/asteroid/moon,
+/turf/open/floor/plating,
+/area/awaymission/moonoutpost19/arrivals/shed)
 "ub" = (
 /obj/item/cigbutt,
 /obj/effect/turf_decal/tile/bar,
@@ -3247,6 +3247,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "vd" = (
 /obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/baseturf_helper/asteroid/moon,
 /turf/open/floor/iron{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
@@ -5664,11 +5665,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals)
-"Ng" = (
-/obj/structure/marker_beacon/burgundy,
-/obj/effect/baseturf_helper/asteroid/moon,
-/turf/open/misc/asteroid/moon,
-/area/awaymission/moonoutpost19/arrivals/shed)
 "Nj" = (
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
@@ -7546,6 +7542,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/baseturf_helper/asteroid/moon,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/research)
 "ZB" = (
@@ -7576,7 +7573,6 @@
 "ZJ" = (
 /obj/machinery/light/small/directional/south,
 /obj/item/stack/cable_coil/five,
-/obj/effect/baseturf_helper/asteroid/moon,
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/research)
 "ZK" = (
@@ -32749,7 +32745,7 @@ CY
 cy
 iJ
 Qj
-cy
+ua
 Bu
 dA
 dA
@@ -33521,7 +33517,7 @@ Ot
 Ot
 Ot
 Ot
-Ng
+XE
 dA
 Wg
 yV
@@ -37869,7 +37865,7 @@ hI
 Lk
 vd
 hI
-mR
+gO
 yV
 yV
 yV
