@@ -17,10 +17,11 @@
 	if(source.slot_flags & slot)
 		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
 		RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(emote_override))
+		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(try_spellcast))
 
 /datum/element/muffles_speech/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY))
+	UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY, COMSIG_MOB_BEFORE_SPELL_CAST))
 
 /datum/element/muffles_speech/proc/emote_override(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
@@ -48,3 +49,19 @@
 			words[ind] = yell_suffix ? uppertext(new_word) : new_word
 		spoken_message = "[jointext(words, " ")][yell_suffix]"
 	speech_args[SPEECH_MESSAGE] = spoken_message
+
+/datum/element/muffles_speech/proc/try_spellcast(mob/living/source, datum/action/cooldown/spell/spell, ...)
+	SIGNAL_HANDLER
+
+	if(spell.invocation_type != INVOCATION_WHISPER && spell.invocation_type != INVOCATION_SHOUT)
+		return NONE
+
+	INVOKE_ASYNC(src, PROC_REF(fail_spellcast), source, spell)
+	return SPELL_CANCEL_CAST
+
+/datum/element/muffles_speech/proc/fail_spellcast(mob/living/source, datum/action/cooldown/spell/spell)
+	spell.invocation(source)
+	to_chat(source, span_warning("Your mouth covering is making it difficult to say the correct words to cast [spell]..."))
+	if(source.click_intercept == spell)
+		spell.unset_click_ability(source, refund_cooldown = TRUE)
+	spell.StartCooldown(2 SECONDS)

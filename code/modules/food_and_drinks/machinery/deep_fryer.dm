@@ -118,6 +118,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK // allow a thwack
 
+	if(tool.is_drainable())
+		return NONE // pour it in
+
 	if(!reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE))
 		to_chat(user, span_warning("[src] has no fat or oil to fry with!"))
 		return ITEM_INTERACT_BLOCKING
@@ -125,9 +128,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(tool.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, span_warning("You don't feel it would be wise to fry [tool]..."))
 		return ITEM_INTERACT_BLOCKING
-
-	if(tool.is_drainable())
-		return NONE // pour it in
 
 	var/deepfry_blacklisted = is_type_in_typecache(tool, deepfry_blacklisted_items) || is_type_in_typecache(tool, GLOB.oilfry_blacklisted_items)
 	var/is_storage = !!tool.atom_storage
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(isnull(frying.reagents))
 		frying.create_reagents(50, INJECTABLE)
 	if(user.mind)
-		ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(frying, TRAIT_HANDMADE, REF(user.mind))
 	SEND_SIGNAL(frying, COMSIG_ITEM_ENTERED_FRYER)
 
 	update_appearance()
