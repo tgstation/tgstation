@@ -674,7 +674,7 @@
 	var/changed_something = FALSE
 	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
 	var/obj/item/organ/replaced = get_organ_slot(initial(new_organ.slot))
-	if (!replaced || ORGAN_CAN_BE_BIOSCRAMBLED(replaced))
+	if ((!replaced || ORGAN_CAN_BE_BIOSCRAMBLED(replaced)) && get_bodypart(deprecise_zone(new_organ.zone)))
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)

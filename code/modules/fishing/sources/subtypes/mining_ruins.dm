@@ -53,10 +53,16 @@
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 15,
 		/obj/item/fish/lavaloop = 15,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 15,
+		/obj/item/stack/sheet/bone = 15,
+		/obj/item/stack/sheet/sinew = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/obj/item/skeleton_key = 1,
 		/obj/item/stack/sheet/mineral/runite = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1,
+		/mob/living/basic/mining/legion= 1,
+		/mob/living/basic/mining/brimdemon= 1,
+
 	)
 	fish_counts = list(
 		/obj/structure/closet/crate/necropolis/tendril = 1,

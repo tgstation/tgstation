@@ -471,6 +471,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "moon"
 	floor_variance = 40
 	dig_result = /obj/item/stack/ore/glass/basalt
+	initial_gas_mix = MOONBASE19_ATMOS
 
 /turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
 	dug = TRUE
