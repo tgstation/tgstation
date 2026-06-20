@@ -659,7 +659,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	name = "trappist beer keg"
 	desc = "A keg of <i>Mont de Requin Trappistes Bleu</i>. A beer normally brewed under guidelines so strict that there are only a handful of two of certified trappist beer breweries, none in the Spinward Sector."
 	keg_print = "keg_beer"
-	/datum/reagent/consumable/ethanol/trappist
+	reagent_id = /datum/reagent/consumable/ethanol/trappist
 
 /obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
