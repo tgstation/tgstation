@@ -281,14 +281,14 @@
 		balloon_alert(user, "no card found!")
 		flick(icon_deny, src)
 		return
-	if(istype(id_card, /obj/item/card/id/departmental_budget))
-		balloon_alert(user, "invalid payment card")
-		to_chat(user, span_warning("You cannot use a departamental card for this."))
-		return
 
 	/// Charges the user if its not the owner
 	var/datum/bank_account/payee = id_card.registered_account
 	if(!compartmentLoadAccessCheck(user))
+		if(istype(id_card, /obj/item/card/id/departmental_budget))
+			balloon_alert(user, "invalid payment card")
+			to_chat(user, span_warning("You cannot use a departamental card for this."))
+			return
 		if(!payee.has_money(dispensed_item.custom_price))
 			balloon_alert(user, "insufficient funds!")
 			return
