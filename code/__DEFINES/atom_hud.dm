@@ -3,9 +3,9 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 
-/// dead, alive, sick, health status
-#define HEALTH_HUD "1"
 /// a simple line rounding the mob's number health
+#define HEALTH_HUD "1"
+/// dead, alive, sick, health status
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
