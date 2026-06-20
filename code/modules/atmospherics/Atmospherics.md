@@ -119,7 +119,7 @@ Introduced in 2026, the new system replaced gaslist with associative array of `m
 
 While new vector functions are extremely fast, they can only work with associative arrays of number. To calculate total moles you just write `values_sum(moles)` and to calculate heat capacity - `values_dot(moles, gas_meta[META_GAS_SPECIFIC_HEAT])`. This does not seem like a lot, but when your subsytem is doing 1000 updates each simulation tick every microsecond matters.
 
-Another beefit of not having `gases` as an array of arrays is that if key is not present in the list, for any arithmetic and logic operations it acts like a 0.
+Another benefit of not having `gases` as an array of arrays is that if key is not present in the list, for any arithmetic and logic operations it acts like a 0.
 
 ### Interfacing with a Gas Mixture
 
@@ -135,7 +135,7 @@ air.garbage_collect() //oxygen is now removed from the gases list, since it was 
 
 _Snippet 4.2: gas mixture usage examples_
 
-Of particular note in this snippet are the two procs assert_gas() and garbage_collect(). These procs are very important while interfacing with gas mixtures. If you are uncertain about whether a given mixture has a particular gas, you must use assert_gas() before any reads or writes from the gas. ~~If you fail to use assert_gas() then there will be runtime errors when you try to access the inner lists~~. When you remove any number of moles from a given gas, be sure to call garbage_collect(). This proc removes all gases which have mole counts less than or equal to 0. This is a memory and performance enhancement for list accesses achieved by reducing the size of the list, and also saves us from having to do sanity checks for negative moles whenever gas is removed. As a quick reference, here is a list of common procs/vars/list indices which the average coder may wish to use when interfacing with a gas mixture.
+Of particular note in this snippet are the two procs assert_gas() and garbage_collect(). These procs are very important while interfacing with gas mixtures. If you are uncertain about whether a given mixture has a particular gas, you must use assert_gas() before any reads or writes from the gas. When you remove any number of moles from a given gas, be sure to call garbage_collect(). This proc removes all gases which have mole counts less than or equal to 0. This is a memory and performance enhancement for list accesses achieved by reducing the size of the list, and also saves us from having to do sanity checks for negative moles whenever gas is removed. As a quick reference, here is a list of common procs/vars/list indices which the average coder may wish to use when interfacing with a gas mixture.
 
 ##### Gas Mixture Datum
 
