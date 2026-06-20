@@ -89191,7 +89191,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vXK" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/holiday/bar_keg,
 /turf/open/floor/iron/checker,
 /area/station/service/bar/backroom)
 "vXP" = (

@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")
 
 /datum/holiday/no_this_is_patrick
-	name = "St. Patrick's Day"
+	name = ST_PATRICK_DAY
 	begin_day = 17
 	begin_month = MARCH
 	holiday_hat = /obj/item/clothing/head/soft/green
@@ -666,7 +666,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	return pick("Ian", "Corgi", "Erro")
 
 /datum/holiday/pirate
-	name = "Talk-Like-a-Pirate Day"
+	name = TALK_LIKE_A_PIRATE_DAY
 	begin_day = 19
 	begin_month = SEPTEMBER
 	holiday_hat = /obj/item/clothing/head/costume/pirate

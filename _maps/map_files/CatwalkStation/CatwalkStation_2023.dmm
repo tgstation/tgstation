@@ -18299,7 +18299,7 @@
 /area/station/hallway/primary/central)
 "eQC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/starboard)
 "eQF" = (
@@ -79656,7 +79656,7 @@
 /turf/open/floor/plating,
 /area/station/construction/storage_wing)
 "vhl" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/holiday/bar_keg,
 /obj/structure/table/wood,
 /obj/item/stack/package_wrap{
 	pixel_x = -2;

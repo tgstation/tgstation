@@ -44,6 +44,8 @@
 #define BEE_DAY "Bee Day"
 #define BEER_DAY "Beer Day"
 #define VEGAN_DAY "Vegan Day"
+#define TALK_LIKE_A_PIRATE_DAY "Talk-Like-a-Pirate Day"
+#define ST_PATRICK_DAY "St. Patrick's Day"
 /*
 
 Days of the week to make it easier to reference them.

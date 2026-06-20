@@ -5,14 +5,20 @@
 	desc = "a spawner effect that only spawns stuff if a holiday is being celebrated."
 	///It contains holiday names (use macros please) as key, and the list of things to spawn on said holiday as value.
 	var/list/holidays_to_spawn
+	///If set and no holiday object is spawned, spawn this instead.
+	var/non_holiday_spawn
 
 /obj/effect/spawner/holiday/Initialize(mapload)
 	. = ..()
+	var/found_holiday = FALSE
 	for(var/holiday in holidays_to_spawn)
 		if(check_holidays(holiday))
+			found_holiday = TRUE
 			var/list/spawn_list = holidays_to_spawn[holiday]
 			for(var/path in spawn_list)
 				new path(loc)
+	if(!found_holiday && non_holiday_spawn)
+		new non_holiday_spawn(loc)
 
 /obj/effect/spawner/holiday/powdered_ingredient
 	name = "holiday powdered ingredient"
@@ -76,3 +82,21 @@
 			/obj/item/food/grown/herbs,
 		),
 	)
+
+/obj/effect/spawner/holiday/bar_keg
+	name = "bar keg spawner"
+	desc = "The spawner of the keg on the station. Special stuff on Beer Day and St. Patrick's Day."
+	icon_state = "keg"
+	holidays_to_spawn = list(
+		ST_PATRICK_DAY = list(
+			/obj/structure/reagent_dispensers/keg/gold/irish,
+		),
+		TALK_LIKE_A_PIRATE_DAY = list(
+			/obj/structure/reagent_dispensers/keg/gold/rum,
+		),
+		BEER_DAY = list(
+			/obj/structure/reagent_dispensers/keg/gold/trappist,
+		),
+	)
+
+	non_holiday_spawn = /obj/effect/spawner/random/food_or_drink/keg
