@@ -1,11 +1,9 @@
-// Monkey-specific BT behavior nodes
 
 /// Monkey's battle screech variant — louder and on a 5 second cooldown
 /datum/bt_node/ai_behavior/battle_screech/monkey
 	time_between_perform = 5 SECONDS
 	screeches = list("roar", "screech")
 
-// --- Equip behaviors ---
 
 /// Base equip behavior; handles blacklist updates and key cleanup on finish
 /datum/bt_node/ai_behavior/monkey_equip
@@ -21,11 +19,11 @@
 /// Equip a weapon off the ground
 /datum/bt_node/ai_behavior/monkey_equip/ground
 	/// Set while equip_item is in flight.
-	var/is_equipping = FALSE
+	VAR_PRIVATE/is_equipping = FALSE
 	/// TRUE once the async equip has written its result.
-	var/async_equip_done = FALSE
+	VAR_PRIVATE/async_equip_done = FALSE
 	/// Whether equip_item returned TRUE.
-	var/async_equip_succeeded = FALSE
+	VAR_PRIVATE/async_equip_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/setup(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[target_key]
@@ -220,12 +218,12 @@
 /datum/bt_node/ai_behavior/monkey_attack_mob
 	var/target_key
 	time_between_perform = CLICK_CD_MELEE
-	/// Set while monkey_attack is in flight.
-	var/is_attacking = FALSE
+	/// Set while monkey_attack is occuring
+	VAR_PRIVATE/is_attacking = FALSE
 	/// TRUE once the async attack has written its result.
-	var/async_attack_done = FALSE
+	VAR_PRIVATE/async_attack_done = FALSE
 	/// Whether the attack should be treated as succeeded.
-	var/async_attack_succeeded = FALSE
+	VAR_PRIVATE/async_attack_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(is_attacking)

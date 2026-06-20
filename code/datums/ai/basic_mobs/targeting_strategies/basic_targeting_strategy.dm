@@ -4,7 +4,7 @@
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
 	/// Whether we care for seeing the target or not
-	var/ignore_sight = TRUE
+	var/ignore_sight = FALSE
 	/// Blackboard key containing the minimum stat of a living mob to target
 	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
 	/// If this blackboard key is TRUE, makes us only target wounded mobs

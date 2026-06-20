@@ -17,11 +17,11 @@
 	time_between_perform = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// Set while an async reachability search is going on
-	var/is_searching = FALSE
+	VAR_PRIVATE/is_searching = FALSE
 	/// TRUE once the async search has written its result.
-	var/async_search_done = FALSE
+	VAR_PRIVATE/async_search_done = FALSE
 	/// Result of the async search: TRUE if a reachable target was found and set.
-	var/async_search_succeeded = FALSE
+	VAR_PRIVATE/async_search_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	if(!istype(controller))
@@ -185,11 +185,11 @@
 	var/target_key
 	time_between_perform = 5 SECONDS
 	/// Set while an async reachability check is still going on
-	var/is_checking_reach = FALSE
+	VAR_PRIVATE/is_checking_reach = FALSE
 	/// TRUE once the async check has written its result.
-	var/async_check_done = FALSE
+	VAR_PRIVATE/async_check_done = FALSE
 	/// Result of the async check.
-	var/async_check_succeeded = FALSE
+	VAR_PRIVATE/async_check_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	// Async check in flight — stay RUNNING.

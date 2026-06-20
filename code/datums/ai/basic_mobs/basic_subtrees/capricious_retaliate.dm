@@ -1,6 +1,6 @@
 ///Random chance to add things to our retaliate list
 /datum/bt_node/ai_behavior/capricious_retaliate
-	var/targeting_strategy
+	var/targeting_strategy = BB_TARGETING_STRATEGY
 	var/ignore_faction
 	time_between_perform = 1 SECONDS
 

@@ -3,11 +3,11 @@
 	/// Blackboard key holding the mob to give the held item to.
 	var/target_key
 	/// Set while the do_after delay is gojng on
-	var/is_giving = FALSE
+	VAR_PRIVATE/is_giving = FALSE
 	/// TRUE once the async give has finished.
-	var/async_give_done = FALSE
+	VAR_PRIVATE/async_give_done = FALSE
 	/// Result flags from the async give.
-	var/async_give_flags = NONE
+	VAR_PRIVATE/async_give_flags = NONE
 
 /datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
 	// do_after in flight — stay RUNNING.

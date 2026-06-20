@@ -42,7 +42,6 @@
 								"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack/minebot",
 								"vars": {
 									"target_key": "BB_CURRENT_TARGET",
-									"targeting_strategy": "BB_TARGETING_STRATEGY",
 									"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 								}
 							}
@@ -80,6 +79,29 @@
 								"target_source": "/datum/target_source/oview_single_type/minebot_target",
 								"targeting_strategy": "/datum/targeting_strategy/anything",
 								"vision_range": 7
+							}
+						}
+					}
+				]
+			},
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+				"loop_delay": "1 SECONDS",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"invert": false,
+							"key": "BB_MINEBOT_LANDMINE_ABILITY"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+							"vars": {
+								"ability_key": "BB_MINEBOT_LANDMINE_ABILITY"
 							}
 						}
 					}

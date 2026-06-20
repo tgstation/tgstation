@@ -6,11 +6,11 @@
 	/// Blackboard key holding the disposal unit.
 	var/disposal_target_key
 	/// Set while stuff_mob_in's do_after is happening.
-	var/is_stuffing = FALSE
+	VAR_PRIVATE/is_stuffing = FALSE
 	/// TRUE once the async disposal stuffing has written its result.
-	var/async_stuff_done = FALSE
+	VAR_PRIVATE/async_stuff_done = FALSE
 	/// Whether the stuff succeeded,d
-	var/async_stuff_succeeded = FALSE
+	VAR_PRIVATE/async_stuff_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/stuff_in_disposal/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(is_stuffing)

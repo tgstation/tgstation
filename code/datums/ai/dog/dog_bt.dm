@@ -43,7 +43,7 @@
  */
 /datum/bt_node/ai_behavior/find_hated_dog_target
 	var/target_key
-	var/targeting_strategy
+	var/targeting_strategy = BB_TARGETING_STRATEGY
 
 /datum/bt_node/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!SPT_PROB(10, seconds_per_tick))

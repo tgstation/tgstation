@@ -4,7 +4,7 @@
 /// Perform a melee attack on the target specified.
 /datum/bt_node/ai_behavior/basic_melee_attack
 	var/target_key
-	var/targeting_strategy
+	var/targeting_strategy = BB_TARGETING_STRATEGY
 	var/hiding_location_key
 
 /datum/bt_node/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller)
@@ -82,7 +82,7 @@
 //Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
 	var/target_key
-	var/targeting_strategy
+	var/targeting_strategy = BB_TARGETING_STRATEGY
 	var/hiding_location_key
 	time_between_perform = 0.6 SECONDS
 	/// Max range at which we can fire. Make sure your movement actually gets you this close please
@@ -115,7 +115,7 @@
 	if(!can_see(basic_mob, final_target, max_range))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targeting_strategy))
+	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, strategy))
 		adjust_position(basic_mob, target)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 

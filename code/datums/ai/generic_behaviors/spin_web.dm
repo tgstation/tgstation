@@ -8,11 +8,11 @@
 	/// Blackboard key holding the target turf to web.
 	var/target_key
 	/// Set while the Trigger() call is happening
-	var/is_triggering = FALSE
+	VAR_PRIVATE/is_triggering = FALSE
 	/// TRUE once the async Trigger() has written its result.
-	var/async_trigger_done = FALSE
+	VAR_PRIVATE/async_trigger_done = FALSE
 	/// Whether Trigger() returned a truthy value.
-	var/async_trigger_succeeded = FALSE
+	VAR_PRIVATE/async_trigger_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/spin_web/setup(datum/ai_controller/controller)
 	if(!controller.blackboard_key_exists(action_key) || !controller.blackboard_key_exists(target_key))

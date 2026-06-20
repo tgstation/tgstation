@@ -35,9 +35,9 @@
 /// Places the customer's food order once they are at their seat.
 /datum/bt_node/ai_behavior/robot_customer/order_food
 	/// Set while order_food is happening (sleeps)
-	var/is_ordering = FALSE
+	VAR_PRIVATE/is_ordering = FALSE
 	/// TRUE once the async order has completed.
-	var/async_order_done = FALSE
+	VAR_PRIVATE/async_order_done = FALSE
 
 /datum/bt_node/ai_behavior/robot_customer/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(is_ordering)

@@ -7,11 +7,11 @@
 	/// Blackboard key holding the atom to grab.
 	var/target_key
 	/// Set while start_pulling is happening (can sleep)
-	var/is_grabbing = FALSE
+	VAR_PRIVATE/is_grabbing = FALSE
 	/// TRUE once the async grab has written its result.
-	var/async_grab_done = FALSE
+	VAR_PRIVATE/async_grab_done = FALSE
 	/// Whether start_pulling returned TRUE.
-	var/async_grab_succeeded = FALSE
+	VAR_PRIVATE/async_grab_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/grab_target/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(is_grabbing)

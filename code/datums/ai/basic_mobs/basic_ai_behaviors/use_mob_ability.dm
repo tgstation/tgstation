@@ -2,11 +2,11 @@
 /datum/bt_node/ai_behavior/use_mob_ability
 	var/ability_key = BB_GENERIC_ACTION
 	/// Set while Trigger() is happening
-	var/is_triggering = FALSE
+	VAR_PRIVATE/is_triggering = FALSE
 	/// TRUE once the async Trigger() has written its result.
-	var/async_trigger_done = FALSE
+	VAR_PRIVATE/async_trigger_done = FALSE
 	/// Whether Trigger() returned a truthy value.
-	var/async_trigger_succeeded = FALSE
+	VAR_PRIVATE/async_trigger_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/use_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(is_triggering)
