@@ -18,7 +18,7 @@
 	speed = 3
 
 	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL
-	move_force = MOVE_FORCE_VERY_STRONG
+	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 
@@ -256,13 +256,13 @@
 /mob/living/basic/boss/mechanical_spider/proc/assess_purity(mob/living/to_assess, force_impure = FALSE)
 	if(!istype(to_assess) || to_assess == src || to_assess.stat == DEAD)
 		return FALSE
-	if(stat >= UNCONSCIOUS || (REF(to_assess) in impurity_list | purity_list))
+	if(stat >= UNCONSCIOUS || (REF(to_assess) in (impurity_list | purity_list)))
 		return
 	addtimer(CALLBACK(src, PROC_REF(finish_assess_purity), to_assess, force_impure), 3 SECONDS, TIMER_UNIQUE)
 
 /mob/living/basic/boss/mechanical_spider/proc/finish_assess_purity(mob/living/to_assess, force_impure = FALSE)
 	var/assess_key = REF(to_assess)
-	if((assess_key in impurity_list | purity_list) || stat >= UNCONSCIOUS)
+	if((assess_key in (impurity_list | purity_list)) || stat >= UNCONSCIOUS)
 		return
 	if(!(to_assess in dview(7, loc)))
 		return
@@ -293,7 +293,7 @@
 			if(to_check.stat != CONSCIOUS || isnull(to_check.mind) || isnull(to_check.client) || to_check == src)
 				continue
 			var/to_check_key = REF(to_check)
-			if((to_check_key in impurity_list | purity_list))
+			if((to_check_key in (impurity_list | purity_list)))
 				continue
 			to_check_pool += to_check
 		if(length(to_check_pool))
