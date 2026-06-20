@@ -1,21 +1,9 @@
-/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/target = controller.blackboard[BB_CURRENT_TARGET]
-	if(!target || QDELETED(target))
-		return
-	if(target.loc != controller.pawn.loc)
-		return
-	return ..()
-
 /datum/ai_controller/basic_controller/living_floor
 	max_target_distance = 2
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/living_floor.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-	)
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top
 	)
 
 /mob/living/basic/living_floor

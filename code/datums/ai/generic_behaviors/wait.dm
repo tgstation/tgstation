@@ -1,7 +1,7 @@
 /// Does nothing for a given duration (deciseconds, so use the SECONDS define pls), then succeeds. duration = 0 waits forever.
 /datum/bt_node/ai_behavior/wait
 	/// world.time when the wait ends. 0 when waiting forever
-	var/end_time = 0
+	VAR_PRIVATE/end_time = 0
 	/// How long to wait, in deciseconds. 0 waits forever.
 	var/duration = 0
 

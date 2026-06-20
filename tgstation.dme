@@ -1186,6 +1186,8 @@
 #include "code\datums\ai\generic_decorators\target_has_reagent.dm"
 #include "code\datums\ai\generic_decorators\target_has_trait.dm"
 #include "code\datums\ai\generic_decorators\target_health_below_fraction.dm"
+#include "code\datums\ai\generic_decorators\target_is_type.dm"
+#include "code\datums\ai\generic_decorators\target_legcuffed.dm"
 #include "code\datums\ai\generic_decorators\target_on_ground.dm"
 #include "code\datums\ai\generic_decorators\true_for_time.dm"
 #include "code\datums\ai\generic_subtrees\basic_find_target.dm"
