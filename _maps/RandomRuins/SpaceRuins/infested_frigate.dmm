@@ -124,6 +124,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
+"bW" = (
+/obj/structure/girder,
+/obj/item/stack/sheet/mineral/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/infested_frigate)
 "bZ" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
@@ -754,18 +759,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"mw" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/door/airlock/hatch,
-/obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
 "mG" = (
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/blood{
@@ -793,6 +786,8 @@
 	},
 /obj/structure/closet/syndicate,
 /obj/structure/cable,
+/obj/item/clothing/glasses/hud/health/night/meson,
+/obj/item/gun/syringe,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "nm" = (
@@ -814,7 +809,7 @@
 	faction = list("syndicate","xenomorph")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "nU" = (
 /obj/structure/cable,
@@ -907,16 +902,13 @@
 /area/ruin/space/has_grav/infested_frigate)
 "pq" = (
 /obj/effect/decal/cleanable/blood/gibs{
-	icon_state = "floor7-old"
-	},
-/obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gibleg";
 	pixel_x = 3;
 	pixel_y = 19;
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium,
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "qb" = (
 /obj/effect/turf_decal{
@@ -1005,8 +997,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "rm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -1075,6 +1066,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "rO" = (
 /obj/structure/broken_flooring/pile/directional/south,
+/obj/structure/door_assembly/door_assembly_ext,
 /turf/template_noop,
 /area/space/nearstation)
 "so" = (
@@ -1122,6 +1114,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "sT" = (
 /obj/structure/lattice,
+/obj/structure/girder/displaced,
 /turf/template_noop,
 /area/space/nearstation)
 "sZ" = (
@@ -1524,6 +1517,11 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
+"yA" = (
+/obj/item/stack/sheet/mineral/plastitanium,
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/template_noop,
+/area/space/nearstation)
 "yG" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris{
 	icon_state = "gib4"
@@ -1595,6 +1593,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "zU" = (
 /obj/structure/broken_flooring/pile/directional/east,
+/obj/item/stack/sheet/mineral/plastitanium,
 /turf/template_noop,
 /area/space/nearstation)
 "zV" = (
@@ -1604,6 +1603,9 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"Ac" = (
+/turf/closed/indestructible/normal_wall,
 /area/ruin/space/has_grav/infested_frigate)
 "Ah" = (
 /obj/effect/mob_spawn/corpse/human/syndicatepilot,
@@ -1779,6 +1781,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "Eg" = (
 /obj/item/stack/rods,
+/obj/structure/girder/displaced,
 /turf/template_noop,
 /area/space/nearstation)
 "Er" = (
@@ -1896,9 +1899,10 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/obj/machinery/door/airlock/hatch,
-/obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/door_assembly/door_assembly_hatch{
+	name = "SYN-C Brutus Bridge"
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Fs" = (
 /mob/living/basic/bot/firebot{
@@ -1961,6 +1965,13 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/trash,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"GI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/girder/displaced,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Hc" = (
 /obj/effect/decal/cleanable/blood/gibs{
@@ -2029,7 +2040,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/item/construction/rcd,
 /obj/effect/mob_spawn/corpse/human/engineer,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Im" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -2135,6 +2146,9 @@
 	dir = 4
 	},
 /obj/machinery/light/broken/directional/west,
+/obj/structure/door_assembly/door_assembly_hatch{
+	name = "SYN-C Brutus Bridge"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "JZ" = (
@@ -2168,12 +2182,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "KB" = (
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "KC" = (
 /obj/item/ammo_casing/spent,
@@ -2247,14 +2256,19 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/structure/alien/weeds,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Ln" = (
 /obj/effect/decal/cleanable/glass,
 /obj/item/ammo_casing/spent,
 /obj/structure/alien/weeds,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"LD" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "LF" = (
 /obj/structure/cable,
@@ -2442,6 +2456,8 @@
 /obj/item/stack/rods{
 	amount = 23
 	},
+/obj/structure/girder/displaced,
+/obj/item/stack/sheet/mineral/plastitanium,
 /turf/template_noop,
 /area/space/nearstation)
 "Ou" = (
@@ -2494,11 +2510,10 @@
 	minimum_growtime = 120000;
 	growtime = 150000
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Pj" = (
 /obj/machinery/door/poddoor/preopen,
@@ -2540,13 +2555,21 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/infested_frigate)
 "Qm" = (
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/light/small/red/dim/directional/north,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "ltrails_1";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gibarm";
+	dir = 4;
+	pixel_x = -6;
+	pixel_y = -21
 	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/basic/alien{
+	faction = list("syndicate","xenomorph")
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "QA" = (
 /obj/effect/turf_decal{
@@ -2638,6 +2661,10 @@
 /obj/effect/spawner/random/trash,
 /turf/template_noop,
 /area/space/nearstation)
+"RZ" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/indestructible/normal_wall,
+/area/ruin/space/has_grav/infested_frigate)
 "Sr" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -3430,7 +3457,7 @@ fl
 vj
 xp
 ab
-Cm
+CE
 rm
 Ou
 Rw
@@ -3457,7 +3484,7 @@ fl
 vj
 Ez
 nN
-Im
+GI
 mp
 ti
 Qg
@@ -3481,8 +3508,8 @@ fl
 fl
 fl
 fl
-BO
-Cm
+Ac
+xt
 rd
 BO
 BO
@@ -3507,10 +3534,10 @@ fl
 qJ
 fl
 sT
-In
-BO
-BO
-mw
+Ac
+Ac
+Ac
+xt
 BO
 uy
 sA
@@ -3531,12 +3558,12 @@ fl
 fl
 fl
 fl
-EB
+yA
 fl
 fl
-jk
+RZ
 HP
-vm
+LD
 KB
 BO
 nk
@@ -3561,9 +3588,9 @@ QL
 fl
 Or
 fl
-BO
-aV
-BO
+Ac
+Qm
+Ac
 Lf
 BO
 VQ
@@ -3588,9 +3615,9 @@ fl
 fl
 fl
 rO
-jk
+Ac
 pq
-tO
+LD
 Pb
 BO
 TL
@@ -3615,10 +3642,10 @@ fl
 fl
 fl
 Eg
-hm
-BO
-BO
-Qm
+Ac
+Ac
+Ac
+xt
 BO
 NU
 Hc
@@ -3643,8 +3670,8 @@ zU
 fl
 fl
 fl
-BO
-BO
+Ac
+bW
 Fi
 BO
 BO
