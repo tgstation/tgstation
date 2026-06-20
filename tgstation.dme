@@ -5547,7 +5547,6 @@
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub.dm"
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub_abilities.dm"
 #include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub_ai.dm"
-#include "code\modules\mob\living\basic\lavaland\goldgrub\goldgrub_bt.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\goliath.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\goliath_actions.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\goliath_ai.dm"
