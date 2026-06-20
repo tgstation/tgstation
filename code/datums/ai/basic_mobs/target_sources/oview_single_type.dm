@@ -57,6 +57,9 @@
 /datum/target_source/oview_single_type/raptor_trough
 	single_typepath = /obj/structure/ore_container/food_trough/raptor_trough
 
+/datum/target_source/oview_single_type/gutlunch_trough
+	single_typepath = /obj/structure/ore_container/food_trough/gutlunch_trough
+
 /datum/target_source/oview_single_type/mouse
 	single_typepath = /mob/living/basic/mouse
 
@@ -95,3 +98,9 @@
 
 /datum/target_source/oview_single_type/node_drone
 	single_typepath = /mob/living/basic/node_drone
+
+/datum/target_source/oview_single_type/icy_rock
+	single_typepath = /obj/structure/flora/rock/icy
+
+/datum/target_source/oview_single_type/ice_whelp
+	single_typepath = /mob/living/basic/mining/ice_whelp

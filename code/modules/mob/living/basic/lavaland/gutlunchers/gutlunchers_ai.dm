@@ -9,6 +9,7 @@
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
+		BB_FUCKS = TRUE,
 	)
 	behavior_tree_json = "code/modules/mob/living/basic/lavaland/gutlunchers/gutlunch_warrior.bt.json"
 
@@ -55,6 +56,16 @@
 		parent.balloon_alert_to_viewers("can't reproduce anymore!")
 		return FALSE
 	return ..()
+
+/// Interacts with the food trough to eat ore, then clears the hungry flag.
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/food_trough
+	always_reset_target = TRUE
+	behavior_combat_mode = FALSE
+
+/datum/bt_node/ai_behavior/hunt_target/interact_with_target/food_trough/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	if(succeeded)
+		controller.clear_blackboard_key(BB_CHECK_HUNGRY)
 
 ///Find nearby ashwalkers. we love lizards.
 /datum/bt_node/ai_behavior/befriend_ashwalkers

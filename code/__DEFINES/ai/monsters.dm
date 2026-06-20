@@ -114,6 +114,10 @@
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
+///cooldown key for sculpting statues
+#define BB_WHELP_SCULPT_COOLDOWN "BB_whelp_sculpt_cooldown"
+///cooldown key for burning trees
+#define BB_WHELP_BURN_COOLDOWN "BB_whelp_burn_cooldown"
 
 // Regal Rats
 /// The rat's ability to corrupt an area.
