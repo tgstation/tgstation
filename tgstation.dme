@@ -1088,6 +1088,7 @@
 #include "code\datums\ai\basic_mobs\targeting_strategies\injured_mob.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\unbroken_light.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\legged_conscious_human.dm"
+#include "code\datums\ai\basic_mobs\targeting_strategies\living_not_dead.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\sniffable_hydro.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\water_dispenser.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\treatable_hydro.dm"

@@ -6,10 +6,4 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/targeted_mob_ability,
-	)
+	behavior_tree_json = "code/datums/ai/basic_mobs/simple_ability_ranged_combat.bt.json"
