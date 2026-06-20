@@ -65,8 +65,9 @@
 
 	null_sound = sound(channel = sound_channel)
 
-	cell_tracker = new /datum/cell_tracker(range, range)
-	update_tracked_cells()
+	if(!allowed_listeners)
+		cell_tracker = new /datum/cell_tracker(range, range)
+		update_tracked_cells()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
@@ -276,7 +277,7 @@
 
 ///Update tracked cells; happens on movement. We need to check if anyone is now out of cell range and kick them out.
 /datum/sound_token/proc/update_tracked_cells()
-	if(!get_turf(source))
+	if(!get_turf(source) || !cell_tracker)
 		return
 
 	var/list/new_and_old = cell_tracker.recalculate_cells(get_turf(source))
