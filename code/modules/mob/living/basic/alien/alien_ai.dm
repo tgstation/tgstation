@@ -4,6 +4,8 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
 	)
 
 	behavior_nodes = list(
@@ -47,6 +49,17 @@
 	time_between_perform = 3 SECONDS
 	max_range = 3
 	avoid_friendly_fire = TRUE
+
+/datum/bt_node/subtree/basic_alien
+	behavior_tree_json = "basic_alien.bt.json"
+
+
+/datum/bt_node/subtree/ranged_alien_combat
+	behavior_tree_json = "ranged_alien_combat.bt.json"
+
+
+/datum/bt_node/subtree/melee_alien_combat
+	behavior_tree_json = "melee_alien_combat.bt.json"
 
 /datum/idle_behavior/idle_random_walk/plant_weeds
 	var/plant_cooldown = 30

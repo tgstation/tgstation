@@ -104,3 +104,6 @@
 
 /datum/target_source/oview_single_type/ice_whelp
 	single_typepath = /mob/living/basic/mining/ice_whelp
+
+/datum/target_source/oview_single_type/hivebot
+	single_typepath = /mob/living/basic/hivebot
