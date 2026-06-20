@@ -183,11 +183,6 @@
 	emote_hear = list("snorts.")
 	emote_see = list("snorts.")
 
-/datum/ai_planning_subtree/random_speech/killer_tomato
-	speech_chance = 3
-	emote_hear = list("gnashes.", "growls lowly.", "snarls.")
-	emote_see = list("salivates.")
-
 /datum/ai_planning_subtree/random_speech/ant
 	speech_chance = 1
 	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")

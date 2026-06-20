@@ -8,6 +8,10 @@
 		"by235tlw": {
 			"label": "cant_attack_subtree",
 			"default": ""
+		},
+		"bqul7l8t": {
+			"label": "speech_subtree",
+			"default": "/datum/bt_node/subtree"
 		}
 	},
 	"type": "parallel",
@@ -96,6 +100,10 @@
 				"targeting_strategy": "BB_TARGETING_STRATEGY",
 				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "$bqul7l8t"
 		}
 	]
 }

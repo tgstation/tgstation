@@ -71,18 +71,13 @@
 		death()
 
 /datum/ai_controller/basic_controller/lightgeist
+	behavior_tree_json = "lightgeist.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree, // We heal things by attacking them
-	)
 
 /// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
 /datum/targeting_strategy/lightgeist

@@ -5551,7 +5551,6 @@
 #include "code\modules\mob\living\basic\lavaland\gutlunchers\gutluncher_foodtrough.dm"
 #include "code\modules\mob\living\basic\lavaland\gutlunchers\gutlunchers.dm"
 #include "code\modules\mob\living\basic\lavaland\gutlunchers\gutlunchers_ai.dm"
-#include "code\modules\mob\living\basic\lavaland\gutlunchers\gutlunchers_bt.dm"
 #include "code\modules\mob\living\basic\lavaland\gutlunchers\gutlunchers_inherit_datum.dm"
 #include "code\modules\mob\living\basic\lavaland\hivelord\hivelord.dm"
 #include "code\modules\mob\living\basic\lavaland\hivelord\hivelord_ai.dm"

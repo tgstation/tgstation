@@ -1,5 +1,238 @@
 {
 	"dm_type": "/datum/ai_controller/basic_controller/mega_arachnid",
-	"type": "selector",
-	"children": []
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/escape_captivity"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_CURRENT_TARGET",
+						"observer_abort": "BT_ABORT_BOTH"
+					},
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subtree",
+										"subtype": "/datum/bt_node/subtree/run_away_from_target"
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/ability_available",
+										"vars": {
+											"ability_key": "BB_ARACHNID_SLIP"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+											"vars": {
+												"ability_key": "BB_ARACHNID_SLIP"
+											}
+										}
+									}
+								]
+							},
+							{
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "decorator",
+														"decorator": "/datum/bt_node/decorator/target_is_type",
+														"vars": {
+															"target_type": "/mob/living/carbon/human"
+														},
+														"child": {
+															"type": "decorator",
+															"decorator": "/datum/bt_node/decorator/target_legcuffed",
+															"vars": {
+																"invert": true
+															},
+															"child": {
+																"type": "decorator",
+																"decorator": "/datum/bt_node/decorator/ability_available",
+																"vars": {
+																	"ability_key": "BB_ARACHNID_RESTRAIN"
+																},
+																"child": {
+																	"type": "leaf",
+																	"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+																	"vars": {
+																		"ability_key": "BB_ARACHNID_RESTRAIN",
+																		"target_key": "BB_CURRENT_TARGET"
+																	}
+																}
+															}
+														}
+													},
+													{
+														"type": "decorator",
+														"decorator": "/datum/bt_node/decorator/target_is_type",
+														"vars": {
+															"target_type": "/mob/living/carbon/human",
+															"invert": true
+														},
+														"child": {
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+															"vars": {
+																"target_key": "BB_CURRENT_TARGET",
+																"targeting_strategy": "BB_TARGETING_STRATEGY",
+																"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+															}
+														}
+													},
+													{
+														"type": "decorator",
+														"decorator": "/datum/bt_node/decorator/target_legcuffed",
+														"child": {
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+															"vars": {
+																"target_key": "BB_CURRENT_TARGET",
+																"targeting_strategy": "BB_TARGETING_STRATEGY",
+																"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+															}
+														}
+													},
+													{
+														"type": "decorator",
+														"decorator": "/datum/bt_node/decorator/target_health_below_fraction",
+														"vars": {
+															"key": "BB_CURRENT_TARGET",
+															"fraction": 0.5
+														},
+														"child": {
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+															"vars": {
+																"target_key": "BB_CURRENT_TARGET",
+																"targeting_strategy": "BB_TARGETING_STRATEGY",
+																"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+															}
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_SURVEILLANCE_TARGET",
+						"observer_abort": "BT_ABORT_SELF"
+					},
+					"child": {
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_SURVEILLANCE_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+								"vars": {
+									"target_key": "BB_SURVEILLANCE_TARGET"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/clear_key",
+								"vars": {
+									"key": "BB_SURVEILLANCE_TARGET"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/climb_tree"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_walk"
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+			"vars": {
+				"target_key": "BB_SURVEILLANCE_TARGET",
+				"target_source": "/datum/target_source/oview_typed/surveillance_equipment",
+				"targeting_strategy": "/datum/targeting_strategy/working_machine",
+				"vision_range": 7
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+			"vars": {
+				"target_key": "BB_CLIMBED_TREE",
+				"target_source": "/datum/target_source/oview_single_type/flora_tree",
+				"targeting_strategy": "/datum/targeting_strategy/anything"
+			}
+		}
+	]
 }
