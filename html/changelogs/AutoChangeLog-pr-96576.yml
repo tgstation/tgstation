@@ -1,0 +1,4 @@
+author: "UvvU"
+delete-after: True
+changes:
+  - qol: "made deploying and undeploying a modsuit no longer ALWAYS drop your suit storage item, instead keeping it if it's valid"
