@@ -352,7 +352,7 @@
 		else
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
-		if(travel_remaining < XING_THRESHOLD_AMBER && (COOLDOWN_FINISHED(src, announce_cooldown)))
+		if(travel_remaining < 39 && (COOLDOWN_FINISHED(src, announce_cooldown)))
 			make_announcement("The next station is: [destination_platform].")
 			COOLDOWN_START(src, announce_cooldown, 4 SECONDS)
 
@@ -741,7 +741,7 @@
 		our_channel,
 		25
 	)
-	var/list/hearers = playsound(idle_platform, jingle, 25, FALSE, 0, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, ignore_walls = TRUE)
+	var/list/hearers = playsound(idle_platform, jingle, 25, FALSE, 0, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	new /datum/threed_sound(
 		new_parent = idle_platform,
 		new_sound = jingle,
