@@ -45,7 +45,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
 ADMIN_VERB(restart_controller, R_DEBUG, "Restart Controller", "Restart one of the various periodic loop controllers for the game (be careful!)", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(controller, ADMIN_VERB_ARG_TYPE_TEXT, null)
+	VERB_ARG(controller, VERB_ARG_TYPE_TEXT, null)
 	switch(controller)
 		if("Master")
 			Recreate_MC()

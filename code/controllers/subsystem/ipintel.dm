@@ -196,7 +196,7 @@ SUBSYSTEM_DEF(ipintel)
 
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL)
-	VERB_ARG(ckey, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(ckey, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if (!SSipintel.is_enabled())
 		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(SSipintel.is_whitelisted(ckey))
@@ -221,7 +221,7 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 	message_admins("IPINTEL: [key_name_admin(user)] has whitelisted '[ckey]'")
 
 ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL)
-	VERB_ARG(ckey, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(ckey, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if (!SSipintel.is_enabled())
 		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(!SSipintel.is_whitelisted(ckey))

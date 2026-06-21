@@ -2,7 +2,7 @@
 #define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", /datum)
-	VERB_ARG(thing, ADMIN_VERB_ARG_TYPE_DATUM, ADMIN_VERB_ARG_SOURCE_WORLD, /datum)
+	VERB_ARG(thing, VERB_ARG_TYPE_DATUM, VERB_ARG_SOURCE_WORLD, /datum)
 	user.debug_variables(thing)
 // This is kept as a separate proc because admins are able to show VV to non-admins
 

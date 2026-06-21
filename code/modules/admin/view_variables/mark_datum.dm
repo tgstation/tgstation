@@ -11,7 +11,7 @@
 	vv_update_display(D, "marked", VV_MSG_MARKED)
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(mark_datum, R_NONE, "Mark Object", /datum)
-	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB | ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_AREA, ADMIN_VERB_ARG_SOURCE_VIEW, /datum)
+	VERB_ARG(target, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA, VERB_ARG_SOURCE_VIEW, /datum)
 	user.mark_datum(target)
 
 /datum/admins/proc/handle_marked_del(datum/source)

@@ -26,7 +26,6 @@ SUBSYSTEM_DEF(verbs)
 /datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
-		// Raw verb without metadata — call it directly
 		call(target, verb_path)(arglist(positional_args))
 		return
 	var/list/structured_args = list()
