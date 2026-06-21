@@ -79,7 +79,6 @@ multiple modular subtrees with behaviors
 				controller_subsystem.currentrun -= src
 				break
 	our_cells = null
-	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	return ..()

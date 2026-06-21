@@ -24,7 +24,7 @@
 
 /datum/ai_movement/proc/update_movement_target(datum/ai_controller/controller, atom/new_target)
 	moving_controllers[controller] = new_target
-	controller.set_blackboard_key(BB_CURRENT_MOVEMENT_TARGET, current_movement_target)
+	controller.set_blackboard_key(BB_CURRENT_MOVEMENT_TARGET, new_target)
 
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts = 0
