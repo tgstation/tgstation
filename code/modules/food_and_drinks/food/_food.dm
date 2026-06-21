@@ -141,6 +141,7 @@
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
 		reagent_purity = starting_reagent_purity,\
+		handmade_complexity = crafting_complexity,\
 	)
 
 /obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
@@ -152,7 +153,7 @@
 		LAZYADD(intrinsic_food_materials, food_component.intrinsic_food_materials)
 	var/mob/living/user = crafter
 	if(istype(user) && !isnull(user.mind))
-		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(src, TRAIT_HANDMADE, REF(user.mind))
 
 	if(!istype(current_recipe, /datum/crafting_recipe/food))
 		return
