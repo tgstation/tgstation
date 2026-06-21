@@ -279,7 +279,7 @@
 #define BB_SWIM_ALTERNATE_TURF "swim_alternate_turf"
 ///key holds our state of swimming
 #define BB_CURRENTLY_SWIMMING "currently_swimming"
-///key holds how long we will be swimming for
+///Time between swims
 #define BB_KEY_SWIMMER_COOLDOWN "key_swimmer_cooldown"
 //Wizard AI keys
 /// Key where we store our main targeted spell

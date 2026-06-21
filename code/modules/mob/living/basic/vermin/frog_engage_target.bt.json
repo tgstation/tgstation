@@ -1,0 +1,90 @@
+{
+	"dm_type": "/datum/bt_node/subtree/frog_engage_target",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_CURRENT_TARGET"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/target_has_trait",
+				"vars": {
+					"key": "BB_CURRENT_TARGET",
+					"trait": "TRAIT_SCARY_FISHERMAN"
+				},
+				"child": {
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "subplan",
+							"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+							"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
+									"vars": {
+										"target_key": "BB_CURRENT_TARGET",
+										"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+										"destination_key": "BB_FLEE_LOCATION"
+									}
+								}
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"vars": {
+								"target_key": "BB_FLEE_LOCATION",
+								"required_dist": 0,
+								"finish_on_arrival": false
+							}
+						}
+					]
+				}
+			},
+			{
+				"type": "parallel",
+				"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+				"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+				"repeat_secondary": true,
+				"finish_on_primary": true,
+				"children": [
+					{
+						"type": "subplan",
+						"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+						"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"targeting_strategy": "BB_TARGETING_STRATEGY",
+									"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+								}
+							}
+						]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CURRENT_TARGET",
+							"required_dist": 1,
+							"finish_on_arrival": false
+						}
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,5 +1,11 @@
 {
 	"dm_type": "/datum/bt_node/subtree/simple_hostile_combat_with_retaliate",
+	"bindings": {
+		"bhvqd9fh": {
+			"label": "speech loop subtree",
+			"default": "/datum/bt_node/subtree"
+		}
+	},
 	"type": "parallel",
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
@@ -92,6 +98,10 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "subtree",
+			"subtype": "$bhvqd9fh"
 		}
 	]
 }

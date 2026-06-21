@@ -60,9 +60,6 @@
 	var/running_child_index = 0
 
 /datum/bt_node/composite/sequence/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick())
-		return tick_result || BT_RUNNING
-
 	var/result = BT_SUCCESS
 	var/start = running_child_index || 1
 	for(var/i in start to length(children))
@@ -76,15 +73,9 @@
 				running_child_index = i
 			else
 				running_child_index = 0
-			if(tick_rate)
-				tick_cooldown = world.time
-				tick_result = result
 			return result
 
 	running_child_index = 0
-	if(tick_rate)
-		tick_cooldown = world.time
-		tick_result = result
 	return result
 
 /datum/bt_node/composite/sequence/reset_tick_state()
@@ -123,9 +114,6 @@
 	var/running_child_index = 0
 
 /datum/bt_node/composite/selector/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick())
-		return tick_result || BT_FAILURE
-
 	var/result = BT_FAILURE
 	var/start = running_child_index || 1
 	for(var/i in start to length(children))
@@ -139,15 +127,9 @@
 				running_child_index = i
 			else
 				running_child_index = 0
-			if(tick_rate)
-				tick_cooldown = world.time
-				tick_result = result
 			return result
 
 	running_child_index = 0
-	if(tick_rate)
-		tick_cooldown = world.time
-		tick_result = result
 	return result
 
 /datum/bt_node/composite/selector/reset_tick_state()
@@ -195,21 +177,12 @@
 	var/next_loop_time = 0
 
 /datum/bt_node/composite/subplan/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick())
-		return tick_result || BT_RUNNING
-
 	if(loop_delay > 0 && next_loop_time > world.time)
-		if(tick_rate)
-			tick_cooldown = world.time
-			tick_result = BT_RUNNING
 		return BT_RUNNING
 
 	var/datum/bt_node/child = LAZYACCESS(children, 1)
 	if(isnull(child))
 		next_loop_time = 0
-		if(tick_rate)
-			tick_cooldown = world.time
-			tick_result = BT_FAILURE
 		return BT_FAILURE
 
 	var/child_result = child.tick(controller, seconds_per_tick)
@@ -217,39 +190,24 @@
 		return BT_FAILURE
 
 	if(child_result == BT_RUNNING)
-		if(tick_rate)
-			tick_cooldown = world.time
-			tick_result = BT_RUNNING
 		return BT_RUNNING
 
 	if(child_result == BT_FAILURE)
-		var/result
 		if(failure_policy == BT_SUBPLAN_LOOP_ON_FAILURE)
 			child.reset_tick_state()
 			if(loop_delay > 0)
 				next_loop_time = world.time + loop_delay
-			result = BT_RUNNING
-		else
-			next_loop_time = 0
-			result = BT_FAILURE
-		if(tick_rate)
-			tick_cooldown = world.time
-			tick_result = result
-		return result
+			return BT_RUNNING
+		next_loop_time = 0
+		return BT_FAILURE
 
-	var/result
 	if(success_policy == BT_SUBPLAN_LOOP_ON_SUCCESS)
 		child.reset_tick_state()
 		if(loop_delay > 0)
 			next_loop_time = world.time + loop_delay
-		result = BT_RUNNING
-	else
-		next_loop_time = 0
-		result = BT_SUCCESS
-	if(tick_rate)
-		tick_cooldown = world.time
-		tick_result = result
-	return result
+		return BT_RUNNING
+	next_loop_time = 0
+	return BT_SUCCESS
 
 /datum/bt_node/composite/subplan/reset_tick_state()
 	. = ..()
@@ -286,9 +244,6 @@
 	var/finish_on_primary = FALSE
 
 /datum/bt_node/composite/parallel/tick(datum/ai_controller/controller, seconds_per_tick)
-	if(!should_tick())
-		return tick_result || BT_RUNNING
-
 	var/succeeded = 0
 	var/failed = 0
 	var/primary_result
@@ -326,25 +281,15 @@
 		for(var/i in 2 to length(children))
 			var/datum/bt_node/child = children[i]
 			child.reset_subtree_tick_states()
-		if(tick_rate)
-			tick_cooldown = world.time
-			tick_result = primary_result
 		return primary_result
 
-	var/result
 	if((failure_policy == BT_PARALLEL_FAILURE_CHILD_ONE && primary_result == BT_FAILURE) || \
 			(failure_policy == BT_PARALLEL_FAILURE_ANY && failed > 0))
-		result = BT_FAILURE
-	else if((success_policy == BT_PARALLEL_SUCCESS_CHILD_ONE && primary_result == BT_SUCCESS) || \
+		return BT_FAILURE
+	if((success_policy == BT_PARALLEL_SUCCESS_CHILD_ONE && primary_result == BT_SUCCESS) || \
 			(success_policy == BT_PARALLEL_SUCCESS_ALL && succeeded == length(children)))
-		result = BT_SUCCESS
-	else
-		result = BT_RUNNING
-
-	if(tick_rate)
-		tick_cooldown = world.time
-		tick_result = result
-	return result
+		return BT_SUCCESS
+	return BT_RUNNING
 
 /datum/bt_node/composite/parallel/reset_tick_state()
 	. = ..()

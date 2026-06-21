@@ -7,12 +7,6 @@
 /datum/bt_node
 	/// Node type identifier for the BT viewer. One of the BT_NODE_* defines.
 	var/node_type = BT_NODE_LEAF
-	/// How often (deciseconds) this node re-evaluates. 0 = every planning tick.
-	var/tick_rate = 0
-	/// world.time of last evaluation. Only meaningful when tick_rate > 0.
-	var/tick_cooldown = 0
-	/// Cached last BT_* result. Only meaningful when tick_rate > 0.
-	var/tick_result = BT_FAILURE
 	/// Pre-order depth-first index of this node in the tree. Assigned by finalize_tree().
 	var/execution_index = 0
 	/// Index of the last descendant node in this subtree. Equal to execution_index for leaves.
@@ -23,12 +17,6 @@
 	///Owning controller for this node
 	var/datum/ai_controller/owning_controller = null
 
-/// Returns TRUE if enough time has elapsed for this node to be re-evaluated.
-/datum/bt_node/proc/should_tick()
-	if(!tick_rate)
-		return TRUE
-	return tick_cooldown + tick_rate <= world.time
-
 /**
  * Called during ai_controller/SelectBehaviors(). Override in subtypes.
  * Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING.
@@ -37,10 +25,9 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	return BT_FAILURE
 
-/// Resets tick timing and cached result for this node instance.
+/// Resets per-tick state for this node instance. Override in subtypes that hold tick state.
 /datum/bt_node/proc/reset_tick_state()
-	tick_cooldown = 0
-	tick_result = BT_FAILURE
+	return
 
 /// Resets this node and all of its descendants, cancelling any behaviors still running in the subtree.
 /datum/bt_node/proc/reset_subtree_tick_states()
@@ -113,13 +100,6 @@
 
 /// Returns a single-character status marker for display. Overridden by ai_behavior to check running.
 /datum/bt_node/proc/get_status_marker()
-	if(tick_rate > 0)
-		if(world.time < tick_cooldown)
-			return "-"
-		if(tick_result == BT_SUCCESS)
-			return "+"
-		if(tick_result == BT_FAILURE)
-			return "x"
 	return "o"
 
 /// Appends this node's full tree state (status + label + children) to lines for display.

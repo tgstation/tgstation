@@ -1,4 +1,5 @@
 /datum/ai_controller/basic_controller/fleshblob
+	behavior_tree_json = "fleshblob.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 7,
@@ -6,11 +7,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/fleshblob
 	name = "mass of flesh"
