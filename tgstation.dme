@@ -5719,7 +5719,6 @@
 #include "code\modules\mob\living\basic\space_fauna\space_dragon\space_dragon.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spider_ai.dm"
-#include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spider_subtrees.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\giant_spider\giant_spiders.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\hivemind.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\lay_eggs.dm"
