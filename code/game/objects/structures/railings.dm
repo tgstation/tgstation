@@ -164,11 +164,23 @@
 	if(anchored == checked_anchored)
 		return TRUE
 
+/obj/structure/railing/green
+	name = "green railing"
+	desc = "Overgrown railing. What is this greenery even growing on? Rust?"
+	icon_state = "greenrailing"
+
+/obj/structure/railing/green/corner
+	icon_state = "greenrailing_corner"
+
+/obj/structure/railing/green/corner/end
+	icon_state = "greenrailing_end"
+
+/obj/structure/railing/green/corner/end/flip
+	icon_state = "greenrailing_end_flip"
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
 	desc = "wooden fence meant to keep animals in."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER

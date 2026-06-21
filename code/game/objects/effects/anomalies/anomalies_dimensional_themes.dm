@@ -14,6 +14,8 @@
 	var/sound = 'sound/effects/magic/blind.ogg'
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
+	/// Weighted list of carpets to replace other carpets with
+	var/list/replace_carpets = list()
 	/// Typepath of turf to replace walls with.
 	var/turf/replace_walls = /turf/closed/wall/material
 	/// List of weighted lists for object replacement. Key is an original typepath, value is a weighted list of typepaths to replace it with.
@@ -111,7 +113,10 @@
 			return FALSE
 		if (affected_turf.holodeck_compatible)
 			return FALSE
-		return transform_floor(affected_turf)
+		if(istype(affected_turf, /turf/open/floor/carpet))
+			return transform_floor(affected_turf)
+		else
+			return transform_carpet(affected_turf)
 
 	if (!iswallturf(affected_turf))
 		return FALSE
@@ -119,6 +124,32 @@
 		return FALSE
 	affected_turf.ChangeTurf(replace_walls, flags = CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
+
+
+/**
+ * Checks what area the provided turf is in, and returns a shortening for it, so we can affect different departaments differently.
+ *
+ * Arguments
+ * * affected_turf - Turf we are checking.
+ */
+/datum/dimension_theme/proc/area_short(turf/affected_turf)
+	var/turf_area = get_area(affected_turf)
+
+	if(istype(turf_area, /area/station/command))
+		return "com"
+	if(istype(turf_area, /area/station/engineering))
+		return "eng"
+	if(istype(turf_area, /area/station/security))
+		return "sec"
+	if(istype(turf_area, /area/station/science))
+		return "sci"
+	if(istype(turf_area, /area/station/medical))
+		return "med"
+	if(istype(turf_area, /area/station/cargo))
+		return "car"
+	if(istype(turf_area, /area/station/service))
+		return "ser"
+	return "nan"
 
 /**
  * Replaces the provided floor turf with a different one.
@@ -129,9 +160,64 @@
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	PROTECTED_PROC(TRUE)
 
-	if (replace_floors.len == 0)
-		return FALSE
+	var/floor_list
+	switch(area_short(affected_floor))
+		if("com")
+			floor_list = replace_com_floors
+		if("eng")
+			floor_list = replace_eng_floors
+		if("sec")
+			floor_list = replace_sec_floors
+		if("sci")
+			floor_list = replace_sci_floors
+		if("med")
+			floor_list = replace_med_floors
+		if("car")
+			floor_list = replace_car_floors
+		if("ser")
+			floor_list = replace_ser_floors
+		else
+			floor_list = replace_floors
+
+	if (floor_list.len == 0)
+		floor_list = replace_floors
+		if (floor_list.len == 0)
+			return FALSE
+
 	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR | CHANGETURF_INHERIT_MOUNTS)
+	return TRUE
+
+/**
+ * Literally the same as for the floor, but inputs changed to carpets.
+ * Also falls back on floors, if carpet is undefined
+ */
+/datum/dimension_theme/proc/transform_carpet(turf/open/floor/affected_floor)
+	PROTECTED_PROC(TRUE)
+
+	var/carpet_list
+	switch(area_short(affected_floor))
+		if("com")
+			carpet_list = replace_com_carpets
+		if("eng")
+			carpet_list = replace_eng_carpets
+		if("sec")
+			carpet_list = replace_sec_carpets
+		if("sci")
+			carpet_list = replace_sci_carpets
+		if("med")
+			carpet_list = replace_med_carpets
+		if("car")
+			carpet_list = replace_car_carpets
+		if("ser")
+			carpet_list = replace_ser_carpets
+		else
+			carpet_list = replace_carpets
+
+	if (carpet_list.len == 0)
+		carpet_list = replace_carpets
+		if (carpet_list.len == 0)
+			return transform_floor(affected_floor)
+	affected_floor.replace_floor(pick_weight(carpet_list), flags = CHANGETURF_INHERIT_AIR | CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 /**
@@ -438,6 +524,8 @@
 	icon_state = "lbulb"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)
+	replace_carpets = list(/obj/item/stack/tile/eighties = 1)
+	replace_sec_carpets = list(/obj/item/stack/tile/eighties/red = 1)
 
 /datum/dimension_theme/disco/transform_floor(turf/open/floor/affected_floor)
 	. = ..()

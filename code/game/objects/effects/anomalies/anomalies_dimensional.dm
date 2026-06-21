@@ -99,3 +99,56 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-flash"
 	duration = 3
+
+/// Da big one.
+/obj/effect/anomaly/dimensional/big
+	name = "big dimensional anomaly"
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 20 // still the same as its very unlikely it reaches it.
+	move_chance = 0
+	/// Range is set to 1 as it expands until it overtakes the entire area.
+	range = 1
+
+	/// Minimum teleports it will do before going away permanently
+	minimum_teleports = 5
+	/// Maximum teleports it will do before going away permanently
+	maximum_teleports = 15
+
+/obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
+	. = ..()
+	transmute_area()
+
+/**
+ * Transforms a turf in our prepared area.
+ */
+/obj/effect/anomaly/dimensional/big/transmute_area()
+	if (!theme)
+		prepare_theme()
+	if (!target_turfs.len)
+		if(teleports_left <= 0 && !immortal)
+			detonate()
+			return
+		teleports_left--
+		relocate()
+		return
+
+	var/turf/affected_turf = target_turfs[1]
+	theme.apply_theme(affected_turf, show_effect = TRUE)
+	target_turfs -= affected_turf
+
+/**
+ * Prepare the area anomaly is in for transformation into a new theme.
+ * Optionally pass in the typepath of an anomaly theme to use that one.
+ */
+/obj/effect/anomaly/dimensional/big/prepare_theme(new_theme_path)
+	if (!new_theme_path)
+		new_theme_path = pick(subtypesof(/datum/dimension_theme))
+	theme = SSmaterials.dimensional_themes[new_theme_path]
+	apply_theme_icon()
+
+
+/obj/effect/anomaly/dimensional/big/prepare_area()
+	target_turfs = list()
+	for (var/turf/turf as anything in spiral_range_turfs(range, src))
+		if (theme.can_convert(turf))
+			if(get_area(turf) == get_area(src))
+				target_turfs += turf
