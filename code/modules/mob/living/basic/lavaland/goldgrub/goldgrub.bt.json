@@ -130,6 +130,14 @@
 									},
 									{
 										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+										"vars": {
+											"cooldown_key": "BB_MINING_COOLDOWN",
+											"cooldown_duration": "4 SECONDS"
+										}
+									},
+									{
+										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/mine_wall",
 										"vars": {
 											"target_key": "BB_TARGET_MINERAL_WALL"
@@ -154,7 +162,7 @@
 										"vars": {
 											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
 											"required_dist": 1,
-											"finish_on_arrival": false
+											"finish_on_arrival": true
 										}
 									},
 									{
@@ -205,10 +213,17 @@
 							"behavior": "/datum/bt_node/ai_behavior/find_ore_vent"
 						},
 						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/key_off_cooldown",
 							"vars": {
-								"target_key": "BB_TARGET_MINERAL_WALL"
+								"cooldown_key": "BB_MINING_COOLDOWN"
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall",
+								"vars": {
+									"target_key": "BB_TARGET_MINERAL_WALL"
+								}
 							}
 						},
 						{

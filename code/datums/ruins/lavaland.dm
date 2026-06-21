@@ -331,7 +331,7 @@
 	description = "A village hosting a community of friendly mooks!"
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
-	cost = 0
+	cost = 5
 
 /datum/map_template/ruin/lavaland/shuttle_wreckage
 	name = "Lava-Ruin Shuttle Wreckage"

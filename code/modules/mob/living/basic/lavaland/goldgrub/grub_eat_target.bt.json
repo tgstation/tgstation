@@ -29,7 +29,7 @@
 				"vars": {
 					"target_key": "$bj13tsp3",
 					"required_dist": 1,
-					"finish_on_arrival": false
+					"finish_on_arrival": true
 				}
 			},
 			{

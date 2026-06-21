@@ -4,6 +4,8 @@
 	var/target_key
 	var/hiding_location_key
 	var/destination_key
+	/// If TRUE, candidate flee turfs are accepted even if they are blocked.
+	var/ignore_blocked_turfs = FALSE
 
 /datum/bt_node/ai_behavior/find_flee_location/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/run_distance = controller.blackboard[BB_BASIC_MOB_FLEE_DISTANCE] || DEFAULT_BASIC_FLEE_DISTANCE
@@ -40,7 +42,7 @@
 	var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
 	for(var/i in 1 to run_distance)
 		var/turf/test = get_ranged_target_turf_direct(controller.pawn, target, range = i, offset = angle)
-		if(test.is_blocked_turf(source_atom = controller.pawn, ignore_atoms = airlocks))
+		if(!ignore_blocked_turfs && test.is_blocked_turf(source_atom = controller.pawn, ignore_atoms = airlocks))
 			break
 		result = test
 	return result

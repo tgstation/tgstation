@@ -83,11 +83,7 @@
 						},
 						{
 							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/find_parent",
-							"vars": {
-								"mom_types_key": "BB_FIND_MOM_TYPES",
-								"found_mom_key": "BB_FOUND_MOM"
-							}
+							"behavior": "/datum/bt_node/ai_behavior/find_mom"
 						}
 					]
 				}

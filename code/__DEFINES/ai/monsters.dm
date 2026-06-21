@@ -150,6 +150,8 @@
 #define BB_BOULDER_TARGET "BB_boulder_target"
 /// key that holds the ore_vent we will harvest boulders from
 #define BB_VENT_TARGET "BB_vent_target"
+/// Prevent us from strip-mining Lavaland lol
+#define BB_MINING_COOLDOWN "Mining Cooldown"
 
 // minebot keys
 /// key that stores our toggle light ability
