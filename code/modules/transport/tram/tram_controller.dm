@@ -65,6 +65,9 @@
 	///previous trams that have been destroyed
 	var/list/tram_history
 
+	///cooldown on tram announcement system
+	COOLDOWN_DECLARE(announce_cooldown)
+
 /datum/tram_mfg_info
 	///serial number of this tram (what round ID it first appeared in)
 	var/serial_number
@@ -349,10 +352,21 @@
 		else
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
+		if(travel_remaining < XING_THRESHOLD_AMBER && (COOLDOWN_FINISHED(src, announce_cooldown)))
+			make_announcement("The next station is: [destination_platform].")
+			COOLDOWN_START(src, announce_cooldown, 4 SECONDS)
+
 		scheduled_move = world.time + internal_movement_delay
 
 /datum/transport_controller/linear/tram/proc/set_tram_speed(new_speed)
 	internal_movement_delay = round(clamp(50 / new_speed, 0.5, 5), 0.1)
+
+/datum/transport_controller/linear/tram/proc/make_announcement(broadcast)
+	if(SStts.tts_enabled)
+		nav_beacon.voice = SStts.tram_voice
+
+	playsound(nav_beacon, 'sound/machines/compiler/compiler-stage2.ogg', 100, vary = FALSE)
+	nav_beacon.say(broadcast)
 
 /**
  * Tram stops normally, performs post-trip actions and updates the tram registration.
@@ -386,7 +400,7 @@
 		sound_range = SOUND_RANGE + 7,
 		sound_length = 12 SECONDS,
 		channel = our_channel,
-		preference_volume = null,
+		preference_volume = /datum/preference/numeric/volume/sound_instruments,
 		preference_signal = null,
 		falloff_exponent = SOUND_FALLOFF_EXPONENT,
 		falloff_distance = 5
