@@ -98,6 +98,8 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+///cooldown key for the cockroach's ant hunt
+#define BB_ROACH_HUNT_COOLDOWN "BB_roach_hunt_cooldown"
 ///cooldown key for the mouse's cheese hunt
 #define BB_MOUSE_CHEESE_HUNT_COOLDOWN "BB_mouse_cheese_hunt_cooldown"
 ///cooldown key for the mouse's cable hunt

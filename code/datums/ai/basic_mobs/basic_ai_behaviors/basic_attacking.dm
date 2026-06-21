@@ -62,23 +62,6 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-// DEPRECATED — port to /datum/bt_node/ai_behavior/basic_melee_attack
-/datum/ai_behavior/basic_melee_attack
-	parent_type = /datum/bt_node/ai_behavior/basic_melee_attack
-	///do we have any alternate movement behavior? (legacy, unused in BT)
-	var/movement_behavior
-
-// DEPRECATED — port to /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
-/datum/ai_behavior/basic_melee_attack/interact_once
-	parent_type = /datum/bt_node/ai_behavior/basic_melee_attack/interact_once
-
-// DEPRECATED — port to /datum/bt_node/ai_behavior/basic_ranged_attack
-/datum/ai_behavior/basic_ranged_attack
-	parent_type = /datum/bt_node/ai_behavior/basic_ranged_attack
-
-/datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire
-	avoid_friendly_fire = TRUE
-
 //Basic ranged attack behavior
 /datum/bt_node/ai_behavior/basic_ranged_attack
 	var/target_key

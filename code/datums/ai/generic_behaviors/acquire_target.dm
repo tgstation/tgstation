@@ -4,7 +4,7 @@
 	var/target_key
 	/// Either a /datum/targeting_strategy typepath (resolved directly) or a blackboard key string
 	var/targeting_strategy = BB_TARGETING_STRATEGY
-	/// Typepath of the /datum/target_source singleton used to gather candidates.
+	/// Typepath of the /datum/target_source type used to gather candidates. turned into the singleton instance when used
 	var/target_source = /datum/target_source/oview
 	/// How far to scan for candidates (passed to the target source). Can be a key too.
 	var/vision_range = 7

@@ -19,15 +19,14 @@
 
 	// Ai controlling processes expect a seconds_per_tick, supply a real-fake dt
 	var/fake_dt = SSai_controllers.wait * 0.1
-	// Set AI - AIs by default are off in z-levels with no client, we have to force it on.
+	// Force this fker to be on
+	biter.ai_controller.ai_traits |= CANNOT_GO_IDLE | CAN_RUN_WITHOUT_CLIENTS
 	biter.ai_controller.set_ai_status(AI_STATUS_ON)
-	biter.ai_controller.ai_traits |= CANNOT_GO_IDLE
-	// Seed the cable as our hunt target directly - the cable-finding branch is gated behind a
-	// random chance, so we drive the hunt branch deterministically instead.
+
+	// Mouse eating is chance-based, so we set the hunting target directly, yes, this messed with the test from what it was before, but I'm not sure how to do it better :(
 	biter.ai_controller.set_blackboard_key(BB_LOW_PRIORITY_HUNTING_TARGET, wire)
 
-	// Tick the tree until the hunt branch moves onto and bites the cable. A handful of ticks is
-	// plenty for the move + interact sequence to resolve.
+	// Tick the tree until the hunt branch moves onto and bites the cable. Can we do this better in unit tests?? idk..
 	for(var/i in 1 to 5)
 		if(QDELETED(biter))
 			break

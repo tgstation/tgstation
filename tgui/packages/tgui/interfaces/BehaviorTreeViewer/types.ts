@@ -14,7 +14,7 @@ export type BehaviorTreeViewerData = {
   blackboard: BlackboardEntry[];
 };
 
-// node_type: 0=selector 1=sequence 2=parallel 3=decorator 4=leaf 5=subtree 6=subplan
+// All dem nodes
 export const BT_NODE_SELECTOR = 0;
 export const BT_NODE_SEQUENCE = 1;
 export const BT_NODE_PARALLEL = 2;

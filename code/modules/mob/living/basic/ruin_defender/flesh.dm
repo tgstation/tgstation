@@ -14,12 +14,6 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
-	)
-
 /mob/living/basic/living_limb_flesh
 	name = "living flesh"
 	desc = "A vaguely leg or arm shaped flesh abomination. It pulses, like a heart."

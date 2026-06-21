@@ -110,3 +110,12 @@
 
 /datum/target_source/oview_single_type/carrot
 	single_typepath = /obj/item/food/grown/carrot
+
+/datum/target_source/oview_single_type/ants
+	single_typepath = /obj/effect/decal/cleanable/ants
+
+/datum/target_source/oview_single_type/cat_house
+	single_typepath = /obj/structure/cat_house
+
+/datum/target_source/oview_single_type/kitten
+	single_typepath = /mob/living/basic/pet/cat/kitten

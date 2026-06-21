@@ -70,6 +70,19 @@
 /datum/target_source/oview_typed/from_bb_key/basic_foods
 	typecache_key = BB_BASIC_FOODS
 
+/// Reads a typecache from BB_HUNTABLE_PREY and filters oview candidates by it.
+/datum/target_source/oview_typed/from_bb_key/huntable_prey
+	typecache_key = BB_HUNTABLE_PREY
+
+/// Gathers items the pawn is carrying that match the prey typecache in BB_HUNTABLE_PREY.
+/datum/target_source/carried_huntable_prey
+
+/datum/target_source/carried_huntable_prey/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	var/list/prey = controller.blackboard[BB_HUNTABLE_PREY]
+	if(isnull(prey))
+		return list()
+	return typecache_filter_list(pawn.contents, prey)
+
 /// Reads candidates directly from a blackboard list. No spatial filtering; range is ignored.
 /datum/target_source/from_bb_list
 	var/list_key
