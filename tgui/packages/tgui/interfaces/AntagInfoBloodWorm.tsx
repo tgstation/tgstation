@@ -90,6 +90,7 @@ export const AntagInfoBloodWorm = (props) => {
                 <LabeledList>
                   <LabeledList.Item label="Extreme Cold">
                   Your species is highly pressure and cold resistant, but extremely low pressures and temperatures can still harm you.
+                  This doesn't apply to you while in a host and you can equip your host with a space suit to protect it too.
                   </LabeledList.Item>
                   <LabeledList.Item label="High Heat">
                   Your species is averse to heat and will rapidly burn up in hot environments. Your body is also flammable, so stay away from fires.
