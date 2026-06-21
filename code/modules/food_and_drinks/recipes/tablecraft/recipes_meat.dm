@@ -248,6 +248,7 @@
 	)
 	result = /obj/item/storage/box/cfc_bucket
 	dish_category = DISH_MEAT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY // fucking meat materials
 
 /datum/crafting_recipe/food/beef_stroganoff
 	name = "Beef Stroganoff"
