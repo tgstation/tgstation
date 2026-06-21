@@ -467,13 +467,6 @@
 ///sent to the projectile when successfully embedding into something: (new_item, victim)
 #define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
-// /obj/vehicle/sealed/mecha/vim signals
-
-///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
-#define COMSIG_VIM_CHIME_USED "vim_chime_used"
-///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
-#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
-
 ///from /datum/computer_file/program/messenger/proc/receive_message
 #define COMSIG_COMPUTER_RECEIVED_MESSAGE "computer_received_message"
 ///from /datum/computer_file/program/virtual_pet/proc/handle_level_up

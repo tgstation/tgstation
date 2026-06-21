@@ -474,19 +474,11 @@
 	sound_path = 'sound/machines/chime.ogg'
 	sound_message = "chimes!"
 
-/datum/action/vehicle/sealed/noise/chime/Trigger(mob/clicker, trigger_flags)
-	if(..())
-		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_CHIME_USED)
-
 /datum/action/vehicle/sealed/noise/buzz
 	name = "Buzz."
 	desc = "Negative!"
 	button_icon_state = "vim_buzz"
 	sound_path = 'sound/machines/buzz/buzz-sigh.ogg'
 	sound_message = "buzzes."
-
-/datum/action/vehicle/sealed/noise/buzz/Trigger(mob/clicker, trigger_flags)
-	if(..())
-		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_BUZZ_USED)
 
 #undef VIM_SOUND_COOLDOWN
