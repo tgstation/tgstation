@@ -496,3 +496,7 @@
   lelandkemble:
   - bugfix: fixed a runtime when an exodrone rolls the shrubbery crate cargo crate
       chip from the abandoned cargo ship
+2026-06-21:
+  UvvU:
+  - qol: made deploying and undeploying a modsuit no longer ALWAYS drop your suit
+      storage item, instead keeping it if it's valid
