@@ -364,8 +364,9 @@
 /datum/transport_controller/linear/tram/proc/make_announcement(broadcast)
 	if(SStts.tts_enabled)
 		nav_beacon.voice = SStts.tram_voice
+	else
+		playsound(nav_beacon, 'sound/machines/tram/info_chime.ogg', 80, vary = FALSE)
 
-	playsound(nav_beacon, 'sound/machines/compiler/compiler-stage2.ogg', 100, vary = FALSE)
 	nav_beacon.say(broadcast)
 
 /**
