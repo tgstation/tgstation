@@ -40,9 +40,8 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Powers">
                 <LabeledList>
-                  <LabeledList.Item label="Space Immunity">
-                  You are immune to low temperature, low pressure and don't need to breathe.
-                  Your hosts don't have to breathe either, but their bodies remain vulnerable to space.
+                  <LabeledList.Item label="Breathless">
+                  You don't need to breathe. This extends to your hosts as well.
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Consumption">
                   You can grow by using Leech Blood or Invade Corpse to consume blood,
@@ -89,6 +88,9 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Weaknesses">
                 <LabeledList>
+                  <LabeledList.Item label="Extreme Cold">
+                  Your species is highly pressure and cold resistant, but extremely low pressures and temperatures can still harm you.
+                  </LabeledList.Item>
                   <LabeledList.Item label="High Heat">
                   Your species is averse to heat and will rapidly burn up in hot environments. Your body is also flammable, so stay away from fires.
                   This weakness applies even while in a host, but can be covered by equipping your host with fire-resistant gear.
