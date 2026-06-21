@@ -1,6 +1,0 @@
-author: "Okram0"
-delete-after: True
-changes:
-  - rscadd: "Zombies are now stam resistant"
-  - rscadd: "Zombies no longer suffer from mood"
-  - balance: "Zombies are now moderately faster"

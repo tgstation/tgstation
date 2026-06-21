@@ -919,6 +919,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
+/// The layer underneath the uniform
+#define UNDER_UNIFORM_LAYER (UNIFORM_LAYER+1)
 /// The layer underneath the suit
 #define UNDER_SUIT_LAYER (SUIT_LAYER+1)
 /// The layer underneath the head (for hats)

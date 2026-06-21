@@ -338,9 +338,9 @@
 	threat = 15
 	signature = "bluespace flux"
 
-/obj/effect/meteor/bluespace/Bump()
+/obj/effect/meteor/bluespace/Bump(atom/bumped_atom)
 	..()
-	if(prob(35))
+	if(!QDELETED(src) && prob(35))
 		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/meteor/banana
