@@ -59,9 +59,10 @@
 	acid = 80
 
 /obj/vehicle/sealed/mecha/vim/mob_try_enter(mob/entering)
-	if(!isanimal_or_basicmob(entering))
+	if(issilicon(entering))
 		entering.balloon_alert(entering, "can't fit inside!")
 		return FALSE
+
 	var/mob/living/animal_or_basic = entering
 	if(animal_or_basic.mob_size > maximum_mob_size)
 		entering.balloon_alert(entering, "can't fit inside!")
