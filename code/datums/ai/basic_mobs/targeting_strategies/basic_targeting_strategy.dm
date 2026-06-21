@@ -11,6 +11,7 @@
 	var/target_wounded_key
 
 /datum/targeting_strategy/basic/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
 	if(isnull(our_controller))

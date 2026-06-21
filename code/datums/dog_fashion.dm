@@ -45,13 +45,13 @@
 		dressup_doggy.speak_emote = string_list(speak_emote)
 
 ///Applies random speech modifiers to the dog
-/datum/dog_fashion/proc/apply_to_speech(datum/ai_planning_subtree/random_speech/speech)
+/datum/dog_fashion/proc/apply_to_speech(var/list/speech_data)
 	if(LAZYLEN(emote_see))
-		speech.emote_see = string_list(emote_see)
+		speech_data[BB_EMOTE_SEE] = string_list(emote_see)
 	if(LAZYLEN(emote_hear))
-		speech.emote_hear = string_list(emote_hear)
+		speech_data[BB_EMOTE_HEAR] = string_list(emote_hear)
 	if(LAZYLEN(speak))
-		speech.speak = string_list(speak)
+		speech_data[BB_EMOTE_SAY] = string_list(speak)
 
 /**
  * Generates the icon overlay for the equipped item

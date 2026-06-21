@@ -125,7 +125,6 @@
 /datum/bt_node/ai_behavior/handle_medbot_speech
 	var/announce_key
 	time_between_perform = 20 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
@@ -164,7 +163,6 @@
 /datum/bt_node/ai_behavior/announce_patient
 	var/target_key
 	time_between_perform = 3 MINUTES
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
 	var/mob/living/living_target = controller.blackboard[target_key]

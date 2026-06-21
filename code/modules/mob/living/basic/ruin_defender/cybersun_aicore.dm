@@ -118,11 +118,6 @@
 		BB_TARGETLESS_TIME = 0,
 	)
 
-/// DA SPELLS!
-// spell #1: lightning strike
-/datum/ai_planning_subtree/targeted_mob_ability/lightning_strike
-	ability_key = BB_CYBERSUN_CORE_LIGHTNING
-	finish_planning = FALSE
 
 /datum/action/cooldown/spell/pointed/lightning_strike
 	name = "lightning strike"
@@ -184,11 +179,6 @@
 /obj/effect/temp_visual/lightning_strike_zap/Initialize(mapload)
 	. = ..()
 	do_sparks(number = rand(1,3), source = src)
-
-// spell #2: cybersun laser barrage
-/datum/ai_planning_subtree/targeted_mob_ability/cybersun_barrage
-	ability_key = BB_CYBERSUN_CORE_BARRAGE
-	finish_planning = FALSE
 
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage
 	name = "plasma beam barrage"

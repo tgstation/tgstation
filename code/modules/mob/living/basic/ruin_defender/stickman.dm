@@ -72,9 +72,3 @@
 
 /datum/ai_controller/basic_controller/stickman/ranged
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/stickman_ranged.bt.json"
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/stickman
-
-/datum/ai_behavior/basic_ranged_attack/stickman
-	time_between_perform = 5 SECONDS

@@ -4,8 +4,6 @@
  * Artificers will seek out and heal the most wounded construct or shade they can see.
  * If there is no one to heal, they will run away from any non-allied mobs.
  */
-/datum/ai_planning_subtree/simple_find_wounded_target
-
 /datum/ai_controller/basic_controller/artificer
 	behavior_tree_json = "artificer.bt.json"
 	blackboard = list(

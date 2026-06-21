@@ -51,17 +51,6 @@
 
 #define AI_BEHAVIOR_INSTANT (NONE)
 
-// DEPRECATED movement flags — the BT system handles movement via dedicated move_to_target nodes.
-///Does this task require movement from the AI before it can be performed?
-#define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
-///Does this require the current_movement_target to be adjacent and in reach?
-#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
-///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
-///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
-/// DEPRECATED — all BT behaviors can run concurrently; use BT_PARALLEL/BT_SEQUENCE for ordering.
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
 /// Don't move if being pulled

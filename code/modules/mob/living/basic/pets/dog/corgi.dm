@@ -135,29 +135,23 @@
 
 	return  ..()
 
-/mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+/mob/living/basic/pet/dog/corgi/update_dog_speech(var/list/speech_data)
 	. = ..()
-
 	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/equipped_head_fashion_item = new inventory_head.dog_fashion(src)
-		equipped_head_fashion_item.apply_to_speech(speech)
+		equipped_head_fashion_item.apply_to_speech(speech_data)
 
 	if(inventory_back?.dog_fashion)
 		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
-		equipped_back_fashion_item.apply_to_speech(speech)
+		equipped_back_fashion_item.apply_to_speech(speech_data)
 
 /// Applies corgi fashion to the BT blackboard speech data by routing through the planning stub.
 /mob/living/basic/pet/dog/corgi/update_dog_speak_blackboard(datum/ai_controller/controller)
-	var/datum/ai_planning_subtree/random_speech/stub = new
-	update_dog_speech(stub) // Populate via the existing fashion-aware proc
 	var/list/speech_data = list()
-	speech_data[BB_EMOTE_SAY] = stub.speak || list()
-	speech_data[BB_EMOTE_HEAR] = stub.emote_hear || list()
-	speech_data[BB_EMOTE_SEE] = stub.emote_see || list()
-	speech_data[BB_EMOTE_SOUND] = stub.sound || list()
-	speech_data[BB_SPEAK_CHANCE] = stub.speech_chance || 1
+	update_dog_speech(speech_data)
+	if(!speech_data[BB_SPEAK_CHANCE])
+		speech_data[BB_SPEAK_CHANCE] = 1
 	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
-	qdel(stub)
 
 /mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
@@ -521,10 +515,10 @@
 	. = ..()
 	speak_emote = list("growls", "barks ominously")
 
-/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	speech.speak = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
-	speech.emote_hear = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
-	speech.emote_see = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
+/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(var/list/speech_data)
+	speech_data[BB_EMOTE_SAY] = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
+	speech_data[BB_EMOTE_HEAR] = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
+	speech_data[BB_EMOTE_SEE] = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
 
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	if(stat == DEAD) //Nar'Sie loves her doggy

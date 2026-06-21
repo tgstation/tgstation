@@ -630,18 +630,6 @@ multiple modular subtrees with behaviors
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
 
-/// DEPRECATED — modify_cooldown is kept for compile compat with legacy ai_target_tracking code.
-/datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	behavior_cooldowns[behavior] = new_cooldown
-
-/// DEPRECATED — queue_behavior is a no-op. Behaviors execute directly via BT tick().
-/datum/ai_controller/proc/queue_behavior(behavior_type, ...)
-	return
-
-/// DEPRECATED — dequeue_behavior is a no-op. Behaviors finish via BT tick() returning BT_SUCCESS/FAILURE.
-/datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
-	return
-
 /datum/ai_controller/proc/cancel_current_plan()
 	active_execution_index = 0
 	cancelled_during_tick = TRUE

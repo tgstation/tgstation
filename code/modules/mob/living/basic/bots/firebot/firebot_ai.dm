@@ -105,7 +105,6 @@
 
 /datum/bt_node/ai_behavior/handle_firebot_speech
 	time_between_perform = 20 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	var/speech_prob = 3
 
 /datum/bt_node/ai_behavior/handle_firebot_speech/perform(seconds_per_tick, datum/ai_controller/controller)

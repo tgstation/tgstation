@@ -21,7 +21,6 @@
 
 /datum/bt_node/ai_behavior/commence_trashtalk
 	var/target_key
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/commence_trashtalk/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!controller.blackboard_key_exists(target_key))

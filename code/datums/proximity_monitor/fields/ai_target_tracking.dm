@@ -36,15 +36,11 @@
 		RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targeting_strategy), PROC_REF(targeting_datum_cleared))
 
 	RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(controller_deleted))
-	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
 	RegisterSignal(controller, COMSIG_AI_CONTROLLER_POSSESSED_PAWN, PROC_REF(pawn_changed))
-	RegisterSignal(controller, AI_CONTROLLER_BEHAVIOR_QUEUED(owning_behavior.type), PROC_REF(behavior_requeued))
 	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
 	. = ..()
-	if(!QDELETED(controller) && owning_behavior)
-		controller.modify_cooldown(owning_behavior, owning_behavior.get_cooldown(controller))
 	owning_behavior = null
 	controller = null
 	target_key = null
@@ -79,17 +75,6 @@
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/pawn_changed(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
-
-/// React to controller planning
-/datum/proximity_monitor/advanced/ai_target_tracking/proc/controller_think(datum/ai_controller/source, list/datum/ai_behavior/old_behaviors, list/datum/ai_behavior/new_behaviors)
-	SIGNAL_HANDLER
-	// If our parent was forgotten, nuke ourselves
-	if(!new_behaviors[owning_behavior])
-		qdel(src)
-
-/datum/proximity_monitor/advanced/ai_target_tracking/proc/behavior_requeued(datum/source, list/new_arguments)
-	SIGNAL_HANDLER
-	check_new_args(arglist(new_arguments))
 
 /// Ensure our args and locals are up to date
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/check_new_args(target_key, targeting_strategy, hiding_location_key)

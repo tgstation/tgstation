@@ -4,7 +4,3 @@
 	living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, TRUE)
 	living_pawn.execute_resist()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-
-// DEPRECATED — port to /datum/bt_node/ai_behavior/resist
-/datum/ai_behavior/resist

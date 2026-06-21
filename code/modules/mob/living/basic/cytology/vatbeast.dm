@@ -71,20 +71,6 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 
-/// Only do this if we are adjacent to target and have been mad at the same guy for at least 10 seconds
-/// That slap REALLY hurts
-/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap
-	operational_datums = list(/datum/component/ai_target_timer)
-
-/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target) || !controller.pawn.Adjacent(target))
-		return
-	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
-	if (time_on_target < 10 SECONDS)
-		return
-	return ..()
-
 /// Ability that allows the owner to slap other mobs a short distance away.
 /// For vatbeats, this ability is shared with the rider.
 /datum/action/cooldown/tentacle_slap

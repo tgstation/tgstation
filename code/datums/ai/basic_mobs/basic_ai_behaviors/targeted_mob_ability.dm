@@ -1,16 +1,3 @@
-// DEPRECATED — port to /datum/bt_node/ai_behavior/targeted_mob_ability
-/datum/ai_behavior/targeted_mob_ability
-	parent_type = /datum/bt_node/ai_behavior/targeted_mob_ability
-
-/datum/ai_behavior/targeted_mob_ability/and_plan_execute
-
-/datum/ai_behavior/targeted_mob_ability/and_clear_target
-
-/// Minimum-range variant: does not fire when already adjacent to target (set by mob files)
-/datum/ai_behavior/targeted_mob_ability/min_range
-
-/datum/ai_behavior/targeted_mob_ability/min_range/short
-
 /// Tries to use a specified ability on the current target
 /datum/bt_node/ai_behavior/targeted_mob_ability
 	var/ability_key = BB_GENERIC_ACTION

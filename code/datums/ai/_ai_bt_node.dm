@@ -68,9 +68,7 @@
 	var/t = "[type]"
 	t = replacetext(t, "/datum/bt_node/decorator/", "")
 	t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
-	t = replacetext(t, "/datum/ai_behavior/", "")
 	t = replacetext(t, "/datum/bt_node/subtree/", "")
-	t = replacetext(t, "/datum/ai_planning_subtree/", "")
 	return t
 
 /// Walks descendants to find the node with the given execution_index. Returns null if not found.

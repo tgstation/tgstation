@@ -99,8 +99,3 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-
-/datum/ai_planning_subtree/random_speech/sloth
-	speech_chance = 1
-	emote_hear = list("snores.", "yawns.")
-	emote_see = list("dozes off.", "looks around sleepily.")

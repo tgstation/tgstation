@@ -182,13 +182,3 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(length(priority_targets))
 		return ..(controller, priority_targets)
 	return ..()
-
-// DEPRECATED — port to /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
-/datum/ai_behavior/update_targets
-	parent_type = /datum/bt_node/ai_behavior/acquire_target/update_combat_targets
-
-/datum/ai_behavior/update_targets/prioritize_trait
-	parent_type = /datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait
-
-/datum/ai_behavior/update_targets/bigger_range
-	vision_range = 16

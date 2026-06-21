@@ -38,31 +38,6 @@
 
 	ai_movement = /datum/ai_movement/dumb
 
-/datum/ai_planning_subtree/face_target_or_face_initial
-
-/datum/ai_planning_subtree/face_target_or_face_initial/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(isnull(controller.blackboard[BB_CURRENT_TARGET]))
-		return
-	var/mob/living/we = controller.pawn
-	controller.blackboard[BB_STARTING_DIRECTION] = we.dir
-	controller.queue_behavior(/datum/ai_behavior/face_target_or_face_initial, BB_CURRENT_TARGET)
-
-/datum/ai_behavior/face_target_or_face_initial
-
-/datum/ai_behavior/face_target_or_face_initial/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/movable/target = controller.blackboard[target_key]
-	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
-
-/datum/ai_behavior/face_target_or_face_initial/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/movable/target = controller.blackboard[target_key]
-	var/mob/living/we = controller.pawn
-	if(isnull(target) || get_dist(we, target) > 8)
-		we.dir = controller.blackboard[BB_STARTING_DIRECTION]
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	we.face_atom(target)
-	return AI_BEHAVIOR_DELAY
-
 /mob/living/basic/statue/mannequin/suspicious
 	name = "mannequin?"
 	desc = "Their eyes follow you."

@@ -71,7 +71,6 @@
 ///Find nearby ashwalkers. we love lizards.
 /datum/bt_node/ai_behavior/befriend_ashwalkers
 	time_between_perform = 5 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn

@@ -91,32 +91,3 @@
 	if(running)
 		finish_action(owning_controller, FALSE)
 	..()
-
-// DEPRECATED — port behaviors to /datum/bt_node/ai_behavior
-// Vars and proc stubs are required so subtype overrides still compile.
-/datum/ai_behavior
-	var/required_distance = 1
-	var/behavior_flags = NONE
-	var/time_between_perform = CLICK_CD_MELEE
-
-/datum/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
-	return TRUE
-
-/datum/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
-	return
-
-/datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
-	return
-
-
-
-// Compatibility shims so legacy ai_behavior subtypes ported via deprecated parent_type stubs
-// can still call set_movement_target / clear_movement_target without compile errors.
-/datum/bt_node/ai_behavior/proc/set_movement_target(datum/ai_controller/controller, atom/target, movement_type)
-	return
-
-/datum/bt_node/ai_behavior/proc/clear_movement_target(datum/ai_controller/controller)
-	return
-
-/datum/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
-	return time_between_perform

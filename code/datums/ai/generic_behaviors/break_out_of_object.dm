@@ -23,10 +23,6 @@
 		return FALSE
 	return pawn.loc == target || pawn.buckled == target
 
-// DEPRECATED — port to /datum/bt_node/ai_behavior/break_out_of_object
-/datum/ai_behavior/break_out_of_object
-	parent_type = /datum/bt_node/ai_behavior/break_out_of_object
-
 /// Variant that reads the escape target from a blackboard key instead of a direct reference.
 /datum/bt_node/ai_behavior/break_out_of_object/from_bb
 	/// Blackboard key holding the object to break out of.

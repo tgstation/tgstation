@@ -15,7 +15,6 @@
 	/// How close the path must get to the target (0 = onto/adjacent). Repairbot raises this so it stops next to the walls/girders it repairs.
 	var/minimum_distance = 0
 	time_between_perform = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// Set while an async reachability search is going on
 	VAR_PRIVATE/is_searching = FALSE
 	/// TRUE once the async search has written its result.
@@ -97,7 +96,6 @@
 	var/list/list_to_pick_from
 	var/announce_key
 	time_between_perform = 5 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/bot_speech/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[announce_key]
@@ -141,7 +139,6 @@
 	/// Blackboard key holding the location tag string to match against beacon.location.
 	var/tag_key
 	time_between_perform = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/find_delivery_beacon/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/beacon_tag = controller.blackboard[tag_key]
@@ -280,7 +277,6 @@
 ///Find a valid authority to salute and set them as the target
 /datum/bt_node/ai_behavior/find_valid_authority
 	var/target_key
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/find_valid_authority/perform(seconds_per_tick, datum/ai_controller/controller)
 	for(var/mob/living/nearby_mob in oview(7, controller.pawn))

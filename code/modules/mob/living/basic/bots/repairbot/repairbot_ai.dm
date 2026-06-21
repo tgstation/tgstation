@@ -24,7 +24,6 @@
 
 
 /datum/bt_node/ai_behavior/repairbot_speech
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/bt_node/ai_behavior/repairbot_speech/setup(datum/ai_controller/controller)
 	if(controller.blackboard[BB_REPAIRBOT_SPEECH_COOLDOWN] > world.time)

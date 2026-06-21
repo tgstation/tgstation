@@ -68,7 +68,6 @@ Difficulty: Medium
 
 	grant_actions_by_list(get_innate_actions())
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
-	RegisterSignals(ai_controller, list(AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/basic_melee_attack), AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/targeted_mob_ability)), PROC_REF(handle_saw_transformation))
 
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
 
@@ -95,12 +94,6 @@ Difficulty: Medium
 		/datum/action/cooldown/mob_cooldown/transform_weapon = BB_BDM_TRANSFORM_WEAPON_ABILITY,
 	)
 	return innate_abilities
-
-/// Invokes the transform weapon ability when signaled by the AI controller.
-/mob/living/basic/boss/blood_drunk_miner/proc/handle_saw_transformation()
-	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(ai_controller.blackboard[BB_BDM_TRANSFORM_WEAPON_ABILITY], TYPE_PROC_REF(/datum/action, Trigger), src, NONE)
 
 /mob/living/basic/boss/blood_drunk_miner/proc/transform_saw()
 	miner_saw.attack_self(src)
