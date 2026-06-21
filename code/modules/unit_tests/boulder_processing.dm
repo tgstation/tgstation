@@ -37,7 +37,7 @@
 	for(var/i in 1 to 2)
 		test_smelter.process()
 	TEST_ASSERT_NOTEQUAL(second_boulder.loc, smelter_loc, "The boulder was not moved out of the smelter's contents!")
-	TEST_ASSERT(!second_boulder.has_material_type(/datum/material/glass), "After the boulder was successfully processed by the smelter, ferrous materials still remain inside!")
+	TEST_ASSERT(!second_boulder.has_material_type(/datum/material/iron), "After the boulder was successfully processed by the smelter, ferrous materials still remain inside!")
 	TEST_ASSERT(second_boulder.durability > 0,  "Boulder was processed successfully, but exited with durability under 1!")
 	second_boulder.durability = 2
 	second_boulder.Move(get_turf(refinery_loc), WEST)
