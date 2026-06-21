@@ -16,7 +16,7 @@
 	TEST_ASSERT(test_boulder.durability > 0,  "Boulder was spawned such that it's durability is less than 1!")
 	test_boulder.durability = 2
 	test_boulder.Move(get_turf(refinery_loc), EAST)
-	TEST_ASSERT_EQUAL(test_boulder.loc, refinery_loc, "The boulder was not moved into the refinery's contents!")
+	TEST_ASSERT_EQUAL(test_boulder.loc, test_refine, "The boulder was not moved into the refinery's contents!")
 	for(var/i in 1 to 2)
 		test_refine.process()
 	TEST_ASSERT_NOTEQUAL(test_boulder.loc, refinery_loc, "The boulder was not moved out of the refinery's contents!")
@@ -24,7 +24,7 @@
 	TEST_ASSERT(test_boulder.durability > 0,  "Boulder was processed successfully, but exited with durability under 1!")
 	test_boulder.durability = 2
 	test_boulder.Move(get_turf(smelter_loc), EAST)
-	TEST_ASSERT_EQUAL(test_boulder.loc, refinery_loc, "The boulder was not moved into the smelter's contents!")
+	TEST_ASSERT_EQUAL(test_boulder.loc, test_smelter, "The boulder was not moved into the smelter's contents!")
 	for(var/i in 1 to 2)
 		test_smelter.process()
 	TEST_ASSERT(QDELETED(test_boulder),"After being processed by both a refinery and smelter, the boulder was not qdeleted!")
@@ -33,7 +33,7 @@
 	TEST_ASSERT(second_boulder.durability > 0,  "Boulder was spawned such that it's durability is less than 1!")
 	second_boulder.durability = 2
 	second_boulder.Move(get_turf(smelter_loc), WEST)
-	TEST_ASSERT_EQUAL(second_boulder.loc, smelter_loc, "The boulder was not moved into the smelter's contents!")
+	TEST_ASSERT_EQUAL(second_boulder.loc, test_smelter, "The boulder was not moved into the smelter's contents!")
 	for(var/i in 1 to 2)
 		test_smelter.process()
 	TEST_ASSERT_NOTEQUAL(second_boulder.loc, smelter_loc, "The boulder was not moved out of the smelter's contents!")
@@ -41,7 +41,7 @@
 	TEST_ASSERT(second_boulder.durability > 0,  "Boulder was processed successfully, but exited with durability under 1!")
 	second_boulder.durability = 2
 	second_boulder.Move(get_turf(refinery_loc), WEST)
-	TEST_ASSERT_EQUAL(second_boulder.loc, refinery_loc, "The boulder was not moved into the refinery's contents!")
+	TEST_ASSERT_EQUAL(second_boulder.loc, test_refine, "The boulder was not moved into the refinery's contents!")
 	for(var/i in 1 to 2)
 		test_refine.process()
 	TEST_ASSERT(QDELETED(second_boulder),"After being processed by both a refinery and smelter, the boulder was not qdeleted!")
