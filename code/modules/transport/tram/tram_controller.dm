@@ -365,7 +365,7 @@
 	if(SStts.tts_enabled)
 		nav_beacon.voice = SStts.tram_voice
 	else
-		playsound(nav_beacon, 'sound/machines/tram/info_chime.ogg', 80, vary = FALSE)
+		playsound(nav_beacon, 'sound/machines/tram/info_chime.ogg', 100, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 1.4)
 
 	nav_beacon.say(broadcast)
 
@@ -377,35 +377,13 @@
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(platform_arrival_jingle)), 2.5 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 	idle_platform = destination_platform
-	var/our_channel = SSsounds.random_available_channel()
-	var/sound/jingle = sound(
-		idle_platform.arrival_sound,
-		FALSE,
-		0,
-		our_channel,
-		60
-	)
-	var/list/hearers = playsound(idle_platform, jingle, 50, FALSE, 0, extrarange= 10, ignore_walls = TRUE)
-	new /datum/threed_sound(
-		new_parent = idle_platform,
-		new_sound = jingle,
-		current_listeners = hearers,
-		can_add_new_listeners = FALSE,
-		volume = 60,
-		sound_range = SOUND_RANGE + 7,
-		sound_length = 12 SECONDS,
-		channel = our_channel,
-		preference_volume = /datum/preference/numeric/volume/sound_instruments,
-		preference_signal = null,
-		falloff_exponent = SOUND_FALLOFF_EXPONENT,
-		falloff_distance = 5
-	)
 
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
@@ -752,6 +730,32 @@
 			stack_trace("Tram receieved invalid travel direction [travel_dir]. Cancelling dispatch.")
 
 	return FALSE
+
+/// Plays the arrival jingle associated with the platform
+/datum/transport_controller/linear/tram/proc/platform_arrival_jingle()
+	var/our_channel = SSsounds.random_available_channel()
+	var/sound/jingle = sound(
+		idle_platform.arrival_sound,
+		FALSE,
+		0,
+		our_channel,
+		25
+	)
+	var/list/hearers = playsound(idle_platform, jingle, 25, FALSE, 0, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, ignore_walls = TRUE)
+	new /datum/threed_sound(
+		new_parent = idle_platform,
+		new_sound = jingle,
+		current_listeners = hearers,
+		can_add_new_listeners = FALSE,
+		volume = 25,
+		sound_range = 7,
+		sound_length = 12 SECONDS,
+		channel = our_channel,
+		preference_volume = /datum/preference/numeric/volume/sound_instruments,
+		preference_signal = null,
+		falloff_exponent = 3,
+		falloff_distance = 5
+	)
 
 /**
  * Moves the tram when hit by an immovable rod
