@@ -158,7 +158,6 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = null
 
 /// Validates an ore vent as a valid hunt target: must exist and have no drone already latched.
 /datum/targeting_strategy/ore_vent_unclaimed

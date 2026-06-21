@@ -10,7 +10,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /datum/ai_controller/basic_controller/orbie/TryPossessPawn(atom/new_pawn)
 	. = ..()

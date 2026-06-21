@@ -8,8 +8,6 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 		/datum/controller/subsystem/movement/ai_movement,
 	)
 	wait = 1
-	/// List of all ai_behavior singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_ai_behaviors()
-	var/list/ai_behaviors
 	/// List of all targeting_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_targeting_strats()
 	var/list/targeting_strategies
 	/// List of all target_priority_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_priority_strats()
@@ -18,17 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 	var/list/target_sources
 
 /datum/controller/subsystem/processing/ai_behaviors/Initialize()
-	setup_ai_behaviors()
 	setup_targeting_strats()
 	setup_target_priority_strats()
 	setup_target_sources()
 	return SS_INIT_SUCCESS
-
-/datum/controller/subsystem/processing/ai_behaviors/proc/setup_ai_behaviors()
-	ai_behaviors = list()
-	for(var/behavior_type in subtypesof(/datum/bt_node/ai_behavior))
-		var/datum/bt_node/ai_behavior/ai_behavior = new behavior_type
-		ai_behaviors[behavior_type] = ai_behavior
 
 /datum/controller/subsystem/processing/ai_behaviors/proc/setup_targeting_strats()
 	targeting_strategies = list()
