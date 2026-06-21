@@ -32,7 +32,7 @@
 			set_hud_image_state(DIAG_BOT_HUD, "")
 
 ///proc that handles drawing and transforming the bot's path onto diagnostic huds
-/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source, list/path)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING)
@@ -40,8 +40,11 @@
 	if(isnull(ai_controller))
 		return
 
+	if(!path)
+		return
 
-	var/atom/move_target = ai_controller.current_movement_target
+
+	var/atom/move_target = path[path.len]
 	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
 		return
 

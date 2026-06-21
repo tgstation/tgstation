@@ -19,19 +19,8 @@ multiple modular subtrees with behaviors
 
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits = DEFAULT_AI_FLAGS
-	// DEPRECATED queue-based behavior vars — kept for compile compatibility of legacy subtrees.
-	// These are never populated by the new BT execution model.
-	var/alist/planned_behaviors = alist()
-	var/alist/current_behaviors = alist()
-	var/alist/behavior_cooldowns = alist()
-	// DEPRECATED idle behavior — port idle logic to a BT_SELECTOR tail entry.
-	var/datum/idle_behavior/idle_behavior = null
 	///Current status of AI (OFF/ON)
 	var/ai_status
-	///Current movement target of the AI, generally set by decision making.
-	var/atom/current_movement_target
-	///Identifier for what last touched our movement target, so it can be cleared conditionally
-	var/movement_target_source
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/consecutive_pathing_attempts
 	///Can the AI remain in control if there is a client?
@@ -41,7 +30,7 @@ multiple modular subtrees with behaviors
 	/// Repo-relative path to the .bt.json source file for this controller (e.g. "code/datums/ai/basic_mobs/cleanbot.bt.json").
 	/// initialize_behavior_tree() derives the compiled path from this and loads the BT tree at runtime.
 	var/behavior_tree_json = null
-	///All behavior_nodes for the BT tree; populated on init from typepaths or BT_* descriptors.
+	///The root of our tree, which will contain
 	var/list/behavior_nodes
 	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
 	var/active_execution_index = 0
@@ -94,22 +83,6 @@ multiple modular subtrees with behaviors
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	return ..()
-
-///Sets the current movement target, with an optional param to override the movement behavior
-/datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
-	if(current_movement_target)
-		UnregisterSignal(current_movement_target, list(COMSIG_MOVABLE_MOVED, COMSIG_PREQDELETED))
-	if(!isnull(target) && !isatom(target))
-		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
-		cancel_current_plan()
-		return
-	movement_target_source = source
-	current_movement_target = target
-	if(!isnull(current_movement_target))
-		RegisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement_target_move))
-		RegisterSignal(current_movement_target, COMSIG_PREQDELETED, PROC_REF(on_movement_target_delete))
-	if(new_movement)
-		change_ai_movement_type(new_movement)
 
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
@@ -304,7 +277,7 @@ multiple modular subtrees with behaviors
 	for(var/datum/bt_node/root in behavior_nodes)
 		root.parent_node = null
 	var/index = 1
-	while(index <= length(to_visit))
+	while(index <= length(to_visit)) //while loop so we can recursively keep populating this list
 		var/datum/bt_node/node = to_visit[index++]
 		node.finalize_node(src, to_visit)
 	var/counter = 1
@@ -352,20 +325,6 @@ multiple modular subtrees with behaviors
 	SIGNAL_HANDLER
 
 	set_new_cells()
-	if(current_movement_target)
-		check_target_max_distance()
-
-/datum/ai_controller/proc/on_movement_target_move(atom/source)
-	SIGNAL_HANDLER
-	check_target_max_distance()
-
-/datum/ai_controller/proc/on_movement_target_delete(atom/source)
-	SIGNAL_HANDLER
-	set_movement_target(source = type, target = null)
-
-/datum/ai_controller/proc/check_target_max_distance()
-	if(get_dist(current_movement_target, pawn) > max_target_distance)
-		cancel_current_plan()
 
 /datum/ai_controller/proc/set_new_cells()
 	if(isnull(our_cells))
@@ -507,7 +466,7 @@ multiple modular subtrees with behaviors
 	if(destroy)
 		qdel(src)
 
-///Call reset tick state on every node in the tree
+///Call reset tick state on every node in the tree.
 /datum/ai_controller/proc/reset_bt_tick_states()
 	if(!LAZYLEN(behavior_nodes))
 		return
@@ -521,32 +480,30 @@ multiple modular subtrees with behaviors
 /**
  * Installs or removes a runtime override on the subtree slot registered with the given id.
  *
- * id          — a SUBPLAN_ID_* constant matching a subtree node's override_id in this tree.
- * datum_type  — the /datum/bt_node/subtree subtype to install, or null to clear the override.
+ * id - The ID for this slot
+ * override_subtree - actual subtree we're setting
  */
-/datum/ai_controller/proc/set_behavior_tree_override(id, datum_type)
+/datum/ai_controller/proc/set_behavior_tree_override(id, override_subtree)
 	var/datum/bt_node/subtree/slot = LAZYACCESS(override_slots, id)
 	if(isnull(slot))
 		return
 
 	var/current_type = isnull(slot.override_node) ? null : slot.override_node.type
-	if(current_type == datum_type)
+	if(current_type == override_subtree)
 		return
 
-
-
-	if(isnull(datum_type))
+	if(isnull(override_subtree))
 		slot.override_node = null
 		finalize_tree()
 		SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), null)
 		return
 
-	var/datum/bt_node/subtree/new_node = new datum_type
+	var/datum/bt_node/subtree/new_node = new override_subtree
 	resolve_node_children(new_node)
 	slot.override_node = new_node
 	finalize_tree()
 	cancel_current_plan() // Reset, not ideal; Maybe later on we can do this more gracefully.
-	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), datum_type)
+	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), override_subtree)
 
 /datum/ai_controller/proc/setup_able_to_run()
 	// paused_until is handled by PauseAi() manually
@@ -658,7 +615,6 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_pawn_qdeleted()
 	SIGNAL_HANDLER
 	set_ai_status(AI_STATUS_OFF)
-	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 

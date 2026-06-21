@@ -112,7 +112,7 @@
 			possible_turfs += possible_turf
 
 	if(length(possible_turfs))
-		controller.set_movement_target(src, pick(possible_turfs))
+		//controller.set_movement_target(src, pick(possible_turfs)) this sucks
 	return AI_BEHAVIOR_DELAY
 
 

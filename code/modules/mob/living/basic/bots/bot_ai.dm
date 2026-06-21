@@ -46,7 +46,7 @@
 /datum/ai_controller/basic_controller/bot/proc/on_movement_start(mob/living/basic/bot/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(current_movement_target == blackboard[BB_BEACON_TARGET])
+	if(target == blackboard[BB_BEACON_TARGET])
 		source.update_bot_mode(new_mode = BOT_PATROL)
 		return
 

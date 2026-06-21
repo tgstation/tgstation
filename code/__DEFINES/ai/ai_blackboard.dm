@@ -10,6 +10,9 @@
 #define BB_CALL_REINFORCEMENTS_TARGET "Call reinforcements target"
 ///Generic target for hunting
 #define BB_HUNT_TARGET_LIST "Hunt Target List"
+///Target of current movement.alist
+#define BB_CURRENT_MOVEMENT_TARGET "Current target movement"
+
 
 ///Cooldown on venting (sus)
 #define BB_VENTING_COOLDOWN "Venting Cooldown"
