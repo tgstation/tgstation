@@ -1,6 +1,7 @@
 #define MAXIMUM_GUTLUNCH_POP 20
 /datum/ai_controller/basic_controller/gutlunch
 	ai_movement = /datum/ai_movement/basic_avoidance
+	behavior_tree_json = ABSTRACT_AI_CLASS
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(

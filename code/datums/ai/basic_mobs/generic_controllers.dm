@@ -6,6 +6,7 @@
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+	behavior_tree_json = ABSTRACT_AI_CLASS
 
 
 /datum/bt_node/subtree/simple_hostile_combat

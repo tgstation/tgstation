@@ -1,5 +1,5 @@
 {
-	"dm_type": "/datum/ai_controller/basic_controller/festivus_pole",
+	"dm_type": "/datum/ai_controller/basic_controller/fake_crewman/instant_hostile",
 	"type": "selector",
 	"children": [
 		{
@@ -37,13 +37,47 @@
 										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 										"children": [
 											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"targeting_strategy": "BB_TARGETING_STRATEGY",
-													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-												}
+												"type": "selector",
+												"children": [
+													{
+														"type": "decorator",
+														"decorator": "/datum/bt_node/decorator/bb_key_equals",
+														"vars": {
+															"key": "BB_CALLS_REINFORCEMENTS",
+															"value": true
+														},
+														"child": {
+															"type": "decorator",
+															"decorator": "/datum/bt_node/decorator/cooldown",
+															"vars": {
+																"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+																"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
+																"cooldown_duration": "30 SECONDS",
+																"lock_on_succeed": true
+															},
+															"child": {
+																"type": "leaf",
+																"behavior": "/datum/bt_node/ai_behavior/call_reinforcements"
+															}
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
 											}
 										]
 									},
@@ -60,40 +94,12 @@
 							}
 						},
 						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/bb_key_set",
-							"vars": {
-								"observer_abort": "BT_ABORT_BOTH",
-								"key": "BB_LOW_PRIORITY_HUNTING_TARGET"
-							},
-							"child": {
-								"type": "sequence",
-								"children": [
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-										"vars": {
-											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-											"required_dist": 1
-										}
-									},
-									{
-										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/hunt_target/use_ability_on_target",
-										"vars": {
-											"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-											"ability_key": "BB_FESTIVE_APC"
-										}
-									}
-								]
-							}
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/move_to_reinforce"
 						},
 						{
 							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/random_walk",
-							"bindings": {
-								"bf07i8ep": "10"
-							}
+							"subtype": "/datum/bt_node/subtree/random_walk"
 						}
 					]
 				},
@@ -104,16 +110,6 @@
 						"target_key": "BB_CURRENT_TARGET",
 						"targeting_strategy": "BB_TARGETING_STRATEGY",
 						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-					}
-				},
-				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-					"vars": {
-						"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
-						"target_source": "/datum/target_source/oview_single_type/apc",
-						"targeting_strategy": "/datum/targeting_strategy/chargeable_apc",
-						"vision_range": 6
 					}
 				}
 			]

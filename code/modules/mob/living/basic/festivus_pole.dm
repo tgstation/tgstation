@@ -58,13 +58,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_apcs,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -84,42 +77,5 @@
 			var/obj/machinery/power/apc/apc_target = affected
 			if(apc_target.cell)
 				apc_target.cell.give(FESTIVUS_RECHARGE_VALUE)
-
-/datum/ai_planning_subtree/find_and_hunt_target/look_for_apcs
-	hunting_behavior = /datum/ai_behavior/hunt_target/apcs
-	hunt_targets = list(/obj/machinery/power/apc)
-	hunt_range = 6
-
-
-/datum/ai_planning_subtree/find_and_hunt_target/look_for_apcs
-	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	finding_behavior = /datum/ai_behavior/find_hunt_target/apcs
-	hunting_behavior = /datum/ai_behavior/hunt_target/apcs
-	hunt_targets = list(/obj/machinery/power/apc)
-	hunt_range = 6
-
-/datum/ai_behavior/hunt_target/apcs
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
-
-/datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/basic/hunter, obj/machinery/power/apc/hunted)
-	var/datum/action/cooldown/mob_cooldown/charge_ability = hunter.ai_controller.blackboard[BB_FESTIVE_APC]
-	if(isnull(charge_ability))
-		return
-	charge_ability.Activate(hunted)
-
-
-/datum/ai_behavior/find_hunt_target/apcs
-
-/datum/ai_behavior/find_hunt_target/apcs/valid_dinner(mob/living/source, obj/machinery/power/apc/dinner, radius)
-	if(istype(dinner, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/apc_target = dinner
-		if(!apc_target.cell)
-			return FALSE
-		var/obj/item/stock_parts/power_store/cell/apc_cell = apc_target.cell
-		if(apc_cell.charge == apc_cell.maxcharge) //if its full charge we no longer feed it
-			return FALSE
-
-	return can_see(source, dinner, radius)
 
 #undef FESTIVUS_RECHARGE_VALUE

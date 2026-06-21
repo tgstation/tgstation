@@ -78,54 +78,26 @@
 	user.AddElement(/datum/element/rust_healing)
 	user.add_faction(FACTION_HERETIC)
 
-// All it does is stand there, only attacks if attacked (Manuel player)
+// All it does is stand there, only attacks if attacked (Manuel player) (TODO: make them ahelp to really simulate manuel players)
 /datum/ai_controller/basic_controller/fake_crewman
+	behavior_tree_json = "crewman.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_REINFORCEMENTS_SAY = "Help me!",
+		BB_CALLS_REINFORCEMENTS = TRUE,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /datum/ai_controller/basic_controller/fake_crewman/ranged
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "crewman_ranged.bt.json"
 
 // Immediately tries to attack the player (Terry player)
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "crewman_hostile.bt.json"
 
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "crewman_hostile_ranged.bt.json"
 
 // The actual crewmate
 /mob/living/basic/fake_crewman

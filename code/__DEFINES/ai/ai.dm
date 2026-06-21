@@ -111,3 +111,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
 	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 ))
+
+
+///Use this if you dont want a controller to show up in the sidebar (e.g. when its a class that just sets BB keys)
+#define ABSTRACT_AI_CLASS "Abstract"
