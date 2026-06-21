@@ -49,7 +49,7 @@
 	if(!isopenturf(target.loc))
 		return TRUE
 
-	var/can_breathe_vacuum = HAS_TRAIT(target, TRAIT_NO_BREATHLESS_DAMAGE)
+	var/can_breathe_vacuum = HAS_TRAIT(target, TRAIT_NO_BREATHLESS_DAMAGE) || HAS_TRAIT(target, TRAIT_NOBREATH)
 
 	var/min_oxy = can_breathe_vacuum ? 0 : atmos_requirements["min_oxy"]
 	var/min_plasma = can_breathe_vacuum ? 0 : atmos_requirements["min_plas"]

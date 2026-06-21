@@ -96,7 +96,7 @@
 /obj/machinery/gizmo/toggle
 	controller = /datum/gizmo_controller/toggle
 
-	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4", "gizmo_active_5")
+	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4")
 
 	var/on_state = FALSE
 
