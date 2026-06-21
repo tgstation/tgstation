@@ -86,19 +86,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 	return FALSE
 
-/proc/request_holiday_colors(atom/thing_to_color, pattern)
-	switch(pattern)
-		if(PATTERN_RANDOM)
-			return "#[random_short_color()]"
-		if(PATTERN_RAINBOW)
-			return get_color_from_pattern(thing_to_color, PATTERN_DEFAULT, PRIDE_FLAG_COLORS)
-	if(!length(GLOB.holidays))
-		return
-	for(var/holiday_key in GLOB.holidays)
-		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
-		if(!holiday_real.holiday_colors)
-			continue
-		return get_color_from_pattern(thing_to_color, pattern || holiday_real.holiday_pattern, holiday_real.holiday_colors)
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern)
+	return get_decoration_color_from_pattern(thing_to_color, pattern || holiday_pattern, holiday_colors)
 
 // The actual holidays
 

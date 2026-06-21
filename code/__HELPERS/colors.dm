@@ -287,13 +287,3 @@
 	)
 
 #undef ALPHA_COMPOSE
-
-/// Proc to return colors for recoloring atoms based on a pattern and the position of the atom. Primarily used by holidays
-/proc/get_color_from_pattern(atom/thing_to_color, pattern = PATTERN_DEFAULT, list/colors)
-	if(!length(colors))
-		return
-	switch(pattern)
-		if(PATTERN_DEFAULT)
-			return colors[(thing_to_color.y % colors.len) + 1]
-		if(PATTERN_VERTICAL_STRIPE)
-			return colors[(thing_to_color.x % colors.len) + 1]
