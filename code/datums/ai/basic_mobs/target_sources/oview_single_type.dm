@@ -117,5 +117,8 @@
 /datum/target_source/oview_single_type/cat_house
 	single_typepath = /obj/structure/cat_house
 
+/datum/target_source/oview_single_type/honeycomb
+	single_typepath = /obj/item/food/honeycomb
+
 /datum/target_source/oview_single_type/kitten
 	single_typepath = /mob/living/basic/pet/cat/kitten

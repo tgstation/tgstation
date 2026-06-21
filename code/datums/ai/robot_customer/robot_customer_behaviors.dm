@@ -151,35 +151,3 @@
 	qdel(controller.pawn)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-
-/// Applies full-body brute damage to BB_CUSTOMER_CURRENT_TARGET while pulling them.
-/// Clears the target key on success so the customer returns to normal behavior.
-/datum/bt_node/ai_behavior/robot_customer/break_spine_attack
-	var/target_key
-	var/give_up_distance = 10
-
-/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/batman = controller.blackboard[target_key]
-	var/mob/living/big_guy = controller.pawn
-
-	if(QDELETED(batman) || get_dist(batman, big_guy) >= give_up_distance)
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-
-	if(batman.stat != CONSCIOUS)
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-
-	INVOKE_ASYNC(big_guy, TYPE_PROC_REF(/atom/movable, start_pulling), batman)
-	big_guy.face_atom(batman)
-	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
-	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)
-		batman.apply_damage(15, BRUTE, zone, wound_bonus = 35)
-
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-
-/datum/bt_node/ai_behavior/robot_customer/break_spine_attack/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	if(succeeded)
-		var/mob/living/bane = controller.pawn
-		if(!QDELETED(bane))
-			bane.stop_pulling()
-		controller.clear_blackboard_key(target_key)

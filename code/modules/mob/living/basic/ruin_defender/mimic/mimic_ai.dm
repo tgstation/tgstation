@@ -1,5 +1,4 @@
 /datum/ai_controller/basic_controller/mimic_crate
-	idle_behavior = null
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
@@ -15,7 +14,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/mimic/mimic_copy.bt.json"
 
 /datum/ai_controller/basic_controller/mimic_copy/machine

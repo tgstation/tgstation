@@ -1,7 +1,6 @@
 /datum/ai_controller/basic_controller/alien
 	behavior_tree_json = "code/modules/mob/living/basic/alien/alien.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
@@ -19,17 +18,7 @@
 
 /datum/ai_controller/basic_controller/alien/queen
 	behavior_tree_json = "code/modules/mob/living/basic/alien/queen.bt.json"
-/**
- * Alien projectile
- * Try to avoid friendly fire, and has a 3 second delay.
- */
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/alien
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/alien
 
-/datum/ai_behavior/basic_ranged_attack/alien
-	time_between_perform = 3 SECONDS
-	max_range = 3
-	avoid_friendly_fire = TRUE
 
 /datum/bt_node/subtree/basic_alien
 	behavior_tree_json = "code/modules/mob/living/basic/alien/basic_alien.bt.json"

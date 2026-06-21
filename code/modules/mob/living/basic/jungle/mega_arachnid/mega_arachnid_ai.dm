@@ -6,7 +6,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /datum/target_source/oview_typed/surveillance_equipment
 	typecache = list(/obj/machinery/camera = TRUE, /obj/machinery/light = TRUE)

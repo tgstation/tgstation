@@ -97,7 +97,6 @@
 /datum/ai_controller/basic_controller/headslug
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/changeling/headslug.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /// Neutered version to prevent people from turning themselves into changelings with sentience potions or transformation
 /mob/living/basic/headslug/beakless

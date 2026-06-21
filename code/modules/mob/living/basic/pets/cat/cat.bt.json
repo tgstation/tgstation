@@ -1,0 +1,208 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/cat",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_BASIC_MOB_FLEE_TARGET",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/run_away_from_target",
+				"bindings": {
+					"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
+				}
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_reside_in_home"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_haul_food"
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_TRESSPASSER_TARGET",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"vars": {
+													"target_key": "BB_TRESSPASSER_TARGET",
+													"required_dist": 1
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/territorial_struggle",
+												"vars": {
+													"target_key": "BB_TRESSPASSER_TARGET",
+													"cries_key": "BB_HOSTILE_MEOWS"
+												}
+											}
+										]
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_CURRENT_TARGET",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "parallel",
+										"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+										"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+										"repeat_secondary": true,
+										"finish_on_primary": true,
+										"children": [
+											{
+												"type": "subplan",
+												"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+												"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"required_dist": 1,
+													"finish_on_arrival": false
+												}
+											}
+										]
+									}
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_hunt_mice"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_find_food"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/make_babies"
+								},
+								{
+									"type": "subplan",
+									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+									"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+									"loop_delay": "IDLE_BEHAVIOR_RATE",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_speech_loop",
+							"bindings": {
+								"bqdqne64": "/datum/bt_node/ai_behavior/random_speech/cats"
+							}
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_partner"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/random_chance",
+					"vars": {
+						"chance": 0.05
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_CAT_HOME",
+							"target_source": "/datum/target_source/oview_single_type/cat_house",
+							"targeting_strategy": "/datum/targeting_strategy/valid_cat_home"
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/random_chance",
+					"vars": {
+						"chance": 0.05
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_cat_tresspasser",
+						"vars": {
+							"target_key": "BB_TRESSPASSER_TARGET"
+						}
+					}
+				}
+			]
+		}
+	]
+}

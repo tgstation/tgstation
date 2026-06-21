@@ -5,7 +5,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 	behavior_tree_json = ABSTRACT_AI_CLASS
 
 
@@ -120,7 +119,6 @@
 /// Literally does nothing except random speech
 /datum/ai_controller/basic_controller/talk
 	behavior_tree_json = "code/datums/ai/basic_mobs/talk.bt.json"
-	idle_behavior = null
 
 
 /datum/bt_node/subtree/simple_hostile_combat_with_retaliate

@@ -210,7 +210,33 @@
 /datum/bt_node/ai_behavior/hunt_target/decorate_donuts/target_caught(mob/living/hunter, atom/hunted)
 	hunter.spin(spintime = 4, speed = 1)
 
+/// Enters (or exits if already resident) a cat house keyed in target_key.
+/datum/bt_node/ai_behavior/enter_cat_home
+	var/target_key
+
+/datum/bt_node/ai_behavior/enter_cat_home/setup(datum/ai_controller/controller)
+	var/obj/structure/cat_house/home = controller.blackboard[target_key]
+	return !QDELETED(home)
+
+/datum/bt_node/ai_behavior/enter_cat_home/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/obj/structure/cat_house/home = controller.blackboard[target_key]
+	if(QDELETED(home))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/mob/living/basic/pet/cat/living_pawn = controller.pawn
+	if(living_pawn == home.resident_cat || isnull(home.resident_cat))
+		INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), home, FALSE)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+/datum/bt_node/ai_behavior/enter_cat_home/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
 // Subtree types — the trees themselves live in the matching .bt.json files.
+
+/// Block other behaviors while residing in a cat house; occasionally leave.
+/datum/bt_node/subtree/cat_reside_in_home
+	behavior_tree_json = "code/modules/mob/living/basic/pets/cat/cat_reside_in_home.bt.json"
 
 /// Find a mouse and pounce on it.
 /datum/bt_node/subtree/cat_hunt_mice
@@ -227,3 +253,7 @@
 /// Turn off a finished oven.
 /datum/bt_node/subtree/cat_turn_off_stove
 	behavior_tree_json = "code/modules/mob/living/basic/pets/cat/cat_turn_off_stove.bt.json"
+
+/// Spin to decorate nearby donuts.
+/datum/bt_node/subtree/cat_decorate_donuts
+	behavior_tree_json = "code/modules/mob/living/basic/pets/cat/cat_decorate_donuts.bt.json"

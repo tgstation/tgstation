@@ -6,7 +6,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /// Only activate the domain when it isn't already running.
 /datum/bt_node/ai_behavior/use_mob_ability/domain

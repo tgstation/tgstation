@@ -72,6 +72,10 @@
 // bear keys
 ///the hive with honey that we will steal from
 #define BB_FOUND_HONEY "BB_found_honey"
+///cooldown between hive raids
+#define BB_BEAR_HIVE_COOLDOWN "BB_bear_hive_cooldown"
+///cooldown between honeycomb hunts
+#define BB_BEAR_HONEYCOMB_COOLDOWN "BB_bear_honeycomb_cooldown"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
 ///tree climbing cooldown

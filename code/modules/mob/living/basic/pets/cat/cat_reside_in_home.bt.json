@@ -1,0 +1,55 @@
+{
+	"dm_type": "/datum/bt_node/subtree/cat_reside_in_home",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/pawn_loc_is_type",
+			"vars": {
+				"loc_type": "/obj/structure/cat_house",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/leave_cat_home"
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/succeed"
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CAT_HOME",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CAT_HOME",
+							"required_dist": 1
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/enter_cat_home",
+						"vars": {
+							"target_key": "BB_CAT_HOME"
+						}
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,79 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/cat/cake",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_turn_off_stove"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_decorate_donuts"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_haul_food"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_hunt_mice"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_find_food"
+								},
+								{
+									"type": "subplan",
+									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+									"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+									"loop_delay": "IDLE_BEHAVIOR_RATE",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_speech_loop",
+							"bindings": {
+								"bqdqne64": "/datum/bt_node/ai_behavior/random_speech/cats"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

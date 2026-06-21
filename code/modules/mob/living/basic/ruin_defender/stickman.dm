@@ -72,10 +72,6 @@
 
 /datum/ai_controller/basic_controller/stickman/ranged
 	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/stickman_ranged.bt.json"
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
-	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/stickman

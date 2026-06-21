@@ -51,7 +51,7 @@
 					},
 					{
 						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/robot_customer/break_spine_attack",
+						"behavior": "/datum/bt_node/ai_behavior/break_spine",
 						"vars": {
 							"target_key": "BB_CUSTOMER_CURRENT_TARGET"
 						}

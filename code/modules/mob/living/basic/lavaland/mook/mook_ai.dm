@@ -237,9 +237,6 @@ GLOBAL_LIST_INIT(mook_commands, list(
 			continue
 		return target
 
-/datum/idle_behavior/walk_near_target/mook_village
-	target_key = BB_HOME_VILLAGE
-
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
 	behavior_tree_json = "code/modules/mob/living/basic/lavaland/mook/support.bt.json"

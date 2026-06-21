@@ -37,7 +37,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/dumb
-	idle_behavior = null
 
 /datum/ai_planning_subtree/face_target_or_face_initial
 

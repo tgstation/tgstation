@@ -108,12 +108,7 @@
 /datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
 	return
 
-// DEPRECATED — movement target tracking is no longer used by the BT system
-/datum/ai_behavior/proc/set_movement_target(datum/ai_controller/controller, atom/target, movement_type)
-	return
 
-/datum/ai_behavior/proc/clear_movement_target(datum/ai_controller/controller)
-	return
 
 // Compatibility shims so legacy ai_behavior subtypes ported via deprecated parent_type stubs
 // can still call set_movement_target / clear_movement_target without compile errors.
