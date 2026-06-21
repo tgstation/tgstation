@@ -442,6 +442,7 @@
 	new_head.give_flash = TRUE
 	new_head.give_hud = TRUE
 	new_head.remove_clumsy = TRUE
+	new_head.roundstart = TRUE
 	candidate.add_antag_datum(new_head, GLOB.revolution_handler.revs)
 	GLOB.revolution_handler.start_revolution()
 
