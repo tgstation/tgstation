@@ -86,31 +86,19 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 	return FALSE
 
-/// Procs to return holiday themed colors for recoloring atoms
-/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = holiday_pattern)
-	if(!holiday_colors)
-		return
-	switch(pattern)
-		if(PATTERN_DEFAULT)
-			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
-		if(PATTERN_VERTICAL_STRIPE)
-			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
-
 /proc/request_holiday_colors(atom/thing_to_color, pattern)
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
 		if(PATTERN_RAINBOW)
-			var/static/datum/holiday/rainbow_datum = new()
-			rainbow_datum.holiday_colors = /datum/holiday/pride_week::holiday_colors
-			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
+			return get_color_from_pattern(thing_to_color, PATTERN_DEFAULT, PRIDE_FLAG_COLORS)
 	if(!length(GLOB.holidays))
 		return
-	for(var/holiday_key in shuffle(GLOB.holidays))
+	for(var/holiday_key in GLOB.holidays)
 		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
 		if(!holiday_real.holiday_colors)
 			continue
-		return holiday_real.get_holiday_colors(thing_to_color, pattern || holiday_real.holiday_pattern)
+		return get_color_from_pattern(thing_to_color, pattern || holiday_real.holiday_pattern, holiday_real.holiday_colors)
 
 // The actual holidays
 
@@ -468,14 +456,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	// Stonewall was June 28th, this captures its week.
 	begin_day = 23
 	end_day = 29
-	holiday_colors = list(
-		COLOR_PRIDE_PURPLE,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_RED,
-	)
+	holiday_colors = PRIDE_FLAG_COLORS
 	holiday_mail = list(
 		/obj/item/bedsheet/rainbow,
 		/obj/item/clothing/accessory/pride,
@@ -493,49 +474,9 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/pride_week/New()
 	. = ..()
-	var/palette = rand(1, 8)
-	switch(palette)
-		if(1)
-			holiday_colors = list(
-				COLOR_LESBIAN_MAGENTA,
-				COLOR_LESBIAN_PINK,
-				COLOR_LESBIAN_ORANGE,
-				COLOR_LESBIAN_RED,
-			)
-		if(2)
-			holiday_colors = list(
-				COLOR_GAY_BLUE,
-				COLOR_GAY_LIGHT_BLUE,
-				COLOR_GAY_LIGHT_GREEN,
-				COLOR_GAY_GREEN,
-			)
-		if(3)
-			holiday_colors = list(
-				COLOR_BI_BLUE,
-				COLOR_BI_PURPLE,
-				COLOR_BI_PINK,
-			)
-		if(4)
-			holiday_colors = list(
-				COLOR_WHITE,
-				COLOR_TRANS_PINK,
-				COLOR_TRANS_BLUE,
-			)
-		if(5)
-			holiday_colors = list(
-				COLOR_ACE_PURPLE,
-				COLOR_WHITE,
-				COLOR_ACE_GREY,
-				COLOR_ACE_BLACK,
-			)
-		if(6)
-			holiday_colors = list(
-				COLOR_PAN_CYAN,
-				COLOR_PAN_YELLOW,
-				COLOR_PAN_MAGENTA,
-			)
-		if(7, 8) //give a bit more weight to the standard rainbow flag
-			holiday_colors = /datum/holiday/pride_week::holiday_colors
+	if(prob(30))
+		return
+	holiday_colors = pick(LESBIAN_FLAG_COLORS, GAY_MAN_FLAG_COLORS, TRANS_FLAG_COLORS, BI_FLAG_COLORS, ACE_FLAG_COLORS, PAN_FLAG_COLORS)
 
 // JULY
 
