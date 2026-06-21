@@ -12,7 +12,7 @@ Usage:
 
 Options:
     --check     Verify that all generated files are up to date without writing anything.
-                Exits with code 1 if any file differs. Used by CI.
+                Exits with code 1 if any file differs. Used by continious int (hopefully).
 """
 
 import ast
@@ -41,7 +41,7 @@ STATIC_NODES: dict[str, str] = {
     'subplan':  '/datum/bt_node/composite/subplan',
 }
 
-# Source JSON structural keys that are consumed/transformed during compilation.
+# Source JSON structural keys that are consumed/transformed during compilation. please keep these updated if u add new stuff :D
 _CONSUMED_KEYS = frozenset({'type', 'children', 'child', 'decorator', 'behavior', 'vars', 'subtype', 'dm_type', 'bindings'})
 
 
@@ -53,7 +53,7 @@ def parse_defines(repo_root: Path) -> dict:
 
     Uses multi-pass resolution so that defines referencing other defines work
     regardless of file or declaration order.  Stops when a full pass makes no
-    new progress (handles transitive references; cycles are silently skipped).
+    new progress.
     """
     defines: dict = {
         'TRUE':  1,
@@ -209,20 +209,13 @@ def compile_node(src: dict, defines: dict) -> dict:
     elif 'child' in src:
         out[desc_children] = [compile_node(src['child'], defines)]
 
-    # Positional "args" and "config" are no longer supported — every node
-    # (leaf, decorator, composite) is configured via "vars".
-    if 'args' in src:
-        raise ValueError(f'"args" is no longer supported in node {node_type!r} — use "vars"')
-    if 'config' in src:
-        raise ValueError(f'"config" is no longer supported in node {node_type!r} — use "vars"')
-
-    # Instance vars — "" means omit the key (DM uses the type var default)
+    # Instance vars — "" means omit the key (cuz then we use the default)
     for key, val in src.get('vars', {}).items():
         rv = resolve_value(val, defines)
         if rv != '':
             out[key] = rv
 
-    # Bindings: declaration on a subtree definition file's root vs. call-site overrides
+    # Bindings: declaration on a subtree definition file's root vs call-site overrides
     if 'bindings' in src:
         if node_type == 'subtree':
             # Call-site overrides: resolve values through defines, emit as "bindings" (becomes node.vars)
@@ -270,15 +263,12 @@ def main() -> int:
     errors = 0
     dirty = 0
     # Maps each target compiled path back to the source that produced it, so we can
-    # detect two sources colliding onto one output. With path-mirrored names this
-    # should be impossible, but the guard catches future regressions loudly instead
-    # of silently overwriting one tree with another.
+    # detect two sources colliding onto one output. shouldn't happen, can happen.
     produced: dict[Path, Path] = {}
     generated_paths: set[Path] = set()
 
     for src_path in bt_files:
-        # The compiled file mirrors the source path relative to code/, so trees that
-        # share a basename in different folders no longer clobber each other.
+        # The compiled file mirrors the source path relative to code/, so trees that share a basename dont fucking break.
         rel = src_path.relative_to(code_dir).as_posix()  # "datums/ai/dog/dog.bt.json"
         tree_name = rel[:-len('.json')]                   # "datums/ai/dog/dog.bt"
         compiled_path = generated_dir / f'{tree_name}.compiled.json'
@@ -323,7 +313,6 @@ def main() -> int:
             compiled_path.write_text(compiled_text, encoding='utf-8')
 
     # Remove stale compiled files that no longer correspond to a source tree —
-    # e.g. leftovers from the old flat naming scheme or a deleted source.
     stale = [p for p in generated_dir.rglob('*.compiled.json') if p not in generated_paths]
     for path in stale:
         if check_mode:

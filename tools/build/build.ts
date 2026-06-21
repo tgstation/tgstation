@@ -94,7 +94,7 @@ export const CutterTarget = new Juke.Target({
     const temp_path = `${cutter_path}_temp`; // yes this means its file extension is .exe_temp I don't really care
     await downloadFile(download_from, temp_path);
     fs.copyFileSync(temp_path, cutter_path);
-    fs.rmSync(temp_path)
+    fs.rmSync(temp_path);
     if (process.platform !== 'win32') {
       await Juke.exec('chmod', ['+x', cutter_path]);
     }
@@ -160,14 +160,11 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const BehaviorTreeCompilerTarget = new Juke.Target({
-  inputs: [
-    'code/**/*.bt.json',
-    'code/__DEFINES/**/*.dm',
-  ],
+  inputs: ['code/**/*.bt.json', 'code/__DEFINES/**/*.dm'],
   outputs: () => {
     return Juke.glob('code/**/*.bt.json').map((file) => {
-      const base = file.split('/').pop()!.replace('.bt.json', '');
-      return `build/behavior_trees/${base}.bt.compiled.json`;
+      const rel = file.replace(/^code\//, '').replace(/\.bt\.json$/, '');
+      return `build/behavior_trees/${rel}.bt.compiled.json`;
     });
   },
   executes: async () => {
