@@ -1,9 +1,6 @@
 /**
  * Defines a game verb with an associated /datum/verb_metadata.
  *
- * The verb stub has no native BYOND args — argument collection is handled
- * by SSverbs using VERB_ARG metadata declared in the body proc.
- *
  * Usage:
  *   GAME_VERB(/client, ooc, "OOC", "Send a message in OOC.", "OOC")
  *       VERB_ARG(msg, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)

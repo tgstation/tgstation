@@ -1,5 +1,5 @@
 ADMIN_VERB(admin_explosion, R_ADMIN|R_FUN, "Explosion", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(orignator, ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /atom)
+	VERB_ARG(orignator, VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /atom)
 	var/devastation = input(user, "Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null)
 		return
@@ -27,7 +27,7 @@ ADMIN_VERB(admin_explosion, R_ADMIN|R_FUN, "Explosion", ADMIN_VERB_NO_DESCRIPTIO
 		BLACKBOX_LOG_ADMIN_VERB("Explosion")
 
 ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(orignator, ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /atom)
+	VERB_ARG(orignator, VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /atom)
 	var/heavy = input(user, "Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null)
 		return
@@ -42,7 +42,7 @@ ADMIN_VERB(admin_emp, R_ADMIN|R_FUN, "EM Pulse", ADMIN_VERB_NO_DESCRIPTION, ADMI
 		BLACKBOX_LOG_ADMIN_VERB("EM Pulse")
 
 ADMIN_VERB(gib_them, R_ADMIN, "Gib", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(victim, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(victim, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/confirm = tgui_alert(user, "Drop a brain?", "Confirm", list("Yes", "No","Cancel")) || "Cancel"
 	if(confirm == "Cancel")
 		return
@@ -259,7 +259,7 @@ ADMIN_VERB(mass_modify_traits, R_FUN, "Mass Modify Traits", "Adds or removes a t
 	return out
 
 ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN, /mob/living)
-	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
+	VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/punishment = tgui_input_list(user, "Choose a punishment", "DIVINE SMITING", GLOB.smites)
 
 	if(QDELETED(target) || !punishment)

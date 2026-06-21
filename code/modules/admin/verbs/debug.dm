@@ -14,7 +14,7 @@ ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status f
 	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
 ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user, "Wait until the game starts")
 		return
@@ -39,6 +39,7 @@ ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, 
 	return types[key]
 
 ADMIN_VERB(cmd_del_all, R_DEBUG|R_SPAWN, "Del-All", "Delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG)
+
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
@@ -55,6 +56,7 @@ ADMIN_VERB(cmd_del_all, R_DEBUG|R_SPAWN, "Del-All", "Delete all datums with the 
 	BLACKBOX_LOG_ADMIN_VERB("Delete All")
 
 ADMIN_VERB(cmd_del_all_force, R_DEBUG|R_SPAWN, "Force-Del-All", "Forcibly delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG)
+
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
@@ -71,6 +73,7 @@ ADMIN_VERB(cmd_del_all_force, R_DEBUG|R_SPAWN, "Force-Del-All", "Forcibly delete
 	BLACKBOX_LOG_ADMIN_VERB("Force-Delete All")
 
 ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG)
+
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
@@ -119,7 +122,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(M, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(M, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user, "Wait until the game starts")
 		return
@@ -161,7 +164,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [M.key] full access."))
 
 ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(M, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(M, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(M.ckey)
 		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
@@ -181,8 +184,8 @@ ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume 
 		qdel(adminmob)
 	BLACKBOX_LOG_ADMIN_VERB("Assume Direct Control")
 
-ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_GAME)
-	VERB_ARG(M, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_PLAYERS)
+	VERB_ARG(M, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!M)
 		return
 	if(M.ckey)
@@ -210,8 +213,8 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct
 
 ADMIN_VERB_VISIBILITY(cmd_admin_areatest, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for various machinery.", ADMIN_CATEGORY_MAPPING)
-	VERB_ARG(on_station, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
-	VERB_ARG(filter_maint, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(on_station, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(filter_maint, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -465,7 +468,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 	return dresscode
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", /mob/living)
-	VERB_ARG(M, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
+	VERB_ARG(M, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	if(!istype(M))
 		tgui_alert(user,"Cannot revive a ghost")
 		return
@@ -478,11 +481,11 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", /mob/l
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_DEBUG, /atom)
-	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_MOB | ADMIN_VERB_ARG_TYPE_TURF, ADMIN_VERB_ARG_SOURCE_WORLD, /atom)
+	VERB_ARG(target, VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_WORLD, /atom)
 	user.admin_delete(target)
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_PLAYERS, /mob/living)
-	VERB_ARG(mob, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
+	VERB_ARG(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)
 		to_chat(user, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
@@ -582,7 +585,7 @@ ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualiz
 	holder.plane_debug.ui_interact(mob)
 
 ADMIN_VERB(debug_huds, R_DEBUG, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(i, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(i, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	user.debug_variables(GLOB.huds[i])
 
 ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
@@ -656,7 +659,7 @@ ADMIN_VERB(unload_ctf, R_DEBUG, "Unload CTF", "Despawns the majority of CTF.", A
 	toggle_id_ctf(user, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
 
 ADMIN_VERB(run_empty_query, R_DEBUG, "Run Empty Query", "Runs a specified number of empty queries.", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(val, ADMIN_VERB_ARG_TYPE_NUM, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(val, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	var/list/queries = list()
 	for(var/i in 1 to val)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")

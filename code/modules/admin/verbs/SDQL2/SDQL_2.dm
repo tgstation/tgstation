@@ -196,7 +196,7 @@
 		CRASH("SDQL2 fatal error");};
 
 ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATEGORY_DEBUG)
-	VERB_ARG(query_text, ADMIN_VERB_ARG_TYPE_MESSAGE, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(query_text, VERB_ARG_TYPE_MESSAGE, VERB_ARG_SOURCE_INPUT)
 	var/prompt = tgui_alert(user, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
 	if (prompt != "Yes")
 		return

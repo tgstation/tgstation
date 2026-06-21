@@ -65,7 +65,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 	data["targets"] = build_target_list()
 	return data
 
-#define ADMIN_VERB_ARG_TYPE_ENTITY (ADMIN_VERB_ARG_TYPE_MOB | ADMIN_VERB_ARG_TYPE_OBJ | ADMIN_VERB_ARG_TYPE_TURF | ADMIN_VERB_ARG_TYPE_AREA | ADMIN_VERB_ARG_TYPE_DATUM | ADMIN_VERB_ARG_TYPE_ATOM)
+#define ADMIN_VERB_ARG_TYPE_ENTITY (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM)
 
 /datum/admin_verb_panel/proc/build_target_list()
 	if(!selected_verb_type)
@@ -109,24 +109,24 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 
 /datum/admin_verb_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
 	switch(arg.source)
-		if(ADMIN_VERB_ARG_SOURCE_WORLD)
+		if(VERB_ARG_SOURCE_WORLD)
 			return get_world_targets(arg.arg_type)
-		if(ADMIN_VERB_ARG_SOURCE_VIEW)
+		if(VERB_ARG_SOURCE_VIEW)
 			return get_view_targets(arg.arg_type)
 	return list()
 
 /datum/admin_verb_panel/proc/get_world_targets(arg_type)
-	if(arg_type & ADMIN_VERB_ARG_TYPE_MOB)
+	if(arg_type & VERB_ARG_TYPE_MOB)
 		return GLOB.mob_list
-	if(arg_type & ADMIN_VERB_ARG_TYPE_AREA)
+	if(arg_type & VERB_ARG_TYPE_AREA)
 		return get_sorted_areas()
-	if(arg_type & ADMIN_VERB_ARG_TYPE_TURF)
+	if(arg_type & VERB_ARG_TYPE_TURF)
 		return get_notable_turfs()
-	if(arg_type & ADMIN_VERB_ARG_TYPE_OBJ)
+	if(arg_type & VERB_ARG_TYPE_OBJ)
 		if(owner.mob)
 			return view(owner.view, owner.mob)
 		return list()
-	if(arg_type & (ADMIN_VERB_ARG_TYPE_ATOM | ADMIN_VERB_ARG_TYPE_DATUM))
+	if(arg_type & (VERB_ARG_TYPE_ATOM | VERB_ARG_TYPE_DATUM))
 		if(owner.mob)
 			return view(owner.view, owner.mob)
 		return list()
@@ -148,17 +148,17 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 	if(!owner.mob)
 		return list()
 	var/list/visible = view(owner.view, owner.mob)
-	if(arg_type & ADMIN_VERB_ARG_TYPE_MOB)
+	if(arg_type & VERB_ARG_TYPE_MOB)
 		var/list/mobs = list()
 		for(var/mob/target in visible)
 			mobs += target
 		return mobs
-	if(arg_type & ADMIN_VERB_ARG_TYPE_OBJ)
+	if(arg_type & VERB_ARG_TYPE_OBJ)
 		var/list/objs = list()
 		for(var/obj/target in visible)
 			objs += target
 		return objs
-	if(arg_type & ADMIN_VERB_ARG_TYPE_TURF)
+	if(arg_type & VERB_ARG_TYPE_TURF)
 		var/list/turfs = list()
 		for(var/turf/target in visible)
 			turfs += target

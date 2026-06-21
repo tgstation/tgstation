@@ -1,4 +1,4 @@
-ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_CATEGORY_PLAYERS)
 	var/input = input(user, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
 	if(!input)
 		return
@@ -16,7 +16,7 @@ ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_C
 	log_admin("[key_name(user)] sent \"[input]\" as the Tip of the Round.")
 	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
-ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_PLAYERS)
 	var/message = input(user, "Global message to send:", "Admin Announce")  as message|null
 	if(!message)
 		return
@@ -28,7 +28,7 @@ ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.",
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
 ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(prisoner, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(prisoner, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!is_centcom_level(prisoner.z))
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
@@ -151,7 +151,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_FUN)
-	VERB_ARG(dropee, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob/living)
+	VERB_ARG(dropee, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

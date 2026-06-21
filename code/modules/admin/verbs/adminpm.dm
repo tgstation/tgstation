@@ -14,7 +14,7 @@
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", /mob)
-	VERB_ARG(target, ADMIN_VERB_ARG_TYPE_MOB, ADMIN_VERB_ARG_SOURCE_WORLD, /mob)
+	VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!ismob(target))
 		to_chat(
 			src,
