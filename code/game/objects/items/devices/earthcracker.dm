@@ -134,7 +134,7 @@
 /// Cleanup after an earthcracker is activated either for sabotage or mining.
 /obj/item/earthcracker/proc/handle_after_activation(turf/cracked_hull)
 	do_sparks(2, FALSE, src)
-	cracked_hull.levelupdate()
+	cracked_hull?.levelupdate()
 
 	status = EARTHCRACKER_SPENT
 	update_appearance(UPDATE_ICON)

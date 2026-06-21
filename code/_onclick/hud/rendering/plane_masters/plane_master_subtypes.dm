@@ -316,17 +316,40 @@
 	plane = AREA_PLANE
 
 /atom/movable/screen/plane_master/weather
-	name = "Weather"
-	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
+	name = "Non-Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects. Used when the player has particle weather disabled."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	/// Is this a particle variant?
+	var/particle_weather = FALSE
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(!.)
 		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
+	home.AddComponent(/datum/component/hide_weather_planes, src, particle_weather)
+
+/atom/movable/screen/plane_master/weather/proc/update_state(mob/mymob)
+	if(!istype(mymob))
+		return
+
+	// If the client wants particle weather, only show the PARTICLE_WEATHER_PLANE, otherwise only show the normal WEATHER_PLANE
+	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) != particle_weather)
+		hide_from(mymob)
+	else
+		show_to(mymob)
+
+/atom/movable/screen/plane_master/weather/show_to(mob/mymob)
+	// Only show ourselves if the player wants it
+	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) == particle_weather)
+		return ..()
+
+/atom/movable/screen/plane_master/weather/particle
+	name = "Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. Used when the player has particle weather enabled."
+	plane = PARTICLE_WEATHER_PLANE
+	particle_weather = TRUE
 
 /atom/movable/screen/plane_master/weather_mask
 	name = "Weather Mask"

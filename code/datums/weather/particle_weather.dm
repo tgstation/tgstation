@@ -16,6 +16,8 @@
 	/// How often can we change our severity?
 	/// Don't set this too low or it'll look jank
 	var/severity_cooldown = 5 SECONDS
+	/// Alpha of the area overlay when the particle weather pref is enabled
+	var/particle_weather_alpha = 255
 
 	/// Current weather severity
 	var/severity = 0
@@ -101,8 +103,14 @@
 
 /datum/weather/particle/generate_overlay_cache()
 	. = ..()
+
 	if (stage == END_STAGE)
 		return
+
+	// Change alpha of overlays on the particle weather plane
+	for(var/mutable_appearance/overlay as anything in .)
+		if (PLANE_TO_TRUE(overlay.plane) == PARTICLE_WEATHER_PLANE)
+			overlay.alpha = particle_weather_alpha
 
 	for (var/offset in 0 to SSmapping.max_plane_offset)
 		. += mutable_appearance('icons/effects/weather_overlay.dmi', "weather_overlay", overlay_layer, null, WEATHER_MASK_PLANE, offset_const = offset)

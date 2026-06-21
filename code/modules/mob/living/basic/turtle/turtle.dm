@@ -94,6 +94,8 @@
 	return destined_path
 
 /mob/living/basic/turtle/process(seconds_per_tick)
+	if(HAS_TRAIT(src, TRAIT_STASIS))
+		return
 	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to our highest destined path
 		set_plant_growth(retrieve_destined_path(), 0.5)
 		return

@@ -70,6 +70,41 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	fax_name = "[current_area.name]"
 	return ..()
 
+/obj/machinery/fax/heads
+	abstract_type = /obj/machinery/fax/heads
+
+/obj/machinery/fax/heads/Initialize(mapload)
+	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
+/obj/machinery/fax/heads/captain
+	name = "Captain's Fax Machine"
+	fax_name = "Captain's Office"
+
+/obj/machinery/fax/heads/hop
+	name = "Head of Personnel's Fax Machine"
+	fax_name = "Head of Personnel's Office"
+
+/obj/machinery/fax/heads/hos
+	name = "Head of Security's Fax Machine"
+	fax_name = "Head of Security's Office"
+
+/obj/machinery/fax/heads/cmo
+	name = "Chief Medical Officer's Fax Machine"
+	fax_name = "Chief Medical Officer's Office"
+
+/obj/machinery/fax/heads/rd
+	name = "Research Director's Fax Machine"
+	fax_name = "Research Director's Office"
+
+/obj/machinery/fax/heads/ce
+	name = "Chief Engineer's Fax Machine"
+	fax_name = "Chief Engineer's Office"
+
+/obj/machinery/fax/heads/qm
+	name = "Quartermaster's Fax Machine"
+	fax_name = "Quartermaster's Office"
+
 /obj/machinery/fax/admin/syndicate
 	name = "Syndicate Fax Machine"
 
@@ -401,6 +436,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
+	SEND_SIGNAL(src, COMSIG_FAX_MESSAGE_RECEIVED, sender_name)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.

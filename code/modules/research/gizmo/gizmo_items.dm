@@ -20,3 +20,15 @@
 
 	controller = new controller(src)
 	controller.generate_interfaces(src)
+
+/obj/item/gizmo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	add_fingerprint(user)
+
+	if(is_wire_tool(tool))
+		attempt_wire_interaction(user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/// Hard-mode code-crack gizmo
+/obj/item/gizmo/moo
+	controller = /datum/gizmo_controller/moo

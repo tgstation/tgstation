@@ -1,17 +1,18 @@
 /datum/religion_rites/dream_projection
 	name = "Dream Projection"
 	desc = "Astrally project your dream consciousness into the mind of one of your followers. \
-		While projecting, you are asleep, and can communicate with only and see through the eyes of the chosen follower, \
-		but cannot interact with the world in any way. The projection can be ended at any time, \
-			ends if you are woken up or attacked, and ends if the follower dies."
+		While projecting, you are asleep, and can see through the eyes of the chosen follower. \
+		They alone can hear you, and you cannot interact with the world in any way. \
+		The projection can be ended at any time, but it will end early if you are woken up, if you are attacked, \
+		or if the follower dies."
 	favor_cost = 100
 	ritual_length = 15 SECONDS
 
 /datum/religion_rites/dream_projection/New()
 	. = ..()
 	ritual_invocations = list(
-		"A member of the flock has gone astray, lost in the waking world...",
-		"It is the duty of the shepherd to guide them back to the fold, even if they cannot find their way themselves...",
+		"A member of our flock has gone astray, lost in the waking world...",
+		"It is the duty of the shepherd to guide those who cannot find their way...",
 		"Let me walk through their waking dream, and show them the way back...",
 	)
 
@@ -166,6 +167,7 @@
 /mob/eye/imaginary_friend/dream_projection/greet()
 	return
 
+// The IC tab was removed recently as of commenting. This should probably be adjusted.
 /mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
 	set category = "IC"
 	set name = "Stop Projection"
