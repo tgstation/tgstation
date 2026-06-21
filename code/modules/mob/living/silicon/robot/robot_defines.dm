@@ -13,7 +13,6 @@
 	health = 100
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
-	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 	unique_name = TRUE
 	mouse_drop_zone = TRUE

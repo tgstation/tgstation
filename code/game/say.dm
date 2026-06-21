@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /// Returns TRUE if the message was received and understood.
 /atom/movable/proc/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-	return TRUE
+	return HEAR_HEARD | HEAR_UNDERSTOOD
 
 
 /**
@@ -110,18 +110,27 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	SHOULD_BE_PURE(TRUE)
 	return !HAS_TRAIT(src, TRAIT_MUTE)
 
+/atom/movable/proc/do_tts_message(message, language, message_mods, list/tts_filter, list/hearers)
+	set waitfor = FALSE
+
+	if(!SStts.tts_enabled || !voice || HAS_TRAIT(src, TRAIT_SIGN_LANG) || HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE) || message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return
+
+	var/list/filter = list()
+	if(length(voice_filter) > 0)
+		filter += voice_filter
+
+	if(length(tts_filter) > 0)
+		filter += tts_filter.Join(",")
+	var/list/special_filter = list()
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message), language, get_tts_voice(filter, special_filter), filter.Join(","), hearers, message_range = 7, pitch = pitch, special_filters = special_filter.Join("|"), blip_base = blip_base, blip_number = blip_number, identifier = message_mods[MODE_TTS_IDENTIFIER])
+
+/atom/movable/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
-	var/found_client = FALSE
 	var/list/listeners = get_hearers_in_view(range, source)
 	var/list/listened = list()
-	for(var/atom/movable/hearing_movable as anything in listeners)
-		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
-			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
-			continue
-		if(hearing_movable.Hear(src, message_language, message, null, null, null, spans, message_mods, range))
-			listened += hearing_movable
-		if(!found_client && length(hearing_movable.client_mobs_in_contents))
-			found_client = TRUE
 
 	var/tts_message_to_use = tts_message
 	if(!tts_message_to_use)
@@ -134,10 +143,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(length(tts_filter) > 0)
 		filter += tts_filter.Join(",")
 
-	if(voice && found_client)
-		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch)
+	var/shell_scrubbed_input = tts_speech_filter(html_decode(tts_message_to_use))
+	var/identifier = "[sha1(voice + filter.Join(",") + num2text(pitch) + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
+	message_mods[MODE_TTS_IDENTIFIER] = identifier
+	for(var/atom/movable/hearing_movable as anything in listeners)
+		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
+			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
+			continue
+		if(hearing_movable.Hear(src, message_language, message, null, null, null, spans, message_mods, range) & HEAR_HEARD)
+			listened += hearing_movable
 
+	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
 	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
 	//Basic span

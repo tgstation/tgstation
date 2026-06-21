@@ -63,4 +63,4 @@
 	ADD_TRAIT(target, TRAIT_DRIED, ELEMENT_TRAIT(type))
 	var/datum/mind/user_mind = drying_user?.resolve()
 	if(drying_user && istype(target, /obj/item/food))
-		ADD_TRAIT(target, TRAIT_FOOD_CHEF_MADE, REF(user_mind))
+		ADD_TRAIT(target, TRAIT_HANDMADE, REF(user_mind))
