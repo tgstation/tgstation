@@ -209,6 +209,6 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/bt_node/subtree/grub_eat_target
-	behavior_tree_json = "grub_eat_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/goldgrub/grub_eat_target.bt.json"
 
 #undef BURROW_RANGE

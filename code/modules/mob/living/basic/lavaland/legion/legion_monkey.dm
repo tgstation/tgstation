@@ -42,7 +42,7 @@
 
 /// Opportunistically hops in and out of vents, if it can find one and is not biting someone.
 /datum/ai_controller/basic_controller/legion_monkey
-	behavior_tree_json = "legion_monkey.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/legion/legion_monkey.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/tendril
-	behavior_tree_json = "tendril.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/tendril/tendril.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

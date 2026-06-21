@@ -148,10 +148,10 @@
 
 /// Engage our current target: flee from scary fishermen, otherwise beat them up.
 /datum/bt_node/subtree/frog_engage_target
-	behavior_tree_json = "frog_engage_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog_engage_target.bt.json"
 
 /datum/ai_controller/basic_controller/frog
-	behavior_tree_json = "frog.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog.bt.json"
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE, //We only flee from scary fishermen.
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -165,10 +165,10 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 
 /datum/ai_controller/basic_controller/frog/trash
-	behavior_tree_json = "trash.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/trash.bt.json"
 
 /datum/ai_controller/basic_controller/frog/suicide_frog
-	behavior_tree_json = "suicide_frog.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/suicide_frog.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

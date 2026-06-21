@@ -60,7 +60,7 @@
 
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
-	behavior_tree_json = "spiderling.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/spiderlings/spiderling.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.

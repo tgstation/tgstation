@@ -199,7 +199,7 @@
 	new /obj/effect/temp_visual/heart(loc)
 	add_faction(FACTION_NEUTRAL)
 	try_consume_cheese(cheese)
-	ai_controller.CancelActions() // Interrupt any current fleeing
+	ai_controller.cancel_current_plan() // Interrupt any current fleeing
 
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
@@ -424,7 +424,7 @@
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
-	behavior_tree_json = "mouse.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/mouse.bt.json"
 	blackboard = list( // Always cowardly
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -437,7 +437,7 @@
 
 /// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat
-	behavior_tree_json = "mouse_rat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/mouse_rat.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -458,10 +458,10 @@
 
 
 /datum/bt_node/subtree/eat_cable
-	behavior_tree_json = "eat_cable.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/eat_cable.bt.json"
 
 /datum/bt_node/subtree/eat_cheese
-	behavior_tree_json = "eat_cheese.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/eat_cheese.bt.json"
 
 /datum/bt_node/subtree/play_instrument_on_floor
-	behavior_tree_json = "play_instrument_on_floor.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/play_instrument_on_floor.bt.json"

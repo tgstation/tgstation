@@ -55,7 +55,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /datum/ai_controller/basic_controller/mushroom
-	behavior_tree_json = "mushroom.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/mushroom.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mushroom,
 		BB_TARGET_MINIMUM_STAT = DEAD,

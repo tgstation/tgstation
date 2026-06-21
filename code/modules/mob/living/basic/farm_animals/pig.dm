@@ -60,7 +60,7 @@
 	visible_message(span_notice("[src] snorts respectfully."))
 
 /datum/ai_controller/basic_controller/pig
-	behavior_tree_json = "pig.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/pig.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

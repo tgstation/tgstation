@@ -1,1 +1,0 @@
-{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/move_to_target","target_key":"bot_summon_target","required_dist":0,"finish_on_arrival":true},{"type":"/datum/bt_node/ai_behavior/complete_summon_travel","target_key":"bot_summon_target"}]}],"key":"bot_summon_target"}

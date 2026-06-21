@@ -148,7 +148,7 @@
 
 /// The node drone AI controller
 /datum/ai_controller/basic_controller/node_drone
-	behavior_tree_json = "node_drone.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/node_drone/node_drone.bt.json"
 	blackboard = list(
 		BB_CURRENT_HUNTING_TARGET = null,
 		BB_CURRENT_TARGET_HIDING_LOCATION = null,

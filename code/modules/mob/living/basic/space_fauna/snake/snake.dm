@@ -74,7 +74,7 @@
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
-	behavior_tree_json = "snake.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/snake/snake.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BASIC_MOB_SPEAK_LINES = list(

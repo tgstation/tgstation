@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/bileworm
-	behavior_tree_json = "bileworm.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/bileworm/bileworm.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bileworm,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,

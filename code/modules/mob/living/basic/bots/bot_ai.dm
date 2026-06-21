@@ -94,7 +94,7 @@
 
 /datum/ai_controller/basic_controller/bot/proc/reset_bot()
 	SIGNAL_HANDLER
-	CancelActions()
+	cancel_current_plan()
 	if(!length(reset_keys))
 		return
 	for(var/key in reset_keys)

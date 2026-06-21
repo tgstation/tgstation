@@ -90,7 +90,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		)
 
 /datum/ai_controller/basic_controller/chicken
-	behavior_tree_json = "chicken.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/chicken.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

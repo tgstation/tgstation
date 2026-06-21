@@ -78,7 +78,7 @@
 	grow_as = null
 
 /datum/ai_controller/basic_controller/chick
-	behavior_tree_json = "chick.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/chick.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),

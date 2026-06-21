@@ -22,5 +22,5 @@
 
 	if (!victim.ai_controller)
 		return
-	victim.ai_controller.CancelActions()
+	victim.ai_controller.cancel_current_plan()
 	victim.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, attacker)

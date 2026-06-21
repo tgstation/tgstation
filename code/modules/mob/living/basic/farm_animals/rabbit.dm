@@ -59,7 +59,7 @@
 		name = "bunny"
 
 /datum/ai_controller/basic_controller/rabbit
-	behavior_tree_json = "rabbit.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/rabbit.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

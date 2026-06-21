@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/ai_controller/basic_controller/cow/wisdom
-	behavior_tree_json = "cow_wisdom.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/cow_wisdom.bt.json"
 	//don't give a targeting strategy
 	blackboard = list(
 		BB_BASIC_MOB_TIP_REACTING = FALSE,

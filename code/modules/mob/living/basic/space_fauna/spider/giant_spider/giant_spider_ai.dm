@@ -1,6 +1,6 @@
 /// Attacks people it can see, spins webs if it can't see anything to attack.
 /datum/ai_controller/basic_controller/giant_spider
-	behavior_tree_json = "giant_spider.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(
@@ -14,15 +14,15 @@
 
 /// Giant spider which won't attack structures
 /datum/ai_controller/basic_controller/giant_spider/weak
-	behavior_tree_json = "giant_spider_weak.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider_weak.bt.json"
 
 /// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
-	behavior_tree_json = "giant_spider_retaliate.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider_retaliate.bt.json"
 
 /// Retaliates, hunts other maintenance creatures, runs away from larger attackers, and spins webs.
 /datum/ai_controller/basic_controller/giant_spider/pest
-	behavior_tree_json = "giant_spider_pest.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/giant_spider/giant_spider_pest.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller, // Hunt mobs our size
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

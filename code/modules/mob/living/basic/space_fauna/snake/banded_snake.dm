@@ -42,7 +42,7 @@
 	return .
 
 /datum/ai_controller/basic_controller/snake/banded
-	behavior_tree_json = "banded.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/snake/banded.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

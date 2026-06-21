@@ -163,7 +163,7 @@
  *   BT_SUBPLAN_FAIL_ON_FAILURE (default) — propagates BT_FAILURE when a child fails.
  *   BT_SUBPLAN_LOOP_ON_FAILURE           — resets all children and returns BT_RUNNING, restarting next tick.
  *
- * Combining both loop policies creates an infinite loop that only exits via an external observer abort or CancelActions(), so be careful pls
+ * Combining both loop policies creates an infinite loop that only exits via an external observer abort or cancel_current_plan(), so be careful pls
  */
 /datum/bt_node/composite/subplan
 	node_type = BT_NODE_SUBPLAN

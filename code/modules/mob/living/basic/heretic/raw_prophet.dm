@@ -85,7 +85,7 @@
 
 /// Walk and attack people, blind them when we can
 /datum/ai_controller/basic_controller/raw_prophet
-	behavior_tree_json = "raw_prophet.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/raw_prophet.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

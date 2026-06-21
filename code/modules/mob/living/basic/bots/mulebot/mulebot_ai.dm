@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/bot/mulebot
-	behavior_tree_json = "mulebot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/mulebot/mulebot.bt.json"
 	blackboard = list(
 		BB_SALUTE_MESSAGES = list(
 			"blinks its light in appreciation towards",

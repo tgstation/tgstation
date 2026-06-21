@@ -19,10 +19,10 @@
 
 
 /datum/bt_node/subtree/pollinate_target
-	behavior_tree_json = "pollinate_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/bee/pollinate_target.bt.json"
 
 /datum/bt_node/subtree/find_hive
-	behavior_tree_json = "find_hive.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/bee/find_hive.bt.json"
 
 /datum/bt_node/subtree/transition_hive_status
-	behavior_tree_json = "transition_hive_status.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/bee/transition_hive_status.bt.json"

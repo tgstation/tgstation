@@ -125,7 +125,7 @@
 	. |= SHOVE_CAN_STAGGER
 
 /datum/ai_controller/basic_controller/pony
-	behavior_tree_json = "pony.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/pony.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

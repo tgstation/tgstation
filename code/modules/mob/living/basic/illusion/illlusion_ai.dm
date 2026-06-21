@@ -13,9 +13,9 @@
 /// Escape subtype of illusions are made to flee from threats rather than attack them. They do not undergo any retaliation behavior.
 /// We also want to account for the possibility of new threats attacking us and fleeing from those too, more randomness is ideal.
 /datum/ai_controller/basic_controller/illusion/escape
-	behavior_tree_json = "escape.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/illusion/escape.bt.json"
 
 /// Retaliate subtypes of escape illusions can fight back against threats that attack them, making them more dangerous.
 /datum/ai_controller/basic_controller/illusion/escape/retaliate
-	behavior_tree_json = "retaliate.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/illusion/retaliate.bt.json"
 

@@ -1,1 +1,0 @@
-{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/move_to_target","target_key":"Current Target"},{"type":"/datum/bt_node/ai_behavior/tend_to_patient","target_key":"Current Target"}]}],"observer_abort":3,"key":"Current Target"}

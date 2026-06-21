@@ -1,6 +1,6 @@
 ///uhm...sus?
 /datum/bt_node/subtree/consider_venting
-	behavior_tree_json = "consider_venting.bt.json"
+	behavior_tree_json = "code/datums/ai/basic_mobs/basic_ai_behaviors/consider_venting.bt.json"
 
 
 /// Enters a vent stored in entry_vent_key. Sets BB_EXIT_VENT_TARGET and BB_VENT_ENTRY_TIME on success.

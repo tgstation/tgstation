@@ -9,7 +9,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "brimdemon.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/brimdemon/brimdemon.bt.json"
 
 /// Brimdemon's beam only fires when the target is lined up on a cardinal direction.
 /datum/bt_node/ai_behavior/targeted_mob_ability/brimbeam/perform(seconds_per_tick, datum/ai_controller/controller)

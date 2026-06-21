@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/mega_arachnid
-	behavior_tree_json = "mega_arachnid.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/mega_arachnid/mega_arachnid.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_FLEE_DISTANCE = 5,

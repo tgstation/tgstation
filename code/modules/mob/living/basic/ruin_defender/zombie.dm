@@ -66,7 +66,7 @@
 	back = /obj/item/storage/backpack
 
 /datum/ai_controller/basic_controller/zombie
-	behavior_tree_json = "zombie.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/zombie.bt.json"
 	blackboard = list(
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -81,4 +81,4 @@
 
 
 /datum/ai_controller/basic_controller/zombie/stupid
-	behavior_tree_json = "zombie_stupid.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/zombie_stupid.bt.json"

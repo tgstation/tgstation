@@ -2,7 +2,7 @@
 #define MESSAGE_EXPIRY_TIME (30 SECONDS)
 
 /datum/ai_controller/basic_controller/orbie
-	behavior_tree_json = "orbie.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/orbie/orbie.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

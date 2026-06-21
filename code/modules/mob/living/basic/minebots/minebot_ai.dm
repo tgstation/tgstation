@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/minebot
-	behavior_tree_json = "minebot.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -22,10 +22,10 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 
 /datum/bt_node/subtree/minebot_combat
-	behavior_tree_json = "minebot_combat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot_combat.bt.json"
 
 /datum/bt_node/subtree/minebot_mining
-	behavior_tree_json = "minebot_mining.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/minebots/minebot_mining.bt.json"
 
 /// Mineral wall finder that skips turfs in the blacklist and the previously unreachable wall.
 /datum/bt_node/ai_behavior/find_mineral_wall/minebot

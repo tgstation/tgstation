@@ -151,7 +151,7 @@
 /datum/bt_node/ai_behavior/make_carp_rift/towards/unvalidated/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if(succeeded)
-		controller.CancelActions()
+		controller.cancel_current_plan()
 
 /**
  * # Find carp rift shortcut

@@ -200,7 +200,7 @@
 /// No fleshed out AI implementation, just something that make these fellers seem lively if they're just dropped into a station.
 /// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
 /datum/ai_controller/basic_controller/morph
-	behavior_tree_json = "morph.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/morph.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

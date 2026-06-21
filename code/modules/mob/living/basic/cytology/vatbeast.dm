@@ -64,7 +64,7 @@
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast
-	behavior_tree_json = "vatbeast.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/cytology/vatbeast.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

@@ -9,7 +9,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "goliath.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/goliath/goliath.bt.json"
 
 /// Use tentacles on the current target — only after tracking them for MIN_TIME_TO_TENTACLE, and only if not already leg-grappled
 /datum/bt_node/ai_behavior/targeted_mob_ability/goliath_tentacles

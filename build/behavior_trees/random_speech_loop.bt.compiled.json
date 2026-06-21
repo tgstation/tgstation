@@ -1,1 +1,0 @@
-{"type":"/datum/bt_node/composite/subplan","children":[{"type":"$bqdqne64"}],"__bindings":{"bqdqne64":{"label":"speech_behavior","default":"/datum/bt_node/ai_behavior/random_speech_blackboard"}},"success_policy":1,"failure_policy":1,"loop_delay":10}

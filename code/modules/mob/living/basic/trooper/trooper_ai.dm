@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/trooper
-	behavior_tree_json = "trooper.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/trooper.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -26,7 +26,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trooper/peaceful
-	behavior_tree_json = "peaceful.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/peaceful.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -35,11 +35,11 @@
 	)
 
 /datum/bt_node/subtree/trooper_ranged
-	behavior_tree_json = "trooper_ranged.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/trooper_ranged.bt.json"
 
 
 /datum/ai_controller/basic_controller/trooper/ranged
-	behavior_tree_json = "ranged.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/ranged.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -51,7 +51,7 @@
 
 
 /datum/ai_controller/basic_controller/trooper/ranged/burst
-	behavior_tree_json = "burst.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/burst.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -62,7 +62,7 @@
 
 //lol my parser cant deal with two subtypes with the same name so this is just a peaceful burst :DDDD ebin
 /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful_burst
-	behavior_tree_json = "peaceful_burst.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/peaceful_burst.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -71,7 +71,7 @@
 	)
 
 /datum/ai_controller/basic_controller/trooper/ranged/shotgunner
-	behavior_tree_json = "shotgunner.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/trooper/shotgunner.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

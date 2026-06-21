@@ -124,7 +124,7 @@
 		potential_gnome.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
 
 /datum/ai_controller/basic_controller/garden_gnome
-	behavior_tree_json = "garden_gnome.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/garden_gnome.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

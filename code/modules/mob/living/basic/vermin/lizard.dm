@@ -64,7 +64,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
 /datum/ai_controller/basic_controller/lizard
-	behavior_tree_json = "lizard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/lizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

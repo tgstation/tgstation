@@ -94,7 +94,7 @@
 
 
 /datum/bt_node/subtree/clean_pet_target
-	behavior_tree_json = "clean_pet_target.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/bots/cleanbot/clean_pet_target.bt.json"
 
 ///Tells the cleanbot to go clean a target
 /datum/pet_command/clean

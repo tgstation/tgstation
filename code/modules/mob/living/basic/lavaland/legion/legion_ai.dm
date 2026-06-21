@@ -1,6 +1,6 @@
 /// Keep away and launch skulls at every opportunity, prioritising injured allies
 /datum/ai_controller/basic_controller/legion
-	behavior_tree_json = "legion.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/legion/legion.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
@@ -13,7 +13,7 @@
 
 /// Chase and attack whatever we are targeting, if it's friendly we will heal them
 /datum/ai_controller/basic_controller/legion_brood
-	behavior_tree_json = "legion_brood.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/legion/legion_brood.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining/low_node_priority,

@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/turtle
-	behavior_tree_json = "turtle.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/turtle/turtle.bt.json"
 	blackboard = list(
 		BB_HAPPY_EMOTIONS = list(
 			"wiggles its tree in excitement!",

@@ -76,7 +76,7 @@
 	ranged_attacks.projectile_type = projectile_type
 
 /datum/ai_controller/basic_controller/basilisk
-	behavior_tree_json = "basilisk.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/basilisk/basilisk.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 5,

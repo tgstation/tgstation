@@ -31,7 +31,7 @@
 	AddElement(/datum/element/ai_retaliate)
 
 /datum/ai_controller/basic_controller/spaceman
-	behavior_tree_json = "spaceman.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spaceman.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

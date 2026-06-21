@@ -154,13 +154,13 @@
 		var/active = controller.active_execution_index
 		if(!execution_index || (active >= execution_index && active <= last_execution_index))
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_SELF on key=[key] — condition lost, replanning")
-			controller.CancelActions()
+			controller.cancel_current_plan()
 
 	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
 		var/active = controller.active_execution_index
 		if(!execution_index || !active || active > last_execution_index)
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key] — condition gained, replanning")
-			controller.CancelActions()
+			controller.cancel_current_plan()
 
 /datum/bt_node/decorator/reset_tick_state()
 	if(observers_registered)

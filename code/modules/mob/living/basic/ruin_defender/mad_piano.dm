@@ -86,7 +86,7 @@
 	return ..()
 
 /datum/ai_controller/basic_controller/mad_piano
-	behavior_tree_json = "mad_piano.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/mad_piano.bt.json"
 	idle_behavior = /datum/idle_behavior/idle_random_walk/mad_piano
 	max_target_distance = 2
 	blackboard = list(

@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ))
 
 /datum/ai_controller/basic_controller/mook
-	behavior_tree_json = "mook.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/mook/mook.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///bard mook plays nice music for the village
 /datum/ai_controller/basic_controller/mook/bard
-	behavior_tree_json = "bard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/mook/bard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
-	behavior_tree_json = "support.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/mook/support.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
@@ -290,7 +290,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 ///the chief would rather command his mooks to attack people than attack them himself
 /datum/ai_controller/basic_controller/mook/tribal_chief
-	behavior_tree_json = "tribal_chief.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/mook/tribal_chief.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_STORM_APPROACHING = FALSE,

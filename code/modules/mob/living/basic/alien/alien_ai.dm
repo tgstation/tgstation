@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/alien
-	behavior_tree_json = "alien.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/alien.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	blackboard = list(
@@ -11,14 +11,14 @@
 	movement_delay = 0.8 SECONDS
 
 /datum/ai_controller/basic_controller/alien/sentinel
-	behavior_tree_json = "sentinel.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/sentinel.bt.json"
 
 
 /datum/ai_controller/basic_controller/alien/drone
-	behavior_tree_json = "drone.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/drone.bt.json"
 
 /datum/ai_controller/basic_controller/alien/queen
-	behavior_tree_json = "queen.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/queen.bt.json"
 /**
  * Alien projectile
  * Try to avoid friendly fire, and has a 3 second delay.
@@ -32,21 +32,21 @@
 	avoid_friendly_fire = TRUE
 
 /datum/bt_node/subtree/basic_alien
-	behavior_tree_json = "basic_alien.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/basic_alien.bt.json"
 
 
 /datum/bt_node/subtree/ranged_alien_combat
-	behavior_tree_json = "ranged_alien_combat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/ranged_alien_combat.bt.json"
 
 
 /datum/bt_node/subtree/melee_alien_combat
-	behavior_tree_json = "melee_alien_combat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/melee_alien_combat.bt.json"
 
 /datum/bt_node/subtree/plant_alien_weeds
-	behavior_tree_json = "plant_alien_weeds.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/plant_alien_weeds.bt.json"
 
 /datum/bt_node/subtree/lay_alien_egg
-	behavior_tree_json = "lay_alien_egg.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/alien/lay_alien_egg.bt.json"
 
 
 /// Plants alien weeds on the pawn's current turf. Fails if the pawn can't plant or weeds couldn't be placed.

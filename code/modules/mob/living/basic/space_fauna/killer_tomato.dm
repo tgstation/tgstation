@@ -41,7 +41,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /datum/ai_controller/basic_controller/killer_tomato
-	behavior_tree_json = "killer_tomato.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/killer_tomato.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

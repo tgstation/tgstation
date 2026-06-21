@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/deer
-	behavior_tree_json = "deer.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/deer/deer.bt.json"
 	blackboard = list(
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,

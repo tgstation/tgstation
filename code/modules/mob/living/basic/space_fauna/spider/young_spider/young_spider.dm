@@ -28,7 +28,7 @@
 
 /// Used by all young spiders if they ever appear.
 /datum/ai_controller/basic_controller/young_spider
-	behavior_tree_json = "young_spider.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/spider/young_spider/young_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,

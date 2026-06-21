@@ -123,7 +123,7 @@
 
 
 /datum/ai_controller/basic_controller/revolutionary
-	behavior_tree_json = "revolutionary.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/revolutionary.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

@@ -45,7 +45,7 @@ multiple modular subtrees with behaviors
 	var/list/behavior_nodes
 	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
 	var/active_execution_index = 0
-	/// Set to TRUE by CancelActions() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
+	/// Set to TRUE by cancel_current_plan() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
 	var/cancelled_during_tick = FALSE
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
 	var/list/bt_execution_log = null
@@ -101,7 +101,7 @@ multiple modular subtrees with behaviors
 		UnregisterSignal(current_movement_target, list(COMSIG_MOVABLE_MOVED, COMSIG_PREQDELETED))
 	if(!isnull(target) && !isatom(target))
 		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
-		CancelActions()
+		cancel_current_plan()
 		return
 	movement_target_source = source
 	current_movement_target = target
@@ -153,9 +153,7 @@ multiple modular subtrees with behaviors
 		if(!isnull(sub.behavior_nodes) && isnull(sub.root))
 			sub.root = build_node_from_descriptor(sub.behavior_nodes)
 		else if(!isnull(sub.behavior_tree_json) && isnull(sub.root))
-			var/filename = copytext(sub.behavior_tree_json, findlasttext(sub.behavior_tree_json, "/") + 1)
-			var/tree_name = copytext(filename, 1, length(filename) - 4)
-			var/list/raw_desc = json_decode(file2text(BT_COMPILED_PATH(tree_name)))
+			var/list/raw_desc = json_decode(file2text(BT_COMPILED_PATH(sub.behavior_tree_json)))
 			if(LAZYLEN(sub.bindings) || !isnull(raw_desc[BT_DESC_BINDINGS]))
 				raw_desc = apply_bindings_to_descriptor(raw_desc, sub.bindings)
 			sub.root = build_node_from_descriptor(raw_desc)
@@ -232,6 +230,7 @@ multiple modular subtrees with behaviors
  * BT_DESC_TYPE and BT_DESC_CHILDREN are consumed internally; all other keys are written
  * as vars onto the node. String values starting with "/" are resolved via text2path so
  * typepath args (e.g. "/datum/ai_movement/basic_avoidance") arrive as actual types.
+ * If you put / in a string then yeah that might cause issues, should probably fix that later!
  */
 /datum/ai_controller/proc/build_node_from_descriptor(list/desc)
 	var/raw_type = desc[BT_DESC_TYPE]
@@ -267,11 +266,7 @@ multiple modular subtrees with behaviors
 /// Builds the per-controller BT node tree from behavior_nodes typepaths or descriptors, then finalizes it.
 /datum/ai_controller/proc/initialize_behavior_tree()
 	if(!isnull(behavior_tree_json) && !LAZYLEN(behavior_nodes))
-
-		///This kind of sucks to do every time, but I don't know if there's a nicer way to inject .compiled into the path?
-		var/filename = copytext(behavior_tree_json, findlasttext(behavior_tree_json, "/") + 1) // Find the filename
-		var/tree_name = copytext(filename, 1, length(filename) - 4) //Remove the .json extension
-		var/compiled_path = BT_COMPILED_PATH(tree_name) //Find the compiled version of this BT
+		var/compiled_path = BT_COMPILED_PATH(behavior_tree_json) //Find the compiled version of this BT
 		var/datum/bt_node/root = load_tree_from_json(compiled_path)
 		if(isnull(root))
 			stack_trace("[type] failed to load behavior tree from compiled JSON: [compiled_path]")
@@ -370,7 +365,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/check_target_max_distance()
 	if(get_dist(current_movement_target, pawn) > max_target_distance)
-		CancelActions()
+		cancel_current_plan()
 
 /datum/ai_controller/proc/set_new_cells()
 	if(isnull(our_cells))
@@ -550,7 +545,7 @@ multiple modular subtrees with behaviors
 	resolve_node_children(new_node)
 	slot.override_node = new_node
 	finalize_tree()
-	CancelActions() // Reset, not ideal; Maybe later on we can do this more gracefully.
+	cancel_current_plan() // Reset, not ideal; Maybe later on we can do this more gracefully.
 	SEND_SIGNAL(pawn, COMSIG_AI_OVERRIDE_SLOT_CHANGED(id), datum_type)
 
 /datum/ai_controller/proc/setup_able_to_run()
@@ -628,7 +623,7 @@ multiple modular subtrees with behaviors
 	GLOB.ai_controllers_by_status[new_ai_status] += src
 	if(ai_status == AI_STATUS_OFF)
 		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
-			CancelActions()
+			cancel_current_plan()
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
@@ -647,7 +642,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
 	return
 
-/datum/ai_controller/proc/CancelActions()
+/datum/ai_controller/proc/cancel_current_plan()
 	active_execution_index = 0
 	cancelled_during_tick = TRUE
 	reset_bt_tick_states()

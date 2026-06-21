@@ -113,7 +113,7 @@
 	return TRUE
 
 /datum/ai_controller/basic_controller/netguardian
-	behavior_tree_json = "netguardian.bt.json"
+	behavior_tree_json = "code/modules/bitrunning/antagonists/netguardian.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

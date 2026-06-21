@@ -68,11 +68,11 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "fox.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/fox.bt.json"
 
 // An AI controller for more docile foxes.
 /datum/ai_controller/basic_controller/fox/docile
-	behavior_tree_json = "fox_docile.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/fox_docile.bt.json"
 
 // The captain's fox, Renault
 /mob/living/basic/pet/fox/renault

@@ -94,7 +94,7 @@
 				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
 
 /datum/ai_controller/basic_controller/ghost
-	behavior_tree_json = "ghost.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/ghost.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

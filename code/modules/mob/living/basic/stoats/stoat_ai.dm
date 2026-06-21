@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/stoat
-	behavior_tree_json = "stoat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/stoats/stoat.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/smaller,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

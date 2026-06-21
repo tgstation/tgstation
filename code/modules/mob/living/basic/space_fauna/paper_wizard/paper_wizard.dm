@@ -47,7 +47,7 @@
 	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/paperwiz_dying)
 
 /datum/ai_controller/basic_controller/paper_wizard
-	behavior_tree_json = "paper_wizard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/paper_wizard/paper_wizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_WRITING_LIST = list(

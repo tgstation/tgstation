@@ -1,6 +1,6 @@
 
 /datum/ai_controller/haunted
-	behavior_tree_json = "haunted.bt.json"
+	behavior_tree_json = "code/datums/ai/hauntium/haunted.bt.json"
 	movement_delay = 0.4 SECONDS
 	blackboard = list(
 		BB_TO_HAUNT_LIST = list(),

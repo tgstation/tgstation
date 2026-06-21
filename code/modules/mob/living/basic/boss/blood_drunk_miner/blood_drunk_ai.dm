@@ -5,7 +5,7 @@
 /// - If in melee range, use melee attacks (depending on saw state)
 /// - After attacks, transform saw state from open to closed.
 /datum/ai_controller/blood_drunk_miner
-	behavior_tree_json = "blood_drunk_miner.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/boss/blood_drunk_miner/blood_drunk_miner.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD,

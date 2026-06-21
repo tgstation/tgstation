@@ -29,7 +29,7 @@
  * Juggernauts slowly walk toward non-allied mobs and pummel them to death.
  */
 /datum/ai_controller/basic_controller/juggernaut
-	behavior_tree_json = "juggernaut.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/cult/constructs/juggernaut.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -43,7 +43,7 @@
  * Proteons perform cowardly hit-and-run attacks, fleeing melee when struck but returning to fight again.
  */
 /datum/ai_controller/basic_controller/proteon
-	behavior_tree_json = "proteon.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/cult/constructs/proteon.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -58,7 +58,7 @@
  * Wraiths seek out the most injured non-allied mob to beat to death.
  */
 /datum/ai_controller/basic_controller/wraith
-	behavior_tree_json = "wraith.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/cult/constructs/wraith.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

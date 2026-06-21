@@ -1,6 +1,6 @@
 /// Goats are normally content to sorta hang around and crunch any plant in sight, but they will go ape on someone who attacks them.
 /datum/ai_controller/basic_controller/goat
-	behavior_tree_json = "goat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/goat/goat.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

@@ -54,7 +54,7 @@
 	faction = list(FACTION_NEUTRAL)
 
 /datum/ai_controller/basic_controller/polar
-	behavior_tree_json = "polar.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/icemoon/polar_bear/polar.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

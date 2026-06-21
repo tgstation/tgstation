@@ -55,7 +55,7 @@
 	AddElement(/datum/element/ai_retaliate)
 
 /datum/ai_controller/basic_controller/roro
-	behavior_tree_json = "roro.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/roro.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

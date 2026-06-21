@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/composite/subplan","children":[{"type":"/datum/bt_node/ai_behavior/swirl_around_target"}],"success_policy":1,"failure_policy":1}],"key":"BB_swarm_target","observer_abort":3}

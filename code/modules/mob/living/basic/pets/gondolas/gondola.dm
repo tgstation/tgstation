@@ -69,7 +69,7 @@
 	add_overlay(moustache_overlay)
 
 /datum/ai_controller/basic_controller/gondola
-	behavior_tree_json = "gondola.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/gondolas/gondola.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

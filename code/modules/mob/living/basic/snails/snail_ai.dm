@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/snail
-	behavior_tree_json = "snail.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/snails/snail.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

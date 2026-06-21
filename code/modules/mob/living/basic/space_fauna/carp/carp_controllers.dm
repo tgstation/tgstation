@@ -67,28 +67,28 @@
 
 /// Shared carp skeleton: escape -> pet command -> (flee / combat / migrate-or-idle) with a target-finding secondary.
 /datum/bt_node/subtree/basic_carp_tree
-	behavior_tree_json = "basic_carp_tree.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/basic_carp_tree.bt.json"
 
 /// Flee or panic-teleport away from a keyed target.
 /datum/bt_node/subtree/carp_flee
-	behavior_tree_json = "carp_flee.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_flee.bt.json"
 
 /// Attack our current target: cast a spell, teleport in, smash obstacles or bite.
 /datum/bt_node/subtree/carp_combat
-	behavior_tree_json = "carp_combat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_combat.bt.json"
 
 /// Travel a migration path, riding or punching through rifts and walls along the way.
 /datum/bt_node/subtree/carp_migration
-	behavior_tree_json = "carp_migration.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_migration.bt.json"
 
 /// Hunting target finder: flee the nearest threat when injured, otherwise hunt prioritising scary fishermen.
 /datum/bt_node/subtree/carp_target_selection
-	behavior_tree_json = "carp_target_selection.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_target_selection.bt.json"
 
 /// Bite-back target finder: target whoever has attacked us.
 /datum/bt_node/subtree/carp_retaliate_selection
-	behavior_tree_json = "carp_retaliate_selection.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_retaliate_selection.bt.json"
 
 /// Passive flee finder: flag scary fishermen and attackers as things to run away from.
 /datum/bt_node/subtree/carp_passive_selection
-	behavior_tree_json = "carp_passive_selection.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive_selection.bt.json"

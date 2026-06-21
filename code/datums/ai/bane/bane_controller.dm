@@ -3,7 +3,7 @@ You yourself fought the decadence of Gotham for years with all your strength, al
 And the only victory you achieved was a lie. Now you understand Gotham is beyond saving, and must be allowed to die.
 */
 /datum/ai_controller/bane
-	behavior_tree_json = "bane.bt.json"
+	behavior_tree_json = "code/datums/ai/bane/bane.bt.json"
 	movement_delay = 0.4 SECONDS
 	blackboard = list(BB_BANE_BATMAN = null)
 	behavior_nodes = list(/datum/ai_planning_subtree/bane_hunting)

@@ -80,7 +80,7 @@
 
 // All it does is stand there, only attacks if attacked (Manuel player) (TODO: make them ahelp to really simulate manuel players)
 /datum/ai_controller/basic_controller/fake_crewman
-	behavior_tree_json = "crewman.bt.json"
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -90,14 +90,14 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 
 /datum/ai_controller/basic_controller/fake_crewman/ranged
-	behavior_tree_json = "crewman_ranged.bt.json"
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_ranged.bt.json"
 
 // Immediately tries to attack the player (Terry player)
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
-	behavior_tree_json = "crewman_hostile.bt.json"
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_hostile.bt.json"
 
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
-	behavior_tree_json = "crewman_hostile_ranged.bt.json"
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_hostile_ranged.bt.json"
 
 // The actual crewmate
 /mob/living/basic/fake_crewman

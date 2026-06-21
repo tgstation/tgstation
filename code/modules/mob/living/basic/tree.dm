@@ -100,7 +100,7 @@
 		)
 
 /datum/ai_controller/basic_controller/tree
-	behavior_tree_json = "tree.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/tree.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

@@ -51,7 +51,7 @@
 	grant_actions_by_list(list(/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC))
 
 /datum/ai_controller/basic_controller/festivus_pole
-	behavior_tree_json = "festivus_pole.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/festivus_pole.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // APCs

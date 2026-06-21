@@ -25,7 +25,7 @@
 
 /// Changes shape and lies in wait when it has no target, uses EMP and attacks once it does
 /datum/ai_controller/basic_controller/stalker
-	behavior_tree_json = "stalker.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/stalker.bt.json"
 	ai_traits = CAN_ACT_IN_STASIS
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,

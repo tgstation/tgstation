@@ -4,7 +4,7 @@
  * Wizards run away from their targets while flinging spells at them and blinking constantly.
  */
 /datum/ai_controller/basic_controller/wizard
-	behavior_tree_json = "wizard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/wizard/wizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

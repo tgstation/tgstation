@@ -54,7 +54,7 @@
 
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
-	behavior_tree_json = "rust_walker.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/rust_walker.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

@@ -1,5 +1,5 @@
 /datum/ai_controller/robot_customer
-	behavior_tree_json = "robot_customer.bt.json"
+	behavior_tree_json = "code/datums/ai/robot_customer/robot_customer.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.8 SECONDS
 	blackboard = list(
@@ -111,7 +111,7 @@
 			customer.say(customer_data.self_defense_line)
 	set_blackboard_key(BB_CUSTOMER_CURRENT_TARGET, greytider)
 
-	CancelActions()
+	cancel_current_plan()
 
 /datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/living_hitter)
 	SIGNAL_HANDLER

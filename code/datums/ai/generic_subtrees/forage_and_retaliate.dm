@@ -1,2 +1,2 @@
 /datum/bt_node/subtree/forage_and_retaliate
-	behavior_tree_json = "forage_and_retaliate.bt.json"
+	behavior_tree_json = "code/datums/ai/generic_subtrees/forage_and_retaliate.bt.json"

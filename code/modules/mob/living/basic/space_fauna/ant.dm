@@ -56,7 +56,7 @@
 	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 20, histamine_add = 5)
 
 /datum/ai_controller/basic_controller/ant
-	behavior_tree_json = "ant.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/ant.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

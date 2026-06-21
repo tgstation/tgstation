@@ -256,7 +256,7 @@
 	vines -= vine
 
 /datum/ai_controller/basic_controller/human_trap
-	behavior_tree_json = "human_trap.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/human_trap.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

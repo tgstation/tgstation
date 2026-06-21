@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/thing_boss
-	behavior_tree_json = "thing_boss.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/boss/thing/thing_boss.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD, // Will attack dead ungutted mobs
@@ -11,10 +11,10 @@
 	ai_movement = /datum/ai_movement/basic_avoidance // dont need anything better because the arena is a square lol
 
 /datum/bt_node/subtree/thing_aoe
-	behavior_tree_json = "thing_aoe.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/boss/thing/thing_aoe.bt.json"
 
 /datum/bt_node/subtree/thing_melee
-	behavior_tree_json = "thing_melee.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/boss/thing/thing_melee.bt.json"
 
 /datum/ai_planning_subtree/thing_boss_aoe/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
 	var/mob/living/pawn = controller.pawn

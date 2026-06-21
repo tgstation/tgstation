@@ -30,7 +30,7 @@
 		. += mutable_appearance(hat::worn_icon, hat::worn_icon_state || hat::post_init_icon_state || hat::icon_state)
 
 /datum/ai_controller/basic_controller/stares_at_people
-	behavior_tree_json = "stares_at_people.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/stares_at_people.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 6,
@@ -72,7 +72,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/suspicious_mannequin
 
 /datum/ai_controller/basic_controller/suspicious_mannequin
-	behavior_tree_json = "suspicious_mannequin.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/suspicious_mannequin.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

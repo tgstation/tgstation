@@ -131,7 +131,7 @@
 	victim.adjust_temp_blindness(8 SECONDS)
 
 /datum/ai_controller/basic_controller/statue
-	behavior_tree_json = "statue.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/statue.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

@@ -83,7 +83,7 @@
 	single_use = FALSE
 
 /datum/ai_controller/basic_controller/supermatter_spider
-	behavior_tree_json = "supermatter_spider.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/supermatter_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = list(

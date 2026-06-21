@@ -87,4 +87,4 @@
 
 /// Find a nest, carry loot home, then go steal more.
 /datum/bt_node/subtree/parrot_hoard
-	behavior_tree_json = "parrot_hoard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/pets/parrot/parrot_ai/parrot_hoard.bt.json"

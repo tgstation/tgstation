@@ -40,7 +40,7 @@
 	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
-	behavior_tree_json = "cow_moonicorn.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/cow_moonicorn.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
