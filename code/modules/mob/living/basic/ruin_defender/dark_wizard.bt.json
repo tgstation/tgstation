@@ -1,7 +1,11 @@
 {
-	"dm_type": "/datum/ai_controller/basic_controller/ant",
+	"dm_type": "/datum/ai_controller/basic_controller/dark_wizard",
 	"type": "selector",
 	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
 		{
 			"type": "parallel",
 			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
@@ -14,10 +18,6 @@
 					"type": "selector",
 					"children": [
 						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/run_away_from_target"
-						},
-						{
 							"type": "decorator",
 							"decorator": "/datum/bt_node/decorator/bb_key_set",
 							"vars": {
@@ -26,7 +26,7 @@
 							},
 							"child": {
 								"type": "parallel",
-								"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
 								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 								"repeat_secondary": true,
 								"finish_on_primary": true,
@@ -38,8 +38,9 @@
 										"children": [
 											{
 												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+												"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
 												"vars": {
+													"time_between_perform": "0.6 SECONDS",
 													"target_key": "BB_CURRENT_TARGET",
 													"targeting_strategy": "BB_TARGETING_STRATEGY",
 													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
@@ -49,29 +50,39 @@
 									},
 									{
 										"type": "leaf",
-										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
 										"vars": {
 											"target_key": "BB_CURRENT_TARGET",
-											"required_dist": 1
+											"approach_movement_type": "/datum/ai_movement/basic_avoidance"
 										}
 									}
 								]
 							}
-						},
-						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/random_walk"
 						}
 					]
 				},
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/nearest",
-					"vars": {
-						"target_key": "BB_BASIC_MOB_FLEE_TARGET",
-						"targeting_strategy": "BB_FLEE_TARGETING_STRATEGY",
-						"hiding_location_key": "BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION"
-					}
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						}
+					]
 				}
 			]
 		}

@@ -107,3 +107,6 @@
 
 /datum/target_source/oview_single_type/hivebot
 	single_typepath = /mob/living/basic/hivebot
+
+/datum/target_source/oview_single_type/carrot
+	single_typepath = /obj/item/food/grown/carrot

@@ -70,7 +70,8 @@
 					"vars": {
 						"target_key": "BB_ITEM_TO_STEAL",
 						"targeting_strategy": "/datum/targeting_strategy/pickup_item/stealable_item",
-						"target_source": "/datum/target_source/oview"
+						"target_source": "/datum/target_source/oview",
+						"must_be_reachable": true
 					}
 				},
 				{

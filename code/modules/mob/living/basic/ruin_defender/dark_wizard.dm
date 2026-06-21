@@ -54,19 +54,12 @@
 	new /obj/item/clothing/head/wizard/hood(src) // Having this hat in our contents allows us to cast wizard spells
 
 /datum/ai_controller/basic_controller/dark_wizard
+	behavior_tree_json = "dark_wizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate, // If you get them to shoot each other it will start a wiz-war
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish/no_minimum,
-	)
 
 /// I don't know why an earth bolt freezes you but I guess it does
 /obj/projectile/temp/earth_bolt

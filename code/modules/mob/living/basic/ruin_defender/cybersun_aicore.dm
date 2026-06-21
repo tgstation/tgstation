@@ -112,14 +112,10 @@
 
 /// how the ai core thinks
 /datum/ai_controller/basic_controller/cybersun_ai_core
+	behavior_tree_json = "cybersun_ai_core.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGETLESS_TIME = 0,
-	)
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/lightning_strike,
-		/datum/ai_planning_subtree/targeted_mob_ability/cybersun_barrage,
 	)
 
 /// DA SPELLS!

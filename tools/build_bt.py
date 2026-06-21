@@ -257,6 +257,7 @@ def main() -> int:
             repo_root = Path(sys.argv[idx + 1]).resolve()
 
     generated_dir = repo_root / 'build' / 'behavior_trees'
+    code_dir = repo_root / 'code'
     generated_dir.mkdir(parents=True, exist_ok=True)
 
     print('Parsing DM defines...')
@@ -268,14 +269,31 @@ def main() -> int:
 
     errors = 0
     dirty = 0
+    # Maps each target compiled path back to the source that produced it, so we can
+    # detect two sources colliding onto one output. With path-mirrored names this
+    # should be impossible, but the guard catches future regressions loudly instead
+    # of silently overwriting one tree with another.
+    produced: dict[Path, Path] = {}
+    generated_paths: set[Path] = set()
 
     for src_path in bt_files:
-        # src_path.stem strips one extension, giving e.g. "simple_hostile_combat.bt"
-        # We want the base name without the .bt part. so we can slam a compiled inbetween :3
-        stem = src_path.stem  # "simple_hostile_combat.bt"
-        name = stem[:-3] if stem.endswith('.bt') else stem  # "simple_hostile_combat"
-        compiled_name = f'{name}.bt.compiled.json'
-        compiled_path = generated_dir / compiled_name
+        # The compiled file mirrors the source path relative to code/, so trees that
+        # share a basename in different folders no longer clobber each other.
+        rel = src_path.relative_to(code_dir).as_posix()  # "datums/ai/dog/dog.bt.json"
+        tree_name = rel[:-len('.json')]                   # "datums/ai/dog/dog.bt"
+        compiled_path = generated_dir / f'{tree_name}.compiled.json'
+
+        prior = produced.get(compiled_path)
+        if prior is not None:
+            print(
+                f'ERROR: {src_path.relative_to(repo_root)} and {prior.relative_to(repo_root)} '
+                f'both compile to {compiled_path.relative_to(repo_root)}',
+                file=sys.stderr,
+            )
+            errors += 1
+            continue
+        produced[compiled_path] = src_path
+        generated_paths.add(compiled_path)
 
         # compile json
         try:
@@ -301,7 +319,24 @@ def main() -> int:
                 print(f'OUT OF DATE: {compiled_path.relative_to(repo_root)}', file=sys.stderr)
                 dirty += 1
         else:
+            compiled_path.parent.mkdir(parents=True, exist_ok=True)
             compiled_path.write_text(compiled_text, encoding='utf-8')
+
+    # Remove stale compiled files that no longer correspond to a source tree —
+    # e.g. leftovers from the old flat naming scheme or a deleted source.
+    stale = [p for p in generated_dir.rglob('*.compiled.json') if p not in generated_paths]
+    for path in stale:
+        if check_mode:
+            print(f'STALE: {path.relative_to(repo_root)}', file=sys.stderr)
+            dirty += 1
+        else:
+            path.unlink()
+
+    if not check_mode:
+        # Prune now-empty directories left behind under the generated tree.
+        for path in sorted(generated_dir.rglob('*'), reverse=True):
+            if path.is_dir() and not any(path.iterdir()):
+                path.rmdir()
 
     if check_mode:
         if dirty:

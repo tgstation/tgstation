@@ -1,5 +1,6 @@
 /datum/ai_controller/basic_controller
 	movement_delay = 0.4 SECONDS
+	behavior_tree_json = ABSTRACT_AI_CLASS
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))

@@ -41,6 +41,7 @@
 	AddElement(/datum/element/door_pryer)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)
+	ai_controller.set_blackboard_key(BB_HUNT_TARGET_LIST, typecacheof(list(/obj/machinery/light)))
 
 /mob/living/basic/faithless/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -54,20 +55,10 @@
 			span_userdanger("\The [src] knocks you down!"))
 
 /datum/ai_controller/basic_controller/faithless
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/faithless.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
-		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	behavior_nodes = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
-		/datum/ai_planning_subtree/random_speech/faithless,
-	)

@@ -96,6 +96,8 @@
 #define BB_BLIND_TARGET "BB_blind_target"
 ///value to store the minimum eye damage to prevent us from attacking a human
 #define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
+///the turf in front of our target we move to so our glare lines up
+#define BB_GLARE_POSITION "BB_glare_position"
 
 // hivebot keys
 ///the machine we must go to repair

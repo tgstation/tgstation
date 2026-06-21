@@ -8,7 +8,7 @@
 	var/mob/living/candidate = target
 	if(!isliving(candidate) || candidate.stat != DEAD)
 		return FALSE
-	return can_see(living_mob, candidate, vision_range)
+	return TRUE
 
 /// As dead_mob, but rejects corpses already being dragged by something.
 /datum/targeting_strategy/dead_mob/not_pulled
