@@ -30,6 +30,18 @@
 	var/datum/weakref/our_alert_ref
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 
+/obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Toggle shoes under uniforms"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/shoes/click_alt_secondary(mob/user)
+	alternate_worn_layer = (alternate_worn_layer == UNDER_UNIFORM_LAYER) ? NONE : UNDER_UNIFORM_LAYER
+
+	update_slot_icon()
+	balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
+	return CLICK_ACTION_SUCCESS
+
 /datum/armor/clothing_shoes
 	bio = 50
 
