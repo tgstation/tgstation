@@ -5,3 +5,4 @@
 	mid_length = 2.219 SECONDS
 	volume = 20
 	use_sound_tokens = TRUE
+	extra_range = 18
