@@ -2,6 +2,7 @@
  * This test checks that all areas are connected to their distribution loops
  */
 /datum/unit_test/atmospherics_sanity
+	test_flags = UNIT_TEST_MAP_TEST
 	priority = TEST_LONGER // we iterate over all atmospherics devices on the starting networks
 
 	/// List of areas to start crawling from

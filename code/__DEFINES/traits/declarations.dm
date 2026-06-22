@@ -196,6 +196,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
+/// Prevents viruses from curing naturaly
+#define TRAIT_NO_SELF_CURE "noselfcure"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
@@ -381,6 +383,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
+/// For mobs / minds with the listening_prayers trait, this stops them from hearing prayers
+#define TRAIT_DONT_HEAR_PRAYERS "dont_hear_prayers"
 #define TRAIT_FEARLESS "fearless"
 /// Ignores darkness for hearing
 #define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"
@@ -501,6 +505,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLIFF_WALKER "cliff_walker"
 /// This means the user is currently holding/wearing a "tactical camouflage" item (like a potted plant).
 #define TRAIT_TACTICALLY_CAMOUFLAGED "tactically_camouflaged"
+/// This means the user is allowed to draw on minimap holotables.
+#define TRAIT_MINIMAP_TABLE_DRAW "minimap_table_draw"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
@@ -898,8 +904,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
 #define TRAIT_FOOD_SILVER "food_silver"
-/// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
-#define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
+/// This object (mainly items) has been made by a player (cooked, crafted etc...) instead of being map-spawned or admin-spawned, printed with a lathe, ordered etc...
+#define TRAIT_HANDMADE "food_made_by_chef"
 /// This atom has a quality_food_ingredient element attached
 #define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
 /// This (edible) atom won't inherit the item of the item it was processed from in the form "a slice of [name]"

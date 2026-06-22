@@ -34,14 +34,14 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	. = ..()
-	if(. || world.time < next_move || !can_perform_action(target, NOT_INSIDE_TARGET | SILENT_ADJACENCY | ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
+	if(. || !ismovable(target) || world.time < next_move || !can_perform_action(target, NOT_INSIDE_TARGET | SILENT_ADJACENCY | ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
 		return
 
 	. = TRUE
 	if(grab(target) != GRAB_SKIP)
 		changeNext_move(CLICK_CD_MELEE)
 		return
-	start_pulling(target)
+	pulled(target)
 
 /**
  * Ctrl mouse wheel click

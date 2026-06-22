@@ -130,7 +130,8 @@
 		if(isturf(clean_target) && !HAS_TRAIT(cleaned, TRAIT_MOPABLE))
 			continue
 		// collect dna FIRST
-		all_blood_dna |= all_cleaned[cleaned]
+		if (!isnull(all_cleaned[cleaned])) // Check if there was any blood on it, we don't want nulls in our list
+			all_blood_dna |= all_cleaned[cleaned]
 		// THEN pass on dna (though in some cases the cleaned item is being deleted)
 		if(blood_level > 0 && !QDELING(cleaned))
 			cleaned.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))

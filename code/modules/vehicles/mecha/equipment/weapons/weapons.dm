@@ -439,7 +439,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), get_equip_cooldown(target))
 	chassis.use_energy(energy_drain)
 	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	var/obj/O = new projectile(chassis.loc)
