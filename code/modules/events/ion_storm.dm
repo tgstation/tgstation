@@ -9,14 +9,25 @@
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/ion_storm
-	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
-	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
-	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
-	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
-	var/botEmagChance = 1
-	var/ionMessage = null
 	announce_when = 1
 	announce_chance = 33
+
+	// These chances are rolled per rack, rather than all at once.
+	/// Chance the AI's chance the AI's lawset is completely replaced with something else per config weights
+	var/replaceLawsetChance = 25
+	/// Chance the AI has one random supplied or inherent law removed
+	var/removeRandomLawChance = 10
+	/// Chance the randomly created law replaces a random law instead of simply being added
+	var/removeDontImproveChance = 10
+	/// Chance the AI's laws are shuffled afterwards
+	var/shuffleLawsChance = 10
+
+	/// Chance any given bot on the station will be randomly emagged
+	var/botEmagChance = 1
+
+	/// If the chance to add a law is rolled, this message will be used.
+	/// If unset, a random law will be generated for for each rack instead.
+	var/ionMessage = null
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
 	replaceLawsetChance = 0
@@ -31,7 +42,7 @@
 
 
 /datum/round_event/ion_storm/start()
-	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack))
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack))
 		rack.scramble_ai_rack(
 			new_lawset_prob = replaceLawsetChance,
 			remove_law_prob = removeRandomLawChance,
