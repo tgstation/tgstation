@@ -62,7 +62,7 @@
 
 /datum/target_source/animatable_objects/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/list/candidates = list()
-	for(var/obj/candidate as anything in oview(range, pawn))
+	for(var/obj/candidate in oview(range, pawn))
 		if(!isitem(candidate) && !isstructure(candidate))
 			continue
 		if(is_type_in_typecache(candidate, GLOB.animatable_blacklist))
