@@ -268,6 +268,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	input = remove_escape_backlashes.Replace_char(input, "$1")
 	return input
 
+#undef ENCODE_HTML_EMPHASIS
+
 /// Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods)
 	if(!language)
