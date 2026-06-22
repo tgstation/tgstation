@@ -14803,11 +14803,8 @@
 "eQb" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/medkit/emergency,
-/obj/item/storage/medkit{
-	pixel_x = 7;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "eQf" = (
@@ -48649,8 +48646,8 @@
 /area/station/maintenance/department/medical/central)
 "pEu" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "pEA" = (
@@ -62406,13 +62403,9 @@
 /area/station/hallway/primary/starboard)
 "tQo" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
-	},
-/obj/item/healthanalyzer,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "tQp" = (
@@ -63711,8 +63704,8 @@
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
 /obj/machinery/light/directional/east,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ulg" = (
