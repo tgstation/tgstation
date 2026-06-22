@@ -92,7 +92,7 @@
 /datum/gizpulse/dispense/food
 	possible_objects = list(
 		/obj/item/food/donut/plain = 1,
-		/obj/item/food/burger = 1,
+		/obj/item/food/burger/plain = 1,
 	)
 
 /datum/gizpulse/dispense/food/modify(atom/movable/new_object)
