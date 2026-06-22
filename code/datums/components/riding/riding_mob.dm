@@ -129,18 +129,24 @@
 /datum/component/riding/creature/proc/get_move_delay(mob/living/living_parent, mob/living/user, direction)
 	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown : vehicle_move_delay
 	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
-		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
-			if(SANITY_LEVEL_GREAT)
-				modified_move_delay *= 0.8
-			if(SANITY_LEVEL_NEUTRAL)
-				modified_move_delay *= 0.9
-			if(SANITY_LEVEL_DISTURBED)
-				modified_move_delay *= 1
-			if(SANITY_LEVEL_CRAZY)
-				modified_move_delay *= 1.1
-			if(SANITY_LEVEL_INSANE)
-				modified_move_delay *= 1.2
+		modified_move_delay *= get_roughrider_mult(user)
 	return modified_move_delay
+
+/datum/component/riding/creature/proc/get_roughrider_mult(mob/living/user)
+	if (HAS_TRAIT(user, TRAIT_PRIMITIVE))
+		return 0.8
+	switch(user.mob_mood?.sanity_level)
+		if(SANITY_LEVEL_GREAT)
+			return 0.8
+		if(SANITY_LEVEL_NEUTRAL)
+			return 0.9
+		if(SANITY_LEVEL_DISTURBED)
+			return 1
+		if(SANITY_LEVEL_CRAZY)
+			return 1.1
+		if(SANITY_LEVEL_INSANE)
+			return 1.2
+	return 1
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, throw_range = 8, throw_speed = 3, gentle = FALSE)
@@ -556,17 +562,7 @@
 
 	// Apply roughrider boost last
 	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER))
-		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
-			if(SANITY_LEVEL_GREAT)
-				modified_move_delay *= 0.8
-			if(SANITY_LEVEL_NEUTRAL)
-				modified_move_delay *= 0.9
-			if(SANITY_LEVEL_DISTURBED)
-				modified_move_delay *= 1
-			if(SANITY_LEVEL_CRAZY)
-				modified_move_delay *= 1.1
-			if(SANITY_LEVEL_INSANE)
-				modified_move_delay *= 1.2
+		modified_move_delay *= get_roughrider_mult(user)
 	return modified_move_delay
 
 /datum/component/riding/creature/goliath/get_rider_offsets_and_layers(pass_index, mob/offsetter)
