@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(isnull(frying.reagents))
 		frying.create_reagents(50, INJECTABLE)
 	if(user.mind)
-		ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(frying, TRAIT_HANDMADE, REF(user.mind))
 	SEND_SIGNAL(frying, COMSIG_ITEM_ENTERED_FRYER)
 
 	update_appearance()

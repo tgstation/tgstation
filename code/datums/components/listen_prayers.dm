@@ -51,7 +51,7 @@
 	if(HAS_MIND_TRAIT(mind.current, TRAIT_DONT_HEAR_PRAYERS))
 		return
 	var/list/arguments = args.Copy(2)
-	if(pre_prayer_callback && !pre_prayer_callback.Invoke(args))
+	if(pre_prayer_callback && !pre_prayer_callback.Invoke(arguments))
 		return
 	prayer_type = arguments[ARG_PRAYER_TYPE]
 	symbol = arguments[ARG_PRAYER_SYMBOL]
