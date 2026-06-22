@@ -70,3 +70,6 @@
 /datum/bt_node/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+
+#undef FIND_PARTNER_COOLDOWN
