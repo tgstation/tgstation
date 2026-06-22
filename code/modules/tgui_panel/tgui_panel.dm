@@ -109,12 +109,12 @@
 
 	if(type == "verbs/request_typepaths")
 		var/parent_text = payload["parent"]
-		var/parent_type = text2path(parent_text)
-		if(isnull(parent_type))
-			parent_type = /datum
+		var/browse_type = text2path(parent_text)
+		if(isnull(browse_type))
+			browse_type = /datum
 		var/list/children = list()
-		for(var/child_type in typesof(parent_type))
-			if(child_type == parent_type)
+		for(var/child_type in typesof(browse_type))
+			if(child_type == browse_type)
 				continue
 			// Only include direct children (one level deeper)
 			var/child_text = "[child_type]"
@@ -164,17 +164,7 @@
 
 		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(admin_meta)
-			var/list/raw_args = payload["args"]
-			if(!islist(raw_args))
-				raw_args = list()
-			var/list/resolved_args = list()
-			for(var/key in raw_args)
-				var/value = raw_args[key]
-				if(istext(value))
-					var/located = locate(value)
-					if(located)
-						value = located
-				resolved_args[key] = value
+			var/list/resolved_args = resolve_invoke_args(payload["args"], admin_meta.metadata?.arguments)
 			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
 			return TRUE
 		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
@@ -183,23 +173,38 @@
 		var/target = resolve_verb_target(verb_path)
 		if(!target)
 			return TRUE
-		var/list/raw_args = payload["args"]
-		if(!islist(raw_args))
-			raw_args = list()
-		var/list/resolved_args = list()
-		for(var/key in raw_args)
-			var/value = raw_args[key]
-			if(istext(value))
-				var/located = locate(value)
-				if(located)
-					value = located
-			resolved_args[key] = value
+		var/list/resolved_args = resolve_invoke_args(payload["args"], meta.arguments)
 		call(target, meta.body_path)(resolved_args)
 		return TRUE
 
 	if(type == "requestMetadata")
 		send_metadata()
 		return TRUE
+
+/datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)
+	if(!islist(raw_args))
+		raw_args = list()
+	var/list/resolved = list()
+	for(var/key in raw_args)
+		var/value = raw_args[key]
+		var/datum/verb_arg_metadata/meta
+		for(var/datum/verb_arg_metadata/m in arg_metadata)
+			if(m.name == key)
+				meta = m
+				break
+		if(meta)
+			if(meta.arg_type & VERB_ARG_TYPE_NUM)
+				value = text2num(value)
+			else if(!(meta.arg_type & VERB_ARG_TYPE_TYPEPATH) && istext(value))
+				var/located = locate(value)
+				if(located)
+					value = located
+		else if(istext(value))
+			var/located = locate(value)
+			if(located)
+				value = located
+		resolved[key] = value
+	return resolved
 
 /datum/tgui_panel/proc/resolve_verb_target(verb_path)
 	if(verb_path in client.verbs)

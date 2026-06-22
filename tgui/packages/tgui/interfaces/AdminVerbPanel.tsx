@@ -36,10 +36,16 @@ type TargetEntry = {
   job?: string;
 };
 
+type TypepathData = {
+  parent: string;
+  paths: string[];
+};
+
 type Data = {
   verbs: Verb[];
   categories: string[];
   targets: TargetEntry[];
+  typepaths?: TypepathData;
 };
 
 const ARG_TEXT = 1 << 0;
@@ -51,9 +57,10 @@ const ARG_MOB = 1 << 5;
 const ARG_OBJ = 1 << 6;
 const ARG_TURF = 1 << 7;
 const ARG_AREA = 1 << 8;
+const ARG_TYPEPATH = 1 << 11;
 
 const ARG_ENTITY = ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | (1 << 9) | (1 << 10);
-const ARG_PRIMITIVE = ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON;
+const ARG_PRIMITIVE = ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;
 
 function isPickableEntityArg(arg: VerbArgument): boolean {
   return (
@@ -94,6 +101,9 @@ export function AdminVerbPanel() {
     setArgValues({});
     setSelectedTarget(null);
     act('select_verb', { verb_type: verb.type });
+    if (verb.arguments.some((a) => a.arg_type & ARG_TYPEPATH)) {
+      act('request_typepaths', { parent: '/datum' });
+    }
   };
 
   const entityArg = selectedVerb?.arguments.find(isPickableEntityArg) ?? null;
@@ -257,6 +267,7 @@ export function AdminVerbPanel() {
                 {selectedVerb ? (
                   <Section
                     fill
+                    scrollable={false}
                     title={selectedVerb.name}
                     buttons={
                       <Button icon="play" color="good" onClick={invokeVerb}>
@@ -264,14 +275,21 @@ export function AdminVerbPanel() {
                       </Button>
                     }
                   >
-                    <Stack vertical>
+                    <Stack vertical fill>
                       {selectedVerb.description && (
                         <Stack.Item color="label" mb={1}>
                           {selectedVerb.description}
                         </Stack.Item>
                       )}
                       {primitiveArgs.map((arg) => (
-                        <Stack.Item key={arg.name}>
+                        <Stack.Item
+                          key={arg.name}
+                          grow={
+                            (arg.arg_type & ARG_TYPEPATH) !== 0
+                              ? 1
+                              : undefined
+                          }
+                        >
                           <ArgInput
                             arg={arg}
                             value={argValues[arg.name]}
@@ -333,6 +351,9 @@ function ArgInput(props: ArgInputProps) {
       </Stack>
     );
   }
+  if (arg.arg_type & ARG_TYPEPATH) {
+    return <TypepathInput arg={arg} value={value as string} onChange={onChange} />;
+  }
   if (arg.arg_type & ARG_TEXT) {
     return (
       <Stack align="center">
@@ -360,6 +381,81 @@ function ArgInput(props: ArgInputProps) {
     <Stack align="center">
       <Stack.Item basis="100px">{arg.name}</Stack.Item>
       <Stack.Item color="label">Unknown arg type</Stack.Item>
+    </Stack>
+  );
+}
+
+type TypepathInputProps = {
+  arg: VerbArgument;
+  value: string | undefined;
+  onChange: (value: unknown) => void;
+};
+
+function TypepathInput(props: TypepathInputProps) {
+  const { arg, value, onChange } = props;
+  const { act, data } = useBackend<Data>();
+  const [lastRequested, setLastRequested] = useState('');
+  const typepaths = data.typepaths;
+  const children = typepaths?.paths || [];
+  const inputValue = (value as string) || '';
+
+  const suggestions = inputValue
+    ? children.filter((p) =>
+        p.toLowerCase().startsWith(inputValue.toLowerCase()),
+      )
+    : children;
+
+  const handleChange = (val: string) => {
+    onChange(val);
+    if (val.endsWith('/')) {
+      const parent = val.slice(0, -1) || '/datum';
+      if (parent !== lastRequested) {
+        setLastRequested(parent);
+        act('request_typepaths', { parent });
+      }
+    }
+  };
+
+  const selectPath = (path: string) => {
+    onChange(path + '/');
+    if (path !== lastRequested) {
+      setLastRequested(path);
+      act('request_typepaths', { parent: path });
+    }
+  };
+
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <Stack align="center">
+          <Stack.Item basis="100px">{arg.name}</Stack.Item>
+          <Stack.Item grow>
+            <Input
+              fluid
+              value={inputValue}
+              onChange={handleChange}
+              placeholder="/datum/..."
+            />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      {suggestions.length > 0 && (
+        <Stack.Item grow>
+          <Section fill scrollable>
+            {suggestions.map((path) => (
+              <Button
+                key={path}
+                fluid
+                color="transparent"
+                textAlign="left"
+                onClick={() => selectPath(path)}
+              >
+                {path}
+              </Button>
+            ))}
+          </Section>
+        </Stack.Item>
+      )}
     </Stack>
   );
 }
