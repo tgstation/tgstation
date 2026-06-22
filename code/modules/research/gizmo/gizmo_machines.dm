@@ -16,10 +16,10 @@
 	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 	/// Possible names to pick from to keep things confusing
-	var/list/possible_names = list(
+	var/static/list/possible_names = list(
 		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster", "natty gonk", "quantum quantum",
 		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", "turbo encabulator",
-		"statistic responder", "possibility matrix", "toety aaier", "phase anchor",
+		"statistic responder", "possibility matrix", "toety aaier", "phase anchor", "thingamajing",
 	)
 
 /obj/machinery/gizmo/Initialize(mapload)
@@ -96,7 +96,7 @@
 /obj/machinery/gizmo/toggle
 	controller = /datum/gizmo_controller/toggle
 
-	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4", "gizmo_active_5")
+	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4")
 
 	var/on_state = FALSE
 

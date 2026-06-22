@@ -684,7 +684,8 @@
  */
 /datum/material_container/proc/retrieve_stack(stack_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
 	//do we support sheets of this material
-	if(!material.sheet_type)
+	var/type_to_retrieve = material.sheet_type || material.ore_type
+	if(!type_to_retrieve)
 		return 0 //Add greyscale sheet handling here later
 	if(!can_hold_material(material))
 		return 0
@@ -703,7 +704,6 @@
 	//eject sheets based on available amount after each iteration
 	var/count = 0
 	while(stack_amt > 0)
-		var/type_to_retrieve = material.sheet_type || material.ore_type
 		//don't merge yet. we need to do stuff with it first
 		var/obj/item/stack/new_stack = new type_to_retrieve(target, min(stack_amt, MAX_STACK_SIZE), FALSE)
 		if(istype(new_stack, /obj/item/stack/sheet))
