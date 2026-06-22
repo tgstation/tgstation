@@ -3542,6 +3542,11 @@
 /area/station/maintenance/department/electrical)
 "bhr" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "rdgene";
+	name = "Genetics Lab Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "bht" = (
