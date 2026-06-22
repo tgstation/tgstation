@@ -12387,7 +12387,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark,
-/area/station/commons/vacant_room/commissary)
+/area/station/engineering/circuit_workshop)
 "ear" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -13788,6 +13788,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "eyl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "eyv" = (
@@ -18743,9 +18746,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
-"fZY" = (
-/turf/closed/wall,
-/area/space)
 "gab" = (
 /obj/machinery/computer/atmos_control/nocontrol/incinerator{
 	dir = 4
@@ -26153,8 +26153,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock)
 "ilJ" = (
@@ -26482,7 +26484,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/maintenance/solars/starboard/aft)
 "irE" = (
 /obj/machinery/teleport/station,
 /obj/machinery/status_display/evac/directional/east,
@@ -26958,7 +26960,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark,
-/area/space/nearstation)
+/area/station/maintenance/fore)
 "iyB" = (
 /obj/machinery/atmospherics/components/binary/valve/layer4,
 /obj/effect/turf_decal/stripes/line,
@@ -44077,7 +44079,7 @@
 "odA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/station/maintenance/solars/starboard/aft)
 "odE" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/pointy/style_random,
@@ -54076,6 +54078,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "rrm" = (
@@ -57207,6 +57210,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/byteforge,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/cargo/bitrunning/den)
 "snU" = (
@@ -68548,9 +68552,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "vKM" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "vKO" = (
@@ -71772,6 +71776,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
+"wHA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/port/lesser)
 "wHF" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -88469,7 +88479,7 @@ jkW
 jpM
 rFD
 kAb
-fbz
+wHA
 kWA
 oIU
 wDz
@@ -103579,7 +103589,7 @@ aaa
 aaa
 cmU
 aUz
-anH
+efG
 efG
 qlC
 efG
@@ -103836,7 +103846,7 @@ aaa
 aaa
 acm
 aeU
-agt
+qlC
 nas
 mFa
 cfu
@@ -104350,7 +104360,7 @@ aaa
 aaa
 acm
 aaa
-fZY
+efG
 efG
 efG
 qlC
