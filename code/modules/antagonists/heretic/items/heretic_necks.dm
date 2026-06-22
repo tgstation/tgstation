@@ -29,7 +29,7 @@
 		return PROCESS_KILL
 
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(wearer)
-	for(var/datum/heretic_knowledge/spell/spell in our_heretic.get_researched_knowledge())
+	for(var/datum/heretic_knowledge/spell/spell in our_heretic?.get_researched_knowledge())
 		spell.add_charges(ceil(spell.max_charges * spell.focus_recharge_amount))
 
 	COOLDOWN_START(src, spell_recharge_cd, cooldown_period)
