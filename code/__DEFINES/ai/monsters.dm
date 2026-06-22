@@ -66,6 +66,8 @@
 #define BB_TARGET_HYDRO "BB_target_hydro"
 ///key to swarm around
 #define BB_SWARM_TARGET "BB_swarm_target"
+///turf picked by swirl_around_target for move_to_target to path toward
+#define BB_SWIRL_TURF "BB_swirl_turf"
 ///key to indicate if the bee wants to go in or out of its hive.
 #define BB_WANTS_TO_TRANSITION_HIVE "BB_wants_to_transition_hive"
 

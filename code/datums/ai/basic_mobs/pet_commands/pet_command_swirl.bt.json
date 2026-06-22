@@ -12,8 +12,69 @@
 		"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 		"children": [
 			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/swirl_around_target"
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_CURRENT_PET_TARGET",
+							"observer_abort": "BT_ABORT_BOTH"
+						},
+						"child": {
+							"type": "parallel",
+							"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+							"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+							"repeat_secondary": true,
+							"finish_on_primary": true,
+							"children": [
+								{
+									"type": "subplan",
+									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+									"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+											"vars": {
+												"target_key": "BB_CURRENT_PET_TARGET",
+												"targeting_strategy": "BB_PET_TARGETING_STRATEGY",
+												"hiding_location_key": "BB_PET_ATTACK_HIDING_LOCATION"
+											}
+										}
+									]
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_CURRENT_PET_TARGET",
+										"required_dist": 1,
+										"finish_on_arrival": false
+									}
+								}
+							]
+						}
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/swirl_around_target"
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_SWIRL_TURF",
+									"required_dist": 0,
+									"finish_on_arrival": true
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	}
