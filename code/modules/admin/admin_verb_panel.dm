@@ -12,6 +12,8 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 /datum/admin_verb_panel
 	var/client/owner
 	var/selected_verb_type
+	var/typepath_parent = "/datum"
+	var/list/typepath_children = list()
 
 /datum/admin_verb_panel/New(client/user)
 	owner = user
@@ -63,6 +65,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 /datum/admin_verb_panel/ui_data(mob/user)
 	var/list/data = list()
 	data["targets"] = build_target_list()
+	data["typepaths"] = list("parent" = typepath_parent, "paths" = typepath_children)
 	return data
 
 #define ADMIN_VERB_ARG_TYPE_ENTITY (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM)
@@ -187,4 +190,21 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 					value = locate(value)
 				structured_args[key] = value
 			SSadmin_verbs.dynamic_invoke_verb(owner, verb_type, structured_args)
+			return TRUE
+		if("request_typepaths")
+			var/parent_text = params["parent"]
+			var/browse_type = text2path(parent_text)
+			if(isnull(browse_type))
+				browse_type = /datum
+			typepath_parent = parent_text || "/datum"
+			typepath_children = list()
+			for(var/child_type in typesof(browse_type))
+				if(child_type == browse_type)
+					continue
+				var/child_text = "[child_type]"
+				var/parent_len = length(typepath_parent)
+				var/remainder = copytext(child_text, parent_len + 1)
+				if(findtext(remainder, "/", 2))
+					continue
+				typepath_children += child_text
 			return TRUE

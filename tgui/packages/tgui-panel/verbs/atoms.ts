@@ -20,3 +20,4 @@ export type AdminTarget = {
 export const adminVerbsAtom = atom<AdminVerb[]>([]);
 export const adminTargetsAtom = atom<AdminTarget[]>([]);
 export const typepathsAtom = atom<string[]>([]);
+export const focusCommandBarAtom = atom<number>(0);

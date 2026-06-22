@@ -4,6 +4,7 @@ import {
   type AdminVerb,
   adminTargetsAtom,
   adminVerbsAtom,
+  focusCommandBarAtom,
   typepathsAtom,
   type VerbArg,
 } from './atoms';
@@ -19,7 +20,12 @@ const ARG_TYPE_DATUM = 1 << 9;
 const ARG_TYPE_ATOM = 1 << 10;
 const ARG_TYPE_TYPEPATH = 1 << 11;
 const ARG_TYPE_ENTITY =
-  ARG_TYPE_MOB | ARG_TYPE_OBJ | ARG_TYPE_TURF | ARG_TYPE_AREA | ARG_TYPE_DATUM | ARG_TYPE_ATOM;
+  ARG_TYPE_MOB |
+  ARG_TYPE_OBJ |
+  ARG_TYPE_TURF |
+  ARG_TYPE_AREA |
+  ARG_TYPE_DATUM |
+  ARG_TYPE_ATOM;
 
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
@@ -91,6 +97,7 @@ export function CommandBar() {
   const verbs = useAtomValue(adminVerbsAtom);
   const targets = useAtomValue(adminTargetsAtom);
   const typepaths = useAtomValue(typepathsAtom);
+  const focusSignal = useAtomValue(focusCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<AdminVerb | null>(null);
@@ -111,6 +118,12 @@ export function CommandBar() {
     Byond.sendMessage('verbs/request_verbs');
   }, []);
 
+  useEffect(() => {
+    if (focusSignal > 0) {
+      inputRef.current?.focus();
+    }
+  }, [focusSignal]);
+
   // Raw arg portion after verb name
   const argPortion = selectedVerb
     ? input.slice(toKebab(selectedVerb.name).length + 1)
@@ -118,9 +131,7 @@ export function CommandBar() {
   // Parse filled + current token from the arg portion
   const parsedArgs = selectedVerb ? parseArgs(argPortion) : [];
   const currentToken =
-    parsedArgs.length > filledArgs.length
-      ? parsedArgs[filledArgs.length]
-      : '';
+    parsedArgs.length > filledArgs.length ? parsedArgs[filledArgs.length] : '';
   const inQuotedArg = selectedVerb ? isInQuotedArg(argPortion) : false;
 
   // Verb suggestions — prefix matches first, then substring matches, sorted by name length
@@ -195,7 +206,10 @@ export function CommandBar() {
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      if (!selectedVerb && verbSuggestions.length > 0) {
+      if (!selectedVerb && !input) {
+        inputRef.current?.blur();
+        Byond.winset('map', { focus: true });
+      } else if (!selectedVerb && verbSuggestions.length > 0) {
         selectVerb(verbSuggestions[selectedIndex]);
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex] as string);
@@ -222,11 +236,8 @@ export function CommandBar() {
         } else {
           selectVerb(verb);
         }
-      } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
-        selectTypepath(typepathSuggestions[selectedIndex] as string);
-      } else if (isCurrentArgTypepath && currentToken) {
-        // Accept what's typed as a typepath directly
-        fillArg(currentToken);
+      } else if (isCurrentArgTypepath) {
+        invokeVerb();
       } else if (selectedVerb && targetSuggestions.length > 0) {
         selectTarget(
           targetSuggestions[selectedIndex] as { name: string; ref: string },
@@ -355,6 +366,8 @@ export function CommandBar() {
       const firstArg = verb.args[0];
       if (isTextArg(firstArg)) {
         setInput(kebab + ' "');
+      } else if (isTypepathArg(firstArg)) {
+        setInput(kebab + ' /');
       } else {
         setInput(kebab + ' ');
       }
@@ -411,6 +424,8 @@ export function CommandBar() {
       const nextArg = verbArgs[newFilledArgs.length];
       if (nextArg && isTextArg(nextArg)) {
         setInput(kebab + ' ' + serializedArgs + ' "');
+      } else if (nextArg && isTypepathArg(nextArg)) {
+        setInput(kebab + ' ' + serializedArgs + ' /');
       } else {
         setInput(kebab + ' ' + serializedArgs + ' ');
       }
@@ -422,12 +437,12 @@ export function CommandBar() {
   const invokeVerb = () => {
     if (!selectedVerb) return;
     const argValues: Record<string, string> = {};
-    const allArgs = [...filledArgs];
-    if (currentToken) {
-      allArgs.push(currentToken);
-    }
-    for (let i = 0; i < verbArgs.length && i < allArgs.length; i++) {
-      argValues[verbArgs[i].name] = allArgs[i];
+    for (let i = 0; i < verbArgs.length && i < parsedArgs.length; i++) {
+      let val = parsedArgs[i];
+      if (isTypepathArg(verbArgs[i])) {
+        val = val.replace(/\/+$/, '');
+      }
+      argValues[verbArgs[i].name] = val;
     }
     Byond.sendMessage('verbs/invoke', {
       verb_type: selectedVerb.type,
@@ -450,7 +465,7 @@ export function CommandBar() {
 
   const placeholder = selectedVerb
     ? `${toKebab(selectedVerb.name)} ${verbArgs.map((a) => `<${a.name}>`).join(' ')}`
-    : 'Type a command...';
+    : '';
 
   return (
     <div className="CommandBar">

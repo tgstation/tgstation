@@ -36,7 +36,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 		"Any" = "\"KeyDown \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
 		"Any+UP" = "\"KeyUp \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
 		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-		"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
+		"Tab" = "\".output output_browser.browseroutput:update [TGUI_PANEL_FOCUS_MESSAGE]\\n.winset \\\"output_browser.browseroutput.focus=true?map.focus=true:output_browser.browseroutput.focus=true\\\"\"",
 		"Escape" = "Open-Escape-Menu",
 	)
 

@@ -10,6 +10,7 @@ import {
 } from '../telemetry/handlers';
 import {
   handleAddVerbs,
+  handleFocusCommandBar,
   handleRemoveVerbs,
   handleTargets,
   handleTypepaths,
@@ -20,6 +21,7 @@ import { roundrestart } from './handlers/roundrestart';
 
 const listeners = {
   'verbs/add': handleAddVerbs,
+  'verbs/focus': handleFocusCommandBar,
   'verbs/init': handleVerbsInit,
   'verbs/remove': handleRemoveVerbs,
   'verbs/targets': handleTargets,

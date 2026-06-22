@@ -4,6 +4,7 @@ import {
   type AdminVerb,
   adminTargetsAtom,
   adminVerbsAtom,
+  focusCommandBarAtom,
   typepathsAtom,
 } from './atoms';
 
@@ -36,4 +37,8 @@ export function handleTargets(payload: { targets: AdminTarget[] }) {
 
 export function handleTypepaths(payload: { paths: string[] }) {
   store.set(typepathsAtom, payload.paths || []);
+}
+
+export function handleFocusCommandBar() {
+  store.set(focusCommandBarAtom, (n) => n + 1);
 }
