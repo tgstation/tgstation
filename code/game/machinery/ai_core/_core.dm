@@ -152,15 +152,17 @@
 		return TRUE
 	if(!active)
 		return FALSE
-	var/turf/T = get_turf(src)
-	var/area/A = get_area(src)
-	if(!(A.area_flags & BLOBS_ALLOWED))
+	var/turf/ai_turf = get_turf(src)
+	var/area/ai_area = get_area(src)
+	if(!(ai_area.area_flags & BLOBS_ALLOWED))
 		return FALSE
-	if(!A.power_equip)
+	if(!ai_area.power_equip)
 		return FALSE
-	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
+	if(!SSmapping.level_trait(ai_turf.z, ZTRAIT_STATION))
 		return FALSE
-	if(!isfloorturf(T))
+	if(!isfloorturf(ai_turf))
+		if(locate(/obj/structure/transport/linear) in ai_turf.contents) // carveout for maps that have the AI core on a lift platform.
+			return TRUE
 		return FALSE
 	return TRUE
 
