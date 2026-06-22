@@ -878,7 +878,7 @@ ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logg
 	GLOB.event_logger.ui_interact(user.mob)
 
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_SPAWNING)
-	VERB_ARG(object, ADMIN_VERB_ARG_TYPE_TEXT, ADMIN_VERB_ARG_SOURCE_INPUT)
+	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	if(!object)
 		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
 		return

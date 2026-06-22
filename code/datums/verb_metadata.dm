@@ -27,8 +27,14 @@
 
 GLOBAL_LIST_INIT(____pending_verb_args, list())
 
-/proc/____register_verb_arg(verb_type, arg_name, arg_type, arg_type_path, arg_source)
-	if(!GLOB.____pending_verb_args[verb_type])
-		GLOB.____pending_verb_args[verb_type] = list()
-	GLOB.____pending_verb_args[verb_type] += list(new /datum/verb_arg_metadata(arg_name, arg_type, arg_type_path, arg_source))
+/proc/____register_verb_arg(owner_type, proc_path, arg_name, arg_type, arg_type_path, arg_source)
+	var/verb_key
+	if(ispath(owner_type, /datum/admin_verb))
+		verb_key = owner_type
+	else
+		verb_key = proc_path
+
+	if(!GLOB.____pending_verb_args[verb_key])
+		GLOB.____pending_verb_args[verb_key] = list()
+	GLOB.____pending_verb_args[verb_key] += list(new /datum/verb_arg_metadata(arg_name, arg_type, arg_type_path, arg_source))
 	return TRUE

@@ -161,8 +161,7 @@
 		var/verb_path = text2path(payload["verb_type"])
 		if(!verb_path)
 			return TRUE
-		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
-		// Check admin verbs too
+
 		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(admin_meta)
 			var/list/raw_args = payload["args"]
@@ -178,6 +177,7 @@
 				resolved_args[key] = value
 			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
 			return TRUE
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
 		if(!meta)
 			return TRUE
 		var/target = resolve_verb_target(verb_path)
@@ -194,7 +194,7 @@
 				if(located)
 					value = located
 			resolved_args[key] = value
-		call(target, meta.body_path)(arglist(resolved_args))
+		call(target, meta.body_path)(resolved_args)
 		return TRUE
 
 	if(type == "requestMetadata")

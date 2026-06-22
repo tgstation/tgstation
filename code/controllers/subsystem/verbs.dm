@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(verbs)
 /datum/controller/subsystem/verbs/Initialize()
 	for(var/datum/verb_metadata/verb_type as anything in subtypesof(/datum/verb_metadata))
 		var/datum/verb_metadata/meta = new verb_type
-		var/list/pending = GLOB.____pending_verb_args[verb_type]
+		var/list/pending = GLOB.____pending_verb_args[meta.body_path]
 		if(pending)
 			meta.arguments = pending
 		verbs_by_type[verb_type] = meta

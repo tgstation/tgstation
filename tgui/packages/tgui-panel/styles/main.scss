@@ -24,6 +24,7 @@
 @include meta.load-css('./components/Ping.scss');
 @include meta.load-css('./components/Notifications.scss');
 @include meta.load-css('./components/UnreadCount.scss');
+@include meta.load-css('./components/CommandBar.scss');
 
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
