@@ -135,7 +135,7 @@ export const AntagInfoBloodWorm = (props) => {
                   You can use this as insurance to get a last ditch escape attempt.
                   </LabeledList.Item>
                   <LabeledList.Item label="Medbay Buffet">
-                  Medbay's blood freezers are all-you-can-eat buffets for you! They are only half synthetic and their high volumes grant you a lot of growth.
+                  Medbay's blood freezers can be a decent source of synthetic blood if you can't find any monkeys.
                   Be careful of nearby crew, as the sounds of breaking freezers can travel through walls.
                   </LabeledList.Item>
                   <LabeledList.Item label="Fast Food">
