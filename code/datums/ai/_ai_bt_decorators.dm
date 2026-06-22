@@ -30,6 +30,10 @@
 	VAR_PRIVATE/last_poll_time = 0
 
 
+/datum/bt_node/decorator/Destroy()
+	QDEL_NULL(child)
+	return ..()
+
 /datum/bt_node/decorator/get_children()
 	return child ? list(child) : null
 

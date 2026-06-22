@@ -81,6 +81,7 @@ multiple modular subtrees with behaviors
 	our_cells = null
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
+	QDEL_LIST(behavior_nodes)
 	return ..()
 
 ///Overrides the current ai_movement of this controller with a new one
@@ -89,8 +90,10 @@ multiple modular subtrees with behaviors
 
 ///Completely replaces the behavior_nodes with a new set based on argument provided.
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
+	var/list/old_nodes = behavior_nodes
 	behavior_nodes = typepaths_of_new_subtrees
 	initialize_behavior_tree()
+	QDEL_LIST(old_nodes)
 
 /// Resolves the children/child of a composite or decorator node, creating configured instances.
 /// Safe to call on any node type; non-composite/non-decorator nodes are a no-op.
@@ -293,6 +296,7 @@ multiple modular subtrees with behaviors
 
 	pawn = new_pawn
 	pawn.ai_controller = src
+	set_blackboard_key(BB_MY_PAWN, pawn)
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
@@ -304,7 +308,7 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
-	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
+	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted), override = TRUE)
 	RegisterSignal(pawn, COMSIG_EVLOGGING_ENABLED, PROC_REF(on_pawn_evlogging_enabled))
 	RegisterSignal(pawn, COMSIG_EVLOGGING_DISABLED, PROC_REF(on_pawn_evlogging_disabled))
 	update_able_to_run()
@@ -606,8 +610,9 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 // Turn the controller off if the pawn has been qdeleted
-/datum/ai_controller/proc/on_pawn_qdeleted()
+/datum/ai_controller/proc/on_pawn_qdeleted(datum/source)
 	SIGNAL_HANDLER
+	sig_remove_from_blackboard(source)
 	set_ai_status(AI_STATUS_OFF)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)

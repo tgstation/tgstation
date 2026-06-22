@@ -28,6 +28,11 @@
 	///Any bindings this subtree has; assigned by the json
 	var/list/bindings = null
 
+/datum/bt_node/subtree/Destroy()
+	QDEL_NULL(root)
+	QDEL_NULL(override_node)
+	return ..()
+
 /datum/bt_node/subtree/tick(datum/ai_controller/controller, seconds_per_tick)
 	if(override_node)
 		return override_node.tick(controller, seconds_per_tick)

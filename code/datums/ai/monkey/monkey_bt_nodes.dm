@@ -131,8 +131,6 @@
 
 	return FALSE
 
-// --- Weapon finding ---
-
 /// Scans nearby items and mobs for a better weapon and sets BB_MONKEY_PICKUPTARGET
 /datum/bt_node/ai_behavior/monkey_find_weapon
 
@@ -383,8 +381,6 @@
 
 	controller.set_blackboard_key(target_key, found)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-// --- Idle ---
 
 /// Idle wander/emote behavior. Reads emote lists from BB_MONKEY_IDLE_COMMON_EMOTES and BB_MONKEY_IDLE_RARE_EMOTES.
 /datum/bt_node/ai_behavior/monkey_idle

@@ -18,3 +18,7 @@
 
 /datum/ai_controller/blood_drunk_miner/doom
 	movement_delay = 0.5 SECONDS
+
+
+/datum/bt_node/subtree/blood_drunk_miner_combat
+	behavior_tree_json = "blood_drunk_miner_combat.bt.json"

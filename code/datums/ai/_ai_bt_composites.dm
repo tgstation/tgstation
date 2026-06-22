@@ -7,6 +7,10 @@
 	/// Resolved child instances. Populated at tree construction. Do not set directly.
 	var/list/children = null
 
+/datum/bt_node/composite/Destroy()
+	QDEL_LIST(children)
+	return ..()
+
 /datum/bt_node/composite/get_children()
 	return children
 

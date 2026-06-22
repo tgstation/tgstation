@@ -102,3 +102,8 @@
 /// Adds all children that must be visited during reset to to_visit. No-op for leaf nodes.
 /datum/bt_node/proc/collect_reset_children(list/to_visit)
 	return
+
+/datum/bt_node/Destroy()
+	parent_node = null
+	owning_controller = null
+	return ..()

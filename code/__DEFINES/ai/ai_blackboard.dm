@@ -12,7 +12,8 @@
 #define BB_HUNT_TARGET_LIST "Hunt Target List"
 ///Target of current movement.alist
 #define BB_CURRENT_MOVEMENT_TARGET "Current target movement"
-
+///The pawn controlled by this controller
+#define BB_MY_PAWN "Literaly me"
 
 ///Cooldown on venting (sus)
 #define BB_VENTING_COOLDOWN "Venting Cooldown"
