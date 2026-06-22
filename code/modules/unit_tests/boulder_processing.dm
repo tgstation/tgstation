@@ -21,7 +21,7 @@
 	TEST_ASSERT_EQUAL(test_boulder.loc, test_refine, "The boulder was not moved into the refinery's contents!")
 	for(var/i in 1 to 2)
 		test_refine.process()
-	TEST_ASSERT_NOTEQUAL(test_boulder.loc, refinery_loc, "The boulder was not moved out of the refinery's contents!")
+	TEST_ASSERT_NOTEQUAL(test_boulder.loc, test_refine, "The boulder was not moved out of the refinery's contents!")
 	TEST_ASSERT(!test_boulder.has_material_type(/datum/material/glass), "After the boulder was successfully processed by the refinery, no-ferrous materials still remain inside!")
 	TEST_ASSERT(test_boulder.durability > 0,  "Boulder was processed successfully, but exited with durability under 1!")
 	test_boulder.durability = 2
@@ -38,7 +38,7 @@
 	TEST_ASSERT_EQUAL(second_boulder.loc, test_smelter, "The boulder was not moved into the smelter's contents!")
 	for(var/i in 1 to 2)
 		test_smelter.process()
-	TEST_ASSERT_NOTEQUAL(second_boulder.loc, smelter_loc, "The boulder was not moved out of the smelter's contents!")
+	TEST_ASSERT_NOTEQUAL(second_boulder.loc, test_smelter, "The boulder was not moved out of the smelter's contents!")
 	TEST_ASSERT(!second_boulder.has_material_type(/datum/material/iron), "After the boulder was successfully processed by the smelter, ferrous materials still remain inside!")
 	TEST_ASSERT(second_boulder.durability > 0,  "Boulder was processed successfully, but exited with durability under 1!")
 	second_boulder.durability = 2
