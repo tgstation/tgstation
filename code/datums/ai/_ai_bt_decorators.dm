@@ -44,7 +44,7 @@
 
 /datum/bt_node/decorator/append_active_nodes(list/lines, indent)
 	if(child && child.has_active_descendants())
-		lines += "[indent][get_label()]"
+		lines += "[indent][label]"
 		child.append_active_nodes(lines, "[indent]  ")
 
 /datum/bt_node/decorator/set_descriptor_children(list/children_descs, datum/ai_controller/controller)
@@ -67,7 +67,7 @@
 		else if(observer_abort == BT_ABORT_BOTH)
 			abort_name = "BOTH"
 		observer_text = " (abort-[abort_name])"
-	lines += "[indent][get_status_marker()] [get_label()][observer_text]"
+	lines += "[indent][get_status_marker()] [label][observer_text]"
 	if(child)
 		child.append_full_tree_state(lines, "[indent]  ")
 
@@ -204,7 +204,6 @@
 
 /// Gates on whether the named override slot currently has an active override installed.
 /// Observes COMSIG_AI_OVERRIDE_SLOT_CHANGED so it reacts immediately when a command is set or cleared.
-/// Use with observer_abort = BT_ABORT_LOWER_PRIORITY to preempt idle behaviour when a command arrives.
 /datum/bt_node/decorator/override_id_set
 	/// SUBPLAN_ID_* constant matching the override slot to watch.
 	var/override_id = null

@@ -56,6 +56,7 @@
  */
 /datum/bt_node/composite/sequence
 	node_type = BT_NODE_SEQUENCE
+	label = "SEQUENCE"
 	/// Index of the child that last returned BT_RUNNING.
 	var/running_child_index = 0
 
@@ -82,14 +83,11 @@
 	. = ..()
 	running_child_index = 0
 
-/datum/bt_node/composite/sequence/get_label()
-	return "SEQUENCE"
-
 /datum/bt_node/composite/sequence/append_active_nodes(list/lines, indent)
 	var/found_active = FALSE
 	for(var/datum/bt_node/child as anything in children)
 		if(found_active)
-			lines += "[indent]↑ [child.get_label()]"
+			lines += "[indent]↑ [child.label]"
 		else if(child.has_active_descendants())
 			found_active = TRUE
 			child.append_active_nodes(lines, indent)
@@ -110,6 +108,7 @@
  */
 /datum/bt_node/composite/selector
 	node_type = BT_NODE_SELECTOR
+	label = "SELECTOR"
 	/// Index of the child that last returned BT_RUNNING.
 	var/running_child_index = 0
 
@@ -135,9 +134,6 @@
 /datum/bt_node/composite/selector/reset_tick_state()
 	. = ..()
 	running_child_index = 0
-
-/datum/bt_node/composite/selector/get_label()
-	return "SELECTOR"
 
 /datum/bt_node/composite/selector/append_active_nodes(list/lines, indent)
 	for(var/datum/bt_node/child as anything in children)
@@ -228,6 +224,7 @@
  */
 /datum/bt_node/composite/parallel
 	node_type = BT_NODE_PARALLEL
+	label = "PARALLEL"
 	/// BT_PARALLEL_SUCCESS_CHILD_ONE: succeed when child 1 succeeds (default).
 	/// BT_PARALLEL_SUCCESS_ALL: succeed only when all children succeed.
 	var/success_policy = BT_PARALLEL_SUCCESS_CHILD_ONE
@@ -294,9 +291,6 @@
 /datum/bt_node/composite/parallel/reset_tick_state()
 	. = ..()
 	secondary_ready_at = null
-
-/datum/bt_node/composite/parallel/get_label()
-	return "PARALLEL"
 
 /datum/bt_node/composite/parallel/append_active_nodes(list/lines, indent)
 	for(var/datum/bt_node/child as anything in children)

@@ -1,5 +1,5 @@
 /// Emotes a reinforcement call and alerts nearby faction members, adding the current target to their retaliate lists.
-/// Returns FAILURE when there is no valid target or the target is a friend. Cooldown must be handled by a cooldown decorator.
+/// Returns FAILURE when there is no valid target or the target is a friend.
 /datum/bt_node/ai_behavior/call_reinforcements
 	/// How far to look for reinforcements
 	var/reinforcements_range = 15

@@ -23,7 +23,7 @@
 
 /datum/bt_node/ai_behavior/append_active_nodes(list/lines, indent)
 	if(running)
-		lines += "[indent][span_bold("● [get_label()]")]"
+		lines += "[indent][span_bold("● [label]")]"
 
 /**
  * ai behavior tick. Runs setup() once on first activation, then perform() each tick.

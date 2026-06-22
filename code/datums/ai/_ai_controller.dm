@@ -107,12 +107,7 @@ multiple modular subtrees with behaviors
 				stack_trace("BT composite [node.type] references unknown child type [child_type]")
 				continue
 			resolved_children += child
-		if(istype(comp, /datum/bt_node/composite/subplan) && length(resolved_children) > 1)
-			var/datum/bt_node/composite/sequence/legacy_subplan_sequence = new
-			legacy_subplan_sequence.children = resolved_children
-			comp.children = list(legacy_subplan_sequence)
-		else
-			comp.children = resolved_children
+		comp.children = resolved_children
 	else if(istype(node, /datum/bt_node/decorator))
 		var/datum/bt_node/decorator/dec = node
 		if(isnull(dec.child_typepath) || !isnull(dec.child))
@@ -1002,7 +997,7 @@ multiple modular subtrees with behaviors
 		for(var/datum/bt_node/root_node as anything in behavior_nodes)
 			var/datum/bt_node/found = root_node.find_by_index(active_execution_index)
 			if(found)
-				active_node_label = found.get_label()
+				active_node_label = found.label
 				break
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))

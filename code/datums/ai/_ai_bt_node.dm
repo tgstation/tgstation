@@ -1,11 +1,6 @@
-/**
- * Base class for all behavior tree nodes.
- *
- * Each controller builds its own tree of node instances, so all state lives
- * directly on the instance rather than in assoc lists keyed by controller.
- */
+///Base node for behavior tree nodes
 /datum/bt_node
-	/// Node type identifier for the BT viewer. One of the BT_NODE_* defines.
+	/// Node type identifier.
 	var/node_type = BT_NODE_LEAF
 	/// Pre-order depth-first index of this node in the tree. Assigned by finalize_tree().
 	var/execution_index = 0
@@ -16,11 +11,19 @@
 	var/datum/bt_node/parent_node = null
 	///Owning controller for this node
 	var/datum/ai_controller/owning_controller = null
+	/// Short display label, set at New() by stripping standard path prefixes from the type.
+	var/label = ""
 
-/**
- * Called during ai_controller/SelectBehaviors(). Override in subtypes.
- * Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING.
- */
+/datum/bt_node/New()
+	. = ..()
+	if(!label)
+		var/t = "[type]"
+		t = replacetext(t, "/datum/bt_node/decorator/", "")
+		t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
+		t = replacetext(t, "/datum/bt_node/subtree/", "")
+		label = t
+
+///Ticked by the ai_controller. Returns BT_SUCCESS, BT_FAILURE, or BT_RUNNING which can change how the parent responds.
 /datum/bt_node/proc/tick(datum/ai_controller/controller, seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE)
 	return BT_FAILURE
@@ -63,14 +66,6 @@
 /datum/bt_node/proc/has_active_descendants()
 	return FALSE
 
-/// Short display label for this node, stripping standard path prefixes.
-/datum/bt_node/proc/get_label()
-	var/t = "[type]"
-	t = replacetext(t, "/datum/bt_node/decorator/", "")
-	t = replacetext(t, "/datum/bt_node/ai_behavior/", "")
-	t = replacetext(t, "/datum/bt_node/subtree/", "")
-	return t
-
 /// Walks descendants to find the node with the given execution_index. Returns null if not found.
 /datum/bt_node/proc/find_by_index(target_index)
 	if(execution_index == target_index)
@@ -102,7 +97,7 @@
 
 /// Appends this node's full tree state (status + label + children) to lines for display.
 /datum/bt_node/proc/append_full_tree_state(list/lines, indent)
-	lines += "[indent][get_status_marker()] [get_label()]"
+	lines += "[indent][get_status_marker()] [label]"
 
 /// Adds all children that must be visited during reset to to_visit. No-op for leaf nodes.
 /datum/bt_node/proc/collect_reset_children(list/to_visit)
