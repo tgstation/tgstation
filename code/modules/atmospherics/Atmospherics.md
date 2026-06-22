@@ -115,11 +115,11 @@ Each gas mixture has an associative list, gases, which maps according to a key t
 Each type of gas is defined by defining a new subtype of /datum/gas. These datums do not get instantiated; they merely serve as a convenient and familiar means for a coder unfamiliar with the inner workings of listmos to define a new gas. Additionally, the type paths serve a second use as the keys used to access a particular gas within the gases list. It is easiest to demonstrate the manipulation of gas, including these list accesses, with an example.
 
 ### Vectorized xgm-like system
-Introduced in 2026, the new system replaced gaslist with associative array of `moles` and `moles_archived` with the key being `/datum/gas`. The gas metadata array moved into a static variable. Gas metadata layout was also changed: order of keys swapped. This allowed for heavy use of BYOND 516 vector functions like `values_sum` and `values_dot`. This approach showed improvement of ~20% on process_cell and memory footprint stayed the same.
+Current system uses two associative arrays: `moles` and `moles_archived` with the key being `/datum/gas`. The gas metadata array is stored in a static variable `gas_mixture::gas_meta`. The layout of keys in the array is `gas_meta[META_INDEX][gas_path]`. This allows us to use vector functions like `values_sum` and `values_dot` (introduced in BYOND v516). This approach showed improvement of ~20% on process_cell and memory footprint stayed the same.
 
-While new vector functions are extremely fast, they can only work with associative arrays of number. To calculate total moles you just write `values_sum(moles)` and to calculate heat capacity - `values_dot(moles, gas_meta[META_GAS_SPECIFIC_HEAT])`. This does not seem like a lot, but when your subsytem is doing 1000 updates each simulation tick every microsecond matters.
+While these vector functions are extremely fast, they can only work with associative arrays of number. To calculate total moles you would write `values_sum(moles)` and to calculate heat capacity, it would be `values_dot(moles, gas_meta[META_GAS_SPECIFIC_HEAT])`. This does not seem like a lot, but when a subsytem is doing 1000 updates each simulation tick every microsecond matters.
 
-Another benefit of not having `gases` as an array of arrays is that if key is not present in the list, for any arithmetic and logic operations it acts like a 0.
+Another benefit of using one-dimensional associative arrays is that for any arithmetic or logic operation a missing key acts like a 0. For example you could write `moles[/datum/gas/oxygen] += 10` even if `/datum/gas/oxygen` is not in the list.
 
 ### Interfacing with a Gas Mixture
 
