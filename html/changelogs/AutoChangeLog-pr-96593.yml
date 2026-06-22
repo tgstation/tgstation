@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Reorganized human layering, report any oddities with sprites, such as mislayered equipment."
-  - refactor: "Refactored cult halos, report any oddities like them not appearing when they should."
-  - refactor: "Refactored mutation visuals, they're now affected by height! Report any oddities like them disappearing."
-  - refactor: "Refactored mutation species handling, report any oddities like lizards with hulk."
