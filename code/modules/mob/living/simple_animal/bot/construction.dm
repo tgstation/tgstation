@@ -678,7 +678,7 @@
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "assembly finished")
-			var/obj/vehicle/sealed/car/vim/new_vim = new(drop_location())
+			var/obj/vehicle/sealed/mecha/vim/new_vim = new(drop_location())
 			new_vim.name = created_name
 			qdel(tool)
 			qdel(src)

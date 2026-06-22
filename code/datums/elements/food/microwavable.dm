@@ -66,7 +66,7 @@
 			LAZYADD(microwaved_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 
 		if(microwaver && microwaver.mind)
-			ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(microwaver.mind))
+			ADD_TRAIT(result, TRAIT_HANDMADE, REF(microwaver.mind))
 
 	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
 	if(result.reagents && source.reagents)

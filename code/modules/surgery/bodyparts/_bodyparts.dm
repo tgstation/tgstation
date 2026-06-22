@@ -297,7 +297,8 @@
 
 	owner = null
 
-	QDEL_LIST_ASSOC_VAL(applied_items)
+	if(LAZYLEN(applied_items))
+		QDEL_LIST_ASSOC_VAL(applied_items)
 	QDEL_LAZYLIST(scars)
 
 	for(var/atom/movable/movable in contents)

@@ -91,21 +91,17 @@
 	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 	var/total_moles_to_remove = 0
-	for(var/gas_id in scrubbing & cached_moles)
+	for(var/gas_id in cached_moles & scrubbing)
 		total_moles_to_remove += cached_moles[gas_id]
 
-	if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
-		environment.garbage_collect()
+	if(!total_moles_to_remove)//no gases to remove
 		return FALSE
 
-	for(var/gas_id in scrubbing & cached_moles)
-		filtered_out.add_gas(gas_id)
+	for(var/gas_id in cached_moles & scrubbing)
 		var/transferred_moles = max(QUANTIZE(cached_moles[gas_id] * removal_ratio * (cached_moles[gas_id] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, cached_moles[gas_id]))
 
-		filtered_out.adjust_gas(gas_id, transferred_moles)
-		environment.adjust_gas(gas_id, -transferred_moles)
-
-	environment.garbage_collect()
+		filtered_out.moles[gas_id] += transferred_moles
+		cached_moles[gas_id] -= transferred_moles
 
 	//Remix the resulting gases
 	air_contents.merge(filtered_out)
