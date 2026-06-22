@@ -4,4 +4,4 @@
 	mid_sounds = 'sound/machines/tram/tram_loop.ogg'
 	mid_length = 2.219 SECONDS
 	use_sound_tokens = TRUE
-	extra_range = 20
+	extra_range = 10
