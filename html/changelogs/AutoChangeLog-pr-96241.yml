@@ -1,4 +1,0 @@
-author: "Absolucy, Flleeppyy"
-delete-after: True
-changes:
-  - rscadd: "Added a websocket client, you can now forward incoming chat messages to an external program, i.e allowing you to change music playlists based on events, or such."
