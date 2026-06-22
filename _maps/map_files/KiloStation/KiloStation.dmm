@@ -27893,7 +27893,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "iLX" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
