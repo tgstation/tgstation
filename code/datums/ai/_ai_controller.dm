@@ -296,7 +296,7 @@ multiple modular subtrees with behaviors
 
 	pawn = new_pawn
 	pawn.ai_controller = src
-	set_blackboard_key(BB_MY_PAWN, pawn)
+	set_blackboard_key(BB_MY_PAWN, pawn, FALSE) //Don't track the datum we already handle qdel of pawn here.
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
@@ -308,7 +308,7 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
-	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted), override = TRUE)
+	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
 	RegisterSignal(pawn, COMSIG_EVLOGGING_ENABLED, PROC_REF(on_pawn_evlogging_enabled))
 	RegisterSignal(pawn, COMSIG_EVLOGGING_DISABLED, PROC_REF(on_pawn_evlogging_disabled))
 	update_able_to_run()
@@ -697,8 +697,9 @@ multiple modular subtrees with behaviors
  *
  * * key - A blackboard key
  * * thing - a value to set the blackboard key to.
+ * * track_datum - whether we should track this ref for deletion, this should always be TRUE unless you really know wtf you're doing
  */
-/datum/ai_controller/proc/set_blackboard_key(key, thing)
+/datum/ai_controller/proc/set_blackboard_key(key, thing, track_datum = TRUE)
 	// Assume it is an error when trying to set a value overtop a list
 	if(islist(blackboard[key]))
 		CRASH("set_blackboard_key attempting to set a blackboard value to key [key] when it's a list!")
@@ -710,7 +711,8 @@ multiple modular subtrees with behaviors
 	if(!isnull(blackboard[key]))
 		clear_blackboard_key(key)
 
-	TRACK_AI_DATUM_TARGET(thing, key)
+	if(track_datum)
+		TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] = thing
 	post_blackboard_key_set(key)
 

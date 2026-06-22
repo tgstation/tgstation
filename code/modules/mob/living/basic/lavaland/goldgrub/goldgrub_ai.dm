@@ -140,7 +140,7 @@
 	var/mob/living/grub_pawn = controller.pawn
 	var/pet_target = controller.blackboard[BB_CURRENT_PET_TARGET]
 	for(var/obj/item/boulder/candidate in oview(9, grub_pawn))
-		if(candidate in grub_pawn || candidate == pet_target)
+		if(candidate == pet_target)
 			continue
 		if(!can_see(grub_pawn, candidate, 9))
 			continue
