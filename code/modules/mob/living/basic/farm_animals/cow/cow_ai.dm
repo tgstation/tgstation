@@ -15,3 +15,7 @@
 
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
+
+/// While we're tipped over, plead with nearby people instead of doing anything else.
+/datum/bt_node/subtree/tip_reaction
+	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/tip_reaction.bt.json"

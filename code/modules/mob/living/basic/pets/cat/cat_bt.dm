@@ -40,7 +40,7 @@
 	manual_emote += succeeded ? "and succeeds!" : "but fails!"
 	living_pawn.manual_emote(manual_emote)
 
-/// Drops a piece of carried food at a kitten's feet. Movement is handled externally.
+/// Drops a piece of carried food at a kitten's feet.
 /datum/bt_node/ai_behavior/deliver_food_to_kitten
 	time_between_perform = 5 SECONDS
 	/// Blackboard key holding the kitten to feed.
@@ -68,7 +68,7 @@
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(food_key)
 
-/// Engages a rival tom in a territorial yowling contest until one of them backs down. Movement is handled externally.
+/// Engages a rival tom in a territorial yowling contest until one of them backs down
 /datum/bt_node/ai_behavior/territorial_struggle
 	time_between_perform = 5 SECONDS
 	/// Blackboard key holding our rival.
@@ -111,7 +111,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-/// Finds a rival tom to fight, marking ourselves as their target too so the fight is mutual.
+/// Finds a rival male cat to fight, marking ourselves as their target too so the fight is mutual.
 /datum/bt_node/ai_behavior/find_cat_tresspasser
 	time_between_perform = 5 SECONDS
 	/// Blackboard key to store the rival in.
