@@ -12,6 +12,8 @@
 	var/obj/item/boulder/shabby/second_boulder = allocate(/obj/item/boulder/shabby, opposite_loc) //Called because we know it has both iron and glass for each machine.
 	var/obj/machinery/bouldertech/refinery/test_refine = allocate(/obj/machinery/bouldertech/refinery, refinery_loc)
 	var/obj/machinery/bouldertech/refinery/smelter/test_smelter = allocate(/obj/machinery/bouldertech/refinery/smelter, smelter_loc)
+	test_refine.dir = WEST
+	test_smelter.dir = WEST
 	//Test to confirm that the boulder is as we expect it to be:
 	TEST_ASSERT(test_boulder.durability > 0,  "Boulder was spawned such that it's durability is less than 1!")
 	test_boulder.durability = 2
