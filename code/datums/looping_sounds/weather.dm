@@ -52,6 +52,8 @@
 	volume = 100
 	extra_range = 30
 	pressure_affected = FALSE
+	reserve_random_channel = TRUE
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/snowstorm
 	mid_sounds = list(
