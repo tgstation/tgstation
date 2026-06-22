@@ -1115,7 +1115,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	var/list/panel_verbs = list()
 	for(var/procpath/verb_to_init as anything in verbstoprocess)
-		if(!verb_to_init || verb_to_init.hidden || !istext(verb_to_init.category))
+		if(!verb_to_init || verb_to_init.hidden)
+			continue
+		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
 			continue
 		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
 	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))

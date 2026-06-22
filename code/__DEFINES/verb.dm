@@ -174,7 +174,7 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 /// For typed args, pass the type path as the last argument: VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 /// For untyped args (primitives), omit it: VERB_ARG(count, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 #define VERB_ARG(name, arg_type, source, type_path...) \
-	var/static/____reg_##name = ____register_verb_arg(__TYPE__, #name, arg_type, ##type_path, source); \
+	var/static/____reg_##name = ____register_verb_arg(__TYPE__, __PROC__, #name, arg_type, ##type_path, source); \
 	var##type_path/##name = structured_args[#name]
 
 // Argument type bitflags. Combine with | for multi-type args.

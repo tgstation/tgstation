@@ -1,0 +1,114 @@
+.CommandBar {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--color-section);
+
+  &__input-wrap {
+    position: relative;
+    flex: 1;
+  }
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: var(--space-xs) var(--space-m);
+    background-color: transparent;
+    border: none;
+    color: var(--color-text);
+    font-size: 1em;
+    font-family: var(--input-font-family-mono);
+    outline: none;
+
+    &::placeholder {
+      font-style: italic;
+      color: var(--color-text-translucent);
+    }
+  }
+
+  &__mode-button {
+    padding: 0 var(--space-m);
+    line-height: var(--button-height);
+    background-color: transparent;
+    border: none;
+    border-left: var(--border-thickness-tiny) solid var(--color-border);
+    color: var(--color-text-translucent);
+    font-size: 1em;
+    font-family: var(--input-font-family-mono);
+    font-weight: bold;
+    cursor: var(--cursor-pointer);
+    text-align: center;
+    user-select: none;
+    outline: none;
+    transition: color var(--transition-time-fast);
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  &__suggestions {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) transparent;
+    max-height: 200px;
+    padding: var(--space-sm);
+    background-color: var(--dropdown-menu-background);
+    color: var(--dropdown-menu-color);
+    border: var(--dropdown-menu-border);
+    border-bottom: none;
+    border-radius: var(--dropdown-menu-border-radius)
+      var(--dropdown-menu-border-radius) 0 0;
+    backdrop-filter: var(--dropdown-menu-blur);
+  }
+
+  &__suggestion {
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: var(--input-font-family-mono);
+    font-size: 1em;
+    padding: var(--space-xxs) var(--space-m);
+    border-radius: var(--dropdown-entry-border-radius);
+    cursor: var(--cursor-pointer);
+    transition: background-color var(--dropdown-entry-transition);
+
+    &--selected {
+      background-color: var(--dropdown-entry-background-selected);
+      transition-duration: 0s;
+    }
+
+    &:not(.CommandBar__suggestion--selected):hover {
+      background-color: var(--dropdown-entry-background-hover);
+      transition-duration: 0s;
+    }
+
+    &:not(.CommandBar__suggestion--selected):active {
+      background-color: var(--dropdown-entry-background-active);
+      transition-duration: 0s;
+    }
+  }
+
+  &__verb-name {
+    color: hsl(from var(--color-primary) h s calc(l + 15));
+  }
+
+  &__verb-args {
+    color: var(--color-text-translucent);
+    margin-left: var(--space-sm);
+  }
+
+  &__typepath {
+    color: hsl(290, 60%, 70%);
+  }
+
+  &__target {
+    color: hsl(from var(--color-green) h s calc(l + 10));
+  }
+}

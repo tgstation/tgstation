@@ -76,6 +76,17 @@ function isInQuotedArg(raw: string): boolean {
   return inQuote;
 }
 
+const MODES = ['Command', 'Say', 'Whisper', 'Me', 'OOC'] as const;
+type Mode = (typeof MODES)[number];
+
+const MODE_COLORS: Record<Mode, string> = {
+  Command: '#888',
+  Say: '#a3d977',
+  Whisper: '#a89ccc',
+  Me: '#d4a44a',
+  OOC: '#6cb6ff',
+};
+
 export function CommandBar() {
   const verbs = useAtomValue(adminVerbsAtom);
   const targets = useAtomValue(adminTargetsAtom);
@@ -85,6 +96,7 @@ export function CommandBar() {
   const [selectedVerb, setSelectedVerb] = useState<AdminVerb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const [lastTypepathRequest, setLastTypepathRequest] = useState('');
+  const [mode, setMode] = useState<Mode>('Command');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const verbArgs = selectedVerb?.args || [];
@@ -111,18 +123,25 @@ export function CommandBar() {
       : '';
   const inQuotedArg = selectedVerb ? isInQuotedArg(argPortion) : false;
 
-  // Verb suggestions — sorted by name length so Tab picks the shortest match
-  const verbSuggestions: AdminVerb[] =
-    !selectedVerb && input.length > 0
-      ? verbs
-          .filter(
-            (v) =>
-              v.name &&
-              toKebab(v.name).toLowerCase().startsWith(input.toLowerCase()),
-          )
-          .sort((a, b) => a.name.length - b.name.length)
-          .slice(0, 8)
-      : [];
+  // Verb suggestions — prefix matches first, then substring matches, sorted by name length
+  const verbSuggestions: AdminVerb[] = (() => {
+    if (selectedVerb || input.length === 0) return [];
+    const query = input.toLowerCase();
+    const prefix: AdminVerb[] = [];
+    const substring: AdminVerb[] = [];
+    for (const v of verbs) {
+      if (!v.name) continue;
+      const kebab = toKebab(v.name).toLowerCase();
+      if (kebab.startsWith(query)) {
+        prefix.push(v);
+      } else if (kebab.includes(query)) {
+        substring.push(v);
+      }
+    }
+    prefix.sort((a, b) => a.name.length - b.name.length);
+    substring.sort((a, b) => a.name.length - b.name.length);
+    return [...prefix, ...substring].slice(0, 8);
+  })();
 
   // Typepath suggestions
   const typepathSuggestions =
@@ -133,7 +152,7 @@ export function CommandBar() {
               currentToken.length === 0 ||
               p.toLowerCase().startsWith(currentToken.toLowerCase()),
           )
-          .slice(0, 12)
+          .slice(0, 8)
       : [];
 
   // Target suggestions — only for entity-type args
@@ -189,7 +208,20 @@ export function CommandBar() {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (!selectedVerb && verbSuggestions.length > 0) {
-        selectVerb(verbSuggestions[selectedIndex]);
+        const verb = verbSuggestions[selectedIndex];
+        if (verb.args.length === 0) {
+          Byond.sendMessage('verbs/invoke', {
+            verb_type: verb.type,
+            args: {},
+          });
+          if (mode !== 'Command') {
+            enterChatMode(mode);
+          } else {
+            resetInput();
+          }
+        } else {
+          selectVerb(verb);
+        }
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex] as string);
       } else if (isCurrentArgTypepath && currentToken) {
@@ -204,8 +236,45 @@ export function CommandBar() {
       }
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      resetInput();
+      if (mode !== 'Command') {
+        enterChatMode(mode);
+      } else {
+        resetInput();
+      }
     }
+  };
+
+  const enterChatMode = (chatMode: Mode) => {
+    const verb = verbs.find((v) => v.name === chatMode);
+    if (!verb) return;
+    setSelectedVerb(verb);
+    setFilledArgs([]);
+    setSelectedIndex(0);
+    setLastTypepathRequest('');
+    const kebab = toKebab(verb.name);
+    if (verb.args.length > 0 && isTextArg(verb.args[0])) {
+      setInput(kebab + ' "');
+    } else if (verb.args.length > 0) {
+      setInput(kebab + ' ');
+    } else {
+      setInput(kebab);
+    }
+  };
+
+  const cycleMode = () => {
+    const nextIndex = (MODES.indexOf(mode) + 1) % MODES.length;
+    const nextMode = MODES[nextIndex];
+    setMode(nextMode);
+    if (nextMode === 'Command') {
+      setInput('');
+      setSelectedVerb(null);
+      setFilledArgs([]);
+      setSelectedIndex(0);
+      setLastTypepathRequest('');
+    } else {
+      enterChatMode(nextMode);
+    }
+    inputRef.current?.focus();
   };
 
   const handleChange = (value: string) => {
@@ -218,6 +287,9 @@ export function CommandBar() {
       if (!value.startsWith(verbPrefix)) {
         setSelectedVerb(null);
         setFilledArgs([]);
+        if (mode !== 'Command') {
+          setMode('Command');
+        }
         value = value.split(' ')[0] || '';
       }
     }
@@ -293,11 +365,7 @@ export function CommandBar() {
         Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
       }
     } else {
-      Byond.sendMessage('verbs/invoke', {
-        verb_type: verb.type,
-        args: {},
-      });
-      resetInput();
+      setInput(kebab);
     }
   };
 
@@ -365,7 +433,11 @@ export function CommandBar() {
       verb_type: selectedVerb.type,
       args: argValues,
     });
-    resetInput();
+    if (mode !== 'Command') {
+      enterChatMode(mode);
+    } else {
+      resetInput();
+    }
   };
 
   const resetInput = () => {
@@ -381,108 +453,73 @@ export function CommandBar() {
     : 'Type a command...';
 
   return (
-    <div style={{ position: 'relative' }}>
-      {hasSuggestions && (
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '100%',
-            left: 0,
-            right: 0,
-            background: 'rgba(30, 30, 40, 0.95)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderBottom: 'none',
-            maxHeight: '200px',
-            overflowY: 'auto',
-          }}
-        >
-          {!selectedVerb
-            ? (verbSuggestions as AdminVerb[]).map((verb, i) => (
-                <div
-                  key={verb.type}
-                  style={{
-                    padding: '4px 8px',
-                    cursor: 'pointer',
-                    background:
-                      i === selectedIndex
-                        ? 'rgba(255, 255, 255, 0.1)'
-                        : 'transparent',
-                    fontSize: '12px',
-                    fontFamily: 'monospace',
-                  }}
-                  onMouseEnter={() => setSelectedIndex(i)}
-                  onClick={() => selectVerb(verb)}
-                >
-                  <span style={{ color: '#6cb6ff' }}>{toKebab(verb.name)}</span>
-                  {verb.args.length > 0 && (
-                    <span style={{ color: '#666', marginLeft: '8px' }}>
-                      {verb.args.map((a) => `<${a.name}>`).join(' ')}
-                    </span>
-                  )}
-                </div>
-              ))
-            : isCurrentArgTypepath
-              ? (typepathSuggestions as string[]).map((path, i) => (
+    <div className="CommandBar">
+      <div className="CommandBar__input-wrap">
+        {hasSuggestions && (
+          <div className="CommandBar__suggestions">
+            {!selectedVerb
+              ? verbSuggestions.map((verb, i) => (
                   <div
-                    key={path}
-                    style={{
-                      padding: '4px 8px',
-                      cursor: 'pointer',
-                      background:
-                        i === selectedIndex
-                          ? 'rgba(255, 255, 255, 0.1)'
-                          : 'transparent',
-                      fontSize: '12px',
-                      fontFamily: 'monospace',
-                    }}
+                    key={verb.type}
+                    className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
                     onMouseEnter={() => setSelectedIndex(i)}
-                    onClick={() => selectTypepath(path)}
+                    onClick={() => selectVerb(verb)}
                   >
-                    <span style={{ color: '#d4a' }}>{path}</span>
+                    <span className="CommandBar__verb-name">
+                      {toKebab(verb.name)}
+                    </span>
+                    {verb.args.length > 0 && (
+                      <span className="CommandBar__verb-args">
+                        {verb.args.map((a) => `<${a.name}>`).join(' ')}
+                      </span>
+                    )}
                   </div>
                 ))
-              : (targetSuggestions as { name: string; ref: string }[]).map(
-                  (target, i) => (
+              : isCurrentArgTypepath
+                ? (typepathSuggestions as string[]).map((path, i) => (
                     <div
-                      key={target.ref}
-                      style={{
-                        padding: '4px 8px',
-                        cursor: 'pointer',
-                        background:
-                          i === selectedIndex
-                            ? 'rgba(255, 255, 255, 0.1)'
-                            : 'transparent',
-                        fontSize: '12px',
-                        fontFamily: 'monospace',
-                      }}
+                      key={path}
+                      className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
                       onMouseEnter={() => setSelectedIndex(i)}
-                      onClick={() => selectTarget(target)}
+                      onClick={() => selectTypepath(path)}
                     >
-                      <span style={{ color: '#a3d977' }}>{target.name}</span>
+                      <span className="CommandBar__typepath">{path}</span>
                     </div>
-                  ),
-                )}
-        </div>
-      )}
-      <input
-        ref={inputRef}
-        type="text"
-        value={input}
-        placeholder={placeholder}
-        onChange={(e) => handleChange(e.target.value)}
-        onKeyDown={handleKeyDown}
-        style={{
-          width: '100%',
-          boxSizing: 'border-box',
-          padding: '6px 8px',
-          background: 'rgba(0, 0, 0, 0.4)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          color: '#fff',
-          fontSize: '12px',
-          fontFamily: 'monospace',
-          outline: 'none',
-        }}
-      />
+                  ))
+                : (targetSuggestions as { name: string; ref: string }[]).map(
+                    (target, i) => (
+                      <div
+                        key={target.ref}
+                        className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
+                        onMouseEnter={() => setSelectedIndex(i)}
+                        onClick={() => selectTarget(target)}
+                      >
+                        <span className="CommandBar__target">
+                          {target.name}
+                        </span>
+                      </div>
+                    ),
+                  )}
+          </div>
+        )}
+        <input
+          ref={inputRef}
+          className="CommandBar__input"
+          type="text"
+          value={input}
+          placeholder={placeholder}
+          onChange={(e) => handleChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
+      <button
+        className="CommandBar__mode-button"
+        onClick={cycleMode}
+        type="button"
+        style={{ color: MODE_COLORS[mode] }}
+      >
+        {mode}
+      </button>
     </div>
   );
 }

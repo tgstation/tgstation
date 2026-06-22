@@ -45,7 +45,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			"arguments" = list(),
 		)
 
-		for(var/datum/admin_verb_metadata/argument/arg in verb.metadata?.arguments)
+		for(var/datum/verb_arg_metadata/arg in verb.metadata?.arguments)
 			verb_entry["arguments"] += list(list(
 				"name" = arg.name,
 				"arg_type" = arg.arg_type,
@@ -75,8 +75,8 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 	if(!verb || !length(verb.metadata?.arguments))
 		return list()
 
-	var/datum/admin_verb_metadata/argument/entity_arg
-	for(var/datum/admin_verb_metadata/argument/arg in verb.metadata.arguments)
+	var/datum/verb_arg_metadata/entity_arg
+	for(var/datum/verb_arg_metadata/arg in verb.metadata.arguments)
 		if(arg.arg_type & ADMIN_VERB_ARG_TYPE_ENTITY)
 			entity_arg = arg
 			break
@@ -107,7 +107,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 		targets += list(entry)
 	return targets
 
-/datum/admin_verb_panel/proc/get_targets_for_arg(datum/admin_verb_metadata/argument/arg)
+/datum/admin_verb_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
 	switch(arg.source)
 		if(ADMIN_VERB_ARG_SOURCE_WORLD)
 			return get_world_targets(arg.arg_type)

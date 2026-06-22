@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		// Map positional args to metadata argument names in order
 		var/list/meta_args = verb_singleton.metadata?.arguments
 		for(var/i in 1 to min(length(extra_args), length(meta_args)))
-			var/datum/admin_verb_metadata/argument/arg = meta_args[i]
+			var/datum/verb_arg_metadata/arg = meta_args[i]
 			structured_args[arg.name] = extra_args[i]
 
 	if(length(verb_singleton.metadata?.arguments))
@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	collected -= "__context_target__"
 	var/context_used = FALSE
 
-	for(var/datum/admin_verb_metadata/argument/arg in verb_singleton.metadata.arguments)
+	for(var/datum/verb_arg_metadata/arg in verb_singleton.metadata.arguments)
 		if(!isnull(collected[arg.name]))
 			continue
 		if(!context_used && !isnull(context_target) && arg.source == ADMIN_VERB_ARG_SOURCE_WORLD)
@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		collected[arg.name] = value
 	return collected
 
-/datum/controller/subsystem/admin_verbs/proc/prompt_for_arg(client/admin, verb_name, datum/admin_verb_metadata/argument/arg)
+/datum/controller/subsystem/admin_verbs/proc/prompt_for_arg(client/admin, verb_name, datum/verb_arg_metadata/arg)
 	if(arg.arg_type & ADMIN_VERB_ARG_TYPE_NUM)
 		return tgui_input_number(admin, arg.name, verb_name)
 	if(arg.arg_type & ADMIN_VERB_ARG_TYPE_TEXT)
