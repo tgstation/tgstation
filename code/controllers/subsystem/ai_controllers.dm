@@ -15,10 +15,19 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/our_cost
 	/// The tick cost of all currently processed AI, being summed together
 	var/summing_cost
+	/// List of all targeting_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_targeting_strats()
+	var/list/targeting_strategies
+	/// List of all target_priority_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_priority_strats()
+	var/list/target_priority_strategies
+	/// List of all target_source singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_sources()
+	var/list/target_sources
 
 
 
 /datum/controller/subsystem/ai_controllers/Initialize()
+	setup_targeting_strats()
+	setup_target_priority_strats()
+	setup_target_sources()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
@@ -56,3 +65,21 @@ SUBSYSTEM_DEF(ai_controllers)
 	while (GLOB.ai_controllers_by_zlevel.len < world.maxz)
 		GLOB.ai_controllers_by_zlevel.len++
 		GLOB.ai_controllers_by_zlevel[GLOB.ai_controllers_by_zlevel.len] = list()
+
+/datum/controller/subsystem/ai_controllers/proc/setup_targeting_strats()
+	targeting_strategies = list()
+	for(var/target_type in subtypesof(/datum/targeting_strategy))
+		var/datum/targeting_strategy/target_start = new target_type
+		targeting_strategies[target_type] = target_start
+
+/datum/controller/subsystem/ai_controllers/proc/setup_target_priority_strats()
+	target_priority_strategies = list()
+	for(var/target_type in subtypesof(/datum/target_priority_strategy))
+		var/datum/target_priority_strategy/target_start = new target_type
+		target_priority_strategies[target_type] = target_start
+
+/datum/controller/subsystem/ai_controllers/proc/setup_target_sources()
+	target_sources = list()
+	for(var/source_type in subtypesof(/datum/target_source))
+		var/datum/target_source/source = new source_type
+		target_sources[source_type] = source

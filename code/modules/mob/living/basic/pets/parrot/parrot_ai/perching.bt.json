@@ -25,7 +25,7 @@
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
-										"target_key": "BB_PERCH_TARGET",
+										"key": "BB_PERCH_TARGET",
 										"target_source": "/datum/target_source/oview_single_type/human_mob",
 										"targeting_strategy": "/datum/targeting_strategy/ally_mob"
 									}
@@ -35,7 +35,7 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 								"vars": {
-									"target_key": "BB_PERCH_TARGET",
+									"key": "BB_PERCH_TARGET",
 									"target_source": "/datum/target_source/oview_typed/from_bb_key/parrot_perch_types",
 									"targeting_strategy": "/datum/targeting_strategy/anything"
 								}
@@ -58,7 +58,7 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 								"vars": {
-									"target_key": "BB_PERCH_TARGET",
+									"key": "BB_PERCH_TARGET",
 									"required_dist": 1
 								}
 							},
@@ -66,7 +66,7 @@
 								"type": "leaf",
 								"behavior": "/datum/bt_node/ai_behavior/perch_on_target",
 								"vars": {
-									"target_key": "BB_PERCH_TARGET"
+									"key": "BB_PERCH_TARGET"
 								}
 							}
 						]
@@ -76,9 +76,9 @@
 		},
 		{
 			"type": "leaf",
-			"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
+			"behavior": "/datum/bt_node/ai_behavior/clear_key",
 			"vars": {
-				"target_key": "BB_PERCH_TARGET"
+				"key": "BB_PERCH_TARGET"
 			}
 		}
 	]

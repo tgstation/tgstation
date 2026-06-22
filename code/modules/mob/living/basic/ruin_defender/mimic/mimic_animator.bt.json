@@ -38,7 +38,7 @@
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
 											"vars": {
-												"target_key": "BB_CURRENT_HUNTING_TARGET",
+												"key": "BB_CURRENT_HUNTING_TARGET",
 												"targeting_strategy": "/datum/targeting_strategy/anything",
 												"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
 											}
@@ -47,7 +47,7 @@
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 											"vars": {
-												"target_key": "BB_CURRENT_HUNTING_TARGET",
+												"key": "BB_CURRENT_HUNTING_TARGET",
 												"required_dist": 1,
 												"finish_on_arrival": false
 											}
@@ -60,9 +60,9 @@
 								},
 								{
 									"type": "leaf",
-									"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
+									"behavior": "/datum/bt_node/ai_behavior/clear_key",
 									"vars": {
-										"target_key": "BB_CURRENT_HUNTING_TARGET"
+										"key": "BB_CURRENT_HUNTING_TARGET"
 									}
 								}
 							]
@@ -141,7 +141,7 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest",
 				"vars": {
-					"target_key": "BB_CURRENT_HUNTING_TARGET",
+					"key": "BB_CURRENT_HUNTING_TARGET",
 					"targeting_strategy": "/datum/targeting_strategy/anything",
 					"target_source": "/datum/target_source/animatable_objects",
 					"vision_range": 7,

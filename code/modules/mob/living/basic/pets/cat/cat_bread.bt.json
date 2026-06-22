@@ -47,16 +47,8 @@
 									"subtype": "/datum/bt_node/subtree/cat_find_food"
 								},
 								{
-									"type": "subplan",
-									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-									"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-									"loop_delay": "IDLE_BEHAVIOR_RATE",
-									"children": [
-										{
-											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
-										}
-									]
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
 								}
 							]
 						},
@@ -65,6 +57,79 @@
 							"subtype": "/datum/bt_node/subtree/random_speech_loop",
 							"bindings": {
 								"bqdqne64": "/datum/bt_node/ai_behavior/random_speech/cats"
+							}
+						}
+					]
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/find_partner"
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_MOUSE_TARGET",
+								"target_source": "/datum/target_source/oview_single_type/mouse",
+								"targeting_strategy": "/datum/targeting_strategy/huntable_mouse",
+								"vision_range": 9
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_CAT_FOOD_TARGET",
+								"target_source": "/datum/target_source/oview_typed/from_bb_key/huntable_prey",
+								"targeting_strategy": "/datum/targeting_strategy/cat_food",
+								"vision_range": 9
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_STOVE_TARGET",
+								"target_source": "/datum/target_source/oview_single_type/oven",
+								"targeting_strategy": "/datum/targeting_strategy/finished_stove",
+								"vision_range": 9
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_FOOD_TO_DELIVER",
+								"invert": true
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+								"vars": {
+									"target_key": "BB_FOOD_TO_DELIVER",
+									"target_source": "/datum/target_source/carried_huntable_prey",
+									"targeting_strategy": "/datum/targeting_strategy/anything"
+								}
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_FOOD_TO_DELIVER",
+								"invert": true
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+								"vars": {
+									"target_key": "BB_FOOD_TO_DELIVER",
+									"target_source": "/datum/target_source/carried_huntable_prey",
+									"targeting_strategy": "/datum/targeting_strategy/anything"
+								}
 							}
 						}
 					]

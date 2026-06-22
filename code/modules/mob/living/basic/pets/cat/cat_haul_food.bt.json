@@ -3,82 +3,39 @@
 	"type": "decorator",
 	"decorator": "/datum/bt_node/decorator/cat_holding_food",
 	"child": {
-		"type": "parallel",
-		"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
-		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-		"repeat_secondary": true,
-		"finish_on_primary": true,
-		"children": [
-			{
-				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"vars": {
-					"key": "BB_KITTEN_TO_FEED",
-					"observer_abort": "BT_ABORT_BOTH"
-				},
-				"child": {
-					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/bb_key_set",
-					"vars": {
-						"key": "BB_FOOD_TO_DELIVER"
+		"type": "decorator",
+		"decorator": "/datum/bt_node/decorator/bb_key_set",
+		"vars": {
+			"key": "BB_KITTEN_TO_FEED",
+			"observer_abort": "BT_ABORT_BOTH"
+		},
+		"child": {
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_FOOD_TO_DELIVER"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_KITTEN_TO_FEED",
+							"required_dist": 1
+						}
 					},
-					"child": {
-						"type": "sequence",
-						"children": [
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-								"vars": {
-									"target_key": "BB_KITTEN_TO_FEED",
-									"required_dist": 1
-								}
-							},
-							{
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/deliver_food_to_kitten",
-								"vars": {
-									"target_key": "BB_KITTEN_TO_FEED",
-									"food_key": "BB_FOOD_TO_DELIVER"
-								}
-							}
-						]
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/deliver_food_to_kitten",
+						"vars": {
+							"target_key": "BB_KITTEN_TO_FEED",
+							"food_key": "BB_FOOD_TO_DELIVER"
+						}
 					}
-				}
-			},
-			{
-				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"vars": {
-					"key": "BB_FOOD_TO_DELIVER",
-					"invert": true
-				},
-				"child": {
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-					"vars": {
-						"target_key": "BB_FOOD_TO_DELIVER",
-						"target_source": "/datum/target_source/carried_huntable_prey",
-						"targeting_strategy": "/datum/targeting_strategy/anything"
-					}
-				}
-			},
-			{
-				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/bb_key_set",
-				"vars": {
-					"key": "BB_KITTEN_TO_FEED",
-					"invert": true
-				},
-				"child": {
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
-					"vars": {
-						"target_key": "BB_KITTEN_TO_FEED",
-						"target_source": "/datum/target_source/oview_single_type/kitten",
-						"targeting_strategy": "/datum/targeting_strategy/valid_kitten"
-					}
-				}
+				]
 			}
-		]
+		}
 	}
 }

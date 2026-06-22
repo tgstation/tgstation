@@ -4,7 +4,7 @@
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/hivebot/relay_to_hive_partner.bt.json"
 
 /// Says a random binary string to a hive partner. Movement to the partner is handled
-/// in the tree via a move_to_target leaf; the target key is cleared by a clear_bb_key leaf.
+/// in the tree via a move_to_target leaf; the target key is cleared by a clear_key leaf.
 /datum/bt_node/ai_behavior/relay_message
 	/// Blackboard key holding the hive partner to talk at.
 	var/target_key

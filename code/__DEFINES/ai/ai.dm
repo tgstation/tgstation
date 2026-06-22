@@ -1,6 +1,6 @@
-#define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
-#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_behaviors.target_priority_strategies[targeting_type]
-#define GET_TARGET_SOURCE(source_type) SSai_behaviors.target_sources[source_type]
+#define GET_TARGETING_STRATEGY(targeting_type) SSai_controllers.targeting_strategies[targeting_type]
+#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_controllers.target_priority_strategies[targeting_type]
+#define GET_TARGET_SOURCE(source_type) SSai_controllers.target_sources[source_type]
 
 // Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
 /// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.

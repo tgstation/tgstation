@@ -8,12 +8,3 @@
 /datum/bt_node/ai_behavior/set_bb_key/perform(seconds_per_tick, datum/ai_controller/controller)
 	controller.set_blackboard_key(target_key, value)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-
-/// Clears the given blackboard key.
-/datum/bt_node/ai_behavior/clear_bb_key
-	/// Blackboard key to clear.
-	var/target_key
-
-/datum/bt_node/ai_behavior/clear_bb_key/perform(seconds_per_tick, datum/ai_controller/controller)
-	controller.clear_blackboard_key(target_key)
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

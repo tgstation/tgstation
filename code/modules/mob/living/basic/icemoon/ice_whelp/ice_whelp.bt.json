@@ -121,9 +121,9 @@
 											},
 											{
 												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
 												"vars": {
-													"target_key": "BB_TARGET_CANNIBAL"
+													"key": "BB_TARGET_CANNIBAL"
 												}
 											}
 										]
@@ -165,9 +165,9 @@
 											},
 											{
 												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/clear_bb_key",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
 												"vars": {
-													"target_key": "BB_TARGET_ROCK"
+													"key": "BB_TARGET_ROCK"
 												}
 											}
 										]

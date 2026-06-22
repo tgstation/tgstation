@@ -3,8 +3,42 @@
 	"type": "selector",
 	"children": [
 		{
-			"type": "subtree",
-			"subtype": "/datum/bt_node/subtree/escape_captivity/pacifist"
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				}
+			]
 		},
 		{
 			"type": "subtree",
@@ -19,11 +53,23 @@
 				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
 			},
 			"child": {
-				"type": "subtree",
-				"subtype": "/datum/bt_node/subtree/run_away_from_target",
-				"bindings": {
-					"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
-				}
+				"type": "sequence",
+				"children": [
+					{
+						"type": "subtree",
+						"subtype": "/datum/bt_node/subtree/run_away_from_target",
+						"bindings": {
+							"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/clear_key",
+						"vars": {
+							"key": "BB_BASIC_MOB_FLEE_TARGET"
+						}
+					}
+				]
 			}
 		},
 		{
@@ -52,6 +98,10 @@
 								{
 									"type": "subtree",
 									"subtype": "/datum/bt_node/subtree/cat_haul_food"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/cat_hunt_mice"
 								},
 								{
 									"type": "decorator",
@@ -86,47 +136,52 @@
 									"type": "decorator",
 									"decorator": "/datum/bt_node/decorator/bb_key_set",
 									"vars": {
-										"key": "BB_CURRENT_TARGET",
-										"observer_abort": "BT_ABORT_BOTH"
+										"observer_abort": "BT_ABORT_NONE",
+										"invert": true,
+										"key": "BB_MOUSE_TARGET"
 									},
 									"child": {
-										"type": "parallel",
-										"failure_policy": "BT_PARALLEL_FAILURE_ANY",
-										"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-										"repeat_secondary": true,
-										"finish_on_primary": true,
-										"children": [
-											{
-												"type": "subplan",
-												"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-												"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
-												"children": [
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-														"vars": {
-															"target_key": "BB_CURRENT_TARGET",
-															"targeting_strategy": "BB_TARGETING_STRATEGY",
-															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_set",
+										"vars": {
+											"key": "BB_CURRENT_TARGET",
+											"observer_abort": "BT_ABORT_BOTH"
+										},
+										"child": {
+											"type": "parallel",
+											"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+											"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+											"repeat_secondary": true,
+											"finish_on_primary": true,
+											"children": [
+												{
+													"type": "subplan",
+													"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+													"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+													"children": [
+														{
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+															"vars": {
+																"target_key": "BB_CURRENT_TARGET",
+																"targeting_strategy": "BB_TARGETING_STRATEGY",
+																"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+															}
 														}
+													]
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+													"vars": {
+														"target_key": "BB_CURRENT_TARGET",
+														"required_dist": 1,
+														"finish_on_arrival": false
 													}
-												]
-											},
-											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"required_dist": 1,
-													"finish_on_arrival": false
 												}
-											}
-										]
+											]
+										}
 									}
-								},
-								{
-									"type": "subtree",
-									"subtype": "/datum/bt_node/subtree/cat_hunt_mice"
 								},
 								{
 									"type": "subtree",
@@ -137,16 +192,8 @@
 									"subtype": "/datum/bt_node/subtree/make_babies"
 								},
 								{
-									"type": "subplan",
-									"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-									"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
-									"loop_delay": "IDLE_BEHAVIOR_RATE",
-									"children": [
-										{
-											"type": "leaf",
-											"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
-										}
-									]
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
 								}
 							]
 						},
@@ -200,6 +247,26 @@
 						"vars": {
 							"target_key": "BB_TRESSPASSER_TARGET"
 						}
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+					"vars": {
+						"target_key": "BB_MOUSE_TARGET",
+						"target_source": "/datum/target_source/oview_single_type/mouse",
+						"targeting_strategy": "/datum/targeting_strategy/huntable_mouse",
+						"vision_range": 9
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+					"vars": {
+						"target_key": "BB_CAT_FOOD_TARGET",
+						"target_source": "/datum/target_source/oview_typed/from_bb_key/huntable_prey",
+						"targeting_strategy": "/datum/targeting_strategy/cat_food",
+						"vision_range": 9
 					}
 				}
 			]
