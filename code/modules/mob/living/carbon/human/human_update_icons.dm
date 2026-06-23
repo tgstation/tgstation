@@ -607,7 +607,7 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
-	if(!isinhands && (bodyshape & ~BODYSHAPE_HUMANOID))
+	if(!isinhands && (bodyshape & BODYSHAPE_CHANGES_WORN_ICON))
 		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
 			key = "[t_state]-[file2use]-[female_uniform]",
