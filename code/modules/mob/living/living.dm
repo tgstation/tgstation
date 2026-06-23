@@ -2597,6 +2597,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	else if(!(movement_type & (FLYING | FLOATING)) && !usable_hands && !usable_legs) //Lost a hand, not flying, no hands left, no legs.
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
+/mob/living/perform_hand_swap(held_index)
+	//safeguard for one-handed mobs lol
+	if(num_hands == 1)
+		held_index = 1
+
+	. = ..()
 
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()
