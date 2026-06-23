@@ -602,15 +602,11 @@ generate/load female uniform sprites matching all previously decided variables
 			bodyshape = bodyshape,
 		)
 	if(!isinhands && (bodyshape & ~BODYSHAPE_HUMANOID))
-		var/static/list/cached_bodyshape_icons = list()
-		var/icon/existing_icon = cached_bodyshape_icons[index]
-    	if(!existing_icon)
-			cached_bodyshape_icons[index] = existing_icon(existing_icon)
-			building_icon = get_bodyshape_icon(
-				base_icon = building_icon || icon(file2use, t_state),
-				key = "[t_state]-[file2use]-[female_uniform]",
-				bodyshape = bodyshape,
-			)
+		building_icon = get_bodyshape_icon(
+			base_icon = building_icon || icon(file2use, t_state),
+			key = "[t_state]-[file2use]-[female_uniform]",
+			bodyshape = bodyshape,
+		)
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
 	else
