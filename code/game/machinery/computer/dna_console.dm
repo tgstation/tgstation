@@ -405,6 +405,18 @@
 	data["storage"]["injector"] = tgui_advinjector_mutations
 	data["maxAdvInjectors"] = max_injector_selections
 
+	data["heldScannerBuffer"] = null
+	for(var/obj/item/sequence_scanner/scanner in user.held_items) //We got one or more scanners in our hands, lets get the data from them.
+		if(!LAZYLEN(scanner.buffer))
+			continue
+		var/list/scanner_data = list()
+		for(var/mutation_type in scanner.buffer)
+			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(mutation_type)
+			if(!HM)
+				continue
+			scanner_data[HM.alias] = scanner.buffer[mutation_type]
+		data["heldScannerBuffer"] = scanner_data
+
 	return data
 
 /obj/machinery/computer/dna_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
