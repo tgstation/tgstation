@@ -44,7 +44,7 @@
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
-	host.physiology.bleed_mod *= BLOOD_WORM_BLEED_MOD
+	MODIFY_PHYSIOLOGY(host, PHYS_COEFF_BLEED, BLOOD_WORM_BLEED_MOD)
 
 	host.AddElement(/datum/element/hand_organ_insertion)
 
@@ -125,7 +125,7 @@
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
-	host.physiology.bleed_mod /= BLOOD_WORM_BLEED_MOD
+	MODIFY_PHYSIOLOGY(host, PHYS_COEFF_BLEED, 1/BLOOD_WORM_BLEED_MOD)
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)
@@ -226,8 +226,7 @@
 	if (host.coretemperature <= maximum_survivable_temperature)
 		return
 
-	var/burn_coeff = damage_coeff[BURN]
-	adjust_worm_health(-unsuitable_heat_damage * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
+	adjust_worm_health(-unsuitable_heat_damage * GET_PHYSIOLOGY(src, PHYS_COEFF_BURN) * seconds_per_tick)
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat_self(span_userdanger("Your blood is burning up!"))

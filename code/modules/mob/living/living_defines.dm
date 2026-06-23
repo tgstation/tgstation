@@ -36,6 +36,8 @@
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
 
+	var/list/physiology
+
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
 

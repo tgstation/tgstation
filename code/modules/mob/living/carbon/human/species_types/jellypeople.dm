@@ -68,14 +68,14 @@
 
 	// Blood regen thresholds use your real amount of blood.
 	if(slime.get_blood_volume() <= 0)
-		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * slime.physiology.blood_regen_mod * seconds_per_tick)
+		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
 		slime.adjust_brute_loss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
 
 	// Same logic applies here.
 	if(slime.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
-			slime.adjust_blood_volume(JELLY_REGEN_RATE * slime.physiology.blood_regen_mod * seconds_per_tick)
+			slime.adjust_blood_volume(JELLY_REGEN_RATE * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
 			if(slime.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
@@ -103,7 +103,7 @@
 	consumed_limb.drop_limb()
 	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.adjust_blood_volume(20 * H.physiology.blood_regen_mod)
+	H.adjust_blood_volume(20 * GET_PHYSIOLOGY(H, PHYS_COEFF_BLOOD_REGEN))
 
 /datum/species/jelly/get_species_description()
 	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."

@@ -22,8 +22,11 @@
 	src.on_linked_death = on_linked_death
 
 /datum/component/life_link/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
-	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
+	if(!iscarbon(parent))
+		RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
+	else
+		RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage)) //carbon mobs handle brute and burn damage differently
+		RegisterSignals(parent, list(COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE), PROC_REF(on_damage_adjusted))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
@@ -61,29 +64,20 @@
 	SIGNAL_HANDLER
 	if (forced)
 		return
-	amount *= our_mob.get_damage_mod(type)
-	switch (type)
-		if(BRUTE)
-			host.adjust_brute_loss(amount, forced = TRUE)
-		if(BURN)
-			host.adjust_fire_loss(amount, forced = TRUE)
-		if(TOX)
-			host.adjust_tox_loss(amount, forced = TRUE)
-		if(OXY)
-			host.adjust_oxy_loss(amount, forced = TRUE)
+	amount *= our_mob.get_incoming_damage_modifier(amount, type)
+	host.apply_damage(amount, type, spread_damage = TRUE)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE
 
 /// Called when someone hurts one of our limbs, bypassing normal damage adjustment
-/datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, limb, brute, burn)
+/datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, obj/item/bodypart/part, brute, burn)
 	SIGNAL_HANDLER
+	var/obj/item/bodypart/host_part = host.get_bodypart(part.body_zone)
 	if (brute != 0)
-		host.adjust_brute_loss(brute, updating_health = FALSE)
+		host.apply_damage(brute, BRUTE, host_part, spread_damage = !host_part)
 	if (burn != 0)
-		host.adjust_fire_loss(burn, updating_health = FALSE)
-	if (brute != 0 || burn != 0)
-		host.updatehealth()
+		host.apply_damage(burn, BURN, host_part, spread_damage = !host_part)
 	on_passed_damage?.Invoke(our_mob, host, brute + burn)
 	return COMPONENT_PREVENT_LIMB_DAMAGE
 

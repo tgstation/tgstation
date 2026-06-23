@@ -42,18 +42,14 @@
 
 /datum/status_effect/slimeskin/on_apply()
 	owner.add_atom_colour(color_transition_filter("#3070CC", SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 10
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.9)
 	owner.visible_message(span_warning("[owner] is suddenly covered in a strange, blue-ish gel!"),
 		span_notice("You are covered in a thick, rubbery gel."))
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance -= 10
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.9)
 	owner.visible_message(span_warning("[owner]'s gel coating liquefies and dissolves away."),
 		span_notice("Your gel second-skin dissolves!"))
 
@@ -300,15 +296,11 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/metalcookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 0.9
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 0.9)
 	return ..()
 
 /datum/status_effect/metalcookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod /= 0.9
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1 / 0.9)
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
@@ -316,19 +308,13 @@
 	alert_type = null
 	duration = 30 SECONDS
 	tick_interval = STATUS_EFFECT_NO_TICK
-	var/original_coeff
 
 /datum/status_effect/sparkcookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		original_coeff = H.physiology.siemens_coeff
-		H.physiology.siemens_coeff = 0
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/sparkcookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.siemens_coeff = original_coeff
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/toxincookie
 	id = "toxincookie"
@@ -451,15 +437,11 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/adamantinecookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.burn_mod *= 0.9
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.9)
 	return ..()
 
 /datum/status_effect/adamantinecookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.burn_mod /= 0.9
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 0.9)
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
@@ -692,15 +674,11 @@
 	colour = SLIME_TYPE_SILVER
 
 /datum/status_effect/stabilized/silver/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.hunger_mod *= 0.8 //20% buff
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HUNGER_MOD, 0.8)
 	return ..()
 
 /datum/status_effect/stabilized/silver/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.hunger_mod /= 0.8
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HUNGER_MOD, 1.25)
 
 //Bluespace has an icon because it's kinda active.
 /atom/movable/screen/alert/status_effect/bluespaceslime
@@ -1083,15 +1061,11 @@
 		qdel(familiar)
 
 /datum/status_effect/stabilized/adamantine/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.95)
 	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance -= 5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.95)
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"

@@ -201,15 +201,13 @@
 		return FALSE
 	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.burn_mod *= BURN_MULTIPLIER
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, BURN_MULTIPLIER)
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.burn_mod /= BURN_MULTIPLIER
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / BURN_MULTIPLIER)
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
@@ -385,10 +383,9 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	var/mob/living/carbon/human/human_owner = owner
-	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
-	human_owner.physiology.brute_mod *= brute_modifier
-	for (var/obj/item/bodypart/arm/arm in human_owner.get_bodyparts())
+	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, brute_modifier)
+	for (var/obj/item/bodypart/arm/arm in owner.get_bodyparts())
 		buff_arm(arm)
 
 /// Give mining mobs an extra slap
@@ -409,9 +406,8 @@
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
-	var/mob/living/carbon/human/human_owner = owner
-	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
-	human_owner.physiology.brute_mod /= brute_modifier
+	UnregisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1 / brute_modifier)
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		debuff_arm(arm)
 	LAZYCLEARLIST(modified_arms)

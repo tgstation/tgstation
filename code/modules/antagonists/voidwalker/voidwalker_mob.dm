@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_SPECIAL
 	maxHealth = 150
 	health = 150
-	damage_coeff = list(BRUTE = 1, BURN = 0.66, TOX = 1, STAMINA = 1, OXY = 0)
+	physiology = list(PHYS_COEFF_BURN = 0.66, PHYS_COEFF_OXY = 0)
 
 	pressure_resistance = 200
 	combat_mode = TRUE

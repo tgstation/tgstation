@@ -19,14 +19,12 @@
 		ADD_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
 		RegisterSignal(L, COMSIG_MOB_SAY, PROC_REF(handle_shrunk_speech))
 		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+		MODIFY_PHYSIOLOGY(L, PHYS_COEFF_DAMAGE, 2)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
 			C.visible_message(span_warning("[C]'s belongings fall off of [C.p_them()] as they shrink down!"),
 			span_userdanger("Your belongings fall away as everything grows bigger!"))
-			if(ishuman(C))
-				var/mob/living/carbon/human/H = C
-				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
 		if(!L.GetComponent(/datum/component/squashable))
 			newsquash = L.AddComponent( \
 				/datum/component/squashable, \
@@ -56,9 +54,7 @@
 		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		REMOVE_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
 		UnregisterSignal(L, COMSIG_MOB_SAY)
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			H.physiology.damage_resistance += 100
+		MODIFY_PHYSIOLOGY(L, PHYS_COEFF_DAMAGE, 0.5)
 	else
 		parent_atom.set_density(olddens) // this is handled by the UNDENSE trait on mobs
 	return ..()

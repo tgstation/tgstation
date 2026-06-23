@@ -24,7 +24,7 @@
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(PHYS_COEFF_BURN = 0.5, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
 	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 
 	slowed_by_drag = FALSE

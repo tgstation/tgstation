@@ -94,7 +94,7 @@
 
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
-	duration = 10
+	duration = 1 SECONDS
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
@@ -105,25 +105,21 @@
 
 /datum/status_effect/blooddrunk/on_apply()
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 0.1
-		human_owner.physiology.burn_mod *= 0.1
-		human_owner.physiology.tox_mod *= 0.1
-		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.stamina_mod *= 0.1
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 0.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 0.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_OXY, 0.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 0.1)
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 10
-		human_owner.physiology.burn_mod *= 10
-		human_owner.physiology.tox_mod *= 10
-		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.stamina_mod *= 10
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 10)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 10)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 10)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_OXY, 10)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_PRESSURE, 10)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_stun_absorption(id)
 
@@ -575,14 +571,11 @@
 	alert_type = null
 
 /datum/status_effect/blessing_of_insanity/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 0.5
-		owner_physiology.burn_mod *= 0.5
-		owner_physiology.tox_mod *= 0.5
-		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.stamina_mod *= 0.5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 0.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_OXY, 0.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 0.5)
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
@@ -593,14 +586,11 @@
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 2
-		owner_physiology.burn_mod *= 2
-		owner_physiology.tox_mod *= 2
-		owner_physiology.oxy_mod *= 2
-		owner_physiology.stamina_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_OXY, 2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 2)
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)

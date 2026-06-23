@@ -175,16 +175,12 @@
 /obj/item/organ/tongue/stoat/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	RegisterSignals(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
-	if(ishuman(receiver))
-		var/mob/living/carbon/human/human_receiver = receiver
-		human_receiver.physiology.hunger_mod *= 2
+	MODIFY_PHYSIOLOGY(receiver, PHYS_COEFF_HUNGER_MOD, 2)
 
 /obj/item/organ/tongue/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY)
-	if(ishuman(organ_owner))
-		var/mob/living/carbon/human/human_remover = organ_owner
-		human_remover.physiology.hunger_mod /= 2
+	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_HUNGER_MOD, 0.5)
 
 /obj/item/organ/tongue/stoat/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()

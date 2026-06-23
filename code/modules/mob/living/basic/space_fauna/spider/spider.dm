@@ -14,7 +14,7 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 3, STAMINA = 1, OXY = 1)
+	physiology = list(PHYS_COEFF_BURN = 1.25, PHYS_COEFF_TOX = 3)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4

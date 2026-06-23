@@ -35,6 +35,10 @@
 	wound_clothing = TRUE,
 )
 	SHOULD_CALL_PARENT(TRUE)
+
+	// convert the relevant coefficient into blocked damage (if PHYS_COEFF_DAMAGE is higher than 1, it'll go into negative and the mob will receive more damage)
+	blocked += (1 - GET_PHYSIOLOGY(src, PHYS_COEFF_DAMAGE)) * 100
+
 	var/damage_amount = damage
 	if(!forced)
 		damage_amount *= ((100 - blocked) / 100)
@@ -116,6 +120,7 @@
 	var/final_mod = 1
 	for(var/new_mod in damage_mods)
 		final_mod *= new_mod
+
 	return final_mod
 
 /**
@@ -255,17 +260,6 @@
 
 	return TRUE
 
-/// Returns a multiplier to apply to a specific kind of damage
-/mob/living/proc/get_damage_mod(damage_type)
-	switch(damage_type)
-		if (OXY)
-			return HAS_TRAIT(src, TRAIT_NOBREATH) ? 0 : 1
-		if (TOX)
-			if (HAS_TRAIT(src, TRAIT_TOXINLOVER))
-				return -1
-			return HAS_TRAIT(src, TRAIT_TOXIMMUNE) ? 0 : 1
-	return 1
-
 /mob/living/proc/get_brute_loss()
 	return bruteloss
 
@@ -277,6 +271,9 @@
 	return TRUE
 
 /mob/living/proc/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
+		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BRUTE)
+
 	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	. = bruteloss
@@ -320,8 +317,12 @@
 	return TRUE
 
 /mob/living/proc/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
+	if(amount > 0)
+		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_OXY)
+
 	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
+
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= oxyloss
@@ -361,6 +362,9 @@
 	return TRUE
 
 /mob/living/proc/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+	if(amount > 0)
+		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_TOX)
+
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
 
@@ -411,6 +415,9 @@
 	return TRUE
 
 /mob/living/proc/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
+		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BURN)
+
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	. = fireloss
@@ -452,8 +459,12 @@
 	return TRUE
 
 /mob/living/proc/adjust_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
+	if(amount > 0)
+		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STAMINA)
+
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
+
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss

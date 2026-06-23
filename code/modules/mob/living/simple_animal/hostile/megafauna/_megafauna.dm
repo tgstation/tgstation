@@ -16,7 +16,7 @@
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
 	atmos_requirements = null
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(PHYS_COEFF_BURN = 0.5, PHYS_COEFF_STAMINA = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	vision_range = 5

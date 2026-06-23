@@ -368,8 +368,6 @@
 	else if(gloves)
 		siemens_coeff *= gloves.siemens_coefficient
 
-	siemens_coeff *= physiology.siemens_coeff
-	siemens_coeff *= dna.species.siemens_coeff
 	. = ..()
 	//Don't go further if the shock was blocked/too weak.
 	if(!.)

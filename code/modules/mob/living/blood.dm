@@ -168,7 +168,7 @@
 		if(satiety > 80)
 			nutrition_ratio *= 1.25
 
-		var/blood_to_restore = BLOOD_REGEN_FACTOR * physiology.blood_regen_mod * heart_blood_multiplier * nutrition_ratio * seconds_per_tick
+		var/blood_to_restore = BLOOD_REGEN_FACTOR * GET_PHYSIOLOGY(src, PHYS_COEFF_BLOOD_REGEN) * heart_blood_multiplier * nutrition_ratio * seconds_per_tick
 		var/blood_restored = adjust_blood_volume(blood_to_restore, maximum = BLOOD_VOLUME_NORMAL)
 		if (blood_restored > 0)
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick * (blood_restored / blood_to_restore))
@@ -270,6 +270,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BLEED)
 	var/amount_bled = -adjust_blood_volume(-amount)
 
 	// Blood loss still happens in locker, floor stays clean
@@ -277,7 +278,6 @@
 		add_splatter_floor(loc, (amount_bled <= 10))
 
 /mob/living/carbon/human/bleed(amount)
-	amount *= physiology.bleed_mod
 	return ..()
 
 /// A helper to see how much blood we're losing per tick
@@ -292,8 +292,7 @@
 	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		. += bodypart.cached_bleed_rate
 
-/mob/living/carbon/human/get_bleed_rate()
-	return ..() * physiology.bleed_mod
+	. *= GET_PHYSIOLOGY(src, PHYS_COEFF_BLEED)
 
 /**
  * bleed_warn() is used to for carbons with an active client to occasionally receive messages warning them about their bleeding status (if applicable)

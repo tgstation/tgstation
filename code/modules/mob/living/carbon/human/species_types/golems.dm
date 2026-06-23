@@ -70,9 +70,9 @@
 	// nutrition = health, so give people a head start
 	human_who_gained_species.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 
-	human_who_gained_species.physiology.stamina_mod *= 0.6
-	human_who_gained_species.physiology.stun_mod *= 0.6
-	human_who_gained_species.physiology.knockdown_mod *= 1.2
+	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_STAMINA, 0.6)
+	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_STUN, 0.6)
+	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_KNOCKDOWN, 1.2) //this offsets the positive effects of the lowered stun coeff on knockdowns specifically.
 
 /datum/species/golem/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
 	. = ..()
@@ -85,9 +85,9 @@
 		COMSIG_LIVING_LIFE,
 	))
 
-	human_who_lost_species.physiology.stamina_mod /= 0.6
-	human_who_lost_species.physiology.stun_mod /= 0.6
-	human_who_lost_species.physiology.knockdown_mod /= 1.2
+	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_STAMINA, 1 / 0.6)
+	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_STUN, 1 / 0.6)
+	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_KNOCKDOWN, 1/1.2)
 
 /datum/species/golem/proc/on_life(mob/living/carbon/human/source, seconds_per_tick)
 	SIGNAL_HANDLER

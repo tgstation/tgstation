@@ -75,7 +75,7 @@
 
 	RegisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_damage))
 	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
-	human_owner.physiology.knockdown_mod *= 3
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 3)
 
 /obj/item/organ/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
@@ -89,7 +89,7 @@
 	var/mob/living/carbon/human/human_owner = organ_owner
 
 	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
-	human_owner.physiology.knockdown_mod /= 3
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1/3)
 
 /obj/item/organ/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
@@ -194,19 +194,14 @@
 
 /obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner))
-		return
-
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.tox_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 2)
 
 /obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+	if(QDELETED(organ_owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = organ_owner
-	human_owner.physiology.tox_mod *= 0.5
+	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_TOX, 0.5)
 
 /// Roach appendix:
 /// No appendicitus! weee!

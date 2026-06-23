@@ -630,10 +630,8 @@
 	// Show the cool red gradiant in our UI
 	heretic_datum.update_static_data(user)
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.physiology.brute_mod *= 0.5
-		human_user.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(user, PHYS_COEFF_BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(user, PHYS_COEFF_BURN, 0.5)
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_path.route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [round_timestamp()].")

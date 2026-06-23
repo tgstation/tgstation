@@ -11,7 +11,7 @@
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
 
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(PHYS_COEFF_BURN = 1.5, PHYS_COEFF_TOX = 0, PHYS_COEFF_STAMINA = 0, PHYS_COEFF_OXY = 0)
 
 	pressure_resistance = 200
 

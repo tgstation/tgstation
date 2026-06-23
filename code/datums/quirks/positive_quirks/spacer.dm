@@ -52,10 +52,13 @@
 	// drift slightly faster through zero G
 	quirk_holder.inertia_move_multiplier_passive *= drift_mod
 
+	//more impervious to the empty space
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_PRESSURE, damage_mod)
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_COLD, damage_mod)
+
+	//taller from lack of gravity
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(modded_height)
-	human_quirker.physiology.pressure_mod *= damage_mod
-	human_quirker.physiology.cold_mod *= damage_mod
 
 /datum/quirk/spacer_born/post_add()
 	var/on_a_planet = SSmapping.is_planetary()
@@ -85,11 +88,11 @@
 	quirk_holder.clear_mood_event("spacer")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
 	quirk_holder.remove_status_effect(/datum/status_effect/spacer)
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_PRESSURE, 1 / damage_mod)
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_COLD, 1 / damage_mod)
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
-	human_quirker.physiology.pressure_mod /= damage_mod
-	human_quirker.physiology.cold_mod /= damage_mod
 
 /// Check on Z change whether we should start or stop timers
 /datum/quirk/spacer_born/proc/spacer_moved(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)

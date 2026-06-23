@@ -38,12 +38,10 @@
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
 	RegisterSignals(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		//Fish is slightly weaker to being cooked. oh oh.
-		human.physiology.burn_mod *= 1.15
-		human.physiology.heat_mod *= 1.15
-		human.physiology.damage_resistance += 8 //base 8% damage resistance, much wow.
+	//Fish is slightly weaker to being cooked. oh oh.
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1.15)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1.15)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.92) //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
 	else
@@ -69,11 +67,9 @@
 	else
 		REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id))
 	owner.clear_mood_event("fish_organs_bonus")
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		human.physiology.burn_mod /= 1.15
-		human.physiology.heat_mod /= 1.15
-		human.physiology.damage_resistance -= 8
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 1.15)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.15)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.92)
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
@@ -150,31 +146,25 @@
 	REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
 	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_waterless)
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/human = owner
-	human.physiology.burn_mod *= 1.5
-	human.physiology.heat_mod *= 1.2
-	human.physiology.brute_mod *= 1.1
-	human.physiology.stun_mod *= 1.1
-	human.physiology.knockdown_mod *= 1.1
-	human.physiology.stamina_mod *= 1.1
-	human.physiology.damage_resistance -= 16 //from +8% to -8%
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1.2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1.175) // This should bring the damage multiplier from 92% to 108%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
 	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id)) //harder to grab when wet.
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
 	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/human = owner
-	human.physiology.burn_mod /= 1.5
-	human.physiology.heat_mod /= 1.2
-	human.physiology.brute_mod /= 1.1
-	human.physiology.stun_mod /= 1.1
-	human.physiology.knockdown_mod /= 1.1
-	human.physiology.stamina_mod /= 1.1
-	human.physiology.damage_resistance += 16 //from -8% to +8%
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 1.5)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.2)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 1.175)
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER

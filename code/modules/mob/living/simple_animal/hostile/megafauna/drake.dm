@@ -318,7 +318,7 @@
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(PHYS_COEFF_STAMINA = 0)
 	loot = list()
 	crusher_loot = null
 	achievement_type = null

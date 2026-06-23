@@ -11,7 +11,7 @@
 	health = 50
 	maxHealth = 50
 
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(PHYS_COEFF_BRUTE = 0.5, PHYS_COEFF_BURN = 0.7, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
 	density = TRUE
 	mob_size = MOB_SIZE_LARGE
 	move_resist = MOVE_FORCE_STRONG

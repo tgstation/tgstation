@@ -83,7 +83,7 @@
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
-	damage_coeff = list(BRUTE = 0.25, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(PHYS_COEFF_BRUTE = 0.25)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Welcome to Clown Planet!"),
 		BB_EMOTE_HEAR = list("bubbles.", "oozes."),
@@ -388,7 +388,6 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	obj_damage = 50
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	///Tracks how many total foods we have eaten, used for calculating when we should gain max health.

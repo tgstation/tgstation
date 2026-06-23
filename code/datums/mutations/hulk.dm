@@ -43,6 +43,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_COLD, 2) //hulks are vulnerable to cold temperatures for some reason, idk low body fat?
 
 /datum/mutation/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -81,6 +82,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_COLD, 0.5)
 
 /datum/mutation/hulk/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER

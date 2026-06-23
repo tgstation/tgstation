@@ -10,7 +10,7 @@
 
 	habitable_atmos = null
 	status_flags = CANPUSH
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(PHYS_COEFF_BRUTE = 0.7, PHYS_COEFF_BURN = 0.7, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
 	speed = 0
 	melee_attack_cooldown = CLICK_CD_MELEE
 

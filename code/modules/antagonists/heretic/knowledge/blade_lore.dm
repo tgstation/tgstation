@@ -353,7 +353,7 @@
 	steel_spell?.cooldown_time /= 2
 
 	var/mob/living/carbon/human/heretic = user
-	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
+	MODIFY_PHYSIOLOGY(heretic, PHYS_COEFF_KNOCKDOWN, 0.75)
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

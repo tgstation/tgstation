@@ -79,8 +79,6 @@
 #define BODYTEMP_HEAT_WOUND_LIMIT (BODYTEMP_NORMAL + 90) // 400.5 k
 /// The modifier on cold damage limit hulks get ontop of their regular limit
 #define BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER 25
-/// The modifier on cold damage hulks get.
-#define HULK_COLD_DAMAGE_MOD 2
 
 // Body temperature warning icons
 /// The temperature the red icon is displayed.

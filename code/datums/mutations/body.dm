@@ -369,12 +369,12 @@
 	. = ..()
 	if(!.)
 		return
-	owner.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.5)
 
 /datum/mutation/fire/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.physiology.burn_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 2)
 
 /datum/mutation/badblink
 	name = "Spatial Instability"
@@ -607,8 +607,8 @@
 	if(!.)
 		return
 	if(!physiology_modified)
-		owner.physiology.bleed_mod *= bleed_rate
-		owner.physiology.blood_regen_mod *= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, blood_regen_rate)
 		physiology_modified = TRUE
 
 /datum/mutation/bloodier/on_losing(mob/living/carbon/human/owner)
@@ -616,22 +616,22 @@
 	if(.)
 		return
 	if(physiology_modified)
-		owner.physiology.bleed_mod /= bleed_rate
-		owner.physiology.blood_regen_mod /= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, 1/blood_regen_rate)
 		physiology_modified = FALSE // just in case
 
 /datum/mutation/bloodier/setup()
 	if(owner && physiology_modified)
-		owner.physiology.bleed_mod /= bleed_rate
-		owner.physiology.blood_regen_mod /= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, 1/blood_regen_rate)
 		physiology_modified = FALSE
 
 	bleed_rate = clamp(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1, 2)
 	blood_regen_rate = clamp(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 4, 12)
 
 	if(owner && !physiology_modified) // redundant but just in case
-		owner.physiology.bleed_mod *= bleed_rate
-		owner.physiology.blood_regen_mod *= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, blood_regen_rate)
 		physiology_modified = TRUE
 	return TRUE
 
