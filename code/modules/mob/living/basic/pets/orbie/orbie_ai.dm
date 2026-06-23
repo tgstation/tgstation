@@ -111,7 +111,7 @@
 /datum/pet_command/untargeted_ability/pet_lights/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		return SUBTREE_RETURN_FINISH_PLANNING
+		return TRUE
 	return ..()
 
 /datum/pet_command/use_ability/pet_lights/retrieve_command_text(atom/living_pet, atom/target)
@@ -134,7 +134,7 @@
 /datum/pet_command/use_ability/take_photo/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 3)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		return SUBTREE_RETURN_FINISH_PLANNING
+		return TRUE
 	return ..()
 
 /datum/pet_command/perform_trick_sequence
@@ -159,7 +159,7 @@
 	for(var/index in 1 to length(trick_sequence))
 		addtimer(CALLBACK(living_pawn, TYPE_PROC_REF(/mob, emote), trick_sequence[index], index * 0.5 SECONDS))
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	return TRUE
 
 #undef PET_PLAYTIME_COOLDOWN
 #undef MESSAGE_EXPIRY_TIME
