@@ -153,7 +153,8 @@ multiple modular subtrees with behaviors
 
 ///Loads and decodes a compiled BT JSON file into a node tree.
 /datum/ai_controller/proc/load_tree_from_json(path)
-	var/list/desc = json_decode(file2text(path))
+	var/file = file(path)
+	var/list/desc = json_decode(file2text(file))
 	return build_node_from_descriptor(desc)
 
 /**
