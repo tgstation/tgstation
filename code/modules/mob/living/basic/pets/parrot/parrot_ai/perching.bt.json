@@ -25,7 +25,7 @@
 									"type": "leaf",
 									"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
 									"vars": {
-										"key": "BB_PERCH_TARGET",
+										"target_key": "BB_PERCH_TARGET",
 										"target_source": "/datum/target_source/oview_single_type/human_mob",
 										"targeting_strategy": "/datum/targeting_strategy/ally_mob"
 									}
