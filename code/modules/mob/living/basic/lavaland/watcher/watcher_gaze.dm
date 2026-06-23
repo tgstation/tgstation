@@ -19,25 +19,20 @@
 	var/wait_delay = 1.6 SECONDS
 	/// What are we currently displaying to all mobs?
 	var/image/current_overlay
-	/// Icon state of the current overlay
-	var/current_overlay_state
+	/// Image displayed for to-be-blinded victims
+	var/image/danger_overlay
 	/// Timer until we go to the next stage
 	var/stage_timer
 	/// Proximity monitor we use to keep track of possible targets
 	var/datum/proximity_monitor/watcher_gaze/proximity_monitor
-	/// List of textrefs to mobs in range we're currently displaying warnings to -> if they're currently seeing the warning overlay or not
+	/// List of textrefs to mobs in range we're currently displaying warnings to -> are they currently under threat or not
 	var/list/tracked_mobs = list()
-	/// List of weakrefs to mobs -> warning image they're currently seeing
-	var/list/mob_images = list()
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Activate(mob/living/target)
 	proximity_monitor = new(owner, effect_radius, ability = src)
 	// Start tracking all potential victims in range as proxmon won't trigger on them
 	for (var/mob/living/victim in viewers(effect_radius, owner))
-		if (valid_target(victim))
-			tracked_mobs[REF(victim)] = TRUE
-		else
-			tracked_mobs[REF(victim)] = FALSE
+		on_entered(victim)
 	show_indicator_overlay("eye_open")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
@@ -47,24 +42,23 @@
 	else
 		deltimer(stage_timer)
 		clear_current_overlay()
-	// Don't cut images here, we may have an ongoing animation still
+	StartCooldown()
 	tracked_mobs.Cut()
 	QDEL_NULL(proximity_monitor)
-	StartCooldown()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Destroy()
+	tracked_mobs.Cut()
 	QDEL_NULL(proximity_monitor)
 	deltimer(stage_timer)
 	clear_current_overlay()
-	tracked_mobs.Cut()
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/Remove(mob/removed_from)
+	tracked_mobs.Cut()
 	QDEL_NULL(proximity_monitor)
 	deltimer(stage_timer)
 	clear_current_overlay()
-	tracked_mobs.Cut()
 	return ..()
 
 /// Do some effects to whoever is looking at us
@@ -111,44 +105,31 @@
 /// Display an animated overlay over our head to indicate what's going on
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/show_indicator_overlay(overlay_state)
 	clear_current_overlay()
-	current_overlay_state = overlay_state
 	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = "[overlay_state]_y", layer = ABOVE_ALL_MOB_LAYER)
 	current_overlay.pixel_w = -owner.pixel_x
 	current_overlay.pixel_z = 28
 	SET_PLANE_EXPLICIT(current_overlay, ABOVE_LIGHTING_PLANE, owner)
-
-	for(var/client/add_to in GLOB.clients)
-		var/mob/living/victim = add_to.mob
-		add_to.images += current_overlay
-		if (!istype(victim) || isnull(tracked_mobs[REF(victim)]))
-			continue
-		var/image/danger_overlay = get_danger_overlay()
-		// Need to have them always on display because animation starts from scratch when we add an image to client.images
-		danger_overlay.alpha = tracked_mobs[REF(victim)] ? 255 : 0
-		mob_images[WEAKREF(victim)] = danger_overlay
-		add_to.images += danger_overlay
-
-/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/get_danger_overlay()
-	var/image/danger_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = current_overlay_state, layer = ABOVE_ALL_MOB_LAYER + 0.01)
+	// This will cause turning to reset the animation *but* this is the best option
+	// as modifying alpha requires readding the image to client.images for it to actually update
+	danger_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, layer = ABOVE_ALL_MOB_LAYER)
 	danger_overlay.pixel_w = -owner.pixel_x
 	danger_overlay.pixel_z = 28
 	SET_PLANE_EXPLICIT(danger_overlay, ABOVE_LIGHTING_PLANE, owner)
-	return danger_overlay
+
+	for(var/client/add_to in GLOB.clients)
+		var/mob/living/victim = add_to.mob
+		if (istype(victim) && tracked_mobs[REF(victim)])
+			add_to.images += danger_overlay
+		else
+			add_to.images += current_overlay
 
 /// Hide whatever overlay we are showing
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/clear_current_overlay()
 	if (!isnull(current_overlay))
 		remove_image_from_clients(current_overlay, GLOB.clients)
-
-	for (var/datum/weakref/mob_ref as anything in mob_images)
-		var/mob/living/victim = mob_ref.resolve()
-		if (!isnull(victim) && victim.client)
-			victim.client.images -= mob_images[mob_ref]
-		else // Orphaned overlay, needs cleanup - only happens in case of bodyswaps or logouts, and there isn't really a better way to handle this without risking harddels
-			remove_image_from_clients(mob_images[mob_ref], GLOB.clients)
-
+		remove_image_from_clients(danger_overlay, GLOB.clients)
 	current_overlay = null
-	mob_images.Cut()
+	danger_overlay = null
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/on_entered(mob/living/arrived)
 	// Already tracked
@@ -159,30 +140,24 @@
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/on_exited(mob/living/exited)
 	UnregisterSignal(exited, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_MOB_STATCHANGE))
 	tracked_mobs -= REF(exited)
-	var/image/danger_overlay = mob_images[WEAKREF(exited)]
-	if (!isnull(danger_overlay))
-		danger_overlay.alpha = 0
+	if (current_overlay && exited.client)
+		exited.client.images += current_overlay
+		exited.client.images -= danger_overlay
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/update_state(mob/living/target)
 	SIGNAL_HANDLER
-
 	// Don't do viewers(), too costly and only applies for thermals anyways
-	var/prev_state = tracked_mobs[REF(target)]
 	if (valid_target(target))
-		tracked_mobs[REF(target)] = TRUE
-	else
+		if (!tracked_mobs[REF(target)])
+			tracked_mobs[REF(target)] = TRUE
+			if (current_overlay && target.client)
+				target.client.images -= current_overlay
+				target.client.images += danger_overlay
+	else if (tracked_mobs[REF(target)] != FALSE) // Can be null
 		tracked_mobs[REF(target)] = FALSE
-
-	var/image/danger_overlay = mob_images[WEAKREF(target)]
-	if (!isnull(danger_overlay))
-		if (prev_state != tracked_mobs[REF(target)])
-			danger_overlay.alpha = tracked_mobs[REF(target)] ? 255 : 0
-		return
-
-	danger_overlay = get_danger_overlay()
-	mob_images[WEAKREF(target)] = danger_overlay
-	danger_overlay.alpha = tracked_mobs[REF(target)] ? 255 : 0
-	target.client?.images += danger_overlay
+		if (current_overlay && target.client)
+			target.client.images += current_overlay
+			target.client.images -= danger_overlay
 
 // No need to refresh targets when the owner moves as the ability uses a do_after and will stop if the owner moves anyways
 /datum/proximity_monitor/watcher_gaze
