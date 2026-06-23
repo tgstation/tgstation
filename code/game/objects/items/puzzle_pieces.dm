@@ -124,13 +124,13 @@
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 	uses_queuelinks = FALSE
 
-/obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/keycard))
-		return
-	var/obj/item/keycard/key = attacking_item
-	if(!try_puzzle_open(key.puzzle_id))
+/obj/machinery/door/puzzle/keycard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/keycard))
+		return NONE
+	if(!try_puzzle_open(astype(tool, /obj/item/keycard).puzzle_id))
 		to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
 
 //Test doors. Gives admins a few doors to use quickly should they so choose for events.
 /obj/machinery/door/puzzle/keycard/yellow_required
