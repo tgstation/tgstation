@@ -450,20 +450,19 @@ There are several things that need to be remembered:
 	return icon(female_clothing_icon)
 
 /// Modifies a sprite to conform to custom body shapes
-/proc/get_bodyshape_icon(icon/base_icon, obj/item/item, key, greyscale_colors, bodyshape)
-	ASSERT(istype(item), "get_bodyshape_icon: no item passed")
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
-	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (item.supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
+	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 			greyscale_colors = item.get_general_color(base_icon)
 
-		var/index = "[key]-[item.type]-[greyscale_colors]"
+		var/index = "[key]-[type]-[greyscale_colors]"
 		var/static/list/digitigrade_clothing_cache = list()
 		var/icon/resulting_icon = digitigrade_clothing_cache[index]
 		if(!resulting_icon)
-			resulting_icon = item.generate_digitigrade_icons(base_icon, greyscale_colors)
+			resulting_icon = generate_digitigrade_icons(base_icon, greyscale_colors)
 			if(!resulting_icon)
-				stack_trace("[item.type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
+				stack_trace("[type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
 				return base_icon
 			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
@@ -602,14 +601,16 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
-	if(!isinhands && bodyshape)
-		building_icon = get_bodyshape_icon(
-			base_icon = building_icon || icon(file2use, t_state),
-			item = src,
-			key = "[t_state]-[file2use]-[female_uniform]",
-			greyscale_colors = greyscale_colors,
-			bodyshape = bodyshape,
-		)
+	if(!isinhands && (bodyshape & ~BODYSHAPE_HUMANOID))
+	    var/static/list/cached_bodyshape_icons = list()
+		var/icon/existing_icon = cached_bodyshape_icons[index]
+    	if(!existing_icon)
+			cached_bodyshape_icons[index] = existing_icon(existing_icon)
+			building_icon = get_bodyshape_icon(
+				base_icon = building_icon || icon(file2use, t_state),
+				key = "[t_state]-[file2use]-[female_uniform]",
+				bodyshape = bodyshape,
+			)
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
 	else
