@@ -85,7 +85,7 @@
 	if(cap_type)
 		. += mutable_appearance(icon, "[base_icon_state]_cap_[cap_type]")
 
-/obj/item/reagent_containers/cup/jerrycan/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/reagent_containers/cup/jerrycan/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		return
