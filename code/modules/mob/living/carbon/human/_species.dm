@@ -28,8 +28,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	 */
 	var/plural_form
 
-	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
+	/// Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
+	/// If FALSE, gender shaping will never be used regardless of what sexes is set to (for example, if you want a species that has biological sexes but does not use gender shaping for sprites, set this to FALSE)
+	var/use_gender_shaping = TRUE
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6

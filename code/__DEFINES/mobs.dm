@@ -187,6 +187,9 @@
 /// Golem's wacky rocky limbs
 #define BODYSHAPE_GOLEM (1<<4)
 
+/// Anything set in here will result in a unique cache key for mobs using that bodyshape in build_worn_icon().
+#define BODYSHAPE_CHANGES_WORN_ICON (BODYSHAPE_DIGITIGRADE)
+
 /// List of body part flags that can not be bioscrambled
 #define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
 /// Check to see if a bodypart limb can be bioscrambled
