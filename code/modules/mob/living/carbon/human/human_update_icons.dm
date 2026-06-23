@@ -454,7 +454,7 @@ There are several things that need to be remembered:
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
-			greyscale_colors = item.get_general_color(base_icon)
+			greyscale_colors = get_general_color(base_icon)
 
 		var/index = "[key]-[type]-[greyscale_colors]"
 		var/static/list/digitigrade_clothing_cache = list()
