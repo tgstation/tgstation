@@ -602,7 +602,7 @@ generate/load female uniform sprites matching all previously decided variables
 			bodyshape = bodyshape,
 		)
 	if(!isinhands && (bodyshape & ~BODYSHAPE_HUMANOID))
-	    var/static/list/cached_bodyshape_icons = list()
+		var/static/list/cached_bodyshape_icons = list()
 		var/icon/existing_icon = cached_bodyshape_icons[index]
     	if(!existing_icon)
 			cached_bodyshape_icons[index] = existing_icon(existing_icon)
