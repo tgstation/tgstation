@@ -135,7 +135,7 @@
 
 	return  ..()
 
-/mob/living/basic/pet/dog/corgi/update_dog_speech(var/list/speech_data)
+/mob/living/basic/pet/dog/corgi/update_dog_speech(list/speech_data)
 	. = ..()
 	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/equipped_head_fashion_item = new inventory_head.dog_fashion(src)
@@ -515,7 +515,7 @@
 	. = ..()
 	speak_emote = list("growls", "barks ominously")
 
-/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(var/list/speech_data)
+/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(list/speech_data)
 	speech_data[BB_EMOTE_SAY] = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
 	speech_data[BB_EMOTE_HEAR] = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
 	speech_data[BB_EMOTE_SEE] = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))

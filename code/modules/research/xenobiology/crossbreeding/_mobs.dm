@@ -48,7 +48,7 @@ Slimecrossing Mobs
 	gold_core_spawnable = NO_SPAWN
 	speak_emote = list("blorbles", "bubbles", "borks")
 
-/mob/living/basic/pet/dog/corgi/puppy/slime/update_dog_speech(var/list/speech_data)
+/mob/living/basic/pet/dog/corgi/puppy/slime/update_dog_speech(list/speech_data)
 	speech_data[BB_EMOTE_SAY] = string_list(list())
 	speech_data[BB_EMOTE_HEAR] = string_list(list("bubbles!", "splorts.", "splops!"))
 	speech_data[BB_EMOTE_SEE] = string_list(list("gets goop everywhere.", "flops.", "jiggles!"))

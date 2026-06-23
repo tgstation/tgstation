@@ -300,7 +300,7 @@ def main() -> int:
             errors += 1
             continue
 
-        compiled_text = json.dumps(compiled, separators=(',', ':'))
+        compiled_text = json.dumps(compiled, separators=(',', ':')) + '\n'
 
         # either write or check depending on flag
         if check_mode:

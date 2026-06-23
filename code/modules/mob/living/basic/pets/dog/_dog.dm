@@ -86,7 +86,7 @@
 			break
 
 ///Updates dog speech and emotes
-/mob/living/basic/pet/dog/proc/update_dog_speech(var/list/speech_data)
+/mob/living/basic/pet/dog/proc/update_dog_speech(list/speech_data)
 	speech_data[BB_EMOTE_SAY] = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
 	speech_data[BB_EMOTE_HEAR] = string_list(list("barks!", "woofs!", "yaps.","pants."))
 	speech_data[BB_EMOTE_SEE] = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
