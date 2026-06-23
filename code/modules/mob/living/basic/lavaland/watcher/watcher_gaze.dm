@@ -132,12 +132,16 @@
 	danger_overlay = null
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/on_entered(mob/living/arrived)
+	if (arrived == owner)
+		return
 	// Already tracked
 	if (isnull(tracked_mobs[REF(arrived)]))
 		RegisterSignals(arrived, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_MOB_STATCHANGE), PROC_REF(update_state))
 	update_state(arrived)
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/on_exited(mob/living/exited)
+	if (exited == owner)
+		return
 	UnregisterSignal(exited, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_MOB_STATCHANGE))
 	tracked_mobs -= REF(exited)
 	if (current_overlay && exited.client)
