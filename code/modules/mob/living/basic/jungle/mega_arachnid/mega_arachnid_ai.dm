@@ -9,3 +9,7 @@
 
 /datum/target_source/oview_typed/surveillance_equipment
 	typecache = list(/obj/machinery/camera = TRUE, /obj/machinery/light = TRUE)
+
+
+/datum/bt_node/subtree/mega_arachnid_combat
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/mega_arachnid/mega_arachnid_combat.bt.json"

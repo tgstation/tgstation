@@ -1,7 +1,7 @@
 /**
  * Issues a spoken pet command and points at the target.
  * Requires a blackboard key holding a list of /datum/pet_command instances.
- * Use a cooldown decorator in the tree — time_between_perform has no effect on one-shot behaviors.
+ * Use a cooldown decorator in the tree  time_between_perform has no effect on one-shot behaviors.
  */
 /datum/bt_node/ai_behavior/issue_pet_command
 	/// Blackboard key holding a list of /datum/pet_command instances to search.

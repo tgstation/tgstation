@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/clown
-	behavior_tree_json = "clown.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/clown/clown.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_SPEAK_LINES = null,

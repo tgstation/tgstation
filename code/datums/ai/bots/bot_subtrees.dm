@@ -27,11 +27,11 @@
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	// Async search in flight — stay RUNNING.
+	// Async search in flight  stay RUNNING.
 	if(is_searching)
 		return AI_BEHAVIOR_DELAY
 
-	// Async search just finished — consume result.
+	// Async search just finished  consume result.
 	if(async_search_done)
 		return AI_BEHAVIOR_DELAY | (async_search_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
@@ -189,11 +189,11 @@
 	VAR_PRIVATE/async_check_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	// Async check in flight — stay RUNNING.
+	// Async check in flight  stay RUNNING.
 	if(is_checking_reach)
 		return AI_BEHAVIOR_DELAY
 
-	// Async check just finished — consume result.
+	// Async check just finished  consume result.
 	if(async_check_done)
 		return AI_BEHAVIOR_DELAY | (async_check_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 

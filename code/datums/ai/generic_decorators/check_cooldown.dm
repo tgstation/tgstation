@@ -8,7 +8,7 @@
 
 /**
  * Checks if a blackboard cooldown key is off cooldown before ticking the child,
- * then sets it when the child finishes — replacing the key_off_cooldown
+ * then sets it when the child finishes  replacing the key_off_cooldown
  *
  * cooldown_duration is in deciseconds (e.g. 30 SECONDS).
  * lock_on_succeed = TRUE (default): lock after child SUCCESS only.

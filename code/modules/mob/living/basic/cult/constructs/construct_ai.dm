@@ -5,7 +5,7 @@
  * If there is no one to heal, they will run away from any non-allied mobs.
  */
 /datum/ai_controller/basic_controller/artificer
-	behavior_tree_json = "artificer.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/cult/constructs/artificer.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/same_faction/construct,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,

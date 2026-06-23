@@ -156,12 +156,12 @@
  * when the child completes instead of propagating completion directly.
  *
  * success_policy:
- *   BT_SUBPLAN_SUCCEED_ON_SUCCESS (default) — propagates BT_SUCCESS when all children succeed.
- *   BT_SUBPLAN_LOOP_ON_SUCCESS              — resets all children and returns BT_RUNNING, restarting next tick.
+ *   BT_SUBPLAN_SUCCEED_ON_SUCCESS (default)  propagates BT_SUCCESS when all children succeed.
+ *   BT_SUBPLAN_LOOP_ON_SUCCESS               resets all children and returns BT_RUNNING, restarting next tick.
  *
  * failure_policy:
- *   BT_SUBPLAN_FAIL_ON_FAILURE (default) — propagates BT_FAILURE when a child fails.
- *   BT_SUBPLAN_LOOP_ON_FAILURE           — resets all children and returns BT_RUNNING, restarting next tick.
+ *   BT_SUBPLAN_FAIL_ON_FAILURE (default)  propagates BT_FAILURE when a child fails.
+ *   BT_SUBPLAN_LOOP_ON_FAILURE            resets all children and returns BT_RUNNING, restarting next tick.
  *
  * Combining both loop policies creates an infinite loop that only exits via an external observer abort or cancel_current_plan(), so be careful pls
  */

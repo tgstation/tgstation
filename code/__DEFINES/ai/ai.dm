@@ -73,13 +73,6 @@
 /// Flags for passive mobs that are easy to push around
 #define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
 
-//Base Subtree defines
-
-// DEPRECATED — porting to /datum/bt_node/subtree makes this return value unnecessary.
-#define SUBTREE_RETURN_FINISH_PLANNING 1
-
-//Generic subtree defines
-
 /// default search range (tiles, passed to oview) when using find_and_set
 #define SEARCH_TACTIC_DEFAULT_RANGE 7
 /// probability that the pawn should try resisting out of restraints

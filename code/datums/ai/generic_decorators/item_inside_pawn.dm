@@ -1,7 +1,7 @@
 /**
  * Gates child on the item at the given blackboard key being located anywhere inside the pawn
  * (recursive contents check via locate()). Clears the key and returns FALSE if the item is deleted.
- * Does NOT clear the key if the item simply isn't inside the pawn — other branches may still use it.
+ * Does NOT clear the key if the item simply isn't inside the pawn  other branches may still use it.
  */
 /datum/bt_node/decorator/item_inside_pawn
 	/// Blackboard key holding the item to check.

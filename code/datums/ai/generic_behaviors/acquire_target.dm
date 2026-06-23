@@ -28,11 +28,11 @@
 	VAR_PRIVATE/async_search_done = FALSE
 
 /datum/bt_node/ai_behavior/acquire_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	// Async reachability search in flight — stay RUNNING until it completes.
+	// Async reachability search in flight  stay RUNNING until it completes.
 	if(is_finding_target)
 		return AI_BEHAVIOR_DELAY
 
-	// Async search just finished — consume the result.
+	// Async search just finished  consume the result.
 	if(async_search_done)
 		return AI_BEHAVIOR_DELAY | (isnull(async_target_result) ? AI_BEHAVIOR_FAILED : AI_BEHAVIOR_SUCCEEDED)
 
@@ -177,7 +177,7 @@
 	var/list/filtered = filter_candidates(controller, candidates, strategy, current_target)
 	var/atom/target
 	for(var/atom/candidate as anything in filtered)
-		// get_path_to may sleep here — check abort flag after it returns.
+		// get_path_to may sleep here  check abort flag after it returns.
 		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
 			target = candidate
 			break

@@ -7,7 +7,7 @@
 	var/datum/ai_controller/controller
 	/// The target key we're trying to fill
 	var/target_key
-	/// The targeting_strategy var value from the owning behavior — either a typepath or a BB key string
+	/// The targeting_strategy var value from the owning behavior  either a typepath or a BB key string
 	var/targeting_strategy
 	/// The hiding location key we're using
 	var/hiding_location_key

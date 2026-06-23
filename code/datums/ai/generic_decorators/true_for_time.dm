@@ -1,5 +1,5 @@
 /**
- * Passes while its duration has not elapsed, then fails — reactively via observer abort.
+ * Passes while its duration has not elapsed, then fails  reactively via observer abort.
  * Starts timing on the first tick; resets when the tree resets.
  *
  * duration: how long to pass, in deciseconds (e.g. "10 SECONDS").

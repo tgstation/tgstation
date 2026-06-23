@@ -10,11 +10,11 @@
 	VAR_PRIVATE/async_give_flags = NONE
 
 /datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
-	// do_after in flight — stay RUNNING.
+	// do_after in flight  stay RUNNING.
 	if(is_giving)
 		return AI_BEHAVIOR_DELAY
 
-	// do_after just finished — consume result.
+	// do_after just finished  consume result.
 	if(async_give_done)
 		return AI_BEHAVIOR_DELAY | async_give_flags
 

@@ -1,7 +1,7 @@
 /**
  * BT-native drag behavior. Moves to the target and starts pulling it.
  * If already pulling the target, returns SUCCESS immediately (idempotent).
- * Does NOT clear the target key on finish — callers must clear it when done.
+ * Does NOT clear the target key on finish  callers must clear it when done.
  * Use move_to_target after this to drag the pulled mob/item to a destination.
  */
 /datum/bt_node/ai_behavior/drag_target

@@ -1,4 +1,4 @@
-/// Moves the item at target_key onto the pawn and records it in storage_key. Does not use hands — storage_key is the virtual carry slot. Clears target_key on finish.
+/// Moves the item at target_key onto the pawn and records it in storage_key. Does not use hands  storage_key is the virtual carry slot. Clears target_key on finish.
 /datum/bt_node/ai_behavior/pick_up_item_virtual
 	/// Blackboard key holding the item to pick up.
 	var/target_key

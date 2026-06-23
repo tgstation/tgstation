@@ -1,6 +1,6 @@
 #define BOT_PATIENT_PATH_LIMIT 20
 
-/// Find and treat a patient — used by both the speak-mode parallel and the silent fallback branch.
+/// Find and treat a patient  used by both the speak-mode parallel and the silent fallback branch.
 /datum/bt_node/subtree/medbot_treat_patient
 	behavior_tree_json = "code/modules/mob/living/basic/bots/medbot/medbot_treat_patient.bt.json"
 
@@ -150,7 +150,7 @@
 
 
 
-/// Valid if the patient is at least unconscious, has a mind, and is visible — used to announce medical emergencies.
+/// Valid if the patient is at least unconscious, has a mind, and is visible  used to announce medical emergencies.
 /datum/targeting_strategy/crit_patient/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)

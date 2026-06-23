@@ -57,7 +57,7 @@
 	var/datum/action/cooldown/dig_ability = controller.blackboard[BB_BURROW_ABILITY]
 
 	if(currently_underground && storm_approaching)
-		return AI_BEHAVIOR_DELAY // Stay underground while storm approaches — RUNNING blocks everything
+		return AI_BEHAVIOR_DELAY // Stay underground while storm approaches  RUNNING blocks everything
 
 	if(!dig_ability?.IsAvailable())
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -65,7 +65,7 @@
 	var/has_target = controller.blackboard_key_exists(BB_CURRENT_TARGET)
 
 	if(currently_underground && !has_target)
-		// No target/danger while underground — emerge
+		// No target/danger while underground  emerge
 		INVOKE_ASYNC(dig_ability, TYPE_PROC_REF(/datum/action, Trigger))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

@@ -63,7 +63,7 @@
 	tail.forceMove(drop_location())
 
 /datum/ai_controller/basic_controller/cat_butcherer
-	behavior_tree_json = "cat_butcherer.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/cat_butcherer.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

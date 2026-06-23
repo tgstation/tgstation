@@ -15,7 +15,7 @@
  * Move to a point designated by the overmind, otherwise just slap people nearby
  */
 /datum/ai_controller/basic_controller/blob_zombie
-	behavior_tree_json = "blob_zombie.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/blob_minions/blob_zombie.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,

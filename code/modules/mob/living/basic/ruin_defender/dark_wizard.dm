@@ -54,7 +54,7 @@
 	new /obj/item/clothing/head/wizard/hood(src) // Having this hat in our contents allows us to cast wizard spells
 
 /datum/ai_controller/basic_controller/dark_wizard
-	behavior_tree_json = "dark_wizard.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/dark_wizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

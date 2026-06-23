@@ -122,3 +122,7 @@
 
 /datum/target_source/oview_single_type/kitten
 	single_typepath = /mob/living/basic/pet/cat/kitten
+
+/// Gathers nearby deer (alive or dead).
+/datum/target_source/oview_single_type/deer_animals
+	single_typepath = /mob/living/basic/deer

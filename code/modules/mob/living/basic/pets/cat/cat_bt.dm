@@ -232,7 +232,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-// Subtree types — the trees themselves live in the matching .bt.json files.
+// Subtree types  the trees themselves live in the matching .bt.json files.
 
 /// Block other behaviors while residing in a cat house; occasionally leave.
 /datum/bt_node/subtree/cat_reside_in_home

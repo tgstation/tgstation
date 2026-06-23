@@ -15,7 +15,7 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	// on_clear_target intentionally removed — it caused grab-then-immediately-release bug
+	// on_clear_target intentionally removed  it caused grab-then-immediately-release bug
 	// Cleanup is handled by on_stop_pulling instead
 	RegisterSignal(new_pawn, COMSIG_ATOM_NO_LONGER_PULLING, PROC_REF(on_stop_pulling))
 
@@ -45,7 +45,7 @@
 
 
 
-/// Valid if the target is a visible human who isn't buckled and has gravity — someone a slip can actually knock over.
+/// Valid if the target is a visible human who isn't buckled and has gravity  someone a slip can actually knock over.
 /datum/targeting_strategy/can_see/slip_victim/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)

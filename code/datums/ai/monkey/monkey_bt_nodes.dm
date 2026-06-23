@@ -1,5 +1,5 @@
 
-/// Monkey's battle screech variant — louder and on a 5 second cooldown
+/// Monkey's battle screech variant  louder and on a 5 second cooldown
 /datum/bt_node/ai_behavior/battle_screech/monkey
 	time_between_perform = 5 SECONDS
 	screeches = list("roar", "screech")

@@ -2,5 +2,6 @@
 /datum/target_source/held_items_then_oview
 
 /datum/target_source/held_items_then_oview/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	var/list/candidates = (pawn.held_items || list())
+	var/list/candidates = pawn.held_items ? pawn.held_items : list()
+	candidates += oview(range, pawn)
 	return candidates

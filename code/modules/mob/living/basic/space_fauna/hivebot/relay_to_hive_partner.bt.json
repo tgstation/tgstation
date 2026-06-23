@@ -13,7 +13,7 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 				"vars": {
-					"key": "BB_HIVE_PARTNER",
+					"target_key": "BB_HIVE_PARTNER",
 					"required_dist": 1
 				}
 			},
@@ -21,7 +21,7 @@
 				"type": "leaf",
 				"behavior": "/datum/bt_node/ai_behavior/relay_message",
 				"vars": {
-					"key": "BB_HIVE_PARTNER"
+					"target_key": "BB_HIVE_PARTNER"
 				}
 			},
 			{

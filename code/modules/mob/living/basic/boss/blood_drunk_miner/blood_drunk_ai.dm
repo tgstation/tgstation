@@ -21,4 +21,4 @@
 
 
 /datum/bt_node/subtree/blood_drunk_miner_combat
-	behavior_tree_json = "blood_drunk_miner_combat.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/boss/blood_drunk_miner/blood_drunk_miner_combat.bt.json"

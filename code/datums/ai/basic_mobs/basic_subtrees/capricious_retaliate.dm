@@ -43,7 +43,7 @@
 		failed_targeting(pawn)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	// Add to shitlist — set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
+	// Add to shitlist  set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
 	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

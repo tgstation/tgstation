@@ -129,7 +129,7 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-/// befriend_target variant that fails immediately if the target is already an ally — used to gate the drone-defend block.
+/// befriend_target variant that fails immediately if the target is already an ally  used to gate the drone-defend block.
 /datum/bt_node/ai_behavior/befriend_target/check_ally
 
 /datum/bt_node/ai_behavior/befriend_target/check_ally/perform(seconds_per_tick, datum/ai_controller/controller)

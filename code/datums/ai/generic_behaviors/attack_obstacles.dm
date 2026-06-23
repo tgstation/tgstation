@@ -17,7 +17,7 @@
 
 	var/turf/next_step = get_step_towards(basic_mob, target)
 	if(!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Path clear — let selector fall through to melee
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Path clear  let selector fall through to melee
 
 	var/dir_to_next_step = get_dir(basic_mob, next_step)
 	var/list/dirs_to_move = list()
@@ -31,7 +31,7 @@
 	for(var/direction in dirs_to_move)
 		if(attack_in_direction(controller, basic_mob, direction))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Nothing smashable — let selector fall through
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED // Nothing smashable  let selector fall through
 
 /datum/bt_node/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
