@@ -551,21 +551,11 @@
 	return TRUE
 
 /obj/item/melee/energy/sword/surplus/on_transform(obj/item/source, mob/user, active)
+	. = ..()
 	if(active)
 		slot_flags &= ~ITEM_SLOT_BELT
-		heat = active_heat
-		START_PROCESSING(SSobj, src)
 	else
 		slot_flags |= ITEM_SLOT_BELT
-		heat = initial(heat)
-		STOP_PROCESSING(SSobj, src)
-
-	tool_behaviour = (active ? TOOL_SAW : NONE)
-	if(user)
-		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
-	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
-	set_light_on(active)
-	return COMPONENT_NO_DEFAULT_MESSAGE
 
 // Null rod variants
 
