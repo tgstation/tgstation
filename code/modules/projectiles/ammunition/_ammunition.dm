@@ -137,9 +137,14 @@
 /obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/ammo_box))
 		return NONE
-	var/obj/item/ammo_box/box = tool
 	if(!isturf(loc))
 		return ITEM_INTERACT_BLOCKING
+	if(!collect_into_box(user, tool))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/// Collects the casing and its like on its tile into the passed box, TRUE if anything collected.
+/obj/item/ammo_casing/proc/collect_into_box(mob/living/user, obj/item/ammo_box/box)
 	var/boolets = 0
 	for(var/obj/item/ammo_casing/bullet in loc)
 		if (box.stored_ammo.len >= box.max_ammo)
@@ -151,11 +156,10 @@
 
 	if (!boolets)
 		to_chat(user, span_warning("You fail to collect anything!"))
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 	box.update_appearance()
 	to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
-	return ITEM_INTERACT_SUCCESS
-
+	return TRUE
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)

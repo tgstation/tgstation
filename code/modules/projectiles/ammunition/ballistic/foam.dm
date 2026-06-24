@@ -52,6 +52,7 @@
 	dart.set_embed(null) // Cap is what makes them sticky
 	to_chat(user, span_notice("You pop the safety cap off [src]."))
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ammo_casing/foam_dart/riot
 	name = "riot foam dart"

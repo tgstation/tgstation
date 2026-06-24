@@ -147,7 +147,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 	deconstruct()
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)

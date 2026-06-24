@@ -122,6 +122,7 @@
 		external_power_trickle += 500
 		log_activation(who = user, how = destabilizing_crystal)
 		qdel(destabilizing_crystal)
+		return ITEM_INTERACT_SUCCESS
 
 	return NONE
 

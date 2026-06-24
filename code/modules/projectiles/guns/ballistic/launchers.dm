@@ -23,7 +23,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(istype(tool, /obj/item/ammo_box) || isammocasing(tool))
+	if((. = ITEM_INTERACT_SUCCESS) && (istype(tool, /obj/item/ammo_box) || isammocasing(tool)))
 		chamber_round()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel

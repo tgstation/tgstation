@@ -207,8 +207,9 @@
 	. = ..()
 	create_reagents(reagent_amount, OPENCONTAINER)
 
-/obj/item/ammo_casing/shotgun/dart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return NONE
+// Can't be collected into an ammo box from the floor, for whatever reason.
+/obj/item/ammo_casing/shotgun/dart/collect_into_box(mob/living/user, obj/item/ammo_box/box)
+	return FALSE
 
 /obj/item/ammo_casing/shotgun/dart/large
 	name = "XL shotgun dart"
