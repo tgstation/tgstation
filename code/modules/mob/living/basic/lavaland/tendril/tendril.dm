@@ -16,8 +16,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
-	maxHealth = 1200
-	health = 1200
+	maxHealth = 800
+	health = 800
 
 	friendly_verb_continuous = "flails at"
 	friendly_verb_simple = "flail at"
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
-	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20)
+	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20, outline_colour = COLOR_CULT_RED)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
 	var/static/list/abilities = list(

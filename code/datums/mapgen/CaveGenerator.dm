@@ -86,15 +86,31 @@
 	/// Radius around megafauna within which we avoid spawning tendrils
 	var/megafauna_exclusion_radius = 7
 
-	///Chance of cells starting closed
-	var/initial_closed_chance = 45
-	///Amount of smoothing iterations
-	var/smoothing_iterations = 20
-	///How much neighbours does a dead cell need to become alive
-	var/birth_limit = 4
-	///How little neighbours does a alive cell need to die
-	var/death_limit = 3
 
+	///Cave gen settings below!!
+
+	/// Minimum dimension of a BSP leaf in the generator. Raising this creates larger pockets but can end up making for big corridors
+	var/min_bsp_size = 25
+	/// Maximum aspect ratio for BSP splits for lavaland generator
+	var/max_ratio = 1.5
+	/// Room edge padding within BSP leaf for lavaland generator
+	var/padding = 1
+	/// How much of each BSP leaf is considered untouchable by the cellular automata. Raising this generally means bigger pockets
+	var/room_fill_percent = 30
+	/// Width of corridors between rooms for lavaland generator. Raising this just means corridors are AT LEAST this wide. but cellular automata can make them bigger
+	var/corridor_width = 1
+	/// Chance to add extra MST edges for loops for lavaland generator. This basically results in more corridors / mazier generation
+	var/loop_percent = 15
+	/// Initial random floor density for lavaland generator
+	var/noise_percent = 51
+	/// Cellular Automata smoothing iterations for lavaland generator
+	var/ca_steps = 8
+	/// Neighbors to create floor (>=) for lavaland generator
+	var/birth_limit = 6
+	/// Neighbors to survive as floor (>=) for lavaland generator
+	var/survival_limit = 4
+	///Whether out-of-boudns counts as being alive. Setting this to FALSE results in the edges of the generator generating more closed. Default behavior tends to open up tunnels outside.
+	var/edges_are_alive = TRUE
 
 /datum/map_generator/cave_generator/New()
 	. = ..()
@@ -138,10 +154,11 @@
 		return generate_terrain_with_biomes(turfs, generate_in)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+
+	string_gen = generate_cave(generate_in)
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "1"
 		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
 
 		// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
@@ -190,7 +207,7 @@
 		heat_seed = rand(0, 50000)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+	string_gen = generate_cave(generate_in)
 
 	var/humidity_gen = list()
 	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
@@ -210,7 +227,7 @@
 
 	var/list/to_generate = list()
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "1"
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
@@ -404,6 +421,32 @@
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
+
+
+///Generates the cave shape using Rust-G
+/datum/map_generator/cave_generator/proc/generate_cave(area/generate_in)
+
+	///Loop through all the active ruins for this z-level and make a json format out of it so we can send it to the generator
+	var/list/active_ruins_list = list()
+
+	for(var/turf/bottom_left_turf in SSmapping.active_ruins)
+		var/datum/map_template/ruin/active_ruin = SSmapping.active_ruins[bottom_left_turf]
+		if(bottom_left_turf.z != generate_in.z)
+			continue
+		active_ruins_list += list(list(
+			"x" = max(1, bottom_left_turf.x - active_ruin.terrain_padding),
+			"y" = max(1, bottom_left_turf.y - active_ruin.terrain_padding),
+			"w" = active_ruin.width + active_ruin.terrain_padding * 2,
+			"h" = active_ruin.height + active_ruin.terrain_padding * 2,
+			"isEnclosed" = active_ruin.enclosed_for_terrain,
+		))
+
+	var/active_ruin_string = json_encode(active_ruins_list)
+
+	var/string_gen = rustg_cave_system_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]", "[edges_are_alive]")
+
+	return string_gen
+
 
 /datum/map_generator/cave_generator/jungle
 	possible_biomes = list(

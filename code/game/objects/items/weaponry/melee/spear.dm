@@ -70,6 +70,7 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
+	AddComponent(/datum/component/walking_aid)
 	add_headpike_component()
 	update_appearance()
 

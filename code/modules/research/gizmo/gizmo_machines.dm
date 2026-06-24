@@ -96,7 +96,7 @@
 /obj/machinery/gizmo/toggle
 	controller = /datum/gizmo_controller/toggle
 
-	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4", "gizmo_active_5")
+	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4")
 
 	var/on_state = FALSE
 
@@ -120,13 +120,15 @@
 	SIGNAL_HANDLER
 
 	on_state = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON)
+	visible_message(span_smallnoticeital("[src] hums to life."))
 
 /obj/machinery/gizmo/toggle/proc/off_state(datum/source)
 	SIGNAL_HANDLER
 
 	on_state = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON)
+	visible_message(span_smallnoticeital("[src] powers down."))
 
 /// A gizmo with a voice activated interface
 /obj/machinery/gizmo/voice

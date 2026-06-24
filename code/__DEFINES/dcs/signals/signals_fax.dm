@@ -1,0 +1,1 @@
+#define COMSIG_FAX_MESSAGE_RECEIVED "fax_message_received"

@@ -147,6 +147,9 @@
 	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
 	var/spawn_blacklisted = FALSE
 
+	/// What color this shows up as on the tactical map
+	var/tacmap_color = TACMAP_SOLID
+
 /**
  * Top level of the destroy chain for most atoms
  *
@@ -191,15 +194,6 @@
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
-
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	if(!(datum_flags & DF_STATIC_OBJECT))
-		DREAMLUAU_CLEAR_REF_USERDATA(contents)
-		DREAMLUAU_CLEAR_REF_USERDATA(filters)
-		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
-		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
-#endif
 
 	return ..()
 
@@ -351,7 +345,14 @@
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(isliving(crafter))
+		var/mob/living/person = crafter
+		if(person.mind)
+			ADD_TRAIT(src, TRAIT_HANDMADE, REF(person.mind))
+
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
+
 	var/list/remaining_parts = LAZYLISTDUPLICATE(current_recipe?.parts)
 	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
@@ -445,6 +446,10 @@
 
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
+	return
+
+/// has a previously nearby atom moved away
+/atom/proc/OnProximityExit(atom/movable/proximity_check_mob as mob|obj)
 	return
 
 /// Sets the wire datum of an atom
@@ -700,7 +705,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
-		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(src, TRAIT_HANDMADE, REF(user.mind))
 
 ///Connect this atom to a shuttle
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
