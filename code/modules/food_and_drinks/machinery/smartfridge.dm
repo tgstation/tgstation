@@ -264,9 +264,8 @@
 	return !(loadable.item_flags & ABSTRACT) && !(loadable.flags_1 & HOLOGRAM_1) && accept_check(loadable)
 
 /obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
-	if(!istype(tool))
-		return
+	if(user.combat_mode)
+		return NONE
 	if(machine_stat)
 		if(machine_stat & NOPOWER)
 			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
