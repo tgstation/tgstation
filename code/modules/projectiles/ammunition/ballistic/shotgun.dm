@@ -207,8 +207,8 @@
 	. = ..()
 	create_reagents(reagent_amount, OPENCONTAINER)
 
-/obj/item/ammo_casing/shotgun/dart/attackby()
-	return
+/obj/item/ammo_casing/shotgun/dart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
 
 /obj/item/ammo_casing/shotgun/dart/large
 	name = "XL shotgun dart"

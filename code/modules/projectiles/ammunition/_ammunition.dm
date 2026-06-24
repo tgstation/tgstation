@@ -134,26 +134,28 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
-		if(isturf(loc))
-			var/boolets = 0
-			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
-					break
-				if (bullet.loaded_projectile)
-					if (box.give_round(bullet, 0))
-						boolets++
-				else
-					continue
-			if (boolets > 0)
-				box.update_appearance()
-				to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
-			else
-				to_chat(user, span_warning("You fail to collect anything!"))
-	else
-		return ..()
+/obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ammo_box))
+		return NONE
+	var/obj/item/ammo_box/box = tool
+	if(!isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in loc)
+		if (box.stored_ammo.len >= box.max_ammo)
+			break
+		if (!bullet.loaded_projectile)
+			continue
+		if (box.give_round(bullet, 0))
+			boolets++
+
+	if (!boolets)
+		to_chat(user, span_warning("You fail to collect anything!"))
+		return ITEM_INTERACT_BLOCKING
+	box.update_appearance()
+	to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)
