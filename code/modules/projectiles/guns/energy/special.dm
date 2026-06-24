@@ -359,14 +359,17 @@
 	var/firing_core = FALSE
 	gun_flags = NOT_A_REAL_GUN
 
-/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
-		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-	return ..()
+/obj/item/gun/energy/gravity_gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/grav))
+		return NONE
+	if(firing_core)
+		user.balloon_alert(user, "already has a core!")
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You insert [tool] into the gravitational manipulator and the weapon gently hums to life."))
+	firing_core = TRUE
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/gravity_gun/can_shoot()
 	if(!firing_core)
