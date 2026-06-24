@@ -2492,6 +2492,7 @@
 #include "code\game\objects\effects\lighting.dm"
 #include "code\game\objects\effects\material_insert.dm"
 #include "code\game\objects\effects\mines.dm"
+#include "code\game\objects\effects\mining_mob_respawner.dm"
 #include "code\game\objects\effects\misc.dm"
 #include "code\game\objects\effects\overlays.dm"
 #include "code\game\objects\effects\particle_holder.dm"

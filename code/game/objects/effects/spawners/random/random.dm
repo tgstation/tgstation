@@ -114,7 +114,9 @@
  * type_path_to_make - what are we spawning?
  **/
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
-	return new type_path_to_make(spawn_loc)
+	var/atom/created = new type_path_to_make(spawn_loc)
+	SEND_SIGNAL(src, COMSIG_RANDOM_SPAWNER_SPAWNED, created)
+	return created
 
 ///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
