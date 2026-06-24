@@ -735,10 +735,9 @@
 	// note: this is where crit damage is handled for mobs that breathe
 	var/oxy_damage_dealt = SUFFOCATION_OXYLOSS
 	if(breath_pp > 0)
-		// if we got a partial breath, scale the damage based on how much we got
-		var/ratio = safe_breath_min / breath_pp
-		oxy_damage_dealt = min(5 * ratio, oxy_damage_dealt)
-		. = mole_count * ratio / 6
+		// we got a partial breath, scale the damage based on how much we got
+		oxy_damage_dealt *= ((safe_breath_min - breath_pp) / safe_breath_min)
+		. = mole_count
 
 	// in hard crit, suffocation damage is reduced significantly (or to zero if the relevant trait is present)
 	if(suffocator.stat == SOFT_CRIT || suffocator.stat == HARD_CRIT)
