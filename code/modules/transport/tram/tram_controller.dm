@@ -745,7 +745,7 @@
 		source = idle_platform,
 		soundin = jingle,
 		volume = 60,
-		range = SOUND_RANGE + 7,
+		range = SOUND_RANGE,
 		preference_volume = /datum/preference/numeric/volume/sound_ambience_volume,
 		sound_channel = our_channel,
 		sound_length = 3 SECONDS,
