@@ -183,7 +183,8 @@
 		has_seed_data = TRUE
 	else
 		seed_data = list()
-		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
+		seed_data["icon"] = initial(to_add.icon)
+		seed_data["icon_state"] = initial(to_add.icon_state)
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
 		seed_data["lifespan"] = to_add.lifespan
 		seed_data["endurance"] = to_add.endurance
@@ -205,7 +206,7 @@
 		var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in to_add.genes
 		var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in to_add.genes
 		seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
-		seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
+		seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capacity : PLANT_REAGENT_VOLUME
 		seed_data["mutatelist"] = list()
 		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
 			seed_data["mutatelist"] += initial(mutant.plantname)
@@ -307,8 +308,3 @@
 					found_seed.forceMove(drop_location())
 					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
 				. = TRUE
-
-/obj/machinery/seed_extractor/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet_batched/seeds)
-	)
