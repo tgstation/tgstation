@@ -1,8 +1,8 @@
-/mob/living/basic/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/basic/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	. = ..()
 
-/mob/living/basic/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/basic/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	var/old_update = updating_health
 	updating_health = FALSE
@@ -16,7 +16,7 @@
 	. = ..()
 	convert_to_brute_loss(OXY, old_update)
 
-/mob/living/basic/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/basic/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	var/old_update = updating_health
 	updating_health = FALSE
