@@ -190,10 +190,10 @@
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)
 
-/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, list/modifiers, list/attack_modifiers)
-	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
+/obj/item/gun/ballistic/revolver/chaplain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
 		user.balloon_alert(user, "no manual reloads!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	return ..()
 
