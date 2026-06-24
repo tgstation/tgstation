@@ -274,7 +274,7 @@
 	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
 		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BRUTE)
 
-	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
+	if (!amount || !can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	. = bruteloss
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -337,7 +337,7 @@
 	if(amount > 0)
 		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_OXY)
 
-	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
+	if(!amount || !can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
 
 	. = oxyloss
@@ -382,7 +382,7 @@
 	if(amount > 0)
 		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_TOX)
 
-	if(!can_adjust_tox_loss(amount, forced, required_biotype))
+	if(!amount || !can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
 
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
@@ -435,7 +435,7 @@
 	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
 		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BURN)
 
-	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
+	if(!amount || !can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	. = fireloss
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -479,7 +479,7 @@
 	if(amount > 0)
 		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STAMINA)
 
-	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
+	if(!amount || !can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
 
 	var/old_amount = staminaloss
