@@ -288,7 +288,7 @@
 			update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	// Loading from a bag (until fridge isfull)
+	// Loading from a bag (until fridge is full)
 	if(istype(tool, /obj/item/storage/bag))
 		var/loaded = 0
 		for(var/obj/item/object in tool.contents)
