@@ -500,3 +500,20 @@
   UvvU:
   - qol: made deploying and undeploying a modsuit no longer ALWAYS drop your suit
       storage item, instead keeping it if it's valid
+2026-06-22:
+  Ghommie:
+  - qol: More diverse floor decal colors during pride week so you aren't subjected
+      exclusively to rainbow-hued decals for a week straight (or should I say "for
+      a week gay"?).
+  - bugfix: Fixed the order of floor decal palettes for a couple holidays.
+  Melbert:
+  - code_imp: Reorganized human layering, report any oddities with sprites, such as
+      mislayered equipment.
+  - refactor: Refactored cult halos, report any oddities like them not appearing when
+      they should.
+  - refactor: Refactored mutation visuals, they're now affected by height! Report
+      any oddities like them disappearing.
+  - refactor: Refactored mutation species handling, report any oddities like lizards
+      with hulk.
+  SmArtKar:
+  - bugfix: Projectile lighting is no longer shown in the right click menu

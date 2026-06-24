@@ -183,6 +183,8 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 			transport_controller.dispatch_transport()
 			return
 	else
+		playsound(transport_controller.nav_beacon, 'sound/machines/tram/door_chime.ogg', 45, vary = FALSE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+		stoplag(1.4 SECONDS)
 		transport_controller.set_status_code(DOORS_READY, FALSE)
 		transport_controller.cycle_doors(CYCLE_CLOSED)
 

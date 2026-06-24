@@ -1,13 +1,24 @@
-/mob/living/silicon/proc/show_laws()
+/**
+ * Shows the silicon's current laws in chat.
+ *
+ * You can optionally pass a mob to show to instead of the silicon itself.
+ */
+/mob/living/silicon/proc/show_laws(mob/show_to)
 	var/list/law_box = list(span_bold("Obey these laws:"))
 	law_box += laws.get_law_list(include_zeroth = TRUE)
-	to_chat(src, boxed_message(jointext(law_box, "\n")))
+	to_chat(show_to || src, boxed_message(jointext(law_box, "\n")))
 
+/**
+ * Logs the silicon's current laws to the server log.
+ */
 /mob/living/silicon/proc/log_current_laws()
 	var/list/the_laws = laws.get_law_list(include_zeroth = TRUE)
 	var/lawtext = the_laws.Join(" ")
 	log_silicon("LAW: [key_name(src)] spawned with [lawtext]")
 
+/**
+ * Notify's dead chat that a silicon's laws (may) have changed, with a link to view the new laws.
+ */
 /mob/living/silicon/proc/deadchat_lawchange()
 	if(!SSticker.HasRoundStarted())
 		return
@@ -15,6 +26,12 @@
 	var/lawtext = the_laws.Join("<br/>")
 	deadchat_broadcast("'s <b>laws were changed.</b> <a href='byond://?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", span_name("[src]"), follow_target=src, message_type=DEADCHAT_LAWCHANGE)
 
+/**
+ * Throws a screen alert indicating that the silicon's laws have changed
+ *
+ * If announce is TRUE, also sends a chat message to the silicon and plays a sound,
+ * followed by printing the new laws to the silicon's chat and informing deadchat of the law change.
+ */
 /mob/living/silicon/proc/announce_law_change(announce = TRUE)
 	throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
@@ -35,7 +52,7 @@
 		if(!law_rack.can_link_to(src))
 			continue
 
-		law_rack.link_silicon(src)
+		law_rack.link_silicon(src, announce = FALSE)
 		return law_rack
 
 /// Returns the law rack this silicon is linked to, or null if not linked.

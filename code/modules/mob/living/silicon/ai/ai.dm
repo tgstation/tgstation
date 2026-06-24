@@ -7,10 +7,11 @@
  * * target_ai - The mob taking control of the AI
  * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
  * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
+ * * force_mind_move - If TRUE, forces the mind to move even if it is inactive.
  */
-/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/base/default_link)
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/base/default_link, force_mind_move = FALSE)
 	. = ..()
-	if(!target_ai) //If there is no player/brain inside.
+	if(isnull(target_ai)) //If there is no player/brain inside.
 		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
@@ -27,7 +28,7 @@
 	else
 		make_laws()
 		if(default_link?.can_link_to(src))
-			default_link.link_silicon(src)
+			default_link.link_silicon(src, announce = FALSE)
 		else
 			link_to_first_rack()
 
@@ -38,13 +39,13 @@
 
 	create_eye()
 
-	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
+	if(target_ai.mind && (target_ai.mind.active || force_mind_move))
 		target_ai.mind.transfer_to(src)
 		if(is_antag())
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
-		if(!mind.has_ever_been_ai)
-			mind.has_ever_been_ai = TRUE
+		mind.has_ever_been_ai = TRUE
+
 	else if(target_ai.ckey)
 		PossessByPlayer(target_ai.ckey)
 
@@ -122,6 +123,12 @@
 			if(!McMobby.binarycheck())
 				continue
 			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
+
+	RegisterSignal(src, COMSIG_SILICON_MODULE_RACK_LAWSET_UPDATE, PROC_REF(lawset_updated_sync_borgs))
+
+/mob/living/silicon/ai/mind_initialize()
+	. = ..()
+	mind.has_ever_been_ai = TRUE
 
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
@@ -882,8 +889,8 @@
 			modularInterface.imprint_id(name = real_name)
 
 		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
+		for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+			slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"
@@ -910,9 +917,8 @@
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
-	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
-		modules_action = new(malf_picker)
-		modules_action.Grant(src)
+	modules_action = new(malf_picker)
+	modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/new_eye)
 	SHOULD_CALL_PARENT(FALSE) // I hate you all
@@ -1289,6 +1295,13 @@
 
 	. += emissive_appearance(icon, lights_state, src)
 
+/mob/living/silicon/ai/proc/lawset_updated_sync_borgs(datum/source, obj/machinery/ai_law_rack/rack, announce = TRUE)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/silicon/robot/bot as anything in connected_robots)
+		if(bot.try_sync_laws() && announce)
+			bot.show_laws()
+			bot.law_change_counter++
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

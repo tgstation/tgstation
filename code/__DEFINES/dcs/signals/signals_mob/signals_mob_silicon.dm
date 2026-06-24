@@ -12,3 +12,5 @@
 #define COMSIG_SILICON_AI_VACATE_APC "AI_vacate_apc"
 ///called when an AI's control is toggled
 #define COMSIG_SILICON_AI_SET_CONTROL_DISABLED "AI_set_control_disabled"
+/// Sent when a silicon's laws change from a module rack
+#define COMSIG_SILICON_MODULE_RACK_LAWSET_UPDATE "silicon_module_rack_lawset_update"

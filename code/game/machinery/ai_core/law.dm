@@ -231,9 +231,8 @@
 	var/obj/machinery/ai_law_rack/base/parent_rack = get_parent_rack()
 
 	module.on_rack_install(src)
-	if(length(parent_rack?.linked_mobs) > 0)
-		for(var/mob/living/silicon/linked_ref in assoc_to_values(parent_rack.linked_mobs))
-			module.silicon_linked_to_installed(linked_ref)
+	for(var/mob/living/silicon/linked_ref in assoc_to_values(parent_rack?.linked_mobs))
+		module.silicon_linked_to_installed(linked_ref)
 	ai_modules[slot] = module
 	ai_modules[module] = security
 	update_appearance()
@@ -250,9 +249,8 @@
 
 	ai_modules[index] = null
 	module.on_rack_uninstall(src)
-	if(length(parent_rack?.linked_mobs) > 0)
-		for(var/mob/living/silicon/linked_ref in assoc_to_values(parent_rack.linked_mobs))
-			module.silicon_unlinked_from_installed(linked_ref)
+	for(var/mob/living/silicon/linked_ref in assoc_to_values(parent_rack?.linked_mobs))
+		module.silicon_unlinked_from_installed(linked_ref)
 	if(!QDELING(src))
 		update_appearance()
 	if(!QDELING(parent_rack))
@@ -689,8 +687,8 @@
 	combined_lawset = new()
 
 /obj/machinery/ai_law_rack/base/Destroy()
-	for(var/mob/bot in assoc_to_values(linked_mobs))
-		unlink_silicon(bot)
+	for(var/mob/linked_ref in assoc_to_values(linked_mobs))
+		unlink_silicon(linked_ref)
 	for(var/obj/machinery/ai_law_rack/broadcaster/linked_rack as anything in linked_racks)
 		unlink_child_law_rack(linked_rack)
 	QDEL_NULL(combined_lawset)
@@ -798,8 +796,8 @@
 
 /obj/machinery/ai_law_rack/base/log_status()
 	var/list/mob_names = list()
-	for(var/linked in linked_mobs)
-		mob_names += "[linked] ([isnull(linked_mobs[linked]) ? "no mob" : key_name(linked_mobs[linked])])"
+	for(var/link_name, link_mob in linked_mobs)
+		mob_names += "[link_name] ([isnull(link_mob) ? "no mob" : key_name(link_mob)])"
 	if(length(mob_names))
 		return "linked to [english_list(mob_names)]"
 	return "unlinked"
@@ -841,7 +839,7 @@
 		to_chat(linked, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(linked)
 
-/obj/machinery/ai_law_rack/base/proc/link_silicon(mob/living/silicon/new_bot)
+/obj/machinery/ai_law_rack/base/proc/link_silicon(mob/living/silicon/new_bot, announce = TRUE)
 	if(!can_link_to(new_bot))
 		return
 	if(isnull(new_bot.laws))
@@ -849,9 +847,10 @@
 		new_bot.make_laws()
 
 	RegisterSignal(new_bot, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
+	RegisterSignal(new_bot, COMSIG_MOB_FULLY_RENAMED, PROC_REF(silicon_renamed))
 	linked_mobs[new_bot.name] = new_bot
 	new_bot.no_law_rack_link = TRUE // don't let other racks link to us
-	update_lawset()
+	apply_lawset(new_bot, announce)
 	refresh_linkable_lists()
 	update_static_data_for_all_viewers()
 	for(var/obj/item/ai_module/installed in ai_modules)
@@ -876,10 +875,19 @@
 
 /obj/machinery/ai_law_rack/base/proc/clear_silicon_ref(mob/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
-	for(var/name in linked_mobs)
-		if(linked_mobs[name] == source)
-			linked_mobs -= name
+	UnregisterSignal(source, COMSIG_QDELETING)
+	UnregisterSignal(source, COMSIG_MOB_FULLY_RENAMED)
+	for(var/link_name, link_mob in linked_mobs)
+		if(link_mob == source)
+			linked_mobs[link_name] = null
+			break
+
+/obj/machinery/ai_law_rack/base/proc/silicon_renamed(mob/source, oldname, newname)
+	SIGNAL_HANDLER
+	for(var/link_name, link_mob in linked_mobs)
+		if(link_mob == source)
+			linked_mobs[newname] = linked_mobs[link_name]
+			linked_mobs -= link_name
 			break
 
 /obj/machinery/ai_law_rack/base/on_deconstruction(disassembled)
@@ -902,8 +910,8 @@
 	. = ..()
 	if(!isAI(user))
 		return
-	for(var/name in linked_mobs)
-		if(linked_mobs[name] == user)
+	for(var/link_name, link_mob in linked_mobs)
+		if(link_mob == user)
 			. += span_notice("This is <b>your</b> module rack.")
 
 /// Refreshes the combined lawset with all the modules currently installed and syncs it to all linked silicons
@@ -919,39 +927,37 @@
 	for(var/obj/item/ai_module/law/installed as anything in get_law_affecting_modules())
 		installed.apply_to_combined_lawset(combined_lawset)
 
-	for(var/linked in linked_mobs)
-		var/mob/living/silicon/linked_ref = linked_mobs[linked]
-		if(!istype(linked_ref))
-			continue
+	for(var/link_name, link_mob in linked_mobs)
+		apply_lawset(link_mob)
 
-		var/old_zeroth = linked_ref.laws.zeroth
-		var/old_zeroth_borg = linked_ref.laws.zeroth_borg
-		var/old_hacked = linked_ref.laws.hacked.Copy()
-		var/old_inherent = linked_ref.laws.inherent.Copy()
-		var/old_supplied = linked_ref.laws.supplied.Copy()
+/// Applies the current combined lawset to a silicon, optionally announcing the change to them/their borgs/deadchat
+/obj/machinery/ai_law_rack/base/proc/apply_lawset(mob/living/silicon/linked_ref, announce = TRUE)
+	if(!istype(linked_ref))
+		return
 
-		linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
-		linked_ref.laws.hacked = combined_lawset.hacked.Copy()
-		linked_ref.laws.inherent = combined_lawset.inherent.Copy()
-		linked_ref.laws.supplied = combined_lawset.supplied.Copy()
-		// avoid spamming the ai if nothing changed
-		if(old_zeroth == combined_lawset.zeroth \
-			&& old_zeroth_borg == combined_lawset.zeroth_borg \
-			&& old_hacked ~= combined_lawset.hacked \
-			&& old_inherent ~= combined_lawset.inherent \
-			&& old_supplied ~= combined_lawset.supplied \
-		)
-			continue
+	var/old_zeroth = linked_ref.laws.zeroth
+	var/old_zeroth_borg = linked_ref.laws.zeroth_borg
+	var/old_hacked = linked_ref.laws.hacked.Copy()
+	var/old_inherent = linked_ref.laws.inherent.Copy()
+	var/old_supplied = linked_ref.laws.supplied.Copy()
 
-		if(SSticker.HasRoundStarted())
-			linked_ref.announce_law_change()
-			linked_ref.law_change_counter++
+	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
+	linked_ref.laws.hacked = combined_lawset.hacked.Copy()
+	linked_ref.laws.inherent = combined_lawset.inherent.Copy()
+	linked_ref.laws.supplied = combined_lawset.supplied.Copy()
+	// avoid spamming the ai if nothing changed
+	if(old_zeroth == combined_lawset.zeroth \
+		&& old_zeroth_borg == combined_lawset.zeroth_borg \
+		&& old_hacked ~= combined_lawset.hacked \
+		&& old_inherent ~= combined_lawset.inherent \
+		&& old_supplied ~= combined_lawset.supplied \
+	)
+		return
 
-		if(isAI(linked_ref))
-			var/mob/living/silicon/ai/linked_ai = linked_ref
-			for(var/mob/living/silicon/robot/bot as anything in linked_ai?.connected_robots)
-				bot.try_sync_laws()
-				bot.law_change_counter++
+	if(announce)
+		linked_ref.announce_law_change()
+		linked_ref.law_change_counter++
+	SEND_SIGNAL(linked_ref, COMSIG_SILICON_MODULE_RACK_LAWSET_UPDATE, src, announce)
 
 /obj/machinery/ai_law_rack/base/get_parent_rack()
 	return src

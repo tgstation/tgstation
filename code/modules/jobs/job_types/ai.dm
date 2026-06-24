@@ -41,7 +41,7 @@
 				gamestart_borg.try_connect_to_ai(spawned)
 
 	ai_spawn.log_current_laws()
-
+	ai_spawn.show_laws(player_client.mob)
 
 /datum/job/ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
