@@ -2602,7 +2602,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(num_hands == 1)
 		held_index = 1
 
-	. = ..()
+	return ..()
 
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()
