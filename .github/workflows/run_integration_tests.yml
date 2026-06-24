@@ -8,6 +8,9 @@ on:
       map:
         required: true
         type: string
+      map_config:
+        required: false
+        type: string
       major:
         required: false
         type: string
@@ -29,7 +32,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
         with:
@@ -60,7 +63,7 @@ jobs:
         id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          bash tools/ci/run_server.sh ${{ inputs.map }}
+          bash tools/ci/run_server.sh "${{ inputs.map }}" "${{ inputs.map_config }}"
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v7
