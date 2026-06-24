@@ -2,7 +2,7 @@
 /datum/brain_trauma/special/burdened
 	name = "Flagellating Compulsions"
 	desc = "Patient feels compelled to injure themselves in various incapacitating and horrific ways. \
-		There seems to be an odd genetic... trigger, following these compulsions may lead to?"
+		There seems to be an odd genetic \"sequence\" gradually expressed upon following these compulsions."
 	scan_desc = "damaged frontal lobe"
 	symptoms = "Experiences an overwhelming compulsion to self-harm, often engaging in behaviors that lead to significant physical injury. \
 		This compulsion is driven by an intense psychological need to feel pain and suffering, \
