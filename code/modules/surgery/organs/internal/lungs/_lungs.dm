@@ -7,8 +7,6 @@
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_SMALL
 
-	var/respiration_type = NONE // The type(s) of gas this lung needs for respiration
-
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 
@@ -111,21 +109,11 @@
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
-	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
-
 	var/breath_noise = "steady in- and exhalation"
 
-// assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
 	. = ..()
 	breath_out = new(BREATH_VOLUME)
-
-	if(safe_nitro_min)
-		respiration_type |= RESPIRATION_N2
-	if(safe_oxygen_min)
-		respiration_type |= RESPIRATION_OXYGEN
-	if(safe_plasma_min)
-		respiration_type |= RESPIRATION_PLASMA
 
 	// Sets up what gases we want to react to, and in what way
 	// always is always processed, while_present is called when the gas is in the breath, and on_loss is called right after a gas is lost
@@ -264,7 +252,7 @@
 
 	breathe_gas_volume(breath, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
 	// Heal mob if not in crit.
-	if(breather.health >= breather.crit_threshold && breather.oxyloss)
+	if(breather.stat != SOFT_CRIT && breather.stat != HARD_CRIT && breather.get_oxy_loss())
 		breather.adjust_oxy_loss(-5)
 
 /// Maximum Oxygen effects. "Too much O2!"
@@ -736,32 +724,29 @@
 /obj/item/organ/lungs/proc/handle_suffocation(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, mole_count = 0)
 	. = 0
 	// Can't suffocate without a Human, or without minimum breath pressure.
-	if(!suffocator || !safe_breath_min)
+	if(isnull(suffocator) || safe_breath_min <= 0)
 		return
 	// Mob is suffocating.
 	suffocator.failed_last_breath = TRUE
 	// Give them a chance to notice something is wrong.
 	if(prob(20))
 		suffocator.emote("gasp")
-	// If mob is at critical health, check if they can be damaged further.
-	if(suffocator.health < suffocator.crit_threshold)
-		// Mob is immune to damage at critical health.
-		if(HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
-			return
-		// Reagents like Epinephrine stop suffocation at critical health.
-		if(suffocator.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
-			return
-	// Low pressure.
-	if(breath_pp)
-		var/ratio = safe_breath_min / breath_pp
-		suffocator.apply_damage(min(5 * ratio, HUMAN_MAX_OXYLOSS), OXY)
-		return mole_count * ratio / 6
-	// Zero pressure.
-	if(suffocator.health >= suffocator.crit_threshold)
-		suffocator.apply_damage(HUMAN_MAX_OXYLOSS, OXY)
-	else
-		suffocator.apply_damage(HUMAN_CRIT_MAX_OXYLOSS, OXY)
 
+	// note: this is where crit damage is handled for mobs that breathe
+	var/oxy_damage_dealt = SUFFOCATION_OXYLOSS
+	if(breath_pp > 0)
+		// if we got a partial breath, scale the damage based on how much we got
+		var/ratio = safe_breath_min / breath_pp
+		oxy_damage_dealt = min(5 * ratio, oxy_damage_dealt)
+		. = mole_count * ratio / 6
+
+	// in hard crit, suffocation damage is reduced significantly (or to zero if the relevant trait is present)
+	if(suffocator.stat == SOFT_CRIT || suffocator.stat == HARD_CRIT)
+		oxy_damage_dealt *= (HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE) ? 0 : SUFFOCATION_OXYLOSS_CRIT_MODIFIER)
+
+	if(oxy_damage_dealt > 0)
+		suffocator.apply_damage(oxy_damage_dealt, OXY)
+	return .
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature

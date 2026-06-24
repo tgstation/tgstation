@@ -263,8 +263,10 @@
 ///Heartbeat is gone... He's dead Jim :(
 #define BEAT_NONE 0
 
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
+/// Damage dealt every life tick on suffocation
+#define SUFFOCATION_OXYLOSS 3
+/// Modifier to damage dealt every life tick on suffocation when the suffocator is in crit
+#define SUFFOCATION_OXYLOSS_CRIT_MODIFIER 0.22
 
 /// Combined brute and burn damage states on a human's head after which they become disfigured
 #define HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES 3

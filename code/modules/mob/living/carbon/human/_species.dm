@@ -135,13 +135,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
-	var/inherent_respiration_type = RESPIRATION_OXYGEN
 	///List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
-
-	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
-	var/breathid = GAS_O2
 
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
@@ -377,7 +372,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Drop the items the new species can't wear
 	human_who_gained_species.mob_biotypes = inherent_biotypes
-	human_who_gained_species.mob_respiration_type = inherent_respiration_type
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
 	//update body zones to match what they are supposed to have
@@ -1914,12 +1908,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/to_add = list()
 
-	if (breathid != GAS_O2)
+	var/breath_id = get_breath_type()
+	if (breath_id && breath_id != GAS_O2)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "[capitalize(breathid)] Breathing",
-			SPECIES_PERK_DESC = "[plural_form] must breathe [breathid] to survive. You receive a tank when you arrive.",
+			SPECIES_PERK_NAME = "[capitalize(breath_id)] Breathing",
+			SPECIES_PERK_DESC = "[plural_form] must breathe [breath_id] to survive. You receive a tank when you arrive.",
 		))
 
 	return to_add
@@ -2064,4 +2059,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
 		return HUMAN_HEIGHT_TALLEST
 
+	return null
+
+/**
+ * Returns what type of gas this species breathes
+ */
+/datum/species/proc/get_breath_type()
+	if(isnull(mutantlungs))
+		return null
+
+	if(mutantlungs::safe_plasma_min > 0)
+		return GAS_PLASMA
+
+	if(mutantlungs::safe_oxygen_min > 0)
+		return GAS_O2
+
+	if(mutantlungs::safe_nitro_min > 0)
+		return GAS_N2
+
+	stack_trace("Unsuported breath type for species with [mutantlungs]")
 	return null

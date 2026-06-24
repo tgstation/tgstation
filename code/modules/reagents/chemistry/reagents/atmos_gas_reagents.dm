@@ -137,13 +137,12 @@
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
-	affected_respiration_type = ALL
 
 /datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjust_brute_loss(6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += breather.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += breather.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += breather.adjust_fire_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += breather.adjust_tox_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
