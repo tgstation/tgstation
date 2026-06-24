@@ -8,12 +8,10 @@
 	tgui_id = "NtosBotanicalEncyclopedia"
 	program_icon = FA_ICON_SEEDLING
 
-/datum/computer_file/program/botanical_encyclopedia/ui_data(mob/user)
-	return list("seeds" = GLOB.botany_seed_infos)
-
 // TODO: Extract this to a global list and share it with the seed extractor.
 /datum/computer_file/program/botanical_encyclopedia/ui_static_data(mob/user)
 	var/list/data = list()
+	data["seeds"] = GLOB.botany_seed_infos
 	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
 	data["trait_db"] = list()
 	for(var/datum/plant_gene/trait as anything in GLOB.plant_traits)
