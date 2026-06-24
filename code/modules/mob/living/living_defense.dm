@@ -49,7 +49,7 @@
 	if(isnull(inner_armor))
 		return
 	inner_armor = inner_armor.subtract_other_armor(armor_to_remove)
-	var/list/ratings_list = inner_armor.get_rating_list(
+	var/list/ratings_list = inner_armor.get_rating_list()
 	for(var/rating in ratings_list)
 		if(ratings_list[rating] != 0)
 			return
