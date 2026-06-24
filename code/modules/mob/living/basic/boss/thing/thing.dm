@@ -85,15 +85,14 @@
 	icon_state = "p[phase]"
 	icon_living = icon_state
 
-/mob/living/basic/boss/thing/on_adjust_damage_loss(amount, updating_health, forced)
-	if(phase_invulnerability_timer || phase == 3 || stat || amount <= 0)
+/mob/living/basic/boss/thing/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	if(phase == 3 || stat || amount <= 0)
 		return ..()
-	var/potential_excess = bruteloss + amount - (maxHealth/3)*phase
-	if(potential_excess > 0)
-		// We cannot remove ALL of the excess without causing issues if the remaining amount of damage is reduced afterward by effects/armor/physiology
-		// That'd translate to never being able to reach the next phase threshold.
-		amount -= potential_excess / 2
-	return ..()
+	var/old_update = updating_health
+	. = ..() //This call is necessary so we convert the other damage types to BRUTE and remove the need of using switch cases for each damage type
+	bruteloss = min(bruteloss, (maxHealth/3) * phase) //Caps the damage that the mob receives to the health loss required to progress to the next phase
+	if(old_update)
+		updatehealth()
 
 /mob/living/basic/boss/thing/updatehealth()
 	. = ..()

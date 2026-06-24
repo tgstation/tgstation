@@ -464,12 +464,11 @@ Difficulty: Hard
 		if(beacon && loc == beacon.loc && sitting_at_center)
 			arena_trap(src)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/on_adjust_damage_loss(amount, updating_health, forced)
-	. = ..()
-	amount = .
+/mob/living/simple_animal/hostile/megafauna/hierophant/on_damage_loss_changed(amount, updating_health, forced)
 	if(amount > 0 && !blinking)
 		wander = TRUE
 		sitting_at_center = FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)

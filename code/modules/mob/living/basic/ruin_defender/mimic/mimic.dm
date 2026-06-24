@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
 	return TRUE
 
-/mob/living/basic/mimic/crate/on_adjust_damage_loss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/mimic/crate/on_damage_loss_changed(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
 		trigger()
 	return ..()

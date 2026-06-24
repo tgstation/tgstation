@@ -1,36 +1,13 @@
-/mob/living/simple_animal/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	amount = on_adjust_damage_loss(amount, updating_health, forced)
-	. = ..()
-
-/mob/living/simple_animal/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	amount = on_adjust_damage_loss(amount, updating_health, forced)
-	var/old_update = updating_health
-	updating_health = FALSE
-	. = ..()
-	convert_to_brute_loss(BURN, old_update)
-
-/mob/living/simple_animal/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
-	amount = on_adjust_damage_loss(amount, updating_health, forced)
-	var/old_update = updating_health
-	updating_health = FALSE
-	. = ..()
-	convert_to_brute_loss(OXY, old_update)
-
-/mob/living/simple_animal/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	amount = on_adjust_damage_loss(amount, updating_health, forced)
-	var/old_update = updating_health
-	updating_health = FALSE
-	. = ..()
-	convert_to_brute_loss(TOX, old_update)
 
 /mob/living/simple_animal/received_stamina_damage(current_level, amount_actual, amount)
 	return
 
-/mob/living/simple_animal/proc/on_adjust_damage_loss(amount, updating_health, forced)
-	SHOULD_CALL_PARENT(TRUE)
-	if(updating_health && !ckey && stat == CONSCIOUS && amount > 0)
+/mob/living/simple_animal/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	if(damage_type != BRUTE)
+		simple_transfer_to_brute_loss(amount)
+	if(!ckey && stat == CONSCIOUS && amount > 0)
 		toggle_ai_on_damage()
-	return amount
+	return ..()
 
 /mob/living/simple_animal/proc/toggle_ai_on_damage()
 	if(AIStatus == AI_IDLE)

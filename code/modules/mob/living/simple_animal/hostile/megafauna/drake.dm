@@ -170,12 +170,30 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/on_adjust_damage_loss(amount, updating_health, forced)
-	if(amount <= 0)
-		return ..()
-	lava_swoop.enraged = DRAKE_ENRAGED
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_brute_loss(amount, forced, required_bodytype)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
-		return 0
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_fire_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_tox_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/on_damage_loss_changed(amount, updating_health, forced)
+	if(amount > 0)
+		lava_swoop.enraged = DRAKE_ENRAGED
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/updatehealth()
@@ -337,7 +355,7 @@
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/on_adjust_damage_loss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/on_damage_loss_changed(amount, updating_health, forced)
 	. = ..()
 	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 

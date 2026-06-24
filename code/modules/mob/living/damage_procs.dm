@@ -281,38 +281,34 @@
 	. -= bruteloss
 	if(!.) // no change, no need to update
 		return 0
-	if(updating_health)
-		updatehealth()
+
+	on_damage_loss_changed(amount, updating_health, forced, BRUTE)
 
 
 /mob/living/proc/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
-		return FALSE
-	. = bruteloss
+		return 0
+	var/difference = bruteloss
 	bruteloss = amount
+	difference -= bruteloss
 
-	if(!.) // no change, no need to update
-		return FALSE
-	if(updating_health)
-		updatehealth()
-	. -= bruteloss
+	if(!difference) // no change, no need to update
+		return 0
 
-///Used by simple and basic mobs. For the samke of simplicity, the damage they receive (beside stamina) is all funneled into a single type.
-/mob/living/proc/convert_to_brute_loss(damage_type, updating_health)
-	var/damage
-	switch(damage_type)
-		if(BURN)
-			damage = get_fire_loss()
-			fireloss = 0
-		if(TOX)
-			damage = get_tox_loss()
-			toxloss = 0
-		if(OXY)
-			damage = get_oxy_loss()
-			oxyloss = 0
-	bruteloss = round(clamp(bruteloss + damage, 0, maxHealth * 2), DAMAGE_PRECISION)
-	if(updating_health)
-		updatehealth()
+	on_damage_loss_changed(-difference, updating_health, forced, BRUTE)
+	return difference
+
+/**
+ * This proc resets any burn, tox and oxy change that the mob has received and adds the amount/difference to bruteloss.
+ * Used by simple and basic mobs. For the sake of simplicity, all damage they receive (beside stamina) is funneled into a single damage type. It makes things easier for other
+ * coders I guess.
+ */
+/mob/living/proc/simple_transfer_to_brute_loss(amount)
+	PROTECTED_PROC(TRUE) //Again, this is workaround to the lack of support that simple/basic mobs have for multiple damage types in the code, do not use it for other things.
+	fireloss = 0
+	toxloss = 0
+	oxyloss = 0
+	bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 
 /mob/living/proc/get_oxy_loss()
 	return oxyloss
@@ -344,29 +340,34 @@
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= oxyloss
 	if(!.) // no change, no need to update
-		return FALSE
+		return 0
+
+	on_damage_loss_changed(amount, updating_health, forced, OXY)
+
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/set_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	if(!forced)
 		if(HAS_TRAIT(src, TRAIT_GODMODE))
-			return FALSE
+			return 0
 
 		var/obj/item/organ/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))
-				return FALSE
+				return 0
 		else
 			if(!(affected_lungs.respiration_type & required_respiration_type))
-				return FALSE
-	. = oxyloss
+				return 0
+	var/difference = oxyloss
 	oxyloss = amount
-	. -= oxyloss
-	if(!.) // no change, no need to update
-		return FALSE
-	if(updating_health)
-		updatehealth()
+	difference -= oxyloss
+	if(!difference) // no change, no need to update
+		return 0
+
+	on_damage_loss_changed(-difference, updating_health, forced, OXY)
+
+	return difference
 
 /mob/living/proc/get_tox_loss()
 	return toxloss
@@ -402,24 +403,24 @@
 	. -= toxloss
 
 	if(!.) // no change, no need to update
-		return FALSE
+		return 0
 
-	if(updating_health)
-		updatehealth()
+	on_damage_loss_changed(amount, updating_health, forced, TOX)
 
 
 /mob/living/proc/set_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
-		return FALSE
+		return 0
 	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
-	. = toxloss
+		return 0
+	var/difference = toxloss
 	toxloss = amount
-	. -= toxloss
-	if(!.) // no change, no need to update
-		return FALSE
-	if(updating_health)
-		updatehealth()
+	difference -= toxloss
+	if(!difference) // no change, no need to update
+		return 0
+
+	on_damage_loss_changed(-difference, updating_health, forced, OXY)
+	return difference
 
 /mob/living/proc/get_fire_loss()
 	return fireloss
@@ -440,21 +441,22 @@
 	. = fireloss
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= fireloss
-	if(. == 0) // no change, no need to update
+	if(!.) // no change, no need to update
 		return
-	if(updating_health)
-		updatehealth()
+
+	on_damage_loss_changed(amount, updating_health, forced, BURN)
 
 /mob/living/proc/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return 0
-	. = fireloss
+	var/difference = fireloss
 	fireloss = amount
-	. -= fireloss
-	if(. == 0) // no change, no need to update
+	difference -= fireloss
+	if(!difference) // no change, no need to update
 		return 0
-	if(updating_health)
-		updatehealth()
+
+	on_damage_loss_changed(-difference, updating_health, forced, BURN)
+	return difference
 
 /mob/living/proc/adjust_organ_loss(slot, amount, maximum, required_organ_flag)
 	return
@@ -485,11 +487,11 @@
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss
+	if(delta == 0) // no change, no need to update
+		return 0
 	if(delta < 0)
 		// need to check for stamcrit AFTER canadjust but BEFORE early return here
 		received_stamina_damage(staminaloss, -1 * delta)
-	if(delta == 0) // no change, no need to update
-		return 0
 	if(updating_stamina)
 		updatehealth()
 	return delta
@@ -502,13 +504,18 @@
 	var/old_amount = staminaloss
 	staminaloss = amount
 	var/delta = old_amount - staminaloss
-	if(delta < 0 && amount >= DAMAGE_PRECISION)
-		received_stamina_damage(staminaloss, -1 * delta, amount)
 	if(delta == 0) // no change, no need to update
 		return 0
+	if(delta < 0 && amount >= DAMAGE_PRECISION)
+		received_stamina_damage(staminaloss, -1 * delta, amount)
 	if(updating_stamina)
 		updatehealth()
 	return delta
+
+/mob/living/proc/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	SHOULD_CALL_PARENT(TRUE)
+	if(updating_health)
+		updatehealth()
 
 /// The mob has received stamina damage
 ///

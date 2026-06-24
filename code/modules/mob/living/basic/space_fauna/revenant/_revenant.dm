@@ -252,10 +252,25 @@
 	orbitsize -= (orbitsize / ICON_SIZE_ALL) * (ICON_SIZE_ALL * 0.25)
 	orbit(target, orbitsize)
 
-/mob/living/basic/revenant/on_adjust_damage_loss(amount, updating_health, forced)
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/basic/revenant/can_adjust_brute_loss(amount, forced, required_bodytype)
 	if(!forced && amount > 0 && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
-		return 0
+		return FALSE
+	return ..()
 
+/mob/living/basic/revenant/can_adjust_fire_loss(amount, forced, required_bodytype)
+	if(!forced && amount > 0 && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+		return FALSE
+	return ..()
+
+/mob/living/basic/revenant/can_adjust_tox_loss(amount, forced, required_bodytype)
+	if(!forced && amount > 0 && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+		return FALSE
+	return ..()
+
+/mob/living/basic/revenant/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	if(!forced && amount > 0 && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+		return FALSE
 	return ..()
 
 /mob/living/basic/revenant/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
