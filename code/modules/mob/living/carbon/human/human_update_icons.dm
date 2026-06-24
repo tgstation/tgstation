@@ -105,12 +105,8 @@ There are several things that need to be remembered:
 		if(dna.species.sexes)
 			var/obj/item/bodypart/chest/our_chest = get_bodypart(BODY_ZONE_CHEST)
 			chest_is_dimorphic = our_chest.is_dimorphic
-		if(is_dimorphic && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		if(chest_is_dimorphic && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
-			// Digi female gender shaping
-			if(digi)
-				female_sprite_flags &= ~FEMALE_UNIFORM_FULL // clear the FEMALE_UNIFORM_DIGI_FULL bit if it was set, we don't want that.
-				female_sprite_flags |= FEMALE_UNIFORM_TOP_ONLY // And set the FEMALE_UNIFORM_TOP_ONLY bit if it is unset.
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 			icon_file = DEFAULT_UNIFORM_FILE
@@ -446,7 +442,7 @@ There are several things that need to be remembered:
 
 /// Modifies a sprite slightly to conform to female body shapes
 /proc/wear_female_version(icon_state, icon, type, greyscale_colors, bodyshape)
-	var/index = "[icon_state]-[(bodyshape & BODYSHAPE_CHANGES_WORN_ICON)]-[greyscale_colors]"
+	var/index = "[icon_state]-[greyscale_colors]"
 	var/static/list/female_clothing_icons = list()
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
@@ -611,7 +607,7 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
-	if(!isinhands && (bodyshape & BODYSHAPE_CHANGES_WORN_ICON))
+	if(!isinhands && (bodyshapes_with_variations & bodyshape))
 		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
 			key = "[t_state]-[file2use]-[female_uniform]",
