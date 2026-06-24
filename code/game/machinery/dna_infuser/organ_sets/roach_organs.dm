@@ -78,13 +78,11 @@
 
 /obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+	if(QDELETED(organ_owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = organ_owner
-
-	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1/3)
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
+	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_KNOCKDOWN, 1/3)
 
 /obj/item/organ/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()

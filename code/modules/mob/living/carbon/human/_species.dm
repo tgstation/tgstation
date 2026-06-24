@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
 	human.butcher_results = null
-	MODIFY_PHYSIOLOGY(human, PHYS_COEFF_ELEC_CONDUCTIVITY, 1/siemens_coeff)
+	MODIFY_PHYSIOLOGY(human, PHYS_COEFF_ELEC_CONDUCTIVITY, 1 / siemens_coeff)
 	for(var/trait in inherent_traits)
 		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 

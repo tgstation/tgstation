@@ -1,22 +1,22 @@
-/mob/living/simple_animal/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	. = ..()
 
-/mob/living/simple_animal/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	var/old_update = updating_health
 	updating_health = FALSE
 	. = ..()
 	convert_to_brute_loss(BURN, old_update)
 
-/mob/living/simple_animal/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
+/mob/living/simple_animal/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	var/old_update = updating_health
 	updating_health = FALSE
 	. = ..()
 	convert_to_brute_loss(OXY, old_update)
 
-/mob/living/simple_animal/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+/mob/living/simple_animal/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	amount = on_adjust_damage_loss(amount, updating_health, forced)
 	var/old_update = updating_health
 	updating_health = FALSE
