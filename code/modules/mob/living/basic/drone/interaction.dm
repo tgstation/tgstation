@@ -113,7 +113,7 @@
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/drone/getarmor(def_zone, type)
+/mob/living/basic/drone/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
 	if(head)

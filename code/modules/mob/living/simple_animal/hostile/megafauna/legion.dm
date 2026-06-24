@@ -141,8 +141,8 @@
 		wander = TRUE
 
 ///This makes sure that the legion door opens on taking damage, so you can't cheese this boss.
-/mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(GLOB.necropolis_gate && true_spawn)
+/mob/living/simple_animal/hostile/megafauna/legion/on_adjust_damage_loss(amount, updating_health, forced)
+	if(GLOB.necropolis_gate && true_spawn && amount > 0)
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 

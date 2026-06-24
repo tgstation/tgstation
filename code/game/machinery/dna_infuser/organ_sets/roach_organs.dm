@@ -22,19 +22,14 @@
 
 /datum/status_effect/organ_set_bonus/roach/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
-	if(!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
+	owner.add_inner_armor(given_armor)
 
 /datum/status_effect/organ_set_bonus/roach/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
-	if(!ishuman(owner) || QDELETED(owner))
+	if(QDELETED(owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor = human_owner.physiology.armor.subtract_other_armor(given_armor)
+	owner.remove_inner_armor(given_armor)
 
 /// Roach heart:
 /// Reduces damage taken from brute attacks from behind,

@@ -427,7 +427,7 @@ Difficulty: Hard
 	sitting_at_center = TRUE
 	visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
 	blink(beacon)
-	adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
+	adjust_brute_loss(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
 	wander = FALSE
 	if(health > maxHealth * 0.9)
 		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
@@ -464,9 +464,10 @@ Difficulty: Hard
 		if(beacon && loc == beacon.loc && sitting_at_center)
 			arena_trap(src)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/hierophant/on_adjust_damage_loss(amount, updating_health, forced)
 	. = ..()
-	if(src && . && !blinking)
+	amount = .
+	if(amount > 0 && !blinking)
 		wander = TRUE
 		sitting_at_center = FALSE
 

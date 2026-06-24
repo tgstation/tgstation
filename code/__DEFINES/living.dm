@@ -55,16 +55,13 @@
 	living.physiology[key] *= mult;\
 	_CLEAR_PHYSIOLOGY_VAL(living, key);
 
-/**
- * Multiplier to brute damage received. IE: A brute mod of 0.9 = 10% less brute damage.
- * Only applies to damage dealt via [apply_damage][/mob/living/proc/apply_damage] unless factored in manually.
- */
+/// Multiplier to brute damage received on adjust_brute_loss (and bodypart/receive_damage()). IE: A brute mod of 0.9 = 10% less brute damage.
 #define PHYS_COEFF_BRUTE "brute"
-/// Multiplier to burn damage received
+/// Multiplier to burn damage received on adjust_brute_loss (and bodypart/receive_damage())
 #define PHYS_COEFF_BURN "burn"
-/// Multiplier to toxin damage received
+/// Multiplier to toxin damage received on adjust_brute_loss
 #define PHYS_COEFF_TOX "tox"
-/// Multiplier to oxygen damage received
+/// Multiplier to oxygen damage received on adjust_brute_loss
 #define PHYS_COEFF_OXY "oxy"
 /// Multiplier to stamina damage received
 #define PHYS_COEFF_STAMINA "stamina"

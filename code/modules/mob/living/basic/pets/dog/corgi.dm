@@ -94,7 +94,7 @@
  * which usually means any direct attack like melee or gunshot. Anything abstract like a bomb or acid or something
  * will instead give half the armor value.
  */
-/mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
+/mob/living/basic/pet/dog/corgi/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
 	if(def_zone)

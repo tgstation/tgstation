@@ -201,7 +201,7 @@
 	name = "[initial(name)] ([id_number])"
 	real_name = name
 
-/mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
+/mob/living/basic/blood_worm/on_adjust_damage_loss(amount, updating_health, forced)
 	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)

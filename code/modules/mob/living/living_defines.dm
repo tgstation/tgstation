@@ -36,7 +36,10 @@
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
 
+	///Lazy list of multipliers for related to mobs, like burn/brute/oxy/tox/stamina damage, hunger, bleeding, electrical conductivity
 	var/list/physiology
+	///Contains an inner armor datum separated from worn armor (I could use the default 'armor' var but it might cause some confusion)
+	VAR_PROTECTED/inner_armor
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN

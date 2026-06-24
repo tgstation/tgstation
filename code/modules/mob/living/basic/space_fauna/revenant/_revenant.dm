@@ -252,19 +252,20 @@
 	orbitsize -= (orbitsize / ICON_SIZE_ALL) * (ICON_SIZE_ALL * 0.25)
 	orbit(target, orbitsize)
 
-/mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+/mob/living/basic/revenant/on_adjust_damage_loss(amount, updating_health, forced)
+	if(!forced && amount > 0 && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
 		return 0
 
-	. = amount
+	return ..()
 
-	essence = max(0, essence - amount)
+/mob/living/basic/revenant/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	. = ..()
+	var/difference = . //negative means that damage has been taken, positive means healing has been received
+	essence = clamp(essence + difference, 0, max_essence)
 	if(updating_health)
 		update_health_hud()
 	if(essence == 0)
 		death()
-
-	return .
 
 /mob/living/basic/revenant/orbit(atom/target)
 	setDir(SOUTH) // reset dir so the right directional sprites show up

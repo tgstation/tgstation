@@ -1,4 +1,23 @@
 
+/mob/living/basic/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	amount = on_adjust_damage_loss(amount, updating_health, forced)
+	. = ..()
+
+/mob/living/basic/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	amount = on_adjust_damage_loss(amount, updating_health, forced)
+	. = ..()
+
+/mob/living/basic/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
+	amount = on_adjust_damage_loss(amount, updating_health, forced)
+	. = ..()
+
+/mob/living/basic/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+	amount = on_adjust_damage_loss(amount, updating_health, forced)
+	. = ..()
+
+/mob/living/basic/proc/on_adjust_damage_loss(amount, updating_health, forced)
+	SHOULD_CALL_PARENT(TRUE)
+	return amount
 /mob/living/basic/received_stamina_damage(current_level, amount_actual, amount)
 	if (stamina_recovery == 0)
 		return ..()

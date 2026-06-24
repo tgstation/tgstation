@@ -521,11 +521,7 @@
 	owner.balloon_alert_to_viewers("health buffed")
 	to_chat(owner, span_nicegreen("You feel healthy, like if your body is little stronger than it was a moment ago."))
 
-	if(isanimal(owner))	//dumb animals have their own proc for healing.
-		var/mob/living/simple_animal/healthy_animal = owner
-		healthy_animal.adjustHealth(-(health_increase * healing_modifier))
-	else
-		owner.adjust_brute_loss(-(health_increase * healing_modifier))
+	owner.adjust_brute_loss(-(health_increase * healing_modifier))
 
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
