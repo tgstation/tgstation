@@ -260,64 +260,59 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
-/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!machine_stat)
-		var/shown_contents_length = visible_items()
-		if(shown_contents_length >= max_n_of_items)
-			balloon_alert(user, "no space!")
-			return FALSE
+/obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
 
-		if(!(weapon.item_flags & ABSTRACT) && \
-			!(weapon.flags_1 & HOLOGRAM_1) && \
-			accept_check(weapon) \
-		)
-			load(weapon, user)
-			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
-			SStgui.update_uis(src)
-			if(visible_contents)
-				update_appearance()
-			return TRUE
+	if(!istype(tool))
+		return
 
-		if(istype(weapon, /obj/item/storage/bag))
-			var/obj/item/storage/bag = weapon
-			var/loaded = 0
-			for(var/obj/item/object in bag.contents)
-				if(shown_contents_length >= max_n_of_items)
-					break
-				if(!(object.item_flags & ABSTRACT) && \
-					!(object.flags_1 & HOLOGRAM_1) && \
-					accept_check(object) \
-				)
-					load(object, user)
-					loaded++
-			SStgui.update_uis(src)
+	if(machine_stat)
+		if(machine_stat & NOPOWER)
+			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return ITEM_INTERACT_BLOCKING
 
-			if(loaded)
-				if(shown_contents_length >= max_n_of_items)
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You fill \the [src] with \the [weapon]."))
-				else
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You load \the [src] with \the [weapon]."))
-				if(weapon.contents.len)
-					to_chat(user, span_warning("Some items are refused."))
-				if (visible_contents)
-					update_appearance()
-				return TRUE
+	var/shown_contents_length = visible_items()
+	if(shown_contents_length >= max_n_of_items)
+		balloon_alert(user, "no space!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!(tool.item_flags & ABSTRACT) && !(tool.flags_1 & HOLOGRAM_1) && accept_check(tool))
+		load(tool, user)
+		user.visible_message(span_notice("[user] adds \the [tool] to \the [src]."), span_notice("You add \the [tool] to \the [src]."))
+		SStgui.update_uis(src)
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/storage/bag))
+		var/loaded = 0
+		for(var/obj/item/object in tool.contents)
+			if(shown_contents_length >= max_n_of_items)
+				break
+			if(!(object.item_flags & ABSTRACT) && !(object.flags_1 & HOLOGRAM_1) && accept_check(object))
+				load(object, user)
+				loaded++
+		SStgui.update_uis(src)
+
+		if(loaded)
+			if(shown_contents_length >= max_n_of_items)
+				user.visible_message(span_notice("[user] loads \the [src] with \the [tool]."), \
+					span_notice("You fill \the [src] with \the [tool]."))
 			else
-				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
-				return FALSE
+				user.visible_message(span_notice("[user] loads \the [src] with \the [tool]."), \
+					span_notice("You load \the [src] with \the [tool]."))
+			if(length(tool.contents))
+				to_chat(user, span_warning("Some items are refused."))
+			if (visible_contents)
+				update_appearance()
+			return ITEM_INTERACT_SUCCESS
 
-	if(!powered())
-		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
-		return FALSE
+		else
+			to_chat(user, span_warning("There is nothing in [tool] to put in [src]!"))
+			return ITEM_INTERACT_BLOCKING
 
-	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
-		return FALSE
-
-	else
-		return ..()
+	to_chat(user, span_warning("\The [src] smartly refuses [tool]."))
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Can this item be accepted by the smart fridge
