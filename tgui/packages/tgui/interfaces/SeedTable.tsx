@@ -12,7 +12,6 @@ import {
   Tooltip,
   DmIcon,
 } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 import { formatTime } from 'tgui-core/format';
 

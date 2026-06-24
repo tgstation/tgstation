@@ -1,7 +1,7 @@
 import { Button } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { SeedTable, SeedData, TraitData } from './SeedTable';
+import { SeedTable, type SeedData, type TraitData } from './SeedTable';
 
 type SeedExtractorData = {
   seeds: SeedData[];
