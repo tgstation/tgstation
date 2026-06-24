@@ -297,6 +297,23 @@
 		updatehealth()
 	. -= bruteloss
 
+///Used by simple and basic mobs. For the samke of simplicity, the damage they receive (beside stamina) is all funneled into a single type.
+/mob/living/proc/convert_to_brute_loss(damage_type, updating_health)
+	var/damage
+	switch(damage_type)
+		if(BURN)
+			damage = get_fire_loss()
+			fireloss = 0
+		if(TOX)
+			damage = get_tox_loss()
+			toxloss = 0
+		if(OXY)
+			damage = get_oxy_loss()
+			oxyloss = 0
+	bruteloss = round(clamp(bruteloss + damage, 0, maxHealth * 2), DAMAGE_PRECISION)
+	if(updating_health)
+		updatehealth()
+
 /mob/living/proc/get_oxy_loss()
 	return oxyloss
 

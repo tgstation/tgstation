@@ -6,15 +6,15 @@
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return get_worn_bodypart_armor_value(def_zone, type)
+				return get_worn_bodypart_armor_value(def_zone, damage_type)
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return get_worn_bodypart_armor_value(affecting, type)
+			return get_worn_bodypart_armor_value(affecting, damage_type)
 		//If a specific bodypart is targeted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/obj/item/bodypart/part as anything in get_bodyparts())
-		armorval += get_worn_bodypart_armor_value(part, type)
+		armorval += get_worn_bodypart_armor_value(part, damage_type)
 		organnum++
 	return (armorval/max(organnum, 1))
 

@@ -117,7 +117,7 @@
 	var/armorval = 0
 
 	if(head)
-		armorval = head.get_armor_rating(type)
+		armorval = head.get_armor_rating(damage_type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
 /// Returns a multiplier for any head armor you wear as a drone.
