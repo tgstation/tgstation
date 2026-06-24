@@ -260,56 +260,63 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
+/obj/machinery/smartfridge/proc/can_load_item(obj/item/loadable)
+	return !(loadable.item_flags & ABSTRACT) && !(loadable.flags_1 & HOLOGRAM_1) && accept_check(loadable)
+
 /obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-
 	if(!istype(tool))
 		return
-
 	if(machine_stat)
 		if(machine_stat & NOPOWER)
 			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/shown_contents_length = visible_items()
-	if(shown_contents_length >= max_n_of_items)
+	var/loaded_count = visible_items()
+	if(loaded_count >= max_n_of_items)
 		balloon_alert(user, "no space!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(!(tool.item_flags & ABSTRACT) && !(tool.flags_1 & HOLOGRAM_1) && accept_check(tool))
+	// Loading a single item
+	if(can_load_item(tool))
 		load(tool, user)
-		user.visible_message(span_notice("[user] adds \the [tool] to \the [src]."), span_notice("You add \the [tool] to \the [src]."))
+		user.visible_message(
+			span_notice("[user] adds \the [tool] to \the [src]."),
+			span_notice("You add \the [tool] to \the [src]."),
+		)
 		SStgui.update_uis(src)
 		if(visible_contents)
 			update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
+	// Loading from a bag (until fridge isfull)
 	if(istype(tool, /obj/item/storage/bag))
 		var/loaded = 0
 		for(var/obj/item/object in tool.contents)
-			if(shown_contents_length >= max_n_of_items)
+			if(loaded_count >= max_n_of_items)
 				break
-			if(!(object.item_flags & ABSTRACT) && !(object.flags_1 & HOLOGRAM_1) && accept_check(object))
-				load(object, user)
-				loaded++
+			if(!can_load_item(object))
+				continue
+			load(object, user)
+			loaded++
+			loaded_count++
+
 		SStgui.update_uis(src)
 
-		if(loaded)
-			if(shown_contents_length >= max_n_of_items)
-				user.visible_message(span_notice("[user] loads \the [src] with \the [tool]."), \
-					span_notice("You fill \the [src] with \the [tool]."))
-			else
-				user.visible_message(span_notice("[user] loads \the [src] with \the [tool]."), \
-					span_notice("You load \the [src] with \the [tool]."))
-			if(length(tool.contents))
-				to_chat(user, span_warning("Some items are refused."))
-			if (visible_contents)
-				update_appearance()
-			return ITEM_INTERACT_SUCCESS
-
-		else
+		if(!loaded)
 			to_chat(user, span_warning("There is nothing in [tool] to put in [src]!"))
 			return ITEM_INTERACT_BLOCKING
+
+		var/filled = loaded_count >= max_n_of_items
+		user.visible_message(
+			span_notice("[user] loads \the [src] with \the [tool]."),
+			span_notice("You [filled ? "fill" : "load"] \the [src] with \the [tool]."),
+		)
+		if(length(tool.contents))
+			to_chat(user, span_warning("Some items are refused."))
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("\The [src] smartly refuses [tool]."))
 	return ITEM_INTERACT_BLOCKING
