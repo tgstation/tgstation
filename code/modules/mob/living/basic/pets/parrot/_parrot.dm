@@ -125,7 +125,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/examine(mob/user)
 	. = ..()
-	. += "It appears to [isnull(get_active_held_item()) ? "not be holding anything." : "be holding \a [get_active_held_item()]."]"
+	var/obj/item/held_item = get_active_held_item()
+	. += "It appears to [isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."]"
 
 	if(stat != DEAD)
 		return
