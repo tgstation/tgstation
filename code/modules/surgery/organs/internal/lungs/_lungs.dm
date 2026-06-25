@@ -729,7 +729,7 @@
 	// Mob is suffocating.
 	suffocator.failed_last_breath = TRUE
 	// Give them a chance to notice something is wrong.
-	if(prob(20))
+	if(prob(25))
 		suffocator.emote("gasp")
 
 	// note: this is where crit damage is handled for mobs that breathe
