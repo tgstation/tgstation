@@ -7,14 +7,14 @@
 	desc = "A strange spike with no usage."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
-	/// if it has a bonus effect, this is how much that effect is
+	/// If it has a bonus effect, this is how much that effect is
 	var/bonus_value = 10
-	/// id of the trophy to be sent by the signal
+	/// ID of the trophy to be sent by the signal
 	var/trophy_id
-	/// what type of trophies will block this trophy from being added, must be overriden
+	/// What type of trophies will block this trophy from being added, must be overriden
 	var/denied_type = /obj/item/crusher_trophy
-	/// what item will drop if you cut it with wildhunter's knife
-	var/wildhunter_drop = null
+	/// What items will drop if you cut it with wildhunter's knife
+	var/list/wildhunter_drops = null
 
 /obj/item/crusher_trophy/examine(mob/living/user)
 	. = ..()

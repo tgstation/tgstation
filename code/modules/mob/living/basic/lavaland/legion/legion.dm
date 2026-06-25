@@ -23,7 +23,6 @@
 	speak_emote = list("gurgles")
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
-	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
 	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
@@ -142,9 +141,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2
-	crusher_drop_chance = 20
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
-
 
 /// Like a Legion but larger and spawns regular Legions, not currently used anywhere and very soulful
 /mob/living/basic/mining/legion/large

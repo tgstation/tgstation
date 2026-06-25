@@ -25,7 +25,6 @@
 		/obj/item/stack/sheet/bone = 2,
 		/obj/item/organ/monster_core/rush_gland = 1,
 	)
-	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
@@ -160,7 +159,6 @@
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/organ/monster_core/rush_gland = 1,
 	)
-	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp

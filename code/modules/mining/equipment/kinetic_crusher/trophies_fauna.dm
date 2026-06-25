@@ -10,7 +10,7 @@
 	denied_type = /obj/item/crusher_trophy/watcher_wing
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew = 7)
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
@@ -34,7 +34,7 @@
 	icon_state = "magma_wing"
 	gender = NEUTER
 	bonus_value = 5
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew/magmawing = 3)
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
@@ -52,7 +52,7 @@
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
 	bonus_value = 8
-	wildhunter_drop = /obj/item/stack/sheet/sinew
+	wildhunter_drops = list(/obj/item/stack/sheet/sinew/icewing = 3)
 
 //legion
 /obj/item/crusher_trophy/legion_skull
@@ -61,7 +61,7 @@
 	icon_state = "legion_skull"
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
-	wildhunter_drop = /obj/item/organ/monster_core/regenerative_core/legion // if you killed blood drunk you can afford stabilizer potions sooo....
+	// No wildhunter drop to prevent refresh cheese
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -84,18 +84,12 @@
 	denied_type = /obj/item/crusher_trophy/goliath_tentacle
 	bonus_value = 2
 	trophy_id = TROPHY_GOLIATH_TENTACLE
-	wildhunter_drop = /obj/item/stack/sheet/animalhide/goliath_hide
+	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
-	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
-	var/missing_health_desc
-
-/obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
-	. = ..()
-	missing_health_desc = 1 / missing_health_ratio / bonus_value
 
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
+	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[1 / missing_health_ratio]</b> health you are missing"
 
 /obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
@@ -113,7 +107,7 @@
 	denied_type = /obj/item/crusher_trophy/lobster_claw
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
-	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
+	// No wildhunter drop to prevent refresh cheese
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] second[bonus_value > 1 ? "s" : ""]"
@@ -129,7 +123,7 @@
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
 	trophy_id = TROPHY_BRIMDEMON_FANG
-	wildhunter_drop = /obj/item/organ/monster_core/brimdust_sac
+	// No wildhunter drop to prevent refresh cheese
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
@@ -148,7 +142,7 @@
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
-	wildhunter_drop = /obj/item/stack/sheet/animalhide/bileworm
+	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/bileworm = 3)
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
@@ -301,7 +295,7 @@
 	icon_state = "raptor_feather"
 	denied_type = /obj/item/crusher_trophy/raptor_feather
 	trophy_id = TROPHY_RAPTOR_FEATHER
-	wildhunter_drop = /obj/item/food/meat/slab/chicken
+	wildhunter_drops = list(/obj/item/food/meat/slab/chicken = 1)
 
 /obj/item/crusher_trophy/raptor_feather/effect_desc()
 	return "your shots to go through your allies"
