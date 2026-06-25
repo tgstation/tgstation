@@ -3686,9 +3686,6 @@
 #include "code\modules\antagonists\wizard\grand_ritual\finales\immortality.dm"
 #include "code\modules\antagonists\wizard\grand_ritual\finales\midas.dm"
 #include "code\modules\antagonists\xeno\xeno.dm"
-#include "code\modules\Apsis-Station\facial_hair_restrictions.dm"
-#include "code\modules\Apsis-Station\species_overrides.dm"
-#include "code\modules\Apsis-Station\species_whitelist.dm"
 #include "code\modules\art\paintings.dm"
 #include "code\modules\art\statues.dm"
 #include "code\modules\assembly\assembly.dm"
@@ -6973,3 +6970,6 @@
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
 // END_INCLUDE
+
+//APSIS INCLUDES
+#include "code\modules\Apsis-Station\apsis_includes.dm"
