@@ -100,10 +100,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 // This looks good enough to pass the sniff test and saves a lot of time
 /mob/living/carbon/human/dummy/regenerate_icons()
 	. = ..()
-	apply_height(src, ENTIRE_BODY, only_apply_in_prefs = FALSE)
+	apply_height(src, ENTIRE_BODY)
 
-/mob/living/carbon/human/dummy/apply_height(image/appearance, upper_torso, only_apply_in_prefs = FALSE)
-	if(only_apply_in_prefs)
+/mob/living/carbon/human/dummy/apply_height(image/appearance, upper_torso)
+	if(appearance == src)
 		return ..()
 
 /// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.

@@ -784,7 +784,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 /mob/living/carbon/human/apply_height(image/appearance, body_area)
 	if(mob_height == HUMAN_HEIGHT_MEDIUM)
-		return
+		return // default, no handling needed
 
 	switch(body_area)
 		if(LOWER_BODY, UPPER_BODY)

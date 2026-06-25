@@ -763,15 +763,15 @@
 
 /// Assoc list of all heights, to offset values
 GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
-	MONKEY_HEIGHT_DWARF = list("[UPPER_BODY]" = -9, "[LOWER_BODY]" = -3),
-	MONKEY_HEIGHT_MEDIUM = list("[UPPER_BODY]" = -7, "[LOWER_BODY]" = -4),
-	HUMAN_HEIGHT_DWARF = list("[UPPER_BODY]" = -5, "[LOWER_BODY]" = -4),
+	MONKEY_HEIGHT_DWARF   = list("[UPPER_BODY]" = -9, "[LOWER_BODY]" = -3),
+	MONKEY_HEIGHT_MEDIUM  = list("[UPPER_BODY]" = -7, "[LOWER_BODY]" = -4),
+	HUMAN_HEIGHT_DWARF    = list("[UPPER_BODY]" = -5, "[LOWER_BODY]" = -4),
 	HUMAN_HEIGHT_SHORTEST = list("[UPPER_BODY]" = -2, "[LOWER_BODY]" = -1),
-	HUMAN_HEIGHT_SHORT = list("[UPPER_BODY]" = -1, "[LOWER_BODY]" = -1),
-	HUMAN_HEIGHT_MEDIUM = list("[UPPER_BODY]" = 0, "[LOWER_BODY]" = 0),
-	HUMAN_HEIGHT_TALL = list("[UPPER_BODY]" = 1, "[LOWER_BODY]" = 1),
-	HUMAN_HEIGHT_TALLER = list("[UPPER_BODY]" = 2, "[LOWER_BODY]" = 1),
-	HUMAN_HEIGHT_TALLEST = list("[UPPER_BODY]" = 3, "[LOWER_BODY]" = 2),
+	HUMAN_HEIGHT_SHORT    = list("[UPPER_BODY]" = -1, "[LOWER_BODY]" = -1),
+	HUMAN_HEIGHT_MEDIUM   = list("[UPPER_BODY]" =  0, "[LOWER_BODY]" =  0),
+	HUMAN_HEIGHT_TALL     = list("[UPPER_BODY]" =  1, "[LOWER_BODY]" =  1),
+	HUMAN_HEIGHT_TALLER   = list("[UPPER_BODY]" =  2, "[LOWER_BODY]" =  1),
+	HUMAN_HEIGHT_TALLEST  = list("[UPPER_BODY]" =  3, "[LOWER_BODY]" =  2),
 ))
 
 /*
