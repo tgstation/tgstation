@@ -27,7 +27,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	physiology = list(PHYS_COEFF_BURN = 1.5, PHYS_COEFF_OXY = 1.5, PHYS_COEFF_TOX = 1.5)
+	physiology = list(BURN = 1.5, OXY = 1.5, TOX = 1.5)
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"

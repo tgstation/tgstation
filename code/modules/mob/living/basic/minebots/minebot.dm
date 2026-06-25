@@ -32,7 +32,7 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///our normal overlay

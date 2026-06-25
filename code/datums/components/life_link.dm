@@ -73,11 +73,10 @@
 /// Called when someone hurts one of our limbs, bypassing normal damage adjustment
 /datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, obj/item/bodypart/part, brute, burn)
 	SIGNAL_HANDLER
-	var/obj/item/bodypart/host_part = host.get_bodypart(part.body_zone)
 	if (brute != 0)
-		host.apply_damage(brute, BRUTE, host_part, spread_damage = !host_part)
+		host.apply_damage(brute, BRUTE, part.body_zone, spread_damage = !host_part)
 	if (burn != 0)
-		host.apply_damage(burn, BURN, host_part, spread_damage = !host_part)
+		host.apply_damage(burn, BURN, part.body_zone, spread_damage = !host_part)
 	on_passed_damage?.Invoke(our_mob, host, brute + burn)
 	return COMPONENT_PREVENT_LIMB_DAMAGE
 

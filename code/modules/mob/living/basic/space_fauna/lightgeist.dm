@@ -34,7 +34,7 @@
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	initial_language_holder = /datum/language_holder/lightbringer
-	physiology = list(PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0)
+	physiology = list(TOX = 0, OXY = 0)
 	light_range = 4
 	faction = list(FACTION_NEUTRAL)
 	unsuitable_atmos_damage = 0

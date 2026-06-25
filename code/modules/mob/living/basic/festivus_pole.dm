@@ -40,7 +40,7 @@
 
 	death_message = "is hacked into pieces!"
 
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	ai_controller = /datum/ai_controller/basic_controller/festivus_pole
 
 /mob/living/basic/festivus/Initialize(mapload)

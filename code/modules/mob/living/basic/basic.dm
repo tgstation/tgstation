@@ -151,7 +151,7 @@
 /mob/living/basic/proc/make_stamina_slowable()
 	if (max_stamina == BASIC_MOB_STAMINA_MATCH_HEALTH)
 		max_stamina = maxHealth
-	if (GET_PHYSIOLOGY(src, PHYS_COEFF_STAMINA) <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
+	if (GET_PHYSIOLOGY(src, STAMINA) <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
 		return
 	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina / 3, maximum_stamina = max_stamina, maximum_slowdown = max_stamina_slowdown)
 

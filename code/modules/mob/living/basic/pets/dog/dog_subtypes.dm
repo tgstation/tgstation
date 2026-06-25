@@ -90,7 +90,7 @@
 	health = 50
 	maxHealth = 50
 	gender = NEUTER
-	physiology = list(PHYS_COEFF_BRUTE = 3, PHYS_COEFF_BURN = 3)
+	physiology = list(BRUTE = 3, BURN = 3)
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"

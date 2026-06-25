@@ -48,8 +48,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
-	if(inner_armor)
-		QDEL_NULL(inner_armor)
+	QDEL_NULL(inner_armor)
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)

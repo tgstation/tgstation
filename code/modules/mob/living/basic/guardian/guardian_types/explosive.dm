@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_EXPLOSIVE
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	physiology = list(PHYS_COEFF_BRUTE = 0.6, PHYS_COEFF_BURN = 0.6, PHYS_COEFF_TOX = 0.6, PHYS_COEFF_OXY = 0.6, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, OXY = 0.6, STAMINA = 0)
 	range = 13
 	playstyle_string = span_holoparasite("As an <b>explosive</b> type, you have moderate close combat abilities and are capable of converting nearby items and objects into disguised bombs via right-click.")
 	creator_name = "Explosive"

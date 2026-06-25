@@ -26,7 +26,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0
-	physiology = list(PHYS_COEFF_STAMINA = 0.5)
+	physiology = list(STAMINA = 0.5)
 	combat_mode = TRUE
 	speed = 0
 	attack_verb_continuous = "chomps"

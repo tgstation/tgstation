@@ -47,7 +47,7 @@
 			balloon_alert(src, "can't eat slime!")
 		return FALSE
 
-	if(GET_PHYSIOLOGY(meal, PHYS_COEFF_BRUTE) <= 0 && GET_PHYSIOLOGY(meal, PHYS_COEFF_TOX) <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+	if(GET_PHYSIOLOGY(meal, BRUTE) <= 0 && GET_PHYSIOLOGY(meal, TOX) <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
 		if(!silent)
 			balloon_alert(src, "not food!")
 		return FALSE

@@ -19,7 +19,7 @@
 	status_flags = CANPUSH
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
 	health = INFINITY
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0

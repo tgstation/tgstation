@@ -28,7 +28,7 @@
 	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	var/health_scaling = TRUE
 
 /mob/living/basic/creature/Initialize(mapload)

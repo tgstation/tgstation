@@ -111,9 +111,9 @@
 
 ///Apply extra damage resistances when sunk in the ground.
 /mob/living/basic/garden_gnome/proc/toggle_sink_damage_res(has_sunk)
-	MODIFY_PHYSIOLOGY(src, PHYS_COEFF_BRUTE, has_sunk ? 0.5 : 2)
-	MODIFY_PHYSIOLOGY(src, PHYS_COEFF_BURN, has_sunk ? 0.5 : 2)
-	MODIFY_PHYSIOLOGY(src, PHYS_COEFF_STAMINA, has_sunk ? 0.1 : 10)
+	MODIFY_PHYSIOLOGY(src, BRUTE, has_sunk ? 0.5 : 2)
+	MODIFY_PHYSIOLOGY(src, BURN, has_sunk ? 0.5 : 2)
+	MODIFY_PHYSIOLOGY(src, STAMINA, has_sunk ? 0.1 : 10)
 
 /mob/living/basic/garden_gnome/proc/apply_colour()
 	if(!greyscale_config)

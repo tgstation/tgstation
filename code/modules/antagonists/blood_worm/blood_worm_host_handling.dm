@@ -226,7 +226,7 @@
 	if (host.coretemperature <= maximum_survivable_temperature)
 		return
 
-	adjust_worm_health(-unsuitable_heat_damage * GET_PHYSIOLOGY(src, PHYS_COEFF_BURN) * seconds_per_tick)
+	adjust_worm_health(-unsuitable_heat_damage * GET_PHYSIOLOGY(src, BURN) * seconds_per_tick)
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat_self(span_userdanger("Your blood is burning up!"))

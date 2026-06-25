@@ -39,7 +39,7 @@
 	RegisterSignals(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 
 	//Fish is slightly weaker to being cooked. oh oh.
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1.15)
+	MODIFY_PHYSIOLOGY(owner, BURN, 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.92) //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
@@ -67,7 +67,7 @@
 	else
 		REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id))
 	owner.clear_mood_event("fish_organs_bonus")
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 1.15)
+	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.92)
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
@@ -146,24 +146,24 @@
 	REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
 	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_waterless)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1.5)
+	MODIFY_PHYSIOLOGY(owner, BURN, 1.5)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1.2)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1.1)
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1.1)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 1.1)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1.175) // This should bring the damage multiplier from 92% to 108%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
 	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id)) //harder to grab when wet.
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
 	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 1.5)
+	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 1.5)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.2)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1 / 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1 / 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1 / 1.1)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STAMINA, 1 / 1.1)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 1 / 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 1.175)
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)

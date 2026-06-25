@@ -6,7 +6,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = -0.5
-	physiology = list(PHYS_COEFF_BRUTE = 0.75, PHYS_COEFF_BURN = 0.75, PHYS_COEFF_TOX = 0.75, PHYS_COEFF_OXY = 0.75, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, OXY = 0.75, STAMINA = 0)
 	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have light damage resistance, move very fast, can be ridden, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
 	creator_name = "Charger"
 	creator_desc = "Moves very fast, does medium damage on attack, can be ridden and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."

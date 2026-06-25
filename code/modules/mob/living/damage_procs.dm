@@ -271,8 +271,8 @@
 	return TRUE
 
 /mob/living/proc/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
-		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BRUTE)
+	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use BRUTE for limb damage instead
+		amount *= GET_PHYSIOLOGY(src, BRUTE)
 
 	if (!amount || !can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
@@ -330,7 +330,7 @@
 
 /mob/living/proc/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	if(amount > 0)
-		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_OXY)
+		amount *= GET_PHYSIOLOGY(src, OXY)
 
 	if(!amount || !can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
@@ -357,7 +357,7 @@
 	oxyloss = amount
 	difference -= oxyloss
 
-	return on_damage_loss(-difference, updating_health, forced, OXY, TRUE, difference)
+	return on_damage_loss(-difference, updating_health, forced, OXY, difference)
 
 /mob/living/proc/get_tox_loss()
 	return toxloss
@@ -371,7 +371,7 @@
 
 /mob/living/proc/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(amount > 0)
-		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_TOX)
+		amount *= GET_PHYSIOLOGY(src, TOX)
 
 	if(!amount || !can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
@@ -416,8 +416,8 @@
 	return TRUE
 
 /mob/living/proc/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use PHYS_COEFF_BRUTE for limb damage instead
-		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BURN)
+	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use BRUTE for limb damage instead
+		amount *= GET_PHYSIOLOGY(src, BURN)
 
 	if(!amount || !can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
@@ -457,7 +457,7 @@
 
 /mob/living/proc/adjust_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(amount > 0)
-		amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STAMINA)
+		amount *= GET_PHYSIOLOGY(src, STAMINA)
 
 	if(!amount || !can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0

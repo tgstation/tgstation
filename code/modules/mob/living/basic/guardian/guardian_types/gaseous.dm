@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_GASEOUS
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	physiology = list(PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(OXY = 0, STAMINA = 0)
 	range = 7
 	playstyle_string = span_holoparasite("As a <b>gaseous</b> type, you have only light damage resistance, but you can expel gas in an area. In addition, your punches cause sparks, and you make your summoner inflammable.")
 	creator_name = "Gaseous"

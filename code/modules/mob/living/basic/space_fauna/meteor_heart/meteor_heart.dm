@@ -27,7 +27,7 @@
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop

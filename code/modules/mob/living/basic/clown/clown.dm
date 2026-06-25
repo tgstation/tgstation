@@ -83,7 +83,7 @@
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
-	physiology = list(PHYS_COEFF_BRUTE = 0.25)
+	physiology = list(BRUTE = 0.25)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Welcome to Clown Planet!"),
 		BB_EMOTE_HEAR = list("bubbles.", "oozes."),

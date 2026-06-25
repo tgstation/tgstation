@@ -349,7 +349,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
-	physiology = list(PHYS_COEFF_BURN = 1.25, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BURN = 1.25, STAMINA = 0)
 	speed = 6
 	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE

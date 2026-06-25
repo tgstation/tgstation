@@ -25,7 +25,7 @@
 	maximum_survivable_temperature = T0C + 1250
 	habitable_atmos = null
 	death_message = "falls to the ground, its shard dulling to a miserable grey!"
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 
 	faction = list(FACTION_HOSTILE)
 

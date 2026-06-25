@@ -29,7 +29,7 @@
 	lighting_cutoff_blue = 50
 
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10

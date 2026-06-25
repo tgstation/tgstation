@@ -9,7 +9,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	status_flags = CANPUSH
-	physiology = list(PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	pressure_resistance = 100
 	speed = 0
 	unique_name = TRUE

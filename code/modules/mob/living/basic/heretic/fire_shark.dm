@@ -16,7 +16,7 @@
 	obj_damage = 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	physiology = list(PHYS_COEFF_BURN = 0.25, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BURN = 0.25, TOX = 0, OXY = 0, STAMINA = 0)
 	faction = list(FACTION_HERETIC)
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")

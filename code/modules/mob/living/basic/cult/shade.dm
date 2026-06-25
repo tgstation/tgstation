@@ -28,7 +28,7 @@
 	faction = list(FACTION_CULT)
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/construct
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// The different flavors of goop shades can drop, depending on theme.

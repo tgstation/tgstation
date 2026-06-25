@@ -369,12 +369,12 @@
 	. = ..()
 	if(!.)
 		return
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.5)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.5)
 
 /datum/mutation/fire/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 2)
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
 
 /datum/mutation/badblink
 	name = "Spatial Instability"

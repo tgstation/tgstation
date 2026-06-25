@@ -135,7 +135,7 @@
 	new_zombie.set_combat_mode(TRUE)
 	// Needs to be added after combat mode is set
 	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
-	MODIFY_PHYSIOLOGY(new_zombie, PHYS_COEFF_STAMINA, 0.33)
+	MODIFY_PHYSIOLOGY(new_zombie, STAMINA, 0.33)
 	MODIFY_PHYSIOLOGY(new_zombie, PHYS_COEFF_DAMAGE, 0.8) // 120 damage to KO a zombie, which kills it
 
 	// Deal with the source of this zombie corruption
@@ -165,7 +165,7 @@
 	REMOVE_TRAIT(was_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
-	MODIFY_PHYSIOLOGY(was_zombie, PHYS_COEFF_STAMINA, 1 / 0.33)
+	MODIFY_PHYSIOLOGY(was_zombie, STAMINA, 1 / 0.33)
 	MODIFY_PHYSIOLOGY(was_zombie, PHYS_COEFF_DAMAGE, 1.25)
 
 /datum/species/zombie/infectious/check_roundstart_eligible()

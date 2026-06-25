@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_GRAVITOKINETIC
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	physiology = list(PHYS_COEFF_BRUTE = 0.75, PHYS_COEFF_BURN = 0.75, PHYS_COEFF_TOX = 0.75, PHYS_COEFF_OXY = 0.75, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, OXY = 0.75, STAMINA = 0)
 	playstyle_string = span_holoparasite("As a <b>gravitokinetic</b> type, you can right-click to make the gravity on the ground stronger, and punching applies this effect to a target.")
 	creator_name = "Gravitokinetic"
 	creator_desc = "Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but you are not immune to your own such effects."

@@ -8,7 +8,7 @@
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
-	physiology = list(PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	obj_damage = 400
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0

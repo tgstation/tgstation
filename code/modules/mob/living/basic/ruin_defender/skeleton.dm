@@ -86,7 +86,7 @@
 	maxHealth = 150
 	health = 150
 	speed = 2
-	physiology = list(PHYS_COEFF_BRUTE = 0.5, PHYS_COEFF_BURN = 0.5, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0) //trying to simulate actually having armor
+	physiology = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, OXY = 0, STAMINA = 0) //trying to simulate actually having armor
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30

@@ -51,7 +51,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	ai_controller = /datum/ai_controller/basic_controller/statue
 
 /mob/living/basic/statue/Initialize(mapload)

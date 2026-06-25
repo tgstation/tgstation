@@ -32,7 +32,7 @@
 	response_harm_continuous = "punches through"
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
-	physiology = list(PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY

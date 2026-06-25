@@ -26,7 +26,7 @@
 	maximum_survivable_temperature = INFINITY
 	death_message = "fades out of existence!"
 	ai_controller = /datum/ai_controller/basic_controller/orbie
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	///are we happy or not?
 	var/happy_state = FALSE
 	///overlay for our neutral eyes

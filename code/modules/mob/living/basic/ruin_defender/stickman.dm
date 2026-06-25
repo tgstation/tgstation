@@ -19,7 +19,7 @@
 	faction = list(FACTION_STICKMAN)
 	unsuitable_atmos_damage = 0
 	unsuitable_heat_damage = 7.5
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
 

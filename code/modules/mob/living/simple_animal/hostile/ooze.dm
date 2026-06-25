@@ -108,7 +108,7 @@
 	name = "Gelatinous Cube"
 	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly aggressive and predatory nature."
 	speed = 1
-	physiology = list(PHYS_COEFF_BRUTE = 1, PHYS_COEFF_BURN = 0.6, PHYS_COEFF_TOX = 0.5, PHYS_COEFF_OXY = 1, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, OXY = 1, STAMINA = 0)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	armour_penetration = 15
@@ -302,7 +302,7 @@
 	speed = 1
 	health = 200
 	maxHealth = 200
-	physiology = list(PHYS_COEFF_BRUTE = 1, PHYS_COEFF_BURN = 0.8, PHYS_COEFF_TOX = 0.5, PHYS_COEFF_OXY = 1, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 1, BURN = 0.8, TOX = 0.5, OXY = 1, STAMINA = 0)
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	obj_damage = 15

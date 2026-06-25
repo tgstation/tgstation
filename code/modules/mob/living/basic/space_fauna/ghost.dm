@@ -27,7 +27,7 @@
 	light_range = 2.5 // same glowing as visible player ghosts
 	light_power = 0.6
 	ai_controller = /datum/ai_controller/basic_controller/ghost
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 
 	///What hairstyle will this ghost have
 	var/ghost_hairstyle

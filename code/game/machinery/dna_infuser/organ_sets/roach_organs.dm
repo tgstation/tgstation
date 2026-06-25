@@ -187,14 +187,14 @@
 
 /obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_TOX, 2)
+	MODIFY_PHYSIOLOGY(owner, TOX, 2)
 
 /obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(QDELETED(organ_owner))
 		return
 
-	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_TOX, 0.5)
+	MODIFY_PHYSIOLOGY(organ_owner, TOX, 0.5)
 
 /// Roach appendix:
 /// No appendicitus! weee!

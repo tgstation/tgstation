@@ -70,7 +70,7 @@
 	// nutrition = health, so give people a head start
 	human_who_gained_species.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 
-	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_STAMINA, 0.6)
+	MODIFY_PHYSIOLOGY(human_who_gained_species, STAMINA, 0.6)
 	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_STUN, 0.6)
 	MODIFY_PHYSIOLOGY(human_who_gained_species, PHYS_COEFF_KNOCKDOWN, 1.2) //this offsets the positive effects of the lowered stun coeff on knockdowns specifically.
 
@@ -85,7 +85,7 @@
 		COMSIG_LIVING_LIFE,
 	))
 
-	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_STAMINA, 1 / 0.6)
+	MODIFY_PHYSIOLOGY(human_who_lost_species, STAMINA, 1 / 0.6)
 	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_STUN, 1 / 0.6)
 	MODIFY_PHYSIOLOGY(human_who_lost_species, PHYS_COEFF_KNOCKDOWN, 1/1.2)
 

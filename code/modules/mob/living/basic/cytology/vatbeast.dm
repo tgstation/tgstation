@@ -12,7 +12,7 @@
 	speak_emote = list("roars")
 	health = 250
 	maxHealth = 250
-	physiology = list(PHYS_COEFF_BRUTE = 0.7, PHYS_COEFF_BURN = 0.7)
+	physiology = list(BRUTE = 0.7, BURN = 0.7)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	melee_attack_cooldown = CLICK_CD_MELEE

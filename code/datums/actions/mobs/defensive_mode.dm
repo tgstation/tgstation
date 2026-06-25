@@ -34,8 +34,8 @@
 	defence(owner_mob)
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/proc/offence(mob/living/basic/owner_mob)
-	MODIFY_PHYSIOLOGY(owner_mob, PHYS_COEFF_BRUTE, 2.5)
-	MODIFY_PHYSIOLOGY(owner_mob, PHYS_COEFF_BURN, 2.5)
+	MODIFY_PHYSIOLOGY(owner_mob, BRUTE, 2.5)
+	MODIFY_PHYSIOLOGY(owner_mob, BURN, 2.5)
 	owner_mob.icon_state = initial(owner_mob.icon_state)
 	owner_mob.icon_living = initial(owner_mob.icon_living)
 	owner_mob.icon_dead = initial(owner_mob.icon_dead)
@@ -43,8 +43,8 @@
 	defense_active = FALSE
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/proc/defence(mob/living/basic/owner_mob)
-	MODIFY_PHYSIOLOGY(owner_mob, PHYS_COEFF_BRUTE, 0.4)
-	MODIFY_PHYSIOLOGY(owner_mob, PHYS_COEFF_BURN, 0.4)
+	MODIFY_PHYSIOLOGY(owner_mob, BRUTE, 0.4)
+	MODIFY_PHYSIOLOGY(owner_mob, BURN, 0.4)
 	owner_mob.icon_dead = "[owner_mob.icon_state]_d_dead"
 	owner_mob.icon_state = "[owner_mob.icon_state]_d"
 	owner_mob.icon_living = "[owner_mob.icon_living]_d"

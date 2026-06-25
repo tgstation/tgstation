@@ -3,7 +3,7 @@
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
-	physiology = list(PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service

@@ -11,7 +11,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	physiology = list(PHYS_COEFF_BRUTE = 0.5, PHYS_COEFF_BURN = 0.7, PHYS_COEFF_TOX = 0, PHYS_COEFF_OXY = 0, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, OXY = 0, STAMINA = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 	can_buckle_to = FALSE

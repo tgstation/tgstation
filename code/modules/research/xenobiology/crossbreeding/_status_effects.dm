@@ -296,11 +296,11 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/metalcookie/on_apply()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 0.9)
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.9)
 	return ..()
 
 /datum/status_effect/metalcookie/on_remove()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BRUTE, 1 / 0.9)
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1 / 0.9)
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
@@ -437,11 +437,11 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/adamantinecookie/on_apply()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 0.9)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.9)
 	return ..()
 
 /datum/status_effect/adamantinecookie/on_remove()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BURN, 1 / 0.9)
+	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 0.9)
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////

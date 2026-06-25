@@ -21,7 +21,7 @@
 	maximum_survivable_temperature = T0C + 1000
 
 	ai_controller = /datum/ai_controller/robot_customer
-	physiology = list(PHYS_COEFF_STAMINA = 0)
+	physiology = list(STAMINA = 0)
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	/// The clothes that we draw on this tourist.

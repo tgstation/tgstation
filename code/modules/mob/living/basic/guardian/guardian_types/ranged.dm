@@ -6,7 +6,7 @@
 	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	physiology = list(PHYS_COEFF_BRUTE = 0.9, PHYS_COEFF_BURN = 0.9, PHYS_COEFF_TOX = 0.9, PHYS_COEFF_OXY = 0.9, PHYS_COEFF_STAMINA = 0)
+	physiology = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, OXY = 0.9, STAMINA = 0)
 	range = 13
 	playstyle_string = span_holoparasite("As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.")
 	creator_name = "Ranged"

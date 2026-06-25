@@ -26,7 +26,7 @@
 	wound_bonus = -45
 	can_buckle_to = FALSE
 
-	physiology = list(PHYS_COEFF_BURN = -1) //Healed by fire
+	physiology = list(BURN = -1) //Healed by fire
 	unsuitable_cold_damage = 15
 	unsuitable_heat_damage = 0
 	maximum_survivable_temperature = INFINITY
