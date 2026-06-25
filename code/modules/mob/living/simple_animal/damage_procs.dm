@@ -1,8 +1,4 @@
-
-/mob/living/simple_animal/received_stamina_damage(current_level, amount_actual, amount)
-	return
-
-/mob/living/simple_animal/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+/mob/living/simple_animal/on_damage_loss(amount, updating_health, forced, damage_type, actual_change)
 	if(damage_type != BRUTE)
 		simple_transfer_to_brute_loss(amount)
 	if(!ckey && stat == CONSCIOUS && amount > 0)

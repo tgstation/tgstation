@@ -107,25 +107,9 @@
 		return FALSE
 	return adjust_fire_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/human/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/carbon/on_damage_loss_changed(amount, updating_health, forced, damage_type)
 	. = ..()
-	if(. >= 0) // 0 = no damage, + values = healed damage
-		return .
-
-	if(AT_TOXIN_VOMIT_THRESHOLD(src))
-		apply_status_effect(/datum/status_effect/tox_vomit)
-
-/mob/living/carbon/human/set_tox_loss(amount, updating_health, forced, required_biotype)
-	. = ..()
-	if(. >= 0)
-		return .
-
-	if(AT_TOXIN_VOMIT_THRESHOLD(src))
-		apply_status_effect(/datum/status_effect/tox_vomit)
-
-/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
-	. = ..()
-	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+	if(damage_type == STAMINA && amount > 0 && (maxHealth - staminaloss) <= crit_threshold && stat != DEAD)
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
