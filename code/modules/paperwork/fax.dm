@@ -216,20 +216,22 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		fax_name = new_fax_name
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/fax/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if (jammed && clear_jam(item, user))
-		return
+/obj/machinery/fax/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (jammed && clear_jam(tool, user))
+		return ITEM_INTERACT_SUCCESS
 	if (panel_open)
-		if (is_wire_tool(item))
-			wires.interact(user)
-		return
-	if (can_load_item(item))
+		if (!is_wire_tool(tool))
+			return ITEM_INTERACT_BLOCKING
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+	if (can_load_item(tool))
 		if (!loaded_item_ref?.resolve())
-			loaded_item_ref = WEAKREF(item)
-			item.forceMove(src)
+			loaded_item_ref = WEAKREF(tool)
+			tool.forceMove(src)
 			update_appearance()
-		return
-	return ..()
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /**
  * Attempts to clean out a jammed machine using a passed item.
