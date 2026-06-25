@@ -543,7 +543,7 @@
 /obj/machinery/fax/heads/hop{
 	pixel_x = 0;
 	pixel_y = 6
-},
+	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
