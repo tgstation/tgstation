@@ -692,7 +692,7 @@
 		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
@@ -702,7 +702,6 @@
 	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
-	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	// abundant ore
 	mineral_chance = 11
 
@@ -717,7 +716,7 @@
 		/obj/item/stack/ore/silver = 24,
 		/obj/item/stack/ore/titanium = 22,
 		/obj/item/stack/ore/uranium = 10,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 8,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /turf/closed/mineral/random/snow/high_chance
