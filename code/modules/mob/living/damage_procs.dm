@@ -280,8 +280,7 @@
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	difference -= bruteloss
 
-	on_damage_loss(amount, updating_health, forced, BRUTE, actual_change = -difference)
-	return difference
+	return on_damage_loss(amount, updating_health, forced, BRUTE, difference)
 
 
 /mob/living/proc/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
@@ -291,8 +290,7 @@
 	bruteloss = amount
 	difference -= bruteloss
 
-	on_damage_loss(-difference, updating_health, forced, BRUTE, actual_change = -difference)
-	return difference
+	return on_damage_loss(-difference, updating_health, forced, BRUTE, difference)
 
 /**
  * This proc resets any burn, tox and oxy change that the mob has received and adds the amount/difference to bruteloss.
@@ -304,7 +302,12 @@
 	fireloss = 0
 	toxloss = 0
 	oxyloss = 0
-	bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
+
+	var/difference = bruteloss
+	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
+	difference -= bruteloss
+
+	return difference
 
 /mob/living/proc/get_oxy_loss()
 	return oxyloss
@@ -336,8 +339,7 @@
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	difference -= oxyloss
 
-	on_damage_loss(amount, updating_health, forced, OXY, actual_change = -difference)
-	return difference
+	return on_damage_loss(amount, updating_health, forced, OXY, difference)
 
 /mob/living/proc/set_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
 	if(!forced)
@@ -355,9 +357,7 @@
 	oxyloss = amount
 	difference -= oxyloss
 
-	on_damage_loss(-difference, updating_health, forced, OXY, TRUE, actual_change = -difference)
-
-	return difference
+	return on_damage_loss(-difference, updating_health, forced, OXY, TRUE, difference)
 
 /mob/living/proc/get_tox_loss()
 	return toxloss
@@ -392,8 +392,7 @@
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	difference -= toxloss
 
-	on_damage_loss(amount, updating_health, forced, TOX, actual_change = -difference)
-	return difference
+	return on_damage_loss(amount, updating_health, forced, TOX, difference)
 
 /mob/living/proc/set_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
@@ -404,8 +403,7 @@
 	toxloss = amount
 	difference -= toxloss
 
-	on_damage_loss(-difference, updating_health, forced, OXY, actual_change = -difference)
-	return difference
+	return on_damage_loss(-difference, updating_health, forced, OXY, actual_change = difference)
 
 /mob/living/proc/get_fire_loss()
 	return fireloss
@@ -427,8 +425,7 @@
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	difference -= fireloss
 
-	on_damage_loss(amount, updating_health, forced, BURN, actual_change = -difference)
-	return difference
+	return on_damage_loss(amount, updating_health, forced, BURN, difference)
 
 /mob/living/proc/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
@@ -437,8 +434,7 @@
 	fireloss = amount
 	difference -= fireloss
 
-	on_damage_loss(-difference, updating_health, forced, BURN, actual_change = -difference)
-	return difference
+	return on_damage_loss(-difference, updating_health, forced, BURN, difference)
 
 /mob/living/proc/adjust_organ_loss(slot, amount, maximum, required_organ_flag)
 	return
@@ -469,8 +465,7 @@
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss
-	on_damage_loss(amount, updating_stamina, forced, STAMINA, actual_change = -delta)
-	return delta
+	return on_damage_loss(amount, updating_stamina, forced, STAMINA, delta)
 
 /mob/living/proc/set_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
@@ -480,24 +475,25 @@
 	var/old_amount = staminaloss
 	staminaloss = amount
 	var/delta = old_amount - staminaloss
-	on_damage_loss(-delta, updating_stamina, forced, STAMINA, actual_change = -delta)
-	return delta
+	return on_damage_loss(-delta, updating_stamina, forced, STAMINA, delta)
 
 /**
  * Called at the end of each set/adjust_x_loss proc, regardless of whether damage was actually inflicted/healed or not.
  *
  * params:
- * * amount: the amount of damage taken/recovered after value modifiers but before clamping the value between [maxHealth]/[max_stamina] * 2 and 0
+ * * amount: the amount of damage taken/recovered after value modifiers BUT BEFORE clamping the value between [maxHealth]/[max_stamina] * 2 and 0
  * * updating_health: if the caller proc is to be followed by an [updatehealth()] proc call
  * * forced: if the caller proc has had the forced arg set to TRUE (ignores damage modifiers
- * * damage_type: one of BRUTE, BURN, OXY, TOX and STAMINA
- * * actual_change: the amount of damage taken/recovered after clamping the value of the associated damage variable (between [maxHealth]/[max_stamina] * 2 and 0)
+ * * damage_type: one of BRUTE, BURN, OXY, TOX or STAMINA
+ * * difference: the difference between the old and new (brute/fire/oxy/tox/stamina)loss var values. Unlike amount, negative values is damage received, positive is healing.
  */
-/mob/living/proc/on_damage_loss(amount, updating_health, forced, damage_type, actual_change)
+/mob/living/proc/on_damage_loss(amount, updating_health, forced, damage_type, difference)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!actual_change) // no change, no need to call on_damage_loss_changed
-		return FALSE
-	on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	if(difference) // only call on_damage_loss_changed if there's an actual change
+		//We pass down 'difference' and not 'amount' as that's the actual change, with its sign swapped to match
+		//how positive values represent damage and negative represent healing in adjust_x_loss() calls once again (less confusing this way).
+		on_damage_loss_changed(-difference, updating_health, forced, damage_type)
+	return difference //I'm pretty sure only mob_damage unit tests need this return value, but who knows...
 
 ///Called by [on_damage_loss()], if the damage was actually inflicted or healed (actual_change different than 0)
 /mob/living/proc/on_damage_loss_changed(amount, updating_health, forced, damage_type)
