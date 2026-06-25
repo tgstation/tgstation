@@ -115,7 +115,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 
 /datum/revolution_handler/proc/check_rev_victory()
 	for(var/datum/objective/mutiny/objective in revs.objectives)
-		if(!(objective.check_completion()))
+		if(!objective.check_completion())
 			return FALSE
 	return TRUE
 

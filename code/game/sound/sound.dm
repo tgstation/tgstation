@@ -219,3 +219,12 @@
 		return soundin
 	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
 	return sfx?.return_sfx() || soundin
+
+
+/**
+ * Creates a soundtoken datum (a sound that updates for movement).
+ * allowed_listeners is an optional list of mobs that are the only ones that can hear this sound ever.
+ * sound_length is an optional length of the sound. Things like TTS need to pass this since we can't dynamically grab the length in that case.
+ */
+/proc/playsoundtoken(atom/source, soundin, volume, range, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, allowed_listeners, sound_length)
+	return new /datum/sound_token(source, soundin, range, volume, falloff_exponent, falloff_distance, allowed_listeners, sound_length, _delete_on_end = TRUE)

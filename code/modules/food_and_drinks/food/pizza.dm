@@ -98,8 +98,8 @@
 	var/obj/item/food/pizzaslice/slice = new slice_type(our_turf)
 	if(HAS_TRAIT(src, TRAIT_FOOD_SILVER))
 		ADD_TRAIT(slice, TRAIT_FOOD_SILVER, INNATE_TRAIT)
-	if(HAS_TRAIT(src, TRAIT_FOOD_CHEF_MADE))
-		ADD_TRAIT(slice, TRAIT_FOOD_CHEF_MADE, GET_TRAIT_SOURCES(src, TRAIT_FOOD_CHEF_MADE)[1]) // wack thing to inherit first source
+	if(HAS_TRAIT(src, TRAIT_HANDMADE))
+		ADD_TRAIT(slice, TRAIT_HANDMADE, GET_TRAIT_SOURCES(src, TRAIT_HANDMADE)[1]) // wack thing to inherit first source
 	slice.pixel_x += rand(-6, 6)
 	slice.pixel_y += rand(-6, 6)
 	user?.put_in_active_hand(slice)

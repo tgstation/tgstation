@@ -64,7 +64,6 @@ There are several things that need to be remembered:
 	update_pockets()
 	update_worn_neck()
 	update_transform()
-	update_mutations_overlay()
 	update_damage_overlays()
 	// These are done via parent call update_body(), keeping them here for clarity
 	// update_hair()
