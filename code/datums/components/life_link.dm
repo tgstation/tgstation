@@ -74,9 +74,9 @@
 /datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, obj/item/bodypart/part, brute, burn)
 	SIGNAL_HANDLER
 	if (brute != 0)
-		host.apply_damage(brute, BRUTE, part.body_zone, spread_damage = !host_part)
+		host.apply_damage(brute, BRUTE, part.body_zone)
 	if (burn != 0)
-		host.apply_damage(burn, BURN, part.body_zone, spread_damage = !host_part)
+		host.apply_damage(burn, BURN, part.body_zone)
 	on_passed_damage?.Invoke(our_mob, host, brute + burn)
 	return COMPONENT_PREVENT_LIMB_DAMAGE
 
