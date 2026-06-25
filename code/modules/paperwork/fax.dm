@@ -217,20 +217,21 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fax/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (jammed && clear_jam(tool, user))
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(jammed && clear_jam(tool, user))
 		return ITEM_INTERACT_SUCCESS
-	if (panel_open)
-		if (!is_wire_tool(tool))
-			return ITEM_INTERACT_BLOCKING
+	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS
-	if (can_load_item(tool))
-		if (!loaded_item_ref?.resolve())
-			loaded_item_ref = WEAKREF(tool)
-			tool.forceMove(src)
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
-		return ITEM_INTERACT_BLOCKING
+	if(can_load_item(tool))
+		if(loaded_item_ref?.resolve())
+			balloon_alert(user, "item already loaded!")
+			return ITEM_INTERACT_BLOCKING
+		loaded_item_ref = WEAKREF(tool)
+		tool.forceMove(src)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 	return NONE
 
 /**
