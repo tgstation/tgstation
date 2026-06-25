@@ -469,7 +469,7 @@
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss
-	on_damage_loss(delta, updating_stamina, forced, STAMINA, actual_change = -delta)
+	on_damage_loss(amount, updating_stamina, forced, STAMINA, actual_change = -delta)
 	return delta
 
 /mob/living/proc/set_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
@@ -480,7 +480,7 @@
 	var/old_amount = staminaloss
 	staminaloss = amount
 	var/delta = old_amount - staminaloss
-	on_damage_loss(delta, updating_stamina, forced, STAMINA, actual_change = -delta)
+	on_damage_loss(-delta, updating_stamina, forced, STAMINA, actual_change = -delta)
 	return delta
 
 /**
