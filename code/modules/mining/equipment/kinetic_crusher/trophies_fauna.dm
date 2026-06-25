@@ -103,7 +103,7 @@
 /obj/item/crusher_trophy/lobster_claw
 	name = "lobster claw"
 	icon_state = "lobster_claw"
-	desc = "A lobster claw."
+	desc = "A lobster claw. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/lobster_claw
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1

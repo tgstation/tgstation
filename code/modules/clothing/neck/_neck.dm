@@ -597,5 +597,5 @@
 /obj/item/clothing/neck/wreath/magmawing
 	name = "\improper magmawing wreath"
 	desc = "An elaborate crown made from the twisted flesh and sinew of an magmawing watcher. Wearing it sets your heart and skin ablaze."
-	icon_state = "magmawingwing_wreath"
+	icon_state = "magmawing_wreath"
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
