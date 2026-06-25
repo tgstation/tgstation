@@ -403,7 +403,7 @@
 	toxloss = amount
 	difference -= toxloss
 
-	return on_damage_loss(-difference, updating_health, forced, OXY, actual_change = difference)
+	return on_damage_loss(-difference, updating_health, forced, TOX, difference)
 
 /mob/living/proc/get_fire_loss()
 	return fireloss
@@ -495,7 +495,7 @@
 		on_damage_loss_changed(-difference, updating_health, forced, damage_type)
 	return difference //I'm pretty sure only mob_damage unit tests need this return value, but who knows...
 
-///Called by [on_damage_loss()], if the damage was actually inflicted or healed (actual_change different than 0)
+///Called by [on_damage_loss()], if the damage was actually inflicted or healed (difference different than 0)
 /mob/living/proc/on_damage_loss_changed(amount, updating_health, forced, damage_type)
 	SHOULD_CALL_PARENT(TRUE)
 	if(damage_type == STAMINA && amount > 0)
