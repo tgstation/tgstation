@@ -410,10 +410,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE)
-	..()
+	. = ..()
 	if(icon_update)
 		update_body(is_creating = TRUE)
-		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 /mob/proc/has_dna()
 	return
@@ -464,7 +463,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(mrace || newfeatures || unique_identity)
 		update_body(is_creating = TRUE)
-		update_mutations_overlay()
 
 	if(LAZYLEN(mutations) && force_transfer_mutations && can_mutate())
 		for(var/datum/mutation/mutation as anything in mutations)
@@ -502,7 +500,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(icon_update)
 		update_body(is_creating = mutcolor_update)
 	if(mutations_overlay_update)
-		update_mutations_overlay()
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/proc/domutcheck()
 	return
@@ -514,7 +512,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	for(var/mutation in dna.mutation_index)
 		dna.check_block(mutation)
 
-	update_mutations_overlay()
+	update_appearance(UPDATE_OVERLAYS)
 
 /datum/dna/proc/check_block(mutation_path)
 	var/datum/mutation/mutation = get_mutation(mutation_path)

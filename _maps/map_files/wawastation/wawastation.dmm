@@ -29571,14 +29571,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "kki" = (
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
 /obj/structure/table/wood/fancy/orange,
+/obj/machinery/fax/heads/qm,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "kkA" = (
@@ -30294,11 +30291,8 @@
 /area/station/science/genetics)
 "kvk" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/fax/heads/cmo,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/cmo)
 "kvo" = (
@@ -44652,16 +44646,13 @@
 	name = "shutter control";
 	pixel_x = -8
 	},
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 8;
 	pixel_y = -24
 	},
 /obj/machinery/status_display/ai/directional/east,
+/obj/machinery/fax/heads/captain,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "pvy" = (
@@ -54205,10 +54196,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/fax{
-	fax_name = "Research Director's Office";
-	name = "Research Director's Fax Machine"
-	},
 /obj/structure/table,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("ss13","rd")
@@ -54217,6 +54204,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
+/obj/machinery/fax/heads/rd,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "sAO" = (
@@ -62013,10 +62001,7 @@
 "vlD" = (
 /obj/structure/table/wood,
 /obj/machinery/light_switch/directional/north,
-/obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
-	},
+/obj/machinery/fax/heads/hop,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "vlJ" = (
@@ -62090,16 +62075,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "vno" = (
-/obj/machinery/fax{
-	fax_name = "Chief Engineer's Office";
-	name = "Chief Engineer's Fax Machine"
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/fax/heads/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "vnr" = (
@@ -65330,16 +65312,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "wum" = (
-/obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
-	},
 /obj/structure/table/wood/fancy/red,
 /obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/fax/heads/hos,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "wun" = (

@@ -8540,13 +8540,10 @@
 /area/station/maintenance/port/aft)
 "cYc" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Chief Engineer's Office";
-	name = "Chief Engineer's Fax Machine"
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/fax/heads/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "cYx" = (
@@ -22558,10 +22555,6 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Quartermaster";
-	name = "Quartermaster's Fax Machine"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
@@ -22573,6 +22566,7 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/machinery/fax/heads/qm,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "hQu" = (
@@ -23730,10 +23724,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
-	},
+/obj/machinery/fax/heads/hop,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "iiL" = (
@@ -27716,11 +27707,8 @@
 /area/station/medical/chemistry)
 "jxv" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/fax/heads/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "jxM" = (
@@ -47634,10 +47622,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
-	},
+/obj/machinery/fax/heads/hos,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "qmi" = (
@@ -62039,13 +62024,10 @@
 "vgZ" = (
 /obj/structure/table/glass,
 /obj/structure/cable,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/fax/heads/cmo,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "vhb" = (
@@ -70099,13 +70081,10 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Research Director's Office";
-	name = "Research Director's Fax Machine"
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/fax/heads/rd,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "xPx" = (

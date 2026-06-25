@@ -73,7 +73,7 @@
 			if(mind.current)
 				SEND_SOUND(mind.current, sound(SFX_HALLUCINATION_I_M_HERE)) /// BANDASTATION EDIT - Cult Sounds
 				to_chat(mind.current, span_cult_large(span_warning("Ваш культ набирает силу, и приближается красная жатва - вы не сможете долго скрывать свою истинную природу!!")))
-				mind.current.AddElement(/datum/element/cult_halo)
+				mind.current.apply_status_effect(/datum/status_effect/cult_halo)
 		cult_ascendent = TRUE
 		/// BANDASTATION ADDITION START - Cult rebalance
 		priority_announce(

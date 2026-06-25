@@ -237,22 +237,19 @@
 	if(tram)
 		if(SStts.tts_enabled)
 			tram.nav_beacon.voice = SStts.tram_voice
-		switch(response_code)
-			if(REQUEST_SUCCESS)
-				tram.nav_beacon.say("Следующая станция: [response_info]")
 
-			if(REQUEST_FAIL)
-				if(!LAZYFIND(relevant, src))
+		if(response_code == REQUEST_FAIL)
+			if(!LAZYFIND(relevant, src))
+				return
+
+			switch(response_info)
+				if(NOT_IN_SERVICE)
+					tram.nav_beacon.say("Трамвай в данный момент недоступен. Пожалуйста, свяжитесь с техническим специалистом.")
+				if(INVALID_PLATFORM)
+					tram.nav_beacon.say("Ошибка конфигурации. Пожалуйста, свяжитесь с техническим специалистом.")
+				if(INTERNAL_ERROR)
+					tram.nav_beacon.say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
+				else
 					return
-
-				switch(response_info)
-					if(NOT_IN_SERVICE)
-						tram.nav_beacon.say("Трамвай в данный момент недоступен. Пожалуйста, свяжитесь с техническим специалистом.")
-					if(INVALID_PLATFORM)
-						tram.nav_beacon.say("Ошибка конфигурации. Пожалуйста, свяжитесь с техническим специалистом.")
-					if(INTERNAL_ERROR)
-						tram.nav_beacon.say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
-					else
-						return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

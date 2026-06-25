@@ -1,6 +1,6 @@
 /obj/item/organ/brain/psyker
 	name = "psyker brain"
-	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrosity would use that?"
+	desc = "This brain is blue, split into two hemispheres, and aflush with psychic power. What kind of monstrosity would use this?"
 	icon_state = "brain-psyker"
 	actions_types = list(
 		/datum/action/cooldown/spell/pointed/psychic_projection,
@@ -249,7 +249,7 @@
 
 /datum/action/cooldown/spell/pointed/psychic_projection
 	name = "Psychic Projection"
-	desc = "Project your psychics into a target to warp their view, and instill absolute terror that will cause them to fire their gun rapidly."
+	desc = "Project your psyche into a target to warp their view and instill absolute terror. This will cause them to fire any held gun rapidly."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	button_icon_state = "blind"
 	school = SCHOOL_PSYCHIC

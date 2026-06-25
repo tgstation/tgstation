@@ -43,7 +43,7 @@
 
 /datum/religion_rites/burning_sacrifice
 	name = "Burning Offering"
-	desc = "Sacrifice a buckled burning or husked corpse for favor, the more burn damage the corpse has the more favor you will receive."
+	desc = "Sacrifice a buckled burning or husked corpse for favor. The more burn damage the corpse has the more favor you will receive."
 	ritual_length = 15 SECONDS
 	ritual_invocations = list("Горящее тело ...",
 	"... очищенное пламенем ...",
@@ -100,7 +100,7 @@
 
 /datum/religion_rites/infinite_candle
 	name = "Immortal Candles"
-	desc = "Creates 5 candles that never run out of wax."
+	desc = "Create five unextinguishable candles that never run out of wax."
 	ritual_length = 10 SECONDS
 	invoke_msg = "Горите ярко, маленькие свечки, ибо вы погаснете вместе со Вселенной."
 	favor_cost = 200

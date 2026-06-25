@@ -65,8 +65,8 @@
 		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
-	if(retry_counter == 1)
-		playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	if(retry_counter > 1)
+		playsound(src, 'sound/machines/tram/door_chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 	addtimer(CALLBACK(src, PROC_REF(verify_status)), (2.7 SECONDS))
 	try_to_close()

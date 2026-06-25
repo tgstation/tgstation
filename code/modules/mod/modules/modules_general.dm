@@ -38,7 +38,7 @@
 		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_suit_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
-	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
+	if(QDELETED(source) || !invdrop || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
 		balloon_alert(mod.wearer, "storage failed!")
