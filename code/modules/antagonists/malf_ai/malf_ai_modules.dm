@@ -850,7 +850,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_cameras
 	name = "Upgrade Camera Network"
 	description = "Установите программу широкополосного сканирования и электрического резервирования в сеть камер, что позволяет активировать ЭМИ-защиту и улучшенное рентгеновское зрение. Обновление происходит сразу после покупки." //I <3 pointless technobabble
-	icon = 'modular_bandastation/aesthetics\cameras/icons/camera.dmi' // BANDASTATION EDIT: Custom camera icons
+	icon = 'modular_bandastation/aesthetics/cameras/icons/cameras.dmi' // BANDASTATION EDIT: Custom camera icons
 	icon_state = "xraycamera"
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	cost = 35 //Decent price for omniscience!
