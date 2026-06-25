@@ -469,8 +469,8 @@
 	core_color.color = core.core_color
 	. += core_color
 
-	var/mutable_appearance/core_esmissive = emissive_appearance(icon, "anom_overlay_light", src, alpha = src.alpha)
-	. += core_esmissive
+	var/mutable_appearance/core_emissive = emissive_appearance(icon, "anom_overlay_light", src, alpha = src.alpha)
+	. += core_emissive
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
