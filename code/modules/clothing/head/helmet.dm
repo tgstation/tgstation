@@ -580,15 +580,15 @@
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
-/datum/armor/helmet_giant_killer
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 50
-	acid = 50
-	wound = 10
+/datum/armor/helmet_giant_killerunfired
+	melee = 0
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = 0
+	fire = 0
+	acid = 0
+	wound = 0
 
 	/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
 	var/obj/item/spear/dragonator/dragonator = new(loc)
