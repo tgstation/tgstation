@@ -316,13 +316,53 @@
 	plane = AREA_PLANE
 
 /atom/movable/screen/plane_master/weather
-	name = "Weather"
-	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
+	name = "Non-Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects. Used when the player has particle weather disabled."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	/// Is this a particle variant?
+	var/particle_weather = FALSE
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	update_state(new_hud?.mymob)
+
+/atom/movable/screen/plane_master/weather/proc/update_state(mob/mymob)
+	if(!istype(mymob))
+		return
+
+	// If the client wants particle weather, only show the PARTICLE_WEATHER_PLANE, otherwise only show the normal WEATHER_PLANE
+	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) == particle_weather)
+		set_alpha(255)
+	else
+		set_alpha(0)
+
+/atom/movable/screen/plane_master/weather/particle
+	name = "Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. Used when the player has particle weather enabled."
+	plane = PARTICLE_WEATHER_PLANE
+	particle_weather = TRUE
+
+/atom/movable/screen/plane_master/weather_mask
+	name = "Weather Mask"
+	documentation = "Used to mask particle weather effects to cut out areas unaffected by weather."
+	plane = WEATHER_MASK_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	render_target = WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(!.)
 		return

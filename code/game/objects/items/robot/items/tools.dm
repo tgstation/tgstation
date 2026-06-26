@@ -191,16 +191,8 @@
 	if (!issilicon(user))
 		return
 
-	var/mob/living/silicon/robot/as_cyborg = user
-	if (!(src in as_cyborg.held_items))
-		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/item/borg/cyborg_omnitool/examine(mob/user)
-	. = ..()
-	if(reference)
-		var/obj/item/tool = get_proxy_attacker_for(src, usr)
-		. += tool.examine(user)
+	context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Sets the new internal tool to be used
@@ -209,6 +201,8 @@
  * * obj/item/ref - typepath for the new internal omnitool
  */
 /obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	for(var/obj/item/internal_tool as anything in omni_toolkit)
 		if(internal_tool == tool)
 			reference = internal_tool
@@ -247,26 +241,30 @@
 	//the internal tool is considered part of the tool itself, so don't let it be dropped.
 	tool.item_flags |= ABSTRACT
 	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
+	//assign the upgraded toolspeed, if any.
+	tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
 	//store tool for future use
 	atoms[reference] = tool
 
 	return tool
 
-/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user, modifiers)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
 	var/list/tool_map = list()
-	for(var/obj/item as anything in omni_toolkit)
-		var/tool_name = initial(item.name)
-		radial_menu_options[tool_name] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
-		tool_map[tool_name] = item
+	for(var/obj/item/tool as anything in omni_toolkit)
+		if(initial(tool.tool_behaviour) == tool_behaviour)
+			continue
+		var/tool_name = initial(tool.name)
+		radial_menu_options[tool_name] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+		tool_map[tool_name] = tool
 
 	//assign the new tool behaviour
 	var/internal_tool_name = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 	if(!internal_tool_name)
 		return
 
-	//set the reference & update icons
+	//set the reference and update appearance
 	set_internal_tool(tool_map[internal_tool_name])
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
@@ -276,10 +274,8 @@
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
 		return ..()
 	var/mob/living/silicon/robot/user = usr
-	if (!(src in user.held_items))
-		attack_self(user)
-	. = ..()
-	user.select_module(user.held_items.Find(src))
+	attack_self(user, modifiers)
+	return ..()
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
@@ -302,7 +298,6 @@
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
 	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
-
 	omni_toolkit = list(
 		/obj/item/surgical_drapes/cyborg,
 		/obj/item/scalpel/cyborg,
@@ -320,98 +315,32 @@
 	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
-
 	omni_toolkit = list(
 		/obj/item/wrench/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
-		/obj/item/weldingtool/largetank/cyborg,
 	)
-
-/obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
-
-/obj/item/borg/cyborg_omnitool/engineering/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if (!issilicon(user) || tool_behaviour != TOOL_WELDER)
-		return
-
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle welder"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
 	. = ..()
-	if(tool_behaviour == TOOL_WELDER)
-		. += span_notice("Use [EXAMINE_HINT("Ctrl Click")] to toggle welder")
-
-/obj/item/borg/cyborg_omnitool/engineering/update_overlays()
-	. = ..()
-	if(tool_behaviour == TOOL_WELDER)
-		var/obj/item/weldingtool/tool = atoms[/obj/item/weldingtool/largetank/cyborg]
-		if(tool?.welding)
-			. |= tool.update_overlays()
-
-/obj/item/borg/cyborg_omnitool/engineering/set_internal_tool(obj/item/tool)
-	if(tool_behaviour == TOOL_WELDER)
-		welder_toggle(src, FALSE)
-
-	. = ..()
-
-	if(tool_behaviour == TOOL_WELDER)
-		welder_toggle(src, TRUE)
-
-/obj/item/borg/cyborg_omnitool/engineering/item_ctrl_click(mob/user)
-	. = NONE
-	if(tool_behaviour == TOOL_WELDER)
-		var/mob/living/silicon/robot/borgy = loc
-		if(!istype(borgy) || borgy.module_active != src)
-			return
-
-		welder_toggle(src, null)
-		return CLICK_ACTION_SUCCESS
-
-///Reflects internal welder icon onto the omnitool
-/obj/item/borg/cyborg_omnitool/engineering/proc/welder_update(source)
-	PRIVATE_PROC(TRUE)
-	SIGNAL_HANDLER
-
-	update_appearance(UPDATE_OVERLAYS)
-
-///Toggles welder on/off when module slot is selected/deselected
-/obj/item/borg/cyborg_omnitool/engineering/proc/welder_toggle(datum/omnitool, state)
-	PRIVATE_PROC(TRUE)
-	SIGNAL_HANDLER
-
-	if(tool_behaviour == TOOL_WELDER)
-		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, usr)
-		if(isnull(state))
-			state = !tool.welding
-		if(state == tool.welding)
-			return
-
-		if(state)
-			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update))
-			tool.switched_on(usr)
-		else
-			tool.switched_off()
-			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
+	if(tool_behaviour == TOOL_MULTITOOL)
+		var/obj/item/multitool/tool = atoms[/obj/item/multitool/cyborg]
+		if(tool?.buffer)
+			. += span_notice("Multitool buffer contains [tool.buffer].")
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"
 	desc = "A set of botanical tools used by cyborgs to do gardening."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili"
-
 	omni_toolkit = list(
 		/obj/item/secateurs/cyborg,
 		/obj/item/cultivator/cyborg,
 		/obj/item/hatchet/cyborg,
 		/obj/item/shovel/spade/cyborg,
 	)
-
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

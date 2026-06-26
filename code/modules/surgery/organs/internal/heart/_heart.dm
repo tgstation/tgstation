@@ -48,13 +48,11 @@
 /obj/item/organ/heart/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	if(!special)
-		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS, TIMER_DELETE_ME)
 	beat = BEAT_NONE
 	owner?.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
-	if(QDELETED(src))
-		return
 	if(IS_ROBOTIC_ORGAN(src))
 		return
 	if(isnull(owner))

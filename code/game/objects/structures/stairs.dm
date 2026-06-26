@@ -4,6 +4,8 @@
 
 /// Range within which stair indicators will appear for approaching mobs
 #define STAIR_INDICATOR_RANGE 3
+/// Minimum tile spacing between stair minimap blips
+#define STAIR_BLIP_MIN_DISTANCE 2
 
 // dir determines the direction of travel to go upwards
 // stairs require /turf/open/openspace as the tile above them to work, unless your stairs have 'force_open_above' set to TRUE
@@ -27,6 +29,8 @@
 	VAR_FINAL/turf/directly_above
 	/// If TRUE, we have left/middle/right sprites.
 	var/has_merged_sprites = TRUE
+	/// Current atoms used as this stair's minimap blip targets.
+	var/list/minimap_blip_targets
 	/// Lazyassoc list of weakef to mob viewing stair indicators to their images
 	VAR_PRIVATE/list/mob_to_image
 
@@ -63,6 +67,7 @@
 		force_open_above()
 		build_signal_listener()
 	update_surrounding()
+	update_minimap_blip()
 
 	var/static/list/exit_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit_stairs),
@@ -78,6 +83,7 @@
 
 
 /obj/structure/stairs/Destroy()
+	clear_minimap_blips()
 	if(directly_above)
 		UnregisterSignal(directly_above, COMSIG_TURF_MULTIZ_NEW)
 		directly_above = null
@@ -104,6 +110,47 @@
 
 	for(var/obj/structure/stairs/stair in get_step(src, turn(dir, -90)))
 		stair.update_appearance()
+	update_minimap_blip()
+
+/obj/structure/stairs/proc/update_minimap_blip()
+	var/bottom_state = isTerminator() ? "stairs_up" : "stairs_down"
+	var/top_state = (bottom_state == "stairs_up") ? "stairs_down" : "stairs_up"
+	var/turf/current_turf = get_turf(src)
+
+	clear_minimap_blips()
+	if(isnull(current_turf))
+		return
+
+	add_minimap_blip_if_valid(current_turf, bottom_state)
+	add_minimap_blip_if_valid(get_step_multiz(current_turf, UP), top_state)
+
+/obj/structure/stairs/proc/clear_minimap_blips()
+	if(!islist(minimap_blip_targets))
+		return
+	for(var/atom/target as anything in minimap_blip_targets)
+		remove_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	LAZYCLEARLIST(minimap_blip_targets)
+
+/obj/structure/stairs/proc/add_minimap_blip_if_valid(atom/target, state)
+	if(isnull(target))
+		return
+	if(!should_place_minimap_blip(target))
+		return
+
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_STAIR_BLIP, target)
+	if(!isnull(blip))
+		blip.icon_state = state
+	else
+		add_minimap_blip(target, MINIMAP_STAIR_BLIP, state)
+	LAZYADD(minimap_blip_targets, target)
+
+/obj/structure/stairs/proc/should_place_minimap_blip(atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return FALSE
+	if(length(get_minimap_blips_in_area(MINIMAP_STAIR_BLIP, target_turf, STAIR_BLIP_MIN_DISTANCE)))
+		return FALSE
+	return TRUE
 
 /obj/structure/stairs/update_icon_state()
 	. = ..()
@@ -420,3 +467,4 @@
 #undef STAIR_TERMINATOR_YES
 
 #undef STAIR_INDICATOR_RANGE
+#undef STAIR_BLIP_MIN_DISTANCE

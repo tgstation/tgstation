@@ -555,7 +555,7 @@
 	Shake(duration = 1.5 SECONDS)
 
 	//decorate the boulder with materials
-	var/list/mats_list = list()
+	var/list/mats_list = new_rock.custom_materials?.Copy() || list()
 	for(var/iteration in 1 to MINERALS_PER_BOULDER)
 		var/datum/material/material = pick_weight(mineral_breakdown)
 		mats_list[material] += ore_quantity_function(iteration)
@@ -677,7 +677,7 @@
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE,
@@ -690,7 +690,7 @@
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/ice_demon,
 		/mob/living/basic/mining/wolf,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 	)
 	ore_vent_options = list(
 		SMALL_VENT_TYPE = 3,

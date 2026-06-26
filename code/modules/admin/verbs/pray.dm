@@ -16,31 +16,33 @@
 		if(src.client.handle_spam_prevention(message, MUTE_PRAY))
 			return
 
-	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage/book.dmi', "bible")
-	var/font_color = "purple"
-	var/prayer_type = "PRAYER"
-	var/deity
+
+	var/prayer_type = DEFAULT_PRAYER
+	var/list/deities = list()
 	if(src.job == JOB_CHAPLAIN)
-		cross.icon_state = "kingyellow"
-		font_color = "blue"
-		prayer_type = "CHAPLAIN PRAYER"
+		prayer_type = CHAPLAIN_PRAYER
 		if(GLOB.deity)
-			deity = GLOB.deity
+			deities += GLOB.deity
 	else if(IS_CULTIST(src))
-		cross.icon_state = "tome"
-		font_color = "red"
-		prayer_type = "CULTIST PRAYER"
-		deity = "Nar'Sie"
-	else if(isliving(src))
-		var/mob/living/L = src
-		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
-			cross.icon_state = "holylight"
-			font_color = "blue"
-			prayer_type = "SPIRITUAL PRAYER"
+		prayer_type = CULT_PRAYER
+		deities += "Nar'Sie"
+	else if(IS_HERETIC_OR_MONSTER(src))
+		prayer_type = HERETIC_PRAYER
+		deities += "the Mansus"
+	else if(HAS_TRAIT(src, TRAIT_SPIRITUAL))
+		prayer_type = SPIRITUAL_PRAYER
+	else if(HAS_TRAIT(src, TRAIT_EVIL))
+		prayer_type = EVIL_PRAYER
+
+	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage/book.dmi', GLOB.prayer_type_to_icon_state[prayer_type])
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_SEND_PRAYER, src, message, prayer_type, cross, deities)
+
 
 	var/msg_tmp = message
 	GLOB.requests.pray(src.client, message, src.job == JOB_CHAPLAIN)
-	message = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(message)]")
+	message = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[GLOB.prayer_type_to_font_color[prayer_type]]>[prayer_type][length(deities) ? " (to [english_list(deities)])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(message)]")
+	message = custom_boxed_message(GLOB.prayer_type_to_message_box[prayer_type], message)
 	for(var/client/C in GLOB.admins)
 		if(get_chat_toggles(C) & CHAT_PRAYER)
 			to_chat(C, message, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)

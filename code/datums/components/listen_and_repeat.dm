@@ -8,6 +8,10 @@
 #define MESSAGE_VOICE "voice"
 /// the tone it should be said in
 #define MESSAGE_PITCH "pitch"
+/// the blip base it should be said in
+#define MESSAGE_BLIP_BASE "blip_base"
+/// the blip base it should be said in
+#define MESSAGE_BLIP_NUMBER "blip_number"
 
 /// Simple element that will deterministically set a value based on stuff that the source has heard and will then compel the source to repeat it.
 /// Requires a valid AI Blackboard.
@@ -24,6 +28,8 @@
 	var/static/list/invalid_voice = list(
 		MESSAGE_VOICE = "invalid",
 		MESSAGE_PITCH = 0,
+		MESSAGE_BLIP_BASE = "male",
+		MESSAGE_BLIP_NUMBER = 1,
 	)
 
 /datum/component/listen_and_repeat/Initialize(list/desired_phrases, blackboard_key)
@@ -68,6 +74,8 @@
 		var/atom/movable/movable_speaker = speaker
 		speaker_sound[MESSAGE_VOICE] = movable_speaker.voice || "invalid"
 		speaker_sound[MESSAGE_PITCH] = (movable_speaker.pitch && SStts.pitch_enabled ? movable_speaker.pitch : 0)
+		speaker_sound[MESSAGE_BLIP_BASE] = movable_speaker.blip_base || "male"
+		speaker_sound[MESSAGE_BLIP_NUMBER] = movable_speaker.blip_number || 1
 
 	if(over_radio && prob(RADIO_IGNORE_CHANCE))
 		return
@@ -94,6 +102,9 @@
 	if(islist(speech_buffer[selected_phrase]))
 		to_return[MESSAGE_VOICE] = speech_buffer[selected_phrase][MESSAGE_VOICE]
 		to_return[MESSAGE_PITCH] = speech_buffer[selected_phrase][MESSAGE_PITCH]
+		to_return[MESSAGE_BLIP_BASE] = speech_buffer[selected_phrase][MESSAGE_BLIP_BASE]
+		to_return[MESSAGE_BLIP_NUMBER] = speech_buffer[selected_phrase][MESSAGE_BLIP_NUMBER]
+
 
 	controller.override_blackboard_key(blackboard_key, to_return)
 
@@ -112,3 +123,5 @@
 #undef MESSAGE_VOICE
 #undef MESSAGE_PITCH
 #undef MESSAGE_LINE
+#undef MESSAGE_BLIP_BASE
+#undef MESSAGE_BLIP_NUMBER

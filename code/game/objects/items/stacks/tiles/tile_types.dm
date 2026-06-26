@@ -1162,9 +1162,11 @@
 	merge_type = /obj/item/stack/tile/material
 
 /obj/item/stack/tile/material/place_tile(turf/open/target_plating, mob/user)
+	// Save refernce to the materials for the case when we place last tile in the stack
+	var/list/saved_mats_per_unit = mats_per_unit
 	. = ..()
 	var/turf/open/floor/material/floor = .
-	floor?.set_custom_materials(mats_per_unit)
+	floor?.set_custom_materials(saved_mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"

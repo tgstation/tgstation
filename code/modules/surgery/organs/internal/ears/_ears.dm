@@ -199,6 +199,7 @@
 	sprite_accessory_override = /datum/sprite_accessory/ears/cat/cybernetic
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
+	restyle_flags = NONE
 
 /obj/item/organ/ears/cat/cybernetic/upgraded
 	name = "cybernetic cat ears"

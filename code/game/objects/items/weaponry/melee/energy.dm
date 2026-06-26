@@ -125,7 +125,6 @@
 	else
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
-
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
@@ -222,48 +221,6 @@
 
 	return ..()
 
-/obj/item/melee/energy/sword/cyborg
-	name = "cyborg energy sword"
-	sword_color_icon = "red"
-	/// The cell cost of hitting something.
-	var/hitcost = 0.05 * STANDARD_CELL_CHARGE
-
-/obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
-	if(!user.cell)
-		return
-
-	var/obj/item/stock_parts/power_store/our_cell = user.cell
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
-		attack_self(user)
-		to_chat(user, span_notice("It's out of charge!"))
-		return
-	return ..()
-
-/obj/item/melee/energy/sword/cyborg/cyborg_unequip(mob/user)
-	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return
-	attack_self(user)
-
-/obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
-	name = "energy saw"
-	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	icon = 'icons/obj/medical/surgery_tools.dmi'
-	icon_state = "esaw"
-	hitsound = 'sound/items/weapons/circsawhit.ogg'
-	force = 18
-	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
-	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = SHARP_EDGED
-	light_color = LIGHT_COLOR_LIGHT_CYAN
-	tool_behaviour = TOOL_SAW
-	toolspeed = 0.7 // Faster than a normal saw.
-
-	active_force = 30
-	sword_color_icon = null // Stops icon from breaking when turned on.
-
-/obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return FALSE
-
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
 	/// Assoc list of all possible saber colors to color define. If you add a new color, make sure to update /obj/item/toy/sword too!
@@ -324,6 +281,51 @@
 	sword_color_icon = "rainbow"
 	to_chat(user, span_warning("RNBW_ENGAGE"))
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/melee/energy/sword/saber/cyborg
+	name = "cyborg energy sword"
+	hacked = TRUE
+	sword_color_icon = "rainbow"
+	/// The cell cost of hitting something.
+	var/hitcost = 0.05 * STANDARD_CELL_CHARGE
+
+/obj/item/melee/energy/sword/saber/cyborg/Initialize(mapload)
+	. = ..()
+	set_light_range(5) //Cyborgs don't have inhand sprites, so we compensate by making it glow brightly.
+
+/obj/item/melee/energy/sword/saber/cyborg/attack(mob/target, mob/living/silicon/robot/user)
+	if(!user.cell)
+		return
+
+	var/obj/item/stock_parts/power_store/our_cell = user.cell
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
+		attack_self(user)
+		to_chat(user, span_notice("It's out of charge!"))
+		return
+	return ..()
+
+/obj/item/melee/energy/sword/saber/cyborg/cyborg_unequip(mob/user)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return
+	attack_self(user)
+
+/obj/item/melee/energy/sword/saber/cyborg/saw //Used by medical Syndicate cyborgs
+	name = "energy saw"
+	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
+	icon = 'icons/obj/medical/surgery_tools.dmi'
+	icon_state = "esaw"
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	force = 18
+	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
+	w_class = WEIGHT_CLASS_NORMAL
+	sharpness = SHARP_EDGED
+	light_color = LIGHT_COLOR_LIGHT_CYAN
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.7 // Faster than a normal saw.
+	hacked = FALSE
+	active_force = 30
+	block_chance = 0 //Unlike assault cyborgs, syndicate medical cyborgs don't get any blocking capabilities
+	sword_color_icon = null // Stops icon from breaking when turned on.
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -407,6 +409,9 @@
 	alt_sharpness = NONE
 	alt_force_mod = -12
 	alt_hitsound = SFX_SWING_HIT
+	worn_icon_state = "energysurplus"
+	slot_flags = ITEM_SLOT_BELT
+	light_color = LIGHT_COLOR_LIGHT_CYAN
 	/// Battery used to determine how many hits we can make before our sword switches off and can't be turned back on without a do_after.
 	var/charge = 20
 	/// Our battery maximum.
@@ -544,6 +549,13 @@
 	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
 	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
 	return TRUE
+
+/obj/item/melee/energy/sword/surplus/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	if(active)
+		slot_flags &= ~ITEM_SLOT_BELT
+	else
+		slot_flags |= ITEM_SLOT_BELT
 
 // Null rod variants
 
