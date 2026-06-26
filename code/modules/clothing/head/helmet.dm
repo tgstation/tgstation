@@ -564,7 +564,7 @@
 	wound = 10
 
 	/obj/item/clothing/head/helmet/giant_killerunfired
-	name = "unfiredGiant-Killer helmet"
+	name = "unfired Giant-Killer helmet"
 	desc = "A knight helmet to be forged in lava."
 	icon_state = "knight_green"
 	inhand_icon_state = "knight_helmet"

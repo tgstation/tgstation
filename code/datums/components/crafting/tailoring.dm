@@ -679,3 +679,13 @@
 		/obj/item/clothing/mask/gas/clown_hat = 1,
 	)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/giant-killerunfiredarmor
+	name= "Unfired Giant-Killer Helmet"
+	result=/obj/item/clothing/head/helmet/giant_killerunfired
+	time= 15 SECONDS
+	reqs=list(
+		/obj/item/stack/sheet/titanium = 3,
+		/obj/item/stack/sheet/plasteel = 8,
+	)"
+category = CAT_CLOTHING
