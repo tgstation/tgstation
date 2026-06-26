@@ -15,7 +15,7 @@
 		return FALSE
 	StartCooldown(135 SECONDS, 135 SECONDS)
 	var/mob/living/living = owner
-	MODIFY_PHYSIOLOGY(living, PHYS_COEFF_DAMAGE, 0.5)
+	living.damage_resistance += 100
 	RegisterSignal(owner, COMSIG_FINISHED_CHARGE, PROC_REF(affect_aoe))
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
@@ -65,4 +65,4 @@
 		nearby_mob.apply_damage(charge_damage, BRUTE, wound_bonus = CANT_WOUND)
 		nearby_mob.Knockdown(5 SECONDS)
 	var/mob/living/living = owner
-	MODIFY_PHYSIOLOGY(living, PHYS_COEFF_DAMAGE, 2)
+	living.damage_resistance -= 100

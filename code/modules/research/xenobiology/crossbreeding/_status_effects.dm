@@ -42,14 +42,14 @@
 
 /datum/status_effect/slimeskin/on_apply()
 	owner.add_atom_colour(color_transition_filter("#3070CC", SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.9)
+	owner.damage_resistance += 10
 	owner.visible_message(span_warning("[owner] is suddenly covered in a strange, blue-ish gel!"),
 		span_notice("You are covered in a thick, rubbery gel."))
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.9)
+	owner.damage_resistance -= 10
 	owner.visible_message(span_warning("[owner]'s gel coating liquefies and dissolves away."),
 		span_notice("Your gel second-skin dissolves!"))
 
@@ -1061,11 +1061,11 @@
 		qdel(familiar)
 
 /datum/status_effect/stabilized/adamantine/on_apply()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.95)
+	owner.damage_resistance += 5
 	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_remove()
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.95)
+	owner.damage_resistance -= 5
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"

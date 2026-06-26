@@ -41,7 +41,7 @@
 	//Fish is slightly weaker to being cooked. oh oh.
 	MODIFY_PHYSIOLOGY(owner, BURN, 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1.15)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 0.92) //base 8% damage resistance, much wow.
+	owner.damage_resistance += 8 //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
 	else
@@ -69,7 +69,7 @@
 	owner.clear_mood_event("fish_organs_bonus")
 	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.15)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 0.92)
+	owner.damage_resistance -= 8
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
@@ -152,7 +152,7 @@
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1.1)
 	MODIFY_PHYSIOLOGY(owner, STAMINA, 1.1)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1.175) // This should bring the damage multiplier from 92% to 108%
+	owner.damage_resistance -= 16 // This should bring the resistance from +8% to -8%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
 	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, TRAIT_STATUS_EFFECT(id)) //harder to grab when wet.
@@ -164,7 +164,7 @@
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 1 / 1.1)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1 / 1.1)
 	MODIFY_PHYSIOLOGY(owner, STAMINA, 1 / 1.1)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_DAMAGE, 1 / 1.175)
+	owner.damage_resistance += 16
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER

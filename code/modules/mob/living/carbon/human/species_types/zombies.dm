@@ -136,7 +136,7 @@
 	// Needs to be added after combat mode is set
 	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	MODIFY_PHYSIOLOGY(new_zombie, STAMINA, 0.33)
-	MODIFY_PHYSIOLOGY(new_zombie, PHYS_COEFF_DAMAGE, 0.8) // 120 damage to KO a zombie, which kills it
+	new_zombie.damage_resistance += 20
 
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
@@ -166,7 +166,7 @@
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
 	MODIFY_PHYSIOLOGY(was_zombie, STAMINA, 1 / 0.33)
-	MODIFY_PHYSIOLOGY(was_zombie, PHYS_COEFF_DAMAGE, 1.25)
+	was_zombie.damage_resistance -= 20
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

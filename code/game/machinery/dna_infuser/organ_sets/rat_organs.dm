@@ -72,11 +72,11 @@
 
 /obj/item/organ/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
-	MODIFY_PHYSIOLOGY(receiver, PHYS_COEFF_DAMAGE, 1.5) //but 1.5 damage
+	receiver.damage_resistance -= 50 //but 1.5 damage
 
 /obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
-	MODIFY_PHYSIOLOGY(heartless, PHYS_COEFF_DAMAGE, 1 / 1.5)
+	heartless.damage_resistance += 50 //revert damage resistance
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/tongue/rat

@@ -36,8 +36,7 @@
 )
 	SHOULD_CALL_PARENT(TRUE)
 
-	// convert the relevant coefficient into blocked damage (if PHYS_COEFF_DAMAGE is higher than 1, it'll go into negative and the mob will receive more damage)
-	blocked += (1 - GET_PHYSIOLOGY(src, PHYS_COEFF_DAMAGE)) * 100
+	blocked += damage_resistance
 
 	var/damage_amount = damage
 	if(!forced)

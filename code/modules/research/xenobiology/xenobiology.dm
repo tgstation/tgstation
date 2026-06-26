@@ -526,7 +526,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				return
 			ADD_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
-			MODIFY_PHYSIOLOGY(user, PHYS_COEFF_DAMAGE, 0.8)
+			user.damage_resistance += 25
 			addtimer(CALLBACK(src, PROC_REF(reset_armor), user), 120 SECONDS)
 			return 450
 
@@ -540,7 +540,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 /obj/item/slime_extract/adamantine/proc/reset_armor(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
-	MODIFY_PHYSIOLOGY(user, PHYS_COEFF_DAMAGE, 1.25)
+	user.damage_resistance -= 25
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"

@@ -40,6 +40,8 @@
 	var/list/physiology
 	///Contains an inner armor datum separated from worn armor (I could use the default 'armor' var but it might cause some confusion)
 	VAR_PROTECTED/datum/armor/inner_armor
+	///Used on apply_damage(). Less than 0 means you take extra damage. While over 100 is where no damage is taken at all.
+	var/damage_resistance = 0
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
