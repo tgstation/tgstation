@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "ChemMasters now have on-the-fly custom transfer amount support. Set it with the number input by the eject button. One-time custom transfer amounts remain usable with the horizontal ellipsis button."
