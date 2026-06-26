@@ -674,7 +674,7 @@
 
 	inserted_list = inserted_list.Copy()
 	for(var/i in 1 to inserted_list.len)
-		inserted_list.Swap(i, rand(0, i))
+		inserted_list.Swap(i, rand(1, i))
 
 	return inserted_list
 
@@ -684,7 +684,7 @@
 		return
 
 	for(var/i in 1 to inserted_list.len)
-		inserted_list.Swap(i, rand(0, i))
+		inserted_list.Swap(i, rand(1, i))
 
 	return inserted_list
 
