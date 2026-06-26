@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - balance: "The AI Upload Console now requires AI Uplaod access for laws to be uploaded (Captain,HoP,RD), emag also works."
-  - balance: "The hacked AI upload board can bypass the access requirement and has had its time requirement removed."
-  - image: "added 2 new overlays for the AI upload console."

@@ -518,6 +518,12 @@
   SmArtKar:
   - bugfix: Projectile lighting is no longer shown in the right click menu
 2026-06-26:
+  EnterTheJake:
+  - balance: The AI Upload Console now requires AI Uplaod access for laws to be uploaded
+      (Captain,HoP,RD), emag also works.
+  - balance: The hacked AI upload board can bypass the access requirement and has
+      had its time requirement removed.
+  - image: added 2 new overlays for the AI upload console.
   Hatterhat:
   - qol: ChemMasters now have on-the-fly custom transfer amount support. Set it with
       the number input by the eject button. One-time custom transfer amounts remain
