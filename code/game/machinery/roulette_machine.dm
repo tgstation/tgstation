@@ -116,88 +116,90 @@
 	update_appearance() // Not applicable to all objects.
 
 ///Handles setting ownership and the betting itself.
-/obj/machinery/roulette/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(machine_stat & MAINT && is_wire_tool(W))
+/obj/machinery/roulette/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(machine_stat & MAINT && is_wire_tool(tool))
 		wires.interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 	if(playing)
-		return ..()
-	var/obj/item/card/id/player_card = W.GetID()
-	if(player_card)
-		if(isidcard(W))
-			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
-		else
-			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
+		return NONE
+	var/obj/item/card/id/player_card = tool.GetID()
+	if(!player_card)
+		return NONE
+	if(isidcard(tool))
+		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
 
-		if(machine_stat & MAINT || !on || locked)
-			to_chat(user, span_notice("The machine appears to be disabled."))
-			return FALSE
+	if(machine_stat & MAINT || !on || locked)
+		to_chat(user, span_notice("The machine appears to be disabled."))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!player_card.registered_account)
-			say("You don't have a bank account!")
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
-			return FALSE
+	if(!player_card.registered_account)
+		say("You don't have a bank account!")
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+		return ITEM_INTERACT_BLOCKING
 
-		if(my_card)
-			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
-				say("You cannot gamble with the department budget!")
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
-				return FALSE
-			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
-				say("You do not have the funds to play! Lower your bet or get more money.")
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
-				return FALSE
-			if(!chosen_bet_amount || isnull(chosen_bet_type))
-				return FALSE
+	if(!my_card)
+		var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
+		if(!msg)
+			return ITEM_INTERACT_BLOCKING
+		name = msg
+		desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
+		my_card = player_card
+		RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
+		to_chat(user, span_notice("You link the wheel to your account."))
+		power_change()
+		return ITEM_INTERACT_SUCCESS
 
-			//double to nothing bets
-			var/list/doubles = list(
-				ROULETTE_BET_2TO1_FIRST,
-				ROULETTE_BET_2TO1_SECOND,
-				ROULETTE_BET_2TO1_THIRD,
-				ROULETTE_BET_1TO12,
-				ROULETTE_BET_13TO24,
-				ROULETTE_BET_25TO36
-			)
-			//result of text2num is null if text starts with a character, meaning it's not a singles bet
-			var/single = !isnull(text2num(chosen_bet_type))
-			var/potential_payout_mult
-			if (single)
-				potential_payout_mult = ROULETTE_SINGLES_PAYOUT
-			else
-				if (chosen_bet_type in doubles)
-					potential_payout_mult = ROULETTE_DOZ_COL_PAYOUT
-				else
-					potential_payout_mult = ROULETTE_SIMPLE_PAYOUT
-			var/potential_payout = chosen_bet_amount * potential_payout_mult
+	if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
+		say("You cannot gamble with the department budget!")
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+		return ITEM_INTERACT_BLOCKING
 
-			if(!check_owner_funds(potential_payout))
-				return FALSE  //owner is too poor
+	if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
+		say("You do not have the funds to play! Lower your bet or get more money.")
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+		return ITEM_INTERACT_BLOCKING
 
-			if(last_anti_spam > world.time) //do not cheat me
-				return FALSE
+	if(!chosen_bet_amount || isnull(chosen_bet_type))
+		return ITEM_INTERACT_BLOCKING
 
-			last_anti_spam = world.time + anti_spam_cooldown
+	//double to nothing bets
+	var/list/doubles = list(
+		ROULETTE_BET_2TO1_FIRST,
+		ROULETTE_BET_2TO1_SECOND,
+		ROULETTE_BET_2TO1_THIRD,
+		ROULETTE_BET_1TO12,
+		ROULETTE_BET_13TO24,
+		ROULETTE_BET_25TO36
+	)
+	//result of text2num is null if text starts with a character, meaning it's not a singles bet
+	var/single = !isnull(text2num(chosen_bet_type))
+	var/potential_payout_mult
+	if(single)
+		potential_payout_mult = ROULETTE_SINGLES_PAYOUT
+	else if(chosen_bet_type in doubles)
+		potential_payout_mult = ROULETTE_DOZ_COL_PAYOUT
+	else
+		potential_payout_mult = ROULETTE_SIMPLE_PAYOUT
+	var/potential_payout = chosen_bet_amount * potential_payout_mult
 
-			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
-			flick("flick_up", src)
-			playsound(src, 'sound/machines/piston/piston_raise.ogg', 70)
-			playsound(src, 'sound/machines/chime.ogg', 50)
+	if(!check_owner_funds(potential_payout))
+		return ITEM_INTERACT_BLOCKING  //owner is too poor
 
-			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
-			return TRUE
-		else
-			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
-			if(!msg)
-				return
-			name = msg
-			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
-			my_card = player_card
-			RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
-			to_chat(user, span_notice("You link the wheel to your account."))
-			power_change()
-			return
-	return ..()
+	if(last_anti_spam > world.time) //do not cheat me
+		return ITEM_INTERACT_BLOCKING
+
+	last_anti_spam = world.time + anti_spam_cooldown
+
+	icon_state = "rolling" //Prepare the new icon state for rolling before hand.
+	flick("flick_up", src)
+	playsound(src, 'sound/machines/piston/piston_raise.ogg', 70)
+	playsound(src, 'sound/machines/chime.ogg', 50)
+
+	addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
+	return ITEM_INTERACT_SUCCESS
+
 
 ///deletes the my_card ref to prevent harddels
 /obj/machinery/roulette/proc/on_my_card_deleted(datum/source)

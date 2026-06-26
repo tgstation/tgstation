@@ -320,15 +320,16 @@
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/launch = item
-		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
-			return ..()
-		launch.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [launch]."))
-	else
-		return ..()
+/obj/machinery/launchpad/briefcase/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return NONE
+	var/obj/item/launchpad_remote/remote = tool
+	if(IS_WEAKREF_OF(src, remote.pad)) //do not attempt to link when already linked
+		return ITEM_INTERACT_BLOCKING
+	remote.pad = WEAKREF(src)
+	to_chat(user, span_notice("You link [src] to [remote]."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/launchpad_remote
 	name = "folder"
