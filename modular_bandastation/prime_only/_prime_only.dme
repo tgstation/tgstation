@@ -1,6 +1,5 @@
 #include "_prime_only.dm"
 
-#include "detective_tweak/code/outfit.dm"
 #include "fish_portal_rebalance/code/machine_circuitboards.dm"
 
 #include "../_defines220/code/defines/bodycam.dm"
