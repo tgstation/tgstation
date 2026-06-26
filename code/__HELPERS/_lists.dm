@@ -672,22 +672,21 @@
 	if(!inserted_list)
 		return
 
-	var/pick_list = inserted_list.Copy()
-	var/list/new_list = list()
-
+	inserted_list = inserted_list.Copy()
 	for(var/i in 1 to inserted_list.len)
-		new_list += pick_n_take(pick_list)
+		// Re-use the list for in-place swaps
+		inserted_list.Swap(1, rand(inserted_list.len - (i - 1), inserted_list.len))
 
-	return new_list
+	return inserted_list
 
 ///same as shuffle, but acts on list in place, and returns same list
 /proc/shuffle_inplace(list/inserted_list)
 	if(!inserted_list)
 		return
 
-	var/pick_list = inserted_list.Copy()
 	for(var/i in 1 to inserted_list.len)
-		inserted_list[i] = pick_n_take(pick_list)
+		// Re-use the list for in-place swaps
+		inserted_list.Swap(1, rand(inserted_list.len - (i - 1), inserted_list.len))
 
 	return inserted_list
 
