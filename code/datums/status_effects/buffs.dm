@@ -66,10 +66,10 @@
 		return
 	var/grace_heal = bloodlust * 0.02
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks, forced = TRUE)
-	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks)
+	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -336,11 +336,11 @@
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
 			var/need_mob_update = FALSE
-			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
 			need_mob_update += itemUser.adjust_tox_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
-			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE)
 			need_mob_update += itemUser.adjust_organ_loss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()

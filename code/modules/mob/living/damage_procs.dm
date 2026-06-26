@@ -36,10 +36,9 @@
 )
 	SHOULD_CALL_PARENT(TRUE)
 
-	blocked += damage_resistance
-
 	var/damage_amount = damage
 	if(!forced)
+		blocked += damage_resistance
 		damage_amount *= ((100 - blocked) / 100)
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	if(damage_amount <= 0)
@@ -270,7 +269,7 @@
 	return TRUE
 
 /mob/living/proc/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use BRUTE for limb damage instead
+	if(amount > 0 && !forced) //carbon mobs override this proc, so the damage modifier check is also performed on [limb/receive_damage()]
 		amount *= GET_PHYSIOLOGY(src, BRUTE)
 
 	if (!amount || !can_adjust_brute_loss(amount, forced, required_bodytype))
@@ -328,7 +327,7 @@
 	return TRUE
 
 /mob/living/proc/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
-	if(amount > 0)
+	if(amount > 0 && !forced)
 		amount *= GET_PHYSIOLOGY(src, OXY)
 
 	if(!amount || !can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
@@ -369,7 +368,7 @@
 	return TRUE
 
 /mob/living/proc/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(amount > 0)
+	if(amount > 0 && !forced)
 		amount *= GET_PHYSIOLOGY(src, TOX)
 
 	if(!amount || !can_adjust_tox_loss(amount, forced, required_biotype))
@@ -415,7 +414,7 @@
 	return TRUE
 
 /mob/living/proc/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
-	if(amount > 0) //This if for damage, just keep in mind that carbon mobs override this proc and use BRUTE for limb damage instead
+	if(amount > 0 && !forced) //carbon mobs override this proc, so the damage modifier check is also performed on [limb/receive_damage()]
 		amount *= GET_PHYSIOLOGY(src, BURN)
 
 	if(!amount || !can_adjust_fire_loss(amount, forced, required_bodytype))
@@ -455,7 +454,7 @@
 	return TRUE
 
 /mob/living/proc/adjust_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
-	if(amount > 0)
+	if(amount > 0 && !forced)
 		amount *= GET_PHYSIOLOGY(src, STAMINA)
 
 	if(!amount || !can_adjust_stamina_loss(amount, forced, required_biotype))

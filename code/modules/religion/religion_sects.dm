@@ -391,7 +391,7 @@
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
 		target.adjust_oxy_loss(-suffocation_damage)
-		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier)
 
 	var/cached_blood_volume = target.get_blood_volume()
 	if (cached_blood_volume < BLOOD_VOLUME_SAFE)

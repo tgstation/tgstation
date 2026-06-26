@@ -72,7 +72,7 @@
 				if (iscarbon(living_target))
 					var/mob/living/carbon/carbon_target = living_target
 					if(prob(30))
-						carbon_target.apply_damage(max(0, adjusted_damage), damage_type, blocked = blocked, forced = TRUE, spread_damage = TRUE, attack_direction = crush_dir) // the 30% chance to spread the damage means you escape breaking any bones
+						carbon_target.apply_damage(max(0, adjusted_damage), damage_type, blocked = blocked, spread_damage = TRUE, attack_direction = crush_dir) // the 30% chance to spread the damage means you escape breaking any bones
 					else
 						var/brute = (damage_type == BRUTE ? damage : 0) * 0.5
 						var/burn = (damage_type == BURN ? damage : 0) * 0.5
@@ -80,7 +80,7 @@
 						carbon_target.take_bodypart_damage(brute, burn, check_armor = TRUE, wound_bonus = 5)
 					carbon_target.AddElement(/datum/element/squish, 80 SECONDS)
 				else
-					living_target.apply_damage(adjusted_damage, damage_type, blocked = blocked, forced = TRUE, attack_direction = crush_dir)
+					living_target.apply_damage(adjusted_damage, damage_type, blocked = blocked, attack_direction = crush_dir)
 
 				living_target.Paralyze(paralyze_time)
 				living_target.emote("scream")

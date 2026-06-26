@@ -273,12 +273,11 @@
 		return FALSE
 	return ..()
 
-/mob/living/basic/revenant/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+/mob/living/basic/revenant/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	bruteloss = 0 //reset brute loss, detract amount of damage from essence instead..
+	//negative amount means that damage has been healed, positive means damage has been received
+	essence = clamp(essence - amount, 0, max_essence)
 	. = ..()
-	var/difference = . //negative means that damage has been taken, positive means healing has been received
-	essence = clamp(essence + difference, 0, max_essence)
-	if(updating_health)
-		update_health_hud()
 	if(essence == 0)
 		death()
 
