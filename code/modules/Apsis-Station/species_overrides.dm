@@ -18,10 +18,10 @@
 	if(!is_species_whitelisted_for_client(species.type, preferences?.parent))
 		if(preferences?.parent)
 			to_chat(preferences.parent, span_warning("You are not whitelisted to play as [species.name]."))
-		//	to_chat(preferences.parent, span_notice("Apsis-Station offers whitelist species to Patreon supporters. Visit <a href='https://www.patreon.com/YOURPAGE'>our Patreon</a> to apply."))
 		return FALSE
 	return TRUE
 
+//Species whitelist files here.
 /proc/is_species_whitelisted_for_client(species_type, client/C)
 	if(species_type == /datum/species/human/felinid)
 		return C ? ckey_in_species_whitelist(C, "felinid_whitelist.txt") : FALSE
@@ -31,12 +31,10 @@
 		return C ? ckey_in_species_whitelist(C, "moth_whitelist.txt") : FALSE
 	return TRUE
 
-// ============================================================
 // FACIAL HAIR ENFORCEMENT ON SPAWN
 // Catches anyone who somehow has a banned style saved from before
 // the restriction was added. Style won't be in SSaccessories list
 // if it's lore_banned, so we just check for existence.
-// ============================================================
 /datum/species/proc/enforce_facial_hair_restrictions(mob/living/carbon/human/H)
 	if(!H?.client)
 		return

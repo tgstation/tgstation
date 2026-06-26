@@ -10,3 +10,4 @@
 			to_chat(preferences.parent, span_notice("Station policy requires leg protection. Jumpskirts may still be found in station lockers."))
 		return PREF_SUIT
 	return ..()
+	

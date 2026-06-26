@@ -3,14 +3,12 @@
 // Reason: NT safety regs prohibit facial hair that obstructs o2 mask seals and helmets
 
 /datum/sprite_accessory
-	/// Apsis-Station: If TRUE, banned server-wide for o2 seal / helmet lore reasons
+	// Apsis-Station: If TRUE, banned server-wide for o2 seal / helmet lore reasons
 	var/lore_banned = FALSE
 
-// ============================================================
-// FLAG BANNED STYLES HERE
+// FLAG BANNED STYLES BELOW
 // Check exact subtype names in:
 // code/datums/sprite_accessories.dm
-// ============================================================
 
 // Hair beyond shoulder length restricted for helmet purposes.
 // Hair tied up is still restricted.
@@ -357,4 +355,3 @@
 			facial_hairstyles_list.Remove(style_name)
 			facial_hairstyles_male_list?.Remove(style_name)
 			facial_hairstyles_female_list?.Remove(style_name)
-
