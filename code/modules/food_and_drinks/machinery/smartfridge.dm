@@ -185,7 +185,7 @@
 	. = ..()
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+		. += status_examine()
 
 	. += structure_examine()
 
@@ -210,6 +210,12 @@
 		. += span_info("It is [EXAMINE_HINT("wrenched")] down on the floor.")
 	else
 		. += span_info("It could be [EXAMINE_HINT("wrenched")] down.")
+
+/// Returns details related to the fridge status
+/obj/machinery/smartfridge/proc/status_examine()
+	. = list()
+
+	. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -580,6 +586,10 @@
 		tool_tip_set = TRUE
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
+
+/obj/machinery/smartfridge/drying/rack/status_examine()
+	. = list()
+	. += span_notice("It looks like this unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()
