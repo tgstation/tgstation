@@ -348,23 +348,20 @@
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
-/obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
-	. = ..()
-	if(!isidcard(some_item))
-		return
-
-	var/obj/item/card/id/clicked_by_this_id = some_item
+/obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return ITEM_INTERACT_BLOCKING
 
 	if(!id_lock)
-		id_lock = WEAKREF(clicked_by_this_id)
+		id_lock = WEAKREF(tool)
 		balloon_alert(user, "successfully locked")
-		return
-	var/obj/item/card/id/resolve_id = id_lock.resolve()
-	if(clicked_by_this_id != resolve_id)
+		return ITEM_INTERACT_SUCCESS
+	if(tool != id_lock.resolve())
 		balloon_alert(user, "locked by another id")
-		return
+		return ITEM_INTERACT_BLOCKING
 	id_lock = null
 	balloon_alert(user, "successfully unlocked")
+	return ITEM_INTERACT_SUCCESS
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
