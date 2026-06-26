@@ -522,3 +522,24 @@
   - qol: ChemMasters now have on-the-fly custom transfer amount support. Set it with
       the number input by the eject button. One-time custom transfer amounts remain
       usable with the horizontal ellipsis button.
+  Melbert:
+  - balance: Obsessions get moderately stronger grabs against their objective targets
+      (this includes their obsession and any other kill/theft targets they may have).
+  - balance: While standing near their obsession (for 20 seconds or if they are incapacitated),
+      Obsessions get slightly stronger grabs against anyone, rather than just their
+      objective targets.
+  - balance: While standing near their obsession (for 20 seconds or if they are incapacitated),
+      Obsessions get slight stamina damage resistance.
+  - balance: Obsession stammering has been reduced in severity a bit, and also becomes
+      less likely the longer you stand around your obsession.
+  - balance: Obsession emotes have been made a bit less obvious, and also become less
+      likely the longer you stand around your obsession.
+  - balance: Taking Psicodine or drinking alcohol will prevent Obsessions from stammering
+      or emoting around their obsession, but also disables their stamina resistance
+      and stronger grabs.
+  - balance: Obsessions get a "permanent" mood bonus for killing their obsession (until
+      they are revived).
+  - refactor: Obsessed has been refactored significantly. It will now play a lot nicer
+      with mindswaps. Report any oddities.
+  - refactor: Grab strength has been refactored a bit, primarily affects martial arts
+      and drunken brawling. Report any oddities.
