@@ -1,6 +1,6 @@
 /// Returns a list of seed data generated from the given seeds.
 /// Filling the "name", "icon" and "icon_state" fields of the data is the caller's responsibility.
-/proc/generate_seed_data_from(var/obj/item/seeds/seeds)
+/proc/generate_seed_data_from(obj/item/seeds/seeds)
 	var/list/seed_data = list()
 
 	seed_data["lifespan"] = seeds.lifespan
