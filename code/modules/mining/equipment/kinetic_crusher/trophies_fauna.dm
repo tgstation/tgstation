@@ -104,6 +104,8 @@
 
 /obj/item/crusher_trophy/ice_wing/on_mark_detonation(mob/living/target, mob/living/user, obj/item/kinetic_crusher/pkc)
 	. = ..()
+	if (!user)
+		return
 	var/step_dir = get_dir(target, user)
 	for (var/i in 1 to bonus_value)
 		var/turf/open/behind_user = get_step(user, step_dir)
