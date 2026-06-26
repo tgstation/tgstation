@@ -411,10 +411,9 @@
 			continue
 		var/list/scanner_data = list()
 		for(var/mutation_type in scanner.buffer)
-			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(mutation_type)
-			if(!HM)
-				continue
-			scanner_data[HM.alias] = scanner.buffer[mutation_type]
+			var/datum/mutation/mutation = GET_INITIALIZED_MUTATION(mutation_type)
+			if(mutation)
+				scanner_data[mutation.alias] = scanner.buffer[mutation_type]
 		data["heldScannerBuffer"] = scanner_data
 
 	return data
