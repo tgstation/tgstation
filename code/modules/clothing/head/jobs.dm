@@ -800,9 +800,15 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
-	armor_type = /datum/armor/jacket_curator
+	armor_type = /datum/armor/hat_curator
 	cold_protection = HEAD
 	heat_protection = HEAD
+	/datum/armor/hat_curator
+	melee = 25
+	bullet = 5
+	laser = 25
+	energy = 35
+	acid = 45
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
