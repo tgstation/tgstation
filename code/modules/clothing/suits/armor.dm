@@ -565,7 +565,7 @@
 	fire = 40
 	acid = 40
 
-	/obj/item/clothing/suit/armor/riot/knight/giant-killer
+/obj/item/clothing/suit/armor/riot/knight/giant-killer
 	name = "Giant-Killer armor"
 	desc = "A knight's armor, forged in lava."
 	icon_state = "knight_greyscale"
