@@ -178,9 +178,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/armor/costume_bronze
-	melee = 30
-	laser = -30
-	energy = -30
+    melee= 5
 	bomb = 10
 	fire = 20
 	acid = 20
