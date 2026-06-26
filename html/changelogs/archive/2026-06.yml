@@ -517,3 +517,8 @@
       with hulk.
   SmArtKar:
   - bugfix: Projectile lighting is no longer shown in the right click menu
+2026-06-26:
+  Hatterhat:
+  - qol: ChemMasters now have on-the-fly custom transfer amount support. Set it with
+      the number input by the eject button. One-time custom transfer amounts remain
+      usable with the horizontal ellipsis button.
