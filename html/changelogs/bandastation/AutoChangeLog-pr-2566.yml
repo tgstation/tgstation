@@ -1,0 +1,4 @@
+author: "Russak-k"
+delete-after: True
+changes:
+  - rscadd: "Теперь при спавне за детектива на кукле сразу имеется СБ ИЛС."
