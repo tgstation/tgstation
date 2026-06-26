@@ -236,6 +236,7 @@
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
 #define BODYPART_ID_BONE "bone"
+#define BODYPART_ID_BLOOD_WORM "blood_worm"
 
 
 //See: datum/species/var/digitigrade_customization

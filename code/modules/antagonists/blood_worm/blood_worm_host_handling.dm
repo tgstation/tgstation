@@ -38,7 +38,8 @@
 	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much. Stops withdrawals instead of addictions since the latter can be metagamed.
 	TRAIT_NO_SPLIT_PERSONALITY, // How about no?
 	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
-	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
+	TRAIT_BLOOD_WORM_HOST,// Used in code for recognizing blood worm hosts with a simple trait check.
+	ADULT_BLOOD_WORM_HOST_TRAIT), // For only Adult worm stuff - tearing the walls and blood worm head overlay on host's body
 	BLOOD_WORM_HOST_TRAIT)
 
 	if (client)
@@ -49,7 +50,10 @@
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
-	grant_actions(src, host_actions)
+	grant_actions(src, host_actions) // todo: needs for begginning to give the action to every worm, but then only to adult
+
+	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
+		grant_bloodworm_head(host)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
@@ -122,6 +126,9 @@
 	client?.set_stat_panel()
 
 	STOP_PROCESSING(SSfastprocess, src)
+
+	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
+		remove_bloodworm_head(host)
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
