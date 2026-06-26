@@ -11,6 +11,7 @@
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
 	wildhunter_drops = list(/obj/item/stack/sheet/sinew = 7)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
@@ -34,6 +35,7 @@
 	icon_state = "magma_wing"
 	denied_type = /obj/item/crusher_trophy/magma_wing
 	wildhunter_drops = list(/obj/item/stack/sheet/sinew/magmawing = 3)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 6, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 3)
 	/// List of mobs we've marked
 	var/list/mob/living/marked_targets = list()
 
@@ -98,6 +100,7 @@
 	bonus_value = 2
 	denied_type = /obj/item/crusher_trophy/ice_wing
 	wildhunter_drops = list(/obj/item/stack/sheet/sinew/icewing = 3)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 6, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/crusher_trophy/ice_wing/effect_desc()
 	return "user to backstep [bonus_value] tile\s when detonating a mark"
@@ -126,6 +129,7 @@
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
 	// No wildhunter drop to prevent refresh cheese
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -149,6 +153,7 @@
 	bonus_value = 2
 	trophy_id = TROPHY_GOLIATH_TENTACLE
 	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 8)
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
 
@@ -174,6 +179,7 @@
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
 	// No wildhunter drop to prevent refresh cheese
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 12, /datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] second[bonus_value > 1 ? "s" : ""]"
@@ -209,6 +215,7 @@
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
 	wildhunter_drops = list(/obj/item/stack/sheet/animalhide/bileworm = 3)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 12)
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
