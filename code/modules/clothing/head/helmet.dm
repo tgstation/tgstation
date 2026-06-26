@@ -536,6 +536,67 @@
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
+/obj/item/clothing/head/helmet/giant_killer
+	name = "Giant-Killer helmet"
+	desc = "A knight helmet forged in lava."
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	armor_type = /datum/armor/helmet_giant_killer
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = NONE
+	strip_delay = 8 SECONDS
+	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+
+/obj/item/clothing/head/helmet/giant_killer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
+
+/datum/armor/helmet_giant_killer
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 50
+	acid = 50
+	wound = 10
+
+	/obj/item/clothing/head/helmet/giant_killerunfired
+	name = "unfiredGiant-Killer helmet"
+	desc = "A knight helmet to be forged in lava."
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	armor_type = /datum/armor/helmet_giant_killerunfired
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = NONE
+	strip_delay = 8 SECONDS
+	dog_fashion = null
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+
+/obj/item/clothing/head/helmet/giant_killerunfired/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
+
+/datum/armor/helmet_giant_killer
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 50
+	acid = 50
+	wound = 10
+
+	/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
+	var/obj/item/spear/dragonator/dragonator = new(loc)
+	dragonator.set_material_slots(material_slots)
+	dragonator.set_custom_materials(custom_materials.Copy())
+	playsound(giant_killer.loc, 'sound/effects/magic/staff_change.ogg',5)
+	qdel(src)
+
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	desc = "A helmet made from durathread and leather."

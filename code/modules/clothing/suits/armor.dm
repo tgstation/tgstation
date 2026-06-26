@@ -565,6 +565,47 @@
 	fire = 40
 	acid = 40
 
+	/obj/item/clothing/suit/armor/riot/knight/giant-killer
+	name = "Giant-Killer armor"
+	desc = "A knight's armor, forged in lava."
+	icon_state = "knight_greyscale"
+	inhand_icon_state = null
+	armor_type = /datum/armor/knight_giantkillerarmor
+
+/datum/armor/knight_giantkillerarmor
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 20
+	bomb = 50
+	fire = 50
+	acid = 50
+	wound = 10
+
+	obj/item/clothing/suit/armor/riot/knight/giant-killerunfiredarmor
+	name = "unfired Giant-Killer armor"
+	desc = "A knight's armor, to be forged in lava."
+	icon_state = "knight_greyscale"
+	inhand_icon_state = null
+	armor_type = /datum/armor/knight_giantkillerunfiredarmor
+
+/datum/armor/knight_giantkillerunfiredarmor
+	melee = 0
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = 0
+	fire = 0
+	acid = 0
+	wound = 0
+
+	/obj/item/clothing/suit/armor/riot/knight/giant-killerunfired/fire_act(exposed_temperature, exposed_volume)
+	var/obj/item//clothing/suit/armor/riot/knight/giant-killer= new(loc)
+	dragonator.set_material_slots(material_slots)
+	dragonator.set_custom_materials(custom_materials.Copy())
+	playsound(giant_killer.loc, 'sound/effects/magic/staff_change.ogg',5)
+	qdel(src)
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
@@ -577,18 +618,6 @@
 	armor_type = /datum/armor/vest_durathread
 	dog_fashion = null
 
-/obj/item/clothing/suit/armor/vest/durathread/Initialize(mapload)
-	. = ..()
-	allowed |= /obj/item/clothing/suit/apron::allowed
-
-/datum/armor/vest_durathread
-	melee = 20
-	bullet = 10
-	laser = 30
-	energy = 40
-	bomb = 15
-	fire = 40
-	acid = 50
 
 /obj/item/clothing/suit/armor/vest/russian
 	name = "russian vest"
