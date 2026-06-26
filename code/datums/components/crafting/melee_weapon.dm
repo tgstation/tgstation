@@ -294,7 +294,7 @@
 
 /datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
 	name = "Icewing Watcher Wing Trophy"
-	result = /obj/item/crusher_trophy/watcher_wing/ice_wing
+	result = /obj/item/crusher_trophy/ice_wing
 	reqs = list(
 		/obj/item/stack/sheet/sinew/icewing = 3,
 		/obj/item/stack/ore/diamond = 6,
@@ -302,8 +302,8 @@
 	)
 
 /datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
-	name = "Icewing Watcher Wing Trophy"
-	result = /obj/item/crusher_trophy/blaster_tubes/magma_wing
+	name = "Magmawing Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/magma_wing
 	reqs = list(
 		/obj/item/stack/sheet/sinew/magmawing = 3,
 		/obj/item/stack/ore/diamond = 6,
