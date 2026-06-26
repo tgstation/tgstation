@@ -109,4 +109,38 @@
 	if (HAS_TRAIT(spawned, TRAIT_MOVE_FLYING))
 
 	else
-		spawned_turf.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 4 SECONDS)
+		new /obj/effect/unburrow(spawned_turf, spawned)
+		spawned.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 2 SECONDS)
+		spawned_turf.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 2 SECONDS)
+		to_chat(world, "[spawned] - [spawned.loc]")
+
+/// A "good enough" alpha mask effect that looks like something is coming out of the ground
+/obj/effect/unburrow
+	var/animate_time = 2 SECONDS
+
+/obj/effect/unburrow/Initialize(mapload, atom/movable/thing)
+	. = ..()
+	if (QDELETED(thing))
+		return INITIALIZE_HINT_QDEL
+
+	thing.forceMove(src)
+	setup(thing)
+
+/obj/effect/unburrow/proc/setup(atom/movable/thing)
+	icon = thing::icon
+	icon_state = thing::icon_state
+	pixel_x = thing::pixel_x
+	pixel_y = ICON_SIZE_Y
+
+	add_filter("alpha_mask", 2, alpha_mask_filter(icon = icon('icons/effects/64x64.dmi', "alpha_unburrow"), y = 64))
+	var/filter = get_filter("alpha_mask")
+	animate(filter, y = 16, time = animate_time, flags = ANIMATION_PARALLEL)
+	animate(src, pixel_y = 0, time = animate_time, flags = ANIMATION_PARALLEL)
+
+	if (!ispath(thing))
+		addtimer(CALLBACK(src, PROC_REF(release), thing), animate_time, TIMER_DELETE_ME)
+
+/obj/effect/unburrow/proc/release(atom/movable/thing)
+	if (!QDELETED(thing))
+		thing.forceMove(drop_location())
+	qdel(src)
