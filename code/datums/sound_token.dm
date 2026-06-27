@@ -153,13 +153,9 @@
 
 	if(source_turf.z != listener_turf.z)
 		should_be_muted = TRUE
-	else
-		if(preference_volume)
-			var/pref_volume = listener_mob.client?.prefs.read_preference(preference_volume)
-			if(!pref_volume)
-				should_be_muted = TRUE
-			else
-				should_be_muted = FALSE
+	else if(preference_volume)
+		var/pref_volume = listener_mob.client?.prefs.read_preference(preference_volume)
+		should_be_muted = !pref_volume
 
 	var/distance = get_dist_euclidean(source_turf, listener_turf)
 	if(distance > range)
