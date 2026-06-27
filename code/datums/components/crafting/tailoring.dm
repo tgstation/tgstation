@@ -680,7 +680,7 @@
 	)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/giant-killerunfiredhelmet
+/datum/crafting_recipe/giant_killerunfiredhelmet
 	name= "Unfired Giant-Killer Helmet"
 	result=/obj/item/clothing/head/helmet/giant_killerunfired
 	time= 15 SECONDS
