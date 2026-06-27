@@ -30,12 +30,16 @@
 	var/text_gain_indication = ""
 	/// Message given to the user upon losing this mutation
 	var/text_lose_indication = ""
-	/// Visual indicators upon the character of the owner of this mutation
-	var/static/list/visual_indicators = list()
 	/// The path of action we grant to our user on mutation gain
 	var/datum/action/cooldown/power_path
+	/// Optional: Icon for overlay the mutation gives the mod
+	var/mutation_icon = 'icons/mob/effects/genetics.dmi'
+	/// Optional: Icon state for the overlay the mutation gives the mob
+	var/mutation_icon_state = ""
 	/// Which mutation layer to use
 	var/layer_used = MUTATIONS_LAYER
+	/// Where the mutation overlay is located
+	var/offset_location = UPPER_BODY
 	/// To restrict mutation to only certain species
 	var/list/species_allowed
 	/// Minimum health required to acquire the mutation
@@ -115,7 +119,7 @@
 /datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
-	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
+	if(LAZYLEN(species_allowed) && !LAZYFIND(species_allowed, acquirer.dna.species.id))
 		return FALSE
 	if(health_req && acquirer.health < health_req)
 		return FALSE
@@ -132,14 +136,11 @@
 	SEND_SIGNAL(src, COMSIG_MUTATION_GAINED, acquirer)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
-	if(visual_indicators.len)
-		var/list/mut_overlay = list(get_visual_indicator())
-		if(owner.overlays_standing[layer_used])
-			mut_overlay = owner.overlays_standing[layer_used]
-			mut_overlay |= get_visual_indicator()
-		owner.remove_overlay(layer_used)
-		owner.overlays_standing[layer_used] = mut_overlay
-		owner.apply_overlay(layer_used)
+	if(LAZYLEN(species_allowed))
+		RegisterSignal(owner, COMSIG_SPECIES_GAIN, PROC_REF(on_species_change))
+	if(mutation_icon && mutation_icon_state)
+		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlay))
+		owner.update_appearance(UPDATE_OVERLAYS)
 	grant_power() //we do checks here so nothing about hulk getting magic
 	if(mutation_traits)
 		owner.add_traits(mutation_traits, GENETIC_MUTATION)
@@ -156,41 +157,27 @@
 		return TRUE
 	. = FALSE
 	SEND_SIGNAL(src, COMSIG_MUTATION_LOST, owner)
+	UnregisterSignal(owner, list(COMSIG_SPECIES_GAIN, COMSIG_ATOM_UPDATE_OVERLAYS))
+	if(mutation_icon && mutation_icon_state)
+		owner.update_appearance(UPDATE_OVERLAYS)
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
-	if(visual_indicators.len)
-		var/list/mut_overlay = list()
-		if(owner.overlays_standing[layer_used])
-			mut_overlay = owner.overlays_standing[layer_used]
-		owner.remove_overlay(layer_used)
-		mut_overlay.Remove(get_visual_indicator())
-		owner.overlays_standing[layer_used] = mut_overlay
-		owner.apply_overlay(layer_used)
-
 	if(mutation_traits)
 		owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 
-/mob/living/carbon/proc/update_mutations_overlay()
-	return
+/datum/mutation/proc/on_species_change(datum/source, datum/species/new_species)
+	SIGNAL_HANDLER
 
-/mob/living/carbon/human/update_mutations_overlay()
-	for(var/datum/mutation/mutation as anything in dna.mutations)
-		if(mutation.species_allowed && !mutation.species_allowed.Find(dna.species.id))
-			dna.remove_mutation(mutation, mutation.sources) //shouldn't have that mutation at all
-			continue
-		if(mutation.visual_indicators.len == 0)
-			continue
-		var/list/mut_overlay = list()
-		if(overlays_standing[mutation.layer_used])
-			mut_overlay = overlays_standing[mutation.layer_used]
-		var/mutable_appearance/indicator_to_add = mutation.get_visual_indicator()
-		if(!mut_overlay.Find(indicator_to_add)) //either we lack the visual indicator or we have the wrong one
-			remove_overlay(mutation.layer_used)
-			for(var/mutable_appearance/indicator_to_remove in mutation.visual_indicators[mutation.type])
-				mut_overlay.Remove(indicator_to_remove)
-			mut_overlay |= indicator_to_add
-			overlays_standing[mutation.layer_used] = mut_overlay
-			apply_overlay(mutation.layer_used)
+	if(!LAZYFIND(species_allowed, new_species.id))
+		dna.remove_mutation(src, src.sources) // shouldn't have this mutation at all
+
+/datum/mutation/proc/on_update_overlay(datum/source, list/overlay_list)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/mutation_appearance = mutable_appearance(mutation_icon, mutation_icon_state, -layer_used)
+	owner.apply_height_offsets(mutation_appearance, offset_location)
+
+	overlay_list += mutation_appearance
 
 /**
  * Called after on_aquiring, or when a chromosome is applied.

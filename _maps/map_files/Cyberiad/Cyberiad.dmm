@@ -6097,10 +6097,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "bxL" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
+/obj/machinery/fax/heads/captain,
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/captain)
 "bxM" = (
@@ -17695,10 +17692,7 @@
 /area/station/maintenance/department/electrical)
 "emv" = (
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
+/obj/machinery/fax/heads/cmo,
 /obj/machinery/requests_console/directional/east{
 	name = "Chief Medical Officer's Requests Console";
 	department = "Chief Medical Officer's Desk"
@@ -24411,10 +24405,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Chief Engineer's Office";
-	name = "Chief Engineer's Fax Machine"
-	},
+/obj/machinery/fax/heads/ce,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "fTH" = (
@@ -51464,10 +51455,7 @@
 /area/station/engineering/supermatter/engine)
 "myR" = (
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Research Director's Office";
-	name = "Research Director's Fax Machine"
-	},
+/obj/machinery/fax/heads/rd,
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
@@ -66863,10 +66851,7 @@
 /area/station/medical/surgery/fore)
 "qke" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
+/obj/machinery/fax/heads/qm,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/qm)
@@ -91926,10 +91911,7 @@
 "wzG" = (
 /obj/machinery/airalarm/directional/east,
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
-	},
+/obj/machinery/fax/heads/hop,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -97345,10 +97327,7 @@
 /area/station/science/xenobiology)
 "xNC" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
-	},
+/obj/machinery/fax/heads/hos,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/button/door/directional/north{

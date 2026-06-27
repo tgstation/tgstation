@@ -59,10 +59,7 @@
 	dir = 10
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	name = "Chief Engineer's Fax Machine";
-	fax_name = "Chief Engineer's Office"
-	},
+/obj/machinery/fax/heads/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "p" = (

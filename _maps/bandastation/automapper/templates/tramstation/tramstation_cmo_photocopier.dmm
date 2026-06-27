@@ -23,10 +23,7 @@
 /area/station/command/heads_quarters/cmo)
 "g" = (
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	name = "Chief Medical Officer's Fax Machine";
-	fax_name = "Chief Medical Officer's Office"
-	},
+/obj/machinery/fax/heads/cmo,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)

@@ -540,9 +540,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine";
+/obj/machinery/fax/heads/hop{
 	pixel_x = 0;
 	pixel_y = 6
 	},
