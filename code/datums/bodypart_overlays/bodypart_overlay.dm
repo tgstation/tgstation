@@ -13,9 +13,9 @@
 	 * layers = list("layer1" = BODY_LAYER_ADJACENT, "layer2" = BODY_LAYER_BEHIND) // - two layers, with icon states "[iconstate]_layer1" and "[iconstate]_layer2"
 	 * layers = list("" = BODY_LAYER_FRONT) // - one layer, with icon state "[iconstate]"
 	 *
-	 * This is cached, so be careful editing it at runtime
+	 * This is cached, so be careful editing it at runtime (use the helpers!)
 	 */
-	var/list/layers
+	VAR_PROTECTED/list/layers
 	/// Whether the overlay blocks emissive light
 	var/blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	/// Can this overlay be drawn on husked mobs?
@@ -25,8 +25,30 @@
 
 /datum/bodypart_overlay/New()
 	. = ..()
-	if(length(layers))
-		layers = string_assoc_list(layers)
+	set_layers(layers)
+
+/// Used for adding a layer at runtime
+/datum/bodypart_overlay/proc/set_layer(layer_postfix, layer_number)
+	var/list/existing_layers = layers.Copy()
+	existing_layers[layer_postfix] = layer_number
+	layers = string_assoc_list(existing_layers)
+
+/// Used for adding layers at runtime
+/datum/bodypart_overlay/proc/set_layers(list/layer_list)
+	if(!length(layer_list))
+		return
+
+	layers = string_assoc_list(layer_list)
+
+/// Used for removing layers at runtime
+/datum/bodypart_overlay/proc/clear_layer(layer_postfix)
+	var/list/existing_layers = layers.Copy()
+	existing_layers -= layer_postfix
+	if(!length(existing_layers))
+		layers = null
+		return
+
+	layers = string_assoc_list(existing_layers)
 
 /**
  * Returns a list of overlays that this overlay datum draws
