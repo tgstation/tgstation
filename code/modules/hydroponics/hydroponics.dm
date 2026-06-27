@@ -851,7 +851,8 @@
 			continue
 		if(T.myseed && T.plant_status != HYDROTRAY_PLANT_DEAD)
 			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
-			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
+			if(!T.myseed.get_gene(/datum/plant_gene/trait/safe_instability))
+				T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
 			being_pollinated = TRUE
 			add_shared_particles(/particles/pollen)
@@ -1116,8 +1117,7 @@
 		if(!do_after(user, 2 SECONDS, src))
 			return
 
-		oursoil.transfer_soil(src, inside_tray = TRUE)
-
+		current_soil = oursoil.transfer_soil(src, inside_tray = TRUE)
 		RefreshParts()
 		tray_flags = current_soil.tray_flags
 

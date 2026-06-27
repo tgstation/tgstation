@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/pirate
 	port_id = "pirate"
+	prefix = "_maps/shuttles/pirate/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/pirate/default

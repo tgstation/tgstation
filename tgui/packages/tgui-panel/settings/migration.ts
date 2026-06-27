@@ -1,6 +1,7 @@
 import { storage } from 'common/storage';
 import { smoothMerge } from 'common/type-safety';
 import { omit, pick } from 'es-toolkit';
+import { wsUpdate } from 'tgui-panel/websocket/helpers';
 import { setMusicVolume } from '../audio/handlers';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
@@ -110,6 +111,11 @@ export function startSettingsMigration(next: MergedSettings): void {
   setMusicVolume(draftSettings.adminMusicVolume);
   store.set(settingsAtom, draftSettings);
   console.log('Migrated panel settings:', draftSettings);
+
+  if (draftSettings.websocketEnabled !== defaultSettings.websocketEnabled) {
+    // Ensure websocket state is correct after migration
+    wsUpdate(draftSettings.websocketEnabled);
+  }
 
   const migratedHighlights = migrateHighlights(highlightPart);
 

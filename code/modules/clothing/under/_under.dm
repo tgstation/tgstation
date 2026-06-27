@@ -216,6 +216,17 @@
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
 	return replace_icon_legs(base_icon, legs)
 
+/obj/item/clothing/under/machine_wash()
+	. = ..()
+	if(stubborn_stains)
+		return
+
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+	)
+	QDEL_IN(fresh_mood, 2 MINUTES)
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if(slot & ITEM_SLOT_ICLOTHING)
@@ -351,14 +362,11 @@
 		return
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
 		return
-	if(!accessory.attach(src, user))
+	if(!accessory.try_attach(src, user))
 		return
 
-	LAZYADD(attached_accessories, accessory)
-	accessory.forceMove(src)
-
 	// Allow for accessories to react to the acccessory list now
-	accessory.successful_attach(src)
+	accessory.attach(src)
 
 	if(user && attach_message)
 		balloon_alert(user, "accessory attached")

@@ -35,3 +35,6 @@
 	#define COMPONENT_CANCEL_RAPTOR_GROWTH (1<<0)
 // Called when the revenant is to be released from its prison : (cause)
 #define COMSIG_REVENANT_RELEASE "revenant_release"
+
+/// Called when a proficient_miner mob mines a tile
+#define COMSIG_PROFICIENT_MINER_MINED "proficient_miner_mined"

@@ -637,7 +637,7 @@
 	if(dna?.species)
 		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
 		var/mutable_appearance/shock_animation_dna = mutable_appearance(icon, "electrocuted_base", appearance_flags = RESET_COLOR|KEEP_APART)
-		apply_height_filters(shock_animation_dna)
+		apply_height(shock_animation_dna, ENTIRE_BODY)
 		zap_appearance = shock_animation_dna
 
 	// Otherwise do a generic animation
@@ -1045,7 +1045,7 @@
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
 	if(use_random_name)
-		fully_replace_character_name(real_name, generate_random_mob_name())
+		fully_replace_character_name(newname = generate_random_mob_name())
 
 ///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
 /mob/living/carbon/human/proc/crewlike_monkify()

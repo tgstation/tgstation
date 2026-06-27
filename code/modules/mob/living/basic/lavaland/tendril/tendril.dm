@@ -47,12 +47,11 @@ GLOBAL_LIST_INIT(tendrils, list())
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
 	GLOB.tendrils += src
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
-	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20)
+	AddComponent(/datum/component/regenerator, regeneration_delay = 30 SECONDS, brute_per_second = 20, outline_colour = COLOR_CULT_RED)
 	add_traits(list(TRAIT_BACKSTAB_IMMUNE, TRAIT_IMMOBILIZED), INNATE_TRAIT)
 
 	var/static/list/abilities = list(

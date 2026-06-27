@@ -43,7 +43,6 @@
 	. = ..()
 
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SWIMMER, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT, move_resist = MOVE_RESIST_DEFAULT, pull_force = PULL_FORCE_DEFAULT)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)

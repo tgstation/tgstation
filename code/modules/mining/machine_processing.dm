@@ -76,7 +76,7 @@
 
 /obj/machinery/mineral/processing_unit_console/Initialize(mapload)
 	. = ..()
-	processing_machine = locate(/obj/machinery/mineral/processing_unit) in view(2, src)
+	processing_machine = locate(/obj/machinery/mineral/processing_unit) in range(2, src)
 	if (processing_machine)
 		processing_machine.mineral_machine = src
 	else
