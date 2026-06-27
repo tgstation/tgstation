@@ -22,7 +22,7 @@
 
 //Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
 /datum/mutation/chameleon/changeling
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	power_coeff = 2.5
 	locked = TRUE
 

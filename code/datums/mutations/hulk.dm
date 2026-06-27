@@ -252,7 +252,7 @@
 	name = "Hulk (Magical)"
 	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
 	no_recoil = FALSE
 	mutation_traits = list(
@@ -264,7 +264,7 @@
 /datum/mutation/hulk/superhuman
 	name = "Hulk (Super)"
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	no_recoil = FALSE
 	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,

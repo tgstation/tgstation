@@ -210,7 +210,7 @@
 	name = "Tourette's Syndrome"
 	desc = "The subject has a chronic twitching disorder, causing them to involuntarily shout or twitch."
 	quality = NEGATIVE
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	text_gain_indication = span_danger("You twitch.")
 	synchronizer_coeff = 1
 
