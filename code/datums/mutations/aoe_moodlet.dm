@@ -3,7 +3,7 @@
 	desc = "The subject's body - and especially their face - is unnaturally unsightly, causing a negative reaction from those around them. \
 		Wearing a mask will dampen the effect."
 	quality = NEGATIVE
-	instability = NEGATIVE_STABILITY_MINOR
+	instability = NEGATIVE_STABILITY_MINI
 	text_gain_indication = span_warning("You feel pretty in your own way.")
 	text_lose_indication = span_notice("You feel less self-conscious.")
 	difficulty = 12
