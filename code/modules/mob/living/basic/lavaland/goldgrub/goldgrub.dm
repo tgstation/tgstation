@@ -87,6 +87,9 @@
 	if(has_emissive)
 		update_appearance(UPDATE_OVERLAYS)
 
+/mob/living/basic/mining/goldgrub/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 

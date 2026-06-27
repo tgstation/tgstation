@@ -497,6 +497,18 @@ Diagnostic HUDs!
 	var/list/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 
+/image/proc/get_cached_width()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_WIDTH_INDEX]
+
+/image/proc/get_cached_height()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_HEIGHT_INDEX]
+
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
 
@@ -522,12 +534,18 @@ Diagnostic HUDs!
 	)
 	return max(scale_list) - min(scale_list)
 
+/atom/proc/get_hud_x_offset()
+	return -(get_cached_width() - ICON_SIZE_X) / 2
+
+/atom/proc/get_hud_y_offset()
+	return get_cached_height() - ICON_SIZE_Y
+
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_z = get_cached_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_w = get_hud_x_offset(), pixel_z = get_hud_y_offset(), time = animate_time)
 		return
-	holder.pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2
-	holder.pixel_z = get_cached_height() - ICON_SIZE_Y
+	holder.pixel_w = get_hud_x_offset()
+	holder.pixel_z = get_hud_y_offset()
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing

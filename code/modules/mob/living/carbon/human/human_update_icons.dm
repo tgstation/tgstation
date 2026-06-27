@@ -938,3 +938,52 @@ generate/load female uniform sprites matching all previously decided variables
 	return appearance
 
 #undef RESOLVE_ICON_STATE
+
+// Wide organs or bodyparts shouldn't offset human HUD directly
+/mob/living/carbon/human/get_hud_x_offset()
+	return 0
+
+// But they are affected by height
+/mob/living/carbon/human/get_hud_y_offset()
+	return GLOB.human_heights_to_offsets[mob_height]["[UPPER_BODY]"]
+
+/mob/living/carbon/human/get_cached_width()
+	return cached_body_width
+
+/mob/living/carbon/human/get_cached_height()
+	return cached_body_height
+
+#define SUB_OVERLAY_X_INDEX 1
+#define SUB_OVERLAY_Y_INDEX 1
+
+/mob/living/carbon/human/update_body_parts(update_limb_data)
+	. = ..()
+	if (!.)
+		return
+	cached_body_width = ICON_SIZE_X
+	cached_body_height = ICON_SIZE_Y
+	var/list/bodypart_overlays = overlays_standing[BODYPARTS_LAYER]
+	if (!length(bodypart_overlays))
+		return
+	var/list/parsed_overlays = bodypart_overlays.Copy()
+	var/i = 1
+	while (i <= length(parsed_overlays))
+		var/mutable_appearance/overlay = parsed_overlays[i]
+		if (!isimage(overlay)) // Malformed overlays, etc
+			i += 1
+			continue
+		var/overlay_x = overlay.pixel_x + overlay.pixel_w
+		var/overlay_y = overlay.pixel_y + overlay.pixel_z
+		if (!isnull(parsed_overlays[overlay])) // Nested overlay
+			overlay_x += parsed_overlays[overlay][SUB_OVERLAY_X_INDEX]
+			overlay_y += parsed_overlays[overlay][SUB_OVERLAY_Y_INDEX]
+		cached_body_width = max(cached_body_width, overlay.get_cached_width())
+		cached_body_height = max(cached_body_height, overlay.get_cached_height())
+		cached_body_min_x_offset = min(cached_body_min_x_offset, overlay_x)
+		cached_body_min_y_offset = min(cached_body_min_y_offset, overlay_y)
+		for (var/sub_overlay in overlay.overlays)
+			parsed_overlays[sub_overlay] = list(overlay_x, overlay_y)
+		i += 1
+
+#undef SUB_OVERLAY_X_INDEX
+#undef SUB_OVERLAY_Y_INDEX

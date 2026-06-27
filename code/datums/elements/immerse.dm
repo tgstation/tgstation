@@ -245,8 +245,17 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	// This determines if the overlay should cover the entire surface of the object or not
 	var/layer_to_check = IS_TOPDOWN_PLANE(movable.plane) ? TOPDOWN_WATER_LEVEL_LAYER : WATER_LEVEL_LAYER
 	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
+	var/x_offset = 0
+	var/y_offset = 0
+	var/movable_width = movable.get_cached_width()
+	if (ishuman(movable))
+		var/mob/living/carbon/human/as_human = movable
+		if (as_human.cached_body_min_x_offset && movable_width > ICON_SIZE_X)
+			x_offset = as_human.cached_body_min_x_offset
+		if (as_human.cached_body_min_y_offset && movable.get_cached_height() > ICON_SIZE_Y)
+			y_offset = as_human.cached_body_min_y_offset
 	// Tall mobs still only get covered to their feet, unless they're offset down
-	var/mutable_appearance/immerse_mask = generate_immerse_mask(movable.get_cached_width(), max(ICON_SIZE_Y - movable.pixel_z, ICON_SIZE_Y), is_below_water)
+	var/mutable_appearance/immerse_mask = generate_immerse_mask(movable_width, max(ICON_SIZE_Y - movable.pixel_z - y_offset, ICON_SIZE_Y), is_below_water)
 	if (!immerse_mask)
 		return
 	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[movable]
@@ -256,6 +265,8 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		generated_visual_overlays[movable] = effect_relay
 	var/mutable_appearance/mask_copy = new(immerse_mask)
 	effect_relay.appearance = mask_copy
+	effect_relay.pixel_w += x_offset
+	effect_relay.pixel_z += y_offset
 	effect_relay.render_target = "*immerse_[REF(movable)]"
 	SEND_SIGNAL(movable, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, effect_relay)
 	// Should always render above any other filters that could be adding visuals
