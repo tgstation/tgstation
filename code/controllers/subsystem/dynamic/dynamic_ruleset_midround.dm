@@ -231,8 +231,8 @@
 		return
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
 	if(ishuman(body))
-		apply_prefs_to_body(human_body)
-		post_apply_prefs(human_body)
+		apply_prefs_to_body(body)
+		post_apply_prefs(body)
 
 /**
  * Handles making the body for the candidate
