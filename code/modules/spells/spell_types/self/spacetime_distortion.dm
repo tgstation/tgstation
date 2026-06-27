@@ -132,7 +132,7 @@
 	busy = TRUE
 	flick("purplesparkles", src)
 	AM.forceMove(get_turf(src))
-	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/proc/on_entered(datum/source, atom/movable/AM)
