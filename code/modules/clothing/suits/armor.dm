@@ -582,7 +582,7 @@
 	acid = 50
 	wound = 10
 
-	obj/item/clothing/suit/armor/riot/knight/giant-killerunfiredarmor
+/obj/item/clothing/suit/armor/riot/knight/giant-killerunfiredarmor
 	name = "unfired Giant-Killer armor"
 	desc = "A knight's armor, to be forged in lava."
 	icon_state = "knight_greyscale"
