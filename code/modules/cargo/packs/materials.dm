@@ -30,6 +30,13 @@
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
 
+/datum/supply_pack/materials/rock30
+	name = "30 Rock Blocks"
+	desc = "Is it diorite, graphite, limestone, something else? Don't know, don't care, as long as you pay for it."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/stack/sheet/mineral/rock/thirty)
+	crate_name = "rock blocks crate"
+
 /datum/supply_pack/materials/wood50
 	name = "50 Wood Planks"
 	desc = "Turn cargo's boring metal groundwork into beautiful \

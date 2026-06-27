@@ -9,7 +9,7 @@
  */
 
 /turf/open/floor/wood
-	desc = "Stylish dark wood."
+	desc = "Stylish wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
@@ -71,6 +71,16 @@
 /turf/open/floor/wood/freezing
 	temperature = ICEBOX_MIN_TEMPERATURE
 
+/turf/open/floor/wood/dark
+	desc = "Stylish dark wood."
+	icon_state = "darkwood"
+	floor_tile = /obj/item/stack/tile/dark/wood
+
+/turf/open/floor/wood/light
+	desc = "Stylish light wood."
+	icon_state = "lightwood"
+	floor_tile = /obj/item/stack/tile/light/wood
+
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -81,6 +91,15 @@
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
 
+/turf/open/floor/wood/dark/tile
+	icon_state = "darkwood_tile"
+	floor_tile = /obj/item/stack/tile/wood/dark/tile
+
+/turf/open/floor/wood/light/tile
+	icon_state = "lightwood_tile"
+	floor_tile = /obj/item/stack/tile/wood/light/tile
+
+
 /turf/open/floor/wood/tile/broken_states()
 	return list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
 
@@ -88,12 +107,28 @@
 	icon_state = "wood_parquet"
 	floor_tile = /obj/item/stack/tile/wood/parquet
 
+/turf/open/floor/wood/light/parquet
+	icon_state = "lightwood_parquet"
+	floor_tile = /obj/item/stack/tile/wood/light/parquet
+
+/turf/open/floor/wood/dark/parquet
+	icon_state = "darkwood_parquet"
+	floor_tile = /obj/item/stack/tile/wood/dark/parquet
+
 /turf/open/floor/wood/parquet/broken_states()
 	return list("wood_parquet-broken", "wood_parquet-broken2", "wood_parquet-broken3", "wood_parquet-broken4", "wood_parquet-broken5", "wood_parquet-broken6", "wood_parquet-broken7")
 
 /turf/open/floor/wood/large
 	icon_state = "wood_large"
 	floor_tile = /obj/item/stack/tile/wood/large
+
+/turf/open/floor/wood/light/large
+	icon_state = "lightwood_large"
+	floor_tile = /obj/item/stack/tile/light/wood/large
+
+/turf/open/floor/wood/dark/large
+	icon_state = "darkwood_large"
+	floor_tile = /obj/item/stack/tile/dark/wood/large
 
 /turf/open/floor/wood/large/broken_states()
 	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
@@ -115,6 +150,13 @@
 
 /turf/open/floor/bamboo/broken_states()
 	return list("bamboodamaged")
+
+/turf/open/floor/bamboo/planks
+	desc = "A floor tile made from cut bamboo pieces."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "bamboo"
+	floor_tile = /obj/item/stack/tile/bamboo/planks
+	smoothing_flags = NONE
 
 /turf/open/floor/bamboo/tatami
 	desc = "A traditional Japanese floor mat."

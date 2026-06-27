@@ -178,11 +178,11 @@
 "aO" = (
 /obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "aP" = (
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "aQ" = (
 /obj/structure/flora/grass/both/style_random,
@@ -239,24 +239,24 @@
 /area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "eb" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "eg" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gh" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gz" = (
 /obj/structure/chair/stool/directional/south,
 /mob/living/basic/skeleton/settler,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "hr" = (
 /mob/living/basic/skeleton/settler,
@@ -268,7 +268,7 @@
 "hA" = (
 /obj/machinery/light/empty/directional/north,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/pod/dark{
+/turf/open/floor/mineral/plastitanium/pod/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/snow_biodome)
@@ -289,7 +289,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "sn" = (
 /obj/structure/bed{
@@ -305,7 +305,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "tl" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/snow_biodome)
 "uO" = (
 /obj/item/bedsheet/blue{
@@ -328,7 +328,7 @@
 /area/ruin/powered/snow_biodome)
 "xU" = (
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "zT" = (
 /obj/machinery/door/airlock/silver,
@@ -339,7 +339,7 @@
 /obj/structure/table,
 /obj/item/pen,
 /obj/item/paper,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "BM" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -352,16 +352,16 @@
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/gloves/fingerless,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Ef" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Ez" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/multi_tile/public/glass,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "EA" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -373,30 +373,30 @@
 /turf/open/misc/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "HP" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "HR" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "JZ" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "KS" = (
 /obj/item/chainsaw,
 /obj/structure/closet,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Mp" = (
 /obj/item/clothing/mask/balaclava,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Oj" = (
 /obj/structure/table,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "PD" = (
 /obj/machinery/door/airlock/hatch,
@@ -404,13 +404,13 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "PK" = (
 /obj/structure/table,
 /obj/item/pen,
 /obj/item/paper_bin,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "PM" = (
 /obj/effect/turf_decal/siding/wood,
@@ -430,7 +430,7 @@
 "QK" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigpack_carp,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "QN" = (
 /obj/effect/spawner/structure/window,
@@ -438,17 +438,17 @@
 /area/ruin/powered/snow_biodome)
 "Sj" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Ub" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
 /obj/machinery/computer/monitor{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/snow_biodome)
 "VE" = (
 /obj/effect/turf_decal/siding/wood/corner{

@@ -2,8 +2,11 @@
 	name = "wired glass tile"
 	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
+	inhand_icon_state = "sheet-glass"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throwforce = 5

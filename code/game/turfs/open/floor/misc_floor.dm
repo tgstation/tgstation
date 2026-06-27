@@ -136,20 +136,6 @@
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-
-/turf/open/floor/pod/light
-	icon_state = "podfloor_light"
-	floor_tile = /obj/item/stack/tile/pod/light
-
-/turf/open/floor/pod/dark
-	icon_state = "podfloor_dark"
-	floor_tile = /obj/item/stack/tile/pod/dark
-
-
 /turf/open/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
@@ -239,6 +225,142 @@
 /turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
+/turf/open/floor/plastic/puzzle
+	name = "plastic puzzle floor"
+	icon_state = "plastic_puzzle"
+	floor_tile = /obj/item/stack/tile/plastic/puzzle
+
+/turf/open/floor/plastic/puzzle/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/meat
+	name = "meat floor"
+	icon_state = "meat"
+	desc = "Floor is meat!"
+	custom_materials = list(/datum/material/meat=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/meat
+
+/turf/open/floor/meat/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/meat/fresh
+	name = "fresh meat floor"
+	icon_state = "meat_fresh"
+	floor_tile = /obj/item/stack/tile/meat/fresh
+
+/turf/open/floor/bone
+	name = "bone floor"
+	icon_state = "bone_tile"
+	desc = "Those bones were once creatures with individidual hopes and dreams. Just a thing to think about as you walk on them."
+	custom_materials = list(/datum/material/bone=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/bone
+
+/turf/open/floor/bone/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/bone/corner
+	name = "bone_corner floor"
+	icon_state = "bone_corner"
+	floor_tile = /obj/item/stack/tile/bone/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/bone/straight
+	name = "fresh meat floor"
+	icon_state = "bone_straight"
+	floor_tile = /obj/item/stack/tile/bone/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/bone/spine
+	name = "fresh meat floor"
+	icon_state = "bone_spine"
+	floor_tile = /obj/item/stack/tile/bone/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/bone/meaty
+	name = "fresh meat floor"
+	icon_state = "mearbone_tile"
+	desc = "Spine-crawling, made literal."
+	floor_tile = /obj/item/stack/tile/bone/meaty
+
+/turf/open/floor/bone/meaty/corner
+	name = "fresh meat floor"
+	icon_state = "meatbone_corner"
+	floor_tile = /obj/item/stack/tile/bone/meaty/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/bone/meaty/straight
+	name = "fresh meat floor"
+	icon_state = "meatbone_straight"
+	floor_tile = /obj/item/stack/tile/bone/meaty/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/bone/meaty/spine
+	name = "fresh meat floor"
+	icon_state = "meatbone_spine"
+	floor_tile = /obj/item/stack/tile/bone/meaty/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/turf/open/floor/hauntium
+	name = "hauntium floor"
+	icon_state = "hauntium"
+	desc = "Now this is one spooky tile."
+	custom_materials = list(/datum/material/hauntium=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/hauntium
+
+/turf/open/floor/hauntium/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/hauntium/ghostbricked
+	name = "ghostbricked hauntium floor"
+	icon_state = "hauntium_ghostbricked"
+	floor_tile = /obj/item/stack/tile/hauntium/ghostbricked
+
+/turf/open/floor/stone
+	name = "stone brick floor"
+	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
+		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
+		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
+		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
+		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
+		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
+	icon_state = "stone_floor"
+	custom_materials = list(/datum/material/rock=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/stone
+
+/turf/open/floor/stone/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/stone/cobbled
+	name = "cobbled stone floor"
+	icon_state = "stone_cobbled"
+	desc = "Cobbled stone tile. Not cobblestone, that's a different thing. And universe."
+	floor_tile = /obj/item/stack/tile/stone/cobbled
+
+/turf/open/floor/stone/tiled
+	name = "stone tile"
+	desc = "You feel a strange nostalgia from looking at this..."
+	icon_state = "rockvault"
+	base_icon_state = "rockvault"
+	floor_tile = /obj/item/stack/tile/stone/tiled
+
+/turf/open/floor/sandstone
+	name = "sandstone brick floor"
+	desc = "Sandstone tile. Makes you feel quite like a pharoah."
+	icon_state = "sandstone_floor"
+	custom_materials = list(/datum/material/sandstone=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/sandstone
+
+/turf/open/floor/sandstone/cobbled
+	name = "cobbled sandstone floor"
+	icon_state = "sandstone_cobbled"
+	floor_tile = /obj/item/stack/tile/sandstone/cobbled
+
+/turf/open/floor/sandstone/tiled
+	name = "sandstone tile"
+	icon_state = "sandstonevault"
+	base_icon_state = "sandstonevault"
+	floor_tile = /obj/item/stack/tile/sandstone/tiled
+
 /turf/open/floor/eighties
 	name = "retro floor"
 	desc = "This one takes you back."
@@ -287,27 +409,6 @@
 	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
 	// Especially since it looks like we don't even change the default icon/iconstate???
 	AddElement(/datum/element/rust)
-
-/turf/open/floor/stone
-	name = "stone brick floor"
-	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
-		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
-		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
-		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
-		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
-		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
-	icon_state = "stone_floor"
-
-/turf/open/floor/stone/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	name = "stone brick floor"
-	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
-		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
-		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
-		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
-		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
-		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
-	icon_state = "stone_floor"
 
 /turf/open/floor/vault
 	name = "strange floor"

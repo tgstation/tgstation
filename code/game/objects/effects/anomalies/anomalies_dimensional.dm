@@ -107,7 +107,6 @@
 	move_chance = 0
 	/// Range is set to 1 as it expands until it overtakes the entire area.
 	range = 1
-
 	/// Minimum teleports it will do before going away permanently
 	minimum_teleports = 5
 	/// Maximum teleports it will do before going away permanently
@@ -118,25 +117,28 @@
 	transmute_area()
 
 /**
- * Transforms a turf in our prepared area.
+ * Transforms turfs ring after ring, thus theming and area preparation are seperate; we are redefining the ring
  */
 /obj/effect/anomaly/dimensional/big/transmute_area()
 	if (!theme)
 		prepare_theme()
-	if (!target_turfs.len)
-		if(teleports_left <= 0 && !immortal)
-			detonate()
-			return
-		teleports_left--
-		relocate()
-		return
 
-	var/turf/affected_turf = target_turfs[1]
-	theme.apply_theme(affected_turf, show_effect = TRUE)
-	target_turfs -= affected_turf
+	if(prob(34) || range < 4)
+		prepare_area()
+		if (!target_turfs.len)
+			if(teleports_left <= 0 && !immortal)
+				detonate()
+				return
+			teleports_left--
+			relocate()
+			return
+
+		theme.apply_theme_to_list_of_turfs(target_turfs, show_effect = TRUE)
+		range++
+	else:
 
 /**
- * Prepare the area anomaly is in for transformation into a new theme.
+ * Sets the theme.
  * Optionally pass in the typepath of an anomaly theme to use that one.
  */
 /obj/effect/anomaly/dimensional/big/prepare_theme(new_theme_path)
@@ -145,10 +147,13 @@
 	theme = SSmaterials.dimensional_themes[new_theme_path]
 	apply_theme_icon()
 
+/**
+ * Prepare the area anomaly is in for transformation into a new theme.
+ */
 
 /obj/effect/anomaly/dimensional/big/prepare_area()
 	target_turfs = list()
-	for (var/turf/turf as anything in spiral_range_turfs(range, src))
+	for (var/turf/turf as anything in turf_peel(range, range, src))
 		if (theme.can_convert(turf))
 			if(get_area(turf) == get_area(src))
 				target_turfs += turf

@@ -2,6 +2,7 @@
 Mineral Sheets
 	Contains:
 		- Sandstone
+		- Stone
 		- Sandbags
 		- Diamond
 		- Snow
@@ -53,6 +54,36 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	. += GLOB.sandstone_recipes
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
+
+/*
+ * Stone
+ */
+
+/obj/item/stack/sheet/mineral/rock
+	name = "rock sheets"
+	desc = "This rocks."
+	singular_name = "rock sheet"
+	icon_state = "sheet-rock"
+	inhand_icon_state = "sheet-rock"
+	mats_per_unit = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
+	inhand_icon_state = null
+	throw_speed = 3
+	throw_range = 5
+	material_type = /datum/material/rock
+	merge_type = /obj/item/stack/sheet/mineral/rock
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
+
+GLOBAL_LIST_INIT(rock_recipes, list ( \
+	new/datum/stack_recipe("stone tile", /obj/item/stack/tile/stone, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/mineral/rock/get_main_recipes()
+	. = ..()
+	. += GLOB.rock_recipes
+
+/obj/item/stack/sheet/mineral/rock/thirty
 	amount = 30
 
 /*
@@ -411,6 +442,7 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new/datum/stack_recipe("adamantine floor tile", /obj/item/stack/tile/mineral/adamantine, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=3, res_amount=1, category = CAT_ROBOT),
 	))
 
@@ -430,6 +462,10 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
  * Runite
  */
 
+GLOBAL_LIST_INIT(runite_recipes, list(
+	new/datum/stack_recipe("runite floor tile", /obj/item/stack/tile/mineral/runite, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
 /obj/item/stack/sheet/mineral/runite
 	name = "runite"
 	desc = "Rare material found in distant lands."
@@ -440,10 +476,19 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	merge_type = /obj/item/stack/sheet/mineral/runite
 	material_type = /datum/material/runite
 
+/obj/item/stack/sheet/mineral/runite/get_main_recipes()
+	. = ..()
+	. += GLOB.runite_recipes
+
 
 /*
  * Mythril
  */
+
+GLOBAL_LIST_INIT(mythril_recipes, list(
+	new/datum/stack_recipe("mythril floor tile", /obj/item/stack/tile/mineral/mythril, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
 /obj/item/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
@@ -452,6 +497,10 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	novariants = TRUE
 	mats_per_unit = list(/datum/material/mythril=SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/mythril
+
+/obj/item/stack/sheet/mineral/mythril/get_main_recipes()
+	. = ..()
+	. += GLOB.mythril_recipes
 
 /*
  * Alien Alloy
@@ -520,6 +569,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 //Metal Hydrogen
 GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
+	new/datum/stack_recipe("metallic hydrogen floor tile", /obj/item/stack/tile/mineral/metal_hydrogen, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, crafting_flags = NONE, category = CAT_ROBOT),
 	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, crafting_flags = NONE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, crafting_flags = NONE, category = CAT_CLOTHING),

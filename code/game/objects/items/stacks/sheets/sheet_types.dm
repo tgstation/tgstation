@@ -834,6 +834,10 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/greatergem
 
+GLOBAL_LIST_INIT(bone_recipes, list(
+	new/datum/stack_recipe("bone floor tile", /obj/item/stack/tile/bone, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
 /*
  * Bones
  */
@@ -857,7 +861,11 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	pickup_sound = null
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-/obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+/obj/item/stack/sheet/plastic/get_main_recipes()
+	. = ..()
+	. += GLOB.bone_recipes
+
+/obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
@@ -945,6 +953,10 @@ GLOBAL_LIST_INIT(paperframe_recipes, list(
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
 
+GLOBAL_LIST_INIT(meat_recipes, list(
+	new/datum/stack_recipe("meat floor tile", /obj/item/stack/tile/meat, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
 /obj/item/stack/sheet/meat
 	name = "meat sheets"
 	desc = "Something's bloody meat compressed into a nice solid sheet."
@@ -957,6 +969,10 @@ GLOBAL_LIST_INIT(paperframe_recipes, list(
 	material_modifier = 1 //None of that wussy stuff
 	drop_sound = null
 	pickup_sound = null
+
+/obj/item/stack/sheet/meat/get_main_recipes()
+	. = ..()
+	. += GLOB.meat_recipes
 
 /obj/item/stack/sheet/meat/fifty
 	amount = 50
@@ -992,6 +1008,10 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 /obj/item/stack/sheet/pizza/five
 	amount = 5
 
+GLOBAL_LIST_INIT(hauntium_recipes, list(
+	new/datum/stack_recipe("hauntium floor tile", /obj/item/stack/tile/hauntium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	))
+
 /obj/item/stack/sheet/hauntium
 	name = "haunted sheets"
 	desc = "These sheets seem cursed."
@@ -1009,3 +1029,7 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	amount = 20
 /obj/item/stack/sheet/hauntium/five
 	amount = 5
+
+/obj/item/stack/sheet/hauntium/get_main_recipes()
+	. = ..()
+	. += GLOB.hauntium_recipes

@@ -85,6 +85,7 @@
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
 	add_fingerprint(user)
+	if(I == /obj/item/food/grown/grass)
 
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(atom_integrity < max_integrity)

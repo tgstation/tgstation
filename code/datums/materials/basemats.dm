@@ -587,7 +587,7 @@
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
-	name = "Metal Hydrogen"
+	name = "metal hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
 	color = "#62708A"
 	starlight_color = COLOR_MODERATE_BLUE

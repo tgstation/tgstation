@@ -65,10 +65,37 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 
+/datum/outfit/corpse_disco
+	glasses = /obj/item/clothing/glasses/sunglasses
+	suit = /obj/item/clothing/suit/toggle/lawyer
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
+	shoes = /obj/item/clothing/shoes/laceup
+	ears = /obj/item/instrument/piano_synth/headphones
+
+/datum/outfit/corpse_disco/post_equip(/mob/living/basic/zombie/Zombert, visuals_only = FALSE)
+	hair_list = list("Afro" = 7, "Afro 2" = 6, "Afro (Large)" = 2,  "Afro (Huge)" = 1, "Short Hair 80s" = 4)
+	Zombert.set_hairstyle(pick_weight(hair_list))
+	Zombert.set_haircolor(random_color())
+
+/mob/living/basic/zombie/rotten/disco
+	name = "Grooving Corpse"
+	desc = "Dead as disco; performing sick moves to viral 80s tunes with electric boogaloo vengance. How thrilling."
+	outfit = /datum/outfit/corpse_disco
+
 /datum/ai_planning_subtree/random_speech/zombie
 	speech_chance = 1
 	emote_hear = list("groans.", "moans.", "grunts.")
 	emote_see = list("twitches.", "shudders.")
+
+/datum/ai_planning_subtree/random_speech/zombie/rotten/disco
+	speech_chance = 3
+	emote_hear = list("groans.", "moans.", "grunts.", "attempts to sing.", "hums.")
+	emote_see = list("twitches.", "shudders.", "strikes a dance pose.")
+	speak = list(
+		"No one's gonna save you from the beast about to strike.",
+		"Let me hold you tight.",
+		"I can thrill you more than any ghoul would ever dare try.",
+	)
 
 /datum/ai_controller/basic_controller/zombie
 	blackboard = list(

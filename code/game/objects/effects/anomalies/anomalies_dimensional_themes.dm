@@ -12,10 +12,24 @@
 	var/datum/material/material
 	/// Sound to play when transforming a tile
 	var/sound = 'sound/effects/magic/blind.ogg'
-	/// Weighted list of turfs to replace the floor with.
+	/// Weighted lists of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
-	/// Weighted list of carpets to replace other carpets with
+	var/list/replace_com_floors = list()
+	var/list/replace_sec_floors = list()
+	var/list/replace_sci_floors = list()
+	var/list/replace_med_floors = list()
+	var/list/replace_eng_floors = list()
+	var/list/replace_car_floors = list()
+	var/list/replace_ser_floors = list()
+	/// Weighted lists of carpets to replace other carpets with
 	var/list/replace_carpets = list()
+	var/list/replace_com_carpets = list()
+	var/list/replace_sec_carpets = list()
+	var/list/replace_sci_carpets = list()
+	var/list/replace_med_carpets = list()
+	var/list/replace_eng_carpets = list()
+	var/list/replace_car_carpets = list()
+	var/list/replace_ser_carpets = list()
 	/// Typepath of turf to replace walls with.
 	var/turf/replace_walls = /turf/closed/wall/material
 	/// List of weighted lists for object replacement. Key is an original typepath, value is a weighted list of typepaths to replace it with.
@@ -30,6 +44,8 @@
 	var/list/random_spawns
 	/// Prob of placing a random spawn in a completely open turf
 	var/random_spawn_chance = 0
+	/// List of threats from the dimension. Major anomalies use this to defend themselves
+	var/guardian = list()
 	/// Typepath of full-size windows which will replace existing ones
 	/// These need to be separate from replace_objs because we don't want to replace dir windows with full ones and they share typepath
 	var/obj/structure/window/replace_window
@@ -330,11 +346,14 @@
 
 /////////////////////
 
+///Dimension where everyone is opulent and gaudy.
 /datum/dimension_theme/gold
 	name = "Gold"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	material = /datum/material/gold
+	replace_carpets = list(/turf/open/floor/carpet/royalblack = 1)
+	replace_com_carpets = list(/turf/open/floor/carpet/royalblue = 1)
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/gold = 1, /obj/machinery/door/airlock/gold/glass = 1),
@@ -343,12 +362,17 @@
 		/obj/structure/platform = list(/obj/structure/platform/gold = 1),
 	)
 
+///Dimension where plasmamen became the Nanostrasen's main species.
 /datum/dimension_theme/plasma
 	name = "Plasma"
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_alt"
 	material = /datum/material/plasma
+	replace_objs = list(
+		/obj/item/tank/internals/oxygen = list(/obj/item/tank/internals/plasma = 1),
+	)
 
+///Dimension where earth and clown planet's roles are reversed.
 /datum/dimension_theme/clown
 	name = "Clown"
 	icon = 'icons/obj/clothing/masks.dmi'
@@ -356,6 +380,7 @@
 	material = /datum/material/bananium
 	sound = 'sound/items/bikehorn.ogg'
 
+///Dimension where cancer regenerates people and they need radiation to live.
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
 	icon = 'icons/obj/ore.dmi'
@@ -363,6 +388,7 @@
 	material = /datum/material/uranium
 	sound = 'sound/items/tools/welder.ogg'
 
+///Dimension where the station was eaten by a giant space whale.
 /datum/dimension_theme/meat
 	name = "Meat"
 	icon = 'icons/obj/food/meat.dmi'
@@ -370,6 +396,7 @@
 	material = /datum/material/meat
 	sound = 'sound/items/eatfood.ogg'
 
+///Dimension where every structure has to be consumable.
 /datum/dimension_theme/pizza
 	name = "Pizza"
 	icon = 'icons/obj/food/pizza.dmi'
@@ -384,6 +411,7 @@
 		/obj/structure/platform = list(/obj/structure/platform/pizza = 1),
 	)
 
+///Dimension where the station got decomissioned and nature overtook it.
 /datum/dimension_theme/natural
 	name = "Natural"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
@@ -398,6 +426,7 @@
 		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
+///Dimension where origin countries of major corps are swapped, and Nanostrasen is japanese/chineese.
 /datum/dimension_theme/bamboo
 	name = "Bamboo"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
@@ -412,6 +441,7 @@
 		/obj/structure/platform = list(/obj/structure/platform/bamboo = 1),
 	)
 
+///Dimension where planets orbit stations and moons are built
 /datum/dimension_theme/icebox
 	name = "Winter"
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -427,6 +457,7 @@
 	)
 	random_spawn_chance = 8
 
+///Dimension where the station is just a village on the ice moon
 /datum/dimension_theme/icebox/winter_cabin
 	name = "Winter Cabin"
 	icon = 'icons/obj/clothing/shoes.dmi'
@@ -439,6 +470,7 @@
 		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
+///Dimension where stations orbit moons and planets are built
 /datum/dimension_theme/lavaland
 	name = "Lavaland"
 	icon = 'icons/obj/stack_objects.dmi'
@@ -453,6 +485,9 @@
 	random_spawns = list(/mob/living/basic/mining/goldgrub)
 	random_spawn_chance = 1
 
+	guardian = list(/mob/living/basic/mining/goliath = 4, )
+
+///Dimension where the station is made to be 'camoflagued' as an asteroid.
 /datum/dimension_theme/space
 	name = "Space"
 	icon = 'icons/effects/effects.dmi'
@@ -463,6 +498,7 @@
 	replace_walls = /turf/closed/wall/rock/porous
 	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
 
+///Dimension where the station is an observatory
 /datum/dimension_theme/glass
 	name = "Glass"
 	icon = 'icons/obj/debris.dmi'
@@ -471,6 +507,7 @@
 	replace_floors = list(/turf/open/floor/glass = 1)
 	sound = SFX_SHATTER
 
+///Dimension where taxes are 5% less.
 /datum/dimension_theme/fancy
 	name = "Fancy"
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -500,10 +537,6 @@
 		/turf/open/floor/carpet/orange,
 		/turf/open/floor/carpet/purple,
 		/turf/open/floor/carpet/red,
-		/turf/open/floor/carpet/royalblack,
-		/turf/open/floor/carpet/royalblue,
-		/turf/open/floor/eighties,
-		/turf/open/floor/eighties/red,
 	)
 	valid_tables = subtypesof(/obj/structure/table/wood/fancy)
 	randomize_theme()
@@ -518,14 +551,38 @@
 		COOLDOWN_START(src, carpet_switch_cd, 90 SECONDS)
 	return ..()
 
+///Dimension where eighties never went out of fashion.
 /datum/dimension_theme/disco
 	name = "Disco"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lbulb"
 	material = /datum/material/glass
+
 	replace_floors = list(/turf/open/floor/light = 1)
+
 	replace_carpets = list(/obj/item/stack/tile/eighties = 1)
 	replace_sec_carpets = list(/obj/item/stack/tile/eighties/red = 1)
+	replace_ser_carpets = list(turf/open/floor/carpet/neon = 1)
+
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
+		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
+	)
+
+	random_spawns = list(
+		/obj/machinery/jukebox/disco,
+		/obj/structure/etherealball,
+		/obj/structure/flora/bush/grassy/style_random,
+		/obj/structure/flora/bush/leavy/style_random,
+		/obj/structure/flora/tree/palm/style_random,
+		/obj/structure/flora/bush/sparsegrass/style_random,
+		/obj/structure/flora/bush/sunny/style_random,
+	)
+	random_spawn_chance = 1
+
+	guardian = list(/mob/living/basic/zombie/rotten/disco = 10)
 
 /datum/dimension_theme/disco/transform_floor(turf/open/floor/affected_floor)
 	. = ..()
@@ -535,6 +592,8 @@
 	disco_floor.currentcolor = pick(disco_floor.coloredlights)
 	disco_floor.update_appearance()
 
+
+///Dimension where lavaland's madness and primitiveness effect works at higher range.
 /datum/dimension_theme/jungle
 	name = "Jungle"
 	icon = 'icons/obj/tiles.dmi'
@@ -559,6 +618,9 @@
 	)
 	random_spawn_chance = 20
 
+	guardian = list(/mob/living/basic/gorilla = 9)
+
+///Dimension where ayys overtook humanity.
 /datum/dimension_theme/ayylmao
 	name = "Alien"
 	icon = 'icons/obj/antags/abductor.dmi'
@@ -574,6 +636,9 @@
 		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
 	)
 
+	guardian = list(/mob/living/basic/trooper/abductor/melee = 7, /mob/living/basic/trooper/abductor/ranged = 3)
+
+///Dimension where Ratvar still lives and won over the station.
 /datum/dimension_theme/bronze
 	name = "Bronze"
 	icon = 'icons/obj/weapons/spear.dmi'

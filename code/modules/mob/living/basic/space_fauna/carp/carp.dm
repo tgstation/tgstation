@@ -323,3 +323,8 @@
 /mob/living/basic/carp/passive/proc/on_attacked(mob/living/attacker)
 	for(var/mob/living/basic/carp/passive/schoolmate in oview(src, 9))
 		schoolmate.ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
+
+/mob/living/basic/carp/laser
+	name = "laser space carp"
+	desc = "Champions of evil ar very responsible with their pets; they give them toys and fresh food!"
+	icon = 'icons/mob/simple/carp.dmi'

@@ -160,6 +160,48 @@
 	turf_type = /turf/open/floor/wood/tile
 	merge_type = /obj/item/stack/tile/wood/tile
 
+/obj/item/stack/tile/wood/parquet
+	name = "parquet wood floor tile"
+	singular_name = "parquet wood floor tile"
+	icon_state = "tile-wood_parquet"
+	turf_type = /turf/open/floor/wood/parquet
+	merge_type = /obj/item/stack/tile/wood/parquet
+
+/obj/item/stack/tile/wood/large
+	name = "large wood floor tile"
+	singular_name = "large wood floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/large
+	merge_type = /obj/item/stack/tile/wood/large
+
+/obj/item/stack/tile/wood/tile
+	name = "tiled wood floor tile"
+	singular_name = "tiled wood floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/tile
+	merge_type = /obj/item/stack/tile/wood/tile
+
+/obj/item/stack/tile/wood/parquet
+	name = "parquet wood floor tile"
+	singular_name = "parquet wood floor tile"
+	icon_state = "tile-wood_parquet"
+	turf_type = /turf/open/floor/wood/parquet
+	merge_type = /obj/item/stack/tile/wood/parquet
+
+/obj/item/stack/tile/wood/large
+	name = "large wood floor tile"
+	singular_name = "large wood floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/large
+	merge_type = /obj/item/stack/tile/wood/large
+
+/obj/item/stack/tile/wood/tile
+	name = "tiled wood floor tile"
+	singular_name = "tiled wood floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/tile
+	merge_type = /obj/item/stack/tile/wood/tile
+
 //Bamboo
 /obj/item/stack/tile/bamboo
 	name = "bamboo mat pieces"
@@ -172,11 +214,19 @@
 	resistance_flags = FLAMMABLE
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bamboo,
+		/obj/item/stack/tile/bamboo/planks,
 		/obj/item/stack/tile/bamboo/tatami,
 		/obj/item/stack/tile/bamboo/tatami/purple,
 		/obj/item/stack/tile/bamboo/tatami/black,
 	)
 	mats_per_unit = list(/datum/material/bamboo = HALF_SHEET_MATERIAL_AMOUNT / 2)
+
+/obj/item/stack/tile/bamboo/planks
+	name = "bamboo planks tile"
+	singular_name = "planks planks floor tile"
+	icon_state = "tile_bamboo"
+	turf_type = /turf/open/floor/bamboo/planks
+	merge_type = /obj/item/stack/tile/bamboo/planks
 
 /obj/item/stack/tile/bamboo/tatami
 	name = "Tatami with green rim"
@@ -1110,45 +1160,203 @@
 	turf_type = /turf/open/floor/circuit/red/anim
 	merge_type = /obj/item/stack/tile/circuit/red/anim
 
-//Pod floor
-/obj/item/stack/tile/pod
-	name = "pod floor tile"
-	singular_name = "pod floor tile"
-	desc = "A grooved floor tile."
-	icon_state = "tile_pod"
-	inhand_icon_state = "tile-pod"
-	turf_type = /turf/open/floor/pod
-	merge_type = /obj/item/stack/tile/pod
-	tile_reskin_types = list(
-		/obj/item/stack/tile/pod,
-		/obj/item/stack/tile/pod/light,
-		/obj/item/stack/tile/pod/dark,
-		)
-
-/obj/item/stack/tile/pod/light
-	name = "light pod floor tile"
-	singular_name = "light pod floor tile"
-	desc = "A lightly colored grooved floor tile."
-	icon_state = "tile_podlight"
-	turf_type = /turf/open/floor/pod/light
-	merge_type = /obj/item/stack/tile/pod/light
-
-/obj/item/stack/tile/pod/dark
-	name = "dark pod floor tile"
-	singular_name = "dark pod floor tile"
-	desc = "A darkly colored grooved floor tile."
-	icon_state = "tile_poddark"
-	turf_type = /turf/open/floor/pod/dark
-	merge_type = /obj/item/stack/tile/pod/dark
-
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
+	inhand_icon_state = "tile-bluespace"
 	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
+	tile_reskin_types = list(
+		/obj/item/stack/tile/plastic
+		/obj/item/stack/tile/plastic/puzzle
+	)
+
+/obj/item/stack/tile/plastic/puzzle
+	name = "puzzle tile"
+	icon_state = "plastic_puzzle"
+	singular_name = "puzzle floor tile"
+	turf_type = /turf/open/floor/plastic/puzzle
+	merge_type = /obj/item/stack/tile/plastic/puzzle
+	desc = "A tile of cheap, puzzling plastic puzzles flooring."
+
+/obj/item/stack/tile/meat
+	name = "meat tile"
+	singular_name = "meat floor tile"
+	desc = "From big Barry's builders best barbecue. This one looks a little stale."
+	icon_state = "tile_meat"
+	inhand_icon_state = "tile-meat"
+	mats_per_unit = list(/datum/material/meat = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/meat
+	merge_type = /obj/item/stack/tile/meat
+	tile_reskin_types = list(
+		/obj/item/stack/tile/meat
+		/obj/item/stack/tile/meat/fresh
+	)
+
+/obj/item/stack/tile/meat/fresh
+	name = "fresh meat tile"
+	singular_name = "fresh meat floor tile"
+	desc = "Fresh from big Barry's builders best barbecue."
+	icon_state = "tile_meat"
+	turf_type = /turf/open/floor/meat/fresh
+	merge_type = /obj/item/stack/tile/meat/fresh
+
+/obj/item/stack/tile/bone
+	name = "bone tile"
+	singular_name = "bone floor tile"
+	desc = "Don't question where the dirt around it came from."
+	icon_state = "tile_bone"
+	inhand_icon_state = "tile-sepia"
+	mats_per_unit = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/bone
+	merge_type = /obj/item/stack/tile/bone
+	tile_reskin_types = list(
+		/obj/item/stack/tile/bone
+		/obj/item/stack/tile/bone/corner
+		/obj/item/stack/tile/bone/straight
+		/obj/item/stack/tile/bone/spine
+		/obj/item/stack/tile/bone/meaty
+		/obj/item/stack/tile/bone/meaty/corner
+		/obj/item/stack/tile/bone/meaty/straight
+		/obj/item/stack/tile/bone/meaty/spine
+	)
+
+/obj/item/stack/tile/bone/corner
+	name = "bone corner tile"
+	singular_name = "bone corner floor tile"
+	icon_state = "bone_corner"
+	turf_type = /turf/open/floor/bone/corner
+	merge_type = /obj/item/stack/tile/bone/corner
+
+/obj/item/stack/tile/bone/straight
+	name = "bone straight tile"
+	singular_name = "bone straight floor tile"
+	icon_state = "bone_straight"
+	turf_type = /turf/open/floor/bone/straight
+	merge_type = /obj/item/stack/tile/bone/straight
+
+/obj/item/stack/tile/bone/spine
+	name = "bone spine tile"
+	singular_name = "bone spine floor tile"
+	icon_state = "bone_spine"
+	turf_type = /turf/open/floor/bone/spine
+	merge_type = /obj/item/stack/tile/bone/spine
+
+/obj/item/stack/tile/bone/meaty
+	name = "meaty bone tile"
+	singular_name = "meaty bone floor tile"
+	desc = "Don't question where the meat around it came from."
+	icon_state = "tile_meatbone"
+	inhand_icon_state = "tile-meat"
+	turf_type = /turf/open/floor/bone/meaty
+	merge_type = /obj/item/stack/tile/bone/meaty
+
+/obj/item/stack/tile/bone/meaty/corner
+	name = "meaty bone corner tile"
+	singular_name = "meaty bone corner floor tile"
+	icon_state = "meatbone_corner"
+	turf_type = /turf/open/floor/bone/meaty/corner
+	merge_type = /obj/item/stack/tile/bone/meaty/corner
+
+/obj/item/stack/tile/bone/meaty/straight
+	name = "meaty bone straight tile"
+	singular_name = "meaty bone straight floor tile"
+	icon_state = "meatbone_straight"
+	turf_type = /turf/open/floor/bone/meaty/straight
+	merge_type = /obj/item/stack/tile/bone/meaty/straight
+
+/obj/item/stack/tile/bone/meaty/spine
+	name = "meaty bone spine tile"
+	singular_name = "meaty bone spine floor tile"
+	icon_state = "meatbone_spine"
+	turf_type = /turf/open/floor/bone/meaty/spine
+	merge_type = /obj/item/stack/tile/bone/meaty/spine
+
+/obj/item/stack/tile/hauntium
+	name = "hauntium tile"
+	singular_name = "hauntium floor tile"
+	desc = "Dead men walking? More like walking over dead men."
+	icon_state = "tile_hauntium"
+	inhand_icon_state = "tile-hauntium"
+	mats_per_unit = list(/datum/material/hauntium = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/hauntium
+	merge_type = /obj/item/stack/tile/hauntium
+	tile_reskin_types = list(
+		/obj/item/stack/tile/hauntium
+		/obj/item/stack/tile/hauntium/ghostbricked
+	)
+
+/obj/item/stack/tile/hauntium/ghostbricked
+	name = "ghostbricked hauntium tile"
+	singular_name = "ghostbricked hauntium floor tile"
+	icon_state = "tile_hauntium_ghostbricked"
+	turf_type = /turf/open/floor/hauntium/ghostbricked
+	merge_type = /obj/item/stack/tile/hauntium/ghostbricked
+
+/obj/item/stack/tile/stone
+	name = "stone brick tile"
+	icon_state = "tile_stone"
+	inhand_icon_state = "tile"
+	singular_name = "stone brick floor tile"
+	mats_per_unit = list(/datum/material/rock = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/stone
+	merge_type = /obj/item/stack/tile/stone
+	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
+		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
+		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
+		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
+		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
+		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
+	tile_reskin_types = list(
+		/obj/item/stack/tile/stone
+		/obj/item/stack/tile/stone/cobbled
+		/obj/item/stack/tile/stone/tiled
+	)
+
+/obj/item/stack/tile/stone/cobbled
+	name = "cobbled stone tile"
+	icon_state = "stone_cobbled"
+	singular_name = "stone brick floor tile"
+	turf_type = /turf/open/floor/stone/cobbled
+	merge_type = /obj/item/stack/tile/stone/cobbled
+
+/obj/item/stack/tile/stone/tiled
+	name = "stone brick tile"
+	icon_state = "stone_tiled"
+	singular_name = "stone brick floor tile"
+	turf_type = /turf/open/floor/stone/tiled
+	merge_type = /obj/item/stack/tile/stone/tiled
+
+/obj/item/stack/tile/sandstone
+	name = "sandstone brick tile"
+	icon_state = "tile_sandstone"
+	inhand_icon_state = "tile-hay"
+	mats_per_unit = list(/datum/material/sandstone = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/sandstone
+	merge_type = /obj/item/stack/tile/sandstone
+	desc = "A tile made out of sandstone."
+	tile_reskin_types = list(
+		/obj/item/stack/tile/sandstone
+		/obj/item/stack/tile/sandstone/cobbled
+		/obj/item/stack/tile/sandstone/tiled
+	)
+
+/obj/item/stack/tile/sandstone/cobbled
+	name = "cobbled sandstone tile"
+	icon_state = "sandstone_cobbled"
+	singular_name = "sandstone cobbled floor tile"
+	turf_type = /turf/open/floor/sandstone/cobbled
+	merge_type = /obj/item/stack/tile/sandstone/cobbled
+
+/obj/item/stack/tile/sandstone/tiled
+	name = "sandstone brick tile"
+	icon_state = "sandstone_tiled"
+	singular_name = "sandstone brick floor tile"
+	turf_type = /turf/open/floor/sandstone/tiled
+	merge_type = /obj/item/stack/tile/sandstone/tiled
 
 /obj/item/stack/tile/material
 	name = "floor tile"

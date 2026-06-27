@@ -518,7 +518,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "fI" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/protected_space/fullbright)
 "fJ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -587,7 +587,7 @@
 	density = 1
 	},
 /obj/effect/decal/fakelattice,
-/turf/open/floor/pod/light{
+/turf/open/floor/mineral/plastitanium/pod/light{
 	density = 1
 	},
 /area/virtual_domain/fullbright)
@@ -2342,7 +2342,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "DK" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/protected_space/fullbright)
 "DL" = (
 /obj/structure/table,
@@ -2582,7 +2582,7 @@
 /area/virtual_domain)
 "GD" = (
 /obj/effect/landmark/bitrunning/permanent_exit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/virtual_domain/protected_space/fullbright)
 "GI" = (
 /turf/open/floor/iron/dark/textured_large,

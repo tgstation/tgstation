@@ -27,3 +27,53 @@
 		/obj/item/stack/cable_coil = 5,
 	)
 	category = CAT_TILES
+
+/datum/crafting_recipe/glassed_plasma
+	name = "Glassed Plasma Tile"
+	result = /obj/item/stack/tile/mineral/glassed/plasma
+	reqs = list(
+		/obj/item/stack/tile/mineral/plasma = 1,
+		/obj/item/stack/tile/glass = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_TILES
+
+/datum/crafting_recipe/glassed_uranium
+	name = "Glassed Uranium Tile"
+	result = /obj/item/stack/tile/mineral/glassed/uranium
+	reqs = list(
+		/obj/item/stack/tile/mineral/uranium = 1,
+		/obj/item/stack/tile/glass = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_TILES
+
+/datum/crafting_recipe/glassed_bananium
+	name = "Glassed Bananium Tile"
+	result = /obj/item/stack/tile/mineral/glassed/bananium
+	reqs = list(
+		/obj/item/stack/tile/mineral/bananium = 1,
+		/obj/item/stack/tile/glass = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_TILES
+
+/datum/crafting_recipe/glassed_bluespace
+	name = "Glassed Bluespace Tile"
+	result = /obj/item/stack/tile/mineral/glassed/bluespace
+	reqs = list(
+		/obj/item/stack/tile/mineral/bluespace = 1,
+		/obj/item/stack/tile/glass = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_TILES
+
+/datum/crafting_recipe/glassed_telecrystal
+	name = "Glassed Telecrystal Tile"
+	result = /obj/item/stack/tile/mineral/glassed/telecrystal
+	reqs = list(
+		/obj/item/stack/tile/mineral/telecrystal = 1,
+		/obj/item/stack/tile/glass = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_TILES

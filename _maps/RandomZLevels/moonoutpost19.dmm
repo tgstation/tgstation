@@ -168,7 +168,7 @@
 	desc = "Second place prize for excellence in archaeology. Wonder who got first place?";
 	name = "silver trophy (second place)"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "aQ" = (
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -2593,7 +2593,7 @@
 /obj/structure/fluff/paper/corner,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "ra" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3272,7 +3272,7 @@
 /obj/structure/closet/crate/bin,
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/structure/fluff/paper,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "vk" = (
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -3416,7 +3416,7 @@
 /obj/item/stock_parts/power_store/cell/crap/empty{
 	pixel_x = -4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "wh" = (
 /obj/structure/alien/weeds/node,
@@ -3514,7 +3514,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "xa" = (
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/moonoutpost19/tent)
 "xb" = (
 /obj/structure/dresser,
@@ -3982,7 +3982,7 @@
 /turf/open/misc/asteroid/moon,
 /area/awaymission/moonoutpost19/mines)
 "Au" = (
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/awaymission/moonoutpost19/tent)
 "Ay" = (
 /obj/machinery/door/firedoor,
@@ -4139,7 +4139,7 @@
 /area/awaymission/moonoutpost19/arrivals/shed)
 "Bq" = (
 /obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "Bs" = (
 /obj/machinery/door/airlock/research/glass{
@@ -4186,7 +4186,7 @@
 "BE" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/survival_pod,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "BG" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4386,7 +4386,7 @@
 /area/awaymission/moonoutpost19/main)
 "CP" = (
 /obj/structure/cable,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/moonoutpost19/tent)
 "CU" = (
 /obj/structure/fluff/minepost,
@@ -5010,7 +5010,7 @@
 "HJ" = (
 /obj/structure/safe,
 /obj/item/camera,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "HN" = (
 /obj/item/stack/rods,
@@ -5190,10 +5190,10 @@
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/lunar_sand/plating,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/moonoutpost19/tent)
 "IP" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/awaymission/moonoutpost19/tent)
 "IW" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -6251,7 +6251,7 @@
 /area/awaymission/moonoutpost19/main)
 "Qx" = (
 /obj/effect/turf_decal/lunar_sand/plating,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/moonoutpost19/tent)
 "Qy" = (
 /obj/effect/turf_decal/tile/red{
@@ -6833,7 +6833,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "Uy" = (
 /obj/structure/table,
@@ -7042,7 +7042,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/cell_charger,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 "Wg" = (
 /obj/structure/flora/rock/style_random{
@@ -7502,7 +7502,7 @@
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/mines)
 "Zo" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/moonoutpost19/tent)
 "Zp" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -7638,7 +7638,7 @@
 	pixel_x = -6
 	},
 /obj/item/pen/red,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/moonoutpost19/tent)
 
 (1,1,1) = {"
