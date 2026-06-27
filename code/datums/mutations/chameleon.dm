@@ -1,7 +1,7 @@
 //Chameleon causes the owner to slowly become transparent when not moving.
 /datum/mutation/chameleon
 	name = "Chameleon"
-	desc = "A genome that causes the holder's skin to become transparent over time."
+	desc = "The subject's skin becomes transparent over time while not moving."
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = span_notice("You feel one with your surroundings.")

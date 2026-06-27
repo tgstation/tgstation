@@ -1,7 +1,8 @@
 //Hulk turns your skin green, makes you strong, and allows you to shrug off stun effect.
 /datum/mutation/hulk
 	name = "Hulk"
-	desc = "A poorly understood genome that causes the holder's muscles to expand, inhibit speech and gives the person a bad skin condition."
+	desc = "The subject's muscles expand drastically, granting superhuman strength and resilience, but inhibit speech in the process. \
+		This heightened muscle density is more vulnerable to the cold, and cannot be maintained if critically injured."
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
@@ -281,7 +282,7 @@
 
 /datum/mutation/hulk/ork
 	name = "Ork"
-	desc = "A mutation caused by a mixup of hulk genes which severely impacts speech centers in owners' brains."
+	desc = "A variant of the hulk mutation that is also known to inhibit the subject's brain functions."
 	text_gain_indication = span_notice("You feel significantly dumber!")
 	bodypart_color = COLOR_ASSISTANT_OLIVE
 	conflicts = list(/datum/mutation/hulk)

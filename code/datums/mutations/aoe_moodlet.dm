@@ -1,6 +1,6 @@
 /datum/mutation/aoe_moodlet
 	name = "Extremely Unsightly"
-	desc = "The subject's body - and especially face - is unnaturally unsightly, causing a negative reaction from those around them. \
+	desc = "The subject's body - and especially their face - is unnaturally unsightly, causing a negative reaction from those around them. \
 		Wearing a mask will dampen the effect."
 	quality = NEGATIVE
 	instability = NEGATIVE_STABILITY_MINOR
@@ -57,7 +57,7 @@
 
 /datum/mutation/aoe_moodlet/positive
 	name = "Extremely Comely"
-	desc = "The subject's body - and especially face - is unnaturally comely, causing a positive reaction from those around them. \
+	desc = "The subject's body - and especially their face - is unnaturally comely, causing a positive reaction from those around them. \
 		Wearing a mask will dampen the effect."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINOR
