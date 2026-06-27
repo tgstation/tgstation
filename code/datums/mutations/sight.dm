@@ -194,7 +194,7 @@
 	name = "Night Vision"
 	desc = "The subject can see in the dark."
 	quality = POSITIVE
-	instability = POSITIVE_INSTABILITY_MINOR
+	instability = POSITIVE_INSTABILITY_MAJOR
 	text_gain_indication = span_notice("The darkness of the corners of the room fades away.")
 	text_lose_indication = span_notice("The darkness of the corners of the room returns.")
 
