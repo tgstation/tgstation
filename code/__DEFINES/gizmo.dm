@@ -21,6 +21,7 @@
 #define GIZMO_PUZZLE_WRONG 		1
 #define GIZMO_PUZZLE_CORRECT	2
 #define GIZMO_PUZZLE_SOLVED		3
+#define GIZMO_PUZZLE_SOLVED_MODE_CONTROL		4
 
 #define GIZMO_INTERFACE_WIRES "gizmo_interface_wires"
 #define GIZMO_INTERFACE_VOICE "gizmo_interface_voices"
