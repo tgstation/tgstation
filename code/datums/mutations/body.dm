@@ -735,7 +735,7 @@
 	return !HAS_TRAIT(acquirer, TRAIT_NOHUNGER)
 
 /datum/mutation/limb_regeneration/on_life(seconds_per_tick)
-	if(!SPT_PROB(7.5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
+	if(!SPT_PROB(5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
 		return
 
 	var/list/missing_limbs = owner.get_missing_limbs()
