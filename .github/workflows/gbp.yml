@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.base_ref }}
       - name: Run Auto Labeler
         uses: actions/github-script@v9
         with:
@@ -41,6 +43,8 @@ jobs:
       - name: Checkout
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.base_ref }}
       - name: Setup git
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |

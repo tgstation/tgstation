@@ -1,4 +1,4 @@
-/obj/item/circuitboard/computer
+/obj/item/circuitboard/computer/obj/machinery/computer/upload/ai/no_lock
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"

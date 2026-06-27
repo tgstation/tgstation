@@ -1,7 +1,8 @@
 /obj/item/ai_module/law/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
-	desc = "An AI Module for hacking additional laws to an AI."
+	desc = "An AI Module for hacking additional laws to an AI. This board bypasses all access restrictions on the upload console."
 	laws = list("")
+	bypass_access_check = TRUE
 
 /obj/item/ai_module/law/syndicate/configure(mob/user)
 	. = TRUE

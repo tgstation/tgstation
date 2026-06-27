@@ -137,19 +137,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
-"ba" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/law/core/full/drone,
-/obj/item/circuitboard/machine/ai_law_rack/core{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "bd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -655,6 +642,17 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"gS" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/autolathe{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/circuitboard/computer/borgupload/no_lock,
+/obj/item/circuitboard/computer/aiupload/no_lock,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "gU" = (
 /obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/dirt,
@@ -851,6 +849,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/aft)
+"kf" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "kk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -5591,15 +5602,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/kitchen)
-"LL" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/autolathe{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/circuitboard/machine/protolathe/offstation,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "LM" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
@@ -5816,15 +5818,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"MQ" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/item/circuitboard/computer/rdconsole/unlocked,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/ai/vault)
 "MT" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
@@ -6998,6 +6991,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
+"SM" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/circuitboard/computer/rdconsole/unlocked,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/ai/vault)
 "SN" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -13337,7 +13339,7 @@ Rm
 lq
 lq
 Yc
-LL
+gS
 Yc
 aa
 aa
@@ -13563,7 +13565,7 @@ Jy
 lq
 YC
 Yc
-ba
+kf
 Yc
 aa
 aa
@@ -14466,7 +14468,7 @@ xf
 zH
 ss
 Jk
-MQ
+SM
 Ym
 xf
 aa
