@@ -1,4 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - qol: "DNA console now automatically matches genetic data with any held genetic sequence scanner, for more efficient geneticist shenanigans!"

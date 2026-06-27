@@ -549,3 +549,17 @@
       with mindswaps. Report any oddities.
   - refactor: Grab strength has been refactored a bit, primarily affects martial arts
       and drunken brawling. Report any oddities.
+2026-06-27:
+  CabinetOnFire:
+  - qol: DNA console now automatically matches genetic data with any held genetic
+      sequence scanner, for more efficient geneticist shenanigans!
+  Ghommie:
+  - balance: Wearing a hard hat or any helmet as a station drone will actually improve
+      your armor values now!
+  Melbert:
+  - bugfix: Icebox gulag console doesn't vanish from reality
+  StrangeWeirdKitten:
+  - bugfix: ''' and " works again'
+  vinylspiders:
+  - bugfix: fixed an issue where you could exceed the smartfridge's capacity by using
+      a plant bag
