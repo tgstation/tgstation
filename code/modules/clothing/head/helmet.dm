@@ -563,7 +563,7 @@
 	acid = 50
 	wound = 10
 
-	/obj/item/clothing/head/helmet/giant_killerunfired
+/obj/item/clothing/head/helmet/giant_killerunfired
 	name = "unfired Giant-Killer helmet"
 	desc = "A knight helmet to be forged in lava."
 	icon_state = "knight_green"
