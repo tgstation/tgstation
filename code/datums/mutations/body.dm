@@ -739,7 +739,7 @@
 		return
 
 	var/list/missing_limbs = owner.get_missing_limbs()
-	var/list/missing_important_organs = owner.get_missing_organs(include_appendix = (GET_MUTATION_SYNCHRONIZER(src) == 1)) // appendix can regrow if you don't have syncronizer
+	var/list/missing_important_organs = owner.get_missing_organs(include_appendix = (GET_MUTATION_POWER(src) > 1)) // appendix can regrow if you have power
 	var/list/missing_special_organs = list()
 	for(var/organ_type in owner.dna?.species?.mutant_organs)
 		if(!owner.get_organ_by_type(organ_type) && should_visual_organ_apply_to(organ_type, owner))
