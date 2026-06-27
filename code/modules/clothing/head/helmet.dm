@@ -590,7 +590,7 @@
 	acid = 0
 	wound = 0
 
-	/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
+/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
 	var/obj/clothing/head/helmet/giant_killerunfired = new(loc)
 	dragonator.set_material_slots(material_slots)
 	dragonator.set_custom_materials(custom_materials.Copy())
