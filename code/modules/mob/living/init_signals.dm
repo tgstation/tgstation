@@ -79,7 +79,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
 
-	RegisterSignal(src, list(
+	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_NIGHT_VISION),
 		SIGNAL_REMOVETRAIT(TRAIT_NIGHT_VISION),
 		SIGNAL_ADDTRAIT(TRAIT_MESON_VISION),
