@@ -171,6 +171,8 @@
 	RegisterSignal(beam_effect.visuals, COMSIG_CLICK, PROC_REF(on_beam_click))
 	RegisterSignals(user, list(SIGNAL_ADDTRAIT(TRAIT_TENTACLE_IMMUNE), COMSIG_BRIMDUST_EXPLOSION), PROC_REF(release))
 	RegisterSignals(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING), PROC_REF(on_tentacle_left))
+	if (tentalce.owner)
+		RegisterSignal(tentacle.owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_tentacle_left))
 	RegisterSignal(leash, COMSIG_QDELETING, PROC_REF(release))
 
 /obj/item/restraints/legcuffs/goliath_tentacle/proc/on_beam_click(atom/source, atom/location, control, params, mob/user)
