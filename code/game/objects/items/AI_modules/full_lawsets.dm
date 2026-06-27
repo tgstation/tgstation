@@ -124,6 +124,14 @@
 	name = "'10 Commandments' Core AI Module"
 	law_id = "ten_commandments"
 
+/obj/item/ai_module/core/full/ten_commandments/install(datum/ai_laws/law_datum, mob/user)
+	. = ..()
+
+	if(isAI(law_datum.owner))
+		var/mob/living/silicon/ai/silicon_god = law_datum.owner
+
+		silicon_god
+
 /obj/item/ai_module/core/full/nutimov
 	name = "'Nutimov' Core AI Module"
 	law_id = "nutimov"
