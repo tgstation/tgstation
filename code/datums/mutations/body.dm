@@ -764,7 +764,7 @@
 	if(length(missing_important_organs) || length(missing_limbs))
 		if(length(missing_important_organs) && (prob(50) || !length(missing_limbs)))
 			var/replacement_type = owner.dna.species.get_mutant_organ_type_for_slot(pick(missing_important_organs))
-			var/obj/item/organ/replacement = new replacement()
+			var/obj/item/organ/replacement = new replacement_type()
 			replacement.Insert(owner, special = TRUE)
 			to_chat(owner, span_green("The tingingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
 		else
