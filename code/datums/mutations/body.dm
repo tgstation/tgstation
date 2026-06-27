@@ -819,6 +819,7 @@
 		/datum/reagent/medicine/mannitol,
 		/datum/reagent/medicine/mutadone,
 		/datum/reagent/medicine/sansufentanyl,
+		/datum/reagent/medicine/salglu_solution,
 	))
 
 /datum/mutation/chemical_allergy/on_acquiring(mob/living/carbon/human/acquirer)
@@ -837,7 +838,7 @@
 	SIGNAL_HANDLER
 
 	render_list += "<span class='alert ml-1'>"
-	render_list += conditional_tooltip("Chemical Allergy", "Subject will react negatively to most forms of medicine - \
+	render_list += conditional_tooltip("Subject has [name]", "Subject will react negatively to most forms of medicine - \
 		avoid administering chemicals as a part of treatment unless absolutely necessary.", tochat)
 	render_list += "</span><br>"
 
@@ -858,12 +859,15 @@
 	if(SPT_PROB(66, seconds_per_tick))
 		owner.set_stutter_if_lower(4 SECONDS)
 	if(SPT_PROB(33, seconds_per_tick))
-		owner.adjust_disgust(12, DISGUST_LEVEL_VERYDISGUSTED)
-		owner.adjust_tox_loss(1 * seconds_per_tick, forced = TRUE)
+		owner.adjust_disgust(24, DISGUST_LEVEL_VERYDISGUSTED)
+		owner.adjust_tox_loss(4, forced = TRUE)
 	if(SPT_PROB(12, seconds_per_tick))
 		owner.adjust_jitter_up_to(6 SECONDS, 36 SECONDS)
+		owner.adjust_dizzy_up_to(6 SECONDS, 36 SECONDS)
+		owner.adjust_blood_volume(-24, minimum = BLOOD_VOLUME_OKAY)
 	if(SPT_PROB(6, seconds_per_tick))
 		owner.adjust_confusion_up_to(4 SECONDS, 12 SECONDS)
+		owner.losebreath = max(owner.losebreath, 4)
 
 /datum/mutation/chemical_allergy/proc/has_danger_reagent()
 	for(var/datum/reagent/reagent as anything in owner.reagents?.reagent_list)
