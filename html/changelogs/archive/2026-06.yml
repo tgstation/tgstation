@@ -558,6 +558,14 @@
       your armor values now!
   Melbert:
   - bugfix: Icebox gulag console doesn't vanish from reality
+  - bugfix: Cybernetic reskinning should break less.
+  - bugfix: Horns and cat ears should be cut off less by height.
+  - bugfix: Bodypart textures should apply more consistently.
+  - refactor: Mutant parts like moth wings, lizard tails, cat eats, etc. have been
+      refactored a tiny bit, report any oddities.
+  - refactor: Bodypart textures were refactored a tiny bit, report any oddities.
+  - refactor: Refactored the way height works, report anything weird looking things
+      involving that.
   StrangeWeirdKitten:
   - bugfix: ''' and " works again'
   vinylspiders:
