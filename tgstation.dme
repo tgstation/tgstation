@@ -1880,6 +1880,7 @@
 #include "code\datums\mutations\active.dm"
 #include "code\datums\mutations\adaptation.dm"
 #include "code\datums\mutations\antenna.dm"
+#include "code\datums\mutations\aoe_moodlet.dm"
 #include "code\datums\mutations\autotomy.dm"
 #include "code\datums\mutations\body.dm"
 #include "code\datums\mutations\chameleon.dm"

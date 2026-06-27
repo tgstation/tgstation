@@ -55,9 +55,7 @@
 		return
 
 	// Something went wront and we still have the thermal vision from our power, no cheating.
-	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
-		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-		owner.update_sight()
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 
 /datum/mutation/thermal/setup()
 	. = ..()
@@ -84,7 +82,6 @@
 
 /datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
 	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	remove_from.update_sight()
 	return ..()
 
 /datum/action/cooldown/spell/thermal_vision/is_valid_target(atom/cast_on)
@@ -93,7 +90,6 @@
 /datum/action/cooldown/spell/thermal_vision/cast(mob/living/cast_on)
 	. = ..()
 	ADD_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	cast_on.update_sight()
 	to_chat(cast_on, span_info("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
 	addtimer(CALLBACK(src, PROC_REF(deactivate), cast_on), thermal_duration)
 
@@ -102,7 +98,6 @@
 		return
 
 	REMOVE_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	cast_on.update_sight()
 	to_chat(cast_on, span_info("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
 
 	if(iscarbon(cast_on))
@@ -122,13 +117,11 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
-	owner.update_sight()
 
 /datum/mutation/xray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
-	owner.update_sight()
 
 
 ///Laser Eyes lets you shoot lasers from your eyes!
@@ -195,3 +188,22 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+
+/datum/mutation/night_vision
+	name = "Night Vision"
+	desc = "The subject can see in the dark."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MINOR
+	text_gain_indication = span_notice("The darkness of the corners of the room fades away.")
+	text_lose_indication = span_notice("The darkness of the corners of the room returns.")
+
+/datum/mutation/night_vision/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_NIGHT_VISION, GENETIC_MUTATION)
+
+/datum/mutation/night_vision/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_NIGHT_VISION, GENETIC_MUTATION)

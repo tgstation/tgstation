@@ -62,12 +62,10 @@
 
 /datum/status_effect/duskndawn/on_apply()
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
-	owner.update_sight()
 	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
-	owner.update_sight()
 
 // WOUNDED SOLDIER
 /datum/status_effect/marshal

@@ -713,3 +713,213 @@
 		owner.adjust_brute_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
 	// Offsets suffocation but not entirely
 	owner.adjust_oxy_loss(-0.5 * seconds_per_tick, forced = TRUE)
+
+/datum/mutation/limb_regeneration
+	name = "Regeneration"
+	desc = "The subject's body is able to regenerate lost limbs or organs while sleeping, given ample rest and nutrients."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MODERATE
+	text_gain_indication = span_notice("You feel a strange tingling.")
+	text_lose_indication = span_notice("The strange tingling feeling fades.")
+	difficulty = 20
+	synchronizer_coeff = 1
+	power_coeff = 1
+
+	/// Threshold of nutrition required to regenerate limbs/organs
+	var/nutrition_threshold = NUTRITION_LEVEL_FED * 0.85
+	/// If TRUE we notified the user they could probably use the mutation if they eat/slept first - comes with a bonus to trigger chance
+	VAR_PRIVATE/notified_of_ability = FALSE
+
+/datum/mutation/limb_regeneration/can_acquire(mob/living/carbon/human/acquirer)
+	return !HAS_TRAIT(acquirer, TRAIT_NOHUNGER)
+
+/datum/mutation/limb_regeneration/on_life(seconds_per_tick)
+	if(!SPT_PROB(7.5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
+		return
+
+	var/list/missing_limbs = owner.get_missing_limbs()
+	var/list/missing_important_organs = owner.get_missing_organs(include_appendix = (GET_MUTATION_SYNCHRONIZER(src) == 1)) // appendix can regrow if you don't have syncronizer
+	var/list/missing_special_organs = list()
+	for(var/organ_type in owner.dna?.species?.mutant_organs)
+		if(!owner.get_organ_by_type(organ_type) && should_visual_organ_apply_to(organ_type, owner))
+			missing_special_organs += organ_type
+
+	if(!length(missing_limbs) && !length(missing_important_organs) && !length(missing_special_organs))
+		return
+
+	if(owner.nutrition <= nutrition_threshold)
+		if(owner.stat == UNCONSCIOUS && !notified_of_ability)
+			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a meal first."))
+			notified_of_ability = TRUE
+		return
+	if(owner.stat != UNCONSCIOUS)
+		if(owner.nutrition > nutrition_threshold && !notified_of_ability)
+			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a nap first."))
+			notified_of_ability = TRUE
+		return
+
+	notified_of_ability = FALSE
+	// "core organs" and limbs are prioritized
+	if(length(missing_important_organs) || length(missing_limbs))
+		if(length(missing_important_organs) && (prob(50) || !length(missing_limbs)))
+			var/replacement_type = owner.dna.species.get_mutant_organ_type_for_slot(pick(missing_important_organs))
+			var/obj/item/organ/replacement = new replacement()
+			replacement.Insert(owner, special = TRUE)
+			to_chat(owner, span_green("The tingingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		else
+			var/replacing_zone = pick(missing_limbs)
+			owner.regenerate_limb(replacing_zone)
+			var/obj/item/bodypart/replacement = owner.get_bodypart(replacing_zone)
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement.plaintext_zone] where your old one was!"))
+			owner.visible_message(span_warning("[owner]'s [replacement.plaintext_zone] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.5 * GET_MUTATION_SYNCHRONIZER(src))
+		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return
+
+	// "cosmetic" organs are second priority and cheaper to regenerate
+	if(length(missing_special_organs))
+		var/replacement_type = pick(missing_special_organs)
+		var/obj/item/organ/replacement = new replacement()
+		replacement.Insert(owner, special = TRUE)
+		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		if(replacement.organ_flags & ORGAN_EXTERNAL)
+			owner.visible_message(span_warning("[owner]'s [replacement] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.3 * GET_MUTATION_SYNCHRONIZER(src))
+		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return
+
+	stack_trace("Limb regeneration failed to find a missing limb or organ to regenerate for [owner] despite passing the checks")
+
+/datum/mutation/chemical_allergy
+	name = "Chemical Allergy"
+	desc = "The subject's body is allergic to almost all forms of medicine or drug - causing a temporary flux of genetic instability, among other side effects."
+	quality = NEGATIVE
+	instability = NEGATIVE_STABILITY_MAJOR
+	text_gain_indication = span_warning("You feel a strange irritation in your skin.")
+	text_lose_indication = span_notice("The irritation in your skin subsides.")
+	difficulty = 20
+
+	/// Typecache of reagents that trigger the allergy
+	var/static/list/danger_reagents
+	/// If we're currently experiencing negative effects
+	VAR_PRIVATE/was_experiencing_allergy = FALSE
+
+/datum/mutation/chemical_allergy/New()
+	. = ..()
+	if(length(danger_reagents))
+		return
+
+	danger_reagents = typecacheof(list(
+		/datum/reagent/medicine,
+		/datum/reagent/drug,
+	)) - typecacheof(list(
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/epinephrine,
+		/datum/reagent/medicine/mannitol,
+		/datum/reagent/medicine/mutadone,
+		/datum/reagent/medicine/sansufentanyl,
+	))
+
+/datum/mutation/chemical_allergy/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(acquirer, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
+
+/datum/mutation/chemical_allergy/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_LIVING_HEALTHSCAN)
+
+/datum/mutation/chemical_allergy/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+	SIGNAL_HANDLER
+
+	render_list += "<span class='alert ml-1'>"
+	render_list += conditional_tooltip("Chemical Allergy", "Subject will react negatively to most forms of medicine - \
+		avoid administering chemicals as a part of treatment unless absolutely necessary.", tochat)
+	render_list += "</span><br>"
+
+/datum/mutation/chemical_allergy/on_life(seconds_per_tick)
+	if(!has_danger_reagent())
+		if(was_experiencing_allergy)
+			was_experiencing_allergy = FALSE
+			instability *= 2
+			owner.dna.update_instability()
+		return
+	if(!SPT_PROB(80, seconds_per_tick))
+		return
+	if(!was_experiencing_allergy)
+		was_experiencing_allergy = TRUE
+		instability *= 0.5 // halves the negative instability it rewards, which could push you into danger territory!
+		owner.dna.update_instability()
+
+	if(SPT_PROB(66, seconds_per_tick))
+		owner.set_stutter_if_lower(4 SECONDS)
+	if(SPT_PROB(33, seconds_per_tick))
+		owner.adjust_disgust(12, DISGUST_LEVEL_VERYDISGUSTED)
+		owner.adjust_tox_loss(1 * seconds_per_tick, forced = TRUE)
+	if(SPT_PROB(12, seconds_per_tick))
+		owner.adjust_jitter_up_to(6 SECONDS, 36 SECONDS)
+	if(SPT_PROB(6, seconds_per_tick))
+		owner.adjust_confusion_up_to(4 SECONDS, 12 SECONDS)
+
+/datum/mutation/chemical_allergy/proc/has_danger_reagent()
+	for(var/datum/reagent/reagent as anything in owner.reagents?.reagent_list)
+		if(!is_type_in_typecache(reagent, danger_reagents))
+			continue
+		if(!reagent.metabolizing || reagent.volume < 1)
+			continue
+		return TRUE
+
+	return FALSE
+
+/datum/mutation/venomous_strikes
+	name = "Venomous"
+	desc = "The subject's body produces a minor toxin that can be injected into others through scratches or bites. \
+		They also gain an innate ability to fight the same toxin."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MODERATE
+	text_gain_indication = span_notice("You teeth and nails feel sharper.")
+	text_lose_indication = span_notice("You teeth and nails feel duller.")
+	/// Type of chem to inject
+	var/venom_type = /datum/reagent/toxin
+	/// Amount of chem to inject per attack
+	var/venom_amount = 3
+
+/datum/mutation/venomous_strikes/on_acquiring(mob/living/carbon/human/owner)
+	text_gain_indication = (owner.get_active_hand()?.unarmed_attack_effect == ATTACK_EFFECT_CLAW) ? span_notice("You teeth and claws feel sharper.") : initial(text_gain_indication)
+	. = ..()
+	if(!.)
+		return
+	apply_venom()
+
+/datum/mutation/venomous_strikes/on_losing(mob/living/carbon/human/owner)
+	text_lose_indication = (owner.get_active_hand()?.unarmed_attack_effect == ATTACK_EFFECT_CLAW) ? span_notice("You teeth and claws feel duller.") : initial(text_lose_indication)
+	. = ..()
+	if(.)
+		return
+	remove_venom()
+
+/datum/mutation/venomous_strikes/vv_edit_var(var_name, var_value)
+	if(var_name != NAMEOF(src, venom_type) && var_name != NAMEOF(src, venom_amount))
+		return ..()
+
+	remove_venom()
+	. = ..()
+	apply_venom()
+
+/datum/mutation/venomous_strikes/pre_apply_chromosome()
+	apply_venom()
+
+/datum/mutation/venomous_strikes/post_apply_chromosome()
+	remove_venom()
+
+/datum/mutation/venomous_strikes/proc/apply_venom()
+	owner.AddElement(/datum/element/venomous, venom_type, venom_amount * GET_MUTATION_POWER(src), INJECT_CHECK_IGNORE_SPECIES)
+
+/datum/mutation/venomous_strikes/proc/remove_venom()
+	owner.RemoveElement(/datum/element/venomous, venom_type, venom_amount * GET_MUTATION_POWER(src), INJECT_CHECK_IGNORE_SPECIES)
+
+/datum/mutation/venomous_strikes/on_life(seconds_per_tick)
+	owner.reagents.remove_reagent(venom_type, round(venom_amount * 0.33, CHEMICAL_VOLUME_ROUNDING) * seconds_per_tick)
