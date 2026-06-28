@@ -5,7 +5,7 @@
 	},
 /area/icemoon/underground/explored/virtual_domain)
 "ab" = (
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/explored/virtual_domain)
 "ac" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -359,7 +359,7 @@
 /area/icemoon/underground/explored/virtual_domain)
 "Vt" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/explored/virtual_domain)
 
 (1,1,1) = {"

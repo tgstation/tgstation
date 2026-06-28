@@ -405,7 +405,7 @@
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "Zd" = (
-/turf/closed/indestructible/rock/snow/ice/ore,
+/turf/closed/indestructible/rock/snow/ore,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"

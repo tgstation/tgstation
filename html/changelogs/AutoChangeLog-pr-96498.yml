@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - bugfix: "Clients who sit in the lobby after pregame will no longer have there ambience disabled till they reconnect"

@@ -136,7 +136,7 @@
 				list("you have a terrible nightmare", "filled with indescribable horrors", "leaving you with a lingering sense of dread"),
 				list("you have a terrible nightmare", "filled with visions of your own death", "leaving you with a lingering sense of doom"),
 				list("you have a terrible nightmare", "filled with horrible memories of your past", "leaving you with a lingering sense of sadness"),
-				list("you have a terrible nightmare", "filled with fear of the unknown", "leaving you with a lingering sense of anxiety"),
+				list("you have a terrible nightmare", "filled with the influence of an uncertain presence", "leaving you with a lingering sense of anxiety"),
 				list("you have a terrible nightmare", "filled with stabbing pain and suffocating darkness", "leaving you with a lingering sense of panic"),
 			))
 
@@ -154,7 +154,7 @@
 				"a great [IS_HERETIC(dreamer) ? "force" : "evil"] locked away for good",
 			)
 
-		var/list/heretic_text = list("the doors of the Mansus loom ahead of you", "intricately decorated - and ajar", "you look through the crack")
+		var/list/heretic_text = list("the doors of the Mansus loom ahead of you", "intricately decorated and ajar", "you look through the crack")
 		switch(prob(75) ? heretic.heretic_path.route : null)
 			if(PATH_ASH)
 				heretic_text += "beyond it, you see a barren wasteland"
@@ -186,7 +186,7 @@
 				heretic_text += "you can't shake the feeling something is wrong"
 			else
 				heretic_text += "what lies beyond cannot be comprehended"
-				heretic_text += "the sheer magnitude of overwhelms you"
+				heretic_text += "the sheer magnitude of it overwhelms you"
 				heretic_text += "you feel a strange mix of awe and terror"
 
 		return heretic_text
@@ -226,7 +226,7 @@
 			"a robed figure manifests in your dream",
 			"they introduce themselves as the magician",
 			"a demonstration of their powers leaves you in awe",
-			"they leave as suddenly as they arrived",
+			"they depart as suddenly as they arrived",
 		)
 
 	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
@@ -235,7 +235,7 @@
 				list("you see", "a supernova", "bright and blinding", "consuming everything in an instant"),
 				list("you see", "a mushroom cloud on the horizon", "a sign of devastation and ruin"),
 				list("you see", "a ticking clock", "counting down to an inevitable disaster"),
-				list("you see", "a looming tower atop a rocky mountain", "a lightning strikes it, bringing it down", "a sign of imminent calamity"),
+				list("you see", "a looming tower atop a rocky mountain", "lightning strikes, bringing it down", "this reads as active calamity"),
 			))
 
 	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
@@ -243,9 +243,9 @@
 		if(!istype(disk_loc, /area/station) && !istype(disk_loc, /area/space))
 			return pick(list(
 				list("you see", "a dying star", "slowly dimming", "on the verge of collapse"),
-				list("you see", "a fool, dancing aimlessly", "they holds a ticking bomb", "a sign of recklessness"),
-				list("you see", "a hanging man", "swaying gently in the breeze", "a sign of surrender"),
-				list("you see", "a looming tower atop a rocky mountain", "it rains heavily around you", "a sign of calamity"),
+				list("you see", "a fool, dancing aimlessly", "they hold a ticking bomb", "a sign of recklessness"),
+				list("you see", "an inverted man", "swaying gently by one ankle", "this reads as suspense"),
+				list("you see", "a looming tower atop a rocky mountain", "it rains heavily, there is distant thunder", "this reads as imminent calamity"),
 			))
 
 	for(var/mob/living/carbon/human/clone as anything in GLOB.human_list)
@@ -276,9 +276,9 @@
 				if(PATH_FLESH)
 					return list("you see", "a legion of amalgamations ahead", "twisted and grotesque", "marching in unison towards an unknown destination")
 				if(PATH_VOID)
-					return list("you see", "nothingness ahead", "a void that seems to swallow all light and hope", "the silence deafening and oppressive")
+					return list("you see", "nothing", "a void that seems to swallow all light and hope", "the silence deafening and oppressive")
 				if(PATH_COSMIC)
-					return list("you see", "the birth of a new star", "radiant and full of potential", "an awe-inspiring sight")
+					return list("you see", "the birth of a new star", "radiant and reaching out", "you are not alone")
 				if(PATH_BLADE)
 					return list("you see", "a towering fortress ahead", "its walls lined with stalwart defenders", "each and every one bowing in respect to you")
 				if(PATH_LOCK)
@@ -351,7 +351,7 @@
 					list("you find yourself", "in an old city", "still bustling with activity", "but with an omnipresent feel of decay"),
 				))
 			if(3)
-				return list("you find yourself", "in a burning city", "flames reaching high", "but everyone doing their best to survive")
+				return list("you find yourself", "in a burning city", "flames reaching high", "but with everyone doing their best to survive")
 			if(4)
 				return list("you find yourself", "in a chaotic battlefield", "with no clear sides or victors", "only endless conflict and suffering")
 
