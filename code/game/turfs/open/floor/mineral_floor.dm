@@ -503,12 +503,12 @@
 	rust_resistance = RUST_RESISTANCE_BASIC
 	material_flags = NONE
 
-	/turf/open/floor/mineral/plasma/tiled
+/turf/open/floor/mineral/plasma/tiled
 	name = "tiled plasma floor"
 	icon_state = "plasma_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/glassed/plasma/tiled
 
-	/turf/open/floor/mineral/glassed/plasma/tiled/broken_states()
+/turf/open/floor/mineral/glassed/plasma/tiled/broken_states()
 		return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/glassed/bananium
