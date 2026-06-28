@@ -61,15 +61,14 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
  */
 
 /obj/item/stack/sheet/mineral/rock
-	name = "rock sheets"
+	name = "rock brick"
 	desc = "This rocks."
 	singular_name = "rock sheet"
 	icon_state = "sheet-rock"
-	inhand_icon_state = "sheet-rock"
-	mats_per_unit = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
 	inhand_icon_state = null
 	throw_speed = 3
 	throw_range = 5
+	mats_per_unit = list(/datum/material/rock = SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/rock
 	merge_type = /obj/item/stack/sheet/mineral/rock
 	drop_sound = SFX_STONE_DROP
@@ -393,13 +392,13 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	new/datum/stack_recipe("plastitanium wall filler", /obj/item/stack/tile/mineral/plastitanium, 1, 1, 10, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("plastitanium platform", /obj/structure/platform/plastitanium, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	))
 
 /obj/item/stack/sheet/mineral/plastitanium/get_main_recipes()
 	. = ..()
 	. += GLOB.plastitanium_recipes
-
 
 /*
  * Snow

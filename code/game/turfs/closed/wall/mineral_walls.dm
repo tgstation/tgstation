@@ -324,12 +324,16 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
+/turf/closed/wall/mineral/plastitanium/wall_fill
+	sheet_type = /obj/item/stack/wall_filling/plastitanium
+
 /turf/closed/wall/mineral/plastitanium/survival
 	name = "pod wall"
 	desc = "An easily-compressible wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/survivalpod
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_TITANIUM_WALLS
 	rust_resistance = RUST_RESISTANCE_TITANIUM

@@ -237,6 +237,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restaurant, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/bar, 32)
 
+/obj/structure/sign/departments/gastro
+	name = "\improper Gastro sign"
+	sign_change_name = "Location - Gastro"
+	desc = "A sign labelling an area where drinks are mixed."
+	icon_state = "gastro"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/gastro, 32)
+
 ///////SUPPLY
 
 /obj/structure/sign/departments/cargo
@@ -255,6 +263,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)
 
+/obj/structure/sign/departments/mine
+	name = "\improper Mining sign"
+	sign_change_name = "Location - Mining"
+	desc = "A sign labelling an area where miners might get geared up."
+	icon_state = "mine"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/mine, 32)
+
+/obj/structure/sign/departments/mine/alt
+	desc = "A sign labelling an area where mining shuttle docks."
+	sign_change_name = "Location - Mining (alt)"
+	icon_state = "mine2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/mine/alt, 32)
+
 ///////SECURITY
 
 /obj/structure/sign/departments/security
@@ -265,6 +288,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security, 32)
 
+/obj/structure/sign/departments/prison
+	name = "\improper Prison sign"
+	sign_change_name = "Department - Security: prison"
+	desc = "A sign labelling an area where the prisoners are held."
+	icon_state = "prison"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/prison, 32)
+
 ////MISC LOCATIONS
 
 /obj/structure/sign/departments/restroom
@@ -274,6 +305,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security, 32)
 	icon_state = "restroom"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restroom, 32)
+
+/obj/structure/sign/departments/dorms
+	name = "\improper Dorms sign"
+	sign_change_name = "Location - Dorms"
+	desc = "A sign labelling a location where tired crewmates might go to rest."
+	icon_state = "dorms"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/dorms, 32)
 
 /obj/structure/sign/departments/maint
 	name = "\improper Maintenance Tunnel sign"
@@ -329,6 +368,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms/alt, 32)
 
+/obj/structure/sign/departments/techstorage
+	name = "\improper Tech Storage sign"
+	sign_change_name = "Location - Tech Storage"
+	desc = "A sign labelling an area where the tech is stored."
+	icon_state = "techstorage"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/techstorage, 32)
+
 /obj/structure/sign/departments/aiupload
 	name = "\improper AI Upload sign"
 	sign_change_name = "Location - AI Upload"
@@ -344,6 +391,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload, 32)
 	icon_state = "aisat"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
+
+/obj/structure/sign/departments/aisat/alt
+	sign_change_name = "Location - AI Satellite (alt)"
+	icon_state = "aisat2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat/alt, 32)
 
 /obj/structure/sign/departments/vault
 	name = "\improper Vault sign"

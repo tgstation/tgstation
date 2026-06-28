@@ -17,6 +17,8 @@
 	var/climbable = TRUE
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
+	///green railing type to be made by wrapping grass around this.
+	var/green_equivalent = /obj/structure/railing/green
 
 /datum/armor/structure_railing
 	melee = 35
@@ -33,18 +35,21 @@
 	density = FALSE
 	climbable = FALSE
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	green_equivalent = /obj/structure/railing/green/corner
 
 /obj/structure/railing/corner/unbreakable
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/corner/end //end of a segment of railing without making a loop
 	icon_state = "railing_end"
+	green_equivalent = /obj/structure/railing/green/corner/end
 
 /obj/structure/railing/corner/end/unbreakable
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/corner/end/flip //same as above but flipped around
 	icon_state = "railing_end_flip"
+	green_equivalent = /obj/structure/railing/green/corner/end/flip
 
 /obj/structure/railing/corner/end/flip/unbreakable
 	resistance_flags = INDESTRUCTIBLE
@@ -82,10 +87,17 @@
 	else
 		. += span_notice("The railing is <i>unbolted</i> from the floor and can be deconstructed with <b>wirecutters</b>.")
 
+/obj/structure/railing/item_interaction(obj/item/something, mob/living/user)
+	if(istype(something, /obj/item/food/grown/grass) && green_equivalent)
+		to_chat(user, span_notice("You begin wrapping the grass around [src]..."))
+		var/atom/moveable/new_railing = new green_equivalent(drop_location())
+		new_railing.dir = dir
+		qdel(src)
+		qdel(something)
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
 	add_fingerprint(user)
-	if(I == /obj/item/food/grown/grass)
 
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(atom_integrity < max_integrity)
@@ -169,15 +181,39 @@
 	name = "green railing"
 	desc = "Overgrown railing. What is this greenery even growing on? Rust?"
 	icon_state = "greenrailing"
+	var/metal_equivalent = /obj/structure/railing
+	green_equivalent = FALSE
 
 /obj/structure/railing/green/corner
 	icon_state = "greenrailing_corner"
+	density = FALSE
+	climbable = FALSE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	metal_equivalent = /obj/structure/railing/corner
 
 /obj/structure/railing/green/corner/end
 	icon_state = "greenrailing_end"
+	metal_equivalent = /obj/structure/railing/corner/end
 
 /obj/structure/railing/green/corner/end/flip
 	icon_state = "greenrailing_end_flip"
+	metal_equivalent = /obj/structure/railing/corner/end/flip
+
+/obj/structure/railing/green/examine(mob/user)
+	. = ..()
+	if(anchored == TRUE)
+		. += span_notice("The railing is <b>bolted</b> to the floor and can be stripped off greenery with <b>wirecutters</b>.")
+	else
+		. += span_notice("The railing is <i>unbolted</i> from the floor and can be stripped off greenery with <b>wirecutters</b>.")
+
+/obj/structure/railing/green/wirecutter_act(mob/living/user, obj/item/something)
+	. = ..()
+	to_chat(user, span_warning("You cut off the greeny aroud [src]."))
+	something.play_tool_sound(src, 100)
+	var/atom/moveable/new_railing = new metal_equivalent(drop_location())
+	new_railing.dir = dir
+	qdel(src)
+	return TRUE
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
@@ -187,6 +223,7 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
+	green_equivalent = FALSE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()
@@ -199,7 +236,6 @@
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
 	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
-
 
 /obj/structure/railing/corner/end/wooden_fence
 	icon = 'icons/obj/structures.dmi'

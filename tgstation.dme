@@ -2876,6 +2876,7 @@
 #include "code\game\objects\items\stacks\tape.dm"
 #include "code\game\objects\items\stacks\telecrystal.dm"
 #include "code\game\objects\items\stacks\tickets.dm"
+#include "code\game\objects\items\stacks\wall_filling.dm"
 #include "code\game\objects\items\stacks\wrap.dm"
 #include "code\game\objects\items\stacks\golem_food\golem_food_buff.dm"
 #include "code\game\objects\items\stacks\golem_food\golem_hand_actions.dm"
