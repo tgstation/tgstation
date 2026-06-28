@@ -140,6 +140,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "basalt"
 	floor_variance = 15
 	dig_result = /obj/item/stack/ore/glass/basalt
+	smoothing_groups = SMOOTH_GROUP_FLOOR_BASALT
 
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
@@ -181,6 +182,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	skip_minimap_rendering = TRUE
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
@@ -267,7 +269,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "siderite"
 	layer = HIGH_TURF_LAYER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
 	dig_result = /obj/item/stack/ore/glass/siderite
 
 /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
@@ -287,7 +289,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "shale-255"
 	base_icon_state = "shale"
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
-	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_WATER_LAVALAND + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -392,6 +394,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
+	skip_minimap_rendering = TRUE
 
 /// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm

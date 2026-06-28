@@ -94,7 +94,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
+/atom/movable/screen/proc/get_mob() as /mob
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)
@@ -219,10 +219,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
 	. = ..()
-	add_overlays()
+	if (usr == hud?.mymob)
+		add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
 	..()
+	if (usr != hud?.mymob)
+		return
 	cut_overlay(object_overlay)
 	QDEL_NULL(object_overlay)
 

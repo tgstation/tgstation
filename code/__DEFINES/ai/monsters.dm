@@ -52,6 +52,11 @@
 /// Key where goliath stores a hole it wants to get into
 #define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
 
+// Tendril AI keys
+#define BB_TENDRIL_LASH "tendril_lash"
+#define BB_TENDRIL_CHASER "tendril_chaser"
+#define BB_TENDRIL_SPIKES "tendril_spikes"
+
 // bee keys
 ///the bee hive we live inside
 #define BB_CURRENT_HOME "BB_current_home"

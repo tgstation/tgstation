@@ -77,8 +77,8 @@
 	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
 	D.after_add()
+	D.register_disease_signals()
 	infectee.med_hud_set_status()
-	register_disease_signals()
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
@@ -96,6 +96,7 @@
 /datum/disease/proc/register_disease_signals()
 	if(isnull(affected_mob))
 		return
+	RegisterSignal(affected_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
 		RegisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breath))
 
@@ -103,11 +104,20 @@
 /datum/disease/proc/unregister_disease_signals()
 	if(isnull(affected_mob))
 		return
-	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
+	UnregisterSignal(affected_mob, list(COMSIG_LIVING_LIFE, COMSIG_CARBON_PRE_BREATHE))
 
 // Proc to determine if the virus can resist natural recovery
 /datum/disease/proc/get_recovery_failure_chance()
 	return 0
+
+/datum/disease/proc/on_life(datum/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(affected_mob, TRAIT_STASIS) || QDELETED(src) || (affected_mob.stat == DEAD && !process_dead))
+		return
+
+	stage_act(seconds_per_tick)
 
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick)

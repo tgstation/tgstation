@@ -696,7 +696,7 @@
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
 		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE && existing_mutation.remove_on_aheal)
-				dna.remove_mutation(existing_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+				dna.remove_mutation(existing_mutation, GLOB.standard_mutation_sources)
 
 	if(heal_flags & HEAL_TEMP)
 		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
@@ -1045,7 +1045,7 @@
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
 	if(use_random_name)
-		fully_replace_character_name(real_name, generate_random_mob_name())
+		fully_replace_character_name(newname = generate_random_mob_name())
 
 ///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
 /mob/living/carbon/human/proc/crewlike_monkify()

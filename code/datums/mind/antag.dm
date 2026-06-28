@@ -185,6 +185,7 @@
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 		var/datum/antagonist/nukeop/N = new()
 		N.send_to_spawnpoint = FALSE
+		N.give_bonus_tc = FALSE
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
 

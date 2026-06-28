@@ -171,6 +171,31 @@
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_3
 
+/obj/item/food/spaghetti/ramen_dry
+	name = "dry space ramen"
+	desc = "Compressed dehydrated noodles."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "raw_ramen"
+
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3
+	)
+	tastes = list("ramen" = 1)
+	foodtypes = GRAIN
+	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/spaghetti/ramen_beef
+	name = "beef space ramen"
+	desc = "Steaming springy noodles dripping with rich artificial beef broth. Somehow both comforting and vaguely chemical."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "cooked_ramen"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3
+	)
+	tastes = list("ramen" = 1, "beef" = 1)
+	foodtypes = GRAIN
+	crafting_complexity = FOOD_COMPLEXITY_3
+
 /obj/item/food/bread/reispan
 	name = "reispan"
 	desc = "Though the concept of rice bread has been common in Asia for centuries, the reispan as we know it today is most commonly associated with Mars- where limited arable land has forced ingenuity."
