@@ -27,7 +27,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_SEND_PRAYER, PROC_REF(on_sent_prayer))
 	var/datum/mind/mind = parent
 
-	var/datum/action/innate/listen_prayers/toggle = new(mind)
+	toggle = new(mind)
 	if(toggle_desc)
 		toggle.desc = toggle_desc
 	if(mind.current)
