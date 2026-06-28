@@ -14,16 +14,27 @@
 		"observer_abort": "BT_ABORT_BOTH"
 	},
 	"child": {
-		"type": "sequence",
+		"type": "parallel",
+		"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+		"repeat_secondary": true,
+		"finish_on_primary": true,
 		"children": [
 			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
-				"vars": {
-					"target_key": "$byk9gqj4",
-					"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
-					"destination_key": "BB_FLEE_LOCATION"
-				}
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
+						"vars": {
+							"target_key": "$byk9gqj4",
+							"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+							"destination_key": "BB_FLEE_LOCATION"
+						}
+					}
+				]
 			},
 			{
 				"type": "leaf",

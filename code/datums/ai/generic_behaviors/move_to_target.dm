@@ -2,7 +2,6 @@
 /// Pass finish_on_arrival = FALSE to keep running indefinitely (used in combat parallels).
 /// Pass movement_type to temporarily override the controller's ai_movement; resets to the initial type on finish.
 /datum/bt_node/ai_behavior/move_to_target
-	time_between_perform = 0
 	/// Set by on_movement_failed() when the movement system gives up pathing.
 	VAR_FINAL/movement_failed = FALSE
 	/// Blackboard key holding the atom to move toward.
@@ -13,6 +12,8 @@
 	var/finish_on_arrival = TRUE
 	/// Optional ai_movement type override; resets to the initial type on finish.
 	var/movement_type = null
+	/// Tracks the last atom we started moving toward so we can retarget when the key changes.
+	VAR_PRIVATE/atom/tracked_target
 
 /datum/bt_node/ai_behavior/move_to_target/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
@@ -22,6 +23,7 @@
 		controller.change_ai_movement_type(movement_type)
 	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
 	controller.ai_movement.start_moving_towards(controller, target, required_dist)
+	tracked_target = target
 	return TRUE
 
 /datum/bt_node/ai_behavior/move_to_target/proc/on_movement_failed(atom/source)
@@ -34,7 +36,10 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_FAILED
-	if(!controller.ai_movement.moving_controllers[controller])
+	if(target != tracked_target)
+		controller.ai_movement.start_moving_towards(controller, target, required_dist)
+		tracked_target = target
+	else if(!controller.ai_movement.moving_controllers[controller])
 		controller.ai_movement.start_moving_towards(controller, target, required_dist)
 	if(finish_on_arrival && get_dist(controller.pawn, target) <= required_dist)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
@@ -43,6 +48,7 @@
 /datum/bt_node/ai_behavior/move_to_target/finish_action(datum/ai_controller/controller, succeeded)
 	UnregisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED)
 	movement_failed = FALSE
+	tracked_target = null
 	controller.ai_movement.stop_moving_towards(controller)
 	if(movement_type)
 		controller.change_ai_movement_type(initial(controller.ai_movement))

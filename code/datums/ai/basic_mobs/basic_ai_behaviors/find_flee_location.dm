@@ -1,11 +1,10 @@
-/// Computes the best flee destination turf away from a target and stores it in a blackboard key.
-/// Returns INSTANT SUCCESS if a path away was found, INSTANT FAILURE otherwise (trapped or target out of range).
+/// Finds the best adjacent turf to flee to away from a threat and stores it in a blackboard key.
+/// Tries get_step_away first, then falls back to shuffled directions if blocked.
+/// Returns INSTANT SUCCESS if a step was found, INSTANT FAILURE if completely cornered.
 /datum/bt_node/ai_behavior/find_flee_location
 	var/target_key
 	var/hiding_location_key
 	var/destination_key
-	/// If TRUE, candidate flee turfs are accepted even if they are blocked.
-	var/ignore_blocked_turfs = FALSE
 
 /datum/bt_node/ai_behavior/find_flee_location/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/run_distance = controller.blackboard[BB_BASIC_MOB_FLEE_DISTANCE] || DEFAULT_BASIC_FLEE_DISTANCE
@@ -13,36 +12,26 @@
 	if(QDELETED(target) || !can_see(controller.pawn, target, run_distance))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/turf/flee_turf = get_best_flee_turf(controller, target, run_distance)
+	var/turf/flee_turf = get_flee_step(controller, target)
 	if(!flee_turf)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(destination_key, flee_turf)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/find_flee_location/proc/get_best_flee_turf(datum/ai_controller/controller, atom/target, run_distance)
-	var/turf/best = get_turf(controller.pawn)
-	var/static/list/offset_angles = list(45, 90, 135, 180, 225, 270)
-	for(var/angle in offset_angles)
-		var/turf/candidate = get_furthest_clear_turf(controller, angle, target, run_distance)
-		if(isnull(candidate))
-			continue
-		var/dist = get_dist(target, candidate)
-		if(dist <= get_dist(target, best))
-			continue
-		best = candidate
-		if(dist == run_distance)
-			break
-	if(best == get_turf(controller.pawn))
-		return null
-	return best
-
-/datum/bt_node/ai_behavior/find_flee_location/proc/get_furthest_clear_turf(datum/ai_controller/controller, angle, atom/target, run_distance)
-	var/turf/result
-	var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
-	for(var/i in 1 to run_distance)
-		var/turf/test = get_ranged_target_turf_direct(controller.pawn, target, range = i, offset = angle)
-		if(!ignore_blocked_turfs && test.is_blocked_turf(source_atom = controller.pawn, ignore_atoms = airlocks))
-			break
-		result = test
-	return result
+/datum/bt_node/ai_behavior/find_flee_location/proc/get_flee_step(datum/ai_controller/controller, atom/target)
+	var/mob/living/pawn = controller.pawn
+	var/turf/pawn_turf = get_turf(pawn)
+	var/datum/can_pass_info/pass_info = new(pawn, controller.get_access())
+	var/turf/next_step = get_step_away(pawn, target)
+	if(!isnull(next_step) && next_step != pawn_turf && !next_step.density && !pawn_turf.LinkBlockedWithAccess(next_step, pass_info))
+		return next_step
+	var/list/all_dirs = GLOB.alldirs.Copy()
+	all_dirs -= get_dir(pawn, next_step)
+	all_dirs -= get_dir(pawn, target)
+	shuffle_inplace(all_dirs)
+	for(var/dir in all_dirs)
+		next_step = get_step(pawn, dir)
+		if(!isnull(next_step) && !next_step.density && !pawn_turf.LinkBlockedWithAccess(next_step, pass_info))
+			return next_step
+	return null
