@@ -2,7 +2,6 @@
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI. This board bypasses all access restrictions on the upload console."
 	laws = list("")
-	bypass_access_check = TRUE
 
 /obj/item/ai_module/law/syndicate/configure(mob/user)
 	. = TRUE
