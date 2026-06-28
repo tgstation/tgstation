@@ -50110,7 +50110,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/garden)
 "hrX" = (
-/obj/vehicle/sealed/car/vim,
+/obj/vehicle/sealed/mecha/vim,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/marker_beacon/yellow,

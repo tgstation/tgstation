@@ -196,6 +196,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
+/// Prevents viruses from curing naturaly
+#define TRAIT_NO_SELF_CURE "noselfcure"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
@@ -625,7 +627,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait which allows you to gain bonuses from consuming rocks
 #define TRAIT_ROCK_METAMORPHIC "rock_metamorphic"
 
-/// `do_teleport` will not allow this atom to teleport
+/// `do_teleport` won't allow this atom to teleport, or if applied to a turf, other atoms to teleport on this turf.
 #define TRAIT_NO_TELEPORT "no-teleport"
 /// This atom is a secluded location, which is counted as out of bounds.
 /// Anything that enters this atom's contents should react if it wants to stay in bounds.

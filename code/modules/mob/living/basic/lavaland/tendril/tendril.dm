@@ -47,7 +47,6 @@ GLOBAL_LIST_INIT(tendrils, list())
 /mob/living/basic/mining/tendril/Initialize(mapload)
 	. = ..()
 	GLOB.tendrils += src
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")

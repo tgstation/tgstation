@@ -86,30 +86,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 	return FALSE
 
-/// Procs to return holiday themed colors for recoloring atoms
-/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern = holiday_pattern)
-	if(!holiday_colors)
-		return
-	switch(pattern)
-		if(PATTERN_DEFAULT)
-			return holiday_colors[(thing_to_color.y % holiday_colors.len) + 1]
-		if(PATTERN_VERTICAL_STRIPE)
-			return holiday_colors[(thing_to_color.x % holiday_colors.len) + 1]
-
-/proc/request_holiday_colors(atom/thing_to_color, pattern)
-	switch(pattern)
-		if(PATTERN_RANDOM)
-			return "#[random_short_color()]"
-		if(PATTERN_RAINBOW)
-			var/datum/holiday/pride_week/rainbow_datum = new()
-			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
-	if(!length(GLOB.holidays))
-		return
-	for(var/holiday_key in GLOB.holidays)
-		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
-		if(!holiday_real.holiday_colors)
-			continue
-		return holiday_real.get_holiday_colors(thing_to_color, pattern || holiday_real.holiday_pattern)
+/datum/holiday/proc/get_holiday_colors(atom/thing_to_color, pattern)
+	return get_decoration_color_from_pattern(thing_to_color, pattern || holiday_pattern, holiday_colors)
 
 // The actual holidays
 
@@ -317,9 +295,9 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = APRIL
 	holiday_hat = /obj/item/clothing/head/rasta
 	holiday_colors = list(
-		COLOR_ETHIOPIA_GREEN,
-		COLOR_ETHIOPIA_YELLOW,
 		COLOR_ETHIOPIA_RED,
+		COLOR_ETHIOPIA_YELLOW,
+		COLOR_ETHIOPIA_GREEN,
 	)
 	holiday_mail = list(/obj/item/cigarette/rollie/cannabis)
 
@@ -467,14 +445,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	// Stonewall was June 28th, this captures its week.
 	begin_day = 23
 	end_day = 29
-	holiday_colors = list(
-		COLOR_PRIDE_PURPLE,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_RED,
-	)
+	holiday_colors = PRIDE_FLAG_COLORS
 	holiday_mail = list(
 		/obj/item/bedsheet/rainbow,
 		/obj/item/clothing/accessory/pride,
@@ -489,6 +460,12 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/food/snowcones/rainbow,
 		/obj/item/toy/crayon/rainbow,
 	)
+
+/datum/holiday/pride_week/New()
+	. = ..()
+	if(prob(30))
+		return
+	holiday_colors = pick(LESBIAN_FLAG_COLORS, GAY_MAN_FLAG_COLORS, TRANS_FLAG_COLORS, BI_FLAG_COLORS, ACE_FLAG_COLORS, PAN_FLAG_COLORS)
 
 // JULY
 
@@ -526,11 +503,11 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	no_mail_holiday = TRUE
 	holiday_hat = /obj/item/clothing/head/cowboy/brown
 	holiday_colors = list(
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
+		COLOR_WHITE,
+		COLOR_OLD_GLORY_RED,
 		COLOR_OLD_GLORY_BLUE,
-		COLOR_OLD_GLORY_RED,
-		COLOR_WHITE,
-		COLOR_OLD_GLORY_RED,
-		COLOR_WHITE,
 	)
 
 

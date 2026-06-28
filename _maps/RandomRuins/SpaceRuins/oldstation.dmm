@@ -523,6 +523,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/circuitboard/computer/borgupload/no_lock,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "cA" = (
@@ -6797,6 +6798,15 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
+"MC" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/circuitboard/computer/aiupload/no_lock,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "MH" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/plating/airless,
@@ -14366,7 +14376,7 @@ Wb
 NS
 dT
 nG
-cz
+MC
 cz
 ad
 ad

@@ -119,23 +119,34 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
-	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown : vehicle_move_delay
-	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
-		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
-			if(SANITY_LEVEL_GREAT)
-				modified_move_delay *= 0.8
-			if(SANITY_LEVEL_NEUTRAL)
-				modified_move_delay *= 0.9
-			if(SANITY_LEVEL_DISTURBED)
-				modified_move_delay *= 1
-			if(SANITY_LEVEL_CRAZY)
-				modified_move_delay *= 1.1
-			if(SANITY_LEVEL_INSANE)
-				modified_move_delay *= 1.2
+	var/modified_move_delay = get_move_delay(living_parent, user, direction)
 	if(NSCOMPONENT(direction) && EWCOMPONENT(direction))
 		modified_move_delay = FLOOR(modified_move_delay * sqrt(2), world.tick_lag)
 	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay)
 	return ..()
+
+/// Calculates and returns movement delay for a certain direction
+/datum/component/riding/creature/proc/get_move_delay(mob/living/living_parent, mob/living/user, direction)
+	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown : vehicle_move_delay
+	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
+		modified_move_delay *= get_roughrider_mult(user)
+	return modified_move_delay
+
+/datum/component/riding/creature/proc/get_roughrider_mult(mob/living/user)
+	if (HAS_TRAIT(user, TRAIT_PRIMITIVE))
+		return 0.8
+	switch(user.mob_mood?.sanity_level)
+		if(SANITY_LEVEL_GREAT)
+			return 0.8
+		if(SANITY_LEVEL_NEUTRAL)
+			return 0.9
+		if(SANITY_LEVEL_DISTURBED)
+			return 1
+		if(SANITY_LEVEL_CRAZY)
+			return 1.1
+		if(SANITY_LEVEL_INSANE)
+			return 1.2
+	return 1
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, throw_range = 8, throw_speed = 3, gentle = FALSE)
@@ -506,19 +517,53 @@
 	keytype = /obj/item/key/lasso
 	uses_native_speed = TRUE
 	rider_traits = list(TRAIT_NO_FLOATING_ANIM, TRAIT_TENTACLE_IMMUNE)
+	/// Flat speed boost to ourselves
+	var/flat_speed_mod = -9.5
+	/// Last direction we've moved in
+	var/last_move_dir = null
+	/// Current speed boost
+	var/speed_boost = 0
+	/// Speed boost per time equivalent tile of movement in the same direction
+	/// Not directly per tile as we move faster and thus would accelerate faster
+	var/rush_speed_boost = -0.3
+	/// Maximum speed boost we can have
+	var/maximum_boost = -3
+	/// Have we spawned an afterimage last move?
+	var/spawned_last_move = FALSE
 
 /datum/component/riding/creature/goliath/deathmatch
 	keytype = null
 
-/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags)
+/datum/component/riding/creature/goliath/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	if (speed_boost != maximum_boost)
+		return ..()
+	// At maximum acceleration, start spawning afterimages
+	var/turf/old_loc = movable_parent.loc
 	. = ..()
-	var/mob/living/basic/mining/goliath/goliath = parent
-	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
+	if (. & COMPONENT_DRIVER_BLOCK_MOVE)
+		return
+	if (!spawned_last_move && istype(old_loc))
+		new /obj/effect/temp_visual/decoy/fading(old_loc, movable_parent, 150)
+	spawned_last_move = !spawned_last_move
 
-/datum/component/riding/creature/goliath/Destroy(force)
-	var/mob/living/basic/mining/goliath/goliath = parent
-	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
-	return ..()
+/datum/component/riding/creature/goliath/get_move_delay(mob/living/living_parent, mob/living/user, direction)
+	var/move_delay = living_parent.cached_multiplicative_slowdown + flat_speed_mod
+	// We give grace of 2 ticks of stopped movement, or 0.1 seconds, in case of SSinput not being able to process all inputs in a single tick
+	if (last_move_dir != direction || vehicle_move_cooldown + 0.1 SECONDS < world.time)
+		last_move_dir = direction
+		// If we're "drifting" only halve our speed instead
+		if (last_move_dir & direction)
+			speed_boost /= 2
+		else
+			speed_boost = 0
+
+	var/modified_move_delay = move_delay + max(maximum_boost, speed_boost)
+	speed_boost += rush_speed_boost * (modified_move_delay / move_delay)
+
+	// Apply roughrider boost last
+	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER))
+		modified_move_delay *= get_roughrider_mult(user)
+	return modified_move_delay
 
 /datum/component/riding/creature/goliath/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -586,11 +631,17 @@
 	. = ..()
 	var/mob/living/basic/mining/goldgrub/goldgrub = parent
 	goldgrub.add_movespeed_modifier(/datum/movespeed_modifier/goldgrub_mount)
+	RegisterSignal(goldgrub, COMSIG_PROFICIENT_MINER_MINED, PROC_REF(on_mined))
 
 /datum/component/riding/creature/goldgrub/Destroy(force)
 	var/mob/living/basic/mining/goldgrub/goldgrub = parent
 	goldgrub.remove_movespeed_modifier(/datum/movespeed_modifier/goldgrub_mount)
 	return ..()
+
+/datum/component/riding/creature/goldgrub/proc/on_mined(datum/source, turf/closed/wall/mineral/rock, mob/living/user)
+	SIGNAL_HANDLER
+	// Reset movement cooldown once you've dug a tile
+	COOLDOWN_RESET(src, vehicle_move_cooldown)
 
 /datum/component/riding/creature/goldgrub/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
