@@ -39553,7 +39553,6 @@
 /turf/closed/wall,
 /area/station/engineering/atmos/pumproom)
 "nwL" = (
-/obj/machinery/computer/upload/ai,
 /obj/machinery/door/window/right/directional/south{
 	name = "Upload Console Window";
 	req_access = list("ai_upload")
@@ -39561,6 +39560,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/upload/ai/no_lock,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "nwT" = (
@@ -62111,7 +62111,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/vault)
 "viF" = (
-/obj/machinery/computer/upload/borg,
 /obj/machinery/door/window/left/directional/south{
 	name = "Cyborg Upload Console Window";
 	req_access = list("ai_upload")
@@ -62119,6 +62118,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/upload/borg/no_lock,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "viH" = (

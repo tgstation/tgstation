@@ -46705,7 +46705,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qen" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -68668,7 +68668,7 @@
 /turf/open/floor/iron,
 /area/station/security/interrogation)
 "xAa" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/computer/upload/ai/no_lock,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)

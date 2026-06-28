@@ -8068,7 +8068,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/east{
@@ -34419,7 +34419,7 @@
 	name = "Cyborg Upload Console Window";
 	req_access = list("ai_upload")
 	},
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 4
 	},
 /turf/open/floor/circuit/green,

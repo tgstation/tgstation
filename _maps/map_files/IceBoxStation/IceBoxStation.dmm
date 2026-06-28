@@ -11474,7 +11474,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "dhL" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 1
 	},
 /obj/machinery/flasher/directional/south{
@@ -63546,7 +63546,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/lobby)
 "rSN" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south{
