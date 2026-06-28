@@ -1170,8 +1170,8 @@
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 	tile_reskin_types = list(
-		/obj/item/stack/tile/plastic
-		/obj/item/stack/tile/plastic/puzzle
+		/obj/item/stack/tile/plastic,
+		/obj/item/stack/tile/plastic/puzzle,
 	)
 
 /obj/item/stack/tile/plastic/puzzle
@@ -1192,8 +1192,8 @@
 	turf_type = /turf/open/floor/meat
 	merge_type = /obj/item/stack/tile/meat
 	tile_reskin_types = list(
-		/obj/item/stack/tile/meat
-		/obj/item/stack/tile/meat/fresh
+		/obj/item/stack/tile/meat,
+		/obj/item/stack/tile/meat/fresh,
 	)
 
 /obj/item/stack/tile/meat/fresh
@@ -1214,14 +1214,14 @@
 	turf_type = /turf/open/floor/bone
 	merge_type = /obj/item/stack/tile/bone
 	tile_reskin_types = list(
-		/obj/item/stack/tile/bone
-		/obj/item/stack/tile/bone/corner
-		/obj/item/stack/tile/bone/straight
-		/obj/item/stack/tile/bone/spine
-		/obj/item/stack/tile/bone/meaty
-		/obj/item/stack/tile/bone/meaty/corner
-		/obj/item/stack/tile/bone/meaty/straight
-		/obj/item/stack/tile/bone/meaty/spine
+		/obj/item/stack/tile/bone,
+		/obj/item/stack/tile/bone/corner,
+		/obj/item/stack/tile/bone/straight,
+		/obj/item/stack/tile/bone/spine,
+		/obj/item/stack/tile/bone/meaty,
+		/obj/item/stack/tile/bone/meaty/corner,
+		/obj/item/stack/tile/bone/meaty/straight,
+		/obj/item/stack/tile/bone/meaty/spine,
 	)
 
 /obj/item/stack/tile/bone/corner
@@ -1230,6 +1230,7 @@
 	icon_state = "bone_corner"
 	turf_type = /turf/open/floor/bone/corner
 	merge_type = /obj/item/stack/tile/bone/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/bone/straight
 	name = "bone straight tile"
@@ -1237,6 +1238,7 @@
 	icon_state = "bone_straight"
 	turf_type = /turf/open/floor/bone/straight
 	merge_type = /obj/item/stack/tile/bone/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/bone/spine
 	name = "bone spine tile"
@@ -1244,6 +1246,7 @@
 	icon_state = "bone_spine"
 	turf_type = /turf/open/floor/bone/spine
 	merge_type = /obj/item/stack/tile/bone/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/bone/meaty
 	name = "meaty bone tile"
@@ -1260,6 +1263,7 @@
 	icon_state = "meatbone_corner"
 	turf_type = /turf/open/floor/bone/meaty/corner
 	merge_type = /obj/item/stack/tile/bone/meaty/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/bone/meaty/straight
 	name = "meaty bone straight tile"
@@ -1267,6 +1271,7 @@
 	icon_state = "meatbone_straight"
 	turf_type = /turf/open/floor/bone/meaty/straight
 	merge_type = /obj/item/stack/tile/bone/meaty/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/bone/meaty/spine
 	name = "meaty bone spine tile"
@@ -1274,6 +1279,7 @@
 	icon_state = "meatbone_spine"
 	turf_type = /turf/open/floor/bone/meaty/spine
 	merge_type = /obj/item/stack/tile/bone/meaty/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/hauntium
 	name = "hauntium tile"
@@ -1285,8 +1291,8 @@
 	turf_type = /turf/open/floor/hauntium
 	merge_type = /obj/item/stack/tile/hauntium
 	tile_reskin_types = list(
-		/obj/item/stack/tile/hauntium
-		/obj/item/stack/tile/hauntium/ghostbricked
+		/obj/item/stack/tile/hauntium,
+		/obj/item/stack/tile/hauntium/ghostbricked,
 	)
 
 /obj/item/stack/tile/hauntium/ghostbricked
@@ -1311,9 +1317,9 @@
 		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	tile_reskin_types = list(
-		/obj/item/stack/tile/stone
-		/obj/item/stack/tile/stone/cobbled
-		/obj/item/stack/tile/stone/tiled
+		/obj/item/stack/tile/stone,
+		/obj/item/stack/tile/stone/cobbled,
+		/obj/item/stack/tile/stone/tiled,
 	)
 
 /obj/item/stack/tile/stone/cobbled
@@ -1339,9 +1345,9 @@
 	merge_type = /obj/item/stack/tile/sandstone
 	desc = "A tile made out of sandstone."
 	tile_reskin_types = list(
-		/obj/item/stack/tile/sandstone
-		/obj/item/stack/tile/sandstone/cobbled
-		/obj/item/stack/tile/sandstone/tiled
+		/obj/item/stack/tile/sandstone,
+		/obj/item/stack/tile/sandstone/cobbled,
+		/obj/item/stack/tile/sandstone/tiled,
 	)
 
 /obj/item/stack/tile/sandstone/cobbled

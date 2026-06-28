@@ -416,21 +416,21 @@
 	icon_state = "telecrystal_s"
 	floor_tile = /obj/item/stack/tile/mineral/telecrystal/s
 
-//ADAMANTIUM
-/turf/open/floor/mineral/adamantium
-	name = "adamantium floor"
+//ADAMANTINE
+/turf/open/floor/mineral/adamantine
+	name = "adamantine floor"
 	icon_state = "adamantium"
-	floor_tile = /obj/item/stack/tile/mineral/adamantium
-	custom_materials = list(/datum/material/adamantium = SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/mineral/adamantine
+	custom_materials = list(/datum/material/adamantine = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/open/floor/mineral/adamantium/broken_states()
+/turf/open/floor/mineral/adamantine/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/mineral/adamantium/alt
-	name = "adamantium plating"
+/turf/open/floor/mineral/adamantine/alt
+	name = "adamantine plating"
 	icon_state = "adamantium_alt"
-	floor_tile = /obj/item/stack/tile/mineral/adamantium/alt
+	floor_tile = /obj/item/stack/tile/mineral/adamantine/alt
 
 //METAL HYDROGEN
 /turf/open/floor/mineral/metal_hydrogen

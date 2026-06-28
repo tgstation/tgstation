@@ -93,10 +93,10 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	merge_type = /obj/item/stack/wall_filling/plastitanium
 	made_from = /obj/item/stack/sheet/mineral/plastitanium
 	wall_reskin_types = list(
-		/obj/item/stack/wall_filling/plastitanium
-		/obj/item/stack/wall_filling/plastitanium/survivalpod
-		/obj/item/stack/wall_filling/plastitanium/pod
-		/obj/item/stack/wall_filling/plastitanium/redpod
+		/obj/item/stack/wall_filling/plastitanium,
+		/obj/item/stack/wall_filling/plastitanium/survivalpod,
+		/obj/item/stack/wall_filling/plastitanium/pod,
+		/obj/item/stack/wall_filling/plastitanium/redpod,
 	)
 
 /obj/item/stack/wall_filling/plastitanium/survivalpod

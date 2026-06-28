@@ -35,8 +35,8 @@
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/plasma
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/plasma
-		/obj/item/stack/tile/mineral/plasma/tiled
+		/obj/item/stack/tile/mineral/plasma,
+		/obj/item/stack/tile/mineral/plasma/tiled,
 	)
 
 /obj/item/stack/tile/mineral/plasma/tiled
@@ -55,8 +55,8 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/uranium
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/uranium
-		/obj/item/stack/tile/mineral/uranium/tiled
+		/obj/item/stack/tile/mineral/uranium,
+		/obj/item/stack/tile/mineral/uranium/tiled,
 	)
 
 /obj/item/stack/tile/mineral/uranium/tiled
@@ -75,9 +75,9 @@
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/gold
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/gold
-		/obj/item/stack/tile/mineral/gold/tiled
-		/obj/item/stack/tile/mineral/gold/sun
+		/obj/item/stack/tile/mineral/gold,
+		/obj/item/stack/tile/mineral/gold/tiled,
+		/obj/item/stack/tile/mineral/gold/sun,
 	)
 
 /obj/item/stack/tile/mineral/gold/tiled
@@ -102,9 +102,9 @@
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/silver
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/silver
-		/obj/item/stack/tile/mineral/silver/tiled
-		/obj/item/stack/tile/mineral/silver/moon
+		/obj/item/stack/tile/mineral/silver,
+		/obj/item/stack/tile/mineral/silver/tiled,
+		/obj/item/stack/tile/mineral/silver/moon,
 	)
 
 /obj/item/stack/tile/mineral/silver/tiled
@@ -130,8 +130,8 @@
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/diamond
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/diamond
-		/obj/item/stack/tile/mineral/diamond/tiled
+		/obj/item/stack/tile/mineral/diamond,
+		/obj/item/stack/tile/mineral/diamond/tiled,
 	)
 
 /obj/item/stack/tile/mineral/diamond/tiled
@@ -150,8 +150,8 @@
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/bananium
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/bananium
-		/obj/item/stack/tile/mineral/bananium/tiled
+		/obj/item/stack/tile/mineral/bananium,
+		/obj/item/stack/tile/mineral/bananium/tiled,
 	)
 
 /obj/item/stack/tile/mineral/bananium/tiled
@@ -170,8 +170,8 @@
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/bluespace
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/bluespace
-		/obj/item/stack/tile/mineral/bluespace/tiled
+		/obj/item/stack/tile/mineral/bluespace,
+		/obj/item/stack/tile/mineral/bluespace/tiled,
 	)
 
 /obj/item/stack/tile/mineral/bluespace/tiled
@@ -196,8 +196,8 @@
 
 	merge_type = /obj/item/stack/tile/mineral/telecrystal
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/telecrystal
-		/obj/item/stack/tile/mineral/telecrystal/tiled
+		/obj/item/stack/tile/mineral/telecrystal,
+		/obj/item/stack/tile/mineral/telecrystal/tiled,
 	)
 
 /obj/item/stack/tile/mineral/telecrystal/tiled
@@ -210,26 +210,26 @@
 	turf_type = /turf/open/floor/mineral/telecrystal/s
 	merge_type = /obj/item/stack/tile/mineral/telecrystal/s
 
-/obj/item/stack/tile/mineral/adamantium
-	name = "adamantium tile"
-	singular_name = "adamantium floor tile"
-	desc = "A tile made out of adamantium. Industrial style, favourite of golems."
+/obj/item/stack/tile/mineral/adamantine
+	name = "adamantine tile"
+	singular_name = "adamantine floor tile"
+	desc = "A tile made out of adamantine. Industrial style, favourite of golems."
 	icon_state = "tile_adamantium"
 	inhand_icon_state = "tile-adamantium"
-	turf_type = /turf/open/floor/mineral/adamantium
-	mineralType = "adamantium"
-	mats_per_unit = list(/datum/material/adamantium=SHEET_MATERIAL_AMOUNT*0.25)
+	turf_type = /turf/open/floor/mineral/adamantine
+	mineralType = "adamantine"
+	mats_per_unit = list(/datum/material/adamantine=SHEET_MATERIAL_AMOUNT*0.25)
 
 	merge_type = /obj/item/stack/tile/mineral/telecrystal
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/adamantium
-		/obj/item/stack/tile/mineral/adamantium/alt
+		/obj/item/stack/tile/mineral/adamantine,
+		/obj/item/stack/tile/mineral/adamantine/alt,
 	)
 
-/obj/item/stack/tile/mineral/adamantium/alt
+/obj/item/stack/tile/mineral/adamantine/alt
 	icon_state = "adamantium_tiled"
-	turf_type = /turf/open/floor/mineral/adamantium/alt
-	merge_type = /obj/item/stack/tile/mineral/adamantium/alt
+	turf_type = /turf/open/floor/mineral/adamantine/alt
+	merge_type = /obj/item/stack/tile/mineral/adamantine/alt
 
 /obj/item/stack/tile/mineral/metal_hydrogen
 	name = "metal hydrogen tile"
@@ -243,8 +243,8 @@
 
 	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/metal_hydrogen
-		/obj/item/stack/tile/mineral/metal_hydrogen/tiled
+		/obj/item/stack/tile/mineral/metal_hydrogen,
+		/obj/item/stack/tile/mineral/metal_hydrogen/tiled,
 	)
 
 /obj/item/stack/tile/mineral/metal_hydrogen/tiled
@@ -302,28 +302,28 @@
 			use(4)
 			if(holding && QDELETED(src))
 				user.put_in_hands(new_item)
-				user.put_in_hands(/obj/item/stack/tile/glass(user.loc))
+				user.put_in_hands(/obj/item/stack/tile/glass)
 	else
 		return ..()
 
-/obj/item/stack/tile/glassed/mineral/glassed/plasma
+/obj/item/stack/tile/mineral/glassed/plasma
 	name = "plasma tile"
 	singular_name = "plasma floor tile"
 	desc = "A tile made out of highly flammable plasma, glassed as to prevent the fire from actually getting to it."
 	icon_state = "tile_plasma"
 	inhand_icon_state = "tile-plasma"
 	turf_type = /turf/open/floor/mineral/glassed/plasma
-	floorType = "bananium"
+	floorType = "plasma"
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/glassed/plasma
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/plasma
-		/obj/item/stack/tile/mineral/glassed/plasma/tiled
+		/obj/item/stack/tile/mineral/glassed/plasma,
+		/obj/item/stack/tile/mineral/glassed/plasma/tiled,
 	)
 
 /obj/item/stack/tile/mineral/glassed/plasma/tiled
 	icon_state = "plasma_tiled"
-	floorType = "bananium"
+	floorType = "plasma/tiled"
 	turf_type = /turf/open/floor/mineral/glassed/plasma/tiled
 	merge_type = /obj/item/stack/tile/mineral/glassed/plasma/tiled
 
@@ -338,8 +338,8 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/glassed/uranium
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/uranium
-		/obj/item/stack/tile/mineral/glassed/uranium/tiled
+		/obj/item/stack/tile/mineral/glassed/uranium,
+		/obj/item/stack/tile/mineral/glassed/uranium/tiled,
 	)
 
 /obj/item/stack/tile/mineral/glassed/uranium/tiled
@@ -360,8 +360,8 @@
 	material_flags = NONE
 	merge_type = /obj/item/stack/tile/mineral/glassed/bananium
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/bananium
-		/obj/item/stack/tile/mineral/glassed/bananium/tiled
+		/obj/item/stack/tile/mineral/glassed/bananium,
+		/obj/item/stack/tile/mineral/glassed/bananium/tiled,
 	)
 
 /obj/item/stack/tile/mineral/glassed/bananium/tiled
@@ -381,8 +381,8 @@
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.25, /datum/material/glass=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/glassed/bluespace
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/bluespace
-		/obj/item/stack/tile/mineral/glassed/bluespace/tiled
+		/obj/item/stack/tile/mineral/glassed/bluespace,
+		/obj/item/stack/tile/mineral/glassed/bluespace/tiled,
 	)
 
 /obj/item/stack/tile/mineral/glassed/bluespace/tiled
@@ -409,8 +409,8 @@
 
 	merge_type = /obj/item/stack/tile/mineral/glassed/telecrystal
 	tile_reskin_types = list(
-		/obj/item/stack/tile/mineral/glassed/telecrystal
-		/obj/item/stack/tile/mineral/glassed/telecrystal/tiled
+		/obj/item/stack/tile/mineral/glassed/telecrystal,
+		/obj/item/stack/tile/mineral/glassed/telecrystal/tiled,
 	)
 
 /obj/item/stack/tile/mineral/glassed/telecrystal/tiled

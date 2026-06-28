@@ -262,19 +262,16 @@
 	name = "bone_corner floor"
 	icon_state = "bone_corner"
 	floor_tile = /obj/item/stack/tile/bone/corner
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/bone/straight
 	name = "fresh meat floor"
 	icon_state = "bone_straight"
 	floor_tile = /obj/item/stack/tile/bone/straight
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/bone/spine
 	name = "fresh meat floor"
 	icon_state = "bone_spine"
 	floor_tile = /obj/item/stack/tile/bone/spine
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/bone/meaty
 	name = "fresh meat floor"
@@ -286,19 +283,16 @@
 	name = "fresh meat floor"
 	icon_state = "meatbone_corner"
 	floor_tile = /obj/item/stack/tile/bone/meaty/corner
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/bone/meaty/straight
 	name = "fresh meat floor"
 	icon_state = "meatbone_straight"
 	floor_tile = /obj/item/stack/tile/bone/meaty/straight
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/bone/meaty/spine
 	name = "fresh meat floor"
 	icon_state = "meatbone_spine"
 	floor_tile = /obj/item/stack/tile/bone/meaty/spine
-	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /turf/open/floor/hauntium
 	name = "hauntium floor"
