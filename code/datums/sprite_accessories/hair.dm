@@ -230,10 +230,6 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Bowl Cut Over Eyes"
 	icon_state = "hair_bowlcut_over_eyes"
 
-/datum/sprite_accessory/hair/biggertails
-	name = "Bigger Twintails"
-	icon_state = "hair_bigger_tails"
-
 /datum/sprite_accessory/hair/braid
 	name = "Braid (Floorlength)"
 	icon_state = "hair_braid"
@@ -822,11 +818,6 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/ponytailfro
 	name = "Ponytail Fro"
 	icon_state = "hair_ponytail_fro"
-
-/datum/sprite_accessory/hair/ponytailscythe
-	name = "Ponytail Scythe"
-	icon_state = "hair_ponytail_scythe"
-	y_offset = 4
 
 /datum/sprite_accessory/hair/ponytailwavy
 	name = "Ponytail Wavy"
