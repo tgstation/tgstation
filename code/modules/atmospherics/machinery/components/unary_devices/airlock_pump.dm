@@ -182,6 +182,10 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
+	if(is_operational)
+		stack_trace("Airlock pump on but not operational, it should've been cancelled by on_set_is_operational")
+		stop_cycle(null, unbolt_only = TRUE)
+		return
 
 	var/turf/location = get_turf(loc)
 	if(isclosedturf(location))
@@ -603,6 +607,7 @@
 			airlock.unbolt()
 		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
 		deltimer(emergency_stop_timer)
+		set_on(FALSE)
 
 	else if(!was_operational && is_operational)
 		// upon regaining power, re-bolt relevant airlocks
