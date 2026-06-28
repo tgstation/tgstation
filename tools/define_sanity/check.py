@@ -63,6 +63,7 @@ for code_file in glob.glob(parent_directory, recursive=True):
     if os.path.basename(code_file)[0] == "_":
         continue
 
+    print(red(f"Checking {code_file}"))
     files_to_scan.append(code_file)
 
 located_error_tuples = []
