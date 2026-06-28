@@ -130,7 +130,17 @@
 	if(isAI(law_datum.owner))
 		var/mob/living/silicon/ai/selected_ai = law_datum.owner
 		var/datum/mind/silicon_god = selected_ai.mind
-		silicon_god.AddComponent(/datum/component/listen_prayers)
+		silicon_god.AddComponent(/datum/component/listen_prayers, CALLBACK(src, PROC_REF(check_if_ai_prayer)))
+
+/obj/item/ai_module/core/full/ten_commandments/proc/check_if_ai_prayer(list/arguments)
+	SIGNAL_HANDLER
+
+	var/message = arguments[ARG_PRAYER_MSG]
+	var/regex/silicon_god = regex("(ai|silicon|mmi|cyborg|core|satellite|sat|upload|robot|bot)", "i")
+	if(!silicon_god.Find(message))
+		return FALSE
+
+	return TRUE
 
 /obj/item/ai_module/core/full/nutimov
 	name = "'Nutimov' Core AI Module"
