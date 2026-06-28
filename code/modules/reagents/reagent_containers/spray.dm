@@ -137,7 +137,7 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-GAME_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "", null)
+GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottle", "", null)
 
 	if(usr.incapacitated)
 		return

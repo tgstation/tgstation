@@ -325,7 +325,7 @@
 		icon_state = initial(icon_state)
 	return ..()
 
-GAME_VERB(/obj/item/paper, rename, "Rename paper", "", null)
+GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", "", null)
 
 	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return

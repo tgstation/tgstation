@@ -217,7 +217,7 @@ Buildable meters
 	if(ispath(pipe_type,/obj/machinery/atmospherics/pipe/heat_exchanging))
 		resistance_flags |= FIRE_PROOF | LAVA_PROOF
 
-GAME_VERB(/obj/item/pipe, flip, "Invert Pipe", "", null)
+GAME_VERB_SRC(/obj/item/pipe, flip, view(1), "Invert Pipe", "", null)
 
 	if ( usr.incapacitated )
 		return

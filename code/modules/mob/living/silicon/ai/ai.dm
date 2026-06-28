@@ -60,7 +60,7 @@
 	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
-	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
+	ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/show_laws_verb)
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -68,13 +68,11 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		add_verb(src, list(
-			/mob/living/silicon/ai/proc/ai_network_change,
-			/mob/living/silicon/ai/proc/ai_hologram_change,
-			/mob/living/silicon/ai/proc/botcall,
-			/mob/living/silicon/ai/proc/control_integrated_radio,
-			/mob/living/silicon/ai/proc/set_automatic_say_channel,
-		))
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/ai_network_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/ai_hologram_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/botcall)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/control_integrated_radio)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/set_automatic_say_channel)
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -507,10 +505,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
 
-/mob/living/silicon/ai/proc/botcall()
-	set category = "AI Commands"
-	set name = "Access Robot Control"
-	set desc = "Wirelessly control various automatic robots."
+GAME_VERB_PROC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", "AI Commands")
 
 	if(!robot_control)
 		robot_control = new(src)
@@ -564,9 +559,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
-/mob/living/silicon/ai/proc/ai_network_change()
-	set category = "AI Commands"
-	set name = "Jump To Network"
+GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "", "AI Commands")
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
@@ -607,10 +600,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
-/mob/living/silicon/ai/proc/ai_hologram_change()
-	set name = "Change Hologram"
-	set desc = "Change the default hologram available to AI to something else."
-	set category = "AI Commands"
+GAME_VERB_PROC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
 
 	if(incapacitated)
 		return
@@ -754,10 +744,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 		C.Togglelight(1)
 		lit_cameras |= C
 
-/mob/living/silicon/ai/proc/control_integrated_radio()
-	set name = "Transceiver Settings"
-	set desc = "Allows you to change settings of your radio."
-	set category = "AI Commands"
+GAME_VERB_PROC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", "AI Commands")
 
 	if(incapacitated)
 		return
@@ -770,10 +757,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 	if(radio)
 		radio.make_syndie()
 
-/mob/living/silicon/ai/proc/set_automatic_say_channel()
-	set name = "Set Auto Announce Mode"
-	set desc = "Modify the default radio setting for your automatic announcements."
-	set category = "AI Commands"
+GAME_VERB_PROC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", "AI Commands")
 
 	if(incapacitated)
 		return

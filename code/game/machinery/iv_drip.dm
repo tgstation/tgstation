@@ -323,7 +323,7 @@
 /obj/machinery/iv_drip/proc/get_reagents()
 	return use_internal_storage ? reagents : reagent_container?.reagents
 
-GAME_VERB(/obj/machinery/iv_drip, eject_beaker, "Remove IV Container", "", null)
+GAME_VERB_SRC(/obj/machinery/iv_drip, eject_beaker, view(1), "Remove IV Container", "", null)
 
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
@@ -340,7 +340,7 @@ GAME_VERB(/obj/machinery/iv_drip, eject_beaker, "Remove IV Container", "", null)
 		reagent_container = null
 		update_appearance(UPDATE_ICON)
 
-GAME_VERB(/obj/machinery/iv_drip, toggle_mode, "Toggle Mode", "", null)
+GAME_VERB_SRC(/obj/machinery/iv_drip, toggle_mode, view(1), "Toggle Mode", "", null)
 
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))

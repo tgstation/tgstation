@@ -190,10 +190,7 @@ GAME_VERB(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
 	else
 		to_chat(src, span_notice("The Message of the Day has not been set."))
 
-/client/proc/self_notes()
-	set name = "View Admin Remarks"
-	set category = "OOC"
-	set desc = "View the notes that admins have written about you"
+GAME_VERB_PROC(/client, self_notes, "View Admin Remarks", "View the notes that admins have written about you", "OOC")
 
 	if(!CONFIG_GET(flag/see_own_notes))
 		to_chat(usr, span_notice("Sorry, that function is not enabled on this server."))
@@ -201,10 +198,7 @@ GAME_VERB(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
 
 	browse_messages(null, usr.ckey, null, TRUE)
 
-/client/proc/self_playtime()
-	set name = "View tracked playtime"
-	set category = "OOC"
-	set desc = "View the amount of playtime for roles the server has tracked."
+GAME_VERB_PROC(/client, self_playtime, "View tracked playtime", "View the amount of playtime for roles the server has tracked.", "OOC")
 
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_notice("Sorry, tracking is currently disabled."))
@@ -324,17 +318,11 @@ GAME_VERB(/client, select_unignore, "Unignore", "Stop ignoring a player's messag
 	// Express that we've unignored the selected player in chat
 	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC channel."))
 
-/client/proc/show_previous_roundend_report()
-	set name = "Your Last Round"
-	set category = "OOC"
-	set desc = "View the last round end report you've seen"
+GAME_VERB_PROC(/client, show_previous_roundend_report, "Your Last Round", "View the last round end report you've seen", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
 
-/client/proc/show_servers_last_roundend_report()
-	set name = "Server's Last Round"
-	set category = "OOC"
-	set desc = "View the last round end report from this server"
+GAME_VERB_PROC(/client, show_servers_last_roundend_report, "Server's Last Round", "View the last round end report from this server", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
@@ -439,10 +427,7 @@ GAME_VERB(/client, policy, "Show Policy", "Show special server rules related to 
 GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
 	init_verbs()
 
-/client/proc/export_preferences()
-	set name = "Export Preferences"
-	set desc = "Export your current preferences to a file."
-	set category = "OOC"
+GAME_VERB_PROC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")
 
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 

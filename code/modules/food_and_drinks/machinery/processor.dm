@@ -193,7 +193,7 @@
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
-GAME_VERB(/obj/machinery/processor, eject, "Eject Contents", "", null)
+GAME_VERB_SRC(/obj/machinery/processor, eject, oview(1), "Eject Contents", "", null)
 
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

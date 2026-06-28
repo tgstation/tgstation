@@ -199,9 +199,7 @@
 /**
  * Some kind of debug verb that gives atmosphere environment details
  */
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = TRUE
+GAME_VERB_PROC(/mob, Cell, "Cell", "", "Admin")
 
 	if(!loc)
 		return

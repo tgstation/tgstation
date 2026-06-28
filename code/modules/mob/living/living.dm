@@ -597,9 +597,7 @@ GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set hidden = TRUE
+GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", "", null)
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
