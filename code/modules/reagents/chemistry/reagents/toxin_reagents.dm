@@ -1638,7 +1638,7 @@
 
 /datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
 	. = ..()
-	var/merged_total = amount + volume
+	var/merged_total = amount + volume | volume
 	if(merged_total >= CRITICAL_CAPACITY)
 		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
