@@ -137,7 +137,7 @@
 	AddComponent(\
 		/datum/component/butchering, \
 		speed = 1.5 SECONDS , \
-		effectiveness = 110, \
+		effectiveness = 125, \
 		bonus_modifier = 0, \
 	)
 
