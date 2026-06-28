@@ -973,9 +973,9 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Tayama"
 	icon_state = "hair_tayama"
 
-/datum/sprite_accessory/hair/tetodrills
-	name = "Teto Drills"
-	icon_state = "hair_teto_drills"
+/datum/sprite_accessory/hair/doubledrills
+	name = "Double Drills"
+	icon_state = "hair_double_drills"
 
 /datum/sprite_accessory/hair/thinning
 	name = "Thinning"
