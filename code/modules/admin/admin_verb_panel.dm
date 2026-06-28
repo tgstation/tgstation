@@ -1,10 +1,3 @@
-// TODO: remove this debug verb before merging
-/client/verb/debug_admin_verb_panel()
-	set name = "Debug Admin Verb Panel"
-	set category = "Debug"
-	var/datum/admin_verb_panel/panel = new(src)
-	panel.ui_interact(mob)
-
 ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admin verbs.", ADMIN_CATEGORY_EVENTS)
 	var/datum/admin_verb_panel/panel = new(user)
 	panel.ui_interact(user.mob)
