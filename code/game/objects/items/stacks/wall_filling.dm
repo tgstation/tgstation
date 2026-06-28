@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/wall_filling/plastitanium
 	made_from = /obj/item/stack/sheet/mineral/plastitanium
-	tile_reskin_types = list(
+	wall_reskin_types = list(
 		/obj/item/stack/wall_filling/plastitanium
 		/obj/item/stack/wall_filling/plastitanium/survivalpod
 		/obj/item/stack/wall_filling/plastitanium/pod
