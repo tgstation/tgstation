@@ -25,10 +25,7 @@ export function handleAddVerbs(payload: { verbs: AdminVerb[] }) {
 export function handleRemoveVerbs(payload: { names: string[] }) {
   const current = store.get(adminVerbsAtom);
   const toRemove = new Set(payload.names || []);
-  store.set(
-    adminVerbsAtom,
-    current.filter((v) => !toRemove.has(v.name)),
-  );
+  store.set(adminVerbsAtom, current.filter((v) => !toRemove.has(v.name)));
 }
 
 export function handleTargets(payload: { targets: AdminTarget[] }) {
