@@ -47,7 +47,7 @@
 
 	attached_to.update_accessory_overlay()
 
-/obj/item/clothing/accessory/gloves_accessory/attach(obj/item/clothing/gloves/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/gloves_accessory/try_attach(obj/item/clothing/gloves/attach_to, mob/living/attacher)
 	. = ..()
 	if(!minimize_when_attached)
 		return
