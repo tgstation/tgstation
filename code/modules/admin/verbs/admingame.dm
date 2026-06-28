@@ -223,7 +223,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
 		return
 
-GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game", mob/mob in GLOB.mob_list)
+GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game")
+	VERB_ARG(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!check_rights(R_ADMIN))
 		return
 

@@ -3,7 +3,8 @@
  * Returns the entry if all organs were successfully replaced.
  * If no infusion was picked, the infusion had no organs, or if one or more organs could not be granted, returns FALSE
 */
-GAME_VERB_PROC(/client, grant_dna_infusion, "Apply DNA Infusion", "Debug", mob/living/carbon/human/target in world)
+GAME_VERB_PROC(/client, grant_dna_infusion, "Apply DNA Infusion", "Debug")
+	VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living/carbon/human)
 
 	var/list/infusions = list()
 	for(var/datum/infuser_entry/path as anything in sort_list(subtypesof(/datum/infuser_entry), GLOBAL_PROC_REF(cmp_typepaths_asc)))
