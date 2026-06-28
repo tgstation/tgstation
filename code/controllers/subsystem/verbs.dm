@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(verbs)
 /datum/controller/subsystem/verbs/proc/invoke_verb(target, verb_path, list/positional_args)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
-		call(target, verb_path)(arglist(positional_args))
+		CRASH("invoke_verb called for '[verb_path]' with no metadata registered")
 		return
 	var/list/structured_args = list()
 	// Check for context menu target (only present in assoc lists from context menu stubs)

@@ -1,7 +1,7 @@
 .CommandBar {
   display: flex;
   align-items: stretch;
-  background-color: var(--color-section);
+  background-color: var(--color-base);
 
   &__input-wrap {
     position: relative;
@@ -32,7 +32,7 @@
     width: 70px;
     background-color: transparent;
     border: none;
-    border-left: var(--border-thickness-tiny) solid var(--color-border);
+    border-left: var(--border-thickness-tiny) solid hsla(0, 0%, 100%, 0.1);
     color: var(--color-text-translucent);
     font-size: 1em;
     font-family: var(--input-font-family-mono);
@@ -59,10 +59,9 @@
     scrollbar-color: var(--color-scrollbar-thumb) transparent;
     max-height: 200px;
     padding: var(--space-sm);
-    background-color: var(--dropdown-menu-background);
+    background-color: hsla(0, 0%, 0%, 0.5);
     color: var(--dropdown-menu-color);
-    border: var(--dropdown-menu-border);
-    border-bottom: none;
+    border: none;
     border-radius: var(--dropdown-menu-border-radius)
       var(--dropdown-menu-border-radius) 0 0;
     backdrop-filter: var(--dropdown-menu-blur);
