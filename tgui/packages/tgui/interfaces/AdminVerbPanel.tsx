@@ -59,8 +59,10 @@ const ARG_TURF = 1 << 7;
 const ARG_AREA = 1 << 8;
 const ARG_TYPEPATH = 1 << 11;
 
-const ARG_ENTITY = ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | (1 << 9) | (1 << 10);
-const ARG_PRIMITIVE = ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;
+const ARG_ENTITY =
+  ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | (1 << 9) | (1 << 10);
+const ARG_PRIMITIVE =
+  ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;
 
 function isPickableEntityArg(arg: VerbArgument): boolean {
   return (
@@ -130,20 +132,18 @@ export function AdminVerbPanel() {
 
   const primitiveArgs = selectedVerb?.arguments.filter(isPrimitiveArg) ?? [];
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    null,
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const matchingCategories = searchText
-    ? categories.filter((cat) =>
-        filteredVerbs.some((v) => v.category === cat),
-      )
+    ? categories.filter((cat) => filteredVerbs.some((v) => v.category === cat))
     : categories;
 
   const activeCategory = selectedCategory || '';
 
   const visibleVerbs = searchText
-    ? filteredVerbs.filter((v) => !activeCategory || v.category === activeCategory)
+    ? filteredVerbs.filter(
+        (v) => !activeCategory || v.category === activeCategory,
+      )
     : verbs.filter((v) => v.category === (activeCategory || categories[0]));
 
   return (
@@ -210,7 +210,7 @@ export function AdminVerbPanel() {
           {/* Center + Right */}
           <Stack.Item grow>
             <Stack fill vertical>
-              {/* Target picker — adapts based on entity arg type */}
+              {/* Target picker */}
               {entityArg && (
                 <Stack.Item basis="45%">
                   <Section
@@ -236,9 +236,7 @@ export function AdminVerbPanel() {
                         <Table.Row
                           key={t.ref}
                           className={
-                            selectedTarget === t.ref
-                              ? 'candystripe'
-                              : undefined
+                            selectedTarget === t.ref ? 'candystripe' : undefined
                           }
                           onClick={() => setSelectedTarget(t.ref)}
                         >
@@ -262,7 +260,6 @@ export function AdminVerbPanel() {
                   </Section>
                 </Stack.Item>
               )}
-              {/* Args + invoke */}
               <Stack.Item grow>
                 {selectedVerb ? (
                   <Section
@@ -285,9 +282,7 @@ export function AdminVerbPanel() {
                         <Stack.Item
                           key={arg.name}
                           grow={
-                            (arg.arg_type & ARG_TYPEPATH) !== 0
-                              ? 1
-                              : undefined
+                            (arg.arg_type & ARG_TYPEPATH) !== 0 ? 1 : undefined
                           }
                         >
                           <ArgInput
@@ -352,7 +347,9 @@ function ArgInput(props: ArgInputProps) {
     );
   }
   if (arg.arg_type & ARG_TYPEPATH) {
-    return <TypepathInput arg={arg} value={value as string} onChange={onChange} />;
+    return (
+      <TypepathInput arg={arg} value={value as string} onChange={onChange} />
+    );
   }
   if (arg.arg_type & ARG_TEXT) {
     return (
