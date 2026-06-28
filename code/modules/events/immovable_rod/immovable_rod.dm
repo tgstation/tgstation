@@ -245,6 +245,7 @@
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
+	sound_to_playing_players('sound/items/handling/lead_pipe/lead_pipe_drop.ogg')
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
 

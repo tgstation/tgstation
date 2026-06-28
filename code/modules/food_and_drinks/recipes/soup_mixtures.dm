@@ -66,7 +66,7 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		var/ingredient_type = ingredient.type
+		var/datum/ingredient_type = ingredient.type
 		do
 		{
 			var/ingredient_count = reqs_copy[ingredient_type]
@@ -91,7 +91,7 @@
 
 			//means we have to look for subtypes
 			else if(isnull(ingredient_count))
-				ingredient_type = type2parent(ingredient_type)
+				ingredient_type = ingredient_type::parent_type
 
 			//means we have no more remaining ingredients so bail, can happen if multiple ingredients of the same type/subtype are in the pot
 			else
@@ -1863,6 +1863,17 @@
 		/datum/reagent/water/salt = 10,
 	)
 	resulting_food_path = /obj/item/food/spaghetti/boilednoodles
+	ingredient_reagent_multiplier = 0
+
+// Space Ramen
+/datum/chemical_reaction/food/soup/beef_ramen
+	required_reagents = list(
+		/datum/reagent/consumable/beef_flavour = 5
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/ramen_dry = 1
+	)
+	resulting_food_path = /obj/item/food/spaghetti/ramen_beef
 	ingredient_reagent_multiplier = 0
 
 // Dashi Broth

@@ -8,7 +8,7 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-DEFINE_VERB(/mob/living, navigate, "Navigate", "", FALSE, "IC")
+DEFINE_VERB(/mob/living, navigate, "Navigate", "", TRUE, "")
 	if(incapacitated)
 		return
 	if(length(client.navigation_images))

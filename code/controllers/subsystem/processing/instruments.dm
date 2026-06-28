@@ -52,6 +52,6 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 /datum/controller/subsystem/processing/instruments/proc/reserve_instrument_channel(datum/instrument/I)
 	if(current_instrument_channels > max_instrument_channels)
 		return
-	. = SSsounds.reserve_sound_channel(I)
+	. = SSsounds.reserve_sound_channel_for_datum(I)
 	if(!isnull(.))
 		current_instrument_channels++

@@ -5,6 +5,7 @@
 	abstract_type = /obj/item/organ/cyberimp
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
+	visual = FALSE
 	/// icon of the bodypart overlay we're going to be applying to our owner
 	var/aug_icon = 'icons/mob/human/species/misc/bodypart_overlay_augmentations.dmi'
 	/// icon_state of the bodypart overlay we're going to be applying to our owner
@@ -17,11 +18,12 @@
 /obj/item/organ/cyberimp/Initialize(mapload)
 	. = ..()
 	if (aug_overlay)
+		visual = TRUE
 		bodypart_aug = new(src)
 
 /obj/item/organ/cyberimp/Destroy()
-	QDEL_NULL(bodypart_aug)
-	return ..()
+	. = ..()
+	QDEL_NULL(bodypart_aug) // Do this after Remove() has done its thing, otherwise on_bodypart_remove() will not properly remove the overlay
 
 /obj/item/organ/cyberimp/proc/get_overlay_state()
 	return aug_overlay
@@ -45,6 +47,7 @@
 /datum/bodypart_overlay/augment
 	layers = EXTERNAL_ADJACENT
 	draw_on_husks = HUSK_OVERLAY_NORMAL
+	offset_location = ENTIRE_BODY
 	/// Implant that owns this overlay
 	var/obj/item/organ/cyberimp/implant
 
@@ -56,12 +59,11 @@
 	implant = null
 	return ..()
 
-/datum/bodypart_overlay/augment/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/augment/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += implant.get_overlay_state()
 
 /datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
-	layer = bitflag_to_layer(layer)
 	var/list/imageset = implant.get_overlay(layer, limb)
 	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
 		return imageset

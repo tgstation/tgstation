@@ -26,7 +26,7 @@ DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
  * in the parent proc with istype checks right?):
  * * having incorporeal_move set (calls Process_Incorpmove() instead)
  * * being grabbed
- * * being buckled  (relaymove() is called to the buckled atom instead)
+ * * being buckled (relaymove() is called to the buckled atom instead)
  * * having your loc be some other mob (relaymove() is called on that mob instead)
  * * Not having MOBILITY_MOVE
  * * Failing Process_Spacemove() call
@@ -512,10 +512,7 @@ DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
 
 ///Moves a mob upwards in z level
-DEFINE_VERB(/mob, up, "Move Upwards", "", FALSE, "IC")
-	do_up()
-
-/mob/proc/do_up()
+/mob/proc/up()
 	if(remote_control)
 		return remote_control.relaymove(src, UP)
 
@@ -539,10 +536,7 @@ DEFINE_VERB(/mob, up, "Move Upwards", "", FALSE, "IC")
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
-DEFINE_VERB(/mob, down, "Move Down", "", FALSE, "IC")
-	do_down()
-	
-/mob/proc/do_down()
+/mob/proc/down()
 	if(remote_control)
 		return remote_control.relaymove(src, DOWN)
 
@@ -571,3 +565,8 @@ DEFINE_VERB(/mob, down, "Move Down", "", FALSE, "IC")
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()
+
+/mob/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(client?.sound_tokens.len)
+		SSsound_tokens.clients_needing_update[client] = TRUE

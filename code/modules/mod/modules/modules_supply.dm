@@ -576,8 +576,8 @@
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
-	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
-		The sphere can move quickly, even through lava, and launch mining micromissile to decimate terrain and fauna alike."
+	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. If the modsuit is insulated with bileworm skin, the user will be protected from lava while active. \
+		The sphere can move quickly, even through lava, and launch mining micromissiles to decimate terrain and fauna alike."
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
@@ -658,6 +658,8 @@
 	mod.wearer.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
+	RegisterSignal(mod.wearer, COMSIG_CARBON_GET_FIRE_OVERLAY, PROC_REF(replace_fire_overlay))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
 
@@ -672,9 +674,22 @@
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOB_STATCHANGE, COMSIG_CARBON_GET_FIRE_OVERLAY))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
+
+/obj/item/mod/module/sphere_transform/proc/replace_fire_overlay(datum/source, stacks, on_fire, fire_icon, list/overrides)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/fire_overlay = mutable_appearance(
+		'icons/mob/effects/onfire.dmi',
+		fire_icon,
+		-HIGHEST_LAYER,
+		appearance_flags = RESET_COLOR|KEEP_APART,
+	)
+	fire_overlay.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
+	overrides += fire_overlay
 
 /obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
@@ -752,9 +767,9 @@
 
 /obj/projectile/bullet/mining_missile/proc/spawn_particles(atom/target)
 	var/obj/effect/abstract/particle_holder/impact_particles = new(get_turf(target), /particles/micromissile_impact)
-	impact_particles.particles.position = generator(GEN_VECTOR, list(impact_x - 2, impact_x + 2), list(impact_y - 2, impact_y + 2), NORMAL_RAND)
-	impact_particles.particles.velocity = generator(GEN_VECTOR, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2), list(movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
-	QDEL_IN(impact_particles, 1 SECONDS)
+	impact_particles.particles.position = generator(GEN_BOX, list(impact_x - 2, impact_y - 2), list(impact_x + 2, impact_y + 2), NORMAL_RAND)
+	impact_particles.particles.velocity = generator(GEN_BOX, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, ), list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
+	QDEL_IN(impact_particles, /particles/micromissile_impact::lifespan)
 
 /particles/micromissile_impact
 	icon = 'icons/effects/particles/generic.dmi'

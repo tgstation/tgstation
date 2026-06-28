@@ -171,7 +171,7 @@ DEFINE_VERBLIKE(verb, /mob, me_verb, VERB_ME, "", FALSE, "", FALSE, FALSE, SSspe
 	return FALSE
 
 ///The amount of items we are looking for in the message
-#define MESSAGE_MODS_LENGTH 6
+#define MESSAGE_MODS_LENGTH 7
 
 /mob/proc/check_for_custom_say_emote(message, list/mods)
 	var/customsaypos = findtext(message, "*")

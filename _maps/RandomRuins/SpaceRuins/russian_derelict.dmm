@@ -5594,6 +5594,8 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/circuitboard/computer/borgupload/no_lock,
+/obj/item/circuitboard/computer/aiupload/no_lock,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "LM" = (

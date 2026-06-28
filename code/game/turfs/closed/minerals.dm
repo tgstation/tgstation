@@ -52,18 +52,7 @@
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
-	// Mineral turfs are big, so they need to be on the game plane at a high layer
-	// But they're also turfs, so we need to cut them out from the light mask plane
-	// So we draw them as if they were on the game plane, and then overlay a copy onto
-	// The wall plane (so emissives/light masks behave)
-	// I am so sorry
-	var/static/list/mutable_appearance/wall_overlays = list()
-	var/mutable_appearance/wall_overlay = wall_overlays[wall_icon_state]
-	if (!wall_overlay)
-		wall_overlay = mutable_appearance('icons/turf/mining.dmi', wall_icon_state, appearance_flags = RESET_TRANSFORM)
-		wall_overlays[wall_icon_state] = wall_overlay
-	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
-	overlays += wall_overlay
+	add_large_wall_overlay('icons/turf/mining.dmi', wall_icon_state)
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
@@ -429,8 +418,8 @@
 		color = COLOR_BLUE
 	else
 		color = BlendRGB(COLOR_GREEN, COLOR_RED, clamp((open_turf_distance - 1) / 5, 0, 0.99))
-	maptext_x = 4
-	maptext_y = 4
+	maptext_x = -transform.c
+	maptext_y = -transform.f
 	maptext = MAPTEXT_TINY_UNICODE("[open_turf_distance]")
 #endif
 
@@ -673,6 +662,7 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
 	exposure_based = TRUE
+	wall_icon_state = "mountainrock"
 
 /turf/closed/mineral/random/snow/change_ore(ore_type, random = TRUE)
 	. = ..()
@@ -680,7 +670,6 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(
@@ -692,7 +681,7 @@
 		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
@@ -702,7 +691,6 @@
 	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
-	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	// abundant ore
 	mineral_chance = 11
 
@@ -717,7 +705,7 @@
 		/obj/item/stack/ore/silver = 24,
 		/obj/item/stack/ore/titanium = 22,
 		/obj/item/stack/ore/uranium = 10,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 8,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /turf/closed/mineral/random/snow/high_chance

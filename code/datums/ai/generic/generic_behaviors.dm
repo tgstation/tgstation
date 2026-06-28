@@ -2,7 +2,7 @@
 /datum/ai_behavior/resist/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, TRUE)
-	living_pawn.do_resist()
+	living_pawn.execute_resist()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/battle_screech
@@ -301,6 +301,7 @@
 /datum/ai_behavior/perform_emote
 
 /datum/ai_behavior/perform_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote, speech_sound)
+	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return AI_BEHAVIOR_INSTANT

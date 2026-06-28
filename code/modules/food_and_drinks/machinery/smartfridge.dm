@@ -14,6 +14,7 @@
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	integrity_failure = 0.5
 	can_atmos_pass = ATMOS_PASS_NO
+	pass_flags_self = PASSCLOSEDTURF
 	/// Icon state part for contents display
 	var/contents_overlay_icon = "plant"
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
@@ -131,8 +132,7 @@
 	. = ..()
 	if(!anchored && welded_down) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
 		welded_down = FALSE
-	can_atmos_pass = anchorvalue ? ATMOS_PASS_NO : ATMOS_PASS_YES
-	air_update_turf(TRUE, anchorvalue)
+	recheck_atmos_passing()
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
@@ -185,9 +185,17 @@
 	. = ..()
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+		. += status_examine()
 
 	. += structure_examine()
+
+/obj/machinery/smartfridge/on_set_machine_stat(old_value)
+	. = ..()
+	recheck_atmos_passing()
+	if(machine_stat & BROKEN)
+		pass_flags_self = PASSMACHINE
+		return
+	pass_flags_self = PASSCLOSEDTURF
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()
@@ -202,6 +210,12 @@
 		. += span_info("It is [EXAMINE_HINT("wrenched")] down on the floor.")
 	else
 		. += span_info("It could be [EXAMINE_HINT("wrenched")] down.")
+
+/// Returns details related to the fridge status
+/obj/machinery/smartfridge/proc/status_examine()
+	. = list()
+
+	. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -252,64 +266,65 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
-/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!machine_stat)
-		var/shown_contents_length = visible_items()
-		if(shown_contents_length >= max_n_of_items)
-			balloon_alert(user, "no space!")
-			return FALSE
+/obj/machinery/smartfridge/proc/can_load_item(obj/item/loadable)
+	return !(loadable.item_flags & ABSTRACT) && !(loadable.flags_1 & HOLOGRAM_1) && accept_check(loadable)
 
-		if(!(weapon.item_flags & ABSTRACT) && \
-			!(weapon.flags_1 & HOLOGRAM_1) && \
-			accept_check(weapon) \
+/obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if(machine_stat)
+		if(machine_stat & NOPOWER)
+			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/loaded_count = visible_items()
+	if(loaded_count >= max_n_of_items)
+		balloon_alert(user, "no space!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Loading a single item
+	if(can_load_item(tool))
+		load(tool, user)
+		user.visible_message(
+			span_notice("[user] adds \the [tool] to \the [src]."),
+			span_notice("You add \the [tool] to \the [src]."),
 		)
-			load(weapon, user)
-			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
-			SStgui.update_uis(src)
-			if(visible_contents)
-				update_appearance()
-			return TRUE
+		SStgui.update_uis(src)
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(weapon, /obj/item/storage/bag))
-			var/obj/item/storage/bag = weapon
-			var/loaded = 0
-			for(var/obj/item/object in bag.contents)
-				if(shown_contents_length >= max_n_of_items)
-					break
-				if(!(object.item_flags & ABSTRACT) && \
-					!(object.flags_1 & HOLOGRAM_1) && \
-					accept_check(object) \
-				)
-					load(object, user)
-					loaded++
-			SStgui.update_uis(src)
+	// Loading from a bag (until fridge is full)
+	if(istype(tool, /obj/item/storage/bag))
+		var/loaded = 0
+		for(var/obj/item/object in tool.contents)
+			if(loaded_count >= max_n_of_items)
+				break
+			if(!can_load_item(object))
+				continue
+			load(object, user)
+			loaded++
+			loaded_count++
 
-			if(loaded)
-				if(shown_contents_length >= max_n_of_items)
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You fill \the [src] with \the [weapon]."))
-				else
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You load \the [src] with \the [weapon]."))
-				if(weapon.contents.len)
-					to_chat(user, span_warning("Some items are refused."))
-				if (visible_contents)
-					update_appearance()
-				return TRUE
-			else
-				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
-				return FALSE
+		SStgui.update_uis(src)
 
-	if(!powered())
-		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
-		return FALSE
+		if(!loaded)
+			to_chat(user, span_warning("There is nothing in [tool] to put in [src]!"))
+			return ITEM_INTERACT_BLOCKING
 
-	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
-		return FALSE
+		var/filled = loaded_count >= max_n_of_items
+		user.visible_message(
+			span_notice("[user] loads \the [src] with \the [tool]."),
+			span_notice("You [filled ? "fill" : "load"] \the [src] with \the [tool]."),
+		)
+		if(length(tool.contents))
+			to_chat(user, span_warning("Some items are refused."))
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	to_chat(user, span_warning("\The [src] smartly refuses [tool]."))
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Can this item be accepted by the smart fridge
@@ -421,6 +436,13 @@
 			return TRUE
 
 	return FALSE
+
+/obj/machinery/smartfridge/proc/recheck_atmos_passing()
+	if(machine_stat & BROKEN)
+		can_atmos_pass = ATMOS_PASS_YES
+	else
+		can_atmos_pass = anchored ? ATMOS_PASS_NO : ATMOS_PASS_YES
+	air_update_turf(TRUE, anchored)
 
 // ----------------------------
 //  Drying 'smartfridge'
@@ -564,6 +586,10 @@
 		tool_tip_set = TRUE
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
+
+/obj/machinery/smartfridge/drying/rack/status_examine()
+	. = list()
+	. += span_notice("It looks like this unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()

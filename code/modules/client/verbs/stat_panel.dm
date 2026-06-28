@@ -6,9 +6,9 @@ DEFINE_VERB(/client, toggle_stat_panel, "Toggle Stat Panel", "", TRUE, "")
 ///Sets the stat panel's visibility to the player, depending on whether they need it/have it enabled or not.
 /client/proc/set_stat_panel()
 	if(prefs.read_preference(/datum/preference/toggle/statpanel) || needs_stat_panel())
-		winset(src, INFOWINDOW_INFO, "left=statwindow")
+		winset(src, SKIN_INFOWINDOW_CHILD, "left=statwindow")
 	else
-		winset(src, INFOWINDOW_INFO, "left=null")
+		winset(src, SKIN_INFOWINDOW_CHILD, "left=null")
 
 ///Returns TRUE if the player has something that necessitates the stat panel.
 /client/proc/needs_stat_panel()

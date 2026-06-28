@@ -1251,8 +1251,8 @@
 	free_hitscan_forceMove = TRUE
 	forceMove(source_loc)
 	starting = source_loc
-	pixel_x = source.pixel_x
-	pixel_y = source.pixel_y
+	pixel_x = source.pixel_x - source.base_pixel_x
+	pixel_y = source.pixel_y - source.base_pixel_y
 	original = target
 
 	// Trim off excess pixel_x/y by converting them into turf offset

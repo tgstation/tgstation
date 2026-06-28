@@ -467,15 +467,6 @@
 ///sent to the projectile when successfully embedding into something: (new_item, victim)
 #define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
-// /obj/vehicle/sealed/car/vim signals
-
-///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
-#define COMSIG_VIM_CHIME_USED "vim_chime_used"
-///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
-#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
-///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
-#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
-
 ///from /datum/computer_file/program/messenger/proc/receive_message
 #define COMSIG_COMPUTER_RECEIVED_MESSAGE "computer_received_message"
 ///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
@@ -685,6 +676,12 @@
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// Sent from /datum/component/reflection when the reflection is updated to the component parent: (obj/effect/abstract/reflection)
+#define COMSIG_REFLECTED_IMAGE_UPDATED "reflected_image_updated"
+
+/// From /datum/element/weapon_description: (list/readout)
+#define COMSIG_ITEM_WEAPON_LABEL_READOUT "item_weapon_label_readout"
 
 /// Send from /datum/element/cuffable_item(): (mob/cuffer, obj/item/cuffs)
 #define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"

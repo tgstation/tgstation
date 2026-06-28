@@ -130,6 +130,12 @@
 #define DISABLE_DREAMLUAU
 #endif
 
+// Since 0.2.0, dreamluau depends on breaking changes made to byondapi in 1674.
+// Get rid of this when BYOND_MINOR is >= 1674 AND we don't have any alternate tests on <1674.
+#if DM_BUILD < 1674
+#define DISABLE_DREAMLUAU
+#endif
+
 // Comment to disable auxcpu's precise cpu usage metrics. Will impact our ability to avoid overtime
 #define USE_AUXCPU
 

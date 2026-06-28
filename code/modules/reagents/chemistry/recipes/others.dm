@@ -344,11 +344,37 @@
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
+	// Does the foam slip you?
+	var/slippery = TRUE
+	// How long the foam lasts for
+	var/lifetime = 8 SECONDS
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/foam/hollow
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/hollowwater = 1)
+	lifetime = 24 SECONDS
+
+/datum/chemical_reaction/foam/salt
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/salt = 1)
+	lifetime = 1 SECONDS
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/ice
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/ice = 1)
+	slippery = FALSE
+
+/datum/chemical_reaction/foam/soda
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/consumable/sodawater = 1)
+	lifetime = 1 SECONDS
+
+/datum/chemical_reaction/foam/holy
+	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water/holywater = 1)
+	lifetime = 24 SECONDS
+	slippery = FALSE
+
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE)
+	holder.create_foam(/datum/effect_system/fluid_spread/foam, 2 * created_volume, notification = span_danger("The solution spews out foam!"), log = TRUE, lifetime = src.lifetime, slippery = src.slippery)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalfoam

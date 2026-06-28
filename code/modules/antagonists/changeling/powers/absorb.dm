@@ -216,16 +216,16 @@
 	if(href_list["exit_hivemind"] && !QDELETED(src))
 		exit_hivemind()
 
-DEFINE_VERB(/mob/eye/imaginary_friend/hivemind, exit_hivemind, "Exit Hivemind", "Leave the hivemind behind and enter the land of the dead.", FALSE, "IC")
+/mob/eye/imaginary_friend/hivemind/proc/exit_hivemind()
 	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
 		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
 	if(response != "Exit" || QDELETED(src))
 		return
 	ghostize(TRUE)
 
-/mob/eye/imaginary_friend/hivemind/ghostize(can_reenter_corpse, admin_ghost)
+/mob/eye/imaginary_friend/hivemind/ghostize(can_reenter_corpse, forced)
 	. = ..()
-	if(admin_ghost)
+	if(forced)
 		return
 
 	alert_hivemind("You sense the presence of [real_name] disappear from the hivemind.")

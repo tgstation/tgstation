@@ -1,7 +1,7 @@
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
-//Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
+//Transmit: the revenant's only direct way to communicate. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
 	name = "Revenant Transmit"
 	background_icon_state = "bg_revenant"
@@ -11,6 +11,14 @@
 	bold_telepathy_span = "revenboldnotice"
 
 	antimagic_flags = MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
+
+/datum/action/cooldown/spell/list_target/telepathy/revenant/get_list_targets(atom/center, target_radius = 7)
+	if(!istype(center, /mob/living/basic/revenant))
+		return ..()
+	var/mob/living/basic/revenant/revenant = center
+	if(!revenant.dormant)
+		return ..()
+	return ..(get_turf(revenant), 2)
 
 /datum/action/cooldown/spell/aoe/revenant
 	background_icon_state = "bg_revenant"
@@ -167,12 +175,6 @@
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
-	for(var/mob/living/simple_animal/bot/bot in victim)
-		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
-			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
-			bot.bot_cover_flags |= BOT_COVER_MAINTS_OPEN
-			bot.emag_act(caster)
 	for(var/mob/living/basic/bot/bot in victim)
 		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)

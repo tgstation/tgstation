@@ -88,6 +88,7 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_DOWNLOAD_SPRITE "download_sprite"
 #define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
@@ -109,6 +110,7 @@
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 #define VV_HK_ADD_REMOVE_FACTION "add_remove_faction"
 #define VV_HK_GET_FACTIONS "add_remove_factions"
+#define VV_HK_SET_TTS_VOICE "set_tts_voice"
 
 // /obj
 #define VV_HK_OSAY "osay"

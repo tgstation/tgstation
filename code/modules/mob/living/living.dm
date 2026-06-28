@@ -13,6 +13,8 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_atom_to_hud(src)
 	add_ally(src)
+	if(!pull_force)
+		remove_verb(src, /mob/living/verb/pulled)
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
@@ -372,8 +374,9 @@
 	now_pushing = FALSE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
-	if(!AM || !src)
+	if(!src)
 		return FALSE
+	ASSERT(ismovable(AM), "[src] attempted to pull [AM ? "[AM], a nonmovable atom" : "a null object"]")
 	if(!(AM.can_be_pulled(src, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
@@ -512,7 +515,7 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "IC", atom/movable/AM as mob|obj in oview(1))
+DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "", atom/movable/AM as mob|obj in oview(1))
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
 	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
@@ -524,9 +527,6 @@ DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "IC", atom/movable/AM as mob
 	..()
 	update_pull_movespeed()
 	update_pull_hud_icon()
-
-DEFINE_VERB(/mob/living, stop_pulling1, "Stop Pulling", "", FALSE, "IC")
-	stop_pulling()
 
 //same as above
 /mob/living/do_pointed(atom/pointing_at)
@@ -595,7 +595,7 @@ DEFINE_VERB(/mob/living, succumb, "succumb", "", TRUE, "", whispered as num|null
 
 // MOB PROCS //END
 
-DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", FALSE, "IC")
+DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", TRUE, "")
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
 		return
@@ -648,7 +648,7 @@ DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", FALSE, "IC")
 		account = I.registered_account
 		return account
 
-DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
+/mob/living/proc/toggle_resting()
 	set_resting(!resting, FALSE)
 
 
@@ -965,10 +965,11 @@ DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 	if(heal_flags & HEAL_STAM)
 		set_stamina_loss(0, updating_stamina = FALSE, forced = TRUE)
 
-	// I don't really care to keep this under a flag
-	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	overeatduration = 0
-	satiety = 0
+	// Only aheals really do this right now, so this flag should be fine for the time being
+	if(heal_flags & HEAL_ADMIN)
+		set_nutrition(NUTRITION_LEVEL_FED + 50)
+		overeatduration = 0
+		satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
@@ -1118,16 +1119,18 @@ DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 		return FALSE
 	return TRUE
 
-DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
-	do_resist()
+/mob/living/proc/resist()
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
-///gotta let folks override thsi thing
-/mob/living/proc/do_resist()
+///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
+/mob/living/proc/execute_resist()
 	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_RESIST) & COMPONENT_BLOCK_RESIST)
+		return
+
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
@@ -1154,12 +1157,20 @@ DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 
-	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
-	var/effective_grab_state = pulledby.grab_state
-	//The amount of damage inflicted on a failed resist attempt.
-	var/damage_on_resist_fail = rand(7, 13)
-	// Base chance to escape a grab. Divided by effective grab state
-	var/escape_chance = BASE_GRAB_RESIST_CHANCE
+	var/list/grab_stats = list(
+		// Our effective grab state.
+		// GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
+		pulledby.grab_state,
+		/// The amount of damage inflicted on a failed resist attempt.
+		rand(7, 13),
+		// Base chance to escape a grab. Divided by effective grab state.
+		BASE_GRAB_RESIST_CHANCE,
+	)
+	SEND_SIGNAL(pulledby, COMSIG_MOVABLE_GRABBED_RESISTING, src, grab_stats)
+
+	var/effective_grab_state = grab_stats[GRAB_STAT_EFFECTIVE_STATE]
+	var/damage_on_resist_fail = grab_stats[GRAB_STAT_FAIL_DAMAGE]
+	var/escape_chance = grab_stats[GRAB_STAT_ESCAPE_CHANCE]
 
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
@@ -1173,26 +1184,14 @@ DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
 	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
 		effective_grab_state--
 
-	//If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
-	if(pulledby && ishuman(pulledby))
+	// If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	if(ishuman(pulledby))
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
 			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
 			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
 			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
-
-		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
-		var/puller_drunkenness = human_puller.get_drunk_amount()
-		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
-			damage_on_resist_fail += clamp((human_puller.get_fire_loss() + human_puller.get_brute_loss()) / 10, 3, 20)
-			effective_grab_state++
-
-		var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
-		if(puller_art?.can_use(human_puller))
-			damage_on_resist_fail += puller_art.grab_damage_modifier
-			effective_grab_state += puller_art.grab_state_modifier
-			escape_chance += puller_art.grab_escape_chance_modifier
 
 	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
 	if(effective_grab_state >= GRAB_AGGRESSIVE)
@@ -2085,6 +2084,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				return FALSE
 			update_transform(var_value/current_size)
 			. = TRUE
+		if(NAMEOF(src, pull_force))
+			set_pull_force(var_value)
+			. = TRUE
+
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -2922,7 +2925,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Guardian Spirit")
 
-DEFINE_VERB(/mob/living, lookup, "Look Up", "", FALSE, "IC")
+/mob/living/proc/lookup()
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()
@@ -2939,7 +2942,7 @@ DEFINE_VERB(/mob/living, lookup, "Look Up", "", FALSE, "IC")
 	to_chat(src, "You tilt your head upwards.")
 	look_up()
 
-DEFINE_VERB(/mob/living, lookdown, "Look Down", "", FALSE, "IC")
+/mob/living/proc/lookdown()
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()
@@ -3027,3 +3030,15 @@ DEFINE_VERB(/mob/living, lookdown, "Look Down", "", FALSE, "IC")
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+/mob/living/proc/set_pull_force(new_pull_force)
+	if(pull_force == new_pull_force)
+		return
+	pull_force = new_pull_force
+	pull_force_change()
+
+/mob/living/proc/pull_force_change()
+	if(!pull_force || HAS_TRAIT(src, TRAIT_PULL_BLOCKED))
+		remove_verb(src, /mob/living/verb/pulled)
+	else
+		add_verb(src, /mob/living/verb/pulled)

@@ -26,11 +26,11 @@
 /mob/eye/canUseStorage()
 	return FALSE
 
-/mob/eye/do_up()
+/mob/eye/up()
 	if(zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/eye/do_down()
+/mob/eye/down()
 	if(zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 

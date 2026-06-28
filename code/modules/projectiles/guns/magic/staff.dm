@@ -11,6 +11,10 @@
 	/// If FALSE, only wizards or survivalists can use the staff to its full potential - If TRUE, anyone can
 	var/allow_intruder_use = FALSE
 
+/obj/item/gun/magic/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
+
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
@@ -213,7 +217,7 @@
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/swap,
 		/obj/projectile/magic/teleport,
-		/obj/projectile/magic/tentacle,
+		/obj/projectile/magic/tentacle_staff,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill
 	)

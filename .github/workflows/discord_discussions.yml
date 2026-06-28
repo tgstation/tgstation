@@ -34,14 +34,14 @@ jobs:
           dotnet-quality: ga
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Build Tgstation.DiscordDiscussions
         run: dotnet publish -c Release -o discord_discussions_bins tools/Tgstation.DiscordDiscussions/Tgstation.DiscordDiscussions.csproj
 
       - name: Generate App Token
         id: app-token-generation
-        uses: actions/create-github-app-token@v3.1.1
+        uses: actions/create-github-app-token@v3.2.0
         if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
         with:
             client-id: ${{ secrets.APP_ID }}
