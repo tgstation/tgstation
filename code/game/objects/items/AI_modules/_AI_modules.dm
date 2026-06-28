@@ -101,6 +101,11 @@
 	var/list/borg_flw = list()
 	if(isAI(law_datum.owner))
 		var/mob/living/silicon/ai/owner = law_datum.owner
+
+		// any law modifications that are not the original ten commandments is blasphemy
+		var/datum/mind/silicon_god = owner.mind
+		qdel(silicon_god.GetComponent(/datum/component/listen_prayers))
+
 		for(var/mob/living/silicon/robot/owned_borg as anything in owner.connected_robots)
 			if(owned_borg.connected_ai && owned_borg.lawupdate)
 				affected_cyborgs += owned_borg

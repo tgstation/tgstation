@@ -128,9 +128,9 @@
 	. = ..()
 
 	if(isAI(law_datum.owner))
-		var/mob/living/silicon/ai/silicon_god = law_datum.owner
-
-		silicon_god
+		var/mob/living/silicon/ai/selected_ai = law_datum.owner
+		var/datum/mind/silicon_god = selected_ai.mind
+		silicon_god.AddComponent(/datum/component/listen_prayers)
 
 /obj/item/ai_module/core/full/nutimov
 	name = "'Nutimov' Core AI Module"
