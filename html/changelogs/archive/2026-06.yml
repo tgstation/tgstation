@@ -571,3 +571,14 @@
   vinylspiders:
   - bugfix: fixed an issue where you could exceed the smartfridge's capacity by using
       a plant bag
+2026-06-28:
+  Ghommie:
+  - map: Made it a bit harder to get stuck on away missions if you willingly or unwillingly
+      use teleportation techniques. You still definitely can, but usually only on
+      sections of the map that can be reached one way or another, including rock walls
+      that can be mined, just not those that cannot.
+  - image: Updated the visuals for indestructible rock walls to match the destructible
+      ones.
+  - balance: RNG teleportation should work marginally better around areas and turfs
+      where teleportation is restricted by skipping them instead of having a chance
+      to fumble because of that.
