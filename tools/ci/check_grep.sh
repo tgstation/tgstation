@@ -31,6 +31,7 @@ else
 	shuttle_map_files="-r --include=_maps/shuttles/**.dmm"
 	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
 fi
+echo $code_files
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
 
