@@ -102,6 +102,10 @@
 	if(locked)
 		. += "cleanerbox_locked"
 
+/obj/item/borg/cleaner_box/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Alt-Click</b> to <b>[locked ? "unlock" : "lock"]</b> the [src]")
+
 /obj/item/vacuum_item
 	name = "janitorial floor cleaner"
 	desc = "This is the working end of an industrial cleaner that someone decided to make sapient."
