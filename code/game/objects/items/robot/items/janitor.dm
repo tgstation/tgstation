@@ -12,7 +12,6 @@
 	. = ..()
 	var/mob/living/silicon/robot = loc
 	if(!istype(robot))
-		stack_trace("[src] Initialized without a connected mob/living/silicon")
 		return INITIALIZE_HINT_QDEL
 	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
 	module_list = WEAKREF(model)
