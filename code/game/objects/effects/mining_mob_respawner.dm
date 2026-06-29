@@ -107,40 +107,72 @@
 /// Play an awesome animation
 /obj/effect/mining_mob_respawner/proc/play_spawn_animation(mob/living/spawned, turf/spawned_turf)
 	if (HAS_TRAIT(spawned, TRAIT_MOVE_FLYING))
-
+		new /obj/effect/fly_down(spawned_turf, spawned)
 	else
 		new /obj/effect/unburrow(spawned_turf, spawned)
-		spawned.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 2 SECONDS)
 		spawned_turf.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 2 SECONDS)
-		to_chat(world, "[spawned] - [spawned.loc]")
 
 /// A "good enough" alpha mask effect that looks like something is coming out of the ground
+/// Not guaranteed to look right on things taller than 32 pixels because i didnt want to make a really massive alpha mask
 /obj/effect/unburrow
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	/// Time in which to animate emerging from the ground
 	var/animate_time = 2 SECONDS
 
 /obj/effect/unburrow/Initialize(mapload, atom/movable/thing)
 	. = ..()
 	if (QDELETED(thing))
 		return INITIALIZE_HINT_QDEL
-
 	thing.forceMove(src)
 	setup(thing)
 
 /obj/effect/unburrow/proc/setup(atom/movable/thing)
-	icon = thing::icon
-	icon_state = thing::icon_state
-	pixel_x = thing::pixel_x
-	pixel_y = ICON_SIZE_Y
+	vis_contents += thing
+	thing.pixel_y -= 32
+	animate(thing, pixel_y = 32, time = animate_time, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+	thing.Shake(pixelshiftx = 1, pixelshifty = 0.5, duration = animate_time)
+	thing.dir = pick(GLOB.cardinals)
 
-	add_filter("alpha_mask", 2, alpha_mask_filter(icon = icon('icons/effects/64x64.dmi', "alpha_unburrow"), y = 64))
+	add_filter("alpha_mask", 2, alpha_mask_filter(icon = icon('icons/effects/64x64.dmi', "alpha_unburrow"), y = 16))
 	var/filter = get_filter("alpha_mask")
-	animate(filter, y = 16, time = animate_time, flags = ANIMATION_PARALLEL)
-	animate(src, pixel_y = 0, time = animate_time, flags = ANIMATION_PARALLEL)
-
-	if (!ispath(thing))
-		addtimer(CALLBACK(src, PROC_REF(release), thing), animate_time, TIMER_DELETE_ME)
+	animate(filter, y = -16, delay = animate_time, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+	addtimer(CALLBACK(src, PROC_REF(release), thing), animate_time + 0.5 SECONDS, TIMER_DELETE_ME)
 
 /obj/effect/unburrow/proc/release(atom/movable/thing)
+	if (!QDELETED(thing))
+		thing.forceMove(drop_location())
+	qdel(src)
+
+/// An effect that shows an object swooping to the ground from above
+/obj/effect/fly_down
+	alpha = 0
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	/// Time in which to animate appearing
+	var/animate_time = 0.6 SECONDS
+
+/obj/effect/fly_down/Initialize(mapload, atom/movable/thing)
+	. = ..()
+	if (!thing)
+		thing = new /mob/living/basic/mining/watcher(loc)
+	if (QDELETED(thing))
+		return INITIALIZE_HINT_QDEL
+	thing.forceMove(src)
+	setup(thing)
+
+/obj/effect/fly_down/proc/setup(atom/movable/thing)
+	vis_contents += thing
+	thing.pixel_y += 64
+	var/direction = pick(list(1, -1))
+	var/anim_offset = 32 * direction
+	thing.pixel_x += anim_offset
+	thing.dir = direction < 0 ? EAST : WEST
+
+	animate(src, alpha = 255, time = 0.4 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(thing, pixel_y = -64, time = animate_time, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+	animate(thing, pixel_x = -anim_offset, time = animate_time, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, easing = QUAD_EASING | EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(release), thing), animate_time, TIMER_DELETE_ME)
+
+/obj/effect/fly_down/proc/release(atom/movable/thing)
 	if (!QDELETED(thing))
 		thing.forceMove(drop_location())
 	qdel(src)
