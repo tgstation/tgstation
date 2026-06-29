@@ -10,11 +10,11 @@
 	VAR_PRIVATE/async_give_flags = NONE
 
 /datum/bt_node/ai_behavior/give/perform(seconds_per_tick, datum/ai_controller/controller)
-	// do_after in flight  stay RUNNING.
+	// do_after in flight stay RUNNING.
 	if(is_giving)
 		return AI_BEHAVIOR_DELAY
 
-	// do_after just finished  consume result.
+	// do_after just finished consume result.
 	if(async_give_done)
 		return AI_BEHAVIOR_DELAY | async_give_flags
 
@@ -33,32 +33,31 @@
 		stack_trace("Tried to give an item to a non-living target!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/perform_flags = try_to_give_item(controller, living_target, held_item)
-	if(perform_flags & AI_BEHAVIOR_FAILED)
-		return perform_flags
-	controller.PauseAi(1.5 SECONDS)
+	if(!can_give_item(living_target, held_item))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	living_target.visible_message(
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
 		span_warning("[pawn] tries to give you [held_item]!")
 	)
 	is_giving = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_give), controller, living_target, held_item, perform_flags)
+	INVOKE_ASYNC(src, PROC_REF(async_give), controller, living_target, held_item)
 	return AI_BEHAVIOR_DELAY
 
-/datum/bt_node/ai_behavior/give/proc/async_give(datum/ai_controller/controller, mob/living/living_target, obj/item/held_item, base_flags)
+/datum/bt_node/ai_behavior/give/proc/async_give(datum/ai_controller/controller, mob/living/living_target, obj/item/held_item)
 	var/mob/living/pawn = controller.pawn
-	var/result_flags = base_flags
+	var/result_flags = AI_BEHAVIOR_FAILED
 	if(do_after(pawn, 1 SECONDS, living_target))
-		result_flags |= try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
+		result_flags = try_to_give_item(living_target, held_item)
 	if(!is_giving || QDELETED(pawn))
 		return
 	async_give_flags = result_flags
 	async_give_done = TRUE
 	is_giving = FALSE
 
-/datum/bt_node/ai_behavior/give/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
+/// Returns a list(has_left_pocket, has_right_pocket, has_valid_hand) if the item can be given, null otherwise.
+/datum/bt_node/ai_behavior/give/proc/can_give_item(mob/living/target, obj/item/held_item)
 	if(QDELETED(held_item) || QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return null
 
 	var/has_left_pocket = target.can_equip(held_item, ITEM_SLOT_LPOCKET)
 	var/has_right_pocket = target.can_equip(held_item, ITEM_SLOT_RPOCKET)
@@ -70,16 +69,23 @@
 			break
 
 	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		return null
 
-	if(!actually_give)
-		return AI_BEHAVIOR_DELAY
+	return list(has_left_pocket, has_right_pocket, has_valid_hand)
+
+/datum/bt_node/ai_behavior/give/proc/try_to_give_item(mob/living/target, obj/item/held_item)
+	var/list/give_slots = can_give_item(target, held_item)
+	if(!give_slots)
+		return AI_BEHAVIOR_FAILED
+
+	var/has_left_pocket = give_slots[1]
+	var/has_valid_hand = give_slots[3]
 
 	if(!has_valid_hand || prob(50))
 		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
 	else
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, put_in_hands), held_item)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

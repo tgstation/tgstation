@@ -30,3 +30,5 @@
 #define BB_MONKEY_IDLE_COMMON_EMOTES "BB_monkey_idle_common_emotes"
 /// Rare emotes played during idle behavior
 #define BB_MONKEY_IDLE_RARE_EMOTES "BB_monkey_idle_rare_emotes"
+/// Whether the monkey believes its gun still works (20% chance it doesn't notice a dry-fire)
+#define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"

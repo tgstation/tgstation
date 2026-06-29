@@ -143,12 +143,8 @@
 	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // already have a gun
 
-	for(var/obj/item/item in living_pawn.held_items) // drop weak items
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
-
 	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(2, living_pawn))
+	for(var/obj/item/item in oview(5, living_pawn))
 		nearby_items += item
 
 	var/obj/item/weapon = GetBestWeapon(controller, nearby_items, living_pawn.held_items)
@@ -194,7 +190,7 @@
 				continue
 			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
 				continue
-			if(possible_enemy.stat != SOFT_CRIT) // Dont bother, theyre fucked.
+			if(IS_DEAD_OR_INCAP(possible_enemy)) // Dont bother, theyre fucked.
 				continue
 		valids[possible_enemy] = CEILING(100 / (get_dist(living_pawn, possible_enemy) || 1), 1)
 
@@ -254,12 +250,8 @@
 	var/succeeded = FALSE
 	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		succeeded = TRUE
-		var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
-		if(isnull(hatred_value))
-			hatred_value = 1
-			controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 		if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
-			hatred_value--
+			var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target] - 1
 			if(hatred_value <= 0)
 				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
 			else
@@ -273,8 +265,6 @@
 	is_attacking = FALSE
 	async_attack_done = FALSE
 	async_attack_succeeded = FALSE
-	if(succeeded) // disposal path clears the key on failure
-		controller.clear_blackboard_key(target_key)
 
 /// Attack with held weapon or bite; try to disarm if target is holding something
 /datum/bt_node/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm, holding_weapon)
@@ -283,26 +273,42 @@
 	if(living_pawn.next_move > world.time)
 		return FALSE
 
-	var/obj/item/gun/gun_to_shoot = locate() in living_pawn.held_items
-	if(gun_to_shoot?.can_shoot())
-		if(gun_to_shoot != living_pawn.get_active_held_item())
-			living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
-		controller.ai_interact(target = target, combat_mode = TRUE)
+	living_pawn.face_atom(target)
+
+	var/obj/item/potential_weapon = locate(/obj/item) in living_pawn.held_items
+
+	if(target.IsReachableBy(living_pawn, potential_weapon?.reach))
+		if(isnull(potential_weapon))
+			controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null, combat_mode = TRUE)
+			if(disarm && !isnull(holding_weapon) && controller.blackboard[BB_MONKEY_BLACKLISTITEMS][holding_weapon])
+				controller.remove_thing_from_blackboard_key(BB_MONKEY_BLACKLISTITEMS, holding_weapon)
+		else
+			if(potential_weapon != living_pawn.get_active_held_item())
+				living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
+			controller.ai_interact(target = target, combat_mode = TRUE)
+		controller.override_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
 		return TRUE
 
-	var/obj/item/potential_weapon = locate() in living_pawn.held_items
-	if(!target.IsReachableBy(living_pawn, potential_weapon?.reach))
+	if(!potential_weapon)
 		return FALSE
 
-	if(isnull(potential_weapon))
-		controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null, combat_mode = TRUE)
-		if(disarm && !isnull(holding_weapon) && controller.blackboard[BB_MONKEY_BLACKLISTITEMS][holding_weapon])
-			controller.remove_thing_from_blackboard_key(BB_MONKEY_BLACKLISTITEMS, holding_weapon)
-		return TRUE
+	// target out of melee reach — try ranged or throw
+	var/atom/real_target = target
+	if(prob(10)) // artificial miss
+		real_target = pick(oview(2, target))
 
-	if(potential_weapon != living_pawn.get_active_held_item())
-		living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
-	controller.ai_interact(target = target, combat_mode = TRUE)
+	var/obj/item/gun/gun = locate(/obj/item/gun) in living_pawn.held_items
+	var/can_shoot = gun?.can_shoot() || FALSE
+	if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
+		if(gun != living_pawn.get_active_held_item())
+			living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
+		controller.ai_interact(target = real_target, combat_mode = TRUE)
+		controller.override_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80))
+		if(can_shoot)
+			controller.override_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
+	else
+		living_pawn.throw_item(real_target)
+		controller.override_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
 	return TRUE
 
 // --- Recruitment ---
@@ -370,9 +376,8 @@
 		found = locate(locate_path) in oview(2, living_pawn)
 	else
 		var/list/candidates = list()
-		for(var/atom/visible in oview(1, living_pawn))
-			if(!ismob(visible) && !isturf(visible))
-				candidates += visible
+		for(var/obj/visible in oview(1, living_pawn))
+			candidates += visible
 		if(length(candidates))
 			found = pick(candidates)
 

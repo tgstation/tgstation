@@ -18,8 +18,8 @@
 
 	if(living_pawn.is_holding(target)) // already in hands
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	if(!target.IsReachableBy(living_pawn)) // not adjacent yet
-		return AI_BEHAVIOR_INSTANT
+	if(!target.IsReachableBy(living_pawn)) // cant reach!
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	if(living_pawn.get_active_held_item()) // something is in our hands already
 		if(!drop_held || !living_pawn.dropItemToGround(living_pawn.get_active_held_item()))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

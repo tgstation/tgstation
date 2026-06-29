@@ -7,46 +7,33 @@
 		"key": "BB_monkey_pickuptarget"
 	},
 	"child": {
-		"type": "selector",
+		"type": "sequence",
 		"children": [
 			{
-				"type": "decorator",
-				"decorator": "/datum/bt_node/decorator/bb_key_set",
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
 				"vars": {
-					"key": "BB_monkey_pickup_is_pickpocket"
-				},
-				"child": {
-					"type": "sequence",
-					"children": [
-						{
-							"type": "leaf",
-							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-							"vars": {
-								"target_key": "BB_monkey_pickuptarget",
-								"required_dist": 1,
-								"finish_on_arrival": true
-							}
+					"target_key": "BB_monkey_pickuptarget",
+					"required_dist": 1,
+					"finish_on_arrival": true,
+					"movement_type": "/datum/ai_movement/jps"
+				}
+			},
+			{
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_monkey_pickup_is_pickpocket"
 						},
-						{
+						"child": {
 							"type": "leaf",
 							"behavior": "/datum/bt_node/ai_behavior/monkey_equip/pickpocket",
 							"vars": {
 								"target_key": "BB_monkey_pickuptarget"
 							}
-						}
-					]
-				}
-			},
-			{
-				"type": "sequence",
-				"children": [
-					{
-						"type": "leaf",
-						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
-						"vars": {
-							"target_key": "BB_monkey_pickuptarget",
-							"required_dist": 1,
-							"finish_on_arrival": true
 						}
 					},
 					{

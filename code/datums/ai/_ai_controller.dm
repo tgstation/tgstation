@@ -582,11 +582,6 @@ multiple modular subtrees with behaviors
 		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
 			cancel_current_plan()
 
-/datum/ai_controller/proc/PauseAi(time)
-	paused_until = world.time + time
-	update_able_to_run()
-	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
-
 /datum/ai_controller/proc/cancel_current_plan()
 	active_execution_index = 0
 	cancelled_during_tick = TRUE
