@@ -1,6 +1,0 @@
-author: "anstapi"
-delete-after: True
-changes:
-  - rscadd: "Добавлен криопод Синдиката, работающий аналогично станционному криоподу."
-  - image: "Спрайт cryoslepeer_s теперь также используется в cryogenics.dmi"
-  - config: "В конфиг cryosleep добавлены строки нового криопода."
