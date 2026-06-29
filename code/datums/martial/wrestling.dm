@@ -5,7 +5,7 @@ The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, a
 If you make a derivative work from this code, you must include this notification header alongside it.
 */
 
-GAME_VERB_PROC(/mob/living, wrestling_help, "Recall Teachings", "Remember how to wrestle.", "Wrestling")
+GAME_VERB_PROC_DESC(/mob/living, wrestling_help, "Recall Teachings", "Remember how to wrestle.", "Wrestling")
 
 	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
 	to_chat(usr, "[span_notice("Clinch")]: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")

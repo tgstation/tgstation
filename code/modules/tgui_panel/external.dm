@@ -8,7 +8,7 @@
 /**
  * tgui panel / chat troubleshooting verb
  */
-GAME_VERB(/client, fix_tgui_panel, "Fix chat", "", "OOC")
+GAME_VERB(/client, fix_tgui_panel, "Fix chat", "OOC")
 	var/action
 	log_tgui(src, "Started fixing.", context = "verb/fix_tgui_panel")
 
@@ -31,7 +31,7 @@ GAME_VERB(/client, fix_tgui_panel, "Fix chat", "", "OOC")
 	// Force show the panel to see if there are any errors
 	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_browser")
 
-GAME_VERB(/client, refresh_tgui, "Refresh TGUI", "", "OOC")
+GAME_VERB(/client, refresh_tgui, "Refresh TGUI", "OOC")
 
 	for(var/window_id in tgui_windows)
 		var/datum/tgui_window/window = tgui_windows[window_id]

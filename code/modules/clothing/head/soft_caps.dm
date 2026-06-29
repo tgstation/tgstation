@@ -20,7 +20,7 @@
 	flipped = FALSE
 	..()
 
-GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", null)
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 	flip(usr)
 

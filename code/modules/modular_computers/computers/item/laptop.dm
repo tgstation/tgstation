@@ -70,7 +70,7 @@
 	else
 		return ..()
 
-GAME_VERB_SRC(/obj/item/modular_computer/laptop, open_computer, view(1), "Toggle Open", "", null)
+GAME_VERB_SRC(/obj/item/modular_computer/laptop, open_computer, view(1), "Toggle Open", null)
 
 	try_toggle_open(usr)
 

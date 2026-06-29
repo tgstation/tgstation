@@ -28,7 +28,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 	GLOB.triple_ai_controller = null
 	. = ..()
 
-GAME_VERB_PROC(/client, triple_ai, "Toggle AI Triumvirate", "", "Admin.Events")
+GAME_VERB_PROC(/client, triple_ai, "Toggle AI Triumvirate", "Admin.Events")
 
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		to_chat(usr, "This option is currently only usable during pregame. This may change at a later date.", confidential = TRUE)

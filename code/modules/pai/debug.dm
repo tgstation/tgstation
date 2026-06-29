@@ -1,4 +1,4 @@
-GAME_VERB_PROC(/client, makepAI, "Make pAI", "Specify a location to spawn a pAI device, then specify a key to play that pAI", "Admin.Fun", turf/target in GLOB.mob_list)
+GAME_VERB_PROC_DESC(/client, makepAI, "Make pAI", "Specify a location to spawn a pAI device, then specify a key to play that pAI", "Admin.Fun", turf/target in GLOB.mob_list)
 
 	var/list/available = list()
 	for(var/mob/player as anything in GLOB.player_list)

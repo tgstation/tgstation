@@ -32,7 +32,7 @@
 	return ..()
 
 ///A right-click verb, for those not using hotkey mode.
-GAME_VERB(/obj/item/borg/apparatus, verb_dropHeld, "Drop", "", null)
+GAME_VERB(/obj/item/borg/apparatus, verb_dropHeld, "Drop", null)
 
 	if(usr != loc || !stored)
 		return

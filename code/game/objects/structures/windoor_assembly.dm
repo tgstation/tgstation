@@ -336,7 +336,7 @@
 
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
-GAME_VERB_SRC(/obj/structure/windoor_assembly, flip, oview(1), "Flip Windoor Assembly", "", null)
+GAME_VERB_SRC(/obj/structure/windoor_assembly, flip, oview(1), "Flip Windoor Assembly", null)
 
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

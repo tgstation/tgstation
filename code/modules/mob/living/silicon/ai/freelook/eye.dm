@@ -211,7 +211,7 @@
 	else
 		eyeobj.RemoveInvisibility(type)
 
-GAME_VERB(/mob/living/silicon/ai, toggle_acceleration, "Toggle Camera Acceleration", "", "AI Commands")
+GAME_VERB(/mob/living/silicon/ai, toggle_acceleration, "Toggle Camera Acceleration", "AI Commands")
 
 	if(incapacitated)
 		return

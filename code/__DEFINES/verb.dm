@@ -26,10 +26,10 @@
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
-#define GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
-_GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, ##verb_args)
+#define GAME_VERB(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
+_GAME_VERB(owner_type, verb_path_name, verb_name, "", verb_category, TRUE, FALSE, ##verb_args)
 
-#define GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
+#define GAME_VERB_DESC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
 _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, ##verb_args)
 
 #define GAME_VERB_HIDDEN(owner_type, verb_path_name, verb_name, verb_args...) \
@@ -55,7 +55,10 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, ##verb_
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
-#define GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
+#define GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
+_GAME_VERB_PROC(owner_type, verb_path_name, verb_name, "", verb_category, TRUE, FALSE, ##verb_args)
+
+#define GAME_VERB_PROC_DESC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
 _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, ##verb_args)
 
 #define _GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, verb_desc, verb_category, show_in_context_menu, is_hidden, verb_args...) \
@@ -79,7 +82,10 @@ _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category,
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
-#define GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, verb_desc, verb_category, verb_args...) \
+#define GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, verb_category, verb_args...) \
+_GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, "", verb_category, TRUE, FALSE, ##verb_args)
+
+#define GAME_VERB_SRC_DESC(owner_type, verb_path_name, src_value, verb_name, verb_desc, verb_category, verb_args...) \
 _GAME_VERB_SRC(owner_type, verb_path_name, src_value, verb_name, verb_desc, verb_category, TRUE, FALSE, ##verb_args)
 
 #define _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, is_hidden, verb_args...) \

@@ -24,7 +24,7 @@
 	UNASSIGN_GAME_VERB(src, /client, ClearCredits)
 	qdel(credits_icon)
 
-GAME_VERB_PROC(/client, ClearCredits, "Hide Credits", "", "OOC")
+GAME_VERB_PROC(/client, ClearCredits, "Hide Credits", "OOC")
 	UNASSIGN_GAME_VERB(src, /client, ClearCredits)
 	QDEL_LIST(credits)
 	credits = null

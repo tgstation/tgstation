@@ -222,7 +222,7 @@
 		ai_display.emotion = emote
 		ai_display.update()
 
-GAME_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", "AI Commands")
+GAME_VERB_DESC(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what appears on your AI core display", "AI Commands")
 
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
@@ -236,7 +236,7 @@ GAME_VERB(/mob/living/silicon/ai, pick_icon, "Set AI Core Display", "Choose what
 		var/obj/item/aicard/card = loc
 		card.update_appearance()
 
-GAME_VERB(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display", "Choose what appears on status displays around the station", "AI Commands")
+GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Display", "Choose what appears on status displays around the station", "AI Commands")
 
 	if(incapacitated)
 		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
@@ -345,7 +345,7 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 	if(eyeobj)
 		eyeobj.glide_size = new_glide_size
 
-GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI Commands")
+GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Commands")
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(stat == DEAD)
@@ -505,7 +505,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "", "AI C
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
 
-GAME_VERB_PROC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wirelessly control various automatic robots.", "AI Commands")
 
 	if(!robot_control)
 		robot_control = new(src)
@@ -559,7 +559,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wireles
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
-GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "", "AI Commands")
+GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI Commands")
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
@@ -600,7 +600,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "",
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
-GAME_VERB_PROC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
 
 	if(incapacitated)
 		return
@@ -744,7 +744,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "C
 		C.Togglelight(1)
 		lit_cameras |= C
 
-GAME_VERB_PROC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Settings", "Allows you to change settings of your radio.", "AI Commands")
 
 	if(incapacitated)
 		return
@@ -757,7 +757,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, control_integrated_radio, "Transceiver Se
 	if(radio)
 		radio.make_syndie()
 
-GAME_VERB_PROC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Announce Mode", "Modify the default radio setting for your automatic announcements.", "AI Commands")
 
 	if(incapacitated)
 		return
@@ -955,7 +955,7 @@ GAME_VERB_PROC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto Anno
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-GAME_VERB(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", "AI Commands")
+GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Transfer to an available remote body.", "AI Commands")
 
 	select_shell()
 

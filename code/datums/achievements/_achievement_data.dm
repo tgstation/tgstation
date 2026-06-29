@@ -129,6 +129,6 @@
 			continue
 		.["highscores"] += list(list("name" = score.name, "scores" = score.high_scores))
 
-GAME_VERB(/client, checkachievements, "Check achievements", "See all of your achievements!", "OOC")
+GAME_VERB_DESC(/client, checkachievements, "Check achievements", "See all of your achievements!", "OOC")
 
 	persistent_client.achievements.ui_interact(usr)

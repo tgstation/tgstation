@@ -33,7 +33,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 
-GAME_VERB_PROC(/mob/dead, server_hop, "Server Hop", "Jump to the other server", "OOC")
+GAME_VERB_PROC_DESC(/mob/dead, server_hop, "Server Hop", "Jump to the other server", "OOC")
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // in case the round is ending and a cinematic is already playing we don't wanna clash with that (yes i know)
 		return
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)

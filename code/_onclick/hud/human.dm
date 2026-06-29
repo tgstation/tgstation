@@ -71,7 +71,7 @@
 			continue
 		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
 
-GAME_VERB(/mob/living/carbon/human, toggle_hotkey_verbs, "Toggle hotkey buttons", "This disables or enables the user interface buttons which can be used with hotkeys.", "OOC")
+GAME_VERB_DESC(/mob/living/carbon/human, toggle_hotkey_verbs, "Toggle hotkey buttons", "This disables or enables the user interface buttons which can be used with hotkeys.", "OOC")
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.screen_groups[HUD_GROUP_HOTKEYS]

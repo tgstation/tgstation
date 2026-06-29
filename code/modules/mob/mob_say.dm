@@ -1,7 +1,7 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-GAME_VERB(/mob, say_verb, VERB_SAY, "", null, message as text)
+GAME_VERB(/mob, say_verb, VERB_SAY, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -13,7 +13,7 @@ GAME_VERB(/mob, say_verb, VERB_SAY, "", null, message as text)
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
-GAME_VERB(/mob, whisper_verb, VERB_WHISPER, "", null, message as text)
+GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -33,7 +33,7 @@ GAME_VERB(/mob, whisper_verb, VERB_WHISPER, "", null, message as text)
 	say(message, language = language)
 
 ///The me emote verb
-GAME_VERB(/mob, me_verb, VERB_ME, "", null, message as text)
+GAME_VERB(/mob, me_verb, VERB_ME, null, message as text)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))

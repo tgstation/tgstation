@@ -1025,7 +1025,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(attack_hand(user))
 		return ITEM_INTERACT_BLOCKING
 
-GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", "", null)
+GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", null)
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return

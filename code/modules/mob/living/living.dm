@@ -515,7 +515,7 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB(/mob/living, pulled, "Pull", "", null, atom/movable/thing_pulled as mob|obj in oview(1))
+GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|obj in oview(1))
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
@@ -597,7 +597,7 @@ GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
 
 // MOB PROCS //END
 
-GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", "", null)
+GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))

@@ -125,7 +125,7 @@
 	return FALSE
 
 
-GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", null)
+GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -159,7 +159,7 @@ GAME_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", null)
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.get_voice()]: [raw_message]"
 
 
-GAME_VERB(/obj/item/taperecorder, record, "Start Recording", "", null)
+GAME_VERB(/obj/item/taperecorder, record, "Start Recording", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -200,7 +200,7 @@ GAME_VERB(/obj/item/taperecorder, record, "Start Recording", "", null)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-GAME_VERB(/obj/item/taperecorder, stop, "Stop", "", null)
+GAME_VERB(/obj/item/taperecorder, stop, "Stop", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -219,7 +219,7 @@ GAME_VERB(/obj/item/taperecorder, stop, "Stop", "", null)
 	update_appearance()
 	update_sound()
 
-GAME_VERB(/obj/item/taperecorder, play, "Play Tape", "", null)
+GAME_VERB(/obj/item/taperecorder, play, "Play Tape", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
@@ -290,7 +290,7 @@ GAME_VERB(/obj/item/taperecorder, play, "Play Tape", "", null)
 			if("Eject")
 				eject(user)
 
-GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "", null)
+GAME_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", null)
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))

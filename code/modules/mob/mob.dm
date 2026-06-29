@@ -199,7 +199,7 @@
 /**
  * Some kind of debug verb that gives atmosphere environment details
  */
-GAME_VERB_PROC(/mob, Cell, "Cell", "", "Admin")
+GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 
 	if(!loc)
 		return
@@ -543,7 +543,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "", "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-GAME_VERB(/mob, examinate, "Examine", "", null, atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+GAME_VERB(/mob, examinate, "Examine", null, atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -805,7 +805,7 @@ GAME_VERB(/mob, examinate, "Examine", "", null, atom/examinify as mob|obj|turf i
  *
  * Only works if flag/allow_respawn is allowed in config
  */
-GAME_VERB(/mob, abandon_mob, "Respawn", "", "OOC")
+GAME_VERB(/mob, abandon_mob, "Respawn", "OOC")
 
 	switch(CONFIG_GET(flag/allow_respawn))
 		if(RESPAWN_FLAG_NEW_CHARACTER)
@@ -871,14 +871,14 @@ GAME_VERB(/mob, abandon_mob, "Respawn", "", "OOC")
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
  */
-GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "", "OOC")
+GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
 	reset_perspective(null)
 
 /**
  * Helpful for when a players uplink window gets glitched to above their screen.
  * preventing them from moving the UPLINK window.
  */
-GAME_VERB(/mob, reset_ui_positions_for_mob, "Reset UI Positions", "", "OOC")
+GAME_VERB(/mob, reset_ui_positions_for_mob, "Reset UI Positions", "OOC")
 	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot

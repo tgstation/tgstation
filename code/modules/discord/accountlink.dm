@@ -1,5 +1,5 @@
 // IF you have linked your account, this will trigger a verify of the user
-GAME_VERB(/client, verify_in_discord, "Verify Discord Account", "Verify your discord account with your BYOND account", "OOC")
+GAME_VERB_DESC(/client, verify_in_discord, "Verify Discord Account", "Verify your discord account with your BYOND account", "OOC")
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))

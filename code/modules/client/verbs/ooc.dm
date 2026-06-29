@@ -2,7 +2,7 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
-GAME_VERB(/client, ooc, VERB_OOC, "", null, msg as text)
+GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -163,20 +163,20 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
-GAME_VERB(/client, admin_notice, "Adminnotice", "Check the admin notice if it has been set", "Admin")
+GAME_VERB_DESC(/client, admin_notice, "Adminnotice", "Check the admin notice if it has been set", "Admin")
 	if(GLOB.admin_notice)
 		to_chat(src, "[span_boldnotice("Admin Notice:")]\n \t [GLOB.admin_notice]")
 	else
 		to_chat(src, span_notice("There are no admin notices at the moment."))
 
-GAME_VERB(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
+GAME_VERB_DESC(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
 	else
 		to_chat(src, span_notice("The Message of the Day has not been set."))
 
-GAME_VERB_PROC(/client, self_notes, "View Admin Remarks", "View the notes that admins have written about you", "OOC")
+GAME_VERB_PROC_DESC(/client, self_notes, "View Admin Remarks", "View the notes that admins have written about you", "OOC")
 
 	if(!CONFIG_GET(flag/see_own_notes))
 		to_chat(usr, span_notice("Sorry, that function is not enabled on this server."))
@@ -184,7 +184,7 @@ GAME_VERB_PROC(/client, self_notes, "View Admin Remarks", "View the notes that a
 
 	browse_messages(null, usr.ckey, null, TRUE)
 
-GAME_VERB_PROC(/client, self_playtime, "View tracked playtime", "View the amount of playtime for roles the server has tracked.", "OOC")
+GAME_VERB_PROC_DESC(/client, self_playtime, "View tracked playtime", "View the amount of playtime for roles the server has tracked.", "OOC")
 
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_notice("Sorry, tracking is currently disabled."))
@@ -193,7 +193,7 @@ GAME_VERB_PROC(/client, self_playtime, "View tracked playtime", "View the amount
 	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
-GAME_VERB(/client, select_ignore, "Ignore", "Ignore a player's messages on the OOC channel", "OOC")
+GAME_VERB_DESC(/client, select_ignore, "Ignore", "Ignore a player's messages on the OOC channel", "OOC")
 	// Make a list to choose players from
 	var/list/players = list()
 
@@ -271,7 +271,7 @@ GAME_VERB(/client, select_ignore, "Ignore", "Ignore a player's messages on the O
 	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC channel."))
 
 // Unignore verb
-GAME_VERB(/client, select_unignore, "Unignore", "Stop ignoring a player's messages on the OOC channel", "OOC")
+GAME_VERB_DESC(/client, select_unignore, "Unignore", "Stop ignoring a player's messages on the OOC channel", "OOC")
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
@@ -304,15 +304,15 @@ GAME_VERB(/client, select_unignore, "Unignore", "Stop ignoring a player's messag
 	// Express that we've unignored the selected player in chat
 	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC channel."))
 
-GAME_VERB_PROC(/client, show_previous_roundend_report, "Your Last Round", "View the last round end report you've seen", "OOC")
+GAME_VERB_PROC_DESC(/client, show_previous_roundend_report, "Your Last Round", "View the last round end report you've seen", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
 
-GAME_VERB_PROC(/client, show_servers_last_roundend_report, "Server's Last Round", "View the last round end report from this server", "OOC")
+GAME_VERB_PROC_DESC(/client, show_servers_last_roundend_report, "Server's Last Round", "View the last round end report from this server", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
-GAME_VERB(/client, fit_viewport, "Fit Viewport", "Fit the width of the map window to match the viewport", "OOC")
+GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map window to match the viewport", "OOC")
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
 	var/aspect_ratio = view_size[1] / view_size[2]
@@ -391,7 +391,7 @@ GAME_VERB(/client, fit_viewport, "Fit Viewport", "Fit the width of the map windo
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 
-GAME_VERB(/client, policy, "Show Policy", "Show special server rules related to your current character.", "OOC")
+GAME_VERB_DESC(/client, policy, "Show Policy", "Show special server rules related to your current character.", "OOC")
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
@@ -413,17 +413,17 @@ GAME_VERB(/client, policy, "Show Policy", "Show special server rules related to 
 GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
 	init_verbs()
 
-GAME_VERB_PROC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")
+GAME_VERB_PROC_DESC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")
 
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
 
-GAME_VERB(/client, map_vote_tally_count, "Show Map Vote Tallies", "View the current map vote tally counts.", "OOC")
+GAME_VERB_DESC(/client, map_vote_tally_count, "Show Map Vote Tallies", "View the current map vote tally counts.", "OOC")
 	to_chat(mob, SSmap_vote.tally_printout)
 
 
-GAME_VERB(/client, linkforumaccount, "Link Forum Account", "Validates your byond account to your forum account. Required to post on the forums.", "OOC")
+GAME_VERB_DESC(/client, linkforumaccount, "Link Forum Account", "Validates your byond account to your forum account. Required to post on the forums.", "OOC")
 	var/uri = CONFIG_GET(string/forum_link_uri)
 	if(!uri)
 		to_chat(src, span_warning("This feature is disabled."))
