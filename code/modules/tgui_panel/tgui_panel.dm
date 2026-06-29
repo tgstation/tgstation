@@ -145,13 +145,13 @@
 			return TRUE
 		var/datum/verb_arg_metadata/entity_arg
 		for(var/datum/verb_arg_metadata/arg in arg_list)
-			if(arg.arg_type & (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM))
+			if(arg.arg_type & VERB_ARG_TYPE_ENTITY)
 				entity_arg = arg
 				break
 		if(!entity_arg)
 			return TRUE
 		var/list/target_data = list()
-		var/list/source_atoms = get_targets_for_arg(entity_arg)
+		var/list/source_atoms = entity_arg.get_targets(client)
 		for(var/atom/target in source_atoms)
 			target_data += list(list("name" = "[target]", "ref" = REF(target)))
 		window.send_message("verbs/targets", list("targets" = target_data))
@@ -212,40 +212,6 @@
 	if(client.mob && (verb_path in client.mob.verbs))
 		return client.mob
 	return null
-
-/datum/tgui_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
-	var/list/targets = list()
-	switch(arg.source)
-		if(VERB_ARG_SOURCE_WORLD)
-			if(arg.arg_type & VERB_ARG_TYPE_MOB)
-				return GLOB.mob_list
-			if(arg.arg_type & VERB_ARG_TYPE_AREA)
-				return get_sorted_areas()
-			if(arg.arg_type & VERB_ARG_TYPE_TURF)
-				for(var/mob/player in GLOB.player_list)
-					var/turf/player_turf = get_turf(player)
-					if(player_turf)
-						targets |= player_turf
-				return targets
-			if(arg.arg_type & (VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM))
-				if(client.mob)
-					return view(client.view, client.mob)
-		if(VERB_ARG_SOURCE_VIEW)
-			if(!client.mob)
-				return targets
-			var/list/visible = view(client.view, client.mob)
-			if(arg.arg_type & VERB_ARG_TYPE_MOB)
-				for(var/mob/target in visible)
-					targets += target
-			else if(arg.arg_type & VERB_ARG_TYPE_OBJ)
-				for(var/obj/target in visible)
-					targets += target
-			else if(arg.arg_type & VERB_ARG_TYPE_TURF)
-				for(var/turf/target in visible)
-					targets += target
-			else
-				return visible
-	return targets
 
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")

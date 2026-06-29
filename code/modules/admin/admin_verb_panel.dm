@@ -61,8 +61,6 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 	data["typepaths"] = list("parent" = typepath_parent, "paths" = typepath_children)
 	return data
 
-#define ADMIN_VERB_ARG_TYPE_ENTITY (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM)
-
 /datum/admin_verb_panel/proc/build_target_list()
 	if(!selected_verb_type)
 		return list()
@@ -73,14 +71,14 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 
 	var/datum/verb_arg_metadata/entity_arg
 	for(var/datum/verb_arg_metadata/arg in verb.metadata.arguments)
-		if(arg.arg_type & ADMIN_VERB_ARG_TYPE_ENTITY)
+		if(arg.arg_type & VERB_ARG_TYPE_ENTITY)
 			entity_arg = arg
 			break
 
 	if(!entity_arg)
 		return list()
 
-	var/list/source_atoms = get_targets_for_arg(entity_arg)
+	var/list/source_atoms = entity_arg.get_targets(owner)
 
 	var/list/targets = list()
 	for(var/atom/target in source_atoms)
@@ -102,64 +100,6 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			entry["name"] = "[target.name] ([target.type])"
 		targets += list(entry)
 	return targets
-
-/datum/admin_verb_panel/proc/get_targets_for_arg(datum/verb_arg_metadata/arg)
-	switch(arg.source)
-		if(VERB_ARG_SOURCE_WORLD)
-			return get_world_targets(arg.arg_type)
-		if(VERB_ARG_SOURCE_VIEW)
-			return get_view_targets(arg.arg_type)
-	return list()
-
-/datum/admin_verb_panel/proc/get_world_targets(arg_type)
-	if(arg_type & VERB_ARG_TYPE_MOB)
-		return GLOB.mob_list
-	if(arg_type & VERB_ARG_TYPE_AREA)
-		return get_sorted_areas()
-	if(arg_type & VERB_ARG_TYPE_TURF)
-		return get_notable_turfs()
-	if(arg_type & VERB_ARG_TYPE_OBJ)
-		if(owner.mob)
-			return view(owner.view, owner.mob)
-		return list()
-	if(arg_type & (VERB_ARG_TYPE_ATOM | VERB_ARG_TYPE_DATUM))
-		if(owner.mob)
-			return view(owner.view, owner.mob)
-		return list()
-	return list()
-
-/datum/admin_verb_panel/proc/get_notable_turfs()
-	var/list/turfs = list()
-	if(owner.mob)
-		var/turf/admin_turf = get_turf(owner.mob)
-		if(admin_turf)
-			turfs += admin_turf
-	for(var/mob/player in GLOB.player_list)
-		var/turf/player_turf = get_turf(player)
-		if(player_turf)
-			turfs |= player_turf
-	return turfs
-
-/datum/admin_verb_panel/proc/get_view_targets(arg_type)
-	if(!owner.mob)
-		return list()
-	var/list/visible = view(owner.view, owner.mob)
-	if(arg_type & VERB_ARG_TYPE_MOB)
-		var/list/mobs = list()
-		for(var/mob/target in visible)
-			mobs += target
-		return mobs
-	if(arg_type & VERB_ARG_TYPE_OBJ)
-		var/list/objs = list()
-		for(var/obj/target in visible)
-			objs += target
-		return objs
-	if(arg_type & VERB_ARG_TYPE_TURF)
-		var/list/turfs = list()
-		for(var/turf/target in visible)
-			turfs += target
-		return turfs
-	return visible
 
 /datum/admin_verb_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
