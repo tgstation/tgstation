@@ -166,6 +166,7 @@
 /mob/eye/imaginary_friend/dream_projection/greet()
 	return
 
+// The IC tab was removed recently as of commenting. This should probably be adjusted.
 GAME_VERB(/mob/eye/imaginary_friend/dream_projection, stop_projection, "Stop Projection", "Stop astrally projecting and return to your body.", "IC")
 
 	qdel(src)

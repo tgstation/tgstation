@@ -965,15 +965,13 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range", input as 
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
 
-/mob/dead/observer/proc/open_spawners_menu()
-	set name = "Spawners Menu"
+GAME_VERB_PROC(/mob/dead/observer, open_spawners_menu, "Spawners Menu", "", null)
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
-/mob/dead/observer/proc/open_minigames_menu()
-	set name = "Minigames Menu"
+GAME_VERB_PROC(/mob/dead/observer, open_minigames_menu, "Minigames Menu", "", null)
 	if(!client)
 		return
 	if(!isobserver(src))

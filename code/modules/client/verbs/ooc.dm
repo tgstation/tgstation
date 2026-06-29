@@ -146,13 +146,6 @@ GAME_VERB(/client, ooc, VERB_OOC, "", null, msg as text)
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-/client/proc/set_ooc()
-	set name = "Set Player OOC Color"
-	set desc = "Modifies player OOC Color"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
-
 ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
 	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
@@ -161,13 +154,6 @@ ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OO
 	message_admins("[key_name_admin(user)] has set the players' ooc color to [new_color].")
 	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
-
-/client/proc/reset_ooc()
-	set name = "Reset Player OOC Color"
-	set desc = "Returns player OOC Color to default"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
 
 ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
 	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
