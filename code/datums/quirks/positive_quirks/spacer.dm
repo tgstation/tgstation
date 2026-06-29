@@ -37,6 +37,8 @@
 
 /datum/quirk/spacer_born/add(client/client_source)
 	if(isdummy(quirk_holder))
+		var/mob/living/carbon/human/dummy_quirker = quirk_holder
+		dummy_quirker.set_mob_height(modded_height)
 		return
 
 	// Using Z moved because we don't urgently need to check on every single turf movement for planetary status.
