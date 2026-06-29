@@ -386,7 +386,7 @@
 	)
 	time = 4 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
-	any_surgery_states_required = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	any_surgery_states_required = ALL_SURGERY_BONE_STATES
 	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/fix_bones/get_default_radial_image()
@@ -418,7 +418,10 @@
 
 /datum/surgery_operation/limb/fix_bones/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.remove_surgical_state(SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
+	// if the limb lacks skin, fix bones needs to act as an analog to mend incision (clearing most surgical states)
+	if(!LIMB_HAS_SKIN(limb))
+		limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
+	limb.remove_surgical_state(ALL_SURGERY_BONE_STATES)
 	limb.heal_damage(40)
 
 /datum/surgery_operation/limb/drill_bones
