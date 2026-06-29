@@ -328,7 +328,7 @@
 	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
-	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
+	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam, Start))
 	if(QDELETED(fishing_line))
 		return null
 	firer.update_held_items()

@@ -215,6 +215,9 @@
 		return FALSE
 	if(!user.mob)
 		return FALSE
+	var/obj/item/object = user.mob.get_active_held_item()
+	if(HAS_TRAIT(object, TRAIT_BORG_GIVE))
+		return TRUE
 	if(!HAS_TRAIT(user.mob, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
 	return TRUE
@@ -224,7 +227,8 @@
 	if(.)
 		return
 	var/mob/living/living_user = user.mob
-	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS))
+	var/obj/item/held_item = living_user.get_active_held_item()
+	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(held_item, TRAIT_BORG_GIVE))
 		return
 	living_user.give()
 
