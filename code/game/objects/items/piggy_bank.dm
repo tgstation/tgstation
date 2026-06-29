@@ -124,23 +124,28 @@
 		if(95 to INFINITY)
 			balloon_alert(user, "brimming with cash")
 
-/obj/item/piggy_bank/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	var/creds_value = item.get_item_credit_value()
+/obj/item/piggy_bank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/creds_value = tool.get_item_credit_value()
 	if(isnull(creds_value))
-		return ..()
+		return NONE
 
 	var/dosh_amount = calculate_dosh_amount()
 
 	if(dosh_amount >= maximum_value)
 		balloon_alert(user, "it's full!")
-	else if(dosh_amount + creds_value > maximum_value)
+		return ITEM_INTERACT_BLOCKING
+
+	if(dosh_amount + creds_value > maximum_value)
 		balloon_alert(user, "too much cash!")
-	else if(!user.transferItemToLoc(item, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
 		balloon_alert(user, "stuck in your hands!")
-	else
-		balloon_alert(user, "inserted [creds_value] creds")
-		sanitize_piggy_bank_contents_len()
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "inserted [creds_value] creds")
+	sanitize_piggy_bank_contents_len()
+	return ITEM_INTERACT_SUCCESS
 
 ///Returns the total amount of credits that its contents amount to.
 /obj/item/piggy_bank/proc/calculate_dosh_amount()
