@@ -85,7 +85,7 @@
 		loaded = tool //tool.loc is src at this point.
 		loaded.set_pipecleaner_color(colors[current_color_index])
 		loaded.max_amount = max_amount //We store a lot.
-		update_appearance
+		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/stack/pipe_cleaner_coil/loading_coil = tool
