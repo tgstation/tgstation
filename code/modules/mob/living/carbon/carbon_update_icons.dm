@@ -505,7 +505,7 @@
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
 		if(texture.can_texture_bodypart(src))
 			. += texture.icon_render_key()
-	if(ishuman(owner))
+	if(ishuman(owner) && !isdummy(owner)) // cache height because we apply height filters to bodypart images, but not for dummies, they have an optimization
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
@@ -533,7 +533,7 @@
 		if(overlay.can_draw_on_bodypart(src, owner))
 			. += overlay.icon_render_key(src)
 	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
-	if(ishuman(owner))
+	if(ishuman(owner) && !isdummy(owner)) // cache height because we apply height filters to bodypart images, but not for dummies, they have an optimization
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	return .
