@@ -54,8 +54,6 @@
 #define LIMB_COLOR_FISH_INFUSION 15
 /// Carp infusion color priority
 #define LIMB_COLOR_CARP_INFUSION 20
-/// Untextured fish suicide color priority
-#define LIMB_COLOR_CS_SOURCE_SUICIDE 30
 /// Base priority for atom colors, gets atom priorities added to it
 #define LIMB_COLOR_ATOM_COLOR 40
 /// Voidwalker effect color priority

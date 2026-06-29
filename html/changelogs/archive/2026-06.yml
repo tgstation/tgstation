@@ -331,5 +331,254 @@
       (e.g. lockers, mechs
   SmArtKar:
   - image: Changed tendril regeneration outlinefrom bright green to maroon red
+  SyncIt21:
+  - rscdel: removes the welder from the engiborg omnitool. They are now separate entities
+      again
+  - qol: The omnitool radial menu won't show the same selected tool again reducing
+      clutter
   timothymtorres:
   - code_imp: Reorganize shuttle maps into separate folders
+2026-06-14:
+  CabinetOnFire:
+  - bugfix: Fixes bug where sig_remove_from_blackboard would try to numerically index
+      a regular list
+  FalloutFalcon:
+  - bugfix: Clients who sit in the lobby after pregame will no longer have there ambience
+      disabled till they reconnect
+  Ghommie:
+  - bugfix: You no longer waddle when buckled to something.
+  Melbert:
+  - rscadd: You can now deconstruct first aid stations with a screwdriver and a crowbar.
+  - rscadd: You can now buy first aid station circuitboards from cargo for 1200 credits.
+  - rscadd: Most medical supplies ordered from cargo now come in DeForest crates.
+      Sansufentanyl comes in an Interdyne create.
+  - balance: As they can now be replaced, first aid station armor has been reduced.
+  - balance: Emergency first aid stations now heal twice as fast but also take twice
+      as long to recharge.
+  SmArtKar:
+  - bugfix: Fixed rugs runtiming when cleaning objects
+  - bugfix: Fixed harddels in escape menu
+  carshalash:
+  - qol: Made certain cocktails reflect real-world ratios. Including gin fizz, rum
+      and coke, whiskey cola/soda, screwdriver, and both tonic cocktails.
+  lelandkemble:
+  - bugfix: fixed a runtime in pathfinding
+  - bugfix: fixed a runtime when breaking a moneybot without money
+  - bugfix: '"fixed" a runtime with gas mask filters'
+  remove32:
+  - bugfix: statpanel uses year offset
+2026-06-15:
+  Ben10Omintrix:
+  - bugfix: baby stoats can now become adults
+  - rscadd: baby stoats are added to the spawn pool of maints, (the overall chance
+      of running into a stoat whether adult/baby remains the same)
+  CabinetOnFire:
+  - bugfix: Fixes a hard-del and signal override with sound tokens
+  Iamgoofball:
+  - rscadd: Added support for Radio TTS. You will now hear players over the radio
+      via the TTS system.
+  - rscadd: Configure this in Game Options under the Sound tab.
+  - sound: Re-did blips to be significantly nicer sounding and way better.
+  - sound: Alien speech you don't understand now comes through as Blips. If you have
+      TTS entirely disabled, you won't hear blips.
+  - sound: The Tram and Computers now utilize the TTS system. Configs have been added
+      to set a consistent voice.
+  - sound: TTS audio now utilizes 3D audio; you can now walk away from people saying
+      stupid shit and it gets quieter.
+  - sound: Blips also now include more customization options, and a dedicated Blips
+      preview button by clicking the leaf icon.
+  - rscdel: The configuration to disable TTS on whispering has been removed, as it
+      is no longer needed and also interferes with radio TTS functioning properly.
+  LemonInTheDark:
+  - bugfix: End of round mapvotes will now properly default to the only option if
+      only one map is votable.
+  Melbert:
+  - qol: Gizmo sends a message when turning on and off
+  - qol: 'If your gun is empty, and you are on combat mode, and you are adjacent to
+      someone, and you click on them: you will perform a gun bash rather than just
+      dry firing.'
+  SmArtKar:
+  - bugfix: Fixed weather on multi-z maps
+  - qol: Particle weather can now be disabled in favor of old weather. !!! AMD GPU
+      USERS NEED TO SWITCH TO OLD WEATHER TO FIX THE LAG!!!
+  - bugfix: Fixed recovered crew showing up as uncategorized antags
+  lelandkemble:
+  - bugfix: fixed a runtime when fishing up no fish
+2026-06-16:
+  Aliceee2ch:
+  - balance: Gender changing potion has a 5 seconds do_after now.
+  CabinetOnFire:
+  - code_imp: Adds playsoundtoken() which lets you play one shot sound tokens
+  - sound: You can now hear screams get louder as you get closer, spooky!
+2026-06-17:
+  Melbert:
+  - qol: Adds an antag info panel for revolution
+  - qol: Codewords can now consist of any station area, and excludes areas not on
+      the current station
+  - qol: Head Revolutionaries (not their underlings) get codewords
+  Okram0:
+  - rscadd: Zombies are now stam resistant
+  - rscadd: Zombies no longer suffer from mood
+  - balance: Zombies are now moderately faster
+  SmArtKar:
+  - bugfix: Fixed slime feeding runtimes
+  - bugfix: Fixed wraith cloaking module runtimes
+  - qol: Materials can now be directly ejected from autolathes rather than needing
+      to be printed.
+  - bugfix: Fixed a bunch of runtimes caused when you try to perform surgery on cyborgs
+      (which cannot be done in the first place)
+  - bugfix: Fixed earthcracker not getting spent on mining z levels
+  SyncIt21:
+  - bugfix: Tooltips no longer cover the whole borgs hands held items
+  lelandkemble:
+  - bugfix: Being given a nonfunctional skeleton arm no longer disables both hands
+  levels0:
+  - rscadd: new gizmode
+  - bugfix: you can now interact with item gizmo wires
+2026-06-18:
+  Aliceee2ch:
+  - bugfix: Turtles now come in the stasis crates and can no longer grow inside of
+      a cargo shuttle (or, well, untill you open the crate in general). This allows
+      you to ACTUALLY interact with turtles growing feature before they come grown
+      up.
+  ArcaneMusic:
+  - bugfix: The Moon Outpost 19 away mission now correctly uses the same gray-sand
+      turf when mining rocks.
+  - map: Tweaked some minor object placements and names across Moon Outpost 19.
+  Ghommie:
+  - bugfix: Fish traits injected with the fish gene gun should work a little better
+      in some cases.
+  - bugfix: Fixed the e-katana not being linked to the recall module automatically
+      when rolling ninja.
+  - bugfix: Moved a recipe that has meat and eggs in it from mothic cuisine and into
+      martian cuisine.
+  Goatto:
+  - bugfix: Fixes non `/obj/item/clothing/under` items from applying the `fresh_laundry`
+      mood_event
+  Wisemonster:
+  - bugfix: Legion cores no longer feed the user.
+  - code_imp: The fully_heal proc now checks for the HEAL_ADMIN flag before restoring
+      hunger.
+  flleeppyy:
+  - bugfix: Camera can now take 1x1 photos so new records can be uploaded
+  timothymtorres:
+  - bugfix: Fix deep fryer to be refillable
+2026-06-19:
+  Ghommie:
+  - refactor: Refactored a couple things around food/recipe complexity (what food
+      buffs depend on). Technically, you can now kiss that pizza toilet, which you
+      crafted (right?), with the chef kiss skillchip enabled to add "love" to its
+      reagents.
+  Hatterhat:
+  - bugfix: Alien welding tools no longer have mixed directions when held in the right
+      hand.
+  - bugfix: Inactive transforming weapons should now use their base throwspeeds properly
+      when turned off.
+  Macaroni:
+  - rscadd: Alt + Right Click now toggles shoe layers above or below uniforms.
+  Melbert:
+  - balance: Muzzles prevent verbal spellcasting
+  RusselNotSCP:
+  - qol: Bottles in the booze-o-mat vending machine have been re-alphabetized.
+  - bugfix: Jester's Grenadine has been moved to the non-alcoholic section of the
+      booze-o-mat.
+  SmArtKar:
+  - qol: TGUI list selectors and Spawn verb now use smooth scrolling with arrow keys
+  - bugfix: Removed DNA infuser sprite from gizmo icon pool
+  - bugfix: Fixed bioscrambler runtiming when the target is missing bodyparts
+  - bugfix: Made fire overlay properly mask when using mining sphere MODule
+  lelandkemble:
+  - bugfix: fixed a runtime with bluespace meteors
+  - bugfix: fixed connecting a tank to a TTV the other way around
+  timothymtorres:
+  - code_imp: Add immunity checks for atmos traits for simple/basic mobs
+2026-06-20:
+  lelandkemble:
+  - bugfix: fixed a runtime when an exodrone rolls the shrubbery crate cargo crate
+      chip from the abandoned cargo ship
+2026-06-21:
+  UvvU:
+  - qol: made deploying and undeploying a modsuit no longer ALWAYS drop your suit
+      storage item, instead keeping it if it's valid
+2026-06-22:
+  Ghommie:
+  - qol: More diverse floor decal colors during pride week so you aren't subjected
+      exclusively to rainbow-hued decals for a week straight (or should I say "for
+      a week gay"?).
+  - bugfix: Fixed the order of floor decal palettes for a couple holidays.
+  Melbert:
+  - code_imp: Reorganized human layering, report any oddities with sprites, such as
+      mislayered equipment.
+  - refactor: Refactored cult halos, report any oddities like them not appearing when
+      they should.
+  - refactor: Refactored mutation visuals, they're now affected by height! Report
+      any oddities like them disappearing.
+  - refactor: Refactored mutation species handling, report any oddities like lizards
+      with hulk.
+  SmArtKar:
+  - bugfix: Projectile lighting is no longer shown in the right click menu
+2026-06-26:
+  EnterTheJake:
+  - balance: The AI Upload Console now requires AI Uplaod access for laws to be uploaded
+      (Captain,HoP,RD), emag also works.
+  - balance: The hacked AI upload board can bypass the access requirement and has
+      had its time requirement removed.
+  - image: added 2 new overlays for the AI upload console.
+  Hatterhat:
+  - qol: ChemMasters now have on-the-fly custom transfer amount support. Set it with
+      the number input by the eject button. One-time custom transfer amounts remain
+      usable with the horizontal ellipsis button.
+  Melbert:
+  - balance: Obsessions get moderately stronger grabs against their objective targets
+      (this includes their obsession and any other kill/theft targets they may have).
+  - balance: While standing near their obsession (for 20 seconds or if they are incapacitated),
+      Obsessions get slightly stronger grabs against anyone, rather than just their
+      objective targets.
+  - balance: While standing near their obsession (for 20 seconds or if they are incapacitated),
+      Obsessions get slight stamina damage resistance.
+  - balance: Obsession stammering has been reduced in severity a bit, and also becomes
+      less likely the longer you stand around your obsession.
+  - balance: Obsession emotes have been made a bit less obvious, and also become less
+      likely the longer you stand around your obsession.
+  - balance: Taking Psicodine or drinking alcohol will prevent Obsessions from stammering
+      or emoting around their obsession, but also disables their stamina resistance
+      and stronger grabs.
+  - balance: Obsessions get a "permanent" mood bonus for killing their obsession (until
+      they are revived).
+  - refactor: Obsessed has been refactored significantly. It will now play a lot nicer
+      with mindswaps. Report any oddities.
+  - refactor: Grab strength has been refactored a bit, primarily affects martial arts
+      and drunken brawling. Report any oddities.
+2026-06-27:
+  CabinetOnFire:
+  - qol: DNA console now automatically matches genetic data with any held genetic
+      sequence scanner, for more efficient geneticist shenanigans!
+  Ghommie:
+  - balance: Wearing a hard hat or any helmet as a station drone will actually improve
+      your armor values now!
+  Melbert:
+  - bugfix: Icebox gulag console doesn't vanish from reality
+  - bugfix: Cybernetic reskinning should break less.
+  - bugfix: Horns and cat ears should be cut off less by height.
+  - bugfix: Bodypart textures should apply more consistently.
+  - refactor: Mutant parts like moth wings, lizard tails, cat eats, etc. have been
+      refactored a tiny bit, report any oddities.
+  - refactor: Bodypart textures were refactored a tiny bit, report any oddities.
+  - refactor: Refactored the way height works, report anything weird looking things
+      involving that.
+  StrangeWeirdKitten:
+  - bugfix: ''' and " works again'
+  vinylspiders:
+  - bugfix: fixed an issue where you could exceed the smartfridge's capacity by using
+      a plant bag
+2026-06-28:
+  Ghommie:
+  - map: Made it a bit harder to get stuck on away missions if you willingly or unwillingly
+      use teleportation techniques. You still definitely can, but usually only on
+      sections of the map that can be reached one way or another, including rock walls
+      that can be mined, just not those that cannot.
+  - image: Updated the visuals for indestructible rock walls to match the destructible
+      ones.
+  - balance: RNG teleportation should work marginally better around areas and turfs
+      where teleportation is restricted by skipping them instead of having a chance
+      to fumble because of that.

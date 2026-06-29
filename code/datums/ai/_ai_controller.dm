@@ -935,7 +935,6 @@ multiple modular subtrees with behaviors
 	while(index <= length(remove_queue))
 		var/list/next_to_clear = remove_queue[index]
 		for(var/inner_value in next_to_clear)
-			var/associated_value = next_to_clear[inner_value]
 			// We are a lists of lists, add the next value to the queue so we can handle references in there
 			// (But we only need to bother checking the list if it's not empty.)
 			if(islist(inner_value) && length(inner_value))
@@ -945,6 +944,13 @@ multiple modular subtrees with behaviors
 			else if(inner_value == source)
 				next_to_clear -= inner_value
 
+			//if this is the case stop here. This means the list isn't associative (because an assoc list couldnt have a key for a number!)
+			if(isnum(inner_value))
+				continue
+
+			var/associated_value = next_to_clear[inner_value]
+			if(!associated_value) //This wasn't an associated list! we lied! its all been a trick. Try again next time.
+				continue
 			// We are an assoc lists of lists, the list at the next value so we can handle references in there
 			// (But again, we only need to bother checking the list if it's not empty.)
 			if(islist(associated_value) && length(associated_value))

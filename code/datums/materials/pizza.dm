@@ -52,7 +52,8 @@
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
 		foodtypes = GRAIN | DAIRY | VEGETABLES, \
 		eat_time = 3 SECONDS, \
-		tastes = /obj/item/food/pizza/margherita::tastes)
+		tastes = /obj/item/food/pizza/margherita::tastes,\
+		handmade_complexity = /obj/item/food/pizzaslice/margherita::crafting_complexity)
 
 /datum/material/pizza/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
