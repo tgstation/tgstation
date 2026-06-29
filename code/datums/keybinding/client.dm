@@ -78,7 +78,7 @@
 		return
 
 	if(user.mob.hud_used)
-		hud_used.show_hud() //Shows the next hud preset
+		user.mob.hud_used.show_hud() //Shows the next hud preset
 		to_chat(user, span_info("Switched HUD mode. Press F12 to toggle."))
 	else
 		to_chat(user, span_warning("This mob type does not use a HUD."))
