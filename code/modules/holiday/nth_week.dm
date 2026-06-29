@@ -64,7 +64,7 @@
 	begin_month = AUGUST
 	begin_weekday = FRIDAY
 
-/datum/holiday/beer/getStationPrefix()
+/datum/holiday/beer/get_station_name()
 	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/nth_week/moth
@@ -82,7 +82,7 @@
 		end_week += 1
 	return ..(dd, mm, yyyy, ddd)
 
-/datum/holiday/nth_week/moth/getStationPrefix()
+/datum/holiday/nth_week/moth/get_station_name()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
 /datum/holiday/nth_week/ice_cream
@@ -91,5 +91,5 @@
 	begin_month = JULY
 	begin_weekday = SUNDAY
 
-/datum/holiday/nth_week/ice_cream/getStationPrefix()
+/datum/holiday/nth_week/ice_cream/get_station_name()
 	return pick("Ice Cream", "Gelato", "Semifreddo", "Cornuto", "Soft Serve", "Cone", "Ice", "Cream", "I Scream", "Parfait", "Straccciatella", "Sherbet", "Snow", "Affogato", "Mochi", "Tartufo", "Sundae", "Neapolitan")
