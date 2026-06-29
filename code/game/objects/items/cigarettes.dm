@@ -344,22 +344,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/cigarette/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/cigarette/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(lit)
-		return ..()
+		return NONE
 
-	var/lighting_text = W.ignition_effect(src, user)
+	var/lighting_text = tool.ignition_effect(src, user)
 	if(!lighting_text)
-		return ..()
+		return NONE
 
 	if(!check_oxygen(user)) //cigarettes need oxygen
 		balloon_alert(user, "no air!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
-	if(smoketime > 0)
-		light(lighting_text)
-	else
+	if(!smoketime)
 		to_chat(user, span_warning("There is nothing to smoke!"))
+		return ITEM_INTERACT_BLOCKING
+
+	light(lighting_text)
+	return ITEM_INTERACT_SUCCESS
 
 /// Checks that we have enough air to smoke
 /obj/item/cigarette/proc/check_oxygen(mob/user)
@@ -971,18 +973,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
-	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
+/obj/item/cigarette/pipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!(istype(tool, /obj/item/food/grown) || istype(tool, /obj/item/food/drug)))
 		return ..()
 
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/to_smoke = thing
+	var/obj/item/to_smoke = tool
 	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You stuff [to_smoke] into [src]."))
 	smoketime = 13 MINUTES
@@ -991,6 +993,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(to_smoke.reagents)
 		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transferred_by = user)
 	qdel(to_smoke)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/cigarette/pipe/attack_self(mob/user)

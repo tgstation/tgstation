@@ -69,10 +69,11 @@
 /obj/effect/portal/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
-/obj/effect/portal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(user && Adjacent(user))
-		teleport(user)
-		return TRUE
+/obj/effect/portal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!Adjacent(user))
+		return ..()
+	teleport(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

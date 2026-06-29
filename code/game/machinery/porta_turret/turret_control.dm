@@ -91,27 +91,30 @@
 		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/turretid/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(machine_stat & BROKEN)
-		return
+		return NONE
 
 	if (issilicon(user))
 		return attack_hand(user)
 
-	var/id = attacking_item.GetID()
+	var/card = tool.GetID()
 
-	if(isnull(id))
-		return
+	if(isnull(card))
+		return NONE
 
-	if (check_access(id))
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning("The turret control is unresponsive!"))
-			return
-
-		locked = !locked
-		to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
-	else
+	if(!check_access(card))
 		to_chat(user, span_alert("Access denied."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("The turret control is unresponsive!"))
+		return ITEM_INTERACT_BLOCKING
+
+	locked = !locked
+	to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
