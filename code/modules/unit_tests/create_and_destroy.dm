@@ -20,6 +20,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
+#if defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
 	var/runner_count = length(config.maplist)
 
 	var/split_up_amount = floor(total_amount_to_check / runner_count)
@@ -34,6 +35,11 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/start_index = (what_map_index_are_we - 1) * split_up_amount
 	// Instead of super trying to make it an equal split, we just give the remainder tests to the final runner
 	var/end_index = (what_map_index_are_we == runner_count) ? total_amount_to_check : start_index + split_up_amount
+#else
+	// not ci? do everything
+	var/start_index = 0
+	var/end_index = total_amount_to_check
+#endif
 
 	// +1 because byond's list.Copy() implementation is weird
 	type_paths_to_check = type_paths_to_check.Copy(start_index, end_index + 1)
