@@ -1302,7 +1302,6 @@
 	if(!visual)
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
-	face_atom(pointed_atom)
 	return TRUE
 
 #undef HOLOGRAM_CHOICE_CHARACTER
