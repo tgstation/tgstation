@@ -183,9 +183,7 @@
  *
  * required uiref ref The UI that was closed.
  */
-/client/verb/uiclose(window_id as text)
-	set name = "uiclose"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/client, uiclose, "uiclose", null, window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return

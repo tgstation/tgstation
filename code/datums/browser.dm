@@ -484,9 +484,7 @@
 /// called when a browser popup window is closed after registering with proc/onclose()
 /// if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 /// otherwise, just reset the client mob's machine var.
-/client/verb/windowclose(atomref as text)
-	set name = ".windowclose"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/client, windowclose, ".windowclose", null, atomref as text)
 
 	if(atomref == "null")
 		return

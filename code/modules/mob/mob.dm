@@ -883,14 +883,10 @@ GAME_VERB(/mob, reset_ui_positions_for_mob, "Reset UI Positions", "OOC")
 	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
-	set name = ".click"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/mob, DisClick, ".click", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
-/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
-	set name = ".dblclick"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
 /// Adds this list to the output to the stat browser

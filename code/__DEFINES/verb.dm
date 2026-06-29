@@ -88,6 +88,30 @@ _GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, FALSE, #
 #define GAME_VERB_NATIVE_INSTANT(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
 _GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, TRUE, ##verb_args)
 
+/// For where you still need native args, ie, when called directly from the skin or some BYOND function
+#define _GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, is_instant, verb_args...) \
+/datum/verb_metadata##owner_type/##verb_path_name \
+{ \
+	name = ##verb_name; \
+	category = ##verb_category; \
+	verb_path = ##owner_type/verb/##verb_path_name; \
+	body_path = ##owner_type/proc/__gvb_##verb_path_name; \
+}; \
+##owner_type/verb/##verb_path_name(##verb_args) \
+{ \
+	set name = ##verb_name; \
+	set hidden = TRUE; \
+	set instant = ##is_instant; \
+	__gvb_##verb_path_name(arglist(args)); \
+}; \
+##owner_type/proc/__gvb_##verb_path_name(##verb_args)
+
+#define GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
+_GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, FALSE, ##verb_args)
+
+#define GAME_VERB_NATIVE_INSTANT(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
+_GAME_VERB_NATIVE(owner_type, verb_path_name, verb_name, verb_category, TRUE, ##verb_args)
+
 #define _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, show_in_context_menu, is_hidden) \
 /datum/verb_metadata##owner_type/##verb_path_name \
 { \
