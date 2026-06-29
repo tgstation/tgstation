@@ -27,6 +27,8 @@ const ARG_TYPE_ENTITY =
   ARG_TYPE_DATUM |
   ARG_TYPE_ATOM;
 
+const ARG_SOURCE_LIST = 'list';
+
 function toKebab(name: string): string {
   return name.replaceAll(' ', '-');
 }
@@ -41,6 +43,10 @@ function isEntityArg(arg: VerbArg): boolean {
 
 function isTextArg(arg: VerbArg): boolean {
   return (arg.arg_type & (ARG_TYPE_TEXT | ARG_TYPE_MESSAGE)) !== 0;
+}
+
+function isListArg(arg: VerbArg): boolean {
+  return arg.source === ARG_SOURCE_LIST && Array.isArray(arg.options) && arg.options.length > 0;
 }
 
 function parseArgs(raw: string): string[] {
@@ -118,6 +124,7 @@ type SuggestionState = {
   verbSuggestions: AdminVerb[];
   typepathSuggestions: string[];
   targetSuggestions: { name: string; ref: string }[];
+  listSuggestions: string[];
   allSuggestions: unknown[];
 };
 
@@ -133,6 +140,7 @@ function useSuggestions(
 
   const isCurrentTypepath = currentArg ? isTypepathArg(currentArg) : false;
   const isCurrentEntity = currentArg ? isEntityArg(currentArg) : false;
+  const isCurrentList = currentArg ? isListArg(currentArg) : false;
 
   const verbSuggestions: AdminVerb[] = (() => {
     if (selectedVerb || input.length === 0) return [];
@@ -175,13 +183,24 @@ function useSuggestions(
           .slice(0, 8)
       : [];
 
+  const listSuggestions =
+    selectedVerb && isCurrentList && currentArg?.options
+      ? currentArg.options.filter(
+          (o) =>
+            currentToken.length === 0 ||
+            o.toLowerCase().startsWith(currentToken.toLowerCase()),
+        )
+      : [];
+
   const allSuggestions = isCurrentTypepath
     ? typepathSuggestions
-    : selectedVerb
-      ? targetSuggestions
-      : verbSuggestions;
+    : isCurrentList
+      ? listSuggestions
+      : selectedVerb
+        ? targetSuggestions
+        : verbSuggestions;
 
-  return { verbSuggestions, typepathSuggestions, targetSuggestions, allSuggestions };
+  return { verbSuggestions, typepathSuggestions, targetSuggestions, listSuggestions, allSuggestions };
 }
 
 export function CommandBar() {
@@ -214,10 +233,12 @@ export function CommandBar() {
     verbSuggestions,
     typepathSuggestions,
     targetSuggestions,
+    listSuggestions,
     allSuggestions,
   } = useSuggestions(input, selectedVerb, currentArg, currentToken);
   const hasSuggestions = allSuggestions.length > 0;
   const isCurrentArgTypepath = currentArg ? isTypepathArg(currentArg) : false;
+  const isCurrentArgList = currentArg ? isListArg(currentArg) : false;
 
   useEffect(() => {
     Byond.sendMessage('verbs/request_verbs');
@@ -346,6 +367,8 @@ export function CommandBar() {
         selectVerb(verbSuggestions[selectedIndex]);
       } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
         selectTypepath(typepathSuggestions[selectedIndex]);
+      } else if (isCurrentArgList && listSuggestions.length > 0) {
+        fillArg(listSuggestions[selectedIndex]);
       } else if (selectedVerb && targetSuggestions.length > 0) {
         fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
       }
@@ -362,6 +385,8 @@ export function CommandBar() {
         } else {
           selectVerb(verbToSelect);
         }
+      } else if (isCurrentArgList && listSuggestions.length > 0) {
+        fillArg(listSuggestions[selectedIndex]);
       } else if (selectedVerb && targetSuggestions.length > 0 && !isCurrentArgTypepath) {
         fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
       } else if (selectedVerb) {
@@ -460,7 +485,18 @@ export function CommandBar() {
                       <span className="CommandBar__typepath">{path}</span>
                     </div>
                   ))
-                : targetSuggestions.map((target, i) => (
+                : isCurrentArgList
+                  ? listSuggestions.map((option, i) => (
+                      <div
+                        key={option}
+                        className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
+                        onMouseEnter={() => setSelectedIndex(i)}
+                        onClick={() => fillArg(option)}
+                      >
+                        {option}
+                      </div>
+                    ))
+                  : targetSuggestions.map((target, i) => (
                     <div
                       key={target.ref}
                       className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}

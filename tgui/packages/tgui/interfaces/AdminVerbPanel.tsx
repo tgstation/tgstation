@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
   Input,
   NumberInput,
   Section,
@@ -19,6 +20,7 @@ type VerbArgument = {
   arg_type: number;
   type_path: string;
   source: string | null;
+  options?: string[];
 };
 
 type Verb = {
@@ -61,6 +63,7 @@ const ARG_TYPEPATH = 1 << 11;
 
 const ARG_ENTITY =
   ARG_MOB | ARG_OBJ | ARG_TURF | ARG_AREA | (1 << 9) | (1 << 10);
+const ARG_SOURCE_LIST = 'list';
 const ARG_PRIMITIVE =
   ARG_TEXT | ARG_NUM | ARG_MESSAGE | ARG_SOUND | ARG_ICON | ARG_TYPEPATH;
 
@@ -341,6 +344,21 @@ function ArgInput(props: ArgInputProps) {
             height="80px"
             value={(value as string) || ''}
             onChange={onChange}
+          />
+        </Stack.Item>
+      </Stack>
+    );
+  }
+  if (arg.source === ARG_SOURCE_LIST && arg.options) {
+    return (
+      <Stack align="center">
+        <Stack.Item basis="100px">{arg.name}</Stack.Item>
+        <Stack.Item grow>
+          <Dropdown
+            options={arg.options}
+            selected={value as string}
+            onSelected={onChange}
+            width="100%"
           />
         </Stack.Item>
       </Stack>

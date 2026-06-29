@@ -41,12 +41,15 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 		)
 
 		for(var/datum/verb_arg_metadata/arg in verb.metadata?.arguments)
-			verb_entry["arguments"] += list(list(
+			var/list/arg_entry = list(
 				"name" = arg.name,
 				"arg_type" = arg.arg_type,
 				"type_path" = "[arg.type_path]",
 				"source" = arg.source,
-			))
+			)
+			if(length(arg.options))
+				arg_entry["options"] = arg.options
+			verb_entry["arguments"] += list(arg_entry)
 
 		verbs_data += list(verb_entry)
 		categories |= list(verb.category || "Unsorted")
