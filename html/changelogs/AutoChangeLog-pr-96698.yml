@@ -1,4 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - bugfix: "Crafting shivs no longer inverts the do_after check"
