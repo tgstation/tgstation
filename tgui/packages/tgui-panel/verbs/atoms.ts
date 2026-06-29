@@ -4,6 +4,7 @@ export type VerbArg = {
   name: string;
   arg_type: number;
   source: string | null;
+  options?: string[];
 };
 
 export type AdminVerb = {

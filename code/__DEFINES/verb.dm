@@ -214,7 +214,13 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 
 #define VERB_ARG_TYPE_ENTITY (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_DATUM | VERB_ARG_TYPE_ATOM)
 
+/// Picks from a fixed list of options. Use with VERB_ARG_LIST.
+#define VERB_ARG_LIST(name, options_list) \
+	var/static/____reg_##name = ____register_verb_arg_list(__TYPE__, __PROC__, #name, options_list); \
+	var/##name = structured_args[#name]
+
 // Argument source constants
 #define VERB_ARG_SOURCE_INPUT "input"
 #define VERB_ARG_SOURCE_WORLD "world"
 #define VERB_ARG_SOURCE_VIEW "view"
+#define VERB_ARG_SOURCE_LIST "list"

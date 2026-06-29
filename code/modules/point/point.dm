@@ -99,7 +99,7 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-GAME_VERB_CONTEXT(/mob, pointed, "Point To", null, /atom)
+GAME_VERB_CONTEXT(/mob, pointed, "Point To", "", null, /atom)
 	VERB_ARG(A, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	if(isnull(A) || istype(A, /obj/effect/temp_visual/point) || isarea(A))

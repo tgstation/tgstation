@@ -73,6 +73,8 @@ SUBSYSTEM_DEF(verbs)
 	return collected
 
 /datum/controller/subsystem/verbs/proc/prompt_for_arg(client/user, verb_name, datum/verb_arg_metadata/arg)
+	if(arg.source == VERB_ARG_SOURCE_LIST && length(arg.options))
+		return tgui_input_list(user, arg.name, verb_name, arg.options)
 	if(arg.arg_type & VERB_ARG_TYPE_NUM)
 		return tgui_input_number(user, arg.name, verb_name)
 	if(arg.arg_type & VERB_ARG_TYPE_TEXT)
@@ -116,12 +118,18 @@ SUBSYSTEM_DEF(verbs)
 	if(meta)
 		entry["type"] = "[meta.verb_path]"
 		for(var/datum/verb_arg_metadata/arg in meta.arguments)
-			arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
+			var/list/arg_entry = list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source)
+			if(length(arg.options))
+				arg_entry["options"] = arg.options
+			arg_data += list(arg_entry)
 	else
 		var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(av)
 			entry["type"] = "[av.verb_path]"
 			for(var/datum/verb_arg_metadata/arg in av.metadata?.arguments)
-				arg_data += list(list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source))
+				var/list/arg_entry = list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source)
+				if(length(arg.options))
+					arg_entry["options"] = arg.options
+				arg_data += list(arg_entry)
 
 	return entry

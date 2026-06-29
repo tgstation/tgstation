@@ -17,13 +17,15 @@
 	var/arg_type
 	var/type_path
 	var/source
+	var/list/options
 
-/datum/verb_arg_metadata/New(arg_name, arg_arg_type, arg_type_path, arg_source)
+/datum/verb_arg_metadata/New(arg_name, arg_arg_type, arg_type_path, arg_source, list/arg_options)
 	. = ..()
 	name = arg_name
 	arg_type = arg_arg_type
 	type_path = arg_type_path
 	source = arg_source
+	options = arg_options
 
 /datum/verb_arg_metadata/proc/get_targets(client/viewer)
 	switch(source)
@@ -87,4 +89,16 @@ GLOBAL_LIST_INIT(____pending_verb_args, list())
 	if(!GLOB.____pending_verb_args[verb_key])
 		GLOB.____pending_verb_args[verb_key] = list()
 	GLOB.____pending_verb_args[verb_key] += list(new /datum/verb_arg_metadata(arg_name, arg_type, arg_type_path, arg_source))
+	return TRUE
+
+/proc/____register_verb_arg_list(owner_type, proc_path, arg_name, list/options)
+	var/verb_key
+	if(ispath(owner_type, /datum/admin_verb))
+		verb_key = owner_type
+	else
+		verb_key = proc_path
+
+	if(!GLOB.____pending_verb_args[verb_key])
+		GLOB.____pending_verb_args[verb_key] = list()
+	GLOB.____pending_verb_args[verb_key] += list(new /datum/verb_arg_metadata(arg_name, VERB_ARG_TYPE_TEXT, null, VERB_ARG_SOURCE_LIST, options))
 	return TRUE
