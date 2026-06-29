@@ -940,18 +940,17 @@
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
-		. = ITEM_INTERACT_SUCCESS  // everything after this shouldn't result in attackby
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
-			return .
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start cutting through the outer grille."))
 		if(!tool.use_tool(src, user, 10, volume=100))
-			return .
+			return ITEM_INTERACT_BLOCKING
 		if(!panel_open)  // double check it wasn't closed while we were trying to snip
-			return .
+			return ITEM_INTERACT_BLOCKING
 		user.visible_message(span_notice("[user] cut through [src]'s outer grille."),
 							span_notice("You cut through [src]'s outer grille."))
 		security_level = AIRLOCK_SECURITY_PLASTEEL_O
-		return .
+		return ITEM_INTERACT_SUCCESS
 	if(note)
 		if(IsReachableBy(user))
 			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
@@ -1073,6 +1072,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/proc/try_reinforce(mob/user, obj/item/stack/sheet/material, amt_required, new_security_level)
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && shock(user, 75))
+		return ITEM_INTERACT_BLOCKING
 	if(material.get_amount() < amt_required)
 		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
 		return ITEM_INTERACT_BLOCKING
@@ -1087,9 +1088,12 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/door/airlock/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
+		return ATTACK_FAILED
+	return ..()
+
 /obj/machinery/door/airlock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (tool.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
-		return ITEM_INTERACT_SUCCESS
 	add_fingerprint(user)
 
 	if(is_wire_tool(tool) && panel_open)
