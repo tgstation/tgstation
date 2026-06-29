@@ -416,7 +416,7 @@
 	register_context()
 
 /atom/movable/screen/alert/give/Destroy()
-	QDEL_NULL(offer)
+	offer = null
 	return ..()
 
 /atom/movable/screen/alert/give/add_context(atom/source, list/context, obj/item/held_item, mob/user)

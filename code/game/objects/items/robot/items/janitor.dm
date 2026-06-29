@@ -12,7 +12,8 @@
 	. = ..()
 	var/mob/living/silicon/robot = loc
 	if(!istype(robot))
-		CRASH("[src] Initialized without a connected mob/living/silicon")
+		stack_trace("[src] Initialized without a connected mob/living/silicon")
+		return INITIALIZE_HINT_QDEL
 	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
 	module_list = WEAKREF(model)
 	robot.AddElement(/datum/element/offered_when_pulled)
@@ -33,7 +34,7 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/borg/cleaner_box/Destroy(force)
-	if(hose.borg_hose)
+	if(hose?.borg_hose)
 		QDEL_NULL(hose.borg_hose)
 	if(deployed)
 		hose.retract_hose()
@@ -91,6 +92,7 @@
 	playsound(hose, 'sound/items/vacuum/vacuum_hose.ogg', 100, TRUE)
 	deployed = TRUE
 	update_icon(UPDATE_OVERLAYS)
+	offerer.remove_status_effect(/datum/status_effect/offering)
 	return TRUE
 
 /obj/item/borg/cleaner_box/update_overlays()
