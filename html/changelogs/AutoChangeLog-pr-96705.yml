@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up station name generation, report any weird looking auto-generated station names"
+  - rscadd: "Pride holiday now has unique station prefixes"
