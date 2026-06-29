@@ -379,17 +379,17 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	. += GLOB.bear_pelt_recipes
 
 //Step one - dehairing.
-
-/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
-		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 5 SECONDS, target = src))
-			to_chat(user, span_notice("You cut the hair from [src.name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
-			use(amount)
-	else
+/obj/item/stack/sheet/animalhide/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
 		return ..()
+	playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
+	user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You cut the hair from [src.name]."))
+	new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
+	use(amount)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/animalhide/examine(mob/user)
 	. = ..()
