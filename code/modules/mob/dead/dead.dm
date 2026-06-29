@@ -22,7 +22,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	prepare_huds()
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
-		ASSIGN_GAME_VERB(src, /mob/dead/server_hop)
+		ASSIGN_GAME_VERB(src, /mob/dead, server_hop)
 	set_focus(src)
 	become_hearing_sensitive()
 	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[src.type]\]")
@@ -41,7 +41,7 @@ GAME_VERB_PROC(/mob/dead, server_hop, "Server Hop", "Jump to the other server", 
 	var/pick
 	switch(length(csa))
 		if(0)
-			UNASSIGN_GAME_VERB(src, /mob/dead/server_hop)
+			UNASSIGN_GAME_VERB(src, /mob/dead, server_hop)
 			to_chat(src, span_notice("Server Hop has been disabled."))
 		if(1)
 			pick = csa[1]

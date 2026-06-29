@@ -60,7 +60,7 @@
 	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
-	ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/show_laws_verb)
+	ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, show_laws_verb)
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -68,11 +68,11 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/ai_network_change)
-		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/ai_hologram_change)
-		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/botcall)
-		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/control_integrated_radio)
-		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai/set_automatic_say_channel)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_network_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_hologram_change)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, botcall)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, control_integrated_radio)
+		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, set_automatic_say_channel)
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src

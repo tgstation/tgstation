@@ -2,7 +2,7 @@
 
 GAME_VERB_PROC(/client, show_verbs, "Adminverbs - Show", "", ADMIN_CATEGORY_MAIN)
 
-	UNASSIGN_GAME_VERB(src, /client/show_verbs)
+	UNASSIGN_GAME_VERB(src, /client, show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)

@@ -11,7 +11,7 @@
 	var/icon/credits_icon = new(CREDITS_PATH)
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
-	ASSIGN_GAME_VERB(src, /client/ClearCredits)
+	ASSIGN_GAME_VERB(src, /client, ClearCredits)
 	var/static/list/credit_order_for_this_round
 	if(isnull(credit_order_for_this_round))
 		credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(credits_icon)) - "Thanks for playing!")
@@ -21,11 +21,11 @@
 		_credits += new /atom/movable/screen/credit(null, null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
-	UNASSIGN_GAME_VERB(src, /client/ClearCredits)
+	UNASSIGN_GAME_VERB(src, /client, ClearCredits)
 	qdel(credits_icon)
 
 GAME_VERB_PROC(/client, ClearCredits, "Hide Credits", "", "OOC")
-	UNASSIGN_GAME_VERB(src, /client/ClearCredits)
+	UNASSIGN_GAME_VERB(src, /client, ClearCredits)
 	QDEL_LIST(credits)
 	credits = null
 

@@ -34,7 +34,7 @@
 	. = ..()
 
 	GLOB.new_player_list += src
-	ASSIGN_GAME_VERB(src, /mob/dead/new_player/reset_menu_hud)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -356,7 +356,7 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
-	ASSIGN_GAME_VERB(src, /mob/dead/new_player/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
 
 ///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
