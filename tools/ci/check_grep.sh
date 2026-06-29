@@ -184,6 +184,13 @@ if $grep -i '(add_traits|remove_traits)\(.+,\s*src\)' "${code_files[@]}"; then
 	st=1
 fi;
 
+part "incorrect shuffle() usage"
+if $grep '^\t+shuffle\(.*\)$' "${code_files[@]}"; then
+    echo
+    echo -e "${RED}ERROR: shuffle() return was not assigned, use shuffle_inplace() instead if you wish to mutate the passed list!${NC}"
+    st=1
+fi;
+
 part "ensure proper lowertext usage"
 # lowertext() is a BYOND-level proc, so it can be used in any sort of code... including the TGS DMAPI which we don't manage in this repository.
 # basically, we filter out any results with "tgs" in it to account for this edgecase without having to enforce this rule in that separate codebase.
