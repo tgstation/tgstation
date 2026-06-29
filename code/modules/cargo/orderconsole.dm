@@ -165,7 +165,7 @@
 	return data
 
 /**
- * returns a list of supply packs by group
+ * returns a list of supply pack ui data by group
  */
 /obj/machinery/computer/cargo/proc/get_packs_data_by_group()
 	var/list/packs_by_group = list()
