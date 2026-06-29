@@ -151,7 +151,7 @@
 	cleaning = !cleaning
 	if(!user)
 		return COMPONENT_NO_DEFAULT_MESSAGE
-	playsound(src, 'sound/items/vacuum/vacuum_clack.ogg', 50, TRUE)
+	playsound(src, 'sound/items/vacuum/vacuum_clack.ogg', 30, TRUE)
 	if(cleaning) //CLEAN_SCRUB because if you get a borg to help you clean up a crime, you deserve to win.
 		balloon_alert(user, "cleaning")
 		AddComponent( \
