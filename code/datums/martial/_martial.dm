@@ -119,6 +119,17 @@
 
 	return grab_act(source, grabbing)
 
+/// Signal proc for [COMSIG_MOVABLE_GRABBED_RESISTING] to modify grab stats
+/datum/martial_art/proc/grabbed_resisting(mob/living/source, mob/living/grabbed, list/grab_stats)
+	SIGNAL_HANDLER
+
+	if(!can_use(source))
+		return
+
+	grab_stats[GRAB_STAT_EFFECTIVE_STATE] += grab_state_modifier
+	grab_stats[GRAB_STAT_FAIL_DAMAGE] += grab_damage_modifier
+	grab_stats[GRAB_STAT_ESCAPE_CHANCE] += grab_escape_chance_modifier
+
 /**
  * Called when help-intenting on someone
  *
@@ -384,6 +395,7 @@
 	active = TRUE
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
+	RegisterSignal(new_holder, COMSIG_MOVABLE_GRABBED_RESISTING, PROC_REF(grabbed_resisting))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
 	if(display_combos)
 		RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
@@ -396,7 +408,14 @@
 /datum/martial_art/proc/deactivate_style(mob/living/remove_from)
 	SHOULD_CALL_PARENT(TRUE)
 	active = FALSE
-	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
+	UnregisterSignal(remove_from, list(
+		COMSIG_LIVING_UNARMED_ATTACK,
+		COMSIG_LIVING_GRAB,
+		COMSIG_LIVING_TABLE_SLAMMING,
+		COMSIG_LIVING_TABLE_LIMB_SLAMMING,
+		COMSIG_MOVABLE_GRABBED_RESISTING,
+		COMSIG_MOB_HUD_CREATED,
+	))
 	remove_from.hud_used?.remove_screen_object(HUD_MOB_COMBO)
 
 ///Gives the owner of the martial art the combo HUD.

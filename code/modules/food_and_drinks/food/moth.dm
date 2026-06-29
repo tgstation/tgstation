@@ -456,24 +456,6 @@
 		making up a typical meal- tomato soup, roast pumpkin, and blueberry pie." //Thankfully not made by Willy Wonka
 	tastes = list("tomato soup" = 1, "roast pumpkin" = 1, "blueberry pie" = 1)
 
-/obj/item/food/bowled/hua_mulan_congee
-	name = "\improper Hua Mulan congee"
-	desc = "Nobody is quite sure why this smiley bowl of rice porridge with eggs and bacon is named after a mythological Chinese figure- \
-		it's just sorta what it's always been called."
-	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "hua_mulan_congee"
-	trash_type = /obj/item/reagent_containers/cup/bowl
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 10,
-		/datum/reagent/consumable/nutriment/protein = 6,
-	)
-	tastes = list("bacon" = 1, "eggs" = 1)
-	foodtypes = MEAT|GRAIN|FRIED|EGG
-	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
-
 /obj/item/food/bowled/fried_eggplant_polenta
 	name = "fried eggplant and polenta"
 	desc = "Polenta loaded with cheese, served with a few discs of fried eggplant and some tomato sauce. Lække!"

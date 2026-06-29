@@ -1,5 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - code_imp: "Adds playsoundtoken() which lets you play one shot sound tokens"
-  - sound: "You can now hear screams get louder as you get closer, spooky!"

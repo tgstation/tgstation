@@ -107,7 +107,7 @@
 		user.log_message("attached [src] to [chair]", LOG_GAME)
 		return ITEM_INTERACT_SUCCESS
 	else if(istype(interacting_with, /obj/item/tank))
-		if(try_attach_tank(interacting_with))
+		if(try_attach_tank(interacting_with, user))
 			return ITEM_INTERACT_SUCCESS
 		else
 			return ITEM_INTERACT_FAILURE
