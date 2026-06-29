@@ -50,7 +50,7 @@
 	src.valid_mobs = valid_mobs
 
 	if (istype (initial_spawn, /obj/effect/spawner/random))
-		RegisterSignal(initial_spawn, COMSIG_RANDOM_SPAWNER_SPAWNED, PROC_REF(register_spawn))
+		RegisterSignal(get_turf(src), COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(get_spawned_mob))
 	else
 		register_spawn(src, initial_spawn)
 
