@@ -506,7 +506,7 @@
 		if(texture.can_texture_bodypart(src))
 			. += texture.icon_render_key()
 	if(isdummy(owner)) // dummies always cache as default height because they have optimizations
-		. += /mob/living/carbon/human::mob_height
+		. += "[/mob/living/carbon/human::mob_height]"
 	else if(ishuman(owner)) // otherwise cache height because we apply height filters to bodypart images
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
@@ -536,7 +536,7 @@
 			. += overlay.icon_render_key(src)
 	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	if(isdummy(owner)) // dummies always cache as default height because they have optimizations
-		. += /mob/living/carbon/human::mob_height
+		. += "[/mob/living/carbon/human::mob_height]"
 	else if(ishuman(owner)) // otherwise cache height because we apply height filters to bodypart images
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
