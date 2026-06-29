@@ -727,7 +727,11 @@
 
 /turf/closed/mineral/random/labormineral/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag = 165,
+		/obj/item/boulder/gulag = 20,
+		/obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/iron = 20,
+		/obj/item/stack/ore/plasma = 15,
+		/obj/item/stack/ore/silver = 20,
 		/turf/closed/mineral/gibtonite = 2,
 	)
 
@@ -740,7 +744,11 @@
 
 /turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag_expanded = 166,
+		/obj/item/boulder/gulag_expanded = 30,
+		/obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/iron = 25,
+		/obj/item/stack/ore/plasma = 20,
+		/obj/item/stack/ore/silver = 20,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
@@ -760,7 +768,11 @@
 
 /turf/closed/mineral/random/labormineral/ice/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag = 168,
+		/obj/item/boulder/gulag = 20,
+		/obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/iron = 20,
+		/obj/item/stack/ore/plasma = 15,
+		/obj/item/stack/ore/silver = 20,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 

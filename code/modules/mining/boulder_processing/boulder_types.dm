@@ -56,7 +56,7 @@
 ///Boulders usually spawned in lavaland labour camp area
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
-	desc = "This rocks. It's a low quality boulder, so it's probably not worth as much."
+	desc = "A small amount of ore compacted together. This rocks."
 
 /obj/item/boulder/gulag/Initialize(mapload)
 	. = ..()
@@ -72,12 +72,12 @@
 		/datum/material/uranium = 3,
 	)
 
-	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT))
+	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT * 4))
 
 ///Boulders usually spawned in lavaland labour camp area but with bluespace material
 /obj/item/boulder/gulag_expanded
 	name = "low-density boulder"
-	desc = "This rocks. It's not very well packed, and can't contain as many minerals."
+	desc = "A medium amount of ore compacted together. This rocks."
 
 /obj/item/boulder/gulag_expanded/Initialize(mapload)
 	. = ..()
@@ -93,7 +93,7 @@
 		/datum/material/titanium = 8,
 		/datum/material/uranium = 3,
 	)
-	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT))
+	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT * 6))
 
 ///lowgrade boulder, Exists as an admin spawn for testing
 /obj/item/boulder/shabby
