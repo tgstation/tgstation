@@ -33,7 +33,7 @@
 
 	if (mapload && length(valid_mobs))
 		var/list/filtered_mobs = list()
-		for (var/path as anything in valid_mobs)
+		for (var/path in valid_mobs)
 			if (!(path in invalid_mobs))
 				filtered_mobs += path
 		valid_mobs = filtered_mobs
