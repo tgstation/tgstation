@@ -661,7 +661,11 @@
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			//If nightlights are on, and we're recovering from low power event, we'll remove it.
-			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+			var/nightshift_disabled
+			if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+				nightshift_disabled = TRUE
+			else
+				nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
 			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
 				if(nightshift_disabled)
