@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix `/datum/component/listen_prayers` not removing action button from UI when component deleted from mob"
