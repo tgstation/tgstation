@@ -261,8 +261,8 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	fire_delay = 3 SECONDS
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	self_charge_amount = 2000
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
 /obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
@@ -278,6 +278,20 @@
 	// Have to wait until the animate is done
 	sleep(30 SECONDS)
 	user.gib(DROP_ALL_REMAINS)
+
+/obj/item/gun/energy/shrink_ray
+	COOLDOWN_DECLARE(shrink_cooldown)
+
+/obj/item/gun/energy/shrink_ray/can_shoot()
+	if(!COOLDOWN_FINISHED(src, shrink_cooldown))
+		return FALSE
+	return ..()
+
+/obj/item/gun/energy/shrink_ray/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
+	. = ..()
+	if(.)
+		COOLDOWN_START(src, shrink_cooldown, 2 SECONDS)
+		playsound(src, "sound/items/eshield_recharge.ogg", 30, TRUE)
 
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
