@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "bodyshape is now accessible in build_worn_overlays() and similar procs."
+  - image: "lizards now have support female gender shaping for their suits"
