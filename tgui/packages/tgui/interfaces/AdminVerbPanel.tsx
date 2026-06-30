@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { storage } from 'common/storage';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,6 +15,9 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+
+const STORAGE_FAVOURITES = 'adminverbpanel-favourites';
+const STORAGE_USER_CATEGORIES = 'adminverbpanel-user-categories';
 
 type VerbArgument = {
   name: string;
@@ -88,6 +92,66 @@ export function AdminVerbPanel() {
   const [selectedTarget, setSelectedTarget] = useState<string | null>(null);
   const [targetSearch, setTargetSearch] = useState('');
 
+  const [favourites, setFavourites] = useState<Record<string, string>>({});
+  const [userCategories, setUserCategories] = useState<string[]>([]);
+  const [newCategoryName, setNewCategoryName] = useState('');
+
+  useEffect(() => {
+    const load = async () => {
+      const storedFavs = await storage.get(STORAGE_FAVOURITES);
+      const storedCats = await storage.get(STORAGE_USER_CATEGORIES);
+      if (storedFavs && typeof storedFavs === 'object') {
+        setFavourites(storedFavs);
+      }
+      if (Array.isArray(storedCats)) {
+        setUserCategories(storedCats);
+      }
+    };
+    load();
+  }, []);
+
+  const persistFavourites = (next: Record<string, string>) => {
+    setFavourites(next);
+    storage.set(STORAGE_FAVOURITES, next);
+  };
+
+  const persistUserCategories = (next: string[]) => {
+    setUserCategories(next);
+    storage.set(STORAGE_USER_CATEGORIES, next);
+  };
+
+  const toggleFavourite = (verbType: string) => {
+    const next = { ...favourites };
+    if (verbType in next) {
+      delete next[verbType];
+    } else {
+      next[verbType] = '';
+    }
+    persistFavourites(next);
+  };
+
+  const assignVerbCategory = (verbType: string, category: string) => {
+    persistFavourites({ ...favourites, [verbType]: category });
+  };
+
+  const addUserCategory = () => {
+    const name = newCategoryName.trim();
+    if (!name || userCategories.includes(name)) return;
+    persistUserCategories([...userCategories, name]);
+    setNewCategoryName('');
+  };
+
+  const removeUserCategory = (name: string) => {
+    persistUserCategories(userCategories.filter((c) => c !== name));
+    const next = { ...favourites };
+    for (const [verbType, cat] of Object.entries(next)) {
+      if (cat === name) {
+        next[verbType] = '';
+      }
+    }
+    persistFavourites(next);
+  };
+
   const filteredVerbs = searchText
     ? verbs.filter((verb) =>
         verb.name.toLowerCase().includes(searchText.toLowerCase()),
@@ -137,25 +201,113 @@ export function AdminVerbPanel() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  const hasFavourites = Object.keys(favourites).length > 0;
+  const uncategorizedFavs = Object.entries(favourites)
+    .filter(([, cat]) => !cat)
+    .map(([type]) => type);
+  const populatedUserCategories = userCategories.filter((cat) =>
+    Object.values(favourites).includes(cat),
+  );
+
+  const isUserCategorySelected =
+    selectedCategory !== null && userCategories.includes(selectedCategory);
+  const isFavouritesSelected = selectedCategory === '\0favourites';
+
   const matchingCategories = searchText
     ? categories.filter((cat) => filteredVerbs.some((v) => v.category === cat))
     : categories;
 
-  const activeCategory = selectedCategory || '';
+  const activeCategory =
+    isUserCategorySelected || isFavouritesSelected
+      ? ''
+      : selectedCategory || '';
 
-  const visibleVerbs = searchText
-    ? filteredVerbs.filter(
+  const getVisibleVerbs = (): Verb[] => {
+    if (searchText) {
+      if (isFavouritesSelected) {
+        return filteredVerbs.filter(
+          (v) => v.type in favourites && !favourites[v.type],
+        );
+      }
+      if (isUserCategorySelected) {
+        return filteredVerbs.filter(
+          (v) => favourites[v.type] === selectedCategory,
+        );
+      }
+      return filteredVerbs.filter(
         (v) => !activeCategory || v.category === activeCategory,
-      )
-    : verbs.filter((v) => v.category === (activeCategory || categories[0]));
+      );
+    }
+    if (isFavouritesSelected) {
+      return verbs.filter((v) => v.type in favourites && !favourites[v.type]);
+    }
+    if (isUserCategorySelected) {
+      return verbs.filter((v) => favourites[v.type] === selectedCategory);
+    }
+    return verbs.filter(
+      (v) => v.category === (activeCategory || categories[0]),
+    );
+  };
+
+  const visibleVerbs = getVisibleVerbs();
 
   return (
     <Window title="Admin Verb Panel" width={800} height={520} theme="admin">
       <Window.Content>
         <Stack fill>
-          {/* Far left: category list */}
           <Stack.Item basis="140px">
             <Section fill scrollable title="Categories">
+              {userCategories.map((cat) => (
+                <Stack key={cat} align="center">
+                  <Stack.Item grow>
+                    <Button
+                      fluid
+                      color={selectedCategory === cat ? 'good' : 'transparent'}
+                      textAlign="left"
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setSelectedVerb(null);
+                        setSelectedTarget(null);
+                      }}
+                    >
+                      {cat}
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="times"
+                      color="transparent"
+                      onClick={() => removeUserCategory(cat)}
+                    />
+                  </Stack.Item>
+                </Stack>
+              ))}
+              {uncategorizedFavs.length > 0 && (
+                <Button
+                  fluid
+                  icon="star"
+                  color={isFavouritesSelected ? 'good' : 'transparent'}
+                  textAlign="left"
+                  onClick={() => {
+                    setSelectedCategory('\0favourites');
+                    setSelectedVerb(null);
+                    setSelectedTarget(null);
+                  }}
+                >
+                  Favourites
+                </Button>
+              )}
+              {(hasFavourites || userCategories.length > 0) && (
+                <Box mb={0.5} mt={0.5}>
+                  <hr
+                    style={{
+                      border: 'none',
+                      borderTop: '1px solid rgba(255,255,255,0.1)',
+                      margin: 0,
+                    }}
+                  />
+                </Box>
+              )}
               {matchingCategories.map((cat) => (
                 <Button
                   key={cat}
@@ -171,11 +323,30 @@ export function AdminVerbPanel() {
                   {cat}
                 </Button>
               ))}
+              <Box mt={1}>
+                <Stack>
+                  <Stack.Item grow>
+                    <Input
+                      fluid
+                      placeholder="New category..."
+                      value={newCategoryName}
+                      onChange={setNewCategoryName}
+                      onEnter={addUserCategory}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="plus"
+                      disabled={!newCategoryName.trim()}
+                      onClick={addUserCategory}
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Box>
             </Section>
           </Stack.Item>
           <Stack.Divider />
-          {/* Verb list */}
-          <Stack.Item basis="180px">
+          <Stack.Item basis="200px">
             <Stack fill vertical>
               <Stack.Item>
                 <Input
@@ -191,29 +362,41 @@ export function AdminVerbPanel() {
               <Stack.Item grow>
                 <Section fill scrollable>
                   {visibleVerbs.map((verb) => (
-                    <Button
-                      key={verb.type}
-                      fluid
-                      color={
-                        selectedVerb?.type === verb.type
-                          ? 'good'
-                          : 'transparent'
-                      }
-                      textAlign="left"
-                      onClick={() => selectVerb(verb)}
-                    >
-                      {verb.name}
-                    </Button>
+                    <div key={verb.type} style={{ display: 'flex' }}>
+                      <Button
+                        fluid
+                        ellipsis
+                        color={
+                          selectedVerb?.type === verb.type
+                            ? 'good'
+                            : 'transparent'
+                        }
+                        textAlign="left"
+                        onClick={() => selectVerb(verb)}
+                        style={{ flex: '1 1 0', minWidth: 0 }}
+                      >
+                        {verb.name}
+                      </Button>
+                      <Button
+                        icon="star"
+                        color={
+                          verb.type in favourites ? 'yellow' : 'transparent'
+                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavourite(verb.type);
+                        }}
+                        style={{ flex: '0 0 auto' }}
+                      />
+                    </div>
                   ))}
                 </Section>
               </Stack.Item>
             </Stack>
           </Stack.Item>
           <Stack.Divider />
-          {/* Center + Right */}
           <Stack.Item grow>
             <Stack fill vertical>
-              {/* Target picker */}
               {entityArg && (
                 <Stack.Item basis="45%">
                   <Section
@@ -270,9 +453,42 @@ export function AdminVerbPanel() {
                     scrollable={false}
                     title={selectedVerb.name}
                     buttons={
-                      <Button icon="play" color="good" onClick={invokeVerb}>
-                        Invoke
-                      </Button>
+                      <>
+                        {selectedVerb.type in favourites &&
+                          userCategories.length > 0 && (
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                marginRight: '4px',
+                              }}
+                            >
+                              <Dropdown
+                                options={['None', ...userCategories]}
+                                selected={
+                                  favourites[selectedVerb.type] || 'None'
+                                }
+                                onSelected={(val: string) =>
+                                  assignVerbCategory(
+                                    selectedVerb.type,
+                                    val === 'None' ? '' : val,
+                                  )
+                                }
+                                width="100px"
+                              />
+                            </span>
+                          )}
+                        <Button
+                          icon="star"
+                          color={
+                            selectedVerb.type in favourites
+                              ? 'yellow'
+                              : 'transparent'
+                          }
+                          onClick={() => toggleFavourite(selectedVerb.type)}
+                          mr={0.5}
+                        />
+                        <Button icon="play" color="good" onClick={invokeVerb} />
+                      </>
                     }
                   >
                     <Stack vertical fill>
