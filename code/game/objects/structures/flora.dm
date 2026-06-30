@@ -49,47 +49,50 @@
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
 
-/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/flora/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
+		return NONE
+
 	if(flags_1 & HOLOGRAM_1)
 		balloon_alert(user, "it goes right through!")
-		return ..()
-	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
+		return ITEM_INTERACT_BLOCKING
+
+	if(can_uproot && tool.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
-				span_notice("You start to replant [src]..."))
+								span_notice("You start to replant [src]..."))
 		else
 			user.visible_message(span_notice("[user] starts to uproot [src]..."),
-				span_notice("You start to uproot [src]..."))
-		used_item.play_tool_sound(src, 50)
+								span_notice("You start to uproot [src]..."))
+		tool.play_tool_sound(src, 50)
 		if(!do_after(user, harvest_time, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(uprooted)
 			user.visible_message(span_notice("[user] replants [src]."),
-				span_notice("You replant [src]."))
+								span_notice("You replant [src]."))
 			replant(user)
 		else
 			user.visible_message(span_notice("[user] uproots [src]."),
-				span_notice("You uproot [src]."))
+								span_notice("You uproot [src]."))
 			uproot(user)
-		used_item.play_tool_sound(src, 50)
-		return
+		tool.play_tool_sound(src, 50)
+		return ITEM_INTERACT_SUCCESS
 
-	if(!can_harvest(user, used_item))
-		return ..()
+	if(!can_harvest(user, tool))
+		return NONE
 
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
-		span_notice("You start to [harvest_verb] [src] with [used_item]..."))
-	play_attack_sound(used_item.force)
-	if(!do_after(user, harvest_time * used_item.toolspeed, src))
-		return
-	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
-		ignored_mobs = list(user))
-	play_attack_sound(used_item.force)
+						span_notice("You start to [harvest_verb] [src] with [tool]..."))
+	play_attack_sound(tool.force)
+	if(!do_after(user, harvest_time * tool.toolspeed, src))
+		return ITEM_INTERACT_BLOCKING
 
+	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
+					span_notice("You [harvest_verb] [src]."))
+	play_attack_sound(tool.force)
 	if(harvest(user))
 		after_harvest(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/flora/attack_hand(mob/user, list/modifiers)
 	. = ..()
