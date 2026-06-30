@@ -503,13 +503,16 @@
 	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freeze_turf()
-	for(var/obj/I in contents)
-		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
-			I.AddElement(/datum/element/frozen)
+	for(var/atom/thing_to_freeze in contents)
+		if(isobj(thing_to_freeze))
+			var/obj/frozen_object = thing_to_freeze
+			if(!HAS_TRAIT(frozen_object, TRAIT_FROZEN) && !(frozen_object.resistance_flags & FREEZE_PROOF))
+				frozen_object.AddElement(/datum/element/frozen)
+		if(isliving(thing_to_freeze))
+			var/mob/living/frozen_mob = thing_to_freeze
+			if(frozen_mob.bodytemperature <= 50 && !HAS_TRAIT(frozen_mob, TRAIT_RESISTCOLD))
+				frozen_mob.apply_status_effect(/datum/status_effect/freon)
 
-	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50 && !HAS_TRAIT(L, TRAIT_RESISTCOLD))
-			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 10 SECONDS)
 	return TRUE
 
