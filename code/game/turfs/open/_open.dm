@@ -503,7 +503,7 @@
 	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freeze_turf()
-	for(var/atom/thing_to_freeze in contents)
+	for(var/atom/thing_to_freeze as anything in contents)
 		if(isobj(thing_to_freeze))
 			var/obj/frozen_object = thing_to_freeze
 			if(!HAS_TRAIT(frozen_object, TRAIT_FROZEN) && !(frozen_object.resistance_flags & FREEZE_PROOF))
