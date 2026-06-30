@@ -665,7 +665,7 @@
 			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
 				var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
-				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number >= SEC_LEVEL_RED)
+				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
