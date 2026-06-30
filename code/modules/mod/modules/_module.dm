@@ -381,7 +381,7 @@
 		qdel(src)
 
 /// Adds the worn overlays to the suit.
-/obj/item/mod/module/proc/add_module_overlay(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/mod/module/proc/add_module_overlay(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	SIGNAL_HANDLER
 
 	if (isinhands)
