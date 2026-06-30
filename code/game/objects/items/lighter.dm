@@ -93,7 +93,7 @@
 		return
 	set_lit(FALSE)
 
-/obj/item/lighter/suicide_act(mob/living/carbon/user)
+/obj/item/lighter/suicide_act(mob/living/user)
 	if (lit)
 		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
