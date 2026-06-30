@@ -40,7 +40,7 @@
 
 /obj/item/bodypart/chest/update_owner(new_owner)
 	. = ..()
-	if(, && ishuman(owner))
+	if(. && ishuman(owner))
 		var/mob/living/carbon/human/humie = owner
 		humie.update_mob_height()
 
