@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	gulag_valid = TRUE
+	gulag_value = 5
 	matter_amount = 8
 	table_type = /obj/structure/table/reinforced/plasmarglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'

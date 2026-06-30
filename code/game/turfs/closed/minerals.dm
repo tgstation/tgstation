@@ -178,7 +178,7 @@
 /turf/closed/mineral/proc/change_ore(ore_type, random = TRUE)
 	if (ispath(ore_type, /obj/item/boulder))
 		scan_state = "rock_boulder" // Yes even the lowly boulder has a scan state
-		spawned_boulder = /obj/item/boulder/gulag_expanded
+		spawned_boulder = /obj/item/boulder/gulag
 		return
 
 	if (random)
@@ -727,12 +727,12 @@
 
 /turf/closed/mineral/random/labormineral/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag = 20,
+		/obj/item/boulder/gulag = 30,
 		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 20,
-		/obj/item/stack/ore/plasma = 15,
+		/obj/item/stack/ore/iron = 25,
+		/obj/item/stack/ore/plasma = 20,
 		/obj/item/stack/ore/silver = 20,
-		/turf/closed/mineral/gibtonite = 2,
+		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
 /turf/closed/mineral/random/labormineral/volcanic
@@ -741,16 +741,6 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-
-/turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
-	return list(
-		/obj/item/boulder/gulag_expanded = 30,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 25,
-		/obj/item/stack/ore/plasma = 20,
-		/obj/item/stack/ore/silver = 20,
-		/turf/closed/mineral/gibtonite/volcanic = 2,
-	)
 
 // Subtypes for mappers placing ores manually.
 /turf/closed/mineral/random/labormineral/ice
