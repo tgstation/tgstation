@@ -6,6 +6,9 @@ on:
       maps:
         description: "The maps that were found"
         value: ${{ jobs.collect_data.outputs.maps }}
+      map_config:
+        description: "The map config file to use"
+        value: ${{ jobs.collect_data.outputs.map_config }}
       alternate_tests:
         description: "The alternate tests that were found"
         value: ${{ jobs.collect_data.outputs.alternate_tests }}
@@ -22,6 +25,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
+      map_config: ${{ steps.map_finder.outputs.map_config }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
       max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
@@ -32,16 +36,27 @@ jobs:
         id: map_finder
         run: |
           > maps_output.txt
+          > map_configs.txt
+
           for file in _maps/*.json; do
             if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
-              echo "\"$(basename "$file" .json)\"" >> maps_output.txt
+              map_name=$(basename "$file" .json)
+
+              echo "\"$map_name\"" >> maps_output.txt
+              echo "map $map_name" >> map_configs.txt
+              echo "endmap" >> map_configs.txt
             else
               echo "Excluded: $file"
             fi
           done
+
           map_list=$(paste -sd, maps_output.txt)
           echo "Maps: $map_list"
           echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
+
+          echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
+          cat map_configs.txt >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |
