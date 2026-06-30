@@ -67,6 +67,21 @@
 		return FALSE
 	return ..()
 
+/**
+ * Calculates the expected height values for the holder of this bodypart
+ *
+ * Return a height value corresponding to a specific height filter
+ * Return null to just use the mob's base height
+ */
+/obj/item/bodypart/chest/proc/update_mob_heights(mob/living/carbon/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return HUMAN_HEIGHT_TALLEST
+
+	return null
+
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
 	QDEL_NULL(worn_uniform_offset)
@@ -108,6 +123,17 @@
 	bodyshape = BODYSHAPE_MONKEY
 	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
+	bodypart_traits = list(TRAIT_PASSTABLE)
+
+/obj/item/bodypart/chest/monkey/update_mob_heights(mob/living/carbon/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return MONKEY_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return MONKEY_HEIGHT_TALL
+
+	return MONKEY_HEIGHT_MEDIUM
+
 
 /obj/item/bodypart/chest/monkey/Initialize(mapload)
 	worn_neck_offset = new(

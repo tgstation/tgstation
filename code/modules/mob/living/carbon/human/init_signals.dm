@@ -23,9 +23,9 @@
 	update_mob_height()
 	// Toggle passtable
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		passtable_on(src, TRAIT_DWARF)
+		ADD_TRAIT(src, TRAIT_PASSTABLE, TRAIT_DWARF)
 	else
-		passtable_off(src, TRAIT_DWARF)
+		REMOVE_TRAIT(src, TRAIT_PASSTABLE, TRAIT_DWARF)
 
 /// Gaining or losing [TRAIT_TOO_TALL] updates our height
 /mob/living/carbon/human/proc/on_tootall_trait(datum/source)
