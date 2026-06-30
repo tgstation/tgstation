@@ -233,6 +233,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	layer = MID_TURF_LAYER
 	floor_variance = 0
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
+	smooth_broken = TRUE
 	/// DMI used by unsmoothed turfs for variance
 	var/variant_dmi = null
 	/// Amount of variants this turf has

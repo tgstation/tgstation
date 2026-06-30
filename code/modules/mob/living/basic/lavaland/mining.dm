@@ -44,6 +44,7 @@
 	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
 	// handling for retaliation and attack special cases
 	AddElement(/datum/element/relay_attackers)
+	AddElement(/datum/element/ai_retaliate) //Used by priority behaviors
 
 /mob/living/basic/mining/proc/add_ranged_armour(list/vulnerable_projectiles)
 	AddElement(\

@@ -328,22 +328,23 @@
 	. = ..()
 	if(!.)
 		return
-	home.AddComponent(/datum/component/hide_weather_planes, src, particle_weather)
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	update_state(new_hud?.mymob)
 
 /atom/movable/screen/plane_master/weather/proc/update_state(mob/mymob)
 	if(!istype(mymob))
 		return
 
 	// If the client wants particle weather, only show the PARTICLE_WEATHER_PLANE, otherwise only show the normal WEATHER_PLANE
-	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) != particle_weather)
-		hide_from(mymob)
-	else
-		show_to(mymob)
-
-/atom/movable/screen/plane_master/weather/show_to(mob/mymob)
-	// Only show ourselves if the player wants it
 	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) == particle_weather)
-		return ..()
+		set_alpha(255)
+	else
+		set_alpha(0)
 
 /atom/movable/screen/plane_master/weather/particle
 	name = "Particle Weather"
@@ -365,7 +366,7 @@
 	. = ..()
 	if(!.)
 		return
-	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+	home.AddComponent(/datum/component/hide_weather_planes, src)
 
 /atom/movable/screen/plane_master/massive_obj
 	name = "Massive object"
