@@ -1439,21 +1439,24 @@
  * If you pass a typepath, the proc will avoid creating duplicates.
  * * update: Whether to call update procs after adding the overlay.
  * Set this to FALSE if you are adding multiple overlays at once.
+ *
+ * Returns the overlay that was added, or null if it was not added.
  */
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
 	if(ispath(overlay, /datum/bodypart_overlay))
 		if(locate(overlay) in bodypart_overlays)
-			return
+			return null
 		overlay = new overlay()
 
 	LAZYADD(bodypart_overlays, overlay)
 	overlay.added_to_limb(src)
 	if(!update)
-		return
+		return overlay
 	if(isnull(owner))
 		update_icon_dropped()
 	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		owner.update_body_parts()
+	return overlay
 
 /**
  * Removes a bodypart overlay from the limb
