@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "The kitchen fridges may have additional ingredients on certain holidays, in particular Atrakor's Might (lizardpeople) and Fleet Day (mothpeople), and Vegan Day."
+  - rscadd: "Added a few more holyday-specific mail items."
+  - rscadd: "Replaces the beer keg in the bar backroom with special kegs on St. Patrick's Day, Beer Day and Speak-Like-a-Pirate day. On any other day, there's a chance that the beer keg will be replaced with one containing whiskey or rum, or in rare cases, one of those special kegs."
