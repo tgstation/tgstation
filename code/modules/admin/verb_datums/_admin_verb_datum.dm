@@ -26,3 +26,6 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb)
 /// Unassigns the verb from the admin.
 /datum/admin_verb/proc/unassign_from_client(client/admin)
 	remove_verb(admin, verb_path)
+
+/datum/admin_verb/proc/get_verb_path()
+	return verb_path

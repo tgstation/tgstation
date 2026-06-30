@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		if(pending)
 			verb_singleton.metadata.arguments = pending
 		admin_verbs_by_type[verb_type] = verb_singleton
-		admin_verbs_by_verb_path[verb_singleton.verb_path] = verb_singleton
+		admin_verbs_by_verb_path[verb_singleton.get_verb_path()] = verb_singleton
 		if(verb_singleton.visibility_flag)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
