@@ -596,3 +596,6 @@
   timothymtorres:
   - bugfix: Fix `/datum/component/listen_prayers` not removing action button from
       UI when component deleted from mob
+2026-06-30:
+  Pumpkinoe:
+  - bugfix: Fixed some weird turf decals on walls for the Ex-Interdyne Pirate Ship
