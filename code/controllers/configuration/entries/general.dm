@@ -809,3 +809,6 @@
 
 /datum/config_entry/string/policy_json_path
 	default = "policy.json"
+
+/datum/config_entry/number_list/ignored_cids
+	default = list()

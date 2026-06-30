@@ -4,13 +4,21 @@ SUBSYSTEM_DEF(stickyban)
 
 	var/list/cache = list()
 	var/list/dbcache = list()
-	var/list/confirmed_exempt = list()
+	var/list/ignored_cids = list() // will be used as numeric-keyed map
 	var/dbcacheexpire = 0
 
 
 /datum/controller/subsystem/stickyban/Initialize()
+	// load IGNORED_CIDS as number_list into a fast lookup map
+	var/list/ignored_conf = CONFIG_GET(number_list/ignored_cids)
+	if (ignored_conf && ignored_conf.len)
+		for (var/num in ignored_conf)
+			if (isnum(num))
+				ignored_cids[num2text(num)] = TRUE
+
 	if (length(GLOB.stickybanadminexemptions))
 		restore_stickybans()
+
 	var/list/bannedkeys = sticky_banned_ckeys()
 	//sanitize the sticky ban list
 
