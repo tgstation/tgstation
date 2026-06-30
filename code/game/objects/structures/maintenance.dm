@@ -93,29 +93,35 @@ at the cost of risking a vicious bite.**/
 		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/moisture_trap/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
-		return ..()
+		return NONE
+
 	add_fingerprint(user)
-	if(is_reagent_container(I))
-		if(istype(I, /obj/item/food/monkeycube))
-			var/obj/item/food/monkeycube/cube = I
+	if(is_reagent_container(tool))
+		if(istype(tool, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = tool
 			cube.Expand()
-			return
-		var/obj/item/reagent_containers/reagent_container = I
+			return ITEM_INTERACT_SUCCESS
+
+		var/obj/item/reagent_containers/reagent_container = tool
 		if(reagent_container.is_open_container())
 			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
 			to_chat(user, span_notice("You fill [reagent_container] from [src]."))
-			return
+			return ITEM_INTERACT_SUCCESS
+
 	if(hidden_item)
 		to_chat(user, span_warning("There is already something inside [src]."))
-		return
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in [src]!"))
-		return
-	hidden_item = I
-	to_chat(user, span_notice("You hide [I] inside the basin."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	hidden_item = tool
+	to_chat(user, span_notice("You hide [tool] inside the basin."))
 	playsound(src,'sound/effects/splash.ogg', 55, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
@@ -138,11 +144,11 @@ at the cost of risking a vicious bite.**/
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
-/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
-		to_chat(user, span_notice("[src] is creating something, you can't move it!"))
-		return
-	return ..()
+/obj/structure/destructible/cult/pants_altar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/melee/cultblade/dagger) || !IS_CULTIST(user) || !status)
+		return NONE
+	to_chat(user, span_notice("[src] is creating something, you can't move it!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/cult/pants_altar/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
