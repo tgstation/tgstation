@@ -53,5 +53,6 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/raptor),
+		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/raptor/baby)
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance

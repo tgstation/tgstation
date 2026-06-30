@@ -91,8 +91,16 @@
 					"subtype": "/datum/bt_node/subtree/random_speech_loop"
 				},
 				{
-					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/find_mom"
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"invert": true,
+						"key": "BB_FOUND_MOM"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_mom"
+					}
 				}
 			]
 		}
