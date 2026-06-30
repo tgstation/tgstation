@@ -12,7 +12,7 @@
 
 	WRITE_FILE(F, "[server_timestamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
-ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed logs.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed logs.", ADMIN_CATEGORY_MAIN)
 	var/static/list/investigates = list(
 		INVESTIGATE_ACCESSCHANGES,
 		INVESTIGATE_ATMOS,

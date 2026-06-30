@@ -1,6 +1,6 @@
 // Admin Verbs in this file are special and cannot use the AVD system for some reason or another.
 
-GAME_VERB_PROC(/client, show_verbs, "Adminverbs - Show", ADMIN_CATEGORY_PLAYERS)
+GAME_VERB_PROC(/client, show_verbs, "Adminverbs - Show", ADMIN_CATEGORY_MAIN)
 
 	UNASSIGN_GAME_VERB(src, /client, show_verbs)
 	add_admin_verbs()

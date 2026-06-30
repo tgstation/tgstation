@@ -1,5 +1,5 @@
 
-ADMIN_VERB(view_all_circuits, R_ADMIN, "View All Circuits", "List all circuits in the game.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(view_all_circuits, R_ADMIN, "View All Circuits", "List all circuits in the game.", ADMIN_CATEGORY_MAIN)
 	var/static/datum/circuit_admin_panel/circuit_admin_panel = new
 	circuit_admin_panel.ui_interact(user.mob)
 

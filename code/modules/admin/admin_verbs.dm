@@ -9,14 +9,14 @@
 	control_freak = initial(control_freak)
 	SSadmin_verbs.deassosciate_admin(src)
 
-ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()
 	ASSIGN_GAME_VERB(user, /client, show_verbs)
 
 	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
 
-ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_CATEGORY_MAIN)
 	. = TRUE
 	if(isobserver(user.mob))
 		//re-enter
@@ -59,7 +59,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_MAIN)
 	// Toggle OFF
 	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
 		user.mob.remove_traits(list(
@@ -91,7 +91,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 	QDEL_NULL(user.mob.orbiters)
 	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now invisible to players and ghosts.")), confidential = TRUE)
 
-ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to see ghosts and invisimins.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to see ghosts and invisimins.", ADMIN_CATEGORY_MAIN)
 	// Toggle OFF
 	if(HAS_TRAIT(user.mob, TRAIT_ADMIN_ESP))
 		if(isliving(user.mob))
@@ -118,50 +118,50 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
 	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see [isliving(user.mob) ? "ghosts and " : ""]invisimins."), confidential = TRUE)
 
-ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_MAIN)
 	user.holder.check_antagonists()
 	log_admin("[key_name(user)] checked antagonists.")
 	if(!isobserver(user.mob) && SSticker.HasRoundStarted())
 		message_admins("[key_name_admin(user)] checked antagonists.")
 	BLACKBOX_LOG_ADMIN_VERB("Check Antagonists")
 
-ADMIN_VERB(list_bombers, R_ADMIN, "List Bombers", "Look at all bombs and their likely culprit.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(list_bombers, R_ADMIN, "List Bombers", "Look at all bombs and their likely culprit.", ADMIN_CATEGORY_MAIN)
 	user.holder.list_bombers()
 	BLACKBOX_LOG_ADMIN_VERB("List Bombers")
 
-ADMIN_VERB(list_signalers, R_ADMIN, "List Signalers", "View all signalers.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(list_signalers, R_ADMIN, "List Signalers", "View all signalers.", ADMIN_CATEGORY_MAIN)
 	user.holder.list_signalers()
 	BLACKBOX_LOG_ADMIN_VERB("List Signalers")
 
-ADMIN_VERB(list_law_changes, R_ADMIN, "List Law Changes", "View all AI law changes.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(list_law_changes, R_ADMIN, "List Law Changes", "View all AI law changes.", ADMIN_CATEGORY_MAIN)
 	user.holder.list_law_changes()
 	BLACKBOX_LOG_ADMIN_VERB("List Law Changes")
 
-ADMIN_VERB(show_manifest, R_ADMIN, "Show Manifest", "View the shift's Manifest.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(show_manifest, R_ADMIN, "Show Manifest", "View the shift's Manifest.", ADMIN_CATEGORY_MAIN)
 	user.holder.show_manifest()
 	BLACKBOX_LOG_ADMIN_VERB("Show Manifest")
 
-ADMIN_VERB(list_dna, R_ADMIN, "List DNA", "View DNA.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(list_dna, R_ADMIN, "List DNA", "View DNA.", ADMIN_CATEGORY_MAIN)
 	user.holder.list_dna()
 	BLACKBOX_LOG_ADMIN_VERB("List DNA")
 
-ADMIN_VERB(list_fingerprints, R_ADMIN, "List Fingerprints", "View fingerprints.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(list_fingerprints, R_ADMIN, "List Fingerprints", "View fingerprints.", ADMIN_CATEGORY_MAIN)
 	user.holder.list_fingerprints()
 	BLACKBOX_LOG_ADMIN_VERB("List Fingerprints")
 
-ADMIN_VERB(ban_panel, R_BAN, "Banning Panel", "Ban players here.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(ban_panel, R_BAN, "Banning Panel", "Ban players here.", ADMIN_CATEGORY_MAIN)
 	user.holder.ban_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Banning Panel")
 
-ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(unban_panel, R_BAN, "Unbanning Panel", "Unban players here.", ADMIN_CATEGORY_MAIN)
 	user.holder.unban_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Unbanning Panel")
 
-ADMIN_VERB(game_panel, R_ADMIN, "Game Panel", "Look at the state of the game.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(game_panel, R_ADMIN, "Game Panel", "Look at the state of the game.", ADMIN_CATEGORY_MAIN)
 	user.holder.Game()
 	BLACKBOX_LOG_ADMIN_VERB("Game Panel")
 
-ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.", ADMIN_CATEGORY_MAIN)
 	user.holder.poll_list_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Server Poll Management")
 
@@ -198,7 +198,7 @@ ADMIN_VERB(poll_panel, R_POLL, "Server Poll Management", "View and manage polls.
 /client/proc/createStealthKey()
 	GLOB.stealthminID["[ckey]"] = generateStealthCkey()
 
-ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY_MAIN)
 	if(user.holder.fakekey)
 		user.disable_stealth_mode()
 	else
@@ -510,10 +510,10 @@ ADMIN_VERB(build_mode_self, R_BUILD, "Toggle Build Mode Self", "Toggle build mod
 	togglebuildmode(user.mob) // why is this a global proc???
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Build Mode")
 
-ADMIN_VERB(check_ai_laws, R_ADMIN, "Check AI Laws", "View the current AI laws.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(check_ai_laws, R_ADMIN, "Check AI Laws", "View the current AI laws.", ADMIN_CATEGORY_MAIN)
 	user.holder.output_ai_laws()
 
-ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain's religion.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain's religion.", ADMIN_CATEGORY_MAIN)
 	if (!isnull(GLOB.religious_sect))
 		var/you_sure = tgui_alert(
 			user,
@@ -537,7 +537,7 @@ ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain'
 		return
 	set_new_religious_sect(choices[choice], reset_existing = TRUE)
 
-ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY_MAIN)
 	user.holder.deactivate()
 	to_chat(user, span_interface("You are now a normal player."))
 	log_admin("[key_name(user)] deadminned themselves.")
@@ -552,7 +552,7 @@ ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with t
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
-ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_MAIN)
 	var/doesnt_have_silicon_access = !HAS_TRAIT_FROM(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
 	if(doesnt_have_silicon_access)
 		ADD_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
@@ -691,7 +691,7 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 
 	message_admins("[key_name_admin(user)] has loaded lazy template '[choice]'")
 
-ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Library.", ADMIN_CATEGORY_PLAYERS)
+ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Library.", ADMIN_CATEGORY_MAIN)
 	if(!user.holder.library_manager)
 		user.holder.library_manager = new
 	user.holder.library_manager.ui_interact(user.mob)
@@ -877,7 +877,7 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
 	GLOB.event_logger.ui_interact(user.mob)
 
-ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_SPAWNING)
+ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_GAME)
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
 	if(!object)
 		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
