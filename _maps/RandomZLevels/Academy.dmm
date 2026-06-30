@@ -2671,7 +2671,7 @@
 /turf/open/misc/grass/jungle,
 /area/awaymission/beach/academy)
 "Ua" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
 "UC" = (
