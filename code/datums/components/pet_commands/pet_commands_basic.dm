@@ -206,8 +206,6 @@
 	return ..()
 
 /datum/pet_command/breed/execute_action(datum/ai_controller/controller)
-	if(!is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
-		return
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/breed)
 
 /datum/pet_command/breed/retrieve_command_text(atom/living_pet, atom/target)

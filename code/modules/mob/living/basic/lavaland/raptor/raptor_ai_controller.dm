@@ -12,6 +12,7 @@
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_MAX_CHILDREN = 5,
 		BB_RAPTOR_FLEE_THRESHOLD = 0.25,
+		BB_FUCKS = TRUE
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 
@@ -31,6 +32,7 @@
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_MAX_CHILDREN = 5,
 		BB_RAPTOR_FLEE_THRESHOLD = 0.1,
+		BB_FUCKS = TRUE
 	)
 
 /datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
