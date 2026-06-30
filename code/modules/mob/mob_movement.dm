@@ -501,8 +501,7 @@ GAME_VERB_HIDDEN(/client, body_l_leg, "body-l-leg")
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
-GAME_VERB_HIDDEN(/client, toggle_walk_run, "toggle-walk-run")
-	set instant = TRUE
+GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
 		user_mob.toggle_move_intent()

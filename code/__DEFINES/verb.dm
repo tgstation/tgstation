@@ -6,7 +6,7 @@
  *       // verb body
  */
 
-#define _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, show_in_context_menu, is_hidden, verb_args...) \
+#define _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, show_in_context_menu, is_hidden, is_instant, verb_args...) \
 /datum/verb_metadata##owner_type/##verb_path_name \
 { \
 	name = ##verb_name; \
@@ -22,18 +22,22 @@
 	set hidden = ##is_hidden; \
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
+	set instant = ##is_instant; \
 	__gvb_##verb_path_name(arglist(args)); \
 }; \
 ##owner_type/proc/__gvb_##verb_path_name(##verb_args)
 
 #define GAME_VERB(owner_type, verb_path_name, verb_name, verb_category, verb_args...) \
-_GAME_VERB(owner_type, verb_path_name, verb_name, "", verb_category, TRUE, FALSE, ##verb_args)
+_GAME_VERB(owner_type, verb_path_name, verb_name, "", verb_category, TRUE, FALSE, FALSE, ##verb_args)
 
 #define GAME_VERB_DESC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, verb_args...) \
-_GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, ##verb_args)
+_GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, FALSE, ##verb_args)
 
 #define GAME_VERB_HIDDEN(owner_type, verb_path_name, verb_name, verb_args...) \
-_GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, ##verb_args)
+_GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, FALSE, ##verb_args)
+
+#define GAME_VERB_HIDDEN_INSTANT(owner_type, verb_path_name, verb_name, verb_args...) \
+_GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, TRUE, ##verb_args)
 
 #define _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category, show_in_context_menu, is_hidden, verb_args...) \
 /datum/verb_metadata##owner_type/##verb_path_name \
