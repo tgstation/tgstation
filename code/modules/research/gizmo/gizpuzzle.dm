@@ -61,11 +61,9 @@
 				succeeded = TRUE
 			if(j == a.len)
 				var/datum/callback/callback = solution_callbacks[i]
-				. = callback.Invoke(holder)
+				. = callback.Invoke(holder) || GIZMO_PUZZLE_SOLVED
 				current_sequence.Cut()
 
-				if(!.)
-					. = GIZMO_PUZZLE_SOLVED
 				break
 
 	if(!succeeded)
