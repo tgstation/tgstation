@@ -595,6 +595,11 @@
 /// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_CLOSED "wings_closed"
 
+/// Sent from /obj/item/clothing/shoes/bhop/rocket/jet, specifically it's toggle action /datum/action/item_action/toggle_flight
+#define COMSIG_JETBOOTS_ACTIVE "jets_on"
+/// Sent from /obj/item/clothing/shoes/bhop/rocket/jet, specifically it's toggle action /datum/action/item_action/toggle_flight
+#define COMSIG_JETBOOTS_INACTIVE "jets_off"
+
 /// Sent from /obj/item/assembly/on_attach(): (atom/holder)
 #define COMSIG_ASSEMBLY_ATTACHED "assembly_attached"
 
