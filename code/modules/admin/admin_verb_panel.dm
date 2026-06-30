@@ -1,5 +1,12 @@
 ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admin verbs.", ADMIN_CATEGORY_EVENTS)
+	if(user.admin_verb_panel)
+		var/datum/tgui/existing = SStgui.get_open_ui(user.mob, user.admin_verb_panel)
+		if(existing)
+			existing.close()
+			user.admin_verb_panel = null
+			return
 	var/datum/admin_verb_panel/panel = new(user)
+	user.admin_verb_panel = panel
 	panel.ui_interact(user.mob)
 
 /datum/admin_verb_panel

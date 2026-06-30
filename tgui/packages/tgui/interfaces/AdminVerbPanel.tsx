@@ -1,5 +1,5 @@
 import { storage } from 'common/storage';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -85,6 +85,18 @@ function isPrimitiveArg(arg: VerbArgument): boolean {
 export function AdminVerbPanel() {
   const { act, data } = useBackend<Data>();
   const { verbs = [], categories = [], targets = [] } = data;
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === '`') {
+      e.preventDefault();
+      Byond.winset(Byond.windowId, { 'is-visible': false });
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   const [searchText, setSearchText] = useState('');
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
