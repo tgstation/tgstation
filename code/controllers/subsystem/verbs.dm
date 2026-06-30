@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(verbs)
 	var/datum/verb_metadata/meta = verbs_by_verb_path[verb_path]
 	if(isnull(meta))
 		CRASH("invoke_verb called for '[verb_path]' with no metadata registered")
-		return
 	var/list/structured_args = list()
 	// Check for context menu target (only present in assoc lists from context menu stubs)
 	var/context_target
@@ -125,7 +124,7 @@ SUBSYSTEM_DEF(verbs)
 	else
 		var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
 		if(av)
-			entry["type"] = "[av.verb_path]"
+			entry["type"] = "[av.get_verb_path()]"
 			for(var/datum/verb_arg_metadata/arg in av.metadata?.arguments)
 				var/list/arg_entry = list("name" = arg.name, "arg_type" = arg.arg_type, "source" = arg.source)
 				if(length(arg.options))

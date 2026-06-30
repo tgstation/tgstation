@@ -600,7 +600,7 @@
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-	living_owner.succumb(whispered = length(last_whisper) > 0)
+	INVOKE_GAME_VERB(living_owner, /mob/living, succumb, whisper = length(last_whisper) > 0)
 
 //ALIENS
 

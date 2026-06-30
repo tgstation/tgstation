@@ -46,7 +46,7 @@
 	permissions = ##verb_permissions; \
 	verb_path = /client/proc/__avd_##verb_path_name; \
 }; \
-/client/proc/__avd_##verb_path_name(UNLINT(var##context_type/__context_target in world)) /* var/ is redundant but makes the parameter look like a typepath */ \
+/client/proc/__avd_##verb_path_name(var##context_type/__context_target in world) \
 { \
 	set name = ##verb_name; \
 	set desc = ##verb_desc; \
