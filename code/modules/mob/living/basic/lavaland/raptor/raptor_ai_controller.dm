@@ -1,5 +1,5 @@
 /datum/ai_controller/basic_controller/raptor
-	behavior_tree_json = "code/modules/mob/living/basic/lavaland/raptor/raptor.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/raptor/raptor_ai.bt.json"
 	blackboard = list(
 		BB_INTERACTIONS_WITH_OWNER = list(
 			"pecks",
@@ -13,13 +13,11 @@
 		BB_MAX_CHILDREN = 5,
 		BB_RAPTOR_FLEE_THRESHOLD = 0.25,
 	)
-
 	ai_movement = /datum/ai_movement/basic_avoidance
-
 
 /// Angry raptors with no faction check on retaliation
 /datum/ai_controller/basic_controller/raptor/aggressive
-	behavior_tree_json = "code/modules/mob/living/basic/lavaland/raptor/aggressive.bt.json"
+	ai_movement = /datum/ai_movement/basic_avoidance
 	blackboard = list(
 		BB_INTERACTIONS_WITH_OWNER = list(
 			"pecks",
@@ -34,7 +32,6 @@
 		BB_MAX_CHILDREN = 5,
 		BB_RAPTOR_FLEE_THRESHOLD = 0.1,
 	)
-
 
 /datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -51,15 +48,10 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(pawn, TRAIT_MOB_DIFFICULT_TO_MOUNT, REF(src))
 
-/datum/ai_controller/basic_controller/raptor/on_mob_eat()
-	. = ..()
-	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
-
 /datum/ai_controller/basic_controller/baby_raptor
 	behavior_tree_json = "code/modules/mob/living/basic/lavaland/raptor/baby_raptor.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/raptor),
 	)
-
 	ai_movement = /datum/ai_movement/basic_avoidance
