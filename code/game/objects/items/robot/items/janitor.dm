@@ -57,7 +57,7 @@
 	. = TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return
-	if(hose.loc != src) // Error handling
+	if(hose.loc != src && !istype(hose.loc, /mob/living)) // Error handling
 		deployed = FALSE
 		hose.forceMove(src)
 	if(locked || deployed)
@@ -77,7 +77,7 @@
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
-	hose.bag = locate(/obj/item/storage/bag/trash) in module_list.resolve()
+	hose.bag = istype(loc, /mob/living/silicon) ? pick(loc.get_all_contents_type(/obj/item/storage/bag/trash)) : locate(/obj/item/storage/bag/trash) in module_list.resolve()
 	if(!hose.bag)
 		stack_trace("[src] failed to connect to a trash bag on [module_list.resolve()].")
 		return TRUE
@@ -140,6 +140,8 @@
 		return NONE
 	playsound(bag, 'sound/items/vacuum/vacuum_use.ogg', 20, TRUE)
 	for(var/obj/item/I in get_turf(thing))
+		if(!istype(I, thing.type))
+			continue
 		if(!do_after(user, 0.1 SECONDS, user, progress = FALSE))
 			break
 		if(bag.atom_storage.attempt_insert(I, user, FALSE))
@@ -187,7 +189,7 @@
 	cleaner_resolved.update_icon(UPDATE_OVERLAYS)
 
 /obj/item/vacuum_item/proc/generate_hose(mob/living/offerer, mob/living/taker)
-	var/datum/beam/fishing_line/vacuum/generated_borg_hose = new(taker, offerer, icon_state = "hosebeam", max_distance = 6, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
+	var/datum/beam/fishing_line/vacuum/generated_borg_hose = new(taker, offerer, icon_state = "hosebeam", max_distance = 7, emissive = FALSE, beam_layer = BELOW_MOB_LAYER)
 	var/index = taker.get_held_index_of_item(src)
 	generated_borg_hose.lefthand = IS_LEFT_INDEX(index)
 	INVOKE_ASYNC(generated_borg_hose, TYPE_PROC_REF(/datum/beam, Start))
