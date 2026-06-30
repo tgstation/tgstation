@@ -17,11 +17,9 @@
 		shock_flags = (SHOCK_NOGLOVES)\
 	)
 
-/obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_WRENCH)
-		var/obj/structure/chair/C = new /obj/structure/chair(loc)
-		W.play_tool_sound(src)
-		C.setDir(dir)
-		qdel(src)
-		return
-	. = ..()
+/obj/structure/chair/e_chair/wrench_act(mob/living/user, obj/item/tool)
+	var/obj/structure/chair/non_electric_chair = new /obj/structure/chair(loc)
+	tool.play_tool_sound(src)
+	non_electric_chair.setDir(dir)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS

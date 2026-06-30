@@ -132,25 +132,36 @@
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/pneumatic_cannon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
-	if(istype(W, /obj/item/tank/internals))
+		return NONE
+	if(!isitem(tool))
+		return NONE
+
+	if(istype(tool, /obj/item/tank/internals))
 		if(needs_air == FALSE)
-			return
-		if(!tank)
-			var/obj/item/tank/internals/IT = W
-			if(IT.volume <= 3)
-				to_chat(user, span_warning("\The [IT] is too small for \the [src]."))
-				return
-			updateTank(W, 0, user)
-	else if(W.type == type)
+			return ITEM_INTERACT_BLOCKING
+
+		if(tank)
+			return ITEM_INTERACT_BLOCKING
+
+		if(astype(tool, /obj/item/tank/internals).volume <= 3)
+			to_chat(user, span_warning("\The [tool] is too small for \the [src]."))
+			return ITEM_INTERACT_BLOCKING
+
+		updateTank(tool, FALSE, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.type == type)
 		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
-	else if(loadedWeightClass >= maxWeightClass)
+		return ITEM_INTERACT_BLOCKING
+
+	if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
-	else if(isitem(W))
-		var/obj/item/IW = W
-		load_item(IW, user)
+		return ITEM_INTERACT_BLOCKING
+
+	load_item(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
 	if(!istype(I)) //Players can't load non items, this allows for admin varedit inserts.
