@@ -38,10 +38,10 @@
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
-/obj/item/bodypart/chest/update_owner(new_owner)
+/obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
 	. = ..()
-	if(. && ishuman(owner))
-		var/mob/living/carbon/human/humie = owner
+	if(ishuman(new_owner))
+		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
 
 /obj/item/bodypart/chest/get_butcher_drops(force = FALSE)

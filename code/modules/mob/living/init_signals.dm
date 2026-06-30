@@ -79,8 +79,8 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
 
-	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
-	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
