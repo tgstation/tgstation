@@ -51,21 +51,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		return
 	return ..()
 
-/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(exposed)
-		if(hidden_item)
-			to_chat(user, span_warning("There is already something in the drain enclosure!"))
-			return
-		if(attacking_item.w_class > WEIGHT_CLASS_TINY)
-			to_chat(user, span_warning("[attacking_item] is too large for the drain enclosure."))
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning("[attacking_item] is stuck to your hand, you cannot put it in the drain enclosure!"))
-			return
-		hidden_item = attacking_item
-		to_chat(user, span_notice("You place [attacking_item] into the drain enclosure."))
-		return
-	return ..()
+/obj/structure/urinal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!exposed)
+		return NONE
+
+	if(hidden_item)
+		to_chat(user, span_warning("There is already something in the drain enclosure!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.w_class > WEIGHT_CLASS_TINY)
+		to_chat(user, span_warning("[tool] is too large for the drain enclosure."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand, you cannot put it in the drain enclosure!"))
+		return ITEM_INTERACT_BLOCKING
+
+	hidden_item = tool
+	to_chat(user, span_notice("You place [tool] into the drain enclosure."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/urinal/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
