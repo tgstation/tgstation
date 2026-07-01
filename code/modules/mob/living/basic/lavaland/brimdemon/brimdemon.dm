@@ -27,7 +27,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/brimdemon
 
-	crusher_loot = /obj/item/crusher_trophy/brimdemon_fang
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
 		/obj/effect/decal/cleanable/brimdust = 1,
