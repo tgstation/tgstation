@@ -93,12 +93,13 @@
 				break
 
 
-/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_CROWBAR)
-		for(var/obj/structure/transit_tube_pod/P in loc)
-			P.deconstruct(FALSE, user)
-	else
-		return ..()
+/obj/structure/transit_tube/station/crowbar_act(mob/living/user, obj/item/tool)
+	var/anything_done = FALSE
+	for(var/obj/structure/transit_tube_pod/victim in loc)
+		victim.deconstruct(FALSE, user)
+		anything_done = TRUE
+	to_chat(user, span_notice("[anything_done ? "You empty \the [src]." : "\The [src] is already empty!"]"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(open_status == STATION_TUBE_CLOSED)

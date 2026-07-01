@@ -173,15 +173,18 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_BASIC
 
-/turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
-	if(W.get_sharpness() && W.force)
-		var/duration = ((4.8 SECONDS)/W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
-			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
-			dismantle_wall(FALSE,FALSE)
-			return
-	return ..()
+/turf/closed/wall/mineral/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness() || !tool.force)
+		return ..()
+
+	var/duration = (4.8 SECONDS / tool.force) * 2 //In seconds, for now.
+	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
+		duration /= 4 //Much better with hatchets and axes.
+	if(!do_after(user, duration * 1 SECONDS, target = src)) //Into deciseconds.
+		return ITEM_INTERACT_BLOCKING
+
+	dismantle_wall(FALSE,FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /turf/closed/wall/mineral/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 0)
 	return ..() //No recoil damage, wood is weak
