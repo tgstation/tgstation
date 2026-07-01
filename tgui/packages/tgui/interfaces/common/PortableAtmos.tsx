@@ -13,7 +13,7 @@ type StoredTank = {
   pressure: number;
 };
 
-type PortableBasicInfoData = {
+export type PortableBasicInfoData = {
   connected: boolean;
   holding: StoredTank | null;
   on: boolean;
