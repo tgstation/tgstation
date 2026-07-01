@@ -96,7 +96,7 @@
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
 	var/cold_level_2_threshold = 200
-	var/cold_level_3_threshold = 100
+	var/cold_level_3_threshold = 120
 	var/cold_level_1_damage = COLD_GAS_DAMAGE_LEVEL_1 //Keep in mind with gas damage levels, you can set these to be negative, if you want someone to heal, instead.
 	var/cold_level_2_damage = COLD_GAS_DAMAGE_LEVEL_2
 	var/cold_level_3_damage = COLD_GAS_DAMAGE_LEVEL_3
@@ -992,7 +992,7 @@
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
-	cold_level_3_threshold = 120
+	cold_level_3_threshold = 100
 
 /obj/item/organ/lungs/cybernetic/surplus
 	name = "surplus prosthetic lungs"
