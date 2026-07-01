@@ -2,6 +2,7 @@
 
 GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	/datum/strippable_item/parrot_headset,
+	/datum/strippable_item/hand/left,
 )))
 
 
@@ -173,11 +174,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 	icon_state = HAS_TRAIT(src, TRAIT_PARROT_PERCHED) ? icon_sit : icon_living
 
-/// Proc that we just use to see if we're rightclicking something for perch behavior or dropping the item we currently ahve
-/mob/living/basic/parrot/resolve_right_click_attack(atom/target, list/modifiers)
-	if(!start_perching(target))
-		return SECONDARY_ATTACK_CALL_NORMAL
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/// Proc that we just use to see if we're dragging onto stomething something for perch behavior or dropping the item we currently have
+/mob/living/basic/parrot/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	. = ..()
+	if(!start_perching(over))
+		balloon_alert(user, "not a perching spot!")
 
 /// Proc that handles sending the signal and returning a valid phrase to say. Will not do anything if we don't have a stat or if we're cliented.
 /// Will return either a string or null.
@@ -276,15 +277,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
-/mob/living/basic/parrot/put_in_hand(obj/item/target, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
-	if(!isnull(get_active_held_item()))
-		balloon_alert(src, "already holding something!")
-		return FALSE
-
-	if(target.w_class > WEIGHT_CLASS_SMALL)
+/mob/living/basic/parrot/put_in_hand_check(obj/item/item_to_pick_up)
+	if(item_to_pick_up.w_class > WEIGHT_CLASS_SMALL)
 		balloon_alert(src, "too big to pick up!")
 		return FALSE
 
+	return ..()
+
+/mob/living/basic/parrot/put_in_hand(obj/item/target, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
 	if(istype(target, /obj/item/food/cracker))
 		consume_cracker(target)
 		qdel(target)
