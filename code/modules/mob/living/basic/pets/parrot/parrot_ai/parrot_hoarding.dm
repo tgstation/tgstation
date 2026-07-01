@@ -49,15 +49,6 @@
 			return TRUE
 	return FALSE
 
-/// Returns TRUE while the parrot is holding loot it should take back to its nest.
-/datum/bt_node/decorator/parrot_has_loot
-
-/datum/bt_node/decorator/parrot_has_loot/check_condition(datum/ai_controller/controller)
-	var/mob/living/basic/parrot/living_pawn = controller.pawn
-	if(!istype(living_pawn))
-		return FALSE
-	return !isnull(living_pawn.held_item)
-
 /// Finds something for the parrot to steal. Temporarily ignores faction when eyeing a person's belongings.
 /datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item
 	target_source = /datum/target_source/oview
@@ -67,16 +58,6 @@
 /datum/bt_node/ai_behavior/acquire_target/parrot_hoard_item/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
 	if(ishuman(target))
 		controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, TRUE)
-
-/// Drops the loot the parrot is currently holding onto its current turf.
-/datum/bt_node/ai_behavior/parrot_drop_item
-
-/datum/bt_node/ai_behavior/parrot_drop_item/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/basic/parrot/living_pawn = controller.pawn
-	if(isnull(living_pawn.held_item))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	living_pawn.drop_held_item(gently = TRUE)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Single-hit grab variant which resets the faction-ignore flag once we are done stealing.
 /datum/bt_node/ai_behavior/basic_melee_attack/interact_once/parrot

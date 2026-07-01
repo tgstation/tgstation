@@ -300,7 +300,7 @@
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)
 "rm" = (
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/closet/crate/goldcrate/stocked,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/protected_space)
 "rn" = (

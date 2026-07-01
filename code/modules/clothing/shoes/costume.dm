@@ -93,7 +93,7 @@
 	AddElement(/datum/element/gags_recolorable)
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/item/clothing/shoes/glow/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/shoes/glow/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(DEFAULT_SHOES_FILE, "glow_shoes_emissive", src, alpha = src.alpha)

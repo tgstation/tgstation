@@ -33,9 +33,10 @@
 			"children": [
 				{
 					"type": "decorator",
-					"decorator": "/datum/bt_node/decorator/parrot_has_loot",
+					"decorator": "/datum/bt_node/decorator/target_is_holding_item",
 					"vars": {
-						"observer_abort": "BT_ABORT_SELF"
+						"observer_abort": "BT_ABORT_SELF",
+						"key": "BB_MY_PAWN"
 					},
 					"child": {
 						"type": "sequence",
@@ -50,7 +51,7 @@
 							},
 							{
 								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/parrot_drop_item"
+								"behavior": "/datum/bt_node/ai_behavior/drop_all_held_items"
 							}
 						]
 					}

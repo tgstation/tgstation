@@ -582,3 +582,22 @@
   - balance: RNG teleportation should work marginally better around areas and turfs
       where teleportation is restricted by skipping them instead of having a chance
       to fumble because of that.
+2026-06-29:
+  CabinetOnFire:
+  - bugfix: Crafting shivs no longer inverts the do_after check
+  Melbert:
+  - bugfix: Obsession don't obsess with themselves
+  - code_imp: Cleaned up station name generation, report any weird looking auto-generated
+      station names
+  - rscadd: Pride holiday now has unique station prefixes
+  SmArtKar:
+  - bugfix: Fixed chem implant injections not counting as such
+  - bugfix: Goliath tentacles now detach when the goliath dies
+  timothymtorres:
+  - bugfix: Fix `/datum/component/listen_prayers` not removing action button from
+      UI when component deleted from mob
+2026-06-30:
+  Melbert:
+  - qol: You can rename/redesc gizmos with a pen
+  Pumpkinoe:
+  - bugfix: Fixed some weird turf decals on walls for the Ex-Interdyne Pirate Ship

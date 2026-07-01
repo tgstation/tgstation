@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	. = ..()
 	AddComponent(/datum/component/walking_aid)
 
-/obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)

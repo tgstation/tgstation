@@ -1549,7 +1549,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (
-/obj/structure/reagent_dispensers/beerkeg{
+/obj/structure/reagent_dispensers/keg/beer{
 	desc = "Hey, CentCom, we located our complimentary case of space beer! The pamphlet didn't lie!";
 	name = "complimentary keg of space beer"
 	},
