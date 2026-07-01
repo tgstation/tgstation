@@ -120,6 +120,7 @@
 	greyscale_colors = CARP_COLORS
 	can_smoothen_out = FALSE
 	shade_color = "blue"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_FERAL_BITER)
 
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer
