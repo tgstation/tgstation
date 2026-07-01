@@ -687,6 +687,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
 	reagent_id = /datum/reagent/consumable/nutraslop
+	anchored = TRUE
+
+/obj/structure/reagent_dispensers/servingdish/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationary water tank"
