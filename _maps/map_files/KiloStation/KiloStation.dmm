@@ -6144,6 +6144,8 @@
 	dir = 1
 	},
 /obj/machinery/light/small/dim/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cdt" = (
@@ -33538,11 +33540,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/east{
-	id = "Arrival Shuttle Bay";
-	name = "Arrival Shuttle Bay Toggle";
-	req_access = list("command")
-	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/airless,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -50344,7 +50341,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/plating/airless,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qeJ" = (
@@ -60867,6 +60863,11 @@
 "toG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/button/door/directional/east{
+	id = "Arrival Shuttle Bay";
+	name = "Arrival Shuttle Bay Toggle";
+	req_access = list("command")
 	},
 /turf/open/floor/plating/airless,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -74984,6 +74985,10 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xGQ" = (
