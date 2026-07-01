@@ -332,6 +332,9 @@
 #define NUTRITION_LEVEL_START_MIN 250
 #define NUTRITION_LEVEL_START_MAX 400
 
+// After this amount of time overeating carbons become fat
+#define OVEREAT_TIME_LIMIT 200 SECONDS
+
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
 #define DISGUST_LEVEL_VERYDISGUSTED 100
