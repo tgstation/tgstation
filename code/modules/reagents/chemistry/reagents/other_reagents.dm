@@ -3447,7 +3447,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	overdose_threshold = 50 // GLOW GLOW GLOW
-	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION)
+	metabolized_traits = list(TRAIT_NIGHT_VISION)
 	self_consuming = TRUE
 	/// Fake flashlight we're using to make owner's eyes glow
 	var/obj/item/flashlight/eyelight/glow/glowing
@@ -3527,7 +3527,7 @@
 	name = "Red Luminiscent Fluid"
 	color = COLOR_SOFT_RED
 	// The glow *is* unnatural, so...
-	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
+	metabolized_traits = list(TRAIT_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
 /datum/reagent/luminescent_fluid/red/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()

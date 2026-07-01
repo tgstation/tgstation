@@ -128,8 +128,6 @@
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
-		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		affected_human.add_fov_trait(type, native_fov)
 

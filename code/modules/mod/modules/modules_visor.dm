@@ -93,8 +93,6 @@
 
 /obj/item/mod/module/night/on_activation(mob/activator)
 	ADD_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
-	mod.wearer.update_sight()
 
 /obj/item/mod/module/night/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_TRUE_NIGHT_VISION, REF(src))
-	mod.wearer.update_sight()

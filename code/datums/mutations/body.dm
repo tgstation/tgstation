@@ -3,7 +3,7 @@
 //Epilepsy gives a very small chance to have a seizure every life tick, knocking you unconscious.
 /datum/mutation/epilepsy
 	name = "Epilepsy"
-	desc = "A genetic defect that sporadically causes seizures."
+	desc = "The subject sporadically suffers from seizures."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You get a headache.")
@@ -51,7 +51,7 @@
 //Unstable DNA induces random mutations!
 /datum/mutation/bad_dna
 	name = "Unstable DNA"
-	desc = "Strange mutation that causes the holder to randomly mutate."
+	desc = "The subject will randomly mutate other mutations or features."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You feel strange.")
@@ -82,7 +82,7 @@
 //Cough gives you a chronic cough that causes you to drop items.
 /datum/mutation/cough
 	name = "Cough"
-	desc = "A chronic cough."
+	desc = "The subject has a chronic cough."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You start coughing.")
@@ -100,7 +100,7 @@
 
 /datum/mutation/paranoia
 	name = "Paranoia"
-	desc = "Subject is easily terrified, and may suffer from hallucinations."
+	desc = "The subject is easily terrified, and may suffer from hallucinations."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You feel screams echo through your mind...")
@@ -115,7 +115,7 @@
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/dwarfism
 	name = "Dwarfism"
-	desc = "A mutation believed to be the cause of dwarfism."
+	desc = "The subject's cells are more compact, making the subject appear smaller."
 	quality = POSITIVE
 	difficulty = 16
 	instability = POSITIVE_INSTABILITY_MINOR
@@ -137,7 +137,7 @@
 
 /datum/mutation/acromegaly
 	name = "Acromegaly"
-	desc = "A mutation believed to be the cause of acromegaly, or 'being unusually tall'."
+	desc = "The subject's cells stack on top of one another, making the subject appear unusually tall."
 	quality = MINOR_NEGATIVE
 	difficulty = 16
 	instability = NEGATIVE_STABILITY_MODERATE
@@ -176,7 +176,7 @@
 
 /datum/mutation/gigantism
 	name = "Gigantism" //negative version of dwarfism
-	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
+	desc = "The subject's cells are more spread out, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(/datum/mutation/dwarfism)
@@ -199,7 +199,7 @@
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/clumsy
 	name = "Clumsiness"
-	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
+	desc = "The subject's brain functions are impaired, causing them to exhibit clown-like behavior."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel lightheaded.")
@@ -208,9 +208,9 @@
 //Tourettes causes you to randomly stand in place and shout.
 /datum/mutation/tourettes
 	name = "Tourette's Syndrome"
-	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
+	desc = "The subject has a chronic twitching disorder, causing them to involuntarily shout or twitch."
 	quality = NEGATIVE
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	text_gain_indication = span_danger("You twitch.")
 	synchronizer_coeff = 1
 
@@ -230,7 +230,7 @@
 //Deafness makes you deaf.
 /datum/mutation/deaf
 	name = "Deafness"
-	desc = "The holder of this genome is completely deaf."
+	desc = "The subject is completely deaf and cannot hear anything."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to hear anything.")
@@ -274,7 +274,7 @@
 
 /datum/mutation/glow
 	name = "Glowy"
-	desc = "You permanently emit a light with a random color and intensity."
+	desc = "The subject's skin emits a soft glow, illuminating the area around them."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your skin begins to glow softly.")
 	instability = POSITIVE_INSTABILITY_MINI
@@ -311,7 +311,7 @@
 
 /datum/mutation/glow/anti
 	name = "Anti-Glow"
-	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
+	desc = "The subject's skin absorbs light, making the area around them darker."
 	text_gain_indication = span_notice("The light around you seems to disappear.")
 	conflicts = list(/datum/mutation/glow)
 	instability = POSITIVE_INSTABILITY_MINOR
@@ -323,7 +323,7 @@
 
 /datum/mutation/strong
 	name = "Strength"
-	desc = "The user's muscles slightly expand. Commonly seen in top-ranking boxers."
+	desc = "The subject's muscles slightly expand, improving general strength and workout efficiency."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You feel strong.")
 	instability = POSITIVE_INSTABILITY_MINOR
@@ -332,7 +332,7 @@
 
 /datum/mutation/stimmed
 	name = "Stimmed"
-	desc = "The user's chemical balance is more robust. This mutation is known to slightly improve workout efficiency."
+	desc = "The subject's chemical balance is more robust, improving workout efficiency."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
 	text_gain_indication = span_notice("You feel stimmed.")
@@ -341,7 +341,7 @@
 
 /datum/mutation/insulated
 	name = "Insulated"
-	desc = "The affected person does not conduct electricity."
+	desc = "The subject does not conduct electricity."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your fingertips go numb.")
 	text_lose_indication = span_notice("Your fingertips regain feeling.")
@@ -351,7 +351,7 @@
 
 /datum/mutation/fire
 	name = "Fiery Sweat"
-	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
+	desc = "The subject's skin will randomly combust, though ultimately becomes more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("You feel hot.")
 	text_lose_indication = span_notice("You feel a lot cooler.")
@@ -378,7 +378,7 @@
 
 /datum/mutation/badblink
 	name = "Spatial Instability"
-	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
+	desc = "The subject has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("The space around you twists sickeningly.")
 	text_lose_indication = span_notice("The space around you settles back to normal.")
@@ -408,7 +408,7 @@
 
 /datum/mutation/acidflesh
 	name = "Acidic Flesh"
-	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
+	desc = "The subject has acidic chemicals building up underneath the skin. This is often lethal."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_userdanger("A horrible burning sensation envelops you as your flesh turns to acid!")
@@ -429,7 +429,7 @@
 
 /datum/mutation/spastic
 	name = "Spastic"
-	desc = "Subject suffers from muscle spasms."
+	desc = "The subject suffers from muscle spasms."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = span_warning("You flinch.")
@@ -449,7 +449,7 @@
 
 /datum/mutation/extrastun
 	name = "Two Left Feet"
-	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
+	desc = "The subject's right foot is replaced with another left foot. Symptoms include kissing the floor when taking a step."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = span_warning("Your right foot feels... left.")
@@ -481,7 +481,8 @@
 
 /datum/mutation/martyrdom
 	name = "Internal Martyrdom"
-	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
+	desc = "The subject violently tears itself apart when near death. The process is irreversible. \
+		The effect is not known to damage anything nearby, but is very, VERY disorienting when observed."
 	instability = NEGATIVE_STABILITY_MAJOR // free stability >:)
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
@@ -529,7 +530,8 @@
 
 /datum/mutation/headless
 	name = "H.A.R.S."
-	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
+	desc = "Short for \"Head Allergic Rejection Syndrome\", the subject's body rejects the head, causing its brain to recede into the chest. \
+		Reversing this mutation is very dangerous, though it will regenerate non-vital head organs."
 	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
@@ -586,7 +588,7 @@
 // You bleed faster but regenerate blood faster
 /datum/mutation/bloodier
 	name = "Hypermetabolic Blood"
-	desc = "The subject's blood is hypermetabolic, causing it to be produced at a much faster rate."
+	desc = "The subject's becomes hypermetabolic, causing it to produce blood at a much faster rate."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINOR
 	text_gain_indication = span_notice("You can feel your heartbeat pick up.")
@@ -669,8 +671,7 @@
 // Soft crit is disabed
 /datum/mutation/inexorable
 	name = "Inexorable"
-	desc = "Your body can push on beyond the limits of normal human endurance. \
-		However, pushing it too far can cause severe damage to your body."
+	desc = "The subject's body can push on beyond the limits of normal human endurance, though the process causes internal damage to the body."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MODERATE
 	text_gain_indication = span_notice("You feel inexorable.")
@@ -713,3 +714,217 @@
 		owner.adjust_brute_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
 	// Offsets suffocation but not entirely
 	owner.adjust_oxy_loss(-0.5 * seconds_per_tick, forced = TRUE)
+
+/datum/mutation/limb_regeneration
+	name = "Regeneration"
+	desc = "The subject's body is able to regenerate lost limbs or organs while sleeping, given ample rest and nutrients."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MODERATE
+	text_gain_indication = span_notice("You feel a strange tingling.")
+	text_lose_indication = span_notice("The strange tingling feeling fades.")
+	difficulty = 20
+	synchronizer_coeff = 1
+	power_coeff = 1
+
+	/// Threshold of nutrition required to regenerate limbs/organs
+	var/nutrition_threshold = NUTRITION_LEVEL_FED * 0.85
+	/// If TRUE we notified the user they could probably use the mutation if they eat/slept first - comes with a bonus to trigger chance
+	VAR_PRIVATE/notified_of_ability = FALSE
+
+/datum/mutation/limb_regeneration/can_acquire(mob/living/carbon/human/acquirer)
+	return !HAS_TRAIT(acquirer, TRAIT_NOHUNGER)
+
+/datum/mutation/limb_regeneration/on_life(seconds_per_tick)
+	if(!SPT_PROB(5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
+		return
+
+	var/list/missing_limbs = owner.get_missing_limbs()
+	var/list/missing_important_organs = owner.get_missing_organs(include_appendix = (GET_MUTATION_POWER(src) > 1)) // appendix can regrow if you have power
+	var/list/missing_special_organs = list()
+	for(var/organ_type in owner.dna?.species?.mutant_organs)
+		if(!owner.get_organ_by_type(organ_type) && should_visual_organ_apply_to(organ_type, owner))
+			missing_special_organs += organ_type
+
+	if(!length(missing_limbs) && !length(missing_important_organs) && !length(missing_special_organs))
+		return
+
+	if(owner.nutrition <= nutrition_threshold)
+		if(owner.stat == UNCONSCIOUS && !notified_of_ability)
+			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a meal first."))
+			notified_of_ability = TRUE
+		return
+	if(owner.stat != UNCONSCIOUS)
+		if(owner.nutrition > nutrition_threshold && !notified_of_ability)
+			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a nap first."))
+			notified_of_ability = TRUE
+		return
+
+	notified_of_ability = FALSE
+	// "core organs" and limbs are prioritized
+	if(length(missing_important_organs) || length(missing_limbs))
+		if(length(missing_important_organs) && (prob(50) || !length(missing_limbs)))
+			var/replacement_type = owner.dna.species.get_mutant_organ_type_for_slot(pick(missing_important_organs))
+			var/obj/item/organ/replacement = new replacement_type()
+			replacement.Insert(owner, special = TRUE)
+			to_chat(owner, span_green("The tingingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		else
+			var/replacing_zone = pick(missing_limbs)
+			owner.regenerate_limb(replacing_zone)
+			var/obj/item/bodypart/replacement = owner.get_bodypart(replacing_zone)
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement.plaintext_zone] where your old one was!"))
+			owner.visible_message(span_warning("[owner]'s [replacement.plaintext_zone] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.5 * GET_MUTATION_SYNCHRONIZER(src))
+		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return
+
+	// "cosmetic" organs are second priority and cheaper to regenerate
+	if(length(missing_special_organs))
+		var/replacement_type = pick(missing_special_organs)
+		var/obj/item/organ/replacement = new replacement_type()
+		replacement.Insert(owner, special = TRUE)
+		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		if(replacement.organ_flags & ORGAN_EXTERNAL)
+			owner.visible_message(span_warning("[owner]'s [replacement] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.3 * GET_MUTATION_SYNCHRONIZER(src))
+		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return
+
+	stack_trace("Limb regeneration failed to find a missing limb or organ to regenerate for [owner] despite passing the checks")
+
+/datum/mutation/chemical_allergy
+	name = "Chemical Allergy"
+	desc = "The subject's body is allergic to almost all forms of medicine or drug - causing a temporary flux of genetic instability, among other side effects."
+	quality = NEGATIVE
+	instability = NEGATIVE_STABILITY_MAJOR
+	text_gain_indication = span_warning("You feel a strange irritation in your skin.")
+	text_lose_indication = span_notice("The irritation in your skin subsides.")
+	difficulty = 20
+
+	/// Typecache of reagents that trigger the allergy
+	var/static/list/danger_reagents
+	/// If we're currently experiencing negative effects
+	VAR_PRIVATE/was_experiencing_allergy = FALSE
+
+/datum/mutation/chemical_allergy/New()
+	. = ..()
+	if(length(danger_reagents))
+		return
+
+	danger_reagents = typecacheof(list(
+		/datum/reagent/medicine,
+		/datum/reagent/drug,
+	)) - typecacheof(list(
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/epinephrine,
+		/datum/reagent/medicine/mannitol,
+		/datum/reagent/medicine/mutadone,
+		/datum/reagent/medicine/sansufentanyl,
+		/datum/reagent/medicine/salglu_solution,
+	))
+
+/datum/mutation/chemical_allergy/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(acquirer, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
+
+/datum/mutation/chemical_allergy/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_LIVING_HEALTHSCAN)
+
+/datum/mutation/chemical_allergy/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+	SIGNAL_HANDLER
+
+	render_list += "<span class='alert ml-1'>"
+	render_list += conditional_tooltip("Subject has [name]", "Subject will react negatively to most forms of medicine - \
+		avoid administering chemicals as a part of treatment unless absolutely necessary.", tochat)
+	render_list += "</span><br>"
+
+/datum/mutation/chemical_allergy/on_life(seconds_per_tick)
+	if(!has_danger_reagent())
+		if(was_experiencing_allergy)
+			was_experiencing_allergy = FALSE
+			instability *= 2
+			owner.dna.update_instability()
+		return
+	if(!SPT_PROB(80, seconds_per_tick))
+		return
+	if(!was_experiencing_allergy)
+		was_experiencing_allergy = TRUE
+		instability *= 0.5 // halves the negative instability it rewards, which could push you into danger territory!
+		owner.dna.update_instability()
+
+	if(SPT_PROB(66, seconds_per_tick))
+		owner.set_stutter_if_lower(4 SECONDS)
+	if(SPT_PROB(33, seconds_per_tick))
+		owner.adjust_disgust(24, DISGUST_LEVEL_VERYDISGUSTED)
+		owner.adjust_tox_loss(pick(2, 3, 4), forced = TRUE)
+	if(SPT_PROB(12, seconds_per_tick))
+		owner.adjust_jitter_up_to(6 SECONDS, 36 SECONDS)
+		owner.adjust_dizzy_up_to(6 SECONDS, 36 SECONDS)
+		owner.adjust_blood_volume(-pick(12, 16, 20, 24), minimum = BLOOD_VOLUME_OKAY)
+	if(SPT_PROB(6, seconds_per_tick))
+		owner.adjust_confusion_up_to(4 SECONDS, 12 SECONDS)
+		owner.losebreath = max(owner.losebreath, 4)
+
+/datum/mutation/chemical_allergy/proc/has_danger_reagent()
+	for(var/datum/reagent/reagent as anything in owner.reagents?.reagent_list)
+		if(!is_type_in_typecache(reagent, danger_reagents))
+			continue
+		if(!reagent.metabolizing || reagent.volume < 1)
+			continue
+		return TRUE
+
+	return FALSE
+
+/datum/mutation/venomous_strikes
+	name = "Venomous"
+	desc = "The subject's body produces a minor toxin that can be injected into others through scratches or bites. \
+		They will also filter out the same variety of toxin from their own bloodstream should they be exposed to it themselves."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MODERATE
+	text_gain_indication = span_notice("You teeth and nails feel sharper.")
+	text_lose_indication = span_notice("You teeth and nails feel duller.")
+	/// Type of chem to inject
+	var/venom_type = /datum/reagent/toxin
+	/// Amount of chem to inject per attack
+	var/venom_amount = 3
+
+/datum/mutation/venomous_strikes/on_acquiring(mob/living/carbon/human/owner)
+	text_gain_indication = (owner.get_active_hand()?.unarmed_attack_effect == ATTACK_EFFECT_CLAW) ? span_notice("You teeth and claws feel sharper.") : initial(text_gain_indication)
+	. = ..()
+	if(!.)
+		return
+	apply_venom()
+
+/datum/mutation/venomous_strikes/on_losing(mob/living/carbon/human/owner)
+	text_lose_indication = (owner.get_active_hand()?.unarmed_attack_effect == ATTACK_EFFECT_CLAW) ? span_notice("You teeth and claws feel duller.") : initial(text_lose_indication)
+	. = ..()
+	if(.)
+		return
+	remove_venom()
+
+/datum/mutation/venomous_strikes/vv_edit_var(var_name, var_value)
+	if(var_name != NAMEOF(src, venom_type) && var_name != NAMEOF(src, venom_amount))
+		return ..()
+
+	remove_venom()
+	. = ..()
+	apply_venom()
+
+/datum/mutation/venomous_strikes/pre_apply_chromosome()
+	apply_venom()
+
+/datum/mutation/venomous_strikes/post_apply_chromosome()
+	remove_venom()
+
+/datum/mutation/venomous_strikes/proc/apply_venom()
+	owner.AddElement(/datum/element/venomous, venom_type, venom_amount * GET_MUTATION_POWER(src), INJECT_CHECK_IGNORE_SPECIES)
+
+/datum/mutation/venomous_strikes/proc/remove_venom()
+	owner.RemoveElement(/datum/element/venomous, venom_type, venom_amount * GET_MUTATION_POWER(src), INJECT_CHECK_IGNORE_SPECIES)
+
+/datum/mutation/venomous_strikes/on_life(seconds_per_tick)
+	owner.reagents.remove_reagent(venom_type, round(venom_amount * 0.33, CHEMICAL_VOLUME_ROUNDING) * seconds_per_tick)

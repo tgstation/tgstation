@@ -1,7 +1,7 @@
 //Chameleon causes the owner to slowly become transparent when not moving.
 /datum/mutation/chameleon
 	name = "Chameleon"
-	desc = "A genome that causes the holder's skin to become transparent over time."
+	desc = "The subject's skin becomes transparent over time while not moving."
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = span_notice("You feel one with your surroundings.")
@@ -22,7 +22,7 @@
 
 //Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
 /datum/mutation/chameleon/changeling
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	power_coeff = 2.5
 	locked = TRUE
 

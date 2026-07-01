@@ -134,11 +134,7 @@
 	if(!ishuman(affected_carbon))
 		return
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
-	var/mob/living/carbon/human/affected_human = affected_carbon
-	var/obj/item/organ/eyes/empowered_eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
-	if(empowered_eyes)
-		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-		empowered_eyes?.refresh()
+	ADD_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	if(!ishuman(affected_carbon))
@@ -162,12 +158,7 @@
 		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 		tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
 		tongue.toxic_foodtypes = initial(tongue.toxic_foodtypes)
-	if(!ishuman(affected_carbon))
-		return
-	var/mob/living/carbon/human/affected_human = affected_carbon
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-	var/obj/item/organ/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
-	eyes?.refresh()
+	REMOVE_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
 
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
 /datum/addiction/medicine
