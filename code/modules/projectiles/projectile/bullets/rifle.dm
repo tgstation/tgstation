@@ -66,7 +66,7 @@
 /obj/projectile/bullet/rebar
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 30
+	damage = 40
 	speed = 2.5
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 10
@@ -92,9 +92,9 @@
 /obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 45
+	damage = 50
 	dismemberment = 2 //It's a budget sniper rifle.
-	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
+	armour_penetration = 35 //A bit better versus armor. Gets past anti laser armor or a sec vest, but doesnt get past proper bulletproof armor.
 	wound_bonus = 10
 	exposed_wound_bonus = 20
 	embed_falloff_tile = -3
@@ -109,7 +109,7 @@
 	pain_stam_pct = 0.4
 	pain_mult = 3
 	jostle_pain_mult = 2
-	rip_time = 1.4 SECONDS
+	rip_time = 2 SECONDS
 
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
@@ -139,11 +139,11 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 35
-	speed = 1.6
+	damage = 40 //if someone gets this they deserve to twotap with it, metal H2 is that rough to make.
+	speed = 3
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
-	max_pierces = 3
+	max_pierces = 10
 	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE

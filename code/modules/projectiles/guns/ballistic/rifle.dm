@@ -195,6 +195,7 @@
 	name = "heated rebar crossbow"
 	desc = "A handcrafted crossbow. \
 		   Aside from conventional sharpened iron rods, it can also fire specialty ammo made from the atmos crystalizer - zaukerite, metallic hydrogen, and healium rods all work. \
+		   A makeshift Quiver can be made with an oxygen tank, wire, and a welder.\
 		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
@@ -218,7 +219,9 @@
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
-	var/draw_time = 3 SECONDS
+	var/draw_time = 1.5 SECONDS
+	var/reload_time = 1.5 SECONDS
+	var/doafter_flags = NONE
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
@@ -232,7 +235,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
-	if(!do_after(user, draw_time, target = src))
+	if(!do_after(user, draw_time, target = src,timed_action_flags = src.doafter_flags))
 		return
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	balloon_alert(user, "bowstring drawn")
@@ -267,23 +270,27 @@
 
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	name = "stressed rebar crossbow"
-	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a draw this crossbow a bit faster. Hopefully, it was worth it."
+	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could rack and reload the crossbow faster. Hopefully, it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
 	can_misfire = TRUE
-	draw_time = 1.5
+	draw_time = 0.5 SECONDS
+	reload_time = 0.5 SECONDS
+	doafter_flags = IGNORE_USER_LOC_CHANGE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/forced
 	misfire_probability = 25
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
+	auto reloads from backpack quiver when racking."
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
 	initial_caliber = CALIBER_REBAR
-	draw_time = 1
+	draw_time = 0.5 SECONDS
+	reload_time = 1.2 SECONDS
+	doafter_flags = IGNORE_USER_LOC_CHANGE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
