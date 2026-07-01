@@ -90,12 +90,11 @@
 	else
 		return ..()
 
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item == noz)
-		remove_noz()
-		return TRUE
-	else
-		return ..()
+/obj/item/watertank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool != noz)
+		return NONE
+	remove_noz()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/watertank/dropped(mob/user)
 	..()

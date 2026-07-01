@@ -122,12 +122,12 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stack/rods))
-		flamethrower_rods(tool, user)
-	else
-		. = ..()
+/obj/item/weldingtool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	flamethrower_rods(tool, user)
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/cyborg_unequip(mob/user)
 	if(!isOn())

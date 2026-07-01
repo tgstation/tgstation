@@ -1,11 +1,11 @@
 ///structure to contain ores
 /obj/structure/ore_container
 
-/obj/structure/ore_container/attackby(obj/item/ore, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(istype(ore, /obj/item/stack/ore) && !user.combat_mode)
-		ore.forceMove(src)
-		return
-	return ..()
+/obj/structure/ore_container/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/ore) || user.combat_mode)
+		return NONE
+	tool.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ore_container/Entered(atom/movable/mover)
 	. = ..()

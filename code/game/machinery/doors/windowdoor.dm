@@ -393,24 +393,24 @@
 	. = ..()
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
 	tool.play_tool_sound(src)
 	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!panel_open || density || operating)
-		return
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
 	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!panel_open || density || operating || !loc)
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/windoor_assembly/windoor_assembly = new /obj/structure/windoor_assembly(loc)
 	switch(base_state)
 		if("left")
@@ -424,14 +424,14 @@
 			windoor_assembly.facing = "r"
 			windoor_assembly.secure = TRUE
 	windoor_assembly.set_anchored(TRUE)
-	windoor_assembly.state= "02"
+	windoor_assembly.cables_added = TRUE
 	windoor_assembly.setDir(dir)
 	windoor_assembly.update_appearance()
 	windoor_assembly.created_name = name
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("You discard the damaged electronics."))
 		qdel(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 	to_chat(user, span_notice("You remove the airlock electronics."))
 	var/obj/item/electronics/airlock/dropped_electronics
 	if(!electronics)
@@ -446,7 +446,7 @@
 		electronics = null
 		dropped_electronics.forceMove(drop_location())
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)

@@ -118,24 +118,27 @@ FLOOR SAFES
 	balloon_alert(user, "lock set!")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(open)
-		. = TRUE //no afterattack
-		if(attacking_item.w_class + space <= maxspace)
-			if(!user.transferItemToLoc(attacking_item, src))
-				to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the safe!"))
-				return
-			space += attacking_item.w_class
-			to_chat(user, span_notice("You put [attacking_item] in [src]."))
-		else
-			to_chat(user, span_warning("[attacking_item] won't fit in [src]."))
-	else
-		if(istype(attacking_item, /obj/item/clothing/neck/stethoscope))
-			attack_hand(user)
-			return
-		else
-			to_chat(user, span_warning("You can't put [attacking_item] into the safe while it is closed!"))
-			return
+/obj/structure/safe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!open)
+		if(!istype(tool, /obj/item/clothing/neck/stethoscope))
+			to_chat(user, span_warning("You can't put [tool] into the safe while it is closed!"))
+			return ITEM_INTERACT_BLOCKING
+
+		attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.w_class + space > maxspace)
+		to_chat(user, span_warning("[tool] won't fit in [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in the safe!"))
+		return ITEM_INTERACT_BLOCKING
+
+	space += tool.w_class
+	to_chat(user, span_notice("You put [tool] in [src]."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return

@@ -39,13 +39,11 @@
 	else
 		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
 
-/obj/structure/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return TRUE
-	if(scanner_taggable && is_type_in_list(item, scanner_types))
+/obj/structure/spawner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!scanner_taggable || !is_type_in_list(tool, scanner_types))
 		gps_tag(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
 /obj/structure/spawner/proc/gps_tag(mob/user)

@@ -108,17 +108,21 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+/obj/structure/training_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)
-		return ..()
-	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
-		return ..()
+		return NONE
+
+	if (!istype(tool, /obj/item/training_toolbox) && !istype(tool, /obj/item/target))
+		return NONE
+
 	if (obj_flags & EMAGGED)
 		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
-		return
-	attach_item(target)
+		return ITEM_INTERACT_BLOCKING
+
+	attach_item(tool)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
 	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Attach an item to the machine
