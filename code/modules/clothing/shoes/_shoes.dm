@@ -63,18 +63,18 @@
 			playsound(user, 'sound/items/weapons/genhit2.ogg', 50, TRUE)
 		return BRUTELOSS
 
-/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 
-/obj/item/clothing/shoes/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+/obj/item/clothing/shoes/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if (isinhands)
 		return
-	var/blood_overlay = get_blood_overlay("shoe")
+	var/blood_overlay = get_blood_overlay("shoe", bodyshape)
 	if (blood_overlay)
 		. += blood_overlay
 

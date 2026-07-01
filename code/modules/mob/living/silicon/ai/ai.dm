@@ -2,7 +2,7 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, latejoining = FALSE)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
@@ -23,7 +23,7 @@
 
 	create_eye()
 
-	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
+	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP || latejoining)
 		target_ai.mind.transfer_to(src)
 		if(is_antag())
 			to_chat(src, span_userdanger("You have been installed as an AI! "))

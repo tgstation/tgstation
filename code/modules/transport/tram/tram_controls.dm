@@ -237,22 +237,19 @@
 	if(tram)
 		if(SStts.tts_enabled)
 			tram.nav_beacon.voice = SStts.tram_voice
-		switch(response_code)
-			if(REQUEST_SUCCESS)
-				tram.nav_beacon.say("The next stop is: [response_info]")
 
-			if(REQUEST_FAIL)
-				if(!LAZYFIND(relevant, src))
+		if(response_code == REQUEST_FAIL)
+			if(!LAZYFIND(relevant, src))
+				return
+
+			switch(response_info)
+				if(NOT_IN_SERVICE)
+					tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
+				if(INVALID_PLATFORM)
+					tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
+				if(INTERNAL_ERROR)
+					tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+				else
 					return
-
-				switch(response_info)
-					if(NOT_IN_SERVICE)
-						tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
-					if(INVALID_PLATFORM)
-						tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
-					if(INTERNAL_ERROR)
-						tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
-					else
-						return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)
