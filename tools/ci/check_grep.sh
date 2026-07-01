@@ -158,6 +158,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' "${code_files[@]}"; then
 	st=1
 fi;
 
+part "manual verb definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant)\s*=\s*(.*)\s' "${code_files[@]}" "-g '!tools/' -g '!code/__DEFINES/' -g '!code/__HELPERS/'"; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verb attribute set. Use GAME_VERB() or ADMIN_VERB() instead.${NC}"
+	st=1
+fi;
+
 part "improperly pathed static lists"
 if $grep -i 'var/list/static/.*' "${code_files[@]}"; then
 	echo

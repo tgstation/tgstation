@@ -301,10 +301,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	prefs.last_id = computer_id //these are gonna be used for banning
 
 	if(fexists(roundend_report_file()))
-		add_verb(src, /client/proc/show_previous_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_previous_roundend_report)
 
 	if(fexists("data/server_last_roundend_report.html"))
-		add_verb(src, /client/proc/show_servers_last_roundend_report)
+		ASSIGN_GAME_VERB(src, /client, show_servers_last_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		admin_datum.associate(src)
 		connecting_admin = TRUE
 	else if(GLOB.deadmins[ckey])
-		add_verb(src, /client/proc/readmin)
+		ASSIGN_GAME_VERB(src, /client, readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -938,11 +938,11 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if (interviewee)
 		return
 	if(CONFIG_GET(flag/see_own_notes))
-		add_verb(src, /client/proc/self_notes)
+		ASSIGN_GAME_VERB(src, /client, self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
-		add_verb(src, /client/proc/self_playtime)
+		ASSIGN_GAME_VERB(src, /client, self_playtime)
 	if(!CONFIG_GET(flag/forbid_preferences_export))
-		add_verb(src, /client/proc/export_preferences)
+		ASSIGN_GAME_VERB(src, /client, export_preferences)
 
 
 //checks if a client is afk
@@ -1113,6 +1113,15 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
 
+	var/list/panel_verbs = list()
+	for(var/procpath/verb_to_init as anything in verbstoprocess)
+		if(!verb_to_init || verb_to_init.hidden)
+			continue
+		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
+	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))
+
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
 		return
@@ -1190,17 +1199,12 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "OOC"
-	set desc = "Stop Current Sounds"
+GAME_VERB_DESC(/client, stop_client_sounds, "Stop Sounds", "Stop Current Sounds", "OOC")
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
+GAME_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "OOC")
 
 	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)

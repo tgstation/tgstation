@@ -145,9 +145,8 @@
 	. = ..()
 	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
-/obj/machinery/gibber/verb/eject()
-	set name = "Empty gibber"
-	set src in oview(1)
+GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", null)
+
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))

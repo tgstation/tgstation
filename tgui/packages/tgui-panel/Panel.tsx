@@ -20,6 +20,7 @@ import { ReconnectButton } from './reconnect';
 import { settingsVisibleAtom } from './settings/atoms';
 import { SettingsPanel } from './settings/SettingsPanel';
 import { useSettings } from './settings/use-settings';
+import { CommandBar } from './verbs/CommandBar';
 
 export function Panel(props) {
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
@@ -95,6 +96,9 @@ export function Panel(props) {
               )}
             </Notifications>
           </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <CommandBar />
         </Stack.Item>
       </Stack>
     </Pane>

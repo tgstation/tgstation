@@ -52,7 +52,7 @@
 					<font color='#00cc66'>[X.get_tox_loss()]</font> \
 					<font color='#00cccc'>[X.get_oxy_loss()]</font>"
 
-ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_MAIN)
 	var/index = 0
 	var/list/dat = list()
 

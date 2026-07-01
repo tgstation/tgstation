@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
+	/// A list of all admin verbs indexed by their verb_path.
+	var/list/datum/admin_verb/admin_verbs_by_verb_path = list()
 	/// A list of all admin verbs indexed by their visibility flag.
 	var/list/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
 	/// A map of all assosciated admins and their visibility flags.
@@ -40,7 +42,12 @@ SUBSYSTEM_DEF(admin_verbs)
 			qdel(verb_singleton, force = TRUE)
 			continue
 
+		verb_singleton.metadata = new
+		var/list/pending = GLOB.____pending_verb_args[verb_type]
+		if(pending)
+			verb_singleton.metadata.arguments = pending
 		admin_verbs_by_type[verb_type] = verb_singleton
+		admin_verbs_by_verb_path[verb_singleton.get_verb_path()] = verb_singleton
 		if(verb_singleton.visibility_flag)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
@@ -101,9 +108,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(isnull(admin.holder))
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' with a non-admin.")
 
-	var/list/verb_args = args.Copy()
-	verb_args.Cut(2, 3)
-	var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type] // this cannot be typed because we need to use `:`
+	var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type]
 	if(isnull(verb_singleton))
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' that doesn't exist.")
 
@@ -111,12 +116,65 @@ SUBSYSTEM_DEF(admin_verbs)
 		to_chat(admin, span_adminnotice("You lack the permissions to do this."))
 		return
 
+	// Build structured_args from whatever the caller passed
+	var/list/structured_args = list()
+	var/list/extra_args = args.Copy(3)
+	if(length(extra_args) == 1 && islist(extra_args[1]))
+		// Caller passed an explicit assoc list (e.g. context menu hints)
+		structured_args = extra_args[1]
+	else if(length(extra_args))
+		// Map positional args to metadata argument names in order
+		var/list/meta_args = verb_singleton.metadata?.arguments
+		for(var/i in 1 to min(length(extra_args), length(meta_args)))
+			var/datum/verb_arg_metadata/arg = meta_args[i]
+			structured_args[arg.name] = extra_args[i]
+
+	if(length(verb_singleton.metadata?.arguments))
+		structured_args = collect_verb_args(admin, verb_singleton, structured_args)
+		if(isnull(structured_args))
+			return
+
 	var/old_usr = usr
 	usr = admin.mob
-	// THE MACRO ENSURES THIS EXISTS. IF IT EVER DOESNT EXIST SOMEONE DIDNT USE THE DAMN MACRO!
-	verb_singleton.__avd_do_verb(arglist(verb_args))
+	verb_singleton.__avd_do_verb(admin, structured_args)
 	usr = old_usr
 	SSblackbox.record_feedback("tally", "dynamic_admin_verb_invocation", 1, "[verb_type]")
+
+/datum/controller/subsystem/admin_verbs/proc/collect_verb_args(client/admin, datum/admin_verb/verb_singleton, list/hints)
+	var/list/collected = hints?.Copy() || list()
+	var/context_target = collected["__context_target__"]
+	collected -= "__context_target__"
+	var/context_used = FALSE
+
+	for(var/datum/verb_arg_metadata/arg in verb_singleton.metadata.arguments)
+		if(!isnull(collected[arg.name]))
+			continue
+		if(!context_used && !isnull(context_target) && arg.source == VERB_ARG_SOURCE_WORLD)
+			collected[arg.name] = context_target
+			context_used = TRUE
+			continue
+		var/value = prompt_for_arg(admin, verb_singleton.name, arg)
+		if(isnull(value))
+			return null
+		collected[arg.name] = value
+	return collected
+
+/datum/controller/subsystem/admin_verbs/proc/prompt_for_arg(client/admin, verb_name, datum/verb_arg_metadata/arg)
+	if(arg.arg_type & VERB_ARG_TYPE_NUM)
+		return tgui_input_number(admin, arg.name, verb_name)
+	if(arg.arg_type & VERB_ARG_TYPE_TEXT)
+		return tgui_input_text(admin, arg.name, verb_name)
+	if(arg.arg_type & VERB_ARG_TYPE_MESSAGE)
+		return tgui_input_text(admin, arg.name, verb_name, multiline = TRUE)
+	if(arg.arg_type & VERB_ARG_TYPE_SOUND)
+		return input(admin, arg.name, verb_name) as null|sound
+	if(arg.arg_type & VERB_ARG_TYPE_MOB)
+		return tgui_input_list(admin, arg.name, verb_name, sort_names(GLOB.mob_list))
+	if(arg.arg_type & VERB_ARG_TYPE_AREA)
+		return tgui_input_list(admin, arg.name, verb_name, get_sorted_areas())
+	if(arg.arg_type & VERB_ARG_TYPE_OBJ)
+		return tgui_input_list(admin, arg.name, verb_name, sort_names(GLOB.mob_list))
+	return null
 
 /**
  * Assosciates and/or resyncs an admin with their accessible admin verbs.

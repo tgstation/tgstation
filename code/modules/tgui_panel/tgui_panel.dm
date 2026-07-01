@@ -103,15 +103,116 @@
 		analyze_telemetry(payload)
 		return TRUE
 
+	if(type == "verbs/request_verbs")
+		client.init_verbs()
+		return TRUE
+
+	if(type == "verbs/request_typepaths")
+		var/parent_text = payload["parent"]
+		var/browse_type = text2path(parent_text)
+		if(isnull(browse_type))
+			browse_type = /datum
+		var/list/children = list()
+		for(var/child_type in typesof(browse_type))
+			if(child_type == browse_type)
+				continue
+			// Only include direct children (one level deeper)
+			var/child_text = "[child_type]"
+			var/parent_len = length(parent_text || "/datum")
+			var/remainder = copytext(child_text, parent_len + 1)
+			if(findtext(remainder, "/", 2))
+				continue
+			children += child_text
+		window.send_message("verbs/typepaths", list("parent" = parent_text, "paths" = children))
+		return TRUE
+
+	if(type == "verbs/request_targets")
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
+			return TRUE
+		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
+			return TRUE
+		// Check game verbs first, then admin verbs
+		var/list/arg_list
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(meta)
+			arg_list = meta.arguments
+		else
+			var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+			if(av)
+				arg_list = av.metadata?.arguments
+		if(!length(arg_list))
+			return TRUE
+		var/datum/verb_arg_metadata/entity_arg
+		for(var/datum/verb_arg_metadata/arg in arg_list)
+			if(arg.arg_type & VERB_ARG_TYPE_ENTITY)
+				entity_arg = arg
+				break
+		if(!entity_arg)
+			return TRUE
+		var/list/target_data = list()
+		var/list/source_atoms = entity_arg.get_targets(client)
+		for(var/atom/target in source_atoms)
+			target_data += list(list("name" = "[target]", "ref" = REF(target)))
+		window.send_message("verbs/targets", list("targets" = target_data))
+		return TRUE
+
+	if(type == "verbs/invoke")
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
+			return TRUE
+
+		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+		if(admin_meta)
+			var/list/resolved_args = resolve_invoke_args(payload["args"], admin_meta.metadata?.arguments)
+			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
+			return TRUE
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(!meta)
+			return TRUE
+		var/target = resolve_verb_target(verb_path)
+		if(!target)
+			return TRUE
+		var/list/resolved_args = resolve_invoke_args(payload["args"], meta.arguments)
+		call(target, meta.body_path)(resolved_args)
+		return TRUE
+
 	if(type == "requestMetadata")
 		send_metadata()
 		return TRUE
 
-/**
- * public
- *
- * Sends a round restart notification.
- */
+/datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)
+	if(!islist(raw_args))
+		raw_args = list()
+	var/list/resolved = list()
+	for(var/key in raw_args)
+		var/value = raw_args[key]
+		var/datum/verb_arg_metadata/meta
+		for(var/datum/verb_arg_metadata/m in arg_metadata)
+			if(m.name == key)
+				meta = m
+				break
+		if(meta)
+			if(meta.arg_type & VERB_ARG_TYPE_NUM)
+				value = text2num(value)
+			else if(!(meta.arg_type & VERB_ARG_TYPE_TYPEPATH) && istext(value))
+				var/located = locate(value)
+				if(located)
+					value = located
+		else if(istext(value))
+			var/located = locate(value)
+			if(located)
+				value = located
+		resolved[key] = value
+	return resolved
+
+/datum/tgui_panel/proc/resolve_verb_target(verb_path)
+	if(verb_path in client.verbs)
+		return client
+	if(client.mob && (verb_path in client.mob.verbs))
+		return client.mob
+	return null
+
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
 

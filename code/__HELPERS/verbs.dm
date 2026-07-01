@@ -46,6 +46,14 @@
 
 	target.stat_panel.send_message("add_verb_list", output_list)
 
+	if(target.tgui_panel?.is_ready())
+		var/list/panel_list = list()
+		for(var/procpath/verb_to_add in verbs_list)
+			if(!SSverbs.verbs_by_verb_path[verb_to_add] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_add] && !istext(verb_to_add.category))
+				continue
+			panel_list += list(SSverbs.serialize_verb(verb_to_add))
+		target.tgui_panel.window.send_message("verbs/add", list("verbs" = panel_list))
+
 	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_ADDED, verbs_list)
 
 /**
@@ -94,5 +102,11 @@
 		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
 
 	target.stat_panel.send_message("remove_verb_list", output_list)
+
+	if(target.tgui_panel?.is_ready())
+		var/list/panel_list = list()
+		for(var/procpath/verb_to_remove as anything in verbs_list)
+			panel_list += list(verb_to_remove.name)
+		target.tgui_panel.window.send_message("verbs/remove", list("names" = panel_list))
 
 	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_REMOVED, verbs_list)

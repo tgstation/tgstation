@@ -1,5 +1,6 @@
 
-ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, message as text)
+ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_MAIN)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if(user.prefs.muted & MUTE_DEADCHAT)
 		to_chat(user, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
 		return

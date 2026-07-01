@@ -1,4 +1,4 @@
-ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_CATEGORY_MAIN)
 	dynamic_panel(user.mob)
 
 /proc/dynamic_panel(mob/user)

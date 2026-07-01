@@ -5,7 +5,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /client/verb/open_escape_menu()
 	set name = "Open Escape Menu"
 	set hidden = TRUE
-
 	var/current_escape_menu = GLOB.escape_menus[ckey]
 	if (!isnull(current_escape_menu))
 		qdel(current_escape_menu)

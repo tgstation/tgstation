@@ -8,10 +8,24 @@ import {
   telemetryRequest,
   testTelemetryCommand,
 } from '../telemetry/handlers';
+import {
+  handleAddVerbs,
+  handleFocusCommandBar,
+  handleRemoveVerbs,
+  handleTargets,
+  handleTypepaths,
+  handleVerbsInit,
+} from '../verbs/handlers';
 import { handleLoadAssets } from './handlers/assets';
 import { roundrestart } from './handlers/roundrestart';
 
 const listeners = {
+  'verbs/add': handleAddVerbs,
+  'verbs/focus': handleFocusCommandBar,
+  'verbs/init': handleVerbsInit,
+  'verbs/remove': handleRemoveVerbs,
+  'verbs/targets': handleTargets,
+  'verbs/typepaths': handleTypepaths,
   'asset/stylesheet': loadStyleSheet,
   'asset/mappings': handleLoadAssets,
   'audio/playMusic': playMusic,

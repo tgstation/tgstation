@@ -9,12 +9,15 @@
  * This is the only macro you should use to define admin verbs.
  * It will define the verb and the verb holder for you.
  * Using it is very simple:
- *  ADMIN_VERB(verb_path, R_PERM, "Name", "Description", "Admin.Category", args...)
+ *  ADMIN_VERB(verb_path, R_PERM, "Name", "Description", "Admin.Category")
  * This sets up all of the above and also acts as syntatic sugar as a verb delcaration for the verb itself.
  * Note that the verb args have an injected `client/user` argument that is the user that called the verb.
  * Do not use usr in your verb; technically you can but I'll kill you.
+ *
+ * Verb arguments are declared in the proc body via VERB_ARG macros which self-register metadata
+ * at world init and extract values from the structured_args list at runtime.
  */
-#define _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, show_in_context_menu, verb_args...) \
+#define _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, show_in_context_menu) \
 /datum/admin_verb/##verb_path_name \
 { \
 	name = ##verb_name; \
@@ -23,27 +26,45 @@
 	permissions = ##verb_permissions; \
 	verb_path = /client/proc/__avd_##verb_path_name; \
 }; \
-/client/proc/__avd_##verb_path_name(##verb_args) \
+/client/proc/__avd_##verb_path_name() \
 { \
 	set name = ##verb_name; \
 	set desc = ##verb_desc; \
 	set hidden = FALSE; /* this is explicitly needed as the proc begins with an underscore */ \
 	set popup_menu = ##show_in_context_menu; \
 	set category = ##verb_category; \
-	var/list/_verb_args = list(usr, /datum/admin_verb/##verb_path_name); \
-	_verb_args += args; \
-	SSadmin_verbs.dynamic_invoke_verb(arglist(_verb_args)); \
+	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name); \
 }; \
-/datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
+/datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, list/structured_args)
 
-#define ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
-_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, FALSE, ##verb_args)
+#define _ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, context_type) \
+/datum/admin_verb/##verb_path_name \
+{ \
+	name = ##verb_name; \
+	description = ##verb_desc; \
+	category = ##verb_category; \
+	permissions = ##verb_permissions; \
+	verb_path = /client/proc/__avd_##verb_path_name; \
+}; \
+/client/proc/__avd_##verb_path_name(var##context_type/__context_target in world) \
+{ \
+	set name = ##verb_name; \
+	set desc = ##verb_desc; \
+	set hidden = FALSE; \
+	set popup_menu = TRUE; \
+	set category = ##verb_category; \
+	SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/##verb_path_name, list("__context_target__" = __context_target)); \
+}; \
+/datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, list/structured_args)
 
-#define ADMIN_VERB_ONLY_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_args...) \
-_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, TRUE, ##verb_args)
+#define ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category) \
+_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, FALSE)
 
-#define ADMIN_VERB_AND_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
-_ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, TRUE, ##verb_args)
+#define ADMIN_VERB_ONLY_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, context_type) \
+_ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, context_type)
+
+#define ADMIN_VERB_AND_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, context_type) \
+_ADMIN_VERB_CONTEXT(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, context_type)
 
 /// Used to define a special check to determine if the admin verb should exist at all. Useful for verbs such as play sound which require configuration.
 #define ADMIN_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \
@@ -63,8 +84,9 @@ _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_categor
 /*
  * This is an example of how to use the above macro:
  * ```
- * ADMIN_VERB(name_of_verb, R_ADMIN, "Verb Name", "Verb Desc", "Verb Category", mob/target in world)
- *     to_chat(user, "Hello!")
+ * ADMIN_VERB(name_of_verb, R_ADMIN, "Verb Name", "Verb Desc", "Verb Category")
+ *     VERB_ARG(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
+ *     to_chat(user, "Hello [target]!")
  * ```
  * Note the implied `client/user` argument that is injected into the verb.
  * Also note that byond is shit and you cannot multi-line the macro call.
@@ -81,11 +103,9 @@ _ADMIN_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_categor
 #define ADMIN_CATEGORY_FUN "Admin.Fun"
 #define ADMIN_CATEGORY_GAME "Admin.Game"
 #define ADMIN_CATEGORY_SHUTTLE "Admin.Shuttle"
-
-// Special categories that are separated
-#define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_SERVER "Server"
 #define ADMIN_CATEGORY_MAPPING "Mapping"
+#define ADMIN_CATEGORY_DEBUG "Debug"
 #define ADMIN_CATEGORY_PROFILE "Profile"
 #define ADMIN_CATEGORY_IPINTEL "Admin.IPIntel"
 

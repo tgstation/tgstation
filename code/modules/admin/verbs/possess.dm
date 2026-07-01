@@ -1,5 +1,6 @@
 
-ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_FUN, obj/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_FUN, /obj)
+	VERB_ARG(target, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
 	var/result = user.mob.AddComponent(/datum/component/object_possession, target)
 
 	if(isnull(result)) // trigger a safety movement just in case we yonk

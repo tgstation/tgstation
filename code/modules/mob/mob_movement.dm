@@ -4,6 +4,7 @@
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
 /client/verb/drop_item()
+	set name = "drop item"
 	set hidden = TRUE
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
