@@ -75,7 +75,7 @@
 #define HUD_HUMAN_TOGGLE_INVENTORY "human_toggle_inventory"
 
 #define HUD_NEW_PLAYER_START_NOW "new_player_start_now"
-#define HUD_NEW_PLAYER_SIGN_UP "newp_layer_sign_up"
+#define HUD_NEW_PLAYER_LOBBY_BUTTON(type) "new_player_lobby_button:[type]"
 #define HUD_KEY_NEW_PLAYER(slot) "newplayer_hud:[slot]"
 
 #define HUD_SILICON_TAKE_IMAGE "silicon_camera"

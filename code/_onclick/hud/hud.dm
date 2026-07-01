@@ -426,11 +426,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/mob/screenmob = viewmob || mymob
 	inventory_update(screenmob)
 
-/datum/hud/new_player/show_hud(version = 0, mob/viewmob)
-	. = ..()
-	if(.)
-		show_station_trait_buttons()
-
 /datum/hud/proc/inventory_update(mob/viewer)
 	if (isnull(mymob))
 		return
