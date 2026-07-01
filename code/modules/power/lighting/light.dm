@@ -377,21 +377,20 @@
 
 
 
-// attack with item - insert light (if right type), otherwise try to break the light
-
-/obj/machinery/light/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
+// insert light (if right type), otherwise try to break the light
+/obj/machinery/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)
 			to_chat(user, span_warning("There is a [fitting] already inserted!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		add_fingerprint(user)
 		var/obj/item/light/light_object = tool
 		if(!istype(light_object, light_type))
 			to_chat(user, span_warning("This type of light requires a [fitting]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(light_object))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		add_fingerprint(user)
 		if(status != LIGHT_EMPTY)
@@ -410,26 +409,31 @@
 
 		qdel(light_object)
 
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	// attempt to stick weapon into light socket
 	if(status != LIGHT_EMPTY || user.combat_mode)
-		return ..()
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
-		tool.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
-			span_notice("You open [src]'s casing."), span_hear("You hear a noise."))
-		deconstruct(disassembled = TRUE)
-		return
+		return NONE
 
 	if(tool.item_flags & ABSTRACT)
-		return
+		return NONE
 
 	to_chat(user, span_userdanger("You stick \the [tool] into the light socket!"))
 	if(has_power() && (tool.obj_flags & CONDUCTS_ELECTRICITY))
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/light/screwdriver_act(mob/living/user, obj/item/tool)
+	if(status != LIGHT_EMPTY || user.combat_mode)
+		return NONE
+	tool.play_tool_sound(src, 75)
+	user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
+						span_notice("You open [src]'s casing."), \
+						span_hear("You hear unscrewing."))
+	deconstruct(disassembled = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/on_deconstruction(disassembled)
 
