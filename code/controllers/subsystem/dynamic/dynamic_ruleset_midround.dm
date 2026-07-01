@@ -232,9 +232,14 @@
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
 	if(ishuman(body))
 		var/mob/living/carbon/human/human_body = body
-		body.client?.prefs.safe_transfer_prefs_to(body)
+		if(should_transfer_prefs_to_body())
+			body.client?.prefs.safe_transfer_prefs_to(body)
 		human_body.dna.remove_all_mutations()
 		human_body.dna.update_dna_identity()
+
+///For when applying prefs to ghost roles will result in unexpected behavior, we can have this return false.
+/datum/dynamic_ruleset/midround/from_ghosts/proc/should_transfer_prefs_to_body()
+	return TRUE
 
 /**
  * Handles making the body for the candidate
