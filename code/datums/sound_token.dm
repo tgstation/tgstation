@@ -34,10 +34,12 @@
 	var/sound_duration_override
 	/// Cell tracker managing spatial grid cells within range of the source. The wizards say this is the fastest.
 	var/datum/cell_tracker/cell_tracker
+	/// What preference is our volume tied to?
+	var/preference_volume
 	///Should we destroy the datum when the sound is done?
 	var/delete_on_end = FALSE
 
-/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end)
+/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end, _preference_volume, _sound_channel)
 	source = _source
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
@@ -48,10 +50,14 @@
 	falloff_exponent = _falloff_exponent
 	falloff_distance = _falloff_distance
 	sound_duration_override = _sound_duration_override
+	preference_volume = _preference_volume
+	if(_sound_channel)
+		sound_channel = _sound_channel
 	if(_delete_on_end)
 		delete_on_end = _delete_on_end
 
 	if(_allowed_listeners)
+		allowed_listeners = list()
 		for(var/allowed_mob in _allowed_listeners)
 			allowed_listeners[allowed_mob] = TRUE
 
@@ -59,8 +65,12 @@
 
 	null_sound = sound(channel = sound_channel)
 
-	cell_tracker = new /datum/cell_tracker(range, range)
-	update_tracked_cells()
+	if(allowed_listeners)
+		for(var/allowed_mob in allowed_listeners)
+			add_or_update_listener(allowed_mob)
+	else
+		cell_tracker = new /datum/cell_tracker(range, range)
+		update_tracked_cells()
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
@@ -143,6 +153,9 @@
 
 	if(source_turf.z != listener_turf.z)
 		should_be_muted = TRUE
+	else if(preference_volume)
+		var/pref_volume = listener_mob.client?.prefs.read_preference(preference_volume)
+		should_be_muted = !pref_volume
 
 	var/distance = get_dist_euclidean(source_turf, listener_turf)
 	if(distance > range)
@@ -169,8 +182,14 @@
 	if(sound.status & SOUND_MUTE)
 		SEND_SOUND(listener_mob, sound)
 		return
-
-	if(!listener_mob.playsound_local(get_turf(source), vol = volume, falloff_exponent = falloff_exponent, channel = sound_channel, sound_to_use = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE))
+	var/volume_to_use = volume
+	if(preference_volume)
+		var/pref_volume = listener_mob.client?.prefs.read_preference(preference_volume)
+		if(!pref_volume)
+			volume_to_use = 0
+		else
+			volume_to_use = volume * (pref_volume/100)
+	if(!listener_mob.playsound_local(get_turf(source), vol = volume_to_use, falloff_exponent = falloff_exponent, channel = sound_channel, sound_to_use = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE))
 		sound.status = SOUND_UPDATE|SOUND_MUTE
 		SEND_SOUND(listener_mob, sound)
 	sound.offset = null
@@ -242,7 +261,7 @@
 	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)
 
 /datum/sound_token/proc/set_new_environment(new_env)
-	if(sound.environment == new_env)
+	if(!sound || sound.environment == new_env)
 		return
 	sound.environment = new_env
 	update_all_listeners()
@@ -257,7 +276,7 @@
 
 ///Update tracked cells; happens on movement. We need to check if anyone is now out of cell range and kick them out.
 /datum/sound_token/proc/update_tracked_cells()
-	if(!get_turf(source))
+	if(!get_turf(source) || !cell_tracker)
 		return
 
 	var/list/new_and_old = cell_tracker.recalculate_cells(get_turf(source))

@@ -174,7 +174,7 @@
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
 			if(LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER))
-				receive_radios[TTS_GHOST_RADIO] |= ghost
+				receive_radios[TTS_GHOST_RADIO] |= WEAKREF(ghost)
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.

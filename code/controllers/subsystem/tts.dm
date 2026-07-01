@@ -198,29 +198,25 @@ SUBSYSTEM_DEF(tts)
 				use_reverb = TRUE
 			)
 	if(actual_target)
-		new /datum/threed_sound(
-			new_parent = actual_target,
-			new_sound = audio,
-			current_listeners = voice_hearers,
-			can_add_new_listeners = FALSE,
+		playsoundtoken(
+			source = actual_target,
+			soundin = audio,
 			volume = 85 + volume_offset,
-			sound_range = SOUND_RANGE,
-			sound_length = audio_length,
-			channel = channel,
+			range = SOUND_RANGE,
+			allowed_listeners = voice_hearers,
 			preference_volume = volume_preference,
-			preference_signal = volume_signal
+			sound_channel = channel,
+			sound_length = audio_length
 		)
-		new /datum/threed_sound(
-			new_parent = actual_target,
-			new_sound = audio_blips,
-			current_listeners = blips_hearers,
-			can_add_new_listeners = FALSE,
+		playsoundtoken(
+			source = actual_target,
+			soundin = audio_blips,
 			volume = 85 + volume_offset,
-			sound_range = SOUND_RANGE,
-			sound_length = audio_length_blips,
-			channel = channel,
+			range = SOUND_RANGE,
+			allowed_listeners = blips_hearers,
 			preference_volume = volume_preference,
-			preference_signal = volume_signal
+			sound_channel = channel,
+			sound_length = audio_length_blips
 		)
 
 
@@ -371,7 +367,7 @@ SUBSYSTEM_DEF(tts)
 				audio_file = new(current_target.audio_file)
 				audio_file_blips = new(current_target.audio_file_blips)
 				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset, FALSE, null, current_target.audio_length, current_target.audio_length_blips)
-				completed_tts_messages[current_target.identifier] = list("ref" = current_target, "expiry_time" = world.time + 300)
+				completed_tts_messages[current_target.identifier] = list("ref" = current_target, "expiry_time" = world.time + 30 SECONDS)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length
@@ -413,9 +409,7 @@ SUBSYSTEM_DEF(tts)
 			queued_radio_messages_compression.Remove(identifier)
 
 	for(var/identifier, request in completed_tts_messages)
-		if(MC_TICK_CHECK)
-			return
-		if (completed_tts_messages[identifier]["expiry_time"] >= world.time + 300)
+		if (world.time >= completed_tts_messages[identifier]["expiry_time"])
 			completed_tts_messages[identifier]["ref"] = null
 			completed_tts_messages[identifier] = null
 			completed_tts_messages.Remove(identifier)
