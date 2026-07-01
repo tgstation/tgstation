@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - code_imp: "Swaps out parrot's sovlful unique item carrying ability with a soulless hand (singular)"
+  - bugfix: "Fixes specific hands hotkey breaking hands on singlehanded mobs"
