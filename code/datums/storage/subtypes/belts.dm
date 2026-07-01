@@ -14,7 +14,6 @@
 ///Medical belt
 /datum/storage/medical_belt
 	max_total_storage = 21
-	exception_max = 1
 
 /datum/storage/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
