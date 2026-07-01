@@ -49,7 +49,7 @@
 /obj/effect/mining_mob_respawner/proc/setup(list/valid_mobs, atom/initial_spawn)
 	src.valid_mobs = valid_mobs
 
-	if (istype (initial_spawn, /obj/effect/spawner/random))
+	if (istype(initial_spawn, /obj/effect/spawner/random))
 		RegisterSignal(get_turf(src), COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(get_spawned_mob))
 	else
 		register_spawn(src, initial_spawn)
