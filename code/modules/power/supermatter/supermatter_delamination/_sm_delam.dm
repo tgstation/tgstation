@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return FALSE
 
 	if (sm.damage >= sm.emergency_point && sm.damage_archived < sm.emergency_point)
-		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
+		sm.investigate_log("has entered the emergency point: Pending [sm.delamination_strategy.name].", INVESTIGATE_ENGINE)
 		message_admins("[ADMIN_VERBOSEJMP(sm)] has entered the emergency point: Pending [sm.delamination_strategy.name].")
 
 	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
