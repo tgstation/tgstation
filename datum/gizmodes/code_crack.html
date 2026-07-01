@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><base href="../../"><link rel="stylesheet" href="dmdoc.css"><title>/datum/gizmodes/code_crack - /tg/ Station 13</title></head><body><header><a href="index.html">/tg/ Station 13</a> - <a href="index.html#modules">Modules</a> - <a href="index.html#types">Types</a></header><main><h1>code_crack <aside>/<a href="datum.html">datum</a>/<a href="datum/gizmodes.html">gizmodes</a>/<a href="datum/gizmodes/code_crack.html">code_crack</a></aside> <a href="https://github.com/tgstation/tgstation/blob/d9309de72b28519eae312fc615efaf736cc014dc/code/modules/research/gizmo/gizmodes/gizcode.dm#L24"><img src="git.png" width="16" height="16" title="code/modules/research/gizmo/gizmodes/gizcode.dm 24"></a></h1><ul>
+<li>
+<p>A code-cracking puzzle gizmo</p>
+</li>
+<li>
+<p>First, the user must pulse activate_puzzle - this randomizes the code and resets the attempt counter.</p>
+</li>
+<li>
+<p>The user may pulse activate_puzzle a limited amount of times again to retry it.</p>
+</li>
+<li>
+<p>Next, the user needs to input a code.</p>
+</li>
+<li>
+<p>Imagine a row of knobs, each of them with 10 notches, and a head that rotates the knobs.</p>
+</li>
+<li>
+<p>Pulsing cycle_position moves the head right,</p>
+</li>
+<li>
+<p>pulsing cycle_digit makes the head bump the knob by 1 notch.</p>
+</li>
+<li>
+<p>If the head reaches the rightmost position, then cycle_position resets it, moving it back left.</p>
+</li>
+<li>
+<p>Similarly, pulsing cycle_digit when the knob is already in the rightmost notch resets it to the leftmost one.</p>
+</li>
+<li>
+<p>Finally, the user has to pulse try_crack to check if their input is correct.</p>
+</li>
+<li>
+<p>If it's correct, a reward is dispensed and the puzzle gets deactivated.</p>
+</li>
+<li>
+<p>If it's not, some sort of feedback is provided.</p>
+</li>
+<li>
+<p>If the user takes too many attempts to solve the code, they are punished.</p>
+</li>
+<li>
+<p>There may be restrictions set upon the code.</p>
+</li>
+<li>
+<p>These are checked upon code generation and cracking attempt.</p>
+</li>
+</ul></main><footer>tgstation.dme <a href="https://github.com/tgstation/tgstation/tree/d9309de72b28519eae312fc615efaf736cc014dc">d9309de</a> (master) — <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.11.0</a></footer></body></html>
