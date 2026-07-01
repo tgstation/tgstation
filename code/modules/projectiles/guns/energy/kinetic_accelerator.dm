@@ -141,12 +141,11 @@
 	if(istype(arrived, /obj/item/borg/upgrade/modkit))
 		modkits |= arrived
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/borg/upgrade/modkit))
-		var/obj/item/borg/upgrade/modkit/MK = I
-		MK.install(src, user)
-	else
-		return ..()
+/obj/item/gun/energy/recharge/kinetic_accelerator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/borg/upgrade/modkit))
+		return NONE
+	astype(tool, /obj/item/borg/upgrade/modkit).install(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -319,11 +318,11 @@
 	. = ..()
 	. += span_notice("Occupies <b>[cost]%</b> of mod capacity.")
 
-/obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))
-		install(A, user)
-	else
-		return ..()
+/obj/item/borg/upgrade/modkit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/energy/recharge/kinetic_accelerator) || issilicon(user))
+		return NONE
+	install(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()

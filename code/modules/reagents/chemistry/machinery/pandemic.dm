@@ -80,33 +80,33 @@
 		update_appearance()
 		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/computer/pandemic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
-	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+	if(istype(tool, /obj/item/reagent_containers/dropper) || istype(tool, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
-			return ..()
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
-			held_item.interact_with_atom_secondary(beaker, user)
+			return ITEM_INTERACT_BLOCKING
+		if(istype(tool, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			tool.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.interact_with_atom(beaker, user)
+			tool.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
-		return ..()
-	. = TRUE //no afterattack
+	if(!is_reagent_container(tool) || tool.item_flags & ABSTRACT || !tool.is_open_container())
+		return NONE
 	if(machine_stat & (NOPOWER|BROKEN))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(beaker)
 		balloon_alert(user, "beaker swapped")
 		try_put_in_hand(beaker, usr)
 	else
 		balloon_alert(user, "beaker loaded")
-	user.transferItemToLoc(held_item, src)
-	beaker = held_item
+	user.transferItemToLoc(tool, src)
+	beaker = tool
 	update_appearance()
 	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/pandemic/on_deconstruction(disassembled)
 	eject_beaker()
