@@ -1,4 +1,4 @@
-/mob/living/carbon/human/getarmor(def_zone, type)
+/mob/living/carbon/human/get_worn_armor_value(def_zone, damage_type)
 	var/armorval = 0
 	var/organnum = 0
 
@@ -6,29 +6,27 @@
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return check_armor(def_zone, type)
+				return get_worn_bodypart_armor_value(def_zone, damage_type)
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return check_armor(affecting, type)
+			return get_worn_bodypart_armor_value(affecting, damage_type)
 		//If a specific bodypart is targeted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
-		armorval += check_armor(BP, type)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
+		armorval += get_worn_bodypart_armor_value(part, damage_type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
-
-/mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
+/mob/living/carbon/human/proc/get_worn_bodypart_armor_value(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
 		return 0
-	var/protection = 100
+	var/unblocked_damage = 100
 	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/obj/item/clothing/clothing_item in covering_clothing)
 		if(clothing_item.body_parts_covered & def_zone.body_part)
-			protection *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
-	protection *= (100 - min(physiology.armor.get_rating(damage_type), 100)) * 0.01
-	return 100 - protection
+			unblocked_damage *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
+	return 100 - unblocked_damage
 
 ///Get all the clothing on a specific body part
 /mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
@@ -368,8 +366,6 @@
 	else if(gloves)
 		siemens_coeff *= gloves.siemens_coefficient
 
-	siemens_coeff *= physiology.siemens_coeff
-	siemens_coeff *= dna.species.siemens_coeff
 	. = ..()
 	//Don't go further if the shock was blocked/too weak.
 	if(!.)

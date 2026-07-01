@@ -170,12 +170,35 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	anger_modifier = clamp(((maxHealth - health)/60),0,20)
-	lava_swoop.enraged = DRAKE_ENRAGED
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_brute_loss(amount, forced, required_bodytype)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
 	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_fire_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_tox_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/on_damage_loss_changed(amount, updating_health, forced)
+	if(amount > 0)
+		lava_swoop.enraged = DRAKE_ENRAGED
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/updatehealth()
+	. = ..()
+	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
@@ -318,7 +341,7 @@
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	loot = list()
 	crusher_loot = null
 	achievement_type = null
@@ -332,7 +355,7 @@
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/on_damage_loss_changed(amount, updating_health, forced)
 	. = ..()
 	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 

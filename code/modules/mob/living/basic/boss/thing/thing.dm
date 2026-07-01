@@ -85,14 +85,18 @@
 	icon_state = "p[phase]"
 	icon_living = icon_state
 
-/mob/living/basic/boss/thing/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(phase_invulnerability_timer || phase == 3 || stat || amount <= 0)
+/mob/living/basic/boss/thing/on_damage_loss_changed(amount, updating_health, forced, damage_type)
+	if(phase == 3 || stat || amount <= 0)
 		return ..()
-	var/potential_excess = bruteloss + amount - (maxHealth/3)*phase
-	if(potential_excess > 0)
-		amount -= potential_excess
+	var/old_update = updating_health
+	. = ..() //This call is necessary so we convert the other damage types to BRUTE and remove the need of using switch cases for each damage type
+	bruteloss = min(bruteloss, (maxHealth/3) * phase) //Caps the damage that the mob receives to the health loss required to progress to the next phase
+	if(old_update)
+		updatehealth()
+
+/mob/living/basic/boss/thing/updatehealth()
 	. = ..()
-	if(bruteloss >= (maxHealth/3)*phase)
+	if(phase < 3 && !stat && bruteloss >= (maxHealth/3)*phase)
 		phase_health_depleted()
 
 /mob/living/basic/boss/thing/proc/phase_health_depleted()
@@ -168,7 +172,7 @@
 	remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	balloon_alert_to_viewers("recovers!")
 	visible_message(span_danger("[src] recovers from the damage! Too slow!"))
-	adjust_health(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
+	adjust_brute_loss(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
 	var/filter = get_filter(PHASEREGEN_FILTER)
 	if(!isnull(filter))
 		animate(filter)

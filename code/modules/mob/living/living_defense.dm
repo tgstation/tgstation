@@ -29,7 +29,31 @@
 	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)
+	SHOULD_CALL_PARENT(TRUE)
+	var/worn_armor = get_worn_armor_value(def_zone, type)
+	var/inner_armor_percent = min(inner_armor?.get_rating(type) * 0.01, 1)
+	var/not_blocked = (100 - worn_armor) * (1 - inner_armor_percent)
+	return 100 - not_blocked
+
+/mob/living/proc/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	return 0
+
+///This proc adds the ratings of an armor type to our inner armor, which is initialized if previously null.
+/mob/living/proc/add_inner_armor(datum/armor/armor_to_add)
+	if(isnull(inner_armor))
+		inner_armor = new
+	inner_armor = inner_armor.add_other_armor(armor_to_add)
+
+///This proc removes the ratings of an armor type from our inner armor, then deletes it if all ratings are 0.
+/mob/living/proc/remove_inner_armor(datum/armor/armor_to_remove)
+	if(isnull(inner_armor))
+		return
+	inner_armor = inner_armor.subtract_other_armor(armor_to_remove)
+	var/list/ratings_list = inner_armor.get_rating_list()
+	for(var/rating in ratings_list)
+		if(ratings_list[rating] != 0)
+			return
+	QDEL_NULL(inner_armor) //all ratings are 0, meaning we no longer have an intrinsic armor of some kind.
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
@@ -589,6 +613,7 @@
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags) & COMPONENT_LIVING_BLOCK_SHOCK)
 		return FALSE
+	siemens_coeff *= GET_PHYSIOLOGY(src, PHYS_COEFF_ELEC_CONDUCTIVITY)
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE

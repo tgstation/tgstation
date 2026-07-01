@@ -94,22 +94,22 @@
  * which usually means any direct attack like melee or gunshot. Anything abstract like a bomb or acid or something
  * will instead give half the armor value.
  */
-/mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
+/mob/living/basic/pet/dog/corgi/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
 	if(def_zone)
 		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
-				armorval = inventory_head.get_armor_rating(type)
+				armorval = inventory_head.get_armor_rating(damage_type)
 		else
 			if(inventory_back)
-				armorval = inventory_back.get_armor_rating(type)
+				armorval = inventory_back.get_armor_rating(damage_type)
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.get_armor_rating(type)
+			armorval += inventory_head.get_armor_rating(damage_type)
 		if(inventory_back)
-			armorval += inventory_back.get_armor_rating(type)
+			armorval += inventory_back.get_armor_rating(damage_type)
 	return armorval * 0.5
 
 /mob/living/basic/pet/dog/corgi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

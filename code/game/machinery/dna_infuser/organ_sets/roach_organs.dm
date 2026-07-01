@@ -22,19 +22,14 @@
 
 /datum/status_effect/organ_set_bonus/roach/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
-	if(!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
+	owner.add_inner_armor(given_armor)
 
 /datum/status_effect/organ_set_bonus/roach/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
-	if(!ishuman(owner) || QDELETED(owner))
+	if(QDELETED(owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor = human_owner.physiology.armor.subtract_other_armor(given_armor)
+	owner.remove_inner_armor(given_armor)
 
 /// Roach heart:
 /// Reduces damage taken from brute attacks from behind,
@@ -75,7 +70,7 @@
 
 	RegisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_damage))
 	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
-	human_owner.physiology.knockdown_mod *= 3
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 3)
 
 /obj/item/organ/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
@@ -83,13 +78,11 @@
 
 /obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+	if(QDELETED(organ_owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = organ_owner
-
-	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
-	human_owner.physiology.knockdown_mod /= 3
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
+	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_KNOCKDOWN, 1/3)
 
 /obj/item/organ/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
@@ -195,19 +188,14 @@
 
 /obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner))
-		return
-
-	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.tox_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, TOX, 2)
 
 /obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+	if(QDELETED(organ_owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = organ_owner
-	human_owner.physiology.tox_mod *= 0.5
+	MODIFY_PHYSIOLOGY(organ_owner, TOX, 0.5)
 
 /// Roach appendix:
 /// No appendicitus! weee!

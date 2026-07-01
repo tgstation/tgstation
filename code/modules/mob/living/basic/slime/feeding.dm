@@ -47,18 +47,10 @@
 			balloon_alert(src, "can't eat slime!")
 		return FALSE
 
-	if(isanimal(meal))
-		var/mob/living/simple_animal/simple_meal = meal
-		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
-			if(!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
-	else if(isbasicmob(meal))
-		var/mob/living/basic/basic_meal = meal
-		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
-			if (!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
+	if(GET_PHYSIOLOGY(meal, BRUTE) <= 0 && GET_PHYSIOLOGY(meal, TOX) <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+		if(!silent)
+			balloon_alert(src, "not food!")
+		return FALSE
 
 	return TRUE
 

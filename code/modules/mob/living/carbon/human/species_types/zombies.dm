@@ -86,7 +86,7 @@
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
-	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
+	damage_modifier = 20
 	mutanteyes = /obj/item/organ/eyes/zombie
 	mutantbrain = /obj/item/organ/brain/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
@@ -135,7 +135,8 @@
 	new_zombie.set_combat_mode(TRUE)
 	// Needs to be added after combat mode is set
 	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
-	new_zombie.physiology.stamina_mod *= 0.33 //Zombie stam resist
+	MODIFY_PHYSIOLOGY(new_zombie, STAMINA, 0.33)
+	new_zombie.damage_resistance += 20
 
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
@@ -164,7 +165,8 @@
 	REMOVE_TRAIT(was_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
-	was_zombie.physiology.stamina_mod /= 0.33
+	MODIFY_PHYSIOLOGY(was_zombie, STAMINA, 1 / 0.33)
+	was_zombie.damage_resistance -= 20
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

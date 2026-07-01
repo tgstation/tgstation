@@ -113,11 +113,11 @@
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/basic/drone/getarmor(def_zone, type)
+/mob/living/basic/drone/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
 	if(head)
-		armorval = head.get_armor_rating(type)
+		armorval = head.get_armor_rating(damage_type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
 /// Returns a multiplier for any head armor you wear as a drone.

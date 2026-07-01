@@ -11,7 +11,7 @@
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
 
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
 
 	pressure_resistance = 200
 
@@ -201,8 +201,18 @@
 	name = "[initial(name)] ([id_number])"
 	real_name = name
 
-/mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/basic/blood_worm/can_adjust_brute_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_fire_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_tox_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()

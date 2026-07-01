@@ -68,8 +68,6 @@
 	/// Allows for special overrides of voice
 	var/override_voice = ""
 
-	var/datum/physiology/physiology
-
 	var/account_id
 
 	var/hardcore_survival_score = 0

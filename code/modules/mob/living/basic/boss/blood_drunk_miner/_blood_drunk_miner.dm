@@ -120,7 +120,7 @@ Difficulty: Medium
 		used_item = miner_saw
 	return ..()
 
-/mob/living/basic/boss/blood_drunk_miner/adjust_health(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/boss/blood_drunk_miner/on_damage_loss_changed(amount, updating_health, forced, damage_type)
 	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
