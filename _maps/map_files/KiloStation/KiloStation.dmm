@@ -7174,6 +7174,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "cpY" = (
@@ -9718,6 +9719,19 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"die" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 3
+	},
+/obj/item/multitool{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "dif" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16607,7 +16621,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -19131,6 +19144,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/computer/station_alert,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "ggI" = (
@@ -23267,6 +23282,11 @@
 "hwN" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/storage/box,
+/obj/item/radio/off{
+	pixel_x = 6
+	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "hwY" = (
@@ -24304,6 +24324,7 @@
 "hMx" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "hMz" = (
@@ -26818,7 +26839,6 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "ixj" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
 /obj/machinery/requests_console/directional/west{
 	department = "Engineering";
@@ -26829,7 +26849,12 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/computer/station_alert,
+/obj/effect/turf_decal/bot,
+/obj/machinery/microwave/engineering/cell_included,
+/obj/structure/table,
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "ixn" = (
@@ -30480,6 +30505,7 @@
 "jFq" = (
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/bronze,
+/obj/structure/cable,
 /turf/open/floor/bronze,
 /area/station/maintenance/department/chapel)
 "jFs" = (
@@ -38230,6 +38256,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"mez" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "meO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48259,16 +48292,14 @@
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/maintenance/storage)
 "pwo" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_y = 5
+/obj/item/modular_computer/laptop/preset/civilian{
+	pixel_y = 3
 	},
-/obj/machinery/microwave/engineering/cell_included,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "pwx" = (
@@ -53387,6 +53418,8 @@
 /area/station/security/prison)
 "rfg" = (
 /obj/structure/chair/bronze,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/bronze,
 /area/station/maintenance/department/chapel)
 "rfm" = (
@@ -72078,6 +72111,7 @@
 "wKN" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
+/obj/structure/cable,
 /turf/open/floor/iron/stairs/old{
 	dir = 1
 	},
@@ -73936,6 +73970,7 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/abandoned_warehouse)
 "xqw" = (
+/obj/structure/cable,
 /turf/open/floor/bronze,
 /area/station/maintenance/department/chapel)
 "xqE" = (
@@ -111743,8 +111778,8 @@ aek
 xOI
 hON
 wcX
-hwN
-hwN
+mez
+die
 hwN
 oBP
 ocQ
