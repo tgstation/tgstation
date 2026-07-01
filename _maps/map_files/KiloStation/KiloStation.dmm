@@ -53485,6 +53485,11 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "research_shutters";
+	name = "Research Privacy Shutter"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "rhN" = (
@@ -55643,6 +55648,11 @@
 /area/station/science/auxlab)
 "rOJ" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "research_shutters";
+	name = "Research Privacy Shutter"
+	},
 /turf/open/floor/plating,
 /area/station/science/lab)
 "rON" = (
