@@ -76,9 +76,6 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tourniquet,
 		/obj/item/wrench/medical,
-	),
-	exception_hold_list = list(
-		/obj/item/crowbar/power/paramedic,
 	))
 
 ///Security belt
