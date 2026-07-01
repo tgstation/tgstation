@@ -27,7 +27,6 @@ type RadioData = {
   subspace: BooleanLike;
   subspaceSwitchable: BooleanLike;
   channels: Record<string, BooleanLike>;
-  radio_noises: number;
 };
 
 export const Radio = (props) => {
@@ -43,7 +42,6 @@ export const Radio = (props) => {
     useCommand,
     subspace,
     subspaceSwitchable,
-    radio_noises,
   } = data;
   const tunedChannel = RADIO_CHANNELS.find(
     (channel) => channel.freq === frequency,
@@ -53,14 +51,14 @@ export const Radio = (props) => {
     status: !!value,
   }));
   // Calculate window height
-  let height = 133;
+  let height = 105;
   if (channels.length > 0) {
     height += channels.length * 25 + 8;
   } else if (subspace) {
     height += 24;
   }
   return (
-    <Window width={380} height={height}>
+    <Window width={330} height={height}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -126,20 +124,6 @@ export const Radio = (props) => {
                   onClick={() => act('subspace')}
                 />
               )}
-            </LabeledList.Item>
-            <LabeledList.Item label="Radio Noise Volume">
-              <Slider
-                onChange={(e, value) => {
-                  act('set_radio_volume', {
-                    volume: value,
-                  });
-                }}
-                minValue={0}
-                maxValue={100}
-                step={1}
-                value={radio_noises}
-                stepPixelSize={10}
-              />
             </LabeledList.Item>
             {(!!subspace || channels.length > 0) && (
               <LabeledList.Item label="Channels">
