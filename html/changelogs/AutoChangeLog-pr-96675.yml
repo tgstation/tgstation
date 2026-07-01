@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Eigenstate and wilderness z levels now randomize properly"

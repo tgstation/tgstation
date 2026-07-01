@@ -61,9 +61,9 @@
 				succeeded = TRUE
 			if(j == a.len)
 				var/datum/callback/callback = solution_callbacks[i]
-				callback.Invoke(holder)
+				. = callback.Invoke(holder) || GIZMO_PUZZLE_SOLVED
 				current_sequence.Cut()
-				. = GIZMO_PUZZLE_SOLVED
+
 				break
 
 	if(!succeeded)
@@ -89,6 +89,9 @@
 		if(GIZMO_PUZZLE_SOLVED)
 			holder.balloon_alert(user, "creak")
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
+		if(GIZMO_PUZZLE_SOLVED_MODE_CONTROL)
+			holder.balloon_alert(user, "clunk")
+			playsound(holder, 'sound/machines/machine_vend.ogg', 30, FALSE)
 
 /// Sequences can be a bit shorter since you have to constantly type and scream them
 /datum/gizmo_puzzle/voice

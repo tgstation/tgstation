@@ -6,6 +6,7 @@
 	icon = 'icons/obj/science/gizmos.dmi'
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 
 	panel_open = TRUE
 	density = TRUE
@@ -16,10 +17,10 @@
 	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 	/// Possible names to pick from to keep things confusing
-	var/list/possible_names = list(
+	var/static/list/possible_names = list(
 		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster", "natty gonk", "quantum quantum",
 		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", "turbo encabulator",
-		"statistic responder", "possibility matrix", "toety aaier", "phase anchor",
+		"statistic responder", "possibility matrix", "toety aaier", "phase anchor", "thingamajing",
 	)
 
 /obj/machinery/gizmo/Initialize(mapload)

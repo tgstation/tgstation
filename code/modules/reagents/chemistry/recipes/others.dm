@@ -1040,7 +1040,7 @@
 	var/list/items = list()
 	for(var/obj/item/item in range(location, 3))
 		items += item
-	shuffle(items)
+	shuffle_inplace(items)
 	for(var/obj/item/item in items)
 		do_teleport(item, location, 3, no_effects=TRUE)
 		lets_not_go_crazy -= 1

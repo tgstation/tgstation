@@ -151,7 +151,7 @@
 	if(.)
 		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 
-/obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -223,7 +223,7 @@
 	visor_flags_inv = NONE
 	visor_state = "weldvisor_atmos"
 
-/obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -270,7 +270,7 @@
 	if(light_on)
 		. += emissive_appearance(icon, "carved_pumpkin-emissive", src, alpha = src.alpha)
 
-/obj/item/clothing/head/utility/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(light_on && !isinhands)
 		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", src, alpha = src.alpha)

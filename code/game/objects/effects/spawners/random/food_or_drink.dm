@@ -391,3 +391,17 @@
 		/obj/effect/spawner/random/food_or_drink/jelly_donuts = 3,
 		/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts = 1,
 	)
+
+/obj/effect/spawner/random/food_or_drink/keg
+	name = "alcohol keg spawner"
+	icon_state = "keg"
+	loot = list(
+		/obj/structure/reagent_dispensers/keg/beer = 16,
+		/obj/structure/reagent_dispensers/keg/whiskey = 4,
+		/obj/structure/reagent_dispensers/keg/rum = 4,
+		list(
+			/obj/structure/reagent_dispensers/keg/gold/rum,
+			/obj/structure/reagent_dispensers/keg/gold/irish,
+			/obj/structure/reagent_dispensers/keg/gold/trappist,
+		) = 1,
+	)

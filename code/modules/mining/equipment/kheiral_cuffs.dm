@@ -100,7 +100,7 @@
 		else if(isliving(loc.loc)) // for the "worn as accessory" case
 			connect_kheiral_network(loc.loc)
 
-/obj/item/clothing/accessory/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/accessory/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "strandcuff_emissive", src, alpha = src.alpha)

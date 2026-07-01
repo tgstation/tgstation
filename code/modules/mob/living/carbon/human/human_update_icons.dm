@@ -64,7 +64,6 @@ There are several things that need to be remembered:
 	update_pockets()
 	update_worn_neck()
 	update_transform()
-	update_mutations_overlay()
 	update_damage_overlays()
 	// These are done via parent call update_body(), keeping them here for clarity
 	// update_hair()
@@ -86,7 +85,7 @@ There are several things that need to be remembered:
 		if(uniform.adjusted == ALT_STYLE)
 			target_overlay = "[target_overlay]_d"
 
-		var/mutable_appearance/uniform_overlay
+
 		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
 		//handled_by_bodyshape is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
 		//icon_file MUST be set to null by default, or it causes issues.
@@ -94,13 +93,19 @@ There are several things that need to be remembered:
 		//"override_file = handled_by_bodyshape ? icon_file : null" MUST be added to the arguments of build_worn_icon()
 		//Friendly reminder that icon_exists_or_scream(file, state) is your friend when debugging this code.
 		var/handled_by_bodyshape = TRUE
+		var/digi = (bodyshape & BODYSHAPE_DIGITIGRADE)
 		var/icon_file
 		var/woman
+		var/female_sprite_flags = uniform.female_sprite_flags
 		//BEGIN SPECIES HANDLING
-		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		var/chest_is_dimorphic
+		if(dna.species.sexes)
+			var/obj/item/bodypart/chest/our_chest = get_bodypart(BODY_ZONE_CHEST)
+			chest_is_dimorphic = our_chest.is_dimorphic
+		if(chest_is_dimorphic && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -108,16 +113,17 @@ There are several things that need to be remembered:
 			handled_by_bodyshape = FALSE
 
 		//END SPECIES HANDLING
-		uniform_overlay = uniform.build_worn_icon(
+		var/mutable_appearance/uniform_overlay = uniform.build_worn_icon(
 			default_layer = UNIFORM_LAYER,
 			default_icon_file = icon_file,
 			isinhands = FALSE,
-			female_uniform = woman ? uniform.female_sprite_flags : null,
+			female_uniform = woman ? female_sprite_flags : null,
 			override_state = target_overlay,
 			override_file = handled_by_bodyshape ? icon_file : null,
 			bodyshape = bodyshape,
 		)
 
+		apply_height(uniform_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
@@ -128,8 +134,6 @@ There are several things that need to be remembered:
 	remove_overlay(ID_LAYER)
 	hud_used?.update_inventory_slot(ITEM_SLOT_ID)
 
-	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
-
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 
@@ -137,12 +141,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/id.dmi'
+		var/mutable_appearance/id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 
-		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-
-		if(!id_overlay)
-			return
-
+		apply_height(id_overlay, UPPER_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_id_offset?.apply_offset(id_overlay)
 		overlays_standing[ID_LAYER] = id_overlay
@@ -168,6 +169,8 @@ There are several things that need to be remembered:
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
+
+		apply_height(hands_combined, LOWER_BODY)
 		overlays_standing[GLOVES_LAYER] = hands_combined
 		apply_overlay(GLOVES_LAYER)
 		return
@@ -184,11 +187,10 @@ There are several things that need to be remembered:
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls
 	for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
-		var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
-		if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
-			feature_y_offset = glove_offset["y"]
+		feature_y_offset = max(my_hand.worn_glove_offset?.get_offset()["y"], feature_y_offset)
 
 	gloves_overlay.pixel_z += feature_y_offset
+	apply_height(gloves_overlay, LOWER_BODY)
 
 	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
 	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
@@ -222,6 +224,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
 
 		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(glasses_overlay, UPPER_BODY)
 		my_head.worn_glasses_offset?.apply_offset(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
@@ -243,6 +246,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
 
 		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(ears_overlay, UPPER_BODY)
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
@@ -260,6 +264,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
 
 		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(neck_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_neck_offset?.apply_offset(neck_overlay)
 		overlays_standing[NECK_LAYER] = neck_overlay
@@ -282,19 +287,13 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		if(!shoes_overlay)
-			return
-
 		var/feature_y_offset = 0
-		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		for (var/body_zone in GLOB.leg_zones)
 			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
-			if(isnull(my_leg))
-				continue
-			var/list/foot_offset = my_leg.worn_foot_offset?.get_offset()
-			if (foot_offset && foot_offset["y"] > feature_y_offset)
-				feature_y_offset = foot_offset["y"]
+			feature_y_offset = max(my_leg?.worn_foot_offset?.get_offset()["y"], feature_y_offset)
 
 		shoes_overlay.pixel_z += feature_y_offset
+		// apply_height(shoes_overlay, NO_MODIFY) // Shoes are rooted
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -308,7 +307,9 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDESUITSTORAGE))
 			return
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+
+		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi', bodyshape = bodyshape)
+		apply_height(s_store_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -326,6 +327,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(head_overlay, UPPER_BODY)
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -344,6 +346,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
 
 		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(belt_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -363,6 +366,7 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(suit_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -390,6 +394,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(mask_overlay, LOWER_BODY)
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
@@ -400,18 +405,13 @@ There are several things that need to be remembered:
 	hud_used?.update_inventory_slot(ITEM_SLOT_BACK)
 
 	if(back)
-		var/obj/item/worn_item = back
-		var/mutable_appearance/back_overlay
-
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+		if(HAS_TRAIT(back, TRAIT_NO_WORN_ICON))
 			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-
-		if(!back_overlay)
-			return
+		var/mutable_appearance/back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		apply_height(back_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_back_offset?.apply_offset(back_overlay)
 		overlays_standing[BACK_LAYER] = back_overlay
@@ -426,9 +426,10 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = worn_item.icon_state
 
-		var/mutable_appearance/hand_overlay
+
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
-		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		var/mutable_appearance/hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		apply_height(hand_overlay, LOWER_BODY)
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
 		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
 
@@ -436,12 +437,12 @@ There are several things that need to be remembered:
 	return hands
 
 /// Modifies a sprite slightly to conform to female body shapes
-/proc/wear_female_version(icon_state, icon, type, greyscale_colors)
-	var/index = "[icon_state]-[greyscale_colors]"
+/proc/wear_female_version(icon_state, icon_file_path, icon, type, greyscale_colors, bodyshape)
+	var/index = "[icon_file_path]-[icon_state]-[greyscale_colors]"
 	var/static/list/female_clothing_icons = list()
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
-		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) || bodyshape & BODYSHAPE_DIGITIGRADE ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
 		var/icon/female_cropping_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', female_icon_state)
 		female_clothing_icon = icon(icon, icon_state)
 		female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
@@ -450,24 +451,24 @@ There are several things that need to be remembered:
 
 	return icon(female_clothing_icon)
 
-/// Modifies a sprite to conform to digitigrade body shapes
-/proc/wear_digi_version(icon/base_icon, obj/item/item, key, greyscale_colors)
-	ASSERT(istype(item), "wear_digi_version: no item passed")
-	ASSERT(istext(key), "wear_digi_version: no key passed")
-	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
-		greyscale_colors = item.get_general_color(base_icon)
+/// Modifies a sprite to conform to custom body shapes
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, bodyshape)
+	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
+	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
+		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+			greyscale_colors = get_general_color(base_icon)
 
-	var/index = "[key]-[item.type]-[greyscale_colors]"
-	var/static/list/digitigrade_clothing_cache = list()
-	var/icon/resulting_icon = digitigrade_clothing_cache[index]
-	if(!resulting_icon)
-		resulting_icon = item.generate_digitigrade_icons(base_icon, greyscale_colors)
+		var/index = "[key]-[type]-[greyscale_colors]"
+		var/static/list/digitigrade_clothing_cache = list()
+		var/icon/resulting_icon = digitigrade_clothing_cache[index]
 		if(!resulting_icon)
-			stack_trace("[item.type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
-			return base_icon
-		digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
+			resulting_icon = generate_digitigrade_icons(base_icon, greyscale_colors)
+			if(!resulting_icon)
+				stack_trace("[type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
+				return base_icon
+			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
-	return icon(resulting_icon)
+		return icon(resulting_icon)
 
 /// Modifies a sprite to replace the legs with a new version
 /proc/replace_icon_legs(icon/base_icon, icon/new_legs)
@@ -597,16 +598,17 @@ generate/load female uniform sprites matching all previously decided variables
 	if(female_uniform)
 		building_icon = wear_female_version(
 			icon_state = t_state,
+			icon_file_path = file2use,
 			icon = file2use,
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
+			bodyshape = bodyshape,
 		)
-	if(!isinhands && (bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
-		building_icon = wear_digi_version(
+	if(!isinhands && (bodyshapes_with_variations & bodyshape))
+		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
-			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",
-			greyscale_colors = greyscale_colors,
+			bodyshape = bodyshape,
 		)
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
@@ -615,7 +617,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use)
+	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use, bodyshape)
 	if(length(worn_overlays))
 		draw_target.overlays += worn_overlays
 	draw_target = color_atom_overlay(draw_target)
@@ -624,7 +626,7 @@ generate/load female uniform sprites matching all previously decided variables
 	// but KEEP_APART breaks float layering, so what we need to do is make fake KEEP_APART for us to use
 	var/mutable_appearance/standing = mutable_appearance(layer = -layer2use, appearance_flags = KEEP_TOGETHER)
 	standing.overlays += draw_target
-	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use)
+	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use, bodyshape)
 	if(length(separate_overlays))
 		standing.overlays += separate_overlays
 	else // Don't nest overlays if there's nothing to nest against
@@ -668,14 +670,12 @@ generate/load female uniform sprites matching all previously decided variables
 
 /mob/living/carbon/human/update_body(is_creating = FALSE)
 	remove_overlay(BODY_LAYER)
-
-	var/list/body_overlays = list()
-	body_overlays += get_underwear_overlays()
-
-	if(length(body_overlays))
-		overlays_standing[BODY_LAYER] = body_overlays
+	var/list/clothing_overlays = get_underwear_overlays()
+	if(length(clothing_overlays))
+		for(var/image/overlay as anything in clothing_overlays)
+			apply_height(overlay, ENTIRE_BODY)
+		overlays_standing[BODY_LAYER] = clothing_overlays
 		apply_overlay(BODY_LAYER)
-
 	// parent call will update the actual bodyparts
 	return ..()
 
@@ -723,6 +723,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/list/eye_overlays = noggin.get_eye_overlays()
 	if(length(eye_overlays))
+		for(var/image/overlay as anything in eye_overlays)
+			apply_height(overlay, UPPER_BODY)
 		overlays_standing[EYES_LAYER] = eye_overlays
 		apply_overlay(EYES_LAYER)
 
@@ -736,6 +738,8 @@ generate/load female uniform sprites matching all previously decided variables
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
 	var/list/head_overlays = head?.get_hair_overlays()
 	if(length(head_overlays))
+		for(var/image/overlay as anything in head_overlays)
+			apply_height(overlay, UPPER_BODY)
 		overlays_standing[HAIR_LAYER] = head_overlays
 		apply_overlay(HAIR_LAYER)
 
@@ -752,6 +756,7 @@ generate/load female uniform sprites matching all previously decided variables
 	for (var/mutable_appearance/overlay as anything in eye_overlays)
 		overlay.pixel_w = 0
 		overlay.pixel_z = 0
+		apply_height(overlay, UPPER_BODY)
 		noggin.worn_face_offset.apply_offset(overlay)
 
 	overlays_standing[EYES_LAYER] = eye_overlays
@@ -776,56 +781,37 @@ generate/load female uniform sprites matching all previously decided variables
 	update_eyes()
 	update_hair()
 
-// Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
-// Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
-// Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
-// So instead we have to pass them through an offset, which is close enough to look good.
-/mob/living/carbon/human/apply_overlay(cache_index)
-	if(mob_height == HUMAN_HEIGHT_MEDIUM)
-		return ..()
-
-	var/raw_applied = overlays_standing[cache_index]
-	var/string_form_index = num2text(cache_index)
-	var/offset_type = GLOB.layers_to_offset[string_form_index]
-	if(isnull(offset_type))
-		if(islist(raw_applied))
-			for(var/image/applied_appearance in raw_applied)
-				apply_height_filters(applied_appearance)
-		else if(isimage(raw_applied))
-			apply_height_filters(raw_applied)
-	else
-		if(islist(raw_applied))
-			for(var/image/applied_appearance in raw_applied)
-				apply_height_offsets(applied_appearance, offset_type)
-		else if(isimage(raw_applied))
-			apply_height_offsets(raw_applied, offset_type)
-
-	return ..()
-
 /**
- * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
+ * Applies an offset or a filter to an appearance accordance to the height of our mob
  *
- * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
- * higher up things (hats for example) need to be offset more due to the location of the filter displacement
+ * * appearance - The appearance to apply the height changes to
+ * * body_area - The body area this appearance is on, used to determine what offsets/filters to apply
  */
-/mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(mob_height)
-	var/final_offset = 0
-	switch(upper_torso)
-		if(UPPER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
-		if(LOWER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
-		else
+/mob/living/carbon/proc/apply_height(image/appearance, body_area)
+	return
+
+/mob/living/carbon/human/apply_height(image/appearance, body_area)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM)
+		return // default, no handling needed
+
+	switch(body_area)
+		if(LOWER_BODY, UPPER_BODY)
+			appearance.pixel_z += GLOB.human_heights_to_offsets[mob_height][body_area]
+			return
+		if(ENTIRE_BODY)
+			apply_height_filter(appearance)
+			return
+		if(NO_MODIFY)
 			return
 
-	appearance.pixel_z += final_offset
-	return appearance
+	stack_trace("Invalid height body_area specified ([body_area || "null"])")
 
 /**
  * Applies a filter to an appearance according to mob height
  */
-/mob/living/carbon/human/proc/apply_height_filters(image/appearance)
+/mob/living/carbon/human/proc/apply_height_filter(image/appearance)
+	PRIVATE_PROC(TRUE)
+
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
@@ -954,8 +940,8 @@ generate/load female uniform sprites matching all previously decided variables
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
 	if(!(appearance.appearance_flags & KEEP_TOGETHER))
-		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
-			apply_height_filters(overlay)
+		for(var/mutable_appearance/child_overlay as anything in appearance.underlays + appearance.overlays)
+			apply_height_filter(child_overlay)
 
 	return appearance
 

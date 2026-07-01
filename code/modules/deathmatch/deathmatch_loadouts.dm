@@ -925,7 +925,7 @@
 /datum/outfit/deathmatch_loadout/cultish/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_CULTIST, REF(src))
-	user.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
+	user.apply_status_effect(/datum/status_effect/cult_halo, 0 SECONDS)
 	user.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 
 // Cultist Invoker, has all the balanced cult gear

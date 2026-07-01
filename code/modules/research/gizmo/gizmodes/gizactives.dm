@@ -94,8 +94,13 @@
 /// Adds a puzzle for every possible made to select it, and a single wire to activate the selected mode
 /datum/gizpulse/mode_controle/select_mode/setup_mode_controle(datum/gizmodes/master, list/active_gizmodes, list/trigger_callbacks)
 	for(var/active in active_gizmodes)
-		trigger_callbacks += VARSET_CALLBACK(master, current_active, active)
+		trigger_callbacks += CALLBACK(src, PROC_REF(select_mode), master, active)
 	trigger_callbacks += CALLBACK(master, PROC_REF(activate))
+
+/datum/gizpulse/mode_controle/select_mode/proc/select_mode(datum/gizmodes/master, new_active_mode, atom/movable/holder)
+	master.current_active = new_active_mode
+	// Give a hint to the user that something DID happen
+	return GIZMO_PUZZLE_SOLVED_MODE_CONTROL
 
 /// Adds a puzzle to cycle to the next gizpulse, and a puzzle to activate the currently active mode
 /datum/gizpulse/mode_controle/cycle_mode/setup_mode_controle(datum/gizmodes/master, list/active_gizmodes, list/trigger_callbacks)
@@ -105,6 +110,8 @@
 /datum/gizpulse/mode_controle/cycle_mode/proc/cycle_mode(datum/gizmodes/master, atom/movable/holder)
 	// Move to the next mode in the list (and loop back to 1 if needed)
 	master.current_active = master.active_gizmodes[((master.active_gizmodes.Find(master.current_active)) % (master.active_gizmodes.len)) + 1]
+	// Give a hint to the user that something DID happen
+	return GIZMO_PUZZLE_SOLVED_MODE_CONTROL
 
 /// Adds a puzzle for every gizpulse that just immediately activates that gizpulse
 /datum/gizpulse/mode_controle/direct_activate/setup_mode_controle(datum/gizmodes/master, list/active_gizmodes, list/trigger_callbacks)
