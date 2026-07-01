@@ -5,101 +5,72 @@ GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 /// Must be kept up to date with the contents of hostile_machines
 GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 
-/datum/ai_behavior/find_potential_targets
-	action_cooldown = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	/// How far can we see stuff?
-	var/vision_range = 9
+
+///Used to find combat targets; Allow finding things hidden in things such as lockers too.
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets
+	target_source = /datum/target_source/hearers
+	targeting_strategy = BB_TARGETING_STRATEGY
+	vision_range = 9
+	target_loss_distance = 16
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
-	/// Range in which we can acquire a new target
-	var/aggro_grab_range_key = BB_AGGRO_GRAB_RANGE
-	/// Blackboard key for the target priority strategy
+	/// Blackboard key holding the hiding-location atom (e.g. closet the target ducked into)
+	var/hiding_location_key
+	/// Blackboard key holding the /datum/target_priority_strategy typepath for selection
 	var/priority_strategy_key = BB_TARGET_PRIORITY_STRATEGY
 	/// If we have a priority strategy set, how often do we refresh our target search?
 	var/priority_refresh_cooldown = 6 SECONDS
 
-/datum/ai_behavior/find_potential_targets/get_cooldown(datum/ai_controller/cooldown_for)
-	if(cooldown_for.blackboard[BB_FIND_TARGETS_FIELD(type)])
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/get_cooldown(datum/ai_controller/controller)
+	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return 60 SECONDS
 	return ..()
 
-/datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	var/mob/living/living_mob = controller.pawn
-	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/can_search(datum/ai_controller/controller)
+	return !(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
 
-	if(!targeting_strategy)
-		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
-
-	var/atom/current_target = controller.blackboard[target_key]
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/should_keep_target(datum/ai_controller/controller, datum/targeting_strategy/strategy, atom/current_target)
+	if(!current_target)
+		return FALSE
+	if(!strategy.is_valid_target(controller.pawn, current_target, vision_range))
+		return FALSE
 	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[priority_strategy_key])
-	if((!priority_strategy || controller.blackboard[BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN] > world.time) && current_target && targeting_strategy.can_attack(living_mob, current_target, vision_range))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(!priority_strategy)
+		return TRUE
+	return controller.blackboard[BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN] > world.time
 
-	var/aggro_range = vision_range
-	if(isnull(current_target) && !isnull(controller.blackboard[aggro_grab_range_key]))
-		aggro_range = controller.blackboard[aggro_grab_range_key]
-	else if(!isnull(controller.blackboard[aggro_range_key]))
-		aggro_range = controller.blackboard[aggro_range_key]
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/on_no_candidates(datum/ai_controller/controller, atom/current_target, datum/targeting_strategy/strategy, range)
+	if(current_target && strategy.can_keep_target(controller.pawn, current_target, target_loss_distance))
+		return list(current_target)
+	if(!current_target)
+		failed_to_find_anyone(controller, target_key, targeting_strategy, hiding_location_key)
+	return list()
 
-	controller.clear_blackboard_key(target_key)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/on_no_valid_candidates(datum/ai_controller/controller, atom/current_target)
+	if(!current_target)
+		failed_to_find_anyone(controller, target_key, targeting_strategy, hiding_location_key)
 
-	// If we're using a field rn, just don't do anything yeah?
-	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
-
-	var/turf/mob_turf = get_turf(living_mob)
-	if(mob_turf?.z)
-		for (var/atom/hostile_machine as anything in GLOB.hostile_machines_by_z[mob_turf.z])
-			if (can_see(living_mob, hostile_machine, aggro_range))
-				potential_targets += hostile_machine
-
-	if(!potential_targets.len)
-		if(!current_target)
-			failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/list/filtered_targets = list()
-	var/current_priority = 0
-	if(priority_strategy)
-		current_priority = priority_strategy.get_target_priority(controller, current_target)
-
-	for(var/atom/pot_target in potential_targets)
-		if(!targeting_strategy.can_attack(living_mob, pot_target))
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/filter_candidates(datum/ai_controller/controller, list/candidates, datum/targeting_strategy/strategy, atom/current_target)
+	var/mob/living/pawn = controller.pawn
+	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[priority_strategy_key])
+	var/current_priority = priority_strategy ? priority_strategy.get_target_priority(controller, current_target) : 0
+	var/list/filtered = list()
+	for(var/atom/candidate as anything in candidates)
+		if(!strategy.is_valid_target(pawn, candidate, vision_range, controller))
 			continue
-		if (priority_strategy && priority_strategy.get_target_priority(controller, pot_target) < current_priority)
+		if(priority_strategy && priority_strategy.get_target_priority(controller, candidate) < current_priority)
 			continue
-		filtered_targets += pot_target
+		filtered += candidate
+	return filtered
 
-	if(!filtered_targets.len)
-		if(!current_target)
-			failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	var/atom/target = pick_final_target(controller, filtered_targets)
-
-	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [target_key]! Behavior: [src]", get_turf(target), "Target: [target]")
-	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
-
-	controller.set_blackboard_key(target_key, target)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
 	controller.set_blackboard_key(BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN, world.time + priority_refresh_cooldown)
-
-	var/atom/potential_hiding_location = targeting_strategy.find_hidden_mobs(living_mob, target)
-
-	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
+	var/atom/potential_hiding_location = strategy.find_hidden_mobs(controller.pawn, target)
+	if(potential_hiding_location)
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	var/aggro_range = vision_range
-	if(!isnull(controller.blackboard[aggro_grab_range_key]))
-		aggro_range = controller.blackboard[aggro_grab_range_key]
-	else if(!isnull(controller.blackboard[aggro_range_key]))
-		aggro_range = controller.blackboard[aggro_range_key]
-
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy, hiding_location_key)
+	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
 	// Alright, here's the interesting bit
@@ -112,13 +83,15 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		src,
 		controller,
 		target_key,
-		targeting_strategy_key,
+		targeting_strategy,
 		hiding_location_key,
 	)
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
+	controller.clear_blackboard_key(target_key)
 
-/datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
+
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
 	for(var/maybe_target in found)
@@ -126,7 +99,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 			continue
 		if(!is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!strategy.can_attack(pawn, maybe_target))
+		if(!strategy.is_valid_target(pawn, maybe_target))
 			continue
 		valid_found = TRUE
 		break
@@ -136,18 +109,18 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 	qdel(field) // autoclears so it's fine
 	// Fire instantly, you should find something I hope
-	controller.modify_cooldown(src, world.time)
+	modify_cooldown(world.time)
 
-/datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/strategy, mob/pawn)
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(!strategy.can_attack(pawn, checking))
+	if(!strategy.is_valid_target(pawn, checking))
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
 	for(var/maybe_target in found)
@@ -156,7 +129,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		// Need to better handle viewers here
 		if(!ismob(maybe_target) && !is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!strategy.can_attack(pawn, maybe_target))
+		if(!strategy.is_valid_target(pawn, maybe_target))
 			continue
 		accepted_targets += maybe_target
 
@@ -165,36 +138,46 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [target_key]! Behavior: [src]", get_turf(target), "Target: [target]")
 	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
 	controller.set_blackboard_key(target_key, target)
-
-	var/atom/potential_hiding_location = strategy.find_hidden_mobs(pawn, target)
-
-	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
+	on_target_found(controller, target, strategy)
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field) // autoclears so it's fine
-		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
-		controller.modify_cooldown(src, get_cooldown(controller))
+		modify_cooldown(get_cooldown(controller))
 
-/// Returns the desired final target from the filtered list of targets
-/datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/// Picks the final target, preferring higher-priority candidates when a priority strategy is set.
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[priority_strategy_key])
-	if (!priority_strategy)
+	if(!priority_strategy)
 		return pick(filtered_targets)
 	return priority_strategy.select_target(controller, filtered_targets)
 
-/// Targets with the trait specified by the BB_TARGET_PRIORITY_TRAIT blackboard key will be prioritized over the rest.
-/datum/ai_behavior/find_potential_targets/prioritize_trait
+/// Picks targets based on which one has the lowest health.
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/most_wounded
 
-/datum/ai_behavior/find_potential_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
-	var/priority_targets = list()
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/most_wounded/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/list/living_targets = list()
+	for(var/mob/living/living_target in filtered_targets)
+		living_targets += living_target
+	if(living_targets.len)
+		sortTim(living_targets, GLOBAL_PROC_REF(cmp_mob_health))
+		return living_targets[living_targets.len]
+	return ..()
+
+/// Prioritizes targets carrying the trait named by our trait_key blackboard key over the rest.
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait
+	/// Blackboard key holding the trait that marks a target as high-priority.
+	var/trait_key = BB_TARGET_PRIORITY_TRAIT
+
+/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/list/priority_targets = list()
+	var/priority_trait = controller.blackboard[trait_key]
 	for(var/atom/target as anything in filtered_targets)
-		if(HAS_TRAIT(target, controller.blackboard[BB_TARGET_PRIORITY_TRAIT]))
+		if(HAS_TRAIT(target, priority_trait))
 			priority_targets += target
 	if(length(priority_targets))
 		return ..(controller, priority_targets)

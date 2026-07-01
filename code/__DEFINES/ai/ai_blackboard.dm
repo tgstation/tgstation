@@ -1,5 +1,22 @@
 
 //Generic BB keys
+///Use this if you need a generic variable for a target; Use this if you don't have multiple different things to target in your ai (PROTIP: YOU BASICALLY NEVER DO!)
+#define BB_CURRENT_TARGET "Current Target"
+///Use this if you need a generic variable for a hiding location;
+#define BB_CURRENT_TARGET_HIDING_LOCATION "Current Target Hiding Location"
+///For any battle screech cooldowns
+#define BB_BATTLE_SCREECH_COOLDOWN "Battle Screech Cooldown"
+///Target for snitching (calling reinforcements on) but dont want to atatck.
+#define BB_CALL_REINFORCEMENTS_TARGET "Call reinforcements target"
+///Generic target for hunting
+#define BB_HUNT_TARGET_LIST "Hunt Target List"
+///Target of current movement.alist
+#define BB_CURRENT_MOVEMENT_TARGET "Current target movement"
+///The pawn controlled by this controller
+#define BB_MY_PAWN "Literally me"
+
+///Cooldown on venting (sus)
+#define BB_VENTING_COOLDOWN "Venting Cooldown"
 
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
@@ -30,13 +47,17 @@
 #define BB_GUILTY_CONSCIOUS_CHANCE "guilty_concious_rate"
 ///the item we will steal
 #define BB_ITEM_TO_STEAL "item_to_steal"
+///be stoat do crime
+#define BB_WANTS_TO_COMMIT_THEFT "BB_WANTS_TO_COMMIT_THEFT"
+///last stolen item
+#define BB_LAST_STOLEN_ITEM "BB_LAST_STOLEN_ITEM"
 
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"
 ///the list of interactions we can have with the owner
 #define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
 
-///The trait checked by ai_behavior/find_potential_targets/prioritize_trait to return a target with a trait over the rest.
+///The trait checked by ai_behavior/update_targets/prioritize_trait to return a target with a trait over the rest.
 #define BB_TARGET_PRIORITY_TRAIT "target_priority_trait"
 
 /// Store a single or list of emotes at this key
@@ -48,6 +69,8 @@
 #define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
 /// Something the mob will remote when calling reinforcements
 #define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+/// Does this mob call reinforcements?
+#define BB_CALLS_REINFORCEMENTS "BB_calls_reinforcements"
 
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
@@ -66,6 +89,12 @@
 /// Are we a panicking goose?
 #define BB_GOOSE_VOMIT_CHANCE "BB_goose_vomit_chance"
 
+/// Set TRUE to suppress a mob's idle wandering (e.g. while under external/deadchat control).
+#define BB_DISABLE_IDLE "BB_disable_idle"
+
+/// Set TRUE on a mob's controller by /datum/component/tameable once it has been tamed.
+#define BB_TAMED "BB_tamed"
+
 //Hunting BB keys
 ///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -73,6 +102,14 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+///cooldown key for the cockroach's ant hunt
+#define BB_ROACH_HUNT_COOLDOWN "BB_roach_hunt_cooldown"
+///cooldown key for the mouse's cheese hunt
+#define BB_MOUSE_CHEESE_HUNT_COOLDOWN "BB_mouse_cheese_hunt_cooldown"
+///cooldown key for the mouse's cable hunt
+#define BB_MOUSE_CABLE_HUNT_COOLDOWN "BB_mouse_cable_hunt_cooldown"
+///Whether we're hungry for a cable
+#define BB_MOUSE_WANTS_TO_EAT_CABLE "BB_mouse_wants_to_eat_cable"
 
 ///Basic Mob Keys
 
@@ -81,14 +118,13 @@
 /// Key used to store the time we can actually attack
 #define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
 
-///Targeting subtrees
-#define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
-#define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
 #define BB_TARGET_PRIORITY_STRATEGY "target_priority_strategy"
 #define BB_HUNT_TARGETING_STRATEGY "hunt_targeting_strategy"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+/// Target atom written by escape-captivity BT decorators (pawn_buckled_to_obj, pawn_contained_in_obj)
+#define BB_BASIC_MOB_ESCAPE_TARGET "BB_basic_mob_escape_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
 /// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
@@ -100,6 +136,9 @@
 /// How likely is this mob to move when idle per tick?
 #define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
 #define BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN "BB_basic_mob_target_refresh_cooldown"
+
+/// whether we can have fuck
+#define BB_FUCKS "can we fuck?"
 
 /// Minimum range to keep target within
 #define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
@@ -115,6 +154,8 @@
 #define BB_FLEE_TARGETING_STRATEGY "flee_targeting_strategy"
 #define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
 #define DEFAULT_BASIC_FLEE_DISTANCE 9
+/// Computed flee destination turf set by find_flee_location and consumed by move_to_target
+#define BB_FLEE_LOCATION "BB_flee_location"
 
 /// Generic key for a non-specific targeted action
 #define BB_TARGETED_ACTION "BB_TARGETED_action"
@@ -189,7 +230,7 @@
 ///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
 #define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
-///currently only used by clowns, a list of what can the mob speak randomly
+///A list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
 #define BB_EMOTE_SAY "emote_say"
 #define BB_EMOTE_HEAR "emote_hear"
@@ -224,6 +265,9 @@
 ///key that holds the next time we will start fishing
 #define BB_FISHING_TIMER "BB_fishing_timer"
 
+///key that holds the next time we will start drilling ice
+#define BB_ICE_DRILLING_TIMER "BB_ice_drilling_timer"
+
 ///are we ONLY allowed to fish when we're hungry?
 #define BB_ONLY_FISH_WHILE_HUNGRY "BB_only_fish_while_hungry"
 
@@ -241,7 +285,7 @@
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists
-/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+/// For /datum/ai_behavior/update_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
 
 ///Currently enraged

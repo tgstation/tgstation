@@ -1,0 +1,15 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/simple/simple_goon",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		}
+	]
+}

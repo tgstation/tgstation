@@ -1,0 +1,23 @@
+{
+	"dm_type": "/datum/bt_node/subtree/plant_alien_weeds",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/cooldown",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+				"cooldown_key": "BB_ALIEN_PLANT_COOLDOWN",
+				"cooldown_duration": "30 SECONDS"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/plant_alien_weeds"
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/idle_random_walk"
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/carp/pet",
+	"type": "subtree",
+	"subtype": "/datum/bt_node/subtree/basic_carp_tree",
+	"bindings": {
+		"bf1nd7r2": "/datum/bt_node/subtree/carp_retaliate_selection",
+		"bc0mb4t9": "/datum/bt_node/subtree/carp_retaliate_selection",
+		"bid1e6k3": "/datum/bt_node/subtree"
+	}
+}

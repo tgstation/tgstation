@@ -18,7 +18,7 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_WAS_ATTACKED)
 
-/// Add an attacking atom to a blackboard list of things which attacked us
+/// Add an attacking atom to a blackboard list of things which attacked us.
 /datum/element/ai_retaliate/proc/on_attacked(mob/victim, atom/attacker)
 	SIGNAL_HANDLER
 

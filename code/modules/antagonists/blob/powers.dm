@@ -353,7 +353,7 @@
 	for(var/mob/living/basic/blob_mob as anything in blob_mobs)
 		if(!isturf(blob_mob.loc) || get_dist(blob_mob, tile) > 35 || blob_mob.key)
 			continue
-		blob_mob.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		blob_mob.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		blob_mob.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, pick(surrounding_turfs))
 
 /** Opens the reroll menu to change strains */

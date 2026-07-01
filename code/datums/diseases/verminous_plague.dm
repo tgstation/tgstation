@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(cursed_vermin_by_stage, list(
 	if (stage == 1 || !created.ai_controller)
 		return
 
-	created.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, affected_mob)
+	created.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, affected_mob)
 	created.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, affected_mob)
 
 /datum/disease/verminous_plague/update_stage(new_stage)

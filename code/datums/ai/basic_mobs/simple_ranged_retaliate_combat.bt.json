@@ -1,0 +1,69 @@
+{
+	"dm_type": "/datum/bt_node/subtree/simple_ranged_retaliate_combat",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_CURRENT_TARGET",
+						"observer_abort": "BT_ABORT_SELF"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
+						"children": [
+							{
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_walk"
+				}
+			]
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
+		}
+	]
+}

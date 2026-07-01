@@ -1,0 +1,125 @@
+{
+	"dm_type": "/datum/ai_controller/robot_customer",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CUSTOMER_LEAVING",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_exit_portal"
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CUSTOMER_EXIT_PORTAL",
+							"required_dist": 0
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/robot_customer/leave_venue"
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CUSTOMER_CURRENT_TARGET",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CUSTOMER_CURRENT_TARGET",
+							"required_dist": 1
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/break_spine",
+						"vars": {
+							"target_key": "BB_CUSTOMER_CURRENT_TARGET"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CUSTOMER_MY_SEAT",
+				"invert": true
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/cooldown",
+				"vars": {
+					"cooldown_key": "BB_CUSTOMER_FIND_SEAT_COOLDOWN",
+					"cooldown_duration": "8 SECONDS",
+					"lock_on_succeed": false
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/robot_customer/find_seat"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CUSTOMER_MY_SEAT"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CUSTOMER_MY_SEAT",
+							"required_dist": 0
+						}
+					},
+					{
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"key": "BB_CUSTOMER_CURRENT_ORDER",
+									"invert": true
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/robot_customer/order_food"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/robot_customer/wait_for_food"
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

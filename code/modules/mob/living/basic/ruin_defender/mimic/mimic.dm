@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(idledamage && !ckey && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
+	if(idledamage && !ckey && !ai_controller?.blackboard[BB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
 		adjust_brute_loss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
 		death()
@@ -391,10 +391,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			// do we have nothing chambered/chambered is spent AND we have no mag or our mag is empty
 			if(!ballistic.chambered?.loaded_projectile && magazine_useless(gun)) // ran out of ammo
 				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE) //BANZAIIIIIIII
-				ai_controller?.CancelActions()
+				ai_controller?.cancel_current_plan()
 		else //if we cant fire we probably like ran out of energy or magic charges or whatever the hell idk
 			ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
-			ai_controller?.CancelActions() // Stop our firing behavior so we can plan melee
+			ai_controller?.cancel_current_plan() // Stop our firing behavior so we can plan melee
 	else
 		ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, FALSE)
 	gun.fire_gun(target, user = src, flag = FALSE, params = modifiers) //still make like a cool click click sound if trying to fire empty

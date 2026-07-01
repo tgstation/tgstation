@@ -80,14 +80,16 @@
 		update_appearance(UPDATE_ICON)
 
 /datum/ai_controller/basic_controller/sheep
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/sheep.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("baaa", "baaaAAAAAH!", "baaah"),
+			BB_EMOTE_HEAR = list("bleats."),
+			BB_EMOTE_SEE = list("shakes her head.", "stares into the distance."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/sheep,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-	)

@@ -131,7 +131,7 @@
 	target.apply_damage(damage = 5, damagetype = BURN)
 	var/datum/targeting_strategy/target_confirmer = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 	for(var/mob/living/nearby_mob in range(1, src))
-		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
+		if(target == nearby_mob || !target_confirmer?.is_valid_target(src, nearby_mob))
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 		nearby_mob.apply_damage(10)
@@ -402,30 +402,10 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_behavior/attack_obstructions/star_gazer
-	action_cooldown = 0.4 SECONDS
-	can_attack_turfs = TRUE
-	can_attack_dense_objects = TRUE
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/star_gazer.bt.json"
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"
 	refuse_reaction = "..."
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack

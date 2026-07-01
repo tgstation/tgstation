@@ -1,0 +1,55 @@
+{
+	"dm_type": "/datum/bt_node/subtree/bard_play_music",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/generic_play_instrument",
+			"bindings": {
+				"bulu13xf": "75"
+			}
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"key": "BB_MOOK_MUSIC_AUDIENCE"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_MOOK_MUSIC_AUDIENCE",
+							"required_dist": 2,
+							"finish_on_arrival": false
+						}
+					}
+				},
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+					"loop_delay": "1 SECONDS",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/idle_random_walk/walk_near_target",
+							"vars": {
+								"target_key": "BB_HOME_VILLAGE",
+								"walk_chance": 75
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

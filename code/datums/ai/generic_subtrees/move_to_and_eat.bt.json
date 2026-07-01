@@ -1,0 +1,36 @@
+{
+	"dm_type": "/datum/bt_node/subtree/move_to_and_eat",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_TARGET_FOOD"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_TARGET_FOOD",
+					"required_dist": 1
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/perform_emote",
+				"vars": {
+					"emote": "eats up happily!"
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+				"vars": {
+					"target_key": "BB_TARGET_FOOD"
+				}
+			}
+		]
+	}
+}

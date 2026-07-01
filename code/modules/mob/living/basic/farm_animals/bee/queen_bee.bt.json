@@ -1,0 +1,58 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/queen_bee",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": false,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": false,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_hive"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/pollinate_target"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/transition_hive_status"
+				},
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive/queen"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_TARGET_HOME"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_hive"
+			}
+		}
+	]
+}

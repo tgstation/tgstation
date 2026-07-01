@@ -103,7 +103,7 @@
 		var/obj/item/my_thing = pop(my_shit)
 		user.dropItemToGround(my_thing)
 		var/mob/living/angry_thing = my_thing.animate_atom_living()
-		angry_thing.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, user)
+		angry_thing.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, user)
 		angry_thing.ai_controller?.set_blackboard_key(BB_TARGET_MINIMUM_STAT, HARD_CRIT)
 		angry_thing.ai_controller?.ai_interact(user, combat_mode = TRUE)
 		user.apply_damage(35, BRUTE, forced = TRUE) // Mimics are not actually very strong so we pretend that it just bit us so we die faster, at least 3 charges & worn items should do it

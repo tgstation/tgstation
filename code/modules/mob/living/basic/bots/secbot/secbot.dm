@@ -198,7 +198,7 @@
 
 /mob/living/basic/bot/secbot/proc/on_entered(datum/source, atom/movable/to_be_tripped)
 	SIGNAL_HANDLER
-	var/mob/living/possible_target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/possible_target = ai_controller.blackboard[BB_CURRENT_TARGET]
 	if(!has_gravity() || !ismob(to_be_tripped) || !possible_target)
 		return
 	var/mob/living/carbon/tripped_mob = to_be_tripped

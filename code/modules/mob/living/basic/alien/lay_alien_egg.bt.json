@@ -1,0 +1,14 @@
+{
+	"dm_type": "/datum/bt_node/subtree/lay_alien_egg",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/cooldown",
+	"vars": {
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+		"cooldown_key": "BB_ALIEN_PLANT_COOLDOWN",
+		"cooldown_duration": "30 SECONDS"
+	},
+	"child": {
+		"type": "leaf",
+		"behavior": "/datum/bt_node/ai_behavior/lay_alien_egg"
+	}
+}

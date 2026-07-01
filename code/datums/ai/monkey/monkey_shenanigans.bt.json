@@ -1,0 +1,165 @@
+{
+	"dm_type": "/datum/bt_node/subtree/monkey_shenanigans",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+			"vars": {
+				"key": "BB_MY_PAWN"
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/random_chance",
+				"vars": {
+					"chance": 0.05
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/use_in_hand"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/random_chance",
+			"vars": {
+				"chance": 0.2
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/monkey_find_press_target",
+						"vars": {
+							"target_key": "BB_monkey_current_press_target"
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_monkey_current_press_target"
+						},
+						"child": {
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance",
+							"vars": {
+								"chance": 0.5
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_monkey_current_press_target",
+											"required_dist": 1,
+											"finish_on_arrival": true,
+											"movement_type": "/datum/ai_movement/jps"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/use_on_object",
+										"vars": {
+											"target_key": "BB_monkey_current_press_target"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+										"vars": {
+											"target_key": "BB_monkey_current_press_target"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+			"vars": {
+				"key": "BB_MY_PAWN"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_monkey_current_give_target",
+							"targeting_strategy": "/datum/targeting_strategy/anything",
+							"target_source": "/datum/target_source/oview_single_type/human_mob",
+							"vision_range": 2
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_monkey_current_give_target"
+						},
+						"child": {
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance_from_key",
+							"vars": {
+								"chance_key": "BB_monkey_give_chance"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_monkey_current_give_target",
+											"required_dist": 1,
+											"finish_on_arrival": true,
+											"movement_type": "/datum/ai_movement/jps"
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/give",
+										"vars": {
+											"target_key": "BB_monkey_current_give_target"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_equals",
+			"vars": {
+				"key": "BB_monkey_tamed",
+				"value": false
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/monkey_find_weapon"
+					},
+					{
+						"type": "subtree",
+						"subtype": "/datum/bt_node/subtree/monkey_find_weapon"
+					}
+				]
+			}
+		}
+	]
+}

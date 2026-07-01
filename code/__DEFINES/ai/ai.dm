@@ -1,6 +1,14 @@
-#define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
-#define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
-#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_behaviors.target_priority_strategies[targeting_type]
+#define GET_TARGETING_STRATEGY(targeting_type) SSai_controllers.targeting_strategies[targeting_type]
+#define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_controllers.target_priority_strategies[targeting_type]
+#define GET_TARGET_SOURCE(source_type) SSai_controllers.target_sources[source_type]
+
+// Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
+/// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.
+#define TARGET_REVALIDATE 1
+/// If a target is already set, return SUCCESS immediately without re-checking.
+#define TARGET_KEEP_IF_SET 2
+/// Always run the full candidate search, ignoring any existing target.
+#define TARGET_ALWAYS_SEARCH 3
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags
@@ -43,16 +51,6 @@
 
 #define AI_BEHAVIOR_INSTANT (NONE)
 
-///Does this task require movement from the AI before it can be performed?
-#define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
-///Does this require the current_movement_target to be adjacent and in reach?
-#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
-///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
-///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
-///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
 /// Don't move if being pulled
@@ -65,18 +63,15 @@
 #define CAN_ACT_IN_STASIS (1<<3)
 /// Continue processing while aggressively grabbed
 #define CAN_ACT_WHILE_GRABBED (1<<4)
+/// Never pauses when off-station with no players nearby (replaces the old can_idle = FALSE)
+#define CANNOT_GO_IDLE (1<<5)
+/// Keeps running even when there are no clients on its z-level (replaces can_run_without_clients_on_zlevel)
+#define CAN_RUN_WITHOUT_CLIENTS (1<<6)
 
 /// Flags we expect for most AI controllers
 #define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
 /// Flags for passive mobs that are easy to push around
 #define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
-
-//Base Subtree defines
-
-///This subtree should cancel any further planning, (Including from other subtrees)
-#define SUBTREE_RETURN_FINISH_PLANNING 1
-
-//Generic subtree defines
 
 /// default search range (tiles, passed to oview) when using find_and_set
 #define SEARCH_TACTIC_DEFAULT_RANGE 7
@@ -97,3 +92,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
 	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 ))
+
+
+///Use this if you dont want a controller to show up in the sidebar (e.g. when its a class that just sets BB keys)
+#define ABSTRACT_AI_CLASS "Abstract"

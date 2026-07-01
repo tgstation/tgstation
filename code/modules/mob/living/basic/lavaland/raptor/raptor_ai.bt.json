@@ -1,0 +1,219 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/raptor",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/raptor_flee"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/raptor_heal_injured"
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+												"vars": {
+													"target_key": "BB_CURRENT_TARGET",
+													"targeting_strategy": "BB_TARGETING_STRATEGY",
+													"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+												}
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/raptor_food_trough"
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/make_babies"
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance",
+							"vars": {
+								"observer_abort": "BT_ABORT_NONE",
+								"chance": 0.4
+							},
+							"child": {
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/play_with_owner"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/care_for_young"
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_walk"
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/raptor_find_food"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_true",
+					"vars": {
+						"observer_abort": "BT_ABORT_NONE",
+						"key": "BB_RAPTOR_PLAYFUL"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target",
+						"vars": {
+							"target_key": "BB_OWNER_TARGET",
+							"targeting_strategy": "/datum/targeting_strategy/ally_mob"
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_true",
+					"vars": {
+						"observer_abort": "BT_ABORT_NONE",
+						"key": "BB_BASIC_MOB_HEALER"
+					},
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target",
+								"vars": {
+									"target_key": "BB_INJURED_RAPTOR",
+									"targeting_strategy": "/datum/targeting_strategy/injured_mob/not_self/injured_raptor"
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/retrieve_injured_rider",
+								"vars": {
+									"target_key": "BB_INJURED_RAPTOR"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_true",
+					"vars": {
+						"observer_abort": "BT_ABORT_NONE",
+						"key": "BB_RAPTOR_MOTHERLY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target",
+						"vars": {
+							"target_key": "BB_RAPTOR_BABY",
+							"targeting_strategy": "/datum/targeting_strategy/baby_raptor"
+						}
+					}
+				},
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+							"vars": {
+								"target_key": "BB_CURRENT_TARGET",
+								"targeting_strategy": "BB_TARGETING_STRATEGY",
+								"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+							}
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_partner"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_speech_loop"
+				},
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+					"loop_delay": "1 SECONDS",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/express_happiness"
+						}
+					]
+				}
+			]
+		}
+	]
+}

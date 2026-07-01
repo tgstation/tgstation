@@ -40,27 +40,24 @@
 	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/cow_moonicorn.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
-	)
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/random_speech/cow,
-		//finds someone to kill
-		/datum/ai_planning_subtree/simple_find_target,
-		//...or something to eat, possibly. both types of target handled by melee attack subtree
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("moo?", "moo", "MOOOOOO"),
+			BB_EMOTE_HEAR = list("brays."),
+			BB_EMOTE_SEE = list("shakes her head."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/cow/cow.ogg'),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
 ///moonicorns will not attack people holding something that could tame them.
 /datum/targeting_strategy/basic/allow_items/moonicorn
 
-/datum/targeting_strategy/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/moonicorn/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(!.)
 		return FALSE

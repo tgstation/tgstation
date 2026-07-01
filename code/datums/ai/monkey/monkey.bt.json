@@ -1,0 +1,59 @@
+{
+	"dm_type": "/datum/ai_controller/monkey",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/escape_captivity"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_combat"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_serve_food"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/generic_hunger"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/generic_play_instrument"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/monkey_shenanigans"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/monkey_idle"
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CURRENT_TARGET",
+				"invert": true
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
+				"vars": {
+					"attack_target_key": "BB_CURRENT_TARGET",
+					"enemies_key": "BB_monkey_enemies"
+				}
+			}
+		}
+	]
+}

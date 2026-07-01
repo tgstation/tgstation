@@ -74,18 +74,17 @@
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/snake/snake.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("hsssss", "sssSSsssss...", "hiisssss"),
+			BB_EMOTE_HEAR = list("hisses."),
+			BB_EMOTE_SEE = list("slithers around.", "glances.", "stares."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/snake/snake_hissing1.ogg', 'sound/mobs/non-humanoids/snake/snake_hissing2.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/random_speech/snake,
-	)

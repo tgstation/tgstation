@@ -1,0 +1,63 @@
+{
+	"dm_type": "/datum/bt_node/subtree/support_find_targets",
+	"type": "selector",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_MOOK_TRIBAL_CHIEF"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
+							"target_source": "/datum/target_source/oview_single_type/tribal_chief",
+							"targeting_strategy": "/datum/targeting_strategy/anything"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/befriend_target",
+						"vars": {
+							"target_key": "BB_MOOK_TRIBAL_CHIEF",
+							"long_range_friendship": true,
+							"forget_target": false
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"vars": {
+				"invert": true,
+				"key": "BB_STORM_APPROACHING"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+				"vars": {
+					"target_key": "BB_INJURED_MOOK",
+					"target_source": "/datum/target_source/oview_typed/from_bb_key/mook_heal_targets",
+					"targeting_strategy": "/datum/targeting_strategy/injured_mob"
+				}
+			}
+		}
+	]
+}

@@ -55,31 +55,19 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /datum/ai_controller/basic_controller/mushroom
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/mushroom.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mushroom,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/mushroom_food,
-	)
-
 
 /datum/targeting_strategy/basic/mushroom
 
 ///we only attacked another mushrooms
 /datum/targeting_strategy/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	return !living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
-
-/datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
-	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target
-	hunt_targets = list(/obj/item/food/grown/mushroom)
-	hunt_range = 6
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()

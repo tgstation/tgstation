@@ -8,15 +8,10 @@
 #define LIVING_FLESH_COMBAT_TOUCH_CHANCE 70
 
 /datum/ai_controller/basic_controller/living_limb_flesh
+	behavior_tree_json = "code/datums/ai/basic_mobs/simple_hostile.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-	)
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
 	)
 
 /mob/living/basic/living_limb_flesh

@@ -157,8 +157,7 @@
 	remove_status_effect(/datum/status_effect/goose_choking) // We're going to cough it out
 
 /mob/living/basic/goose/vomit/proc/stop_deadchat_plays()
-	var/initial_behaviour = initial(ai_controller?.idle_behavior)
-	ai_controller?.idle_behavior = SSidle_ai_behaviors.idle_behaviors[initial_behaviour]
+	ai_controller?.clear_blackboard_key(BB_DISABLE_IDLE)
 
 /mob/living/basic/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	var/list/goose_inputs = list(
@@ -172,6 +171,6 @@
 		return
 
 	// Stop automated movement, retain the other behaviour so you can lead the horse to plastic and have it drink.
-	ai_controller?.idle_behavior = null
+	ai_controller?.set_blackboard_key(BB_DISABLE_IDLE, TRUE)
 
 #undef GOOSE_SATIATED

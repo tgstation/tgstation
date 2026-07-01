@@ -1,0 +1,73 @@
+{
+	"dm_type": "/datum/bt_node/subtree/find_paper_and_write",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_SELF",
+				"key": "BB_SIMPLE_CARRY_ITEM"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/write_on_paper",
+				"vars": {
+					"paper_key": "BB_SIMPLE_CARRY_ITEM",
+					"writing_list_key": "BB_WRITING_LIST"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+				"key": "BB_FOUND_PAPER"
+			},
+			"child": {
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+				"children": [
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+										"vars": {
+											"time_between_perform": "0.4 SECONDS",
+											"target_key": "BB_FOUND_PAPER",
+											"can_attack_turfs": true,
+											"can_attack_dense_objects": true
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_FOUND_PAPER",
+											"required_dist": 0
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
+								"vars": {
+									"target_key": "BB_FOUND_PAPER",
+									"storage_key": "BB_SIMPLE_CARRY_ITEM"
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

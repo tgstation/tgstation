@@ -1,0 +1,104 @@
+{
+	"dm_type": "/datum/bt_node/subtree/monkey_serve_food",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_monkey_tamed"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/monkey_find_patrons",
+				"vars": {
+					"patrons_key": "BB_monkey_patrons_nearby",
+					"give_target_key": "BB_monkey_current_give_target"
+				}
+			},
+			{
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_monkey_current_served_item",
+							"invert": true
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_monkey_current_served_item",
+								"target_source": "/datum/target_source/held_items_then_oview",
+								"targeting_strategy": "/datum/targeting_strategy/food_or_drink/include_drinks",
+								"vision_range": 2
+							}
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/is_holding_target",
+						"vars": {
+							"key": "BB_monkey_current_served_item"
+						},
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_monkey_current_give_target",
+										"required_dist": 1,
+										"finish_on_arrival": true,
+										"movement_type": "/datum/ai_movement/jps"
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/give",
+									"vars": {
+										"target_key": "BB_monkey_current_give_target"
+									}
+								}
+							]
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"invert": false,
+							"key": "BB_monkey_current_served_item"
+						},
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_monkey_current_served_item",
+										"required_dist": 1,
+										"finish_on_arrival": true,
+										"movement_type": "/datum/ai_movement/jps"
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/pick_up",
+									"vars": {
+										"target_key": "BB_monkey_current_served_item",
+										"drop_held": true
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		]
+	}
+}
