@@ -2666,10 +2666,10 @@
 	name = "virology sorting disposal pipe"
 	},
 /obj/effect/mapping_helpers/mail_sorting/medbay/virology,
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "aPg" = (
@@ -43251,6 +43251,9 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "nLm" = (
@@ -51625,6 +51628,12 @@
 /obj/machinery/chem_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
+"qCu" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/medbay/central)
 "qCI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -63653,12 +63662,10 @@
 	},
 /area/station/hallway/primary/central/fore)
 "uko" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/holopad,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
 "ukM" = (
@@ -96164,7 +96171,7 @@ bXe
 gsy
 jhv
 uZT
-uCa
+fph
 pMj
 dKa
 wCR
@@ -96421,7 +96428,7 @@ ekB
 ayC
 jhv
 uCa
-fph
+qCu
 bsR
 aOS
 hDX
@@ -118574,7 +118581,7 @@ fQb
 lSl
 xGN
 gYm
-bTT
+rCi
 bUN
 bUN
 bUN
@@ -118831,7 +118838,7 @@ qYt
 cpi
 nlM
 bzS
-bTT
+rCi
 bUO
 bUN
 bUN
