@@ -7,10 +7,21 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { PortableBasicInfo } from './common/PortableAtmos';
+import {
+  PortableBasicInfo,
+  type PortableBasicInfoData,
+} from './common/PortableAtmos';
+
+type PortablePumpData = {
+  direction: boolean;
+  targetPressure: number;
+  defaultPressure: number;
+  minPressure: number;
+  maxPressure: number;
+} & PortableBasicInfoData;
 
 export const PortablePump = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<PortablePumpData>();
   const {
     direction,
     connected,
@@ -30,14 +41,13 @@ export const PortablePump = (props) => {
           title="Pumping"
           buttons={
             <Button
-              content={
-                direction
-                  ? `${area_or_tank} → ${pump_or_port}`
-                  : `${pump_or_port} → ${area_or_tank}`
-              }
               color={!direction && !holding ? 'caution' : null}
               onClick={() => act('direction')}
-            />
+            >
+              {direction
+                ? `${area_or_tank} → ${pump_or_port}`
+                : `${pump_or_port} → ${area_or_tank}`}
+            </Button>
           }
         >
           <LabeledList>
