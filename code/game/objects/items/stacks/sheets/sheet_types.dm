@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
-	gulag_valid = TRUE
+	gulag_value = 5
 	table_type = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor_type = /datum/armor/sheet_plasteel
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	gulag_valid = TRUE
+	gulag_value = 10
 	table_type = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12

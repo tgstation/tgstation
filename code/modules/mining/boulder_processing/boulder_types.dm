@@ -53,47 +53,31 @@
 	icon_state = "boulder_artifact_diamond"
 	bonus_mat = /datum/material/diamond
 
-///Boulders usually spawned in lavaland labour camp area
+///Boulders spawned by the vent in the work camp, contain exclusively iron so we can have a reliable payout
+/obj/item/boulder/gulag_vent
+	name = "iron boulder"
+	desc = "Basically just a raw lump of iron. Smash it into bits with a pickaxe."
+	// This produces 5 ore when smashed open because not using a machine reduces the ore count by one. 14 boulders x 15 ore x 5 points = 1050 points
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 16)
+
+/// Boulders usually spawned in lavaland labour camp area, broken open with pickaxe like a loot box
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
-	desc = "This rocks. It's a low quality boulder, so it's probably not worth as much."
+	desc = "Smash it with a pickaxe to get a bunch of ore at once. This rocks."
 
 /obj/item/boulder/gulag/Initialize(mapload)
 	. = ..()
 
 	/// Static list of all minerals to populate gulag boulders with.
 	var/static/list/gulag_minerals = list(
-		/datum/material/diamond = 1,
-		/datum/material/gold = 8,
-		/datum/material/iron = 95,
-		/datum/material/plasma = 30,
-		/datum/material/silver = 20,
-		/datum/material/titanium = 8,
-		/datum/material/uranium = 3,
+		/datum/material/gold = 1,
+		/datum/material/iron = 5,
+		/datum/material/plasma = 4,
+		/datum/material/silver = 2,
 	)
 
-	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT))
-
-///Boulders usually spawned in lavaland labour camp area but with bluespace material
-/obj/item/boulder/gulag_expanded
-	name = "low-density boulder"
-	desc = "This rocks. It's not very well packed, and can't contain as many minerals."
-
-/obj/item/boulder/gulag_expanded/Initialize(mapload)
-	. = ..()
-
-	/// Static list of all minerals to populate gulag boulders with, but with bluespace added where safe.
-	var/static/list/expanded_gulag_minerals = list(
-		/datum/material/bluespace = 1,
-		/datum/material/diamond = 1,
-		/datum/material/gold = 8,
-		/datum/material/iron = 94,
-		/datum/material/plasma = 30,
-		/datum/material/silver = 20,
-		/datum/material/titanium = 8,
-		/datum/material/uranium = 3,
-	)
-	set_custom_materials(list(pick_weight(expanded_gulag_minerals) = SHEET_MATERIAL_AMOUNT))
+	var/amount = rand(10, 13)
+	set_custom_materials(list(pick_weight(gulag_minerals) = SHEET_MATERIAL_AMOUNT * amount))
 
 ///lowgrade boulder, Exists as an admin spawn for testing
 /obj/item/boulder/shabby
