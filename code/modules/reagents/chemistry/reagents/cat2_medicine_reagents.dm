@@ -35,10 +35,10 @@
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = max(death_is_coming/20, 3)
-			need_mob_update += affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/13,0.1)
-			need_mob_update += affected_mob.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype)
 			good_kind_of_healing = TRUE
 		else //no convert
 			thou_shall_heal = round(death_is_coming/10, 0.1)
@@ -272,7 +272,7 @@
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.get_oxy_loss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(-2 * oxycalc * normalise_creation_purity() * metabolization_ratio * seconds_per_tick , FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_oxy_loss(-2 * oxycalc * normalise_creation_purity() * metabolization_ratio * seconds_per_tick , FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_tox_loss(2 * oxycalc * metabolization_ratio * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB((current_cycle-1) / 2, seconds_per_tick) && affected_mob.losebreath)
 		affected_mob.losebreath--
@@ -302,7 +302,7 @@
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(-4.5 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_oxy_loss(-4.5 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_stamina_loss(2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
@@ -615,7 +615,7 @@
 		need_mob_update += affected_mob.adjust_tox_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_oxy_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += affected_mob.adjust_oxy_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 
 		affected_mob.losebreath = 0
 

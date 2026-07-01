@@ -198,7 +198,7 @@
 		prompt_fail = tgui_alert(user, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS) != "Yes"
 
 	var/species_pref = user.client.prefs.read_preference(/datum/preference/choiced/species) || /datum/species/human
-	if(!prompt_fail && user.started_as_observer && allow_custom_character && (GLOB.species_prototypes[species_pref].inherent_respiration_type & RESPIRATION_OXYGEN))
+	if(!prompt_fail && user.started_as_observer && allow_custom_character && (GLOB.species_prototypes[species_pref].get_breath_type() == GAS_O2))
 		var/static_prompt = "Because you haven't taken a role so far, you may spawn in as \
 			[((allow_custom_character & GHOSTROLE_TAKE_PREFS_SPECIES) || species_pref == /datum/species/human) ? "" : "a human version of"] \
 			your customized character with a random name. Would you like to?"

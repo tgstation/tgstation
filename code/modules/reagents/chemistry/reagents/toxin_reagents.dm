@@ -233,7 +233,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
-		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath += 1 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
 		. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
@@ -371,7 +371,7 @@
 /datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
 	PRIVATE_PROC(TRUE)
 
-	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
@@ -416,7 +416,7 @@
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mindbreaker
@@ -806,7 +806,7 @@
 	. = ..()
 	var/heal = 4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -988,7 +988,7 @@
 			affected_mob.Paralyze(60)
 		if(2)
 			affected_mob.losebreath += 10
-			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			need_mob_update = TRUE
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -997,7 +997,7 @@
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10
-				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1158,7 +1158,7 @@
 	. = ..()
 	if(current_cycle > 11)
 		affected_mob.Paralyze(240 * metabolization_ratio * seconds_per_tick)
-	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1502,7 +1502,7 @@
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
 		remove_paralysis(affected_mob)
-		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update = affected_mob.adjust_tox_loss(-3.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(-6.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
