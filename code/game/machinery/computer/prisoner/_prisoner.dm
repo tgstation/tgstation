@@ -50,9 +50,8 @@
 	balloon_alert_to_viewers("id ejected")
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
-/obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/card/id/advanced/prisoner))
-		id_insert(user, weapon)
-		return TRUE
-
-	return ..()
+/obj/machinery/computer/prisoner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+	id_insert(user, tool)
+	return ITEM_INTERACT_SUCCESS
