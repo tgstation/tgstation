@@ -1,0 +1,5 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - bugfix: "Night shift lighting can be manually enabled through APCs again."
+  - bugfix: "Night lighting is no longer automatically reenabled during red alert night shifts when APCs are drained and recharged."
