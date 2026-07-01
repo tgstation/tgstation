@@ -75,7 +75,7 @@
 		if(spawn_distance == 1)
 			created = new chosen_mob_type(spawner.loc)
 		else if(spawn_distance >= 1 && spawn_distance_exclude >= 1)
-			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc, view_based = TRUE))
+			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc, mode = TURF_PEEL_REACHABLE))
 			if(!picked_spot)
 				picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
 			if(picked_spot == spawner.loc)
