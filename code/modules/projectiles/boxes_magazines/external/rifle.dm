@@ -23,10 +23,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = CALIBER_38
-	custom_materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 4,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 1,
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	max_ammo = 15
 	ammo_band_icon = "+38mag_ammo_band"
 	ammo_band_color = null
@@ -43,6 +40,7 @@
 	desc = parent_type::desc + " TRAC bullets embed a tracking implant within the target's body and are entirely nonlethal."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 	ammo_band_color = COLOR_AMMO_TRACK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ammo_box/magazine/m38/match
 	name = "battle rifle magazine (.38 Match)"
@@ -55,12 +53,14 @@
 	desc = parent_type::desc + " These rounds are incredibly bouncy and MOSTLY nonlethal, making them great to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
 	ammo_band_color = COLOR_AMMO_RUBBER
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/ammo_box/magazine/m38/true
 	name = "battle rifle magazine (.38 True Strike)"
 	desc = parent_type::desc + " Bullets bounce towards new targets with surprising accuracy and can strike through armored target"
 	ammo_type = /obj/item/ammo_casing/c38/match/true
 	ammo_band_color = COLOR_AMMO_TRUESTRIKE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/magazine/m38/dumdum
 	name = "battle rifle magazine (.38 DumDum)"
@@ -73,15 +73,18 @@
 	desc = parent_type::desc + " Hot Shot bullets contain an incendiary payload."
 	ammo_type = /obj/item/ammo_casing/c38/hotshot
 	ammo_band_color = COLOR_AMMO_HOTSHOT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/magazine/m38/iceblox
 	name = "battle rifle magazine (.38 Iceblox)"
 	desc = parent_type::desc + " Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = COLOR_AMMO_ICEBLOX
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/ammo_box/magazine/m38/flare
 	name = "battle rifle magazine (.38 Flare)"
 	desc = parent_type::desc + " Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75)

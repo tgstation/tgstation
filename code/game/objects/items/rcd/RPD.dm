@@ -607,6 +607,7 @@
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	icon_state = "datadisk1"
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

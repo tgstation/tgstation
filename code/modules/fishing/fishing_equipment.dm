@@ -95,6 +95,7 @@
 	wiki_desc = "Automatically starts the minigame and helps guide the bait a little. It also spin fishing lures for you without need of an input. \
 		It can also be used to snag in objects from a distance and throw them in your direction.<br>\
 		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
@@ -153,6 +154,7 @@
 	cast_range = 6
 	wiki_desc = "It can be used to reach distant fishing spots as well as other things that a normal fishing line cannot, with the exception of reinforced walls. <br>\
 		<b>It requires the Marine Utility Node to be researched to be printed.</b>"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
 
 // Hooks
 
@@ -314,6 +316,7 @@
 	rod_overlay_icon_state = "hook_gyro_overlay"
 	wiki_desc = "It allows you to move both up (left-click) and down (right-click) during the minigame while negating gravity.<br>\
 		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
@@ -508,6 +511,7 @@
 	attack_verb_continuous = list("pricked", "stabbed", "poked")
 	attack_verb_simple = list("prick", "stab", "poke")
 	hitsound = 'sound/items/hypospray.ogg'
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 2)
 	//This can be an empty syringe or a gene injector
 	var/obj/item/loaded_injector
 

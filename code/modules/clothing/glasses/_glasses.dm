@@ -88,6 +88,7 @@
 	pickup_sound = SFX_GOGGLES_PICKUP
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -103,6 +104,7 @@
 	color_cutoffs = list(10, 35, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/meson/night/update_icon_state()
 	. = ..()
@@ -135,6 +137,7 @@
 	pickup_sound = SFX_GOGGLES_PICKUP
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/glasses_science
 	fire = 80
@@ -153,6 +156,7 @@
 	color_cutoffs = list(30, 5, 15)
 	glass_colour_type = /datum/client_colour/glass_colour/lightpurple
 	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/science/night/update_icon_state()
 	. = ..()
@@ -172,6 +176,7 @@
 	pickup_sound = SFX_GOGGLES_PICKUP
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/night/update_icon_state()
 	. = ..()
@@ -410,7 +415,7 @@
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
@@ -492,7 +497,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
 	visor_flags_cover = GLASSESCOVERSEYES
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	glass_colour_type = /datum/client_colour/glass_colour/gray

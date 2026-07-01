@@ -960,6 +960,7 @@
 	breath_noise = "a steady whirr"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/emp_act(severity)
@@ -989,6 +990,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 	emp_vulnerability = 20
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140

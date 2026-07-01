@@ -14,7 +14,7 @@
 	name = "Wet Floor Sign"
 	id = "wet_floor_sign"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/suit/caution
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -183,7 +183,7 @@
 	id = "plate"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.5)
-	build_path = /obj/item/plate
+	build_path = /obj/item/plate/iron
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
@@ -374,7 +374,7 @@
 	name = "Cap Gun"
 	id = "toygun"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -386,7 +386,7 @@
 	name = "Box of Cap Gun Shots"
 	id = "capbox"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)
+	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/toy/ammo/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -398,7 +398,7 @@
 	name = "Plastic Balloon"
 	id = "toy_balloon"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.6)
 	build_path = /obj/item/toy/balloon
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -667,9 +667,13 @@
 	id = "rdd"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12,
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+	)
+	//Some of the material is "lost" to make up for the fact that the rdd is loaded to the brim
+	transfered_materials = list(
+		/obj/item/construction/rdd/loaded = /obj/item/construction/rdd::custom_materials,
 	)
 	build_path = /obj/item/construction/rdd/loaded
 	category = list(

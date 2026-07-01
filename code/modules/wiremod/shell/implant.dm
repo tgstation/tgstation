@@ -1,6 +1,7 @@
 /obj/item/implant/circuit
 	name = "circuit implant"
 	actions_types = null
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 	implant_info = "Functions as a shell for integrated circuits. Activation conditions and effects are defined by the installed circuit."
 

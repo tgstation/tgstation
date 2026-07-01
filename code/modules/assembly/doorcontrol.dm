@@ -2,6 +2,7 @@
 	name = "controller assembly"
 	desc = "An assembly that controls something. It's so vaguely designed that it probably shouldn't exist."
 	icon_state = "control"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// The ID of the electronics to match to the ID of the machine being used.
 	var/id = -1
 	/// Cooldown of the controller. Updates when pressed (activate())
@@ -210,6 +211,7 @@
 	desc = "A remote controller for a floor igniter or wall sparker."
 	generically_adjustable = TRUE
 	copyable = TRUE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/assembly/control/igniter/activate()
 	if(cooldown)

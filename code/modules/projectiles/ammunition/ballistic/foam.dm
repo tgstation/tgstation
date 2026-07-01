@@ -63,4 +63,4 @@
 	base_icon_state = "foamdart_riot"
 	tip_color = "red"
 	embed_type = /datum/embedding/foam_dart/riot
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1.125)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)

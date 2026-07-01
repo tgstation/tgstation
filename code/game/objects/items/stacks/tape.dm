@@ -18,6 +18,7 @@
 	apply_verb = "taping"
 	heal_begin_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 	heal_end_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
+	mats_per_unit = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 
 	/// Prefix applied to the target when wrapped with this tape.
 	var/prefix = "sticky"
@@ -101,6 +102,7 @@
 	merge_type = /obj/item/stack/medical/wrap/sticky_tape/super
 	greyscale_colors = "#4D4D4D#75433F"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/super
+	mats_per_unit = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 
 /datum/embedding/sticky_tape/super
 	embed_chance = 100
@@ -119,6 +121,7 @@
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
+	mats_per_unit = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 
 /datum/embedding/pointy_tape
 	ignore_throwspeed_threshold = TRUE
@@ -132,6 +135,7 @@
 	merge_type = /obj/item/stack/medical/wrap/sticky_tape/pointy/super
 	greyscale_colors = "#8C0A00#4F4F4F#300008"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy/super
+	mats_per_unit = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 
 /datum/embedding/pointy_tape/super
 	embed_chance = 100

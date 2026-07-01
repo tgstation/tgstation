@@ -266,6 +266,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/tracker = 0
 	var/glass_type = null
 	var/random_offset = 6 //amount in pixels an unanchored assembly may be offset by

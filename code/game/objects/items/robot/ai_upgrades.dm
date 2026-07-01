@@ -75,6 +75,7 @@
 	name = "surveillance software upgrade"
 	desc = "An illegal software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading and hidden microphones."
 	to_gift = /datum/ai_module/malf/upgrade/eavesdrop
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/aiupgrade/surveillance_upgrade/Initialize(mapload)
 	. = ..()
@@ -85,3 +86,4 @@
 	name = "power transfer upgrade"
 	desc = "A legal upgrade that allows an artificial intelligence to directly provide power to APCs from a distance"
 	to_gift = /datum/ai_module/power_apc
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)

@@ -10,6 +10,7 @@
 	contents_hidden = TRUE
 	paper_overlay_state = "paperbiscuit_paper"
 	folder_type_name = "biscuit"
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.2)
 	/// Is biscuit cracked open or not?
 	var/cracked = FALSE
 	/// The paper slip inside, if there is one
@@ -110,6 +111,7 @@
 		On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
 	icon_state = "paperbiscuit_secret"
 	bg_color = "#355e9f"
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.3)
 
 /obj/item/folder/biscuit/confidential/spare_id_safe_code
 	name = "spare ID safe code biscuit card"
@@ -164,3 +166,4 @@
 	icon_state = "paperbiscuit_secret_cracked"
 	bg_color = "#355e9f"
 	sealed_icon = "paperbiscuit_secret"
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.3)

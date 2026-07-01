@@ -326,7 +326,7 @@
 		materials_needed[material] += amount_needed
 
 	//checks for available materials
-	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
+	var/material_cost_coefficient = (ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency) ? 1 : creation_efficiency
 	if(!materials.has_materials(materials_needed, material_cost_coefficient, build_count))
 		say("Not enough materials to begin production.")
 		return
@@ -409,22 +409,22 @@
 	materials.use_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
 		var/max_stack_amount = initial(stack_item.max_amount)
-		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = design.create_result(target, materials_needed, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			number_to_make -= max_stack_amount
-		created = design.create_result(target, materials_needed, amount = number_to_make)
-	else
-		created = design.create_result(target, materials_needed)
-		if (length(slots_chosen))
-			created.set_material_slots(slots_chosen)
-		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
+	created = design.create_result(target, materials_needed, amount = number_to_make)
+	if (length(slots_chosen))
+		created.set_material_slots(slots_chosen)
+	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+		design.transfer_materials(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

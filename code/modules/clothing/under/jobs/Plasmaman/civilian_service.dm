@@ -77,6 +77,7 @@
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/canisters.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"

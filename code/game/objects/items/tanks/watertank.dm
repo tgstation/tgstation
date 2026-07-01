@@ -235,6 +235,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
+	custom_materials = null
 	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0

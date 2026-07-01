@@ -11,7 +11,7 @@
 	light_power = 0.3
 	light_color = COLOR_CARP_TEAL
 	light_on = FALSE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// If set, only IDs with this name can (un)lock the sign.
 	var/registered_owner
 	/// The current color of the sign.

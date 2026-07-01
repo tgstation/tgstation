@@ -197,6 +197,7 @@
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))

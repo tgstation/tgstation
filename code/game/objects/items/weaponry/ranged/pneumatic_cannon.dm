@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor_type = /datum/armor/item_pneumatic_cannon
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	/// The max weight of items that can fit into the cannon
 	var/maxWeightClass = 20
 	/// The weight of items currently in the cannon

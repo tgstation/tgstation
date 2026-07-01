@@ -6,6 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	icon_state = "undertile"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/undertile_circuit/Initialize(mapload)
 	. = ..()

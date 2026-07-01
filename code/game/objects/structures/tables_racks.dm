@@ -23,7 +23,7 @@
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_BITMASK
@@ -455,6 +455,7 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 	can_flip = FALSE

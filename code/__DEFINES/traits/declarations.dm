@@ -914,6 +914,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
 #define TRAIT_UNCATCHABLE "uncatchable"
+///Items with this trait will be ignored when redeeming materials from inserting it in a material container
+#define TRAIT_IGNORED_BY_MAT_REDEMPTION "ignored_by_mat_redemption"
 /// You won't catch duds while fishing with this rod.
 #define TRAIT_ROD_REMOVE_FISHING_DUD "rod_remove_fishing_dud"
 /// This rod ignores environmental conditions for fishing (like low light for nocturnal fish)

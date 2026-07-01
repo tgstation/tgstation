@@ -10,6 +10,7 @@
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	has_variable_transfer_amount = FALSE
 	interaction_flags_click = NEED_DEXTERITY
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/chem_pack/click_alt(mob/living/user)
 	if(reagents.flags & SEALED_CONTAINER)

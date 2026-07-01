@@ -136,6 +136,7 @@
 				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
 
 /obj/item/ai_module/core/full
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
 /obj/item/ai_module/core/full/Initialize(mapload)

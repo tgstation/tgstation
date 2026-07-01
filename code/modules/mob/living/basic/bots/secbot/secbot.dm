@@ -27,7 +27,7 @@
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 	additional_access = /datum/id_trim/job/detective
 
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
 	ai_controller = /datum/ai_controller/basic_controller/bot/secbot
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
 	var/commissioned = FALSE

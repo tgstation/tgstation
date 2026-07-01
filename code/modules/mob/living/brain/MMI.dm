@@ -5,8 +5,10 @@
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
+
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/braintype = "Cyborg"
-	var/obj/item/radio/radio = null //Let's give it a radio.
+	var/obj/item/radio/mmi/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -17,10 +19,12 @@
 	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
 
+/obj/item/radio/mmi
+	custom_materials = null
+
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
-	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()

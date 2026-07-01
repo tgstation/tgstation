@@ -14,6 +14,7 @@
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/compact_remote/Initialize(mapload)
 	. = ..()

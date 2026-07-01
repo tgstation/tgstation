@@ -1,5 +1,3 @@
-
-
 //The robot bodyparts have been moved to code/module/surgery/bodyparts/robot_bodyparts.dm
 
 /obj/item/robot_suit
@@ -7,6 +5,7 @@
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5)
 	/// Left arm part of the endoskeleton
 	var/obj/item/bodypart/arm/left/robot/l_arm = null
 	/// Right arm part of the endoskeleton

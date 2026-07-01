@@ -1,4 +1,5 @@
 /obj/item/disk/computer
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	/// The amount of free storage space
 	var/max_capacity = 16
 	/// The amount of storage space occupied
@@ -49,9 +50,11 @@
 	name = "advanced data disk"
 	icon_state = "datadisk5"
 	max_capacity = 64
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/disk/computer/super
 	name = "super data disk"
 	desc = "Removable disk used to store large amounts of data."
 	icon_state = "datadisk3"
 	max_capacity = 256
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)

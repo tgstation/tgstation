@@ -4,6 +4,7 @@
 	desc = "A basic component of every vehicle."
 	icon_state = "mecha_radio"
 	equipment_slot = MECHA_UTILITY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	///Internal radio item
 	var/obj/item/radio/mech/radio
 
@@ -48,3 +49,4 @@
 
 /obj/item/radio/mech
 	subspace_transmission = TRUE
+	custom_materials = null

@@ -268,6 +268,8 @@
 	sound_vary = TRUE
 	pickup_sound = SFX_TRAY_PICKUP
 	drop_sound = SFX_TRAY_DROP
+	fragile = FALSE //oven trays are metallic
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/plate/oven_tray/item_interaction_secondary(mob/living/user, obj/item/item, list/modifiers)
 	if(isnull(item.atom_storage))

@@ -94,6 +94,7 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/package_wrap
+	mats_per_unit = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/stack/package_wrap/grind_results()
 	return list(/datum/reagent/cellulose = 5)
