@@ -7,7 +7,7 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/movable/proc/point_at(atom/pointed_atom, intentional = FALSE)
+/atom/movable/proc/point_at(atom/pointed_atom, intentional = FALSE, pointer_type = /obj/effect/temp_visual/point)
 	if(!isturf(loc))
 		return FALSE
 
@@ -20,12 +20,12 @@
 		return FALSE
 
 	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
+	var/obj/visual = new pointer_type(our_tile, invisibility)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
 
 	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
-	return TRUE
+	return visual
 
 /mob/point_at(atom/pointed_atom, intentional = FALSE)
 	. = ..()
