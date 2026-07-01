@@ -346,6 +346,14 @@
 	adjust_stacks(decay * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
+		return
+
+	if(HAS_TRAIT(owner, TRAIT_RESISTCOLD))
+		return
+
+	if(owner.bodytemperature <= WATER_VAPOR_DEPOSITION_POINT)
+		owner.apply_status_effect(/datum/status_effect/freon, stacks SECONDS)
+		qdel(src)
 
 /datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
 	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)
