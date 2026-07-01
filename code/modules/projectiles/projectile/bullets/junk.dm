@@ -3,7 +3,7 @@
 /obj/projectile/bullet/junk
 	name = "junk bullet"
 	icon_state = "trashball"
-	damage = 30
+	damage = 40
 	embed_type = /datum/embedding/bullet/junk
 	/// What biotype does our junk projectile especially harm?
 	var/extra_damage_mob_biotypes = MOB_ROBOTIC
@@ -29,7 +29,7 @@
 			living_target.apply_damage(finalized_damage, damagetype = extra_damage_type, def_zone = BODY_ZONE_CHEST, wound_bonus = wound_bonus)
 
 /datum/embedding/bullet/junk
-	embed_chance = 15
+	embed_chance = 30
 	fall_chance = 3
 	jostle_chance = 4
 	ignore_throwspeed_threshold = TRUE
@@ -41,7 +41,7 @@
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
-	damage = 30
+	damage = 40
 	fire_stacks = 5
 	suppressed = SUPPRESSED_NONE
 
@@ -53,7 +53,7 @@
 /obj/projectile/bullet/junk/shock
 	name = "bundle of live electrical parts"
 	icon_state = "tesla_projectile"
-	damage = 15
+	damage = 20
 	embed_type = null
 	shrapnel_type = null
 	extra_damage_added_damage = 30
@@ -70,14 +70,14 @@
 	icon_state = "gauss"
 	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	extra_damage_multiplier = 0
-	extra_damage_added_damage = 50
+	extra_damage_added_damage = 80
 
 /obj/projectile/bullet/junk/ripper
 	name = "junk ripper bullet"
 	icon_state = "redtrac"
-	damage = 10
+	damage = 20
 	embed_type = /datum/embedding/bullet/junk/ripper
-	wound_bonus = 10
+	wound_bonus = 20
 	exposed_wound_bonus = 30
 
 /datum/embedding/bullet/junk/ripper

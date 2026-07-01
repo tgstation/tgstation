@@ -301,8 +301,8 @@
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
-
-	projectile_damage_multiplier = 1.35
+	projectile_damage_multiplier = 1.75
+	projectile_speed_multiplier = 1.6
 	obj_flags = UNIQUE_RENAME
 	can_be_sawn_off = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -340,7 +340,8 @@
 	worn_icon_state = "gun"
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
-	projectile_damage_multiplier = 0.50
+	projectile_damage_multiplier = 0.625
+	projectile_speed_multiplier = 1
 	spread = 15 //kinda inaccurate
 	burst_size = 3 //but it empties the entire magazine when it fires
 	burst_delay = 0.3 // and by empties, I mean it does it all at once
@@ -362,7 +363,7 @@
 	inhand_icon_state = "regal_pipegun"
 	worn_icon_state = "regal_pipegun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
-	projectile_damage_multiplier = 2
+	projectile_damage_multiplier = 3
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.15,
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT *8,
