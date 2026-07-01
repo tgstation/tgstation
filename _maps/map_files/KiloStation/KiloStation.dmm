@@ -12533,7 +12533,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/light/directional/south,
 /obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -19930,11 +19929,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"gsy" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
 "gsB" = (
 /obj/structure/table,
 /obj/item/pipe_dispenser,
@@ -20829,15 +20823,6 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
-"gHC" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "cmoprivacy";
-	name = "Office Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/cmo)
 "gHD" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
@@ -27885,6 +27870,10 @@
 /area/station/science/genetics)
 "iMr" = (
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/button/door/directional/east{
+	name = "Psychology Privacy Shutters";
+	id = "psychprivacy"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/psychology)
 "iMu" = (
@@ -31447,11 +31436,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"jTu" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
 "jUa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -36612,6 +36596,11 @@
 /area/station/medical/cryo)
 "lCa" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "psychprivacy";
+	name = "Office Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/medical/psychology)
 "lCs" = (
@@ -94994,7 +94983,7 @@ oxp
 noO
 xfZ
 tyA
-gHC
+xxk
 buJ
 kAR
 gbB
@@ -95251,7 +95240,7 @@ uiu
 noO
 dHg
 kkC
-gHC
+xxk
 lWr
 khj
 pYZ
@@ -96284,7 +96273,7 @@ clH
 huR
 huR
 bXe
-gsy
+gZu
 jhv
 uZT
 fph
@@ -97312,7 +97301,7 @@ iCV
 ewa
 kDw
 kCZ
-jTu
+gZu
 mEt
 kRu
 rFt
