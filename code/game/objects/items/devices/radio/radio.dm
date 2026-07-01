@@ -497,7 +497,6 @@
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
 	data["headset"] = FALSE
-	data["radio_noises"] = (user.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 
 	return data
 
@@ -557,15 +556,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-		if("set_radio_volume")
-			if(!user.client)
-				return
-			user.client.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_radio_noise], params["volume"])
-			//let them know what it'll sound like
-			//we get their read prefs instead of just taking the params beacuse write_preference is what handles ensuring
-			//there's no href exploits.
-			var/volume_modifier = (user.client.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
-			SEND_SOUND(user, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
 
 /obj/item/radio/examine(mob/user)
 	. = ..()
