@@ -31,7 +31,6 @@ else
 	shuttle_map_files="-r --include=_maps/shuttles/**.dmm"
 	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
 fi
-
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
 
 part=0
@@ -155,6 +154,13 @@ part "proc args with var/"
 if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' "${code_files[@]}"; then
 	echo
 	echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
+	st=1
+fi;
+
+part "manual verblike definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant|invisibility)\s*=\s*(.*)\s' "${code_files[@]}" "-g '!tools/"; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verblike attribute set. Verbs are shimmed, use DEFINE_VERB() instead, or if this absolutely has to be manually defined, wrap it in UNLINT().${NC}"
 	st=1
 fi;
 

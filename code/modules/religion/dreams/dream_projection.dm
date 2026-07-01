@@ -168,11 +168,7 @@
 	return
 
 // The IC tab was removed recently as of commenting. This should probably be adjusted.
-/mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
-	set category = "IC"
-	set name = "Stop Projection"
-	set desc = "Stop astrally projecting and return to your body."
-
+DEFINE_VERB(/mob/eye/imaginary_friend/dream_projection, stop_projection, "Stop Projection", "Stop astrally projecting and return to your body.", FALSE, "IC")
 	qdel(src)
 
 /mob/eye/imaginary_friend/dream_projection/attach_to_owner(mob/living/imaginary_friend_owner)

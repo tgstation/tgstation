@@ -143,7 +143,7 @@ mob
 		loc = locate (10,10,1)
 	verb
 		Browse_Icon()
-			set name = "1. Browse Icon"
+			VERBLIKE_SET(name, "1. Browse Icon")
 			// Give it a name for the cache
 			var/iconName = "[ckey(src.name)]_flattened.dmi"
 			// Send the icon to src's local cache
@@ -152,11 +152,11 @@ mob
 			src<<browse("<body bgcolor='#000000'><p><img src='[iconName]'></p></body>")
 
 		Output_Icon()
-			set name = "2. Output Icon"
+			VERBLIKE_SET(name, "2. Output Icon")
 			to_chat(src, "Icon is: [icon2base64html(getFlatIcon(src))]")
 
 		Label_Icon()
-			set name = "3. Label Icon"
+			VERBLIKE_SET(name, "3. Label Icon")
 			// Give it a name for the cache
 			var/iconName = "[ckey(src.name)]_flattened.dmi"
 			// Copy the file to the rsc manually
@@ -167,11 +167,11 @@ mob
 			winset(src,"imageLabel","image='[REF(I)]'");
 
 		Add_Overlay()
-			set name = "4. Add Overlay"
+			VERBLIKE_SET(name, "4. Add Overlay")
 			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
 
 		Stress_Test()
-			set name = "5. Stress Test"
+			VERBLIKE_SET(name, "5. Stress Test")
 			for(var/i = 0 to 1000)
 				// The third parameter forces it to generate a new one, even if it's already cached
 				getFlatIcon(src,0,2)
@@ -180,7 +180,7 @@ mob
 			Browse_Icon()
 
 		Cache_Test()
-			set name = "6. Cache Test"
+			VERBLIKE_SET(name, "6. Cache Test")
 			for(var/i = 0 to 1000)
 				getFlatIcon(src)
 			Browse_Icon()

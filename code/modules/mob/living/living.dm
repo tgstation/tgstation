@@ -515,11 +515,11 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/thing_pulled as mob|obj in oview(1))
-	set name = "Pull"
-
-	if(istype(thing_pulled) && Adjacent(thing_pulled))
-		start_pulling(thing_pulled)
+DEFINE_VERB(/mob/living, pulled, "Pull", "", FALSE, "", atom/movable/AM as mob|obj in oview(1))
+	if(istype(AM) && Adjacent(AM))
+		start_pulling(AM)
+	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
+		stop_pulling()
 
 /mob/living/stop_pulling()
 	if(ismob(pulling))
@@ -529,20 +529,15 @@
 	update_pull_hud_icon()
 
 //same as above
-/mob/living/pointed(atom/A)
+/mob/living/do_pointed(atom/pointing_at)
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
-
-	return ..()
-
-/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
-/mob/living/verb/succumb(whispered as num|null)
-	set hidden = TRUE
+DEFINE_VERB(/mob/living, succumb, "succumb", "", TRUE, "", whispered as num|null)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -600,10 +595,7 @@
 
 // MOB PROCS //END
 
-/mob/living/proc/mob_sleep()
-	set name = "Sleep"
-	set hidden = TRUE
-
+DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", TRUE, "")
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
 		return

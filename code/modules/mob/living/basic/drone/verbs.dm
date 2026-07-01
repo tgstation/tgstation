@@ -3,10 +3,7 @@
  *
  * See [/mob/living/basic/drone/var/laws]
  */
-/mob/living/basic/drone/verb/check_laws()
-	set category = "Drone"
-	set name = "Check Laws"
-
+DEFINE_VERB(/mob/living/basic/drone, check_laws, "Check Laws", "", FALSE, "Drone")
 	to_chat(src, "<b>Drone Laws</b>")
 	to_chat(src, laws)
 
@@ -21,10 +18,7 @@
  *
  * Attaches area name to message
  */
-/mob/living/basic/drone/verb/drone_ping()
-	set category = "Drone"
-	set name = "Drone ping"
-
+DEFINE_VERB(/mob/living/basic/drone, drone_ping, "Drone ping", "Relinquish your life and enter the land of the dead.", FALSE, "Drone")
 	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
 
 	var/area/A = get_area(loc)
