@@ -40,7 +40,7 @@
 		transfer_blood = 0
 		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
-/obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/gloves/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!"))
 	return OXYLOSS
 

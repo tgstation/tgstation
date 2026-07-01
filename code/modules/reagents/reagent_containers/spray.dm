@@ -231,7 +231,7 @@
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null
 
-/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 

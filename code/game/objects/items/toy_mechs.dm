@@ -212,7 +212,7 @@
 /**
  * Starts a battle, toy mech vs player. Player... doesn't win.
  */
-/obj/item/toy/mecha/suicide_act(mob/living/carbon/user)
+/obj/item/toy/mecha/suicide_act(mob/living/user)
 	if(in_combat)
 		to_chat(user, span_notice("[src] is in battle, let it finish first."))
 		return

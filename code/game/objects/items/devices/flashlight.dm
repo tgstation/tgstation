@@ -115,7 +115,7 @@
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/suicide_act(mob/living/user)
 	if (user.is_blind())
 		user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!"))
 		return SHAME
@@ -1012,7 +1012,7 @@
 		user.visible_message(span_notice("[user] cracks and shakes [src]."), span_notice("You crack and shake [src], turning it on!"))
 		turn_on()
 
-/obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/glowstick/suicide_act(mob/living/user)
 	if(!get_fuel())
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
