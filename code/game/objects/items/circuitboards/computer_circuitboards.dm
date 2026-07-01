@@ -519,19 +519,21 @@
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
 
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (user.combat_mode || !isidcard(attacking_item))
-		return ..()
-	if (check_access(attacking_item))
-		locked = !locked
-		balloon_alert(user, locked ? "locked" : "unlocked")
-		user.visible_message(
-			message = span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [attacking_item]."),
-			self_message = span_notice("You unlock \the [src] with \the [attacking_item]."),
-			blind_message = span_hear("You hear a soft beep."),
-		)
-	else
+/obj/item/circuitboard/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode || !isidcard(tool))
+		return NONE
+	if (!check_access(tool))
 		balloon_alert(user, "no access!")
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	balloon_alert(user, locked ? "locked" : "unlocked")
+	user.visible_message(
+		span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [tool]."),
+		span_notice("You unlock \the [src] with \the [tool]."),
+		span_hear("You hear a soft beep."),
+	)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

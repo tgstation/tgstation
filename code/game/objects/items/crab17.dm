@@ -71,32 +71,32 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/checkoutmachine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!canwalk)
 		balloon_alert(user, "not ready to accept transactions!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(check_if_finished())
 		qdel(src)
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/card/id/card = attacking_item.GetID()
+	var/obj/item/card/id/card = tool.GetID()
 	if(!card)
-		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
+		balloon_alert(user, "the reader repels your [tool.name]")
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		playsound(get_turf(src),'sound/effects/magic/repulse.ogg', 100, TRUE)
 
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!card.registered_account)
 		balloon_alert(user, "card has no registered account!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!LAZYFIND(card.registered_account.being_dumped, src))
 		balloon_alert(user, "funds are already safe!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
 	accounts_to_rob -= card.registered_account
@@ -104,7 +104,8 @@
 
 	if(check_if_finished())
 		qdel(src)
-		return
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()

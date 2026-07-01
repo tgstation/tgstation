@@ -91,11 +91,11 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(stored)
-		item.melee_attack_chain(user, stored, modifiers)
-		return
-	return ..()
+/obj/item/borg/apparatus/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!stored)
+		return NONE
+	tool.melee_attack_chain(user, stored, modifiers)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/borg/apparatus/beaker
 	name = "beaker storage apparatus"

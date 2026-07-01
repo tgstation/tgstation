@@ -144,12 +144,12 @@
 /**
  * If you attack a mech with a mech, initiate combat between them
  */
-/obj/item/toy/mecha/attackby(obj/item/user_toy, mob/living/user)
-	if(istype(user_toy, /obj/item/toy/mecha))
-		var/obj/item/toy/mecha/P = user_toy
-		if(check_battle_start(user, P))
-			mecha_brawl(P, user)
-	..()
+/obj/item/toy/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/mecha))
+		return NONE
+	var/obj/item/toy/mecha/challenger = tool
+	if(check_battle_start(user, challenger))
+		mecha_brawl(challenger, user)
 
 /**
  * Attack is called from the user's toy, aimed at target(another human), checking for target's toy.

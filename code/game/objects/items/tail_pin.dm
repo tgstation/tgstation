@@ -35,16 +35,15 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
 
-/obj/structure/sign/poster/party_game/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.
-		return
+/obj/structure/sign/poster/party_game/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.
+		return NONE
 
 	var/x_offset = 0
 	var/y_offset = 0
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
 		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	if(!user.transfer_item_to_turf(attacking_item, drop_location(), x_offset, y_offset, silent = FALSE))
-		return
-	return TRUE
+	if(!user.transfer_item_to_turf(tool, drop_location(), x_offset, y_offset, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS

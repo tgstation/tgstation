@@ -73,29 +73,31 @@
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
-		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
+/obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
+		var/obj/item/stack/sheet/mineral/sandstone/brick = tool
 		balloon_alert(user, "inserting brick...")
 		if(!do_after(user, 2 SECONDS, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!brick.use(1))
 			balloon_alert(user, "not enough bricks!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "bricked!")
 		become_bricked()
-		return
-	if(istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
-		if(!pillow_trophy)
-			user.transferItemToLoc(attacking_item, src)
-			pillow_trophy = attacking_item
-			balloon_alert(user, "honor reclaimed!")
-			update_appearance()
-			return
-		else
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/neck/pillow_tag))
+		if(pillow_trophy)
 			balloon_alert(user, "tag is intact.")
-			return
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		pillow_trophy = tool
+		balloon_alert(user, "honor reclaimed!")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
