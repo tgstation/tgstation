@@ -521,7 +521,7 @@
 		for(var/obj/item/item_iterator in src)
 			if(!accept_check(item_iterator))
 				continue
-			SEND_SIGNAL(item_iterator, COMSIG_ITEM_DRIED, current_user, seconds_per_tick)
+			SEND_SIGNAL(item_iterator, COMSIG_ITEM_FINISH_DRYING, current_user, seconds_per_tick)
 
 		SStgui.update_uis(src)
 		update_appearance()

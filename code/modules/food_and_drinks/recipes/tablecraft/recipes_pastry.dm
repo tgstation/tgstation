@@ -690,7 +690,7 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_brownie_batter
-	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR
+	added_foodtypes = GRAIN|JUNKFOOD|SUGAR
 	removed_foodtypes = MEAT|RAW|EGG
 	meal_category = MEAL_COMPONENT
 
@@ -705,7 +705,7 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
-	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR|NUTS
+	added_foodtypes = GRAIN|JUNKFOOD|SUGAR|NUTS
 	removed_foodtypes = MEAT|RAW|EGG
 	meal_category = MEAL_COMPONENT
 

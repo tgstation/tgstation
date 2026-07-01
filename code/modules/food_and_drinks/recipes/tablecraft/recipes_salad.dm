@@ -159,6 +159,7 @@
 	)
 	result = /obj/item/food/salad/potato_salad
 	dish_category = DISH_SALAD
+	removed_foodtypes = BREAKFAST
 
 /datum/crafting_recipe/food/spinach_fruit_salad
 	name = "Spinach fruit salad"

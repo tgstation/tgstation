@@ -16,8 +16,9 @@
 
 	RegisterSignal(target, COMSIG_ATOM_USED_IN_CRAFT, PROC_REF(used_in_craft))
 	RegisterSignal(target, COMSIG_ITEM_BAKED, PROC_REF(item_baked))
-	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_COOKED_FROM, PROC_REF(microwaved_from))
+	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(microwaved_from))
 	RegisterSignal(target, COMSIG_ITEM_GRILLED, PROC_REF(item_grilled))
+	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(item_dried))
 	RegisterSignals(target, list(COMSIG_ITEM_BARBEQUE_GRILLED, COMSIG_ITEM_FRIED), PROC_REF(simply_cooked))
 	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(used_as_ingredient))
 
@@ -25,11 +26,12 @@
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_USED_IN_CRAFT,
 		COMSIG_ITEM_BAKED,
-		COMSIG_ITEM_MICROWAVE_COOKED_FROM,
+		COMSIG_ITEM_MICROWAVE_COOKED,
 		COMSIG_ITEM_GRILLED,
 		COMSIG_ITEM_BARBEQUE_GRILLED,
 		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
+		COMSIG_ITEM_DRIED,
 		COMSIG_FOOD_GET_EXTRA_COMPLEXITY,
 	))
 	REMOVE_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
@@ -50,6 +52,10 @@
 /datum/element/quality_food_ingredient/proc/item_grilled(datum/source, atom/grill_result)
 	SIGNAL_HANDLER
 	add_quality(grill_result)
+
+/datum/element/quality_food_ingredient/proc/item_dried(datum/source, atom/result)
+	SIGNAL_HANDLER
+	add_quality(result)
 
 /datum/element/quality_food_ingredient/proc/simply_cooked(datum/source)
 	SIGNAL_HANDLER

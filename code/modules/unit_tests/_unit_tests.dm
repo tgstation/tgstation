@@ -187,6 +187,7 @@
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
+#include "food_processor.dm"
 #include "full_heal.dm"
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
