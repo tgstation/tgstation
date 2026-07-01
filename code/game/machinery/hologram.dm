@@ -768,12 +768,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	animate(visual, pixel_x = (target_turf.x - pad_turf.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_turf.y - pad_turf.y) * ICON_SIZE_Y + target.pixel_y, time = 1.7, easing = EASE_OUT)
 	set_light(2)
 	icon_state = "[base_icon_state]1"
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), ray), 2.5 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(clear_holo_point)), 2.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(clear_holo_point), ray), 2.5 SECONDS)
 	return visual
 
 /// Called after the holo-point expires to restore the holopad's state
-/obj/machinery/holopad/proc/clear_holo_point()
+/obj/machinery/holopad/proc/clear_holo_point(obj/effect/overlay/holoray/ray)
+	qdel(ray)
 	pointing = FALSE
 	SetLightsAndPower()
 
