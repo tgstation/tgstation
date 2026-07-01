@@ -381,24 +381,22 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
-/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/mob/living/living_user = user
-	if(istype(living_user) && attacking_item.get_sharpness() && living_user.combat_mode)
-		if(!isturf(loc))
-			balloon_alert(user, "can't butcher here!")
-			return
+/obj/item/food/deadmouse/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness() || !user.combat_mode)
+		return NONE
+	if(!isturf(loc))
+		balloon_alert(user, "can't butcher here!")
+		return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "butchering...")
-		if(!do_after(user, 0.75 SECONDS, src))
-			balloon_alert(user, "interrupted!")
-			return
+	balloon_alert(user, "butchering...")
+	if(!do_after(user, 0.75 SECONDS, src))
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
 
-		loc.balloon_alert(user, "butchered")
-		new /obj/item/food/meat/slab/mouse(loc)
-		qdel(src)
-		return
-
-	return ..()
+	loc.balloon_alert(user, "butchered")
+	new /obj/item/food/meat/slab/mouse(loc)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isnull(reagents) || !interacting_with.is_open_container())

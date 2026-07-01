@@ -119,12 +119,11 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
-		crusher_trophy.add_to(src, user)
-		return
-	return ..()
+/obj/item/kinetic_crusher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/crusher_trophy))
+		astype(tool, /obj/item/crusher_trophy).add_to(src, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
