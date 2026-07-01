@@ -115,9 +115,14 @@ ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a c
 	var/show_log = tgui_alert(user, "Show ion message?", "Message", list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
-	var/datum/round_event/ion_storm/add_law_only/ion = new
+	var/datum/round_event/ion_storm/ion = new
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
+	ion.replaceLawsetChance = 0
+	ion.removeRandomLawChance = 0
+	ion.removeDontImproveChance = 0
+	ion.shuffleLawsChance = 0
+	ion.botEmagChance = 0
 
 	BLACKBOX_LOG_ADMIN_VERB("Add Custom AI Law")
 

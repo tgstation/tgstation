@@ -517,15 +517,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"cz" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/circuitboard/computer/borgupload/no_lock,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3356,12 +3347,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"pB" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/structure/alien/weeds,
-/obj/machinery/light/small/broken/directional/west,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "pD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -4444,6 +4429,15 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
+"wX" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/circuitboard/machine/ai_law_rack,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "xd" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -4789,6 +4783,15 @@
 "zL" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/delta/hall)
+"zR" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/circuitboard/computer/borgupload/no_lock,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "zS" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -5949,12 +5952,6 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HP" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "HQ" = (
 /obj/structure/transit_tube{
 	dir = 4
@@ -6463,6 +6460,20 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"KJ" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "KK" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6798,13 +6809,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
-"MC" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/circuitboard/computer/aiupload/no_lock,
+"MG" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/item/circuitboard/machine/ai_law_rack/core,
+/obj/item/stock_parts/subspace/transmitter,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "MH" = (
@@ -14376,8 +14386,8 @@ Wb
 NS
 dT
 nG
-MC
-cz
+wX
+zR
 ad
 ad
 aa
@@ -15229,8 +15239,8 @@ aa
 aa
 aa
 ad
-HP
-pB
+MG
+KJ
 lq
 ag
 gk

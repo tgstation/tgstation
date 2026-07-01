@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	//Get which verb is prefixed to the message before radio but after most modifications
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	message_mods[SAY_MOD_VERB] ||= say_mod(message, message_mods)
 
 	var/identifier = "invalid"
 	var/tts_message_to_use = tts_message || message

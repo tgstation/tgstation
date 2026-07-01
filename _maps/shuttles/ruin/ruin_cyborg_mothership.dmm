@@ -540,7 +540,7 @@
 /obj/structure/cable,
 /obj/structure/table_frame,
 /obj/item/aicard,
-/obj/item/ai_module/core/full/overlord,
+/obj/item/ai_module/law/core/full/overlord,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Em" = (

@@ -10,26 +10,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-	req_one_access = list(ACCESS_AI_UPLOAD)
-
-/obj/item/circuitboard/computer/aiupload/no_lock
-	build_path = /obj/machinery/computer/upload/ai/no_lock
-	req_one_access = null
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	req_one_access = list(ACCESS_AI_UPLOAD)
-	build_path = /obj/machinery/computer/upload/borg
-
-/obj/item/circuitboard/computer/borgupload/no_lock
-	req_one_access = null
-	build_path = /obj/machinery/computer/upload/borg/no_lock
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control

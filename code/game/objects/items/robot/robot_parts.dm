@@ -279,31 +279,18 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
+			// if our MMI has laws - ai sync and law sync are automatically disabled
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), M.laws, forced_ai, isnull(M.laws) && aisync, isnull(M.laws) && lawsync)
 			if(!O)
 				return
-			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
-				aisync = FALSE
-				lawsync = FALSE
-				O.laws = M.laws
-				M.laws.associate(O)
 
 			O.SetInvisibility(INVISIBILITY_NONE)
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
 			O.locked = panel_locked
-			if(!aisync)
-				lawsync = FALSE
-				O.set_connected_ai(null)
-			else
+
+			if(O.connected_ai)
 				O.notify_ai(AI_NOTIFICATION_NEW_BORG)
-				if(forced_ai)
-					O.set_connected_ai(forced_ai)
-			if(!lawsync)
-				O.lawupdate = FALSE
-				if(M.laws.id == DEFAULT_AI_LAWID)
-					O.make_laws()
-					O.log_current_laws()
 
 			brainmob.mind?.remove_antags_for_borging()
 			O.job = JOB_CYBORG
@@ -348,19 +335,12 @@
 				to_chat(user, span_warning("[M] is stuck to your hand!"))
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src), null, forced_ai, aisync, lawsync)
+			if(!O)
+				return
 
-			if(!aisync)
-				lawsync = FALSE
-				O.set_connected_ai(null)
-			else
-				if(forced_ai)
-					O.set_connected_ai(forced_ai)
+			if(O.connected_ai)
 				O.notify_ai(AI_NOTIFICATION_AI_SHELL)
-			if(!lawsync)
-				O.lawupdate = FALSE
-				O.make_laws()
-				O.log_current_laws()
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)

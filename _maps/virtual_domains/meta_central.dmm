@@ -212,15 +212,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "bR" = (
 /obj/structure/chair{
 	dir = 1
@@ -805,6 +796,14 @@
 /area/virtual_domain)
 "gE" = (
 /turf/open/floor/wood,
+/area/virtual_domain)
+"gF" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/glass,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/suture,
+/turf/open/floor/plating,
 /area/virtual_domain)
 "gM" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -3007,14 +3006,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
-"zg" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/table/glass,
-/obj/item/stack/medical/wrap/gauze,
-/obj/item/stack/medical/mesh,
-/obj/item/stack/medical/suture,
-/turf/open/floor/plating,
-/area/virtual_domain)
 "zj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3122,6 +3113,15 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Ag" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Ah" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -7010,7 +7010,7 @@ HM
 ps
 hV
 Hd
-bQ
+Ag
 hZ
 ii
 SN
@@ -7701,7 +7701,7 @@ ul
 wa
 tM
 Nh
-zg
+gF
 Fj
 NO
 RG

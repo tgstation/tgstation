@@ -291,3 +291,6 @@
 
 ///sent to radio TTS sounds when the volume preference is changed and applied
 #define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"
+
+/// Sent when a mob's name is fullyrenamed (oldname(can be null), newname)
+#define COMSIG_MOB_FULLY_RENAMED "mob_fully_renamed"
