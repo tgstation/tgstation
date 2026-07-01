@@ -990,9 +990,9 @@
 	safe_oxygen_min = 13
 	emp_vulnerability = 20
 
-	cold_level_1_threshold = COLD_LEVEL_1_THRESHOLD - 60
-	cold_level_2_threshold = COLD_LEVEL_2_THRESHOLD - 60
-	cold_level_3_threshold = COLD_LEVEL_3_THRESHOLD - 20
+	cold_level_1_threshold = 200
+	cold_level_2_threshold = 140
+	cold_level_3_threshold = 120
 
 /obj/item/organ/lungs/cybernetic/surplus
 	name = "surplus prosthetic lungs"
@@ -1117,8 +1117,8 @@
 	icon_state = "lungs_ethereal"
 	breath_noise = "a low fluorescent hum"
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
-	heat_level_2_threshold = HEAT_LEVEL_2_THRESHOLD + 73
-	heat_level_3_threshold = HEAT_LEVEL_3_THRESHOLD + 73
+	heat_level_2_threshold = 473
+	heat_level_3_threshold = 1073
 
 /obj/item/organ/lungs/ethereal/ethereal_smoker
 	name = "smoker aeration reticulum"

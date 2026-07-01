@@ -287,14 +287,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-/// Theses are for the default lungs
-#define COLD_LEVEL_1_THRESHOLD 260
-#define COLD_LEVEL_2_THRESHOLD 200
-#define COLD_LEVEL_3_THRESHOLD 120
-#define HEAT_LEVEL_1_THRESHOLD 360
-#define HEAT_LEVEL_2_THRESHOLD 400
-#define HEAT_LEVEL_3_THRESHOLD 1000
-
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
 #define BRAIN_DAMAGE_ASYNC_BLINKING 60
