@@ -269,6 +269,7 @@
 /// Combined brute and burn damage states on a human's head after which they become disfigured
 #define HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES 3
 
+/// Lung temperature defines
 #define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
@@ -285,6 +286,14 @@
 #define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
+
+/// Theses are for the default lungs
+#define COLD_LEVEL_1_THRESHOLD 260
+#define COLD_LEVEL_2_THRESHOLD 200
+#define COLD_LEVEL_3_THRESHOLD 120
+#define HEAT_LEVEL_1_THRESHOLD 360
+#define HEAT_LEVEL_2_THRESHOLD 400
+#define HEAT_LEVEL_3_THRESHOLD 1000
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
