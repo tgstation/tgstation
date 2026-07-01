@@ -169,6 +169,12 @@
 	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
 	dust_overlay.color = COLOR_RED_LIGHT
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
+	if (ishuman(owner))
+		var/mob/living/carbon/human/as_human = owner
+		if (as_human.cached_body_min_x_offset && target_width > ICON_SIZE_X)
+			dust_overlay.pixel_w = as_human.cached_body_min_x_offset
+		if (as_human.cached_body_min_y_offset && target_height > ICON_SIZE_Y)
+			dust_overlay.pixel_z = as_human.cached_body_min_y_offset
 	ADD_KEEP_TOGETHER(owner, REF(src))
 	owner.add_overlay(dust_overlay)
 	var/obj/effect/holder = owner.add_shared_particles(/particles/brimdust, "brimdust_coating-[owner.base_pixel_w]")

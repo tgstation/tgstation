@@ -87,6 +87,9 @@
 	QDEL_NULL(tentacle_line)
 	return ..()
 
+/mob/living/basic/mining/goliath/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
 	if (saddled)
