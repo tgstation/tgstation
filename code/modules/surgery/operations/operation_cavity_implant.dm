@@ -34,6 +34,41 @@
 	. = ..()
 	limb.add_surgical_state(SURGERY_CAVITY_WIDENED)
 
+/datum/surgery_operation/limb/undo_prepare_cavity
+	name = "close chest cavity"
+	desc = "Reset a patient's chest cavity."
+	implements = list(
+		TOOL_RETRACTOR = 1,
+		TOOL_CROWBAR = 1.5,
+	)
+	time = 4.8 SECONDS
+	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_CAVITY_WIDENED
+
+/datum/surgery_operation/limb/undo_prepare_cavity/get_default_radial_image()
+	return image(/obj/item/retractor)
+
+/datum/surgery_operation/limb/undo_prepare_cavity/all_required_strings()
+	return list("operate on chest (target chest)") + ..()
+
+/datum/surgery_operation/limb/undo_prepare_cavity/state_check(obj/item/bodypart/chest/limb)
+	return limb.body_zone == BODY_ZONE_CHEST
+
+/datum/surgery_operation/limb/undo_prepare_cavity/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You begin to close [FORMAT_LIMB_OWNER(limb)] cavity..."),
+		span_notice("[surgeon] begins to close [FORMAT_LIMB_OWNER(limb)] cavity."),
+		span_notice("[surgeon] begins to close [FORMAT_LIMB_OWNER(limb)] cavity."),
+	)
+	display_pain(limb.owner, "You can feel pressure as your [limb.plaintext_zone] is being closed!")
+
+/datum/surgery_operation/limb/undo_prepare_cavity/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
+	limb.remove_surgical_state(SURGERY_CAVITY_WIDENED)
+
 /datum/surgery_operation/limb/cavity_implant
 	name = "cavity implant"
 	desc = "Implant an item into a patient's body cavity."
