@@ -505,7 +505,6 @@
 	if(.)
 		return
 
-	var/mob/user = ui.user
 	switch(action)
 		if("frequency")
 			if(freqlock != RADIO_FREQENCY_UNLOCKED)
