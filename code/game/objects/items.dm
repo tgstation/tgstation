@@ -959,14 +959,11 @@
 		. = SFX_DESECRATION
 
 /// Creates an ignition hotspot if item is lit and located on turf, in mask, or in hand
-/obj/item/proc/open_flame(flame_heat=700)
+/obj/item/proc/open_flame(flame_heat = 700, mob_slots = ITEM_SLOT_MASK|ITEM_SLOT_HANDS)
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/pyromanic = location
-		var/success = FALSE
-		if(src == pyromanic.get_item_by_slot(ITEM_SLOT_MASK) || (src in pyromanic.held_items))
-			success = TRUE
-		if(success)
+		if((pyromanic.get_slot_by_item(src) & mob_slots))
 			location = get_turf(pyromanic)
 	if(isturf(location))
 		location.hotspot_expose(flame_heat, 5)

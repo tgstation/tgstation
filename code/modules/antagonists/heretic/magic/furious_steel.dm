@@ -27,24 +27,6 @@
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/Grant(mob/grant_to)
-	. = ..()
-	if(!owner)
-		return
-
-	if(IS_HERETIC(owner))
-		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
-
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/Remove(mob/remove_from)
-	UnregisterSignal(remove_from, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-	return ..()
-
-/// Signal proc for [SIGNAL_REMOVETRAIT], via [TRAIT_ALLOW_HERETIC_CASTING], to remove the effect when we lose the focus trait
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_focus_lost(mob/source)
-	SIGNAL_HANDLER
-
-	unset_click_ability(source, refund_cooldown = TRUE)
-
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/clicker, params, atom/target)
 	// Let the caster prioritize using items like guns over blade casts
 	if(clicker.get_active_held_item())
@@ -112,7 +94,8 @@
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_status_effect_triggered(datum/status_effect/protective_blades/source, atom/target)
 	SIGNAL_HANDLER
 
-	current_amount--
+	if(blade_effect == source)
+		current_amount -= 1
 
 /obj/projectile/floating_blade
 	name = "blade"

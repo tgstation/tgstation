@@ -53,9 +53,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
-	desc = "Opens up the Path of Moon to you. \
-		Allows you to transmute 2 sheets of glass and a knife into an Lunar Blade. \
+	desc = "Opens up the Path of Moon to you.<br>\
+		Allows you to create Lunar Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute 2 sheets of glass and a knife."
 	gain_text = "Under the light of the moon the laughter echoes."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -90,20 +91,24 @@
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
 	desc = "Grants you Mind Gate, a spell which mutes, deafens, blinds, inflicts hallucinations, \
-		confusion, oxygen loss and brain damage to its target over 10 seconds.\
-		The caster takes 20 brain damage per use."
+		confusion, oxygen loss and brain damage to its target over 10 seconds.<br>\
+		Casting the spell causes brain damage."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
+	max_charges = 6
+	path_recharge_amount = 0.33
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.33
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"
-	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
-			If the item is used on someone with low sanity they go berserk attacking everyone, \
-			if their sanity isn't low enough it decreases their mood. \
-			Wearing this will grant you the ability to see heathens through walls and make your blades harmless, they will instead directly attack their mind. \
-			Provides thermal vision and doubles the brain regen of a moon heretic while worn."
+	desc = "Sculpt a Moonlight Amulet.<br>\
+		If the item is used on someone with low sanity, they go berserk - attacking anyone nearby. \
+		If their sanity isn't low enough, it decreases their mood.<br>\
+		Wearing yourself this will heal your brain damage and grant you the ability to see heathens through walls, \
+		but makes your blades harmless - instead damaging their mind directly."
+	transmute_text = "Transmute 2 sheets of glass, a heart and a tie."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
 	required_atoms = list(
@@ -111,7 +116,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
+	result_atoms = list(/obj/item/clothing/neck/moon_amulet)
 	cost = 2
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -119,12 +124,13 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia. \
-			This robe will render the user fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and rendering them unable to use ranged weapons. \
-			A Moonlight Amulet will be necessary to use blades while wearing it."
+	desc = "Create a Resplendant Regalia.<br>While worn, renders you fully immune to disabling effects \
+			While worn, pacifies you, while also rendering you fully immune to disabling effects and converting all forms of damage into brain damage."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
-				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
-				I observed, basking in the light, to find my self."
+			The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
+			I observed, basking in the light, to find my self."
+	notice = "Despite the robe's pacifying effect, you can still use your Moon Blades, provided you ALSO wear a Moonlight Amulet."
+	transmute_text = "Transmute a table (or a suit), a mask and two sheets of glass."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
 	research_tree_icon_state = "moon_armor"
 	required_atoms = list(
@@ -135,17 +141,23 @@
 
 /datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"
-	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
-		when hitting someone they are forced to join the parade and suffer hallucinations."
+	desc = "Grants you Lunar Parade, a spell that - after a short charge - fires a projectile.<br>\
+		Anyone hit by it is forced to join the parade, following the projectile while suffering hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	notice = "There is no cap to the number of charges on the spell from applying Moonlight Amulets."
 	cost = 2
 	drafting_tier = 5
+	max_charges = 4
+	path_recharge_amount = 0.25
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage. \
-			Deals more brain damage if your victim is insane or unconscious."
+	desc = "Your blade now deals brain damage, causes random hallucinations and does sanity damage.<br>\
+		Deals more brain damage if your victim is insane or unconscious."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -171,25 +183,27 @@
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
-	desc = "Grants you Ringleaders Rise, an AoE spell that deals more brain damage the lower the sanity of everyone in the AoE \
-			and causes hallucinations, with those who have less sanity getting more. \
-			If their sanity is low enough this turns them insane, the spell then halves their sanity."
+	desc = "Grants you Ringleaders Rise, an AoE spell that deals brain damage and causes hallucinations, scaling with sanity."
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
-
+	notice = "There is no cap to the number of charges on the spell from applying Moonlight Amulets."
 	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 2
-
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
+	max_charges = 2
+	path_recharge_amount = 0.25
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
-	desc = "The ascension ritual of the Path of Moon. \
-		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Moon.<br>\
 		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease, \
-		crewmembers with low enough sanity will be converted into acolytes. \
+		crewmembers with low enough sanity will be converted into acolytes.<br>\
 		1/5th of the crew will turn into acolytes and follow your command, they will all receive moonlight amulets."
+	transmute_text = "Transmute 3 corpses with more than 50 brain damage."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
@@ -252,7 +266,7 @@
 
 	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
 	lunatic.set_master(user.mind, user)
-	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
+	var/obj/item/clothing/neck/moon_amulet/amulet = new(convertee.drop_location())
 	var/static/list/slots = list(
 		LOCATION_NECK,
 		LOCATION_HANDS,

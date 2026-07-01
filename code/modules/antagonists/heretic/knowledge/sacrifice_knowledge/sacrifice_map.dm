@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 // Rooms for where heretic sacrifices send people.
 /area/centcom/heretic_sacrifice
-	name = "Mansus"
+	name = "Mansus Gate"
 	icon_state = "heretic"
 	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
