@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed jaws of recovery not being able to be stored in the paramedic EMT belt"

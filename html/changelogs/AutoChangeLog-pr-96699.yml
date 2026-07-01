@@ -1,4 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - bugfix: "Fixes crates not respecting density in all cases and being able to move into other crates or tables"
