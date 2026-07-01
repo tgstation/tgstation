@@ -362,6 +362,28 @@
 			turfs += checked_turf
 	return turfs
 
+///Returns a list of turfs around a center that can be reached from said center (blocked by density) using a breadth-first flood fill
+/proc/circle_reachable_turfs(turf/center, radius = 3)
+	var/list/turfs = list()
+	var/list/checked = alist(center = TRUE)
+	var/list/current_ring = list(center)
+	for(var/step in 1 to radius)
+		var/list/next_ring = list()
+		for(var/turf/checking as anything in current_ring)
+			for(var/direction in GLOB.alldirs)
+				var/turf/neighbor = get_step(checking, direction)
+				if(!neighbor || checked[neighbor])
+					continue
+				checked[neighbor] = TRUE
+				if(neighbor.is_blocked_turf(exclude_mobs = TRUE))
+					continue
+				next_ring += neighbor
+				turfs += neighbor
+		if(!length(next_ring))
+			break
+		current_ring = next_ring
+	return turfs
+
 ///Returns the list of turfs around the outside of a center based on RANGE_TURFS()
 /proc/border_diamond_range_turfs(atom/center = usr, radius = 3)
 	var/turf/center_turf = get_turf(center)
@@ -513,20 +535,25 @@
  * @params outer_range - The outer range of the cicle to pull from.
  * @params inner_range - The inner range of the circle to NOT pull from.
  * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
- * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ * @params mode - One of TURF_PEEL_RANGE (plain distance, the default), TURF_PEEL_VIEW (blocked by opacity,
+ * via circle_view_turfs), or TURF_PEEL_REACHABLE (blocked by density, via circle_reachable_turfs).
  */
-/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+/proc/turf_peel(outer_range, inner_range, center, mode = TURF_PEEL_RANGE)
 	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
 		CRASH("Turf peel inner range is larger than outer range!")
 	var/list/peel = list()
 	var/list/outer
 	var/list/inner
-	if(view_based)
-		outer = circle_view_turfs(center, outer_range)
-		inner = circle_view_turfs(center, inner_range)
-	else
-		outer = circle_range_turfs(center, outer_range)
-		inner = circle_range_turfs(center, inner_range)
+	switch(mode)
+		if(TURF_PEEL_VIEW)
+			outer = circle_view_turfs(center, outer_range)
+			inner = circle_view_turfs(center, inner_range)
+		if(TURF_PEEL_REACHABLE)
+			outer = circle_reachable_turfs(get_turf(center), outer_range)
+			inner = circle_reachable_turfs(get_turf(center), inner_range)
+		else
+			outer = circle_range_turfs(center, outer_range)
+			inner = circle_range_turfs(center, inner_range)
 	for(var/turf/possible_spawn as anything in outer)
 		if(possible_spawn in inner)
 			continue

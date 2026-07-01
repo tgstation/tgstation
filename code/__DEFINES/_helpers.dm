@@ -52,3 +52,10 @@
 
 /// Abstraction over using mob.client to just check if there's a connected player.
 #define HAS_CONNECTED_PLAYER(mob) (mob.client)
+
+/// uses circle_range_turfs(), turfs are picked purely by distance
+#define TURF_PEEL_RANGE 0
+/// uses circle_view_turfs(), turfs must be within line of sight (blocked by opacity)
+#define TURF_PEEL_VIEW 1
+/// uses circle_reachable_turfs(), turfs must be reachable by movement (blocked by density)
+#define TURF_PEEL_REACHABLE 2
