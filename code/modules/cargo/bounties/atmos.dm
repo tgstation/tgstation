@@ -13,14 +13,14 @@
 		return FALSE
 	var/obj/item/tank/applied_tank = applied_obj
 	var/datum/gas_mixture/our_mix = applied_tank.return_air()
-	if(!our_mix.gases[gas_type])
+	if(!our_mix.moles[gas_type])
 		return FALSE
-	return our_mix.gases[gas_type][MOLES] >= moles_required
+	return our_mix.moles[gas_type] >= moles_required
 
 /datum/bounty/item/atmospherics/contribution_amount(obj/shipped)
 	var/obj/item/tank/shipped_tank = shipped
 	var/datum/gas_mixture/our_mix = shipped_tank.return_air()
-	return our_mix.gases[gas_type][MOLES]
+	return our_mix.moles[gas_type]
 
 /datum/bounty/item/atmospherics/pluox_tank
 	name = "Full Tank of Pluoxium"

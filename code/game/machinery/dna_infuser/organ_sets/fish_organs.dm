@@ -370,7 +370,7 @@
 /// Called when there isn't enough water to breath
 /obj/item/organ/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
 	breather.throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
-	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
+	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.moles[/datum/gas/water_vapor])
 	if(water_pp)
 		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide, volume = gas_breathed)
 

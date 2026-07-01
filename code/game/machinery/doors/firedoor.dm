@@ -286,7 +286,7 @@
 
 	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return FIRELOCK_ALARM_TYPE_HOT
-	if(environment.gases[/datum/gas/antinoblium] && environment.gases[/datum/gas/antinoblium][MOLES] > MINIMUM_MOLE_COUNT)
+	if(environment.moles[/datum/gas/antinoblium] > MINIMUM_MOLE_COUNT)
 		return FIRELOCK_ALARM_TYPE_HOT
 	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 		return FIRELOCK_ALARM_TYPE_COLD

@@ -445,7 +445,7 @@
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
 	//check for workable conditions
-	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
 		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Insufficient Gas")
 		if(autoeject) // Eject if configured.

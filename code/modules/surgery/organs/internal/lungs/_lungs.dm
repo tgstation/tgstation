@@ -251,7 +251,7 @@
 		// Not safe to check the old pp because of can_breath_vacuum
 		breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 
-		var/gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath.gases[/datum/gas/oxygen][MOLES])
+		var/gas_breathed = handle_suffocation(breather, o2_pp, safe_oxygen_min, breath.moles[/datum/gas/oxygen])
 		if(o2_pp)
 			breathe_gas_volume(breath, /datum/gas/oxygen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		return
@@ -275,7 +275,7 @@
 			return BREATH_LOST
 		return
 
-	var/ratio = (breath.gases[/datum/gas/oxygen][MOLES] / safe_oxygen_max) * 10
+	var/ratio = (breath.moles[/datum/gas/oxygen] / safe_oxygen_max) * 10
 	breather.apply_damage(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type, spread_damage = TRUE)
 	if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 		breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
@@ -299,7 +299,7 @@
 		// Not safe to check the old pp because of can_breath_vacuum
 		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
-		var/gas_breathed = handle_suffocation(breather, nitro_pp, safe_nitro_min, breath.gases[/datum/gas/nitrogen][MOLES])
+		var/gas_breathed = handle_suffocation(breather, nitro_pp, safe_nitro_min, breath.moles[/datum/gas/nitrogen])
 		if(nitro_pp)
 			breathe_gas_volume(breath, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		return
@@ -354,7 +354,7 @@
 		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		// Breathe insufficient amount of Plasma, exhale CO2.
-		var/gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath.gases[/datum/gas/plasma][MOLES])
+		var/gas_breathed = handle_suffocation(breather, plasma_pp, safe_plasma_min, breath.moles[/datum/gas/plasma])
 		if(plasma_pp)
 			breathe_gas_volume(breath, /datum/gas/plasma, /datum/gas/carbon_dioxide, volume = gas_breathed)
 		return
@@ -380,7 +380,7 @@
 		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 
-	var/ratio = (breath.gases[/datum/gas/plasma][MOLES] / safe_plasma_max) * 10
+	var/ratio = (breath.moles[/datum/gas/plasma] / safe_plasma_max) * 10
 	breather.apply_damage(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type, spread_damage = TRUE)
 
 /// Resets plasma side effects
@@ -570,7 +570,7 @@
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
 	var/gas_breathed = breathe_gas_volume(breath, /datum/gas/tritium)
-	var/moles_visible = GLOB.meta_gas_info[/datum/gas/tritium][META_GAS_MOLES_VISIBLE] * BREATH_PERCENTAGE
+	var/moles_visible = GLOB.meta_gas_info[META_GAS_MOLES_VISIBLE][/datum/gas/tritium] * BREATH_PERCENTAGE
 	// Tritium side-effects.
 	if(gas_breathed > moles_visible)
 		var/ratio = gas_breathed * 15
@@ -637,7 +637,7 @@
 		breather.failed_last_breath = TRUE
 
 	// The list of gases in the breath.
-	var/list/breath_gases = breath.gases
+	var/list/breath_moles = breath.moles
 	// Copy the breath's temperature into breath_out to avoid cooling the output breath down unfairly
 	breath_out.temperature = breath.temperature
 
@@ -651,8 +651,8 @@
 
 	// Build out our partial pressures, for use as we go
 	var/list/partial_pressures = list()
-	for(var/gas_id in breath_gases)
-		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES] * received_pressure_mult)
+	for(var/gas_id, amount in breath_moles)
+		partial_pressures[gas_id] = breath.get_breath_partial_pressure(amount * received_pressure_mult)
 
 	// Treat gas as other types of gas
 	for(var/list/conversion_packet in treat_as)
@@ -670,32 +670,31 @@
 		var/partial_pressure = partial_pressures[breath_id] || 0
 		var/old_partial_pressure = last_partial_pressures[breath_id] || 0
 		// Ensures the gas will always be instanciated, so people can interact with it safely
-		ASSERT_GAS(breath_id, breath)
 		var/inhale = breathe_always[breath_id]
 		call(src, inhale)(breather, breath, partial_pressure, old_partial_pressure)
 
 	// Now we'll handle the callbacks that want to be run conditionally off our current breath
-	for(var/breath_id in breath_gases)
-		var/when_present = breath_present[breath_id]
+	for(var/gas_id in breath_moles)
+		var/when_present = breath_present[gas_id]
 		if(!when_present)
 			continue
 
-		var/reaction = call(src, when_present)(breather, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
+		var/reaction = call(src, when_present)(breather, breath, partial_pressures[gas_id], last_partial_pressures[gas_id])
 		if(reaction == BREATH_LOST)
-			var/on_lose = breath_lost[breath_id]
+			var/on_lose = breath_lost[gas_id]
 			if(on_lose)
-				call(src, on_lose)(breather, breath, partial_pressures[breath_id], last_partial_pressures[breath_id])
+				call(src, on_lose)(breather, breath, partial_pressures[gas_id], last_partial_pressures[gas_id])
 
 	// Finally, we'll run the callbacks that aren't in breath_gases, but WERE in our last breath
-	for(var/gas_lost in last_partial_pressures)
+	for(var/gas_id in last_partial_pressures)
 		// If we still have it, go away
-		if(breath_gases[gas_lost])
+		if(breath_moles[gas_id])
 			continue
-		var/on_loss = breath_lost[gas_lost]
+		var/on_loss = breath_lost[gas_id]
 		if(!on_loss)
 			continue
 
-		call(src, on_loss)(breather, breath, last_partial_pressures[gas_lost])
+		call(src, on_loss)(breather, breath, last_partial_pressures[gas_id])
 
 	src.last_partial_pressures = partial_pressures
 
@@ -723,12 +722,11 @@
 /// Removes 100% of the given gas type unless given a volume argument.
 /// Returns the amount of gas theoretically removed.
 /obj/item/organ/lungs/proc/breathe_gas_volume(datum/gas_mixture/breath, remove_id, exchange_id = null, volume = INFINITY)
-	var/list/breath_gases = breath.gases
-	volume = min(volume, breath_gases[remove_id][MOLES])
-	breath_gases[remove_id][MOLES] -= volume
+	var/list/breath_moles = breath.moles
+	volume = min(volume, breath_moles[remove_id])
+	breath_moles[remove_id] -= volume
 	if(exchange_id)
-		ASSERT_GAS(exchange_id, breath_out)
-		breath_out.gases[exchange_id][MOLES] += volume
+		breath_out.moles[exchange_id] += volume
 	return volume
 
 /// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
@@ -940,8 +938,8 @@
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
 	. = ..()
-	if (breath?.gases[/datum/gas/plasma])
-		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
+	if (breath?.moles[/datum/gas/plasma])
+		var/plasma_pp = breath.get_breath_partial_pressure(breath.moles[/datum/gas/plasma])
 		breather_slime.adjust_blood_volume(0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/lungs/smoker_lungs
@@ -1037,7 +1035,7 @@
 	// Take a "breath" of the air
 	var/datum/gas_mixture/breath = volumed_mix.remove(volumed_mix.total_moles() * BREATH_PERCENTAGE)
 
-	var/list/breath_gases = breath.gases
+	var/list/breath_moles = breath.moles
 
 	breath.assert_gases(
 		/datum/gas/oxygen,
@@ -1048,12 +1046,12 @@
 		/datum/gas/miasma,
 	)
 
-	var/oxygen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])
-	var/nitrogen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
-	var/plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
-	var/carbon_dioxide_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
-	var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
-	var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
+	var/oxygen_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/oxygen])
+	var/nitrogen_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/nitrogen])
+	var/plasma_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/plasma])
+	var/carbon_dioxide_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/carbon_dioxide])
+	var/bz_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/bz])
+	var/miasma_pp = breath.get_breath_partial_pressure(breath_moles[/datum/gas/miasma])
 
 	safe_oxygen_min = max(0, oxygen_pp - GAS_TOLERANCE)
 	safe_nitro_min = max(0, nitrogen_pp - GAS_TOLERANCE)
@@ -1134,7 +1132,7 @@
 
 /// H2O electrolysis
 /obj/item/organ/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
-	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
+	var/gas_breathed = breath.moles[/datum/gas/water_vapor]
 	breath.adjust_gas(/datum/gas/water_vapor, -gas_breathed)
 	var/list/new_gases = list(/datum/gas/oxygen = gas_breathed, /datum/gas/hydrogen = gas_breathed * 2)
 	breath_out.adjust_multiple_gases(new_gases)
