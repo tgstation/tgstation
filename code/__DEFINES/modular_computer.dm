@@ -39,6 +39,7 @@
 #define PROGRAM_CATEGORY_ENGINEERING "Engineering"
 #define PROGRAM_CATEGORY_SUPPLY "Supply"
 #define PROGRAM_CATEGORY_SCIENCE "Science"
+#define PROGRAM_CATEGORY_SERVICE "Service"
 
 ///The default amount a program should take in cell use.
 #define PROGRAM_BASIC_CELL_USE 2 WATTS
