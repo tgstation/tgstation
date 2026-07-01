@@ -1,0 +1,4 @@
+author: "Swan"
+delete-after: True
+changes:
+  - bugfix: "fixes the chemical tab of the plant analyzer bluescreening on certain seeds."
