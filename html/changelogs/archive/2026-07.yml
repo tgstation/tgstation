@@ -14,6 +14,8 @@
       Day, Beer Day and Speak-Like-a-Pirate day. On any other day, there's a chance
       that the beer keg will be replaced with one containing whiskey or rum, or in
       rare cases, one of those special kegs.
+  Jacquerel:
+  - rscadd: Mobs on Lavaland will repopulate during ash storms.
   LT3:
   - bugfix: Fixed jaws of recovery not being able to be stored in the paramedic EMT
       belt
@@ -21,6 +23,10 @@
   - bugfix: Fix emote overlays sticking
   - balance: Mutation toxins now work on plasmamen, skeletons, zombies, spirits, and
       vampires
+  QuiteLiterallyAnything:
+  - bugfix: Night shift lighting can be manually enabled through APCs again.
+  - bugfix: Night lighting is no longer automatically reenabled during red alert night
+      shifts when APCs are drained and recharged.
   Yobrocharlie:
   - rscdel: Removed both mounted guns in the heretic gateway per headmin request
   vinylspiders:
