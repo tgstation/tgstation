@@ -146,6 +146,8 @@
 		thrown_weapon.get_embed()?.embed_chance = 0
 	else if(isliving(bomb_target))
 		plastic_overlay.layer = FLOAT_LAYER
+	else if(isopenturf(bomb_target)) //Render them above open turf layer if theyre open turf
+		plastic_overlay.layer = ABOVE_OPEN_TURF_LAYER
 
 	target.add_overlay(plastic_overlay)
 	to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
