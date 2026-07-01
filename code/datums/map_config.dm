@@ -262,7 +262,7 @@
 		// Just pick and take based on weight
 		for(var/i in 1 to wilderness_levels)
 			wilderness_maps_to_spawn += pick_weight_take(wilderness)
-		shuffle(wilderness_maps_to_spawn)
+		shuffle_inplace(wilderness_maps_to_spawn)
 
 	var/list/wilderness_level_traits = json["wilderness_level_traits"]
 	if (islist(wilderness_level_traits))

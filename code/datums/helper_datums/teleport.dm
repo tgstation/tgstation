@@ -37,7 +37,7 @@
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
 					to_chat(MM, span_warning("The clashing pulls of bluespace interfere with your teleport!"))
-			
+
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/basic/spark_spread/sparks = new(teleatom, 5, TRUE)
@@ -56,16 +56,22 @@
 
 	// perform the teleport
 	var/turf/curturf = get_turf(teleatom)
-	var/turf/destturf = get_teleport_turf(get_turf(destination), precision)
-
-	if(!destturf || !curturf || destturf.is_transition_turf())
+	if(!curturf)
 		return FALSE
 
-	if(!forced)
-		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
-			if(ismob(teleatom))
-				teleatom.balloon_alert(teleatom, "something holds you back!")
-			return FALSE
+	//The final destination chosen after a few checks
+	var/turf/destturf
+	//The turf of the original destination from the args
+	var/turf/og_destination = get_turf(destination)
+	if(precision)
+		destturf = get_valid_teleport_turf(curturf, og_destination, precision, skip_restrictions = forced)
+	else if(!og_destination.is_transition_turf())
+		destturf = og_destination
+
+	if(!destturf || (!forced && !check_teleport_valid(teleatom, destturf, channel, original_destination = destination)))
+		if(ismob(teleatom))
+			teleatom.balloon_alert(teleatom, "something holds you back!")
+		return FALSE
 
 	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))
 		return FALSE
@@ -216,22 +222,29 @@
 	// DING! You have passed the gauntlet, and are "probably" safe.
 	return TRUE
 
-/proc/get_teleport_turfs(turf/center, precision = 0)
-	if(!precision)
-		return list(center)
-	var/list/posturfs = list()
-	for(var/turf/T as anything in RANGE_TURFS(precision,center))
-		if(T.is_transition_turf())
-			continue // Avoid picking these.
-		var/area/A = T.loc
-		if(!(A.area_flags & NOTELEPORT))
-			posturfs.Add(T)
-	return posturfs
+///Check for turfs within range of the center turf and perform simple checks to see which is a valid teleportation target. If so, add it to a list to pick the final destination from at the end.
+/proc/get_valid_teleport_turf(turf/origin, turf/center, range = 0, skip_restrictions = FALSE)
+	var/list/turfs = list()
+	var/area/origin_area = origin.loc
+	for(var/turf/turf as anything in RANGE_TURFS(range, center))
+		if(turf.is_transition_turf())
+			continue // Avoid picking these at all cost
+		if(skip_restrictions)
+			turfs.Add(turf)
+			continue
 
-/proc/get_teleport_turf(turf/center, precision = 0)
-	var/list/turfs = get_teleport_turfs(center, precision)
+		if(HAS_TRAIT(turf, TRAIT_NO_TELEPORT))
+			continue
+		var/area/area = turf.loc
+		if(area.area_flags & NOTELEPORT)
+			continue
+		if(((origin_area.area_flags & LOCAL_TELEPORT) || (area.area_flags & LOCAL_TELEPORT)) && origin_area != area)
+			continue
+		turfs.Add(turf)
+
 	if (length(turfs))
 		return pick(turfs)
+	return null
 
 /// Validates that the teleport being attempted is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
@@ -245,7 +258,7 @@
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
 
-	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT) || HAS_TRAIT(destination_turf, TRAIT_NO_TELEPORT))
 		return FALSE
 
 	// prevent unprecise teleports from landing you outside of the destination's reserved area

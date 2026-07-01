@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 	var/obj/item/stack/sheet/cloth/cloth = tool
 	to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
-	if(do_after(user, craft_time, target = src))
+	if(!do_after(user, craft_time, target = src))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/knife/shiv/shiv = new shiv_type

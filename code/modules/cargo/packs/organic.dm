@@ -395,7 +395,7 @@
 	Contains a full barrel of Nanotrasen brewed, low-grade alcoholic beverage, \
 	perfect for getting loose after a hard day of not dying."
 	cost = CARGO_CRATE_VALUE * 6.25
-	contains = list(/obj/structure/reagent_dispensers/beerkeg)
+	contains = list(/obj/structure/reagent_dispensers/keg/beer)
 	crate_name = "beer keg crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
