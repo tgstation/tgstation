@@ -160,7 +160,9 @@
 	var/list/applied_items
 
 	///A list of all bodypart overlays to draw
-	var/list/bodypart_overlays = list()
+	var/list/bodypart_overlays
+	///A list of all bodypart textures to apply
+	var/list/bodypart_textures
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -215,7 +217,7 @@
 	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
 	/// A potential texturing overlay to put on the limb
-	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	var/datum/bodypart_texture/texture_bodypart_overlay
 	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
@@ -300,6 +302,14 @@
 	if(LAZYLEN(applied_items))
 		QDEL_LIST_ASSOC_VAL(applied_items)
 	QDEL_LAZYLIST(scars)
+
+	// Overlays and textures may be owned by something else like a status effect,
+	// so we'll just remove them all rather than delete them
+	// Worst case scenario they'll just get swept up by GC and which is fine
+	for(var/datum/bodypart_overlay/remaining_overlay in bodypart_overlays)
+		remove_bodypart_overlay(remaining_overlay, update = FALSE)
+	for(var/datum/bodypart_texture/remaining_texture in bodypart_textures)
+		remove_bodypart_texture(remaining_texture, update = FALSE)
 
 	for(var/atom/movable/movable in contents)
 		qdel(movable)
@@ -1369,30 +1379,43 @@
 			// Add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
+	// Apply height to the overlays we generated so far
+	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
+	if(!dropped && !isnull(owner))
+		for(var/image/generated_overlay as anything in .)
+			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+			// it's more important to keep it consistent for things like getflaticon
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
+
 	// Draw external organs like horns and frills
+	// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
+		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 
 		// Some externals have multiple layers for background, foreground and between
-		for(var/external_layer in overlay.all_layers)
+		for(var/external_layer, actual_layer in overlay.all_layers)
 			if(!(overlay.layers & external_layer))
 				continue
 
-			var/external_overlay = overlay.get_overlay(external_layer, src, is_husked)
-			if (!dropped)
-				. += external_overlay
+			for (var/mutable_appearance/actual_overlay as anything in overlay.get_overlay(actual_layer, src))
+				if(dropped || isnull(owner))
+					. += image(actual_overlay, dir = SOUTH)
+					continue
+
+				owner.apply_height(actual_overlay, overlay.offset_location)
+				. += actual_overlay
+
+	// Then texture everything at once, including bodypart overlays
+	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+		if(!texture.can_texture_bodypart(src))
+			continue
+		for(var/image/generated_overlay as anything in .)
+			var/appearance_plane = PLANE_TO_TRUE(generated_overlay.plane)
+			if(appearance_plane != FLOAT_PLANE && appearance_plane != GAME_PLANE)
 				continue
 
-			if (!islist(external_overlay))
-				. += image(external_overlay, dir = SOUTH)
-				continue
-
-			for (var/mutable_appearance/actual_overlay as anything in external_overlay)
-				. += image(actual_overlay, dir = SOUTH)
-
-		for(var/datum/layer in .)
-			overlay.modify_bodypart_appearance(layer)
+			texture.modify_bodypart_appearance(generated_overlay)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .
@@ -1409,24 +1432,95 @@
 	husk_blood.color = LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED
 	return husk_blood
 
-///Add a bodypart overlay and call the appropriate update procs
+/**
+ * Adds a bodypart overlay to the limb
+ *
+ * * overlay: The overlay to add. Either an instance of a bodypart overlay or a typepath of a bodypart overlay.
+ * If you pass a typepath, the proc will avoid creating duplicates.
+ * * update: Whether to call update procs after adding the overlay.
+ * Set this to FALSE if you are adding multiple overlays at once.
+ *
+ * Returns the overlay that was added, or null if it was not added.
+ */
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
-	bodypart_overlays += overlay
+	if(ispath(overlay, /datum/bodypart_overlay))
+		if(locate(overlay) in bodypart_overlays)
+			return null
+		overlay = new overlay()
+
+	LAZYADD(bodypart_overlays, overlay)
 	overlay.added_to_limb(src)
 	if(!update)
+		return overlay
+	if(isnull(owner))
+		update_icon_dropped()
+	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		owner.update_body_parts()
+	return overlay
+
+/**
+ * Removes a bodypart overlay from the limb
+ *
+ * * overlay: The overlay to remove. Either an instance of a bodypart overlay or a typepath of a bodypart overlay.
+ * If you pass a typepath, the first overlay of that typepath found will be removed.
+ * * update: Whether to call update procs after removing the overlay.
+ * Set this to FALSE if you are removing multiple overlays at once.
+ */
+/obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
+	if(ispath(overlay, /datum/bodypart_overlay))
+		overlay = locate(overlay) in bodypart_overlays
+		if(isnull(overlay))
+			return
+
+	LAZYREMOVE(bodypart_overlays, overlay)
+	overlay.removed_from_limb(src)
+	if(!update)
 		return
-	if(!owner)
+	if(isnull(owner))
 		update_icon_dropped()
 	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		owner.update_body_parts()
 
-///Remove a bodypart overlay and call the appropriate update procs
-/obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
-	bodypart_overlays -= overlay
-	overlay.removed_from_limb(src)
+/**
+ * Adds a bodypart texture to the limb
+ *
+ * * texture: The texture to add. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the proc will avoid creating duplicates.
+ * * update: Whether to call update procs after adding the texture.
+ * Set this to FALSE if you are adding multiple textures at once.
+ */
+/obj/item/bodypart/proc/add_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		if(locate(texture) in bodypart_textures)
+			return
+		texture = new texture()
+
+	LAZYADD(bodypart_textures, texture)
 	if(!update)
 		return
-	if(!owner)
+	if(isnull(owner))
+		update_icon_dropped()
+	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		owner.update_body_parts()
+
+/**
+ * Removes a bodypart texture from the limb
+ *
+ * * texture: The texture to remove. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the first texture of that typepath found will be removed.
+ * * update: Whether to call update procs after removing the texture.
+ * Set this to FALSE if you are removing multiple textures at once.
+ */
+/obj/item/bodypart/proc/remove_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = locate(texture) in bodypart_textures
+		if(isnull(texture))
+			return
+
+	LAZYREMOVE(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
 		update_icon_dropped()
 	else if(!(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		owner.update_body_parts()

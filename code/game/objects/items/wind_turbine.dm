@@ -345,7 +345,7 @@
 	if (istype(charging, /obj/item/melee/baton/security/))
 		. += mutable_appearance(icon, "baton")
 
-/obj/item/portable_wind_turbine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/portable_wind_turbine/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (isinhands)
 		return

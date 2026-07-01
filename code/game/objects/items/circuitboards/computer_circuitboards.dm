@@ -1,4 +1,4 @@
-/obj/item/circuitboard/computer
+/obj/item/circuitboard/computer/obj/machinery/computer/upload/ai/no_lock
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
@@ -15,12 +15,22 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/ai
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	req_one_access = list(ACCESS_AI_UPLOAD)
+
+/obj/item/circuitboard/computer/aiupload/no_lock
+	build_path = /obj/machinery/computer/upload/ai/no_lock
+	req_one_access = null
 
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	req_one_access = list(ACCESS_AI_UPLOAD)
 	build_path = /obj/machinery/computer/upload/borg
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/circuitboard/computer/borgupload/no_lock
+	req_one_access = null
+	build_path = /obj/machinery/computer/upload/borg/no_lock
 
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"

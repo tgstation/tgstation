@@ -20,6 +20,8 @@
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
 	var/bypass_law_amt_check = FALSE
+	/// Used for the Traitor Hacked Upload board to ignore access restrictions on the upload console.
+	var/bypass_access_check = FALSE
 
 /obj/item/ai_module/Initialize(mapload)
 	. = ..()

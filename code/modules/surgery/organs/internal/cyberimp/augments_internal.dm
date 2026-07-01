@@ -47,6 +47,7 @@
 /datum/bodypart_overlay/augment
 	layers = EXTERNAL_ADJACENT
 	draw_on_husks = HUSK_OVERLAY_NORMAL
+	offset_location = ENTIRE_BODY
 	/// Implant that owns this overlay
 	var/obj/item/organ/cyberimp/implant
 
@@ -58,12 +59,11 @@
 	implant = null
 	return ..()
 
-/datum/bodypart_overlay/augment/generate_icon_cache(obj/item/bodypart/limb)
+/datum/bodypart_overlay/augment/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += implant.get_overlay_state()
 
 /datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
-	layer = bitflag_to_layer(layer)
 	var/list/imageset = implant.get_overlay(layer, limb)
 	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
 		return imageset

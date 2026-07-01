@@ -1837,7 +1837,7 @@ GLOBAL_LIST_EMPTY(intento_players)
  */
 /obj/item/toy/foam_runic_scepter
 	name = "foam scepter"
-	desc = "A foam replica of the scepters Wizards us on Vendormancy Soccer."
+	desc = "A foam replica of the scepters Wizards use on Vendormancy Soccer."
 	icon_state = "vendor_staff"
 	worn_icon_state = "vendor_staff" //For the back
 	inhand_icon_state = "vendor_staff"

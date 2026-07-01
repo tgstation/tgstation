@@ -155,7 +155,7 @@
 				TEST_FAIL("The [mat.name] ([mat.type] = [sheet_val]) of [printed_instance.type] plus its contents exceeds what presents in [design.type] ([design_val]). Review the code of the object and fix that.")
 
 ///Proc made to reduce copypasted code when allocating an object from a design, because stacks have a tendency to merge with each other, and we don't want that.
-/datum/unit_test/proc/allocate_build_path_for_design(build_path)
+/datum/unit_test/design_mats/proc/allocate_build_path_for_design(build_path)
 	var/is_stack = ispath(build_path)
 	if(is_stack) //If this is a stack, we don't want it to merge with any other stack on the same location
 		var/obj/item/stack/stack_path = build_path

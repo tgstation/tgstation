@@ -574,7 +574,7 @@
 			for(var/trait in skip_traits)
 				if(HAS_TRAIT(atom, trait))
 					skip = TRUE
-					continue
+					break
 			if(skip)
 				continue
 		for(var/material in atom.custom_materials)

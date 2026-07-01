@@ -10,14 +10,18 @@
 	///The action that the owner can use to ignore the prayers
 	var/datum/action/innate/listen_prayers/toggle
 	///The description we give to the instance of the listen_prayers toggle.
-	var/toggle_desc
+	var/toggle_desc = "Allows you to listen to prayers"
 
 /datum/component/listen_prayers/Initialize(datum/callback/pre_prayer_callback, deity_name, toggle_desc)
-	if (!istype(parent, /datum/mind))
+	if(!istype(parent, /datum/mind))
 		return COMPONENT_INCOMPATIBLE
-	src.pre_prayer_callback = pre_prayer_callback
-	src.deity_name = deity_name
-	src.toggle_desc = toggle_desc
+
+	if(pre_prayer_callback)
+		src.pre_prayer_callback = pre_prayer_callback
+	if(deity_name)
+		src.deity_name = deity_name
+	if(toggle_desc)
+		src.toggle_desc = toggle_desc
 
 /datum/component/listen_prayers/Destroy()
 	pre_prayer_callback = null
@@ -26,8 +30,7 @@
 /datum/component/listen_prayers/RegisterWithParent()
 	RegisterSignal(SSdcs, COMSIG_GLOB_SEND_PRAYER, PROC_REF(on_sent_prayer))
 	var/datum/mind/mind = parent
-
-	var/datum/action/innate/listen_prayers/toggle = new(mind)
+	toggle = new(mind)
 	if(toggle_desc)
 		toggle.desc = toggle_desc
 	if(mind.current)
