@@ -441,9 +441,7 @@ SUBSYSTEM_DEF(vote)
 	voting -= user.client?.ckey
 
 /// Mob level verb that allows players to vote on the current vote.
-/mob/verb/vote()
-	set category = "OOC"
-	set name = "Vote"
+GAME_VERB(/mob, vote, "Vote", "OOC")
 
 	if(!SSvote.initialized)
 		to_chat(usr, span_notice("<i>Voting is not set up yet!</i>"))

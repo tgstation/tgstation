@@ -477,17 +477,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			continue
 		show_to.client?.screen += reuse
 
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = TRUE
-
-	if(hud_used && client)
-		hud_used.show_hud() //Shows the next hud preset
-		to_chat(usr, span_info("Switched HUD mode. Press F12 to toggle."))
-	else
-		to_chat(usr, span_warning("This mob type does not use a HUD."))
-
 /// Rebuilds our mob's hand slot screen elements
 /datum/hud/proc/build_hand_slots(update_hud = FALSE)
 
