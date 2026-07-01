@@ -107,17 +107,16 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return TRUE
-	if(!is_type_in_list(attacking_item, scanning_equipment))
-		return TRUE
+/obj/structure/ore_vent/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_list(tool, scanning_equipment))
+		return NONE
+
 	if(tapped)
 		balloon_alert_to_viewers("vent tapped!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
+
 	scan_and_confirm(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

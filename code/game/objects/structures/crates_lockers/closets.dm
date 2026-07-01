@@ -693,13 +693,123 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		req_access = accesses
 		req_one_access = null
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(user in src)
-		return
-	if(src.tool_interact(W,user))
-		return 1 // No afterattack
-	else
-		return ..()
+/obj/structure/closet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user in contents)
+		return ITEM_INTERACT_BLOCKING // can't even attack it from inside
+
+	if(!opened && istype(tool, /obj/item/airlock_painter))
+		if(!length(paint_jobs))
+			return ITEM_INTERACT_BLOCKING
+
+		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
+		if(isnull(choice))
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/airlock_painter/painter = tool
+		if(!painter.use_paint(user))
+			return ITEM_INTERACT_BLOCKING
+
+		var/list/paint_job = paint_jobs[choice]
+		icon_state = paint_job["icon_state"]
+		base_icon_state = icon_state
+		icon_door = paint_job["icon_door"]
+
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
+		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
+			span_notice("You start to install electronics into the [src]..."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		inherit_airlock_electronics_access(tool)
+		qdel(tool)
+		secure = TRUE
+		balloon_alert(user, "electronics installed")
+
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+		user.visible_message(span_notice("[user] is installing a card reader."),
+							span_notice("You begin installing the card reader."))
+
+		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
+			return ITEM_INTERACT_BLOCKING
+
+		qdel(tool)
+		card_reader_installed = TRUE
+
+		balloon_alert(user, "card reader installed")
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/card/id/card = tool.GetID()
+
+	if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && card)
+		var/num_choices = length(access_choices)
+		if(!num_choices)
+			return ITEM_INTERACT_BLOCKING
+
+		var/choice
+		if(num_choices == 1)
+			choice = access_choices[1]
+		else
+			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
+		if(isnull(choice))
+			return ITEM_INTERACT_BLOCKING
+
+		id_card = null
+		switch(choice)
+			if("Personal") //only the player who swiped their id has access.
+				id_card = WEAKREF(card)
+				name = "[card.registered_name]'s locker"
+				desc += " It has been ID locked to [card.registered_name]."
+			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
+				name = "[card.assignment]'s locker"
+				desc += " It has been access locked to [card.assignment]s."
+				set_access(card.GetAccess())
+			if("None") //free for all
+				name = initial(name)
+				desc = initial(desc)
+				req_access = list()
+				req_one_access = null
+				set_access(list())
+
+		if(!isnull(id_card))
+			balloon_alert(user, "now owned by [card.registered_name]")
+		else
+			balloon_alert(user, "set to [choice]")
+		return ITEM_INTERACT_SUCCESS
+
+	if(opened)
+		if(istype(tool, cutting_tool) && tool.tool_behaviour != TOOL_WELDER) // for example cardboard box is cut with wirecutters
+			user.visible_message(span_notice("[user] cut apart \the [src]."), \
+								span_notice("You cut \the [src] apart with \the [tool]."))
+			deconstruct(TRUE)
+			return ITEM_INTERACT_SUCCESS
+
+		if (user.combat_mode)
+			return ITEM_INTERACT_SKIP_TO_ATTACK
+
+		if(!user.transfer_item_to_turf(tool, drop_location())) // so we put in unlit welder too
+			return ITEM_INTERACT_BLOCKING
+
+		return ITEM_INTERACT_SUCCESS
+
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		if(!card)
+			return NONE
+		if(opened)
+			return ITEM_INTERACT_BLOCKING
+		togglelock(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/closet/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if (attack_hand(user, modifiers))
@@ -764,172 +874,96 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	return TRUE
 
-/// returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
-/obj/structure/closet/proc/tool_interact(obj/item/weapon, mob/living/user)
-	. = TRUE
-	var/obj/item/card/id/id = null
-	if(!opened && istype(weapon, /obj/item/airlock_painter))
-		if(!length(paint_jobs))
-			return
-		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
-		if(isnull(choice))
-			return
+/obj/structure/closet/screwdriver_act(mob/living/user, obj/item/tool)
+	if(user in contents)
+		return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/airlock_painter/painter = weapon
-		if(!painter.use_paint(user))
-			return
-		var/list/paint_job = paint_jobs[choice]
-		icon_state = paint_job["icon_state"]
-		base_icon_state = icon_state
-		icon_door = paint_job["icon_door"]
+	if(!can_unscrew_airlock_electronics(user))
+		return NONE
 
-		update_appearance()
+	user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
+						span_notice("You begin to remove the electronics from the [src]..."))
 
-	else if(istype(weapon, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
+	if (!tool.use_tool(src, user, 4 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
-			return
-		if(!user.transferItemToLoc(weapon, src))
-			return
-
-		inherit_airlock_electronics_access(weapon)
-		qdel(weapon)
-		secure = TRUE
-		balloon_alert(user, "electronics installed")
-
-		update_appearance()
-
-	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
-		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-			span_notice("You begin to remove the electronics from the [src]..."))
-
-		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
-			return
-
-		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
-		if(length(req_one_access))
-			airlock_electronics.one_access = TRUE
-			airlock_electronics.accesses = req_one_access
-		else
-			airlock_electronics.accesses = req_access
-
-		req_access = list()
-		req_one_access = null
-		id_card = null
-		secure = FALSE
-		balloon_alert(user, "electronics removed")
-
-		update_appearance()
-
-	else if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
-		user.visible_message(span_notice("[user] is installing a card reader."),
-					span_notice("You begin installing the card reader."))
-
-		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
-			return
-
-		qdel(weapon)
-		card_reader_installed = TRUE
-
-		balloon_alert(user, "card reader installed")
-
-	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
-		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
-			span_notice("You begin to pry the card reader out from [src]..."))
-
-		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
-			return
-
-		new /obj/item/stock_parts/card_reader(drop_location())
-		card_reader_installed = FALSE
-
-		balloon_alert(user, "card reader removed")
-
-	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = weapon.GetID())))
-		var/num_choices = length(access_choices)
-		if(!num_choices)
-			return
-
-		var/choice
-		if(num_choices == 1)
-			choice = access_choices[1]
-		else
-			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
-		if(isnull(choice))
-			return
-
-		id_card = null
-		switch(choice)
-			if("Personal") //only the player who swiped their id has access.
-				id_card = WEAKREF(id)
-				name = "[id.registered_name]'s locker"
-				desc += " It has been ID locked to [id.registered_name]."
-			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
-				name = "[id.assignment]'s locker"
-				desc += " It has been access locked to [id.assignment]s."
-				set_access(id.GetAccess())
-			if("None") //free for all
-				name = initial(name)
-				desc = initial(desc)
-				req_access = list()
-				req_one_access = null
-				set_access(list())
-
-		if(!isnull(id_card))
-			balloon_alert(user, "now owned by [id.registered_name]")
-		else
-			balloon_alert(user, "set to [choice]")
-
-	else if(opened)
-		if(istype(weapon, cutting_tool))
-			if(weapon.tool_behaviour == TOOL_WELDER)
-				if(!weapon.tool_start_check(user, amount=1))
-					return
-
-				to_chat(user, span_notice("You begin cutting \the [src] apart..."))
-				if(weapon.use_tool(src, user, 40, volume=50))
-					if(!opened)
-						return
-					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart with \the [weapon]."),
-									span_hear("You hear welding."))
-					deconstruct(TRUE)
-				return
-			else // for example cardboard box is cut with wirecutters
-				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart with \the [weapon]."))
-				deconstruct(TRUE)
-				return
-		if (user.combat_mode)
-			return
-		if(user.transfer_item_to_turf(weapon, drop_location())) // so we put in unlit welder too
-			return
-
-	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
-		if(!weapon.tool_start_check(user, amount=1))
-			return
-
-		if(weapon.use_tool(src, user, 40, volume=50))
-			if(opened)
-				return
-			welded = !welded
-			after_weld(welded)
-			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
-							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [weapon]."),
-							span_hear("You hear welding."))
-			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [weapon]", LOG_GAME)
-			update_appearance()
-
-	else if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		var/item_is_id = weapon.GetID()
-		if(!item_is_id)
-			return FALSE
-		if((item_is_id || !toggle(user)) && !opened)
-			togglelock(user)
+	var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
+	if(length(req_one_access))
+		airlock_electronics.one_access = TRUE
+		airlock_electronics.accesses = req_one_access
 	else
-		return FALSE
+		airlock_electronics.accesses = req_access
+
+	req_access = list()
+	req_one_access = null
+	id_card = null
+	secure = FALSE
+	balloon_alert(user, "electronics removed")
+
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/closet/crowbar_act(mob/living/user, obj/item/tool)
+	if(user in contents)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!can_pryout_card_reader(user))
+		return NONE
+
+	user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
+						span_notice("You begin to pry the card reader out from [src]..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
+		return ITEM_INTERACT_BLOCKING
+
+	new /obj/item/stock_parts/card_reader(drop_location())
+	card_reader_installed = FALSE
+
+	balloon_alert(user, "card reader removed")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/closet/welder_act(mob/living/user, obj/item/tool)
+	if(user in contents)
+		return ITEM_INTERACT_BLOCKING
+
+	if(opened && istype(tool, cutting_tool)) // not all of them take welders
+		if(!tool.tool_start_check(user, amount=1))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You begin cutting \the [src] apart..."))
+		if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!opened)
+			return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] slices apart \the [src]."),
+							span_notice("You cut \the [src] apart with \the [tool]."),
+							span_hear("You hear welding."))
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!can_weld_shut)
+		return NONE
+
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	if(opened)
+		return ITEM_INTERACT_BLOCKING
+
+	welded = !welded
+	after_weld(welded)
+	user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
+						span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [tool]."),
+						span_hear("You hear welding."))
+	user.log_message("[welded ? "welded":"unwelded"] closet [src] with [tool]", LOG_GAME)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!anchorable)
