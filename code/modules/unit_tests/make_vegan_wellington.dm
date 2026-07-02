@@ -56,14 +56,16 @@
 	raw_bacon.melee_attack_chain(human, griddle, list(ICON_X = "0", ICON_Y = "0"))
 	griddle.process(90 SECONDS) //should be done.
 
-	var/obj/item/food/meat/steak/steak = locate() in griddle_loc
+	var/obj/item/food/meat/steak/steak = locate() in griddle
 	TEST_ASSERT_NOTNULL(steak, "Failed cooking steak!")
 	allocated += steak
+	steak.forceMove(griddle_loc) //move it out of the griddle so that it can be used in recipes.
 	TEST_ASSERT(meat_check(steak), "Cooked plant \"steak\" has MEAT foodtype!")
 
-	var/obj/item/food/meat/bacon/bacon = locate() in griddle_loc
+	var/obj/item/food/meat/bacon/bacon = locate() in griddle
 	TEST_ASSERT_NOTNULL(bacon, "Failed cooking bacon!")
 	allocated += bacon
+	bacon.forceMove(griddle_loc) //move it out of the griddle
 	TEST_ASSERT(meat_check(bacon), "Cooked plant \"bacon\" has MEAT foodtype!")
 
 	//final step, make the recipe and check that it doesn't have
