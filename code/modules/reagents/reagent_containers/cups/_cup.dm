@@ -357,8 +357,7 @@
 
 /obj/item/reagent_containers/cup/on_found(mob/finder)
 	. = ..()
-	if(lid_assembly)
-		lid_assembly.on_found(finder)
+	lid_assembly?.on_found(finder)
 
 /obj/item/reagent_containers/cup/Exited(atom/movable/gone, direction)
 	. = ..()
