@@ -231,8 +231,8 @@
 		return
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
 	if(ishuman(body))
-		apply_prefs_to_body(body)
-		post_apply_prefs(body)
+		if(apply_prefs_to_body(body))
+			on_prefs_applied(body)
 
 /**
  * Handles making the body for the candidate
@@ -264,14 +264,16 @@
  * Handles prepping the body with the candidate's prefs
  *
  * Applies prefs to a given body. Usually that's what you want, but sometimes you don't, in which case you can override this proc.
+ * Returns TRUE if 
  */
 /datum/dynamic_ruleset/midround/from_ghosts/proc/apply_prefs_to_body(mob/living/carbon/human/body)
 	body.client?.prefs.safe_transfer_prefs_to(body)
+	return TRUE
 
 /**
  * Handles anything you want to happen after applying prefs, such as stripping mutations
  */
-/datum/dynamic_ruleset/midround/from_ghosts/proc/post_apply_prefs(mob/living/carbon/human/body)
+/datum/dynamic_ruleset/midround/from_ghosts/proc/on_prefs_applied(mob/living/carbon/human/body)
 	body.dna.remove_all_mutations()
 	body.dna.update_dna_identity()
 
