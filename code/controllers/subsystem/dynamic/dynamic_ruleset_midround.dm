@@ -231,8 +231,7 @@
 		return
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
 	if(ishuman(body))
-		if(apply_prefs_to_body(body))
-			on_prefs_applied(body)
+		apply_prefs_to_body(body)
 
 /**
  * Handles making the body for the candidate
@@ -268,7 +267,7 @@
  */
 /datum/dynamic_ruleset/midround/from_ghosts/proc/apply_prefs_to_body(mob/living/carbon/human/body)
 	body.client?.prefs.safe_transfer_prefs_to(body)
-	return TRUE
+	on_prefs_applied(body)
 
 /**
  * Handles anything you want to happen after applying prefs, such as stripping mutations
@@ -528,7 +527,7 @@
 	signup_atom_appearance = /obj/item/light_eater
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/apply_prefs_to_body(mob/living/carbon/human/body)
-	return null
+	return
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
