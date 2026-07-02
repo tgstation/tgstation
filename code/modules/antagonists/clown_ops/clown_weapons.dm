@@ -63,8 +63,11 @@
 		slipper.Slip(src, hit_atom)
 
 /obj/item/melee/energy/sword/bananium/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!COOLDOWN_FINISHED(src, next_trombone_allowed) || !istype(tool, /obj/item/melee/energy/sword/bananium))
+	if(!istype(tool, /obj/item/melee/energy/sword/bananium))
 		return ..()
+
+	if(!COOLDOWN_FINISHED(src, next_trombone_allowed))
+		return ITEM_INTERACT_BLOCKING
 
 	COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
 	to_chat(user, span_warning("You slap the two swords together. Sadly, they do not seem to fit!"))

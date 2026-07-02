@@ -257,10 +257,7 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(tool.tool_behaviour != TOOL_ANALYZER)
-		return NONE
-
+/obj/structure/blob/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 	SEND_SOUND(user, sound('sound/machines/ping.ogg'))
