@@ -385,7 +385,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
 // if you're doing this locally, do ALL of it
-#if defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+// otherwise, we gotta split em up
+#ifndef RUNNING_LOCAL_TESTS
 		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
 		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
 		// If we didn't find a primary unit test map then we are likely a solo runner.
