@@ -144,7 +144,7 @@
 // Bileworm
 /obj/item/crusher_trophy/bileworm_spewlet
 	name = "bileworm spewlet"
-	icon = 'icons/mob/simple/lavaland/bileworm.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
@@ -186,17 +186,31 @@
 	check_flags = NONE
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid/crusher
+	projectile_type = /obj/projectile/bileworm_acid
 	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
 
-/obj/projectile/bileworm_acid/crusher
+/obj/projectile/bileworm_acid // basically only used by the crusher trophy
+	name = "acidic bile"
+	damage = 20
+	speed = 0.5
+	range = 20
+	hitsound = 'sound/items/weapons/sear.ogg'
+	pass_flags = PASSTABLE
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "bile_glob"
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	damage_type = BRUTE // Otherwise the mobs take heavily reduced damage
 
-/obj/projectile/bileworm_acid/crusher/prehit_pierce(atom/target)
+/obj/projectile/bileworm_acid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
+/obj/projectile/bileworm_acid/prehit_pierce(atom/target)
 	if (!isliving(target))
 		return ..()
 	var/mob/living/as_living = target

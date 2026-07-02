@@ -10,6 +10,8 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
+///If defined, mobs will use this distance instead of default aggro range to locate new targets
+#define BB_AGGRO_GRAB_RANGE "BB_aggro_grab_range"
 ///are we hungry? determined by the udder component
 #define BB_CHECK_HUNGRY "BB_check_hungry"
 ///are we ready to breed?
@@ -241,3 +243,8 @@
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
+
+///Currently enraged
+#define BB_BASIC_MOB_ENRAGE "BB_enraged"
+///Previous melee cooldown
+#define BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN "BB_previous_melee_cooldown"

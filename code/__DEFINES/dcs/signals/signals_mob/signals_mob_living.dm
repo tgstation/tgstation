@@ -36,6 +36,8 @@
 	#define DOORCRUSH_NO_WOUND (1<<0)
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
+	// Block execute_resist()
+	#define COMPONENT_BLOCK_RESIST (1<<0)
 ///from base of mob/living/ignite_mob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
 ///from base of mob/living/extinguish_mob() (/mob/living)
@@ -61,9 +63,11 @@
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime)
-#define COMSIG_LIVING_LIFE "living_life"
+#define COMSIG_LIVING_PRE_LIFE "living_pre_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
+///From living/Life(). (deltatime)
+#define COMSIG_LIVING_LIFE "living_life"
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
 

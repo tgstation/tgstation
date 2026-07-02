@@ -250,11 +250,75 @@
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
-	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEELEVATOR)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
+	// they all get the normal operative job, even the leader. (leader's job is updated when they get the antag datum)
+	// all this ultimately matters for is 1. ensuring they *don't* get a normal job and 2. spawning them in the elevator
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative)
+
+/datum/dynamic_ruleset/roundstart/nukies/execute()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(load_nukie_base)), 3 SECONDS)
+
+#define ELEVATOR_WIDTH 6
+#define ELEVATOR_HEIGHT 5
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/load_nukie_base()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	addtimer(CALLBACK(src, PROC_REF(teleport_elevator_contents)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open_nukie_elevator)), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(call_infiltrator)), 5 SECONDS)
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/teleport_elevator_contents()
+	var/obj/effect/landmark/nukeop_elevator/interior/interior = locate() in GLOB.landmarks_list
+	var/obj/effect/landmark/nukeop_elevator/exterior/exterior = locate() in GLOB.landmarks_list
+	if(isnull(interior) || isnull(exterior))
+		stack_trace("Failed to find nukie elevator landmarks during load!")
+		message_admins("Failed to find nukie elevator landmarks during load, you might have some stuck nukies that need help.")
+		return
+
+	var/turf/top_right_interior = get_turf(interior)
+	var/turf/top_right_exterior = get_turf(exterior)
+
+	var/list/turf/elevator_turfs = block(
+		top_right_interior.x,
+		top_right_interior.y,
+		top_right_interior.z,
+		top_right_interior.x - ELEVATOR_WIDTH + 1,
+		top_right_interior.y - ELEVATOR_HEIGHT + 1,
+		top_right_interior.z,
+	)
+
+	for(var/turf/elevator_turf as anything in elevator_turfs)
+		var/turf/destination_turf = locate(
+			top_right_exterior.x - (top_right_interior.x - elevator_turf.x),
+			top_right_exterior.y - (top_right_interior.y - elevator_turf.y),
+			top_right_exterior.z,
+		)
+		if(isnull(destination_turf))
+			stack_trace("Failed to find destination turf for nukie elevator!")
+			message_admins("Failed to find corresponding elevator turf for nuke ops, you might have some stuck nukies that need help.")
+			continue
+
+		for(var/atom/movable/thing in elevator_turf)
+			if(thing.anchored || thing.orbit_target)
+				continue
+			thing.forceMove(destination_turf)
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/open_nukie_elevator()
+	for(var/obj/machinery/door/poddoor/shutter in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(shutter.id_tag == "nukiespawnlift")
+			shutter.open()
+
+/datum/dynamic_ruleset/roundstart/nukies/proc/call_infiltrator()
+	for(var/datum/mind/leader_mind as anything in selected_minds)
+		var/datum/antagonist/nukeop/leader/nuke_leader = leader_mind.has_antag_datum(/datum/antagonist/nukeop/leader)
+		nuke_leader?.spawn_infiltrator()
+
+#undef ELEVATOR_WIDTH
+#undef ELEVATOR_HEIGHT
 
 /datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
 	return list(
@@ -264,9 +328,14 @@
 
 /datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate, datum/team/nuke_team, datum/mind/most_experienced)
 	if(most_experienced == candidate)
-		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
+		var/datum/antagonist/nukeop/leader/nuke_leader = new()
+		nuke_leader.send_to_spawnpoint = FALSE // because they get spawned in the elevator
+		nuke_leader.spawn_ship = FALSE // spawned manually later
+		candidate.add_antag_datum(nuke_leader, nuke_team)
 	else
-		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
+		var/datum/antagonist/nukeop/nukie = new()
+		nukie.send_to_spawnpoint = FALSE // ditto
+		candidate.add_antag_datum(nukie, nuke_team)
 
 /datum/dynamic_ruleset/roundstart/nukies/round_result()
 	var/datum/antagonist/nukeop/nukie = selected_minds[1].has_antag_datum(/datum/antagonist/nukeop)
@@ -373,6 +442,7 @@
 	new_head.give_flash = TRUE
 	new_head.give_hud = TRUE
 	new_head.remove_clumsy = TRUE
+	new_head.roundstart = TRUE
 	candidate.add_antag_datum(new_head, GLOB.revolution_handler.revs)
 	GLOB.revolution_handler.start_revolution()
 

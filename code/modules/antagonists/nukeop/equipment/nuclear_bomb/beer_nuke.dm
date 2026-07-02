@@ -3,8 +3,9 @@
 	name = "\improper Nanotrasen-brand nuclear fission explosive"
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
 	proper_bomb = FALSE
+	is_on_minimap = FALSE
 	/// The keg located within the beer nuke.
-	var/obj/structure/reagent_dispensers/beerkeg/keg
+	var/obj/structure/reagent_dispensers/keg/beer/keg
 	/// Reagent that is produced once the nuke detonates.
 	var/flood_reagent = /datum/reagent/consumable/ethanol/beer
 	/// Round event control we might as well keep track of instead of locating every time

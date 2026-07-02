@@ -489,6 +489,49 @@
 			return quirk
 	return null
 
+/**
+ * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+ *
+ * Arguments:
+ * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+ * * Category- Which types of quirks we want to print out. Defaults to everything
+ * * from_scan- If the source of this call is like a health analyzer or HUD, in which case QUIRK_HIDE_FROM_MEDICAL hides the quirk.
+ */
+/mob/living/proc/get_quirk_string(medical = FALSE, category = CAT_QUIRK_ALL, from_scan = FALSE)
+	var/list/dat = list()
+	for(var/datum/quirk/candidate as anything in quirks)
+		if(from_scan && (candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN))
+			continue
+		switch(category)
+			if(CAT_QUIRK_MAJOR_DISABILITY)
+				if(candidate.value >= -4)
+					continue
+			if(CAT_QUIRK_MINOR_DISABILITY)
+				if(!ISINRANGE(candidate.value, -4, -1))
+					continue
+			if(CAT_QUIRK_NOTES)
+				if(candidate.value < 0)
+					continue
+		dat += medical ? candidate.medical_record_text : candidate.name
+
+	if(!length(dat))
+		return medical ? "No issues have been declared." : "None"
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
+
+/mob/living/proc/cleanse_quirk_datums() //removes all trait datums
+	QDEL_LAZYLIST(quirks)
+
+/mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
+	// We could be done before the client was moved or after the client was moved
+	var/datum/preferences/to_pass = client || to_mob.client
+
+	for(var/datum/quirk/quirk as anything in quirks)
+		if(quirk.quirk_flags & QUIRK_NO_TRANSFER)
+			continue
+		quirk.remove_from_current_holder(quirk_transfer = TRUE)
+		quirk.add_to_holder(to_mob, quirk_transfer = TRUE, client_source = to_pass)
+
+
 /// Helper to easily add a personality by a typepath
 /mob/living/proc/add_personality(personality_type)
 	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
@@ -508,6 +551,14 @@
 /mob/living/proc/clear_personalities()
 	for(var/personality_type in personalities)
 		remove_personality(personality_type)
+
+/// Returns a string with the names of the personalities of this mob, and their description as tooltip
+/mob/living/proc/get_parsonality_string()
+	var/list/return_list = list()
+	for(var/personality_type in personalities)
+		var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+		return_list += span_tooltip(personality.desc, personality.name)
+	return english_list(return_list)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)

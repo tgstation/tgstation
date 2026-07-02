@@ -14,7 +14,9 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.base_ref }}
 
       - name: Generate App Token
         id: app-token-generation

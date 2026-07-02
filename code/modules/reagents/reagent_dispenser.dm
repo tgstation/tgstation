@@ -35,6 +35,8 @@
 	var/last_rigger = ""
 	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
+	/// Flags passed to the reagents datum upon creation
+	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
@@ -152,7 +154,7 @@
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
-	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
+	create_reagents(tank_volume, reagent_flags)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
@@ -358,6 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
+	reagent_flags = DRAINABLE | TRANSPARENT
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
@@ -588,17 +591,75 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
 	reagent_id = /datum/reagent/consumable/fruit_punch
 
-/obj/structure/reagent_dispensers/beerkeg
-	name = "beer keg"
-	desc = "Beer is liquid bread, it's good for you..."
-	icon_state = "beer"
-	reagent_id = /datum/reagent/consumable/ethanol/beer
+/obj/structure/reagent_dispensers/keg
+	name = "keg"
+	desc = "A keg, usually filled with some low-grade, Nanotrasen brewed alcoholic drink."
+	icon_state = "keg"
 	openable = TRUE
+	var/keg_print
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
+/obj/structure/reagent_dispenders/keg/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/reagent_dispensers/keg/update_overlays()
+	. = ..()
+	if(keg_print)
+		. += keg_print
+
+/obj/structure/reagent_dispensers/keg/blob_act(obj/structure/blob/B)
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/structure/reagent_dispensers/keg/beer
+	name = "beer keg"
+	desc = "Beer is liquid bread, it's good for you..."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/beer
+
+/obj/structure/reagent_dispensers/keg/whiskey
+	name = "irish whiskey keg"
+	desc = "<i>Too much of anything is bad, but too much good whiskey is barely enough.\"</i> - Mark Twain"
+	keg_print = "keg_irish"
+	reagent_id = /datum/reagent/consumable/ethanol/whiskey
+
+/obj/structure/reagent_dispensers/keg/rum
+	name = "rum keg"
+	desc = "A keg of not just any rum, oh no. It's the famous Captain Pete's Spiced Rum. It's GRIFF in a bottle... or keg, dare I say."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold
+	name = "gold keg"
+	desc = "A gaudy, gold-coated keg. It's easy to assume that whatever is inside it must be quite valuable indeed."
+	icon_state = "keg_gold"
+
+/obj/structure/reagent_dispensers/keg/gold/rum
+	name = "vintage rum keg"
+	desc = "A keg of Captain Pete's Spiced Rum from over half a century ago. Old recipe, strong and authentic flavor, y'aaarrrr..."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold/irish
+	name = "special irish drink keg"
+	desc = "A keg full of a cocktail drink made from imported irish whiskey."
+	keg_print = "keg_irish"
+
+/obj/structure/reagent_dispensers/keg/gold/irish/Initialize(mapload)
+	reagent_id = pick(
+		/datum/reagent/consumable/ethanol/irishcoffee,
+		/datum/reagent/consumable/ethanol/irish_cream,
+		/datum/reagent/consumable/ethanol/irishcarbomb,
+		/datum/reagent/consumable/ethanol/b52,
+	)
+	return ..()
+
+/obj/structure/reagent_dispensers/keg/gold/trappist
+	name = "trappist beer keg"
+	desc = "A keg of <i>Mont de Requin Trappistes Bleu</i>. A beer normally brewed under guidelines so strict that there are only a handful of two of certified trappist beer breweries, none in the Spinward Sector."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/trappist
 
 /obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"

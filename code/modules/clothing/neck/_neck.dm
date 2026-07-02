@@ -15,11 +15,11 @@
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 
-/obj/item/clothing/neck/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/clothing/neck/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (isinhands || !(body_parts_covered & HEAD))
 		return
-	var/blood_overlay = get_blood_overlay("mask")
+	var/blood_overlay = get_blood_overlay("mask", bodyshape)
 	if (blood_overlay)
 		. += blood_overlay
 
@@ -145,7 +145,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	var/mob/living/carbon/human/wearer = loc
 	if(!ishuman(wearer) || !wearer.w_uniform)
@@ -584,7 +584,7 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
-/obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "wreath_emissive", src, alpha = src.alpha)

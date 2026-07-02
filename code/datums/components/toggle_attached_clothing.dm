@@ -106,7 +106,7 @@
 		return COMPONENT_ITEM_ACTION_SLOT_INVALID
 
 /// Apply an overlay while the item is not deployed
-/datum/component/toggle_attached_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/datum/component/toggle_attached_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file, bodyshape)
 	SIGNAL_HANDLER
 	if (isinhands || currently_deployed)
 		return

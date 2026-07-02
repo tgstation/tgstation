@@ -187,7 +187,7 @@
 		if(!chef.mind)
 			continue
 		// if cooked by chef, or if EITHER 5% chance OR its april fools. a || (b || c)
-		if(HAS_TRAIT_FROM(pancakes, TRAIT_FOOD_CHEF_MADE, REF(chef.mind)) || (prob(5) || check_holidays(APRIL_FOOLS)))
+		if(HAS_TRAIT_FROM(pancakes, TRAIT_HANDMADE, REF(chef.mind)) || (prob(5) || check_holidays(APRIL_FOOLS)))
 			chef.say("Ma fuckin' pancakes!")
 
 	playsound(pancakes, 'sound/effects/fuse.ogg', 80)

@@ -12,6 +12,16 @@
 	var/atom/movable/moving = controller.pawn
 	var/delay = controller.movement_delay
 
+	var/datum/move_loop/loop = setup_moveloop(controller, current_movement_target, moving, delay)
+
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
+	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, PROC_REF(repath_incoming))
+
+	return loop
+
+
+/datum/ai_movement/jps/proc/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay)
 	var/datum/move_loop/has_target/jps/loop = GLOB.move_manager.jps_move(moving,
 		current_movement_target,
 		delay,
@@ -24,11 +34,6 @@
 		diagonal_handling = diagonal_flags,
 		extra_info = controller,
 	)
-
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, PROC_REF(repath_incoming))
-
 	return loop
 
 /datum/ai_movement/jps/proc/repath_incoming(datum/move_loop/has_target/jps/source)
@@ -47,9 +52,35 @@
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
-		return
+		return null
 	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+	return loop
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 	max_pathing_attempts = 10
+
+
+/datum/ai_movement/jps/bot/mulebot
+	max_pathing_attempts = 10
+	maximum_length = AI_MULEBOT_PATH_LENGTH
+
+/datum/ai_movement/jps/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay)
+	var/datum/move_loop/has_target/jps/frustrations/loop = GLOB.move_manager.frustrations_move(moving,
+		current_movement_target,
+		delay,
+		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
+		max_path_length = maximum_length,
+		minimum_distance = controller.get_minimum_distance(),
+		access = controller.get_access(),
+		subsystem = SSai_movement,
+		diagonal_handling = diagonal_flags,
+		extra_info = controller,
+	)
+	return loop
+
+/datum/ai_movement/jps/bot/mulebot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+	var/datum/move_loop/loop = ..()
+	var/atom/our_pawn = controller.pawn
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED, TYPE_PROC_REF(/mob/living/basic/bot/mulebot, handle_buzzing))

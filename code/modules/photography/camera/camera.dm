@@ -127,15 +127,15 @@
 		if(loc != user)
 			to_chat(user, span_warning("You must be holding the camera to continue!"))
 			return FALSE
-		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
 
-	picture_size_x = clamp(desired_x, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = clamp(desired_y, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_x = clamp(desired_x, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = clamp(desired_y, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
 	if(user)
 		to_chat(user, span_notice("The dimensions of the picture will be [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]"))
@@ -187,6 +187,7 @@
 
 /**
  * Attempts to take an image of the target and all its surrounding tiles
+ * Returns TRUE if it successfully starts taking a picture.
  * Arguments
  *
  * * atom/target - the target we are trying to take a photo of
@@ -198,14 +199,16 @@
 	if(!on)
 		if(user)
 			user.balloon_alert(user, "flash still charging!")
-		return
+		return FALSE
 
 	if(blending)
 		if(user)
 			user.balloon_alert(user, "image still blending!")
-		return
+		return FALSE
 
+	blending = TRUE
 	INVOKE_ASYNC(src, PROC_REF(capture_image), target, user)
+	return TRUE
 
 /**
  * Renders an image of the target and all its surrounding tiles
@@ -217,11 +220,14 @@
 	var/turf/target_turf = get_turf(target)
 	var/view_size = user?.client?.view || world.view
 	if(isnull(target_turf))
+		blending = FALSE
 		return
 	if(isAI(user))
 		if(!SScameras.is_visible_by_cameras(target_turf))
+			blending = FALSE
 			return
 	else if(!(target_turf in view(view_size, user)))
+		blending = FALSE
 		return
 
 	//These vars will be reused later on
@@ -232,11 +238,11 @@
 	var/viewer = get_turf(user?.client?.eye || user)
 	var/list/seen = get_hear_turfs(view_range, viewer)
 	if(!(target_turf in seen))
+		blending = FALSE
 		return
 
 	//taking the actual picture
 	on_flash(target, user)
-	blending = TRUE
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
 	var/list/turfs = list()

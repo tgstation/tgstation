@@ -12,7 +12,7 @@
 		BB_BDM_RANGED_ATTACK_COOLDOWN = 0,
 	)
 
-	movement_delay = 0.3 SECONDS
+	movement_delay = 0.25 SECONDS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -63,4 +63,4 @@
 	return TRUE
 
 /datum/ai_controller/blood_drunk_miner/doom
-	movement_delay = 0.8 SECONDS
+	movement_delay = 0.5 SECONDS

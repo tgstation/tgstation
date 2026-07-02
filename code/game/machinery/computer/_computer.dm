@@ -7,6 +7,7 @@
 	integrity_failure = 0.5
 	armor_type = /datum/armor/machinery_computer
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// How bright we are when turned on.
 	var/brightness_on = 1
 	/// Icon_state of the keyboard overlay.
@@ -29,6 +30,11 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+
+/obj/machinery/computer/post_machine_initialize()
+	. = ..()
+	if(SStts.tts_enabled)
+		voice = SStts.computer_voice
 
 /obj/machinery/computer/mouse_drop_receive(mob/living/dropping, mob/user, params)
 	. = ..()

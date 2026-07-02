@@ -91,21 +91,24 @@
 	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 	var/total_moles_to_remove = 0
-	for(var/gas in scrubbing & env_gases)
+	for(var/gas in env_gases & scrubbing)
 		total_moles_to_remove += env_gases[gas][MOLES]
 
-	if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
-		environment.garbage_collect()
+	if(!total_moles_to_remove)//no gases to remove
 		return FALSE
 
-	for(var/gas in scrubbing & env_gases)
-		filtered_out.add_gas(gas)
-		var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, env_gases[gas][MOLES]))
+	for(var/gas in env_gases & scrubbing)
+		var/transferred_moles = env_gases[gas]
+		// somehow gases with 0 moles can creep into our list which gets removed with `adjust_gas()`
+		// that compounded with the fact our for loop copies our list means it never gets updated so we may
+		// end up with an GC'd gas and that's bad so let's not
+		if(!transferred_moles)
+			continue
+		transferred_moles = transferred_moles[MOLES]
+		transferred_moles = max(QUANTIZE(transferred_moles * removal_ratio * (transferred_moles / total_moles_to_remove)), min(MOLAR_ACCURACY * 1000, transferred_moles))
 
 		filtered_out.adjust_gas(gas, transferred_moles)
 		environment.adjust_gas(gas, -transferred_moles)
-
-	environment.garbage_collect()
 
 	//Remix the resulting gases
 	air_contents.merge(filtered_out)

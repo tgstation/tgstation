@@ -75,6 +75,7 @@
 				what.reagents.trans_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier, copy_only = TRUE)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
+			SEND_SIGNAL(what, SIGNAL_USED_IN_FOOD_PROCESSOR, processed_food, recipe)
 
 	if(isliving(what))
 		var/mob/living/themob = what
@@ -178,6 +179,10 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
+
+	if(PERFORM_ALL_TESTS(make_vegan_wellington)) //don't waste time, we need that uncooked bacon strip right away
+		complete_processing()
+		return
 
 	var/duration = (total_time / rating_speed)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 1, 0, duration)

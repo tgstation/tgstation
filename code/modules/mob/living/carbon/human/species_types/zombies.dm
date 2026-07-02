@@ -47,15 +47,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
-	/// Spooky growls we sometimes play while alive
-	var/static/list/spooks = list(
-		'sound/effects/hallucinations/growl1.ogg',
-		'sound/effects/hallucinations/growl2.ogg',
-		'sound/effects/hallucinations/growl3.ogg',
-		'sound/effects/hallucinations/veryfar_noise.ogg',
-		'sound/effects/hallucinations/wail.ogg',
-	)
-
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
 /datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
 	return
@@ -122,6 +113,7 @@
 		// INFECTIOUS UNIQUE
 		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
+		TRAIT_APATHETIC, // They don't have the brains for mood.
 	)
 
 	// Infectious zombies have slow legs
@@ -143,6 +135,7 @@
 	new_zombie.set_combat_mode(TRUE)
 	// Needs to be added after combat mode is set
 	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
+	new_zombie.physiology.stamina_mod *= 0.33 //Zombie stam resist
 
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
@@ -171,17 +164,13 @@
 	REMOVE_TRAIT(was_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
+	was_zombie.physiology.stamina_mod /= 0.33
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	return min(2 SECONDS, amount)
-
-/datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick)
-	. = ..()
-	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
-		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
 // Weaker subtype - less healing, weaker attacks, etc
 /datum/species/zombie/infectious/mindless

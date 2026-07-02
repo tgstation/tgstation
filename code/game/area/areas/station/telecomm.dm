@@ -15,6 +15,10 @@
 		'sound/ambience/misc/ambimystery.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/engineering
+	tacmap_color = TACMAP_AREA_ENGINEERING
+
+/area/station/tcommsat/maints
+	name = "\improper Telecomms Maintenance Room"
 
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"

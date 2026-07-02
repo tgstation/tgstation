@@ -210,11 +210,10 @@
 /obj/machinery/autolathe/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = list()
+	data["materials"] = materials.ui_data()
 	data["materialtotal"] = materials.total_amount()
 	data["materialsmax"] = materials.max_amount
 	data["active"] = busy
-	data["materials"] = materials.ui_data()
 
 	return data
 
@@ -222,6 +221,27 @@
 	. = ..()
 	if(.)
 		return
+
+	if (action == "eject")
+		var/datum/material/material = locate(params["ref"])
+		if(!istype(material))
+			return
+
+		var/amount = params["amount"]
+		if(isnull(amount))
+			return
+
+		amount = text2num(amount)
+		if(isnull(amount))
+			return
+
+		//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
+		if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
+			say("No power to dispense sheets")
+			return
+
+		materials.retrieve_stack(amount, material)
+		return TRUE
 
 	//sanity checks to start printing
 	if(action != "make")

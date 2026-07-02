@@ -31,16 +31,3 @@
 
 	if(!isalienqueen(mymob))
 		add_screen_object(/atom/movable/screen/alien/alien_queen_finder, HUD_ALIEN_QUEEN_FINDER, HUD_GROUP_INFO)
-
-/datum/hud/alien/persistent_inventory_update()
-	if(!mymob)
-		return
-	var/mob/living/carbon/alien/adult/H = mymob
-	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in H.held_items)
-			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
-			H.client.screen += I
-	else
-		for(var/obj/item/I in H.held_items)
-			I.screen_loc = null
-			H.client.screen -= I

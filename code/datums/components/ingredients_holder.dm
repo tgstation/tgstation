@@ -72,6 +72,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(food_exited))
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, PROC_REF(on_processed))
+	RegisterSignal(parent, COMSIG_PIZZA_SLICE_TAKEN, PROC_REF(on_slice_taken))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	ADD_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
 
@@ -81,6 +82,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_PROCESSED,
+		COMSIG_PIZZA_SLICE_TAKEN,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
 	REMOVE_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
@@ -286,6 +288,11 @@
 	// while custom materials are already transferred evenly between results by atom/proc/StartProcessingAtom()
 	for (var/atom/result as anything in results)
 		result.AddComponent(/datum/component/ingredients_holder, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, processed_holder = src)
+
+/// Pizzas have unique slicing interaction so we need to do this
+/datum/component/ingredients_holder/proc/on_slice_taken(datum/source, mob/living/user, obj/item/slice)
+	SIGNAL_HANDLER
+	slice.AddComponent(/datum/component/ingredients_holder, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, processed_holder = src)
 
 /**
  * Adds context sensitivy directly to the customizable reagent holder file for screentips

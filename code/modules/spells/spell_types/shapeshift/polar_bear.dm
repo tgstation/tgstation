@@ -6,4 +6,4 @@
 	invocation_type = INVOCATION_EMOTE
 	spell_requirements = NONE
 
-	possible_shapes = list(/mob/living/simple_animal/hostile/asteroid/polarbear/lesser)
+	possible_shapes = list(/mob/living/basic/mining/polarbear/lesser)

@@ -92,7 +92,7 @@
 	if(equipping.pulledby)
 		equipping.pulledby.stop_pulling()
 
-	equipping.screen_loc = null // will get moved if inventory is visible
+	hud_used?.update_inventory_slot(slot)
 	equipping.forceMove(src)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 
@@ -106,10 +106,7 @@
 	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/basic/guardian/dextrous/proc/update_inv_internal_storage()
-	if(isnull(internal_storage) || isnull(client) || !hud_used?.hud_shown)
-		return
-	internal_storage.screen_loc = ui_back
-	client.screen += internal_storage
+	hud_used?.update_inventory_slot(ITEM_SLOT_DEX_STORAGE)
 
 /mob/living/basic/guardian/dextrous/regenerate_icons()
 	update_inv_internal_storage()

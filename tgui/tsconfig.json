@@ -2,7 +2,6 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
@@ -13,14 +12,14 @@
 		"moduleResolution": "Bundler",
 		"noEmit": true,
 		"paths": {
-			"tgui": ["packages/tgui"],
-			"tgui/*": ["packages/tgui/*"],
-			"tgui-panel": ["packages/tgui-panel"],
-			"tgui-panel/*": ["packages/tgui-panel/*"],
-			"tgui-say": ["packages/tgui-say"],
-			"tgui-say/*": ["packages/tgui-say/*"],
-			"tgui-dev-server": ["packages/tgui-dev-server"],
-			"tgui-dev-server/*": ["packages/tgui-dev-server/*"]
+			"tgui": ["./packages/tgui"],
+			"tgui/*": ["./packages/tgui/*"],
+			"tgui-panel": ["./packages/tgui-panel"],
+			"tgui-panel/*": ["./packages/tgui-panel/*"],
+			"tgui-say": ["./packages/tgui-say"],
+			"tgui-say/*": ["./packages/tgui-say/*"],
+			"tgui-dev-server": ["./packages/tgui-dev-server"],
+			"tgui-dev-server/*": ["./packages/tgui-dev-server/*"]
 		},
 		"resolveJsonModule": true,
 		"skipLibCheck": true,

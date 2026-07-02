@@ -70,6 +70,7 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
+	AddComponent(/datum/component/walking_aid)
 	add_headpike_component()
 	update_appearance()
 
@@ -160,7 +161,7 @@
 	tip_overlay.color = tip_material.color
 	. += tip_overlay
 
-/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
 		return

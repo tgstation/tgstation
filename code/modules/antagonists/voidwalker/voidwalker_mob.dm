@@ -40,6 +40,11 @@
 	hud_possible = list(ANTAG_HUD)
 	sight = SEE_TURFS | SEE_MOBS
 
+	//purplish tint night vision because the voidwalker is purple
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 30
+
 	/// Color of our regen outline
 	var/regenerate_colour = COLOR_GRAY
 

@@ -34,9 +34,5 @@
 	name = "Shrubbery Crate"
 	desc = "Crate full of hedge shrubs."
 	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/grown/shrub = 8)
 	crate_name = "shrubbery crate"
-	var/shrub_amount = 8
-
-/datum/supply_pack/exploration/shrubbery/fill(obj/container)
-	for(var/i in 1 to shrub_amount)
-		new /obj/item/grown/shrub(container)

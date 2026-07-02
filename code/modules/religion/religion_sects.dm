@@ -513,7 +513,7 @@
 
 /datum/religion_sect/music
 	name = "Festival God"
-	quote = "Everything follows a rhythm- The heartbeat of the universe!"
+	quote = "Everything follows a rhythm: the heartbeat of the universe!"
 	desc = "Make wonderful music! Sooth or serrate your friends and foes with the beat."
 	tgui_icon = "music"
 	altar_icon_state = "convertaltar-festival"

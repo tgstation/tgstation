@@ -294,10 +294,10 @@
  * Hard deleting an object without clearing userdata corresponding to it leaves the userdata to become associated with
  * the next DM object to receive the old object's reference ID, which may be undesirable behavior.
  *
- * @param object the object to disassociate from userdata.
+ * @param args the objects to disassociate from userdata.
  *
  * @return null on success
  */
-#define DREAMLUAU_CLEAR_REF_USERDATA(object) DREAMLUAU_CALL(clear_ref_userdata)((object))
+#define DREAMLUAU_CLEAR_REF_USERDATA(args...) DREAMLUAU_CALL(clear_ref_userdata)(##args)
 
 #endif

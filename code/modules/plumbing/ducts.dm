@@ -114,7 +114,7 @@
 				neighbours[other] = direction
 				//connecting duct to us
 				LAZYADDASSOC(other.neighbours, src, opposite_dir)
-				other.update_appearance(UPDATE_ICON_STATE)
+				other.update_appearance(UPDATE_ICON)
 
 				continue
 
@@ -138,7 +138,7 @@
 				//assign neighbour
 				neighbours[plumbing.parent] = direction
 
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
@@ -168,7 +168,7 @@
 		var/obj/machinery/duct/pipe = neighbour
 		if(istype(pipe))
 			pipe.neighbours -= src
-			pipe.update_appearance(UPDATE_ICON_STATE)
+			pipe.update_appearance(UPDATE_ICON)
 
 		//find every node that can be reached from our neighbour making sure to not revisit it again in circles
 		if(visited[neighbour])

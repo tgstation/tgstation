@@ -32,6 +32,8 @@
 	var/beam_color
 	///If we use an emissive appearance
 	var/emissive = TRUE
+	/// If FALSE, redraws snap per update instead of using animate() interpolation.
+	var/animate = TRUE
 	/// If set will be used instead of origin's pixel_x in offset calculations
 	var/override_origin_pixel_x = null
 	/// If set will be used instead of origin's pixel_y in offset calculations
@@ -42,6 +44,34 @@
 	var/override_target_pixel_y = null
 	///the layer of our beam
 	var/beam_layer
+	///Whether we have a cached last-drawn geometry from a previous Draw().
+	var/last_draw_valid = FALSE
+	///Last drawn origin tile/pixel coordinates (used as the "from" frame for animated redraws).
+	var/last_origin_x = 0
+	var/last_origin_y = 0
+	var/last_origin_px = 0
+	var/last_origin_py = 0
+	///Last drawn target tile/pixel coordinates.
+	var/last_target_x = 0
+	var/last_target_y = 0
+	var/last_target_px = 0
+	var/last_target_py = 0
+	///Animate time queued for the pending redraw. We take the largest (slowest glide) of any movers that triggered the redraw.
+	var/pending_animate_time = 0
+	///Last animation's "from" (where segments were seeded at draw time) — origin endpoint.
+	var/anim_from_origin_x = 0
+	var/anim_from_origin_y = 0
+	var/anim_from_origin_px = 0
+	var/anim_from_origin_py = 0
+	///Last animation's "from" — target endpoint.
+	var/anim_from_target_x = 0
+	var/anim_from_target_y = 0
+	var/anim_from_target_px = 0
+	var/anim_from_target_py = 0
+	///world.time at which the last animation began. Combined with anim_duration to estimate segments' current visual position mid-animation.
+	var/anim_start_time = 0
+	///Duration of the last animation, in deciseconds (matches the time= passed to animate()).
+	var/anim_duration = 0
 
 /datum/beam/New(
 	origin,
@@ -53,6 +83,7 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
@@ -67,6 +98,7 @@
 	src.beam_type = beam_type
 	src.beam_color = beam_color
 	src.emissive = emissive
+	src.animate = animate
 	src.override_origin_pixel_x = override_origin_pixel_x
 	src.override_origin_pixel_y = override_origin_pixel_y
 	src.override_target_pixel_x = override_target_pixel_x
@@ -97,11 +129,59 @@
 	SIGNAL_HANDLER
 	if(QDELING(src))
 		return
-	if(!QDELETED(origin) && !QDELETED(target) && get_dist(origin,target)<max_distance && origin.z == target.z)
-		QDEL_LIST(elements)
-		INVOKE_ASYNC(src, PROC_REF(Draw))
-	else
+	if(QDELETED(origin) || QDELETED(target) || get_dist(origin, target) >= max_distance || origin.z != target.z)
 		qdel(src)
+		return
+	var/queued_time = 0
+	if(animate && istype(mover))
+		queued_time = ICON_SIZE_ALL / max(mover.glide_size, MIN_GLIDE_SIZE) * world.tick_lag
+	if(queued_time > pending_animate_time)
+		pending_animate_time = queued_time
+	// Synchronous: deferring via INVOKE_ASYNC would start animate() one render frame after the mob's
+	// BYOND-managed glide, making the beam trail. Draw() doesn't sleep, so calling it here is safe.
+	Draw()
+
+/** Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
+/datum/beam/proc/get_last_geometry()
+	if(!last_draw_valid)
+		return null
+	return list(
+		"origin_x" = last_origin_x,
+		"origin_y" = last_origin_y,
+		"origin_px" = last_origin_px,
+		"origin_py" = last_origin_py,
+		"target_x" = last_target_x,
+		"target_y" = last_target_y,
+		"target_px" = last_target_px,
+		"target_py" = last_target_py,
+	)
+
+/** Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
+/datum/beam/proc/inherit_glide(list/geometry, animate_time)
+	if(!geometry || animate_time <= 0)
+		return
+	last_origin_x = geometry["origin_x"]
+	last_origin_y = geometry["origin_y"]
+	last_origin_px = geometry["origin_px"]
+	last_origin_py = geometry["origin_py"]
+	last_target_x = geometry["target_x"]
+	last_target_y = geometry["target_y"]
+	last_target_px = geometry["target_px"]
+	last_target_py = geometry["target_py"]
+	// Mirror into the anim "from" frame; with anim_duration 0 the next Draw() treats progress as 1 and
+	// seeds segments exactly at these endpoints, then animates to the (new) live position.
+	anim_from_origin_x = last_origin_x
+	anim_from_origin_y = last_origin_y
+	anim_from_origin_px = last_origin_px
+	anim_from_origin_py = last_origin_py
+	anim_from_target_x = last_target_x
+	anim_from_target_y = last_target_y
+	anim_from_target_px = last_target_px
+	anim_from_target_py = last_target_py
+	anim_duration = 0
+	anim_start_time = world.time
+	last_draw_valid = TRUE
+	pending_animate_time = animate_time
 
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
@@ -115,54 +195,116 @@
 /**
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
  */
-/datum/beam/proc/Draw()
+/datum/beam/proc/Draw(atom/movable/mover = null, atom/oldloc = null)
 	if(SEND_SIGNAL(src, COMSIG_BEAM_BEFORE_DRAW) & BEAM_CANCEL_DRAW)
 		return
+	var/animate_time = pending_animate_time
+	pending_animate_time = 0
+	if(!animate)
+		animate_time = 0
 	var/origin_px = (isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x) + origin.pixel_w
 	var/origin_py = (isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y) + origin.pixel_z
 	var/target_px = (isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x) + target.pixel_w
 	var/target_py = (isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y) + target.pixel_z
-	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x , target.y, target_px, target_py)
-	///var/Angle = round(get_angle(origin,target))
+
+	// Seed from where segments visually are *now*, not where the last Draw asked them to end up.
+	// If the previous animation is still in flight (e.g. consecutive-tick or mid-diagonal moves),
+	// using the cached destination teleports segments forward then animates back — the diagonal jump.
+	// Lerp last from→to by elapsed time to get the real current frame.
+	var/progress = 1
+	if(last_draw_valid && anim_duration > 0)
+		progress = clamp((world.time - anim_start_time) / anim_duration, 0, 1)
+	var/old_origin_x_f = last_draw_valid ? (anim_from_origin_x + (last_origin_x - anim_from_origin_x) * progress) : origin.x
+	var/old_origin_y_f = last_draw_valid ? (anim_from_origin_y + (last_origin_y - anim_from_origin_y) * progress) : origin.y
+	var/old_origin_px_f = last_draw_valid ? (anim_from_origin_px + (last_origin_px - anim_from_origin_px) * progress) : origin_px
+	var/old_origin_py_f = last_draw_valid ? (anim_from_origin_py + (last_origin_py - anim_from_origin_py) * progress) : origin_py
+	var/old_target_x_f = last_draw_valid ? (anim_from_target_x + (last_target_x - anim_from_target_x) * progress) : target.x
+	var/old_target_y_f = last_draw_valid ? (anim_from_target_y + (last_target_y - anim_from_target_y) * progress) : target.y
+	var/old_target_px_f = last_draw_valid ? (anim_from_target_px + (last_target_px - anim_from_target_px) * progress) : target_px
+	var/old_target_py_f = last_draw_valid ? (anim_from_target_py + (last_target_py - anim_from_target_py) * progress) : target_py
+	if(!last_draw_valid)
+		animate_time = 0
+
+	// Endpoints in absolute world-pixel coordinates.
+	var/vector/origin_world = vector(origin.x * ICON_SIZE_X + origin_px, origin.y * ICON_SIZE_Y + origin_py)
+	var/vector/target_world = vector(target.x * ICON_SIZE_X + target_px, target.y * ICON_SIZE_Y + target_py)
+	var/vector/old_origin_world = vector(old_origin_x_f * ICON_SIZE_X + old_origin_px_f, old_origin_y_f * ICON_SIZE_Y + old_origin_py_f)
+	var/vector/old_target_world = vector(old_target_x_f * ICON_SIZE_X + old_target_px_f, old_target_y_f * ICON_SIZE_Y + old_target_py_f)
+
+	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x, target.y, target_px, target_py)
+	var/vector/beam_direction = vector(sin(Angle), cos(Angle))
+	// Old angle from the interpolated endpoints.
+	var/vector/old_beam_delta = old_target_world - old_origin_world
+	var/OLD_DX_F = old_beam_delta.x
+	var/OLD_DY_F = old_beam_delta.y
+	var/old_angle
+	if(!OLD_DY_F)
+		old_angle = (OLD_DX_F >= 0) ? 90 : 270
+	else
+		old_angle = arctan(OLD_DX_F / OLD_DY_F)
+		if(OLD_DY_F < 0)
+			old_angle += 180
+		else if(OLD_DX_F < 0)
+			old_angle += 360
 	var/matrix/rot_matrix = matrix()
+	var/matrix/old_rot_matrix = matrix()
 	var/turf/origin_turf = get_turf(origin)
 	rot_matrix.Turn(Angle)
+	old_rot_matrix.Turn(old_angle)
+	var/raw_angle_delta = abs(Angle - old_angle)
+	if(raw_angle_delta > 180) // Normalize to shortest-path angle across the 0/360 seam.
+		raw_angle_delta = 360 - raw_angle_delta
+	// Byond doesn't handle 180 degree rotations well
+	var/animate_rotation = animate_time && raw_angle_delta < 90
 
-	//Translation vector for origin and target
-	var/DX = (32*target.x+target_px)-(32*origin.x+origin_px)
-	var/DY = (32*target.y+target_py)-(32*origin.y+origin_py)
+	var/vector/beam_delta = target_world - origin_world
+	var/DX = beam_delta.x
+	var/DY = beam_delta.y
 	var/N = 0
-	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
+	var/length = round(beam_delta.size)
+	var/old_length = round(old_beam_delta.size)
+	var/vector/old_beam_direction = vector(sin(old_angle), cos(old_angle))
 
-	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
+	var/list/old_elements = elements
+	var/list/new_elements = list()
+
+	for(N in 0 to length-1 step 32)
 		if(QDELETED(src))
 			break
+		// Map each new segment to the same offset on the interpolated old beam.
+		var/old_pos = clamp(N + 16, 0, old_length)
 		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
-		elements += segment
+		new_elements += segment
 
-		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
-		if(N+32>length) //went past the target, we draw a box of space to cut away from the beam sprite so the icon actually ends at the center of the target sprite
-			var/icon/terminal_icon = new(icon, icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
-			terminal_icon.DrawBox(null,1,(length-N),32,32)//in the future if you want to improve this, remove the drawbox and instead use a 513 filter to cut away at the final object's icon
+		var/icon/terminal_icon = null
+		if(N+32>length)
+			terminal_icon = new(icon, icon_state)
+			var/cut_row = length - N
+			terminal_icon.DrawBox(null, 1, cut_row, 32, 32)
+			// Soft alpha falloff so the tip isn't a hard line.
+			var/fade_height = min(4, cut_row - 1)
+			if(fade_height > 0)
+				var/icon/alpha_mask = new(icon, icon_state)
+				alpha_mask.DrawBox(rgb(255, 255, 255, 255), 1, 1, 32, 32)
+				var/band_start = cut_row - fade_height
+				for(var/y in band_start to cut_row - 1)
+					var/from_tip = (cut_row - 1) - y // 0 at the tip row, fade_height-1 furthest back
+					var/a = round(255 * (from_tip + 1) / (fade_height + 1), 1)
+					alpha_mask.DrawBox(rgb(255, 255, 255, a), 1, y, 32, y)
+				alpha_mask.DrawBox(null, 1, cut_row, 32, 32)
+				terminal_icon.Blend(alpha_mask, ICON_MULTIPLY)
 			segment.icon = terminal_icon
 			segment.color = beam_color
 		else
 			set_subsegment_appearance(segment)
-		segment.transform = rot_matrix
-
-		//Calculate pixel offsets (If necessary)
-		var/Pixel_x
-		var/Pixel_y
-		if(DX == 0)
-			Pixel_x = 0
+		if(animate_rotation)
+			segment.transform = old_rot_matrix
 		else
-			Pixel_x = round(sin(Angle)+32*sin(Angle)*(N+16)/32)
-		if(DY == 0)
-			Pixel_y = 0
-		else
-			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+			segment.transform = rot_matrix
 
-		//Position the effect so the beam is one continous line
+		var/Pixel_x = (DX == 0) ? 0 : round(sin(Angle) + 32 * sin(Angle) * (N + 16) / 32, 1)
+		var/Pixel_y = (DY == 0) ? 0 : round(cos(Angle) + 32 * cos(Angle) * (N + 16) / 32, 1)
+
 		var/final_x = segment.x
 		var/final_y = segment.y
 		if(abs(Pixel_x)>32)
@@ -171,11 +313,75 @@
 		if(abs(Pixel_y)>32)
 			final_y += Pixel_y > 0 ? round(Pixel_y/32) : ceil(Pixel_y/32)
 			Pixel_y %= 32
-
 		segment.forceMove(locate(final_x, final_y, segment.z))
-		segment.pixel_x = origin_px + Pixel_x
-		segment.pixel_y = origin_py + Pixel_y
-		CHECK_TICK
+		var/new_pixel_x = origin_px + Pixel_x
+		var/new_pixel_y = origin_py + Pixel_y
+		if(animate_time)
+			// Seed from interpolated old endpoints so consecutive redraws don't snap.
+			var/vector/old_visual = old_origin_world + old_beam_direction * old_pos
+			var/new_visual_x = final_x * ICON_SIZE_X + new_pixel_x
+			var/new_visual_y = final_y * ICON_SIZE_Y + new_pixel_y
+			segment.pixel_x = new_pixel_x + round(old_visual.x - new_visual_x, 1)
+			segment.pixel_y = new_pixel_y + round(old_visual.y - new_visual_y, 1)
+			// Segments past the old beam's end fade in instead of popping.
+			if(N >= old_length)
+				segment.alpha = 0
+				animate(segment, alpha = 255, time = animate_time, flags = ANIMATION_PARALLEL)
+			if(animate_rotation)
+				animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
+			else
+				animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, time = animate_time, flags = ANIMATION_PARALLEL)
+		else
+			segment.pixel_x = new_pixel_x
+			segment.pixel_y = new_pixel_y
+		if(emissive)
+			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha))
+
+	elements = new_elements
+	// Fade out extra segments before deleting them so shrinking the beam does not pop the tail.
+	var/old_count = length(old_elements)
+	var/new_count = length(new_elements)
+	if(animate_time && old_count > new_count && progress >= 1)
+		for(var/i in 1 to new_count)
+			qdel(old_elements[i])
+		for(var/i in new_count + 1 to old_count)
+			var/obj/effect/ebeam/dying = old_elements[i]
+			// Project the dying segment onto the new beam and clamp it to the tip.
+			var/proj_pos = clamp((i - 1) * ICON_SIZE_ALL + 16, 0, length)
+			var/vector/proj_world = origin_world + beam_direction * proj_pos
+			var/dying_world_x = dying.x * ICON_SIZE_X
+			var/dying_world_y = dying.y * ICON_SIZE_Y
+			var/target_px_anim = round(proj_world.x - dying_world_x, 1)
+			var/target_py_anim = round(proj_world.y - dying_world_y, 1)
+			dying.cut_overlays() // Remove emissive overlay so it doesn't glow while the segment fades out.
+			if(animate_rotation)
+				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, transform = rot_matrix, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
+			else
+				animate(dying, pixel_x = target_px_anim, pixel_y = target_py_anim, alpha = 0, time = animate_time, flags = ANIMATION_PARALLEL)
+			QDEL_IN(dying, animate_time)
+	else
+		QDEL_LIST(old_elements)
+
+	// Cache this draw's seed and destination so the next Draw() can lerp mid-animation.
+	anim_from_origin_x = old_origin_x_f
+	anim_from_origin_y = old_origin_y_f
+	anim_from_origin_px = old_origin_px_f
+	anim_from_origin_py = old_origin_py_f
+	anim_from_target_x = old_target_x_f
+	anim_from_target_y = old_target_y_f
+	anim_from_target_px = old_target_px_f
+	anim_from_target_py = old_target_py_f
+	last_origin_x = origin.x
+	last_origin_y = origin.y
+	last_origin_px = origin_px
+	last_origin_py = origin_py
+	last_target_x = target.x
+	last_target_y = target.y
+	last_target_px = target_px
+	last_target_py = target_py
+	anim_start_time = world.time
+	anim_duration = animate_time
+	last_draw_valid = TRUE
 
 /datum/beam/proc/set_up_effect(obj/effect/ebeam/beam_effect, effect_icon_state)
 	beam_effect.icon = icon
@@ -206,6 +412,7 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
@@ -225,21 +432,13 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	var/emissive = TRUE
 	var/datum/beam/owner
 
 /obj/effect/ebeam/Initialize(mapload, beam_owner)
 	owner = beam_owner
 	return ..()
-
-/obj/effect/ebeam/update_overlays()
-	. = ..()
-	if(!emissive)
-		return
-	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
-	emissive_overlay.transform = transform
-	emissive_overlay.alpha = alpha
-	. += emissive_overlay
 
 /obj/effect/ebeam/Destroy()
 	owner = null
@@ -331,18 +530,24 @@
 	time=INFINITY,maxdistance=INFINITY,
 	beam_type=/obj/effect/ebeam,
 	beam_color = null, emissive = TRUE,
+	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
 	layer = ABOVE_ALL_MOB_LAYER,
 	icon_state_variants = 0,
+	glide_seed = null,
+	glide_time = 0,
 )
 	var/datum/beam/newbeam
 
 	if(icon_state_variants <= 0)
-		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
 	else
-		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
+		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
+	// Seed the glide before Start()'s first Draw() runs (INVOKE_ASYNC runs it synchronously here since
+	// Draw() never sleeps), so a rebuilt beam animates from its predecessor instead of snapping.
+	newbeam.inherit_glide(glide_seed, glide_time)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam

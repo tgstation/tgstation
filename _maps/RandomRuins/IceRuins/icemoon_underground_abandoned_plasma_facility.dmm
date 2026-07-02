@@ -204,7 +204,7 @@
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
 "dB" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	name = "Baloo"
 	},
 /turf/open/misc/asteroid/snow/icemoon,

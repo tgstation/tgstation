@@ -1,3 +1,6 @@
+#define BONUS_MATS_MINIMUM 1
+#define BONUS_MATS_MAXIMUM 5
+
 ///Boulders with special artificats that can give higher mining points
 /obj/item/boulder/artifact
 	name = "artifact boulder"
@@ -7,10 +10,14 @@
 	var/artifact_type = /obj/item/relic/lavaland
 	/// References to the relic inside the boulder, if any.
 	var/obj/item/artifact_inside
+	/// Bonus materials to add to this boulder, in addition to existing materials created by the ore vent.
+	var/datum/material/bonus_mat
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
 	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology in the future.
+	if(bonus_mat)
+		add_bonus_mats()
 
 /obj/item/boulder/artifact/Destroy(force)
 	QDEL_NULL(artifact_inside)
@@ -27,7 +34,24 @@
 
 /obj/item/boulder/artifact/update_icon_state()
 	. = ..()
-	icon_state = "boulder_artifact" // Hardset to artifact sprites for consistency
+	icon_state = initial(icon_state) // Hardset to artifact sprites for consistency
+
+/// Adds a random amount of material to an artifact boulder, determined by BONUS_MAT defines and of the type bonus_mat defined on the boulder.
+/obj/item/boulder/artifact/proc/add_bonus_mats()
+	var/list/bonus_mats = list()
+	if(custom_materials)
+		bonus_mats = custom_materials.Copy()
+	bonus_mats[bonus_mat] += rand(BONUS_MATS_MINIMUM, BONUS_MATS_MAXIMUM) * SHEET_MATERIAL_AMOUNT
+	set_custom_materials(bonus_mats)
+
+
+/obj/item/boulder/artifact/bluespace
+	icon_state = "boulder_artifact_BS"
+	bonus_mat = /datum/material/bluespace
+
+/obj/item/boulder/artifact/diamond
+	icon_state = "boulder_artifact_diamond"
+	bonus_mat = /datum/material/diamond
 
 ///Boulders usually spawned in lavaland labour camp area
 /obj/item/boulder/gulag
@@ -77,3 +101,6 @@
 	desc = "A bizarre, twisted boulder. Wait, wait no, it's just a rock."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1
+
+#undef BONUS_MATS_MINIMUM
+#undef BONUS_MATS_MAXIMUM

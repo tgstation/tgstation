@@ -165,7 +165,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/stasis_bag
-	name = "Stasis Bodybag"
+	name = "Stasis Body Bag"
 	desc = "A disposal bodybag designed to stabilize patients in the field in critical condition. \
 		The bag itself cannot maintain stasis for long, and will eventually fall apart."
 	id = "stasis_bodybag"

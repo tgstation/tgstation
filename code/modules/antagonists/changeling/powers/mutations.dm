@@ -478,7 +478,7 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/tentacle/Destroy()
-	qdel(chain)
+	QDEL_NULL(chain)
 	source = null
 	return ..()
 

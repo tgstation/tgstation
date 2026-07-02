@@ -95,7 +95,7 @@
 	if(isnull(item.atom_storage))
 		return NONE
 
-	if(length(contents) >= max_items)
+	if(length(griddled_objects) >= max_items)
 		balloon_alert(user, "it's full!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -109,7 +109,7 @@
 	for(var/obj/tray_item in item)
 		if(!IS_EDIBLE(tray_item))
 			continue
-		if(length(contents) >= max_items)
+		if(length(griddled_objects) >= max_items)
 			break
 		if(item.atom_storage.attempt_remove(tray_item, src))
 			loaded++

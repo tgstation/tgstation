@@ -1,4 +1,4 @@
-/obj/item/circuitboard/computer
+/obj/item/circuitboard/computer/obj/machinery/computer/upload/ai/no_lock
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
@@ -14,11 +14,21 @@
 	name = "AI Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/ai
+	req_one_access = list(ACCESS_AI_UPLOAD)
+
+/obj/item/circuitboard/computer/aiupload/no_lock
+	build_path = /obj/machinery/computer/upload/ai/no_lock
+	req_one_access = null
 
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	req_one_access = list(ACCESS_AI_UPLOAD)
 	build_path = /obj/machinery/computer/upload/borg
+
+/obj/item/circuitboard/computer/borgupload/no_lock
+	req_one_access = null
+	build_path = /obj/machinery/computer/upload/borg/no_lock
 
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
@@ -509,19 +519,21 @@
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
 
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (user.combat_mode || !isidcard(attacking_item))
-		return ..()
-	if (check_access(attacking_item))
-		locked = !locked
-		balloon_alert(user, locked ? "locked" : "unlocked")
-		user.visible_message(
-			message = span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [attacking_item]."),
-			self_message = span_notice("You unlock \the [src] with \the [attacking_item]."),
-			blind_message = span_hear("You hear a soft beep."),
-		)
-	else
+/obj/item/circuitboard/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode || !isidcard(tool))
+		return NONE
+	if (!check_access(tool))
 		balloon_alert(user, "no access!")
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	balloon_alert(user, locked ? "locked" : "unlocked")
+	user.visible_message(
+		span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [tool]."),
+		span_notice("You unlock \the [src] with \the [tool]."),
+		span_hear("You hear a soft beep."),
+	)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

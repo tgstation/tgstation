@@ -340,7 +340,7 @@
 
 /obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
-		var/mob/thrower = throwingdatum.thrower.resolve()
+		var/mob/thrower = throwingdatum.thrower?.resolve()
 		if(thrower && ismob(thrower))
 			to_chat(thrower, span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
 		return

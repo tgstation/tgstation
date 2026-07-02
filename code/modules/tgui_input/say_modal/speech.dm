@@ -123,7 +123,7 @@
  *  boolean - success or failure
  */
 /datum/tgui_say/proc/handle_entry(type, payload)
-	if(!payload?["channel"] || !payload["entry"])
+	if(!payload?["channel"] || isnull(payload["entry"]))
 		CRASH("[usr] entered in a null payload to the chat window.")
 	if(length(payload["entry"]) > max_length)
 		CRASH("[usr] has entered more characters than allowed into a TGUI-Say")

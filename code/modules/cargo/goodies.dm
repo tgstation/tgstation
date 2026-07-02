@@ -203,6 +203,12 @@
 	cost = PAYCHECK_CREW * 3
 	contains = list(/obj/item/storage/toolbox/mechanical)
 
+/datum/supply_pack/goody/autolatheboard
+	name = "Autolathe Circuit Board"
+	desc = "A single autolathe circuit board for your construction needs."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/circuitboard/machine/autolathe)
+
 /datum/supply_pack/goody/valentine
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"

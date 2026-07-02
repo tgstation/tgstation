@@ -199,7 +199,7 @@
 
 /// Picks a random toxin and assigns it to the bee
 /mob/living/basic/bee/proc/assign_random_toxin_reagent()
-	assign_reagent(get_random_reagent_id(whitelist = subtypesof(/datum/reagent/toxin)))
+	assign_reagent(GLOB.chemical_reagents_list[get_random_reagent_id(whitelist = subtypesof(/datum/reagent/toxin))])
 
 /mob/living/basic/bee/mutate()
 	. = ..()

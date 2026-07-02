@@ -23,11 +23,11 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/M, params)
-	if(!istype(dropping) || !istype(M))
+/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/living/user, params)
+	if(!istype(dropping) || !istype(user))
 		return ..()
-	if(M == dropping)
-		mob_try_enter(M)
+	if(user == dropping)
+		mob_try_enter(user)
 	return ..()
 
 /obj/vehicle/sealed/Exited(atom/movable/gone, direction)

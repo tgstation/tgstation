@@ -172,6 +172,8 @@
 	var/list/species_exception = null
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
+	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
+	var/bodyshapes_with_variations = NONE
 
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
@@ -366,7 +368,7 @@
 	return TRUE
 
 /obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+	if(B && B.loc == loc && !(resistance_flags & INDESTRUCTIBLE))
 		atom_destruction(MELEE)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -423,7 +425,8 @@
 
 	if(item_flags & CRUEL_IMPLEMENT)
 		.[span_red("morbid")] = "It seems quite practical for particularly morbid procedures and experiments."
-
+	if(item_flags & BLUESPACE_INTERFERENCE)
+		.["bluespace-active"] = "It is highly active in bluespace and will cause malfunctions in teleporters."
 	if (siemens_coefficient == 0)
 		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
 	else if (siemens_coefficient <= 0.5)

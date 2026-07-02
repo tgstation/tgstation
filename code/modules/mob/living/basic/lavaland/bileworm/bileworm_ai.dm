@@ -2,6 +2,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bileworm,
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
+		BB_BILEWORM_FLEE_DISTANCE = 3,
 	)
 
 	planning_subtrees = list(
@@ -22,15 +23,11 @@
 		return
 
 	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
+	var/datum/action/cooldown/mob_cooldown/bile = controller.blackboard[BB_BILEWORM_SPEW_BILE]
 
-	//because one ability is always INFINITY cooldown, this actually works to check which ability should be used
-	//sometimes it will try to spew bile on infinity cooldown, but that's okay because as soon as resurface is ready it will attempt that
-
-	if(resurface?.IsAvailable())
+	if(resurface?.IsAvailable() && (controller.blackboard[BB_BILEWORM_SCARED] || get_dist(controller.pawn, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) <= controller.blackboard[BB_BILEWORM_FLEE_DISTANCE]))
 		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_RESURFACE, BB_BASIC_MOB_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-
-	var/datum/action/cooldown/mob_cooldown/bile = controller.blackboard[BB_BILEWORM_SPEW_BILE]
 
 	if(bile?.IsAvailable())
 		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_SPEW_BILE, BB_BASIC_MOB_CURRENT_TARGET)

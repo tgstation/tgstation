@@ -196,6 +196,7 @@
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 	allow_shuttle_docking = TRUE
+	skip_minimap_rendering = TRUE
 
 /area/icemoon/surface
 	name = "Icemoon"

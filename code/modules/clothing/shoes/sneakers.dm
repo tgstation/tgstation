@@ -12,6 +12,8 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	greyscale_colors = "#2d2d33#ffffff"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
+
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
 

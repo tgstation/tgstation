@@ -83,7 +83,7 @@
 		/datum/action/cooldown/alien/promote,
 	)
 	grant_actions_by_list(innate_actions)
-
+	add_movespeed_mod_immunities(type, /datum/movespeed_modifier/tail_dragger)
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()

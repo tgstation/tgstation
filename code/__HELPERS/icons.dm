@@ -1426,7 +1426,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 // Reorder the 2d pixel data of the passed in frames into a data string that can be passed to rustg_dmi_create_png
 /proc/reorder_pixels(icon_width, icon_height, grid_width, grid_height, list/frames)
-	var/file_height = icon_height * grid_height
+	var/file_width = icon_width * grid_width
 
 	// This little trick right here reduces the total iteration of repeat_string from the product of the arguments to their sum.
 	// Can't be applied to the general case without a complex partitioning algorithm,
@@ -1443,7 +1443,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		var/column = (i-1)%grid_width
 		for(var/y in 1 to length(frame))
 			var/list/row = jointext(frame[y], "")
-			var/splice_start = (row_index+y-1)*file_height + column*icon_width + 1
+			var/splice_start = (row_index*icon_height+y-1)*file_width + column*icon_width + 1
 			linear_pixels = splicetext(linear_pixels, (splice_start-1)*9+1, (splice_start+icon_width-1)*9+1, row)
 	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
 	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)

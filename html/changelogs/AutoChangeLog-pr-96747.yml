@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Miner callouts are now off by default"
+  - bugfix: "Miner callouts can now be used to command pets like regular pointing"

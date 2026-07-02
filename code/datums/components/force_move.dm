@@ -10,6 +10,8 @@
 	var/mob/mob_parent = parent
 	var/dist = get_dist(mob_parent, target)
 	var/datum/move_loop/loop = GLOB.move_manager.move_towards(mob_parent, target, delay = 1, timeout = dist)
+	if(!loop)
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(mob_parent, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(stop_move))
 	RegisterSignal(mob_parent, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 	if(spin)

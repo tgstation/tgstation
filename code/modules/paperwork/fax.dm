@@ -70,6 +70,41 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	fax_name = "[current_area.name]"
 	return ..()
 
+/obj/machinery/fax/heads
+	abstract_type = /obj/machinery/fax/heads
+
+/obj/machinery/fax/heads/Initialize(mapload)
+	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
+/obj/machinery/fax/heads/captain
+	name = "Captain's Fax Machine"
+	fax_name = "Captain's Office"
+
+/obj/machinery/fax/heads/hop
+	name = "Head of Personnel's Fax Machine"
+	fax_name = "Head of Personnel's Office"
+
+/obj/machinery/fax/heads/hos
+	name = "Head of Security's Fax Machine"
+	fax_name = "Head of Security's Office"
+
+/obj/machinery/fax/heads/cmo
+	name = "Chief Medical Officer's Fax Machine"
+	fax_name = "Chief Medical Officer's Office"
+
+/obj/machinery/fax/heads/rd
+	name = "Research Director's Fax Machine"
+	fax_name = "Research Director's Office"
+
+/obj/machinery/fax/heads/ce
+	name = "Chief Engineer's Fax Machine"
+	fax_name = "Chief Engineer's Office"
+
+/obj/machinery/fax/heads/qm
+	name = "Quartermaster's Fax Machine"
+	fax_name = "Quartermaster's Office"
+
 /obj/machinery/fax/admin/syndicate
 	name = "Syndicate Fax Machine"
 
@@ -181,20 +216,23 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		fax_name = new_fax_name
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/fax/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if (jammed && clear_jam(item, user))
-		return
-	if (panel_open)
-		if (is_wire_tool(item))
-			wires.interact(user)
-		return
-	if (can_load_item(item))
-		if (!loaded_item_ref?.resolve())
-			loaded_item_ref = WEAKREF(item)
-			item.forceMove(src)
-			update_appearance()
-		return
-	return ..()
+/obj/machinery/fax/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(jammed && clear_jam(tool, user))
+		return ITEM_INTERACT_SUCCESS
+	if(panel_open && is_wire_tool(tool))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+	if(can_load_item(tool))
+		if(loaded_item_ref?.resolve())
+			balloon_alert(user, "item already loaded!")
+			return ITEM_INTERACT_BLOCKING
+		loaded_item_ref = WEAKREF(tool)
+		tool.forceMove(src)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /**
  * Attempts to clean out a jammed machine using a passed item.
@@ -401,6 +439,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
+	SEND_SIGNAL(src, COMSIG_FAX_MESSAGE_RECEIVED, sender_name)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.

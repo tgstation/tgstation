@@ -100,7 +100,7 @@
 	var/long_term_power = 10
 	///Automatically name the APC after the area is in
 	var/auto_name = FALSE
-	///Time to allow the APC to regain some power and to turn the channels back online
+	///Time to allow the APC to regain some power and to turn the channels back online in seconds
 	var/failure_timer = 0
 	///Forces an update on the power use to ensure that the apc has enough power
 	var/force_update = FALSE
@@ -282,8 +282,8 @@
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
-	energy_fail(disrupt_duration)
+	// failure timer is in seconds, not deciseconds, so we need to convert
+	energy_fail(disrupt_duration * 0.1)
 	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
@@ -589,7 +589,7 @@
 	if(!area?.requires_power)
 		return
 	if(failure_timer)
-		failure_timer--
+		failure_timer = max(0, failure_timer - seconds_per_tick)
 		force_update = TRUE
 		return
 
@@ -660,11 +660,12 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
-			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
-			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
+			//At this point the APC is fully powered. If we've swapped to night lights because of low power then
+			//that gets undone here. The night lights are disabled depending on nightshift or security level.
+			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
-				if(nightshift_disabled)
+				var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)

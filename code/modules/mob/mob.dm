@@ -782,11 +782,7 @@
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-/mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
+/mob/proc/mode()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
@@ -943,14 +939,8 @@
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots[previous_index]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots[held_index]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, previous_index)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
@@ -1462,13 +1452,6 @@
 	//Do not do parent's actions, as we *usually* do this differently.
 	fully_replace_character_name(real_name, new_name)
 
-///Show the language menu for this mob
-/mob/verb/open_language_menu_verb()
-	set name = "Open Language Menu"
-	set category = "IC"
-
-	get_language_holder().open_language_menu(usr)
-
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
@@ -1589,21 +1572,6 @@
 	canon_client = null
 
 ///Shows a tgui window with memories
-/mob/verb/memory()
-	set name = "Memories"
-	set category = "IC"
-	set desc = "View your character's memories."
-	if(!mind)
-		var/fail_message = "You have no mind!"
-		if(isobserver(src))
-			fail_message += " You have to be in the current round at some point to have one."
-		to_chat(src, span_warning(fail_message))
-		return
-	if(!mind.memory_panel)
-		mind.memory_panel = new(usr, mind)
-	mind.memory_panel.ui_interact(usr)
-
-///Shows a tgui window with memories
 /mob/proc/open_memory_panel()
 	if(!mind)
 		var/fail_message = "You have no mind!"
@@ -1654,12 +1622,6 @@
 
 	data["memories"] = memories
 	return data
-
-/mob/verb/view_skills()
-	set category = "IC"
-	set name = "View Skills"
-
-	mind?.print_levels(src)
 
 /mob/key_down(key, client/client, full_key)
 	..()

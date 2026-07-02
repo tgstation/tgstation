@@ -5,8 +5,8 @@
  */
 
 import { storage } from 'common/storage';
-import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'tgui-core/vector';
 import type { BooleanLike } from 'tgui-core/react';
+import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'tgui-core/vector';
 import { createLogger } from './logging';
 
 type Point = [number, number];

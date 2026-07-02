@@ -654,7 +654,7 @@
 		operative team's body-cams. They can also pilot the shuttle remotely and view the station's camera net. \
 		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
 	item = /obj/item/antag_spawner/nuke_ops/overwatch
-	cost = 12
+	cost = 10
 	purchasable_from = UPLINK_FIREBASE_OPS
 
 // ~~ Disposable Sentry Gun ~~

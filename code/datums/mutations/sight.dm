@@ -141,11 +141,7 @@
 	text_gain_indication = span_notice("You feel pressure building up behind your eyes.")
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
-
-/datum/mutation/laser_eyes/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
+	mutation_icon_state = "lasereyes"
 
 /datum/mutation/laser_eyes/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
@@ -158,9 +154,6 @@
 	if(.)
 		return
 	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
-
-/datum/mutation/laser_eyes/get_visual_indicator()
-	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
 /datum/mutation/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)

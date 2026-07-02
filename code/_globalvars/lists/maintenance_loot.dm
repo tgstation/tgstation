@@ -246,6 +246,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/canned/peaches/maint = 1,
 		/obj/item/storage/box/donkpockets = 1,
 		/obj/item/storage/box/gum/happiness = 1,
+		/obj/item/storage/box/ramen_beef = 1,
 		list(//Donk Varieties
 			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
@@ -319,7 +320,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,
 		/obj/item/spess_knife = 1,
-		/obj/item/gun/ballistic/automatic/pistol/doorhickey = 1,
+		/obj/item/gun/ballistic/automatic/pistol/doohickey = 1,
 		) = 1,
 
 	list(//equipment
