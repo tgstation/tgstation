@@ -230,6 +230,10 @@
 	timeout = 3 SECONDS
 	hidden = TRUE
 
+/datum/mood_event/creeping/dead
+	mood_change = 8
+	timeout = 0
+
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3

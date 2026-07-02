@@ -337,7 +337,7 @@
 	key_third_person = "flares"
 	message = "flares up to a dazzling intensity!"
 	emote_type = EMOTE_VISIBLE
-	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
+	sound = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
 /datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
 	if(!isethereal(user))
@@ -354,7 +354,7 @@
 	key_third_person = "flicker"
 	message = "flickers."
 	emote_type = EMOTE_VISIBLE
-	sound = "sound/effects/sparks/sparks4.ogg"
+	sound = 'sound/effects/sparks/sparks4.ogg'
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
 	if(!isethereal(user))

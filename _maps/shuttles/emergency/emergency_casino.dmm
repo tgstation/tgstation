@@ -270,7 +270,7 @@
 /area/shuttle/escape)
 "jH" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)

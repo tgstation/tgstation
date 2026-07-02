@@ -89,6 +89,8 @@ Possible to do for anyone motivated enough:
 	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
+	/// Whether this pad is currently projecting a pointing arrow
+	var/pointing = FALSE
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
 
@@ -737,6 +739,43 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		animate(ray, transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle),time = 1)
 	else
 		ray.transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle)
+
+/// Project a holographic pointing arrow from this holopad toward a target
+/obj/machinery/holopad/proc/holo_point(atom/target, invisibility = 0)
+	if(pointing)
+		return
+	var/turf/pad_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	if(!pad_turf || !target_turf)
+		return
+	pointing = TRUE
+	var/obj/effect/temp_visual/point/holo/visual = new(pad_turf, invisibility)
+	var/obj/effect/overlay/holoray/ray = new(pad_turf)
+	var/disty = target_turf.y - pad_turf.y
+	var/distx = target_turf.x - pad_turf.x
+	var/distance = sqrt(distx*distx + disty*disty)
+	var/angle
+	if(!disty)
+		angle = (distx >= 0) ? 90 : 270
+	else
+		angle = arctan(distx/disty)
+		if(disty < 0)
+			angle += 180
+		else if(distx < 0)
+			angle += 360
+	var/matrix/M = matrix()
+	ray.transform = turn(M.Scale(1, distance), angle)
+	animate(visual, pixel_x = (target_turf.x - pad_turf.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_turf.y - pad_turf.y) * ICON_SIZE_Y + target.pixel_y, time = 1.7, easing = EASE_OUT)
+	set_light(2)
+	icon_state = "[base_icon_state]1"
+	addtimer(CALLBACK(src, PROC_REF(clear_holo_point), ray), 2.5 SECONDS)
+	return visual
+
+/// Called after the holo-point expires to restore the holopad's state
+/obj/machinery/holopad/proc/clear_holo_point(obj/effect/overlay/holoray/ray)
+	qdel(ray)
+	pointing = FALSE
+	SetLightsAndPower()
 
 // RECORDED MESSAGES
 

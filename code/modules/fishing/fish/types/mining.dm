@@ -96,7 +96,6 @@
 	if(/datum/fish_trait/territorial in fish_traits)
 		return
 	if(!prob(anger))
-		result.AddElement(/datum/element/ai_retaliate)
 		qdel(result.ai_controller)
 		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(result)
 	else if(anger < 30) //not really that mad, just a bit unstable.
