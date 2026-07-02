@@ -72,8 +72,8 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/instrument/piano_synth/headphones
 
-/datum/outfit/corpse_disco/post_equip(/mob/living/basic/zombie/Zombert, visuals_only = FALSE)
-	hair_list = list("Afro" = 7, "Afro 2" = 6, "Afro (Large)" = 2,  "Afro (Huge)" = 1, "Short Hair 80s" = 4)
+/datum/outfit/corpse_disco/post_equip(mob/living/carbon/human/Zombert, visuals_only = FALSE)
+	var/hair_list = list("Afro" = 7, "Afro 2" = 6, "Afro (Large)" = 2,  "Afro (Huge)" = 1, "Short Hair 80s" = 4)
 	Zombert.set_hairstyle(pick_weight(hair_list))
 	Zombert.set_haircolor(random_color())
 

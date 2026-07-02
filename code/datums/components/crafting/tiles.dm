@@ -77,3 +77,15 @@
 	)
 	tool_behaviors = list(TOOL_WELDER)
 	category = CAT_TILES
+
+/datum/crafting_recipe/neo_tile
+	name = "Neo Tile"
+	result = /obj/item/stack/tile/neo/red
+	reqs = list(
+		/obj/item/stack/tile/iron = 4,
+		/datum/reagent/phosphorus = 20,
+		/datum/reagent/uranium/radium = 20,
+		/datum/reagent/fuel/oil = 10,
+	)
+	result_amount = 4
+	category = CAT_TILES

@@ -12,10 +12,10 @@
 		/obj/item/stack/sheet/bronze/thirty = 20,
 		/obj/item/stack/tile/noslip{amount = 20} = 10,
 		/obj/item/stack/sheet/plastic{amount = 30} = 10,
-		/obj/item/stack/sheet/rock{amount = 30} = 10,
+		/obj/item/stack/sheet/mineral/rock{amount = 30} = 10,
 		/obj/item/stack/tile/mineral/plastitanium/pod{amount = 20} = 4,
-		/obj/item/stack/tile/mineral/plastitanium/light{amount = 20} = 3,
-		/obj/item/stack/tile/mineral/plastitanium/dark{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod/dark{amount = 20} = 3,
 	)
 
 /obj/effect/spawner/random/decoration/carpet

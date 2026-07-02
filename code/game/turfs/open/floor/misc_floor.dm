@@ -309,6 +309,39 @@
 	icon_state = "hauntium_ghostbricked"
 	floor_tile = /obj/item/stack/tile/hauntium/ghostbricked
 
+/turf/open/floor/neo
+	name = "neo tile"
+	desc = "It's pink and black because it shouldn't exist!"
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/neo
+
+/turf/open/floor/neo/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/neo/red
+	name = "red neo tile"
+	icon_state = "neo_red"
+	desc = "A neo tile. Radiates with the power of ketchup."
+	floor_tile = /obj/item/stack/tile/neo/red
+
+/turf/open/floor/neo/purple
+	name = "purple neo tile"
+	icon_state = "neo_purple"
+	desc = "A neo tile. Radiates with the power of neo. Duh."
+	floor_tile = /obj/item/stack/tile/neo/purple
+
+/turf/open/floor/neo/orange
+	name = "orange neo tile"
+	icon_state = "neo_orange"
+	desc = "A neo tile. Radiates with the power of 80s stylized sunset and tequilla."
+	floor_tile = /obj/item/stack/tile/neo/orange
+
+/turf/open/floor/neo/cyan
+	name = "cyan neo tile"
+	icon_state = "neo_cyan"
+	desc = "A neo tile. Radiates with the power of being pedantic about colour names."
+	floor_tile = /obj/item/stack/tile/neo/cyan
+
 /turf/open/floor/stone
 	name = "stone brick floor"
 	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\

@@ -16,6 +16,7 @@
 	max_amount = 60
 	novariants = TRUE
 	material_flags = MATERIAL_EFFECTS
+	usable_for_construction = TRUE
 	/// the main thing it exists for, list of fillings to reskin into.
 	var/list/wall_reskin_types
 	/// what it should be broken down back into when using a welder. Provided as a path.
@@ -89,30 +90,36 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	desc = "A filling for a standard plastitanium wall."
 	icon_state = "plastitanium-wall-fill"
 	inhand_icon_state = "sheet-plastitanium"
-	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT*2)
 	merge_type = /obj/item/stack/wall_filling/plastitanium
 	made_from = /obj/item/stack/sheet/mineral/plastitanium
 	wall_reskin_types = list(
-		/obj/item/stack/wall_filling/plastitanium,
+		/obj/item/stack/wall_filling/plastitanium/basic,
 		/obj/item/stack/wall_filling/plastitanium/survivalpod,
 		/obj/item/stack/wall_filling/plastitanium/pod,
 		/obj/item/stack/wall_filling/plastitanium/redpod,
 	)
 
+/obj/item/stack/wall_filling/plastitanium/basic
+	merge_type = /obj/item/stack/wall_filling/plastitanium/basic
+
 /obj/item/stack/wall_filling/plastitanium/survivalpod
 	name = "survival pod wall filling"
 	singular_name = "survival pod wall filler"
+	icon_state = "survivalpod-wall-fill"
 	desc = "A filling for a survival pod wall, often usen for mining in hostile enviroments."
 	merge_type = /obj/item/stack/wall_filling/plastitanium/survivalpod
 
 /obj/item/stack/wall_filling/plastitanium/pod
 	name = "dark shuttle wall filling"
 	singular_name = "dark shuttle wall filler"
+	icon_state = "pod-wall-fill"
 	desc = "A filling for a dark shuttle wall. Dark mode on."
 	merge_type = /obj/item/stack/wall_filling/plastitanium/pod
 
 /obj/item/stack/wall_filling/plastitanium/redpod
 	name = "red dark shuttle wall filling"
 	singular_name = "red dark shuttle wall filler"
+	icon_state = "redpod-wall-fill"
 	desc = "A filling for a red dark shuttle wall. Quite the menacing vibe."
 	merge_type = /obj/item/stack/wall_filling/plastitanium/redpod

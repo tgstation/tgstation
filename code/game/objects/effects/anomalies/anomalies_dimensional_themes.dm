@@ -44,7 +44,7 @@
 	var/list/random_spawns
 	/// Prob of placing a random spawn in a completely open turf
 	var/random_spawn_chance = 0
-	/// List of threats from the dimension. Major anomalies use this to defend themselves
+	/// List of threats from the dimension. Dimensional rifts use this to defend themselves
 	var/guardian = list()
 	/// Typepath of full-size windows which will replace existing ones
 	/// These need to be separate from replace_objs because we don't want to replace dir windows with full ones and they share typepath
@@ -175,8 +175,8 @@
  */
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	PROTECTED_PROC(TRUE)
+	var/list/floor_list = list()
 
-	var/floor_list
 	switch(area_short(affected_floor))
 		if("com")
 			floor_list = replace_com_floors
@@ -209,8 +209,7 @@
  */
 /datum/dimension_theme/proc/transform_carpet(turf/open/floor/affected_floor)
 	PROTECTED_PROC(TRUE)
-
-	var/carpet_list
+	var/list/carpet_list = list()
 	switch(area_short(affected_floor))
 		if("com")
 			carpet_list = replace_com_carpets
@@ -361,8 +360,9 @@
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
 		/obj/structure/platform = list(/obj/structure/platform/gold = 1),
 	)
+	guardian = list(/mob/living/basic/trooper/clown = 10)
 
-///Dimension where plasmamen became the Nanostrasen's main species.
+///Dimension where plasmamen overtook the world.
 /datum/dimension_theme/plasma
 	name = "Plasma"
 	icon = 'icons/obj/clothing/masks.dmi'
@@ -371,6 +371,7 @@
 	replace_objs = list(
 		/obj/item/tank/internals/oxygen = list(/obj/item/tank/internals/plasma = 1),
 	)
+	guardian = list(/mob/living/basic/skeleton/plasmaminer = 6, /mob/living/basic/skeleton/plasmaminer/jackhammer = 4)
 
 ///Dimension where earth and clown planet's roles are reversed.
 /datum/dimension_theme/clown
@@ -379,14 +380,16 @@
 	icon_state = "clown"
 	material = /datum/material/bananium
 	sound = 'sound/items/bikehorn.ogg'
+	guardian = list(/mob/living/basic/trooper/clown = 10)
 
-///Dimension where cancer regenerates people and they need radiation to live.
+///Dimension where roaches rule the world and made everything from uranium so no one gets in the way.
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
 	sound = 'sound/items/tools/welder.ogg'
+	guardian = list(/mob/living/basic/cockroach/glockroach/mobroach = 1,  /mob/living/basic/cockroach/glockroach/mobroach/goon = 4, /mob/living/basic/cockroach/glockroach = 10, /mob/living/basic/cockroach/hauberoach = 5)
 
 ///Dimension where the station was eaten by a giant space whale.
 /datum/dimension_theme/meat
@@ -395,6 +398,7 @@
 	icon_state = "meat"
 	material = /datum/material/meat
 	sound = 'sound/items/eatfood.ogg'
+	guardian = list(/mob/living/basic/fleshblob = 2, /mob/living/basic/living_limb_flesh = 4, /mob/living/basic/flesh_spider = 4)
 
 ///Dimension where every structure has to be consumable.
 /datum/dimension_theme/pizza
@@ -410,8 +414,9 @@
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
 		/obj/structure/platform = list(/obj/structure/platform/pizza = 1),
 	)
+	guardian = list(/mob/living/basic/killer_tomato = 5, /mob/living/basic/trooper/angry_chef = 5)
 
-///Dimension where the station got decomissioned and nature overtook it.
+///Dimension where humans live in harmony with nature. But then the garden gnome nation attacked.
 /datum/dimension_theme/natural
 	name = "Natural"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
@@ -424,14 +429,24 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),
 		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
+		/obj/structure/railing = list(/obj/structure/railing/wooden_fence = 1),
+		/obj/structure/railing/corner/end = list(/obj/structure/railing/corner/end/wooden_fence = 1),
 	)
+	guardian = list(/mob/living/basic/garden_gnome = 10)
 
 ///Dimension where origin countries of major corps are swapped, and Nanostrasen is japanese/chineese.
 /datum/dimension_theme/bamboo
 	name = "Bamboo"
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "bamboo"
-	replace_floors = list(/turf/open/floor/bamboo = 1)
+	replace_floors = list(/turf/open/floor/bamboo/planks = 1)
+	replace_com_floors = list(/turf/open/floor/bamboo/tatami/black = 1)
+	replace_sec_floors = list(/turf/open/floor/bamboo/tatami/black = 1)
+	replace_sci_floors = list(/turf/open/floor/bamboo/tatami/purple = 1)
+	replace_med_floors = list(/turf/open/floor/bamboo = 1)
+	replace_eng_floors = list(/turf/open/floor/bamboo = 1)
+	replace_car_floors = list(/turf/open/floor/bamboo/tatami = 1)
+	replace_ser_floors = list(/turf/open/floor/bamboo/tatami = 1)
 	replace_walls = /turf/closed/wall/mineral/bamboo
 	replace_window = /obj/structure/window/paperframe
 	replace_objs = list(
@@ -439,7 +454,9 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
 		/obj/structure/platform = list(/obj/structure/platform/bamboo = 1),
+		/obj/item/kirbyplants = list(/obj/item/kirbyplants/organic/plant4 = 1),
 	)
+	guardian = list(/mob/living/basic/trooper/spiderclan_mook = 10)
 
 ///Dimension where planets orbit stations and moons are built
 /datum/dimension_theme/icebox
@@ -456,6 +473,7 @@
 		/obj/structure/flora/grass/green/style_random,
 	)
 	random_spawn_chance = 8
+	guardian = list(/mob/living/basic/mining/ice_whelp = 2, /mob/living/basic/mining/polarbear = 3, /mob/living/basic/mining/wolf = 5, /mob/living/basic/mining/legion/snow = 5, /mob/living/basic/mining/ice_demon = 5)
 
 ///Dimension where the station is just a village on the ice moon
 /datum/dimension_theme/icebox/winter_cabin
@@ -485,9 +503,9 @@
 	random_spawns = list(/mob/living/basic/mining/goldgrub)
 	random_spawn_chance = 1
 
-	guardian = list(/mob/living/basic/mining/goliath = 4, )
+	guardian = list(/mob/living/basic/mining/goliath = 2, /mob/living/basic/mining/legion = 6, /mob/living/basic/mining/watcher = 2)
 
-///Dimension where the station is made to be 'camoflagued' as an asteroid.
+///Dimension where the station is made to be 'disguised' as an asteroid.
 /datum/dimension_theme/space
 	name = "Space"
 	icon = 'icons/effects/effects.dmi'
@@ -497,6 +515,7 @@
 	replace_floors = list(/turf/open/floor/fakespace = 1)
 	replace_walls = /turf/closed/wall/rock/porous
 	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
+	guardian = list(/mob/living/basic/carp = 9, /mob/living/basic/carp/mega = 1)
 
 ///Dimension where the station is an observatory
 /datum/dimension_theme/glass
@@ -506,6 +525,7 @@
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
 	sound = SFX_SHATTER
+	guardian = list(/mob/living/basic/eyeball = 7, /mob/living/basic/mining/watcher/glass = 3)
 
 ///Dimension where taxes are 5% less.
 /datum/dimension_theme/fancy
@@ -525,6 +545,8 @@
 	var/list/valid_carpets
 	/// List of tables we can pick from, set up in New
 	var/list/valid_tables
+
+	guardian = list(/mob/living/basic/trooper/pirate/ranged/irs = 10)
 
 /datum/dimension_theme/fancy/New()
 	. = ..()
@@ -559,10 +581,14 @@
 	material = /datum/material/glass
 
 	replace_floors = list(/turf/open/floor/light = 1)
+	replace_sec_floors = list(/turf/open/floor/neo/red = 1)
+	replace_sci_floors = list(/turf/open/floor/neo/purple = 1)
+	replace_med_floors = list(/turf/open/floor/neo/cyan = 1)
+	replace_eng_floors = list(/turf/open/floor/neo/orange = 1)
 
 	replace_carpets = list(/obj/item/stack/tile/eighties = 1)
 	replace_sec_carpets = list(/obj/item/stack/tile/eighties/red = 1)
-	replace_ser_carpets = list(turf/open/floor/carpet/neon = 1)
+	replace_ser_carpets = list(/obj/item/stack/tile/carpet/neon/simple = 1)
 
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
@@ -574,11 +600,6 @@
 	random_spawns = list(
 		/obj/machinery/jukebox/disco,
 		/obj/structure/etherealball,
-		/obj/structure/flora/bush/grassy/style_random,
-		/obj/structure/flora/bush/leavy/style_random,
-		/obj/structure/flora/tree/palm/style_random,
-		/obj/structure/flora/bush/sparsegrass/style_random,
-		/obj/structure/flora/bush/sunny/style_random,
 	)
 	random_spawn_chance = 1
 
@@ -618,7 +639,7 @@
 	)
 	random_spawn_chance = 20
 
-	guardian = list(/mob/living/basic/gorilla = 9)
+	guardian = list(/mob/living/basic/gorilla/hostile = 1, /mob/living/carbon/human/species/monkey/angry = 5, /mob/living/basic/trooper/caveman = 4)
 
 ///Dimension where ayys overtook humanity.
 /datum/dimension_theme/ayylmao
@@ -659,3 +680,4 @@
 		/obj/structure/platform = list(/obj/structure/platform/bronze = 1),
 	)
 	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'
+	guardian = list(/mob/living/basic/trooper/clock_cultist = 10)

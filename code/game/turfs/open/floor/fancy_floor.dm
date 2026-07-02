@@ -74,12 +74,12 @@
 /turf/open/floor/wood/dark
 	desc = "Stylish dark wood."
 	icon_state = "darkwood"
-	floor_tile = /obj/item/stack/tile/dark/wood
+	floor_tile = /obj/item/stack/tile/wood/dark
 
 /turf/open/floor/wood/light
 	desc = "Stylish light wood."
 	icon_state = "lightwood"
-	floor_tile = /obj/item/stack/tile/light/wood
+	floor_tile = /obj/item/stack/tile/wood/light
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -124,11 +124,11 @@
 
 /turf/open/floor/wood/light/large
 	icon_state = "lightwood_large"
-	floor_tile = /obj/item/stack/tile/light/wood/large
+	floor_tile = /obj/item/stack/tile/wood/light/large
 
 /turf/open/floor/wood/dark/large
 	icon_state = "darkwood_large"
-	floor_tile = /obj/item/stack/tile/dark/wood/large
+	floor_tile = /obj/item/stack/tile/wood/dark/large
 
 /turf/open/floor/wood/large/broken_states()
 	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")

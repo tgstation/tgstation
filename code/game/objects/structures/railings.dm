@@ -87,10 +87,10 @@
 	else
 		. += span_notice("The railing is <i>unbolted</i> from the floor and can be deconstructed with <b>wirecutters</b>.")
 
-/obj/structure/railing/item_interaction(obj/item/something, mob/living/user)
+/obj/structure/railing/item_interaction(mob/living/user, obj/item/something)
 	if(istype(something, /obj/item/food/grown/grass) && green_equivalent)
 		to_chat(user, span_notice("You begin wrapping the grass around [src]..."))
-		var/atom/moveable/new_railing = new green_equivalent(drop_location())
+		var/atom/movable/new_railing = new green_equivalent(drop_location())
 		new_railing.dir = dir
 		qdel(src)
 		qdel(something)
@@ -207,10 +207,9 @@
 		. += span_notice("The railing is <i>unbolted</i> from the floor and can be stripped off greenery with <b>wirecutters</b>.")
 
 /obj/structure/railing/green/wirecutter_act(mob/living/user, obj/item/something)
-	. = ..()
 	to_chat(user, span_warning("You cut off the greeny aroud [src]."))
 	something.play_tool_sound(src, 100)
-	var/atom/moveable/new_railing = new metal_equivalent(drop_location())
+	var/atom/movable/new_railing = new metal_equivalent(drop_location())
 	new_railing.dir = dir
 	qdel(src)
 	return TRUE

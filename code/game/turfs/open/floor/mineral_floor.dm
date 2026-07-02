@@ -220,19 +220,19 @@
 	icon_state = "podfloor"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod
 
-/turf/open/floor/mineral/plastitanium/pod_light
+/turf/open/floor/mineral/plastitanium/pod/light
 	icon_state = "podfloor_light"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/light
 
-/turf/open/floor/mineral/plastitanium/pod_dark
+/turf/open/floor/mineral/plastitanium/pod/dark
 	icon_state = "podfloor_dark"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/dark
 
-/turf/open/floor/mineral/plastitanium/pod_redlight
-	icon_state = "podfloor_redlight"
+/turf/open/floor/mineral/plastitanium/pod/redlight
+	icon_state = "podfloor_red_light"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/redlight
 
-/turf/open/floor/mineral/plastitanium/pod_red
+/turf/open/floor/mineral/plastitanium/pod/red
 	icon_state = "podfloor_red"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/pod/red
 

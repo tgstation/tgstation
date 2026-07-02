@@ -85,3 +85,9 @@
 /mob/living/basic/trooper/pirate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
+/mob/living/basic/trooper/pirate/ranged/irs
+	name = "IRS Agent"
+	mob_spawner = /obj/effect/mob_spawn/corpse/human/irs
+	corpse = /obj/effect/mob_spawn/corpse/human/irs
+	r_hand = /obj/item/gun/ballistic/automatic/wt550

@@ -108,3 +108,18 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	crusher_drop_chance = 100
+
+/// Much less durable, high damage projectiles
+/mob/living/basic/mining/watcher/glass
+	name = "glass watcher"
+	desc = "This watcher is an anomaly to regular development cycle, quite possibly otherwordly as well. What ideal circumstances must have led to its creation?"
+	icon_state = "watcher_glass"
+	icon_living = "watcher_glass"
+	icon_dead = "watcher_glass_dead"
+	eye_glow = "glass_glow"
+	maxHealth = 100
+	health = 100
+	projectile_type = /obj/projectile/temp/watcher/glass_wing
+	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/glass
+	butcher_results = list(/obj/item/stack/sheet/glass = 5, /obj/item/stack/sheet/bone = 1)
+	ranged_cooldown = 2 SECONDS

@@ -41,3 +41,10 @@
 	if(!HAS_TRAIT(target, TRAIT_RESISTCOLD))
 		return
 	target.apply_status_effect(/datum/status_effect/freon/watcher)
+
+/obj/projectile/temp/watcher/glass_wing
+	name = "glass blast"
+	damage = 15
+	damage_type = BRUTE
+	armor_flag = BULLET
+	temperature = -10

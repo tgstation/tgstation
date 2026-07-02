@@ -7,6 +7,8 @@
 	var/spawn_text
 	/// List of atom types to spawn, picked randomly
 	var/list/spawn_types
+	/// Is our list weighted?
+	var/weighted_list
 	/// Faction to grant to mobs (only applies to mobs)
 	var/list/faction
 	/// List of weak references to things we have already created
@@ -21,11 +23,12 @@
 	var/spawn_distance_exclude
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
+/datum/component/spawner/Initialize(spawn_types = list(), weighted_list = FALSE, spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
 	src.spawn_types = spawn_types
+	src.weighted_list = weighted_list
 	src.faction = faction
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
@@ -63,7 +66,11 @@
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
-	var/chosen_mob_type = pick(spawn_types)
+	var/chosen_mob_type
+	if(weighted_list)
+		chosen_mob_type = pick_weight(spawn_types)
+	else
+		chosen_mob_type = pick(spawn_types)
 	var/adjusted_spawn_count = 1
 	var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
 	if (max_spawn_this_attempt > 1)

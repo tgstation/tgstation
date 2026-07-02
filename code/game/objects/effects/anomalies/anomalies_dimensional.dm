@@ -102,46 +102,47 @@
 
 /// Da big one.
 /obj/effect/anomaly/dimensional/big
-	name = "big dimensional anomaly"
-	lifespan = ANOMALY_COUNTDOWN_TIMER * 20 // still the same as its very unlikely it reaches it.
+	name = "dimensional rift"
+	lifespan = ANOMALY_COUNTDOWN_TIMER
 	move_chance = 0
-	/// Range is set to 1 as it expands until it overtakes the entire area.
-	range = 1
-	/// Minimum teleports it will do before going away permanently
-	minimum_teleports = 5
-	/// Maximum teleports it will do before going away permanently
-	maximum_teleports = 15
+	/// how long are we waiting?
+	var/timer = 8
+	/// Starts at 0, as it expands
+	range = 0
 
-/obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
+/obj/effect/anomaly/dimensional/big/Initialize(mapload, new_lifespan)
 	. = ..()
-	transmute_area()
+	prepare_theme()
+	AddComponent(\
+		/datum/component/spawner, \
+		spawn_types = theme.guardian, \
+		weighted_list = TRUE, \
+		spawn_time = 20 SECONDS, \
+		max_spawned = 20, \
+		max_spawn_per_attempt = 3, \
+		spawn_text = "emerges from the dimensional rift", \
+		spawn_distance = 5, \
+		spawn_distance_exclude = 1, \
+	)
 
 /**
- * Transforms turfs ring after ring, thus theming and area preparation are seperate; we are redefining the ring
+ * Transforms turfs ring after ring.
  */
 /obj/effect/anomaly/dimensional/big/transmute_area()
-	if (!theme)
-		prepare_theme()
-
-	if(prob(34) || range < 4)
+	var/og_timer = timer
+	if(timer == 0 || range == 0)
 		prepare_area()
-		if (!target_turfs.len)
-			if(teleports_left <= 0 && !immortal)
-				detonate()
-				return
-			teleports_left--
-			relocate()
-			return
-
-		theme.apply_theme_to_list_of_turfs(target_turfs, show_effect = TRUE)
+		theme.apply_theme_to_list_of_turfs(target_turfs)
 		range++
-	else:
+		timer = og_timer
+	else
+		timer--
 
 /**
  * Sets the theme.
  * Optionally pass in the typepath of an anomaly theme to use that one.
  */
-/obj/effect/anomaly/dimensional/big/prepare_theme(new_theme_path)
+/obj/effect/anomaly/dimensional/big/proc/prepare_theme(new_theme_path)
 	if (!new_theme_path)
 		new_theme_path = pick(subtypesof(/datum/dimension_theme))
 	theme = SSmaterials.dimensional_themes[new_theme_path]
@@ -151,9 +152,12 @@
  * Prepare the area anomaly is in for transformation into a new theme.
  */
 
-/obj/effect/anomaly/dimensional/big/prepare_area()
+/obj/effect/anomaly/dimensional/big/prepare_area(new_theme_path)
 	target_turfs = list()
-	for (var/turf/turf as anything in turf_peel(range, range, src))
-		if (theme.can_convert(turf))
-			if(get_area(turf) == get_area(src))
+	if (range == 0)
+		if (theme.can_convert(get_turf(src)))
+			target_turfs += get_turf(src)
+	else
+		for (var/turf/turf as anything in turf_peel(range, range-1, src))
+			if (theme.can_convert(turf))
 				target_turfs += turf

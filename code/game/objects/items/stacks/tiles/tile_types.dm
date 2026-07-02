@@ -136,6 +136,14 @@
 		/obj/item/stack/tile/wood/large,
 		/obj/item/stack/tile/wood/tile,
 		/obj/item/stack/tile/wood/parquet,
+		/obj/item/stack/tile/wood/dark,
+		/obj/item/stack/tile/wood/dark/large,
+		/obj/item/stack/tile/wood/dark/tile,
+		/obj/item/stack/tile/wood/dark/parquet,
+		/obj/item/stack/tile/wood/light,
+		/obj/item/stack/tile/wood/light/large,
+		/obj/item/stack/tile/wood/light/tile,
+		/obj/item/stack/tile/wood/light/parquet,
 	)
 	mats_per_unit = list(/datum/material/wood = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
@@ -160,47 +168,63 @@
 	turf_type = /turf/open/floor/wood/tile
 	merge_type = /obj/item/stack/tile/wood/tile
 
-/obj/item/stack/tile/wood/parquet
-	name = "parquet wood floor tile"
-	singular_name = "parquet wood floor tile"
-	icon_state = "tile-wood_parquet"
-	turf_type = /turf/open/floor/wood/parquet
-	merge_type = /obj/item/stack/tile/wood/parquet
+/obj/item/stack/tile/wood/dark
+	name = "dark wood floor tile"
+	singular_name = "dark wood floor tile"
+	desc = "An easy to fit dark wood floor tile. Use while in your hand to change what pattern you want."
+	icon_state = "tile-darkwood"
+	turf_type = /turf/open/floor/wood
+	merge_type = /obj/item/stack/tile/wood/dark
 
-/obj/item/stack/tile/wood/large
-	name = "large wood floor tile"
-	singular_name = "large wood floor tile"
-	icon_state = "tile-wood_large"
-	turf_type = /turf/open/floor/wood/large
-	merge_type = /obj/item/stack/tile/wood/large
+/obj/item/stack/tile/wood/dark/parquet
+	name = "parquet dark wood floor tile"
+	singular_name = "parquet dark wood floor tile"
+	icon_state = "tile-darkwood_parquet"
+	turf_type = /turf/open/floor/wood/dark/parquet
+	merge_type = /obj/item/stack/tile/wood/dark/parquet
 
-/obj/item/stack/tile/wood/tile
-	name = "tiled wood floor tile"
-	singular_name = "tiled wood floor tile"
-	icon_state = "tile-wood_tile"
-	turf_type = /turf/open/floor/wood/tile
-	merge_type = /obj/item/stack/tile/wood/tile
+/obj/item/stack/tile/wood/dark/large
+	name = "large dark wood floor tile"
+	singular_name = "large dark wood floor tile"
+	icon_state = "tile-darkwood_large"
+	turf_type = /turf/open/floor/wood/dark/large
+	merge_type = /obj/item/stack/tile/wood/dark/large
 
-/obj/item/stack/tile/wood/parquet
-	name = "parquet wood floor tile"
-	singular_name = "parquet wood floor tile"
-	icon_state = "tile-wood_parquet"
-	turf_type = /turf/open/floor/wood/parquet
-	merge_type = /obj/item/stack/tile/wood/parquet
+/obj/item/stack/tile/wood/dark/tile
+	name = "tiled dark wood floor tile"
+	singular_name = "tiled dark wood floor tile"
+	icon_state = "tile-darkwood_tile"
+	turf_type = /turf/open/floor/wood/dark/tile
+	merge_type = /obj/item/stack/tile/wood/dark/tile
 
-/obj/item/stack/tile/wood/large
-	name = "large wood floor tile"
-	singular_name = "large wood floor tile"
-	icon_state = "tile-wood_large"
-	turf_type = /turf/open/floor/wood/large
-	merge_type = /obj/item/stack/tile/wood/large
+/obj/item/stack/tile/wood/light
+	name = "light wood floor tile"
+	singular_name = "light wood floor tile"
+	desc = "An easy to fit light wood floor tile. Use while in your hand to change what pattern you want."
+	icon_state = "tile-lightwood"
+	turf_type = /turf/open/floor/wood/light
+	merge_type = /obj/item/stack/tile/wood/light
 
-/obj/item/stack/tile/wood/tile
-	name = "tiled wood floor tile"
-	singular_name = "tiled wood floor tile"
-	icon_state = "tile-wood_tile"
-	turf_type = /turf/open/floor/wood/tile
-	merge_type = /obj/item/stack/tile/wood/tile
+/obj/item/stack/tile/wood/light/parquet
+	name = "parquet light wood floor tile"
+	singular_name = "parquet light wood floor tile"
+	icon_state = "tile-lightwood_parquet"
+	turf_type = /turf/open/floor/wood/light/parquet
+	merge_type = /obj/item/stack/tile/wood/light/parquet
+
+/obj/item/stack/tile/wood/light/large
+	name = "large light wood floor tile"
+	singular_name = "large light wood floor tile"
+	icon_state = "tile-lightwood_large"
+	turf_type = /turf/open/floor/wood/light/large
+	merge_type = /obj/item/stack/tile/wood/light/large
+
+/obj/item/stack/tile/wood/light/tile
+	name = "tiled light wood floor tile"
+	singular_name = "tiled light wood floor tile"
+	icon_state = "tile-lightwood_tile"
+	turf_type = /turf/open/floor/wood/light/tile
+	merge_type = /obj/item/stack/tile/wood/light/tile
 
 //Bamboo
 /obj/item/stack/tile/bamboo
@@ -224,7 +248,8 @@
 /obj/item/stack/tile/bamboo/planks
 	name = "bamboo planks tile"
 	singular_name = "planks planks floor tile"
-	icon_state = "tile_bamboo"
+	icon_state = "tile_bamboo_planks"
+	desc = "Layer after layer of cut bamboo placed like planks."
 	turf_type = /turf/open/floor/bamboo/planks
 	merge_type = /obj/item/stack/tile/bamboo/planks
 
@@ -1301,6 +1326,52 @@
 	icon_state = "tile_hauntium_ghostbricked"
 	turf_type = /turf/open/floor/hauntium/ghostbricked
 	merge_type = /obj/item/stack/tile/hauntium/ghostbricked
+
+/obj/item/stack/tile/neo
+	name = "neo tile"
+	singular_name = "neo floor tile"
+	inhand_icon_state = "tile-neon"
+	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/neo
+	merge_type = /obj/item/stack/tile/neo
+	tile_reskin_types = list(
+		/obj/item/stack/tile/neo/red,
+		/obj/item/stack/tile/neo/purple,
+		/obj/item/stack/tile/neo/orange,
+		/obj/item/stack/tile/neo/cyan,
+	)
+
+/obj/item/stack/tile/neo/red
+	name = "red neo tile"
+	singular_name = "red neo floor tile"
+	desc =  "A neo tile. Radiates with the power of ketchup."
+	icon_state = "neo_red"
+	turf_type = /turf/open/floor/neo/red
+	merge_type = /obj/item/stack/tile/neo/red
+
+/obj/item/stack/tile/neo/purple
+	name = "purple neo tile"
+	singular_name = "purple neo floor tile"
+	desc = "A neo tile. Radiates with the power of neo. Duh."
+	icon_state = "neo_purple"
+	turf_type = /turf/open/floor/neo/purple
+	merge_type = /obj/item/stack/tile/neo/purple
+
+/obj/item/stack/tile/neo/orange
+	name = "orange neo tile"
+	singular_name = "orange neo floor tile"
+	desc = "A neo tile. Radiates with the power of 80s stylized sunset and tequilla."
+	icon_state = "neo_orange"
+	turf_type = /turf/open/floor/neo/orange
+	merge_type = /obj/item/stack/tile/neo/orange
+
+/obj/item/stack/tile/neo/cyan
+	name = "cyan neo tile"
+	singular_name = "cyan neo floor tile"
+	desc = "A neo tile. Radiates with the power of being pedantic about colour names."
+	icon_state = "neo_cyan"
+	turf_type = /turf/open/floor/neo/cyan
+	merge_type = /obj/item/stack/tile/neo/cyan
 
 /obj/item/stack/tile/stone
 	name = "stone brick tile"

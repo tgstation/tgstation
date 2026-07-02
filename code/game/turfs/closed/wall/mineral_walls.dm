@@ -325,7 +325,29 @@
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/mineral/plastitanium/wall_fill
-	sheet_type = /obj/item/stack/wall_filling/plastitanium
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/basic
+
+/turf/closed/wall/mineral/plastitanium/darkpod
+	name = "dark pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/pod
+	icon = 'icons/turf/walls/dark_pod.dmi'
+	icon_state = "dark_pod_walls-0"
+	base_icon_state = "dark_pod_walls"
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/closed/wall/mineral/plastitanium/redpod
+	name = "red pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/redpod
+	icon = 'icons/turf/walls/red_pod.dmi'
+	icon_state = "red_pod_walls-0"
+	base_icon_state = "red_pod_walls"
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/mineral/plastitanium/survival
 	name = "pod wall"
@@ -333,8 +355,8 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"
-	sheet_type = /obj/item/stack/wall_filling/plastitanium/survivalpod
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_TITANIUM_WALLS
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
@@ -346,17 +368,16 @@
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/mineral/plastitanium/survival/pod
+	sheet_type = /obj/item/stack/wall_filling/plastitanium/survivalpod
 	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	rust_resistance = RUST_RESISTANCE_TITANIUM
-
 
 /turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
 		return TRUE
 	return ..()
-
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
