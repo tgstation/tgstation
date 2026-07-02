@@ -92,7 +92,7 @@
 /obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 50
+	damage = 60
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 35 //A bit better versus armor. Gets past anti laser armor or a sec vest, but doesnt get past proper bulletproof armor.
 	wound_bonus = 10
