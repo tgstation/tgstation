@@ -204,12 +204,16 @@ if $grep -i 'lowertext\(.+\)' "${code_files[@]}" | $grep -v 'UNLINT\(.+\)' | $gr
 fi;
 
 part "lower case obj name sanity"
-if $awk '/^\/obj\// {print; flagging=1; next} flagging {if (/^\t/) print; else flagging=0}' "${code_files[@]}" &&
-    $grep -P '^\tname\b.*[A-Z]'; then
-    echo
-    echo -e "${RED}ERROR: Found uppercase letters inside an /obj/ name string. Please ensure there is no capitalization."
-    st=1
-fi;
+for file in "${code_files[@]}"; do
+    if [[ -f "$file" && "$file" == *.dm]]; then
+        if $awk '/^\/obj\// {print; flagging=1; next} flagging {if (/^\t/) print; else flagging=0}' "${code_files[@]}" &&
+            $grep -P '^\tname\b.*[A-Z]'; then
+            echo
+            echo -e "${RED}ERROR: Found uppercase letters inside an /obj/ name string. Please ensure there is no capitalization."
+            st=1
+        fi
+    fi;
+done
 
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' "${code_files[@]}"; then
