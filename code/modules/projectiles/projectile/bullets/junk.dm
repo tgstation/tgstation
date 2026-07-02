@@ -45,6 +45,16 @@
 	fire_stacks = 5
 	suppressed = SUPPRESSED_NONE
 
+/obj/projectile/bullet/dart/ants
+	name = "a ball of ants"
+	icon_state = "trashball"
+	damage = 40 // Fuck your life.
+	inject_flags = INJECT_CHECK_PENETRATE_THICK // Fuck your modsuit.
+
+/obj/projectile/bullet/dart/ants/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/ants, damage) // Get fucked, asshole. Ants.
+
 /obj/projectile/bullet/junk/phasic
 	name = "junk phasic bullet"
 	icon_state = "gaussphase"

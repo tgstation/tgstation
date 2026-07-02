@@ -19,6 +19,7 @@
 		/obj/item/ammo_casing/junk/incendiary = 20,
 		/obj/item/ammo_casing/junk/shock = 20,
 		/obj/item/ammo_casing/junk/hunter = 20,
+		/obj/item/ammo_casing/junk/ants = 20,
 		/obj/item/ammo_casing/junk/phasic = 5,
 		/obj/item/ammo_casing/junk/ripper = 5,
 		/obj/item/ammo_casing/junk/reaper = 1,
@@ -26,6 +27,9 @@
 
 /obj/item/ammo_casing/junk/incendiary
 	projectile_type = /obj/projectile/bullet/incendiary/fire/junk
+
+/obj/item/ammo_casing/junk/ants
+	projectile_type = /obj/projectile/bullet/dart/ants
 
 /obj/item/ammo_casing/junk/phasic
 	projectile_type = /obj/projectile/bullet/junk/phasic
