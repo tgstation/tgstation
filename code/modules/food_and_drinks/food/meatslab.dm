@@ -115,6 +115,7 @@
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	tastes = list("salad" = 1, "wood" = 1)
 	foodtypes = VEGETABLES
+	custom_materials = null
 	venue_value = FOOD_MEAT_MUTANT_RARE
 	blood_decal_type = /obj/effect/decal/cleanable/food/plant_smudge
 
