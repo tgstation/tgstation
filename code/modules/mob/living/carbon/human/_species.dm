@@ -2077,5 +2077,5 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(mutantlungs::safe_nitro_min > 0)
 		return GAS_N2
 
-	stack_trace("Unsuported breath type for species with [mutantlungs]")
+	stack_trace("Unsupported breath type for species with [mutantlungs]")
 	return null
