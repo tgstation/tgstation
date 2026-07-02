@@ -44,11 +44,29 @@
 	. = ..()
 	if(heatable)
 		AddElement(/datum/element/reagents_item_heatable)
+	register_context()
 
 /obj/item/reagent_containers/cup/Destroy(force)
 	QDEL_NULL(lid_assembly)
 	QDEL_NULL(attached_cell)
 	return ..()
+
+/obj/item/reagent_containers/cup/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(can_lid)
+		if(isnull(held_item))
+			context[SCREENTIP_CONTEXT_ALT_LMB] = lid_assembly ? "Detach assembly" : "Toggle lid"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(isnull(lid_assembly) && istype(held_item, /obj/item/assembly_holder))
+			context[SCREENTIP_CONTEXT_LMB] = "Attach assembly"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(isnull(attached_cell) && !isnull(lid_assembly) && istype(held_item, /obj/item/stock_parts/power_store/cell))
+			context[SCREENTIP_CONTEXT_LMB] = "Attach cell"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if(cell_wired && held_item.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut wires"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
