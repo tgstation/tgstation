@@ -111,13 +111,13 @@
 		last_sentence_cache.Cut()
 
 /// Returns what icon to display when speaking this language
-/datum/language/proc/display_icon_type(atom/movable/hearer)
-	if(hearer.has_language(src.type))
+/datum/language/proc/display_icon_type(atom/movable/hearer, list/message_mods)
+	if(hearer.has_language(type))
 		if(flags & LANGUAGE_HIDE_ICON_IF_UNDERSTOOD)
 			return DISPLAY_LANGUAGE_ICON_NONE
 
 	else
-		if(hearer.has_partial_language(src.type))
+		if(hearer.has_partial_language(type) || LAZYACCESSASSOC(message_mods, LANGUAGE_MUTUAL_BONUS, type))
 			return DISPLAY_LANGUAGE_ICON_PARTIAL
 		if(flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD)
 			return DISPLAY_LANGUAGE_ICON_NONE
