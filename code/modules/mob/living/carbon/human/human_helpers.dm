@@ -287,6 +287,7 @@
 	mob_height = chest?.update_mob_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
+		readjust_atom_huds()
 	SEND_SIGNAL(src, COMSIG_HUMAN_HEIGHT_UPDATED, old_height)
 
 /**

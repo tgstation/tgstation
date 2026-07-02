@@ -100,7 +100,7 @@
 	switch (ore_path::vein_type)
 		if (ORE_VEIN_CLUSTER)
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
-				if (rock.mineral_type)
+				if (rock.mineral_type || istype(rock, /turf/closed/mineral/gibtonite))
 					continue
 
 				var/spread_prob = 100
@@ -116,7 +116,7 @@
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
 				if (rock.base_icon_state != base_icon_state && prob(50))
 					continue
-				if (!rock.mineral_type)
+				if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 					rocks += rock
 
 			for (var/i in 1 to rand(min_vein_size ** 2, max_vein_size ** 2))
@@ -130,7 +130,7 @@
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
 				if (rock.base_icon_state != base_icon_state && prob(50))
 					continue
-				if (!rock.mineral_type)
+				if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 					rocks += rock
 
 			if (!length(rocks))
@@ -165,7 +165,7 @@
 				for (var/turf/closed/mineral/rock in range(vein_size, src))
 					if (rock.base_icon_state != base_icon_state && prob(50))
 						continue
-					if (!rock.mineral_type)
+					if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 						rocks += rock
 
 				if (!length(rocks))

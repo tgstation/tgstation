@@ -59,7 +59,7 @@
 	begin_weekday = SUNDAY
 
 /datum/holiday/nth_week/beer
-	name = "Beer Day"
+	name = BEER_DAY
 	begin_week = 1
 	begin_month = AUGUST
 	begin_weekday = FRIDAY

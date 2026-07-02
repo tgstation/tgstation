@@ -83,20 +83,19 @@
 	if(lungs?.organ_flags & ORGAN_FAILING)
 		losebreath++
 	else if(!get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || pulledby?.grab_state >= GRAB_KILL)
+		if(stat == HARD_CRIT || pulledby?.grab_state >= GRAB_KILL)
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= crit_threshold)
+		else if(stat == SOFT_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
-		if(prob(10))
-			emote("gasp")
 		if(isobj(loc))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
+
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)

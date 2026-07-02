@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Cursed: Vending machines will have a chance to tip over onto you when you purchase something, rather than passively as you walk around them."
+  - balance: "Cursed: Airlocks will now have a chance to crush you if you stand on them when they try to close, rather than passively as you walk through them."
+  - balance: "Cursed: Nearby light fixtures will now have a chance to shock you if they break or are turned on/off, rather than passively as you walk around them."
+  - balance: "Cursed: Mirror reaction will only trigger if you step up to a mirror, rather than if you step within two tiles of a mirror."
+  - spellcheck: "Cursed: Several chat feedback messages have been rewritten to be less \"overt\" about their nature. (More \"final destination\", less \"a demon is haunting you\".)"
+  - admin: "Bad luck smite set to \"permanent\" can no longer be removed by chaplains."
+  - admin: "Bad luck smite set to \"permanent\" won't gib the guy on death if they've experienced one bad luck event."
+  - refactor: "Cursed/omen/bad luck has been refactored, report any oddities with it."

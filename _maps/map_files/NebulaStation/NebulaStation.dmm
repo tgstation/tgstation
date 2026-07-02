@@ -49575,7 +49575,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hnZ" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/holiday/bar_keg,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_y = -3;
 	pixel_x = 9
@@ -49732,7 +49732,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "hps" = (
@@ -143961,7 +143961,7 @@
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "vjZ" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)

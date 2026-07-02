@@ -34,18 +34,21 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/blackbox))
-		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
-			return
-		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
-		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		stored = attacking_item
-		update_appearance()
-		return
-	return ..()
+/obj/machinery/blackbox_recorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/blackbox))
+		return NONE
+	if(stored)
+		to_chat(user, span_warning("There's already a blackbox in \the [src].")) //something's gone wrong to get here, but you know, it could happen
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] clicks [tool] into [src]!"), \
+	span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	stored = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)
