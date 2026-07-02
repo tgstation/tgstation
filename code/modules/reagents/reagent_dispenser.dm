@@ -694,6 +694,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/reagent_dispensers/servingdish/unanchored
+	anchored = FALSE
+
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationary water tank"
 	anchored = TRUE
