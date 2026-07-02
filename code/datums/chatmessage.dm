@@ -171,12 +171,17 @@
 
 	// Append language icon if the language uses one
 	var/datum/language/language_instance = GLOB.language_datum_instances[language]
-	if (language_instance?.display_icon(owner))
-		var/icon/language_icon = LAZYACCESS(language_icons, language)
+	var/language_icon_type = language_instance?.display_icon_type(owner)
+	if(language_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
+		var/language_icon_key = "[language][language_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]"
+		var/icon/language_icon = LAZYACCESS(language_icons, language_icon_key)
 		if (isnull(language_icon))
 			language_icon = icon(language_instance.icon, icon_state = language_instance.icon_state)
+			if(language_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL)
+				language_icon.Blend(icon('icons/ui/chat/language.dmi', "partial_mask"), ICON_SUBTRACT)
+				language_icon.Blend(icon('icons/ui/chat/language.dmi', "unknown"), ICON_UNDERLAY)
 			language_icon.Scale(CHAT_MESSAGE_ICON_SIZE, CHAT_MESSAGE_ICON_SIZE)
-			LAZYSET(language_icons, language, language_icon)
+			LAZYSET(language_icons, language_icon_key, language_icon)
 		LAZYADD(prefixes, "\icon[language_icon]")
 
 	text = "[prefixes?.Join("&nbsp;")][text]"

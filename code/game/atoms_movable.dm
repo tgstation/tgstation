@@ -1598,6 +1598,10 @@
 /atom/movable/proc/has_language(language, flags_to_check)
 	return get_language_holder().has_language(language, flags_to_check)
 
+/// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
+/atom/movable/proc/has_partial_language(language)
+	return get_language_holder().has_partial_language(language)
+
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
 	return get_language_holder().can_speak_language(language)
@@ -1622,6 +1626,10 @@
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
 	return get_language_holder().get_random_spoken_language()
+
+/// Gets a list of all understood languages, excluding any blocked languages
+/atom/movable/proc/get_understood_languages() as /list
+	return get_language_holder().get_understood_languages() || list()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
