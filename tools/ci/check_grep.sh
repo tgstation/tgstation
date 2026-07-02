@@ -15,6 +15,7 @@ st=0
 # check for ripgrep
 if command -v rg >/dev/null 2>&1; then
 	grep=rg
+    awk=awk
 	pcre2_support=1
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
@@ -26,6 +27,7 @@ if command -v rg >/dev/null 2>&1; then
 else
 	pcre2_support=0
 	grep=grep
+    awk=awk
 	code_files=( -r --include='*.dm' --exclude-dir='DMCompiler_linux-x64' --exclude='od_lints.dm' --exclude-dir='CatchUnescapedBrackets' --exclude-dir='changelogs' . )
 	map_files="-r --include=_maps/**/**.dmm"
 	shuttle_map_files="-r --include=_maps/shuttles/**.dmm"
@@ -202,8 +204,8 @@ if $grep -i 'lowertext\(.+\)' "${code_files[@]}" | $grep -v 'UNLINT\(.+\)' | $gr
 fi;
 
 part "lower case obj name sanity"
-if awk '/^\/obj\// {print; flagging=1; next} flagging {if (/^\t/) print; else flagging=0}' "${code_files[@]}" |
-    grep -P '^\tname\b.*[A-Z]'; then
+if $awk '/^\/obj\// {print; flagging=1; next} flagging {if (/^\t/) print; else flagging=0}' "${code_files[@]}" &&
+    $grep -P '^\tname\b.*[A-Z]'; then
     echo
     echo -e "${RED}ERROR: Found uppercase letters inside an /obj/ name string. Please ensure there is no capitalization."
     st=1
