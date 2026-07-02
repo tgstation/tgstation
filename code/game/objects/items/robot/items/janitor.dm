@@ -105,11 +105,11 @@
 
 /obj/item/borg/cleaner_box/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Alt-Click</b> to <b>[locked ? "unlock" : "lock"]</b> the [src]")
+	. += span_notice("<b>Alt-Click</b> to <b>[locked ? "unlock" : "lock"]</b> the [src].")
 
 /obj/item/vacuum_item
 	name = "janitorial floor cleaner"
-	desc = "This is the working end of an industrial cleaner that someone decided to make sapient."
+	desc = "This is the working end of an industrial cleaner that someone unfortinately gave sapience."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "vacuum-wand"
 	inhand_icon_state = "vacuum-wand"
@@ -197,6 +197,9 @@
 	RegisterSignal(generated_borg_hose, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(on_update))
 	return generated_borg_hose
 
+/obj/item/vacuum_item/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Interact</b> to switch to [cleaning ? "<b>vacuum</b>" : "<b>cleaning</b>"] mode.")
 /obj/item/vacuum_item/proc/on_update()
 	SIGNAL_HANDLER
 	if(prob(10))
