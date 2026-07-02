@@ -355,6 +355,11 @@
 	update_appearance()
 	return TRUE
 
+/obj/item/reagent_containers/cup/on_found(mob/finder)
+	. = ..()
+	if(lid_assembly)
+		lid_assembly.on_found(finder)
+
 /obj/item/reagent_containers/cup/Exited(atom/movable/gone, direction)
 	. = ..()
 	if (gone == lid_assembly)
