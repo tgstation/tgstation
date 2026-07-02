@@ -230,8 +230,8 @@
 	if(isnull(body))
 		return
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
-	if(ishuman(body))
-		apply_prefs_to_body(body)
+	if(ishuman(body) && apply_prefs_to_body(body))
+		on_prefs_applied(body)
 
 /**
  * Handles making the body for the candidate
@@ -263,17 +263,18 @@
  * Handles prepping the body with the candidate's prefs
  *
  * Applies prefs to a given body. Usually that's what you want, but sometimes you don't, in which case you can override this proc.
+ * Returns TRUE if prefs were applied
  */
 /datum/dynamic_ruleset/midround/from_ghosts/proc/apply_prefs_to_body(mob/living/carbon/human/body)
 	body.client?.prefs.safe_transfer_prefs_to(body)
-	on_prefs_applied(body)
-
-/**
- * Handles anything you want to happen after applying prefs, such as stripping mutations
- */
-/datum/dynamic_ruleset/midround/from_ghosts/proc/on_prefs_applied(mob/living/carbon/human/body)
 	body.dna.remove_all_mutations()
 	body.dna.update_dna_identity()
+
+/**
+ * Handles anything extra you want to happen after applying prefs
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/proc/on_prefs_applied(mob/living/carbon/human/body)
+	return
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
@@ -526,7 +527,7 @@
 	signup_atom_appearance = /obj/item/light_eater
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/apply_prefs_to_body(mob/living/carbon/human/body)
-	return
+	return FALSE
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
