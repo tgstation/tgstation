@@ -288,7 +288,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
 		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
-		message_mods[LANGUAGE_MUTUAL_BONUS] = partially_understood_languages
 
 	return raw_message
 
