@@ -63,7 +63,7 @@
 
 /datum/mutation/fire_immunity
 	name = "Fire Immunity"
-	desc = "The subject becomes completely inflammable and can withstand higher temperatures."
+	desc = "The subject becomes completely nonflammable and can withstand higher temperatures."
 	text_gain_indication = span_notice("Your body feels like it can withstand fire.")
 	text_lose_indication = span_warning("Your body feels vulnerable to fire again.")
 	locked = TRUE
