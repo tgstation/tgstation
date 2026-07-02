@@ -172,7 +172,7 @@
 
 	// Append language icon if the language uses one
 	var/datum/language/language_instance = GLOB.language_datum_instances[language]
-	var/language_icon_type = language_instance?.display_icon_type(owner, message_mods)
+	var/language_icon_type = language_instance?.display_icon_type(owner, message_mods) || DISPLAY_LANGUAGE_ICON_NONE
 	if(language_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
 		var/language_icon_key = "[language][language_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]"
 		var/icon/language_icon = LAZYACCESS(language_icons, language_icon_key)

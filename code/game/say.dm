@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/languageicon = ""
 	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
-		var/dialect_icon_type = dialect?.display_icon_type(speaker, message_mods)
+		var/dialect_icon_type = dialect?.display_icon_type(speaker, message_mods) || DISPLAY_LANGUAGE_ICON_NONE
 		if(dialect_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
 			var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 			languageicon = sheet.icon_tag("language-[dialect.icon_state][dialect_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]") + " "
