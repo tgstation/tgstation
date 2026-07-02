@@ -512,9 +512,9 @@
 	. = ..()
 	try_break_off(target, user)
 
-/obj/item/food/pizza/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizza/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	i_kill_you(tool, user)
+	return ..()
 
 /obj/item/food/pizzaslice/arnold
 	name = "\improper Arnold pizza slice"
@@ -528,9 +528,9 @@
 	. =..()
 	try_break_off(target, user)
 
-/obj/item/food/pizzaslice/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizzaslice/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	i_kill_you(tool, user)
+	return ..()
 
 // Ant Pizza, now with more ants.
 /obj/item/food/pizzaslice/ants
