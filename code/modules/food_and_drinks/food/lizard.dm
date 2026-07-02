@@ -18,8 +18,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_1
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
-/obj/item/food/raw_tiziran_sausage/Initialize(mapload)
-	. = ..()
+/obj/item/food/raw_tiziran_sausage/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/tiziran_sausage)
 
 /obj/item/food/tiziran_sausage
@@ -53,8 +52,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_1
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
-/obj/item/food/raw_headcheese/Initialize(mapload)
-	. = ..()
+/obj/item/food/raw_headcheese/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/headcheese)
 
 /obj/item/food/headcheese

@@ -6,6 +6,8 @@
 	text_lose_indication = span_notice("Your antenna shrinks back down.")
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
@@ -33,14 +35,6 @@
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 
-/datum/mutation/antenna/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
-
-/datum/mutation/antenna/get_visual_indicator()
-	return visual_indicators[type][1]
-
 /datum/mutation/mindreader
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
@@ -51,6 +45,8 @@
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	locked = TRUE
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 
 /datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
@@ -174,11 +170,3 @@
 	log_info += "Current thought: \"[read_text]\""
 
 	log_combat(examiner, examined, "mind read (triggered on examine)", null, "info: [english_list(log_info, and_text = ", ")]")
-
-/datum/mutation/mindreader/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
-
-/datum/mutation/mindreader/get_visual_indicator()
-	return visual_indicators[type][1]

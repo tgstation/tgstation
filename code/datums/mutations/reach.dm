@@ -7,13 +7,9 @@
 	text_gain_indication = span_notice("You feel smarter!")
 	limb_req = BODY_ZONE_HEAD
 	instability = POSITIVE_INSTABILITY_MAJOR
+	mutation_icon_state = "telekinesishead"
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
-
-/datum/mutation/telekinesis/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
@@ -26,9 +22,6 @@
 	if(.)
 		return
 	UnregisterSignal(homan, COMSIG_MOB_ATTACK_RANGED)
-
-/datum/mutation/telekinesis/get_visual_indicator()
-	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/telekinesis/proc/on_ranged_attack(mob/source, atom/target)

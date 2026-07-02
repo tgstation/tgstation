@@ -2,6 +2,7 @@
 set -euo pipefail
 
 MAP=$1
+MAP_CONFIG=${2:-""}
 
 echo Testing $MAP
 
@@ -11,7 +12,9 @@ mkdir -p ci_test/data
 
 #test config
 cp tools/ci/ci_config.txt ci_test/config/config.txt
-cp tools/ci/ci_config_maps.txt ci_test/config/maps.txt
+if [ -n "$MAP_CONFIG" ]; then
+    echo "$MAP_CONFIG" > ci_test/config/maps.txt
+fi
 
 #set the map
 cp _maps/$MAP.json ci_test/data/next_map.json

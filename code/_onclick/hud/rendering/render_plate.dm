@@ -73,7 +73,7 @@
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), blend_override = BLEND_MULTIPLY)
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather
-	name = "Particle Weather"
+	name = "Particle Weather Holder Plate"
 	documentation = "Plane used to render particle weather, masked by WEATHER_MASK_PLANE. \
 		Cannot be a single screen object as it needs to be a planemaster in order to be properly masked by the weather mask."
 	plane = RENDER_PLANE_PARTICLE_WEATHER
@@ -89,7 +89,7 @@
 	. = ..()
 	if(!.)
 		return
-	home.AddComponent(/datum/component/hide_weather_planes, src, TRUE)
+	home.AddComponent(/datum/component/hide_weather_planes, src)
 	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	update_state(home.our_hud?.mymob)
 
@@ -117,7 +117,7 @@
 	return ..()
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
-	name = "Emissive Particle Weather"
+	name = "Emissive Particle Weather Holder Plate"
 	documentation = "Secondary particle weather plane for emissive parts of weather, which is additionally rendered onto the emissive plane after being masked."
 	plane = RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER
 

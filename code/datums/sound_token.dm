@@ -160,7 +160,7 @@
 /datum/sound_token/proc/send_listener_sound(mob/listener_mob, update_sound)
 	PRIVATE_PROC(TRUE)
 
-	sound.status = SOUND_STREAM|sound_status|listeners[listener_mob]
+	sound.status = sound_status|listeners[listener_mob]
 	if(update_sound)
 		sound.status |= SOUND_UPDATE
 	else
