@@ -52,8 +52,8 @@
 
 	//turn the griddle on and cook steak and bacon on it
 	griddle.attack_hand(human)
-	raw_steak.melee_attack_chain(human, griddle)
-	raw_bacon.melee_attack_chain(human, griddle)
+	raw_steak.melee_attack_chain(human, griddle, list(ICON_X = "0", ICON_Y = "0"))
+	raw_bacon.melee_attack_chain(human, griddle, list(ICON_X = "0", ICON_Y = "0"))
 	griddle.process(90 SECONDS) //should be done.
 
 	var/obj/item/food/meat/steak/steak = locate() in griddle_loc
