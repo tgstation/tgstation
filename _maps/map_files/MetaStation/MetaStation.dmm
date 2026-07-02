@@ -18964,11 +18964,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
-"gDv" = (
-/obj/item/kirbyplants,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "gDH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -30051,6 +30046,7 @@
 	pixel_y = 8;
 	req_access = list("cargo")
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kkr" = (
@@ -33650,6 +33646,7 @@
 /area/station/security/medical)
 "lvU" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kirbyplants,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "lvZ" = (
@@ -94144,7 +94141,7 @@ fDk
 vVV
 htd
 tAG
-gDv
+dYa
 cjb
 iPM
 mvY
