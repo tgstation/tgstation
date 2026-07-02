@@ -162,9 +162,13 @@
 
 	var/made_with_food = FALSE
 	var/final_foodtypes = food_recipe.added_foodtypes
-	for(var/obj/item/food/ingredient in components)
+	for(var/obj/item/ingredient in components)
+		var/datum/component/edible/edible = ingredient.GetComponent(/datum/component/edible)
+		if(!edible)
+			continue
 		made_with_food = TRUE
-		final_foodtypes |= ingredient.foodtypes
+		var/ingredient_foodtypes = edible.foodtypes_by_source[SOURCE_EDIBLE_INNATE]
+		final_foodtypes |= ingredient_foodtypes
 	if(!made_with_food)
 		return
 	final_foodtypes &= ~food_recipe.removed_foodtypes
