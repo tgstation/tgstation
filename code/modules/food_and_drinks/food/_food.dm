@@ -167,7 +167,7 @@
 		if(!edible)
 			continue
 		made_with_food = TRUE
-		var/ingredient_foodtypes = edible.foodtypes_by_source[SOURCE_EDIBLE_INNATE]
+		var/ingredient_foodtypes = edible.foodtypes_by_source?[SOURCE_EDIBLE_INNATE]
 		final_foodtypes |= ingredient_foodtypes
 	if(!made_with_food)
 		return
@@ -265,7 +265,7 @@
 		return
 
 	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
-	var/inherited_foodtypes = edible.foodtypes_by_source[SOURCE_EDIBLE_INNATE]
+	var/inherited_foodtypes = edible.foodtypes_by_source?[SOURCE_EDIBLE_INNATE]
 
 	inherited_foodtypes &= ~removed_foodtypes
 	inherited_foodtypes |= added_foodtypes
