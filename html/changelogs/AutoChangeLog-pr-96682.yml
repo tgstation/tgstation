@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Brimdust sac and fluid immersion overlays no longer look weird on humans with extra-wide or tall bodyparts or organs"
+  - bugfix: "Some mobs now have more sensible health HUD positions"
+  - bugfix: "Health and security HUD now scales with player height, no more huds clipping into spacer hair"

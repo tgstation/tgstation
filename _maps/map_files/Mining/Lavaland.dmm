@@ -8806,7 +8806,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
 "Yc" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 1
 	},

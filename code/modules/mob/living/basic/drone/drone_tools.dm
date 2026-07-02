@@ -49,7 +49,7 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/item/screwdriver/drone/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+/obj/item/screwdriver/drone/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		return

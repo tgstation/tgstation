@@ -79,16 +79,16 @@
 	. = ..()
 	if(!cause || !imp_in)
 		return
-	var/mob/living/carbon/R = imp_in
+	var/mob/living/carbon/victim = imp_in
 	var/injectamount = null
 	if (cause == "action_button")
 		injectamount = reagents.total_volume
 	else
 		injectamount = cause
-	reagents.trans_to(R, injectamount)
-	to_chat(R, span_hear("You hear a faint beep."))
+	reagents.trans_to(victim, injectamount, methods = INJECT)
+	to_chat(victim, span_hear("You hear a faint beep."))
 	if(!reagents.total_volume)
-		to_chat(R, span_hear("You hear a faint click from your chest."))
+		to_chat(victim, span_hear("You hear a faint click from your chest."))
 		qdel(src)
 
 /obj/item/implant/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

@@ -378,7 +378,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			primary_unit_test_map = map_config
 		if(!LAZYLEN(map_config.skipped_tests) && !found_secondary_unit_test_map)
 			found_secondary_unit_test_map = TRUE
-			if(SSmapping.current_map.map_name == map_config.map_name)
+			if(SSmapping.current_map.map_name == map_name)
 				is_secondary_unit_test_map = TRUE
 
 	var/list/tests_to_run = list()
@@ -386,7 +386,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
 		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
 		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
-		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && !SSmapping.current_map.is_unit_test_map && \
+		// If we didn't find a primary unit test map then we are likely a solo runner.
+		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && \
+			!isnull(primary_unit_test_map) && \
+			!SSmapping.current_map.is_unit_test_map && \
 			!(primary_unit_test_map.skipped_tests?.Find(potential_test) && is_secondary_unit_test_map) \
 		)
 			continue

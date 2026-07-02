@@ -17,17 +17,18 @@
 		department_grab.quirk_poster_department = quirk_poster_department
 
 /// You can use any spraypaint can on a quirk poster to turn it into a contraband poster from the traitor objective
-/obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, list/modifiers, list/attack_modifiers)
-	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
-		return ..()
+/obj/item/poster/quirk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(tool, /obj/item/toy/crayon))
+		return NONE
 	balloon_alert(user, "converting poster...")
 	if(!do_after(user, 5 SECONDS, user))
 		balloon_alert(user, "interrupted!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/poster/traitor/quirkspawn = new(get_turf(src))
 	user.put_in_hands(quirkspawn)
 	to_chat(user, span_notice("You have converted one of your posters!"))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /// Screentip for the above
 
@@ -50,9 +51,8 @@
 	mood_buff = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE, department = quirk_poster_department)
 	return ..()
 
-/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if (I.tool_behaviour == TOOL_WIRECUTTER)
-		QDEL_NULL(mood_buff)
+/obj/structure/sign/poster/quirk/wirecutter_act(mob/living/user, obj/item/tool)
+	QDEL_NULL(mood_buff)
 	return ..()
 
 /obj/structure/sign/poster/quirk/Destroy()
