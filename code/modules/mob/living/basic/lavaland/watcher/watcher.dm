@@ -44,7 +44,6 @@
 
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
 	AddComponent(/datum/component/ai_target_timer)

@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/cordon/secret,
+/area/misc/cordon)
 "ab" = (
 /turf/closed/indestructible/riveted,
-/area/awaymission/undergroundoutpost45/caves)
+/area/awaymission/inaccessible)
 "ad" = (
 /turf/closed/mineral/random/labormineral,
 /area/awaymission/undergroundoutpost45/caves)

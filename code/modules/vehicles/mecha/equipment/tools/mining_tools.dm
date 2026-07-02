@@ -11,7 +11,7 @@
 	icon_state = "mecha_drill"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
@@ -128,9 +128,9 @@
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
 		var/turf/T = target
+		. = ..()
 		T.drill_act(src, source)
-
-		return ..()
+		return
 
 	// Drilling objects and mobs is a repeating procedure.
 	while(do_after_mecha(target, source, drill_delay))
@@ -152,6 +152,11 @@
 			break
 
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/drill/get_equip_cooldown(atom/target)
+	if (isturf(target))
+		return equip_cooldown * 0.1
+	return equip_cooldown
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	return
@@ -248,7 +253,7 @@
 		return
 	if(!LAZYLEN(chassis.occupants))
 		return
-	scanning_time = world.time + equip_cooldown
+	scanning_time = world.time + get_equip_cooldown()
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()

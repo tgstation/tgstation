@@ -225,7 +225,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 
 	race_changer.update_body(is_creating = TRUE)
-	race_changer.update_mutations_overlay() // no hulk lizard
 
 /// Hook for mirrors to do stuff on species change
 /obj/structure/mirror/proc/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
@@ -261,7 +260,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	sexy.dna.update_ui_block(/datum/dna_block/identity/gender)
 	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
-	sexy.update_mutations_overlay() //(hulk male/female)
 	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)

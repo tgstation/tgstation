@@ -52,7 +52,6 @@
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddElement(\
@@ -87,6 +86,9 @@
 	QDEL_NULL(melee_tentacles)
 	QDEL_NULL(tentacle_line)
 	return ..()
+
+/mob/living/basic/mining/goliath/get_hud_x_offset()
+	return -4
 
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()

@@ -139,6 +139,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return
 	return ..()
 
+/mob/living/basic/raptor/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/raptor/examine(mob/user)
 	. = ..()
 	if (stat == DEAD)

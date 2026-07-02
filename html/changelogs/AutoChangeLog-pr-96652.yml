@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - rscadd: "Added Botanical Encyclopedia app for browsing knowledge about plants, which comes pre-installed on all botanist PDAs."

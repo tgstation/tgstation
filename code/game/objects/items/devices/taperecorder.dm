@@ -84,15 +84,16 @@
 	else
 		soundloop.start()
 
-/obj/item/taperecorder/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!mytape && istype(I, /obj/item/tape))
-		if(!user.transferItemToLoc(I,src))
-			return
-		mytape = I
-		balloon_alert(user, "inserted [mytape]")
-		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
-		update_appearance()
-
+/obj/item/taperecorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(mytape || !istype(tool, /obj/item/tape))
+		return NONE
+	if(!user.transferItemToLoc(tool,src))
+		return ITEM_INTERACT_BLOCKING
+	mytape = tool
+	balloon_alert(user, "inserted [mytape]")
+	playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(!mytape)

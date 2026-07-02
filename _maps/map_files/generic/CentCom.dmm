@@ -8769,7 +8769,7 @@
 "MI" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table/wood,
-/obj/structure/reagent_dispensers/beerkeg{
+/obj/structure/reagent_dispensers/keg/beer{
 	pixel_y = 6;
 	pixel_x = 5
 	},
@@ -9785,7 +9785,7 @@
 /area/centcom/tdome/observation)
 "QT" = (
 /obj/structure/table/wood,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/reagent_dispensers/keg/beer,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,

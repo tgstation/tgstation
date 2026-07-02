@@ -18,8 +18,6 @@
 	var/give_objectives = TRUE
 	///bool for giving codewords
 	var/should_give_codewords = TRUE
-	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
-	var/module_picker_compactmode = FALSE
 	///malf on_gain sound effect. Set here so Infected AI can override
 	var/malf_sound = 'sound/music/antag/malf.ogg'
 
@@ -165,15 +163,12 @@
 /datum/antagonist/malf_ai/ui_data(mob/living/silicon/ai/malf_ai)
 	var/list/data = list()
 	data["processingTime"] = malf_ai.malf_picker.processing_time
-	data["compactMode"] = module_picker_compactmode
 	data["hackedAPCs"] = malf_ai.hacked_apcs.len
 	return data
 
 /datum/antagonist/malf_ai/ui_static_data(mob/living/silicon/ai/malf_ai)
 	var/list/data = list()
-
 	//antag panel data
-
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)
 		data["phrases"] = jointext(SStraitor.syndicate_code_phrase, ", ")
@@ -183,52 +178,7 @@
 	data["goal"] = malfunction_flavor["goal"]
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
-
-	//module picker data
-
-	data["categories"] = list()
-	if(malf_ai.malf_picker)
-		for(var/category in malf_ai.malf_picker.possible_modules)
-			var/list/cat = list(
-				"name" = category,
-				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
-			for(var/module in malf_ai.malf_picker.possible_modules[category])
-				var/datum/ai_module/malf/mod = malf_ai.malf_picker.possible_modules[category][module]
-				cat["items"] += list(list(
-					"name" = mod.name,
-					"cost" = mod.cost,
-					"desc" = mod.description,
-					"minimum_apcs" = mod.minimum_apcs,
-				))
-			data["categories"] += list(cat)
-
 	return data
-
-/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	if(!isAI(usr))
-		return
-	var/mob/living/silicon/ai/malf_ai = usr
-	switch(action)
-		//module picker actions
-		if("buy")
-			var/item_name = params["name"]
-			var/list/buyable_items = list()
-			for(var/category in malf_ai.malf_picker.possible_modules)
-				buyable_items += malf_ai.malf_picker.possible_modules[category]
-			for(var/key in buyable_items)
-				var/datum/ai_module/malf/valid_mod = buyable_items[key]
-				if(valid_mod.name == item_name)
-					malf_ai.malf_picker.purchase_module(malf_ai, valid_mod)
-					return TRUE
-		if("select")
-			malf_ai.malf_picker.selected_cat = params["category"]
-			return TRUE
-		if("compact_toggle")
-			module_picker_compactmode = !module_picker_compactmode
-			return TRUE
 
 /datum/antagonist/malf_ai/roundend_report()
 	var/list/result = list()

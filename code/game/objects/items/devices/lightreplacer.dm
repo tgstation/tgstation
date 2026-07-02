@@ -76,36 +76,35 @@
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/item/lightreplacer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(uses >= max_uses)
 		user.balloon_alert(user, "already full!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(insert, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/glass_to_insert = insert
-		if(glass_to_insert.use(LIGHTBULB_COST))
-			add_uses(GLASS_SHEET_USES)
-			user.balloon_alert(user, "glass inserted")
-		else
+	if(istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_to_insert = tool
+		if(!glass_to_insert.use(LIGHTBULB_COST))
 			user.balloon_alert(user, "need [LIGHTBULB_COST] glass sheets!")
-		return TRUE
+			return ITEM_INTERACT_BLOCKING
+		add_uses(GLASS_SHEET_USES)
+		user.balloon_alert(user, "glass inserted")
+		return ITEM_INTERACT_SUCCESS
 
-	if(insert.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
-		if(!user.temporarilyRemoveItemFromInventory(insert))
+	if(tool.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
+		if(!user.temporarilyRemoveItemFromInventory(tool))
 			user.balloon_alert(user, "stuck in your hand!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
 			user.balloon_alert(user, "shard inserted")
-		qdel(insert)
-		return TRUE
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(insert, /obj/item/light))
-		var/obj/item/light/light_to_insert = insert
+	if(istype(tool, /obj/item/light))
+		var/obj/item/light/light_to_insert = tool
 		//remove from player's hand
 		if(!user.temporarilyRemoveItemFromInventory(light_to_insert))
 			user.balloon_alert(user, "stuck in your hand!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
 		var/display_msg = TRUE
@@ -117,14 +116,13 @@
 			user.balloon_alert(user, "light inserted")
 		qdel(light_to_insert)
 
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(insert, /obj/item/storage))
+	if(istype(tool, /obj/item/storage))
 		var/replaced_something = FALSE
 		var/loaded = FALSE
 
-		var/obj/item/storage/storage_to_empty = insert
-		for(var/obj/item/item_to_check in storage_to_empty.contents)
+		for(var/obj/item/item_to_check in tool.contents)
 			//reached max capacity during insertion
 			if(src.uses >= max_uses)
 				break
@@ -153,14 +151,13 @@
 				replaced_something = TRUE
 
 		if(!replaced_something)
-			if(uses == max_uses)
-				user.balloon_alert(user, "already full!")
-			else
-				user.balloon_alert(user, "nothing usable in [storage_to_empty]!")
-			return TRUE
+			user.balloon_alert(user, "nothing usable in [tool]!")
+			return ITEM_INTERACT_BLOCKING
 
 		user.balloon_alert(user, "lights inserted")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/lightreplacer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
