@@ -44,7 +44,7 @@
 	halo_overlay.pixel_w = 0
 	if (ishuman(owner))
 		var/mob/living/carbon/human/human_parent = owner
-		human_parent.apply_height_offsets(halo_overlay, UPPER_BODY)
+		human_parent.apply_height(halo_overlay, UPPER_BODY)
 
 		var/obj/item/bodypart/head/human_head = human_parent.get_bodypart(BODY_ZONE_HEAD)
 		human_head?.worn_head_offset?.apply_offset(halo_overlay)

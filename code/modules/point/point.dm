@@ -84,6 +84,13 @@
 	pixel_y = old_loc.pixel_y
 	SetInvisibility(set_invis)
 
+/obj/effect/temp_visual/point/holo
+	icon_state = "arrow_large_white"
+
+/obj/effect/temp_visual/point/holo/Initialize(mapload, set_invis = 0)
+	. = ..()
+	makeHologram()
+
 #undef POINT_TIME
 
 /**

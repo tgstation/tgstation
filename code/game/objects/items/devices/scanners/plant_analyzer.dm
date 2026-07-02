@@ -303,6 +303,9 @@
 	)
 	seed_data["removable_traits"] = list()
 	seed_data["core_traits"] = list()
+	seed_data["distill_reagent"] = ""
+	seed_data["juice_name"] = ""
+	seed_data["grind_results"] = list()
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		if(trait.mutability_flags & PLANT_GENE_REMOVABLE)
 			seed_data["removable_traits"] += trait.type

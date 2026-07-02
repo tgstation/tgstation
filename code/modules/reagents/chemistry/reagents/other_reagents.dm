@@ -677,6 +677,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //metabolizes to prevent micro-dosage
 	taste_description = "slime"
+	affected_biotype = MOB_ORGANIC|MOB_SKELETAL|MOB_UNDEAD
 	var/race = /datum/species/human
 	var/list/mutationtexts = list( "You don't feel very well." = MUT_MSG_IMMEDIATE,
 									"Your skin feels a bit abnormal." = MUT_MSG_IMMEDIATE,

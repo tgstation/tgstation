@@ -81,17 +81,16 @@
 	if(human_lungs)
 		return human_lungs.check_breath(breath, src)
 
-	if(health >= crit_threshold)
-		adjust_oxy_loss(HUMAN_MAX_OXYLOSS + 1)
-	else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
-		adjust_oxy_loss(HUMAN_CRIT_MAX_OXYLOSS)
+	var/oxy_damage = SUFFOCATION_OXYLOSS + 1
+	if(stat == SOFT_CRIT || stat == HARD_CRIT)
+		oxy_damage *= (HAS_TRAIT(src, TRAIT_NOCRITDAMAGE) ? 0 : SUFFOCATION_OXYLOSS_CRIT_MODIFIER)
+
+	if(oxy_damage > 0)
+		apply_damage(oxy_damage, OXY)
 
 	failed_last_breath = TRUE
-
-	var/datum/species/human_species = dna.species
-
-	switch(human_species.breathid)
-		if(GAS_O2)
+	switch(dna?.species?.get_breath_type())
+		if(GAS_O2, null) // null means use oxyloss alert by default
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		if(GAS_PLASMA)
 			throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
@@ -99,6 +98,9 @@
 			throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		if(GAS_N2)
 			throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
+		else
+			stack_trace("Unsupported breath type for species [dna.species.name] in check_breath()")
+
 	return FALSE
 
 /// Environment handlers for species

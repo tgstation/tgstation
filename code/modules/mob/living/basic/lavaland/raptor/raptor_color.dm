@@ -271,7 +271,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	// Raptors won't have the best of times keeping up tall humans or fatties up in the air
 	var/struggling = HAS_TRAIT(user, TRAIT_FAT) || user.mob_height > HUMAN_HEIGHT_SHORTEST
 	if (wings_open)
-		wings_underlay = user.apply_height_offsets(mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user), UPPER_BODY)
+		wings_underlay = mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user)
+		user.apply_height(wings_underlay, UPPER_BODY)
 		user.add_overlay(wings_underlay)
 		user.physiology.stun_mod *= 2
 		user.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))

@@ -22,10 +22,11 @@
 
 ///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
-	layers = ALL_EXTERNAL_OVERLAYS
+	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 	feature_key = FEATURE_WINGS
+	offset_location = ENTIRE_BODY
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 
-/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)

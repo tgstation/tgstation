@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes some niche issues with settler/spacer looking off"
+  - bugfix: "Spacer is visible in prefs"
