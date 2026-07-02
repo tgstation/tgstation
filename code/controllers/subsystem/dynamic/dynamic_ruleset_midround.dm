@@ -264,7 +264,7 @@
  * Handles prepping the body with the candidate's prefs
  *
  * Applies prefs to a given body. Usually that's what you want, but sometimes you don't, in which case you can override this proc.
- * Returns TRUE if we want to run on_prefs_applied() as well (which by default, removes mutations + calls update_dna_identiy()
+ * Returns TRUE if we want to run on_prefs_applied() as well (which by default, removes mutations + calls update_dna_identity())
  */
 /datum/dynamic_ruleset/midround/from_ghosts/proc/apply_prefs_to_body(mob/living/carbon/human/body)
 	body.client?.prefs.safe_transfer_prefs_to(body)
