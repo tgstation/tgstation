@@ -165,6 +165,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
 
+// BANDASTATION EDIT START: New hair
+/datum/sprite_accessory/hair/bedheadlong2
+	name = "Long Bedhead 2"
+// BANDASTATION EDIT END: New hair
 /datum/sprite_accessory/hair/bedheadfloorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
