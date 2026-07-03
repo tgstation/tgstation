@@ -42355,7 +42355,7 @@
 "nSq" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/closet/crate/goldcrate/stocked,
 /obj/machinery/firealarm/directional/west,
 /obj/item/crowbar/power,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -58821,7 +58821,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "tmV" = (
-/obj/structure/reagent_dispensers/beerkeg{
+/obj/effect/spawner/random/food_or_drink/keg{
 	pixel_y = 5
 	},
 /obj/structure/table/wood,

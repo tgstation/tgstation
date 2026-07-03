@@ -25680,7 +25680,7 @@
 /area/station/engineering/atmos)
 "gjF" = (
 /obj/structure/table/wood,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/wood,
 /area/station/maintenance/aft)
 "gjK" = (
@@ -27544,7 +27544,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "gIr" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/ghetto/port/aft)
@@ -37173,7 +37173,7 @@
 /obj/effect/turf_decal/trimline/tram/mid_joiner{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/dark/smooth_corner{
@@ -57104,7 +57104,7 @@
 /area/station/maintenance/starboard/upper)
 "nRP" = (
 /obj/effect/turf_decal/bot_white/right,
-/obj/structure/closet/crate/goldcrate,
+/obj/structure/closet/crate/goldcrate/stocked,
 /obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -66670,7 +66670,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/ghetto/starboard)
 "qia" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/plating,
 /area/station/maintenance/ghetto/port/aft)
 "qim" = (
@@ -73163,7 +73163,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "rPv" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/upper)
 "rPA" = (
@@ -76926,7 +76926,7 @@
 "sJc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/stone,
 /area/station/maintenance/ghetto/starboard)
@@ -83383,7 +83383,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/ghetto)
 "upL" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/wood,
 /area/station/maintenance/ghetto/port/aft)
 "upO" = (

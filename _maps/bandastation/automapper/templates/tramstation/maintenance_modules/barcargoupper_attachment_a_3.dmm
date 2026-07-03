@@ -33,7 +33,7 @@
 /area/station/maintenance/department/cargo)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "q" = (
