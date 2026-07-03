@@ -36,22 +36,20 @@
 	for(var/i in 1 to pulp_count)
 		new pulp_type(user.loc)
 
-	/// The piece of armour barrelmelon turns into; either chetsplate or helmet
+	/// The piece of armour melon turns into; either chetsplate or helmet
 	var/obj/item/clothing/received_armor
-	/// Chance for the armour to be a chestplate instead of the helmet
-	var/barrelmelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(barrelmelon_chestplate_chance))
+	if (prob(max(0, seed.potency - 50) / 50))
 		if(seed.resistance_flags & FIRE_PROOF)
 			received_armor = new fire_resistant_chestplate_type
 		else
 			received_armor = new chestplate_type
-		to_chat(user, span_notice("You hollow the barrelmelon into a helmet with [tool]."))
+		to_chat(user, span_notice("You hollow \the [src] into a helmet with [tool]."))
 	else
 		if(seed.resistance_flags & FIRE_PROOF)
 			received_armor = new fire_resistant_helmet_type
 		else
 			received_armor = new helmet_type
-		to_chat(user, span_notice("You hollow the barrelmelon into a chestplate with [tool]."))
+		to_chat(user, span_notice("You hollow \the [src] into a chestplate with [tool]."))
 
 	remove_item_from_storage(user)
 	qdel(src)
