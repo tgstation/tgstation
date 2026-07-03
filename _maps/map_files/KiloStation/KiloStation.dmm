@@ -5214,14 +5214,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "bMe" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/fore)
 "bMw" = (
 /obj/effect/decal/cleanable/dirt,
@@ -10533,7 +10534,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /obj/effect/mapping_helpers/airlock/unres/delayed,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
 "dtD" = (
 /obj/machinery/light/small/directional/west,
@@ -25946,9 +25947,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology,
 /turf/open/floor/iron/dark,
@@ -31427,6 +31425,7 @@
 "jTt" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "jUa" = (
@@ -41068,7 +41067,9 @@
 /area/station/hallway/primary/aft)
 "nax" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/fore)
 "naC" = (
 /obj/machinery/firealarm/directional/west,
@@ -42658,7 +42659,9 @@
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/fore)
 "nCI" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -45932,6 +45935,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "oLG" = (
@@ -52096,7 +52100,6 @@
 	dir = 10
 	},
 /obj/machinery/disposal/bin/tagger,
-/obj/effect/turf_decal/bot/right,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -52104,6 +52107,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "qLi" = (
@@ -65031,14 +65035,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "uGc" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/fore)
 "uGm" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -65296,7 +65301,9 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/fore)
 "uJN" = (
 /obj/machinery/door/firedoor,
@@ -67635,6 +67642,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vxr" = (
