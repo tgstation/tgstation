@@ -765,20 +765,24 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/club = attacking_item
-		if(club.beacon == src)
-			to_chat(user, span_notice("You start removing your hierophant beacon..."))
-			if(do_after(user, 5 SECONDS, target = src))
-				playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
-				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
-				club.beacon = null
-				club.update_appearance(UPDATE_ICON_STATE)
-				user.update_mob_action_buttons()
-				qdel(src)
-		else
-			to_chat(user, span_hierophant_warning("You touch the beacon with the club, but nothing happens."))
-	else
+/obj/effect/hierophant/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/hierophant_club))
 		return ..()
+
+	var/obj/item/hierophant_club/club = tool
+	if(club.beacon != src)
+		to_chat(user, span_hierophant_warning("You touch the beacon with the club, but nothing happens."))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You start removing your hierophant beacon..."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
+	new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
+	to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
+	club.beacon = null
+	club.update_appearance(UPDATE_ICON_STATE)
+	user.update_mob_action_buttons()
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS

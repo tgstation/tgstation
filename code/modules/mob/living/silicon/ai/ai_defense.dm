@@ -1,15 +1,15 @@
 
-/mob/living/silicon/ai/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
-		disconnect_shell()
-		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, span_warning("[src] is entirely unresponsive!"))
-			return
-		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
-		return
+/mob/living/silicon/ai/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ai_module))
+		return ..()
 
-	return ..()
+	disconnect_shell()
+	if(!mind) //A player mind is required for law procs to run antag checks.
+		to_chat(user, span_warning("[src] is entirely unresponsive!"))
+		return ITEM_INTERACT_BLOCKING
+
+	astype(tool, /obj/item/ai_module).install(laws, user) //Proc includes a success mesage so we don't need another one
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
