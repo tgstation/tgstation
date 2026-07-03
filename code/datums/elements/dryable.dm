@@ -11,7 +11,7 @@
 		return ELEMENT_INCOMPATIBLE
 	src.dry_result = dry_result
 
-	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
+	RegisterSignal(target, COMSIG_ITEM_FINISH_DRYING, PROC_REF(finish_drying))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 	var/atom/atom_target = target
@@ -28,7 +28,7 @@
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	UnregisterSignal(target, COMSIG_ITEM_FINISH_DRYING)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 /datum/element/dryable/proc/finish_drying(atom/source, datum/weakref/drying_user)
@@ -40,7 +40,7 @@
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
 		resulting_atom.add_atom_colour(dried_color, FIXED_COLOUR_PRIORITY)
-		apply_dried_status(resulting_atom, drying_user)
+		apply_dried_status(resulting_atom, drying_user, source)
 		return
 	else if(isstack(source)) //Check if its a sheet
 		var/obj/item/stack/itemstack = dried_atom
@@ -56,11 +56,14 @@
 		resulting_atom.reagents.clear_reagents()
 		source_food.reagents.trans_to(resulting_atom, source_food.reagents.total_volume)
 	resulting_atom.set_custom_materials(source.custom_materials)
-	apply_dried_status(resulting_atom, drying_user)
+	apply_dried_status(resulting_atom, drying_user, source)
+
 	qdel(source)
 
-/datum/element/dryable/proc/apply_dried_status(atom/target, datum/weakref/drying_user)
+/datum/element/dryable/proc/apply_dried_status(atom/target, datum/weakref/drying_user, atom/source)
 	ADD_TRAIT(target, TRAIT_DRIED, ELEMENT_TRAIT(type))
 	var/datum/mind/user_mind = drying_user?.resolve()
 	if(drying_user && istype(target, /obj/item/food))
 		ADD_TRAIT(target, TRAIT_HANDMADE, REF(user_mind))
+
+	SEND_SIGNAL(source, COMSIG_ITEM_DRIED, target, drying_user)

@@ -11,6 +11,9 @@
 /datum/movespeed_modifier/jetpack/wings
 	multiplicative_slowdown = -0.3
 
+/datum/movespeed_modifier/jetpack/shoes
+	multiplicative_slowdown = -0.2
+
 /datum/movespeed_modifier/jetpack/raptor
 	multiplicative_slowdown = 0.2
 

@@ -118,33 +118,42 @@
 			return ITEM_INTERACT_FAILURE
 	return NONE
 
-/obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/tank))
-		try_attach_tank(item, user)
-//TODO: Have this take an assemblyholder
-	else if(isassembly(item))
-		try_attach_assembly(item, user)
-	else if(istype(item, /obj/item/stack/cable_coil) && !wired)
-		var/obj/item/stack/cable_coil/coil = item
+/obj/item/transfer_valve/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank))
+		try_attach_tank(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	//TODO: Have this take an assemblyholder <-- commit five years ago
+	if(isassembly(tool))
+		try_attach_assembly(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil) && !wired)
+		var/obj/item/stack/cable_coil/coil = tool
 		if (coil.get_amount() < 15)
 			to_chat(user, span_warning("You need fifteen lengths of coil for this!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		coil.use(15)
 		to_chat(user, span_notice("You add some cables, not being really sure why. Looks like <i>backpack</i> straps."))
 		wired = TRUE
 		slot_flags |= ITEM_SLOT_BACK
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(item.tool_behaviour == TOOL_WIRECUTTER && wired)
-		item.play_tool_sound(src)
-		to_chat(user, span_notice("You remove the cables."))
-		wired = FALSE
-		slot_flags &= ~ITEM_SLOT_BACK
-		Move(drop_location())
-		new /obj/item/stack/cable_coil(drop_location(), 15)
-		update_appearance()
+	return NONE
 
-	return
+/obj/item/transfer_valve/wirecutter_act(mob/living/user, obj/item/tool)
+	if(!wired)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You remove the cables."))
+	wired = FALSE
+	slot_flags &= ~ITEM_SLOT_BACK
+	forceMove(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 15)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/transfer_valve/proc/try_attach_tank(obj/item/tank/new_tank, mob/user)
 	if(!tank_one)

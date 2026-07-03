@@ -3,6 +3,7 @@
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
