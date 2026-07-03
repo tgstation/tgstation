@@ -5,7 +5,6 @@ import {
   LabeledList,
   NumberInput,
   Section,
-  Slider,
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
