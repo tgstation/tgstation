@@ -221,7 +221,7 @@
  * Returns a list of mobs who can hear any of the radios given in the given radio list, indexed by the radio.
  * More expensive than get_hearers_in_radio_ranges()
  */
-/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios, frequency)
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
 	for(var/obj/item/radio/radio as anything in radios)
