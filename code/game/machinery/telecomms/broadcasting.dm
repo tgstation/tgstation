@@ -166,10 +166,9 @@
 	var/list/receive_radios
 
 	if(tts_radio_id) // only do this if we have a TTS identifier to save on perf
-		var/list/recieved_radios_raw = get_hearers_in_radio_ranges_track_radios(radios, frequency)
 		receive = list()
 		receive_radios = list()
-		for(var/radio, radio_hearers in recieved_radios_raw)
+		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios, frequency))
 			receive |= radio_hearers
 			var/datum/weakref/radio_ref = WEAKREF(radio)
 			for(var/mob/possible_hearer as anything in radio_hearers)
