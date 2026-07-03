@@ -601,6 +601,12 @@
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	scanpower = SCANPOWER_ADVANCED
 
+/obj/item/healthanalyzer/super
+	name = "super health analyzer"
+	icon_state = "health_super"
+	desc = "A health scanner for debuggers. Functions the same as ghost healthscans."
+	scanpower = SCANPOWER_SUPER
+
 #define AID_EMOTION_NEUTRAL "neutral"
 #define AID_EMOTION_HAPPY "happy"
 #define AID_EMOTION_WARN "cautious"
