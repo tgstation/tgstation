@@ -22610,6 +22610,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
+"hms" = (
+/turf/closed/wall,
+/area/station/medical/cryo)
 "hmK" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
@@ -25544,7 +25547,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/port/fore)
+/area/station/medical/morgue)
 "ieb" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Xenobiology Euthanization Chamber";
@@ -25950,7 +25953,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/port/fore)
+/area/station/medical/psychology)
 "ikt" = (
 /obj/structure/plaque/static_plaque/atmos,
 /turf/closed/wall/rust,
@@ -48094,6 +48097,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/station/security/armory)
+"psv" = (
+/turf/closed/wall/rust,
+/area/station/medical/psychology)
 "psC" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -52120,7 +52126,7 @@
 "qLB" = (
 /obj/structure/sign/departments/holy,
 /turf/closed/wall,
-/area/station/maintenance/port/fore)
+/area/station/medical/morgue)
 "qLO" = (
 /obj/machinery/door/airlock/mining{
 	name = "Auxiliary Base"
@@ -65482,6 +65488,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"uMG" = (
+/turf/closed/wall/rust,
+/area/station/medical/cryo)
 "uNi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -94738,11 +94747,11 @@ jQR
 hCV
 xAK
 jeT
-pVz
-pVz
+eUN
+eUN
 ikr
-xBI
-pVz
+psv
+eUN
 xNc
 wsg
 dfW
@@ -94995,7 +95004,7 @@ pCu
 ejc
 jcj
 qVD
-pVz
+eUN
 oxp
 noO
 xfZ
@@ -95252,7 +95261,7 @@ pCu
 ejc
 pLO
 xtt
-xBI
+psv
 uiu
 noO
 dHg
@@ -95509,7 +95518,7 @@ cXZ
 nki
 cXZ
 qKx
-pVz
+eUN
 fFH
 ugc
 jVZ
@@ -95766,7 +95775,7 @@ ixi
 jJJ
 pVP
 ami
-pVz
+eUN
 vsJ
 xFt
 kUp
@@ -96023,7 +96032,7 @@ ixi
 oaU
 ocS
 eyj
-xBI
+psv
 hOY
 pqS
 kUp
@@ -96279,8 +96288,8 @@ qku
 cIV
 irQ
 sTe
-pVz
-pVz
+hms
+eUN
 eUN
 lCa
 qez
@@ -96536,7 +96545,7 @@ rKa
 xOg
 mCk
 ocS
-pVz
+hms
 rxl
 lFN
 lBU
@@ -96793,7 +96802,7 @@ hgW
 cIU
 rMJ
 oRz
-xBI
+uMG
 fWK
 fWL
 kEC
@@ -97050,7 +97059,7 @@ ntb
 qLO
 qEs
 ocS
-xBI
+uMG
 sFu
 jIg
 pdI
@@ -97307,7 +97316,7 @@ xgV
 lCV
 mCk
 ocS
-pVz
+hms
 xAQ
 eWH
 okQ
@@ -97564,7 +97573,7 @@ sSP
 xOg
 mCk
 bsy
-pVz
+dkh
 dkh
 jUU
 dkh
@@ -98335,7 +98344,7 @@ efG
 qOz
 sRL
 cVn
-xBI
+jUU
 jKQ
 gGR
 ryC
@@ -98592,7 +98601,7 @@ efG
 rdI
 hWD
 tmd
-pVz
+dkh
 uRf
 vxZ
 tLh
