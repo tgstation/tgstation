@@ -442,8 +442,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text(advanced, add_tooltips, colored = TRUE)
-	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
+/obj/item/organ/proc/get_status_text(scanpower, add_tooltips, colored = TRUE)
+	if(scanpower >= SCANPOWER_ADVANCED && (organ_flags & ORGAN_HAZARDOUS))
 		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]Harmful Foreign Body[colored ? "</font>" : ""]", "Remove surgically.", add_tooltips)
 
 	if(organ_flags & ORGAN_EMP)
@@ -473,7 +473,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	return (organ_flags & (ORGAN_PROMINENT|ORGAN_HAZARDOUS|ORGAN_FAILING|ORGAN_VITAL))
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
-/obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/proc/get_status_appendix(scanpower, add_tooltips)
 	return
 
 /**

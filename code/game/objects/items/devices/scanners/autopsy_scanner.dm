@@ -44,7 +44,7 @@
 	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
 	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
 
-	healthscan(user, scanned, advanced = TRUE)
+	healthscan(user, scanned, scanpower = SCANPOWER_ADVANCED)
 
 	add_fingerprint(user)
 
@@ -147,8 +147,8 @@
 						<td>-</td>\
 						<td><u>Missing</u></td></tr>"
 				continue
-			var/status = organ.get_status_text(advanced = TRUE, add_tooltips = FALSE, colored = FALSE)
-			var/appendix = organ.get_status_appendix(advanced = TRUE, add_tooltips = FALSE)
+			var/status = organ.get_status_text(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE, colored = FALSE)
+			var/appendix = organ.get_status_appendix(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE)
 			if(!status)
 				status ||= "OK" // otherwise flawless organs have no status reported by default
 			organreport += "<tr>\
