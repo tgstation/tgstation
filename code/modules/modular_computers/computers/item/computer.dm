@@ -156,9 +156,6 @@
 	update_appearance()
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
-	else
-		if(SStts.tts_enabled)
-			voice = SStts.computer_voice
 
 /obj/item/modular_computer/LateInitialize()
 	if(SStts.tts_enabled)
