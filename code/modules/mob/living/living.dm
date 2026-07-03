@@ -2035,10 +2035,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
 	if(glasses)
-		if(glasses.invis_override)
-			set_invis_see(glasses.invis_override)
-		else
-			set_invis_see(min(glasses.invis_view, see_invisible))
+		set_invis_see(glasses.invis_override || min(glasses.invis_view, see_invisible))
 		if(!isnull(glasses.lighting_cutoff))
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
 		if(length(glasses.color_cutoffs))
