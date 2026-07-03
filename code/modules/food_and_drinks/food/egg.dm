@@ -24,6 +24,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	foodtypes = MEAT | RAW | EGG
+	foodtypes_added_when_cooked = BREAKFAST
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
@@ -222,6 +223,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
 	foodtypes = MEAT | RAW | EGG
+	foodtypes_added_when_cooked = BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawegg/make_grillable()

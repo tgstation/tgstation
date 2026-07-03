@@ -1407,6 +1407,11 @@
 	if(!dangerous_close)
 		for(var/turf/checked_turf in locs)
 			for(var/atom/movable/blocking in checked_turf)
+				var/sigreturn = SEND_SIGNAL(blocking, COMSIG_MOVABLE_BLOCKING_AIRLOCK, src, forced, force_crush)
+				if(sigreturn & AIRLOCK_BLOCK_FORCE_CRUSH)
+					dangerous_close = TRUE
+					continue
+
 				if(blocking.density && blocking != src)
 					autoclose_in(DOOR_CLOSE_WAIT)
 					return FALSE

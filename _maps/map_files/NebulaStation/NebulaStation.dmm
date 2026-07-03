@@ -62612,7 +62612,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/engineering/break_room)
 "jke" = (
-/obj/machinery/computer/upload/borg{
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -117305,7 +117305,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "rop" = (
-/obj/machinery/computer/upload/ai{
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/east,

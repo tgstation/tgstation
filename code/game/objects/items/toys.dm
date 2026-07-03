@@ -78,22 +78,27 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/reagent_containers/cup))
-		if(I.reagents)
-			if(I.reagents.total_volume <= 0)
-				to_chat(user, span_warning("[I] is empty."))
-			else if(reagents.total_volume >= 10)
-				to_chat(user, span_warning("[src] is full."))
-			else
-				desc = "A translucent balloon with some form of liquid sloshing around in it."
-				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
-				I.reagents.trans_to(src, 10, transferred_by = user)
-				update_appearance()
-	else if(I.get_sharpness())
+/obj/item/toy/waterballoon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/reagent_containers/cup) && tool.reagents)
+		if(tool.reagents.total_volume <= 0)
+			to_chat(user, span_warning("[tool] is empty."))
+			return ITEM_INTERACT_BLOCKING
+
+		if(reagents.total_volume >= 10)
+			to_chat(user, span_warning("[src] is full."))
+			return ITEM_INTERACT_BLOCKING
+
+		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		to_chat(user, span_notice("You fill the balloon with the contents of [tool]."))
+		tool.reagents.trans_to(src, 10, transferred_by = user)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.get_sharpness())
 		balloon_burst()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/toy/waterballoon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
@@ -167,17 +172,18 @@
 	)
 
 
-/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+/obj/item/toy/balloon/long/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
 		return ..()
 
-	var/obj/item/toy/balloon/long/hit_by = attacking_item
+	var/obj/item/toy/balloon/long/hit_by = tool
 	if(hit_by.current_color == current_color)
 		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
-		return ..()
-	visible_message(
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(
 		span_notice("[user.name] starts contorting up a balloon animal!"),
-		blind_message = span_hear("You hear balloons being contorted."),
+		span_notice("You start twisting together a balloon animal!"),
+		span_hear("You hear balloons being contorted."),
 		vision_distance = 3,
 		ignored_mobs = user,
 	)
@@ -188,13 +194,13 @@
 			break
 	qdel(hit_by)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
-		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
+/obj/item/toy/balloon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ammo_casing/foam_dart) || !ismonkey(user))
+		return NONE
+	pop_balloon(monkey_pop = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	var/mob/thrower = throwingdatum?.get_thrower()
@@ -515,39 +521,39 @@
 	. = ..()
 	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/toy/gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 
-	if(istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= 7)
-			to_chat(user, span_warning("It's already fully loaded!"))
-			return 1
-		if (A.amount_left <= 0)
-			to_chat(user, span_warning("There are no more caps!"))
-			return 1
-		if (A.amount_left < (7 - src.bullets))
-			src.bullets += A.amount_left
-			to_chat(user, span_notice("You reload [A.amount_left] cap\s."))
-			A.amount_left = 0
-		else
-			to_chat(user, span_notice("You reload [7 - src.bullets] cap\s."))
-			A.amount_left -= 7 - src.bullets
-			src.bullets = 7
-		A.update_appearance()
-		return 1
+	if(!istype(tool, /obj/item/toy/ammo/gun))
+		return NONE
+	var/obj/item/toy/ammo/gun/ammunition = tool
+	if (bullets >= 7)
+		to_chat(user, span_warning("It's already fully loaded!"))
+		return ITEM_INTERACT_BLOCKING
+	if (ammunition.amount_left <= 0)
+		to_chat(user, span_warning("There are no more caps!"))
+		return ITEM_INTERACT_BLOCKING
+	if (ammunition.amount_left < (7 - bullets))
+		bullets += ammunition.amount_left
+		to_chat(user, span_notice("You reload [ammunition.amount_left] cap\s."))
+		ammunition.amount_left = 0
 	else
-		return ..()
+		to_chat(user, span_notice("You reload [7 - bullets] cap\s."))
+		ammunition.amount_left -= 7 - bullets
+		bullets = 7
+	tool.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return ITEM_INTERACT_BLOCKING
-	src.add_fingerprint(user)
-	if (src.bullets < 1)
+	add_fingerprint(user)
+	if (bullets < 1)
 		user.show_message(span_warning("*click*"), MSG_AUDIBLE)
 		playsound(src, 'sound/items/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
 		return ITEM_INTERACT_SUCCESS
 	playsound(user, 'sound/items/weapons/gun/revolver/shot.ogg', 100, TRUE)
-	src.bullets--
+	bullets--
 	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
 		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
@@ -668,28 +674,26 @@
 	to_chat(user, span_warning("RNBW_ENGAGE"))
 	update_appearance(UPDATE_ICON)
 
+/obj/item/toy/sword/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/sword))
+		return NONE
+	var/obj/item/toy/sword/attatched_sword = tool
+	if(HAS_TRAIT(tool, TRAIT_NODROP))
+		to_chat(user, span_warning("[tool] is stuck to your hand, you can't attach it to [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [tool]!"))
+		return ITEM_INTERACT_BLOCKING
 
-// Copied from /obj/item/melee/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/toy/sword))
-		var/obj/item/toy/sword/attatched_sword = weapon
-		if(HAS_TRAIT(weapon, TRAIT_NODROP))
-			to_chat(user, span_warning("[weapon] is stuck to your hand, you can't attach it to [src]!"))
-			return
-		else if(HAS_TRAIT(src, TRAIT_NODROP))
-			to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [weapon]!"))
-			return
-		else
-			to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
-			var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
-			if(attatched_sword.hacked || hacked)
-				new_saber.hacked = TRUE
-				new_saber.saber_color = "rainbow"
-			qdel(weapon)
-			qdel(src)
-			user.put_in_hands(new_saber)
-	else
-		return ..()
+	to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
+	var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
+	if(attatched_sword.hacked || hacked)
+		new_saber.hacked = TRUE
+		new_saber.saber_color = "rainbow"
+	qdel(tool)
+	qdel(src)
+	user.put_in_hands(new_saber)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * Foam armblade

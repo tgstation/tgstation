@@ -110,6 +110,8 @@
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
 	projectile_type = /obj/projectile/bullet/rebar/syndie
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
+
 
 /obj/item/ammo_casing/rebar/zaukerite
 	name = "zaukerite sliver"
