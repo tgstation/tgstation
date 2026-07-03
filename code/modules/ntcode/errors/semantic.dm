@@ -4,7 +4,7 @@
 /datum/ntcode/error/semantic/New(datum/ntcode/node/node)
 	. = ..()
 	src.node = node
-	if(node.node_token)
+	if(node && node.node_token)
 		line_number = node.node_token.line_number
 		line_offset = node.node_token.line_offset
 
@@ -15,10 +15,10 @@
 
 /datum/ntcode/error/semantic/unknown/New(datum/ntcode/node/node, value)
 	. = ..()
-	src.value = value	
+	src.value = value
 
 /datum/ntcode/error/semantic/unknown/to_string()
-	return "'[value]' is an unknown [name] in that scope"	
+	return "'[value]' is an unknown [name] in that scope"
 
 /datum/ntcode/error/semantic/unknown/function
 	name = "function"
@@ -28,6 +28,15 @@
 
 /datum/ntcode/error/semantic/unknown/module
 	name = "module"
+
+/datum/ntcode/error/semantic/unknown/entry_point
+	var/entry_point_name
+
+/datum/ntcode/error/semantic/unknown/entry_point/New(datum/ntcode/node/node, entry_point_name)
+	src.entry_point_name = entry_point_name
+
+/datum/ntcode/error/semantic/unknown/entry_point/to_string()
+	return "Can't find entry point [entry_point_name]"
 
 /datum/ntcode/error/semantic/known
 	var/name
@@ -39,7 +48,7 @@
 	src.value = value
 
 /datum/ntcode/error/semantic/known/to_string()
-	return "[name] [value] is already exists in that scope"	
+	return "[name] [value] is already exists in that scope"
 
 /datum/ntcode/error/semantic/known/function
 	name = "function"
@@ -53,10 +62,10 @@
 /datum/ntcode/error/semantic/const_assign/New(datum/ntcode/node/node, name)
 	. = ..()
 	src.name = name
-	
+
 /datum/ntcode/error/semantic/const_assign/to_string()
 	return "You can't assign value to constant '[name]'"
-	
+
 /datum/ntcode/error/semantic/recursion
 	var/function_name
 
@@ -66,7 +75,7 @@
 
 /datum/ntcode/error/semantic/recursion/to_string()
 	return "Recursion was detected in the '[function_name]' function. Recursion is an illegal Syndicate technology created to destroy Nanotrasen systems."
-	
+
 /datum/ntcode/error/semantic/invalid_arguments_count
 	var/datum/ntcode/function/function
 	var/arguments_count

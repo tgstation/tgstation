@@ -8,7 +8,7 @@
 	else
 		return precedence <= precedence2
 
-/datum/ntcode/node/expression/oper/expect(datum/ntcode/token/token/token, expect)
+/datum/ntcode/node/expression/oper/expect(datum/ntcode/token/token, expect)
 	return expect == NTCODE_EXPRESSION_OPERATOR
 
 /datum/ntcode/node/expression/oper/matches(datum/ntcode/token/token, expect)

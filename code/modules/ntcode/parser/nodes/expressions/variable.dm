@@ -4,7 +4,7 @@
 /datum/ntcode/node/expression/variable/New(name)
 	. = ..()
 	src.name = name
-	
+
 /datum/ntcode/node/expression/variable/analyze(datum/ntcode/analyzer/analyzer)
 	var/datum/ntcode/variable/variable = analyzer.current_scope.get_variable(name)
 	if(!variable)
@@ -18,7 +18,7 @@
 /datum/ntcode/node/expression/variable/to_string(indent)
 	return "[name]"
 
-/datum/ntcode/node/expression/variable/expect(datum/ntcode/token/token/token, expect)
+/datum/ntcode/node/expression/variable/expect(datum/ntcode/token/token, expect)
 	return expect == NTCODE_EXPRESSION_OPERAND
 
 /datum/ntcode/node/expression/variable/matches(datum/ntcode/token/token)

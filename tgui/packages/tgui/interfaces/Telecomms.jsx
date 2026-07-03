@@ -33,6 +33,9 @@ export const Telecomms = (props) => {
     broadcasting,
     receiving,
     frequencyinfos,
+    diskinserted,
+    errors,
+    programactive,
   } = data;
   const linked = data.linked || [];
   const frequencies = data.frequencies || [];
@@ -255,6 +258,53 @@ export const Telecomms = (props) => {
                 )}
               </Table>
             </Section>
+            {type === 'server' && (
+              <Section
+                title="Program Compilation"
+                buttons={
+                  <Button
+                    content="Eject Disk"
+                    disabled={!diskinserted}
+                    onClick={() => act('eject_disk')}
+                  />
+                }
+              >
+                <Flex justify="space-between">
+                  <Flex.Item>
+                    <Button
+                      disabled={!diskinserted}
+                      onClick={() => act('compile')}
+                    >
+                      {'Compile'}
+                    </Button>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      color={programactive ? 'bad' : 'good'}
+                      onClick={() => act('activate_program')}
+                    >
+                      {programactive ? 'Deactivate' : 'Activate'}
+                    </Button>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      icon="trash"
+                      color="bad"
+                      onClick={() => act('flush_program')}
+                    >
+                      {'Flush'}
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+                <Table>
+                  {errors.map((error) => (
+                    <Table.Row
+                      key={error.message}
+                    >{`${error.line_number}:${error.line_offset} - ${error.message}`}</Table.Row>
+                  ))}
+                </Table>
+              </Section>
+            )}
             {type === 'server' && (
               <Section
                 title="Frequencies Settings"

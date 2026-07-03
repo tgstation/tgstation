@@ -265,6 +265,15 @@
 		))
 
 	data["frequencyinfos"] = infos
+	data["errors"] = list()
+	data["diskinserted"] = inserted_disk != null
+	data["programactive"] = evaluate_script
+	for(var/datum/ntcode/error/error in compile_errors)
+		data["errors"] += list(list(
+			"line_number" = isnum(error.line_number) ? error.line_number : 0,
+			"line_offset" = isnum(error.line_offset) ? error.line_offset : 0,
+			"message" = error.to_string()
+		))
 	return data
 
 /**
@@ -298,6 +307,35 @@
 
 /obj/machinery/telecomms/server/add_act(action, params)
 	switch(action)
+		if("compile")
+			if(!inserted_disk)
+				audible_message(span_danger("[src] buzzes!"))
+				visible_message(span_warning("Disk with program is not inserted!"))
+
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+				return
+			var/program_code
+			for(var/datum/computer_file/data/text/text_file in inserted_disk.stored_files)
+				if(text_file.filename == "main" && text_file.filetype == "NC")
+					program_code = text_file.stored_text
+
+			if(!program_code)
+				audible_message(span_danger("[src] buzzes!"))
+				visible_message(span_warning("The program was not found! Make sure main.nc is n the disk."))
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+				return
+
+			compile_program(program_code)
+			. = TRUE
+		if("eject_disk")
+			eject_disk(usr)
+			. = TRUE
+		if("flush_program")
+			interpreter.handle_signal = null
+			. = TRUE
+		if("activate_program")
+			evaluate_script = !evaluate_script
+			. = TRUE
 		if("delete")
 			frequency_infos.Remove(num2text(params["value"]))
 			. = TRUE

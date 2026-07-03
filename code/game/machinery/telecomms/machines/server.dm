@@ -24,6 +24,18 @@
 	/// the current traffic is higher than 0. See `traffic` for more info.
 	var/total_traffic = 0
 
+	/// Server's NTCode interpreter, that execute handle_signal(signal) function
+	var/datum/ntcode/interpreter/telecomms/interpreter = new()
+
+	/// If TRUE, the script will be executed, if FALSE, it will not be executed
+	var/evaluate_script = FALSE
+
+	/// Computer data disk with program for server
+	var/obj/item/disk/computer/inserted_disk
+
+	/// Errors that were found during the last code compilation
+	var/list/datum/ntcode/error/compile_errors = list()
+
 /obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-vocal signals
 	if(!istype(signal) || !signal.data["message"] || !is_freq_listening(signal))
@@ -36,6 +48,11 @@
 	if(freq_info)
 		signal.data["frequency_name"] = freq_info["name"]
 		signal.data["frequency_color"] = freq_info["color"]
+
+
+	// Evaluate user script
+	if(evaluate_script)
+		interpreter.evaluate(signal)
 
 	// Delete particularly old logs
 	if (log_entries.len >= MAX_LOG_ENTRIES)
@@ -69,6 +86,49 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 	use_energy(idle_power_usage)
+
+
+/obj/machinery/telecomms/server/proc/eject_disk(mob/user)
+	if(!inserted_disk)
+		return FALSE
+	if(!user || !Adjacent(user))
+		inserted_disk.forceMove(drop_location())
+	else
+		user.put_in_hands(inserted_disk)
+	inserted_disk = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	return TRUE
+
+/obj/machinery/telecomms/server/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk/computer))
+		return NONE
+	eject_disk(user)
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	inserted_disk = tool
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/telecomms/server/proc/compile_program(program_code)
+	compile_errors.Cut()
+
+	var/compile_result = interpreter.compile(program_code)
+	if(compile_result)
+		compile_errors += compile_result
+		return
+
+	var/datum/ntcode/function/entry_point = new("handle_signal", list("signal"))
+	var/datum/ntcode/function/handle_signal = interpreter.current_scope.get_function(entry_point.name)
+
+	if(!handle_signal)
+		compile_errors += new /datum/ntcode/error/semantic/unknown/entry_point(null, entry_point)
+		return
+
+	if(handle_signal.arguments.len != entry_point.arguments.len)
+		compile_errors += new /datum/ntcode/error/semantic/invalid_arguments_count(null, entry_point, handle_signal.arguments.len)
+		return
+
+	interpreter.handle_signal = handle_signal
 
 #undef MAX_LOG_ENTRIES
 

@@ -2478,6 +2478,8 @@
 #include "code\game\machinery\telecomms\machines\receiver.dm"
 #include "code\game\machinery\telecomms\machines\relay.dm"
 #include "code\game\machinery\telecomms\machines\server.dm"
+#include "code\game\machinery\telecomms\scripting\interpreter.dm"
+#include "code\game\machinery\telecomms\scripting\module.dm"
 #include "code\game\objects\buckling.dm"
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\items.dm"

@@ -1,9 +1,9 @@
 /datum/ntcode/module/string
 	module_name = "string"
-	
+
 /datum/ntcode/module/string/New()
 	. = ..()
-	
+
 	add_byond_proc("replace", TYPE_PROC_REF(/datum/ntcode/module/string, replace), list("string", "sub_string", "replace_string"))
 	add_byond_proc("find", TYPE_PROC_REF(/datum/ntcode/module/string, find), list("string", "needle", "start", "end"))
 	add_byond_proc("length", TYPE_PROC_REF(/datum/ntcode/module/string, string_length), list("string"))
@@ -18,7 +18,7 @@
 	if(!istext(string) || !istext(sub_string) || !istext(replace_string))
 		return
 	return replacetext(string, sub_string, replace_string)
-	
+
 /datum/ntcode/module/string/proc/find(string, needle, start, end)
 	if(!istext(string) || !istext(needle) || !isnum(start) || !isnum(end))
 		return
@@ -81,6 +81,6 @@
 		return string
 
 	var/result = ""
-	for(var/i = length(string); i >= 1, i--)
+	for(var/i = length(string); i >= 1; i--)
 		result += string[i]
 	return result

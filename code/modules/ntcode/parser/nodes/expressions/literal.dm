@@ -11,13 +11,13 @@
 
 /datum/ntcode/node/expression/literal/evaluate(datum/ntcode/interpreter/interpreter)
 	return value
-	
+
 /datum/ntcode/node/expression/literal/to_string(indent)
 	if(istext(value))
 		return "'[value]'"
 	return "[value]"
 
-/datum/ntcode/node/expression/literal/expect(datum/ntcode/token/token/token, expect)
+/datum/ntcode/node/expression/literal/expect(datum/ntcode/token/token, expect)
 	return expect == NTCODE_EXPRESSION_OPERAND
 
 /datum/ntcode/node/expression/literal/matches(datum/ntcode/token/token, expect)
