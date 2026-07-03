@@ -2,15 +2,16 @@ import { Icon, Section, Table, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
+import { DEPARTMENTS_RU, JOBS_RU } from '../bandastation/ru_jobs';
 import { Window } from '../layouts';
 
 const commandJobs = [
-  'Head of Personnel',
-  'Head of Security',
-  'Chief Engineer',
-  'Research Director',
-  'Chief Medical Officer',
-  'Quartermaster',
+  JOBS_RU['Head of Personnel'],
+  JOBS_RU['Head of Security'],
+  JOBS_RU['Chief Engineer'],
+  JOBS_RU['Research Director'],
+  JOBS_RU['Chief Medical Officer'],
+  JOBS_RU.Quartermaster,
 ];
 
 export const CrewManifest = (props) => {
@@ -26,9 +27,9 @@ export const CrewManifest = (props) => {
             className={`CrewManifest--${dept}`}
             key={dept}
             title={
-              dept +
+              (DEPARTMENTS_RU[dept] || dept) +
               (dept !== 'Misc'
-                ? ` (${positions[dept].open} positions open)`
+                ? ` (позиций открыто: ${positions[dept].open})`
                 : '')
             }
           >
@@ -57,8 +58,8 @@ export const CrewManifest = (props) => {
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
-                    {crewMember.trim === 'Captain' && (
-                      <Tooltip content="Captain" position="bottom">
+                    {crewMember.trim === JOBS_RU.Captain && (
+                      <Tooltip content={JOBS_RU.Captain} position="bottom">
                         <Icon
                           className={classes([
                             'CrewManifest__Icon',
@@ -69,7 +70,7 @@ export const CrewManifest = (props) => {
                       </Tooltip>
                     )}
                     {commandJobs.includes(crewMember.trim) && (
-                      <Tooltip content="Member of command" position="bottom">
+                      <Tooltip content="Член командования" position="bottom">
                         <Icon
                           className={classes([
                             'CrewManifest__Icon',

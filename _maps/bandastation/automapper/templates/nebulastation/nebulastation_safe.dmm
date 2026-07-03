@@ -1,0 +1,17 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/safe,
+/obj/item/stack/spacecash/c1000,
+/obj/item/clothing/accessory/holster,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/bridge)
+
+(1,1,1) = {"
+a
+"}

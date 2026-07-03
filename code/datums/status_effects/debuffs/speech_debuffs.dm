@@ -47,7 +47,7 @@
 	if(make_tts_message_original)
 		message_args[TREAT_TTS_MESSAGE_ARG] = message_args[TREAT_MESSAGE_ARG]
 
-	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
+	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase, apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 
 /**
  * Applies the speech effects on the past character, changing

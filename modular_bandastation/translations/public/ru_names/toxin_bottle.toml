@@ -1,0 +1,8 @@
+["toxin bottle"]
+nominative = "бутылка с токсином"
+genitive = "бутылки с токсином"
+dative = "бутылке с токсином"
+accusative = "бутылку с токсином"
+instrumental = "бутылкой с токсином"
+prepositional = "бутылке с токсином"
+gender = "female"

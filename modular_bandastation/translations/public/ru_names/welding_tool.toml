@@ -1,0 +1,8 @@
+["welding tool"]
+nominative = "сварочный инструмент"
+genitive = "сварочного инструмента"
+dative = "сварочному инструменту"
+accusative = "сварочный инструмент"
+instrumental = "сварочным инструментом"
+prepositional = "сварочном инструменте"
+gender = "male"

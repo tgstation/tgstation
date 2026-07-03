@@ -234,7 +234,9 @@
 		if(delayed_activation())
 			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 			if(!malfunctioning)
-				wearer.playsound_local(get_turf(src), 'sound/vehicles/mecha/nominal.ogg', 50)
+			// BANDASTATION EDIT START - MOD ACTIVATION SOUND
+				wearer.playsound_local(get_turf(src), theme.activation_sound, 50)
+			// BANDASTATION EDIT START - MOD ACTIVATION SOUND
 		else
 			activating = FALSE
 			for(var/obj/item/sealed_part as anything in sealed_parts)

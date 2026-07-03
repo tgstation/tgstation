@@ -56,5 +56,11 @@
 	switch(severity) // Hard cap on brain damage from EMP
 		if (EMP_HEAVY)
 			apply_organ_damage(20, BRAIN_DAMAGE_SEVERE)
+			// BANDASTATION ADDITION START - Robobrain rebalance
+			owner.Paralyze(0.25 SECONDS * damage)
+			owner.adjust_staggered_up_to(0.5 SECONDS * damage, 20 SECONDS)
+			// BANDASTATION ADDITION END - Robobrain rebalance
 		if (EMP_LIGHT)
 			apply_organ_damage(10, BRAIN_DAMAGE_MILD)
+			owner.adjust_staggered_up_to(0.2 SECONDS * damage, 20 SECONDS) // BANDASTATION ADDITION - Robobrain rebalance
+

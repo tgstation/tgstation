@@ -1,6 +1,6 @@
 /obj/machinery/griddle
 	name = "griddle"
-	desc = "Because using pans is for pansies."
+	desc = "Сковородки для слабаков."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "griddle1_off"
 	density = TRUE
@@ -63,13 +63,13 @@
 		AddToGrill(new_pancake)
 		if(griddled_objects.len >= max_items)
 			break
-	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
+	visible_message(span_notice("[capitalize(exposing_reagent.declent_ru(NOMINATIVE))] начинает жариться на [declent_ru(PREPOSITIONAL)]."))
 	return NONE
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(griddled_objects.len >= max_items)
-		to_chat(user, span_notice("[src] can't fit more items!"))
+		to_chat(user, span_notice("[capitalize(declent_ru(NOMINATIVE))] не может уместить больше предметов!"))
 		return
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
@@ -78,7 +78,7 @@
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-		to_chat(user, span_notice("You place [I] on [src]."))
+		to_chat(user, span_notice("Вы помещаете [I.declent_ru(ACCUSATIVE)] на [declent_ru(ACCUSATIVE)]."))
 		AddToGrill(I, user)
 	else
 		return ..()
@@ -96,12 +96,12 @@
 		return NONE
 
 	if(length(griddled_objects) >= max_items)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, "заполнено!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))
 		// Non-tray dumping requires a do_after
-		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		to_chat(user, span_notice("Вы начинаете вываливать содержимое [item.declent_ru(GENITIVE)] на [declent_ru(ACCUSATIVE)]..."))
 		if(!do_after(user, 2 SECONDS, target = item))
 			return ITEM_INTERACT_BLOCKING
 
@@ -115,7 +115,7 @@
 			loaded++
 			AddToGrill(tray_item, user)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] item\s into [src]."))
+		to_chat(user, span_notice("Вы вываливаете [loaded] [declension_ru(loaded,"предмет","предмета","предметов")] на [declent_ru(ACCUSATIVE)]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
@@ -202,7 +202,7 @@
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 		AddToGrill(to_dump, user)
 
-	to_chat(user, span_notice("You dump out [storage.parent] onto [src]."))
+	to_chat(user, span_notice("Вы перемещаете содержимое из [storage.parent.declent_ru(GENITIVE)] на [declent_ru(ACCUSATIVE)]."))
 	return STORAGE_DUMP_HANDLED
 
 /obj/machinery/griddle/process(seconds_per_tick)
@@ -211,7 +211,7 @@
 			continue
 		griddled_item.fire_act(1000) //Hot hot hot!
 		if(prob(10))
-			visible_message(span_danger("[griddled_item] doesn't seem to be doing too great on the [src]!"))
+			visible_message(span_danger("Кажется, [griddled_item.declent_ru(NOMINATIVE)] не очень удачно готовится на [declent_ru(PREPOSITIONAL)]!"))
 
 		use_energy(active_power_usage)
 
@@ -225,7 +225,7 @@
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"
-	desc = "A more commercialized version of your traditional griddle. What happened to the good old days where people griddled with passion?"
+	desc = "Более коммерческая версия традиционного гридля. Что случилось со старыми добрыми временами, когда люди жарили на гридле со страстью?"
 	variant = "stand"
 
 /obj/machinery/griddle/stand/update_overlays()

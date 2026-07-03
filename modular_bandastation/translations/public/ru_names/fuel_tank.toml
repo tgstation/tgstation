@@ -1,0 +1,8 @@
+["fuel tank"]
+nominative = "бак с топливом"
+genitive = "бака с топливом"
+dative = "баку с топливом"
+accusative = "бак с топливом"
+instrumental = "баком с топливом"
+prepositional = "баке с топливом"
+gender = "male"

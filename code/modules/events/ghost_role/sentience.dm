@@ -36,19 +36,19 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	minimum_required = 1
 	role_name = "random animal"
 	var/animals = 1
-	var/one = "one"
+	var/one = "кто-то"
 	fakeable = TRUE
 
 /datum/round_event/ghost_role/sentience/announce(fake)
 	var/sentience_report = ""
 
-	var/data = pick("scans from our long-range sensors", "our sophisticated probabilistic models", "our omnipotence", "the communications traffic on your station", "energy emissions we detected", "\[REDACTED\]")
-	var/pets = pick("animals/bots", "bots/animals", "pets", "simple animals", "lesser lifeforms", "\[REDACTED\]")
-	var/strength = pick("human", "moderate", "lizard", "security", "command", "clown", "low", "very low", "\[REDACTED\]")
+	var/data = pick("данных со сканеров дальнего действия", "наших сложных вероятностных моделях", "коммуникационном трафике на вашей станции", "обнаруженом всплеске энергии", "\[ДАННЫЕ УДАЛЕНЫ\]")
+	var/pets = pick("животных/ботов", "ботов/животных", "питомцев", "простых животных", "низших форм жизни", "\[ДАННЫЕ УДАЛЕНЫ\]")
+	var/strength = pick("человека", "ящеров", "офицеров службы безопасности", "командования", "клоуна", "\[ДАННЫЕ УДАЛЕНЫ\]")
 
-	sentience_report += "Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
+	sentience_report += "Основаваясь на [data], мы думаем что [one] из [pets] обрел(и) уровень интеллекта как у [strength], и возможность общаться."
 
-	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
+	priority_announce(sentience_report,"[command_name()]: Сообщение со средним приоритетом")
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, alert_pic = /obj/item/slimepotion/sentience, role_name_text = role_name)
@@ -130,6 +130,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	description = "ALL animals and robots become sentient, provided there is enough ghosts."
 
 /datum/round_event/ghost_role/sentience/all
-	one = "all"
+	one = "все"
 	animals = INFINITY // as many as there are ghosts and animals
 	// cockroach pride, station wide

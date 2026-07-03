@@ -139,9 +139,9 @@ export const HypertorusSecondaryControls = (props) => {
   } = data;
 
   return (
-    <Section title="Reactor Control">
+    <Section title="Управление реактором">
       <LabeledControls justify="space-around" wrap>
-        <LabeledControls.Item label="Heating Conductor">
+        <LabeledControls.Item label="Нагревательный проводник">
           <ComboKnob
             color={heating_conductor > 50 && heat_output > 0 && 'yellow'}
             value={heating_conductor}
@@ -151,10 +151,10 @@ export const HypertorusSecondaryControls = (props) => {
             maxValue={500}
             parameter="heating_conductor"
             icon="fire"
-            help="Adjusts the rate the fusion reaction heats or cools. Higher heating values improve production at the risk of a runaway reaction."
+            help="Регулирует скорость нагрева или охлаждения реакции синтеза. Более высокие значения нагрева повышают производительность, увеличивая риск неконтролируемой реакции."
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Cooling Volume">
+        <LabeledControls.Item label="Объем охлаждения">
           <ComboKnob
             value={cooling_volume}
             unit="L"
@@ -164,10 +164,10 @@ export const HypertorusSecondaryControls = (props) => {
             parameter="cooling_volume"
             step={25}
             icon="snowflake-o"
-            help="Adjusts the HFR core's internal cooling space. A smaller space will provide less cooling internally, but will move most of the coolant outside of the HFR core, where it can be rapidly cooled when not needed."
+            help="Регулирует внутреннее пространство охлаждения ядра HFR. Меньшее пространство обеспечивает меньшее внутреннее охлаждение, но перемещает большую часть охлаждающей жидкости за пределы ядра HFR, где она может быть быстро охлаждена когда не нужна."
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Magnetic Constrictor">
+        <LabeledControls.Item label="Магнитный ограничитель">
           <ComboKnob
             value={magnetic_constrictor}
             unit="m³/T"
@@ -177,10 +177,10 @@ export const HypertorusSecondaryControls = (props) => {
             parameter="magnetic_constrictor"
             icon="magnet"
             flipIcon
-            help="Adjusts the density of the fusion reaction. Denser reactions expose more energy, but may destabilize the reaction if too much mass is involved."
+            help="Регулирует плотность реакции синтеза. Более плотные реакции выделяют больше энергии, но могут дестабилизировать реакцию, если в ней участвует слишком много массы."
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Current Damper">
+        <LabeledControls.Item label="Текущий демпфер">
           <ComboKnob
             color={current_damper && 'yellow'}
             value={current_damper}
@@ -190,7 +190,7 @@ export const HypertorusSecondaryControls = (props) => {
             maxValue={1000}
             parameter="current_damper"
             icon="sun-o"
-            help="Destabilizes the reaction. A sufficiently destabilized reaction will halt production and become endothermic, cooling the Fusion Mix instead of heating it. Reactions with more iron are harder to destabilize."
+            help="Дестабилизирует реакцию. Достаточно дестабилизированная реакция остановит производство и станет эндотермической, охлаждая термоядерную смесь вместо того, чтобы нагревать ее. Реакции с большим количеством железа труднее дестабилизировать."
           />
         </LabeledControls.Item>
       </LabeledControls>
@@ -203,24 +203,24 @@ export const HypertorusWasteRemove = (props) => {
   const { filter_types = [], waste_remove, mod_filtering_rate } = data;
 
   return (
-    <Section title="Output Control">
+    <Section title="Управление выводом">
       <LabeledList>
         <LabeledList.Item
           label={
             <>
               <HoverHelp
                 content={
-                  'Remove waste gases from Fusion,' +
-                  ' and any selected gases from the Moderator.'
+                  'Удаление отработанных газов из синтеза,' +
+                  ' и любые выбранные газы от модератора.'
                 }
               />
-              Waste remove:
+              Удаление отходов:
             </>
           }
         >
           <Button
             icon={waste_remove ? 'power-off' : 'times'}
-            content={waste_remove ? 'On' : 'Off'}
+            content={waste_remove ? 'Вкл' : 'Выкл'}
             selected={waste_remove}
             onClick={() => act('waste_remove')}
           />
@@ -229,7 +229,7 @@ export const HypertorusWasteRemove = (props) => {
           label={
             <>
               <HelpDummy />
-              Moderator filtering rate:
+              Скорость фильтрации модератора:
             </>
           }
         >
@@ -252,7 +252,7 @@ export const HypertorusWasteRemove = (props) => {
           label={
             <>
               <HelpDummy />
-              Filter from moderator mix:
+              Фильтр из смеси модератора:
             </>
           }
         >

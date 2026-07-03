@@ -201,12 +201,12 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/monkey
-	name = "monkey meat"
+	name = "мясо обезьяны"
 	foodtypes = RAW | MEAT
 	starting_reagent_purity = 0.3 // Monkeys are considered synthetic life
 
 /obj/item/food/meat/slab/bugmeat
-	name = "bug meat"
+	name = "жучиное мясо"
 	icon_state = "spidermeat"
 	foodtypes = RAW | MEAT | BUGS
 	blood_decal_type = /obj/effect/decal/cleanable/insectguts
@@ -216,8 +216,8 @@
 	AddElement(/datum/element/raptor_food, health_modifier = 2, color_chances = string_list(list(/datum/raptor_color/green = 2)))
 
 /obj/item/food/meat/slab/mouse
-	name = "mouse meat"
-	desc = "A slab of mouse meat. Best not eat it raw."
+	name = "мышатина"
+	desc = "На безрыбье и мышь мясо. Кто знает чем питался этот грызун до его подачи к столу."
 	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/mouse/Initialize(mapload)
@@ -225,9 +225,9 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/meat/slab/corgi
-	name = "corgi meat"
-	desc = "Tastes like... well you know..."
-	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
+	name = "мясо корги"
+	desc = "На вкус как... Ну вы понимаете..."
+	tastes = list("meat" = 4, "любовь к шляпкам" = 1)
 	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/corgi/Initialize(mapload)
@@ -235,8 +235,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/meat/slab/mothroach
-	name = "mothroach meat"
-	desc = "A light slab of meat."
+	name = "мясо таракомоли"
+	desc = "Легкий кусок мяса"
 	foodtypes = RAW | MEAT | GROSS
 
 /obj/item/food/meat/slab/mothroach/Initialize(mapload)
@@ -244,8 +244,8 @@
 	AddElement(/datum/element/swabable, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/meat/slab/pug
-	name = "pug meat"
-	desc = "Tastes like... well you know..."
+	name = "мясо мопса"
+	desc = "Чуть менее очарователен в нарезке."
 	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/pug/Initialize(mapload)

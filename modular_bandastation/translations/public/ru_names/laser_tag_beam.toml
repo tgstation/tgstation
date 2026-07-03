@@ -1,0 +1,8 @@
+["laser tag beam"]
+nominative = "лазертаговый луч"
+genitive = "лазертагового луча"
+dative = "лазертаговому лучу"
+accusative = "лазертаговый луч"
+instrumental = "лазертаговым лучом"
+prepositional = "лазертаговом луче"
+gender = "male"

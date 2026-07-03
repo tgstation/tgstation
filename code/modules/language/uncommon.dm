@@ -1,6 +1,6 @@
 /datum/language/uncommon
 	name = "Galactic Uncommon"
-	desc = "The second-most spoken Human language."
+	desc = "Второй по распространённости язык человечества."
 	key = "!"
 	flags = TONGUELESS_SPEECH
 	space_chance = 20
@@ -10,12 +10,12 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 0
 	syllables = list(
-		"ba", "be", "bo", "ca", "ce", "co", "da", "de", "do",
-		"fa", "fe", "fo", "ga", "ge", "go", "ha", "he", "ho",
-		"ja", "je", "jo", "ka", "ke", "ko", "la", "le", "lo",
-		"ma", "me", "mo", "na", "ne", "no", "ra", "re", "ro",
-		"sa", "se", "so", "ta", "te", "to", "va", "ve", "vo",
-		"xa", "xe", "xo", "ya", "ye", "yo", "za", "ze", "zo"
+		"ба", "бе", "бо", "ка", "ке", "ко", "да", "де", "до",
+		"фа", "фе", "фо", "га", "ге", "го", "ха", "хе", "хо",
+		"джа", "дже", "джо", "ка", "ке", "ко", "ла", "ле", "ло",
+		"ма", "ме", "мо", "на", "не", "но", "ра", "ре", "ро",
+		"са", "се", "со", "та", "те", "то", "ва", "ве", "во",
+		"кса", "ксе", "ксо", "я", "е", "ё", "за", "зе", "зо"
 	)
 	icon_state = "galuncom"
 	default_priority = 90

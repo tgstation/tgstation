@@ -93,7 +93,7 @@ it will be sent to all connected chats.
 		to_chat(observer, "[link] [message]", type = message_type)
 
 /// Sends a message to everyone within the list, as well as all observers.
-/proc/relay_to_list_and_observers(message, list/mob_list, source, message_type = null)
+/proc/relay_to_list_and_observers(message, list/mob_list, source, message_type = null, tts_message, tts_seed, list/tts_effects) // BANDASTATION EDIT - TTS: added  `tts_message, tts_seed, list/tts_effects`
 	for(var/mob/creature as anything in mob_list)
 		to_chat(
 			creature,
@@ -101,4 +101,18 @@ it will be sent to all connected chats.
 			type = message_type,
 			avoid_highlighting = (creature == source),
 		)
+		// BANDASTATION ADDITION START - TTS
+		if(!tts_seed)
+			continue
+
+		SStts220.get_tts(
+			listener = creature,
+			message = tts_message,
+			tts_seed = tts_seed,
+			is_local = FALSE,
+			effect_types = tts_effects,
+			channel_override = CHANNEL_TTS_TELEPATHY
+		)
+		// BANDASTATION ADDITION END
+
 	send_to_observers(message, source)

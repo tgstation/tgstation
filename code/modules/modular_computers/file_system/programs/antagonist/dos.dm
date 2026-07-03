@@ -3,7 +3,7 @@
 	filedesc = "DoS Traffic Generator"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "hostile"
-	extended_desc = "This advanced script can perform denial of service attacks against NTNet quantum relays. The system administrator will probably notice this. Multiple devices can run this program together against same relay for increased effect"
+	extended_desc = "Этот продвинутый скрипт может выполнять атаки на квантовые ретрансляторы NTNet. Системный администратор, вероятно, заметит это. Несколько устройств могут запускать эту программу вместе против одного реле для усиления эффекта"
 	size = 20
 	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetDos"

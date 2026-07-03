@@ -44,7 +44,7 @@
 		)
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
-			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", [no_damage_feedback]"]!"),
+			span_danger("[capitalize(hitting_projectile.declent_ru(NOMINATIVE))] попадает по [declent_ru(DATIVE)][damage_sustained ? "" : ", [no_damage_feedback]"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 
@@ -57,7 +57,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("You smash [src][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] крушит [declent_ru(ACCUSATIVE)][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("Вы крушите [declent_ru(ACCUSATIVE)][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
@@ -72,7 +72,7 @@
 /obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
+		user.emote("custom", message = "[ru_attack_verb(user.friendly_verb_continuous)] [declent_ru(ACCUSATIVE)].")
 		return FALSE
 	else
 		var/turf/current_turf = get_turf(src) //we want to save the turf to play the sound there, cause being destroyed deletes us!

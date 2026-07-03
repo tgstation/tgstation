@@ -1,0 +1,8 @@
+["gold ring"]
+nominative = "золотое кольцо"
+genitive = "золотого кольца"
+dative = "золотому кольцу"
+accusative = "золотое кольцо"
+instrumental = "золотым кольцом"
+prepositional = "золотом кольце"
+gender = "neuter"

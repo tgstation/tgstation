@@ -2,7 +2,7 @@
 	name = "host monitor"
 
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
-	desc = "A complex electronic that will analyze the connection health between host and avatar."
+	desc = "Сложная электронная система, которая анализирует работоспособность соединения между хостом и аватаром."
 	obj_flags = CONDUCTS_ELECTRICITY
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "host_monitor"
@@ -22,12 +22,12 @@
 
 	var/datum/component/avatar_connection/connection = user.GetComponent(/datum/component/avatar_connection)
 	if(isnull(connection))
-		balloon_alert(user, "data not recognized")
+		balloon_alert(user, "данные не распознаны")
 		return
 
 	var/mob/living/pilot = connection.old_body_ref?.resolve()
 	if(isnull(pilot))
-		balloon_alert(user, "host not recognized")
+		balloon_alert(user, "хост не распознан")
 		return
 
 	to_chat(user, span_notice("Current host health: [pilot.health / pilot.maxHealth * 100]%"))

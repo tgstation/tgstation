@@ -1,0 +1,8 @@
+[fedora]
+nominative = "федора"
+genitive = "федоры"
+dative = "федоре"
+accusative = "федору"
+instrumental = "федорой"
+prepositional = "федоре"
+gender = "female"

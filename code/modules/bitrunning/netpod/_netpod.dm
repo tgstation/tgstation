@@ -6,7 +6,7 @@
 
 	base_icon_state = "netpod"
 	circuit = /obj/item/circuitboard/machine/netpod
-	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
+	desc = "Связущее звено с сетевым миром. Здесь есть множество кабелей для подключения себя к виртуальному домену."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "netpod"
 	max_integrity = 300
@@ -56,57 +56,57 @@
 	. = ..()
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
+		context[SCREENTIP_CONTEXT_LMB] = "Выбрать одежду"
 	else
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER && !occupant && !state_open)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Закрыть" : "Открыть"] панель"
 
 		if(held_item.tool_behaviour == TOOL_CROWBAR)
 			if(isnull(occupant))
 				if(panel_open)
-					context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+					context[SCREENTIP_CONTEXT_LMB] = "Разобрать"
 				else
-					context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Close" : "Open"] Cover"
+					context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Открыть" : "Закрыть"] кожух"
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "Break out"
+				context[SCREENTIP_CONTEXT_LMB] = "Выломать"
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "[copy_body ? "Disable" : "Enable"] Scan"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[copy_body ? "Выключить" : "Включить"] скан"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice("Панель технического обслуживания может быть [panel_open ? "прикручена" : "откручена"] при помощи [EXAMINE_HINT("отвертки")].")
 	if(isnull(occupant))
 		if(panel_open)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+			. += span_notice("Её можно поддеть [EXAMINE_HINT("ломом")].")
 		else
-			. += span_notice("Its hatch can be [EXAMINE_HINT("pried")] [state_open ? "closed" : "open"].")
+			. += span_notice("Её люк можно поддеть [EXAMINE_HINT("ломом")] и [state_open ? "закрыть" : "открыть"].")
 
 	if(isnull(server_ref?.resolve()))
-		. += span_infoplain("It's not connected to anything.")
-		. += span_infoplain("Netpods must be built within 4 tiles of a server.")
+		. += span_infoplain("Оно ни к чему не подключено.")
+		. += span_infoplain("Нетподы должны быть построены на расстоянии 4-х тайлов от сервера.")
 		return
 
 	if(!isobserver(user))
-		. += span_infoplain("Drag yourself into the pod to engage the link.")
-		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
-		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+		. += span_infoplain("Перетащите себя на под, чтобы начать подключение.")
+		. += span_infoplain("Под имеет ограниченные возможности реанимации. Нахождение в поде может вылечить некоторые ранения.")
+		. += span_infoplain("Имеется система безопасности, оповещающая пользователя, если начнётся вмешательство с подом.")
 		if(copy_body)
-			. += span_infoplain("Occupant scanning is currently enabled, which will cause bit avatars to look like the occupant when first created.")
-		. += span_infoplain("Alt-click to [copy_body ? "disable" : "enable"] occupant scanning.")
+			. += span_infoplain("В настоящее время включено сканирование пользователя, благодаря чему аватары будут выглядят как пользователь при первом его создании.")
+		. += span_infoplain("Альт-ЛКМ чтобы [copy_body ? "выключить" : "включить"] сканирование пользователя.")
 
 	if(isnull(occupant))
-		. += span_infoplain("It's currently unoccupied.")
+		. += span_infoplain("Сейчас внутри пусто.")
 		return
 
-	. += span_infoplain("It's currently occupied by [occupant].")
+	. += span_infoplain("Сейчас внутри находится - [occupant].")
 
 	if(isobserver(user))
-		. += span_notice("As an observer, you can click this netpod to jump to its avatar.")
+		. += span_notice("Как наблюдатель, вы можете щелкнуть по этому нетподу, чтобы перейти к его аватару.")
 		return
 
-	. += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
+	. += span_notice("Оно может быть насильно открыто монтировкой, но системы безопасности оповестят пользователя.")
 
 
 /obj/machinery/netpod/update_icon_state()
@@ -162,7 +162,7 @@
 	copy_body = !copy_body
 	scanning_can_toggle = world.time + SCANNING_TOGGLE_COOLDOWN
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	user.balloon_alert_to_viewers(user, "scanning [copy_body ? "enabled" : "disabled"]")
+	user.balloon_alert_to_viewers(user, "сканирование [copy_body ? "включено" : "выключено"]")
 	return CLICK_ACTION_SUCCESS
 
 #undef BASE_DISCONNECT_DAMAGE

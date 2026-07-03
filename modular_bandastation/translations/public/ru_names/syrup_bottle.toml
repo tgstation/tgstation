@@ -1,0 +1,8 @@
+["syrup bottle"]
+nominative = "бутылка сиропа"
+genitive = "бутылки сиропа"
+dative = "бутылке сиропа"
+accusative = "бутылку сиропа"
+instrumental = "бутылкой сиропа"
+prepositional = "бутылке сиропа"
+gender = "female"

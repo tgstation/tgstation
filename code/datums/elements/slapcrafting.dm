@@ -105,12 +105,12 @@
 
 	var/atom/final_result = initial(actual_recipe.result)
 
-	to_chat(user, span_notice("You start crafting \a [initial(final_result.name)]..."))
+	to_chat(user, span_notice("Вы начинаете создавать [declent_ru_initial(final_result::name, ACCUSATIVE, final_result::name)]..."))
 
 	var/error_string = craft_sheet.construct_item(user, actual_recipe)
 
 	if(istext(error_string))
-		to_chat(user, span_warning("Crafting failed[error_string]"))
+		to_chat(user, span_warning("Не удалось создать[error_string]"))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
 /datum/element/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
@@ -125,9 +125,9 @@
 		if(locate(initial(result.name)) in already_used_names)
 			continue
 		already_used_names += initial(result.name)
-		string_results += list("\a [initial(result.name)]")
+		string_results += list("[declent_ru_initial(result::name, NOMINATIVE, result::name)]")
 
-	examine_list["crafting component"] = "You think [source] could be used to make [english_list(string_results)]! Examine again to look at the details..."
+	examine_list["используемый в рецепте"] = "Вы думаете, что [source.declent_ru(ACCUSATIVE)] можно использовать для создания: [english_list(string_results)]! Осмотрите еще раз для подробностей..."
 
 /// Alerts any examiners to the details of the recipe.
 /datum/element/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
@@ -135,7 +135,7 @@
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>Узнать рецепт для [declent_ru_initial(result::name, GENITIVE, result::name)]</a>"
 
 /datum/element/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
@@ -150,7 +150,7 @@
 
 	var/atom/result = initial(cur_recipe.result)
 
-	to_chat(user, span_notice("You could craft \a [initial(result.name)] by applying one of these items to it!"))
+	to_chat(user, span_notice("Вы можете создать [declent_ru_initial(result::name, ACCUSATIVE, result::name)], применив один из следующих предметов к этому!"))
 
 	// Gotta instance it to copy the lists over.
 	cur_recipe = new cur_recipe()
@@ -165,7 +165,7 @@
 		var/datum/reagent/reagent_ingredient = valid_type
 		if(istype(reagent_ingredient))
 			var/amount = initial(cur_recipe.reqs[reagent_ingredient])
-			string_ingredient_list += "[amount] unit[amount > 1 ? "s" : ""] of [initial(reagent_ingredient.name)]\n"
+			string_ingredient_list += "[amount] юнит[declension_ru(amount, "", "а", "ов")] [initial(reagent_ingredient.name)]\n"
 
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
@@ -176,11 +176,11 @@
 				amount--
 			else
 				continue
-		string_ingredient_list += "[amount > 1 ? ("[amount]" + " of") : "a"] [initial(ingredient.name)]\n"
+		string_ingredient_list += "[amount == 1 ? "[declent_ru_initial(ingredient::name, NOMINATIVE, ingredient::name)]" : "[declent_ru_initial(ingredient::name, GENITIVE, ingredient::name)]"]\n"
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		to_chat(user, span_boldnotice("Extra Ingredients:"))
+		to_chat(user, span_boldnotice("Дополнительные ингредиенты:"))
 		to_chat(user, boxed_message(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""
@@ -188,13 +188,13 @@
 	// Paste the required tools.
 	for(var/valid_type in cur_recipe.tool_paths)
 		var/atom/tool = valid_type
-		tool_list += "\a [initial(tool.name)]\n"
+		tool_list += "[declent_ru_initial(tool::name, NOMINATIVE, tool::name)]\n"
 
 	for(var/string in cur_recipe.tool_behaviors)
-		tool_list += "\a [string]\n"
+		tool_list += "[string]\n"
 
 	if(length(tool_list))
-		to_chat(user, span_boldnotice("Required Tools:"))
+		to_chat(user, span_boldnotice("Необходимые инструменты:"))
 		to_chat(user, boxed_message(span_notice(tool_list)))
 
 	qdel(cur_recipe)

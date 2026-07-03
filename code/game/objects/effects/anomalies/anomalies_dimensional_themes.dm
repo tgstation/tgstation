@@ -193,6 +193,7 @@
 		return
 	if (!replace_window)
 		window.add_atom_colour(window_colour, FIXED_COLOUR_PRIORITY)
+		window.edge_overlay_color = window_colour // BANDASTATION ADDITION
 		return
 
 	var/obj/structure/window/new_window = new replace_window(window.loc)

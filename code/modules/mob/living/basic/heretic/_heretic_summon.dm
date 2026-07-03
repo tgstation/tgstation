@@ -1,7 +1,7 @@
 /mob/living/basic/heretic_summon
 	name = "Eldritch Demon"
 	real_name = "Eldritch Demon"
-	desc = "A horror from beyond this realm, summoned by bad code."
+	desc = "Древний ужас из-за пределов этого мира, вызванный плохим кодом."
 	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	faction = list(FACTION_HERETIC)
 	basic_mob_flags = DEL_ON_DEATH
@@ -15,13 +15,13 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 
 	attack_sound = 'sound/items/weapons/punch1.ogg'
-	response_help_continuous = "thinks better of touching"
-	response_help_simple = "think better of touching"
-	response_disarm_continuous = "flails at"
-	response_disarm_simple = "flail at"
-	response_harm_continuous = "rips"
-	response_harm_simple = "tear"
-	death_message = "implodes into itself."
+	response_help_continuous = "стоит ещё подумать, прежде чем трогать"
+	response_help_simple = "лучше подумайте, прежде чем трогать"
+	response_disarm_continuous = "цепляется за"
+	response_disarm_simple = "цепляется за"
+	response_harm_continuous = "разрывает"
+	response_harm_simple = "рвёт"
+	death_message = "схлопывается в себя."
 
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0

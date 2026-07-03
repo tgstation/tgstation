@@ -178,7 +178,7 @@
 
 /atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
-	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
+	desc = "Наши раны быстро заживают. <i>Этот эффект приостанавливается, если мы горим.</i>"
 	icon_state = "fleshmend"
 
 /datum/status_effect/exercised
@@ -427,7 +427,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 2 MINUTES
+	duration = 15 SECONDS // BANDASTATION EDIT - Original: 2 MINUTES (BALANCE: nerfing status_effect/mayhem for safer using)
 	alert_type = null
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
@@ -453,7 +453,7 @@
 		ADD_TRAIT(chainsaw, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 		owner.put_in_hands(chainsaw, forced = TRUE)
 		chainsaw.attack_self(owner)
-		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 5) // BANDASTATION EDIT - Original: 25 (BALANCE: nerfing status_effect/mayhem for safer using)
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
 	to_chat(owner, span_narsiesmall("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, NO TEAM MATES OR ALLEGIANCES! KILL THEM ALL!"))

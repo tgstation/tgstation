@@ -75,7 +75,7 @@
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
+	COOLDOWN_START(src, cooldown_vehicle_move, modified_move_delay(movedelay)) // BANDASTATION EDIT - Vehicle speed
 	if(completely_disabled)
 		return FALSE
 	if(!direction)
@@ -144,7 +144,7 @@
 		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
-	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
+	set_glide_size(DELAY_TO_GLIDE_SIZE(modified_move_delay(movedelay))) // BANDASTATION EDIT - Vehicle speed
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 

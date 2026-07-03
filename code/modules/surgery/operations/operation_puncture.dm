@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/repair_puncture
-	name = "realign blood vessels"
-	desc = "Realign a patient's torn blood vessels to prepare for sealing."
+	name = "Соединение сосудов"
+	desc = "Соединение разорванных кровеносных сосудов пациента для подготовки к их прижиганию."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_SCALPEL = 1.15,
@@ -21,7 +21,7 @@
 	return image(/obj/item/hemostat)
 
 /datum/surgery_operation/limb/repair_puncture/all_required_strings()
-	return list("the limb must have an unoperated puncture wound") + ..()
+	return list("конечность должна иметь необработанную колотую рану") + ..()
 
 /datum/surgery_operation/limb/repair_puncture/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
@@ -33,11 +33,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете соединять разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает соединять разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает соединять разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "You feel a horrible stabbing pain in your [limb.plaintext_zone]!")
+	display_pain(limb.owner, "Вы чувствуете ужасную колющую боль в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]]!")
 
 /datum/surgery_operation/limb/repair_puncture/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
@@ -48,9 +48,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You successfully realign the last of the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
-			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
+			span_notice("Вы успешно соединили последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+			span_notice("[surgeon] успешно соединяет последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+			span_notice("[surgeon] успешно соединяет последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 		)
 		return
 
@@ -58,25 +58,25 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully realign some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully realigns some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully realigns some of the blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно соединили часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно соединяет часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно соединяет часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 
 /datum/surgery_operation/limb/repair_puncture/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You jerk apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы случайно разрываете кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] разрывает кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [declent_ru(tool, ACCUSATIVE)]!"),
+		span_notice("[surgeon] разрывает кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = 10, sharpness = SHARP_EDGED, damage_source = tool)
 
 /datum/surgery_operation/limb/seal_veins
-	name = "seal blood vessels"
+	name = "Прижигание сосудов"
 	// rnd_name = "Anastomosis (Seal Blood Vessels)" // doctor says this is the term to use but it fits awkwardly
-	desc = "Seal a patient's now-realigned blood vessels."
+	desc = "Прижигание ранее соединенных кровеносных сосудов пациента."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/gun/energy/laser = 1.12,
@@ -98,10 +98,10 @@
 	return image(/obj/item/cautery)
 
 /datum/surgery_operation/limb/seal_veins/get_any_tool()
-	return "Any heat source"
+	return "Любой источник тепла"
 
 /datum/surgery_operation/limb/seal_veins/all_required_strings()
-	return list("the limb must have an operated puncture wound") + ..()
+	return list("конечность должна иметь подготовленную колотую рану") + ..()
 
 /datum/surgery_operation/limb/seal_veins/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
@@ -120,11 +120,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете прижигать соединенные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает прижигать соединенные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает прижигать соединенные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "You feel a burning sensation in your [limb.plaintext_zone]!")
+	display_pain(limb.owner, "Вы чувствуете жжение в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]]!")
 
 /datum/surgery_operation/limb/seal_veins/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
@@ -134,9 +134,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You successfully seal the last of the ruptured blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
-			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
+			span_notice("Вы успешно прижгли последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+			span_notice("[surgeon] успешно прижигает последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+			span_notice("[surgeon] успешно прижигает последние разорванные кровеносные сосуды в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 		)
 		return
 
@@ -144,7 +144,7 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully seal some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully seals some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully seals some of the blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно прижгли часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно прижигает часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно прижигает часть кровеносных сосудов в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)

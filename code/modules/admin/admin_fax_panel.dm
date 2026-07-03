@@ -17,6 +17,13 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	/// Default name of paper. paper - bluh-bluh. Used when field with paper name not edited.
 	var/default_paper_name = "Standard Report"
 
+	var/prefill_text = ""
+	var/prefill_paper_name = ""
+	var/prefill_sender = ""
+
+	var/generated_signer_name = "John Doe"
+	var/generated_signer_job = "Centcom Intern"
+
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
 	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
@@ -34,10 +41,23 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	//Give our paper special status, to read everywhere.
 	fax_paper.request_state = TRUE
 
+	generated_signer_name = generate_spinwarder_name()
+
+/datum/fax_panel_interface/proc/generate_spinwarder_name()
+	var/f_name = "John"
+	var/l_name = "Doe"
+
+	// Используем глобальные списки, если они есть
+	if(length(GLOB.first_names_male_spinwarder))
+		f_name = pick(GLOB.first_names_male_spinwarder)
+
+	if(length(GLOB.last_names_male_spinwarder))
+		l_name = pick(GLOB.last_names_male_spinwarder)
+
+	return "[f_name] [l_name]"
+
 /**
  * Return fax if name exists
- * Arguments:
- * * name - Name of fax what we try to find.
  */
 /datum/fax_panel_interface/proc/get_fax_by_name(name)
 	if(!length(available_faxes))
@@ -65,6 +85,10 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	data["faxes"] = list()
 	data["stamps"] = list()
 
+	data["prefillText"] = prefill_text
+	data["prefillPaperName"] = prefill_paper_name
+	data["prefillSender"] = prefill_sender
+
 	for(var/stamp in stamp_list)
 		data["stamps"] += list(stamp[1]) // send only names.
 
@@ -72,6 +96,14 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
 		if(another_fax && istype(another_fax))
 			data["faxes"] += list(another_fax.fax_name)
+
+	return data
+
+/datum/fax_panel_interface/ui_data(mob/user)
+	var/list/data = list()
+
+	data["generatedName"] = generated_signer_name
+	data["generatedJob"] = generated_signer_job
 
 	return data
 
@@ -100,6 +132,12 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 				return
 			fax_paper.ui_interact(ui.user)
 
+		if("use_current_user")
+			if(ui.user)
+				generated_signer_name = ui.user.real_name
+				generated_signer_job = "Nanotrasen Navy Officer"
+				return TRUE
+
 		if("save") // save paper
 			if(params["paperName"])
 				default_paper_name = params["paperName"]
@@ -117,12 +155,26 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 					break
 
 			fax_paper.name = "paper — [default_paper_name]"
-			fax_paper.add_raw_text(params["rawText"], advanced_html = TRUE)
+
+			var/final_text = params["rawText"]
+
+			if(params["signerName"])
+				var/s_name = params["signerName"]
+				var/s_html = "<font face='[SIGNATURE_FONT]'><i>[s_name]</i></font>"
+				final_text = replacetext(final_text, "\[input_field autofill_type=sign]", s_html)
+
+			if(params["signerJob"])
+				final_text = replacetext(final_text, "\[input_field autofill_type=job]", params["signerJob"])
+
+			var/formatted_time = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR] [server_timestamp()]"
+			final_text = replacetext(final_text, "\[input_field autofill_type=time]", formatted_time)
+
+			fax_paper.add_raw_text(replace_text_keys(final_text, ui.user), advanced_html = TRUE)
 
 			if(stamp)
 				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampAngle"], stamp)
 
-			fax_paper.update_static_data(ui.user) // OK, it's work, and update UI.
+			fax_paper.update_static_data(ui.user)
 
 		if("send")
 			//copy
@@ -136,3 +188,4 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 		if("createPaper")
 			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, ui.user.loc)
 			our_paper.name = fax_paper.name
+

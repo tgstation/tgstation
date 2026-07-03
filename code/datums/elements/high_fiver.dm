@@ -63,7 +63,7 @@
 		offerer.visible_message(
 			span_notice("[taker] enthusiastically high-tens [offerer]!"),
 			span_nicegreen("Wow! You're high-tenned [taker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_hear("Вы слышите противный звук удара плоти о плоть!"),
 			ignored_mobs = taker,
 		)
 
@@ -74,7 +74,7 @@
 		offerer.visible_message(
 			span_notice("[taker] high-fives [offerer]!"),
 			span_nicegreen("All right! You're high-fived by [taker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_hear("Вы слышите противный звук удара плоти о плоть!"),
 			ignored_mobs = taker,
 		)
 

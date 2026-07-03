@@ -1,0 +1,8 @@
+["host monitor"]
+nominative = "главный монитор"
+genitive = "главного монитора"
+dative = "главному монитору"
+accusative = "главный монитор"
+instrumental = "главным монитором"
+prepositional = "главном мониторе"
+gender = "male"

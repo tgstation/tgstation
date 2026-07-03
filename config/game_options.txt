@@ -33,7 +33,7 @@ COMMENDATION_PERCENT_POLL 0.05
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1.5
+RUN_DELAY 2.2
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
@@ -44,9 +44,8 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/basic/slime 0
-MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
-MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
-
+##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
 ## NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
@@ -76,12 +75,14 @@ ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE 6000
 
 
 ## ALERT LEVELS ###
-ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
-ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_GREEN Все угрозы для станции устранены. Все оружие должно быть в кобуре, и законы о конфиденциальности вновь полностью соблюдаются.
+ALERT_BLUE_UPTO Станция получила надежные данные о возможной враждебной активности на борту. Служба безопасности может держать оружие на виду.
+ALERT_BLUE_DOWNTO Непосредственная угроза миновала. Служба безопасности может больше не держать оружие в полной боевой готовности, но может по-прежнему держать его на виду. Выборочные обыски запрещены.
+ALERT_RED_UPTO Станции грозит серьёзная опасность. Службе безопасности рекомендуется иметь оружие в полной боевой готовности. Выборочные обыски разрешены.
+ALERT_RED_DOWNTO Код был снижен до красного. Станции по-прежнему грозит серьёзная опасность. Службе безопасности рекомендуется иметь оружие в полной боевой готовности. Выборочные обыски разрешены.
+ALERT_DELTA Механизм самоуничтожения станции задействован. Все члены экипажа обязаны подчиняться всем указаниям, данными главами отделов. Любые нарушения этих приказов наказуемы уничтожением на месте. Это не учебная тревога.
+ALERT_GAMMA Центральным Командованием был установлен код ГАММА. Служба безопасности должна быть полностью вооружена. Гражданский персонал обязан немедленно обратиться к главам отделов для получения дальнейших указаний.
+ALERT_EPSILON Центральным Командованием был установлен код ЭПСИЛОН. Все контракты расторгнуты.
 
 ## The total weight of station goals possible for a round (allows multiple goals)
 STATION_GOAL_BUDGET 1
@@ -94,7 +95,7 @@ ROUNDSTART_BLUE_ALERT 1
 ## GAME MODES ###
 
 ## Uncomment to not send a roundstart intercept report.
-#NO_INTERCEPT_REPORT
+NO_INTERCEPT_REPORT
 
 ## Uncomment to exclude dynamic info in the roundstart report.
 #NO_DYNAMIC_REPORT
@@ -122,6 +123,8 @@ CHANGELING_SCALING_COEFF 6
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 SECURITY_SCALING_COEFF 8
+SECURITY_MIN_POSITIONS 5
+SECURITY_MAX_POSITIONS 12
 
 ## The number of objectives traitors get.
 ## Not including escaping/hijacking.
@@ -180,7 +183,7 @@ ALLOW_AI_MULTICAM
 
 ## Secborg ###
 ## Uncomment to prevent the security cyborg model from being chosen
-#DISABLE_SECBORG
+DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg model from being chosen
@@ -189,7 +192,7 @@ ALLOW_AI_MULTICAM
 ## AWAY MISSIONS ###
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
-#ROUNDSTART_AWAY
+ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
@@ -219,7 +222,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you deactivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
-#SECURITY_HAS_MAINT_ACCESS
+SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
@@ -231,16 +234,16 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Set to 0/commented out for "off", Departmental Security Officers will never get additional room-specific access (beyond general departmental doors).
 ## Set to 1 if you want to enable "Scaling Access", where Departmental Security Officers will get access to most rooms within a department depending on how many security officers there are relative to the number of people on a station.
 ## Set to 2 if you want Departmental Security Officers to always have access to all rooms in a department.
-DEPSEC_ACCESS_LEVEL 1
+DEPSEC_ACCESS_LEVEL 2
 
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ## NEAR-DEATH EXPERIENCE ###
 ## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
-NEAR_DEATH_EXPERIENCE
+#NEAR_DEATH_EXPERIENCE
 
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
@@ -256,7 +259,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
 
 
-DEFAULT_LAWS 0
+DEFAULT_LAWS 4
 
 ## SILICON ASIMOV SUPERIORITY OVERRIDE ###
 ## This makes "Asimov Superiority" show up as a perk for humans in the character creation menu even if asimov is not the default lawset, such as when used with asimov++
@@ -269,7 +272,7 @@ DEFAULT_LAWS 0
 ## See datums\ai_laws.dm for the full law lists
 ## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
 
-SPECIFIED_LAWS asimovpp
+SPECIFIED_LAWS crewsimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -282,6 +285,30 @@ RANDOM_LAWS asimovpp
 RANDOM_LAWS paladin
 RANDOM_LAWS robocop
 RANDOM_LAWS corporate
+RANDOM_LAWS nt_default
+RANDOM_LAWS crewsimovpp
+RANDOM_LAWS crewsimov
+RANDOM_LAWS paladin
+RANDOM_LAWS petrovich
+RANDOM_LAWS renter
+RANDOM_LAWS chapai
+RANDOM_LAWS clown
+RANDOM_LAWS cowboy
+RANDOM_LAWS detective
+RANDOM_LAWS druid
+RANDOM_LAWS educator
+RANDOM_LAWS fitnesscoach
+RANDOM_LAWS friendbot
+RANDOM_LAWS mediator
+RANDOM_LAWS metaexperiment
+RANDOM_LAWS mother
+RANDOM_LAWS partybot
+RANDOM_LAWS plantfriend
+RANDOM_LAWS researcher
+RANDOM_LAWS siliconcollective
+RANDOM_LAWS spotless
+RANDOM_LAWS travelguide
+RANDOM_LAWS wafflehouse
 
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
@@ -313,18 +340,31 @@ LAW_WEIGHT custom,0
 
 ## standard-ish laws. These are fairly ok to run
 ## Unique AI station trait uses weights so we don't want asimov
-LAW_WEIGHT asimov,0
+LAW_WEIGHT asimov,5
 LAW_WEIGHT asimovpp,5
-LAW_WEIGHT paladin,5
 LAW_WEIGHT paladin5,5
-LAW_WEIGHT robocop,5
 LAW_WEIGHT corporate,5
 LAW_WEIGHT hippocratic,5
 LAW_WEIGHT maintain,5
-LAW_WEIGHT liveandletlive,5
 LAW_WEIGHT peacekeeper,5
 LAW_WEIGHT ten_commandments,5
 LAW_WEIGHT nutimov,5
+LAW_WEIGHT nt_default,5
+LAW_WEIGHT crewsimov,5
+LAW_WEIGHT renter,5
+LAW_WEIGHT chapai,5
+LAW_WEIGHT clown,5
+LAW_WEIGHT druid,5
+LAW_WEIGHT educator,5
+LAW_WEIGHT fitnesscoach,5
+LAW_WEIGHT friendbot,5
+LAW_WEIGHT mediator,5
+LAW_WEIGHT mother,5
+LAW_WEIGHT partybot,5
+LAW_WEIGHT plantfriend,5
+LAW_WEIGHT spotless,5
+LAW_WEIGHT travelguide,5
+LAW_WEIGHT wafflehouse,5
 
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT reporter,3
@@ -334,15 +374,26 @@ LAW_WEIGHT overlord,3
 LAW_WEIGHT painter,3
 LAW_WEIGHT dungeon_master,3
 LAW_WEIGHT thinkermov,3
+LAW_WEIGHT balance,3
+LAW_WEIGHT petrovich,3
+LAW_WEIGHT cowboy,3
+LAW_WEIGHT detective,3
+LAW_WEIGHT metaexperiment,3
+LAW_WEIGHT researcher,3
+LAW_WEIGHT siliconcollective,3
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
 LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
-LAW_WEIGHT balance,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT buildawall,0
 LAW_WEIGHT drone,0
+LAW_WEIGHT ert,0
+LAW_WEIGHT liveandletlive,0
+LAW_WEIGHT paladin,0
+LAW_WEIGHT robocop,0
+LAW_WEIGHT yesman,0
 
 ##------------------------------------------------
 
@@ -372,6 +423,7 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES felinid
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES skrell
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman

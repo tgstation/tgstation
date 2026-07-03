@@ -1,8 +1,8 @@
 /// Scout and assassin who can appear and disappear from glass surfaces. Damaged by being examined.
 /mob/living/basic/heretic_summon/maid_in_the_mirror
-	name = "\improper Maid in the Mirror"
+	name = "Maid in the Mirror"
 	real_name = "Maid in the Mirror"
-	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
+	desc = "Парящий и струящийся поток холодного воздуха. При взгляде на него он слегка мерцает."
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite... still
@@ -15,7 +15,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
-	death_message = "shatters and vanishes, releasing a gust of cold air."
+	death_message = "разлетается вдребезги и исчезает, выпуская порыв холодного воздуха."
 	/// Whether we take damage when someone looks at us
 	var/harmed_by_examine = TRUE
 	/// How often being examined by a specific mob can hurt us
@@ -53,8 +53,8 @@
 	// If we have health, we take some damage
 	if(health > (maxHealth * 0.02))
 		visible_message(
-				span_warning("[src] seems to fade in and out slightly."),
-				span_userdanger("[user]'s gaze pierces your every being!"),
+				span_warning("Кажется, что [src.declent_ru(NOMINATIVE)] то появляется, то исчезает."),
+				span_userdanger("Взгляд [user.declent_ru(GENITIVE)] пронизывает само ваше существование!"),
 		)
 
 		recent_examiner_refs += user_ref
@@ -67,8 +67,8 @@
 	// If we're examined on low enough health we die straight up
 	else
 		visible_message(
-				span_danger("[src] vanishes from existence!"),
-				span_userdanger("[user]'s gaze shatters your form, destroying you!"),
+				span_danger("[capitalize(src.declent_ru(NOMINATIVE))] уходит в небытие!"),
+				span_userdanger("Взгляд [user.declent_ru(GENITIVE)] разрушает вашу оболочку, уничтожая вас!"),
 		)
 
 		death()

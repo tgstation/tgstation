@@ -88,8 +88,8 @@
 		/obj/item/reagent_containers/cup/glass/bottle/trappist = 5,
 	)
 
-	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
-	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
+	product_slogans = "Надеюсь, никто не попросит меня о чёртовой кружке чая...;Алкоголь - друг человека. Вы же не бросите друга?;Очень рад вас обслужить!;Никто на этой станции не хочет выпить?"
+	product_ads = "Выпьем!;Бухло пойдёт вам на пользу!;Алкоголь - друг человека.;Очень рад вас обслужить!;Хотите отличного холодного пива?;Ничто так не лечит, как бухло!;Пригубите!;Выпейте!;Возьмите пивка!;Пиво пойдёт вам на пользу!;Только лучший алкоголь!;Бухло лучшего качества с 2053 года!;Вино со множеством наград!;Максимум алкоголя!;Твоё любимое пиво.;Тост: «За прогресс!»"
 	refill_canister = /obj/item/vending_refill/boozeomat
 	default_price = PAYCHECK_CREW * 0.9
 	extra_price = PAYCHECK_COMMAND

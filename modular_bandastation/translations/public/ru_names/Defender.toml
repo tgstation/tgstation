@@ -1,0 +1,8 @@
+[Defender]
+nominative = "Защитник"
+genitive = "Защитника"
+dative = "Защитнику"
+accusative = "Защитника"
+instrumental = "Защитником"
+prepositional = "Защитнике"
+gender = "female"

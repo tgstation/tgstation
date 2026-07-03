@@ -1,0 +1,10 @@
+#include "_admin.dm"
+
+#include "code/admin_helpers.dm"
+#include "code/admin_hotkeys.dm"
+#include "code/admin_secrets.dm"
+#include "code/admin_verbs.dm"
+#include "code/buildmode/crush.dm"
+#include "code/buildmode/offer.dm"
+#include "code/smites/broken_limb.dm"
+#include "code/raider_controller.dm"

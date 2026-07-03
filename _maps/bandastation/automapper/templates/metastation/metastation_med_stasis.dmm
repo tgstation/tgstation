@@ -1,0 +1,97 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/cold/directional/north,
+/obj/structure/bed/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"j" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/north,
+/obj/machinery/newscaster/directional/east,
+/obj/structure/table/glass,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"v" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"A" = (
+/obj/machinery/light_switch/directional/west,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/camera/directional/west{
+	c_tag = "Medbay Primary Treatment Centre West";
+	network = list("ss13","medbay")
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"B" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/cold/directional/north,
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"Q" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"R" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/north,
+/obj/item/radio/intercom/directional/west,
+/obj/structure/table/glass,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"X" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+
+(1,1,1) = {"
+R
+A
+"}
+(2,1,1) = {"
+a
+v
+"}
+(3,1,1) = {"
+x
+v
+"}
+(4,1,1) = {"
+v
+v
+"}
+(5,1,1) = {"
+v
+v
+"}
+(6,1,1) = {"
+v
+v
+"}
+(7,1,1) = {"
+X
+v
+"}
+(8,1,1) = {"
+B
+v
+"}
+(9,1,1) = {"
+j
+Q
+"}

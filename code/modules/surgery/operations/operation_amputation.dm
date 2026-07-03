@@ -1,7 +1,7 @@
 /datum/surgery_operation/limb/amputate
-	name = "amputate limb"
-	rnd_name = "Disarticulation (Amputation)"
-	desc = "Sever a limb from a patient's body."
+	name = "Ампутация конечности"
+	rnd_name = "Разъединение (Ампутация)"
+	desc = "Отделение конечности от тела пациента."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	required_bodytype = ~(BODYTYPE_ROBOTIC|BODYTYPE_PEG)
 	implements = list(
@@ -42,28 +42,28 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to sever [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to sever [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to sever [limb.owner]'s [limb.plaintext_zone] with [tool]."),
+		span_notice("Вы начинаете отсекать [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] ..."),
+		span_notice("[surgeon] начинает отсекать [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает отсекать [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
 	)
-	display_pain(limb.owner, "You feel a gruesome pain in your [limb.plaintext_zone]'s joint!")
+	display_pain(limb.owner, "Вы чувствуете ужасную боль в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]]!")
 
 /datum/surgery_operation/limb/amputate/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully amputate [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] successfully amputates [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] finishes severing [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("Вы успешно ампутировали [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] успешно ампутировал [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] заканчивает разъединение [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "You can no longer feel your [limb.plaintext_zone]!")
+	display_pain(limb.owner, "Вы больше не чувствуете свою [limb.ru_plaintext_zone[PREPOSITIONAL]]!")
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
 		surgeon.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	limb.drop_limb()
 
 /datum/surgery_operation/limb/amputate/mechanic
-	name = "disassemble limb"
-	rnd_name = "Dissassembly (Amputation)"
+	name = "Разбор конечности"
+	rnd_name = "Разборка (Ампутация)"
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 	implements = list(
@@ -84,16 +84,16 @@
 
 /datum/surgery_operation/limb/amputate/mechanic/any_required_strings()
 	return ..() + list(
-		"if operating on the head, the bone MUST be sawed",
-		"otherwise, the state of the bone doesn't matter",
+		"при операции на голове кость должна быть распилена",
+		"в другом случае состояние кости не имеет значения",
 	)
 
 /datum/surgery_operation/limb/amputate/mechanic/get_recommended_tool()
 	return "[TOOL_WRENCH] / [TOOL_SAW]"
 
 /datum/surgery_operation/limb/amputate/pegleg
-	name = "detach wooden limb"
-	rnd_name = "Detach Wooden Limb (Amputation)"
+	name = "Отсоединение деревянной конечности"
+	rnd_name = "Отсоединение деревянной конечности (ампутация)"
 	required_bodytype = BODYTYPE_PEG
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 	implements = list(
@@ -113,4 +113,4 @@
 
 /datum/surgery_operation/limb/amputate/pegleg/all_required_strings()
 	. = ..()
-	. += "the limb must be wooden"
+	. += "конечность должна быть деревянной"

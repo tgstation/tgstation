@@ -1,6 +1,6 @@
 /datum/language/draconic
 	name = "Draconic"
-	desc = "The common language of lizard-people, composed of sibilant hisses and rattles."
+	desc = "Общий язык унатхов, состоящий из шипящих и дребезжащих звуков."
 	key = "o"
 	flags = TONGUELESS_SPEECH
 	space_chance = 12
@@ -10,13 +10,13 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 3
 	syllables = list(
-		"za", "az", "ze", "ez", "zi", "iz", "zo", "oz", "zu", "uz", "zs", "sz",
-		"ha", "ah", "he", "eh", "hi", "ih", "ho", "oh", "hu", "uh", "hs", "sh",
-		"la", "al", "le", "el", "li", "il", "lo", "ol", "lu", "ul", "ls", "sl",
-		"ka", "ak", "ke", "ek", "ki", "ik", "ko", "ok", "ku", "uk", "ks", "sk",
-		"sa", "as", "se", "es", "si", "is", "so", "os", "su", "us", "ss", "ss",
-		"ra", "ar", "re", "er", "ri", "ir", "ro", "or", "ru", "ur", "rs", "sr",
-		"a",  "a",  "e",  "e",  "i",  "i",  "o",  "o",  "u",  "u",  "s",  "s"
+		"за", "аз", "зэ", "эз", "зи", "из", "зо", "оз", "зу", "уз", "зс", "сз",
+		"ха", "ах", "хэ", "эх", "хи", "их", "хо", "ох", "ху", "ух", "хс", "ш",
+		"ла", "ал", "лэ", "эл", "ли", "ил", "ло", "ол", "лу", "ул", "лс", "сл",
+		"ка", "ак", "кэ", "эк", "ки", "ик", "ко", "ок", "ку", "ук", "кс", "ск",
+		"са", "ас", "сэ", "эс", "си", "ис", "со", "ос", "су", "ус", "сс", "сс",
+		"ра", "ар", "рэ", "эр", "ри", "ир", "ро", "ор", "ру", "ур", "рс", "ср",
+		"а",  "а",  "э",  "э",  "и",  "и",  "о",  "о",  "у",  "у",  "с",  "с"
 	)
 	special_characters = list("-")
 	icon_state = "lizard"

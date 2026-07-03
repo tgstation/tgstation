@@ -32,7 +32,7 @@
 
 		output += include_template("Autowiki/VendingMachine", list(
 			"icon" = escape_value(filename),
-			"name" = escape_value(format_text(vending_machine.name)),
+			"name" = escape_value(declent_ru_initial(format_text(vending_machine.name), NOMINATIVE, format_text(vending_machine.name))),
 			"products" = format_product_list(vending_machine.products),
 			"contraband" = format_product_list(vending_machine.contraband),
 			"premium" = format_product_list(vending_machine.premium),
@@ -52,7 +52,7 @@
 
 	for (var/obj/product_path as anything in product_list)
 		output += include_template("Autowiki/VendingMachineProduct", list(
-			"name" = escape_value(capitalize(format_text(initial(product_path.name)))),
+			"name" = escape_value(capitalize(declent_ru_initial(format_text(product_path::name), NOMINATIVE, format_text(product_path::name)))),
 			"amount" = product_list[product_path],
 		))
 

@@ -1,0 +1,8 @@
+[oven]
+nominative = "духовка"
+genitive = "духовки"
+dative = "духовке"
+accusative = "духовку"
+instrumental = "духовкой"
+prepositional = "духовке"
+gender = "female"

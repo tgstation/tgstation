@@ -1,7 +1,7 @@
 /datum/techweb_node/syndicate_basic
 	id = TECHWEB_NODE_SYNDICATE_BASIC
-	display_name = "Illegal Technology"
-	description = "Dangerous research used to create dangerous objects."
+	display_name = "Нелегальные технологии"
+	description = "Опасные исследования, используемые для создания опасных предметов."
 	prereq_ids = list(TECHWEB_NODE_EXP_TOOLS, TECHWEB_NODE_EXOTIC_AMMO)
 	design_ids = list(
 		"advanced_camera",
@@ -37,8 +37,8 @@
 
 /datum/techweb_node/unregulated_bluespace
 	id = TECHWEB_NODE_UNREGULATED_BLUESPACE
-	display_name = "Unregulated Bluespace Research"
-	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
+	display_name = "Нерегулируемое блюспейс исследование"
+	description = "Блюспейс технологии, что используют нестабильные и несбалансированные процедуры, способные повредить структуру самого блюспейса. Запрещена Галактической конвенцией."
 	prereq_ids = list(TECHWEB_NODE_PARTS_BLUESPACE, TECHWEB_NODE_SYNDICATE_BASIC)
 	design_ids = list(
 		"desynchronizer",

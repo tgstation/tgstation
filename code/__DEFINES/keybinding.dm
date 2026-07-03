@@ -10,6 +10,7 @@
 
 //Admin
 #define COMSIG_KB_ADMIN_ASAY_DOWN "keybinding_admin_asay_down"
+#define COMSIG_KB_ADMIN_MSAY_DOWN "keybinding_admin_msay_down" // BANDASTATION ADDITION - Mentors
 #define COMSIG_KB_ADMIN_DSAY_DOWN "keybinding_admin_dsay_down"
 #define COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN "keybinding_admin_togglebuildmode_down"
 #define COMSIG_KB_ADMIN_AGHOST_DOWN "keybinding_admin_aghost_down"
@@ -48,6 +49,7 @@
 #define COMSIG_KB_HUMAN_SUITEQUIP_DOWN "keybinding_human_suitequip_down"
 #define COMSIG_KB_HUMAN_LPOCKETEQUIP_DOWN "keybinding_human_lpocketequip_down"
 #define COMSIG_KB_HUMAN_RPOCKETEQUIP_DOWN "keybinding_human_rpocketequip_down"
+#define COMSIG_KB_HUMAN_QUICK_ACCESSORY_DRAW_DOWN "keybinding_human_quick_accessory_draw_down" //BANDASTATION EDIT: Accessory holsters
 
 //Living
 #define COMSIG_KB_LIVING_RESIST_DOWN "keybinding_living_resist_down"

@@ -13,7 +13,7 @@
 	filedesc = "Chat Client"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "text"
-	extended_desc = "This program allows communication over NTNRC network."
+	extended_desc = "Эта программа позволяет осуществлять коммуникацию через сеть NTNRC."
 	size = 8
 	ui_header = "ntnrc_idle.gif"
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET

@@ -1,0 +1,10 @@
+{
+	"snake": [
+		{
+			"type": "icon_state",
+			"icon_state": "snake",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

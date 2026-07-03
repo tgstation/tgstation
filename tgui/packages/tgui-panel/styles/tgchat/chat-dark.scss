@@ -24,7 +24,7 @@ img.icon {
   min-height: 16px;
   min-width: 16px;
   width: auto;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 a {
@@ -299,6 +299,11 @@ em {
   font-weight: bold;
 }
 
+.mentorsay {
+  color: hsl(210, 100%, 51%);
+  font-weight: bold;
+}
+
 .admin {
   color: hsl(227, 63.5%, 60.2%);
   font-weight: bold;
@@ -553,6 +558,11 @@ em {
 
 .adminhelp {
   color: hsl(0, 100%, 50%);
+  font-weight: bold;
+}
+
+.mentorhelp {
+  color: #0077bb;
   font-weight: bold;
 }
 
@@ -1111,6 +1121,8 @@ $alert-stripe-colors: (
   'red': hsl(0, 100%, 12.9%),
   'purple': hsl(295, 100%, 9.4%),
   'grey': hsl(0, 0%, 14.5%),
+  // BANDASTATION ADDITION
+  'white': hsl(0, 0%, 13%),
 );
 
 $alert-stripe-alternate-colors: (
@@ -1123,6 +1135,8 @@ $alert-stripe-alternate-colors: (
   'red': hsl(0, 100%, 16.1%),
   'purple': hsl(295.1, 100%, 12%),
   'grey': hsl(0, 0%, 16.1%),
+  // BANDASTATION ADDITION
+  'white': hsl(0, 0%, 10%),
 );
 
 $alert-major-header-colors: (
@@ -1135,6 +1149,8 @@ $alert-major-header-colors: (
   'red': hsl(336.1, 100%, 66.1%),
   'purple': hsl(266.5, 84.3%, 80%),
   'grey': hsl(336.1, 100%, 66.1%),
+  // BANDASTATION ADDITION
+  'white': hsl(20.9, 92%, 95.1%),
 );
 
 $alert-subheader-header-colors: (
@@ -1147,6 +1163,8 @@ $alert-subheader-header-colors: (
   'red': hsl(192.4, 100%, 60%),
   'purple': hsl(192.4, 100%, 60%),
   'grey': hsl(192.4, 100%, 60%),
+  // BANDASTATION ADDITION
+  'white': hsl(192.4, 100%, 60%),
 );
 
 $border-width: 4;
@@ -1277,5 +1295,124 @@ $border-width-px: $border-width * 1px;
       $lightness: -5%,
       $space: hsl
     );
+  }
+}
+
+//MARK: BANDASTATION
+.looc {
+  color: #6699cc;
+}
+
+.justiceradio {
+  color: #df3e71;
+}
+
+.tooltip-img > span {
+  vertical-align: middle;
+}
+
+.tooltip-img .icon {
+  vertical-align: unset;
+}
+
+@keyframes metalic-anim {
+  0%,
+  33% {
+    background-position-x: var(--shine-start);
+  }
+
+  100% {
+    background-position-x: var(--shine-end);
+  }
+}
+
+@mixin metalic() {
+  --shine-start: 100%;
+  --shine-end: -100%;
+  color: transparent !important;
+  background: linear-gradient(
+    130deg,
+    var(--stabilized-color) 1em,
+    hsl(from var(--stabilized-color) h s calc(l + 20)) 2em,
+    var(--stabilized-color) 3em
+  );
+  background-clip: text;
+  background-size: 220% 220%;
+  animation: metalic-anim 5s infinite linear;
+}
+
+@keyframes glowing-anim {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position-x: var(--size);
+  }
+}
+
+@mixin glowing() {
+  --size: 75px;
+  position: relative;
+  color: transparent !important;
+  background: linear-gradient(
+    to right,
+    var(--stabilized-color),
+    hsl(from var(--stabilized-color) calc(h + 15) s calc(l + 20)),
+    var(--stabilized-color)
+  );
+  background-clip: text;
+  background-size: var(--size) auto;
+  animation: glowing-anim 3s infinite linear;
+}
+
+@mixin shine() {
+  &:before {
+    --tranclucent-shine: hsl(from var(--stabilized-color) h s l / 0.5);
+    content: '';
+    filter: blur(6px);
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 0.5lh;
+    align-self: center;
+    background: linear-gradient(
+      to right,
+      var(--tranclucent-shine),
+      hsl(from var(--tranclucent-shine) calc(h + 15) s calc(l + 20)),
+      var(--tranclucent-shine)
+    );
+    background-size: inherit;
+    animation: glowing-anim 3s infinite linear;
+  }
+}
+
+.tier-3,
+.tier-4,
+.tier-5 {
+  --stabilized-color: oklch(from var(--shine-color) min(max(l, 0.33), 0.8) c h);
+}
+
+.metal {
+  &.tier-3,
+  &.tier-4,
+  &.tier-5 {
+    @include metalic();
+  }
+}
+
+.auto,
+.glowing {
+  &.tier-3 {
+    @include metalic();
+  }
+
+  &.tier-4,
+  &.tier-5 {
+    @include glowing();
+  }
+
+  &.tier-5 {
+    @include shine();
   }
 }

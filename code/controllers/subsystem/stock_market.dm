@@ -1,7 +1,7 @@
 
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
-	wait = 60 SECONDS
+	wait = 180 SECONDS // BANDASTATION EDIT - Original: 60 SECONDS
 	runlevels = RUNLEVEL_GAME
 
 	/// Associated list of materials and their prices at the given time.
@@ -40,10 +40,10 @@ SUBSYSTEM_DEF(stock_market)
 	var/new_price = materials_prices[mat.type] + delta
 
 	//get the limits
-	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5)
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.8) // BANDASTATION EDIT - Original: * 0.5)
 	if(!isnull(mat.minimum_value_override))
 		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
-	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 2) // BANDASTATION EDIT - Original: * 3)
 
 	//clamp it down
 	new_price = round(clamp(new_price, price_minimum, price_maximum))
@@ -73,10 +73,10 @@ SUBSYSTEM_DEF(stock_market)
 	var/trend_life = materials_trend_life[mat]
 
 	var/price_units = materials_prices[mat]
-	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5)
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.8) // BANDASTATION EDIT - Original: * 0.5)
 	if(!isnull(mat.minimum_value_override))
 		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
-	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 2) // BANDASTATION EDIT - Original: * 3)
 	var/price_baseline = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
 	var/quantity_baseline = mat.tradable_base_quantity
 

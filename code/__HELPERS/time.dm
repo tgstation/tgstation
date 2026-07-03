@@ -1,6 +1,6 @@
 /// Returns UTC timestamp with the specifified format, with optionally deciseconds or optional IC time (year offset), AKA Nanotrasen Standard Time (NST)
-/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time, twelve_hour_clock)
-	var/time_string = twelve_hour_clock ? time_to_twelve_hour(format, world.timeofday, world.timezone) : time2text(world.timeofday, format, world.timezone)
+/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time, twelve_hour_clock, timezone = TIMEZONE_UTC)
+	var/time_string = twelve_hour_clock ? time_to_twelve_hour(format, world.timeofday, timezone) : time2text(world.timeofday, format, timezone)
 	if(ic_time && findtext(format, "YYYY")) //if we have a year, replace the year
 		time_string = replacetext_char(time_string, "[GLOB.year_integer]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
@@ -79,29 +79,29 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/DisplayTimeText(time_value, round_seconds_to = 0.1)
 	var/second = FLOOR(time_value * 0.1, round_seconds_to)
 	if(!second)
-		return "right now"
+		return "сейчас же"
 	if(second < 60)
-		return "[second] second[(second != 1)? "s":""]"
+		return "[second] [declension_ru(second, "секунда", "секунды", "секунд")]"
 	var/minute = FLOOR(second / 60, 1)
 	second = FLOOR(MODULUS(second, 60), round_seconds_to)
 	var/secondT
 	if(second)
-		secondT = " and [second] second[(second != 1)? "s":""]"
+		secondT = " и [second] [declension_ru(second, "секунда", "секунды", "секунд")]"
 	if(minute < 60)
-		return "[minute] minute[(minute != 1)? "s":""][secondT]"
+		return "[minute] [declension_ru(minute, "минута", "минуты", "минут")][secondT]"
 	var/hour = FLOOR(minute / 60, 1)
 	minute = MODULUS(minute, 60)
 	var/minuteT
 	if(minute)
-		minuteT = " and [minute] minute[(minute != 1)? "s":""]"
+		minuteT = ", [minute] [declension_ru(minute, "минута", "минуты", "минут")]"
 	if(hour < 24)
-		return "[hour] hour[(hour != 1)? "s":""][minuteT][secondT]"
+		return "[hour] [declension_ru(minute, "час", "часа", "часов")][minuteT][secondT]"
 	var/day = FLOOR(hour / 24, 1)
 	hour = MODULUS(hour, 24)
 	var/hourT
 	if(hour)
-		hourT = " and [hour] hour[(hour != 1)? "s":""]"
-	return "[day] day[(day != 1)? "s":""][hourT][minuteT][secondT]"
+		hourT = ", [hour] [declension_ru(minute, "час", "часа", "часов")]"
+	return "[day] [declension_ru(minute, "день", "дня", "дней")][hourT][minuteT][secondT]"
 
 
 /proc/daysSince(realtimev)

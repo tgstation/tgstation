@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/shadow_cloak
-	name = "Cloak of Shadow"
-	desc = "Completely conceals your identity, but does not make you invisible.  Can be activated early to disable it. \
-		While cloaked, you move faster, but undergo actions much slower. \
-		Taking damage while cloaked may cause it to lift suddenly, causing negative effects. "
+	name = "Покров Тени"
+	desc = "Полностью скрывает вашу личность, но не делает вас невидимым. Используйте повторно, чтобы отключить ее. \
+		В замаскированном состоянии вы двигаетесь быстрее, но совершаете действия гораздо медленнее. \
+		Получение урона в маскировке может привести к ее внезапному снятию, что вызовет негативные эффекты. "
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -68,8 +68,8 @@
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
 	playsound(cast_on, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
 	cast_on.visible_message(
-		span_warning("[cast_on] disappears into the shadows!"),
-		span_notice("You disappear into the shadows, becoming unidentifiable."),
+		span_warning("[capitalize(cast_on.declent_ru(NOMINATIVE))] исчезает в тени!"),
+		span_notice("Вы исчезаете в тени, становясь неопознаваемым."),
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
@@ -86,8 +86,8 @@
 	playsound(cast_on, 'sound/effects/curse/curseattack.ogg', 50)
 	if(show_message)
 		cast_on.visible_message(
-			span_warning("[cast_on] appears from the shadows!"),
-			span_notice("You appear from the shadows, identifiable once more."),
+			span_warning("[capitalize(cast_on.declent_ru(NOMINATIVE))] появляется из тени!"),
+			span_notice("Вы появляетесь из тени, вас снова можно узнать."),
 		)
 
 	// Clear up the timer
@@ -101,8 +101,8 @@
 	var/mob/living/removed = source.owner
 	uncloak_mob(removed, show_message = FALSE)
 	removed.visible_message(
-		span_warning("[removed] is pulled from the shadows!"),
-		span_userdanger("You are pulled out of the shadows!"),
+		span_warning("[capitalize(removed.declent_ru(NOMINATIVE))] вытаскивается из тени!"),
+		span_userdanger("Вас вытаскивают из тени!"),
 	)
 
 	removed.Knockdown(0.5 SECONDS)
@@ -116,8 +116,8 @@
 
 	uncloak_mob(source, show_message = FALSE)
 	source.visible_message(
-		span_warning("[source] suddenly appears from the shadows!"),
-		span_userdanger("As you lose your focus, you are pulled out of the shadows!"),
+		span_warning("[capitalize(source.declent_ru(NOMINATIVE))] внезапно появляется из тени!"),
+		span_userdanger("Вы утратили фокусировку, вас вытаскивает из тени!"),
 	)
 	StartCooldown(uncloak_time / 3)
 

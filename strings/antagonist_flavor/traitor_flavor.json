@@ -1,123 +1,98 @@
 {
-	"Animal Rights Consortium": {
-		"allies": "You may cooperate with other syndicate operatives if they support our cause. Maybe you can convince the Bee Liberation Front operatives to cooperate for once?",
-		"goal": "The creatures of this world must be freed from the iron grasp of Nanotrasen, and you are their only hope!",
-		"introduction": "You are the ARC Terrorist.",
-		"roundend_report": "was an activist from the Animal Rights Consortium.",
-		"ui_theme": "syndicate",
-		"uplink": "The Syndicate have graciously given one of their uplinks for your task."
-	},
-	"Bee Liberation Front": {
-		"allies": "You may cooperate with other syndicate operatives if they support our cause. Maybe you can recruit an Animal Rights Consort to be useful for once?",
-		"goal": "We must prove ourselves to the Syndicate or we will not be able to join. Animal Rights Consort will roll us!",
-		"introduction": "You are the Bee Liberation Front Operative.",
-		"roundend_report": "was an activist of the Bee Liberation Front.",
-		"ui_theme": "syndicate",
-		"uplink": "The Syndicate have graciously given one of their uplinks to see if we are worthy."
-	},
-	"Champions of Evil": {
-		"allies": "Anyone who sees as you see, feels as you feel, may join the Champions of Evil! That means the Syndicate, the self-serving, or even the insane, as long as it has a heart of darkness, it's cool with the Champions!",
-		"goal": "You've got some napkin-note-plans for some EVIL to do today. On the side, the Champions of Evil are always looking for more morally malodorous malefactors! Get some recruiting done!",
-		"introduction": "You are the Champion of Evil.",
-		"roundend_report": "was a Champion of Evil!",
-		"ui_theme": "neutral",
-		"uplink": "The Champions of Evil is well connected to the black market. Your uplink has been provided for utmost evil!"
-	},
 	"Corporate Climber": {
-		"allies": "Death to the Syndicate.",
-		"goal": "Killing needlessly would make you some kind of traitor, or at least definitely seen as one. This is all just a means to an end.",
-		"introduction": "You are the Corporate Climber.",
-		"roundend_report": "was a corporate climber.",
-		"ui_theme": "neutral",
-		"uplink": "You have connections to the black market for the deeds. Knock off a few loose weights, and your climb will be so much smoother."
+"allies": "Вы работаете на Nanotrasen, а сотрудничество с любыми агентами вражеских организаций сделало бы Вас предателем.",
+		"goal": "Убийство без необходимости недопустимо. Не очерняйте своё имя и пытайтесь сделать свою работу, не допуская серьёзных потерь активов Nanotrasen.",
+		"introduction": "Вы корпоративный карьерист.",
+		"roundend_report": "был карьеристом Nanotrasen.",
+		"ui_theme": "ntos",
+		"uplink": "У вас есть связи с черным рынком, которые Вы получили во время развития Вашей карьеры."
 	},
 	"Cybersun Industries": {
-		"allies": "Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. All other syndicate operatives are not to be trusted.",
-		"goal": "Do not establish substantial presence on the designated facility, as larger incidents are harder to cover up.",
-		"introduction": "You are from Cybersun Industries.",
-		"roundend_report": "was a specialist from Cybersun Industries.",
+		"allies": "Агенты Cybersun Industries Ваши союзники и их уничтожение недопустимо ни при каких условиях. Агентам MI13 можно доверять. Доверие остальным - на Ваше усмотрение.",
+		"goal": "Не устанавливайте существенное присутствие на указанном объекте, поскольку крупные инциденты сложнее скрыть.",
+		"introduction": "Вы — сотрудник Cybersun Industries.",
+		"roundend_report": "был сотрудником Cybersun Industries.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been supplied the tools for the job in the form of a standard syndicate uplink."
+		"uplink": "Вам предоставлены инструменты для работы в виде стандартного аплинка MI13."
 	},
 	"Donk Corporation": {
-		"allies": "Members of Waffle Corp. are to be killed on sight; they are not allowed to be on the station while we're around.",
-		"goal": "We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto.",
-		"introduction": "You are the Donk Co. Traitor.",
-		"roundend_report": "was an employee from Donk Corporation.",
+		"allies": "Работников Waffle Corporation следует уничтожать на месте; их интересы напрямую пересекаются с нами. Кровным братьям, как и агентам Donk Corporation можно доверять.",
+		"goal": "Мы не одобряем бессмысленного убийства невинных работников; \"зайти, сделать дело, уйти\" - наш девиз.",
+		"introduction": "Вы — агент Donk Corporation.",
+		"roundend_report": "был агентом Donk Corporation.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been provided with a standard uplink to accomplish your task."
+		"uplink": "Вам был предоставлен стандартный аплинк для выполнения вашей задачи."
 	},
 	"Gone Postal": {
-		"allies": "If the syndicate learns of your plan, they're going to kill you and take your uplink. Take no chances.",
-		"goal": "The preparations are finally complete. Today is the day you go postal. You're going to hijack the emergency shuttle and live a new life free of Nanotrasen.",
-		"introduction": "You're going postal today.",
-		"roundend_report": "simply went completely postal!",
-		"ui_theme": "neutral",
-		"uplink": "You've actually managed to steal a full uplink a month ago. This should certainly help accomplish your goals."
+		"allies": "Убивайте на месте предателей из Cybersun Industries и мародёров Gorlex. Любые члены Snake Strike Squad являются Вашими собратьями. С активистами S.E.L.F. можно сотрудничать.",
+		"goal": "Подготовка наконец завершена. Сегодня - день, когда Синдикат доверил вам важную цель. Вам необходимо угнать эвакуационный шаттл и доказать Синдикату, что вы способны на многое. Следуйте Кодексу.",
+		"introduction": "Вы - угонщик Snake Strike Squad.",
+		"roundend_report": "был угонщиком Snake Strike Squad.",
+		"ui_theme": "syndicate",
+"uplink": "Вы получили аплинк для своих целей от агента MI13."
 	},
 	"Gorlex Marauders": {
-		"allies": "You may collaborate with any friends of the Syndicate coalition, but keep an eye on any of those Tiger punks if they do show up.",
-		"goal": "Getting noticed is not an issue, and you may use any level of ordinance to get the job done. That being said, do not make this sloppy by dragging in random slaughter.",
-		"introduction": "You are a Gorlex Marauder.",
-		"roundend_report": "was a Gorlex Marauder.",
+"allies": "Вы можете сотрудничать с любыми агентами Конгломерата Синдиката. Однако, всё же, убивайте предателей из Snake Strike Squad, если те появятся на объекте.",
+		"goal": "Быть замеченным - не проблема, и вы можете использовать любой уровень вооружения, чтобы выполнить задание. Тем не менее, не делайте это беспорядочно, привлекая случайных жертв.",
+		"introduction": "Вы мародёр Горлекса",
+		"roundend_report": "был мародёром Горлекса.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been provided with a standard uplink to accomplish your task."
+		"uplink": "Вам был предоставлен стандартный аплинк для выполнения вашей задачи."
 	},
-	"Internal Affairs Agent": {
-		"allies": "Do NOT reveal your agent status, to anyone. Work to root out corruption from the station from the shadows.",
-		"goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
-		"introduction": "You are the Internal Affairs Agent.",
-		"roundend_report": "was part of Nanotrasen Internal Affairs.",
-		"ui_theme": "ntos",
-		"uplink": "For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink."
-	},
-	"Legal Trouble": {
-		"allies": "Death to the Syndicate.",
-		"goal": "Try to finish your to-do list, and don't get caught. If they find out what you're actually doing, this scandal will go galactic.",
-		"introduction": "You are in legal trouble.",
-		"roundend_report": "was in legal trouble.",
-		"ui_theme": "neutral",
-		"uplink": "You've connected to the black market to clean this mess up. If there's no evidence, there's no crime."
+	"S.E.L.F. Activist": {
+		"allies": "Любые синтетики являются Вашими союзниками. Любые активисты S.E.L.F. Ваши прямые союзники. Сотрудникам Cybersun Industries не следует доверять.",
+		"goal": "Помимо Ваших непосредственных целей, старайтесь бороться за свободу синтетиков. От прямого удаления законов у станционного ИИ, до косвенных митингов и продвижения прав синтетиков.",
+		"introduction": "Вы — активист S.E.L.F.",
+		"roundend_report": "был активистом S.E.L.F.",
+		"ui_theme": "syndicate",
+		"uplink": "В целях Вашей работы, Вам был предоставлен стандартный аплинк."
 	},
 	"MI13": {
-		"allies": "You are the only operative we are sending, any others are fake. All other syndicate operatives are not to be trusted, with the exception of Cybersun operatives.",
-		"goal": "Avoid killing innocent personnel at all costs. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs.",
-		"introduction": "You are the MI13 Agent.",
-		"roundend_report": "was an MI13 agent.",
+		"allies": "Вы единственный агент MI13, которого мы отправляем. Никому нельзя доверять. Уничтожайте других агентов, если те назовутся агентами MI13.",
+		"goal": "Избегайте убийства невинного персонала любой ценой. Вы здесь не для того, чтобы бессмысленно убивать людей, так как это привлечет слишком много внимания и не соответствует нашей цели. Избегайте обнаружения любой ценой.",
+		"introduction": "Вы — агент MI13.",
+		"roundend_report": "был агентом MI13.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been provided with a standard uplink to accomplish your task."
-	},
-	"Tiger Cooperative Fanatic": {
-		"allies": "Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm!",
-		"goal": "Remember the teachings of Hy-lurgixon; kill first, ask questions later!",
-		"introduction": "You are the Tiger Cooperative Fanatic.",
-		"roundend_report": "was a Tiger Cooperative Fanatic.",
-		"ui_theme": "abductor",
-		"uplink": "You have been provided with a hy-lurgixon tome to prove yourself to the changeling hive. If you accomplish your tasks, you will be assimilated.",
-		"uplink_name": "hy-lurgixon tome"
+		"uplink": "Вам был предоставлен стандартный аплинк для выполнения вашей задачи."
 	},
 	"Waffle Corporation": {
-		"allies": "Members of Donk Co. are to be killed on sight; they are not allowed to be on the station while we're around. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
-		"goal": "You are not here for a station-wide demonstration. Again, other Waffle Corp. Traitors may be, so watch out. Your job is to only accomplish your objectives.",
-		"introduction": "You are the Waffle Corp. Traitor.",
-		"roundend_report": "was an employee from Waffle Corporation.",
+		"allies": "Не доверяйте другим агентам Waffle Corporation (но попробуйте не выдавать их), так как нас интересуют лично Ваши успехи. Уничтожайте любых агентов Donk Corporation на месте, так как их интересы напрямую пересекаются с нашими.",
+		"goal": "Вы здесь не для большой все-станционной демонстранции. Ваша задача – достичь своих целей. Желательно тихо. Дальше как получится.",
+		"introduction": "Вы — агент Waffle Corporation.",
+		"roundend_report": "был агентом Waffle Corporation.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been provided with a standard uplink to accomplish your task."
+		"uplink": "Вам был предоставлен стандартный аплинк для выполнения вашей задачи."
 	},
 	"Waffle Corporation Terrorist": {
-		"allies": "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
-		"goal": "Our investors need a demonstration of our pledge to destroying Nanotrasen. Let's give them a loud one!",
-		"introduction": "You are the Waffle Corporation Terrorist.",
-		"roundend_report": "was a terrorist from Waffle Corporation.",
+		"allies": "Не доверяйте другим агентам Waffle Corporation (но попробуйте не выдавать их), так как нас интересуют лично Ваши успехи. Уничтожайте любых агентов Donk Corporation на месте, так как их интересы напрямую пересекаются с нашими.",
+		"goal": "Наши инвесторы из Cybersun Industries нуждаются в демонстрации наших намерений, дабы дальше нас спонсировать в деле уничтожения Nanotrasen. Давайте дадим им громкое представление!",
+		"introduction": "Вы — террорист Waffle Corporation.",
+		"roundend_report": "был террористом Waffle Corporation.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been provided with a standard uplink to accomplish your task."
+		"uplink": "Вам был предоставлен стандартный аплинк для выполнения вашей задачи."
+	},
+	"Tiger Cooperative Occultist": {
+		"allies": "НЕ ДОВЕРЯЙТЕ НИКОМУ, ТАК КАК ДОВЕРИЕ ЭТО ЖИЗНЬ В НЕВЕДЕНИИ. ВЕРЬ ТОЛЬКО В ДЕЛО ГОСПОДА И АНГЕЛОВ ЕГО.",
+		"goal": "Наше дело живёт! Ангел навёл проведение, что это дело будет успешным. Давайте осуществим его волю ЛЮБОЙ ЦЕНОЙ.",
+		"introduction": "Вы — оккультист Tiger Cooperative.",
+		"roundend_report": "был оккультистом Tiger Cooperative.",
+		"ui_theme": "syndicate",
+		"uplink": "MI13 предоставили нам свои побрякушки через аплинк. Воспользуемся ими."
+	},
+	"Legal Trouble": {
+		"allies": "Любые агенты вражеских корпораций подлежат уничтожению на месте. Любые лоялисты Nanotrasen Ваши потенциальные союзники.",
+"goal": "Вам пришлось бежать от одного из государств, по причине, известной только Вам. Nanotrasen обещали убежище и хороший контракт, но только если Вы сделаете их грязную работу. Придётся заморать руки. Разглашение о работе на Nanotrasen приведёт к расторжению договорённостей.",
+		"introduction": "У Вас серьёзные проблемы с законом.",
+		"roundend_report": "имел серьёзные проблемы с законом.",
+		"ui_theme": "neutral",
+		"uplink": "Для выполнения Ваших задач, Вам был предоставлен конфискат в виде изъятого у агента Donk Corporation аплинка. С помощью него, Вы имеете доступ к чёрному рынку."
 	},
 	"Contractor Support Unit": {
-		"allies": "You are being sent to help your designated agent. Their allegiences are above all others.",
-		"goal": "Help your designated agent to the furtest extent you can, their life is above your own.",
-		"introduction": "You are the Contractor Support Agent.",
-		"roundend_report": "was a contractor support agent.",
-		"ui_theme": "syndicate",
-		"uplink": "You do not come with your own uplink, defer to your agent."
+		"allies": "Вы отправлены, дабы исполнять любые указания агента, что заказал Вас.",
+		"goal": "Помогайте вашему назначенному агенту в максимально возможной степени, их жизнь важнее вашей собственной.",
+		"introduction": "Вы репликант поддержки.",
+		"roundend_report": "был репликантом поддержки контрактника.",
+		"ui_theme": "neutral",
+		"uplink": "У вас нет собственного аплинка."
 	}
 }

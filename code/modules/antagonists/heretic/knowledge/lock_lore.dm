@@ -1,7 +1,7 @@
 /datum/heretic_knowledge_tree_column/lock
 	route = PATH_LOCK
 	ui_bgr = "node_lock"
-	complexity = "Medium"
+	complexity = "Умеренная"
 	complexity_color = COLOR_YELLOW
 	shop_cost_discount = 1
 	icon = list(
@@ -12,25 +12,25 @@
 		"moving" = FALSE,
 	)
 	description = list(
-		"The Path of Lock revolves around access, area denial, theft and gadgets.",
-		"Pick this path if you want a less confrontational playstyle and more interested in being a slippery rat.",
+		"Путь Замка сосредоточен на проникновении, блокировании доступа, кражах и хитрости.",
+		"Выбирайте этот путь, если вы предпочитаете менее конфронтационный стиль игры и больше интересуетесь ролью скользкой крысы.",
 	)
 	pros = list(
-		"Your mansus grasp can open any lock, unlock every terminal and bypass any access restriction.",
-		"lock heretics get a discount from the knowledge shop, making it the perfect path if you want to experiment with the various trinkets the shop has to offer.",
+		"Ваша «Хватка Мансуса» может открыть любой замок, разблокировать любой терминал и обойти любые ограничения доступа.",
+		"Хранители Ключей получают скидку в магазине знаний, что делает его идеальным выбором, если вы хотите поэкспериментировать с различными безделушками, которые предлагает магазин.",
 	)
 	cons = list(
-		"The weakest heretic path in direct combat, period.",
-		"Very limited direct combat benefits.",
-		"You have no defensive benefits or immunities.",
-		"no mobility or direct additional teleportation",
-		"Highly reliant on sourcing power from other departments, players and the game world.",
+		"Самый слабый путь еретика в прямом бою.",
+		"Очень ограниченные преимущества в открытом бою.",
+		"У вас нет защитных преимуществ или иммунитетов.",
+		"Без мобильности или прямой дополнительной телепортации",
+		"В значительной степени зависит от ресурсов других отделов, игроков и игрового мира.",
 	)
 	tips = list(
-		"Your mansus grasp allows you to access everything, from airlocks, consoles and even exosuits, but it has no additional effects on players. It will however leave a mark that when triggered will make your victim unable to leave the room you are in.",
-		"Your blade also functions as a crowbar! You can store it in utility belts And, in a pitch, use it to force open an airlock.",
-		"Your Eldritch ID can create a portal between 2 different airlocks. Useful if you want to enstablish a secret base.",
-		"Use your labyrinth book to shake off pursuers. It creates impassible walls to anyone but you.",
+		"Ваша «Хватка Мансуса» позволяет вам получить доступ ко всему, от шлюзов и консолей до экзокостюмов, но не оказывает дополнительного воздействия на игроков. Однако она оставляет след, который при срабатывании не дает вашей жертве покинуть комнату, в которой вы находитесь.",
+		"Ваш клинок также функционирует как ломик! Вы можете хранить его в поясе для инструментов и, в случае необходимости, использовать его, чтобы взломать шлюз.",
+		"Ваша Мистическая ID может создать портал между двумя разными шлюзами. Полезно, если вы хотите создать секретную базу.",
+		"Используйте свою книгу лабиринтов, чтобы оторваться от преследователей. Она создает непроходимые стены для всех, кроме вас.",
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_lock
@@ -46,12 +46,12 @@
 	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_lock
-	name = "A Steward's Secret"
-	desc = "Opens up the Path of Lock to you. \
-		Allows you to transmute a knife and a crowbar into a Key Blade. \
-		You can only create two at a time and they function as fast crowbars. \
-		In addition, they can fit into utility belts."
-	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
+	name = "Секрет Хранителя Ключей"
+	desc = "Открывает перед вами Путь замка. \
+		Позволяет трансмутировать нож и монтировку в Ключ-клинок. \
+		Одновременно можно иметь только два, а также он действует как быстрая монтировка. \
+		К тому же, они помещаются в пояса для инструментов."
+	gain_text = "Запертый лабиринт ведет к свободе. Но только пойманные Хранители Ключей знают верный путь."
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/crowbar = 1,
@@ -118,14 +118,14 @@
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/key_ring
-	name = "Key Keeper’s Burden"
-	desc = "Allows you to transmute a wallet, an iron rod, and an ID card to create an Eldritch Card. \
-		Hit a pair of airlocks with it to create a pair of portals, which will teleport you between them, but teleport non-heretics randomly. \
-		You can ctrl-click the card to invert this behavior for created portals. \
-		Each card may only sustain a single pair of portals at the same time. \
-		It also functions and appears the same as a regular ID Card. \
-		Attacking it with a normal ID card consumes it and gains its access, and you can use it in-hand to change its appearance to a card you fused."
-	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
+	name = "Бремя Хранителя Ключей"
+	desc = "Позволяет трансмутировать кошелек, железный прут и ИД-карта, чтобы создать Мистическую карту. \
+		Ударьте ею по двум шлюзам, чтобы создать спаренный портал, который будет телепортировать вас между ними, а не-еретиков случайно. \
+		С помощью Ctrl-Click по карте, вы можете инвертировать поведение созданных порталов. \
+		Каждая такая карта может иметь только одну пару порталов. \
+		Также, она выглядит и работает как обычная ИД-карта. \
+		Атаки по карте обычными ИД-картами поглощает их и получает их доступ. При использовании в руке, она может изменить свой внешний вид на любую поглощенную."
+	gain_text = "Хранитель усмехнулся. \"Эти пластиковые прямоугольники - насмешка над ключами, и я проклинаю каждую дверь, которая их требует.\""
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
@@ -149,10 +149,10 @@
 	return TRUE
 
 /datum/heretic_knowledge/limited_amount/concierge_rite
-	name = "Concierge's Rite"
-	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
-		It can materialize a barricade at range that only you and people resistant to magic can pass. Has 5 charges which regenerate over time."
-	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
+	name = "Обряд Хранителя"
+	desc = "Позволяет трансмутировать мелок, деревянную доску и мультитул, чтобы создать Справочник лабиринта. \
+		Оно может материализовать на расстоянии баррикаду, через которую могут пройти только вы и люди с сопротивлением против магии. Имеет 5 зарядов, которые перезаряжаются со временем."
+	gain_text = "Хранитель Ключей записал мое имя в Справочник. \"Добро пожаловать в ваш новый дом, коллега Хранитель Ключей.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
 		/obj/item/stack/sheet/mineral/wood = 1,
@@ -165,12 +165,13 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/lock
-	desc = "Allows you to transmute a table (or a suit), a mask and a crowbar to create a shifting guise. \
-		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
-		Acts as a focus while hooded."
-	gain_text = "While stewards are known to the Concierge, \
-				they still consort between one another and with outsiders under shaded cloaks and drawn hoods. \
-				Familiarity is treachery, even to oneself."
+	name = "Меняющийся облик"
+	desc = "Позволяет трансмутировать стол (или костюм), маску и лом, чтобы создать Меняющийся облик. \
+		Это одеяние будет прятать ваше присутствие на камерах видеонаблюдения, скрывать вашу личность и голос, а также приглушать шаги. \
+		Когда надет капюшон, работает как фокусировщик."
+	gain_text = "Хотя Хранителю Ключей и известны стюарды, \
+				они по прежнему общаются друг с другом и посторонними лицами, скрывая свой облик под капюшонами. \
+				Фамильярность - это предательство, даже по отношению к самому себе."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock)
 	research_tree_icon_state = "lock_armor"
 	required_atoms = list(
@@ -180,18 +181,18 @@
 	)
 
 /datum/heretic_knowledge/spell/burglar_finesse
-	name = "Burglar's Finesse"
-	desc = "Grants you Burglar's Finesse, a single-target spell \
-		that puts a random item from the victims backpack into your hand."
-	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
+	name = "Ловкость воришки"
+	desc = "Дарует вам заклинание, «Ловкость воришки», которое \
+		перемещает случайный предмет из сумки жертвы в вашу руку."
+	gain_text = "Общение с Духами-Взломщиками не одобряется, но Хранитель Ключей всегда хочет узнавать о новых дверях."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock
-	name = "Opening Blade"
-	desc = "Your blade has a chance to cause a weeping avulsion on attack."
-	gain_text = "The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys."
+	name = "Открывающий клинок"
+	desc = "Ваш клинок теперь может накладывать сильное кровотечение при атаке."
+	gain_text = "Пилигрим-Хирург не был Хранителем. Тем не менее, его клинки и швы оказались достойны их ключей."
 	wound_type = /datum/wound/slash/flesh/critical
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_lock"
@@ -202,31 +203,31 @@
 		return ..()
 
 /datum/heretic_knowledge/spell/caretaker_refuge
-	name = "Caretaker’s Last Refuge"
-	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
-		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
-		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
-	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
+	name = "Последнее убежище Хранителя"
+	desc = "Заклинание, позволяющее становиться прозрачным и безтелесным. Невозможно использовать рядом с живыми разумными существами. \
+		Пока вы находитесь в убежище, вы не можете использовать руки и заклинания, и вы имеете иммунитет к замедлению. \
+		Вы неуязвимы, но также не можете ничему вредить. При попадании анти-магией, эффект прерывается."
+	gain_text = "Дозорный и Гончая охотились за мной из ревности. Но я раскрыл свою форму, став лишь неприкосаемой дымкой."
 	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 2
 	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/lock_final
-	name = "Unlock the Labyrinth"
-	desc = "The ascension ritual of the Path of Knock. \
-		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
-		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and your keyblades will become even deadlier. \
-		In addition, you will create a tear to the Labyrinth's heart; \
-		a tear in reality located at the site of this ritual. \
-		Eldritch creatures will endlessly pour from this rift \
-		who are bound to obey your instructions."
-	gain_text = "The Stewards guided me, and I guided them. \
-		My foes were the Locks and my blades were the Key! \
-		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
+	name = "Открытие Лабиринта"
+	desc = "Ритуал вознесения Пути замка. \
+		Принесите 3 трупа без органов в их торсе к руне трансмутации, чтобы завершить ритуал. \
+		При завершении, вы сможете превращаться в усиленных мистических существ, \
+		а ваши ключ-клинки становятся еще смертоноснее. \
+		Также, вы откроете разрыв к сердцу Лабиринта; \
+		разрыв в реальности, который будет находиться на месте ритуала. \
+		Мистические существа будут беспрерывно выходить из разлома, \
+		и они будут подчиненны вам."
+	gain_text = "Управляющие направляли меня, и я направил их. \
+		Мои враги были Замками, а мои клинки - Ключами! \
+		Лабиринт теперь не будет Заперт, свобода будет нашей! УЗРИТЕ НАС!"
 	required_atoms = list(/mob/living/carbon/human = 3)
 	ascension_achievement = /datum/award/achievement/misc/lock_ascension
-	announcement_text = "Delta-class dimensional anomaly detec%SPOOKY% Reality rended, torn. Gates open, doors open, %NAME% has ascended! Fear the tide! %SPOOKY%"
+	announcement_text = "Пространственная аномалия Дельта-класса обнар%SPOOKY% Реальность разрушена, разорвана. Врата открыты, двери открыты, %NAME% вознесся! Бойтесь нашествия! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_knock.ogg'
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -238,13 +239,13 @@
 		if(body.stat != DEAD)
 			continue
 		if(LAZYLEN(body.get_organs_for_zone(BODY_ZONE_CHEST)))
-			to_chat(user, span_hierophant_warning("[body] has organs in their chest."))
+			to_chat(user, span_hierophant_warning("[capitalize(body.declent_ru(NOMINATIVE))] имеет органы внутри их торса."))
 			continue
 
 		selected_atoms += body
 
 	if(!LAZYLEN(selected_atoms))
-		loc.balloon_alert(user, "ritual failed, not enough valid bodies!")
+		loc.balloon_alert(user, "ритуал провален, недостаточно подходящих тел!")
 		return FALSE
 	return TRUE
 

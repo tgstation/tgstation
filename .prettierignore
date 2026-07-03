@@ -7,6 +7,9 @@ juke
 **/build
 **/dist
 **/node_modules
+# BANDASTATION ADD - Start
+**/blanks/markdown
+# BANDASTATION ADD - End
 
 # File names / types
 *.min.*

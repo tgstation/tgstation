@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(ticker)
 	if(GLOB.station_was_nuked)
 		return TRUE
 	if(GLOB.revolution_handler?.result == REVOLUTION_VICTORY)
-		return TRUE
+		return FALSE // SS220 BandaStation EDIT - No roundend for Revs win
 	return FALSE
 
 /// Gets a list of players with their readied state so we can post it as a log
@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(ticker)
 	return player_states
 
 /datum/controller/subsystem/ticker/proc/setup()
-	to_chat(world, span_boldannounce("Starting game..."))
+	to_chat(world, span_boldannounce("Игра начинается..."))
 	var/init_start = world.timeofday
 
 	var/list/players_and_readiness = get_player_ready_states()
@@ -269,14 +269,14 @@ SUBSYSTEM_DEF(ticker)
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
-	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
-	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
+	to_chat(world, span_notice(span_bold("Приветствуем вас на [station_name()]. Приятного вам пребывания!")))
+	SEND_SOUND(world, sound(SSmapping.current_map?.welcome_sound_override || SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(length(GLOB.holidays))
-		to_chat(world, span_notice("and..."))
+		to_chat(world, span_notice("и..."))
 		for(var/holidayname in GLOB.holidays)
 			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, span_info(holiday.greet()))
@@ -353,8 +353,9 @@ SUBSYSTEM_DEF(ticker)
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
 
+// BANDASTATION EDIT START - Roundstart logout report with blackbox
 /datum/controller/subsystem/ticker/proc/display_roundstart_logout_report()
-	var/list/msg = list("[span_boldnotice("Roundstart logout report")]\n\n")
+	var/datum/roundstart_logout_report_builder/builder = new()
 
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
@@ -363,47 +364,51 @@ SUBSYSTEM_DEF(ticker)
 			continue  // never had a client
 
 		if(L.ckey && !GLOB.directory[L.ckey])
-			msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+			builder.add_entry(L.name, L.ckey, L.job, "disconnected", L.is_antag())
 
 
 		if(L.ckey && L.client)
 			var/failed = FALSE
 			if(L.client.inactivity >= GLOB.logout_timer_set) //Connected, but inactive (alt+tabbed or something)
-				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
+				builder.add_entry(L.name, L.ckey, L.job, "afk", L.is_antag())
 			if(!failed && L.stat)
 				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
-					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_bolddanger("Suicide")])\n"
 					failed = TRUE //Disconnected client
+					builder.add_entry(L.name, L.ckey, L.job, "suicide", L.is_antag())
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
-					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
 					failed = TRUE //Unconscious
+					builder.add_entry(L.name, L.ckey, L.job, "dying", L.is_antag())
 				if(!failed && L.stat == DEAD)
-					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dead)\n"
 					failed = TRUE //Dead
+					builder.add_entry(L.name, L.ckey, L.job, "dead", L.is_antag())
 
 			continue //Happy connected client
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_bolddanger("Suicide")])\n"
+						builder.add_entry(L.name, ckey(D.mind.key), L.job, "suicide", L.is_antag())
 						continue //Disconnected client
 					else
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
+						builder.add_entry(L.name, ckey(D.mind.key), L.job, "dead", L.is_antag())
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
 						continue //Adminghost, or cult/wizard ghost
 					else
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_bolddanger("Ghosted")])\n"
+						builder.add_entry(L.name, ckey(D.mind.key), L.job, "ghosted", L.is_antag())
 						continue //Ghosted while alive
 
-	msg += "[span_boldnotice("Roundstart logout reported at: [DisplayTimeText(GLOB.logout_timer_set)]")]\n"
+	var/msg = builder.to_formatted_text()
+	log_admin(msg)
+	to_chat(get_holders_with_rights(R_ADMIN), msg) /// BANDASTATION EDIT: Proper permissions
 
-	var/concatenated_message = msg.Join()
-	log_admin(concatenated_message)
-	to_chat(GLOB.admins, concatenated_message)
+	for(var/entry in builder.to_nested_list())
+		SSblackbox.record_feedback("associative", "roundstart_logout_report", 1, entry)
+
+	qdel(builder)
+// BANDASTATION EDIT END
 
 /datum/controller/subsystem/ticker/proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
@@ -459,6 +464,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
+		SStitle.show_title_screen_to(player.client) // BANDASTATION ADDITION - HTML Title Screen
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
@@ -547,7 +553,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 			if(new_player_human)
-				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
+				to_chat(new_player_mob, span_notice("Капитанство никому не назначено."))
 			CHECK_TICK
 
 
@@ -803,14 +809,19 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	if(!delay)
-		delay = CONFIG_GET(number/round_end_countdown) * 10
+		delay = CONFIG_GET(number/round_end_countdown) SECONDS
+		// BANDASTATION ADD Start - roundend vote
+		var/vote_time_and_delay_diff = delay - CONFIG_GET(number/vote_period)
+		if(vote_time_and_delay_diff <= 5 SECONDS)
+			delay = delay + 5 SECONDS
+		// BANDASTATION ADD End - roundend vote
 
 	var/skip_delay = check_rights()
 	if(delay_end && !skip_delay)
-		to_chat(world, span_boldannounce("An admin has delayed the round end."))
+		to_chat(world, span_boldannounce("Администратор задержал окончание раунда."))
 		return
 
-	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
+	to_chat(world, span_boldannounce("Перезагрузка мира через [DisplayTimeText(delay)]. [reason]"))
 
 	var/statspage = CONFIG_GET(string/roundstatsurl)
 	var/gamelogloc = CONFIG_GET(string/gamelogurl)
@@ -830,7 +841,7 @@ SUBSYSTEM_DEF(ticker)
 	if(end_string)
 		end_state = end_string
 
-	log_game(span_boldannounce("Rebooting World. [reason]"))
+	log_game(span_boldannounce("Перезагрузка мира. [reason]"))
 
 	world.Reboot()
 
@@ -842,9 +853,9 @@ SUBSYSTEM_DEF(ticker)
  */
 /datum/controller/subsystem/ticker/proc/cancel_reboot(mob/user)
 	if(!reboot_timer)
-		to_chat(user, span_warning("There is no pending reboot!"))
+		to_chat(user, span_warning("Ожидающей перезагрузки нет!"))
 		return FALSE
-	to_chat(world, span_boldannounce("An admin has delayed the round end."))
+	to_chat(world, span_boldannounce("Администратор задержал окончание раунда."))
 	deltimer(reboot_timer)
 	reboot_timer = null
 	return TRUE

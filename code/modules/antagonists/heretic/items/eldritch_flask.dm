@@ -2,7 +2,7 @@
 // Heals heretics, harms non-heretics. Pretty much identical.
 /obj/item/reagent_containers/cup/beaker/eldritch
 	name = "flask of eldritch essence"
-	desc = "Toxic to the closed minded, yet refreshing to those with knowledge of the beyond."
+	desc = "Токсичный для недалеких умов, но освежающий для тех, кто имеет знания о потустороннем."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eldritch_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
@@ -11,7 +11,7 @@
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery
 	name = "phylactery of damnation"
-	desc = "Used to steal blood from soon-to-be victims."
+	desc = "Служит для похищения крови у тех, кому ещё предстоит стать жертвами."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "phylactery"
 	base_icon_state = "phylactery"
@@ -23,7 +23,7 @@
 
 /obj/item/reagent_containers/cup/phylactery/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, drain_cooldown))
-		user.balloon_alert(user, "can't steal so fast!")
+		user.balloon_alert(user, "нельзя похитить так быстро!")
 		return NONE
 	if(!isliving(target))
 		return NONE
@@ -32,21 +32,21 @@
 	if(living_target == user)
 		return ITEM_INTERACT_BLOCKING
 	if(reagents.total_volume >= reagents.maximum_volume)
-		to_chat(user, span_notice("[src] is full."))
+		to_chat(user, span_notice("[capitalize(src.declent_ru(NOMINATIVE))] полон."))
 		return ITEM_INTERACT_BLOCKING
 	if(living_target.can_block_magic(MAGIC_RESISTANCE_HOLY))
-		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
+		to_chat(user, span_warning("Вы не можете похитить кровь у [living_target.declent_ru(GENITIVE)]!"))
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
-		to_chat(living_target, span_warning("You feel a force attempt to steal your blood, but it is repelled!"))
+		to_chat(living_target, span_warning("Вы чувствуете, как некая сила пыталась украсть вашу кровь, но получила отпор!"))
 		return ITEM_INTERACT_BLOCKING
 	var/drawn_amount = min(reagents.maximum_volume - reagents.total_volume, 5)
 	if(living_target.transfer_blood_to(src, drawn_amount))
-		to_chat(user, span_notice("You take a blood sample from [living_target]."))
-		to_chat(living_target, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("Вы забираете немного крови у [living_target.declent_ru(GENITIVE)]."))
+		to_chat(living_target, span_warning("Вы чувствуете крошечный укол!"))
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
 		playsound(src, 'sound/effects/chemistry/catalyst.ogg', 20, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 	else
-		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
+		to_chat(user, span_warning("Вы не можете похитить кровь у [living_target.declent_ru(GENITIVE)]!"))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/phylactery/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -67,7 +67,7 @@
 // Funny potion that is basically an aheal. The downside is that it puts you to sleep for a minute.
 /obj/item/ether
 	name = "ether of the newborn"
-	desc = "A flask of nausea-inducing, thick green liquid. Restores your body completely, then places you into an enhanced sleep for a full minute."
+	desc = "Фляжка с густой зелёной жидкостью, вызывающей тошноту. Она полностью восстанавливает ваш организм, а затем погружает вас в крепкий сон на одну минуту."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "poison_flask"
 
@@ -103,6 +103,6 @@
 	owner.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ELDRITCH_ETHER)
 
 /atom/movable/screen/alert/status_effect/eldritch_sleep
-	name = "Eldritch Slumber"
-	desc = "You feel an indescribable warmth keeping you safe..."
+	name = "Жуткая спячка"
+	desc = "Вы чувствуете неописуемое тепло, которое оберегает вас..."
 	icon_state = "eldritch_slumber"

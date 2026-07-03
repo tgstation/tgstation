@@ -4,8 +4,8 @@
  * During the night, goes on watch, killing all players who visit.
  */
 /datum/mafia_ability/attack_visitors
-	name = "Alert"
-	ability_action = "send any visitors home with buckshot tonight"
+	name = "Предупреждение"
+	ability_action = "сегодня вечером накормить всех посетителей картечью"
 	use_flags = CAN_USE_ON_SELF
 
 /datum/mafia_ability/attack_visitors/set_target(datum/mafia_role/new_target)
@@ -22,8 +22,8 @@
 	SIGNAL_HANDLER
 	if(attacker == host_role)
 		return
-	host_role.send_message_to_player(span_userdanger("You have shot a visitor!"))
-	attacker.send_message_to_player(span_userdanger("You have visited the warden!"))
+	host_role.send_message_to_player(span_userdanger("Вы застрелили посетителя!"))
+	attacker.send_message_to_player(span_userdanger("Вы посетили смотрителя!"))
 	attacker.kill(game, host_role, lynch = FALSE)
 	return MAFIA_VISIT_INTERRUPTED
 

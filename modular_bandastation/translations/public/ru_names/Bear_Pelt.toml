@@ -1,0 +1,8 @@
+["Bear Pelt"]
+nominative = "медвежья шкура"
+genitive = "медвежьей шкуры"
+dative = "медвежьей шкуре"
+accusative = "медвежью шкуру"
+instrumental = "медвежьей шкурой"
+prepositional = "медвежьей шкуре"
+gender = "female"

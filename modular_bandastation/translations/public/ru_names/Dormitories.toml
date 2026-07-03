@@ -1,0 +1,8 @@
+[Dormitories]
+nominative = "дормитории"
+genitive = "дормиториев"
+dative = "дормитиориям"
+accusative = "дормитории"
+instrumental = "дормиториями"
+prepositional = "дормиториях"
+gender = "plural"

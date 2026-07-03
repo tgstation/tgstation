@@ -1,0 +1,8 @@
+["emitter beam"]
+nominative = "эмиттерный луч"
+genitive = "эмиттерного луча"
+dative = "эмиттерному лучу"
+accusative = "эмиттерный луч"
+instrumental = "эмиттерным лучом"
+prepositional = "эмиттерном луче"
+gender = "male"

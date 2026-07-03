@@ -1,8 +1,8 @@
 /datum/techweb_node/medbay_equip
 	id = TECHWEB_NODE_MEDBAY_EQUIP
 	starting_node = TRUE
-	display_name = "Medbay Equipment"
-	description = "Essential medical tools to patch you up while medbay is still intact."
+	display_name = "Оборудование медицинского отдела"
+	description = "Базовый комплект медицинского оборудования для оказания неотложной помощи при сохранении функциональности медотдела."
 	design_ids = list(
 		"beaker",
 		"blood_filter",
@@ -45,8 +45,8 @@
 
 /datum/techweb_node/chem_synthesis
 	id = TECHWEB_NODE_CHEM_SYNTHESIS
-	display_name = "Chemical Synthesis"
-	description = "Synthesizing complex chemicals from electricity and thin air... Don't ask how..."
+	display_name = "Химический синтез"
+	description = "Технология синтеза сложных химических соединений с использованием электричества и газовых сред."
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
 		"med_spray_bottle",
@@ -71,14 +71,14 @@
 
 /datum/techweb_node/medbay_equip_adv
 	id = TECHWEB_NODE_MEDBAY_EQUIP_ADV
-	display_name = "Advanced Medbay Equipment"
-	description = "State-of-the-art medical gear for keeping the crew in one piece — mostly."
+	display_name = "Продвинутое оборудование медицинского отдела"
+	description = "Современное медицинское оборудование для поддержания жизнеспособности экипажа с минимальными физическими повреждениями."
 	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS)
 	design_ids = list(
 		"chem_mass_spec",
 		"crewpinpointer",
 		"defibmount",
-		"diode_disk_healing",
+		//"diode_disk_healing", // BANDASTATION REMOVAL - Healing beam design removal
 		"diode_disk_sanity",
 		"healthanalyzer_advanced",
 		"medicalbed_emergency",
@@ -93,8 +93,8 @@
 
 /datum/techweb_node/cryostasis
 	id = TECHWEB_NODE_CRYOSTASIS
-	display_name = "Cryostasis"
-	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
+	display_name = "Криостазис"
+	description = "Технология криогенной консервации экипажа, разработанная на основе случайного химического воздействия и адаптированная для безопасного применения."
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP_ADV, TECHWEB_NODE_FUSION)
 	design_ids = list(
 		"cryo_grenade",

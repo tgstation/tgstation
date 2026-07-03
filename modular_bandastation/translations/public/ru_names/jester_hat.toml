@@ -1,0 +1,8 @@
+["jester hat"]
+nominative = "шляпа шута"
+genitive = "шляпы шута"
+dative = "шляпе шута"
+accusative = "шляпу шута"
+instrumental = "шляпой шута"
+prepositional = "шляпе шута"
+gender = "female"

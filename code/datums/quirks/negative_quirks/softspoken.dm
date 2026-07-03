@@ -1,9 +1,9 @@
 /datum/quirk/softspoken
 	name = "Soft-Spoken"
-	desc = "You are soft-spoken, and your voice is hard to hear."
+	desc = "Вы немногословны, и ваш голос трудно услышать."
 	icon = FA_ICON_COMMENT
 	value = -2
 	mob_trait = TRAIT_SOFTSPOKEN
-	gain_text = span_danger("You feel like you're speaking more quietly.")
-	lose_text = span_notice("You feel like you're speaking louder.")
-	medical_record_text = "Patient is soft-spoken and difficult to hear."
+	gain_text = span_danger("Вам кажется, что вы стали говорить тише.")
+	lose_text = span_notice("Вам кажется, что вы стали говорить как обычно.")
+	medical_record_text = "Пациент тихо говорит, и его трудно расслышать."

@@ -1,5 +1,5 @@
 /datum/antagonist/nukeop/lone
-	name = "Lone Operative"
+	name = "Одинокий оперативник"
 	send_to_spawnpoint = FALSE //Handled by event
 	give_bonus_tc = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/full/loneop

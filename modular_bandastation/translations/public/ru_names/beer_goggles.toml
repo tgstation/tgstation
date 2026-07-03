@@ -1,0 +1,8 @@
+["beer goggles"]
+nominative = "очки для пива"
+genitive = "очков для пива"
+dative = "очкам для пива"
+accusative = "очки для пива"
+instrumental = "очками для пива"
+prepositional = "очках для пива"
+gender = "plural"

@@ -101,7 +101,7 @@
  * * the_folder - aka user
  */
 /obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
-	visible_message(span_notice("[the_folder] folds up [src]."))
+	visible_message(span_notice("[the_folder] сворачивает [src.declent_ru(ACCUSATIVE)]."))
 	the_folder.put_in_hands(undeploy_bodybag(the_folder.loc))
 
 /// Makes the bag into an item, returns that item
@@ -151,7 +151,7 @@
 	return TRUE
 
 /obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
-	visible_message(span_notice("[the_folder] folds up [src]."))
+	visible_message(span_notice("[the_folder] сворачивает [src.declent_ru(ACCUSATIVE)]."))
 	var/obj/item/bodybag/folding_bodybag = undeploy_bodybag(the_folder.loc)
 	var/max_weight_of_contents = initial(folding_bodybag.w_class)
 	for(var/am in contents)
@@ -175,16 +175,16 @@
 /obj/structure/closet/body_bag/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Fold up"
+		context[SCREENTIP_CONTEXT_RMB] = "Свернуть"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness())
-		context[SCREENTIP_CONTEXT_LMB] = "Remove [pinned ? "Paper" : "Tag"]"
+		context[SCREENTIP_CONTEXT_LMB] = "Убрать [pinned ? "бумагу" : "ярлык"]"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(!pinned && istype(held_item, /obj/item/paper) && !opened)
-		context[SCREENTIP_CONTEXT_LMB] = "Pin Paper"
+		context[SCREENTIP_CONTEXT_LMB] = "Прикрепить бумагу"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(can_scan_through && istype(held_item, /obj/item/healthanalyzer) && !opened)
-		context[SCREENTIP_CONTEXT_LMB] = "Scan Contents"
+		context[SCREENTIP_CONTEXT_LMB] = "Сканировать содержимое"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/closet/body_bag/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -206,9 +206,9 @@
 		if(get_dist(user, src) <= 2 && user.client)
 			pinned.ui_interact(user)
 		else
-			. += span_smallnoticeital("There's a paper pinned to the bag, but you can't make out what it says.")
+			. += span_smallnoticeital("К мешку приколот листок бумаги, но вы не можете разобрать, что на нём написано.")
 	if(can_scan_through)
-		. += span_notice("The walls of the bag are thin enough to scan through via a <b>health analyzer</b>.")
+		. += span_notice("Стенки мешка достаточно тонкие, чтобы сканировать через них с помощью <b>анализатора здоровья</b>.")
 
 /obj/structure/closet/body_bag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tag_name && tool.tool_behaviour == TOOL_WIRECUTTER || tool.get_sharpness())
@@ -236,7 +236,7 @@
 		if(force || !user || user.loc == src)
 			pinned.forceMove(drop_location())
 			return TRUE // force open, no user, or we can't take the note out from inside
-		balloon_alert(user, "paper removed")
+		balloon_alert(user, "бумага убрана")
 		if(!user.put_in_inactive_hand(pinned) && pinned.loc == src)
 			pinned.forceMove(drop_location())
 		return FALSE // blocked the open action
@@ -457,10 +457,11 @@
 
 /obj/structure/closet/body_bag/environmental/stasis
 	name = "stasis body bag"
-	desc = "A disposable bodybag designed to keep its contents in stasis, preventing decay and further injury. \
-		The bag itself cannot maintain stasis for long, and will eventually fall apart."
+	desc = "Мешок для тел, предназначенный для удержания содержимого в стазисе, предотвращая разложение \
+		и дальнейшие повреждения. Сам мешок не может поддерживать стазис долго и в конечном итоге развалится."
 	max_integrity = 300
-	icon_state = "holobag_med"
+	icon = 'modular_bandastation/balance/icons/bodybag.dmi' // BANDASTATION EDIT: Replace stasis bag sprites and remove modular stasis bag
+	icon_state = "stasisbag" // BANDASTATION EDIT: Replace stasis bag sprites and remove modular stasis bag
 	breakout_time = 5 SECONDS
 	can_scan_through = TRUE
 	material_drop = /obj/item/stack/sheet/plastic
@@ -515,11 +516,11 @@
 /obj/structure/closet/body_bag/environmental/stasis/examine_status(mob/user)
 	switch(100 * get_integrity_percentage())
 		if(50 to 75)
-			return span_warning("It looks worn.")
+			return span_warning("Выглядит изношенным.")
 		if(25 to 50)
-			return span_warning("It appears moderately worn.")
+			return span_warning("Выглядит изрядно изношенным.")
 		if(0 to 25)
-			return span_boldwarning("It's falling apart!")
+			return span_boldwarning("Разваливается на части!")
 
 /obj/structure/closet/body_bag/environmental/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -585,7 +586,7 @@
 /obj/structure/closet/body_bag/environmental/stasis/proc/apply_stasis(mob/living/target)
 	target.apply_status_effect(/datum/status_effect/grouped/stasis, REF(src))
 	if(!INCAPACITATED_IGNORING(target, INCAPABLE_STASIS))
-		to_chat(target, span_notice("You feel a cold, numbing sensation..."))
+		to_chat(target, span_notice("Вы чувствуете холод и онемение..."))
 	RegisterSignal(target, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(skip_to_attack_hand))
 
 /obj/structure/closet/body_bag/environmental/stasis/after_close(mob/living/user)
@@ -597,7 +598,7 @@
 /obj/structure/closet/body_bag/environmental/stasis/proc/remove_stasis(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/grouped/stasis, REF(src))
 	if(!INCAPACITATED_IGNORING(target, INCAPABLE_STASIS))
-		to_chat(target, span_notice("You can feel your fingers and toes again."))
+		to_chat(target, span_notice("Вы снова чувствуете пальцы рук и ног."))
 	UnregisterSignal(target, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/structure/closet/body_bag/environmental/stasis/undeploy_bodybag(atom/fold_loc)
@@ -624,19 +625,19 @@
 	user.changeNext_move(6 SECONDS)
 	user.last_special = world.time + 6 SECONDS
 	user.visible_message(
-		span_warning("Something in [src] begins to wriggle!"),
-		span_notice("You start wriggling, attempting to climb out of [src]... (This will take about [DisplayTimeText(breakout_time)].)"),
-		span_hear("You hear straining cloth from [src]."),
+		span_warning("Что-то внутри [src.declent_ru(GENITIVE)] начинает шевелиться!"),
+		span_notice("Вы начинаете извиваться, пытаясь выбраться из [src.declent_ru(GENITIVE)]... (Это займёт около [DisplayTimeText(breakout_time)])."),
+		span_hear("Вы слышите, как трещит ткань внутри [src.declent_ru(GENITIVE)]."),
 	)
 	if(do_after(user, breakout_time, src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(breakout_checks), user)))
 		user.visible_message(
-			span_danger("[user] climbs out of [src]!"),
-			span_notice("You successfully climb out of [src]!"),
+			span_danger("[capitalize(user.declent_ru(NOMINATIVE))] выбирается из [src.declent_ru(GENITIVE)]!"),
+			span_notice("Вы успешно выбрались из [src.declent_ru(GENITIVE)]!"),
 		)
 		open(user, force = TRUE, special_effects = FALSE)
 
 	else if(!QDELETED(user) && user.loc == src)
-		user.show_message("You fail to break out of [src]!", MSG_VISUAL)
+		user.show_message("Вы не смогли выбраться из [src.declent_ru(GENITIVE)]!", MSG_VISUAL)
 
 /obj/structure/closet/body_bag/environmental/stasis/proc/breakout_checks(mob/living/user)
 	if(QDELETED(user) || user.stat != CONSCIOUS || user.loc != src || opened)
@@ -647,7 +648,7 @@
 	if(!(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION))
 		new /obj/effect/decal/cleanable/shreds(loc, name)
 		new /obj/item/stack/sheet/cloth(loc, 4)
-	loc.visible_message(span_warning("[src] unwinds into threads!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	loc.visible_message(span_warning("[capitalize(src.declent_ru(NOMINATIVE))] распадается на куски!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(loc, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE, frequency = 0.5)
 	for(var/mob/living/left_behind in src)
 		left_behind.Knockdown(3 SECONDS)

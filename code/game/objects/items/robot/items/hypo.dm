@@ -1,4 +1,4 @@
-/// All of the default reagent lists for each hypospray (+ hacked variants)
+/// All of the default reagent lists for each hypospray (+ hacked variants) // BANDASTATION EDIT: added /datum/reagent/medicine/mine_salve for base_medical and /datum/reagent/medicine/tramadol for expanded_medical
 #define BASE_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/c2/aiuri,\
 		/datum/reagent/medicine/c2/convermol,\
@@ -7,6 +7,7 @@
 		/datum/reagent/medicine/c2/multiver,\
 		/datum/reagent/medicine/salglu_solution,\
 		/datum/reagent/medicine/spaceacillin,\
+		/datum/reagent/medicine/mine_salve,\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
@@ -18,6 +19,7 @@
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/rezadone,\
 		/datum/reagent/medicine/sal_acid,\
+		/datum/reagent/medicine/tramadol,\
 	)
 #define HACKED_MEDICAL_REAGENTS list(\
 		/datum/reagent/toxin/cyanide,\

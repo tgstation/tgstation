@@ -1,0 +1,8 @@
+["cardigan skirt"]
+nominative = "юбка-кардиган"
+genitive = "юбки-кардигана"
+dative = "юбке-кардигану"
+accusative = "юбку-кардиган"
+instrumental = "юбкой-кардиганом"
+prepositional = "юбке-кардигане"
+gender = "female"

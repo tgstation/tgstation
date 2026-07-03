@@ -1,0 +1,407 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/station/service/lawoffice)
+"b" = (
+/obj/structure/table/wood,
+/obj/item/stamp/law{
+	pixel_y = 10
+	},
+/obj/item/pen/fountain{
+	pixel_y = -8
+	},
+/turf/open/floor/carpet,
+/area/station/service/lawoffice)
+"c" = (
+/obj/structure/sign/directions/engineering,
+/obj/structure/sign/directions/evac{
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/science{
+	pixel_y = 8
+	},
+/turf/closed/wall/r_wall,
+/area/station/service/lawoffice)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/camera_film{
+	pixel_x = 6
+	},
+/obj/item/camera_film{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/taperecorder{
+	pixel_x = -6
+	},
+/obj/item/camera{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"h" = (
+/obj/machinery/light/directional/west,
+/turf/template_noop,
+/area/space/nearstation)
+"i" = (
+/turf/template_noop,
+/area/template_noop)
+"j" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"k" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"m" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"o" = (
+/obj/machinery/button/door/directional/south{
+	id = "lawyerprivacy";
+	name = "Privacy Shutters Control"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"q" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/station/service/lawoffice)
+"s" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/turf/open/floor/iron,
+/area/station/service/lawoffice)
+"t" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/directional/west,
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/computer/security/telescreen/prison/directional/north,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"u" = (
+/obj/structure/cable,
+/obj/structure/filingcabinet/employment,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"v" = (
+/obj/machinery/newscaster/directional/west,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/landmark/start/lawyer,
+/turf/open/floor/carpet,
+/area/station/service/lawoffice)
+"w" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "lawyerprivacy";
+	name = "Lawyer's Privacy Shutter"
+	},
+/turf/open/floor/plating,
+/area/station/service/lawoffice)
+"x" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"y" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"z" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/service/lawoffice)
+"B" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"C" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"D" = (
+/obj/structure/fireplace,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/service/lawoffice)
+"E" = (
+/obj/machinery/vending/wardrobe/law_wardrobe,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"F" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"H" = (
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
+"I" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"J" = (
+/obj/structure/sign/poster/official/random/directional/south,
+/obj/structure/table/wood,
+/obj/item/folder/yellow{
+	pixel_x = 4
+	},
+/obj/item/folder/white,
+/obj/item/folder/red{
+	pixel_x = -4
+	},
+/obj/item/folder/blue{
+	pixel_x = -8
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet,
+/area/station/service/lawoffice)
+"K" = (
+/obj/machinery/light_switch/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"L" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/lawyer{
+	name = "Lawyer's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/turf/open/floor/iron,
+/area/station/service/lawoffice)
+"M" = (
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/machinery/requests_console/directional/west{
+	name = "Lawyer's Office Requests Console";
+	department = "Lawyer's Office"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/turf/open/floor/carpet,
+/area/station/service/lawoffice)
+"P" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Lawyer's Office"
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"Q" = (
+/obj/structure/closet/secure_closet/lawyer,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"S" = (
+/obj/machinery/firealarm/directional/south,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"U" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/briefcase{
+	pixel_y = 12
+	},
+/obj/item/toy/figure/lawyer,
+/turf/open/floor/iron/dark,
+/area/station/service/lawoffice)
+"V" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"W" = (
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+"Y" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
+
+(1,1,1) = {"
+i
+i
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+i
+i
+a
+t
+v
+M
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+m
+b
+J
+a
+"}
+(4,1,1) = {"
+a
+u
+E
+Y
+q
+q
+a
+"}
+(5,1,1) = {"
+a
+z
+V
+F
+C
+P
+a
+"}
+(6,1,1) = {"
+a
+D
+k
+W
+n
+y
+s
+"}
+(7,1,1) = {"
+a
+U
+I
+B
+B
+S
+a
+"}
+(8,1,1) = {"
+a
+f
+Q
+j
+W
+x
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+K
+o
+a
+"}
+(10,1,1) = {"
+i
+i
+i
+c
+L
+w
+a
+"}
+(11,1,1) = {"
+i
+i
+i
+i
+H
+i
+h
+"}

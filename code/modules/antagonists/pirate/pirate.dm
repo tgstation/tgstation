@@ -1,7 +1,7 @@
 /datum/antagonist/pirate
 	name = "\improper Space Pirate"
 	pref_flag = ROLE_TRAITOR
-	roundend_category = "space pirates"
+	roundend_category = "Космические пираты"
 	antagpanel_category = ANTAG_GROUP_PIRATES
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
@@ -13,7 +13,7 @@
 
 /datum/antagonist/pirate/greet()
 	. = ..()
-	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the [MONEY_NAME] from the station, and raid it for even more loot.</B>")
+	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot.</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/pirate/get_team()
@@ -80,7 +80,7 @@
 /datum/objective/loot/update_explanation_text()
 	if(cargo_hold)
 		var/area/storage_area = get_area(cargo_hold)
-		explanation_text = "Acquire loot and store [target_value] of [MONEY_NAME] worth in [storage_area.name] cargo hold."
+		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name] cargo hold."
 
 /datum/objective/loot/proc/loot_listing()
 	//Lists notable loot.

@@ -99,7 +99,7 @@
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)
 	. = ..()
 	if(!QDELETED(src))
-		openToolTip(usr, src, params, title = name, content = desc, theme = actiontooltipstyle)
+		openToolTip(usr, src, params, title = get_tip_name(), content = desc, theme = actiontooltipstyle)
 
 /atom/movable/screen/movable/action_button/MouseExited(location, control, params)
 	closeToolTip(usr)
@@ -344,7 +344,7 @@
 	return ..()
 
 /atom/movable/screen/button_palette/proc/show_tooltip(params)
-	openToolTip(usr, src, params, title = name, content = desc)
+	openToolTip(usr, src, params, title = get_tip_name(), content = desc)
 
 GLOBAL_LIST_INIT(palette_added_matrix, list(0.4,0.5,0.2,0, 0,1.4,0,0, 0,0.4,0.6,0, 0,0,0,1, 0,0,0,0))
 GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,0, 0,0,0,1, 0,0,0,0))
@@ -463,7 +463,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	. = ..()
 	if(QDELETED(src))
 		return
-	openToolTip(usr, src, params, title = name, content = desc)
+	openToolTip(usr, src, params, title = get_tip_name(), content = desc)
 
 /atom/movable/screen/palette_scroll/MouseExited()
 	closeToolTip(usr)

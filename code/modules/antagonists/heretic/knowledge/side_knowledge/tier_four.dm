@@ -3,10 +3,10 @@
  */
 
 /datum/heretic_knowledge/spell/space_phase
-	name = "Space Phase"
-	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
-		You can only phase in and out when you are on a space or misc turf."
-	gain_text = "You feel like your body can move through space as if you where dust."
+	name = "Космическая фаза"
+	desc = "Дарует вам «Космическую фазу» - заклинание, позволяющее свободно перемещаться в космическом пространстве. \
+		Вы можете входить и выходить из фазы только тогда, когда находитесь в космосе."
+	gain_text = "Вы ощущаете, что ваше тело может перемещаться по космосу так, словно вы стали космической пылью."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 2
@@ -14,11 +14,11 @@
 	drafting_tier = 4
 
 /datum/heretic_knowledge/unfathomable_curio
-	name = "Unfathomable Curio"
-	desc = "Allows you to transmute 3 rods, lungs, and any belt into an Unfathomable Curio - \
-			a belt that can hold blades and items for rituals. Whilst worn it will veil you, \
-			blocking one blow of incoming damage, at the cost of the veil. The veil will recharge itself out of combat."
-	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
+	name = "Непостижимая реликвия"
+	desc = "Позволяет трансмутировать 3 железных прута, легкие, и любой пояс, чтобы получить непостижимую реликвию - \
+			пояс, на котором можно хранить клинки и предметы для ритуалов. Пока вы носите его, он будет окутывать вас вуалью, \
+			блокируя один удар входящего урона за счет вуали. Вуаль будет перезаряжаться после боя."
+	gain_text = "Мансус хранит множество реликвий, некоторые не предназначены для глаз смертных."
 
 	required_atoms = list(
 		/obj/item/organ/lungs = 1,
@@ -32,9 +32,9 @@
 	drafting_tier = 4
 
 /datum/heretic_knowledge/rust_sower
-	name = "Rust Sower Grenade"
-	desc = "Allows you to combine a chemical grenade casing and some moldy food to conjure a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
-	gain_text = "The choked vines of the Rusted Hills are burdened with such overripe fruits. It undoes the markers of progress, leaving a clean slate to work into new shapes."
+	name = "Сеятель ржавчины"
+	desc = "Позволяет совместить гильзу от химической гранаты и немного заплесневелой еды, чтобы создать проклятую гранату, заполненную паранормальной ржавчиной. При взрыве граната выпускает огромное облако, ослепляющее органиков, покрывая поверхности ржавчиной, уничтожая синтетиков и мехов."
+	gain_text = "Засохшие виноградные лозы на Ржавых Холмах отягощены подобными, перезрелыми плодами. Они уничтожают признаки прогресса, оставляя чистый лист для создания новых форм."
 	required_atoms = list(
 		list(
 			/obj/item/food/breadslice/moldy,
@@ -53,24 +53,24 @@
 	drafting_tier = 4
 
 /datum/heretic_knowledge/spell/crimson_cleave
-	name = "Crimson Cleave"
-	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AOE. Cleanses all wounds upon casting"
-	gain_text = "At first I didn't understand these instruments of war, but the Priest \
-				told me to use them regardless. Soon, he said, I would know them well."
+	name = "Багровый разрез"
+	desc = "Дарует вам «Багровый разрез» - направленное заклинание, поглощающее здоровье в небольшом радиусе. Очищает все раны при использовании."
+	gain_text = "Поначалу я не понимал этих орудий войны, но Жрец велел мне использовать их несмотря ни на что. \
+				Вскоре, сказал он, я познаю их хорошо."
 	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
 	cost = 2
 	drafting_tier = 4
 
 /datum/heretic_knowledge/rifle
-	name = "Lionhunter's Rifle"
-	desc = "Allows you to transmute a piece of wood, with hide \
-		from any animal, and a camera to create the Lionhunter's rifle. \
-		The Lionhunter's Rifle is a long ranged ballistic weapon with three shots. \
-		These shots function as normal, albeit weak high-caliber munitions when fired from \
-		close range or at inanimate objects. You can aim the rifle at distant foes, \
-		causing the shot to mark your victim with your grasp and teleport you directly to them."
-	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
-		I could not purchase it at the time, but they showed me how they made it ages ago."
+	name = "Винтовка Охотника на Львов"
+	desc = "Позволяет трансмутировать кусок дерева, шкуру любого животного и камеру, \
+		чтобы создать винтовку Охотника на Львов. \
+		Винтовка Охотника на Львов - это дальнобойное баллистическое оружие с тремя зарядами. \
+		Эти заряды действуют как обычные, хотя и слабые, боеприпасы крупного калибра при стрельбе вблизи или по неодушевлённым объектам. \
+		Используя прицел, вы можете нацелиться на противника находящегося вдали, \
+		при попадании выстрел пометит жертву вашей Хваткой и мгновенно переместит вас к ней."
+	gain_text = "Я встретил старика в антикварном магазине, в котором стояло крайне необычное оружие. \
+		В то время я не мог его купить, но Они показали мне, как его создавали века назад."
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/stack/sheet/animalhide = 1,
@@ -83,12 +83,12 @@
 	drafting_tier = 2
 
 /datum/heretic_knowledge/rifle_ammo
-	name = "Lionhunter Rifle Ammunition"
-	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
-		including shotgun shells to create an extra clip of ammunition for the Lionhunter Rifle."
-	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \
-		They were very effective, for simple iron, but used up quickly. I soon ran out. \
-		No replacement munitions worked in their stead. It was peculiar in what it wanted."
+	name = "Боеприпасы для винтовки Охотника на Львов"
+	desc = "Позволяет трансмутировать 3 гильзы (использованные или неиспользованные) любого калибра, в том числе патроны дробовика, \
+		чтобы создать дополнительную обойму патронов для винтовки Охотника на Львов."
+	gain_text = "К оружию прилагались три грубых железных шара, предназначенных для использования в качестве боеприпасов. \
+		Они были слишком эффективны для простого железа, но быстро кончались. Вскоре они закончились и у меня. \
+		Никакие другие пули не могли заменить их. Оно было привередливо в том, чего хотело."
 	required_atoms = list(
 		/obj/item/ammo_casing = 3,
 	)

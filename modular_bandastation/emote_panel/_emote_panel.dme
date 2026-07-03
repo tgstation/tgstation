@@ -1,0 +1,12 @@
+#include "_emote_panel.dm"
+
+#include "code/emote_verbs.dm"
+
+#include "code/human.dm"
+#include "code/jellypeople.dm"
+#include "code/lizard.dm"
+#include "code/mothpeople.dm"
+#include "code/podpeople.dm"
+#include "code/skrell.dm"
+#include "code/tajaran.dm"
+#include "code/vulpkanin.dm"

@@ -141,6 +141,26 @@ Doesn't work on other aliens/AI.*/
 
 	log_directed_talk(owner, chosen_recipient, to_whisper, LOG_SAY, tag = "alien whisper")
 	to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][to_whisper]")
+
+	// BANDASTATION ADDITION START - TTS
+	owner.cast_tts(
+		chosen_recipient,
+		to_whisper,
+		is_local = FALSE,
+		effects = list(/datum/singleton/sound_effect/telepathy),
+		channel_override = CHANNEL_TTS_TELEPATHY,
+		check_deafness = FALSE
+	)
+	owner.cast_tts(
+		owner,
+		to_whisper,
+		is_local = FALSE,
+		effects = list(/datum/singleton/sound_effect/telepathy),
+		channel_override = CHANNEL_TTS_TELEPATHY,
+		check_deafness = FALSE
+	)
+	// BANDASTATION ADDITION END
+
 	to_chat(owner, span_noticealien("You said: \"[to_whisper]\" to [chosen_recipient]"))
 	for(var/mob/dead_mob as anything in GLOB.dead_mob_list)
 		if(!isobserver(dead_mob))

@@ -1,0 +1,8 @@
+["combat knife"]
+nominative = "боевой нож"
+genitive = "боевого ножа"
+dative = "боевому ножу"
+accusative = "боевой нож"
+instrumental = "боевым ножом"
+prepositional = "боевом ноже"
+gender = "male"

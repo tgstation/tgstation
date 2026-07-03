@@ -1,0 +1,8 @@
+["assault belt"]
+nominative = "штурмовой пояс"
+genitive = "штурмового пояса"
+dative = "штурмовому поясу"
+accusative = "штурмовой пояс"
+instrumental = "штурмовым поясом"
+prepositional = "штурмовом поясе"
+gender = "male"

@@ -1,0 +1,8 @@
+[kilt]
+nominative = "килт"
+genitive = "килта"
+dative = "килту"
+accusative = "килт"
+instrumental = "килтом"
+prepositional = "килте"
+gender = "male"

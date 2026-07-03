@@ -16,31 +16,33 @@
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
-			/* button_text = */ "Create Admin Ticket",
+			/* button_text = */ "Открыть тикет",
 			/* offset = */ list(-136, 28),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(create_ticket)),
 		)
 	)
 
-	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable/admin_ticket_notification(
-			null,
-			/* hud_owner = */ null,
-			/* escape_menu = */ src,
-			/* button_text = */ "View Latest Ticket",
-			/* offset = */ list(-171, 28),
-			/* font_size = */ 24,
-			/* on_click_callback = */ CALLBACK(src, PROC_REF(view_latest_ticket)),
-		)
-	)
+	// BANDASTATION EDIT START - ticket manager
+	// page_holder.give_screen_object(
+	// 	new /atom/movable/screen/escape_menu/text/clickable/admin_ticket_notification(
+	// 		null,
+	// 		/* hud_owner = */ null,
+	// 		/* escape_menu = */ src,
+	// 		/* button_text = */ "View Latest Ticket",
+	// 		/* offset = */ list(-171, 28),
+	// 		/* font_size = */ 24,
+	// 		/* on_click_callback = */ CALLBACK(src, PROC_REF(view_latest_ticket)),
+	// 	)
+	// )
+	// BANDASTATION EDIT END
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/text/clickable(
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
-			/* button_text = */ "Pray",
-			/* offset = */ list(-206, 30),
+			/* button_text = */ "Помолиться",
+			/* offset = */ list(-171, 28), // BANDASTATION EDIT - move up
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(pray)),
 		)
@@ -66,8 +68,10 @@
 	qdel(src)
 
 ///Opens your latest admin ticket.
-/datum/escape_menu/proc/view_latest_ticket()
-	client?.view_latest_ticket()
+// BANDASTATION EDIT START - ticket manager
+// /datum/escape_menu/proc/view_latest_ticket()
+// 	client?.view_latest_ticket()
+// BANDASTATION EDIT END
 
 ///Manually calls the user's pray() hotkey (which is where prefs is taken into account).
 /datum/escape_menu/proc/pray()

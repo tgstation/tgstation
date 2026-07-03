@@ -24,6 +24,7 @@ GLOBAL_LIST_EMPTY(dynamic_human_appearances)
 			outfit.r_hand = r_hand
 		if(l_hand != NO_REPLACE)
 			outfit.l_hand = l_hand
+		outfit.organs = null // BANDAMARINES ADD - Fix runtime
 		dummy.equipOutfit(outfit, visuals_only = TRUE)
 	else if(mob_spawn_path)
 		var/obj/effect/mob_spawn/spawner = new mob_spawn_path(null, TRUE)

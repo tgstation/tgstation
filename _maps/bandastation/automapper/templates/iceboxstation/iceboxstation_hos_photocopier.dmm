@@ -1,0 +1,156 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - HoS Office"
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_x = -6;
+	pixel_y = 16;
+	start_on = 0
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/stamp/head/hos{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/machinery/recharger{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/item/phone{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/hos)
+"b" = (
+/obj/machinery/disposal/bin,
+/obj/machinery/light_switch/directional/south,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+"e" = (
+/obj/structure/table/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/fax{
+	fax_name = "Head of Security's Office";
+	name = "Head of Security's Fax Machine"
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/hos)
+"w" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron/smooth_large,
+/area/station/command/heads_quarters/hos)
+"x" = (
+/obj/structure/table/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/off{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
+	pixel_x = 7;
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 6
+	},
+/obj/item/taperecorder{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/hos)
+"G" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/hos)
+"I" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/station/command/heads_quarters/hos)
+"K" = (
+/obj/machinery/suit_storage_unit/hos,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+"O" = (
+/obj/machinery/firealarm/directional/south,
+/obj/structure/secure_safe/hos{
+	pixel_x = 28;
+	pixel_y = 6
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+"S" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+"T" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/closet/secure_closet/hos,
+/obj/structure/cable,
+/obj/item/storage/box/deputy,
+/obj/item/storage/box/seccarts,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+"V" = (
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/command/heads_quarters/hos)
+
+(1,1,1) = {"
+a
+T
+K
+"}
+(2,1,1) = {"
+x
+I
+w
+"}
+(3,1,1) = {"
+e
+S
+b
+"}
+(4,1,1) = {"
+G
+V
+O
+"}

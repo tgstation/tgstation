@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "You can open bags with alt click while resting again"
+  - qol: "Many items which previously required you to stand to alt-click now don't, such as bedsheets and spray cans"

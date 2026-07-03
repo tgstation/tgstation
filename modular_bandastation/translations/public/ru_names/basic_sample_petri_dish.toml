@@ -1,0 +1,8 @@
+["basic sample petri dish"]
+nominative = "чашка Петри с простым образцом"
+genitive = "чашки Петри с простым образцом"
+dative = "чашке Петри с простым образцом"
+accusative = "чашку Петри с простым образцом"
+instrumental = "чашкой Петри с простым образцом"
+prepositional = "чашке Петри с простым образцом"
+gender = "female"

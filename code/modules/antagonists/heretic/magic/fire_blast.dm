@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/charged/beam/fire_blast
-	name = "Volcano Blast"
-	desc = "Charge up a blast of fire that chains between nearby targets, setting them ablaze. \
-		Targets already on fire will take priority. If the target fails to catch ablaze, or \
-		extinguishes themselves before it bounces, the chain will stop."
+	name = "Взрыв вулкана"
+	desc = "Зарядите огненную струю, которая отскакивает между ближайшими целями, поджигая их. \
+		Приоритет отдается уже горящим целям. Если цель не загорится, или \
+		погаснет до того, как отскочит, цепь остановится."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -78,8 +78,8 @@
 	// but likely will (due to them not catching on fire)
 	if(to_beam.can_block_magic(antimagic_flags))
 		to_beam.visible_message(
-			span_warning("[to_beam] absorbs the spell, remaining unharmed!"),
-			span_userdanger("You absorb the spell, remaining unharmed!"),
+			span_warning("[capitalize(to_beam.declent_ru(NOMINATIVE))] поглощает заклинание, оставаясь невредимым!"),
+			span_userdanger("Вы поглощаете заклинание, оставаясь невредимым!"),
 		)
 		// Apply status effect but with no overlay
 		to_beam.apply_status_effect(/datum/status_effect/fire_blasted)

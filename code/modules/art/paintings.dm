@@ -292,7 +292,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 			if(curator_cut)
 				for(var/datum/bank_account/curator as anything in curator_accounts)
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
-					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] [MONEY_SYMBOL].")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance][MONEY_SYMBOL].")
 
 	if(istype(loc, /obj/structure/sign/painting))
 		var/obj/structure/sign/painting/frame = loc

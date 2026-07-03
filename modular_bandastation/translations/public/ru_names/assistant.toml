@@ -1,0 +1,8 @@
+[assistant]
+nominative = "ассистент"
+genitive = " ассистента"
+dative = "ассистенту"
+accusative = "ассистента"
+instrumental = "ассистентом"
+prepositional = "ассистенте"
+gender = "male"

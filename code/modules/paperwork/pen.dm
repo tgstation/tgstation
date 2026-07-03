@@ -155,7 +155,7 @@
 	name = "fountain pen"
 	desc = "It's a common fountain pen, with a faux wood body. Rumored to work in zero gravity situations."
 	icon_state = "pen-fountain"
-	font = FOUNTAIN_PEN_FONT
+	font = PEN_FONT // BANDASTATION EDIT - Readble fountain pen font
 	requires_gravity = FALSE // fancy spess pens
 	dart_insert_casing_icon_state = "overlay_fountainpen"
 	dart_insert_projectile_icon_state = "overlay_fountainpen_proj"
@@ -436,7 +436,7 @@
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
-		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		attack_self(user)
 	return BRUTELOSS
 

@@ -65,12 +65,12 @@ export const AntagInfoWizard = (props) => {
             <Section scrollable fill>
               <Stack vertical>
                 <Stack.Item textColor="red" fontSize="20px">
-                  You are the Space Wizard!
+                  Вы Космический волшебник!
                 </Stack.Item>
                 <Stack.Item>
                   <ObjectivePrintout
                     objectives={objectives}
-                    titleMessage="The Space Wizard Federation has given you the following tasks:"
+                    titleMessage="Федерация космических волшебников выдала вам следующие задачи:"
                     objectiveFollowup={
                       <ReplaceObjectivesButton
                         can_change_objective={can_change_objective}
@@ -87,68 +87,71 @@ export const AntagInfoWizard = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section fill title="Spellbook">
+            <Section fill title="Книга заклинаний">
               <Stack vertical fill>
                 <Stack.Item>
-                  You have a spellbook which is bound to you. You can use it to
-                  choose a magical arsenal.
+                  У вас есть книга заклинаний, привязанная к вам. Вы можете
+                  использовать её, чтобы выбрать ваш магический арсенал.
                   <br />
                   <span style={destructionstyle}>
-                    The deadly page has the offensive spells, to destroy your
-                    enemies.
+                    На странице смертоносности содержатся наступающие
+                    заклинания, чтобы уничтожить ваших врагов.
                   </span>
                   <br />
                   <span style={defensestyle}>
-                    The defensive page has defensive spells, to keep yourself
-                    alive. Remember, you may be powerful, but you are still only
-                    human.
+                    На странице защиты содержатся защитные заклинания, чтобы
+                    сохранить себя живым. Помните, что вы можете быть
+                    могущественным, но вы все еще просто человек.
                   </span>
                   <br />
                   <span style={transportstyle}>
-                    The transport page has mobility spells, very important
-                    aspect of staying alive and getting things done.
+                    На странице передвижения содержатся заклинания мобильности,
+                    очень важный аспект выживания и выполнения поставленных
+                    задач.
                   </span>
                   <br />
                   <span style={summonstyle}>
-                    The summoning page has summoning and other helpful spells
-                    for not fighting alone. Careful, not every summon is on your
-                    side.
+                    На странице призывания содержатся заклинания призыва и
+                    другие полезные заклинания для того, чтобы не сражаться в
+                    одиночку. Осторожно, не все призванные вами находятся на
+                    вашей стороне.
                   </span>
                   <br />
                   <span style={ritualstyle}>
-                    The rituals page has powerful global effects, that will pit
-                    the station against itself. Do mind that these are either
-                    expensive, or just for panache.
+                    На странице ритуалов есть мощные глобальные эффекты, которые
+                    поставят станцию против самой себя. Имейте в виду, что они
+                    либо дорогие, или просто для пафоса.
                   </span>
                 </Stack.Item>
                 <Stack.Item textColor="lightgreen">
-                  (If you are unsure what to get or are new to the Federation,
-                  go to the &quot;Wizard Approved Loadouts&quot; section. There
-                  you will find some kits that work fairly well for new
-                  wizards.)
+                  (Если вы не знаете, что взять, или являетесь новичком в
+                  Федерации, перейдите в секцию &quot;Наборы снаряжения,
+                  одобренные волшебниками&quot;. Там вы найдете несколько
+                  наборов, которые хорошо подходят для новых волшебников.)
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Misc Gear">
+            <Section title="Разное снаряжение">
               <Stack>
                 <Stack.Item>
-                  <span style={teleportstyle}>Teleport scroll:</span> 4 uses to
-                  teleport wherever you want. You will not be able to come back
-                  to the den, so be sure you have everything ready before
-                  departing.
+                  <span style={teleportstyle}>Свиток телепортации:</span> 4
+                  использования для телепортации, куда вы захотите. Вы не
+                  сможете вернуться в логово, поэтому убедитесь, что у вас все
+                  готово, перед отправкой.
                   <br />
-                  <span style={robestyle}>Wizard robes:</span> Used to cast most
-                  spells. Your spellbook will let you know which spells cannot
-                  be cast without a garb.
+                  <span style={robestyle}>Мантии волшебника:</span> Используется
+                  для произношения большинства заклинаний. В вашей книге
+                  заклинаний вы узнаете, какие заклинания нельзя использовать
+                  без вашего одеяния.
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
             <Section textAlign="center" textColor="red" fontSize="20px">
-              Remember: Do not forget to prepare your spells.
+              Помните: Не забудьте подготовить свои заклинания.
             </Section>
           </Stack.Item>
         </Stack>
@@ -164,14 +167,14 @@ const RitualPrintout = (props: { ritual: GrandRitual }) => {
   }
   return (
     <Box>
-      Alternately, complete the{' '}
-      <span style={grandritualstyle}>Grand Ritual </span>
-      by invoking a ritual circle at several nexuses of power.
+      Кроме того, выполните{' '}
+      <span style={grandritualstyle}>Великий ритуал </span>
+      - вызывая ритуальный круг в нескольких центрах силы.
       <br />
-      You must complete the ritual
-      <span style={grandritualstyle}> {ritual.remaining}</span> more times.
+      Вы должны завершить ритуал еще
+      <span style={grandritualstyle}> {ritual.remaining}</span> раз.
       <br />
-      Your next ritual location is the
+      Следующее место проведения ритуала -
       <span style={grandritualstyle}> {ritual.next_area}</span>.
     </Box>
   );

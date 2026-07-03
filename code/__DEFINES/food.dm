@@ -72,30 +72,30 @@ DEFINE_BITFIELD(foodtypes, list(
 	"EGG", \
 )
 
-/// IC meaning (more or less) for food flags
+/// IC meaning (more or less) for food flags // BANDASTATION EDIT - сверяйте с tgui\packages\tgui\interfaces\PersonalCrafting.tsx
 #define FOOD_FLAGS_IC list( \
-	"Meat", \
-	"Vegetables", \
-	"Raw food", \
-	"Junk food", \
-	"Grain", \
-	"Fruits", \
-	"Dairy products", \
-	"Fried food", \
-	"Alcohol", \
-	"Sugary food", \
-	"Gross food", \
-	"Toxic food", \
-	"Pineapples", \
-	"Breakfast food", \
-	"Clothing", \
-	"Nuts", \
-	"Seafood", \
-	"Oranges", \
-	"Bugs", \
-	"Gore", \
-	"Rocks", \
-	"Eggs", \
+	"Мясное", \
+	"Овощи", \
+	"Сырое", \
+	"Фастфуд", \
+	"Зерновое", \
+	"Фрукты", \
+	"Молочное", \
+	"Жареное", \
+	"Алкоголь", \
+	"Сахарное", \
+	"Ужасное", \
+	"Токсичное", \
+	"Ананасы", \
+	"Завтраки", \
+	"Из одежды", \
+	"Орехи", \
+	"Морепродукты", \
+	"Апельсины", \
+	"Из жуков", \
+	"Месиво", \
+	"Каменное", \
+	"Из яиц", \
 )
 
 /// Food types assigned to all podperson organs
@@ -126,13 +126,13 @@ DEFINE_BITFIELD(foodtypes, list(
 
 /// Labels for food quality
 GLOBAL_ALIST_INIT(food_quality_description, alist(
-	FOOD_QUALITY_NORMAL = "okay",
-	FOOD_QUALITY_NICE = "nice",
-	FOOD_QUALITY_GOOD = "good",
-	FOOD_QUALITY_VERYGOOD = "very good",
-	FOOD_QUALITY_FANTASTIC = "fantastic",
-	FOOD_QUALITY_AMAZING = "amazing",
-	FOOD_QUALITY_TOP = "divine",
+	FOOD_QUALITY_NORMAL = "неплохая",
+	FOOD_QUALITY_NICE = "хорошая",
+	FOOD_QUALITY_GOOD = "вкусная",
+	FOOD_QUALITY_VERYGOOD = "очень вкусная",
+	FOOD_QUALITY_FANTASTIC = "фантастическая",
+	FOOD_QUALITY_AMAZING = "превосходная",
+	FOOD_QUALITY_TOP = "богоподобная",
 ))
 
 /// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff

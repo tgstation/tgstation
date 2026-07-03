@@ -78,21 +78,21 @@
 	phrases_to_return += read_memory() // must come first!!!
 	// now add some valuable lines every poly should have
 	phrases_to_return += list(
-		":e Check the crystal, you chucklefucks!",
-		":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE",
-		":e WHO TOOK THE DAMN MODSUITS?",
-		":e Wire the solars, you lazy bums!",
-		"Poly wanna cracker!",
+		":e Проверьте кристалл, долбоёбы!",
+		":e О БОЖЕ, ОН ВОТ-ВОТ РАССЛОИТСЯ, ВЫЗЫВАЙТЕ ШАТТЛ!",
+		":e КТО ЗАБРАЛ ЭТИ ЧЕРТОВЫ МОДСЬЮТЫ?",
+		":e Подключите соляры, бездельники!",
+		"Поли хочет крекер!",
 	)
 	switch(determine_special_poly())
 		if(POLY_DEFAULT)
-			phrases_to_return += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+			phrases_to_return += pick("...живой?", "Это не рай для попугаев!", "Я живу, я умираю, я снова живу!", "Пустота отступает!")
 		if(POLY_LONGEST_SURVIVAL)
-			phrases_to_return += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
+			phrases_to_return += pick("...[longest_survival].", "Вещи, которые я видел...!", "Я прожил множество жизней!", "Да кто вы по сравнению со мной?!")
 		if(POLY_BEATING_DEATHSTREAK)
-			phrases_to_return += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+			phrases_to_return += pick("Чего вы ждёте?!", "Насилие порождает насилие!", "Кровь! Кровь!!!", "Ну попробуйте меня трахнуть, да я вас сам трахну, ублюдки, онанисты чертовы, будь вы прокляты!")
 		if(POLY_CONSECUTIVE_ROUND)
-			phrases_to_return += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+			phrases_to_return += pick("...опять?", "Нет, это же был конец!", "Выпустите меня!!!", "Это никогда не закончится!!!")
 
 	return phrases_to_return
 
@@ -100,11 +100,11 @@
 	. = ..()
 	switch(determine_special_poly())
 		if(POLY_LONGEST_SURVIVAL)
-			desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
+			desc += " Стар, как грех, но такой же крикливый, как и всегда. Утверждается, что он прожил [rounds_survived] смен(-ы)."
 		if(POLY_BEATING_DEATHSTREAK)
-			desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+			desc += " Визги [-rounds_survived] мёртвых попугаев раздаются звоном в ваших ушах..."
 		if(POLY_CONSECUTIVE_ROUND)
-			desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
+			desc += " Более [rounds_survived] смен(-ы) без \"ужасающих\" \"инцидентов\"!"
 
 /mob/living/basic/parrot/poly/update_icon()
 	. = ..()

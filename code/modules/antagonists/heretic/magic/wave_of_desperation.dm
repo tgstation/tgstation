@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/wave_of_desperation
-	name = "Wave Of Desperation"
-	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
-		Cannot be cast unless you are restrained. (Can be casted without a focus)"
+	name = "Волна Отчаяния"
+	desc = "Снимает оковы, отталкивает и сбивает с ног находящихся рядом людей, а также накладывает на них некоторые эффекты «Хватки Мансуса». \
+		Не может быть применено, если вы скованы. (Фокусировка не требуется)!"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -27,10 +27,10 @@
 		return
 
 	if(cast_on.handcuffed)
-		cast_on.visible_message(span_danger("[cast_on.handcuffed] on [cast_on] shatter!"))
+		cast_on.visible_message(span_danger("[capitalize(cast_on.handcuffed.declent_ru(NOMINATIVE))], сковывающие [cast_on.declent_ru(GENITIVE)], разбиваются!"))
 		QDEL_NULL(cast_on.handcuffed)
 	if(cast_on.legcuffed)
-		cast_on.visible_message(span_danger("[cast_on.legcuffed] on [cast_on] shatters!"))
+		cast_on.visible_message(span_danger("[capitalize(cast_on.legcuffed.declent_ru(NOMINATIVE))], сковывающие [cast_on.declent_ru(GENITIVE)], разбиваются!"))
 		QDEL_NULL(cast_on.legcuffed)
 
 	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)

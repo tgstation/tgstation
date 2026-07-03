@@ -3,46 +3,46 @@
 
 // Mood applied for ripping the painting
 /datum/mood_event/eldritch_painting
-	description = "I've been hearing weird laughter since cutting down that painting..."
+	description = "Я всё слышу этот странный смех с того момента, как я снял ту картину..."
 	mood_change = -6
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/weeping
-	description = "He is here!"
+	description = "Он здесь!"
 	mood_change = -3
 	timeout = 11 SECONDS
 
 /datum/mood_event/eldritch_painting/weeping_heretic
-	description = "His suffering inspires me!"
+	description = "Его страдания воодушляют меня!"
 	mood_change = 5
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/weeping_withdrawal
-	description = "My mind is clear. He is not here."
+	description = "Мой разум чист. Его здесь нет."
 	mood_change = 1
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/desire_heretic
-	description = "The void screams."
+	description = "Пустота кричит."
 	mood_change = -2
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/desire_examine
-	description = "The hunger has been fed, for now..."
+	description = "Голод утолен, пока что..."
 	mood_change = 3
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/heretic_vines
-	description = "Oh what a lovely flower!"
+	description = "О, какой прекрасный цветок!"
 	mood_change = 3
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/rust_examine
-	description = "That painting really creeped me out."
+	description = "Та картина была довольно стремной."
 	mood_change = -2
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/rust_heretic_examine
-	description = "Climb. Decay. Rust."
+	description = "Подъем. Разложение. Ржавчина."
 	mood_change = 6
 	timeout = 3 MINUTES

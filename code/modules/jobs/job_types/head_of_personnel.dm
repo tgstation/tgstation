@@ -1,19 +1,19 @@
 /datum/job/head_of_personnel
 	title = JOB_HEAD_OF_PERSONNEL
-	description = "Alter access on ID cards, manage the service department, \
-		protect Ian, run the station when the Captain dies."
+	description = "Выдавайте доступы, руководите сервисным отделом, \
+		защищайте Иана, управляйте станцией в случае смерти капитана."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = RADIO_CHANNEL_SERVICE
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = JOB_CAPTAIN_RU
 	req_admin_notify = 1
 	minimal_player_age = 10
-	exp_requirements = 180
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SERVICE
-	exp_granted_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_COMMAND
 	config_tag = "HEAD_OF_PERSONNEL"
 
 	outfit = /datum/outfit/job/hop
@@ -47,7 +47,7 @@
 
 
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
-	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
+	return "В связи с нехваткой персонала, недавно назначенный исполняющий обязанности капитана [captain.real_name] на борту!"
 
 /datum/job/head_of_personnel/generate_traitor_objective()
 	var/datum/objective/assassinate/captain_replacement/promotion = new()

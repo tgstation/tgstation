@@ -132,10 +132,10 @@
 		return
 
 	if(!attached_circuit)
-		examine_text += span_notice("There is no integrated circuit attached.")
+		examine_text += span_notice("Нет прикреплённой интегральной платы.")
 		return
 
-	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
+	examine_text += span_notice("Прикреплена интегральная плата. Используйте мультитул для доступа к проводке. Используйте отвёртку, чтобы извлечь её из [source.declent_ru(ACCUSATIVE)].")
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
 	var/obj/item/stock_parts/power_store/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")

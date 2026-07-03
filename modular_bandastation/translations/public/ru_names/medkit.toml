@@ -1,0 +1,8 @@
+[medkit]
+nominative = "меднабор"
+genitive = "меднабора"
+dative = "меднабору"
+accusative = "меднабор"
+instrumental = "меднабором"
+prepositional = "меднаборе"
+gender = "male"

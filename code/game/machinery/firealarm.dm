@@ -119,7 +119,8 @@
 
 /obj/machinery/firealarm/update_name(updates)
 	. = ..()
-	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
+	var/area/current_area = get_area(src)
+	name = "[declent_ru(NOMINATIVE)] [id_tag] [current_area.declent_ru(GENITIVE)]"
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place
@@ -621,7 +622,7 @@
 		reset()
 	user?.log_message("enabled firelock sensors using [src].", LOG_GAME)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 24) // BANDASTATION EDIT - ASTHETICS - ORIGINAL: 26
 
 /*
  * Return of Party button

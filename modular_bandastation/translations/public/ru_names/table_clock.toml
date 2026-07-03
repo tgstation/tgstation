@@ -1,0 +1,8 @@
+["table clock"]
+nominative = "настольные часы"
+genitive = "настольных часов"
+dative = "настольным часам"
+accusative = "настольные часы"
+instrumental = "настольными часами"
+prepositional = "настольных часах"
+gender = "male"

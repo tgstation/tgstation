@@ -1,6 +1,6 @@
 /datum/antagonist/paradox_clone
 	name = "\improper Paradox Clone"
-	roundend_category = "Paradox Clone"
+	roundend_category = "Парадокс-клоны"
 	pref_flag = ROLE_PARADOX_CLONE
 	antagpanel_category = ANTAG_GROUP_PARADOX
 	antag_hud_name = "paradox_clone"
@@ -66,7 +66,7 @@
 	var/name_and_job
 
 /datum/objective/paradox_clone_replace/update_explanation_text()
-	explanation_text = "Take [name_and_job || "someone's"]'s place. Avoid collateral damage - remember, your mission is to blend in!"
+	explanation_text = "Займите место [name_and_job || "кого-то"]. Избегайте лишних жертв - помните, ваша миссия - слиться с толпой!"
 
 /datum/objective/paradox_clone_replace/check_completion()
 	return completed || considered_alive(owner)

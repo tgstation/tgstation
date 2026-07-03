@@ -16,10 +16,10 @@
 		return
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
-		balloon_alert(src, "navigation path removed")
+		balloon_alert(src, "навигация убрана")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
-		balloon_alert(src, "navigation on cooldown!")
+		balloon_alert(src, "навигация на задержке!")
 		return
 	addtimer(CALLBACK(src, PROC_REF(create_navigation)), world.tick_lag)
 
@@ -37,15 +37,15 @@
 	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
 	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	if(can_go_down)
-		destination_list["Nearest Way Down"] = DOWN
+		destination_list["Близлежащий путь вниз"] = DOWN
 	if(can_go_up)
-		destination_list["Nearest Way Up"] = UP
+		destination_list["Близлежащий путь вверх"] = UP
 
 	if(!length(destination_list))
-		balloon_alert(src, "no navigation signals!")
+		balloon_alert(src, "нет сигнала для навигации!")
 		return
 
-	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
+	var/platform_code = tgui_input_list(src, "Выберите локацию", "Навигация", sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
 
 	if(isnull(navigate_target) || incapacitated)
@@ -58,12 +58,12 @@
 		// lowering the cooldown to 5 seconds if we're navigating to a ladder or staircase instead of a proper destination
 		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
 		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
-		var/direction_name = isatom(navigate_target) ? "there" : (navigate_target == UP ? "up" : "down")
+		var/direction_name = isatom(navigate_target) ? "туда" : (navigate_target == UP ? "вверх" : "вниз")
 		var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
 		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
 
 		if(!new_target)
-			balloon_alert(src, "can't find ladder or staircase going [direction_name]!")
+			balloon_alert(src, "не удалось найти ступеньки или лестницу ведущую [direction_name]!")
 			return
 
 		navigate_target = new_target
@@ -75,7 +75,7 @@
 
 	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
 	if(!length(path))
-		balloon_alert(src, "no valid path with current access!")
+		balloon_alert(src, "нет доступного пути с текущим доступом!")
 		return
 	path |= get_turf(navigate_target)
 	for(var/i in 1 to length(path))
@@ -104,7 +104,7 @@
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
 	if(finding_zchange)
 		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
-	balloon_alert(src, "navigation path created")
+	balloon_alert(src, "путь к месту назначания построен")
 
 /mob/living/proc/shine_navigation()
 	for(var/i in 1 to length(client.navigation_images))

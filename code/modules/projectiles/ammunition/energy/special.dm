@@ -54,6 +54,7 @@
 /obj/item/ammo_casing/energy/scatter
 	projectile_type = /obj/projectile/beam/disabler/scatter
 	select_name = "scatter"
+	delay = 5 // 0.5 SECONDS BANDASTATION ADDITION: DRAGNET REBALANCE BOUNTY
 	pellets = 10
 	variance = 10
 	harmful = FALSE
@@ -61,6 +62,7 @@
 /obj/item/ammo_casing/energy/snare
 	projectile_type = /obj/projectile/energy/snare
 	select_name = "snare"
+	delay = 5 // 0.5 SECONDS BANDASTATION ADDITION: DRAGNET REBALANCE BOUNTY
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon

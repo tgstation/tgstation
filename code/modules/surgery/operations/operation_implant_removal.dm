@@ -1,7 +1,7 @@
 /datum/surgery_operation/basic/implant_removal
-	name = "implant removal"
-	desc = "Attempt to find and remove an implant from a patient. \
-		Any implant found will be destroyed unless an implant case is held or nearby."
+	name = "Извлечение импланта"
+	desc = "Попытка найти и извлечь имплант из пациента. \
+		Любой найденный имплант будет уничтожен, если рядом или в руках нет кейса для имплантов."
 	operation_flags = OPERATION_NOTABLE
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -17,18 +17,18 @@
 	return image('icons/obj/medical/syringe.dmi', "implantcase-b")
 
 /datum/surgery_operation/basic/implant_removal/any_optional_strings()
-	return ..() + list("have an implant case below or inhand to store removed implants")
+	return ..() + list("наличие кейса для имплантов у пациента или в руках позволит сохранить извлеченный имплант")
 
 /datum/surgery_operation/basic/implant_removal/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You search for implants in [patient]..."),
-		span_notice("[surgeon] searches for implants in [patient]."),
-		span_notice("[surgeon] searches for something in [patient]."),
+		span_notice("Вы ищете импланты в [patient.declent_ru(PREPOSITIONAL)]..."),
+		span_notice("[surgeon] ищет импланты в [patient.declent_ru(PREPOSITIONAL)]."),
+		span_notice("[surgeon] ищет что-то в [patient.declent_ru(PREPOSITIONAL)]."),
 	)
 	if(LAZYLEN(patient.implants))
-		display_pain(patient, "You feel a serious pain as [surgeon] digs around inside you!")
+		display_pain(patient, "Вы чувствуете серьезную боль, когда [surgeon] копается внутри вас!")
 
 /datum/surgery_operation/basic/implant_removal/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/implant/implant = LAZYACCESS(patient.implants, 1)
@@ -36,20 +36,20 @@
 		display_results(
 			surgeon,
 			patient,
-			span_warning("You find no implant to remove from [patient]."),
-			span_warning("[surgeon] finds no implant to remove from [patient]."),
-			span_warning("[surgeon] finds nothing to remove from [patient]."),
+			span_warning("Вы не находите имплантов для извлечения в [patient.declent_ru(PREPOSITIONAL)]."),
+			span_warning("[surgeon] не находит имплантов для извлечения в [patient.declent_ru(PREPOSITIONAL)]."),
+			span_warning("[surgeon] не находит ничего, что можно было бы извлечь из [patient.declent_ru(GENITIVE)]."),
 		)
 		return
 
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You successfully remove [implant] from [patient]."),
-		span_notice("[surgeon] successfully removes [implant] from [patient]!"),
-		span_notice("[surgeon] successfully removes something from [patient]!"),
+		span_notice("Вы успешно извлекаете [declent_ru(implant, ACCUSATIVE)] из [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно извлекает [declent_ru(implant, ACCUSATIVE)] из [patient.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] успешно извлекает что-то из [patient.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(patient, "You can feel your [implant.name] pulled out of you!")
+	display_pain(patient, "Вы чувствуете, как ваш [declent_ru(implant.name, ACCUSATIVE)] вытаскивают из вас!")
 	implant.removed(patient)
 
 	if(QDELETED(implant))
@@ -65,9 +65,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You place [implant] into [case]."),
-		span_notice("[surgeon] places [implant] into [case]."),
-		span_notice("[surgeon] places something into [case]."),
+		span_notice("Вы помещаете [declent_ru(implant, ACCUSATIVE)] в [case]."),
+		span_notice("[surgeon] помещает [declent_ru(implant, ACCUSATIVE)] в [case]."),
+		span_notice("[surgeon] помещает что-то в [declent_ru(implant, ACCUSATIVE)]."),
 	)
 
 /datum/surgery_operation/basic/implant_removal/proc/get_case(mob/living/surgeon, mob/living/target)

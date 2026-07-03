@@ -41,12 +41,15 @@ at the cost of risking a vicious bite.**/
 		var/picked_item = pick_weight(loot_table)
 		hidden_item = new picked_item(src)
 
+	/* BANDASTATION REMOVAL START - Stupid TG Shit
 	var/datum/fish_source/moisture_trap/fish_source = new
 	if(prob(50)) // 50% chance there's another item to fish out of there
 		var/picked_item = pick_weight(loot_table)
 		fish_source.fish_table[picked_item] = 5
 		fish_source.fish_counts[picked_item] = 1;
+
 	AddComponent(/datum/component/fishing_spot, fish_source)
+	BANDASTATION REMOVAL END */
 	drip_sfx = new(src)
 	drip_sfx.start()
 

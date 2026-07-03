@@ -1,7 +1,7 @@
 /datum/mafia_role
-	var/name = JOB_ASSISTANT
-	var/desc = "You are a crewmember without any special abilities."
-	var/win_condition = "kill all mafia and solo killing roles."
+	var/name = "Ассистент"
+	var/desc = "Вы - член экипажа без особых способностей."
+	var/win_condition = "убьет всех мафиози и одиночных убийц."
 	var/team = MAFIA_TEAM_TOWN
 	///how the random setup chooses which roles get put in
 	var/role_type = TOWN_OVERFLOW
@@ -158,22 +158,22 @@
 /datum/mafia_role/proc/greet()
 	mafia_alert = new(body, src)
 	SEND_SOUND(body, 'sound/ambience/misc/ambifailure.ogg')
-	to_chat(body, span_danger("You are the [name]."))
+	to_chat(body, span_danger("Вы [name]."))
 	to_chat(body, span_danger("[desc]"))
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
-			to_chat(body,span_danger("You and your co-conspirators win if you outnumber crewmembers."))
+			to_chat(body,span_danger("Вы и ваши сообщники победите, если вас будет больше, чем членов экипажа."))
 		if(MAFIA_TEAM_TOWN)
-			to_chat(body,span_danger("You are a crewmember. Find out and lynch the changelings!"))
+			to_chat(body,span_danger("Вы - член экипажа. Выясните кто генокрад и линчуйте!"))
 		if(MAFIA_TEAM_SOLO)
-			to_chat(body,span_danger("You are not aligned to town or mafia. Accomplish your own objectives!"))
-	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
+			to_chat(body,span_danger("Вы не принадлежите ни к городу, ни к мафии. Выполняйте свои собственные цели!"))
+	to_chat(body, "<span class='warningplain'><b>Обязательно прочитайте <a href=\"https://tgstation13.org/wiki/Mafia\">страницу вики</a> чтобы узнать больше, если вы понятия не имеете, что происходит.</b></span>")
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))
 		return
 	if(verbose)
-		game.send_message("<span class='big bold notice'>It is revealed that the true role of [body] [game_status == MAFIA_ALIVE ? "is" : "was"] [name]!</span>")
+		game.send_message("<span class='big bold notice'>Выясняется, что истинная роль [body] [game_status == MAFIA_ALIVE ? "это" : "была"] [name]!</span>")
 	var/list/oldoutfit = body.get_equipped_items()
 	for(var/thing in oldoutfit)
 		qdel(thing)
@@ -188,19 +188,19 @@
 	var/list/result = list()
 	var/team_desc = ""
 	var/team_span = ""
-	var/the = TRUE
+	//var/the = TRUE
 	switch(team)
 		if(MAFIA_TEAM_TOWN)
-			team_desc = "Town"
+			team_desc = "Гражданином"
 			team_span = "nicegreen"
 		if(MAFIA_TEAM_MAFIA)
-			team_desc = "Mafia"
+			team_desc = "Мафиози"
 			team_span = "red"
 		if(MAFIA_TEAM_SOLO)
-			team_desc = "Nobody"
+			team_desc = "Одиночкой"
 			team_span = "comradio"
-			the = FALSE
-	result += span_notice("The [span_bold("[name]")] is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span>")
+			//the = FALSE
+	result += span_notice("[span_bold("[name]")] является <span class='[team_span]'>[team_desc]</span>")
 	result += "<span class='bold notice'>\"[initial(desc)]\"</span>"
-	result += span_notice("[name] wins when they [win_condition]")
+	result += span_notice("[name] выигрывает, если [win_condition]")
 	to_chat(clueless, result.Join("</br>"))

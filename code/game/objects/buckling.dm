@@ -23,7 +23,7 @@
 		return
 	if(can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, "Кого вы хотите отстегнуть?", "Отстегивание", sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			if(user_unbuckle_mob(unbuckled,user))
@@ -39,7 +39,7 @@
 		return
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, "Кого вы хотите отстегнуть?", "Отстегивание", sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			return user_unbuckle_mob(unbuckled,user)
@@ -320,9 +320,9 @@
 	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
 	// we'll try it with a 2 second do_after delay.
 	if(M != user && (get_turf(M) != get_turf(src)))
-		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
-			span_userdanger("[user] starts buckling you to [src]!"),\
-			span_hear("You hear metal clanking."))
+		M.visible_message(span_warning("[capitalize(user.declent_ru(NOMINATIVE))] начинает пристегивать [M.declent_ru(ACCUSATIVE)] к [declent_ru(DATIVE)]!"),\
+			span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] начинает пристегивать вас к [declent_ru(DATIVE)]!"),\
+			span_hear("Вы слышите металлический лязг."))
 		if(!do_after(user, buckle_delay, M))
 			return FALSE
 
@@ -339,15 +339,15 @@
 /atom/movable/proc/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] buckles [buckler.p_them()]self to [src]."),
-			span_notice("You buckle yourself to [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice("[capitalize(buckler.declent_ru(NOMINATIVE))] пристегивает себя к [declent_ru(DATIVE)]."),
+			span_notice("Вы пристегиваете себя к [declent_ru(DATIVE)]."),
+			span_hear("Вы слышите металлический лязг."),
 		)
 	else
 		being_buckled.visible_message(
-			span_warning("[buckler] buckles [being_buckled] to [src]!"),
-			span_warning("[buckler] buckles you to [src]!"),
-			span_hear("You hear metal clanking."),
+			span_warning("[capitalize(buckler.declent_ru(NOMINATIVE))] пристегивает [being_buckled.declent_ru(ACCUSATIVE)] к [declent_ru(DATIVE)]!"),
+			span_warning("[capitalize(buckler.declent_ru(NOMINATIVE))] пристегивает вас к [declent_ru(DATIVE)]!"),
+			span_hear("Вы слышите металлический лязг."),
 		)
 
 /**
@@ -375,13 +375,13 @@
 /atom/movable/proc/unbuckle_feedback(mob/living/unbuckled_mob, mob/unbuckler)
 	if(unbuckled_mob == unbuckler)
 		unbuckled_mob.visible_message(
-			span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),
-			span_notice("You unbuckle yourself from [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice("[unbuckler.declent_ru(NOMINATIVE)] отстегивает себя от [src.declent_ru(GENITIVE)]."),
+			span_notice("Вы отстегиваете себя от [src.declent_ru(GENITIVE)]."),
+			span_hear("Вы слышите лязг металла."),
 		)
 	else
 		unbuckled_mob.visible_message(
-			span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),
-			span_notice("[unbuckler] unbuckles you from [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice("[unbuckler.declent_ru(NOMINATIVE)] отстёгивает [unbuckled_mob.declent_ru(ACCUSATIVE)] от [src.declent_ru(GENITIVE)]."),
+			span_notice("[unbuckler.declent_ru(NOMINATIVE)] отстёгивает вас от [src.declent_ru(GENITIVE)]."),
+			span_hear("Вы слышите лязг металла."),
 		)

@@ -1,6 +1,6 @@
 /datum/language/calcic
 	name = "Calcic"
-	desc = "The disjointed and staccato language of plasmamen. Also understood by skeletons."
+	desc = "Разрозненный и отрывистый язык плазмаменов. Также понимается скелетами."
 	key = "b"
 	space_chance = 10
 	sentence_chance = 2
@@ -9,11 +9,11 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 1
 	syllables = list(
-		"k", "ck", "ack", "ick", "cl", "tk", "sk", "isk", "tak",
-		"kl", "hs", "ss", "ks", "lk", "dk", "gk", "ka", "ska", "la", "pk",
-		"wk", "ak", "ik", "ip", "ski", "bk", "kb", "ta", "is", "it", "li", "di",
-		"ds", "ya", "sck", "crk", "hs", "ws", "mk", "aaa", "skraa", "skee", "hss",
-		"raa", "klk", "tk", "stk", "clk"
+		"к", "кк", "акк", "икк", "кл", "тк", "ск", "иск", "так",
+		"кл", "хс", "сс", "кс", "лк", "дк", "гк", "ка", "ска", "ла", "пк",
+		"вк", "ак", "ик", "ип", "ски", "бк", "кб", "та", "ис", "ит", "ли", "ди",
+		"дс", "йа", "скк", "крк", "хс", "вс", "мк", "ааа", "скраа", "скее", "хсс",
+		"раа", "клк", "тк", "стк", "клк"
 	)
 	icon_state = "calcic"
 	default_priority = 90

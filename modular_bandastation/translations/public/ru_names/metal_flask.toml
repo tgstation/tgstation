@@ -1,0 +1,8 @@
+["metal flask"]
+nominative = "металлическая фляга"
+genitive = "металлической фляги"
+dative = "металлической фляге"
+accusative = "металлическую флягу"
+instrumental = "металлической флягой"
+prepositional = "металлической фляге"
+gender = "female"

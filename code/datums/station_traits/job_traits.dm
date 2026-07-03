@@ -19,6 +19,7 @@
 	blacklist += subtypesof(/datum/station_trait/job) - type // All but ourselves
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
 	lobby_button.desc = button_desc
@@ -44,6 +45,7 @@
 /datum/station_trait/job/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "tick" : "cross"
+*/
 
 /// Called before we start assigning roles, assign ours first
 /datum/station_trait/job/proc/pre_jobs_assigned()
@@ -81,9 +83,11 @@
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/cargorilla/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "gorilla_on" : "gorilla_off"
+*/
 
 /// Remove the cargo equipment and personnel that are being replaced by a gorilla.
 /datum/station_trait/job/cargorilla/proc/replace_cargo(datum/source)
@@ -113,9 +117,11 @@
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffeemaker))
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += "bridge_assistant"
+*/
 
 /// Creates a coffeemaker in the bridge, if we don't have one yet.
 /datum/station_trait/job/bridge_assistant/proc/add_coffeemaker(datum/source)
@@ -162,9 +168,11 @@
 	show_in_report = TRUE
 	job_to_add = /datum/job/veteran_advisor
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/veteran_advisor/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += "veteran_advisor"
+*/
 
 /datum/station_trait/job/human_ai
 	name = "Human AI"
@@ -186,9 +194,11 @@
 	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	return ..()
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/human_ai/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "human_ai_on" : "human_ai_off"
+*/
 
 /datum/station_trait/job/human_ai/proc/remove_ai_job(datum/source)
 	SIGNAL_HANDLER
@@ -248,6 +258,8 @@
 	new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
 	qdel(GLOB.the_one_and_only_punpun)
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /datum/station_trait/job/pun_pun/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "pun_pun_on" : "pun_pun_off"
+*/

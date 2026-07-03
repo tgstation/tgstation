@@ -1,0 +1,8 @@
+[tongs]
+nominative = "щипцы"
+genitive = "щипцов"
+dative = "щипцам"
+accusative = "щипцы"
+instrumental = "щипцами"
+prepositional = "щипцах"
+gender = "plural"

@@ -8,15 +8,15 @@ import {
 } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
-  Box,
   Button,
   Dropdown,
   Input,
   NumberInput,
   Slider,
   Stack,
+  TextArea,
 } from 'tgui-core/components';
-import type { BooleanLike } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import {
   type CharacterPreferencesData,
@@ -65,69 +65,58 @@ export type FeatureValueProps<
   character_preferences: CharacterPreferencesData;
 }>;
 
-export function FeatureColorInput(props: FeatureValueProps<string>) {
-  const { act } = useBackend<PreferencesMenuData>();
-  const { featureId, shrink, value } = props;
+type ToggleProps = {
+  checked: boolean;
+  onClick: () => void;
+};
 
+function Toggle(props: ToggleProps) {
+  const { checked, onClick } = props;
   return (
-    <Button
-      onClick={() => {
-        act('set_color_preference', {
-          preference: featureId,
-        });
-      }}
+    <Stack
+      className={classes(['Toggle', checked && 'Toggle--checked'])}
+      onClick={onClick}
     >
-      <Stack align="center" fill>
-        <Stack.Item>
-          <Box
-            style={{
-              background: value.startsWith('#') ? value : `#${value}`,
-              border: '2px solid white',
-              boxSizing: 'content-box',
-              height: '11px',
-              width: '11px',
-              ...(shrink
-                ? {
-                    margin: '1px',
-                  }
-                : {}),
-            }}
-          />
-        </Stack.Item>
-
-        {!shrink && <Stack.Item>Change</Stack.Item>}
-      </Stack>
-    </Button>
+      <div className="Toggle__Switch" />
+    </Stack>
   );
 }
 
 export type FeatureToggle = Feature<BooleanLike, boolean>;
 
 export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
-  const { handleSetValue, value } = props;
-
-  return (
-    <Button.Checkbox
-      checked={!!value}
-      onClick={() => {
-        handleSetValue(!value);
-      }}
-    />
-  );
+  const { value, handleSetValue } = props;
+  return <Toggle checked={!!value} onClick={() => handleSetValue(!value)} />;
 }
 
 export function CheckboxInputInverse(
   props: FeatureValueProps<BooleanLike, boolean>,
 ) {
-  const { handleSetValue, value } = props;
+  const { value, handleSetValue } = props;
+  return <Toggle checked={!value} onClick={() => handleSetValue(!value)} />;
+}
 
+export function FeatureColorInput(props: FeatureValueProps<string>) {
+  const { act } = useBackend<PreferencesMenuData>();
+  const { value, featureId, shrink } = props;
   return (
-    <Button.Checkbox
-      checked={!value}
+    <Button
+      p={0}
+      className="ColorInput"
       onClick={() => {
-        handleSetValue(!value);
+        act('set_color_preference', {
+          preference: featureId,
+        });
       }}
-    />
+    >
+      <Stack fill g={0}>
+        {!shrink && <div className="ColorInput__Text">Изменить</div>}
+        <div
+          className="ColorInput__Color"
+          style={{ background: value.startsWith('#') ? value : `#${value}` }}
+        />
+      </Stack>
+    </Button>
   );
 }
 
@@ -137,13 +126,11 @@ export function createDropdownInput<T extends string | number = string>(
   dropdownProps?: Record<T, unknown>,
 ): FeatureValue<T> {
   return (props: FeatureValueProps<T>) => {
-    const { handleSetValue, value } = props;
-
+    const { value, handleSetValue } = props;
     return (
       <Dropdown
         selected={choices[value] as string}
         onSelected={handleSetValue}
-        width="100%"
         options={sortChoices(Object.entries(choices)).map(
           ([dataValue, label]) => {
             return {
@@ -177,16 +164,15 @@ export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
 export function FeatureNumberInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
-  const { serverData, handleSetValue, value } = props;
-
+  const { value, serverData, handleSetValue } = props;
   return (
     <NumberInput
-      onChange={(value) => handleSetValue(value)}
       disabled={!serverData}
+      value={value}
       minValue={serverData?.minimum || 0}
       maxValue={serverData?.maximum || 100}
       step={serverData?.step || 1}
-      value={value}
+      onChange={(value) => handleSetValue(value)}
     />
   );
 }
@@ -194,19 +180,18 @@ export function FeatureNumberInput(
 export function FeatureSliderInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
-  const { serverData, handleSetValue, value } = props;
-
+  const { value, serverData, handleSetValue } = props;
   return (
     <Slider
-      onChange={(e, value) => {
-        handleSetValue(value);
-      }}
+      width="100%"
       disabled={!serverData}
       minValue={serverData?.minimum || 0}
       maxValue={serverData?.maximum || 100}
       step={serverData?.step || 1}
       value={value}
-      stepPixelSize={10}
+      onChange={(e, value) => {
+        handleSetValue(value);
+      }}
     />
   );
 }
@@ -253,15 +238,32 @@ type FeatureShortTextData = {
 export function FeatureShortTextInput(
   props: FeatureValueProps<string, string, FeatureShortTextData>,
 ) {
-  const { serverData, value, handleSetValue } = props;
-
+  const { value, serverData, handleSetValue } = props;
   return (
     <Input
-      disabled={!serverData}
       fluid
+      disabled={!serverData}
       value={value}
       maxLength={serverData?.maximum_length}
       onBlur={handleSetValue}
     />
   );
 }
+
+export const FeatureTextInput = (
+  props: FeatureValueProps<string, string, FeatureShortTextData>,
+) => {
+  if (!props.serverData) {
+    return <Stack>Loading...</Stack>;
+  }
+
+  return (
+    <TextArea
+      fluid
+      expensive
+      value={props.value}
+      maxLength={props.serverData.maximum_length}
+      onChange={(value) => props.handleSetValue(value)}
+    />
+  );
+};

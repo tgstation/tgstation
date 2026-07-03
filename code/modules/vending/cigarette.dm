@@ -1,8 +1,8 @@
 /obj/machinery/vending/cigarette
 	name = "\improper ShadyCigs Deluxe"
 	desc = "If you want to get cancer, might as well do it in style."
-	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
-	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
+	product_slogans = "Космосигареты хороши на вкус, какими они и должны быть.;Курение убивает, но не сегодня!;Курите!;Не верьте исследованиям - курите сегодня!"
+	product_ads = "Наверняка не вредно!;Не верьте ученым!;На здоровье!;Не бросайте курить, купите ещё!;Курите!;Никотиновый рай.;Лучшие сигареты с 2150 года.;Сигареты с множеством наград."
 	icon_state = "cigs"
 	panel_type = "panel5"
 	products = list(
@@ -63,8 +63,8 @@
 /obj/machinery/vending/cigarette/beach //Used in the lavaland_biodome_beach.dmm ruin
 	name = "\improper ShadyCigs Ultra"
 	desc = "Now with extra premium products!"
-	product_ads = "Probably not bad for you!;Dope will get you through times of no money better than money will get you through times of no dope!;It's good for you!"
-	product_slogans = "Turn on, tune in, drop out!;Better living through chemistry!;Toke!;Don't forget to keep a smile on your lips and a song in your heart!"
+	product_ads = "Наверняка не вредно!;Допинг проведёт через безденежье лучше, чем деньги через бездопингье!;На здоровье!"
+	product_slogans = "Включи, настрой, получи!;С химией жить веселей!;Затянитесь!;Сохраняй улыбку на устах и песню в своём сердце!"
 	products = list(
 		/obj/item/storage/fancy/cigarettes = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,

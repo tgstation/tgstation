@@ -7,8 +7,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 * Not-entirely-flightless domesticated birds that lay eggs, which are then consumed by humans and other animals.
 */
 /mob/living/basic/chicken
-	name = "\improper chicken"
-	desc = "Hopefully the eggs are good this season."
+	name = "курица"
+	desc = "Гордая несушка. Яички должны быть хороши!"
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	icon_state = "chicken_brown"
@@ -37,6 +37,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
 	var/fertile = TRUE
+	var/can_egg_layer = TRUE // SS220 EDIT
 
 /datum/emote/chicken
 	abstract_type = /datum/emote/chicken
@@ -60,7 +61,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
-	AddComponent(\
+	if(can_egg_layer) // SS220 EDIT
+		AddComponent(\
 		/datum/component/egg_layer,\
 		/obj/item/food/egg/organic,\
 		list(/obj/item/food/grown/wheat),\

@@ -114,15 +114,15 @@
 
 	if(positive_result)
 		used_oven.visible_message(
-			span_notice("You smell something great coming from [used_oven]."),
-			blind_message = span_notice("You smell something great..."),
+			span_notice("Вы чувствуете, как [used_oven.declent_ru(NOMINATIVE)] источает приятный запах."),
+			blind_message = span_notice("Вы чувствуете приятный запах..."),
 			ignored_mobs = asomnia_hadders,
 		)
 		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
 		used_oven.visible_message(
-			span_warning("You smell a burnt smell coming from [used_oven]."),
-			blind_message = span_warning("You smell a burnt smell..."),
+			span_warning("Вы чувствуете, как [used_oven.declent_ru(NOMINATIVE)] испускает горелое зловоние."),
+			blind_message = span_warning("Вы чувствуете запах горелого..."),
 			ignored_mobs = asomnia_hadders,
 		)
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
@@ -136,15 +136,15 @@
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
 			if(initial(bake_result.gender) == PLURAL)
-				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+				examine_list += span_notice("[capitalize(parent.declent_ru(NOMINATIVE))] [span_bold("запекается")] в [declent_ru_initial(bake_result::name, ACCUSATIVE, bake_result::name)].")
 			else
-				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
+				examine_list += span_notice("[capitalize(parent.declent_ru(NOMINATIVE))] [span_bold("запекается")] в [declent_ru_initial(bake_result::name, ACCUSATIVE, bake_result::name)].")
 		return
 
 	if(positive_result)
 		if(current_bake_time <= required_bake_time * 0.75)
-			examine_list += span_notice("[parent] probably needs to be baked a bit longer!")
+			examine_list += span_notice("Наверное, [parent.declent_ru(ACCUSATIVE)] нужно выпекать немного дольше!")
 		else if(current_bake_time <= required_bake_time)
-			examine_list += span_notice("[parent] seems to be almost finished baking!")
+			examine_list += span_notice("Кажется, что [parent.declent_ru(NOMINATIVE)] вот-вот запечется!")
 	else
-		examine_list += span_danger("[parent] should probably not be put in the oven.")
+		examine_list += span_danger("[capitalize(parent.declent_ru(NOMINATIVE))] не стоит засовывать в духовку.")

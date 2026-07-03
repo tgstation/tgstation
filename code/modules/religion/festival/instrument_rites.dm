@@ -2,8 +2,8 @@
 	name = "Cogitandi Fidis"
 	desc = "Creates a holy violin that can analyze songs played from it."
 	ritual_length = 6 SECONDS
-	ritual_invocations = list("A servant of jubilee is needed ...")
-	invoke_msg = "... A great mind for musical matters!"
+	ritual_invocations = list("Нужен слуга торжества ...")
+	invoke_msg = "... Великий разум для музыкальных дел!"
 	favor_cost = 20 //you only need one
 
 /datum/religion_rites/holy_violin/invoke_effect(mob/living/user, atom/religious_tool)
@@ -17,8 +17,8 @@
 	name = "Portable Song Tuning"
 	desc = "Empowers a provided instrument to work as a portable altar for tuning songs. It will need to be recharged after five rites."
 	ritual_length = 6 SECONDS
-	ritual_invocations = list("Allow me to bring your holy inspirations ...")
-	invoke_msg = "... And send them with the winds my tunes ride!"
+	ritual_invocations = list("Позвольте мне даровать вам святые вдохновения ...")
+	invoke_msg = "... И пусть их несут ветра, что играют в унисон с моей мелодией!"
 	favor_cost = 10
 	///instrument to empower
 	var/obj/item/instrument/instrument_target

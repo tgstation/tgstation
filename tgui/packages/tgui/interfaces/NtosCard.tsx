@@ -220,7 +220,7 @@ const IdCardPage = (props) => {
               >
                 {modified_card
                   ? `${modified_card.id_owner} (${modified_card.id_rank})`
-                  : 'Insert ID'}
+                  : 'Вставить ID'}
               </Button>
             </Flex.Item>
             <Flex.Item>
@@ -229,7 +229,7 @@ const IdCardPage = (props) => {
                 disabled={!modified_card || !authed_user}
                 onClick={() => act('PRG_print')}
               >
-                Print Report
+                Распечатать отчет
               </Button>
             </Flex.Item>
           </Flex>
@@ -238,7 +238,7 @@ const IdCardPage = (props) => {
       {!!(modified_card && authed_user) && (
         <>
           <Stack mt={1}>
-            <Stack.Item align="center">Details:</Stack.Item>
+            <Stack.Item align="center">Детали:</Stack.Item>
             <Stack.Item grow={1} mr={1} ml={1}>
               <Input
                 width="100%"
@@ -266,7 +266,7 @@ const IdCardPage = (props) => {
             </Stack.Item>
           </Stack>
           <Stack>
-            <Stack.Item align="center">Assignment:</Stack.Item>
+            <Stack.Item align="center">Назначение:</Stack.Item>
             <Stack.Item grow={1} ml={1}>
               <Input
                 fluid
@@ -299,7 +299,7 @@ const TemplateDropdown = (props) => {
       <Stack.Item grow>
         <Dropdown
           width="100%"
-          placeholder="Select a template..."
+          placeholder="Выбрать шаблон..."
           options={templateKeys.map((path) => {
             return templates[path];
           })}

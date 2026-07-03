@@ -44,7 +44,7 @@
 	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		victim.adjust_tox_loss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
-			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
+			victim.visible_message(span_danger("Инфекция на остатках [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] тошнотворно пузырится!"), span_warning("Вы чувствуете, как инфекция на остатках вашей [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] проникает в ваши вены!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
 	for(var/datum/reagent/reagent as anything in victim.reagents.reagent_list)
@@ -74,7 +74,7 @@
 
 	// here's the check to see if we're cleared up
 	if((flesh_damage <= 0) && (infection <= WOUND_INFECTION_MODERATE))
-		to_chat(victim, span_green("The burns on your [limb.plaintext_zone] have cleared up!"))
+		to_chat(victim, span_green("Ожоги на вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] зажили!"))
 		qdel(src)
 		return
 
@@ -94,16 +94,16 @@
 			if(SPT_PROB(15, seconds_per_tick))
 				victim.adjust_tox_loss(0.2)
 				if(prob(6))
-					to_chat(victim, span_warning("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
+					to_chat(victim, span_warning("Волдыри на вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] выделяют странный гной..."))
 
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling)
 				if(SPT_PROB(1, seconds_per_tick))
-					to_chat(victim, span_warning("<b>Your [limb.plaintext_zone] completely locks up, as you struggle for control against the infection!</b>"))
+					to_chat(victim, span_warning("<b>Ваша [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] полностью утратила чувствительность, и вы боретесь за контроль над инфекцией!</b>"))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(4, seconds_per_tick))
-				to_chat(victim, span_notice("You regain sensation in your [limb.plaintext_zone], but it's still in terrible shape!"))
+				to_chat(victim, span_notice("Вы вновь чувствуете свою [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone], но она по-прежнему в ужасном состоянии!"))
 				set_disabling(FALSE)
 				return
 
@@ -113,17 +113,17 @@
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
 			if(!disabling)
 				if(SPT_PROB(1.5, seconds_per_tick))
-					to_chat(victim, span_warning("<b>You suddenly lose all sensation of the festering infection in your [limb.plaintext_zone]!</b>"))
+					to_chat(victim, span_warning("<b>Вы внезапно теряете все ощущения от гнойной инфекции в вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone]!</b>"))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(victim, span_notice("You can barely feel your [limb.plaintext_zone] again, and you have to strain to retain motor control!"))
+				to_chat(victim, span_notice("Вы едва чувствуете свою [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] снова, и вам нужно напрягаться, чтобы сохранить контроль над моторикой!"))
 				set_disabling(FALSE)
 				return
 
 			if(SPT_PROB(2.48, seconds_per_tick))
 				if(prob(20))
-					to_chat(victim, span_warning("You contemplate life without your [limb.plaintext_zone]..."))
+					to_chat(victim, span_warning("Вы размышляете о жизни без своей [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone]..."))
 					victim.adjust_tox_loss(0.75)
 				else
 					victim.adjust_tox_loss(1)
@@ -133,50 +133,50 @@
 				strikes_to_lose_limb--
 				switch(strikes_to_lose_limb)
 					if(2 to INFINITY)
-						to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
+						to_chat(victim, span_deadsay("<b>Инфекция в вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] буквально сочится, вы чувствуете себя ужасно!</b>"))
 					if(1)
-						to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
+						to_chat(victim, span_deadsay("<b>Инфекция почти полностью захватила вашу [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone]!</b>"))
 					if(0)
-						to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
+						to_chat(victim, span_deadsay("<b>Последние нервные окончания в вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] увядают, пока инфекция полностью парализует ваш сустав.</b>"))
 						threshold_penalty *= 2 // piss easy to destroy
 						set_disabling(TRUE)
 
 /datum/wound/burn/flesh/set_disabling(new_value)
 	. = ..()
 	if(new_value && strikes_to_lose_limb <= 0)
-		treat_text_short = "Amputate or augment limb immediately, or place the patient into cryogenics."
+		treat_text_short = "Ампутируйте или аугментируйте конечность немедленно, или поместите пациента в криогенику."
 	else
 		treat_text_short = initial(treat_text_short)
 
 /datum/wound/burn/flesh/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
-		return span_deadsay("<B>[victim.p_Their()] [limb.plaintext_zone] has locked up completely and is non-functional.</B>")
+		return span_deadsay("<B>[capitalize(victim.ru_p_them())] [limb.ru_plaintext_zone[NOMINATIVE] || limb.plaintext_zone] полностью обезжизнена и не функционирует.</B>")
 
-	var/list/condition = list("[victim.p_Their()] [limb.plaintext_zone] [examine_desc]")
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	var/list/condition = list("[capitalize(victim.ru_p_them())] [limb.ru_plaintext_zone[NOMINATIVE] || limb.plaintext_zone] [examine_desc]")
 	if(current_gauze)
 		var/bandage_condition
 		switch(current_gauze.absorption_capacity)
 			if(0 to 1.25)
-				bandage_condition = "nearly ruined "
+				bandage_condition = "почти спала"
 			if(1.25 to 2.75)
-				bandage_condition = "badly worn "
+				bandage_condition = "сильно износилась"
 			if(2.75 to 4)
-				bandage_condition = "slightly stained "
+				bandage_condition = "слегка запачкана кровью"
 			if(4 to INFINITY)
-				bandage_condition = "clean "
+				bandage_condition = "чиста"
 
-		condition += " underneath a dressing of [bandage_condition][current_gauze.name]."
+		condition += ", и перевязана [current_gauze.declent_ru(INSTRUMENTAL)]. Повязка [bandage_condition]."
 	else
 		switch(infection)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-				condition += ", [span_deadsay("with early signs of infection.")]"
+				condition += ", [span_deadsay("и видны ранние признаки инфекции.")]"
 			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-				condition += ", [span_deadsay("with growing clouds of infection.")]"
+				condition += ", [span_deadsay("и видны растущие облака инфекции.")]"
 			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-				condition += ", [span_deadsay("with streaks of rotten infection!")]"
+				condition += ", [span_deadsay("и видны полосы гнилой инфекции!")]"
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
-				return span_deadsay("<B>[victim.p_Their()] [limb.plaintext_zone] is a mess of charred skin and infected rot!</B>")
+				return span_deadsay("<B>[capitalize(victim.ru_p_them())] [limb.ru_plaintext_zone[NOMINATIVE] || limb.plaintext_zone] представляет собой мессиво из обожженной кожи и зараженного гниения!</B>")
 			else
 				condition += "!"
 
@@ -184,46 +184,46 @@
 
 /datum/wound/burn/flesh/severity_text(simple = FALSE)
 	. = ..()
-	. += " Burn / "
+	. += " Ожог / "
 	switch(infection)
 		if(-INFINITY to WOUND_INFECTION_MODERATE)
-			. += "No"
+			. += "Отсутствует"
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			. += "Moderate"
+			. += "Умеренная"
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			. += "<b>Severe</b>"
+			. += "<b>Серьезная</b>"
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			. += "<b>Critical</b>"
+			. += "<b>Критическая</b>"
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			. += "<b>Total</b>"
-	. += " Infection"
+			. += "<b>Полностью распространенная</b>"
+	. += " инфекция"
 
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
-		var/oopsie = "Type: [name]<br>Severity: [severity_text()]"
-		oopsie += "<div class='ml-3'>Infection Level: [span_deadsay("The body part has suffered complete sepsis and must be removed. Amputate or augment limb immediately, or place the patient in a cryotube.")]</div>"
+		var/oopsie = "Тип: [name]<br>Тяжесть: [severity_text()]"
+		oopsie += "<div class='ml-3'>Уровень инфекции: [span_deadsay("Часть тела пострадала от полной сепсиса и должна быть удалена. Ампутируйте или аугментируйте конечность немедленно, или поместите пациента в криогенику.")]</div>"
 		return oopsie
 
 	. = ..()
 	. += "<div class='ml-3'>"
 
 	if(infection <= sanitization && flesh_damage <= flesh_healing)
-		. += "No further treatment required: Burns will heal shortly."
+		. += "Дополнительное лечение не требуется: Ожоги заживут в ближайшее время."
 	else
 		switch(infection)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-				. += "Infection Level: Moderate\n"
+				. += "Уровень инфекции: Умеренный\n"
 			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-				. += "Infection Level: Severe\n"
+				. += "Уровень инфекции: Серьезный\n"
 			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-				. += "Infection Level: [span_deadsay("CRITICAL")]\n"
+				. += "Уровень инфекции: [span_deadsay("КРИТИЧЕСКИЙ")]\n"
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
-				. += "Infection Level: [span_deadsay("LOSS IMMINENT")]\n"
+				. += "Уровень инфекции: [span_deadsay("ПОТЕРЯ НЕМИУЕМА")]\n"
 		if(infection > sanitization)
-			. += "\tSurgical debridement, antibiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
+			. += "\tХирургическая обработка, антибиотики/стерилизаторы или регенеративная сетка избавят от инфекции. Ультрафиолетовые ручные фонарики парамедиков также эффективны.\n"
 
 		if(flesh_damage > 0)
-			. += "Flesh damage detected: Application of ointment, regenerative mesh, Synthflesh, or ingestion of \"Miner's Salve\" will repair damaged flesh. Good nutrition, rest, and keeping the wound clean can also slowly repair flesh.\n"
+			. += "Обнаружено повреждение ткани: Применение мази, регенеративной сетки, синтплоти или шахтерской мази помогут восстановить поврежденную кожу. Хорошее питание, отдых и поддержание чистоты раны также могут медленно восстановить плоть.\n"
 	. += "</div>"
 
 /*
@@ -241,13 +241,13 @@
 /// Paramedic UV penlights
 /datum/wound/burn/flesh/proc/uv(obj/item/flashlight/pen/paramedic/I, mob/user)
 	if(!COOLDOWN_FINISHED(I, uv_cooldown))
-		to_chat(user, span_notice("[I] is still recharging!"))
+		to_chat(user, span_notice("[capitalize(I.declent_ru(NOMINATIVE))] еще перезаряжается!"))
 		return
 	if(infection <= 0 || infection < sanitization)
-		to_chat(user, span_notice("There's no infection to treat on [victim]'s [limb.plaintext_zone]!"))
+		to_chat(user, span_notice("Заражение на [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] уже излечивается, и дополнительная обработка ультрафиолетом не требуется!"))
 		return
 
-	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with [I]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]."), vision_distance=COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] дезинфицирует ожоги [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] при помощи [I.declent_ru(GENITIVE)]."), span_notice("Вы дезинфицируете ожоги [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] у [user == victim ? "вас" : "[victim.declent_ru(GENITIVE)]"] при помощи [I.declent_ru(GENITIVE)]."), vision_distance=COMBAT_MESSAGE_RANGE)
 	sanitization += I.uv_power
 	COOLDOWN_START(I, uv_cooldown, I.uv_cooldown_length)
 
@@ -260,12 +260,12 @@
 	. = ..()
 	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		if(SPT_PROB(0.5, seconds_per_tick))
-			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
+			victim.visible_message(span_danger("Инфекция на остатках [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] тошнотворно пузырится!"), span_warning("Вы чувствуете, как инфекция на остатках вашей [limb.ru_plaintext_zone[GENITIVE] || limb.plaintext_zone] проникает в ваши вены!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	if(flesh_healing > 0)
 		flesh_damage = max(flesh_damage - (0.1 * seconds_per_tick), 0)
 	if((flesh_damage <= 0) && (infection <= 1))
-		to_chat(victim, span_green("The burns on your [limb.plaintext_zone] have cleared up!"))
+		to_chat(victim, span_green("Ожоги на [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] очистились!"))
 		qdel(src)
 		return
 	if(sanitization > 0)
@@ -283,16 +283,16 @@
 	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
 
 /datum/wound/burn/get_limb_examine_description()
-	return span_warning("The flesh on this limb appears badly cooked.")
+	return span_warning("Плоть на конечности ужасно обуглена.")
 
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/flesh/moderate
-	name = "Second Degree Burns"
-	desc = "Patient is suffering considerable burns with mild skin penetration, weakening limb integrity and increased burning sensations."
-	treat_text = "Apply topical ointment or regenerative mesh to the wound."
-	treat_text_short = "Apply healing aid such as regenerative mesh."
-	examine_desc = "is badly burned and breaking out in blisters"
-	occur_text = "breaks out with violent red burns"
+	name = "Ожог второй степени"
+	desc = "Пациент страдает от значительных ожогов с незначительным поражением кожи, что ослабляет целостность конечности и вызывает уязвимость к ожогам."
+	treat_text = "Нанесите мазь на кожу или регенеративную сетку на рану."
+	treat_text_short = "Нанесите средство для лечения, например, регенеративную сетку."
+	examine_desc = "сильно обожжёна и покрывается волдырями"
+	occur_text = "покрывается ярко-красными ожогами"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_multiplier_penalty = 1.1
 	series_threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
@@ -300,9 +300,9 @@
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
 
-	simple_desc = "Patient's skin is burned, weakening the limb and multiplying perceived damage!"
-	simple_treat_text = "Ointment will speed up recovery, as will regenerative mesh. Risk of infection is negligible."
-	homemade_treat_text = "Healthy tea will speed up recovery. Salt, or preferably a salt-water mixture, will sanitize the wound, but the former will cause skin irritation, increasing the risk of infection."
+	simple_desc = "Кожа пациента обожжена, что ослабляет конечность и увеличивает ощущаемый урон!"
+	simple_treat_text = "Мазь ускорит восстановление, как и регенеративная сетка. Риск заражения незначителен."
+	homemade_treat_text = "Полезный чай ускорит восстановление. Соль или, предпочтительно, соленая вода, продезинфицируют рану, но использование соли может вызвать раздражение кожи и увеличить риск заражения."
 
 /datum/wound_pregen_data/flesh_burn/second_degree
 	abstract = FALSE
@@ -312,15 +312,15 @@
 	threshold_minimum = 40
 
 /datum/wound/burn/flesh/severe
-	name = "Third Degree Burns"
-	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
-	treat_text = "Swiftly apply healing aids such as Synthflesh or regenerative mesh to the wound. \
-		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
-		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
-		Clean gauze or ointment will slow infection rate."
-	examine_desc = "appears seriously charred, with aggressive red splotches"
-	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
+	name = "Ожог третьей степени"
+	desc = "Пациент страдает от сильнейших ожогов с полным проникновением в кожу, что создает серьезный риск инфекции и значительно снижает целостность конечности."
+	treat_text = "Немедленно примените лечебные средства, такие как синтплоть или регенеративная сетка, к ране. \
+		Продезинфицируйте рану и хирургически удалите инфицированную кожу, затем оберните чистой марлей или используйте мазь для предотвращения дальнейшего заражения. \
+		Если конечность отмерла, ее необходимо ампутировать, заменить имплантатом или лечить криогеникой."
+	treat_text_short = "Примените лечебные средства, такие как регенеративная сетка, синтплоть или криогеника, и продезинфицируйте / удалите инфицированные участки. \
+		Чистая марля или мазь замедлят скорость распространения инфекции."
+	examine_desc = "выглядит сильно обугленной, с агрессивными красными пятнами"
+	occur_text = "обугливается, обнажая разрушенные ткани и распространяя ярко-красные ожоги"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_multiplier_penalty = 1.2
 	series_threshold_penalty = 40
@@ -330,9 +330,9 @@
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
 
-	simple_desc = "Patient's skin is badly burned, significantly weakening the limb and compounding further damage!!"
-	simple_treat_text = "<b>Bandages will speed up recovery</b>, as will <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, and 'Miner's Salve'</b> will help with infection."
-	homemade_treat_text = "<b>Healthy tea</b> will speed up recovery. <b>Salt</b>, or preferably a <b>salt-water</b> mixture, will sanitize the wound, but the former especially will cause skin irritation and dehydration, speeding up infection. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
+	simple_desc = "Кожа пациента сильно обожжена, что значительно ослабляет конечность и усугубляет дальнейшие повреждения!!"
+	simple_treat_text = "<b>Бинты ускорят восстановление</b>, как и <b>мазь или регенеративная сетка</b>. <b>Спейсациллин, стерилизин и шахтерская мазь</b> помогут справиться с инфекцией."
+	homemade_treat_text = "<b>Полезный чай</b> ускорит восстановление. <b>Соль</b> или, предпочтительно, <b>соленная вода</b>, продезинфицируют рану, но особенно первая вызовет раздражение кожи и обезвоживание, что ускорит развитие инфекции. <b>Космический очиститель</b> можно использовать в качестве дезинфицирующего средства в крайнем случае."
 
 /datum/wound_pregen_data/flesh_burn/third_degree
 	abstract = FALSE
@@ -342,15 +342,15 @@
 	threshold_minimum = 80
 
 /datum/wound/burn/flesh/critical
-	name = "Catastrophic Burns"
-	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
-	treat_text = "Immediately apply healing aids such as Synthflesh or regenerative mesh to the wound. \
-		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
-		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
-		Clean gauze or ointment will slow infection rate."
-	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
-	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
+	name = "Катастрофический ожог"
+	desc = "Пациент страдает от почти полного разрушения тканей, с серьезными обугленными мышцами и костями, что создает угрожающую жизни опасность инфекции и практически нулевую целостность конечности."
+	treat_text = "Немедленно нанесите лечебные средства, такие как Синтплоть или регенеративную сетку, на рану. \
+		Продезинфицируйте рану и хирургически удалите инфицированные участки кожи, затем оберните чистой марлей / используйте мазь для предотвращения дальнейшей инфекции. \
+		Если конечность отмерла, её необходимо ампутировать, заменить на имплант или лечить с помощью криогенной терапии."
+	treat_text_short = "Нанесите лечебное средство, такое как регенеративная сетка, Синтплоть или используйте криогенику и продезинфицируйте / удалите инфицированные участки. \
+		Чистая марля или мазь замедлит скорость инфицирования."
+	examine_desc = "выглядит как разрушенный беспорядок из обесцвеченных костей, расплавленного жира и обугленной ткани"
+	occur_text = "источает дымок, когда плоть, кости и жир плавятся в ужасающую массу"
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
@@ -361,9 +361,9 @@
 	flesh_damage = 20
 	scar_keyword = "burncritical"
 
-	simple_desc = "Patient's skin is destroyed and tissue charred, leaving the limb with almost <b>no integrity<b> and a drastic chance of <b>infection<b>!!!"
-	simple_treat_text = "Immediately <b>bandage</b> the wound and treat it with <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, or 'Miner's Salve'</b> will stave off infection. Seek professional care <b>immediately</b>, before sepsis sets in and the wound becomes untreatable."
-	homemade_treat_text = "<b>Healthy tea</b> will help with recovery. A <b>salt-water mixture</b>, topically applied, might help stave off infection in the short term, but pure table salt is NOT recommended. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
+	simple_desc = "Кожа пациента разрушена, ткани обуглены, конечность почти лишена <b>целостности</b> и подвержена крайне высокой вероятности <b>инфекции</b>!!!"
+	simple_treat_text = "Немедленно <b>перевяжите</b> рану и обработайте её <b>мазью или регенеративной сеткой</b>. <b>Спейсациллин, стерилизин или шахтерская мазь</b> помогут предотвратить инфекцию. Обратитесь за профессиональной помощью <b>немедленно</b>, до того как начнётся сепсис и рана станет неизлечимой."
+	homemade_treat_text = "<b>Целебный чай</b> поможет с восстановлением. <b>Соленая вода</b>, нанесенный на кожу, может временно предотвратить инфекцию, но чистая поваренная соль НЕ рекомендуется. <b>Космический очиститель</b> можно использовать в качестве дезинфицирующего средства в крайнем случае."
 
 /datum/wound_pregen_data/flesh_burn/fourth_degree
 	abstract = FALSE
@@ -374,12 +374,12 @@
 
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/flesh/severe/brand
-	name = "Holy Brand"
-	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
-	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
-	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+	name = "Святое клеймо"
+	desc = "Пациент страдает от сильных ожогов от загадочного клейма, что создают серьезный риск инфекции и сильно снижают целостность конечности."
+	examine_desc = "похоже, что на коже были выжжены священные символы, оставившие сильные ожоги."
+	occur_text = "быстро обугливается в странный узор из священных символов, выжженных на коже"
 
-	simple_desc = "Patient's skin has had strange markings burned onto it, significantly weakening the limb and compounding further damage!!"
+	simple_desc = "На коже пациента выжжены странные метки, что значительно ослабляет конечность и усугубляет дальнейшие повреждения!!"
 
 /datum/wound_pregen_data/flesh_burn/third_degree/holy
 	abstract = FALSE
@@ -389,13 +389,13 @@
 /// special severe wound caused by the cursed slot machine.
 
 /datum/wound/burn/flesh/severe/cursed_brand
-	name = "Ancient Brand"
-	desc = "Patient is suffering extreme burns with oddly ornate brand markings, creating serious risk of infection and greatly reduced limb integrity."
-	examine_desc = "appears to have ornate symbols painfully branded into their flesh, leaving severe burns"
-	occur_text = "chars rapidly into a pattern that can only be described as an agglomeration of several financial symbols, burned into the flesh"
+	name = "Древнее клеймо"
+	desc = "Пациент страдает от сильных ожогов нанесённых клеймом с причудливым орнаментом, что создают серьезный риск инфекции и сильно снижают целостность конечности."
+	examine_desc = "похоже, что на коже были выжжены причудливые символы, оставившие сильные ожоги."
+	occur_text = "быстро обугливается в узор, который можно описать только как сочетание нескольких финансовых символов, выжженных на коже"
 
 /datum/wound/burn/flesh/severe/cursed_brand/get_limb_examine_description()
-	return span_warning("The flesh on this limb has several ornate symbols burned into it, with pitting throughout.")
+	return span_warning("На коже этой конечности выжжены причудливые символы, с углублениями по всей поверхности.")
 
 /datum/wound_pregen_data/flesh_burn/third_degree/cursed_brand
 	abstract = FALSE

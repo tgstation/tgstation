@@ -1,5 +1,5 @@
 
-ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, message as text)
+ADMIN_VERB(dsay, R_ADMIN, "DSay", "Speak to the dead.", ADMIN_CATEGORY_HIDDEN, message as text) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_GAME
 	if(user.prefs.muted & MUTE_DEADCHAT)
 		to_chat(user, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
 		return

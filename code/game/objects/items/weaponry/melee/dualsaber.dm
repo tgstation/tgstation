@@ -38,6 +38,11 @@
 	var/two_hand_force = 40
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+	// BANDASTATION EDIT START
+	var/hit_wield = 'sound/items/weapons/blade1.ogg'
+	var/hit_unwield = SFX_SWING_HIT
+	var/bypass_nodrop = FALSE
+	// BANDASTATION EDIT END
 
 /datum/armor/item_dualsaber
 	fire = 100
@@ -60,11 +65,11 @@
 	if(user && HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, span_warning("You lack the grace to wield this!"))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
-	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
+	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) && !bypass_nodrop) // BANDASTATION EDIT
 		to_chat(user, span_warning("You can't seem to hold [src] properly!"))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
-	hitsound = 'sound/items/weapons/blade1.ogg'
+	hitsound = hit_wield // BANDASTATION EDIT
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 
@@ -72,7 +77,7 @@
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	update_weight_class(initial(w_class))
-	hitsound = SFX_SWING_HIT
+	hitsound = hit_unwield // BANDASTATION EDIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
 
@@ -87,7 +92,7 @@
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] begins spinning way too fast! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)

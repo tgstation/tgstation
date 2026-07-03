@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				var/mob/living/L = usr
 				message = L.treat_message(message)["message"]
 
-			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg')
+			minor_announce(message, "[department] объявляет", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg', tts_override = usr.GetComponent(/datum/component/tts_component)) // BANDASTATION ADDITION: "tts_override"
 			GLOB.news_network.submit_article(message, department, NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")

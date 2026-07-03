@@ -1,0 +1,167 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"g" = (
+/obj/structure/table,
+/obj/machinery/keycard_auth{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/stamp/head/rd{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/command/heads_quarters/rd)
+"v" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/disk/computer/ordnance{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/disk/computer/ordnance{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/disk/computer/ordnance{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/aicard,
+/obj/item/circuitboard/aicore,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"y" = (
+/obj/machinery/modular_computer/preset/research,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/glass/reinforced,
+/area/station/command/heads_quarters/rd)
+"z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/displaycase/labcage,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"A" = (
+/obj/machinery/disposal/bin,
+/obj/structure/cable,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"C" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	name = "Privacy Shutter Control";
+	pixel_x = -7;
+	pixel_y = -2;
+	id = "rdoffice";
+	req_access = list("research")
+	},
+/obj/item/folder/white{
+	pixel_x = 5
+	},
+/obj/item/pen/fountain{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/command/heads_quarters/rd)
+"D" = (
+/turf/open/floor/glass/reinforced,
+/area/station/command/heads_quarters/rd)
+"G" = (
+/obj/item/kirbyplants/random/dead/research_director,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"H" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"J" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"K" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot/right,
+/obj/effect/turf_decal/bot/left,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"U" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+"Z" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/taperecorder{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/tape{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/tape{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
+
+(1,1,1) = {"
+Z
+a
+T
+"}
+(2,1,1) = {"
+v
+J
+D
+"}
+(3,1,1) = {"
+z
+D
+g
+"}
+(4,1,1) = {"
+K
+D
+y
+"}
+(5,1,1) = {"
+G
+D
+C
+"}
+(6,1,1) = {"
+H
+U
+D
+"}
+(7,1,1) = {"
+A
+U
+U
+"}

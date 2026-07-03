@@ -1,0 +1,8 @@
+["Interrogation Room"]
+nominative = "комната для допросов"
+genitive = "комнаты для допросов"
+dative = "комнате для допросов"
+accusative = "комнату для допросов"
+instrumental = "комнатой для допросов"
+prepositional = "комнате для допросов"
+gender = "female"

@@ -1,11 +1,11 @@
 /datum/lazy_template/virtual_domain/pirates
-	name = "Corsair Cove"
+	name = "Бухта корсаров"
 	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_MEDIUM
-	desc = "Battle your way to the hidden treasure, seize the booty, and make a swift escape before the pirates turn the tide."
+	desc = "Пробейтесь с боем к спрятанным сокровищам, захватите добычу и поспешите сбежать, прежде чем пираты переломят ситуацию."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
-	help_text = "Put on the provided outfits to blend in, then battle your way through the hostile pirates. \
-	Grab the treasure and get out before you're overwhelmed!"
+	help_text = "Переодентесь в предоставленную одежду, чтобы слиться с толпой, а затем сразитесь с враждебными пиратами. \
+	Хватайте сокровища и выбирайтесь, пока вас не одолели!"
 	key = "pirates"
 	map_name = "pirates"
 	reward_points = BITRUNNER_REWARD_MEDIUM

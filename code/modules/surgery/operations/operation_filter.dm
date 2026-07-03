@@ -1,7 +1,7 @@
 /datum/surgery_operation/limb/filter_blood
-	name = "blood filtration"
-	rnd_name = "Hemodialysis (Blood Filtration)"
-	desc = "Remove unwanted chemicals from a patient's bloodstream."
+	name = "Фильтрация крови"
+	rnd_name = "Гемодиализ (Фильтрация крови)"
+	desc = "Удаление нежелательных химических веществ из кровотока пациента."
 	implements = list(/obj/item/blood_filter = 1)
 	time = 2.5 SECONDS
 	operation_flags = OPERATION_LOOPING
@@ -12,9 +12,9 @@
 
 /datum/surgery_operation/limb/filter_blood/all_required_strings()
 	. = list()
-	. += "operate on chest (target chest)"
+	. += "операция на груди"
 	. += ..()
-	. += "the patient must not be husked"
+	. += "пациент не должен быть хаском"
 
 /datum/surgery_operation/limb/filter_blood/get_default_radial_image()
 	return image(/obj/item/blood_filter)
@@ -27,7 +27,7 @@
 
 /datum/surgery_operation/limb/filter_blood/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	display_pain(limb.owner, "You feel a throbbing pain in your chest!")
+	display_pain(limb.owner, "Вы чувствуете пульсирующую боль в груди!")
 
 /datum/surgery_operation/limb/filter_blood/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -39,9 +39,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("[tool] completes a cycle filtering [limb.owner]'s blood."),
-		span_notice("[tool] whirrs as it filters [limb.owner]'s blood."),
-		span_notice("[tool] whirrs as it pumps."),
+		span_notice("[capitalize(tool.declent_ru(ACCUSATIVE))] завершает цикл фильтрации крови у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[capitalize(tool.declent_ru(ACCUSATIVE))] гудит, фильтруя кровь у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[capitalize(tool.declent_ru(ACCUSATIVE))] гудит, пока работает насос."),
 	)
 
 	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
@@ -51,15 +51,15 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_warning("You screw up, bruising [limb.owner]'s chest!"),
-		span_warning("[surgeon] screws up, bruising [limb.owner]'s chest!"),
-		span_warning("[surgeon] screws up!"),
+		span_warning("Вы ошибаетесь, оставляя синяк на груди у [limb.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] ошибается, оставляя синяк на груди у [limb.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] ошибается!"),
 	)
 	limb.receive_damage(5, damage_source = tool)
 
 /datum/surgery_operation/limb/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
-		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
+		bloodfilter.audible_message(span_notice("[capitalize(bloodfilter.declent_ru(ACCUSATIVE))] сигнализирует о том, что в крови у [target.declent_ru(GENITIVE)] не обнаружено химических веществ."))
 		playsound(target, 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 		return FALSE
 
@@ -73,7 +73,7 @@
 	return FALSE
 
 /datum/surgery_operation/limb/filter_blood/mechanic
-	name = "purge hydraulics"
-	rnd_name = "Hydraulics Purge (Blood Filtration)"
+	name = "Продувка гидравлики"
+	rnd_name = "Продувка гидравлики (Фильтрация крови)"
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

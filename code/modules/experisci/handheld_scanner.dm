@@ -33,7 +33,7 @@
 	)
 
 /obj/item/experi_scanner/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is giving in to the Great Toilet Beyond! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is giving in to the Great Toilet Beyond! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 
 	forceMove(drop_location())
 	user.forceMove(src)

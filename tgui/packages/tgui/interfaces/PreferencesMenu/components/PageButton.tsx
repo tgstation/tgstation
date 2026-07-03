@@ -1,7 +1,8 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
-import { Button } from 'tgui-core/components';
+import { Tabs } from 'tgui-core/components';
 
 type Props<TPage> = {
+  icon: string;
   currentPage: TPage;
   page: TPage;
   otherActivePages?: TPage[];
@@ -10,21 +11,15 @@ type Props<TPage> = {
 };
 
 export function PageButton<TPage extends number>(props: Props<TPage>) {
-  const { children, currentPage, page, otherActivePages, setPage } = props;
-
+  const { children, currentPage, page, otherActivePages, setPage, icon } =
+    props;
   const pageIsActive =
     currentPage === page ||
     (otherActivePages && otherActivePages.indexOf(currentPage) !== -1);
 
   return (
-    <Button
-      align="center"
-      fontSize="1.2em"
-      fluid
-      selected={pageIsActive}
-      onClick={() => setPage(page)}
-    >
+    <Tabs.Tab selected={pageIsActive} icon={icon} onClick={() => setPage(page)}>
       {children}
-    </Button>
+    </Tabs.Tab>
   );
 }

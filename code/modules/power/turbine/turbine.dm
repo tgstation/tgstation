@@ -170,7 +170,7 @@
 		balloon_alert(user, "turn it off!")
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "нужно прикрутить!")
 		return
 
 	tool.play_tool_sound(src, 50)

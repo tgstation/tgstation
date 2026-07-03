@@ -108,15 +108,23 @@
 	var/image_dir = dropped ? SOUTH : null
 
 	var/list/all_hair_overlays = list()
+	// BANDASTATION MOD START: Ears overlay mask
 	// Hair masks
-	var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(owner?.hair_masks))
+	//var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(owner?.hair_masks))
+	var/list/hair_masks_to_use = list()
+	if(islist(owner?.hair_masks))
+		hair_masks_to_use = owner.hair_masks.Copy()
+	if(species_hair_mask)
+		hair_masks_to_use |= species_hair_mask
+	var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(hair_masks_to_use))
+	// BANDASTATION MOD END: Ears overlay mask
 	// Overlay
 	all_hair_overlays += image(base_icon, layer = -HAIR_LAYER, dir = image_dir)
 	// If we have any hair appendages (ponytails, etc.) sticking out on a particular side,
 	// we need to add an additional hair layer to go above hats/helmets for the sides they stick out on
 	if(LAZYLEN(hair_sprite_accessory.hair_appendages_outer))
 		var/strictly_masked_zones = NONE
-		for(var/datum/hair_mask/mask as anything in owner?.hair_masks)
+		for(var/datum/hair_mask/mask as anything in hair_masks_to_use) // BANDASTATION MOD: Ears overlay mask
 			strictly_masked_zones |= mask.strict_coverage_zones
 		for(var/appendage_icon_state in hair_sprite_accessory.hair_appendages_outer)
 			var/appendage_zone = hair_sprite_accessory.hair_appendages_outer[appendage_icon_state]

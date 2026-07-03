@@ -28,7 +28,7 @@ export function ComponentPrinter(props) {
 
   return (
     <Window
-      title={`${debug && 'Debug '}Component Printer`}
+      title={`${debug && 'Дебаг '}Принтер компонентов'`}
       width={670}
       height={600}
       theme={debug ? 'admin' : undefined}

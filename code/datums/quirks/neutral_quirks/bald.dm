@@ -1,13 +1,13 @@
 /datum/quirk/item_quirk/bald
 	name = "Smooth-Headed"
-	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
+	desc = "У вас нет волос, и вы чувствуете себя неуверенно из-за этого! Не снимайте парик или хотя бы прикрывайте голову."
 	icon = FA_ICON_EGG
 	value = 0
 	mob_trait = TRAIT_BALD
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
-	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
-	lose_text = span_notice("Your head itches, could it be... growing hair?!")
-	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	gain_text = span_notice("Ваша голова настолько гладкая, насколько это возможно, это ужасно.")
+	lose_text = span_notice("У вас чешется голова, может, это... растут волосы?!")
+	medical_record_text = "Пациент категорически отказался снять головной убор во время осмотра."
 	mail_goodies = list(/obj/item/clothing/head/wig/random)
 	/// The user's starting hairstyle
 	var/old_hair

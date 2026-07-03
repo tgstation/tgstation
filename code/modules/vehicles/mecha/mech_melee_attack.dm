@@ -110,7 +110,7 @@
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
 		visible_message(span_warning("[mecha_attacker] pushes [src] out of the way."), \
-						span_warning("[mecha_attacker] pushes you out of the way."), span_hear("You hear aggressive shuffling!"), 5, list(mecha_attacker))
+						span_warning("[mecha_attacker] pushes you out of the way."), span_hear("Вы слышите агрессивное шарканье!"), 5, list(mecha_attacker))
 		to_chat(mecha_attacker, span_danger("You push [src] out of the way."))
 		return
 

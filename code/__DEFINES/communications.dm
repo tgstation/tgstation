@@ -11,5 +11,13 @@
 #define SEC_LEVEL_BLUE 1
 /// Security level is red. (hostile threats)
 #define SEC_LEVEL_RED 2
+
+// BANDASTATION ADDITION - START
+/// Security level is gamma.
+#define SEC_LEVEL_GAMMA 3
+/// Security level is epsilon.
+#define SEC_LEVEL_EPSILON 4
+// BANDASTATION ADDITION - START
+
 /// Security level is delta. (station destruction immiment)
-#define SEC_LEVEL_DELTA 3
+#define SEC_LEVEL_DELTA 5 // BANDASTION EDIT: 3 => 5

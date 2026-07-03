@@ -1,6 +1,6 @@
 /datum/language/narsie
 	name = "Nar'Sian"
-	desc = "The ancient, blood-soaked, impossibly complex language of Nar'Sian cultists."
+	desc = "Древний, пропитанный кровью, невероятно сложный язык культистов Нар'Си."
 	key = "n"
 	space_chance = 75 //very high due to the potential length of each syllable
 	sentence_chance = 10
@@ -9,22 +9,22 @@
 	additional_syllable_low = -1
 	additional_syllable_high = 0
 	var/static/list/base_syllables = list(
-		"h", "v", "c", "e", "g", "d", "r", "n", "h", "o", "p",
-		"ra", "so", "at", "il", "ta", "gh", "sh", "ya", "te", "sh", "ol", "ma", "om", "ig", "ni", "in",
-		"sha", "mir", "sas", "mah", "zar", "tok", "lyr", "nqa", "nap", "olt", "val", "qha",
-		"fwe", "ath", "yro", "eth", "gal", "gib", "bar", "jin", "kla", "atu", "kal", "lig",
-		"yoka", "drak", "loso", "arta", "weyh", "ines", "toth", "fara", "amar", "nyag", "eske", "reth", "dedo", "btoh", "nikt", "neth",
-		"kanas", "garis", "uloft", "tarat", "khari", "thnor", "rekka", "ragga", "rfikk", "harfr", "andid", "ethra", "dedol", "totum",
-		"ntrath", "keriam"
+		"х", "в", "к", "е", "г", "д", "р", "н", "х", "о", "п",
+		"ра", "со", "ат", "ил", "та", "гх", "ш", "я", "те", "ш", "ол", "ма", "ом", "иг", "ни", "ин",
+		"ша", "мир", "сас", "мах", "зар", "ток", "лир", "нква", "нап", "олт", "вал", "кха",
+		"фве", "атх", "иро", "етх", "гал", "гиб", "бар", "джин", "кла", "ату", "кал", "лиг",
+		"йока", "драк", "лосо", "арта", "вейх", "инес", "тотх", "фара", "амар", "няг", "эске", "ретх", "дедо", "бтох", "никт", "нетх",
+		"канас", "гарис", "улофт", "тарат", "хари", "тхнор", "рекка", "рагга", "рфикк", "харфр", "андид", "етхра", "дедол", "тотум",
+		"нтратх", "кериам"
 	) //the list of syllables we'll combine with itself to get a larger list of syllables
 	syllables = list(
-		"sha", "mir", "sas", "mah", "hra", "zar", "tok", "lyr", "nqa", "nap", "olt", "val",
-		"yam", "qha", "fel", "det", "fwe", "mah", "erl", "ath", "yro", "eth", "gal", "mud",
-		"gib", "bar", "tea", "fuu", "jin", "kla", "atu", "kal", "lig",
-		"yoka", "drak", "loso", "arta", "weyh", "ines", "toth", "fara", "amar", "nyag", "eske", "reth", "dedo", "btoh", "nikt", "neth", "abis",
-		"kanas", "garis", "uloft", "tarat", "khari", "thnor", "rekka", "ragga", "rfikk", "harfr", "andid", "ethra", "dedol", "totum",
-		"verbot", "pleggh", "ntrath", "barhah", "pasnar", "keriam", "usinar", "savrae", "amutan", "tannin", "remium", "barada",
-		"forbici"
+		"ша", "мир", "сас", "мах", "хра", "зар", "ток", "лир", "нква", "нап", "олт", "вал",
+		"ям", "кха", "фел", "дет", "фве", "мах", "эрл", "атх", "иро", "етх", "гал", "муд",
+		"гиб", "бар", "теа", "фуу", "джин", "кла", "ату", "кал", "лиг",
+		"йока", "драк", "лосо", "арта", "вейх", "инес", "тотх", "фара", "амар", "няг", "эске", "ретх", "дедо", "бтох", "никт", "нетх", "абис",
+		"канас", "гарис", "улофт", "тарат", "хари", "тхнор", "рекка", "рагга", "рфикк", "харфр", "андид", "етхра", "дедол", "тотум",
+		"вербот", "плегх", "нтратх", "бархах", "паснар", "кериам", "усинар", "саврэ", "амутан", "таннин", "ремиум", "барада",
+		"форбичи"
 	) //the base syllables, which include a few rare ones that won't appear in the mixed syllables
 	icon_state = "narsie"
 	default_priority = 10

@@ -84,6 +84,9 @@
 			),
 		),
 	)
+	// BANDASTATION EDIT START - MOD ACTIVATION SOUND
+	var/activation_sound = 'sound/vehicles/mecha/nominal.ogg'
+	// BANDASTATION ADD END - MOD ACTIVATION SOUND
 
 #ifdef UNIT_TESTS
 /datum/mod_theme/New()

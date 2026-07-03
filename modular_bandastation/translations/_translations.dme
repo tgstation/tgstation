@@ -1,0 +1,20 @@
+#include "code/defines.dm"
+
+#include "_translations.dm"
+
+#include "code/bodyparts.dm"
+#include "code/pronouns.dm"
+#include "code/restaurant_customer.dm"
+#include "code/saymode.dm"
+#include "code/tips.dm"
+#include "code/translate_emotes.dm"
+#include "code/translate_security_level.dm"
+#include "code/translate_suggest_ru_names.dm"
+#include "code/translate_verbs.dm"
+#include "code/ru_names/ru_name_base.dm"
+#include "code/ru_names/ru_name_design.dm"
+#include "code/ru_names/ru_name_materials.dm"
+#include "code/ru_names/ru_name_orderables.dm"
+#include "code/ru_names/ru_name_reagents.dm"
+
+#include "code/~undefs.dm"

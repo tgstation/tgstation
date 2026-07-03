@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire", appearance_flags = RESET_COLOR|KEEP_APART))
+GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('modular_bandastation/aesthetics/fire/icons/fire.dmi', "fire", appearance_flags = RESET_COLOR|KEEP_APART)) // BANDASTATION EDIT: NEW FIRE ICON
 
 /**
  * Component representing an atom being on fire.

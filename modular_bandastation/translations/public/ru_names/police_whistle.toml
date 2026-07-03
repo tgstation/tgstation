@@ -1,0 +1,8 @@
+["police whistle"]
+nominative = "полицейский свисток"
+genitive = "полицейского свистка"
+dative = "полицейскому свистку"
+accusative = "полицейский свисток"
+instrumental = "полицейским свистком"
+prepositional = "полицейском свистке"
+gender = "male"

@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/revive
-	name = "Revive Host"
-	desc = "Restart the blood circulation of your host, bringing them back to life."
+	name = "Оживить носителя"
+	desc = "Восстановите кровообращение организма, возвращая его к жизни, захватывая тело под свой контроль."
 
 	button_icon_state = "revive_host"
 
@@ -43,7 +43,7 @@
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	to_chat(owner, span_notice("You begin restarting \the [host]'s blood circulation..."))
+	to_chat(owner, span_notice("Вы начинаете восстанавливать циркуляцию крови [host.declent_ru(ACCUSATIVE)]..."))
 
 	for (var/i in 1 to 3)
 		if (!do_after(owner, 2 SECONDS, host, timed_action_flags = IGNORE_INCAPACITATED | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(run_checks), worm, host)))
@@ -58,20 +58,20 @@
 		animate(transform = original_transform, time = 0.2 SECONDS, easing = CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
 
 		host.visible_message(
-			message = span_danger("\The [host] shake[host.p_s()] violently!"),
+			message = span_danger("[host.declent_ru(NOMINATIVE)] безудержно трясется!"),
 			ignored_mobs = owner
 		)
 
 	if (!host.revive())
-		host.balloon_alert(owner, "revival failed!")
+		host.balloon_alert(owner, "не удалось оживить!")
 		return FALSE
 
 	host.visible_message(
-		message = span_danger("\The [host] rise[host.p_s()] from the dead!"),
+		message = span_danger("[host.declent_ru(NOMINATIVE)] восстает из мёртвых!"),
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_green("You successfully revive \the [host]!"))
+	to_chat(owner, span_green("Вы успешно оживили [host.declent_ru(ACCUSATIVE)]!"))
 
 	return ..()
 
@@ -80,26 +80,26 @@
 		return FALSE
 	if (host.stat != DEAD)
 		if (feedback)
-			host.balloon_alert(owner, "not dead!")
+			host.balloon_alert(owner, "ещё жив!")
 		return FALSE
 	if (HAS_TRAIT(host, TRAIT_HUSK))
 		if (feedback)
-			host.balloon_alert(owner, "husked!")
+			host.balloon_alert(owner, "хаск!")
 		return FALSE
 	if (!host.get_organ_slot(ORGAN_SLOT_BRAIN))
 		if (feedback)
-			host.balloon_alert(owner, "no brain!")
+			host.balloon_alert(owner, "нет мозга!")
 		return FALSE
 	if (host.get_organ_loss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_DEATH && !HAS_TRAIT(host, TRAIT_BRAIN_DAMAGE_NODEATH))
 		if (feedback)
-			host.balloon_alert(owner, "brain too damaged!")
+			host.balloon_alert(owner, "мозг слишком повреждён!")
 		return FALSE
 	if (host.health <= HEALTH_THRESHOLD_DEAD)
 		if (feedback)
-			host.balloon_alert(owner, "body too damaged!")
+			host.balloon_alert(owner, "тело слишком повреждено!")
 		return FALSE
 	if (!host.can_be_revived()) // Fallback, ideally caught by earlier, more descriptive checks.
 		if (feedback)
-			host.balloon_alert(owner, "unable to revive!")
+			host.balloon_alert(owner, "невозможно оживить!")
 		return FALSE
 	return TRUE

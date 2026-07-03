@@ -29,11 +29,13 @@
 /// the order departments show up in for the id scan (its sorted by red to blue on the color wheel)
 #define DETSCAN_ACCESS_ORDER(...) list(\
 	REGION_SECURITY, \
+	REGION_JUSTICE, \
 	REGION_ENGINEERING, \
 	REGION_SUPPLY, \
 	REGION_GENERAL, \
 	REGION_MEDBAY, \
 	REGION_COMMAND, \
+	REGION_NT_REPRESENTATION, \
 	REGION_RESEARCH, \
 	REGION_CENTCOM, \
 )
@@ -42,12 +44,12 @@
 #define DETSCAN_BLOCK "DETSCAN_BLOCK"
 
 /// Wanted statuses
-#define WANTED_ARREST "Arrest"
-#define WANTED_DISCHARGED "Discharged"
-#define WANTED_NONE "None"
-#define WANTED_PAROLE "Parole"
-#define WANTED_PRISONER "Incarcerated"
-#define WANTED_SUSPECT "Suspected"
+#define WANTED_ARREST "Арест"
+#define WANTED_DISCHARGED "Оправдано"
+#define WANTED_NONE "Нет"
+#define WANTED_PAROLE "УДО"
+#define WANTED_PRISONER "Заключение"
+#define WANTED_SUSPECT "Подозрение"
 
 /// List of available wanted statuses
 #define WANTED_STATUSES(...) list(\

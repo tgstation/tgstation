@@ -98,7 +98,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 				return TRUE
 			for(var/access_as_text in SSid_access.sub_department_managers_tgui)
 				var/list/info = SSid_access.sub_department_managers_tgui[access_as_text]
-				if(card.trim.assignment != info["head"])
+				if(card.trim.assignment != job_title_ru(info["head"])) // BANDASTATION FIX: janitor keycard
 					continue
 				COOLDOWN_START(src, access_grant_cooldown, ACCESS_GRANTING_COOLDOWN)
 				SEND_GLOBAL_SIGNAL(COMSIG_ON_DEPARTMENT_ACCESS, info["regions"])
@@ -173,7 +173,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 					airlock.emergency = TRUE
 					airlock.update_icon(ALL, 0)
 
-	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
+	minor_announce("Ограничения на доступ к техническим и внешним шлюзам были сняты.", "Внимание! На станции объявлена чрезвычайная ситуация!",1)
 	GLOB.emergency_access = TRUE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
@@ -185,13 +185,13 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 					airlock.emergency = FALSE
 					airlock.update_icon(ALL, 0)
 
-	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
+	minor_announce("Ограничения на доступ в зоны технического обслуживания были восстановлены.", "Внимание! Общестанционная чрезвычайная ситуация отменена")
 	GLOB.emergency_access = FALSE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "disabled"))
 
 /proc/toggle_bluespace_artillery()
 	GLOB.bsa_unlock = !GLOB.bsa_unlock
-	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
+	minor_announce("Оружейные протоколы блюспейс артиллерии были [GLOB.bsa_unlock? "разблокированы" : "заблокированы"]", "Обновление оружейных систем")
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("bluespace artillery", GLOB.bsa_unlock? "unlocked" : "locked"))
 
 #undef ACCESS_GRANTING_COOLDOWN

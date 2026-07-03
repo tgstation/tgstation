@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = SUPERVISOR_HOS
+	supervisors = JOB_HEAD_OF_SECURITY_RU
 	minimal_player_age = 7
 	exp_requirements = 6000 //100 HOURS! We want really hard boiled people
 	exp_required_type = EXP_TYPE_CREW
@@ -73,7 +73,7 @@
 	head = /obj/item/clothing/head/soft/veteran
 	mask = /obj/item/cigarette/cigar
 	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
-	belt = /obj/item/storage/belt/holster/detective/full/ert //M1911 pistol
+	accessory = /obj/item/clothing/accessory/holster/detective/veteran_advisor // BANDASTATION EDIT: Accessory holsters
 	ears = /obj/item/radio/headset/heads/hos/advisor
 	glasses = /obj/item/clothing/glasses/eyepatch
 	shoes = /obj/item/clothing/shoes/jackboots

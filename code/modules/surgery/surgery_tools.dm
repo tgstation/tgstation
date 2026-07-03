@@ -186,7 +186,7 @@
 	return surgical_tray_overlay
 
 /obj/item/surgicaldrill/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), DROP_ALL_REMAINS), 2.5 SECONDS)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
@@ -249,7 +249,7 @@
 	return surgical_tray_overlay
 
 /obj/item/scalpel/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/scalpel/cyborg
@@ -590,7 +590,7 @@
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.get_bodyparts())
 		if(thing.body_part == CHEST)

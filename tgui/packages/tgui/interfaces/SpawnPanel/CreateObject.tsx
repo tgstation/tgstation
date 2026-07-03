@@ -78,6 +78,12 @@ export function CreateObject(props: CreateObjectProps) {
     return true;
   });
 
+  // BANDASTATION FIX START: on search by changed
+  useEffect(() => {
+    updateSearchText(query);
+  }, [searchBy])
+  // BANDASTATION FIX END: on search by changed
+
   useEffect(() => {
     if (data.selected_object) {
       setSelectedObj(data.selected_object);

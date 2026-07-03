@@ -63,6 +63,7 @@
 	var/datum/action/cooldown/mob_cooldown/chase_target/chase_target
 	/// Create Turrets Ability
 	var/datum/action/cooldown/mob_cooldown/create_legion_turrets/create_legion_turrets
+	var/last_legion // BANDASTATION EDIT
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
@@ -166,7 +167,7 @@
 	if(Split())
 		return
 	//We check what loot we should drop.
-	var/last_legion = TRUE
+	last_legion = TRUE // BANDASTATION EDIT
 	for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_living_list)
 		if(other != src)
 			last_legion = FALSE

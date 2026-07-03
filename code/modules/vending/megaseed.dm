@@ -1,8 +1,8 @@
 /obj/machinery/vending/hydroseeds
 	name = "\improper MegaSeed Servitor"
 	desc = "When you need seeds fast!"
-	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
-	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
+	product_slogans = "ЗДЕСЬ ЖИВУТ СЕМЕНА! ВОЗЬМИТЕ СЕБЕ НЕМНОГО!;Лучший выбор семян на станции!;Доступны разнообразные сорта грибов для специалистов! Станьте им уже сегодня!"
+	product_ads = "Мы любим растения!;Вырасти урожай!;Расти, малыш, расти-и-и-и!;Ды-а, сына!"
 	icon_state = "seeds"
 	panel_type = "panel2"
 	light_mask = "seeds-light-mask"
@@ -94,6 +94,7 @@
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,
+		/obj/item/seeds/cocaleaf = 2, // BANDASTATION ADDITION
 		/obj/item/seeds/random = 2,
 	)
 

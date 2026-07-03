@@ -11,8 +11,191 @@
     pointer-events: none;
     user-select: none;
   }
+
   &__Page {
     word-break: break-word;
     word-wrap: break-word;
+  }
+
+  &__TextArea {
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
+
+  &__Hints {
+    overflow: hidden auto;
+    scroll-padding: var(--space-m);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) transparent;
+    height: 100%;
+    max-height: 30vh;
+    padding: var(--space-m);
+
+    &--wrapper {
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0 calc(1.25rem + var(--space-m)) 0 var(--space-m); // 1.25rem for scrollbar
+      background-color: hsla(0, 0%, 80%, 0.5);
+      border: 1px solid hsla(0, 0%, 0%, 0.1);
+      border-radius: 0.33rem;
+      box-shadow: 0px -0.25rem 0.66rem 1px hsla(0, 0%, 0%, 0.2);
+      transform: translateY(calc(-100% - 0.5rem));
+      z-index: 1;
+    }
+
+    &--blur {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: var(--blur-medium);
+      z-index: -1;
+    }
+
+    /* We need to somehow override the specificity so that we don't use !important */
+    .Paper__Hints--button {
+      &.Button {
+        border-radius: var(--border-radius-medium);
+
+        &--selected {
+          transition-duration: 0s;
+        }
+
+        &:hover:not(.Button--selected) {
+          background-color: hsla(0, 0%, 0%, 0.1);
+          color: inherit;
+        }
+      }
+
+      &--content {
+        padding: var(--space-s) 0;
+        line-height: 1.3rem;
+      }
+
+      .key {
+        font-weight: bold;
+      }
+
+      .desc {
+        opacity: 0.66;
+      }
+    }
+  }
+}
+
+// MARK: Typography
+.Paper__Page {
+  button {
+    cursor: pointer;
+    margin: var(--space-s);
+    padding: var(--space-xxs) var(--space-sm);
+    background-color: hsla(0, 0%, 50%, 0.1);
+    border: var(--border-thickness-tiny) solid hsla(0, 0%, 0%, 0.2);
+    border-radius: var(--border-radius-small);
+
+    &:hover {
+      background-color: hsla(0, 0%, 50%, 0.2);
+    }
+
+    &[aria-checked='true'] {
+      background-color: transparent;
+      border-color: var(--color-green);
+    }
+
+    &.icon_only {
+      padding: var(--space-xxs) var(--space-xs);
+    }
+
+    i {
+      pointer-events: none;
+    }
+  }
+
+  h1 {
+    padding: 0 0 0.25rem;
+  }
+
+  hr {
+    margin: 0.75rem 0;
+  }
+
+  strong {
+    display: inline-block;
+    margin-top: 0.75rem;
+    line-height: 1.33rem;
+    font-size: 1.25rem;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: normal;
+    }
+  }
+
+  small {
+    font-size: 0.75rem;
+  }
+
+  hr {
+    width: 100%;
+  }
+}
+
+// MARK: Blank templates
+.Paper__Page {
+  .blank {
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+      display: flex;
+    }
+
+    &_content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1rem 0.5rem;
+
+      .name {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .id {
+        font-size: 0.75rem;
+      }
+
+      .station {
+        text-align: left;
+        height: 100%;
+        margin-bottom: 0.5rem;
+
+        &_name {
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+      }
+
+      .category {
+        text-align: right;
+        font-size: 1.5rem;
+      }
+    }
+
+    &_notice,
+    &_footer {
+      text-align: center;
+      font-size: 0.75rem;
+
+      hr {
+        margin: 0.33rem 0;
+      }
+    }
+
+    &_footer {
+      margin: 1rem 0 0.5rem;
+    }
   }
 }

@@ -29,7 +29,7 @@
 /obj/machinery/computer/piratepad_control/civilian
 	name = "civilian bounty control terminal"
 	desc = "A console for assigning civilian bounties to inserted ID cards, and for controlling the bounty pad for export."
-	status_report = "Ready for delivery."
+	status_report = "Готов к доставке."
 	icon_screen = "civ_bounty"
 	icon_keyboard = "id_key"
 	warmup_time = 3 SECONDS
@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
+		to_chat(user, span_notice("Вы привязываете [declent_ru(ACCUSATIVE)] к [I.buffer] с помощью буффера [I.declent_ru(GENITIVE)]."))
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
@@ -69,14 +69,14 @@
 	if(sending)
 		return FALSE
 	if(!inserted_scan_id)
-		status_report = "Please insert your ID first."
+		status_report = "Пожалуйста, вставьте сначала ID карту."
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
-		status_report = "Please accept a new civilian bounty first."
+		status_report = "Пожалуйста, возьмите сначала новый заказ."
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
-	status_report = "Civilian Bounty: "
+	status_report = "Гражданский заказ: "
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/possible_shippable in get_turf(pad))
 		if(possible_shippable == pad)
@@ -88,10 +88,10 @@
 			if(possible_shippable_item.item_flags & ABSTRACT)
 				continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(possible_shippable))
-			status_report += "Target Applicable."
+			status_report += "Цель применима."
 			playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 			return
-	status_report += "Not Applicable."
+	status_report += "Цель неприменима."
 	playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 
 
@@ -138,11 +138,11 @@
 				qdel(possible_shippable)
 
 	if(active_count >= 1)
-		status_report += "Bounty Target[active_count > 1 ? "s" : ""] Found x[active_count]. "
+		status_report += "Цель заказа найдена x[active_count]. "
 
 		SStgui.update_uis(src)	//update Ui data to display how much of the bounty remains
 	else
-		status_report = "No applicable target found. Aborting. "
+		status_report = "Цель заказа не обнаружена. Отмена. "
 		stop_sending()
 
 	active_count = 0 // We'll just re-use this for the second message setter.
@@ -167,13 +167,13 @@
 			var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 			reward.set_up(stack_item, inserted_scan_id)
 	if(active_count >= 1)
-		status_report += "x[active_count] Bount[active_count > 1 ? "ies" : "y"] completed! \
-			Please give your bounty cube[active_count > 1 ? "s" : ""] to cargo for your automated payout shortly. "
+		status_report += "x[active_count] заказ[declension_ru(active_count,"","а","ов")] выполнен[declension_ru(active_count,"","о","о")]! \
+			Пожалуйста, передайте сво[active_count > 1 ? "и":"ю"] куб-наград[active_count > 1 ? "ы":"у"] в отдел снабжения для перевода средств на ваш счёт. "
 
 	if(check_global)
 		update_global_bounty_list(round(CIV_BOUNTY_BASELINE + (SSeconomy.civ_bounty_tracker / 3)), FALSE)
 
-	pad.visible_message(span_notice("[pad] activates!"))
+	pad.visible_message(span_notice("[capitalize(pad.declent_ru(NOMINATIVE))] активируется!"))
 	pad.finish_sending()
 	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
@@ -186,10 +186,10 @@
 		return FALSE
 	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
-		balloon_alert(user, "try again in [time_left]!")
+		balloon_alert(user, "попробуйте еще раз через [time_left]!")
 		return FALSE
 	if(!inserted_scan_id.trim)
-		say("Requesting ID card has no job assignment registered!")
+		say("Запрашиваемая ID карта не имеет зарегистрированной должности!")
 		return FALSE
 
 	var/list/datum/bounty/crumbs = inserted_scan_id.trim.generate_bounty_list()
@@ -314,8 +314,8 @@
 		else
 			id_eject(user, target)
 
-	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
-						span_notice("You insert \the [card_to_insert] into \the [src]."))
+	user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] вставляет [card_to_insert.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."),
+						span_notice("Вы вставляете [card_to_insert.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	ui_interact(user)
 	return TRUE
@@ -323,12 +323,12 @@
 ///Removes A stored ID card.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/item/target)
 	if(!target)
-		to_chat(user, span_warning("That slot is empty!"))
+		to_chat(user, span_warning("Этот слот пуст!"))
 		return FALSE
 	else
 		try_put_in_hand(target, user)
-		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
-							span_notice("You get \the [target] from \the [src]."))
+		user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] получает [target.declent_ru(ACCUSATIVE)] из [declent_ru(GENITIVE)]."), \
+							span_notice("Вы получаете [target.declent_ru(ACCUSATIVE)] из [declent_ru(GENITIVE)]."))
 		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_scan_id = null
 		return TRUE
@@ -425,7 +425,7 @@
 	var/uses = 2
 
 /obj/item/civ_bounty_beacon/attack_self()
-	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
+	loc.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] начинает громко гудеть!"))
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()

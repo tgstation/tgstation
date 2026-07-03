@@ -761,7 +761,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 /datum/admin_help_ui_handler/proc/perform_adminhelp(client/user_client, message, urgent)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
+		to_chat(usr, span_danger("Общение было заблокировано администрацией."), confidential = TRUE)
 		return
 
 	if(!message)
@@ -806,9 +806,19 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 /client/verb/adminhelp()
 	set category = "Admin"
 	set name = "Adminhelp"
+	/* BANDASTATION REMOVAL
 	GLOB.admin_help_ui_handler.ui_interact(mob)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='byond://?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
+	*/
+	// BANDASTATION ADDITION - START
+	if(persistent_client.current_help_ticket)
+		ticket_to_open = persistent_client.current_help_ticket.id
+		GLOB.ticket_manager.ui_interact(mob)
+		return
 
+	GLOB.help_ui_handler.ui_interact(mob)
+	// BANDASTATION ADDITION - END
+/* BANDASTATION REMOVAL - START
 /client/verb/view_latest_ticket()
 	set category = "Admin"
 	set name = "View Latest Ticket"
@@ -836,7 +846,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		return
 
 	current_ticket.player_ticket_panel()
-
+BANDASTATION REMOVAL - END */
 //
 // LOGGING
 //
@@ -846,6 +856,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 /// player_message: If the message should be shown in the player ticket panel, fill this out
 /// log_in_blackbox: Whether or not this message with the blackbox system.
 /// If disabled, this message should be logged with a different proc call
+/* BANDASTATION REMOVAL
 /proc/admin_ticket_log(what, message, player_message, log_in_blackbox = TRUE)
 	var/client/mob_client
 	var/mob/Mob = what
@@ -871,7 +882,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 			if(log_in_blackbox)
 				SSblackbox.LogAhelp(active_admin_help.id, "Interaction", message, what, usr.ckey)
 			return active_admin_help
-
+*/
 //
 // HELPER PROCS
 //
@@ -1077,8 +1088,9 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
  *
  * Arguments:
  * * msg - the message being scanned
+ * * pinged_admins_permission - permissions admins need to have to be pinged
  */
-/proc/check_asay_links(msg)
+/proc/check_asay_links(msg, pinged_admins_permission = R_NONE)
 	var/list/msglist = splittext(msg, " ") //explode the input msg into a list
 	var/list/pinged_admins = list() // if we ping any admins, store them here so we can ping them after
 	var/modified = FALSE // did we find anything?
@@ -1095,7 +1107,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 				// first we check if it's a ckey of an admin
 				var/client/client_check = GLOB.directory[stripped_word]
-				if(client_check?.holder)
+				if(check_rights_for(client_check, pinged_admins_permission))
 					msglist[i] = "<u>[word]</u>"
 					pinged_admins[stripped_word] = client_check
 					modified = TRUE
@@ -1115,20 +1127,18 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 				if(!possible_ticket_id)
 					continue
 
-				var/datum/admin_help/ahelp_check = GLOB.ahelp_tickets?.TicketByID(possible_ticket_id)
-				if(!ahelp_check)
+				var/datum/help_ticket/help_ticket = GLOB.ticket_manager.get_help_ticket_by_id(possible_ticket_id)
+				if(!help_ticket)
 					continue
 
-				var/state_word
-				switch(ahelp_check.state)
-					if(AHELP_ACTIVE)
-						state_word = "Active"
-					if(AHELP_CLOSED)
-						state_word = "Closed"
-					if(AHELP_RESOLVED)
-						state_word = "Resolved"
+				var/static/alist/state_to_state_word = alist(
+					TICKET_OPEN = "Активный",
+					TICKET_CLOSED = "Закрытый",
+					TICKET_RESOLVED = "Решенный",
+				)
+				var/state_word = state_to_state_word[help_ticket.state]
 
-				msglist[i]= "<u><A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
+				msglist[i] = TICKET_OPEN_LINK(possible_ticket_id, "[word] ([state_word] | [help_ticket.initiator])")
 				modified = TRUE
 
 	if(modified)
@@ -1137,6 +1147,26 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		return_list[ASAY_LINK_PINGED_ADMINS_INDEX] = pinged_admins
 		return return_list
 
+// BANDASTATION ADDITION START - Refactor admin related procs
+/proc/notify_linked_in_chat(message, target_permissions)
+	if(!findtext(message, "@") && !findtext(message, "#"))
+		return message
+
+	var/list/link_results = check_asay_links(message, target_permissions)
+	if(!length(link_results))
+		return message
+
+	message = link_results[ASAY_LINK_NEW_MESSAGE_INDEX]
+	link_results[ASAY_LINK_NEW_MESSAGE_INDEX] = null
+	var/list/pinged_admin_clients = link_results[ASAY_LINK_PINGED_ADMINS_INDEX]
+	for(var/iter_ckey in pinged_admin_clients)
+		var/client/iter_admin_client = pinged_admin_clients[iter_ckey]
+
+		window_flash(iter_admin_client)
+		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/asay_ping.ogg'))
+
+	return message
+// BANDASTATION ADDITION END
 
 #undef WEBHOOK_URGENT
 #undef WEBHOOK_NONE

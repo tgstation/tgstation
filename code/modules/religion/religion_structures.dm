@@ -45,8 +45,8 @@
 
 /// This one actually has relevance to chaplains
 /obj/structure/altar/of_gods
-	name = "\improper Altar of the Gods"
-	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	name = "Altar of the Gods"
+	desc = "Алтарь, который позволяет главе церкви выбирать секту религиозных учений, а также приносить жертвы, чтобы заслужить благосклонность."
 	///Avoids having to check global everytime by referencing it locally.
 	var/datum/religion_sect/sect_to_altar
 

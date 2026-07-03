@@ -1,0 +1,8 @@
+["identification card"]
+nominative = "ID-карта"
+genitive = "ID-карты"
+dative = "ID-карте"
+accusative = "ID-карту"
+instrumental = "ID-картой"
+prepositional = "ID-карте"
+gender = "female"

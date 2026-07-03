@@ -1,0 +1,110 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"h" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/engine,
+/area/station/command/heads_quarters/rd)
+"n" = (
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
+"w" = (
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
+"E" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Research Director's Office - Observation Cage";
+	network = list("ss13","rd")
+	},
+/turf/open/floor/engine,
+/area/station/command/heads_quarters/rd)
+"G" = (
+/turf/open/floor/engine,
+/area/station/command/heads_quarters/rd)
+"J" = (
+/obj/structure/table,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/taperecorder{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
+"K" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/folder/white,
+/obj/item/toy/figure/rd{
+	pixel_y = 10
+	},
+/obj/item/stamp/head/rd,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"N" = (
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/landmark/start/research_director,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
+"W" = (
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
+
+(1,1,1) = {"
+n
+N
+W
+J
+w
+"}
+(2,1,1) = {"
+K
+a
+h
+G
+E
+"}

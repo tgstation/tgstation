@@ -66,9 +66,9 @@
 	limb.receive_damage(25, damage_source = tool)
 
 /datum/surgery_operation/limb/repair_hairline
-	name = "repair hairline fracture"
-	desc = "Mend a hairline fracture in a patient's bone."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
+	name = "Сращивание трещины"
+	desc = "Заживление трещины в кости пациента."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/medical/bone_gel = 1,
@@ -89,7 +89,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/repair_hairline/all_required_strings()
-	return list("the limb must have a hairline fracture") + ..()
+	return list("конечность должна иметь трещину") + ..()
 
 /datum/surgery_operation/limb/repair_hairline/state_check(obj/item/bodypart/limb)
 	if(!(locate(/datum/wound/blunt/bone/severe) in limb.wounds))
@@ -100,11 +100,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair the fracture in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете устаранять трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает устаранять трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает устаранять трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "Your [limb.plaintext_zone] aches with pain!")
+	display_pain(limb.owner, "Ваша [limb.ru_plaintext_zone[PREPOSITIONAL]] ноет от боли!")
 
 /datum/surgery_operation/limb/repair_hairline/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/blunt/bone/fracture = locate() in limb.wounds
@@ -113,14 +113,14 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно устаранили трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно устаранил трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно устаранил трещину в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 
 /datum/surgery_operation/limb/reset_compound
 	name = "reset compound fracture"
-	desc = "Reset a compound fracture in a patient's bone, preparing it for proper healing."
+	desc = "Вправление сложного перелома кости пациента, для подготавливки её к правильному заживлению."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_BONESET = 1,
@@ -142,7 +142,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/reset_compound/all_required_strings()
-	return list("the limb must have a compound fracture") + ..()
+	return list("конечность должна иметь сложный перелом") + ..()
 
 /datum/surgery_operation/limb/reset_compound/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -154,11 +154,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to reset the bone in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to reset the bone in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to reset the bone in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете вправлять кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает вправлять кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает вправлять кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "The aching pain in your [limb.plaintext_zone] is overwhelming!")
+	display_pain(limb.owner, "Ноющая боль в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]] невыносима!")
 
 /datum/surgery_operation/limb/reset_compound/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -167,14 +167,14 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully reset the bone in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully resets the bone in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully resets the bone in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно вправляете кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно вправляет кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно вправляет кость в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 
 /datum/surgery_operation/limb/repair_compound
 	name = "repair compound fracture"
-	desc = "Mend a compound fracture in a patient's bone."
+	desc = "Залечивание сложного перелома кости пациента."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
@@ -195,7 +195,7 @@
 	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/repair_compound/all_required_strings()
-	return list("the limb's compound fracture has been reset") + ..()
+	return list("сложный перелом конечности должен быть вправлен") + ..()
 
 /datum/surgery_operation/limb/repair_compound/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -207,11 +207,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair the fracture in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете устранять перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает устранять перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает устранять перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "The aching pain in your [limb.plaintext_zone] is overwhelming!")
+	display_pain(limb.owner, "Ноющая боль в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]] невыносима!")
 
 /datum/surgery_operation/limb/repair_compound/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -219,14 +219,14 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно устраняете перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно устраняет перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно устраняет перелом в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 
 /datum/surgery_operation/limb/prepare_cranium_repair
 	name = "discard skull debris"
-	desc = "Clear away bone fragments and debris from a patient's cranial fissure in preparation for repair."
+	desc = "Удаление костных фрагментов и обломков из черепной щели пациента перед началом восстановления."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -246,7 +246,7 @@
 	return image(/obj/item/hemostat)
 
 /datum/surgery_operation/limb/prepare_cranium_repair/all_required_strings()
-	return list("the cranium must be fractured") + ..()
+	return list("череп должен быть проломлен") + ..()
 
 /datum/surgery_operation/limb/prepare_cranium_repair/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
@@ -258,11 +258,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to discard the smaller skull debris in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to discard the smaller skull debris in [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to poke around in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("Вы начинаете удалять мелкие осколки черепа в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает удалять мелкие осколки черепа в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает копошиться в [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
 	)
-	display_pain(limb.owner, "Your brain feels like it's getting stabbed by little shards of glass!")
+	display_pain(limb.owner, "Ваш мозг словно пронзают маленькие осколки стекла!")
 
 /datum/surgery_operation/limb/prepare_cranium_repair/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
@@ -271,7 +271,7 @@
 
 /datum/surgery_operation/limb/repair_cranium
 	name = "repair cranium"
-	desc = "Mend a cranial fissure in a patient's skull."
+	desc = "Закрытие трещины в черепе пациента."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
@@ -291,7 +291,7 @@
 	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/repair_cranium/all_required_strings()
-	return list("the debris has been cleared from the cranial fissure") + ..()
+	return list("обломки были удалены из черепной щели") + ..()
 
 /datum/surgery_operation/limb/repair_cranium/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
@@ -303,12 +303,12 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair [limb.owner || limb]'s skull as best you can..."),
-		span_notice("[surgeon] begins to repair [limb.owner || limb]'s skull with [tool]."),
-		span_notice("[surgeon] begins to repair [limb.owner || limb]'s skull."),
+		span_notice("Вы начинаете восстанавливать череп у [limb.owner.declent_ru(GENITIVE)], насколько это возможно..."),
+		span_notice("[surgeon] начинает восстанавливать череп у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает восстанавливать череп у [limb.owner.declent_ru(GENITIVE)]."),
 	)
 
-	display_pain(limb.owner, "You can feel pieces of your skull rubbing against your brain!")
+	display_pain(limb.owner, "Вы можете почувствовать, как осколки вашего черепа трутся о ваш мозг!")
 
 /datum/surgery_operation/limb/repair_cranium/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
@@ -317,7 +317,7 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair [limb.owner || limb]'s skull."),
-		span_notice("[surgeon] successfully repairs [limb.owner || limb]'s skull with [tool]."),
-		span_notice("[surgeon] successfully repairs [limb.owner || limb]'s skull.")
+		span_notice("Вы успешно восстанавливаете череп у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно восстанавливает череп у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] успешно восстанавливает череп у [limb.owner.declent_ru(GENITIVE)].")
 	)

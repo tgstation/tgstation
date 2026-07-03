@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(ipintel)
 	QDEL_NULL(query)
 
 
-ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
+ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_HIDDEN, ckey as text) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_IPINTEL
 	if (!SSipintel.is_enabled())
 		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(SSipintel.is_whitelisted(ckey))
@@ -219,7 +219,7 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 	QDEL_NULL(query)
 	message_admins("IPINTEL: [key_name_admin(user)] has whitelisted '[ckey]'")
 
-ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL, ckey as text)
+ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_HIDDEN, ckey as text) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_IPINTEL
 	if (!SSipintel.is_enabled())
 		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
 	if(!SSipintel.is_whitelisted(ckey))

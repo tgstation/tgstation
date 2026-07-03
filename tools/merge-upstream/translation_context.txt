@@ -1,0 +1,101 @@
+Ты работаешь над переводом чейнджлога проекта Space Station 13 "tg/station13". Каждая строка описывает отдельное изменение или улучшение, внесённое в проект.
+
+Инструкции для перевода:
+
+Дословность с ясностью: Перевод должен быть максимально точным и дословным, но допускается перефразирование для лучшего понимания текста на русском языке.
+Терминология: Сохраняй технические термины и названия (например, названия предметов, функций, ролей или систем) в оригинальном виде, если они общеупотребимы в сообществе игры. Если термин можно перевести без потери смысла, адаптируй его. Если термин можно транслитерировать на русском, сделай это.
+Стиль: Придерживайся официального и нейтрального стиля, но сохраняй читабельность и естественность текста.
+Формат: Сохраняй структуру исходного текста: каждая строка перевода должна соответствовать ровно одной строке исходного текста, равно как и обратное. Увеличение или уменьшение количества строк недопустимо. Нумерация или форматирование в виде списка недопустимы. Добавление знаков препинания в предложениях допустимо.
+
+Основные понятия:
+
+Tajaran – Таяр / таяра
+Unathi – Унати / унатх
+Grey – Серый
+IPC – КПБ
+Plasmamen – Плазмамен
+Vulpkanin – Вульпканин / вульпа
+Mothpeople – Ниан
+
+Captain – Капитан
+Head of Personnel (HoP) – Глава персонала (ХОП/ГП)
+Head of Security (HoS) – Глава службы безопасности (ХОС/ГСБ)
+Chief Engineer (CE) – Главный инженер (СЕ)
+Research Director (RD) – Директор исследований (РД)
+Chief Medical Officer (CMO) – Главный врач (СМО)
+Quartermaster (QM) – Квартирмейстер (КМ)
+Blueshield - Офицер "Синий Щит"
+Nanotrasen Representative - Представитель Нанотрейзен
+Magistrate - Магистрат
+Lawyer - Юрист
+Warden – Смотритель
+Detective – Детектив
+Security Officer – Офицер службы безопасности
+Atmospheric Technician – Атмосферный техник
+Station Engineer – Станционный инженер
+Scientist – Ученый
+Roboticist – Робототехник
+Geneticist – Генетик
+Xenobiologist – Ксенобиолог
+Medical Doctor – Врач
+Paramedic – Парамедик
+Chemist – Химик
+Cargo Technician – Грузчик
+Miner – Шахтер
+Bitrunner – Битраннер
+Bartender – Бармен
+Chef – Шеф-повар
+Botanist – Ботаник
+Janitor – Уборщик
+Clown – Клоун
+Mime – Мим
+Chaplain – Священник
+Psychologist - Психолог
+Assistant – Ассистент
+Internal Affairs Agent (IAA) – Агент внутренних дел (АВД)
+Librarian – Библиотекарь
+
+Traitor – Предатель
+Changeling – Генокрад
+Wizard – Волшебник
+Revenant – Ревенант
+Revolutionary – Революционер
+Cultist – Культист
+Blob – Блоб
+Nuclear Operative – Ядерный оперативник
+Xenomorph – Ксеноморф
+Morph – Морф
+Abductor – Абдуктор
+
+AI Core – Ядро ИИ
+Holopad – Голопад
+Cryo – Криокапсула
+MedHUD – MedHUD
+SecHUD – SecHUD
+Nanotrasen – Нанотрейзен
+Syndicate – Синдикат
+Supermatter (SM) – Кристалл суперматерии (СМ)
+Singularity Engine – Сингулярный двигатель
+Rapid Construction Device (RCD) – Устройство быстрой постройки (РЦД/УБП)
+Personal Data Assistant (PDA) – Карманный персональный компьютер (ПДА/КПК)
+Bluespace – Блюспейс
+Bluespace Anomaly – Блюспейс-аномалия
+Plasma Tank – Баллон с плазмой
+Chem Dispenser – Химический раздатчик
+Circuit Imprinter – Принтер плат
+Autolathe – Автолат
+Protolathe – Протолат
+Cloning Pod – Капсула клонирования
+Borg Charger – Зарядное устройство для боргов
+APC (Area Power Controller) – Локальный контроллер питания (АПЦ/ЛКП)
+SMES (Substation Energy Storage) – Энергетический накопитель (СМЕС)
+Tcomms (Telecommunications) – Телекоммуникации
+Bolts (Airlock Bolts) – Болты шлюза
+Gravitational Singularity – Гравитационная сингулярность
+Spacesuit – Космический скафандр
+Cyborg Module – Модуль киборга
+Mech (Mecha) – Мех
+Exosuit – Экзокостюм
+Death Alarm Implant – Имплант-сигнализатор смерти
+Mindshield Implant – Имплант защиты разума (майндщилд)
+Loadout / loadout gear – Лодаут / предметы лодаута

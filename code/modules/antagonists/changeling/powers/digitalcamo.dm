@@ -1,8 +1,8 @@
 /datum/action/changeling/digitalcamo
 	name = "Digital Camouflage"
-	desc = "By evolving the ability to distort our form and proportions, we defeat common algorithms used to detect lifeforms on cameras."
-	helptext = "We cannot be tracked by camera or seen by AI units while using this skill. However, humans looking at us will find us... uncanny."
-	button_icon_state = "digital_camouflage"
+	desc = "Развивая способность искажать свою форму и пропорции, мы побеждаем обычные алгоритмы, используемые для обнаружения форм жизни на камерах."
+	helptext = "При использовании этого навыка нас нельзя отследить с помощью камеры или увидеть с помощью ИИ. Однако люди, смотрящие на нас, будут находить нас... странными."
+	button_icon_state = "digital_camo"
 	category = "stealth"
 	dna_cost = 1
 	active = FALSE
@@ -11,10 +11,10 @@
 /datum/action/changeling/digitalcamo/sting_action(mob/user)
 	..()
 	if(active)
-		to_chat(user, span_notice("We return to normal."))
+		to_chat(user, span_notice("Мы возвращаемся в нормальное состояние."))
 		user.RemoveElement(/datum/element/digitalcamo)
 	else
-		to_chat(user, span_notice("We distort our form to hide from the AI."))
+		to_chat(user, span_notice("Мы искажаем свою форму, чтобы скрыться от ИИ."))
 		user.AddElement(/datum/element/digitalcamo)
 	active = !active
 	return TRUE

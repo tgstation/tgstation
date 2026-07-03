@@ -299,13 +299,42 @@
 	if(num_candidates <= 0)
 		return list()
 
-	// technically not pure
-	var/list/resulting_candidates = shuffle(trim_candidates(antag_candidates)) || list()
-	if(length(resulting_candidates) <= num_candidates)
+	// BANDASTATION EDIT START - Weighted candidate selection
+	var/list/mob/valid_candidates = trim_candidates(antag_candidates)
+	if(!length(valid_candidates))
+		return list()
+
+	if(!CONFIG_GET(flag/antag_weighted_selection))
+		// Fallback to old random selection
+		var/list/resulting_candidates = shuffle(valid_candidates)
+		if(length(resulting_candidates) <= num_candidates)
+			return resulting_candidates
+		resulting_candidates.Cut(num_candidates + 1)
 		return resulting_candidates
 
-	resulting_candidates.Cut(num_candidates + 1)
+	// Build weighted list of candidates
+	var/list/mob/weighted_candidates = list()
+	for(var/mob/candidate as anything in valid_candidates)
+		var/client/candidate_client = GET_CLIENT(candidate)
+		if(!candidate_client)
+			continue
+		var/weight = get_candidate_weight(candidate_client.ckey)
+		weighted_candidates[candidate] = weight
+
+	if(!length(weighted_candidates))
+		return list()
+
+	// Select candidates using weighted random selection
+	var/list/mob/resulting_candidates = list()
+	for(var/i in 1 to min(num_candidates, length(weighted_candidates)))
+		if(!length(weighted_candidates))
+			break
+		var/mob/picked = pick_weight(weighted_candidates)
+		resulting_candidates += picked
+		weighted_candidates -= picked
+
 	return resulting_candidates
+	// BANDASTATION EDIT END
 
 /// Handles loading map templates that this ruleset requires
 /datum/dynamic_ruleset/proc/load_templates()

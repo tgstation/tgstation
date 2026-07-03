@@ -1,0 +1,8 @@
+["ammo box (.35 Sol Short rubber)"]
+nominative = "коробка патронов (.35 Sol Short резина)"
+genitive = "коробки патронов (.35 Sol Short резина)"
+dative = "коробке патронов (.35 Sol Short резина)"
+accusative = "коробку патронов (.35 Sol Short резина)"
+instrumental = "коробкой патронов (.35 Sol Short резина)"
+prepositional = "коробке патронов (.35 Sol Short резина)"
+gender = "female"

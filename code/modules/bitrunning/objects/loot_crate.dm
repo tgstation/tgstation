@@ -10,14 +10,14 @@
 
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class cache"
-	desc = "Talk to a coder."
+	desc = "Поговорите с программистом."
 	icon_state = "bitrunning"
 	base_icon_state = "bitrunning"
 
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
 	name = "encrypted cache"
-	desc = "Needs to be decrypted at the safehouse to be opened."
+	desc = "Для открытия требуется расшифровать данные в убежище."
 	locked = TRUE
 	damage_deflection = 30
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -28,7 +28,7 @@
 /// The bitrunner den - side of the bitrunning crate. Appears in the receive location.
 /obj/structure/closet/crate/secure/bitrunning/decrypted
 	name = "decrypted cache"
-	desc = "Compiled from the virtual domain. The reward of a successful bitrunner."
+	desc = "Скомпилированная из виртуального домена. Награда за успешное прохождение битрана."
 	locked = FALSE
 
 /obj/structure/closet/crate/secure/bitrunning/decrypted/Initialize(

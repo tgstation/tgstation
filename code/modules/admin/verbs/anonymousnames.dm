@@ -78,7 +78,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * it's in a proc so it can be a non-constant expression.
  */
 /datum/anonymous_theme/proc/announce_to_all_players()
-	priority_announce("A recent bureaucratic error in the Organic Resources Department has resulted in a necessary full recall of all identities and names until further notice.", "Identity Loss", SSstation.announcer.get_rand_alert_sound())
+	priority_announce("Недавняя бюрократическая ошибка в отделе органических ресурсов привела к необходимости полного отзыва всех личностей и имен до дальнейшего уведомления.", "Потеря личности", SSstation.announcer.get_rand_alert_sound())
 
 /**
  * anonymous_all_players: sets all crewmembers on station anonymous.
@@ -106,7 +106,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * called when the anonymous theme is removed regardless of extra theming
  */
 /datum/anonymous_theme/proc/restore_all_players()
-	priority_announce("Names and Identities have been restored.", "Identity Restoration", SSstation.announcer.get_rand_alert_sound())
+	priority_announce("Имена и личности были восстановлены.", "Восстановление личности", SSstation.announcer.get_rand_alert_sound())
 	for(var/mob/living/player in GLOB.player_list)
 		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
@@ -151,7 +151,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	name = "Employees"
 
 /datum/anonymous_theme/employees/announce_to_all_players()
-	priority_announce("As punishment for this station's poor productivity when compared to neighbor stations, names and identities will be restricted until further notice.", "Finance Report", SSstation.announcer.get_rand_alert_sound())
+	priority_announce("В качестве наказания за низкую производительность этой станции по сравнению с соседствующими, имена и личности будут ограничены до дальнейшего уведомления.", "Финансовый отчёт", SSstation.announcer.get_rand_alert_sound())
 
 /datum/anonymous_theme/employees/anonymous_name(mob/target)
 	var/is_head_of_staff = target.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF
@@ -184,7 +184,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	player.put_in_hands(new random_path())
 
 /datum/anonymous_theme/wizards/announce_to_all_players()
-	priority_announce("Your station has been caught by a Wizard Federation Memetic Hazard. You are not y0urself, and yo% a2E 34!NOT4--- Welcome to the Academy, apprentices!", "Memetic Hazard", SSstation.announcer.get_rand_alert_sound())
+	priority_announce("Ваша станция попала в зону действия Меметической Угрозы Федерации Волшебников. Ты не туыыы, и ти.. ниеее--- Добро пожаловать в Академию, ученики!", "Меметическая угроза", SSstation.announcer.get_rand_alert_sound())
 
 /datum/anonymous_theme/wizards/anonymous_name(mob/target)
 	var/wizard_name_first = pick(GLOB.wizard_first)
@@ -201,7 +201,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	return "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 
 /datum/anonymous_theme/spider_clan/announce_to_all_players()
-	priority_announce("Your station has been sold out to the Spider Clan. Your new designations will be applied now.", "New Management", SSstation.announcer.get_rand_alert_sound())
+	priority_announce("Ваша станция была продана Клану Паука. Ваши обязаности будут перераспределены.", "Новое руководство", SSstation.announcer.get_rand_alert_sound())
 
 /datum/anonymous_theme/spider_clan/anonymous_ai_name(is_ai = FALSE)
 	var/posibrain_name = pick(GLOB.posibrain_names)
@@ -220,7 +220,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	set_station_name("[pick(GLOB.first_names)] [pick(GLOB.last_names)]")
 
 /datum/anonymous_theme/station/announce_to_all_players()
-	priority_announce("Confirmed level 9 reality error event near [station_name()]. All personnel must try their best to carry on, as to not trigger more reality events by accident.", "Central Command Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+	priority_announce("Подтверджена ошибка реальности 9 уровня угрозы возле [station_name()]. Все сотрудники должны изо всех сил стараться продолжать работу, чтобы случайно не спровоцировать новые проблемы с реальностью.", "Отдел паранормальных явлений Центрального Командования", 'sound/announcer/notice/notice1.ogg')
 
 /datum/anonymous_theme/station/anonymous_name(mob/target)
 	return new_station_name()

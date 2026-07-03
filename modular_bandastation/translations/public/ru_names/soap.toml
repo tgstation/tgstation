@@ -1,0 +1,8 @@
+[soap]
+nominative = "мыло"
+genitive = "мыла"
+dative = "мылу"
+accusative = "мыло"
+instrumental = "мылом"
+prepositional = "мыле"
+gender = "neuter"

@@ -6,7 +6,7 @@
  */
 /obj/item/disk/bitrunning
 	name = "generic bitrunning program"
-	desc = "A disk containing source code."
+	desc = "Диск с исходным кодом."
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	sticker_icon_state = "o_code"
@@ -28,21 +28,21 @@
 
 /obj/item/disk/bitrunning/examine(mob/user)
 	. = ..()
-	. += span_infoplain("This disk must be carried on your person into a netpod to be used.")
+	. += span_infoplain("Этот диск должен находится у вас, когда вы входите в нетпод.")
 
 	if(isnull(choice_made))
-		. += span_notice("To make a selection, toggle the disk in hand.")
+		. += span_notice("Используйте в руке, чтобы изменить выбор.")
 		return
 
-	. += span_info("It has been used to select: <b>[choice_made]</b>.")
-	. += span_notice("It cannot make another selection.")
+	. += span_info("Сейчас выбрано: <b>[choice_made]</b>.")
+	. += span_notice("Нельзя более вносить изменения.")
 
 /// Handles loading our stuff onto avatars
 /obj/item/disk/bitrunning/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	return NONE
 
 /obj/item/disk/bitrunning/ability
-	desc = "A disk containing source code. It can be used to preload abilities into the virtual domain. Duplicate abilities will be ignored."
+	desc = "Диск с исходным кодом. Позволяет загрузить способности в виртуальный домен. Повторные способности будут проигнорированы."
 	/// The selected ability that this grants
 	var/datum/action/granted_action
 	/// The list of actions that this can grant
@@ -72,7 +72,7 @@
 	for(var/datum/action/thing as anything in selectable_actions)
 		names += initial(thing.name)
 
-	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
+	var/choice = tgui_input_list(user, message = "Выберите способность",  title = "Программа битраннинга", items = names)
 	if(isnull(choice) || !user.is_holding(src))
 		return
 
@@ -83,13 +83,13 @@
 	if(isnull(granted_action))
 		return
 
-	balloon_alert(user, "selected")
+	balloon_alert(user, "выбрано")
 	playsound(user, 'sound/items/click.ogg', 50, TRUE)
 	choice_made = choice
 
 /// Tier 1 programs. Simple, funny, or helpful.
 /obj/item/disk/bitrunning/ability/tier1
-	name = "bitrunning program: basic"
+	name = "Программа битраннинга: базовая"
 	selectable_actions = list(
 		/datum/action/cooldown/spell/conjure/cheese,
 		/datum/action/cooldown/spell/basic_heal,
@@ -97,7 +97,7 @@
 
 /// Tier 2 programs. More complex, powerful, or useful.
 /obj/item/disk/bitrunning/ability/tier2
-	name = "bitrunning program: complex"
+	name = "Программа битраннинга: комплексная"
 	selectable_actions = list(
 		/datum/action/cooldown/spell/pointed/projectile/fireball,
 		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
@@ -106,7 +106,7 @@
 
 /// Tier 3 abilities. Very powerful, game breaking.
 /obj/item/disk/bitrunning/ability/tier3
-	name = "bitrunning program: elite"
+	name = "Программа битраннинга: элитная"
 	selectable_actions = list(
 		/datum/action/cooldown/spell/shapeshift/dragon,
 		/datum/action/cooldown/spell/shapeshift/polar_bear,
@@ -114,7 +114,7 @@
 
 
 /obj/item/disk/bitrunning/item
-	desc = "A disk containing source code. It can be used to preload items into the virtual domain."
+	desc = "Диск с исходным кодом. Позволяет загрузить предметы в виртуальный домен."
 	/// The selected item that this grants
 	var/obj/granted_item
 	/// The list of actions that this can grant
@@ -140,7 +140,7 @@
 	for(var/obj/thing as anything in selectable_items)
 		names += initial(thing.name)
 
-	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
+	var/choice = tgui_input_list(user, message = "Выберите способность",  title = "Программа битраннинга", items = names)
 	if(isnull(choice) || !user.is_holding(src))
 		return
 
@@ -148,7 +148,7 @@
 		if(initial(thing.name) == choice)
 			granted_item = thing
 
-	balloon_alert(user, "selected")
+	balloon_alert(user, "выбрано")
 	playsound(user, 'sound/items/click.ogg', 50, TRUE)
 	choice_made = choice
 

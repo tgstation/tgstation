@@ -1,0 +1,250 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"f" = (
+/obj/machinery/door/window/left/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"j" = (
+/obj/machinery/door/window/right/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"k" = (
+/obj/machinery/door/window/left/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"n" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"p" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"z" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"A" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"D" = (
+/obj/machinery/door/window/right/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"H" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"J" = (
+/turf/closed/wall,
+/area/station/maintenance/central/lesser)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/material,
+/obj/effect/spawner/random/engineering/material,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"W" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+
+(1,1,1) = {"
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+z
+z
+z
+z
+J
+J
+J
+z
+J
+J
+J
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+z
+z
+z
+z
+J
+Y
+J
+z
+J
+L
+J
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+z
+z
+z
+z
+J
+f
+J
+J
+J
+j
+J
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+z
+J
+J
+J
+J
+e
+e
+e
+e
+e
+J
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+z
+J
+M
+k
+e
+e
+e
+e
+e
+e
+J
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+z
+J
+J
+J
+e
+e
+e
+e
+e
+e
+J
+z
+z
+z
+a
+"}
+(8,1,1) = {"
+z
+J
+B
+D
+e
+H
+n
+p
+e
+e
+J
+z
+z
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+A
+A
+A
+a
+W
+a
+a
+a
+a
+a
+"}

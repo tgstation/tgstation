@@ -21,8 +21,8 @@
 
 	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
+	attack_verb_continuous = "кусает"
+	attack_verb_simple = "кусает"
 
 	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
 	maximum_survivable_temperature = T0C + 100
@@ -133,6 +133,8 @@
 	grant_actions(src, innate_actions)
 
 	ADD_TRAIT(src, TRAIT_BLOOD_HUD, INNATE_TRAIT)
+
+	ADD_TRAIT(src, TRAIT_SLEEPIMMUNE, INNATE_TRAIT) // BANDASTATION EDIT: SSD fix
 
 	// Move speed delays at min health
 	// Hatchling goes from 1.5 up to 2 deciseconds
@@ -272,7 +274,7 @@
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
-	desc = "A freshly hatched blood worm. It looks hungry and weak, requiring blood to grow further."
+	desc = "Только что вылупившаяся личинка кровяного червя. Она выглядит голодной и слабой. Для дальнейшего роста требуется кровь."
 
 	icon_state = "hatchling"
 	icon_living = "hatchling"
@@ -314,7 +316,7 @@
 
 /mob/living/basic/blood_worm/juvenile
 	name = "juvenile blood worm"
-	desc = "A mid-sized blood worm. It looks bloodthirsty and has numerous long and extremely sharp teeth."
+	desc = "Кровяной червь среднего размера. Имеет множество длинных и чрезвычайно острых зубов, всем своим видом показывая жажду крови."
 
 	icon_state = "juvenile"
 	icon_living = "juvenile"
@@ -357,7 +359,7 @@
 
 /mob/living/basic/blood_worm/adult
 	name = "adult blood worm"
-	desc = "A monstrosity of a blood worm. It'd probably be better to put your head in an industrial shredder rather than its maw."
+	desc = "Чудовищный кровяной червь. Наверное, было бы лучше засунуть голову в промышленный измельчитель, чем в его пасть."
 
 	icon = 'icons/mob/nonhuman-player/blood_worm_32x48.dmi'
 

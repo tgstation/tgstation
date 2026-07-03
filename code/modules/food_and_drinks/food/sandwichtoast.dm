@@ -318,7 +318,7 @@
 	consumer.ForceContractDisease(new /datum/disease/death_sandwich_poisoning())
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	qdel(src)
 	user.gib()
 	return MANUAL_SUICIDE

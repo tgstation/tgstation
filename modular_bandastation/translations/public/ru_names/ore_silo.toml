@@ -1,0 +1,8 @@
+["ore silo"]
+nominative = "силос для руды"
+genitive = "силоса для руды"
+dative = "силосу для руды"
+accusative = "силос для руды"
+instrumental = "силосом для руды"
+prepositional = "силосе для руды"
+gender = "male"

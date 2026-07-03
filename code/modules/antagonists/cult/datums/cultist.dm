@@ -1,9 +1,9 @@
 /datum/antagonist/cult
-	name = "Cultist"
-	roundend_category = "cultists"
-	antagpanel_category = "Cult"
+	name = "Культист"
+	roundend_category = "Культисты"
+	antagpanel_category = "Культ"
 	antag_moodlet = /datum/mood_event/cult
-	suicide_cry = "FOR NAR'SIE!!"
+	suicide_cry = "ЗА НАР'СИ!!"
 	preview_outfit = /datum/outfit/cultist
 	pref_flag = ROLE_CULTIST
 	antag_hud_name = "cult"
@@ -44,8 +44,8 @@
 		return ..()
 
 	if(!silent)
-		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
-		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
+		owner.current.visible_message(span_deconversion_message("Старая вера вернулась к [owner.current]!"), ignored_mobs = owner.current)
+		to_chat(owner.current, span_userdanger("Незнакомый белый свет вспыхивает в твоем сознании, очищая от скверны Геометра и всех твоих воспоминаний о том, что ты был её слугой."))
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
 	for(var/datum/action/innate/cult/cult_buttons in owner.current.actions)
@@ -56,7 +56,7 @@
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current || mob_override
-	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	handle_clown_mutation(current, mob_override ? null : "Ваши тренировки позволили вам преодолеть свою клоунскую натуру, позволив вам владеть оружием, не нанося себе вреда.")
 	current.add_faction(FACTION_CULT)
 	current.grant_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
@@ -91,7 +91,7 @@
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
-		to_chat(owner.current, span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
+		to_chat(owner.current, span_warning("Вы чувствуете, что что-то вмешивается в ваше ментальное состояние, но вы сопротивляетесь этому!"))
 	return
 
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
@@ -142,7 +142,7 @@
 	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
 	if(metal)
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
-	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
+	to_chat(owner, span_notice("Это поможет вам организовать культ на станции. Используйте их с пользой, и запомните - вы не одни."))
 
 ///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
@@ -150,21 +150,21 @@
 	ADD_TRAIT(item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/where = mob.equip_conspicuous_item(item)
 	if(!where)
-		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
+		to_chat(mob, span_userdanger("К сожалению, вы не смогли получить [item]. Это очень плохо и вам стоит написать админхелп (нажмите F1)."))
 		return FALSE
 
-	to_chat(mob, span_danger("You have [item] in your [where]."))
+	to_chat(mob, span_danger("[item] был помещен в ваш [where]."))
 	if(where == "backpack")
 		mob.back.atom_storage?.show_contents(mob)
 	return TRUE
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal = FALSE))
-		to_chat(admin, span_danger("Spawning dagger failed!"))
+		to_chat(admin, span_danger("Призыв клинка провалился!"))
 
 /datum/antagonist/cult/proc/admin_give_metal(mob/admin)
 	if (!equip_cultist(metal = TRUE))
-		to_chat(admin, span_danger("Spawning runed metal failed!"))
+		to_chat(admin, span_danger("Призыв рунического металла провалился!"))
 
 /datum/antagonist/cult/proc/admin_take_all(mob/admin)
 	var/mob/living/current = owner.current
@@ -200,14 +200,13 @@
 
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		if (cult_mind != owner)
-			to_chat(cult_mind.current, span_cult_large("[owner.current] is your cult's Master! \
-				Follow [owner.current.p_their()] orders to the best of your ability!"))
+			to_chat(cult_mind.current, span_cult_large("[owner.current] ваш Мастер культа! \
+				Выполняйте приказы Мастера насколько это в ваших силах!"))
 
-	to_chat(owner.current, span_cult_large("<span class='warningplain'>You are the cult's Master</span>. \
-		As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
-		targets, such as a location or a noncultist, to direct the cult to them, and, finally, you are capable of \
-		summoning the entire living cult to your location <b><i>once</i></b>. Use these abilities to direct the cult \
-		to victory at any cost."))
+	to_chat(owner.current, span_cult_large("<span class='warningplain'>Вы - Мастер культа</span>. \
+		Как Мастер культа у вас громче голос при коммуникации и вы можете помечать цели, такие как локацию и не культиста, \
+		чтобы направить культ туда. Вы можете призывать живых культистов к вашей локации <b><i>единожды</i></b>. \
+		Используйте свои способности для победы любой ценой."))
 
 	return TRUE
 
@@ -234,7 +233,7 @@
 	if(pass_role)
 		pass_role.Remove(owner.current)
 	owner.current.update_mob_action_buttons()
-	to_chat(owner.current, span_cult_large("You have been demoted from being the cult's Master, you are now a mere acolyte!"))
+	to_chat(owner.current, span_cult_large("Вы были понижены с Мастера культа. Теперь вы послушник!"))
 	return TRUE
 
 ///If dead (and Narsie isn't summoned), will alert all Cultists of their death, sending their location out.
@@ -251,7 +250,7 @@
 	var/area/current_area = get_area(owner.current)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		SEND_SOUND(cult_mind, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
-		to_chat(cult_mind, span_cult_large("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
+		to_chat(cult_mind, span_cult_large("Мастер культа, [owner.current.name] пал в [current_area]!"))
 
 /datum/antagonist/cult/get_preview_icon()
 	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)

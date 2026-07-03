@@ -501,7 +501,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure/gear,
 /obj/item/storage/belt/bandolier,
-/obj/item/storage/belt/holster,
+/obj/item/clothing/accessory/holster,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter2)
 "sR" = (

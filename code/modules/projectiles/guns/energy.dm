@@ -88,7 +88,7 @@
 
 /obj/item/gun/energy/get_cell(atom/movable/interface, mob/user)
 	if(istype(interface, /obj/item/inducer))
-		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		to_chat(user, span_alert("ОШИБКА: невозможно взаимодействие с [interface.declent_ru(INSTRUMENTAL)]."))
 		return null
 	return cell
 
@@ -127,21 +127,21 @@
 	if(!ammo_type.len)
 		return
 	var/obj/projectile/exam_proj
-	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]."
-	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
+	readout += "\nСтандартные модели этого оружия имеют режимов - [span_warning("[ammo_type.len]")]."
+	readout += "Наши бравые интерны показали, что они могут выстоять..."
 	if(projectile_damage_multiplier <= 0)
-		readout += "a theoretically infinite number of shots on [span_warning("every")] mode due to esoteric or nonexistent offensive potential."
+		readout += "теоретически бесконечное количество выстрелов на [span_warning("любом")] режиме из-за эзотерической или отстутсвующего боевого потенциала."
 		return readout.Join("\n") // Sending over the singular string, rather than the whole list
 	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_type)
 		exam_proj = for_ammo.projectile_type
 		if(!ispath(exam_proj))
 			continue
 		if(initial(exam_proj.damage) > 0) // Don't divide by 0!!!!!
-			readout += "[span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * projectile_damage_multiplier) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from [initial(exam_proj.damage_type) == STAMINA ? "immense pain" : "their wounds"]."
+			readout += "выстрелов - [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * projectile_damage_multiplier) * for_ammo.pellets)]")] на режиме [span_warning("[for_ammo.select_name]")], перед тем, как упасть от [initial(exam_proj.damage_type) == STAMINA ? "сильной боли" : "полученных ран"]."
 			if(initial(exam_proj.stamina) > 0) // In case a projectile does damage AND stamina damage (Energy Crossbow)
-				readout += "[span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * projectile_damage_multiplier) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from immense pain."
+				readout += "выстрелов - [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * projectile_damage_multiplier) * for_ammo.pellets)]")] на режиме [span_warning("[for_ammo.select_name]")], перед тем, как упасть от сильной боли."
 		else
-			readout += "a theoretically infinite number of shots on [span_warning("[for_ammo.select_name]")] mode."
+			readout += "теоретически бесконечное количество выстрелов на режиме - [span_warning("[for_ammo.select_name]")]."
 
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
 
@@ -234,6 +234,18 @@
 		process_chamber() // Ditto.
 	return ..()
 
+//BANDASTATION ADDITION: START
+GLOBAL_LIST_INIT(ammo_mode_translations, list(
+	"stun" = "оглушение",
+	"disable" = "обезвреживание",
+	"kill" = "летальный",
+	"scatter" = "разброс",
+	"snare" = "силки",
+	"DESTROY" = "УНИЧТОЖЕНИЕ",
+	"ion" = "ионный"
+))
+//BANDASTATION ADDITION: END
+
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
@@ -244,7 +256,8 @@
 	if (shot.muzzle_flash_color)
 		set_light_color(shot.muzzle_flash_color)
 	if (shot.select_name && user)
-		balloon_alert(user, "set to [shot.select_name]")
+		var/display_name = GLOB.ammo_mode_translations[shot.select_name] || shot.select_name // BANDASTATION ADDITION
+		balloon_alert(user, "выбран режим: [display_name]")
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()
@@ -310,20 +323,20 @@
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if(istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
-		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] вставляет ствол [declent_ru(GENITIVE)] себе в рот. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
-			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
+			user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] расплавляет себе лицо с помощью [declent_ru(GENITIVE)]!"))
 			playsound(loc, fire_sound, 50, TRUE, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()
 			return FIRELOSS
 		else
-			user.visible_message(span_suicide("[user] panics and starts choking to death!"))
+			user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] паникует и начинает задыхаться до смерти!"))
 			return OXYLOSS
 	else
-		user.visible_message(span_suicide("[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] притворяется, что расплавляет себе лицо с помощью [declent_ru(GENITIVE)]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
 		return OXYLOSS
 
@@ -347,13 +360,13 @@
 		if(!loaded_projectile)
 			. = ""
 		else if(loaded_projectile.damage <= 0 || loaded_projectile.damage_type == STAMINA)
-			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass."))
+			user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается зажечь [A.loc == user ? "свою " : " "][A.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)], но ничего не происходит. Тупица."))
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(loaded_projectile.damage_type != BURN)
-			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass."))
+			user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается зажечь [A.declent_ru(ACCUSATIVE)][A.loc == user ? "свою " : " "][A.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)], но создает лишь разрушение. Тупица."))
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
@@ -363,7 +376,7 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = span_rose("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
+			. = span_rose("[capitalize(user.declent_ru(NOMINATIVE))] непринужденно зажигает [A.declent_ru(ACCUSATIVE)][A.loc == user ? "свою " : " "][A.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)]. Ёмаё.")
 
 /obj/item/gun/energy/proc/instant_recharge()
 	SIGNAL_HANDLER

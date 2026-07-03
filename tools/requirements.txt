@@ -11,3 +11,6 @@ mysql-connector-python==9.5.0
 
 # icon cutter
 numpy==2.3.5
+
+# translation validation
+jsonschema==4.23.0

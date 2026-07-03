@@ -1,12 +1,12 @@
 /datum/quirk/item_quirk/deafness
 	name = "Deaf"
-	desc = "You are incurably deaf."
+	desc = "Вы неизлечимо глухой."
 	icon = FA_ICON_DEAF
 	value = -8
 	mob_trait = TRAIT_DEAF
-	gain_text = span_danger("You can't hear anything.")
-	lose_text = span_notice("You're able to hear again!")
-	medical_record_text = "Patient's cochlear nerve is incurably damaged."
+	gain_text = span_danger("Вы ничего не слышите.")
+	lose_text = span_notice("Вы снова можете слышать!")
+	medical_record_text = "У пациента неизлечимо поврежден слуховой нерв."
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/clothing/mask/whistle)
 

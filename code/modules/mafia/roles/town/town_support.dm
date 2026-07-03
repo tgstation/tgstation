@@ -1,6 +1,6 @@
 /datum/mafia_role/lawyer
-	name = "Lawyer"
-	desc = "You can choose a person to provide extensive legal advice to, preventing night actions."
+	name = "Адвокат"
+	desc = "Вы можете выбрать человека, которому будете предоставлять обширные юридические консультации, предотвращая ночные действия."
 	revealed_outfit = /datum/outfit/mafia/lawyer
 	role_type = TOWN_SUPPORT
 	hud_icon = SECHUD_LAWYER
@@ -10,8 +10,8 @@
 	role_unique_actions = list(/datum/mafia_ability/roleblock)
 
 /datum/mafia_role/hop
-	name = "Head of Personnel"
-	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
+	name = "Глава персонала"
+	desc = "Вы можете раскрыть себя один раз за игру, утроив силу голоса, но лишившись возможности быть защищенным!"
 	role_type = TOWN_SUPPORT
 	role_flags = ROLE_UNIQUE
 	role_flags = ROLE_CAN_KILL

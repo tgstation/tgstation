@@ -120,6 +120,10 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_SUPPLY] = REGION_ACCESS_SUPPLY
 	accesses_by_region[REGION_COMMAND] = REGION_ACCESS_COMMAND
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
+	/// BANDASTATION ADDITION START - Jobs Module
+	accesses_by_region[REGION_JUSTICE] = REGION_ACCESS_JUSTICE
+	accesses_by_region[REGION_NT_REPRESENTATION] = REGION_ACCESS_NT_REPRESENTATION
+	/// BANDASTATION ADDITION END - Jobs Module
 
 	station_regions = REGION_AREA_STATION
 
@@ -193,6 +197,20 @@ SUBSYSTEM_DEF(id_access)
 			"templates" = list(),
 			"pdas" = list(),
 		),
+		/// BANDASTATION ADDITION START - Jobs Module
+		"[ACCESS_MAGISTRATE]" = list(
+			"regions" = list(REGION_JUSTICE),
+			"head" = JOB_MAGISTRATE,
+			"templates" = list(),
+			"pdas" = list(),
+		),
+		"[ACCESS_NANOTRASEN_REPRESENTATIVE]" = list(
+			"regions" = list(REGION_NT_REPRESENTATION),
+			"head" = JOB_NANOTRASEN_REPRESENTATIVE,
+			"templates" = list(),
+			"pdas" = list(),
+		),
+		/// BANDASTATION ADDITION END - Jobs Module
 	)
 
 	var/list/station_job_trims = subtypesof(/datum/id_trim/job)

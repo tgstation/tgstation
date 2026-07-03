@@ -1,6 +1,6 @@
 /// Space antagonist that murders everyone in space and nearby it using the power of loads of fire
 /datum/antagonist/sunwalker
-	name = "\improper Sunwalker"
+	name = "\improper Санволкер"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
 	pref_flag = ROLE_SUNWALKER
 
@@ -29,12 +29,12 @@
 
 /datum/objective/sunwalker/New()
 	var/list/explanation_texts = list(
-		"Teach them to fear the void. Overhwelm them with your brilliance, then impart the truth of immolation. Seek to destroy, not enlighten.",
+		"Научите их бояться пустоты. Покройте их своим великолепием, а затем расскажите об истине жертвоприношения. Стремитесь разрушать, а не просвещать.",
 	)
 	explanation_text = pick(explanation_texts)
 
 	if(prob(5))
-		explanation_text = "Man I fucking love glass."
+		explanation_text = "Чувак, я чертовски люблю стекло."
 	..()
 
 /datum/objective/sunwalker/check_completion()

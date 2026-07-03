@@ -223,7 +223,7 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant_if_not_caught))
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant_in_hands)) // BANDASTATION ADDITION
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -262,6 +262,14 @@
 /datum/plant_gene/trait/squash/proc/squash_plant_if_not_caught(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	if(!caught)
 		squash_plant(source, hit_atom)
+
+// BANDASTATION ADDITION - START
+/datum/plant_gene/trait/squash/proc/squash_plant_in_hands(obj/item/food/grown/our_plant, atom/target)
+	if(!do_after(target, SQUASH_WITH_HANDS_DELAY, our_plant))
+		return
+
+	squash_plant(our_plant, target)
+// BANDASTATION ADDITION - END
 
 /*
  * Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.

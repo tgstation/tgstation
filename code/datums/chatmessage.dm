@@ -72,6 +72,7 @@
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
+	text = replacetext_char(text, "+", null) // BANDASTATION ADDITION - TTS
 	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
@@ -156,6 +157,10 @@
 		var/image/r_icon = image('icons/ui/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
 		chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for nonverbal messages
+	// Bandastation Edit Start
+	else if (extra_classes.Find("looc"))
+		LAZYADD(prefixes, "<span style='font-size: 6px; color: #6699cc;'><b>\[LOOC\]</b></span> ")
+	// Bandastation Edit End
 
 	if(isnull(chat_color_name_to_use))
 		if(HAS_TRAIT(target, TRAIT_SIGN_LANG))

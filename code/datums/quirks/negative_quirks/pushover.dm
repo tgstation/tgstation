@@ -1,11 +1,11 @@
 /datum/quirk/pushover
 	name = "Pushover"
-	desc = "Your first instinct is always to let people push you around. Resisting out of grabs is noticeably more difficult."
+	desc = "Ваше мышление заключается в том, чтобы всегда позволять людям манипулировать вами и делать из вас ведомого. Сопротивление из захвата потребует особых усилий."
 	icon = FA_ICON_HANDSHAKE
 	value = -8
 	mob_trait = TRAIT_GRABWEAKNESS
-	gain_text = span_danger("You feel like a pushover.")
-	lose_text = span_notice("You feel like standing up for yourself.")
-	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
+	gain_text = span_danger("Вы чувствуете себя податливо.")
+	lose_text = span_notice("Вы чувствуете себя уверенно.")
+	medical_record_text = "Пациент демонстрирует необычайно неуверенный характер, и им легко манипулировать."
 	hardcore_value = 4
 	mail_goodies = list(/obj/item/clothing/gloves/cargo_gauntlet)

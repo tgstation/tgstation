@@ -56,7 +56,7 @@
 /obj/item/paperplane/suicide_act(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	user.Stun(20 SECONDS)
-	user.visible_message(span_suicide("[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] jams [src] in [user.p_their()] nose. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	user.adjust_eye_blur(12 SECONDS)
 	if(eyes)
 		eyes.apply_organ_damage(rand(6,8))

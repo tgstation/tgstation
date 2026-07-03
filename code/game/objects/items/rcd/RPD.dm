@@ -125,7 +125,7 @@
 	ui_interact(user)
 
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
+	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! Кажется, [user.ru_p_they()] пытается совершить самоубийство..."))
 	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS

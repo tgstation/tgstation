@@ -1,0 +1,367 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor{
+	id = "securedeeznuts";
+	name = "Secure Storage"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/field/generator,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor{
+	id = "securedeeznuts";
+	name = "Secure Storage"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/shieldgen,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/west{
+	id = "securedeeznuts";
+	req_access = "engineering"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/item/wrench,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"t" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"z" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"A" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central/lesser)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"D" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"L" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_dispenser,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/shieldgen,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"O" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/power/emitter,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"R" = (
+/turf/closed/wall,
+/area/station/maintenance/central/lesser)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/field/generator,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"T" = (
+/obj/machinery/door/window/left/directional/south{
+	req_access = "engineering"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"V" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
+"W" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Engineering Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+
+(1,1,1) = {"
+z
+z
+z
+z
+z
+z
+A
+A
+A
+A
+A
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+z
+z
+z
+z
+z
+z
+A
+N
+S
+e
+A
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+z
+z
+z
+z
+z
+z
+A
+n
+i
+P
+A
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+z
+z
+z
+z
+R
+R
+A
+g
+j
+j
+A
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+z
+z
+z
+z
+R
+t
+r
+G
+c
+I
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+z
+z
+z
+z
+R
+T
+B
+B
+B
+C
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+z
+z
+z
+z
+R
+L
+K
+B
+B
+m
+V
+D
+O
+O
+a
+"}
+(8,1,1) = {"
+z
+z
+z
+z
+R
+R
+E
+v
+s
+x
+V
+D
+O
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+W
+a
+a
+a
+a
+a
+"}

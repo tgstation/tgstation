@@ -21,7 +21,7 @@
 /obj/item/implant/uplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()
 	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = target?.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
-	new_uplink.unlock_text = "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
+	new_uplink.unlock_text = "За небольшое количество телекристаллов Синдикат хитроумно вживил вам свой аплинк. Чтобы получить доступ к нему, просто активируйте его."
 	if(!uplink_handler)
 		new_uplink.uplink_handler.owner = target.mind
 		new_uplink.uplink_handler.assigned_role = target.mind.assigned_role.title

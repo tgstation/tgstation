@@ -62,3 +62,6 @@
 #define COMSIG_DASH_ACTION_DASHED "dash_action_dashed"
 /// From /datum/action/innate/dash/proc/charge when charges are replenished
 #define COMSIG_DASH_ACTION_CHARGED "dash_action_charged"
+// BANDASTATION ADD START - SSD INDICATOR
+#define COMSIG_SLIMEMAN_SWAPPED_BODY "slimeman_swapped_body"
+// BANDASTATION ADD END - SSD INDICATOR

@@ -206,7 +206,7 @@
 	name = "robe cape"
 	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "/obj/item/clothing/neck/robe_cape"
+	icon_state = "robe_cape"
 	post_init_icon_state = "robe_cape"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "robe_cape"
@@ -553,7 +553,7 @@
 	if(price)
 		var/true_price = round(price*profit_scaling)
 		var/fee_display = round(price-true_price)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> [MONEY_NAME][interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b>[MONEY_NAME][interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[fee_display]</b>[MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user), true_price)
 	else

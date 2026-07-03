@@ -4926,12 +4926,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"OX" = (
-/obj/machinery/fax{
-	pixel_y = 9
-	},
-/turf/open/floor/plating,
-/area/virtual_domain)
 "Pa" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L4"
@@ -8077,7 +8071,7 @@ ps
 ps
 uS
 uS
-OX
+fh
 Xs
 fh
 uS

@@ -63,7 +63,7 @@
 	switch(action)
 		if("paycheck_advance")
 			if(bank_account.paydays_to_skip < MAX_ADVANCES)
-				bank_account.payday(1, event = "Paycheck advance")
+				bank_account.payday(1, event = "Выплата аванса")
 				bank_account.paydays_to_skip += 1
 			return TRUE
 		if("change_pay_mod")

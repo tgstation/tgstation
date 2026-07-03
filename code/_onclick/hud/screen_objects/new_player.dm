@@ -1,6 +1,11 @@
 #define SHUTTER_MOVEMENT_DURATION 0.4 SECONDS
 #define SHUTTER_WAIT_DURATION 0.2 SECONDS
 
+/datum/hud/new_player
+	///Whether the menu is currently on the client's screen or not
+	var/menu_hud_status = TRUE
+	var/list/shown_station_trait_buttons
+
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_MENU_LAYER

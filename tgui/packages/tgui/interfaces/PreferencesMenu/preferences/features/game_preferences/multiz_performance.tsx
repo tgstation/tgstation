@@ -1,14 +1,13 @@
 import { createDropdownInput, type Feature } from '../base';
 
 export const multiz_performance: Feature<number> = {
-  name: 'Multi-Z Depth',
-  category: 'GAMEPLAY',
-  description:
-    'How many Multi-Z levels are rendered before they start getting culled. Decrease this to improve performance in case of lag on multi-z maps.',
+  name: 'Мульти-Z - детализация',
+  category: 'Геймплей',
+  description: 'Уровень детализации мульти-Z. Влияет на производительность.',
   component: createDropdownInput({
-    [-1]: 'No Culling',
-    2: 'High',
-    1: 'Medium',
-    0: 'Low',
+    [-1]: 'Стандартная',
+    2: 'Высокая',
+    1: 'Средняя',
+    0: 'Низкая',
   }),
 };

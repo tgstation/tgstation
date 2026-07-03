@@ -126,6 +126,12 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			log_transport(log_text, data)
 		if(LOG_ECON)
 			log_econ(log_text, data)
+		// BANDASTATION ADDITION START - LOOC
+		if(LOG_LOOC)
+			log_looc(log_text, data)
+		if(LOG_MSAY)
+			log_mentorsay(log_text, data)
+		// BANDASTATION ADDITION END - LOOC
 		if(LOG_OOC)
 			log_ooc(log_text, data)
 		if(LOG_ADMIN)

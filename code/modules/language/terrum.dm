@@ -1,6 +1,6 @@
 /datum/language/terrum
 	name = "Terrum"
-	desc = "The language of the golems. Sounds similar to old-earth Hebrew."
+	desc = "Язык големов. Звучит похоже на древнееврейский со Старой Земли."
 	key = "g"
 	space_chance = 20
 	sentence_chance = 0
@@ -9,11 +9,11 @@
 	additional_syllable_low = 1
 	additional_syllable_high = 2
 	syllables = list(
-		"sha", "vu", "nah", "ha", "yom", "ma", "cha", "ar", "et", "mol", "lua",
-		"ch", "na", "sh", "ni", "yah", "bes", "ol", "hish", "ev", "la", "ot", "la",
-		"khe", "tza", "chak", "hak", "hin", "hok", "lir", "tov", "yef", "yfe",
-		"cho", "ar", "kas", "kal", "ra", "lom", "im", "bok",
-		"erev", "shlo", "lo", "ta", "im", "yom"
+		"ша", "ву", "нах", "ха", "йом", "ма", "ха", "ар", "эт", "мол", "луа",
+		"х", "на", "ш", "ни", "ях", "бес", "ол", "хиш", "эв", "ла", "от", "ла",
+		"хе", "ца", "хак", "чак", "хин", "хок", "лир", "тов", "еф", "йфе",
+		"хо", "ар", "кас", "кал", "ра", "лом", "им", "бок",
+		"эрев", "шло", "ло", "та", "им", "йом"
 	)
 	special_characters = list("'")
 	icon_state = "golem"

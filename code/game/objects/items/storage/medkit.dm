@@ -36,7 +36,7 @@
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
 /obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/storage/medkit/regular/PopulateContents()
@@ -175,7 +175,7 @@
 	return "tox"
 
 /obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 
@@ -202,7 +202,7 @@
 	return "oxy"
 
 /obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 /obj/item/storage/medkit/o2/PopulateContents()
@@ -226,7 +226,7 @@
 	return "brute"
 
 /obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/storage/medkit/brute/PopulateContents()

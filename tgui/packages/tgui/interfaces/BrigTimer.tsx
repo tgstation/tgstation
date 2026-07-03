@@ -4,12 +4,21 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+// BANDASTATION EDIT START - Verbose presets
 type Data = {
   timing: BooleanLike;
   minutes: number;
   seconds: number;
   flash_charging: BooleanLike;
+  presets: Presets;
 };
+
+type Presets = {
+  short: number;
+  medium: number;
+  long: number;
+}
+// BANDASTATION EDIT END
 
 export const BrigTimer = (props) => {
   const { act, data } = useBackend<Data>();
@@ -53,17 +62,17 @@ export const BrigTimer = (props) => {
           <br />
           <Button
             icon="hourglass-start"
-            content="Short"
+            content={data.presets.short + "m"} // BANDASTATION EDIT - Verbose presets
             onClick={() => act('preset', { preset: 'short' })}
           />
           <Button
             icon="hourglass-start"
-            content="Medium"
+            content={data.presets.medium + "m"} // BANDASTATION EDIT - Verbose presets
             onClick={() => act('preset', { preset: 'medium' })}
           />
           <Button
             icon="hourglass-start"
-            content="Long"
+            content={data.presets.long + "m"} // BANDASTATION EDIT - Verbose presets
             onClick={() => act('preset', { preset: 'long' })}
           />
         </Section>

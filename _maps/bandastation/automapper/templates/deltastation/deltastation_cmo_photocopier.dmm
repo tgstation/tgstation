@@ -1,0 +1,35 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/obj/machinery/camera/directional/north{
+	c_tag = "Medbay - Chief Medical Officer's Office";
+	name = "medbay camera";
+	network = list("ss13","medbay")
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/item/disk/computer/medical{
+	pixel_x = -3
+	},
+/obj/item/disk/computer/medical{
+	pixel_x = 3
+	},
+/obj/item/storage/medkit/regular,
+/obj/item/toy/figure/cmo,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"L" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/cmo)
+
+(1,1,1) = {"
+a
+"}
+(2,1,1) = {"
+L
+"}

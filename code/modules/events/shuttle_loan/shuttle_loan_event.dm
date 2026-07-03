@@ -47,13 +47,13 @@
 		situation = new fake_situation
 	else
 		SSshuttle.shuttle_loan = src
-	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+	priority_announce("Отдел снабжения: [situation.announcement_text]", situation.sender)
 	if(fake)
 		qdel(situation)
 
 ///Triggered when accepting the shuttle loan. Gives payment and delays shuttle. Ensures the event won't be deleted from event controller until after the cargo arrives at the station.
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
+	priority_announce(situation.thanks_msg, "Грузовой шаттл под командованием [command_name()].")
 
 	dispatched = TRUE
 	var/datum/bank_account/dep_account = SSeconomy.get_dep_account(ACCOUNT_CAR)

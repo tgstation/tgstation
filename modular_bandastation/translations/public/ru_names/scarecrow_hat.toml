@@ -1,0 +1,8 @@
+["scarecrow hat"]
+nominative = "шляпа-пугало"
+genitive = "шляпы-пугала"
+dative = "шляпе-пугалу"
+accusative = "шляпу-пугало"
+instrumental = "шляпой-пугалом"
+prepositional = "шляпе-пугале"
+gender = "female"

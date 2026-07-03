@@ -1,8 +1,8 @@
 /// Physical statuses
-#define PHYSICAL_ACTIVE "Active"
-#define PHYSICAL_DEBILITATED "Debilitated"
-#define PHYSICAL_UNCONSCIOUS "Unconscious"
-#define PHYSICAL_DECEASED "Deceased"
+#define PHYSICAL_ACTIVE "Активен"
+#define PHYSICAL_DEBILITATED "Болезнь"
+#define PHYSICAL_UNCONSCIOUS "Бессознательность"
+#define PHYSICAL_DECEASED "Мертв"
 
 /// List of available physical statuses
 #define PHYSICAL_STATUSES list(\
@@ -13,10 +13,10 @@
 )
 
 /// Mental statuses
-#define MENTAL_STABLE "Stable"
-#define MENTAL_WATCH "Watch"
-#define MENTAL_UNSTABLE "Unstable"
-#define MENTAL_INSANE "Insane"
+#define MENTAL_STABLE "Стабильно"
+#define MENTAL_WATCH "Наблюдение"
+#define MENTAL_UNSTABLE "Нестабильно"
+#define MENTAL_INSANE "Безумство"
 
 /// List of available mental statuses
 #define MENTAL_STATUSES list(\

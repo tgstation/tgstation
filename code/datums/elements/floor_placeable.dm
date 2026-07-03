@@ -20,7 +20,7 @@
 
 /datum/element/floor_placeable/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list["floor placeable"] = "This item can be placed directly on the floor."
+	examine_list["напольный"] = "Этот предмет можно напрямую разместить на полу." // BANDASTATION EDIT — перевод тегов
 
 /datum/element/floor_placeable/proc/on_interact_with_atom(obj/item/source, mob/living/user, atom/interacting_with, list/modifiers)
 	SIGNAL_HANDLER

@@ -1,0 +1,8 @@
+["pet carrier"]
+nominative = "переноска для животных"
+genitive = "переноски для животных"
+dative = "переноске для животных"
+accusative = "переноску для животных"
+instrumental = "переноской для животных"
+prepositional = "переноске для животных"
+gender = "female"

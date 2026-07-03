@@ -1,0 +1,8 @@
+["cat ears"]
+nominative = "кошачьи уши"
+genitive = "кошачьих ушей"
+dative = "кошачьим ушам"
+accusative = "кошачьи уши"
+instrumental = "кошачьими ушами"
+prepositional = "кошачьих ушах"
+gender = "plural"

@@ -1,8 +1,8 @@
 /datum/surgery_operation/organ/pacify
 	name = "pacification"
-	rnd_name = "Paxopsy (Pacification)"
-	desc = "Remove aggressive tendencies from a patient's brain."
-	rnd_desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
+	rnd_name = "Паксопсия (Пацификация)"
+	desc = "Удаление агрессивных наклонностей из мозга пациента."
+	rnd_desc = "Хирургическая процедура, которая навсегда подавляет центр агрессии в мозгу, лишая пациента желания наносить прямой вред."
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -25,38 +25,38 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to pacify [FORMAT_ORGAN_OWNER(organ)]..."),
-		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("Вы начинаете пацификацию [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает оперировать мозг [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает проводить операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
+	display_pain(organ.owner, "Ваша голова разрывается от невообразимой боли!")
 
 /datum/surgery_operation/organ/pacify/on_success(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You succeed in pacifying [FORMAT_ORGAN_OWNER(organ)]."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]!"),
-		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("Вам удалось пацифицировать [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно оперирует мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] завершает операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head pounds... the concept of violence flashes in your head, and nearly makes you hurl!")
+	display_pain(organ.owner, "Ваша голова пульсирует... мысль о насилии вспыхивает в вашем разуме, и вас едва не выворачивает наизнанку!")
 	organ.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/organ/pacify/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You screw up, rewiring [FORMAT_ORGAN_OWNER(organ)]'s brain the wrong way around..."),
-		span_warning("[surgeon] screws up, causing brain damage!"),
-		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("Вы совершаете ошибку, перепутав все связи в мозгу [organ.owner.declent_ru(GENITIVE)]..."),
+		span_warning("[surgeon] совершает ошибку, вызывая повреждение мозга!"),
+		span_notice("[surgeon] завершает операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head pounds, and it feels like it's getting worse!")
+	display_pain(organ.owner, "Ваша голова пульсирует, и кажется, становится только хуже!")
 	organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/organ/pacify/mechanic
-	name = "delete aggression programming"
-	rnd_name = "Aggression Suppression Programming (Pacification)"
-	rnd_desc = "Install malware which permanently inhibits the aggression programming of the patient's neural network, making the patient unwilling to cause direct harm."
+	name = "Удаление программы агрессии"
+	rnd_name = "Программирование подавления агрессии (Пацификация)"
+	rnd_desc = "Установка вредоносного ПО, которое навсегда подавляет программы агрессии в нейронной сети пациента, лишая его желания наносить прямой вред."
 	implements = list(
 		TOOL_MULTITOOL = 1,
 		TOOL_HEMOSTAT = 2.85,

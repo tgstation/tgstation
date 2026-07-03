@@ -23,6 +23,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	can_open_with_hands = FALSE
 	COOLDOWN_DECLARE(activation_cooldown)
+	knock_sound = 'sound/effects/glass/glassknock.ogg'
 
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
@@ -59,7 +60,7 @@
 	///Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be). Used during power changes.
 	var/is_playing_alarm = FALSE
 
-	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
+	// BANDASTATION REMOVAL: KNOCK var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 
 
@@ -495,9 +496,28 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(!user.combat_mode)
+		/* BandaStation Removal
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
 		playsound(src, knock_sound, 50, TRUE)
+		*/
+		// BANDASTATION EDIT START
+		if(welded)
+			return
+
+		if(!do_after(user, 5 SECONDS))
+			return
+
+		if(!density)
+			return
+
+		open()
+		user.visible_message(span_notice("[user] opens [src]."), span_notice("You open [src]."))
+		if(!active)
+			return
+
+		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
+		// BANDASTATION EDIT STOP
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))

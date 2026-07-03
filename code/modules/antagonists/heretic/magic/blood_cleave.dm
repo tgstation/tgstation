@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/cleave
-	name = "Cleave"
-	desc = "Causes severe bleeding on a target and several targets around them."
+	name = "Разрезание"
+	desc = "Вызывает сильное кровотечение у цели, и находящихся рядом с ней."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -31,8 +31,8 @@
 			continue
 		if(victim.can_block_magic(antimagic_flags))
 			victim.visible_message(
-				span_danger("[victim]'s flashes in a firey glow, but repels the blaze!"),
-				span_danger("Your body begins to flash a firey glow, but you are protected!!")
+				span_danger("[capitalize(victim.declent_ru(NOMINATIVE))] вспыхивает огненным сиянием, но отражает пламя!"),
+				span_danger("Ваше тело начинает вспыхивать огненным сиянием, но вы защищены!!")
 			)
 			continue
 
@@ -40,8 +40,8 @@
 			continue
 
 		victim.visible_message(
-			span_danger("[victim]'s veins are shredded from within as an unholy blaze erupts from [victim.p_their()] blood!"),
-			span_danger("Your veins burst from within and unholy flame erupts from your blood!")
+			span_danger("Вены [victim.declent_ru(GENITIVE)] разрываются изнутри, и нечестивое пламя вырывается из крови!"),
+			span_danger("Ваши вены лопаются изнутри, и нечестивое пламя вырывается из крови!")
 		)
 
 		var/obj/item/bodypart/bodypart = pick(victim.get_bodyparts())

@@ -1,6 +1,6 @@
 /datum/antagonist/spy
-	name = "\improper Spy"
-	roundend_category = "spies"
+	name = "\proper Шпион"
+	roundend_category = "Шпионы"
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
 	pref_flag = ROLE_SPY
@@ -99,7 +99,7 @@
 		if(give_backup)
 			var/datum/action/backup_uplink/backup = new(src)
 			backup.Grant(spy)
-			to_chat(spy, span_boldnotice("You were unable to be supplied with an uplink, so you have been given the ability to create one yourself."))
+			to_chat(spy, span_boldnotice("Нам не удалось предоставить вам аплинк, поэтому вам была дана возможность создать его самостоятельно."))
 		return FALSE
 
 	return TRUE
@@ -113,16 +113,16 @@
 	uplink_created = TRUE
 
 	if(istype(spy_uplink, /obj/item/modular_computer/pda))
-		uplink_location = "your PDA"
+		uplink_location = "ваш КПК"
 
 	else if(istype(spy_uplink, /obj/item/pen))
 		if(istype(spy_uplink.loc, /obj/item/modular_computer/pda))
-			uplink_location = "your PDA's pen"
+			uplink_location = "ручку вашего КПК"
 		else
-			uplink_location = "a pen"
+			uplink_location = "ручку"
 
 	else if(istype(spy_uplink, /obj/item/radio))
-		uplink_location = "your radio headset"
+		uplink_location = "ваш наушник"
 
 	return TRUE
 
@@ -186,9 +186,9 @@
 /datum/antagonist/spy/roundend_report()
 	var/list/report = list()
 	report += printplayer(owner)
-	report += " - They completed <b>[bounties_claimed]</b> bounties."
+	report += " - Количество совершенных краж <b>[bounties_claimed]</b>."
 	if(bounties_claimed > 0)
-		report += " - They received the following rewards: [english_list(all_loot)]"
+		report += " - Получены следующие награды: [english_list(all_loot)]"
 	report += printobjectives(objectives)
 	return report.Join("<br>")
 
@@ -214,7 +214,7 @@
 
 /datum/action/backup_uplink
 	name = "Create Uplink"
-	desc = "Fashion a PDA, Pen or Radio Headset into a swanky Spy Uplink."
+	desc = "Превратите КПК, ручку или наушник в шикарный шпионский аплинк."
 	var/list/valid_types = list(
 		/obj/item/modular_computer/pda,
 		/obj/item/pen,
@@ -235,15 +235,15 @@
 	var/mob/living/spy = usr
 	var/obj/item/held_thing = spy.get_active_held_item()
 	if(isnull(held_thing))
-		spy.balloon_alert(spy, "you need to hold something!")
+		spy.balloon_alert(spy, "вам нужно что-то держать!")
 		return
 
 	if(!is_type_in_list(held_thing, valid_types))
-		held_thing.balloon_alert(spy, "invalid item!")
+		held_thing.balloon_alert(spy, "неверный предмет!")
 		return
 
 	var/datum/antagonist/spy/spy_datum = target
 	spy_datum.create_spy_uplink(spy, held_thing)
-	held_thing.balloon_alert(spy, "uplink created")
+	held_thing.balloon_alert(spy, "аплинк создан")
 
 	qdel(src)

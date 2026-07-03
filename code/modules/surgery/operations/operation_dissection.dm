@@ -1,8 +1,8 @@
 /datum/surgery_operation/basic/dissection
-	name = "experimental dissection"
-	rnd_name = "Experimental Androtomy (Experimental Dissection and Autopsy)"
-	desc = "Perform an experimental dissection on a patient to obtain research points."
-	rnd_desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
+	name = "Экспериментальное вскрытие"
+	rnd_name = "Экспериментальная андротомия (Экспериментальное вскрытие и аутопсия)"
+	desc = "Проведение экспериментального вскрытия пациента, чтобы получить исследовательские очки."
+	rnd_desc = "Экспериментальная хирургическая процедура, при которой тела препарируются в обмен на исследовательские очки на древних научно-исследовательских консолях."
 	implements = list(
 		/obj/item/autopsy_scanner = 1,
 		TOOL_SCALPEL = 1.66,
@@ -19,8 +19,8 @@
 
 /datum/surgery_operation/basic/dissection/all_required_strings()
 	. += ..()
-	. += "the patient must be deceased"
-	. += "the patient must not have been dissected prior"
+	. += "пациент должен быть мёртвым"
+	. += "пациент ранее не должен подвергаться вскрытию"
 
 /datum/surgery_operation/basic/dissection/state_check(mob/living/patient)
 	return !HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT) && patient.stat == DEAD
@@ -29,9 +29,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to dissect [patient]..."),
-		span_notice("[surgeon] begins to dissect [patient]."),
-		span_notice("[surgeon] begins to dissect [patient]."),
+		span_notice("Вы начинаете вскрывать [patient.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает вскрывать [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает вскрывать [patient.declent_ru(GENITIVE)]."),
 	)
 
 /datum/surgery_operation/basic/dissection/on_failure(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
@@ -39,9 +39,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You dissect [patient], but don't find anything particularly interesting."),
-		span_warning("[surgeon] dissects [patient]."),
-		span_warning("[surgeon] dissects [patient]."),
+		span_warning("Вы производите вскрытие [patient.declent_ru(GENITIVE)], но не находите ничего интересного."),
+		span_warning("[surgeon] производит вскрытие [patient.declent_ru(GENITIVE)]."),
+		span_warning("[surgeon] производит вскрытие [patient.declent_ru(GENITIVE)]."),
 	)
 	give_paper(surgeon, points_earned)
 	patient.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
@@ -52,9 +52,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You dissect [patient], discovering [points_earned] point\s of data!"),
-		span_warning("[surgeon] dissects [patient]."),
-		span_warning("[surgeon] dissects [patient]."),
+		span_warning("Вы производите вскрытие [patient.declent_ru(GENITIVE)] и обнаруживаете [points_earned] точку данных!"),
+		span_warning("[surgeon] производит вскрытие [patient.declent_ru(GENITIVE)]."),
+		span_warning("[surgeon] производит вскрытие [patient.declent_ru(GENITIVE)]."),
 	)
 	give_paper(surgeon, points_earned)
 	patient.apply_damage(80, BRUTE, BODY_ZONE_CHEST)
@@ -91,8 +91,8 @@
 	return reward
 
 /obj/item/research_notes
-	name = "research notes"
-	desc = "Valuable scientific data. Use it in an ancient research server to turn it in."
+	name = "Исследовательские заметки"
+	desc = "Ценные научные данные. Используйте их на древнем исследовательском сервере, чтобы получить доступ к ним."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper"
 	w_class = WEIGHT_CLASS_SMALL
@@ -113,7 +113,7 @@
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()
-	. += span_notice("It is worth [value] research points.")
+	. += span_notice("Это стоит [value] исследовательских очков.")
 
 /obj/item/research_notes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/research_notes))
@@ -127,16 +127,16 @@
 /// proc that changes name and icon depending on value
 /obj/item/research_notes/proc/change_vol()
 	if(value >= 10000)
-		name = "revolutionary discovery in the field of [origin_type]"
+		name = "Революционное открытие в области [origin_type]"
 		icon_state = "docs_verified"
 	else if(value >= 2500)
-		name = "essay about [origin_type]"
+		name = "Эссе о [origin_type]"
 		icon_state = "paper_words"
 	else if(value >= 100)
-		name = "notes of [origin_type]"
+		name = "Примечания к [origin_type]"
 		icon_state = "paperslip_words"
 	else
-		name = "fragmentary data of [origin_type]"
+		name = "Фрагментарные данные о [origin_type]"
 		icon_state = "scrap"
 
 ///proc when you slap research notes into another one, it applies a bonus if they are of different origin (only applied once)
@@ -145,7 +145,7 @@
 	value = value + new_paper.value
 	if(origin_type != new_paper.origin_type && !mixed)
 		value += bonus * 0.3
-		origin_type = "[origin_type] and [new_paper.origin_type]"
+		origin_type = "[origin_type] и [new_paper.origin_type]"
 		mixed = TRUE
 	change_vol()
 	qdel(new_paper)

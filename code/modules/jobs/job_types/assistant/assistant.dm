@@ -5,11 +5,11 @@ Assistant
 */
 /datum/job/assistant
 	title = JOB_ASSISTANT
-	description = "Get your space legs, assist people, ask the HoP to give you a job."
+	description = "Бездельничайте, помогайте людям, просите ГП подкинуть вам какую-нибудь работенку."
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = "absolutely everyone"
+	supervisors = "абсолютно всеми"
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
@@ -69,6 +69,11 @@ Assistant
 			head = special_hat
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
+	/// BANDASTATION EDIT START - Loadout
+	if(uniform)
+		return
+	/// BANDASTATION EDIT END - Loadout
+
 	var/static/jumpsuit_number = 0
 	jumpsuit_number += 1
 

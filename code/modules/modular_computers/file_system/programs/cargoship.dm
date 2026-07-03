@@ -3,7 +3,7 @@
 	filedesc = "GrandArk Exporter"
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
 	program_open_overlay = "shipping"
-	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
+	extended_desc = "Комбинированное приложение для принтера/сканера, позволяющее модульным компьютерам печатать штрих-коды для удобного сканирования и отправки."
 	size = 6
 	tgui_id = "NtosShipping"
 	program_icon = "tags"

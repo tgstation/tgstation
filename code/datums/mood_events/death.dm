@@ -45,11 +45,11 @@
 
 	if(!description)
 		if(gibbed)
-			description = "%DEAD_MOB% just exploded in front of me!!"
+			description = "%DEAD_MOB% просто взорвался напротив меня!!"
 		else if(dusted)
-			description = "%DEAD_MOB% was just vaporized in front of me!!"
+			description = "%DEAD_MOB% просто испарился у меня на глазах!!"
 		else
-			description = "I just saw %DEAD_MOB% die. How horrible..."
+			description = "Я видел, как %DEAD_MOB% умер. Как ужасно..."
 
 	description = capitalize(replacetext(description, "%DEAD_MOB%", get_descriptor(dead_mob)))
 
@@ -87,8 +87,8 @@
 	if(is_pet(dead_mob))
 		return "[dead_mob]"
 	if(dead_mob.name != "Unknown" && dead_mob.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER)
-		return "the [LOWER_TEXT(dead_mob.mind?.assigned_role.title)]"
-	return "someone"
+		return "[LOWER_TEXT(dead_mob.mind?.assigned_role.title)]"
+	return "кто-то"
 
 /// Highest priority: Clown naivety about death
 /datum/mood_event/conditional/see_death/naive
@@ -99,12 +99,12 @@
 	return HAS_MIND_TRAIT(who, TRAIT_NAIVE) && !dusted && !gibbed
 
 /datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob, dusted, gibbed)
-	description = "Have a good nap, [get_descriptor(dead_mob)]."
+	description = "Хорошо поспать, [get_descriptor(dead_mob)]."
 
 /// Cultists are super brainwashed so they get buffs instead
 /datum/mood_event/conditional/see_death/cult
 	priority = CULT_PRIORITY
-	description = "More souls for the Geometer!"
+	description = "Больше душ для Геометра!"
 	mood_change = parent_type::mood_change * -0.5
 
 /datum/mood_event/conditional/see_death/cult/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
@@ -124,12 +124,12 @@
 
 /datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob, dusted, gibbed)
 	var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
-	description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
+	description = "[possible_head_job.title ? "[LOWER_TEXT(possible_head_job.title)]" : "Ещё один глава отдела"] мёртв! Да здравствует революция!"
 
 /// Then gamers
 /datum/mood_event/conditional/see_death/gamer
 	priority = GAMER_PRIORITY
-	description = "Another one bites the dust!"
+	description = "Ещё один глотает пыль!"
 	mood_change = parent_type::mood_change * -0.5
 
 /datum/mood_event/conditional/see_death/gamer/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
@@ -150,11 +150,11 @@
 
 /datum/mood_event/conditional/see_death/dontcare/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)
-		description = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
+		description = "Оу, %DEAD_MOB% взорвался. Что ж, пора за шваброй."
 	else if(dusted)
-		description = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
+		description = "Оу, %DEAD_MOB% испарился. Придётся искать совок."
 	else
-		description = "Oh, %DEAD_MOB% died. Shame, I guess."
+		description = "Оу, %DEAD_MOB% умер. Досадно, наверное."
 
 /// Ashwalkers get a small boost from sacrificing people to the necropolis spire, and don't care otherwise
 /datum/mood_event/conditional/see_death/ashwalker
@@ -182,11 +182,11 @@
 
 /datum/mood_event/conditional/see_death/pet/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)
-		description = "%DEAD_MOB% just exploded!!"
+		description = "%DEAD_MOB% просто взорвался!!"
 	else if(dusted)
-		description = "%DEAD_MOB% just vaporized!!"
+		description = "%DEAD_MOB% просто испарился!!"
 	else
-		description = "%DEAD_MOB% just died!!"
+		description = "%DEAD_MOB% просто умер!!"
 
 	// future todo : make the hop care about ian, cmo runtime, etc.
 	if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
@@ -226,25 +226,25 @@
 	if(islarva(dead_mob))
 		change_modifier = 0.1
 		timeout_modifier = 0.1
-		description = "Fine day whenever those slugs get squished."
+		description = "Прекрасный день, когда давят этих червей."
 
 	if(isalienadult(dead_mob))
 		change_modifier = 0.25
 		timeout_modifier = 0.25
-		description = "That xenomorph bit the dust! Hell yeah!"
+		description = "Этот ксеноморф глотает пыль. Ооо, да!!"
 		if(gibbed || dusted)
 			change_modifier += 0.1
 			timeout_modifier += 0.1
-			description = "It warms my heart to see xenomorphs get blown to bits!"
+			description = "Это согревает моё сердце, когда ксеноморфов разносят на кусочки!"
 
 	if(isalienroyal(dead_mob) || istype(dead_mob, /mob/living/basic/alien/queen))
 		change_modifier = 0.5
 		timeout_modifier = 0.5
-		description = "The queen has fallen! The galaxy lives another day! I hope those bastards all rot in hell!"
+		description = "Королева пала! Галактика начнёт новую жизнь! Я надеюсь, что все эти ублюдки сгниют в аду!"
 		if(gibbed || dusted)
 			change_modifier += 0.25
 			timeout_modifier += 0.25
-			description = "Seeing the xenomorph queen blown to bits fills me with extreme joy!"
+			description = "Вид королевы ксеноморфов, разорванной на куски, наполняет меня огромной радостью!"
 
 
 	mood_change = initial(mood_change) * -change_modifier
@@ -267,7 +267,7 @@
 	var/embryo_stage_multiplier = 1 + (embryo.stage / 10)
 	mood_change *= embryo_stage_multiplier
 	timeout *= embryo_stage_multiplier
-	description = "There's something inside of me churning after I saw that xenomorph die."
+	description = "Что-то внутри меня всколыхнулось после того, как я увидел смерть того ксеноморфа."
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_XENO_HOST), PROC_REF(on_embryo_removal))
 
 /// Handles cleanup once the embryo carrier dies
@@ -285,11 +285,11 @@
 
 /datum/mood_event/conditional/see_death/desensitized/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)
-		description = "I saw %DEAD_MOB% explode."
+		description = "Я увидел, как %DEAD_MOB% взорвался."
 	else if(dusted)
-		description = "I saw %DEAD_MOB% get vaporized."
+		description = "Я увидел, как %DEAD_MOB% испарился."
 	else
-		description = "I saw %DEAD_MOB% die."
+		description = "Я увидел, как %DEAD_MOB% умер."
 
 
 #undef DESENSITIZED_PRIORITY

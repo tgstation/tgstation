@@ -67,6 +67,14 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 	new_target.update_explanation_text()
 	revs.objectives += new_target
 
+/// BANDASTATION EDIT START - Revolution Overhaul
+	for(var/datum/mind/rev_mind as anything in revs.members)
+		var/datum/antagonist/rev/rev_datum = rev_mind.has_antag_datum(/datum/antagonist/rev)
+		if(rev_datum)
+			rev_datum.objectives |= new_target
+		rev_mind.announce_objectives()
+/// BANDASTATION EDIT END - Revolution Overhaul
+
 /datum/revolution_handler/proc/declare_revs_win()
 	for(var/datum/mind/headrev_mind as anything in revs.ex_headrevs)
 		var/mob/living/real_headrev = headrev_mind.current
@@ -78,6 +86,15 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 			/datum/personality/nt/disillusioned = /datum/mood_event/disillusioned_revs_win,
 		), range = 5)
 
+/// BANDASTATION EDIT START - Revolution Overhaul
+	priority_announce(
+			text = "Похоже, восстание одержало победу. Пожалуйста, немедленно прекратите работу и окажите помощь пострадавшим лидерам революции и своим товарищам. \
+				Лидерам революции разрешается вызвать эвакуационный шаттл для возвращения на оперативную базу.",
+			color_override = "red",
+			sender_override = "Оповещение от Синдиката: Viva la Revolution",
+			has_important_message = TRUE,
+	)
+/// BANDASTATION EDIT END - Revolution Overhaul
 	result = REVOLUTION_VICTORY
 
 /datum/revolution_handler/proc/declare_heads_win()
@@ -108,8 +125,8 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 				/datum/personality/nt/disillusioned = /datum/mood_event/disillusioned_revs_lost
 			), range = 5)
 
-	priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "[command_name()] Loyalty Monitoring Division")
+	priority_announce("Похоже, мятеж подавлен. Пожалуйста, верните себя и своих недееспособных коллег к работе. \
+		Мы дистанционно внесли глав революции в черный список в ваших медицинских записях, чтобы предотвратить нежелательную реанимацию.", null, null, null, "[command_name()]: Отдел мониторинга лояльности")
 
 	result = STATION_VICTORY
 

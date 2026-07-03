@@ -1,6 +1,6 @@
 /// Inhand items (Moves overrided items to backpack)
 /datum/loadout_category/inhands
-	category_name = "Inhand"
+	category_name = "В руках"
 	category_ui_icon = FA_ICON_BRIEFCASE
 	type_to_generate = /datum/loadout_item/inhand
 	tab_order = /datum/loadout_category/head::tab_order + 4

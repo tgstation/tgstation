@@ -658,7 +658,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		for(var/block_id in GLOB.dna_feature_blocks)
 			var/datum/dna_block/feature/block = GLOB.dna_feature_blocks[block_id]
 			if(prob(probability))
-				M.dna.unique_identity = block.modified_hash(M.dna.unique_identity, random_string(block.block_length, GLOB.hex_characters))
+				M.dna.unique_features = block.modified_hash(M.dna.unique_features, random_string(block.block_length, GLOB.hex_characters)) // BANDASTATION EDIT: was unique_identity
 	if(ui || uf)
 		M.updateappearance(mutcolor_update=uf, mutations_overlay_update=1)
 

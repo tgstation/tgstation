@@ -2,7 +2,7 @@
 
 /obj/machinery/chem_master
 	name = "\improper ChemMaster 3000"
-	desc = "Used to separate chemicals and distribute them in a variety of forms."
+	desc = "Используется для выведения и разделения химикатов и их различных форм."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "chemmaster"
 	base_icon_state = "chemmaster"
@@ -584,7 +584,7 @@
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
-	desc = "Used to create condiments and other cooking supplies."
+	desc = "Используется для создания приправ."
 	icon_state = "condimaster"
 
 /obj/machinery/chem_master/condimaster/load_printable_containers()

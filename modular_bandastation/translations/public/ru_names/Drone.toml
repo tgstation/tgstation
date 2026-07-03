@@ -1,0 +1,8 @@
+[Drone]
+nominative = "Дрон"
+genitive = "Дрона"
+dative = "Дрону"
+accusative = "Дрон"
+instrumental = "Дроном"
+prepositional = "Дроне"
+gender = "female"

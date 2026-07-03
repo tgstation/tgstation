@@ -1,0 +1,122 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"j" = (
+/turf/closed/wall,
+/area/station/medical/treatment_center)
+"r" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"B" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"C" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/camera/directional/west{
+	network = list("ss13","medbay");
+	c_tag = "Medical - Treatment North-West"
+	},
+/obj/machinery/vitals_reader/directional/west,
+/obj/structure/table/glass,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/suture,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"H" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/machinery/vitals_reader/directional/east,
+/obj/structure/table/glass,
+/obj/item/storage/box/bodybags{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/box/beakers,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"I" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/directional/east,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"T" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/structure/bed/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"Y" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+
+(1,1,1) = {"
+j
+B
+"}
+(2,1,1) = {"
+C
+a
+"}
+(3,1,1) = {"
+T
+a
+"}
+(4,1,1) = {"
+r
+a
+"}
+(5,1,1) = {"
+a
+a
+"}
+(6,1,1) = {"
+f
+a
+"}
+(7,1,1) = {"
+Y
+a
+"}
+(8,1,1) = {"
+H
+a
+"}
+(9,1,1) = {"
+j
+I
+"}

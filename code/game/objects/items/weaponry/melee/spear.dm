@@ -92,7 +92,7 @@
 	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	if (!do_after(user, 4 SECONDS, target = src))
 		return SHAME
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
@@ -341,7 +341,7 @@
 	return ..()
 
 /obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
 	explosive.detonate()

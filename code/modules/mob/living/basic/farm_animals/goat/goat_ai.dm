@@ -18,6 +18,6 @@
 
 /datum/ai_planning_subtree/random_speech/goat
 	speech_chance = 3
-	emote_hear = list("brays.")
-	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
-	speak = list("EHEHEHEHEH", "eh?")
+	emote_hear = list("блеет.")
+	emote_see = list("трясет головой.", "топает ногой.", "пялится вокруг.")
+	speak = list("беее", "бе?")

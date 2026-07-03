@@ -162,7 +162,7 @@
 		return
 
 	attached_bot.add_money(amount_to_insert)
-	balloon_alert(attacker, "inserted [amount_to_insert] [MONEY_NAME].")
+	balloon_alert(attacker, "inserted [amount_to_insert][MONEY_NAME].")
 	money_input.set_output(amount_to_insert)
 	entity.set_output(attacker)
 	money_trigger.set_output(COMPONENT_SIGNAL)

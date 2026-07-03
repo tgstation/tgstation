@@ -1,0 +1,8 @@
+["leather satchel"]
+nominative = "кожаная сумка"
+genitive = "кожаной сумки"
+dative = "кожаной сумке"
+accusative = "кожаную сумку"
+instrumental = "кожаной сумкой"
+prepositional = "кожаной сумке"
+gender = "female"

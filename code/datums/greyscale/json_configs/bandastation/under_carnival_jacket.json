@@ -1,0 +1,21 @@
+{
+	"jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_general",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_shirt",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_accent",
+			"blend_mode": "overlay"
+		}
+	]
+}

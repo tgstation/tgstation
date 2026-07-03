@@ -1,0 +1,8 @@
+["science goggles"]
+nominative = "научные очки"
+genitive = "научных очков"
+dative = "научным очкам"
+accusative = "научные очки"
+instrumental = "научными очками"
+prepositional = "научных очках"
+gender = "plural"

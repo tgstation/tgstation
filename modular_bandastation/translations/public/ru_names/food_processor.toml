@@ -1,0 +1,8 @@
+["food processor"]
+nominative = "пищевой комбайн"
+genitive = "пищевого комбайна"
+dative = "пищевому комбайну"
+accusative = "пищевой комбайн"
+instrumental = "пищевым комбайном"
+prepositional = "пищевом комбайне"
+gender = "male"

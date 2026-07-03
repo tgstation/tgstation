@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast
-	name = "Star Blast"
-	desc = "This spell fires an unstoppable disk with cosmic energies at a target, spreading the star mark. \
-			When recasted, you will be teleported to the disk, and cosmic fields will generate from the disk and from the caster, pulling nearby heathens into it."
+	name = "Звёздный взрыв"
+	desc = "Запускает медленно движущийся снаряд, оставляющий Звездные поля на пути пролета. \
+			При повтороной активации, телепортирует вас к снаряду, создавая вокруг заклинателя и диска гравитационные поля, притягивающие близлежащих язычников."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -15,8 +15,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	active_msg = "You prepare to cast your star blast!"
-	deactive_msg = "You stop swirling cosmic energies from the palm of your hand... for now."
+	active_msg = "Вы готовитесь создать звездный взрыв!"
+	deactive_msg = "Вы прекращаете завихрять космическую энергию с ладони... пока что."
 	cast_range = 12
 	projectile_type = /obj/projectile/magic/star_ball
 	/// Weakref to the projectile we fire, so that we can recast our ability to teleport to its location

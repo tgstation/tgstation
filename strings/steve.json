@@ -1,21 +1,21 @@
 {
 	"ballmer_good_msg": [
-		"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
-		"Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
-		"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
-		"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
-		"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."
+		"Послушайте меня. Что если, и это всего лишь теория - мы сделаем РнД управляемым с наших ПДА?",
+		"Господа, что если мы сделаем блюспейс проводку, чтобы мыши больше не могли перегрызать провода?",
+		"Не знаю как вы, господа, но я считаю что разделение карт и ПДА - пиздец как не удобно. Что если мы просто объединим их? Тогда их будет труднее украсть.",
+		"Я думаю, что нам следует создать свой git репозиторий под лицензией AGPLv3 для наших исследований, чтобы мы могли свободно делиться ими с другими станциями.",
+		"Какого хуя мы не превратим всю обувь в галоши? У нас есть технология."
 	],
 
 	"ballmer_windows_me_msg": [
-		"Who keeps commiting to master?",
-		"Best idea ever: Disposal pipes instead of hallways.",
-		"Do you know who ate all the donuts?",
-		"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
-		"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
-		"We should store bank records in a webscale datastore, like /dev/null.",
-		"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?",
-		"Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
-		"You ever wonder if /dev/null supports sharding?"
+		"Кто продолжает коммитить в мастер?",
+		"Лучшая идея на свете: Утилизационные трубы вместо коридоров.",
+		"Кто сожрал все пончики?",
+		"Господа, радикальная идея: H.O.N.K. мехи, но без бананиума.",
+		"Мы ведь локализируем наши технологии на отдельной ветке? Что если мы объединим её с мастером? Тогда у нас не будет разделения кодовой базы.",
+		"Мы должны хранить банковские записи в веб-масштабируемом хранилище данных, таком как /dev/null.",
+		"Что если, мы будем использовать язык написанный за неделю на салфетке, для всех наших серверов?",
+		"Бля, а что если, мы... ну это... в каждый ПДА поставим веб-сервер с автозапуском, с стандартными админ-паролями?",
+		"Вы когда-нибудь задумывались, поддерживает ли /dev/null шардинг?"
 	]
 }

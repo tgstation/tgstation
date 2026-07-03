@@ -144,14 +144,14 @@
 /mob/proc/get_held_index_name(i)
 	var/list/hand = list()
 	if(i > 2)
-		hand += "upper "
+		hand += "верхней "
 	var/num = 0
 	if(IS_RIGHT_INDEX(i))
 		num = i-2
-		hand += "right hand"
+		hand += "правой руке"
 	else
 		num = i-1
-		hand += "left hand"
+		hand += "левой руке"
 	num -= (num*0.5)
 	if(num > 1) //"upper left hand #1" seems weird, but "upper left hand #2" is A-ok
 		hand += " #[num]"
@@ -241,7 +241,7 @@
 		if (merge_stacks)
 			if (istype(active_stack) && active_stack.can_merge(item_stack, inhand = TRUE))
 				if (item_stack.merge(active_stack))
-					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s."))
+					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.")) // TODO220 - need to add support in master
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
@@ -519,7 +519,7 @@
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
-			to_chat(src, span_warning("You are unable to equip that!"))
+			to_chat(src, span_warning("Вы не можете экипировать это!"))
 		return FALSE
 	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
 	return TRUE
@@ -629,7 +629,7 @@
 		if(gear?.atom_storage?.attempt_insert(src, user, messages = FALSE))
 			return TRUE
 
-	to_chat(user, span_warning("You are unable to equip that!"))
+	to_chat(user, span_warning("Вы не можете экипировать это!"))
 	return FALSE
 
 /// Attempts to put an item into storage located in a given slot
@@ -654,7 +654,7 @@
 /mob/proc/execute_quick_equip()
 	var/obj/item/I = get_active_held_item()
 	if(!I)
-		to_chat(src, span_warning("You are not holding anything to equip!"))
+		to_chat(src, span_warning("Вы ничего не держите, что можно было бы экипировать!"))
 		return
 	if(!QDELETED(I))
 		I.equip_to_best_slot(src)

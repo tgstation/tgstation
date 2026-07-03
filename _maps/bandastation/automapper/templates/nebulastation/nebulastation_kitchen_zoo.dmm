@@ -1,0 +1,103 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"g" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/mob/living/basic/chicken/cock/clucky,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"p" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"q" = (
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
+"r" = (
+/turf/closed/wall,
+/area/station/service/kitchen)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/pig/named/Yanas,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"w" = (
+/obj/structure/flora/rock/pile/style_random,
+/mob/living/basic/cow/black/pipa,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"D" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
+"J" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/mob/living/basic/chicken/wife,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"L" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/mob/living/basic/pig/named/Sanya,
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/pig/named/Marina,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"R" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/sandy_dirt,
+/area/station/service/kitchen)
+"T" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 9
+	},
+/obj/machinery/light/small/directional/north,
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
+
+(1,1,1) = {"
+r
+L
+J
+"}
+(2,1,1) = {"
+r
+v
+a
+"}
+(3,1,1) = {"
+r
+Q
+w
+"}
+(4,1,1) = {"
+r
+p
+R
+"}
+(5,1,1) = {"
+r
+r
+g
+"}
+(6,1,1) = {"
+q
+r
+D
+"}
+(7,1,1) = {"
+r
+r
+T
+"}

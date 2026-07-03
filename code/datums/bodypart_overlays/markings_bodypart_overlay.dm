@@ -6,6 +6,12 @@
 	var/use_gender = FALSE
 	/// Which dna feature key to draw from
 	var/dna_feature_key
+
+	/// BANDASTATION ADDITION START - Species
+	/// Which dna color feature use to color the markings
+	var/dna_color_feature_key
+	/// BANDASTATION ADDITION START - Species
+
 	/// Which bodyparts do we apply ourselves to?
 	var/list/applies_to = list(
 		/obj/item/bodypart/arm/left,

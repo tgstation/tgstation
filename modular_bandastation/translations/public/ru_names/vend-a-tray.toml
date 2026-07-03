@@ -1,0 +1,8 @@
+[vend-a-tray]
+nominative = "поднос-автомат"
+genitive = "подноса-автомата"
+dative = "подносу-автомату"
+accusative = "поднос-автомат"
+instrumental = "подносом-автоматом"
+prepositional = "подносе-автомате"
+gender = "male"

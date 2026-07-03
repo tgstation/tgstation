@@ -15,7 +15,7 @@
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is huffing [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
@@ -31,7 +31,7 @@
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is huffing [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 /obj/item/cultivator
@@ -53,7 +53,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/cultivator/rake
@@ -128,7 +128,7 @@
 	)
 
 /obj/item/hatchet/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
@@ -177,7 +177,7 @@
 	AddComponent(/datum/component/walking_aid)
 
 /obj/item/scythe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)

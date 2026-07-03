@@ -1,7 +1,7 @@
 /datum/lazy_template/virtual_domain/hierophant
-	name = "Zealot Arena"
+	name = "Арена ревнителя"
 	cost = BITRUNNER_COST_HIGH
-	desc = "Dance, puppets, dance!"
+	desc = "Танцуйте, марионетки, танцуйте!"
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	forced_outfit = /datum/outfit/job/miner
 	key = "hierophant"

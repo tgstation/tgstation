@@ -4,9 +4,9 @@
 
 /datum/spellbook_entry/summon/ghosts
 	name = "Summon Ghosts"
-	desc = "Spook the crew out by making them see dead people. \
-		Be warned, ghosts are capricious and occasionally vindicative, \
-		and some will use their incredibly minor abilities to frustrate you."
+	desc = "Напугайте экипаж, заставив их видеть мертвых. \
+		Будьте внимательны, призраки капризны и иногда мстительны, \
+		а некоторые из них будут использовать свои невероятно незначительные способности, чтобы насолить вам."
 	cost = 0
 
 /datum/spellbook_entry/summon/ghosts/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
@@ -16,8 +16,8 @@
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. \
-		There is a good chance that they will shoot each other first."
+	desc = "Нет ничего плохого в том, чтобы вооружить команду сумасшедших, которые только и ждут повода, чтобы убить вас. \
+		Но велика вероятность, что они сперва перестреляют друг друга."
 
 /datum/spellbook_entry/summon/guns/can_be_purchased()
 	// Must be a high chaos round + Also must be config enabled
@@ -30,8 +30,8 @@
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-	desc = "Share the wonders of magic with the crew and show them \
-		why they aren't to be trusted with it at the same time."
+	desc = "Поделитесь с командой чудесами магии \
+		и заодно покажите им, почему им нельзя ее доверять."
 
 /datum/spellbook_entry/summon/magic/can_be_purchased()
 	// Must be a high chaos round + Also must be config enabled
@@ -44,9 +44,9 @@
 
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
-	desc = "Give Murphy's law a little push and replace all events with \
-		special wizard ones that will confound and confuse everyone. \
-		Multiple castings increase the rate of these events."
+	desc = "Подтолкните закон Мерфи и замените все события на  \
+		специальные магические, которые запутают и собьют с толку всех. \
+		Многократное использование увеличивает частоту этих событий."
 	cost = 2
 	limit = 5 // Each purchase can intensify it.
 
@@ -61,11 +61,11 @@
 
 /datum/spellbook_entry/summon/curse_of_madness
 	name = "Curse of Madness"
-	desc = "Curses the station, warping the minds of everyone inside, causing lasting traumas. Warning: this spell can affect you if not cast from a safe distance."
+	desc = "Проклинает станцию, искажая сознание всех, кто в ней находится, и вызывая неизгладимые травмы. Предупреждение: это заклинание может подействовать на вас, если оно не применяется с безопасного расстояния."
 	cost = 4
 
 /datum/spellbook_entry/summon/curse_of_madness/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
-	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(user, "Прошепчите секретную истину, чтобы довести ваших жертв до безумия", "Шепоты безумия", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
 	curse_of_madness(user, message)
@@ -76,8 +76,8 @@
 /// This includes item entries (which will be given to everyone) but disincludes other rituals like itself
 /datum/spellbook_entry/summon/specific_spell
 	name = "Mass Wizard Teaching"
-	desc = "Teach a specific spell (or give a specific item) to everyone on the station. \
-		The cost of this is increased by the cost of the spell you choose. And don't worry - you, too, will learn the spell!"
+	desc = "Научите определенному заклинанию (или дайте определенный предмет) каждому на станции. \
+		Стоимость этого увеличивается на стоимость выбранного вами заклинания. И не волнуйтесь - вы тоже выучите заклинание!"
 	cost = 3 // cheapest is 4 cost, most expensive is 7 cost
 	limit = 1
 
@@ -92,16 +92,16 @@
 		spell_options[entry.name] = entry
 
 	sortTim(spell_options, GLOBAL_PROC_REF(cmp_text_asc))
-	var/chosen_spell_name = tgui_input_list(user, "Choose a spell (or item) to grant to everyone...", "Wizardly Teaching", spell_options)
+	var/chosen_spell_name = tgui_input_list(user, "Выберите заклинание (или предмет), которое вы дадите каждому...", "Волшебное обучение", spell_options)
 	if(isnull(chosen_spell_name) || QDELETED(user) || QDELETED(book))
 		return FALSE
 	if(GLOB.mass_teaching)
-		tgui_alert(user, "Someone's already cast [name]!", "Wizardly Teaching", list("Shame"))
+		tgui_alert(user, "Кто-то уже провел [name]!", "Волшебное обучение", list("Shame"))
 		return FALSE
 
 	var/datum/spellbook_entry/chosen_entry = spell_options[chosen_spell_name]
 	if(cost + chosen_entry.cost > book.uses)
-		tgui_alert(user, "You can't afford to grant everyone [chosen_spell_name]! ([cost] points needed)", "Wizardly Teaching", list("Shame"))
+		tgui_alert(user, "Вы не можете позволить себе предоставить всем [chosen_spell_name]! (нужно [cost] очков)", "Волшебное обучение", list("Shame"))
 		return FALSE
 
 	cost += chosen_entry.cost
@@ -113,7 +113,7 @@
 	GLOB.mass_teaching.equip_all_affected()
 
 	var/item_entry = istype(chosen_entry, /datum/spellbook_entry/item)
-	to_chat(user, span_hypnophrase("You have [item_entry ? "granted everyone the power" : "taught everyone the ways"] of [chosen_spell_name]!"))
+	to_chat(user, span_hypnophrase("Вы [item_entry ? "даровали всем силу" : "обучили всех приемами"] [chosen_spell_name]!"))
 	message_admins("[ADMIN_LOOKUPFLW(user)] gave everyone the [item_entry ? "item" : "spell"] \"[chosen_spell_name]\"!")
 	user.log_message("has gave everyone the [item_entry ? "item" : "spell"] \"[chosen_spell_name]\"!", LOG_GAME)
 

@@ -6,8 +6,8 @@
 #define LOWER_BOUND_VOLUME 10
 
 /mob/living/basic/turtle
-	name = "turtle"
-	desc = "Dog."
+	name = "черепаха"
+	desc = "Собака?"
 	icon_state = "turtle"
 	icon_living = "turtle"
 	icon_dead = "turtle_dead"

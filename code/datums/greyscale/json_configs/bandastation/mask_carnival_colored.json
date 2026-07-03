@@ -1,0 +1,16 @@
+{
+	"colored": [
+		{
+			"type": "icon_state",
+			"icon_state": "colored_r",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "colored_l",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
+}

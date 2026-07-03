@@ -25,6 +25,7 @@
 	)
 	result = /obj/item/food/sandwich/cheese
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/slimesandwich
 	name = "Jelly sandwich"
@@ -35,6 +36,7 @@
 	added_foodtypes = TOXIC
 	result = /obj/item/food/sandwich/jelly/slime
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/cherrysandwich
 	name = "Jelly sandwich"
@@ -45,6 +47,7 @@
 	added_foodtypes = FRUIT|SUGAR
 	result = /obj/item/food/sandwich/jelly/cherry
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
@@ -55,6 +58,7 @@
 	added_foodtypes = GROSS
 	result = /obj/item/food/sandwich/notasandwich
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/hotdog
 	name = "Hot dog"
@@ -101,6 +105,7 @@
 	result = /obj/item/food/sandwich/peanut_butter_jelly
 	added_foodtypes = FRUIT|NUTS
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/peanut_butter_banana_sandwich
 	name = "Peanut butter and banana sandwich"
@@ -112,6 +117,7 @@
 	result = /obj/item/food/sandwich/peanut_butter_banana
 	added_foodtypes = NUTS
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/philly_cheesesteak
 	name = "Philly Cheesesteak"
@@ -145,3 +151,4 @@
 	result = /obj/item/food/sandwich/toast_sandwich
 	removed_foodtypes = BREAKFAST
 	dish_category = DISH_SANDWICH
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround

@@ -1462,7 +1462,7 @@
 			// GUARD CHECK - Sanitise and trim the proposed name. This prevents HTML
 			//  injection and equivalent as tgui input is not stripped
 			var/inj_name = params["name"]
-			inj_name = trim(sanitize(inj_name))
+			inj_name = trim(sanitize(inj_name, apply_ic_filter = TRUE)) // BANDASTATION EDIT - Sanitize emotes
 
 			// GUARD CHECK - If the name is null or blank, or the name is already in
 			//  the list of advanced injectors, we want to reject it as we can't have

@@ -1,0 +1,170 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"n" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"q" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/toy,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"x" = (
+/turf/closed/wall,
+/area/station/maintenance/central/greater)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"X" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+
+(1,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(2,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(3,1,1) = {"
+a
+x
+E
+R
+X
+R
+R
+R
+n
+q
+q
+"}
+(4,1,1) = {"
+a
+x
+s
+S
+x
+R
+R
+R
+q
+q
+q
+"}
+(5,1,1) = {"
+a
+x
+x
+x
+x
+p
+R
+w
+q
+q
+q
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+x
+x
+A
+t
+q
+q
+q
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+x
+x
+x
+q
+q
+q
+"}

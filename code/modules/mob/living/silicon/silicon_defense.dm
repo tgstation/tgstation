@@ -12,18 +12,18 @@
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 	if (prob(90))
 		playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user] slashes at [src]!"), \
-						span_userdanger("[user] slashes at you!"), null, null, user)
-		to_chat(user, span_danger("You slash at [src]!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] режет [declent_ru(ACCUSATIVE)]!"), \
+						span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] режет вас!"), null, null, user)
+		to_chat(user, span_danger("Вы режете [declent_ru(ACCUSATIVE)]!"))
 		if(prob(8))
 			flash_act(affect_silicon = 1)
 		adjust_brute_loss(damage)
 		log_combat(user, src, "attacked")
 	else
 		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user]'s swipe misses [src]!"),
-						span_danger("You avoid [user]'s swipe!"), null, null, user)
-		to_chat(user, span_warning("Your swipe misses [src]!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] промахивается режущим ударом по [declent_ru(DATIVE)]!"),
+						span_danger("Вы избегаете режущий удар от [declent_ru(GENITIVE)]"), null, null, user)
+		to_chat(user, span_warning("Вы промахиваетесь режущим ударом по [declent_ru(DATIVE)]!"))
 		log_combat(user, src, "attacked and missed")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -34,18 +34,18 @@
 			buckled.Paralyze(2 SECONDS)
 			unbuckle_mob(buckled)
 			buckled.visible_message(
-				span_danger("[buckled] is knocked off of [src] by [user]!"),
-				span_userdanger("You're knocked off of [src] by [user]!"),
+				span_danger("[capitalize(buckled.declent_ru(NOMINATIVE))] сбит с [declent_ru(GENITIVE)] ударом от [user.declent_ru(GENITIVE)]!"),
+				span_userdanger("Вы сбиты с [declent_ru(GENITIVE)] ударом от [user.declent_ru(GENITIVE)]!"),
 				ignored_mobs = user,
 			)
-			to_chat(user, span_danger("You knock [buckled] off of [src]!"))
+			to_chat(user, span_danger("Вы сбиваете [buckled.declent_ru(ACCUSATIVE)] с [declent_ru(GENITIVE)]!"))
 
 /mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	if(!L.combat_mode)
-		visible_message(span_notice("[L.name] rubs its head against [src]."))
+		visible_message(span_notice("[capitalize(L.declent_ru(NOMINATIVE))] трется головой об [declent_ru(ACCUSATIVE)]."))
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -53,9 +53,9 @@
 		return
 	adjust_brute_loss(rand(10, 15))
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
-	visible_message(span_danger("[user] punches [src]!"), \
-					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You punch [src]!"))
+	visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] бьет [declent_ru(ACCUSATIVE)]!"), \
+					span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] бьет вас!"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("Вы бьете [declent_ru(ACCUSATIVE)]!"))
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -72,13 +72,13 @@
 	if(user.combat_mode)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
-		visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
-						span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] бьет [declent_ru(ACCUSATIVE)], но не оставляет и вмятины!"), \
+						span_warning("[capitalize(user.declent_ru(NOMINATIVE))] бьет вас, но не оставляет и вмятины!"), null, COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("Вы бьете [declent_ru(ACCUSATIVE)], но не оставляете и вмятины!"))
 		return TRUE
 	else
-		visible_message(span_notice("[user] pets [src]."), span_notice("[user] pets you."), null, null, user)
-		to_chat(user, span_notice("You pet [src]."))
+		visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] гладит [declent_ru(ACCUSATIVE)]."), span_notice("[capitalize(user.declent_ru(NOMINATIVE))] гладит вас."), null, null, user)
+		to_chat(user, span_notice("Вы гладите [declent_ru(ACCUSATIVE)]."))
 		SEND_SIGNAL(user, COMSIG_MOB_PAT_BORG)
 		return TRUE
 
@@ -88,7 +88,7 @@
 		return SUCCESSFUL_BLOCK
 	if(damage_type == BRUTE && attack_type == UNARMED_ATTACK && attack_flag == MELEE && damage <= 10)
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
-		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] не получает и вмятины - корпус останавливает [attack_text]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return SUCCESSFUL_BLOCK
 	return FAILED_BLOCK
 
@@ -104,7 +104,7 @@
 
 /mob/living/silicon/emp_act(severity)
 	. = ..()
-	to_chat(src, span_danger("Warning: Electromagnetic pulse detected."))
+	to_chat(src, span_danger("Предупреждение: обнаружен электромагнитный импульс."))
 	if(. & EMP_PROTECT_SELF || QDELETED(src))
 		return
 	switch(severity)
@@ -112,12 +112,12 @@
 			src.take_bodypart_damage(burn = 20)
 		if(2)
 			src.take_bodypart_damage(burn = 10)
-	to_chat(src, span_userdanger("*BZZZT*"))
+	to_chat(src, span_userdanger("*БЗЗЗТ*"))
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
 			M.Paralyze(40)
-			M.visible_message(span_boldwarning("[M] is thrown off of [src]!"))
+			M.visible_message(span_boldwarning("[capitalize(M.declent_ru(NOMINATIVE))] падает с [declent_ru(GENITIVE)]!"))
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
@@ -135,7 +135,7 @@
 
 	if(prob(prob_of_knocking_dudes_off))
 		for(var/mob/living/buckled in buckled_mobs)
-			buckled.visible_message(span_boldwarning("[buckled] is knocked off of [src] by [hitting_projectile]!"))
+			buckled.visible_message(span_boldwarning("[capitalize(buckled.declent_ru(NOMINATIVE))] падает с [declent_ru(GENITIVE)] от попадания [hitting_projectile.declent_ru(GENITIVE)]!"))
 			unbuckle_mob(buckled)
 			buckled.Paralyze(4 SECONDS)
 

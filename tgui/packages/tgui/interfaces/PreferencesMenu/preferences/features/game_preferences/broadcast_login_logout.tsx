@@ -1,10 +1,10 @@
 import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const broadcast_login_logout: FeatureToggle = {
-  name: 'Broadcast login/logout',
-  category: 'GAMEPLAY',
+  name: 'Оповещать остальных о входе/выходе',
+  category: 'Геймплей',
   description: `
-    When enabled, disconnecting and reconnecting will announce to deadchat.
+    Оповещать в чате призраков остальных, когда вы входите или выходите из сервера.
   `,
   component: CheckboxInput,
 };

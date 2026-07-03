@@ -1,0 +1,191 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sit)
+"af" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sit)
+"ax" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate_sit)
+"aG" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sit)
+"aJ" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"aK" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"aN" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sit)
+"br" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate_sit)
+"bs" = (
+/obj/structure/chair/comfy/shuttle/tactical,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate_sit)
+"bQ" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stack/sheet/iron/five,
+/obj/item/weldingtool,
+/obj/item/clothing/glasses/welding,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"cp" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"cA" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/button/door/directional/east{
+	id = "sit_front_shuttle_door";
+	req_access = list("syndicate");
+	name = "Shuttle Blast Door Control"
+	},
+/obj/machinery/door/poddoor{
+	id = "sit_front_shuttle_door";
+	name = "Outer Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/syndicate_sit)
+"cT" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/syndicate_sit)
+"lJ" = (
+/obj/machinery/door/window/survival_pod/left/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate_sit)
+"nN" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"pQ" = (
+/obj/structure/chair/comfy/shuttle/tactical,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"ES" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/sit{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"Hl" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/poddoor{
+	id = "sit_side_shuttle_door";
+	name = "Outer Blast Door"
+	},
+/obj/machinery/button/door/directional/north{
+	id = "sit_side_shuttle_door";
+	name = "Shuttle Blast Door Control";
+	req_access = list("syndicate")
+	},
+/obj/docking_port/mobile/syndicate_sit,
+/turf/open/floor/plating,
+/area/shuttle/syndicate_sit)
+"Pz" = (
+/obj/machinery/computer/shuttle/syndicate/sit{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+"Ro" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sit)
+
+(1,1,1) = {"
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+Hl
+cT
+cT
+cT
+"}
+(2,1,1) = {"
+aa
+aG
+bs
+ax
+nN
+aJ
+aJ
+Ro
+pQ
+Pz
+cT
+"}
+(3,1,1) = {"
+af
+aG
+bs
+lJ
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+cA
+"}
+(4,1,1) = {"
+aN
+aG
+bs
+br
+bQ
+cp
+cp
+aK
+pQ
+ES
+cT
+"}
+(5,1,1) = {"
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+cT
+"}

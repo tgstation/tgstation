@@ -1,0 +1,8 @@
+[pico-servo]
+nominative = "пикосервопривод"
+genitive = "пикосервопривода"
+dative = "пикосервоприводу"
+accusative = "пикосервопривод"
+instrumental = "пикосервоприводом"
+prepositional = "пикосервоприводе"
+gender = "male"

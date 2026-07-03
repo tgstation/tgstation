@@ -1,6 +1,6 @@
 /obj/effect/forcefield/wizard/heretic
 	name = "labyrinth pages"
-	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
+	desc = "Вихрь из страниц, парящий в воздухе, отбрасывающий язычников необъяснимой силой."
 	icon_state = "lintel"
 	initial_duration = 15 SECONDS
 
@@ -15,12 +15,12 @@
 		return
 	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
 	bumpee.safe_throw_at(throwtarget, 10, 10, src, force = MOVE_FORCE_EXTREMELY_STRONG)
-	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
+	visible_message(span_danger("[capitalize(src.declent_ru(NOMINATIVE))] отбрасывает [bumpee.declent_ru(ACCUSATIVE)] прочь в вихре страниц!"))
 
 ///A heretic item that spawns a barrier at the clicked turf, 3 uses
 /obj/item/heretic_labyrinth_handbook
 	name = "labyrinth handbook"
-	desc = "A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape."
+	desc = "Книга содержит в себе законы и правила Запертого Лабиринта, написанные неизвестным веществом. Ее страницы корчатся и напрягаются, пытаясь вырваться и убежать."
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "heretichandbook"
 	force = 10
@@ -49,8 +49,8 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
-	. += span_notice("It has <b>[charges]</b> charge\s remaining.")
+	. += span_hypnophrase("Материализует барьер, который пропускает только вас. Действует 8 секунд.")
+	. += span_hypnophrase("Осталось использований: <b>[charges]</b>.")
 
 /obj/item/heretic_labyrinth_handbook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
@@ -61,7 +61,7 @@
 	if(!IS_HERETIC(user))
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
-			to_chat(human_user, span_userdanger("Your mind burns as you stare deep into the book, a headache setting in like your brain is on fire!"))
+			to_chat(human_user, span_userdanger("Ваш разум начинает гореть, когда вы заглядываете в эту книгу, словно весь ваш мозг окутало пламя!"))
 			human_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 30, 190)
 			human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 			human_user.dropItemToGround(src)
@@ -73,9 +73,9 @@
 
 	var/turf/turf_target = get_turf(interacting_with)
 	if(locate(barrier_type) in turf_target)
-		user.balloon_alert(user, "already occupied!")
+		user.balloon_alert(user, "нет места!")
 		return ITEM_INTERACT_BLOCKING
-	turf_target.visible_message(span_warning("A storm of paper materializes!"))
+	turf_target.visible_message(span_warning("Бумажный шторм материализуется!"))
 	new /obj/effect/temp_visual/paper_scatter(turf_target)
 	playsound(turf_target, 'sound/effects/magic/smoke.ogg', 30)
 	new barrier_type(turf_target, user)

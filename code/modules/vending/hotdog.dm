@@ -5,9 +5,9 @@
 	icon_state = "hotdog-vendor"
 	icon_deny = "hotdog-vendor-deny"
 	panel_type = "panel17"
-	product_slogans = "Meatier than ever!;Now with 20% more MSG!;HOTDOGS!;Now Tirizan-friendly!"
-	product_ads = "Your best and only automatic hotdog dispenser!;Serving you the finest buns since 2469!;Comes in 12 different flavors!"
-	vend_reply = "Have a scrumptious meal!"
+	product_slogans = "Мяснее не бывает!;Теперь на 20% больше глутамата натрия!;ХОТ-ДОГИ!;Теперь подходит для Тиризана!"
+	product_ads = "Ваш лучший и единственный автоматический раздатчик хот-догов!;Подаем вам лучшие булочки с 2469 года!;Доступно 12 разных вкусов!"
+	vend_reply = "Приятного аппетита!"
 	light_mask = "hotdog-vendor-light-mask"
 	default_price = PAYCHECK_LOWER
 	product_categories = list(

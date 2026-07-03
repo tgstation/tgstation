@@ -1,8 +1,8 @@
 /datum/techweb_node/atmos
 	id = TECHWEB_NODE_ATMOS
 	starting_node = TRUE
-	display_name = "Atmospherics"
-	description = "Maintaining station air and related life support systems."
+	display_name = "Атмосферика"
+	description = "Поддержание атмосферы станции и связанных с ней систем жизнеобеспечения."
 	design_ids = list(
 		"atmos_control",
 		"atmosalerts",
@@ -24,8 +24,8 @@
 
 /datum/techweb_node/gas_compression
 	id = TECHWEB_NODE_GAS_COMPRESSION
-	display_name = "Gas Compression"
-	description = "Highly pressurized gases hold potential for unlocking immense energy capabilities."
+	display_name = "Компрессия газов"
+	description = "Газы под высоким давлением обладают потенциалом для раскрытия огромных энергетических возможностей."
 	prereq_ids = list(TECHWEB_NODE_ATMOS)
 	design_ids = list(
 		"tank_compressor",
@@ -54,8 +54,8 @@
 
 /datum/techweb_node/plasma_control
 	id = TECHWEB_NODE_PLASMA_CONTROL
-	display_name = "Controlled Plasma"
-	description = "Experiments with high-pressure gases and electricity resulting in crystallization and controlled plasma reactions."
+	display_name = "Контролируемая плазма"
+	description = "Эксперименты с газами высокого давления и электричеством, приводящие к кристаллизации и контролируемым плазменным реакциям."
 	prereq_ids = list(TECHWEB_NODE_GAS_COMPRESSION, TECHWEB_NODE_ENERGY_MANIPULATION)
 	design_ids = list(
 		"electrolyzer",
@@ -71,8 +71,8 @@
 
 /datum/techweb_node/fusion
 	id = TECHWEB_NODE_FUSION
-	display_name = "Fusion"
-	description = "Investigating fusion reactor technology to achieve sustainable and efficient energy production through controlled plasma reactions involving noble gases."
+	display_name = "Синтез"
+	description = "Исследование технологии термоядерного реактора для достижения устойчивого и эффективного производства энергии посредством управляемых плазменных реакций с участием благородных газов."
 	prereq_ids = list(TECHWEB_NODE_PLASMA_CONTROL)
 	design_ids = list(
 		"HFR_core",
@@ -93,8 +93,8 @@
 
 /datum/techweb_node/exp_tools
 	id = TECHWEB_NODE_EXP_TOOLS
-	display_name = "Experimental Tools"
-	description = "Enhances the functionality and versatility of station tools."
+	display_name = "Экспериментальные инструменты"
+	description = "Повышение функциональности и универсальности станционного инструментария."
 	prereq_ids = list(TECHWEB_NODE_FUSION)
 	design_ids = list(
 		"flatpacker",
@@ -115,8 +115,8 @@
 
 /datum/techweb_node/rcd_upgrade
 	id = TECHWEB_NODE_RCD_UPGRADE
-	display_name = "Rapid Construction Device Upgrades"
-	description = "New designs and enhancements for RCD and RPD."
+	display_name = "Улучшение устройства быстрого строительства"
+	description = "Новые технологии усовершенствования для УБС и БРТ."
 	prereq_ids = list(TECHWEB_NODE_EXP_TOOLS, TECHWEB_NODE_PARTS_BLUESPACE)
 	design_ids = list(
 		"rcd_upgrade_silo_link",

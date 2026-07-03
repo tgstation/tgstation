@@ -1,0 +1,398 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"b" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"c" = (
+/obj/structure/window/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"d" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
+"g" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 8
+	},
+/obj/machinery/firealarm/directional/south{
+	pixel_x = -5
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"i" = (
+/obj/machinery/power/shieldwallgen,
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/catwalk_floor,
+/area/station/command/teleporter)
+"j" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"k" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"l" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"m" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"o" = (
+/turf/closed/wall/r_wall,
+/area/station/command/teleporter)
+"r" = (
+/obj/machinery/power/shieldwallgen,
+/turf/open/floor/catwalk_floor,
+/area/station/command/teleporter)
+"s" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"t" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"v" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"x" = (
+/obj/structure/closet/crate,
+/turf/open/floor/catwalk_floor,
+/area/station/command/teleporter)
+"z" = (
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/command/teleporter)
+"A" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Teleport Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"B" = (
+/obj/item/crowbar,
+/obj/structure/closet/crate,
+/turf/open/floor/catwalk_floor,
+/area/station/command/teleporter)
+"C" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"D" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plating,
+/area/station/command/teleporter)
+"F" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plating,
+/area/station/command/teleporter)
+"H" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/gas,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"J" = (
+/obj/machinery/bluespace_beacon,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"K" = (
+/turf/closed/wall/r_wall,
+/area/station/construction/mining/aux_base)
+"L" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/status_display/ai/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Secure - Teleporter"
+	},
+/obj/machinery/light/cold/directional/west,
+/obj/structure/rack,
+/obj/item/stack/sheet/plasteel{
+	amount = 25
+	},
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"M" = (
+/obj/structure/rack,
+/obj/structure/window/spawner/directional/north,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"N" = (
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"O" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"P" = (
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/hop)
+"Q" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/multitool,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"R" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Secure External Operations"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/command/eva,
+/obj/effect/mapping_helpers/airlock/access/any/command/gateway,
+/obj/effect/mapping_helpers/airlock/access/any/command/teleporter,
+/obj/effect/mapping_helpers/airlock/red_alert_access,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"S" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"T" = (
+/turf/closed/wall/r_wall,
+/area/station/command/eva)
+"U" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"V" = (
+/obj/structure/table,
+/obj/item/hand_tele,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
+"W" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
+"X" = (
+/obj/structure/window/spawner/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/light/cold/directional/east,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"Y" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/closet/crate,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/stack/cable_coil,
+/obj/item/crowbar,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+"Z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/teleporter)
+
+(1,1,1) = {"
+T
+K
+K
+K
+K
+K
+K
+K
+K
+P
+"}
+(2,1,1) = {"
+T
+v
+Q
+L
+l
+o
+b
+C
+z
+P
+"}
+(3,1,1) = {"
+Y
+O
+O
+c
+U
+o
+V
+m
+F
+P
+"}
+(4,1,1) = {"
+e
+e
+e
+s
+Z
+o
+H
+d
+D
+P
+"}
+(5,1,1) = {"
+e
+e
+e
+a
+a
+A
+J
+j
+k
+P
+"}
+(6,1,1) = {"
+e
+e
+e
+M
+t
+o
+N
+S
+N
+P
+"}
+(7,1,1) = {"
+e
+e
+e
+X
+g
+o
+B
+r
+r
+P
+"}
+(8,1,1) = {"
+e
+e
+e
+o
+R
+o
+x
+i
+r
+P
+"}
+(9,1,1) = {"
+e
+e
+e
+f
+W
+o
+o
+o
+o
+P
+"}

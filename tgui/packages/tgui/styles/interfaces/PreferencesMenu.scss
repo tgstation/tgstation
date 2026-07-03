@@ -1,240 +1,790 @@
-@use 'sass:color';
 @use 'sass:map';
-@use '../colors.scss';
 @use '../base.scss';
 
 $department_map: (
   'Assistant': var(--color-gray),
-  'Captain': colors.fg(var(--color-blue)),
-  'Cargo': var(--color-brown),
-  'Command': var(--color-yellow),
-  'Security': var(--color-red),
-  'Engineering': hsl(from var(--color-orange) h s calc(l + 7.5)),
-  'Medical': var(--color-teal),
-  'Science': colors.fg(var(--color-purple)),
-  'Service': var(--color-green),
-  'Silicon': var(--color-pink),
+  'Captain': var(--color-command),
+  'Cargo': var(--color-cargo),
+  'Security': var(--color-security),
+  'Engineering': var(--color-engineering),
+  'Medical': var(--color-medical),
+  'Science': var(--color-science),
+  'Service': var(--color-service),
+  'Silicon': var(--color-silicon),
+  'NTRepresentation': var(--color-centcom),
+  'Justice': var(--color-justice),
 );
 
-.ChoicedSelection {
-  padding: var(--space-m);
-  background-color: var(--color-base);
-  box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
+.ColorInput {
+  &__Text {
+    padding: 0 var(--space-s) 0 var(--space-m);
+  }
+
+  &__Color {
+    height: 1lh;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--border-radius-small);
+    border: 2px solid hsl(from var(--color-primary) h s calc(l + 5));
+    transform: scale(0.75);
+  }
 }
 
+// MARK: PreferencesPage
 .PreferencesMenu {
-  &__Antags {
-    &__antagSelection {
-      gap: var(--space-l);
+  .Dropdown {
+    justify-content: end;
 
-      @mixin animate-hover {
-        .antagonist-icon-parent .antagonist-icon {
-          &:hover {
-            transform: scale(1.3);
-            transition: transform var(--transition-time-fast) ease-out;
-          }
-        }
+    // TODO: Remove after tgui-core release
+    flex: 1;
+    &__selected-text {
+      overflow: hidden;
+    }
+
+    &:has(.Dropdown__control--icon-only) {
+      flex: 0;
+    }
+  }
+
+  &__Section {
+    --section-separator-thickness: 0;
+    background-color: var(--color-section);
+
+    .Section__title {
+      text-align: right;
+      padding: 0.5rem 1rem;
+      padding-left: 0.75rem;
+
+      &Text {
+        font-size: 2rem;
+        color: hsl(from var(--color-primary) h s calc(l + var(--adjust-color)));
       }
+    }
 
-      &__antagonist {
-        .antagonist-icon-parent {
-          cursor: var(--cursor-pointer);
-          border-style: solid;
-          border-radius: var(--border-radius-circular);
-          border-width: var(--border-thickness-large);
-          box-sizing: content-box;
-          overflow: hidden;
-          position: relative;
+    &.Sidebar .Tabs {
+      gap: var(--space-s);
+      padding-top: var(--space-ml);
+      margin-right: calc(-1 * var(--space-m) - var(--border-thickness-small));
+    }
 
-          height: 96px;
-          width: 96px;
+    &Search {
+      font-size: 0.66em;
+      align-self: center;
 
-          .antagonist-icon {
-            image-rendering: pixelated;
-            border-radius: var(--border-radius-circular);
-            overflow: hidden;
-            transition: transform var(--transition-time-fast) ease-in;
-          }
-        }
-
-        &--off {
-          @include animate-hover;
-
-          .antagonist-icon-parent {
-            border-color: var(--color-red);
-
-            .antagonist-icon {
-              opacity: 0.5;
-
-              &:hover {
-                opacity: 1;
-              }
-            }
-          }
-        }
-
-        &--on {
-          @include animate-hover;
-
-          .antagonist-icon-parent {
-            border-color: var(--color-green);
-          }
-        }
-
-        &--banned {
-          .antagonist-icon-parent {
-            border-color: var(--color-grey);
-          }
-
-          .antagonist-icon {
-            opacity: 0.5;
-          }
-        }
-
-        .antagonist-banned-slash {
-          background: var(--color-grey);
-
-          width: 100%;
-          height: 3px;
-
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translateY(-50%) translateX(-50%) rotate(35deg);
-
-          opacity: 0.8;
-        }
-
-        .antagonist-days-left {
-          text-align: center;
-          text-shadow: 1px 1px 1px hsl(0, 0%, 13.3%);
-
-          width: 100%;
-
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translateY(-50%) translateX(-50%);
-        }
+      .Input {
+        font-size: 0.95em;
+        height: 1.667em;
       }
     }
   }
 
-  &__Jobs {
-    > * {
-      flex: 1;
-    }
-
-    &__departments {
-      @each $department-name, $color-value in $department_map {
-        &--#{$department-name} {
-          &.head {
-            background: $color-value;
-
-            .job-name {
-              font-weight: bold;
-            }
-          }
-
-          background: colors.fg($color-value);
-          border: var(--border-thickness-small) outset colors.fg($color-value);
-          color: black;
-
-          > * {
-            height: calc(100% + 0.2em);
-            padding-bottom: 0.2em;
-          }
-
-          .options {
-            margin-right: var(--space-xxs);
-            background: hsla(0, 0%, 0%, 0.2);
-            height: 100%;
-          }
-        }
-
-        &--Captain {
-          border: var(--border-thickness-medium)
-            outset
-            hsla(60, 100%, 39.2%, 1);
-
-          &:first-child {
-            border-top: var(--border-thickness-medium)
-              outset
-              hsla(60, 100%, 39.2%, 1);
-          }
-
-          .job-name {
-            font-size: 17px;
-          }
-        }
-      }
-
-      &__priority {
-        border: var(--border-thickness-tiny) solid hsla(0, 0%, 0%, 0.3);
-
-        &--off::after {
-          content: '';
-
-          background: hsla(0, 0%, 0%, 0.2);
-          display: block;
-          height: 80%;
-          left: 50%;
-          position: relative;
-          top: 50%;
-          transform: translateX(-50%) translateY(-50%) rotate(40deg);
-          width: 2px;
-        }
-      }
-    }
-
-    &__PriorityHeader {
-      font-weight: bold;
-      transform: translateX(-4px) translateY(-8px) rotate(315deg);
-      white-space: nowrap;
-      width: 19px;
-    }
+  &__Content {
+    border: var(--border-thickness-small) solid var(--color-primary);
+    border-bottom: none;
+    border-right: none;
+    box-shadow: inset 0.25rem 0.25rem 0.5rem -0.25rem var(--color-primary);
   }
 
-  &__Quirks {
-    &__QuirkList {
-      scrollbar-color: var(--color-grey) transparent;
-      background-color: var(--color-light-grey);
-      width: 100%;
-      overflow-x: hidden;
-      overflow-y: scroll;
+  &__Preference {
+    user-select: none;
+    align-items: center;
+    padding: 0.4em;
+    background-color: var(--pref-background);
+    border-radius: var(--border-radius-medium);
+    outline: var(--border-thickness-tiny) outset var(--color-border);
 
-      &__quirk {
-        cursor: var(--cursor-pointer);
-        background-color: var(--color-white);
-        border-bottom: var(--border-thickness-tiny) solid var(--color-black);
-        color: hsl(0, 0%, 6.7%);
-        transition: background-color var(--transition-time-fast) ease-in;
+    &--controls {
+      position: relative;
 
-        $quality_map: (
-          'positive': var(--color-green),
-          'neutral': var(--color-white),
-          'negative': var(--color-red),
-        );
+      &:has(.TextArea) {
+        height: 2.25lh;
+      }
 
-        @each $quality, $color-value in $quality_map {
-          &--#{$quality} {
-            background-color: $color-value;
-            transition: background-color var(--transition-time-fast) ease-in;
-          }
+      .TextArea {
+        position: absolute;
+        bottom: 0;
+        height: 100%;
+        z-index: 1;
+
+        &:focus {
+          height: 7.25lh;
+          box-shadow: 0 -0.25em 0.5em 2px hsla(0, 0%, 0%, 0.33);
+          z-index: 2;
         }
+      }
+    }
+
+    &--desc {
+      font-size: 0.8em;
+      color: var(--color-label);
+    }
+
+    &--Character {
+      align-items: center;
+      width: 50%;
+    }
+
+    &--Preferences {
+      width: 17.5rem;
+    }
+
+    &--Keybindings {
+      width: 50%;
+
+      .Button {
+        height: 1lh;
+        background-color: var(--comp-background) !important;
+        color: var(--color-text-translucent);
+        outline: var(--border-thickness-tiny) solid var(--comp-border);
+        transition: outline-color var(--transition-time-medium);
 
         &:hover {
-          background-color: var(--color-grey);
-          transition: background-color var(--transition-time-fast) ease-out;
+          outline-color: hsl(
+            from var(--comp-border) h s calc(l + var(--adjust-hover))
+          );
+        }
 
-          @each $quality, $color-value in $quality_map {
-            .PreferencesMenu__Quirks__QuirkList__quirk--#{$quality} {
-              background-color: hsl(from $color-value h s calc(l - 10));
-              transition: background-color var(--transition-time-fast) ease-out;
-            }
-          }
+        &__content {
+          font-size: 0.8em;
+        }
+
+        &--selected {
+          --comp-border: var(--color-good);
+          color: var(--color-text);
         }
       }
     }
+  }
+}
+
+// MARK: CharacterPage
+.PreferencesMenu {
+  &__ChoicedSelection {
+    width: 18.5rem;
+    height: 23em;
+    padding: var(--space-m);
+    background-color: var(--color-base);
+    box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
+
+    &.Characters {
+      width: 20rem;
+      height: 26rem;
+    }
+
+    .Section__title {
+      font-size: 0.9em;
+    }
+  }
+
+  &__CharacterControls {
+    justify-content: space-between;
+
+    &.Gender {
+      padding: var(--space-s);
+      background-color: var(--color-base);
+      box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
+    }
+
+    .Button {
+      margin: 0;
+
+      &__content {
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        line-height: 1px;
+      }
+
+      i {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  &__Name {
+    text-align: center;
+
+    span {
+      line-height: 1px;
+      vertical-align: middle;
+    }
+
+    .Button {
+      position: relative;
+
+      .Input {
+        position: absolute;
+        inset: 2px;
+        width: auto;
+        background-color: hsl(0, 0%, 0%, 0.75);
+        border-color: transparent;
+
+        & ~ i {
+          color: transparent;
+        }
+      }
+    }
+  }
+
+  &__AltName {
+    gap: var(--space-s);
+    padding: var(--space-sm);
+    background-color: var(--pref-background);
+    border: var(--border-thickness-tiny) outset var(--color-border);
+    border-radius: var(--border-radius-small);
+
+    &--explanation {
+      color: var(--color-label);
+    }
+  }
+
+  &__MainFeature {
+    .ImageButton__image {
+      padding: var(--space-s) 0;
+    }
+  }
+}
+
+// MARK: JobPage
+.PreferencesMenu {
+  &__Department {
+    --text-shadow: 1px 1px 2px hsla(0, 0%, 0%, 0.75);
+    --head-color: oklch(from var(--background-color) calc(l * 0.85) c h);
+    --border-color: oklch(from var(--background-color) calc(l * 1.1) c h);
+    --border-color-darker: oklch(from var(--border-color) calc(l * 0.8) c h);
+    --button-width: 40px;
+    --button-gap: 0.33rem;
+
+    user-select: none;
+    overflow: hidden;
+    background-color: var(--background-color);
+    border: var(--border-thickness-tiny) solid;
+    border-color: var(--border-color) var(--border-color-darker)
+      var(--border-color-darker) var(--border-color);
+
+    &.head {
+      background-color: var(--head-color);
+
+      .job-name {
+        font-weight: bold;
+      }
+    }
+
+    .job-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 1.2em;
+      padding: var(--space-s) var(--space-m);
+      text-shadow: var(--text-shadow);
+    }
+
+    .options {
+      display: flex;
+      max-width: 50%;
+      gap: var(--button-gap);
+      padding: 2px;
+      text-align: right;
+      z-index: 1;
+
+      .Button--color--default {
+        overflow: visible;
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        transition: transform var(--transition-time-medium);
+        transition-delay: var(--transition-time-medium);
+        z-index: 0;
+
+        &:before {
+          content: '';
+          position: absolute;
+          background-color: var(--background-color);
+          inset: calc(-1 * var(--button-gap) + 1px);
+          z-index: -2;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-color: var(--head-color);
+          outline: 1px inset var(--border-color);
+          border-radius: var(--border-radius-small);
+          z-index: -1;
+        }
+
+        &:hover:not(.selected):after {
+          background-color: transparent;
+          outline-style: outset;
+        }
+
+        &:hover:active:not(.selected):after {
+          outline-style: inset;
+        }
+
+        /* Special for dropdown */
+        &.Dropdown__control {
+          width: 1.667em !important; // Override inline style
+          height: 1.667em;
+        }
+      }
+
+      .restricted {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: var(--button-height);
+        text-shadow: var(--text-shadow);
+
+        &.ban {
+          margin-right: 0.33em;
+          font-weight: bold;
+          color: hsl(from var(--border-color) h calc(s + 20) calc(l + 20));
+        }
+      }
+    }
+
+    &:first-child {
+      border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
+    }
+
+    &:only-child {
+      border-radius: var(--border-radius-medium);
+    }
+
+    @each $department-name, $color in $department_map {
+      &--#{$department-name} {
+        --background-color: #{$color};
+      }
+    }
+
+    &--Captain {
+      position: relative;
+      border-color: hsla(0, 0%, 100%, 0.15) hsla(0, 0%, 0%, 0.2)
+        hsla(0, 0%, 0%, 0.2) hsla(0, 0%, 100%, 0.15);
+      background: linear-gradient(
+        in oklch 45deg,
+        var(--background-color) 15%,
+        oklch(from var(--background-color) calc(l * 1.5) c h) 20%,
+        var(--background-color) 25%
+      );
+      background-size: 250%;
+      animation: captain 4s infinite ease-in-out;
+
+      &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--background-color);
+        z-index: 0;
+      }
+
+      .job-name {
+        position: relative;
+        font-size: 1.15em;
+      }
+
+      @keyframes captain {
+        0%,
+        50% {
+          background-position-x: 50%;
+        }
+
+        100% {
+          background-position-x: -50%;
+        }
+      }
+    }
+  }
+
+  &__Priority {
+    position: relative;
+
+    &:hover .PreferencesMenu__PriorityButton {
+      transform: translateX(
+        calc(
+          -1 * (var(--button-width) - var(--button-gap) * -1) *
+            var(--button-position)
+        )
+      );
+
+      &.off.selected:after {
+        background-color: hsla(0, 0%, 0%, 0.5);
+        transition-delay: var(--transition-time-medium);
+      }
+    }
+
+    &Button {
+      width: var(--button-width);
+
+      &:not(.selected) {
+        position: absolute !important;
+      }
+
+      &.selected {
+        cursor: var(--cursor-default);
+        z-index: 1 !important;
+
+        &.low:after {
+          background-color: var(--color-bad) !important;
+        }
+
+        &.mid:after {
+          background-color: var(--color-average) !important;
+        }
+
+        &.high:after {
+          background-color: hsl(
+            from var(--color-good) h s calc(l + var(--adjust-color))
+          ) !important;
+        }
+      }
+    }
+  }
+}
+
+// MARK: AntagsPage
+.PreferencesMenu__AntagsSelection {
+  --cell-size: 9.75rem;
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cell-size), 1fr));
+  grid-template-rows: repeat(
+    auto-fill,
+    calc(var(--cell-size) + var(--border-thickness-small) * 10)
+  );
+
+  &__Antag {
+    cursor: var(--cursor-pointer);
+    align-items: center;
+    width: 100%;
+
+    &.on {
+      --antag-border: var(--color-good);
+    }
+
+    &.off,
+    &.banned {
+      --antag-border: var(--color-bad);
+    }
+
+    &Name {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    &Icon {
+      transform-origin: bottom;
+      transition-property: transform, filter;
+      transition-duration: var(--transition-time-medium);
+
+      &--wrapper {
+        overflow: hidden;
+        position: relative;
+        border: var(--border-thickness-small) solid var(--antag-border);
+        border-radius: var(--border-radius-circular);
+        box-shadow: var(--shadow-glow-medium) -1px var(--antag-border);
+        transition-property: border-color, box-shadow, transform;
+        transition-duration: var(--transition-time-medium);
+      }
+    }
+
+    &:not(.banned):hover &Icon {
+      filter: drop-shadow(0 0 0.5rem var(--antag-border));
+      transform: scale(1.1);
+
+      &--wrapper {
+        transform: translateY(-0.25rem);
+      }
+    }
+
+    &Ban {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      background-color: hsl(from var(--antag-border) h s l / 0.25);
+      z-index: 1;
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: var(--border-thickness-medium);
+        background-color: var(--antag-border);
+        box-shadow: var(--shadow-glow-small) var(--color-black);
+      }
+
+      &:before {
+        transform: rotate(45deg);
+      }
+
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &DaysLeft {
+      position: absolute;
+      inset: 0;
+      gap: 0.25rem;
+      height: 3.5rem;
+      align-self: center;
+      justify-content: center;
+      text-align: center;
+      background-color: hsl(from var(--antag-border) h s calc(l - 25));
+      box-shadow: var(--shadow-glow-medium) var(--antag-border);
+      z-index: 2;
+
+      div:last-child {
+        font-size: 1.33rem;
+      }
+    }
+  }
+}
+
+// MARK: QuirksPage
+.PreferencesMenu__Quirks {
+  &Quirk {
+    --lightness-multiplier: 0;
+
+    &.negative {
+      --quirk-background: hsl(
+        from var(--color-bad) h 50 calc(l - 15 + var(--lightness-multiplier))
+      );
+      --quirk-border: hsl(from var(--quirk-background) h 50 calc(l + 5) / 0.2);
+    }
+
+    &.positive {
+      --quirk-background: hsl(
+        from var(--color-good) h 50 calc(l - 12.5 + var(--lightness-multiplier))
+      );
+      --quirk-border: hsl(from var(--quirk-background) h 50 calc(l + 5) / 0.2);
+    }
+
+    &.neutral {
+      --quirk-background: hsl(
+        from var(--color-base) h s calc(l + 5 + var(--lightness-multiplier))
+      );
+      --quirk-border: hsl(from var(--quirk-background) h s calc(l + 5) / 0.1);
+    }
+
+    overflow: hidden;
+    background-color: var(--quirk-background);
+    border: var(--border-thickness-tiny) solid var(--quirk-border);
+    border-radius: var(--border-radius-medium);
+    transition-property: background-color, border-color;
+    transition-duration: var(--transition-time-medium);
+
+    &:not(.Unremovable):hover {
+      cursor: var(--cursor-pointer);
+      --lightness-multiplier: var(--adjust-hover);
+    }
+
+    &--Icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5rem;
+    }
+
+    &--Name {
+      padding: 0.25rem 0.5rem;
+    }
+
+    &--Desc {
+      padding: 0.33rem;
+      padding-left: 0.5rem;
+      background-color: hsl(from var(--quirk-background) h s calc(l - 15));
+      border-width: 1px 0 0 1px;
+      border-style: solid;
+      border-color: hsl(from var(--quirk-border) h s calc(l + 7.5) / 1);
+      border-top-left-radius: var(--border-radius-medium);
+      box-shadow: inset 3px 3px 2px -1px hsla(0, 0%, 0%, 0.25);
+      transition-property: background-color, border-color;
+      transition-duration: var(--transition-time-medium);
+    }
+
+    &--Customization {
+      width: 50vw;
+      padding: var(--space-m);
+      background-color: var(--color-base);
+      border-radius: var(--border-radius-large);
+      box-shadow: 0 0.5rem 1rem hsl(0, 0%, 0%, 0.5);
+    }
+
+    &.Unremovable {
+      --quirk-border: var(--color-red);
+    }
+  }
+}
+
+// MARK: SpeciesPage
+.PreferencesMenu__Species {
+  overflow: hidden;
+  display: flex;
+  gap: 0.5rem;
+
+  .ImageButton__image {
+    padding: var(--space-s) var(--space-s) 0;
+  }
+
+  &__OverflowButton {
+    cursor: var(--cursor-pointer);
+    position: absolute;
+    inset: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    background-color: hsl(from var(--color-base) h s 7.5 / 0.66);
+    box-shadow: var(--shadow-direction) 0 0.66rem hsla(0, 0%, 0%, 0.5);
+    backdrop-filter: var(--blur-medium);
+    z-index: 3;
+
+    &.left {
+      --shadow-direction: 0.5rem;
+      left: 0;
+    }
+
+    &.right {
+      --shadow-direction: -0.5rem;
+      right: 0;
+    }
+
+    i {
+      opacity: 0.5;
+    }
+
+    &:hover i {
+      opacity: 1;
+    }
+  }
+
+  &__Perk {
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: hsl(
+      from var(--perk-background) h s calc(l - var(--adjust-color))
+    );
+    border: 1px outset var(--perk-background);
+    border-radius: var(--border-radius-small);
+
+    &.green {
+      --perk-background: var(--color-good);
+    }
+
+    &.grey {
+      --perk-background: var(--color-grey);
+    }
+
+    &.red {
+      --perk-background: var(--color-bad);
+    }
+
+    &s {
+      width: 3.6rem;
+
+      .Section__content {
+        scrollbar-gutter: auto !important;
+      }
+    }
+  }
+
+  &__History {
+    color: var(--color-label);
+    margin-bottom: 1lh;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// MARK: VoicePage
+.PreferencesMenu__Voice {
+  align-items: center;
+  transition: background-color var(--transition-time-fast);
+
+  &:hover {
+    cursor: var(--cursor-pointer);
+    background-color: var(--color-hover);
+    transition-duration: 0s;
+  }
+
+  &.selected {
+    cursor: var(--cursor-default);
+    background-color: var(--color-green);
+
+    &.header {
+      position: sticky;
+      top: calc(-1 * var(--space-ml));
+      z-index: 1;
+    }
+  }
+
+  &--Category {
+    text-align: right;
+  }
+
+  &--Tier {
+    opacity: 0.66;
+    text-align: right;
+    width: 5.5em;
+    margin-right: 0.25rem;
+  }
+
+  &--GenderIcon {
+    opacity: 0.66;
+    text-align: center;
+    width: 1.5rem;
+    margin-right: 0.5rem;
+  }
+
+  &--Category,
+  &--Tier,
+  &--GenderIcon {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// MARK: AugmentationsPage
+.PreferencesMenu__Augmentations {
+  position: absolute;
+  top: 1rem;
+  right: 20vw;
+  width: 50vw;
+  height: calc(100% - 2rem);
+
+  &Title {
+    align-items: center;
+    font-size: 1.33rem;
+  }
+
+  &Row {
+    line-height: 1;
+    align-items: center;
+
+    &--name {
+      flex: 1 1 66%;
+      font-weight: bold;
+    }
+  }
+
+  .Dropdown {
+    margin: 0;
   }
 }

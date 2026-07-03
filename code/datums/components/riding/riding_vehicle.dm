@@ -100,7 +100,7 @@
 	var/move_delay = vehicle_move_delay
 	if(NSCOMPONENT(direction) && EWCOMPONENT(direction))
 		move_delay = FLOOR(move_delay * sqrt(2), world.tick_lag)
-	COOLDOWN_START(src, vehicle_move_cooldown, move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay(move_delay)) // BANDASTATION EDIT - Vehicle speed
 
 	if(QDELETED(src))
 		return

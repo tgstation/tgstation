@@ -1,0 +1,8 @@
+["agent card"]
+nominative = "карта агента"
+genitive = "карты агента"
+dative = "карте агента"
+accusative = "карту агента"
+instrumental = "картой агента"
+prepositional = "карте агента"
+gender = "female"

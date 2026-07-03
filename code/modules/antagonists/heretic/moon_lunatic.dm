@@ -1,10 +1,10 @@
 // A type of antagonist created by the moon ascension
 /datum/antagonist/lunatic
-	name = "\improper Lunatic"
+	name = "\improper Лунатик"
 	hijack_speed = 0
 	antagpanel_category = ANTAG_GROUP_HORRORS
 	show_in_antagpanel = FALSE
-	suicide_cry = "PRAISE THE RINGLEADER!!"
+	suicide_cry = "СЛАВЬСЯ ПОСТАНОВЩИК!!"
 	antag_moodlet = /datum/mood_event/heretics/lunatic
 	antag_hud_name = "lunatic"
 	can_assign_self_objectives = FALSE
@@ -52,11 +52,11 @@
 	lunatic_obj.master = heretic_master
 	lunatic_obj.update_explanation_text()
 
-	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
+	to_chat(owner, span_boldnotice("Разрушьте ложь, спасите правду, повинуясь вашему Постановщику - [heretic_master]!"))
 
 /datum/antagonist/lunatic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
-	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	handle_clown_mutation(our_mob, "Древнее знание, данное вам луной, позволило преодолеть свою клоунскую натуру, позволяя вам владеть оружием без вреда для себя.")
 	our_mob.add_faction(FACTION_HERETIC)
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
@@ -69,11 +69,11 @@
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic
-	description = "THE TRUTH REVEALED, THE LIE SLAIN."
+	description = "ПРАВДА РАСКРЫТА, ЛОЖЬ УБИТА."
 	mood_change = 10
 
 /datum/objective/lunatic
-	explanation_text = "Assist your ringleader. If you are seeing this, scroll up in chat for who that is and report this"
+	explanation_text = "Помогите вашему Постановщику. Если вы видите это сообщение, найдите в чате, кто это, и сообщите об этом"
 	var/datum/mind/master
 	// If the person with this objective is a lunatic master
 	var/is_master = FALSE
@@ -83,11 +83,11 @@
 	if(is_master)
 		explanation_text = "Lead your lunatics to further your own goals!"
 		return
-	explanation_text = "Assist your ringleader [master], do not harm fellow lunatics"
+	explanation_text = "Помогите вашему Постановщику - [master], не навредите вашим товарищам-лунатикам"
 
 // Lunatic master
 /datum/antagonist/lunatic/master
-	name = "\improper Ringleader"
+	name = "\improper Постановщик"
 	antag_hud_name = "lunatic_master"
 
 /datum/antagonist/lunatic/master/on_gain()

@@ -1,6 +1,6 @@
 /obj/machinery/computer/order_console/bitrunning
 	name = "bitrunning supplies order console"
-	desc = "NexaCache(tm)! Dubiously authentic gear for the digital daredevil."
+	desc = "НексаКэш(ТМ)! Сомнительно аутентичное снаряжение для цифрового сорвиголовы."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "vendor"
 	icon_keyboard = null
@@ -9,10 +9,10 @@
 	cooldown_time = 10 SECONDS
 	cargo_cost_multiplier = 0.65
 	express_cost_multiplier = 1
-	purchase_tooltip = @{"Your purchases will arrive at cargo,
-	and hopefully get delivered by them.
-	35% cheaper than express delivery."}
-	express_tooltip = @{"Sends your purchases instantly."}
+	purchase_tooltip = @{"Ваши покупки прибудут в отдел снабжения,
+	можете понадеятся, что ваши коллеги доставят их вам.
+	На 35% дешевле, чем экспресс-доставка."}
+	express_tooltip = @{"Отправляет ваши покупки мгновенно."}
 	credit_type = MONEY_BITRUNNING_SYMBOL
 
 	order_categories = list(
@@ -21,7 +21,7 @@
 		CATEGORY_BEPIS,
 	)
 	blackbox_key = "bitrunning"
-	announcement_line = "A bitrunner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
+	announcement_line = "Битраннер заказал оборудование, которое прибудет на грузовом шаттле! Пожалуйста, убедитесь, что оно будет доставлено как можно скорее!"
 
 /obj/machinery/computer/order_console/bitrunning/subtract_points(final_cost, obj/item/card/id/card)
 	if(final_cost <= card.registered_account.bitrunning_points)
@@ -43,7 +43,7 @@
 	var/datum/supply_order/new_order = new(
 		pack = pack,
 		orderer = purchaser,
-		orderer_rank = "Bitrunning Vendor",
+		orderer_rank = "Поставщик битрана",
 		orderer_ckey = purchaser.ckey,
 		reason = "",
 		paying_account = card.registered_account,
@@ -54,7 +54,7 @@
 		cost_type = credit_type,
 		can_be_cancelled = FALSE,
 	)
-	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+	say("Благодарим вас за покупку! Товар прибудет следующим грузовым рейсом!")
 	aas_config_announce(/datum/aas_config_entry/order_console, list(), src, list(radio_channel), capitalize(blackbox_key))
 	SSshuttle.shopping_list += new_order
 
@@ -79,6 +79,6 @@
 
 /datum/supply_pack/bitrunning/New(purchaser, cost, list/contains)
 	. = ..()
-	name = "[purchaser]'s Bitrunning Order"
+	name = "Битраннерский заказ [purchaser]"
 	src.cost = cost
 	src.contains = contains

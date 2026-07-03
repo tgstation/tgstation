@@ -1,131 +1,131 @@
-#define SPELLBOOK_CATEGORY_DEFENSIVE "Defensive"
+#define SPELLBOOK_CATEGORY_DEFENSIVE "Защита"
 // Defensive wizard spells
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
-	desc = "Fires several, slow moving, magic projectiles at nearby targets."
+	desc = "Выпускает несколько медленно движущихся магических снарядов по ближайшим целям."
 	spell_type = /datum/action/cooldown/spell/aoe/magic_missile
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
-	desc = "Disables all weapons, cameras and most other technology in range."
+	desc = "Отключает все оружие, камеры и большинство других устройств в радиусе действия."
 	spell_type = /datum/action/cooldown/spell/emp/disable_tech
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
-	desc = "Throws everything around the user away."
+	desc = "Отбрасывает все вокруг пользователя."
 	spell_type = /datum/action/cooldown/spell/aoe/repulse/wizard
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/lightning_packet
 	name = "Thrown Lightning"
-	desc = "Forged from eldrich energies, a packet of pure power, \
-		known as a spell packet will appear in your hand, that when thrown will stun the target."
+	desc = "Выкованный из мистической энергии, мешочек чистой силы, \
+		известный как мешочек заклинаний, появится в вашей руке и при броске оглушит цель."
 	spell_type = /datum/action/cooldown/spell/conjure_item/spellpacket
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	desc = "Stops time for everyone except for you, allowing you to move freely \
-		while your enemies and even projectiles are frozen."
+	desc = "Останавливает время для всех, кроме вас, позволяя вам свободно двигаться, \
+		в то время как ваши враги и даже снаряды заморожены."
 	spell_type = /datum/action/cooldown/spell/timestop
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
-	desc = "Spawns a cloud of choking smoke at your location."
+	desc = "Порождает облако удушливого дыма на вашем месте."
 	spell_type = /datum/action/cooldown/spell/smoke
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
-	desc = "Create a magical barrier that only you can pass through."
+	desc = "Создайте магический барьер, через который сможете пройти только вы."
 	spell_type = /datum/action/cooldown/spell/forcewall
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/lichdom
 	name = "Bind Soul"
-	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing, \
-		turning you into an immortal Lich. So long as the item remains intact, you will revive from death, \
-		no matter the circumstances. Be wary - with each revival, your body will become weaker, and \
-		it will become easier for others to find your item of power."
+	desc = "Темный некромантический договор, который может навсегда привязать вашу душу к выбранному вами предмету, \
+		превратив вас в бессмертного лича. Пока предмет остается нетронутым, вы будете возрождаться после смерти, \
+		независимо от обстоятельств. Будьте осторожны - с каждым возрождением ваше тело будет слабеть, и \
+		другим станет проще найти ваш предмет силы."
 	spell_type =  /datum/action/cooldown/spell/lichdom
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	no_coexistence_typecache = list(/datum/action/cooldown/spell/splattercasting, /datum/spellbook_entry/perks/wormborn, /datum/spellbook_entry/ghostliness)
 
 /datum/spellbook_entry/chuunibyou
 	name = "Chuuni Invocations"
-	desc = "Makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
+	desc = "Заставляет все ваши заклинания выкрикивать призывы, а сами призывы становятся... глупыми. Вы немного исцеляетесь после произнесения заклинания."
 	spell_type =  /datum/action/cooldown/spell/chuuni_invocations
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
-	desc = "Entangle the strings of space-time in an area around you, \
-		randomizing the layout and making proper movement impossible. The strings vibrate..."
+	desc = "Запутывает нити пространства-времени в области вокруг вас, \
+		случайным образом изменяя расположение и делая невозможным правильное перемещение. Нити колеблются..."
 	spell_type = /datum/action/cooldown/spell/spacetime_dist
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
-	desc = "Summon a number of traps around you. They will damage and enrage any enemies that step on them."
+	desc = "Вызовите вокруг себя несколько ловушек. Они нанесут урон и разозлят любых врагов, которые на них наступят."
 	spell_type = /datum/action/cooldown/spell/conjure/the_traps
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/bees
 	name = "Lesser Summon Bees"
-	desc = "This spell magically kicks a transdimensional beehive, \
-		instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
+	desc = "Это заклинание магически бьет по транспространственному улью, \
+		мгновенно вызывая рой пчел в ваше местоположение. Эти пчелы НЕ дружелюбны ко кому-либо."
 	spell_type = /datum/action/cooldown/spell/conjure/bee
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/duffelbag
 	name = "Bestow Cursed Duffel Bag"
-	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. \
-		The duffel bag will make the person it's attached to take periodical damage \
-		if it is not fed regularly, and regardless of whether or not it's been fed, \
-		it will slow the person wearing it down significantly."
+	desc = "Проклятие, прочно прикрепляющее к спине цели демонический вещмешок. \
+		Сумка будет периодически наносить урон тому, к кому она прикреплена, \
+		если ее не кормить регулярно, и независимо от того, кормили ее или нет, \
+		она будет значительно замедлять передвижение того, кто ее носит."
 	spell_type = /datum/action/cooldown/spell/touch/duffelbag
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
-	desc = "An altruistic staff that can heal the lame and raise the dead."
+	desc = "Альтруистический посох, способный исцелять хромых и воскрешать мертвых."
 	item_path = /obj/item/gun/magic/staff/healing
 	cost = 1
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/lockerstaff
 	name = "Staff of the Locker"
-	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
+	desc = "Посох, стреляющий шкафчиками. Он съедает всех, в кого попадает на своем пути, оставляя после себя заваренный шкафчик с вашими жертвами."
 	item_path = /obj/item/gun/magic/staff/locker
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
-	desc = "An incandescent orb of crackling energy. Using it will allow you to release your ghost while alive, allowing you to spy upon the station and talk to the deceased. In addition, buying it will permanently grant you X-ray vision."
+	desc = "Накаленная сфера с потрескивающей энергией. Используя его, вы сможете выпустить свой дух при сохранении жизни, что позволит вам шпионить за станцией и разговаривать с умершими. Кроме того, купив его, вы навсегда получите рентгеновское зрение."
 	item_path = /obj/item/scrying
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
-	desc = "A collection of wands that allow for a wide variety of utility. \
-		Wands have a limited number of charges, so be conservative with their use. \
-		Comes in a handy belt, or a fancy bandolier if you are already wearing one."
+	desc = "Коллекция палочек, позволяющих использовать их в самых разных целях. \
+		У палочек ограниченное количество зарядов, поэтому будьте осторожны при их использовании. \
+		Поставляется в удобном поясе или модной бандольере, если пояс уже экипирован."
 	item_path = /obj/item/storage/belt/wands/full
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/wands/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	if (!istype(user.belt, /obj/item/storage/belt/wands))
 		var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
-		to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+		to_chat(user, span_notice("[capitalize(to_equip.declent_ru(NOMINATIVE))] призывается [was_equipped ? "на ваш пояс" : "у ваших ног"]."))
 		return
 
 	// If you already have a wand belt you get a cool bandolier instead for your copious amount of wands
@@ -137,22 +137,22 @@
 	qdel(to_equip)
 
 	var/was_equipped = user.equip_to_slot_if_possible(bandolier, ITEM_SLOT_SUITSTORE, disable_warning = TRUE)
-	to_chat(user, span_notice("\A [bandolier.name] has been summoned [was_equipped ? "across your chest" : "at your feet"]."))
+	to_chat(user, span_notice("[capitalize(bandolier.declent_ru(NOMINATIVE))] призывается [was_equipped ? "вам на грудь" : "у ваших ног"]."))
 
 /datum/spellbook_entry/item/wands/discount
 	name = "Wand Assortment (Bargain Bin)"
-	desc = "A random collection of wands sourced from apprentice wandmaking studies. \
-		You're never quite sure what you're going to get. \
-		Comes in a handy belt, or a fancy bandolier if you are already wearing one."
+	desc = "Случайная коллекция палочек, сотворённых учениками. \
+		Неизвестно, что вы получите. \
+		Поставляется в удобном поясе или модной бандольере, если пояс уже экипирован."
 	cost = 1
 	item_path = /obj/item/storage/belt/wands/full/discount
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells \
-		while providing more protection against attacks and the void of space. \
-		Also grants a battlemage shield."
+	desc = "Артефактный комплект брони, позволяющий использовать заклинания \
+		и обеспечивающий дополнительную защиту от атак и пустоты космоса. \
+		Также дает силовой щит боевого мага."
 	item_path = /obj/item/mod/control/pre_equipped/enchanted
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 

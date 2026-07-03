@@ -8,6 +8,7 @@ import { logger } from '../../logging';
 import { CreateObject } from './CreateObject';
 import { CreateObjectAdvancedSettings } from './CreateObjectAdvancedSettings';
 import type { CreateObjectData } from './types';
+import { useBackend } from '../../backend';
 
 export interface IconSettings {
   icon: string | null;
@@ -18,6 +19,7 @@ export interface IconSettings {
 
 export function SpawnPanel() {
   const [data, setData] = useState<CreateObjectData | undefined>();
+  const { act } = useBackend(); // BANDASTATION EDIT: More handy verb
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [iconSettings, setIconSettings] = useState<IconSettings>({
     icon: null,
@@ -46,7 +48,14 @@ export function SpawnPanel() {
   };
 
   return (
-    <Window height={550} title="Spawn Panel" width={500} theme="admin">
+    <Window height={550} title="Spawn Panel" width={500} theme="admin"
+      // BANDASTATION EDIT START: More handy verb
+      buttons={
+        <Button fluid onClick={() => act('game-mode-panel')} icon="gamepad">
+          Game Mode Panel
+        </Button>
+      // BANDASTATION EDIT END: More handy verb
+      }>
       <Window.Content>
         {advancedSettings && (
           <Modal

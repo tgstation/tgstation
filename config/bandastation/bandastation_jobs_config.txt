@@ -1,0 +1,16 @@
+## Race restriction
+## Non-human races will be restricted from gaining this jobs
+JOB_RESTRICTIONS Captain
+JOB_RESTRICTIONS Nanotrasen Representative
+JOB_RESTRICTIONS Head of Security
+JOB_RESTRICTIONS Chief Medical Officer
+JOB_RESTRICTIONS Chief Engineer
+JOB_RESTRICTIONS Research Director
+JOB_RESTRICTIONS Quartermaster
+JOB_RESTRICTIONS Head of Personnel
+JOB_RESTRICTIONS Magistrate
+JOB_RESTRICTIONS Blueshield
+
+ALLOWED_SPECIES /datum/species/human
+ALLOWED_SPECIES /datum/species/skrell
+

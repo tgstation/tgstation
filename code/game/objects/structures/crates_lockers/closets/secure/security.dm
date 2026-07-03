@@ -121,7 +121,17 @@
 	..()
 	new /obj/item/storage/belt/security/full(src)
 
-/obj/structure/closet/secure_closet/security/cargo
+// BANDASTATION EDIT START - Track amount of security closets
+GLOBAL_VAR_INIT(security_closets_count, 0)
+
+/obj/structure/closet/secure_closet/security/sec/Initialize(mapload)
+	. = ..()
+	GLOB.security_closets_count++
+
+/obj/structure/closet/secure_closet/security/sec/Destroy()
+	GLOB.security_closets_count--
+	. = ..()
+// BANDASTATION EDIT END
 
 /obj/structure/closet/secure_closet/security/cargo/PopulateContents()
 	..()
@@ -168,7 +178,7 @@
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/storage/belt/holster/detective/full(src)
+	new /obj/item/clothing/accessory/holster/detective/full(src) //BANDASTATION EDIT: Accessory holsters
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
@@ -239,6 +249,10 @@
 	new /obj/item/clothing/under/rank/prisoner( src )
 	new /obj/item/clothing/under/rank/prisoner/skirt( src )
 	new /obj/item/clothing/shoes/sneakers/orange( src )
+	// BANDASTATION MOD START: Brig closet extra items
+	new /obj/item/radio/headset( src )
+	new /obj/item/card/id/advanced/prisoner/temp( src )
+	// BANDASTATION MOD END: Brig closet extra items
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"

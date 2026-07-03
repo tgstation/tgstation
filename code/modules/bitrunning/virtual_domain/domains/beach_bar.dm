@@ -1,9 +1,9 @@
 /datum/lazy_template/virtual_domain/beach_bar
-	name = "Beach Bar"
-	desc = "A cheerful seaside haven where friendly skeletons serve up drinks. Say, how'd you guys get so dead?"
+	name = "Бар на пляже"
+	desc = "Веселая пляжная обитель, где дружелюбные скелеты подают напитки. Ребят, а как вы погибли?"
 	completion_loot = list(/obj/item/toy/beach_ball = 1)
-	help_text = "This place is running on a skeleton crew, and they don't seem to be too keen to share details. \
-	Maybe a few drinks of liquid charm will get the spirits up. As the saying goes, if you can't beat 'em, join 'em."
+	help_text = "Это место работает на скелетной команде, и они не очень хотят делиться информацией. \
+	Может быть, парочка рюмочек жидкого очарования поднимут им настроение. Как говорится, если не можешь их победить - присоединись к ним!"
 	key = "beach_bar"
 	map_name = "beach_bar"
 	domain_flags = DOMAIN_NO_NOHIT_BONUS

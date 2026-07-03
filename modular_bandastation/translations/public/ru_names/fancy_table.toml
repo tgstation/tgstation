@@ -1,0 +1,8 @@
+["fancy table"]
+nominative = "изысканный стол"
+genitive = "изысканного стола"
+dative = "изысканному столу"
+accusative = "изысканный стол"
+instrumental = "изысканным столом"
+prepositional = "изысканном столе"
+gender = "male"

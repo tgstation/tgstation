@@ -1,0 +1,8 @@
+[binoculars]
+nominative = "бинокль"
+genitive = "бинокля"
+dative = "биноклю"
+accusative = "бинокль"
+instrumental = "биноклем"
+prepositional = "бинокле"
+gender = "male"

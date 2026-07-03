@@ -1,0 +1,21 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/obj/item/hand_labeler{
+	pixel_y = 2
+	},
+/obj/item/assembly/timer{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
+"G" = (
+/obj/structure/statue/gold/galactic_map,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
+
+(1,1,1) = {"
+G
+a
+"}

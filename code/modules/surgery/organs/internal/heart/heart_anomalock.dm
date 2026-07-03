@@ -5,7 +5,7 @@
 
 /obj/item/organ/heart/cybernetic/anomalock
 	name = "voltaic combat cyberheart"
-	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
+	desc = "Кибернетическое сердце, что обогнало своё время. Активное сердце даёт пользователю защиту от ЭМИ и удерживает тело в вертикальном положении в самых тяжёлых условиях. Для работы требуется аномальное ядро флюкс"
 	icon_state = "anomalock_heart"
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
@@ -68,8 +68,8 @@
 
 	if(DOING_INTERACTION(user, DOAFTER_IMPLANTING_HEART))
 		return
-	user.balloon_alert(user, "this will hurt...")
-	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
+	user.balloon_alert(user, "это будет больно...")
+	to_chat(user, span_userdanger("Чёрные кибервены разрывают вашу плоть, затягивая сердце в рёбра. Кажется, что это не очень хорошо..."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
 	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
@@ -142,19 +142,19 @@
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "your heart strengthtens")
+	balloon_alert(organ_owner, "ваше сердце крепнет")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 /obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
 		return NONE
 	if(core)
-		balloon_alert(user, "core already in!")
+		balloon_alert(user, "ядро уже установлено!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	core = tool
-	balloon_alert(user, "core installed")
+	balloon_alert(user, "ядро установлено")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
@@ -163,16 +163,16 @@
 /obj/item/organ/heart/cybernetic/anomalock/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!core)
-		balloon_alert(user, "no core!")
+		balloon_alert(user, "нет ядра!")
 		return
 	if(!core_removable)
-		balloon_alert(user, "can't remove core!")
+		balloon_alert(user, "не удаётся достать ядро!")
 		return
-	balloon_alert(user, "removing core...")
+	balloon_alert(user, "извлечение ядра...")
 	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, "прервано!")
 		return
-	balloon_alert(user, "core removed")
+	balloon_alert(user, "ядро извлечено")
 	core.forceMove(drop_location())
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)
@@ -216,7 +216,7 @@
 	REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
 	owner.add_filter("emp_shield", 2, outline_filter(1, "#639BFF"))
-	to_chat(owner, span_revendanger("You feel a burst of energy! It's do or die!"))
+	to_chat(owner, span_revendanger("Вы чувствуете прилив сил! Со щитом или на щите!"))
 	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /datum/status_effect/voltaic_overdrive/on_remove()
@@ -224,7 +224,7 @@
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
-	owner.balloon_alert(owner, "your heart weakens")
+	owner.balloon_alert(owner, "ваше сердце слабнет")
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /// Called when an organ is lost in the owner. In the event the owner just lost their voltaic (presumably, the one giving this effect), ends the buff and clears the overlay.
@@ -237,13 +237,13 @@
 	name = "voltaic overdrive"
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "anomalock_heart"
-	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
+	desc = "Поступление гальванической энергии в кровь, которая будет поддерживать ваше тело на протяжении 30 секунд, прежде чем эффект закончится!"
 
 /obj/item/organ/heart/cybernetic/anomalock/hear_beat_noise(mob/living/hearer)
 	if(prob(1))
-		to_chat(hearer, span_danger("Yeah. Press a metal disk to the chest of a living arc flash hazard. See what that gets you.")) //the guy is LITERALLY sparking like a tesla coil.
+		to_chat(hearer, span_danger("Посмотрим, что выйдет, если прижать металлический диск к груди живой электрической дуги.")) //the guy is LITERALLY sparking like a tesla coil.
 	else
-		to_chat(hearer, span_danger("An electrical arc strikes your stethoscope, conducting into you!"))
+		to_chat(hearer, span_danger("Электрическая дуга попадает в ваш стетоскоп и проникает в вас!"))
 	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) //the stethoscope is in your ears. (returns true if it does damage so we only scream in that case)
 		hearer.emote("scream")
 	return span_danger("[owner.p_Their()] heart produces [beat_noise].")

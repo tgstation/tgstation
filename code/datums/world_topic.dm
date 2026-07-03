@@ -159,7 +159,7 @@
 
 	LAZYREMOVE(timers, timer_id)
 
-	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+	minor_announce(input["message"], "Входящее сообщение от [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
 	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
@@ -168,7 +168,7 @@
 	keyword = "News_Report"
 
 /datum/world_topic/news_report/Run(list/input)
-	minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
+	minor_announce(input["message"], "Свежие новости от [input["message_sender"]]")
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
@@ -189,7 +189,26 @@
 	keyword = "adminwho"
 
 /datum/world_topic/adminwho/Run(list/input)
-	return tgsadminwho()
+	var/list/out_data = list()
+
+	for(var/client/C as anything in GLOB.admins)
+		var/list/this_entry = list()
+		// Send both incase we want special formatting
+		this_entry["ckey"] = C.ckey
+		this_entry["key"] = C.key
+		this_entry["ranks"] = list()
+
+		for(var/datum/admin_rank/rank in C.holder.ranks)
+			this_entry["ranks"] += rank.name
+
+		// is_afk() returns an int of inactivity, we can use this to determine AFK for how long
+		// This info will not be shown in public channels
+		this_entry["afk"] = C.is_afk()
+		this_entry["stealth"] = C.holder.fakekey ? "STEALTH" : "NONE"
+		this_entry["skey"] = C.holder.fakekey ? C.holder.fakekey : "NONE"
+
+		out_data += list(this_entry)
+	return out_data
 
 /datum/world_topic/status
 	keyword = "status"

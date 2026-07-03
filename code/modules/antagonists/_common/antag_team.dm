@@ -52,23 +52,23 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/proc/roundend_report()
 	var/list/report = list()
 
-	report += span_header("\The [name]:")
-	report += "The [member_name]s were:"
+	report += span_header("[name]:")
+	report += "[member_name] были:"
 	report += printplayerlist(members)
 
 	if(objectives.len)
-		report += span_header("Team had following objectives:")
+		report += span_header("Команда имела следующие цели:")
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective as anything in objectives)
 			if(!objective.check_completion())
 				win = FALSE
-			report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+			report += "<B>Цель #[objective_count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			objective_count++
 		if(win)
-			report += span_greentext("The [name] was successful!")
+			report += span_greentext("[name] выполнил свои задачи!")
 		else
-			report += span_redtext("The [name] have failed!")
+			report += span_redtext("[name] провалился!")
 
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"

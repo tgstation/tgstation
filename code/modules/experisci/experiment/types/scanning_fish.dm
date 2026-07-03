@@ -7,14 +7,14 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
  * and to make the fishing portal generator a bit than just gubby and goldfish.
  */
 /datum/experiment/scanning/fish
-	name = "Fish Scanning Experiment 1"
-	description = "An experiment requiring different fish species to be scanned to unlock the 'Beach' setting for the fishing portal generator."
-	performance_hint = "Scan fish. Examine scanner to review progress. Unlock new fishing portals."
+	name = "Эксперимент по скану рыбы (1)"
+	description = "Эксперимент, требующий сканирования различных видов рыб, чтобы разблокировать настройку \"Пляж\" для генератора рыболовного портала."
+	performance_hint = "Сканируйте рыбу. Осмотрите сканер, чтобы просмотреть прогресс. Разблокируйте новые порталы для рыбалки."
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner, /obj/item/fishing_rod/tech, /obj/item/fish_analyzer)
 	traits = EXPERIMENT_TRAIT_TYPECACHE
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS )
 	required_atoms = list(/obj/item/fish = 3)
-	scan_message = "Scan different species of fish"
+	scan_message = "Сканируйте разные виды рыб"
 	///Further experiments added to the techweb when this one is completed.
 	var/list/next_experiments = list(/datum/experiment/scanning/fish/second)
 	///Completing a experiment may also enable a fish source to be used for use for the portal generator.
@@ -50,11 +50,11 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
 /datum/experiment/scanning/fish/proc/on_handler_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Examine again to review all the species of fish scanned so far.")
+	examine_list += span_notice("Осмотрите еще раз, чтобы просмотреть все виды рыб, отсканированные на данный момент.")
 
 /datum/experiment/scanning/fish/proc/on_handler_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	var/message = span_notice("Fish species scanned hitherto, if any:")
+	var/message = span_notice("Виды рыб, отсканированные до этого, если таковые имеются:")
 	message += "<span class='info ml-1'>"
 	for(var/atom_type in required_atoms)
 		for(var/obj/item/fish/fish_path as anything in scanned[atom_type])
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
 /datum/experiment/scanning/fish/second
 	name = "Fish Scanning Experiment 2"
-	description = "An experiment requiring more fish species to be scanned to unlock the 'Ocean' setting for the fishing portal."
+	description = "Эксперимент, требующий отсканировать больше видов рыб, чтобы разблокировать настройку \"Океан\" для рыболовного портала."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS )
 	required_atoms = list(/obj/item/fish = 7)
 	next_experiments = list(/datum/experiment/scanning/fish/third)
@@ -87,19 +87,19 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
 /datum/experiment/scanning/fish/third
 	name = "Fish Scanning Experiment 3"
-	description = "An experiment requiring even more fish species to be scanned to unlock the 'Chasm' setting for the fishing portal."
+	description = "Эксперимент, требующий отсканировать еще больше видов рыб, чтобы разблокировать настройку \"Бездна\" для рыболовного портала."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS )
 	required_atoms = list(/obj/item/fish = 11)
 	next_experiments = list(/datum/experiment/scanning/fish/fourth, /datum/experiment/scanning/fish/holographic)
 	fish_source_reward = /datum/fish_source/portal/chasm
 
 /datum/experiment/scanning/fish/holographic
-	name = "Holographic Fish Scanning Experiment"
-	description = "This one actually requires holographic fish to unlock the 'Randomizer' setting for the fishing portal."
-	performance_hint = "Load in the 'Beach' template at the Holodeck to fish some holo-fish."
+	name = "Эксперимент по скану голорыбы"
+	description = "Чтобы разблокировать настройку \"Рандомизатор\" для рыболовного портала, потребуется голографическая рыба."
+	performance_hint = "Загрузите шаблон \"Пляж\" на Голодэке, чтобы половить голорыбу."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS )
 	required_atoms = list(/obj/item/fish/holo = 3)
-	scan_message = "Scan different species of holographic fish"
+	scan_message = "Сканирование различных видов голографических рыб"
 	next_experiments = null
 	fish_source_reward = /datum/fish_source/portal/random
 
@@ -108,8 +108,8 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	return TRUE
 
 /datum/experiment/scanning/fish/fourth
-	name = "Fish Scanning Experiment 4"
-	description = "An experiment requiring lotsa fish species to unlock the 'Hyperspace' setting for the fishing portal."
+	name = "Эксперимент по скану рыбы (4)"
+	description = "Эксперимент, требующий много видов рыб, чтобы разблокировать настройку \"Гиперпространство\" для рыболовного портала."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS )
 	required_atoms = list(/obj/item/fish = 17)
 	next_experiments = null

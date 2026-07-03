@@ -7,12 +7,12 @@
  * procs should be extended where necessary.
  */
 /datum/experiment/scanning
-	name = "Scanning Experiment"
-	description = "Base experiment for scanning atoms"
-	exp_tag = "Scan"
+	name = "Эксперимент по скану"
+	description = "Базовый эксперимент по скану атомов"
+	exp_tag = "Скан"
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner)
-	performance_hint = "Perform scanning experiments using a handheld experi-scanner, or the stationary experimental destructive scanner. \
-						Destructive scans can only be performed with the experimental destructive scanner."
+	performance_hint = "Проведите сканирования с помощью ручного экспери-сканнера или стационарного экспериментального деструктора. \
+						Деструктивное сканирование может быть выполнено только с помощью деструктора."
 	/// The typepaths and number of atoms that must be scanned
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment (Or a count of atoms destoryed for destructive expiriments)
@@ -71,7 +71,7 @@
  */
 /datum/experiment/scanning/proc/serialize_progress_stage(atom/target, list/seen_instances)
 	var/scanned_total = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !(traits & EXPERIMENT_TRAIT_TYPECACHE)) ? scanned[target] : seen_instances.len
-	var/message = scan_message || "Scan samples of \a [initial(target.name)]"
+	var/message = scan_message || "Скан образцов: [declent_ru_initial(target::name, NOMINATIVE, target::name)]"
 	return EXPERIMENT_PROG_INT(message, scanned_total, required_atoms[target])
 
 /**

@@ -58,7 +58,7 @@
 	LoadComponent( \
 		/datum/component/itempicky, \
 		xeno_allowed_items, \
-		span_alien("Your claws lack the dexterity to hold %TARGET."), \
+		span_alien("Ваши когти недостаточно ловки, чтобы держать %TARGET."), \
 		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_has_trait), src, TRAIT_ADVANCEDTOOLUSER))
 
 /mob/living/carbon/alien/proc/create_internal_organs()
@@ -128,15 +128,15 @@ Des: Removes all infected images from the alien.
 	return TRUE
 
 /mob/living/carbon/alien/get_visible_suicide_message()
-	return "[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."
+	return "[capitalize(declent_ru(NOMINATIVE))] дико мечется! Кажется, [ru_p_they()] пытается совершить самоубийство."
 
 /mob/living/carbon/alien/get_blind_suicide_message()
-	return "You hear thrashing."
+	return "Вы слышите мечение."
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(
-		span_alertalien("[src] begins to twist and contort!"),
-		span_noticealien("You begin to evolve!"),
+		span_alertalien("[capitalize(declent_ru(NOMINATIVE))] начинает извиваться и изменяться!"),
+		span_noticealien("Вы начинаете эволюционировать!"),
 	)
 
 	new_xeno.setDir(dir)
@@ -184,6 +184,7 @@ Des: Removes all infected images from the alien.
 	if(old_identifier != 0)
 		identifier = old_identifier
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
+		ru_names_rename(ru_names_toml(name))
 
 	set_name()
 

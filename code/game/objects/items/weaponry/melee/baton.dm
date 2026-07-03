@@ -1,7 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
-	desc_controls = "Left click to stun, right click to harm."
+	desc = "Деревянная дубинка для избиения уголовных подонков."
+	desc_controls = "ЛКМ для оглушения, ПКМ для вреда."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -55,22 +55,22 @@
 	var/activated_word = "ready"
 
 	/// The context to show when the baton is active and targeting a living thing
-	var/context_living_target_active = "Stun"
+	var/context_living_target_active = "Оглушить"
 
 	/// The context to show when the baton is active and targeting a living thing in combat mode
-	var/context_living_target_active_combat_mode = "Stun"
+	var/context_living_target_active_combat_mode = "Оглушить"
 
 	/// The context to show when the baton is inactive and targeting a living thing
-	var/context_living_target_inactive = "Prod"
+	var/context_living_target_inactive = "Тыкнуть"
 
 	/// The context to show when the baton is inactive and targeting a living thing in combat mode
-	var/context_living_target_inactive_combat_mode = "Attack"
+	var/context_living_target_inactive_combat_mode = "Атаковать"
 
 	/// The RMB context to show when the baton is active and targeting a living thing
-	var/context_living_rmb_active = "Attack"
+	var/context_living_rmb_active = "Атаковать"
 
 	/// The RMB context to show when the baton is inactive and targeting a living thing
-	var/context_living_rmb_inactive = "Attack"
+	var/context_living_rmb_inactive = "Атаковать"
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
@@ -85,19 +85,19 @@
 	var/list/readout = list()
 
 	if(affect_cyborg)
-		readout += "It can stun cyborgs for [round((stun_time_cyborg/10), 1)] seconds."
+		readout += "Оглушает киборгов на [round((stun_time_cyborg/10), 1)] сек."
 
-	readout += "\n[active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."]"
+	readout += "\n[active ? "Сейчас [span_warning(activated_word)] и может оглушать." : "Сейчас [span_warning("не " + activated_word)] и не может оглушать."]"
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
-		readout += "Either it is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
+		readout += "[span_warning("Не может наносить оглушающие удары")], либо [span_warning("использует для атаки необычный метод")]."
 		return readout.Join("\n")
 
-	readout += "It takes [span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")] to stun an enemy."
+	readout += "Требуется [span_warning("[HITS_TO_CRIT(stamina_damage)] удар[declension_ru(HITS_TO_CRIT(stamina_damage), "", "ов", "а")]")], чтобы оглушить врага."
 
-	readout += "\nThe effects of each strike can be mitigated by utilizing [span_warning("[armour_type_against_stun]")] armor."
+	readout += "\nЭффект каждого удара можно смягчить с помощью брони типа [span_warning("[armour_type_against_stun]")]."
 
-	readout += "\nIt has a stun armor-piercing capability of [span_warning("[stun_armour_penetration]%")]."
+	readout += "\nИмеет бронепробиваемость для оглушения в [span_warning("[stun_armour_penetration]%")]."
 	return readout.Join("\n")
 
 /obj/item/melee/baton/proc/add_deep_lore()
@@ -125,7 +125,7 @@
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			if(!harmbatonning)
-				balloon_alert(human_user, "fingers are too big!")
+				balloon_alert(human_user, "пальцы слишком большие!")
 			return FALSE
 	if(!COOLDOWN_FINISHED(src, cooldown_check))
 		if(wait_desc && !harmbatonning)
@@ -133,7 +133,7 @@
 		return FALSE
 	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)) ) //no doublebaton abuse anon!
 		if(!harmbatonning)
-			target.balloon_alert(user, "can't stun yet!")
+			target.balloon_alert(user, "нельзя пока оглушить!")
 		return FALSE
 	return TRUE
 
@@ -164,8 +164,8 @@
 	// clumsy people redirect this attack - yes, this bypasses IWASBATONED and such
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message(
-			span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"),
-			span_userdanger("You accidentally hit yourself over the head with [src]!"),
+			span_danger("[capitalize(user.declent_ru(NOMINATIVE))] случайно бьёт себя по голове [declent_ru(INSTRUMENTAL)]! Что за придурок!"),
+			span_userdanger("Вы случайно бьёте себя по голове [declent_ru(INSTRUMENTAL)]!"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -216,7 +216,7 @@
 		return NONE
 
 	if (isobj(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+		context[SCREENTIP_CONTEXT_LMB] = "Ударить"
 	else
 		if (active)
 			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
@@ -271,19 +271,19 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	PROTECTED_PROC(TRUE)
 	. = list()
-	.["visible"] = span_danger("[user] knocks [target] down with [src]!")
-	.["local"] = span_userdanger("[user] knocks you down with [src]!")
+	.["visible"] = span_danger("[capitalize(user.declent_ru(NOMINATIVE))] сбивает [target.declent_ru(ACCUSATIVE)] с ног с помощью [declent_ru(GENITIVE)]!")
+	.["local"] = span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] сбивает вас с ног с помощью [declent_ru(GENITIVE)]!")
 
 /// Default message for stunning a cyborg.
 /obj/item/melee/baton/proc/get_cyborg_stun_description(mob/living/target, mob/living/user)
 	PROTECTED_PROC(TRUE)
 	. = list()
 	if(affect_cyborg)
-		.["visible"] = span_danger("[user] pulses [target]'s sensors with the baton!")
-		.["local"] = span_danger("You pulse [target]'s sensors with the baton!")
+		.["visible"] = span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пульсирует сенсоры [target.declent_ru(GENITIVE)] с помощью [declent_ru(GENITIVE)]!")
+		.["local"] = span_danger("Вы пульсируете сенсоры [target.declent_ru(GENITIVE)] с помощью [declent_ru(GENITIVE)]!")
 	else
-		.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
-		.["local"] = span_userdanger("[user] tries to... knock you down with [src]?") //look at the top of his head!
+		.["visible"] = span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается сбить [target.declent_ru(ACCUSATIVE)] с ног с помощью [declent_ru(GENITIVE)], и предсказуемо терпит неудачу!") //look at this duuuuuude
+		.["local"] = span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] пытается... сбить вас с помощью [declent_ru(GENITIVE)]?") //look at the top of his head!
 
 /// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
 /obj/item/melee/baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
@@ -308,14 +308,14 @@
 
 /obj/item/conversion_kit
 	name = "conversion kit"
-	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
+	desc = "Странная коробка с инструментами для обработки дерева и инструкцией по превращению оглушающих дубинок во что-то другое."
 	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_COMMAND * 4.5
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	desc = "Компактное, но надежное оружие личной защиты. В сложенном виде его можно спрятать."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
 	icon_angle = -45
@@ -332,7 +332,7 @@
 	exposed_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
-	activated_word = "extended"
+	activated_word = "вытянут"
 	var/folded_drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 	var/folded_pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
 	var/unfolded_drop_sound = 'sound/items/baton/telescopic_baton_unfolded_drop.ogg'
@@ -367,7 +367,7 @@
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/organ/brain/our_brain = human_user.get_organ_by_type(/obj/item/organ/brain)
 
-	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
+	user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] вставляет [declent_ru(ACCUSATIVE)] себе в нос и нажимает кнопку 'вытянуть'! Кажется, [user.ru_p_they()] пытается очистить свой разум."))
 	if(active)
 		playsound(src, on_sound, 50, TRUE)
 		add_fingerprint(user)
@@ -394,7 +394,7 @@
 	src.active = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	if(user)
-		balloon_alert(user, active ? "extended" : "collapsed")
+		balloon_alert(user, active ? "вытянуто" : "втянуто")
 	if(!active)
 		drop_sound = folded_drop_sound
 		pickup_sound = folded_pickup_sound
@@ -406,24 +406,24 @@
 
 /obj/item/melee/baton/telescopic/bronze
 	name = "bronze-capped telescopic baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked BRONZE, and thus has mediocre penetrative power."
+	desc = "Компактное, но надежное оружие личной защиты. В сложенном виде его можно спрятать. Бронзовый вариант. Обладает посредственным пробитием."
 	icon_state = "telebaton_bronze"
 
 /obj/item/melee/baton/telescopic/silver
 	name = "silver-capped telescopic baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked SILVER, and thus has decent penetrative power."
+	desc = "Компактное, но надежное оружие личной защиты. В сложенном виде его можно спрятать. Серебряный вариант. Обладает неплохим пробитием."
 	icon_state = "telebaton_silver"
 	stun_armour_penetration = 30 // strong enough to pen sec armor
 
 /obj/item/melee/baton/telescopic/gold
 	name = "gold-capped telescopic baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked GOLD, and thus has exceptional penetrative power."
+	desc = "Компактное, но надежное оружие личной защиты. В сложенном виде его можно спрятать. Золото - сила. Обладает повышенным пробитием."
 	icon_state = "telebaton_gold"
 	stun_armour_penetration = 50 // strong enough to pen syndicate modsuits
 
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
-	desc = "A high tech telescopic stun baton, as developed by Cybersun Industries. Delivers a precise shock to a target's central nervous system to incapacitate them."
+	desc = "Высокотехнологичная оглушающая дубинка Cybersun Industries. Наносит точный электрический разряд по центральной нервной системе цели, чтобы обездвижить её."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
@@ -440,7 +440,7 @@
 	stun_armour_penetration = 30 // strong enough to pen sec armor
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
-	wait_desc = "still charging!"
+	wait_desc = "ещё перезаряжается!"
 	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
 	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
@@ -456,8 +456,8 @@
 
 /obj/item/melee/baton/security
 	name = "stun baton"
-	desc = "The Secure Apprehension Device, as developed by Nanotrasen. Delivers a precise shock to a target's central nervous system to incapacitate them."
-	desc_controls = "Left click to stun, right click to harm."
+	desc = "Устройство безопасного задержания разработанная Нанотрейзен. Наносит точный электрический разряд по центральной нервной системе цели, чтобы обездвижить её."
+	desc_controls = "ЛКМ для оглушения, ПКМ для вреда."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	base_icon_state = "stunbaton"
@@ -480,9 +480,9 @@
 	on_stun_volume = 50
 	active = FALSE
 	stun_on_harmbaton = TRUE
-	wait_desc = "still charging!"
-	activated_word = "activated"
-	context_living_rmb_active = "Harmful Stun"
+	wait_desc = "ещё перезаряжается!"
+	activated_word = "активирован"
+	context_living_rmb_active = "Травмирующее оглушение"
 	light_range = 1.5
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
@@ -527,11 +527,11 @@
 
 /obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
-		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] вставляет [declent_ru(ACCUSATIVE)] с включенной батареей себе в рот! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		finalize_baton_attack(user, user)
 		return FIRELOSS
 	else
-		user.visible_message(span_suicide("[user] is shoving \the [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] заталкивает [declent_ru(ACCUSATIVE)] себе в горло! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		return OXYLOSS
 
 /obj/item/melee/baton/security/Destroy()
@@ -587,9 +587,9 @@
 /obj/item/melee/baton/security/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+		. += span_notice("Батарея [declent_ru(GENITIVE)] заряжена на [round(cell.percent())]%.")
 	else
-		. += span_warning("\The [src] does not have a power source installed.")
+		. += span_warning("[capitalize(declent_ru(NOMINATIVE))] не имеет установленного источника питания.")
 
 /obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
 	if(tryremovecell(user))
@@ -600,15 +600,15 @@
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
-			to_chat(user, span_warning("[src] already has a cell!"))
+			to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] уже имеет батарею!"))
 		else
 			if(active_cell.maxcharge < cell_hit_cost)
-				to_chat(user, span_notice("[src] requires a higher capacity cell."))
+				to_chat(user, span_notice("[capitalize(declent_ru(NOMINATIVE))] нуждается в более емкой батарее."))
 				return
 			if(!user.transferItemToLoc(item, src))
 				return
 			cell = item
-			to_chat(user, span_notice("You install a cell in [src]."))
+			to_chat(user, span_notice("Вы вставляете батарею в [capitalize(declent_ru(ACCUSATIVE))]."))
 			update_appearance()
 	else
 		return ..()
@@ -616,22 +616,22 @@
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
-		to_chat(user, span_notice("You remove the cell from [src]."))
+		to_chat(user, span_notice("Вы вынимаете батарею из [declent_ru(GENITIVE)]."))
 		return TRUE
 	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost && !active)
 		turn_on(user)
-		balloon_alert(user, "turned on")
+		balloon_alert(user, "включение")
 	else
 		turn_off()
 		if(!cell)
-			balloon_alert(user, "no power source!")
+			balloon_alert(user, "нет источника питания!")
 		else if(cell?.charge < cell_hit_cost)
-			balloon_alert(user, "out of charge!")
+			balloon_alert(user, "не хватает заряда!")
 		else
-			balloon_alert(user, "turned off")
+			balloon_alert(user, "выключение")
 	add_fingerprint(user)
 
 /// Toggles the stun baton's light
@@ -668,8 +668,8 @@
 /obj/item/melee/baton/security/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	if(!active && !harmbatonning && !user.combat_mode)
 		target.visible_message(
-			span_warning("[user] prods [target] with [src]. Luckily it was off."),
-			span_warning("[user] prods you with [src]. Luckily it was off."),
+			span_warning("[capitalize(user.declent_ru(NOMINATIVE))] тыкает [target.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)]. К счастью, оно было выключено."),
+			span_warning("[capitalize(user.declent_ru(NOMINATIVE))] тыкает вас с помощью [declent_ru(GENITIVE)]. К счастью, оно было выключено."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		return FALSE
@@ -702,7 +702,7 @@
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
+		to_chat(target, span_warning("Ваши мышцы сводит судорогой, заставляя вас упасть[trait_check ? ", но ваше тело быстро восстанавливается..." : "!"]"))
 
 	if(!trait_check)
 		target.Knockdown(knockdown_time)
@@ -710,14 +710,14 @@
 /obj/item/melee/baton/security/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = span_danger("[user] stuns [target] with [src]!")
-	.["local"] = span_userdanger("[user] stuns you with [src]!")
+	.["visible"] = span_danger("[capitalize(user.declent_ru(NOMINATIVE))] оглушает [target.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)]!")
+	.["local"] = span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] оглушает вас с помощью [declent_ru(GENITIVE)]!")
 
 /obj/item/melee/baton/security/get_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = ..()
 	if(!affect_cyborg)
-		.["visible"] = span_danger("[user] tries to stun [target] with [src], and predictably fails!")
-		.["local"] = span_userdanger("[user] tries to... stun you with [src]?")
+		.["visible"] = span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается оглушить [target.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)], и предсказуемо терпит неудачу!")
+		.["local"] = span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] пытается... оглушить вас с помощью [declent_ru(GENITIVE)]?")
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -771,7 +771,7 @@
 ///Stun Sword
 /obj/item/melee/baton/security/stunsword
 	name = "\improper NT-20 'Excalibur' Stunsword"
-	desc = "It's a sword. It stuns. What more could you want?"
+	desc = "Это меч. Он оглушает. Что вы ещё хотите??"
 	icon_state = "stunsword"
 	inhand_icon_state = "stunsword"
 	base_icon_state = "stunsword"
@@ -806,8 +806,8 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton."
-	desc_controls = "Left click to stun, right click to harm."
+	desc = "Импровизированная оглушающая дубинка."
+	desc_controls = "ЛКМ для оглушения, ПКМ для вреда."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	base_icon_state = "stunprod"
@@ -842,11 +842,11 @@
 		return ..()
 
 	if(!can_upgrade)
-		user.visible_message(span_warning("This prod is already improved!"))
+		user.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] уже улучшен!"))
 		return ..()
 
 	if(cell)
-		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
+		user.visible_message(span_warning("Вы не можете вставить кристалл в [declent_ru(ACCUSATIVE)] пока установлен источник питания!"))
 		return ..()
 
 	var/our_prod
@@ -860,10 +860,10 @@
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice("You don't think \the [item] will do anything to improve \the [src]."))
+		to_chat(user, span_notice("Вы не думаете, что [item.declent_ru(NOMINATIVE)] способен хоть как-то улучшить [declent_ru(ACCUSATIVE)]."))
 		return ..()
 
-	to_chat(user, span_notice("You place \the [item] firmly into \the [sparkler]."))
+	to_chat(user, span_notice("Вы крепко вставляете [item.declent_ru(ACCUSATIVE)] в [sparkler.declent_ru(ACCUSATIVE)]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
@@ -881,7 +881,7 @@
 
 /obj/item/melee/baton/security/boomerang
 	name = "\improper OZtek Boomerang"
-	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	desc = "Устройство, изобретённое в 2486 году для Великой войны с космическими эму Конфедерацией Австраликуса. Эти высокотехнологичные бумеранги также исключительно хорошо оглушают членов экипажа. Только не забудьте поймать его, когда кидаете!"
 	throw_speed = 1
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
@@ -908,7 +908,7 @@
 
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
-	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
+	desc = "Прут с блюспейс кристаллом на конце. Внешний вид кристалла не внушает желания прикоснуться к нему"
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod"
 	base_icon_state = "teleprod"
@@ -925,7 +925,7 @@
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	name = "snatcherprod"
-	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
+	desc = "Прут с телекристаллом на конце. Он искрит с желанием к воровству и диверсии."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "telecrystalprod"
 	base_icon_state = "telecrystalprod"
@@ -943,10 +943,10 @@
 	if(!user || !stuff_in_hand || !target.temporarilyRemoveItemFromInventory(stuff_in_hand))
 		return
 	if(user.put_in_inactive_hand(stuff_in_hand))
-		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+		stuff_in_hand.loc.visible_message(span_warning("[capitalize(stuff_in_hand.declent_ru(NOMINATIVE))] внезапно появляется в руке [user.declent_ru(GENITIVE)]!"))
 	else
 		stuff_in_hand.forceMove(user.drop_location())
-		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+		stuff_in_hand.loc.visible_message(span_warning("[capitalize(stuff_in_hand.declent_ru(NOMINATIVE))] внезапно появляется!"))
 
 	if(clumsy && user.dropItemToGround(src, force = TRUE, silent = TRUE))
 		do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
@@ -1007,7 +1007,7 @@
 
 /obj/item/melee/baton/security/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore_hint = span_notice("Вы можете [EXAMINE_HINT("осмотреть поближе")], чтобы узнать немного больше об этом предмете."), \
 		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
 		an unholy union of mace and cattleprod. Designed to stop criminals in their tracks, Nanotrasen security members \
 		are rarely without their trusty stun baton. Assuming they haven't lost it somewhere.<br>\
@@ -1028,7 +1028,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore_hint = span_notice("Вы можете [EXAMINE_HINT("осмотреть поближе")], чтобы узнать немного больше об этом предмете."), \
 		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
 		the most frequently encountered example of Cybersun Industries weaponry. Similar in purpose to Nanotrasen's \
 		own Secure Apprehension Device, the baton is capable of inducing rapid CNS disruption in a target to render them \

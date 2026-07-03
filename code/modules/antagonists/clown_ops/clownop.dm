@@ -1,7 +1,7 @@
 
 /datum/antagonist/nukeop/clownop
 	name = ROLE_CLOWN_OPERATIVE
-	roundend_category = "clown operatives"
+	roundend_category = "Клоуны-оперативники"
 	antagpanel_category = ANTAG_GROUP_CLOWNOPS
 	nukeop_outfit = /datum/outfit/syndicate/clownop
 	job_type = /datum/job/nuclear_operative/clown_operative
@@ -43,7 +43,7 @@
 
 /datum/antagonist/nukeop/leader/clownop
 	name = "Clown Operative Leader"
-	roundend_category = "clown operatives"
+	roundend_category = "Клоуны-оперативники"
 	antagpanel_category = ANTAG_GROUP_CLOWNOPS
 	nukeop_outfit = /datum/outfit/syndicate/clownop/leader
 	challengeitem = /obj/item/nuclear_challenge/clownops

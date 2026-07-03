@@ -1,11 +1,11 @@
 /datum/job/paramedic
 	title = JOB_PARAMEDIC
-	description = "Run around the station looking for patients, respond to \
-		emergencies, give patients a roller bed ride to medbay."
+	description = "Доставляйте раненых и помогайте им на месте, отвечайте \
+		на экстренные вызовы, обеспечьте комфортную поездку до медбея."
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = SUPERVISOR_CMO
+	supervisors = JOB_CHIEF_MEDICAL_OFFICER_RU
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "PARAMEDIC"
 

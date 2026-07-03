@@ -81,7 +81,7 @@
 		"effectQuiet" = TRUE,))
 
 /datum/round_event/wizard/object_rain/announce(fake)
-	priority_announce("Anomalous weather patterns forecast in the [target_region].", "Janitorial alert")
+	priority_announce("Прогнозируются аномальные погодные явления в [target_region].", "Уведомление уборщиков")
 
 /// Return whatever it is you want to rain from the sky here.
 /datum/round_event/wizard/object_rain/proc/get_item()

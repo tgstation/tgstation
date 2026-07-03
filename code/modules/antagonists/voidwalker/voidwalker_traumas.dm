@@ -1,7 +1,7 @@
 /// Curse brain trauma that makes someone space textured, mute, pacifist and forbids them from entering space
 /datum/brain_trauma/voided
 	name = "Voided"
-	desc = "They've seen the secrets of the cosmos, in exchange for a curse that keeps them chained."
+	desc = "Они узрели тайны космоса, заплатив за это проклятием, которое держит их в плену."
 	scan_desc = "cosmic neural pattern"
 	gain_text = ""
 	lose_text = ""

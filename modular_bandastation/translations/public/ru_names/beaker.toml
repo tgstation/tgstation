@@ -1,0 +1,8 @@
+[beaker]
+nominative = "мензурка"
+genitive = "мензурки"
+dative = "мензурке"
+accusative = "мензурку"
+instrumental = "мензуркой"
+prepositional = "мензурке"
+gender = "female"

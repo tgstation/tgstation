@@ -1,13 +1,13 @@
 /datum/lazy_template/virtual_domain/syndicate_assault
-	name = "Syndicate Assault"
+	name = "Нападение Синдиката"
 	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_MEDIUM
-	desc = "Board the enemy ship and recover the stolen cargo."
+	desc = "Возьмите на абордаж вражеский корабль и верните украденный груз."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	completion_loot = list(/obj/item/toy/plush/nukeplushie = 1)
-	help_text = "A group of Syndicate operatives have stolen valuable cargo from the station. \
-	They have boarded their ship and are attempting to escape. Infiltrate their ship and recover \
-	the crate. 	Be careful, they are extremely armed."
+	help_text = "Группа из оперативников Синдиката похитила со станции ценный груз. \
+	Они поднялись на борт своего корабля и пытаются сбежать. Проникните на их корабль и \
+	верните ящик. Будьте осторожны, они очень хорошо вооружены."
 	is_modular = TRUE
 	key = "syndicate_assault"
 	map_name = "syndicate_assault"

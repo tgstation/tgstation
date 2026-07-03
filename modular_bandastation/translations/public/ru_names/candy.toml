@@ -1,0 +1,8 @@
+[candy]
+nominative = "конфета"
+genitive = "конфеты"
+dative = "конфете"
+accusative = "конфету"
+instrumental = "конфетой"
+prepositional = "конфете"
+gender = "female"

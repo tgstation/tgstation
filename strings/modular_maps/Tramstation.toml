@@ -1,4 +1,4 @@
-directory = "_maps/map_files/tramstation/maintenance_modules/"
+directory = "_maps/bandastation/automapper/templates/tramstation/maintenance_modules/" # BANDASTATION EDIT - directory | If something's not okay on tram, blame it.
 
 
 [rooms.arrivalsecupper]

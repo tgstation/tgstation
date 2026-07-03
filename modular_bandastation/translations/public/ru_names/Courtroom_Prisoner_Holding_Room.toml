@@ -1,0 +1,8 @@
+["Courtroom Prisoner Holding Room"]
+nominative = "комната содержания подсудимых"
+genitive = "комнаты содержания подсудимых"
+dative = "комнате содержания подсудимых"
+accusative = "комнату содержания подсудимых"
+instrumental = "комнатой содержания подсудимых"
+prepositional = "комнате содержания подсудимых"
+gender = "female"

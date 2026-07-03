@@ -1,0 +1,8 @@
+["comfy chair"]
+nominative = "удобное кресло"
+genitive = "удобного кресла"
+dative = "удобному креслу"
+accusative = "удобное кресло"
+instrumental = "удобным креслом"
+prepositional = "удобном кресле"
+gender = "neuter"

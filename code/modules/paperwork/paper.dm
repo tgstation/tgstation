@@ -1,3 +1,5 @@
+#define NEW_CHILD_INSERT_KEY_REGEX new /regex(@"\[child_(\d+)\]", "gm")
+
 /**
  * Paper
  * also scraps of paper
@@ -35,8 +37,6 @@
 	var/list/datum/paper_input/raw_text_inputs
 	/// Lazylist of all raw stamp data to be sent to tgui.
 	var/list/datum/paper_stamp/raw_stamp_data
-	/// Lazylist of all fields that have had some input added to them.
-	var/list/datum/paper_field/raw_field_input_data
 
 	/// Whether the icon should show little scribbly written words when the paper has some text on it.
 	var/show_written_words = TRUE
@@ -51,9 +51,6 @@
 
 	/// Default raw text to fill this paper with on init.
 	var/default_raw_text
-
-	/// The number of input fields
-	var/input_field_count = 0
 
 	/// Paper can be shown via cameras. When that is done, a deep copy of the paper is made and stored as a var on the camera.
 	/// The paper is located in nullspace, and holds a weak ref to the camera that once contained it so the paper can do some
@@ -75,7 +72,7 @@
 	pixel_y = base_pixel_y + rand(-8, 8)
 
 	if(default_raw_text)
-		add_raw_text(default_raw_text)
+		add_raw_text(replace_text_keys(default_raw_text))
 
 	update_appearance()
 
@@ -116,24 +113,12 @@
 
 	return copy_text
 
-/// Returns a deep copy list of raw_field_input_data, or null if the list is empty or doesn't exist.
-/obj/item/paper/proc/copy_field_text()
-	if(!LAZYLEN(raw_field_input_data))
-		return null
-
-	var/list/datum/paper_field/copy_text = list()
-
-	for(var/datum/paper_field/existing_input as anything in raw_field_input_data)
-		copy_text += existing_input.make_copy()
-
-	return copy_text
-
 /// Returns a deep copy list of raw_stamp_data, or null if the list is empty or doesn't exist. Does not copy overlays or stamp_cache, only the tgui rendered stamps.
 /obj/item/paper/proc/copy_raw_stamps()
 	if(!LAZYLEN(raw_stamp_data))
 		return null
 
-	var/list/datum/paper_field/copy_stamps = list()
+	var/list/datum/paper_stamp/copy_stamps = list()
 
 	for(var/datum/paper_stamp/existing_input as anything in raw_stamp_data)
 		copy_stamps += existing_input.make_copy()
@@ -160,19 +145,14 @@
 		CRASH("invalid paper_type [paper_type], paper type path or instance expected")
 
 	new_paper.raw_text_inputs = copy_raw_text()
-	new_paper.raw_field_input_data = copy_field_text()
 
 	if(colored)
 		new_paper.color = color
 	else
 		var/new_color = greyscale_override || COLOR_WEBSAFE_DARK_GRAY
 		for(var/datum/paper_input/text as anything in new_paper.raw_text_inputs)
-			text.colour = new_color
+			text.apply_colour(new_color)
 
-		for(var/datum/paper_field/text as anything in new_paper.raw_field_input_data)
-			text.field_data.colour = new_color
-
-	new_paper.input_field_count = input_field_count
 	new_paper.raw_stamp_data = copy_raw_stamps()
 	new_paper.stamp_cache = stamp_cache?.Copy()
 	new_paper.update_icon_state()
@@ -191,83 +171,19 @@
  * * color - The font color to use.
  * * bold - Whether this text should be rendered completely bold.
  * * advanced_html - Boolean that is true when the writer has R_FUN permission, which sanitizes less HTML (such as images) from the new paper_input
+ * * children - List of all children of new paper input
  */
-/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html)
-	var/new_input_datum = new /datum/paper_input(
+/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html, list/children)
+	var/datum/paper_input/new_input_datum = new /datum/paper_input(
 		text,
 		font,
 		color,
 		bold,
 		advanced_html,
+		children
 	)
-
-	input_field_count += get_input_field_count(text)
 
 	LAZYADD(raw_text_inputs, new_input_datum)
-
-/**
- * This simple helper adds the supplied input field data to the paper.
- *
- * It will not overwrite any existing input field data by default and will early return FALSE if this scenario happens unless overwrite is
- * set properly.
- *
- * Other than that, this is a God proc that does not care about max length or out-of-range IDs and expects sanity checking beforehand if
- * you want to respect it.
- *
- * * Arguments:
- * * field_id - The ID number of the field to which this data applies.
- * * text - The text to append to the paper.
- * * font - The font to use.
- * * color - The font color to use.
- * * bold - Whether this text should be rendered completely bold.
- * * overwrite - If TRUE, will overwrite existing field ID's data if it exists.
- */
-/obj/item/paper/proc/add_field_input(field_id, text, font, color, bold, signature_name, overwrite = FALSE)
-	var/datum/paper_field/field_data_datum = null
-
-	var/is_signature = ((text == "%sign") || (text == "%s"))
-	var/is_date = ((text == "%date") || (text == "%d"))
-	var/is_time = ((text == "%time") || (text == "%t"))
-
-	var/field_text = text
-	if(is_signature)
-		field_text = signature_name
-	else if(is_date)
-		field_text = "[server_timestamp("DD/MM/YYYY", ic_time = TRUE)]"
-	else if(is_time)
-		field_text = round_timestamp()
-
-	var/field_font = is_signature ? SIGNATURE_FONT : font
-
-	for(var/datum/paper_field/field_input in raw_field_input_data)
-		if(field_input.field_index == field_id)
-			if(!overwrite)
-				return FALSE
-			field_data_datum = field_input
-			break
-
-	if(!field_data_datum)
-		var/new_field_input_datum = new /datum/paper_field(
-			field_id,
-			field_text,
-			field_font,
-			color,
-			bold,
-			is_signature,
-		)
-		LAZYADD(raw_field_input_data, new_field_input_datum)
-		return TRUE
-
-	var/new_input_datum = new /datum/paper_input(
-		field_text,
-		field_font,
-		color,
-		bold,
-	)
-
-	field_data_datum.field_data = new_input_datum;
-	field_data_datum.is_signature = is_signature;
-
 	return TRUE
 
 /**
@@ -303,7 +219,6 @@
 /obj/item/paper/proc/clear_paper()
 	LAZYNULL(raw_text_inputs)
 	LAZYNULL(raw_stamp_data)
-	LAZYNULL(raw_field_input_data)
 	LAZYNULL(stamp_cache)
 
 	cut_overlays()
@@ -508,6 +423,7 @@
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/simple/stamps),
 		get_asset_datum(/datum/asset/simple/logos),
+		get_asset_datum(/datum/asset/simple/paper_logos),
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
@@ -608,27 +524,35 @@
 
 	static_data["user_name"] = user.real_name
 
-	static_data += convert_to_data()
+	static_data += convert_to_data(include_ref = TRUE)
 
 	static_data["max_length"] = MAX_PAPER_LENGTH
-	static_data["max_input_field_length"] = MAX_PAPER_INPUT_FIELD_LENGTH
 
 	static_data["default_pen_font"] = PEN_FONT
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
+	static_data["replacements"] = get_paper_placements_data(user)
 
 	return static_data
 
-/obj/item/paper/proc/convert_to_data()
+/obj/item/paper/proc/get_paper_placements_data(mob/user)
+	var/list/data = list()
+	for(var/replacement_key in GLOB.paper_replacements)
+		var/datum/paper_replacement/replacer = GLOB.paper_replacements[replacement_key]
+		UNTYPED_LIST_ADD(data, list(
+			"key" = replacement_key,
+			"name" = replacer.name,
+			"value" = replacer.get_replacement(user),
+		))
+
+	return data
+
+/obj/item/paper/proc/convert_to_data(include_ref = FALSE)
 	var/list/data = list()
 
 	data[LIST_PAPER_RAW_TEXT_INPUT] = list()
 	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
-		data[LIST_PAPER_RAW_TEXT_INPUT] += list(text_input.to_list())
-
-	data[LIST_PAPER_RAW_FIELD_INPUT] = list()
-	for(var/datum/paper_field/field_input as anything in raw_field_input_data)
-		data[LIST_PAPER_RAW_FIELD_INPUT] += list(field_input.to_list())
+		data[LIST_PAPER_RAW_TEXT_INPUT] += list(text_input.to_list(include_ref))
 
 	data[LIST_PAPER_RAW_STAMP_INPUT] = list()
 	for(var/datum/paper_stamp/stamp_input as anything in raw_stamp_data)
@@ -639,13 +563,24 @@
 
 	return data
 
+/obj/item/paper/proc/convert_paper_input_from_data(list/input)
+	var/list/child_inputs
+	if(length(input[LIST_PAPER_CHILDREN]))
+		child_inputs = list()
+		for(var/list/child_data as anything in input[LIST_PAPER_CHILDREN])
+			child_inputs += convert_paper_input_from_data(child_data)
+	return new /datum/paper_input(
+		input[LIST_PAPER_RAW_TEXT],
+		input[LIST_PAPER_FONT],
+		input[LIST_PAPER_FIELD_COLOR],
+		input[LIST_PAPER_BOLD],
+		input[LIST_PAPER_ADVANCED_HTML],
+		child_inputs
+	)
+
 /obj/item/paper/proc/write_from_data(list/data)
 	for(var/list/input as anything in data[LIST_PAPER_RAW_TEXT_INPUT])
-		add_raw_text(input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], input[LIST_PAPER_ADVANCED_HTML])
-
-	for(var/list/field as anything in data[LIST_PAPER_RAW_FIELD_INPUT])
-		var/list/input = field[LIST_PAPER_FIELD_DATA]
-		add_field_input(field[LIST_PAPER_FIELD_INDEX], input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], field[LIST_PAPER_IS_SIGNATURE])
+		LAZYADD(raw_text_inputs, convert_paper_input_from_data(input))
 
 	for(var/list/stamp as anything in data[LIST_PAPER_RAW_STAMP_INPUT])
 		add_stamp(stamp[LIST_PAPER_CLASS], stamp[LIST_PAPER_STAMP_X], stamp[LIST_PAPER_STAMP_Y], stamp[LIST_PAPER_ROTATION])
@@ -736,9 +671,25 @@
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
 			var/writing_implement_data = holding.get_writing_implement_details()
 
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+			var/datum/paper_input/target_paper_input = locate(params["paper_input_ref"])
+			var/field_id = text2num(params["field_id"])
 
-			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
+			var/successful_input = FALSE
+			if(istype(target_paper_input) && field_id)
+				successful_input = add_raw_text_to_input_field(target_paper_input, field_id, paper_input, writing_implement_data, user)
+			else
+				successful_input = add_raw_text(
+					paper_input,
+					writing_implement_data["font"],
+					writing_implement_data["color"],
+					writing_implement_data["use_bold"],
+					check_rights_for(user?.client, R_FUN)
+				)
+
+			if(!successful_input)
+				return FALSE
+
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");
@@ -746,55 +697,6 @@
 			update_static_data_for_all_viewers()
 			update_appearance()
 			return TRUE
-		if("fill_input_field")
-			// If the paper is on an unwritable noticeboard, this usually shouldn't be possible.
-			if(istype(loc, /obj/structure/noticeboard))
-				var/obj/structure/noticeboard/noticeboard = loc
-				if(!noticeboard.allowed(user))
-					log_paper("[key_name(user)] tried to write to the input fields of [name] when it was on an unwritable noticeboard!")
-					return TRUE
-
-			var/obj/item/holding = user.get_active_held_item()
-			// Use a clipboard's pen, if applicable
-			if(istype(loc, /obj/item/clipboard))
-				var/obj/item/clipboard/clipboard = loc
-				// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
-				// use the clipboard's pen, if applicable.
-				if(!istype(holding, /obj/item/stamp) && clipboard.pen)
-					holding = clipboard.pen
-
-			// As of the time of writing, can_write outputs a message to the user so we don't have to.
-			if(!user.can_write(holding))
-				return TRUE
-
-			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
-			var/writing_implement_data = holding.get_writing_implement_details()
-			var/list/field_data = params["field_data"]
-
-			for(var/field_key in field_data)
-				var/field_text = field_data[field_key]
-				var/text_length = length_char(field_text)
-				if(text_length > MAX_PAPER_INPUT_FIELD_LENGTH)
-					log_paper("[key_name(user)] tried to write to field [field_key] with text over the max limit ([text_length] out of [MAX_PAPER_INPUT_FIELD_LENGTH]) with the following text: [field_text]")
-					return TRUE
-				if(text2num(field_key) >= input_field_count)
-					log_paper("[key_name(user)] tried to write to invalid field [field_key] (when the paper only has [input_field_count] fields) with the following text: [field_text]")
-					return TRUE
-
-				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], user.real_name))
-					log_paper("[key_name(user)] tried to write to field [field_key] when it already has data, with the following text: [field_text]")
-
-			update_static_data_for_all_viewers()
-			return TRUE
-
-/obj/item/paper/proc/get_input_field_count(raw_text)
-	var/static/regex/field_regex = new(@"\[_+\]","g")
-
-	var/counter = 0
-	while(field_regex.Find(raw_text))
-		counter++
-
-	return counter
 
 /obj/item/paper/ui_host(mob/user)
 	if(istype(loc, /obj/structure/noticeboard))
@@ -804,7 +706,7 @@
 /obj/item/paper/proc/get_total_length()
 	var/total_length = 0
 	for(var/datum/paper_input/entry as anything in raw_text_inputs)
-		total_length += length_char(entry.raw_text)
+		total_length += entry.get_raw_text_length()
 
 	return total_length
 
@@ -812,8 +714,24 @@
 /obj/item/paper/proc/get_raw_text()
 	var/paper_contents = ""
 	for(var/datum/paper_input/line as anything in raw_text_inputs)
-		paper_contents += line.raw_text + "/"
+		paper_contents += line.get_raw_text() + "/"
 	return paper_contents
+
+/obj/item/paper/proc/add_raw_text_to_input_field(datum/paper_input/field_holder, input_field_id, raw_text, list/writing_implement_data, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(field_holder))
+		return FALSE
+
+	var/datum/paper_input/field_input = new /datum/paper_input(
+		raw_text,
+		writing_implement_data["font"],
+		writing_implement_data["color"],
+		writing_implement_data["use_bold"],
+		check_rights_for(user?.client, R_FUN)
+	)
+
+	return field_holder.add_child_to_field(field_input, input_field_id)
 
 /// A single instance of a saved raw input onto paper.
 /datum/paper_input
@@ -827,25 +745,99 @@
 	var/bold = FALSE
 	/// Whether the creator of this input field has the R_FUN permission, thus allowing less sanitization
 	var/advanced_html = FALSE
+	/// Lazy list of other paper inputs that will be displayed inside of this one.
+	var/list/datum/paper_input/children
 
-/datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html)
+/datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html, _children)
 	raw_text = _raw_text
 	font = _font
 	colour = _colour
 	bold = _bold
 	advanced_html = _advanced_html
+	children = _children
 
 /datum/paper_input/proc/make_copy()
-	return new /datum/paper_input(raw_text, font, colour, bold, advanced_html)
+	return new /datum/paper_input(raw_text, font, colour, bold, advanced_html, copy_children())
 
-/datum/paper_input/proc/to_list()
-	return list(
+/datum/paper_input/proc/copy_children()
+	if(!length(children))
+		return null
+
+	var/list/children_copies = list()
+	for(var/datum/paper_input/child as anything in children)
+		children_copies += child.make_copy()
+
+	return children_copies
+
+/datum/paper_input/proc/to_list(include_ref = FALSE)
+	var/list/data = list(
 		LIST_PAPER_RAW_TEXT = raw_text,
 		LIST_PAPER_FONT = font,
 		LIST_PAPER_FIELD_COLOR = colour,
 		LIST_PAPER_BOLD = bold,
 		LIST_PAPER_ADVANCED_HTML = advanced_html,
+		LIST_PAPER_CHILDREN = children_to_list(include_ref),
 	)
+	if(include_ref)
+		data["ref"] = REF(src)
+	return data
+
+/datum/paper_input/proc/children_to_list(include_ref = FALSE)
+	PRIVATE_PROC(TRUE)
+
+	var/list/children_as_lists = list()
+	for(var/datum/paper_input/child as anything in children)
+		UNTYPED_LIST_ADD(children_as_lists, child.to_list(include_ref))
+
+	return children_as_lists
+
+/datum/paper_input/proc/add_child_to_field(datum/paper_input/new_child, input_field_id)
+	var/regex/input_field_regex = new(@"\[input_field(?:\]|\s+autofill_type=\w+\])", "gm")
+	var/field_counter = 0
+	while(input_field_regex.Find(raw_text))
+		field_counter++
+		if(field_counter < input_field_id)
+			continue
+
+		var/new_child_index = add_child(new_child)
+		var/text_before_child_input = copytext(raw_text, 1, input_field_regex.index)
+		var/text_after_child_input = splicetext(copytext(raw_text, input_field_regex.index), 1, length(input_field_regex.match) + 1, "\[input_field\]");
+
+		raw_text = text_before_child_input +  "\[child_[new_child_index]\]" + text_after_child_input
+		return TRUE
+
+	return FALSE
+
+/datum/paper_input/proc/get_raw_text()
+	var/final_raw_text = raw_text
+	if(length(children))
+		var/regex/child_insert_key_regex = NEW_CHILD_INSERT_KEY_REGEX
+		while(child_insert_key_regex.Find(final_raw_text))
+			var/matched_text = child_insert_key_regex.match
+			var/child_index = child_insert_key_regex.group[1]
+			var/replacement_text = children[child_index].get_raw_text()
+			final_raw_text = splicetext(final_raw_text, child_insert_key_regex.index, child_insert_key_regex.index + length(matched_text), replacement_text)
+
+	return final_raw_text
+
+/datum/paper_input/proc/get_raw_text_length()
+	var/static/child_key_base_length = 8
+	var/total_length = length_char(raw_text)
+	for(var/index = 1, index <= length(children), index++)
+		var/datum/paper_input/child = children[index]
+		var/key_total_length = child_key_base_length + length("[index]")
+		total_length += child.get_raw_text_length() - key_total_length
+
+	return total_length
+
+/datum/paper_input/proc/apply_colour(new_colour)
+	colour = new_colour
+	for(var/datum/paper_input/child as anything in children)
+		child.apply_colour(new_colour)
+
+/datum/paper_input/proc/add_child(datum/paper_input/new_child)
+	LAZYADD(children, new_child)
+	return length(children)
 
 /// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
 /datum/paper_input/proc/to_raw_html()
@@ -854,6 +846,15 @@
 		final = "<font[" color='[colour]'"][" face='[font]'"]>[final]</font>"
 	if(bold)
 		final = "<b>[final]</b>"
+
+	if(length(children))
+		var/regex/child_insert_key_regex = NEW_CHILD_INSERT_KEY_REGEX
+		while(child_insert_key_regex.Find(final))
+			var/matched_text = child_insert_key_regex.match
+			var/child_index = child_insert_key_regex.group[1]
+			var/replacement_text = children[child_index].to_raw_html()
+			final = splicetext(final, child_insert_key_regex.index, child_insert_key_regex.index + length(matched_text), replacement_text)
+
 	return final
 
 /// A single instance of a saved stamp on paper.
@@ -884,30 +885,6 @@
 		LIST_PAPER_ROTATION = rotation,
 	)
 
-/// A reference to some data that replaces a modifiable input field at some given index in paper raw input parsing.
-/datum/paper_field
-	/// When tgui parses the raw input, if it encounters a field_index matching the nth user input field, it will disable it and replace it with the field_data.
-	var/field_index = -1
-	/// The data that tgui should substitute in-place of the input field when parsing.
-	var/datum/paper_input/field_data = null
-	/// If TRUE, requests tgui to render this field input in a more signature-y style.
-	var/is_signature = FALSE
-
-/datum/paper_field/New(_field_index, raw_text, font, colour, bold, _is_signature)
-	field_index = _field_index
-	field_data = new /datum/paper_input(raw_text, font, colour, bold)
-	is_signature = _is_signature
-
-/datum/paper_field/proc/make_copy()
-	return new /datum/paper_field(field_index, field_data.raw_text, field_data.font, field_data.colour, field_data.bold, is_signature)
-
-/datum/paper_field/proc/to_list()
-	return list(
-		LIST_PAPER_FIELD_INDEX = field_index,
-		LIST_PAPER_FIELD_DATA = field_data.to_list(),
-		LIST_PAPER_IS_SIGNATURE = is_signature,
-	)
-
 /obj/item/paper/construction
 	name = "construction paper"
 	icon = 'icons/effects/random_spawners.dmi'
@@ -933,3 +910,5 @@
 
 /obj/item/paper/crumpled/muddy
 	icon_state = "scrap_mud"
+
+#undef NEW_CHILD_INSERT_KEY_REGEX

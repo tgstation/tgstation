@@ -38,15 +38,15 @@ export const CrimeWatcher = (props) => {
             onClick={() => setSelectedTab(SECURETAB.Crimes)}
             selected={selectedTab === SECURETAB.Crimes}
           >
-            Crimes: {crimes.length}
+            Преступления: {crimes.length}
           </Tabs.Tab>
           <Tabs.Tab
             onClick={() => setSelectedTab(SECURETAB.Citations)}
             selected={selectedTab === SECURETAB.Citations}
           >
-            Citations: {citations.length}
+            Штрафы: {citations.length}
           </Tabs.Tab>
-          <Tooltip content="Add a new crime or citation" position="bottom">
+          <Tooltip content="Новое преступление или штраф" position="bottom">
             <Tabs.Tab
               onClick={() => setSelectedTab(SECURETAB.Add)}
               selected={selectedTab === SECURETAB.Add}
@@ -83,7 +83,7 @@ const CrimeList = (props) => {
       {!toDisplay.length ? (
         <Stack.Item>
           <NoticeBox>
-            No {tab === SECURETAB.Crimes ? 'crimes' : 'citations'} found.
+            Не найдены {tab === SECURETAB.Crimes ? 'преступления' : 'штрафы'}.
           </NoticeBox>
         </Stack.Item>
       ) : (
@@ -103,7 +103,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid, voider } =
     item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : ': PAID OFF';
+  const showFine = !!fine && fine > 0 ? `: ${fine} кр` : ': ШТРАФ ОПЛАЧЕН';
 
   let collapsibleColor = '';
   if (!valid) {
@@ -123,32 +123,32 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
     <Stack.Item>
       <Collapsible color={collapsibleColor} open={editing} title={displayTitle}>
         <LabeledList>
-          <LabeledList.Item label="Time">{time}</LabeledList.Item>
-          <LabeledList.Item label="Author">{author}</LabeledList.Item>
-          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
-            {!valid ? 'Void' : 'Active'}
+          <LabeledList.Item label="Время">{time}</LabeledList.Item>
+          <LabeledList.Item label="Автор">{author}</LabeledList.Item>
+          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Статус">
+            {!valid ? 'Аннулировано' : 'Активно'}
           </LabeledList.Item>
           {!valid && (
             <LabeledList.Item
               color={voider ? 'gold' : 'good'}
-              label="Voided by"
+              label="Аннулировано"
             >
-              {!voider ? 'Automation' : voider}
+              {!voider ? 'Автоматически' : voider}
             </LabeledList.Item>
           )}
           {!!fine && fine > 0 && (
             <>
               <LabeledList.Item color="bad" label="Fine">
-                {fine}cr <Icon color="gold" name="coins" />
+                {fine}кр <Icon color="gold" name="coins" />
               </LabeledList.Item>
               <LabeledList.Item color="good" label="Paid">
-                {paid}cr <Icon color="gold" name="coins" />
+                {paid}кр <Icon color="gold" name="coins" />
               </LabeledList.Item>
             </>
           )}
         </LabeledList>
         <Box color="label" mt={1} mb={1}>
-          Details:
+          Детали:
         </Box>
         <BlockQuote>{details}</BlockQuote>
 
@@ -159,10 +159,10 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               icon="pen"
               onClick={() => setEditing(true)}
             >
-              Edit
+              Изменить
             </Button>
             <Button.Confirm
-              content="Invalidate"
+              content="Аннулировать"
               disabled={!valid || (!higher_access && author !== current_user)}
               icon="ban"
               onClick={() =>
@@ -187,7 +187,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
                   name: value,
                 });
               }}
-              placeholder="Enter a new name"
+              placeholder="Введите новое имя"
             />
             <Input
               fluid
@@ -202,7 +202,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
                   description: value,
                 });
               }}
-              placeholder="Enter a new description"
+              placeholder="Введите новое описание"
             />
           </>
         )}
@@ -253,26 +253,26 @@ const CrimeAuthor = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item color="label">
-        Name
+        Имя
         <Input
           fluid
           maxLength={25}
           onChange={setCrimeName}
-          placeholder="Brief overview"
+          placeholder="Краткое описание"
         />
       </Stack.Item>
       <Stack.Item color="label">
-        Details
+        Детали
         <TextArea
           fluid
           height={4}
           maxLength={1025}
           onChange={setCrimeDetails}
-          placeholder="Type some details..."
+          placeholder="Напишите детали..."
         />
       </Stack.Item>
       <Stack.Item color="label">
-        Fine (leave blank to arrest)
+        Штраф (оставьте пустым для ареста)
         <RestrictedInput
           fluid
           value={crimeFine}
@@ -286,9 +286,9 @@ const CrimeAuthor = (props) => {
           disabled={!nameMeetsReqs || !crimeFineIsValid}
           icon="plus"
           onClick={createCrime}
-          tooltip={!nameMeetsReqs ? 'Name must be at least 3 characters.' : ''}
+          tooltip={!nameMeetsReqs ? 'Имя состоит из менее 3-х символов.' : ''}
         >
-          Create
+          Создать
         </Button.Confirm>
       </Stack.Item>
     </Stack>

@@ -63,6 +63,15 @@
 
 /// Select [path] item to [category_slot] slot.
 /datum/preference_middleware/loadout/proc/select_item(datum/loadout_item/selected_item)
+	/// BANDASTATION ADDITION START - Loadout
+	if(preferences.parent.get_donator_level() < selected_item.donator_level)
+		return
+
+	var/points_left = preferences.get_loadout_max_points() - preferences.loadout_points_spent
+	if(points_left < selected_item.cost)
+		return
+	/// BANDASTATION ADDITION END - Loadout
+
 	var/list/loadout = preferences.read_preference(/datum/preference/loadout)
 	var/list/datum/loadout_item/loadout_datums = loadout_list_to_datums(loadout)
 	for(var/datum/loadout_item/item as anything in loadout_datums)
@@ -94,6 +103,12 @@
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	var/list/data = list()
 	data["job_clothes"] = preferences.character_preview_view.show_job_clothes
+	/** BANDASTATION ADDITION - START */
+	var/loadout_maxpoints = preferences.get_loadout_max_points()
+	data["loadout_leftpoints"] = max(0, loadout_maxpoints - preferences.loadout_points_spent)
+	data["loadout_maxpoints"] = loadout_maxpoints
+	data["donator_level"] = preferences.parent.get_donator_level()
+	/** BANDASTATION ADDITION - END */
 	return data
 
 /datum/preference_middleware/loadout/get_ui_static_data(mob/user)

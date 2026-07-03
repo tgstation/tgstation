@@ -1,0 +1,8 @@
+["cocoa pod seed pack"]
+nominative = "стручок какао (семена)"
+genitive = "стручка какао (семена)"
+dative = "стручку какао (семена)"
+accusative = "стручок какао (семена)"
+instrumental = "стручком какао (семена)"
+prepositional = "стручке какао (семена)"
+gender = "male"

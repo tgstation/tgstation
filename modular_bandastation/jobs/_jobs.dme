@@ -1,0 +1,61 @@
+#include "_jobs.dm"
+
+#include "code/controller/subsystem/job.dm"
+
+// NT Representation department
+#include "code/departments/nt_representation.dm"
+
+// Department of Justice
+#include "code/departments/justice.dm"
+
+// Captain
+#include "code/job_types/captain/trim.dm"
+
+// Blueshield job
+#include "code/job_types/blueshield/access_helpers.dm"
+#include "code/job_types/blueshield/areas.dm"
+#include "code/job_types/blueshield/job.dm"
+#include "code/job_types/blueshield/landmarks.dm"
+#include "code/job_types/blueshield/pda.dm"
+#include "code/job_types/blueshield/trim.dm"
+
+// Detective job
+#include "code/job_types/detective/detective.dm"
+#include "code/job_types/detective/forensics.dm"
+
+// Lawyer
+#include "code/job_types/lawyer/job.dm"
+#include "code/job_types/lawyer/trim.dm"
+
+// Head of Security
+#include "code/job_types/head_of_security/trim.dm"
+
+// Magistrate
+#include "code/job_types/magistrate/access_helpers.dm"
+#include "code/job_types/magistrate/areas.dm"
+#include "code/job_types/magistrate/job.dm"
+#include "code/job_types/magistrate/landmarks.dm"
+#include "code/job_types/magistrate/pda.dm"
+#include "code/job_types/magistrate/trim.dm"
+
+// Nanotrasen Representative job
+#include "code/job_types/nanotrasen_representative/access_helpers.dm"
+#include "code/job_types/nanotrasen_representative/areas.dm"
+#include "code/job_types/nanotrasen_representative/job.dm"
+#include "code/job_types/nanotrasen_representative/landmarks.dm"
+#include "code/job_types/nanotrasen_representative/pda.dm"
+#include "code/job_types/nanotrasen_representative/trim.dm"
+
+// Research Scientist
+#include "code/job_types/research_director/trim.dm"
+
+// Scientist
+#include "code/job_types/scientist/trim.dm"
+
+// Explorer
+#include "code/job_types/explorer/job.dm"
+#include "code/job_types/explorer/landmarks.dm"
+#include "code/job_types/explorer/pda.dm"
+#include "code/job_types/explorer/trim.dm"
+
+#include "code/job_types/job_staffing_priority.dm"

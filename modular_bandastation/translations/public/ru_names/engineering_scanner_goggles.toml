@@ -1,0 +1,8 @@
+["engineering scanner goggles"]
+nominative = "инженерные очки"
+genitive = "инженерных очков"
+dative = "инженерным очкам"
+accusative = "инженерные очки"
+instrumental = "инженерными очками"
+prepositional = "инженерных очках"
+gender = "plural"

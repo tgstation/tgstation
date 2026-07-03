@@ -619,7 +619,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 	var/mob/the_user = ui.user
 	if(!allowed(the_user))
-		balloon_alert(the_user, "access denied!")
+		balloon_alert(the_user, "в доступе отказано!")
 		return
 
 	if(action == "lock")

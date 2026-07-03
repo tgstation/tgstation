@@ -1,0 +1,8 @@
+[plate]
+nominative = "тарелка"
+genitive = "тарелки"
+dative = "тарелке"
+accusative = "тарелку"
+instrumental = "тарелкой"
+prepositional = "тарелке"
+gender = "female"

@@ -1,28 +1,28 @@
 {
 	"boomer": [
-		"@pick(expense) isn't really that expensive.",
-		"@pick(kids) these days have it too easy!",
-		"Back in my day...",
-		"Do I look like I know what a @pick(file) is!?",
-		"How do I open a @pick(file) again?",
-		"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job.",
-		"Listen here Jack, how do I open @pick(file)?",
-		"These damn @pick(kids) need to get a @pick(impossible) for once!",
-		"This generation can't take a joke.",
-		"Unlike you snowflakes, I'm not offended so easily.",
-		"When I was a kid I had to walk to school uphill both ways!",
-		"When I was your age...",
-		"Why are @pick(kids) these days so @pick(sad) all the time?",
-		"You'll never get anywhere in life without a degree."
+		"Позволить себе @pick(expense) в наше время было не так уж и дорого.",
+		"Сегодняшние @pick(kids) слишком избалованы!",
+		"В наше время...",
+		"Я похож на человека, который знает, что такое @pick(file)!?",
+		"Как там открыть @pick(file), напомните?",
+		"Всё просто: приходишь, смотришь менеджеру в глаза, жмёшь руку и говоришь, что хочешь работу.",
+		"Слушай сюда, дружище, как открыть @pick(file)?",
+		"@pick(kids), заимейте уже наконец себе @pick(impossible)!",
+		"Это поколение вообще не понимает юмора.",
+		"В отличие от вас, неженок, меня так просто не обидеть.",
+		"В моём детстве мы ходили в школу через горы туда и обратно!",
+		"Когда я был в твоём возрасте...",
+		"Почему @pick(kids) сейчас постоянно такие @pick(sad)?",
+		"Без высшего образования в жизни ничего не добьёшься."
 	],
 
-	"expense": ["A car", "A house", "College", "Food", "Healthcare"],
+	"expense": ["машину", "дом", "университет", "еду", "медицину"],
 
-	"kids": ["kids", "millennials", "snowflakes"],
+	"kids": ["дети", "миллениалы"],
 
 	"file": ["DMI", "JPEG", "JSON", "PDF"],
 
-	"sad": ["depressed", "sad and depressed", "sad"],
+	"sad": ["депрессивные", "грустные и унылые", "грустные"],
 
-	"impossible": ["house", "job and a house", "job", "life"]
+	"impossible": ["дом", "работу и дом", "работу", "нормальную жизнь"]
 }

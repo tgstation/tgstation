@@ -1,0 +1,301 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"b" = (
+/obj/structure/cable,
+/obj/structure/table/glass,
+/obj/item/cultivator{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/shovel/spade,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"c" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/little_fruits/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"e" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/seeds/watermelon,
+/obj/item/seeds/berry,
+/obj/item/food/grown/potato{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"h" = (
+/obj/item/seeds/glowshroom,
+/obj/item/seeds/bamboo{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/machinery/newscaster/directional/east,
+/obj/structure/cable,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/structure/table/glass,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"j" = (
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/plant_analyzer,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/table/glass,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"k" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/mob/living/basic/pig/named/Yanas,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"l" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
+"n" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"p" = (
+/obj/machinery/duct,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"q" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/sink/kitchen/directional/west,
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"v" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"x" = (
+/turf/closed/wall,
+/area/station/service/kitchen)
+"y" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/mob/living/basic/cow/black/pipa,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"C" = (
+/obj/structure/mirror/directional/north,
+/obj/structure/sink/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"D" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Kitchen Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"E" = (
+/obj/machinery/light/small/dim/directional/south,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"F" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Service - Kitchen"
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/east,
+/obj/structure/table,
+/obj/machinery/processor{
+	pixel_y = 6
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/chicken/cock/clucky,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"I" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/mob/living/basic/pig/named/Sanya,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"J" = (
+/obj/structure/sign/poster/contraband/kudzu/directional/north,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"K" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
+"M" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/mob/living/basic/pig/named/Marina,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/station/service/kitchen)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/chicken/wife,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"R" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
+"T" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 5
+	},
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/service/kitchen)
+"W" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/service/kitchen)
+
+(1,1,1) = {"
+q
+T
+F
+R
+K
+x
+l
+"}
+(2,1,1) = {"
+W
+x
+x
+e
+x
+x
+x
+"}
+(3,1,1) = {"
+J
+g
+H
+n
+I
+v
+x
+"}
+(4,1,1) = {"
+p
+t
+a
+n
+k
+E
+x
+"}
+(5,1,1) = {"
+C
+O
+s
+n
+y
+v
+x
+"}
+(6,1,1) = {"
+c
+b
+h
+j
+M
+v
+x
+"}
+(7,1,1) = {"
+D
+x
+x
+x
+x
+x
+x
+"}

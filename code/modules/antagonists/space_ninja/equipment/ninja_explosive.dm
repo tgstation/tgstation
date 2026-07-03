@@ -27,9 +27,9 @@
 	if (!IS_SPACE_NINJA(user))
 		return
 	if (isnull(detonation_area))
-		. += span_notice("This one was provided with no destination set, and cannot be used.")
+		. += span_notice("Это устройство было предоставлено без заданного места и не может быть использовано.")
 	else
-		. += span_notice("This device will only function in [detonation_area].")
+		. += span_notice("Это устройство сработает только в [detonation_area].")
 
 /**
  * set_detonation_area
@@ -49,7 +49,7 @@
 
 /obj/item/grenade/c4/ninja/plant_c4(atom/bomb_target, mob/living/user)
 	if(!IS_SPACE_NINJA(user))
-		say("Access denied.")
+		say("Доступ запрещен.")
 		return FALSE
 	if(!check_loc(bomb_target, user))
 		return FALSE
@@ -62,7 +62,7 @@
 	if(!check_loc(target, detonator.resolve())) // if its moved, deactivate the c4
 		var/obj/item/grenade/c4/ninja/new_c4 = new /obj/item/grenade/c4/ninja(target.loc)
 		new_c4.detonation_area = detonation_area
-		new_c4.say("Invalid location!")
+		new_c4.say("недопустимая локация!")
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
 		return
@@ -89,10 +89,10 @@
  */
 /obj/item/grenade/c4/ninja/proc/check_loc(atom/bomb_target, mob/user)
 	if(isnull(detonation_area))
-		balloon_alert(user, "no location set!")
+		balloon_alert(user, "локация не установлена!")
 		return FALSE
 	if(get_area(bomb_target) != detonation_area)
 		if (!active)
-			balloon_alert(user, "wrong location!")
+			balloon_alert(user, "неверное место!")
 		return FALSE
 	return TRUE

@@ -1,0 +1,8 @@
+["good lawyer's suitskirt"]
+nominative = "хорошая юбка-пиджак юриста"
+genitive = "хорошей юбки-пиджака юриста"
+dative = "хорошей юбке-пиджаку юриста"
+accusative = "хорошую юбку-пиджак юриста"
+instrumental = "хорошей юбкой-пиджаком юриста"
+prepositional = "хорошей юбке-пиджаке юриста"
+gender = "female"

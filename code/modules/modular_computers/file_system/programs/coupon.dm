@@ -6,7 +6,7 @@
 	filename = "couponmaster"
 	filedesc = "Coupon Master"
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
-	extended_desc = "Program for receiving discounts for several cargo goodies. After redeeming a coupon, hit a photocopier with your PDA to print it."
+	extended_desc = "Программа для получения скидок на несколько грузовых товаров. Погасив купон, нажмите на принтер с помощью КПК, чтобы распечатать его."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 5
 	tgui_id = "NtosCouponMaster"

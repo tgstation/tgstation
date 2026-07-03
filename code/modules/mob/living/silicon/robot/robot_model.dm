@@ -300,8 +300,18 @@
 
 /obj/item/robot_model/proc/do_transform_delay()
 	var/mob/living/silicon/robot/cyborg = loc
+	// BANDASTATION ADDITION - Borg Skins
+	var/animation_state = "[cyborg_base_icon]_transform"
+	var/has_animation = icon_states(cyborg.icon).Find(animation_state)
+
+	if(!has_animation)
+		do_smoke(1, 0, src, get_turf(src), /obj/effect/particle_effect/fluid/smoke)
+
 	sleep(0.1 SECONDS)
-	flick("[cyborg_base_icon]_transform", cyborg)
+
+	if(has_animation)
+		flick(animation_state, cyborg)
+	// BANDASTATION ADDITION END
 	ADD_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	if(locked_transform)
 		cyborg.ai_lockdown = TRUE
@@ -317,6 +327,7 @@
 			'sound/items/tools/welder.ogg',
 			'sound/items/tools/ratchet.ogg',
 			), 80, TRUE, -1)
+		do_sparks(2, FALSE, src) // BANDASTATION ADDITION - Borg Skins
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
 	cyborg.ai_lockdown = FALSE

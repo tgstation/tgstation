@@ -8,67 +8,67 @@ import {
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const sound_ambience_volume: Feature<number> = {
-  name: 'Ambience volume',
-  category: 'SOUND',
-  description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
+  name: 'Громкость окружения',
+  category: 'Звук',
+  description: `Различные звуки оружения, играющие по ситуации.`,
   component: FeatureSliderInput,
 };
 
 export const sound_breathing: FeatureToggle = {
-  name: 'Enable breathing sounds',
-  category: 'SOUND',
-  description: 'When enabled, hear breathing sounds when using internals.',
+  name: 'Включить звук дыхания',
+  category: 'Звук',
+  description: 'Слышать звук дыхания, когда подключен баллон.',
   component: CheckboxInput,
 };
 
 export const sound_announcements: FeatureToggle = {
-  name: 'Enable announcement sounds',
-  category: 'SOUND',
-  description: 'When enabled, hear sounds for command reports, notices, etc.',
+  name: 'Включить звук анонсов',
+  category: 'Звук',
+  description: 'Играть звук при оповещениях с ЦК, уведомлений и тд.',
   component: CheckboxInput,
 };
 
 export const sound_ghost_poll_prompt: FeatureChoiced = {
-  name: 'Ghost poll prompt',
-  category: 'SOUND',
-  description: 'Choose which sound prompt to play on getting ghost polls.',
+  name: 'Оповещения призрака',
+  category: 'Звук',
+  description: 'Выберите какой звук будет при оповещении, когда вы призрак.',
   component: FeatureDropdownInput,
 };
 
 export const sound_ghost_poll_prompt_volume: Feature<number> = {
-  name: 'Ghost poll prompt volume',
-  category: 'SOUND',
-  description: 'The volume that ghost poll prompts will play at.',
+  name: 'Оповещения призрака - громкость',
+  category: 'Звук',
+  description: 'Звук оповещенией призрака.',
   component: FeatureSliderInput,
 };
 
 export const sound_combatmode: FeatureToggle = {
-  name: 'Enable combat mode sound',
-  category: 'SOUND',
-  description: 'When enabled, hear sounds when toggling combat mode.',
+  name: 'Включить звук режима боя',
+  category: 'Звук',
+  description: 'Играть звук при переключении режима боя.',
   component: CheckboxInput,
 };
 
 export const sound_instruments: Feature<number> = {
-  name: 'Instruments volume',
-  category: 'SOUND',
-  description: 'Volume of instruments.',
+  name: 'Включить звук музыкальных инструментов',
+  category: 'Звук',
+  description: 'Играть звук музыкальных инструментов.',
   component: FeatureSliderInput,
 };
 
 export const sound_jukebox: Feature<number> = {
-  name: 'Jukebox volume',
-  category: 'SOUND',
-  description: 'Volume of jukebox tracks.',
+  name: 'Громкость музыкальных автоматов',
+  category: 'Звук',
+  description: 'Громкость треков в музыкальных автоматах.',
   component: FeatureSliderInput,
 };
 
 export const sound_tts: FeatureChoiced = {
-  name: 'Enable TTS',
-  category: 'SOUND',
+  name: 'TTS - включить',
+  category: 'Звук',
   description: `
-    When enabled, be able to hear text-to-speech sounds in game.
-    When set to "Blips", text to speech will be replaced with blip sounds based on the voice.
+    Играть звук text-to-speech.
+    Функция "Blips" не работает.
   `,
   component: FeatureDropdownInput,
 };
@@ -92,9 +92,30 @@ export const sound_tts_hear_self_radio: FeatureToggle = {
 };
 
 export const sound_tts_volume: Feature<number> = {
-  name: 'TTS Volume',
-  category: 'SOUND',
-  description: 'The volume that the text-to-speech sounds will play at.',
+  name: 'TTS - громкость',
+  category: 'Звук',
+  description: 'Громкость text-to-speech.',
+  component: FeatureSliderInput,
+};
+
+export const sound_tts_volume_radio: Feature<number> = {
+  name: 'TTS - громкость рации',
+  category: 'Звук',
+  description: 'Громкость text-to-speech для рации.',
+  component: FeatureSliderInput,
+};
+
+export const sound_tts_volume_announcement: Feature<number> = {
+  name: 'TTS - громкость оповещений',
+  category: 'Звук',
+  description: 'Громкость text-to-speech для оповещений.',
+  component: FeatureSliderInput,
+};
+
+export const sound_tts_volume_telepathy: Feature<number> = {
+  name: 'TTS - громкость телепатической речи',
+  category: 'Звук',
+  description: 'Громкость text-to-speech для телепатии (хайвмайнд генокрадов, телепатия ревенанта и тд).',
   component: FeatureSliderInput,
 };
 
@@ -106,38 +127,45 @@ export const sound_tts_radio_volume: Feature<number> = {
 };
 
 export const sound_lobby_volume: Feature<number> = {
-  name: 'Lobby music volume',
-  category: 'SOUND',
+  name: 'Громкость музыки в лобби',
+  category: 'Звук',
   component: FeatureSliderInput,
 };
 
 export const sound_midi: Feature<number> = {
-  name: 'Admin music volume',
-  category: 'SOUND',
-  description: 'Volume of admin musics.',
+  name: 'Громкость админской музыки',
+  category: 'Звук',
+  description: 'Громкость музыки, запускаемой администрацией.',
   component: FeatureSliderInput,
 };
 
 export const sound_ship_ambience_volume: Feature<number> = {
-  name: 'Ship ambience volume',
-  category: 'SOUND',
-  description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
+  name: 'Громкость звуков корабля',
+  category: 'Звук',
+  description: `Зацикленный звук окружения корабля (низкий гул).`,
   component: FeatureSliderInput,
 };
 
 export const sound_achievement: FeatureChoiced = {
-  name: 'Achievement unlock sound',
-  category: 'SOUND',
+  name: 'Звук при получении достижений',
+  category: 'Звук',
   description: `
-    The sound that's played when unlocking an achievement.
-    If disabled, no sound will be played.
+    Выбор звука, который будет играть при получении достижения.
+    При отключении звука не будет.
   `,
   component: FeatureDropdownInput,
 };
 
+export const sound_radio_noise: Feature<number> = {
+  name: 'Громкость оповещения рации',
+  category: 'Звук',
+  description: `Громкость оповещений, когда в рацию кто-то говорит.`,
+  component: FeatureSliderInput,
+};
+
 export const sound_ai_vox: Feature<number> = {
-  name: 'AI VOX announcements volume',
-  category: 'SOUND',
-  description: 'Volume of vocal AI announcements (also known as "VOX").',
+  name: 'Громкость оповещения VOX ИИ',
+  category: 'Звук',
+  description: 'Громкость вокальных оповещений ИИ (также известных как "VOX").',
   component: FeatureSliderInput,
 };

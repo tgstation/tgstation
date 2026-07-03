@@ -1,11 +1,11 @@
 /datum/job/human_ai
 	title = JOB_HUMAN_AI
-	description = "Assist the crew, open airlocks, follow your lawset, and coordinate your cyborgs."
+	description = "Помогайте экипажу, открывайте шлюзы, следуйте своему своду законов и координируйтесь с другими киборгами."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = "the Captain, Research Director, and your lawset"
+	supervisors = "Капитаном, Директором Исследований и вашим сводом законов"
 	minimal_player_age = 7
 	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
@@ -82,7 +82,7 @@
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
+		minor_announce("Из-за неудачного опыта [joining_mob] был отправлен в качестве замены вашего ИИ в [AREACOORD(joining_mob)]. Пожалуйста, относитесь к нему с уважанием.")
 
 /datum/job/human_ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs.</b>"

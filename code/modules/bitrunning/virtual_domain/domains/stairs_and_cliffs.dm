@@ -1,10 +1,10 @@
 /datum/lazy_template/virtual_domain/stairs_and_cliffs
-	name = "Glacier Grind"
+	name = "Ледниковый откос"
 	cost = BITRUNNER_COST_LOW
-	desc = "A treacherous climb few calves can survive. Great cardio though."
-	help_text = "Ever heard of 'Snakes and Ladders'? It's like that, but with \
-	instead of ladders its stairs and instead of snakes its a steep drop down a \
-	cliff into rough rocks or liquid plasma."
+	desc = "Коварный подъем, который осилят немногие. Зато это отличное кардио."
+	help_text = "Слышали когда-нибудь о \"Змеях и Лестницах\"? Так вот, это тоже самое, но \
+	вместо лестниц - подъемы, а вместо змей - крутой спуск \
+	с обрыва на жесткие камни или в жидкую плазму."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
 	completion_loot = list(/obj/item/clothing/suit/costume/snowman = 2)
 	secondary_loot = list(/obj/item/clothing/shoes/wheelys/skishoes = 2, /obj/item/clothing/head/costume/ushanka/polar = 1)

@@ -54,7 +54,7 @@
 	user.spawn_gibs()
 	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
 	user.set_species(/datum/species/skeleton)
-	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "mastodon fish suicide")
+	user.say("АААААААААААААА!!!!!!!!!!!!!!", forced = "mastodon fish suicide")
 	user.AddComponent(/datum/component/omen) // the curse of the fish
 	if(prob(75)) // rare so less likely (the curse keeps you alive)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)

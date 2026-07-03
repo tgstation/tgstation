@@ -1,6 +1,6 @@
 /datum/antagonist/blob
 	name = "\improper Blob"
-	roundend_category = "blobs"
+	roundend_category = "Блобы"
 	antagpanel_category = ANTAG_GROUP_BIOHAZARDS
 	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE

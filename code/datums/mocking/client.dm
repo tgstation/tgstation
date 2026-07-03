@@ -58,7 +58,7 @@
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
 	else
-		persistent_client = new(ckey)
+		persistent_client = new(ckey, key) // BANDASTATION ADDITION - Mentors: (key)
 	persistent_client.set_client(src)
 #endif
 

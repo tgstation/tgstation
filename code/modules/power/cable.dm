@@ -554,9 +554,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/item/stack/cable_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is making a noose with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	else
-		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
@@ -672,7 +672,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if(!do_after(user, use_delay, attacked_humanoid))
 		return ITEM_INTERACT_BLOCKING
 
-	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC))
+	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "вмятины", heal_message_burn = "сожженую проводку", required_bodytype = BODYTYPE_ROBOTIC))
 		return ITEM_INTERACT_BLOCKING
 
 	if (use(1) && amount > 0)

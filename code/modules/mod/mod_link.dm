@@ -8,6 +8,7 @@
 	link_visual.makeHologram(0.75)
 	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
 	link_visual.add_overlay(mod_link.visual_overlays)
+	link_visual.AddComponent(/datum/component/tts_component, user.get_tts_seed(), user.get_tts_effects(list(/datum/singleton/sound_effect/radio))) // Bandastation Addition
 	mod_link.visual = link_visual
 	mod_link.holder.become_hearing_sensitive(REF(mod_link))
 	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY), proc_path)

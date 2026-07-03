@@ -1,0 +1,89 @@
+#For more details
+# https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms
+# https://docs.gitea.com/1.19/usage/issue-pull-request-templates
+#Be sure to check the docs
+#
+#Format
+#- type: | markdown | textarea | input | checkboxes |
+#  id:   | just an id, no actual relevance |
+#  attributes:
+#    label:       | Box title |
+#    description: | Box small text - Description |
+#
+name: "Issue Report"
+#title: "[Bug]: " | if you want to have a have it automatically say [Bug] when they start the form
+description: "Доложите о проблемах или багах, что бы мы могли их исправить."
+#labels: "Баг"
+
+body:
+  - type: markdown
+    attributes:
+      value: Спасибо за оставленный отчёт! Не забудьте дать ему соответствующее проблеме название для упрощения работы другим.
+
+  - type: input
+    id: version
+    attributes:
+      label: BYOND Version
+      description: "На какой версии BYOND встретился баг. (Если уверены, что не связано, можно пропустить)"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание проблемы
+      description: В чем состоит суть проблемы? (Обязательное поле)
+      placeholder: Я сел на стул, от чего взорвался, а мой мозг оказался в душе на ЦК!
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-expected
+    attributes:
+      label: Что должно было произойти?
+      description: Почему вы считаете это проблемой?
+      placeholder: Я ожидал, что я просто сяду на стул и буду сидеть.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Что случилось вместо этого?
+      description: Как произошедшее отличается от ваших ожиданий?
+      placeholder: Я умер и оказался на ЦК.
+
+  - type: textarea
+    id: why-bad
+    attributes:
+      label: Почему это плохо/Какие последствия?
+      description: Почему вы считаете эту проблему значительной?
+      placeholder: Игроки должны иметь возможность сидеть на стульях, не взрываясь.
+
+  - type: textarea
+    id: how-to-reproduce
+    attributes:
+      label: Шаги для повторения проблемы.
+      description: Самая важная часть. Опишите ВСЁ, что вы делали, что бы встретиться с проблемой. (Обязательное поле)
+      placeholder: Нашел стул, сел, взорвался.
+    validations:
+      required: true
+
+  - type: textarea
+    id: when-problem-start
+    attributes:
+      label: Когда проблема началась?
+      description: Если отчет связан с тем, что раньше работало иначе, опишите последний раз, когда механика работала корректно. (Обязательное поле)
+      placeholder: Я мог садиться на стулья без проблем неделю назад, так что примерно тогда.
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra-information
+    attributes:
+      label: Дополнительная информация
+      description: Всё, что вы считаете важным/относящимся к проблеме.
+      placeholder: Я думаю, что проблема начала появляться после этого PR https://github.com/ss220club/Paradise-SS220/pull/583
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Связанные логи
+      description: Пожалуйста, предоставьте связанные логи или рантаймы, если имеете к ним доступ. (Лучше цензурить IP-адреса)
+      render: DM

@@ -1,0 +1,8 @@
+["cup ramen"]
+nominative = "рамен в чашке"
+genitive = "рамена в чашке"
+dative = "рамену в чашке"
+accusative = "рамен в чашке"
+instrumental = "раменом в чашке"
+prepositional = "рамене в чашке"
+gender = "male"

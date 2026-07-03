@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
-import { isEscape } from 'tgui-core/keys';
-import { KEY } from 'tgui-core/keys';
+import { isEscape, KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -89,7 +88,7 @@ export const TextInputModal = (props) => {
                 maxLength={max_length}
                 onEscape={() => act('cancel')}
                 onChange={onType}
-                placeholder="Type something..."
+                placeholder="Напечатайте что-нибудь..."
                 value={input}
               />
             </Stack.Item>

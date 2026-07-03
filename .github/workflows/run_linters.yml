@@ -10,6 +10,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+      - name: Install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zlib1g
+      # Your existing steps
       - name: Restore SpacemanDMM cache
         uses: actions/cache@v5
         with:
@@ -111,6 +116,17 @@ jobs:
       - name: Check Miscellaneous Files
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_misc.sh
+      - name: Check For Translation Edits
+        id: ru-names-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            run_ru_names:
+              - 'modular_bandastation/translations/public/ru_names/**'
+              - 'tools/translations/**'
+      - name: Validate Translations
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.ru-names-filter.outputs.run_ru_names == 'true'
+        run: bash tools/translations/validate_ru_names.sh
       - name: Run TGUI Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/build/build.sh --ci lint tgui-test

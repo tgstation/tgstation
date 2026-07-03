@@ -368,29 +368,29 @@
  */
 /proc/offer_control(mob/M)
 	if(isdead(M))
-		to_chat(usr, "You can't give ghosts control of a ghost. They're already ghosts.")
+		to_chat(usr, "Вы не можете дать призракам контроль над призраком. Они уже призраки.")
 		return FALSE
 
-	to_chat(M, "Control of your mob has been offered to dead players.")
+	to_chat(M, "Контроль над вашей куклой был предложен мертвым игрокам.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/whomst = span_danger(M.real_name)
 	if(M.mind && !is_unassigned_job(M.mind?.assigned_role))
-		whomst += "Job: [span_notice(M.mind.assigned_role.title)]."
+		whomst += "Должность: [span_notice(M.mind.assigned_role.title)]."
 	if(length(M.mind?.get_special_roles()))
-		whomst += "Status: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
+		whomst += "Роли: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Хотите ли вы играть за - [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
 	if(chosen_one)
-		to_chat(M, "Your mob has been taken over by a ghost!")
+		to_chat(M, "Ваша кукла была передана призраку!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
 		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
-		to_chat(M, "There were no ghosts willing to take control.")
+		to_chat(M, "Не было найдено желающих призраков для передачи контроля.")
 		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(M)])")
 		return FALSE
 

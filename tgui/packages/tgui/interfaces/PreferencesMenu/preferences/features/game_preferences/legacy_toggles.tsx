@@ -5,103 +5,103 @@ import {
 } from '../base';
 
 export const admin_ignore_cult_ghost: FeatureToggle = {
-  name: 'Prevent being summoned as a cult ghost',
-  category: 'ADMIN',
+  name: 'Не появляться за призрака культа',
+  category: 'Админ',
   description: `
-    When enabled and observing, prevents Spirit Realm from forcing you
-    into a cult ghost.
+    Если включено, и если вы призрак, не дает Spirit Realm превращать вас
+    в призрака культа.
   `,
   component: CheckboxInput,
 };
 
 export const announce_login: FeatureToggle = {
-  name: 'Announce login',
-  category: 'ADMIN',
-  description: 'Admins will be notified when you login.',
+  name: 'Оповещать о входе',
+  category: 'Админ',
+  description: 'Администрация будет оповещена о вашем входе.',
   component: CheckboxInput,
 };
 
 export const combohud_lighting: FeatureToggle = {
-  name: 'Enable fullbright Combo HUD',
-  category: 'ADMIN',
+  name: 'Включить Combo-HUD с полным светом',
+  category: 'Админ',
   component: CheckboxInput,
 };
 
 export const deadmin_always: FeatureToggle = {
-  name: 'Auto deadmin - Always',
-  category: 'ADMIN',
-  description: 'When enabled, you will automatically deadmin.',
+  name: 'Авто deadmin',
+  category: 'Админ',
+  description: 'Автоматический deadmin при заходе в раунд.',
   component: CheckboxInput,
 };
 
 export const deadmin_antagonist: FeatureToggle = {
-  name: 'Auto deadmin - Antagonist',
-  category: 'ADMIN',
-  description: 'When enabled, you will automatically deadmin as an antagonist.',
+  name: 'Авто deadmin - при антагонизме',
+  category: 'Админ',
+  description: 'Автоматический deadmin, если вы антагонист.',
   component: CheckboxInput,
 };
 
 export const deadmin_position_head: FeatureToggle = {
-  name: 'Auto deadmin - Head of Staff',
-  category: 'ADMIN',
+  name: 'Авто deadmin - глава отдела',
+  category: 'Админ',
   description:
-    'When enabled, you will automatically deadmin as a head of staff.',
+    'Автоматический deadmin, если вы становитесь главой какого-либо отдела',
   component: CheckboxInput,
 };
 
 export const deadmin_position_security: FeatureToggle = {
-  name: 'Auto deadmin - Security',
-  category: 'ADMIN',
+  name: 'Авто deadmin - СБ',
+  category: 'Админ',
   description:
-    'When enabled, you will automatically deadmin as a member of security.',
+    'Автоматический deadmin, если вы становитесь членом службы безопасности.',
   component: CheckboxInput,
 };
 
 export const deadmin_position_silicon: FeatureToggle = {
-  name: 'Auto deadmin - Silicon',
-  category: 'ADMIN',
-  description: 'When enabled, you will automatically deadmin as a silicon.',
+  name: 'Авто deadmin - синтетик',
+  category: 'Админ',
+  description: 'Автоматический deadmin, если вы синтетик.',
   component: CheckboxInput,
 };
 
 export const disable_arrivalrattle: FeatureToggle = {
-  name: 'Notify for new arrivals',
-  category: 'GHOST',
-  description: 'When enabled, you will be notified as a ghost for new crew.',
+  name: 'Оповещать о прибытии экипажа',
+  category: 'Призрак',
+  description: 'Оповещать, когда вы призрак, о прибытии нового члена экипажа.',
   component: CheckboxInputInverse,
 };
 
 export const disable_deathrattle: FeatureToggle = {
-  name: 'Notify for deaths',
-  category: 'GHOST',
+  name: 'Оповещать о смертях',
+  category: 'Призрак',
   description:
-    'When enabled, you will be notified as a ghost whenever someone dies.',
+    'Оповещать, когда вы призрак, когда умирают другие игроки от чего-либо.',
   component: CheckboxInputInverse,
 };
 
 export const member_public: FeatureToggle = {
-  name: 'Publicize BYOND membership',
-  category: 'CHAT',
+  name: 'Показывать подписку BYOND',
+  category: 'Чат',
   description:
-    'When enabled, a BYOND logo will be shown next to your name in OOC.',
+    'При включении, показывает логотип BYOND рядом с вашим именем в OOC чате.',
   component: CheckboxInput,
 };
 
 export const sound_adminhelp: FeatureToggle = {
-  name: 'Enable adminhelp sounds',
-  category: 'ADMIN',
+  name: 'Включить звуки админхелпов',
+  category: 'Админ',
   component: CheckboxInput,
 };
 
 export const sound_prayers: FeatureToggle = {
-  name: 'Enable prayer sound',
-  category: 'ADMIN',
+  name: 'Включить звуки молитв',
+  category: 'Админ',
   component: CheckboxInput,
 };
 
 export const split_admin_tabs: FeatureToggle = {
-  name: 'Split admin tabs',
-  category: 'ADMIN',
-  description: "When enabled, will split the 'Admin' panel into several tabs.",
+  name: 'Разделять админские вкладки',
+  category: 'Админ',
+  description: "Разделяет вкладки на панели 'Admin'",
   component: CheckboxInput,
 };

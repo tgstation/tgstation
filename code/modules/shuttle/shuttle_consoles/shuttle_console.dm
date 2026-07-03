@@ -224,7 +224,7 @@
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, span_notice("Your request has been received by CentCom."))
-			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A href='byond://?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A href='byond://?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
+			to_chat(get_holders_with_rights(R_ADMIN), "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A href='byond://?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A href='byond://?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>") /// BANDASTATION EDIT: Proper permissions
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

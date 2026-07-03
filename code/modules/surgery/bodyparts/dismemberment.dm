@@ -224,6 +224,7 @@
 		if(pill)
 			pill.forceMove(src)
 
+	ru_names_rename(ru_names_toml("head", suffix = " [owner.real_name]", override_base = "[owner.real_name]'s head"))
 	name = "[owner.real_name]'s head"
 
 	/// If our owner loses their head, update their name as their face ~cannot be seen~ does not exist anymore

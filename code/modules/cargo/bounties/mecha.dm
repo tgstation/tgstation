@@ -23,26 +23,26 @@
 	return FALSE
 
 /datum/bounty/item/mech/ripleymk2
-	name = "APLU MK-II \"Ripley\""
+	name = "APLU MK-II \"Рипли\""
 	reward = CARGO_CRATE_VALUE * 6.5
 	required_data = /obj/vehicle/sealed/mecha/ripley/mk2
 
 /datum/bounty/item/mech/clarke
-	name = "Clarke"
+	name = "Кларк"
 	reward = CARGO_CRATE_VALUE * 12
 	required_data = /obj/vehicle/sealed/mecha/clarke
 
 /datum/bounty/item/mech/odysseus
-	name = "Odysseus"
+	name = "Одиссей"
 	reward = CARGO_CRATE_VALUE * 5.5
 	required_data = /obj/vehicle/sealed/mecha/odysseus
 
 /datum/bounty/item/mech/gygax
-	name = "Gygax"
+	name = "Гигакс"
 	reward = CARGO_CRATE_VALUE * 28
 	required_data = /obj/vehicle/sealed/mecha/gygax
 
 /datum/bounty/item/mech/durand
-	name = "Durand"
+	name = "Дюранд"
 	reward = CARGO_CRATE_VALUE * 20
 	required_data = /obj/vehicle/sealed/mecha/durand

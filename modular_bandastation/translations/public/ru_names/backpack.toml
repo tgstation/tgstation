@@ -1,0 +1,8 @@
+[backpack]
+nominative = "рюкзак"
+genitive = "рюкзака"
+dative = "рюкзаку"
+accusative = "рюкзак"
+instrumental = "рюкзаком"
+prepositional = "рюкзаке"
+gender = "male"

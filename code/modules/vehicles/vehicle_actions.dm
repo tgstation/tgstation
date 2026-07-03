@@ -327,7 +327,7 @@
 		to_chat(owner, span_danger("You prepare to thank the driver, only to realize that they don't exist."))
 		return
 	var/mob/clown = pick(drivers)
-	owner.say("Thank you for the fun ride, [clown.name]!")
+	owner.say("Спасибо за веселую поездку, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
 /datum/action/vehicle/ridden/wheelchair/bell

@@ -94,24 +94,26 @@
 		Due to that, it isn't of much use out in space. Their eyes are very sensitive."
 
 /datum/species/moth/get_species_description()
-	return "Hailing from a planet that was lost long ago, the moths travel \
-		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
+	return "Нианы инсектоидные гуманоиды, ведущие кочевой образ жизни. \
+	Они общительны, ценят коллектив и известны как торговцы, инженеры и посредники."
 
 /datum/species/moth/get_species_lore()
 	return list(
-		"Their homeworld lost to the ages, the moths live aboard the Grand Nomad Fleet. \
-		Made up of what could be found, bartered, repaired, or stolen the armada is a colossal patchwork \
-		built on a history of politely flagging travelers down and taking their things. Occasionally a moth \
-		will decide to leave the fleet, usually to strike out for fortunes to send back home.",
+	"Родной мир Ниан - Зувийен, некогда богатая и разнообразная планета с множеством биомов и форм жизни. \
+	Долгое время нианы жили разрозненными кланами, развивая культуру и науку, не покидая привычные регионы. \
+	Со временем нестабильность местной звезды начала необратимо разрушать климат планеты. \
+	Катастрофы и истощение ресурсов поставили цивилизацию ниан на грань вымирания.",
 
-		"Nomadic life produces a tight-knit culture, with moths valuing their friends, family, and vessels highly. \
-		Moths are gregarious by nature and do best in communal spaces. This has served them well on the galactic stage, \
-		maintaining a friendly and personable reputation even in the face of hostile encounters. \
-		It seems that the galaxy has come to accept these former pirates.",
+	"В условиях нарастающего кризиса нианы были вынуждены объединиться и пересмотреть своё устройство общества. \
+	Борьба за ресурсы сменилась поиском долгосрочных решений для спасения вида. \
+	Понимая, что Зувийен обречён, нианы начали активное освоение космоса и строительство звездного флота. \
+	Так началась история их народа за пределами родного мира.",
 
-		"Surprisingly, living together in a giant fleet hasn't flattened variance in dialect and culture. \
-		These differences are welcomed and encouraged within the fleet for the variety that they bring.",
-	)
+	"Попытки спасти Зувийен с помощью терраформирования и автономных систем завершились катастрофой. \
+	С тех пор нианы продолжают жить среди звёзд, сохраняя культуру и надежду однажды обрести новый дом.",
+)
+
+
 
 /datum/species/moth/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -120,28 +122,28 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "feather-alt",
-			SPECIES_PERK_NAME = "Precious Wings",
-			SPECIES_PERK_DESC = "Moths can fly in pressurized, zero-g environments and safely land short falls using their wings.",
+			SPECIES_PERK_NAME = "Прелестные крылья",
+			SPECIES_PERK_DESC = "Моли могут летать в помещениях под давлением в условиях невесомости и безопасно приземляться с небольшой высоты.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tshirt",
-			SPECIES_PERK_NAME = "Meal Plan",
-			SPECIES_PERK_DESC = "Moths can eat clothes for temporary nourishment.",
+			SPECIES_PERK_NAME = "План питания",
+			SPECIES_PERK_DESC = "Моли могут поедать одежду, чтобы временно подкрепиться.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fire",
-			SPECIES_PERK_NAME = "Ablazed Wings",
-			SPECIES_PERK_DESC = "Moth wings are fragile, and can be easily burnt off.",
+			SPECIES_PERK_NAME = "Опаленные крылья",
+			SPECIES_PERK_DESC = "Крылья молей хрупкие и легко сгорают.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
-			SPECIES_PERK_NAME = "Bright Lights",
-			SPECIES_PERK_DESC = "Moths need an extra layer of flash protection to protect \
-				themselves, such as against security officers or when welding. Welding \
-				masks will work.",
+			SPECIES_PERK_NAME = "Яркие огоньки",
+			SPECIES_PERK_DESC = "Молям нужен дополнительный слой защиты от вспышек, чтобы защитить глаза \
+				от офицеров службы безопасности или сварочных аппаратов. Сварочные \
+				маски полностью спасают от вспышек.",
 		),
 	)
 

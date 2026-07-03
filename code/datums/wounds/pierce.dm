@@ -60,22 +60,22 @@
 	switch(blood_bled)
 		if(8 to 12)
 			victim.visible_message(
-				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
-				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
+				span_smalldanger("Капли крови вылетают из отверстия в [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)]!."),
+				span_danger("Вы откашливаетесь, выплевывая немного крови из-за удара по вашей [limb.ru_plaintext_zone[DATIVE] || limb.plaintext_zone]."),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(12 to 18)
 			victim.visible_message(
-				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
-				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
+				span_smalldanger("Небольшая струя крови брызгает из дыры в [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)]!!"),
+				span_danger("Вы выплевываете струю крови из-за удара по вашей [limb.ru_plaintext_zone[DATIVE] || limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(18 to INFINITY)
 			victim.visible_message(
-				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
-				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
+				span_danger("Брызги крови струятся из прокола в [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)]!"),
+				span_bolddanger("Вы задыхаетесь, выплевывая брызги крови из-за удара по вашей [limb.ru_plaintext_zone[DATIVE] || limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
@@ -106,7 +106,7 @@
 			if(QDELETED(src))
 				return
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_notice("Вы чувствуете, как [LOWER_TEXT(undiagnosed_name || name)] в вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] сужается от холода!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
@@ -126,7 +126,7 @@
 	if(blood_flow > WOUND_MAX_BLOODFLOW)
 		blood_flow = WOUND_MAX_BLOODFLOW
 	if(blood_flow <= 0 && !QDELETED(src))
-		to_chat(victim, span_green("The holes on your [limb.plaintext_zone] have [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
+		to_chat(victim, span_green("Отверстия на вашей [limb.ru_plaintext_zone[PREPOSITIONAL] || limb.plaintext_zone] [!limb.can_bleed() ? "закрылись" : "перестали кровоточить"]!"))
 		qdel(src)
 
 /datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
@@ -158,9 +158,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		treatment_delay *= 0.5
-		user.visible_message(span_danger("[user] begins expertly cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image indications in mind..."))
+		user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает опытно прижигать [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] с помощью [I.declent_ru(GENITIVE)]..."), span_warning("Вы начинаете прижигать [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] у [user == victim ? "вас" : "[victim.declent_ru(GENITIVE)]"] с помощью [I.declent_ru(GENITIVE)], держа в голове показатели сканера..."))
 	else
-		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+		user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает прижигать [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] у [victim.declent_ru(GENITIVE)] с помощью [I.declent_ru(GENITIVE)]..."), span_warning("Вы начинаете прижигать [limb.ru_plaintext_zone[ACCUSATIVE] || limb.plaintext_zone] у [user == victim ? "вас" : "[victim.declent_ru(GENITIVE)]"] с помощью [I.declent_ru(GENITIVE)]..."))
 
 	playsound(user, 'sound/items/handling/surgery/cautery1.ogg', 75, TRUE)
 
@@ -169,8 +169,8 @@
 
 	playsound(user, 'sound/items/handling/surgery/cautery2.ogg', 75, TRUE)
 
-	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "holes")
-	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
+	var/bleeding_wording = (limb.can_bleed() ? "кровотечений" : "дыр")
+	user.visible_message(span_green("[capitalize(user.declent_ru(NOMINATIVE))] прижигает часть [bleeding_wording] на [victim.declent_ru(PREPOSITIONAL)]."), span_green("Вы прижигаете часть [bleeding_wording] на [victim.declent_ru(PREPOSITIONAL)]."))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	if(prob(30))
 		victim.emote("scream")
@@ -189,17 +189,17 @@
 	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
 /datum/wound/pierce/get_limb_examine_description()
-	return span_warning("The flesh on this limb appears badly perforated.")
+	return span_warning("Кожа на этой конечности кажется сильно перфорированной.")
 
 /datum/wound/pierce/bleed/moderate
-	name = "Minor Skin Breakage"
-	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
-		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
-		Follow with food and a rest period."
-	treat_text_short = "Apply bandaging or suturing."
-	examine_desc = "has a small, torn hole, gently bleeding"
-	occur_text = "spurts out a thin stream of blood"
+	name = "Незначительный прокол"
+	desc = "Кожа пациента была повреждена, вызвав сильный синяк и незначительное внутреннее кровотечение в пораженной области."
+	treat_text = "Перевяжите или зашейте рану, используйте средства для свертывания крови, \
+		прижигание или в крайних случаях - воздействие на рану сильным холодом или вакуумом. \
+		Следует обеспечить прием пищи и период отдыха."
+	treat_text_short = "Примените повязку, швы, средства для свертывания крови или прижигание."
+	examine_desc = "имеет небольшое, слегка кровоточащее, разорванное отверстие"
+	occur_text = "выбрызгивает тонкую струю крови"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.25
@@ -211,13 +211,13 @@
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
-	simple_treat_text = "<b>Bandaging</b> the wound will reduce blood loss, help the wound close by itself quicker, and speed up the blood recovery period. The wound itself can be slowly <b>sutured</b> shut."
-	homemade_treat_text = "<b>Tea</b> stimulates the body's natural healing systems, slightly fastening clotting. The wound itself can be rinsed off on a sink or shower as well. Other remedies are unnecessary."
+	simple_treat_text = "<b>Перевязывание</b> раны уменьшит кровопотерю, поможет ране быстрее закрыться самостоятельно и ускорит период восстановления крови. Саму рану можно медленно <b>зашить</b>."
+	homemade_treat_text = "<b>Чай</b> стимулирует естественные лечебные системы организма, слегка ускоряя свёртывание крови. Рану также можно промыть в раковине или под душем. Другие средства не нужны."
 
 /datum/wound/pierce/bleed/moderate/update_descriptions()
 	if(!limb.can_bleed())
-		examine_desc = "has a small, torn hole"
-		occur_text = "splits a small hole open"
+		examine_desc = "имеет небольшую рваную дыру"
+		occur_text = "пробивает небольшую дыру"
 
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
@@ -232,10 +232,10 @@
 	return weight
 
 /datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
-	name = "Pinprick Pierce"
-	desc = "Patient's skin has been deeply pierced, causing mild bleeding."
-	treat_text_short = "Apply bandaging or suturing."
-	examine_desc = "has a small red pinprick, gently bleeding"
+	name = "Глубокий прокол"
+	desc = "Кожа пациента была глубоко проколота, что привело к небольшому кровотечению."
+	treat_text_short = "Наложить повязку или швы."
+	examine_desc = "имеет небольшое красное отверстие, слегка кровоточит"
 	initial_flow = 0.5 //very minor, mostly there as fluff and "dont do that idiot" reminder
 	gauzed_clot_rate = 0.1
 	clot_rate = 0.03 // will close quickly on its own
@@ -248,36 +248,28 @@
 	abstract = FALSE
 
 /datum/wound/pierce/bleed/moderate/projectile
-	name = "Minor Skin Penetration"
-	desc = "Patient's skin has been pierced through, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
-		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
-		Follow with food and a rest period."
-	examine_desc = "has a small, circular hole, gently bleeding"
+	name = "Незначительный прокол кожи"
+	desc = "Кожа пациента была пробита, что привело к сильным ушибам и небольшому внутреннему кровотечению в поражённой области."
+	treat_text = "Наложить повязку или швы на рану, использовать кровоостанавливающие средства, \
+		прижечь рану, либо в крайних случаях подвергнуть воздействию экстремального холода или вакуума. \
+		Затем обеспечить питание и покой."
+	examine_desc = "имеет небольшое круглое отверстие, слегка кровоточит"
 	clot_rate = 0
 
 /datum/wound/pierce/bleed/moderate/projectile/update_descriptions()
 	if(!limb.can_bleed())
-		examine_desc = "has a small, circular hole"
-		occur_text = "splits a small hole open"
-
-/datum/wound_pregen_data/flesh_pierce/breakage/projectile
-	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/projectile
-
-/datum/wound_pregen_data/flesh_pierce/breakage/projectile/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
-	if (!isprojectile(damage_source))
-		return 0
-	return weight
+		examine_desc = "имеет небольшое круглое отверстие"
+		occur_text = "разрывает небольшое отверстие"
 
 /datum/wound/pierce/bleed/severe
-	name = "Open Stab Puncture"
-	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
-	treat_text = "Swiftly apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
-		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
-		Follow with iron supplements and a rest period."
-	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
-	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
-	occur_text = "looses a violent spray of blood, revealing a pierced wound"
+	name = "Открытая колотая рана"
+	desc = "Внутренние ткани пациента повреждены, что вызывает значительное внутреннее кровотечение и снижение стабильности конечности."
+	treat_text = "Быстро примените повязку или швы к ране, используйте средства для свертывания крови или соляно-глюкозный раствор, \
+		прижигание или в крайних случаях - воздействие на рану сильным холодом или вакуумом. \
+		Следует дополнить лечение добавками железа и периодом отдыха."
+	treat_text_short = "Примените повязку, швы, средства для свертывания крови или прижигание."
+	examine_desc = "проколота насквозь, с кусочками ткани, закрывающими открытое отверстие"
+	occur_text = "брызжет сильным фонтаном крови, обнажая проколотую рану"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2
@@ -289,12 +281,12 @@
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
-	simple_treat_text = "<b>Bandaging</b> the wound is essential, and will reduce blood loss. Afterwards, the wound can be <b>sutured</b> shut, preferably while the patient is resting and/or grasping their wound."
-	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, table salt, or salt mixed with water</b> can be applied directly to stem the flow, though unmixed salt will irritate the skin and worsen natural healing. Resting and grabbing your wound will also reduce bleeding."
+	simple_treat_text = "<b>Перевязывание</b> раны необходимо и поможет уменьшить кровотечение. После этого рану можно <b>зашить</b>, предпочтительно когда пациент отдыхает и/или держит свою рану."
+	homemade_treat_text = "Простыни можно разорвать, чтобы сделать <b>самодельный бинт</b>. <b>Мука, поваренная соль или соль, смешанная с водой</b> могут быть нанесены непосредственно на рану, чтобы остановить кровотечение, хотя неразмешанная соль будет раздражать кожу и ухудшать естественное заживление. Падение на землю и удерживание раны снизит кровотечение."
 
 /datum/wound/pierce/bleed/severe/update_descriptions()
 	if(!limb.can_bleed())
-		occur_text = "tears a hole open"
+		occur_text = "разрывает отверстие"
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
@@ -309,8 +301,8 @@
 	return weight
 
 /datum/wound/pierce/bleed/severe/projectile
-	name = "Open Bullet Puncture"
-	examine_desc = "is pierced clear through, with bits of tissue obscuring the cleanly torn hole"
+	name = "Открытое пулевое ранение"
+	examine_desc = "пробито насквозь, с кусочками ткани, закрывающими аккуратно разорванную дыру"
 	clot_rate = 0
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/projectile
@@ -322,9 +314,9 @@
 	return weight
 
 /datum/wound/pierce/bleed/severe/eye
-	name = "Eyeball Puncture"
-	desc = "Patient's eye has sustained extreme damage, causing severe bleeding from the ocular cavity."
-	occur_text = "looses a violent spray of blood, revealing a crushed eyeball"
+	name = "Прокол глазного яблока"
+	desc = "Глаз пациента получил серьёзные повреждения, вызывающее сильное кровотечение из глазной полости."
+	occur_text = "брызжет кровь, обнажая раздавленное глазное яблоко"
 	var/right_side = FALSE
 
 /datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
@@ -333,7 +325,7 @@
 		return FALSE
 	. = ..()
 	src.right_side = right_side
-	examine_desc = "has its [right_side ? "right" : "left"] eye pierced clean through, blood spewing from the cavity"
+	examine_desc = "имеет ранение в [right_side ? "правом" : "левом"] глазу, и из раны течёт кровь"
 	RegisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, PROC_REF(wound_overlay))
 	limb.update_part_wound_overlay()
 
@@ -365,10 +357,10 @@
 	return ..()
 
 /datum/wound/pierce/bleed/severe/magicalearpain //what happens if you try to listen to the heartbeat of a corrupt heart while not a heretic
-	name = "Bleeding Ears"
-	desc = "Patient's ears are bleeding heavily as blood seeps through the inner flesh of the ear through some unknown means."
-	examine_desc = "is covered in blood, black-purple fluid flowing from its ears"
-	occur_text = "is soaked as two spurts of black liquid spray from its ears"
+	name = "Кровоточащие уши"
+	desc = "Уши пациента сильно кровоточат, так как кровь каким-то неизвестным образом просачивается через внутреннюю поверхность уха."
+	examine_desc = "всё покрыто кровью, из ушей течёт чёрно-фиолетовая жидкость"
+	occur_text = "промокает полностью, когда из ушей вырываются две струйки чёрной жидкости"
 	internal_bleeding_chance = 0 // just your ears
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/magicalearpain
@@ -383,14 +375,14 @@
 	. = ..()
 
 /datum/wound/pierce/bleed/critical
-	name = "Ruptured Cavity"
-	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
-	treat_text = "Immediately apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
-		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
-		Follow with supervised resanguination."
-	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
-	examine_desc = "is ripped clear through, barely held together by exposed bone"
-	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
+	name = "Разрыв полости"
+	desc = "Внутренние ткани и кровеносная система пациента разорваны, что вызывает значительное внутреннее кровотечение и повреждение внутренних органов."
+	treat_text = "Быстро примените повязку или швы к ране, используйте средства для свертывания крови или соляно-глюкозный раствор, \
+		прижигание или в крайних случаях - воздействие на рану сильным холодом или вакуумом. \
+		Затем следует провести контролируемую реинфузию."
+	treat_text_short = "Примените повязку, швы, средства для свертывания крови или прижигание."
+	examine_desc = "разорвана насквозь, едва удерживается на месте открытой костью"
+	occur_text = "разлетается на куски, отправляя части внутренностей во все стороны"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 2.5
@@ -403,8 +395,8 @@
 	surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED // Bad enough to count
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
-	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."
-	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, salt, and saltwater</b> topically applied will help. Dropping to the ground and grabbing your wound will reduce blood flow."
+	simple_treat_text = "<b>Перевязывание</b> раны имеет первостепенное значение, так же как и получение непосредственной медицинской помощи - <b>Смерть</b> наступит, если лечение будет задержано, так как недостаток <b>кислорода</b> убьет пациента, поэтому <b>пища, железо и солево-глюкозный раствор</b> всегда рекомендуются после лечения. Эта рана не заживет самостоятельно."
+	homemade_treat_text = "Простыни можно разорвать, чтобы сделать <b>самодельный бинт</b>. <b>Мука, соль и соленая вода</b>, нанесенные на кожу, помогут. Падение на землю и удерживание раны снизит кровотечение."
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE

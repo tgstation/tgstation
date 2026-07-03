@@ -1,0 +1,8 @@
+["'Wespe' pistol"]
+nominative = "пистолет \"Оса\""
+genitive = "пистолета \"Оса\""
+dative = "пистолету \"Оса\""
+accusative = "пистолет \"Оса\""
+instrumental = "пистолетом \"Оса\""
+prepositional = "пистолете \"Оса\""
+gender = "male"

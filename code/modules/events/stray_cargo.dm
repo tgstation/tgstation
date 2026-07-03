@@ -42,7 +42,7 @@
 /datum/round_event/stray_cargo/announce(fake)
 	if(fake)
 		impact_area = find_event_area()
-	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
+	priority_announce("Бродячая грузовая капсула обнаружена на сканерах дальнего действия. Ожидаемое место падения: [impact_area.declent_ru(NOMINATIVE)].", "Предупреждение о столкновении")
 
 /**
 * Tries to find a valid area, throws an error if none are found

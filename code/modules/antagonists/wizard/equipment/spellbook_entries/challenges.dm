@@ -3,8 +3,8 @@
 // shit that sounds stupid but fun so we can painfully lock behind a dimmer
 /datum/spellbook_entry/challenge/multiverse
 	name = "Multiverse Sword"
-	desc = "The Station gets a multiverse sword to stop you. Can you withstand the hordes of multiverse realities?"
+	desc = "Чтобы остановить вас, станция получает меч мультивселенной. Сможете ли вы противостоять полчищам мультивселенных реальностей?"
 
 /datum/spellbook_entry/challenge/antiwizard
 	name = "Friendly Wizard Scum"
-	desc = "A \"Friendly\" Wizard will protect the station, and try to kill you. They get a spellbook much like you, but will use it for \"GOOD\"."
+	desc = "«Дружелюбный» волшебник будет защищать станцию и пытаться убить вас. Он получит книгу заклинаний, как и вы, но будет использовать ее «во благо»."

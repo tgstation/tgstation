@@ -1,0 +1,8 @@
+[dropper]
+nominative = "пипетка"
+genitive = "пипетки"
+dative = "пипетке"
+accusative = "пипетку"
+instrumental = "пипеткой"
+prepositional = "пипетке"
+gender = "female"

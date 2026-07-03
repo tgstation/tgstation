@@ -1,0 +1,7 @@
+#include "_ai_vox.dm"
+
+//#include "code/vox_defines.dm" - в tgstation.dme, code\__DEFINES\ai\vox_defines.dm
+#include "code/vox_procs.dm"
+#include "code/vox_sounds_bms.dm"
+#include "code/vox_sounds_hl1.dm"
+#include "code/vox_sounds_mil.dm"

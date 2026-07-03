@@ -35,22 +35,23 @@ export const AntagInfoNinja = (props) => {
         <Section scrollable fill>
           <Stack vertical textColor="green">
             <Stack.Item textAlign="center" fontSize="20px">
-              I am an elite mercenary of the Spider Clan.
-              <br />A <span style={ninja_emphasis}> SPACE NINJA</span>!
+              Я элитный наёмник клана Паука.
+              <br />
+              <span style={ninja_emphasis}> КОСМИЧЕСКИЙ НИНДЗЯ</span>!
             </Stack.Item>
             <Stack.Item textAlign="center" italic>
-              Surprise is my weapon. Shadows are my armor. Without them, I am
-              nothing.
+              Неожиданность - мое оружие. Тень - моя броня. Без них, Я - ничто.
             </Stack.Item>
             <Stack.Item>
               <Section fill>
-                Your advanced ninja suit contains many powerful modules.
-                <br /> It can be recharged by right clicking on station APCs or
-                other power sources, in order to drain their battery.
+                Ваш продвинутый костюм ниндзи содержит множество продвинутых
+                модулей.
+                <br /> Его можно зарядить, нажав ПКМ по станционным ЛКП или
+                другим источникам энергии, чтобы выкачать энергию из них.
                 <br />
-                Right clicking on some kinds of machines or items wearing your
-                suit will hack them, to varying effect. Experiment and find out
-                what you can do!
+                ПКМ по некоторым видам техники или предметам при активированном
+                костюме, взломает их, с различными эффектами. Экспериментируйте
+                и узнайте, на что вы способны! Хаджимимаште.
               </Section>
             </Stack.Item>
             <Stack.Item>
@@ -59,7 +60,7 @@ export const AntagInfoNinja = (props) => {
                 objectiveFollowup={
                   <ReplaceObjectivesButton
                     can_change_objective={can_change_objective}
-                    button_title={'Adapt Mission Parameters'}
+                    button_title={'Адаптировать параметры миссии'}
                     button_colour={'green'}
                   />
                 }

@@ -10,7 +10,7 @@
  */
 /mob/living/proc/perform_surgery(atom/movable/operating_on, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE, operating_zone = zone_selected)
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? operating_on : DOAFTER_SOURCE_SURGERY)))
-		operating_on.balloon_alert(src, "already performing surgery!")
+		operating_on.balloon_alert(src, "операция уже проводится!")
 		return ITEM_INTERACT_BLOCKING
 
 	// allow cyborgs to use "hands"
@@ -45,13 +45,13 @@
 		if (isliving(operating_on))
 			var/mob/living/patient = operating_on
 			if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
-				patient.balloon_alert(src, "operation site is obstructed!")
+				patient.balloon_alert(src, "операционная зона перекрыта!")
 			else if(!IS_LYING_OR_CANNOT_LIE(patient))
-				patient.balloon_alert(src, "not lying down!")
+				patient.balloon_alert(src, "не лежит!")
 			else
-				patient.balloon_alert(src, "nothing to do with [realtool.name]!")
+				patient.balloon_alert(src, "ничего не сделать с данным инструментом!")
 		else
-			operating.balloon_alert(src, "nothing to do with [realtool.name]!")
+			operating.balloon_alert(src, "ничего не сделать с данным инструментом!")
 		//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
 		return ITEM_INTERACT_BLOCKING
 
@@ -140,9 +140,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] attempts to close [p_their()] own [limb.plaintext_zone] with [tool]..."),
-		span_notice("You attempt to close your own [limb.plaintext_zone] with [tool]..."),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_notice("[declent_ru(NOMINATIVE)] пытается закрыть [ru_p_theirs()] [limb.ru_plaintext_zone[PREPOSITIONAL]] с помощью [tool.declent_ru(GENITIVE)]..."),
+		span_notice("Вы пытаетесь закрыть свою [limb.ru_plaintext_zone[PREPOSITIONAL]] с помощью [tool.declent_ru(GENITIVE)]..."),
+		span_hear("Вы слышите [tool?.get_temperature() ? "шипение" : "шуршание"]"),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -156,9 +156,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] closes [p_their()] own [limb.plaintext_zone] with [tool]."),
-		span_notice("You close your own [limb.plaintext_zone] with [tool]."),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_notice("[declent_ru(NOMINATIVE)] закрывает [ru_p_theirs()] [limb.ru_plaintext_zone[ACCUSATIVE]] с помощью [tool.declent_ru(GENITIVE)]."),
+		span_notice("Вы закрываете свою [limb.ru_plaintext_zone[ACCUSATIVE]] с помощью [tool.declent_ru(GENITIVE)]."),
+		span_hear("Вы слышите [tool?.get_temperature() ? "шипение" : "шуршание"]"),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -213,7 +213,7 @@
 
 	var/list/operations = surgeon.get_available_operations(src, surgeon.get_active_held_item())
 	if(!length(operations))
-		to_chat(surgeon, boxed_message(span_info("No available surgeries.")))
+		to_chat(surgeon, boxed_message(span_info("Нет доступных операций.")))
 		return
 
 	var/list/operations_info = list()
@@ -222,7 +222,7 @@
 		var/atom/movable/operating_on = operations[radial_slice][2]
 		operations_info += "[radial_slice]: [operation.name] on [operating_on]"
 
-	to_chat(surgeon, boxed_message(span_info("Available surgeries:<br><hr>[jointext(operations_info, "<br>")]")))
+	to_chat(surgeon, boxed_message(span_info("Доступные операции:<br><hr>[jointext(operations_info, "<br>")]")))
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
@@ -231,30 +231,30 @@
 	if(has_limbs)
 		var/obj/item/bodypart/part = get_bodypart(target_zone)
 		if(isnull(part))
-			return list("Bodypart missing")
+			return list("Часть тела отсуствует")
 
 		if(HAS_TRAIT(part, TRAIT_READY_TO_OPERATE))
-			state += "Ready for surgery"
+			state += "Готов к операции"
 		if(!is_location_accessible(target_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
-			state += "Bodypart is obstructed by clothing"
+			state += "Часть тела закрыта одеждой"
 
 		var/part_state = part?.surgery_state || NONE
 
 		if(!LIMB_HAS_BONES(part))
 			part_state &= ~BONELESS_SURGERY_STATES
-			state += "Bodypart lacks bones (counts as [jointext(bitfield_to_list(BONELESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+			state += "В части тела отсутствуют кости (считается [jointext(bitfield_to_list(BONELESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
 		if(!LIMB_HAS_VESSELS(part))
 			part_state &= ~VESSELLESS_SURGERY_STATES
-			state += "Bodypart lacks blood vessels (counts as [jointext(bitfield_to_list(VESSELLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+			state += "В части тела отсутствуют кровеносные сосуды (считается [jointext(bitfield_to_list(VESSELLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
 		if(!LIMB_HAS_SKIN(part))
 			part_state &= ~SKINLESS_SURGERY_STATES
-			state += "Bodypart lacks skin (counts as [jointext(bitfield_to_list(SKINLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+			state += "На части тела отсутствует кожа (считается [jointext(bitfield_to_list(SKINLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
 
 		state += bitfield_to_list(part_state, SURGERY_STATE_READABLE)
 
 	else
 		if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
-			state += "Ready for surgery"
+			state += "Готов к операции"
 
 		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
 		state += bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
@@ -610,7 +610,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * For surgery operations that can be performed with any item, this explains what kind of item is needed
  */
 /datum/surgery_operation/proc/get_any_tool()
-	return "Any item"
+	return "Любой предмет"
 
 /**
  * Return a list of lists of strings indicating the various requirements for this operation
@@ -628,9 +628,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /// "All requirements" are formatted as "All of the following must be true:"
 /datum/surgery_operation/proc/all_required_strings()
 	SHOULD_CALL_PARENT(TRUE)
-	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
+	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("требуется"))
 	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
-		. += "the patient must be lying down"
+		. += "пациент должен лежать"
 
 /// Returns a list of strings indicating any of the requirements for this operation
 /// "Any requirements" are formatted as "At least one of the following must be true:"
@@ -641,15 +641,15 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_any_flags = any_surgery_states_required
 	if((parsed_any_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be sawed or drilled"
+		. += "кость должна быть распилена или просверлена"
 	if((parsed_any_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be cut or opened"
+		. += "кожа должна быть разрезана или вскрыта"
 	if((parsed_any_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be clamped or unclamped" // weird phrasing but whatever
+		. += "кровеносные сосуды должны быть зажаты или разжаты" // weird phrasing but whatever
 
-	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
+	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("требуется"))
 
 /// Returns a list of strings indicating optional conditions for this operation
 /// "Optional conditions" are formatted as "Additionally, any of the following may be true:"
@@ -657,7 +657,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	if(operation_flags & OPERATION_SELF_OPERABLE)
-		. += "a surgeon may perform this on themselves"
+		. += "хирург может сделать это самостоятельно"
 
 /// Returns a list of strings indicating blocked states for this operation
 /// "Blocked requirements" are formatted as "However, none of the following may be true:"
@@ -668,17 +668,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_blocked_flags = any_surgery_states_blocked
 	if((parsed_blocked_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be intact"
+		. += "кость должна быть целой"
 	if((parsed_blocked_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be intact"
+		. += "кожа должна быть целой"
 	if((parsed_blocked_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be intact"
+		. += "кровеносные сосуды должны быть целы"
 
-	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("must not"))
+	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("не требуется"))
 	if(!(operation_flags & OPERATION_IGNORE_CLOTHES))
-		. += "the operation site must not be obstructed by clothing"
+		. += "рабочая область не должна быть закрыта одеждой"
 
 /**
  * Returns what icon this surgery uses by default on the radial wheel if it does not implement its own radial options
@@ -759,7 +759,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= mod_amt
 	if(HAS_TRAIT(patient, TRAIT_SURGICALLY_ANALYZED))
 		basemod *= 0.8
-	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
+	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || HAS_TRAIT(patient, TRAIT_STASIS) || patient.stat >= 2) // BANDASTATION EDIT
 		basemod *= 0.8
 	return basemod
 
@@ -896,7 +896,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS) && !(operation_flags & OPERATION_ALWAYS_FAILABLE))
 			operation_args[OPERATION_SPEED] = 0
 
-		if(operation_args[OPERATION_FORCE_FAIL] || prob(clamp(GET_FAILURE_CHANCE(time, operation_args[OPERATION_SPEED]), 0, 99)))
+		var/failure_chance = get_modified_failure_chance(time, patient, surgeon, tool, operation_args) // BANDASTATION EDIT
+		if(operation_args[OPERATION_FORCE_FAIL] || prob(clamp(failure_chance, 0, 99))) // BANDASTATION EDIT
 			failure(operating_on, surgeon, tool, operation_args)
 			result |= ITEM_INTERACT_FAILURE
 			if (patient)
@@ -993,11 +994,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			return
 		CRASH("[type] operation attempted to call display_results without a patient, despite requiring one!")
 
-	var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
+	var/you_feel = pick("короткая боль", "ваше тело напрягается", "неприятное ощущение")
 	target.show_message(
-		msg = vague_message || detailed_message || span_notice("You feel [you_feel] as you are operated on."),
+		msg = vague_message || detailed_message || span_notice("Вы чувствуете себя [you_feel], когда вас оперируют."),
 		type = MSG_VISUAL,
-		alt_msg = span_notice("You feel [you_feel] as you are operated on."),
+		alt_msg = span_notice("Вы чувствуете себя [you_feel], когда вас оперируют."),
 	)
 
 /// Display pain message to the target based on their traits and condition
@@ -1020,8 +1021,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
 		return
-	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
-		to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || HAS_TRAIT(target, TRAIT_STASIS) || drunken_patient && prob(drunken_ignorance_probability)) // BANDASTATION EDIT
+		to_chat(target, span_notice("Вы испытываете притупленное покалывание, пока ваше тело оперируют."))
 		return
 	to_chat(target, span_userdanger(pain_message))
 	if(prob(30) && !mechanical_surgery)
@@ -1079,7 +1080,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	// Create a probability to ignore the pain based on drunkenness level
 	var/drunk_ignore_prob = clamp(patient.get_drunk_amount(), 0, 90)
 
-	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || prob(drunk_ignore_prob))
+	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || HAS_TRAIT(patient, TRAIT_STASIS) || prob(drunk_ignore_prob))
 		patient.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery (or became drunk). has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
 		return
 	if(patient.stat >= UNCONSCIOUS)
@@ -1131,9 +1132,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to operate on [display_target]..."),
-		span_notice("[surgeon] begins to operate on [display_target]."),
-		span_notice("[surgeon] begins to operate on [display_target]."),
+		span_notice("Вы начинаете оперировать [display_target.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает оперировать [display_target.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает оперировать [display_target.declent_ru(GENITIVE)]."),
 	)
 
 /**
@@ -1163,9 +1164,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You succeed."),
-		span_notice("[surgeon] succeeds!"),
-		span_notice("[surgeon] finishes."),
+		span_notice("Вы преуспеваете."),
+		span_notice("[surgeon] преуспел!"),
+		span_notice("[surgeon] заканчивает операцию."),
 	)
 
 /**
@@ -1199,22 +1200,22 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/screwedmessage = ""
 	switch(operation_args[OPERATION_SPEED])
 		if(2.5 to 3)
-			screwedmessage = " You almost had it, though."
+			screwedmessage = " А ведь у вас почти получилось..."
 		if(3 to 4)
 			pass()
 		if(4 to 5)
-			screwedmessage = " This is hard to get right in these conditions..."
+			screwedmessage = " В таких условиях это трудно сделать правильно..."
 		if(5 to INFINITY)
-			screwedmessage = " This is practically impossible in these conditions..."
+			screwedmessage = " В данных условиях это практически невозможно..."
 	if(operation_args[OPERATION_FORCE_FAIL])
-		screwedmessage = " Intentionally."
+		screwedmessage = " Намеренно."
 
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You screw up![screwedmessage]"),
-		span_warning("[surgeon] screws up!"),
-		span_notice("[surgeon] finishes."),
+		span_warning("Вы облажались![screwedmessage]"),
+		span_warning("[surgeon] облажался!"),
+		span_notice("[surgeon] заканчивает операцию."),
 		TRUE, //By default the patient will notice if the wrong thing has been cut
 	)
 
@@ -1241,17 +1242,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
+		. += "операция на [target_zone ? "[parse_zone(target_zone)] (цель: [parse_zone(target_zone)])" : "пациента"]"
 	else if(target_zone)
-		. += "operate on [parse_zone(target_zone)] (target [parse_zone(target_zone)])"
+		. += "операция на [parse_zone(target_zone)] (цель: [parse_zone(target_zone)])"
 	. += ..()
 
 /datum/surgery_operation/basic/all_blocked_strings()
 	. = ..()
 	if(required_biotype & MOB_ROBOTIC)
-		. += "the patient must not be organic"
+		. += "пациент не должен быть органиком"
 	else if(required_biotype)
-		. += "the patient must not be robotic"
+		. += "пациент не должен быть роботом"
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1309,9 +1310,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
 	if(required_bodytype & BODYTYPE_ROBOTIC)
-		. += "the limb must not be organic"
+		. += "конечность не должна быть органической"
 	else if(required_bodytype & BODYTYPE_ORGANIC)
-		. += "the limb must not be cybernetic"
+		. += "конечность не должна быть кибернетической"
 
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
@@ -1358,14 +1359,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/obj/item/organ/target_type
 
 /datum/surgery_operation/organ/all_required_strings()
-	return list("operate on [target_type::name] (target [target_type::zone])") + ..()
+	return list("операция на [target_type::name] (цель [target_type::zone])") + ..()
 
 /datum/surgery_operation/organ/all_blocked_strings()
 	. = ..()
 	if(required_organ_flag & BODYTYPE_ROBOTIC)
-		. += "the organ must not be organic"
+		. += "орган не должен быть органическим"
 	else if(required_organ_flag & ORGAN_TYPE_FLAGS)
-		. += "the organ must not be cybernetic"
+		. += "орган не должен быть кибернетическим"
 
 /datum/surgery_operation/organ/get_default_radial_image()
 	return get_generic_limb_radial_image(target_type::zone)

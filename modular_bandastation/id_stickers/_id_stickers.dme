@@ -1,0 +1,7 @@
+#include "_id_stickers.dm"
+
+#include "code/_grayscale.dm"
+#include "code/base.dm"
+#include "code/card_interactions.dm"
+#include "code/stickers.dm"
+#include "code/supply_packs.dm"

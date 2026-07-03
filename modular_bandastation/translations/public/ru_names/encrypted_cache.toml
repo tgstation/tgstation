@@ -1,0 +1,8 @@
+["encrypted cache"]
+nominative = "зашифрованный кэш"
+genitive = "зашифрованного кэша"
+dative = "зашифрованному кэшу"
+accusative = "зашифрованный кэш"
+instrumental = "зашифрованным кэшом"
+prepositional = "зашифрованном кэше"
+gender = "male"

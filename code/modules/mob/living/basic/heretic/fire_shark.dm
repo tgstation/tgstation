@@ -1,7 +1,7 @@
 /mob/living/basic/heretic_summon/fire_shark
-	name = "\improper Fire Shark"
+	name = "Fire Shark"
 	real_name = "Fire Shark"
-	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
+	desc = "Это потусторонняя карликовая космическая акула, также известная как огненная акула."
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB

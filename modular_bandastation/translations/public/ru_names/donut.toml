@@ -1,0 +1,8 @@
+[donut]
+nominative = "пончик"
+genitive = "пончика"
+dative = "пончику"
+accusative = "пончик"
+instrumental = "пончиком"
+prepositional = "пончике"
+gender = "male"

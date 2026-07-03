@@ -76,10 +76,10 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			stack_trace("Unknown action key: [action_key] for [type]")
 
 /datum/strippable_item/mob_item_slot/jumpsuit/proc/do_adjust_jumpsuit(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
-	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit]."))
+	to_chat(source, span_notice("[capitalize(user.declent_ru(NOMINATIVE))] пытается изменить стиль [jumpsuit.ru_p_yours(GENITIVE)] [jumpsuit.declent_ru(GENITIVE)]."))
 	if (!do_after(user, (jumpsuit.strip_delay * 0.5), source))
 		return
-	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit]."))
+	to_chat(source, span_notice("[capitalize(user.declent_ru(NOMINATIVE))] успешно меняет стиль [jumpsuit.ru_p_yours(GENITIVE)] [jumpsuit.declent_ru(GENITIVE)]."))
 	jumpsuit.toggle_jumpsuit_adjust()
 
 	if (!ismob(source))
@@ -94,35 +94,35 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	var/static/list/sensor_mode_text_to_num = list(
-		"Off" = SENSOR_OFF,
-		"Living" = SENSOR_LIVING,
-		"Vitals" = SENSOR_VITALS,
-		"Tracking" = SENSOR_COORDS,
+		"Отключено" = SENSOR_OFF,
+		"\"Жив-мертв\"" = SENSOR_LIVING,
+		"Жизненные показатели" = SENSOR_VITALS,
+		"Слежение" = SENSOR_COORDS,
 	)
 	var/static/list/senor_mode_num_to_text = list( // keep this as the inverse of the above list
-		"[SENSOR_OFF]" = "Off",
-		"[SENSOR_LIVING]" = "Living",
-		"[SENSOR_VITALS]" = "Vitals",
-		"[SENSOR_COORDS]" = "Tracking",
+		"[SENSOR_OFF]" = "Отключено",
+		"[SENSOR_LIVING]" = "\"Жив-мертв\"",
+		"[SENSOR_VITALS]" = "Жизненные показатели",
+		"[SENSOR_COORDS]" = "Слежение",
 	)
 
-	var/new_mode_str = tgui_input_list(user, "Adjust suit sensors", "Adjust Sensors", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
+	var/new_mode_str = tgui_input_list(user, "Переключение датчиков комбинезона", "Переключение датчиков", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
 	var/new_mode = sensor_mode_text_to_num[new_mode_str]
 	if(isnull(new_mode)) // also catches returning null
 		return
 
 	if(!user.Adjacent(source))
-		source.balloon_alert(user, "can't reach!")
+		source.balloon_alert(user, "не можете достать!")
 		return
 
-	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit.name]'s sensor."))
+	to_chat(source, span_notice("[capitalize(user.declent_ru(NOMINATIVE))] пытается переключить датчики [jumpsuit.ru_p_yours(GENITIVE)] [jumpsuit.declent_ru(GENITIVE)]."))
 	if(!do_after(user, jumpsuit.strip_delay * 0.5, source) || !jumpsuit.set_sensor_mode(new_mode)) // takes the same amount of time as adjusting it
-		source.balloon_alert(user, "failed!")
+		source.balloon_alert(user, "не удалось!")
 		return
-	source.balloon_alert(user, "changed sensors")
-	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit.name]'s sensor."))
-	user.log_message("changed suit sensors of [key_name(source)] to [new_mode_str]", LOG_ATTACK, color="red")
-	source.log_message("suit sensors changed to [new_mode_str] by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
+	source.balloon_alert(user, "датчики переключены")
+	to_chat(source, span_notice("[capitalize(user.declent_ru(NOMINATIVE))] успешно переключает датчики [jumpsuit.ru_p_yours(GENITIVE)] [jumpsuit.declent_ru(GENITIVE)]."))
+	user.log_message("изменил(а) режим датчиков костюма [key_name(source)] на [new_mode_str]", LOG_ATTACK, color="red")
+	source.log_message("режим датчиков костюма изменен на [new_mode_str] игроком [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /datum/strippable_item/mob_item_slot/jumpsuit/proc/do_strip_accessory(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
 	var/list/accessory_choices = list()
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if (isnull(item))
 		return FALSE
 
-	to_chat(user, span_notice("You try to empty [source]'s [pocket_side] pocket."))
+	to_chat(user, span_notice("Вы пытаетесь опустошить [pocket_side] карман [source.declent_ru(GENITIVE)]."))
 
 	user.log_message("is pickpocketing [key_name(source)] of [item] ([pocket_side])", LOG_ATTACK, color="red")
 	source.log_message("is being pickpocketed of [item] by [key_name(user)] ([pocket_side])", LOG_VICTIM, color="orange", log_globally=FALSE)
@@ -263,17 +263,17 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	return result
 
 /datum/strippable_item/mob_item_slot/pocket/proc/warn_owner(atom/owner)
-	to_chat(owner, span_warning("You feel your [pocket_side] pocket being fumbled with!"))
+	to_chat(owner, span_warning("Вы чувствуете, как ваш [pocket_side] карман трогают!"))
 
 /datum/strippable_item/mob_item_slot/pocket/left
 	key = STRIPPABLE_ITEM_LPOCKET
 	item_slot = ITEM_SLOT_LPOCKET
-	pocket_side = "left"
+	pocket_side = "левый"
 
 /datum/strippable_item/mob_item_slot/pocket/right
 	key = STRIPPABLE_ITEM_RPOCKET
 	item_slot = ITEM_SLOT_RPOCKET
-	pocket_side = "right"
+	pocket_side = "правый"
 
 /proc/get_strippable_alternate_action_internals(obj/item/item, atom/source)
 	if (!iscarbon(source))
@@ -299,12 +299,12 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	carbon_source.visible_message(
-		span_danger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on your [item.name]."),
+		span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается [(carbon_source.internal != item) ? "открыть" : "перекрыть"] клапан на [item.declent_ru(PREPOSITIONAL)] у [source.declent_ru(GENITIVE)]."),
+		span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] пытается [(carbon_source.internal != item) ? "открыть" : "перекрыть"] клапан на [item.ru_p_yours(GENITIVE)] [item.declent_ru(PREPOSITIONAL)]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_notice("You try to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]..."))
+	to_chat(user, span_notice("Вы пытаетесь [(carbon_source.internal != item) ? "открыть" : "перекрыть"] клапан на [item.declent_ru(PREPOSITIONAL)] у [source.declent_ru(GENITIVE)]..."))
 
 	if(!do_after(user, INTERNALS_TOGGLE_DELAY, carbon_source))
 		return
@@ -317,12 +317,12 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			return
 
 	carbon_source.visible_message(
-		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on your [item.name]."),
+		span_danger("[capitalize(user.declent_ru(NOMINATIVE))] [isnull(carbon_source.internal) ? "перекрывает": "открывает"] клапан на [item.declent_ru(PREPOSITIONAL)] у [source.declent_ru(GENITIVE)]."),
+		span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] [isnull(carbon_source.internal) ? "перекрывает": "открывает"] клапан на [item.ru_p_yours(PREPOSITIONAL)] [item.declent_ru(PREPOSITIONAL)]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_notice("You [isnull(carbon_source.internal) ? "close" : "open"] the valve on [source]'s [item.name]."))
+	to_chat(user, span_notice("Вы [isnull(carbon_source.internal) ? "перекрываете": "открываете"] клапан на [item.declent_ru(PREPOSITIONAL)] у [source.declent_ru(GENITIVE)]."))
 
 #undef INTERNALS_TOGGLE_DELAY
 #undef POCKET_EQUIP_DELAY

@@ -1,0 +1,8 @@
+[autolathe]
+nominative = "автолат"
+genitive = "автолата"
+dative = "автолату"
+accusative = "автолат"
+instrumental = "автолатом"
+prepositional = "автолате"
+gender = "male"

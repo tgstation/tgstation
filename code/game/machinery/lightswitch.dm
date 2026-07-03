@@ -35,6 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!area)
 		area = get_area(src)
 	if(autoname)
+		ru_names_rename(ru_names_toml(src::name, suffix = " ([area.name])", override_base = "light switch ([area.name])"))
 		name = "light switch ([area.name])"
 	if(mapload)
 		find_and_mount_on_atom()

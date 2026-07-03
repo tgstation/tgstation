@@ -1,4 +1,11 @@
+#DOCS
+#https://docs.github.com/en/github-ae@latest/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
+#
+blank_issues_enabled: true
 contact_links:
-  - name: Feature Requests
-    url: https://tgstation13.org/phpBB/viewforum.php?f=9
-    about: Post feature requests and suggestions on the forums. This repository does not handle them.
+  - name: Feature Request
+    url: https://discord.com/channels/1097181193939730453/1181261198096875670
+    about: Запросы новых фич следует оставлять на форуме ss13-трекер в дискорде.
+  - name: Exploit Reports
+    url: https://github.com/ss220club/Paradise-SS220/security
+    about: Критические баги, которые могут быть использованы со злыми намерениями, следует оставлять по ссылке.

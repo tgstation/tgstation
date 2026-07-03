@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		user.AddComponent(/datum/component/omen/bible)
 
 /obj/item/book/bible/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/book/bible/proc/can_set_bible_skin(mob/living/user)
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		success_forcesay = "ПРОЧЬ ЗЛАЯ СКВЕРНА!!", \
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)

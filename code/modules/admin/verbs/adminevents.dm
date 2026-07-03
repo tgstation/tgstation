@@ -104,7 +104,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	admin_ticket_log(target, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
-ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_HIDDEN) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_EVENTS
 	var/input = input(user, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
@@ -146,7 +146,7 @@ ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the securit
 	if(!level)
 		return
 
-	SSsecurity_level.set_level(level)
+	SSsecurity_level.set_level(level, user = user) // BANDASTATION EDIT - Gamma Shuttle (add mob/user argument)
 
 	log_admin("[key_name(user)] changed the security level to [level]")
 	message_admins("[key_name_admin(user)] changed the security level to [level]")

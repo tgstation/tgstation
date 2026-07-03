@@ -1,6 +1,6 @@
 /obj/item/spellbook
 	name = "spell book"
-	desc = "An unearthly tome that glows with power."
+	desc = "Необычный том, светящийся силой."
 	icon = 'icons/obj/service/library.dmi'
 	icon_state ="book"
 	worn_icon_state = "book"
@@ -39,13 +39,13 @@
 /obj/item/spellbook/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
-	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
+	to_chat(caster, span_warning("На обложке появляются красные светящиеся буквы..."))
 	to_chat(caster, span_red(pick(
-		"NICE TRY BUT NO!",
-		"CLEVER BUT NOT CLEVER ENOUGH!",
-		"SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!",
-		"CUTE! VERY CUTE!",
-		"YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?",
+		"ХОРОШАЯ ПОПЫТКА, НО НЕТ!",
+		"УМНО, НО НЕДОСТАТОЧНО УМНО!",
+		"ИЗ-ЗА ТАКОГО ВОПИЮЩЕГО ШУЛЕРСТВА МЫ И ПРИНЯЛИ ВАШЕ ЗАЯВЛЕНИЕ!",
+		"МИЛО! ОЧЕНЬ МИЛО!",
+		"ТЫ ЖЕ НЕ ДУМАЛ, ЧТО ЭТО БУДЕТ ТАК ПРОСТО, ПРАВДА?",
 	)))
 
 	return COMPONENT_ITEM_BURNT_OUT
@@ -53,23 +53,23 @@
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
 	if(owner)
-		. += "There is a small signature on the front cover: \"[owner]\"."
+		. += "На передней обложке есть небольшая подпись: \"[owner]\"."
 	else
-		. += "It appears to have no author."
+		. += "Похоже, что у нее нет автора."
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
 		if(!user.mind)
 			return
-		to_chat(user, span_notice("You bind [src] to yourself."))
+		to_chat(user, span_notice("Вы привязываете [declent_ru(ACCUSATIVE)] к себе."))
 		owner = user.mind
 		return
 
 	if(user.mind != owner)
 		if(IS_WIZARD_APPRENTICE(user))
-			to_chat(user, span_warning("If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."))
+			to_chat(user, span_warning("Если бы вас поймают за подглядыванием в книгу заклинаний вашего учителя, то, скорее всего, вас отчислять из Академии волшебников. Лучше не стоит."))
 		else
-			to_chat(user, span_warning("[src] does not recognize you as its owner and refuses to open!"))
+			to_chat(user, span_warning("Вы не признаетесь владельцем [declent_ru(GENITIVE)], и не собирается открываться!"))
 		return
 
 	return ..()
@@ -79,17 +79,17 @@
 	if(istype(O, /obj/item/antag_spawner/contract))
 		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
 		if(!istype(contract_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
 			return
 		if(!contract_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [src]."))
+			to_chat(user, span_warning("Вы не можете вернуть очки за [declent_ru(ACCUSATIVE)]."))
 			return
 		var/obj/item/antag_spawner/contract/contract = O
 		if(contract.used)
-			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
+			to_chat(user, span_warning("Контракт был использован, вы не можете вернуть себе очки!"))
 			return
 
-		to_chat(user, span_notice("You feed the contract back into the spellbook, refunding your points."))
+		to_chat(user, span_notice("Вы возвращаете контракт в книгу заклинаний, возвращая себе очки."))
 		uses += contract_entry.cost
 		contract_entry.times--
 		qdel(O)
@@ -97,13 +97,13 @@
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
 		var/datum/spellbook_entry/item/hugbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
 			return
 		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+			to_chat(user, span_warning("Вы не можете вернуть очки за [O.declent_ru(ACCUSATIVE)]."))
 			return
 
-		to_chat(user, span_notice("On second thought, maybe summoning a demon isn't a funny idea. You refund your points."))
+		to_chat(user, span_notice("Если подумать, может быть, вызов демона - не такая уж и смешная идея. Вы возвращаете свои очки."))
 		uses += demon_entry.cost
 		demon_entry.times--
 		qdel(O)
@@ -111,13 +111,13 @@
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
 		var/datum/spellbook_entry/item/bloodbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
 			return
 		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+			to_chat(user, span_warning("Вы не можете вернуть очки за [O.declent_ru(ACCUSATIVE)]."))
 			return
 
-		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
+		to_chat(user, span_notice("Если подумать, возможно, вызов демона - плохая идея. Вы возвращаете свои очки."))
 		uses += demon_entry.cost
 		demon_entry.times--
 		qdel(O)
@@ -178,7 +178,7 @@
 		return
 	var/mob/living/carbon/human/wizard = usr
 	if(!istype(wizard))
-		to_chat(wizard, span_warning("The book doesn't seem to listen to lower life forms."))
+		to_chat(wizard, span_warning("Книга, похоже, не слушает низшие формы жизни."))
 		return FALSE
 
 	// Actions that are always available
@@ -202,7 +202,7 @@
 			return TRUE
 
 	if(uses < initial(uses))
-		to_chat(wizard, span_warning("You need to have all your spell points to do this!"))
+		to_chat(wizard, span_warning("Для этого вам нужны все очки заклинаний!"))
 		return FALSE
 
 	// Actions that are only available if you have full spell points
@@ -302,7 +302,7 @@
 /// Purchases a semi-random wizard loadout for [wizard]
 /// If passed a number [bonus_to_give], the wizard is given additional uses on their spellbook, used in randomization.
 /obj/item/spellbook/proc/semirandomize(mob/living/carbon/human/wizard, bonus_to_give = 0)
-	var/list/needed_cats = list("Offensive", "Mobility")
+	var/list/needed_cats = list("Наступление", "Мобильность")
 	var/list/shuffled_entries = shuffle(entries)
 	for(var/i in 1 to 2)
 		for(var/datum/spellbook_entry/entry as anything in shuffled_entries)

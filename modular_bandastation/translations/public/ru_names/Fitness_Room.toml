@@ -1,0 +1,8 @@
+["Fitness Room"]
+nominative = "фитнес-зал"
+genitive = "фитнес-зала"
+dative = "фитнес-залу"
+accusative = "фитнес-зал"
+instrumental = "фитнес-залом"
+prepositional = "фитнес-зале"
+gender = "male"

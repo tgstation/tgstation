@@ -9,7 +9,7 @@
 		designation = trim_left(player.designation + " " + player.job)
 
 	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
-		designation = mind.assigned_role.title
+		designation = job_title_ru(mind.assigned_role.title)
 
 	if(HAS_TRAIT(src, TRAIT_LOUD_BINARY))
 		// AIs are loud and ugly
@@ -54,6 +54,15 @@
 					type = MESSAGE_TYPE_RADIO,
 					avoid_highlighting = (src == hearing_mob)
 				)
+
+			cast_tts(
+				hearing_mob,
+				message,
+				is_local = FALSE,
+				effects = list(/datum/singleton/sound_effect/robot, /datum/singleton/sound_effect/radio),
+				channel_override = CHANNEL_TTS_RADIO,
+				check_deafness = FALSE
+			)
 
 		if(isobserver(hearing_mob))
 			var/following = src

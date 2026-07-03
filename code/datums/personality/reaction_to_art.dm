@@ -1,13 +1,13 @@
 /datum/personality/creative
 	savefile_key = "creative"
-	name = "Creative"
-	desc = "I like expressing myself, especially in a chaotic place like this."
-	pos_gameplay_desc = "Likes making and seeing art or playing music"
+	name = "Творческий"
+	desc = "Мне нравится самовыражаться, особенно в таком хаотичном месте, как это."
+	pos_gameplay_desc = "Любит заниматься искусством или музицировать"
 	groups = list(PERSONALITY_GROUP_ART)
 
 /datum/personality/unimaginative
 	savefile_key = "unimaginative"
-	name = "Unimaginative"
-	desc = "I'm not good at thinking outside the box. The box is there for a reason."
-	neg_gameplay_desc = "Ignores art or music and dislikes making new art"
+	name = "Лишенный воображения"
+	desc = "Я не силен в нестандартном мышлении. Коробка существует не просто так."
+	neg_gameplay_desc = "Игнорирует искусство или музыку и не любит создавать новые произведения искусства"
 	groups = list(PERSONALITY_GROUP_ART)

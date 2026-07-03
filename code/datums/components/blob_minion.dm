@@ -182,7 +182,17 @@
 	minion.log_sayverb_talk(message, message_mods, tag = "blob hivemind telepathy")
 	var/spanned_message = minion.generate_messagepart(adjusted_message, message_mods = message_mods)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion, MESSAGE_TYPE_RADIO)
+	// BANDASTATION EDIT START - TTS
+	relay_to_list_and_observers(
+		rendered,
+		GLOB.blob_telepathy_mobs,
+		minion,
+		MESSAGE_TYPE_RADIO,
+		tts_message = adjusted_message,
+		tts_seed = minion.get_tts_seed(),
+		tts_effects = list(/datum/singleton/sound_effect/telepathy)
+	)
+	// BANDASTATION EDIT END
 
 /// Called when a blob minion is transformed into something else, hopefully a spore into a zombie
 /datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)

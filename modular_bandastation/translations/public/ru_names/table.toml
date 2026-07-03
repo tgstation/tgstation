@@ -1,0 +1,8 @@
+[table]
+nominative = "стол"
+genitive = "стола"
+dative = "столу"
+accusative = "стол"
+instrumental = "столом"
+prepositional = "столе"
+gender = "male"

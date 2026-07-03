@@ -98,7 +98,7 @@
 	data["beaconError"] = using_beacon && !canBeacon ? "(BEACON ERROR)" : ""//changes button text to include an error alert if necessary
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
-	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST] [MONEY_NAME]" : "Print Beacon for [BEACON_COST] [MONEY_NAME] ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
+	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST][MONEY_NAME]" : "Print Beacon for [BEACON_COST][MONEY_NAME] ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning

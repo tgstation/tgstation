@@ -58,9 +58,9 @@
 	else if(the_source_of_our_problems)
 		location_descriptor = get_area(the_source_of_our_problems)
 
-	priority_announce("A radiation leak has been detected in [location_descriptor || "an unknown area"]. \
-		All crew are to evacuate the affected area. Our [pick("mechanics", "engineers", "scientists", "interns", "sensors", "readings")] \
-		report that a machine within is causing it - repair it quickly to stop the leak.", "[command_name()] Engineering Division")
+	priority_announce("Утечка радиации обнаружена в [location_descriptor || "an unknown area"]. \
+		Все члены экипажа должны эвакуироваться из поражённой зоны. Наши [pick("механики", "инженеры", "ученые", "интерны", "сенсоры", "показатели")] \
+		указывают, что машинерия в этой локации является причиной проблемы - отремонтируйте её как можно быстрее, чтобы остановить утечку", "[command_name()]: Инженерный отдел")
 
 /datum/round_event/radiation_leak/start()
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
@@ -71,14 +71,14 @@
 	// The key of this assoc list is the "method" of how they're fixing the thing (just flavor for examine),
 	// and the value is what tool they actually need to use on the thing to fix it
 	var/list/how_do_we_fix_it = list(
-		"wrenching a few valves" = TOOL_WRENCH,
-		"tightening its bolts" = TOOL_WRENCH,
-		"crowbaring its panel [pick("down", "up")]" = TOOL_CROWBAR,
-		"tightening some screws" = TOOL_SCREWDRIVER,
-		"checking its [pick("wires", "circuits")]" = TOOL_MULTITOOL,
-		"welding its panel [pick("open", "shut")]" = TOOL_WELDER,
-		"analyzing its readings" = TOOL_ANALYZER,
-		"cutting some excess wires" = TOOL_WIRECUTTER,
+		"закрутить несколько клапанов" = TOOL_WRENCH,
+		"затянуть болты" = TOOL_WRENCH,
+		"вправить панель ломом" = TOOL_CROWBAR,
+		"затянуть винты" = TOOL_SCREWDRIVER,
+		"проверить [pick("проводку", "микросхемы")]" = TOOL_MULTITOOL,
+		"[pick("разварить", "заварить")] панель" = TOOL_WELDER,
+		"проанализировать показатели" = TOOL_ANALYZER,
+		"обрезать лишние провода" = TOOL_WIRECUTTER,
 	)
 	var/list/fix_it_keys = assoc_to_keys(how_do_we_fix_it) // Returns a copy that we can pick and take from, fortunately
 
@@ -92,14 +92,14 @@
 	for(var/tool_method in methods_to_fix)
 		signals_to_add += COMSIG_ATOM_TOOL_ACT(how_do_we_fix_it[tool_method])
 
-	the_source_of_our_problems.visible_message(span_danger("[the_source_of_our_problems] starts to emanate a horrible green gas!"))
+	the_source_of_our_problems.visible_message(span_danger("[the_source_of_our_problems] начинает испускать ужасный зеленый газ!"))
 	// Add the component that makes the thing radioactive
 	the_source_of_our_problems.AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 2 SECONDS, \
 		range = 5, \
 		threshold = RAD_MEDIUM_INSULATION, \
-		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
+		examine_text = span_green("<i>Оно испускает зеленый газ... Возможно, вы сможете исправить это, если сделаете одно из следующего: [english_list(methods_to_fix, and_text = " или ")].</i>"), \
 	)
 	// Register signals to make it fixable
 	if(length(signals_to_add))
@@ -126,7 +126,7 @@
 	if(!the_end_of_our_problems)
 		return
 
-	the_end_of_our_problems.visible_message(span_notice("The gas emanating from [the_end_of_our_problems] dissipates."))
+	the_end_of_our_problems.visible_message(span_notice("Газ, исходящий от [the_end_of_our_problems] рассеивается."))
 	qdel(the_end_of_our_problems.GetComponent(/datum/component/radioactive_emitter))
 	if(length(signals_to_add))
 		UnregisterSignal(the_end_of_our_problems, signals_to_add)
@@ -153,15 +153,15 @@
 
 /// Attempts a do_after, and if successful, stops the event
 /datum/round_event/radiation_leak/proc/try_remove_radiation(obj/machinery/source, mob/living/user, obj/item/tool)
-	source.balloon_alert(user, "fixing leak...")
+	source.balloon_alert(user, "устраняем протечку...")
 	// Fairly long do after. It shouldn't be SUPER easy to just run in and stop it.
 	// A tider can fix it if they want to soak a bunch of rads and inhale noxious fumes,
 	// but only an equipped engineer should be able to handle it painlessly.
 	if(!tool.use_tool(source, user, 30 SECONDS, amount = (tool.tool_behaviour == TOOL_WELDER ? 2 : 0), volume = 50))
-		source.balloon_alert(user, "interrupted!")
+		source.balloon_alert(user, "прервано!")
 		return
 
-	source.balloon_alert(user, "leak repaired")
+	source.balloon_alert(user, "протечка исправлена")
 	// Force end the event
 	processing = FALSE
 	end()

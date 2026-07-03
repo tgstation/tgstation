@@ -11,6 +11,7 @@ import { createRoot } from 'react-dom/client';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+//import { emotesReducer } from 'tgui-panel/emotes'; // BANDASTATION ADD  - Emote Panel
 import { App } from './app';
 import { bus } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';

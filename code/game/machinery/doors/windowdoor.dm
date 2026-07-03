@@ -19,6 +19,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	set_dir_on_move = FALSE
 	opens_with_door_remote = TRUE
+	knock_sound = 'sound/effects/glass/glassknock.ogg' // BANDASTATION ADDITION: KNOCK
 	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
 	/// If the door is considered reinforced. If TRUE, the door will resist twice as much heat (1600 deg C vs 800 deg C).

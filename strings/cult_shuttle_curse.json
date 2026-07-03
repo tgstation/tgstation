@@ -1,25 +1,25 @@
 {
 	"curse_announce": [
-		"A fuel technician just slit his own throat and begged for death.",
-		"A scan of the shuttle's fuel tank has revealed tainting by a mixture of humanoid innards and teeth.",
-		"A security incident involving a frenzied shuttle worker attacking coworkers with a laser cutter has just been reported as resolved by on-site security.",
-		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",
-		"A shuttle engineer was spotted inside the cockpit, feverishly arranging her innards on the floor in the shape of a rune before expiring.",
-		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine.",
-		"The corpse of an unidentified shuttle worker was found mutilated beyond recognition in the shuttle's main hold, with at least five unique sources of blood on the scene.",
-		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh.",
-		"The shuttle's custodian was found washing the windows with their own blood.",
-		"The shuttle's navigation programming was replaced by a file containing just two words: IT COMES.",
-		"The shuttle's transponder is emitting the encoded message 'FEAR THE OLD BLOOD' in lieu of its assigned identification signal."
+		"Заправщик только что перерезал себе горло, умоляя о смерти.",
+		"Сканирование топливного бака шаттла выявило загрязнение смесью человеческих внутренностей и зубов.",
+		"Инцидент с участием обезумевшего работника шаттла, атаковавшего коллег лазерным резаком, был разрешён местной охраной.",
+		"Инженер шаттла начала кричать «СМЕРТЬ НЕ КОНЕЦ» и рвать провода, пока дуговой разряд не испепелил её.",
+		"Инженера шаттла заметили в кабине, перед смертью лихорадочно раскладывающего свои внутренности на полу в виде руны.",
+		"Инспектор шаттла начал безумно смеяться в радиоэфир, а затем бросился в турбину двигателя.",
+		"Труп неустановленного работника шаттла был найден в главном отсеке, изувеченный до неузнаваемости, с как минимум пятью разными источниками крови на месте.",
+		"Диспетчер шаттла был найден мёртвым с кровавыми символами, вырезанными на коже.",
+		"Уборщик шаттла был замечен моющим окна собственной кровью.",
+		"Навигационная программа шаттла была заменена файлом с двумя словами: ОНО ИДЁТ.",
+		"Транспондер шаттла передаёт закодированное сообщение «БОЙСЯ ДРЕВНЕЙ КРОВИ» вместо стандартного идентификационного сигнала."
 	],
 
 	"omfg_announce": [
-		"OH MY FUCKING GOD WHAT JUST HAPPENED IN OUR SHUTTLE DOCK",
-		"HOLY SHIT OUR SHUTTLE DOCK IS A WARZONE",
-		"JESUS FUCKING CHRIST LEAVE OUR SHUTTLE WORKERS ALONE",
-		"WHAT THE FUCK",
-		"LEAVE THE SHUTTLE WORKERS ALONE YOU FUCKING ANIMALS",
-		"STOP STOPS STOPST OSPTOPSTOP",
-		"CHELP"
+		"ОХУЕТЬ ЧТО ТОЛЬКО ЧТО ПРОИЗОШЛО В НАШЕМ ДОКЕ ШАТТЛОВ",
+		"ЁБ ТВОЮ МАТЬ НАШ ШАТТЛ-ДОК - ЭТО ЗОНА БОЕВЫХ ДЕЙСТВИЙ",
+		"ГОСПОДИ ИИСУСЕ ХРИСТЕ ОСТАВЬТЕ НАШИХ РАБОТНИКОВ ШАТТЛОВ В ПОКОЕ",
+		"ЧТО ЗА ХУЙНЯ",
+		"ОТСТАНЬТЕ ОТ РАБОТНИКОВ ШАТТЛОВ ЁБАНЫЕ ТВАРИ",
+		"СТОЙТЕ СТОП СТОПСТОПСТОПСТОП",
+		"ПАМАГИТЕ"
 	]
 }

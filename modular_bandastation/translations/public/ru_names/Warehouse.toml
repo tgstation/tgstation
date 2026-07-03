@@ -1,0 +1,8 @@
+[Warehouse]
+nominative = "склад"
+genitive = "склада"
+dative = "складу"
+accusative = "склад"
+instrumental = "складом"
+prepositional = "складе"
+gender = "male"

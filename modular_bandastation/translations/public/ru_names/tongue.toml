@@ -1,0 +1,8 @@
+[tongue]
+nominative = "язык"
+genitive = "языка"
+dative = "языку"
+accusative = "язык"
+instrumental = "языком"
+prepositional = "языке"
+gender = "male"

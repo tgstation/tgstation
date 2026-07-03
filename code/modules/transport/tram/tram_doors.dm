@@ -96,7 +96,7 @@
 		for(var/turf/checked_turf in locs)
 			for(var/atom/movable/blocker in checked_turf)
 				if(blocker.density && blocker != src) //something is blocking the door
-					say("Please stand clear of the doors!")
+					say("Пожалуйста, отойдите от дверей!")
 					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 					layer = OPEN_DOOR_LAYER
 					set_airlock_state(AIRLOCK_OPEN, animated = FALSE, force_type = forced)
@@ -180,7 +180,7 @@
 		return
 
 	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
+	say("ТЫ ЗАДЕРЖИВАЕШЬ ТРАМВАЙ, ПРИДУРОК!")
 	close(forced = BYPASS_DOOR_CHECKS)
 
 /**

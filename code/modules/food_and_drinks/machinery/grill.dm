@@ -5,7 +5,7 @@
 
 /obj/machinery/grill
 	name = "Barbeque grill"
-	desc = "Just like the old days. Smokes items over a light heat"
+	desc = "Как в старые добрые времена. Копченые продукты на легком огне."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grill_open"
 	density = TRUE
@@ -51,34 +51,34 @@
 		return
 
 	if(istype(held_item, /obj/item/stack/sheet/mineral/coal) || istype(held_item, /obj/item/stack/sheet/mineral/wood))
-		context[SCREENTIP_CONTEXT_LMB] = "Add fuel"
+		context[SCREENTIP_CONTEXT_LMB] = "Добавить топливо"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(is_reagent_container(held_item) && held_item.is_open_container() && held_item.reagents.total_volume)
-		context[SCREENTIP_CONTEXT_LMB] = "Add fuel"
+		context[SCREENTIP_CONTEXT_LMB] = "Добавить топливо"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(IS_EDIBLE(held_item) && !HAS_TRAIT(held_item, TRAIT_NODROP))
-		context[SCREENTIP_CONTEXT_LMB] = "Add item"
+		context[SCREENTIP_CONTEXT_LMB] = "Добавить предмет"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "От" : "При"]крутить"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(!anchored && held_item.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		context[SCREENTIP_CONTEXT_LMB] = "Разобрать"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/grill/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Add fuel via wood/coal stacks or any open container having a good fuel source")
-	. += span_notice("Monkey energy > Oil > Welding fuel > Ethanol. Others cause bad effects")
-	. += span_notice("Place any food item on top via hand to start grilling")
+	. += span_notice("Добавляйте топливо, такое как дрова или уголь, или открытый контейнер с подходящим видом топлива.")
+	. += span_notice("Monkey energy > Oil > Welding fuel > Ethanol. Другие виды топлива вызывают плохие последствия")
+	. += span_notice("Поместите любую еду на верхнюю часть с помощью руки, чтобы начать жарить.")
 
 	if(!anchored)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice("Машина может быть [EXAMINE_HINT("разобрана")] ломом.")
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice("Машина [EXAMINE_HINT("прикручена")] к полу.")
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to work.")
+		. += span_warning("Машина должна быть [EXAMINE_HINT("прикручена")] к полу для работы.")
 
 /obj/machinery/grill/update_icon_state()
 	if(!QDELETED(grilled_item))
@@ -99,7 +99,7 @@
 
 /obj/machinery/grill/attack_hand(mob/living/user, list/modifiers)
 	if(!QDELETED(grilled_item))
-		balloon_alert(user, "item removed")
+		balloon_alert(user, "предмет убран")
 		grilled_item.forceMove(drop_location())
 		update_appearance(UPDATE_ICON_STATE)
 		return TRUE
@@ -132,7 +132,7 @@
 		if(!QDELETED(grilled_item))
 			return NONE
 		if(!anchored)
-			balloon_alert(user, "anchor it first!")
+			balloon_alert(user, "нужно прикрутить к полу!")
 			return ITEM_INTERACT_BLOCKING
 
 		//required for amount subtypes
@@ -149,7 +149,7 @@
 			if(!istype(stored, target_type))
 				continue
 			if(stored.amount == MAX_STACK_SIZE)
-				balloon_alert(user, "no space!")
+				balloon_alert(user, "заполнено!")
 				return ITEM_INTERACT_BLOCKING
 			target.merge(stored)
 			merged = TRUE
@@ -157,7 +157,7 @@
 		if(!merged)
 			weapon.forceMove(src)
 
-		to_chat(user, span_notice("You add [src] to the fuel stack."))
+		to_chat(user, span_notice("Вы добавляете [weapon.declent_ru(ACCUSATIVE)] в топку."))
 		if(!grill_fuel)
 			burn_stack()
 			begin_processing()
@@ -168,7 +168,7 @@
 		if(!QDELETED(grilled_item))
 			return NONE
 		if(!anchored)
-			balloon_alert(user, "anchor it first!")
+			balloon_alert(user, "нужно прикрутить к полу!")
 			return ITEM_INTERACT_BLOCKING
 
 		var/transfered_amount = weapon.reagents.trans_to(src, container.amount_per_transfer_from_this)
@@ -201,27 +201,27 @@
 			update_appearance(UPDATE_ICON_STATE)
 
 			//feedback
-			to_chat(user, span_notice("You transfer [transfered_amount]u to the fuel source."))
+			to_chat(user, span_notice("Вы наливаете [transfered_amount] [declension_ru(transfered_amount,"юнит","юнита","юнитов")] в топку."))
 			return ITEM_INTERACT_SUCCESS
 
-		balloon_alert(user, "no fuel transfered!")
+		balloon_alert(user, "топливо не добавлено!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(IS_EDIBLE(weapon))
 		//sanity checks
 		if(!anchored)
-			balloon_alert(user, "anchor first!")
+			balloon_alert(user, "нужно прикрутить к полу!")
 			return ITEM_INTERACT_BLOCKING
 		if(HAS_TRAIT(weapon, TRAIT_NODROP))
 			return ..()
 		if(!QDELETED(grilled_item))
-			balloon_alert(user, "remove item first!")
+			balloon_alert(user, "уберите предмет!")
 			return ITEM_INTERACT_BLOCKING
 		if(grill_fuel <= 0)
-			balloon_alert(user, "no fuel!")
+			balloon_alert(user, "нет топлива!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(weapon, src))
-			balloon_alert(user, "[weapon] is stuck in your hand!")
+			balloon_alert(user, "[weapon.declent_ru(NOMINATIVE)] застревает на руке!")
 			return ITEM_INTERACT_BLOCKING
 
 		//add the item on the grill
@@ -230,7 +230,7 @@
 		var/datum/component/sizzle/sizzle = grilled_item.GetComponent(/datum/component/sizzle)
 		if(!isnull(sizzle))
 			grill_time = sizzle.time_elapsed()
-		to_chat(user, span_notice("You put the [grilled_item] on [src]."))
+		to_chat(user, span_notice("Вы положили [grilled_item.declent_ru(ACCUSATIVE)] на [declent_ru(ACCUSATIVE)]."))
 		update_appearance(UPDATE_ICON_STATE)
 		grill_loop.start()
 		return ITEM_INTERACT_SUCCESS
@@ -244,7 +244,7 @@
 
 /obj/machinery/grill/crowbar_act(mob/living/user, obj/item/tool)
 	if(anchored)
-		balloon_alert(user, "unanchor first!")
+		balloon_alert(user, "нужно открутить от пола!")
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_crowbar(user, tool)

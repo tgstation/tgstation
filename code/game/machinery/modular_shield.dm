@@ -787,7 +787,7 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	explosion_block = 2
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or at least should be
-	no_damage_feedback = "weakening the generator sustaining it"
+	no_damage_feedback = "ослабляя поддерживающий генератор"
 	can_atmos_pass = ATMOS_PASS_NO
 
 	///The shield generator sustaining us

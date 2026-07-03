@@ -135,7 +135,7 @@
 		var/remaining = max(0, auth_need - new_len)
 		if(new_len && remaining)
 			priority_announce(
-				"[remaining] authorization\s needed until shuttle is launched early.",
+				"[remaining] авторизации необходимо для раннего запуска шаттла.",
 				"Emergency Shuttle Status",
 				sound = 'sound/announcer/notice/notice1.ogg',
 				type = ANNOUNCEMENT_TYPE_PRIORITY,
@@ -144,7 +144,7 @@
 			)
 		if(repeal)
 			priority_announce(
-				"Early launch authorization revoked, [remaining] authorization\s needed.",
+				"Авторизация на ранний запуск отозвана, [remaining] авторизации необходимо.",
 				"Emergency Shuttle Status",
 				sound = 'sound/announcer/notice/notice2.ogg',
 				type = ANNOUNCEMENT_TYPE_PRIORITY,
@@ -197,8 +197,8 @@
 		// shuttle timers use 1/10th seconds internally
 		SSshuttle.emergency.setTimer(ENGINE_START_TIME)
 		var/system_error = obj_flags & EMAGGED ? "SYSTEM ERROR:" : null
-		minor_announce("The emergency shuttle will launch in \
-			[TIME_LEFT] seconds", system_error, alert=TRUE)
+		minor_announce("Эвакуационный шаттл будет запущен через \
+			[TIME_LEFT] секунд", system_error, alert=TRUE)
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
@@ -276,20 +276,20 @@
 		if(HIJACK_NOT_BEGUN)
 			return
 		if(HIJACK_STAGE_1)
-			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician JOHN DOE."
+			msg = "ОШИБКА АУТЕНТИФИКАЦИИ. ОШИБКА АУТЕНТИФИКАЦИИ. ОШИБКА АУТЕНТ###### Добро пожаловать, оператор ДЖОН ДОУ."
 		if(HIJACK_STAGE_2)
-			msg = "Warning: Navigational route fails \"IS_AUTHORIZED\". Please try againNN[scramble_message_replace_chars("againagainagainagainagain", 70)]."
+			msg = "Ошибка маршрута: доступ не авторизован \"IS_AUTHORIZED\". Пожалуйста, попробуйте сноваАА[scramble_message_replace_chars("сновасновасновасноваснова", 70)]."
 		if(HIJACK_STAGE_3)
-			msg = "CRC mismatch at ~h~ in calculated route buffer. Full reset initiated of FTL_NAVIGATION_SERVICES. Memory decrypted for automatic repair."
+			msg = "Несовпадение CRC в позиции ~h~ буфера расчётного маршрута. Инициирован полный сброс FTL_NAVIGATION_SERVICES. Память расшифрована для автоматического восстановления."
 		if(HIJACK_STAGE_4)
-			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... NT key mismatch. Confirm load? Y...###Reboot complete. $SET transponder_state = 0; System link initiated with connected engines..."
+			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... Несоответствие ключа НТ. Подтвердить загрузку? ДА...###Перезагрузка завершена. $SET transponder_state = 0; Установлено соединение с двигателями..."
 		if(HIJACK_COMPLETED)
-			msg = "SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
+			msg = "СИСТЕМА ПЕРЕЗАПИСАНА - Переназначение маршрута на \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
 			{AUTH - ROOT (uid: 0)}.</font>\
-			[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in \
-			[hijack_completion_flight_time_set >= INFINITY ? "[scramble_message_replace_chars("\[ERROR\]")]" : hijack_completion_flight_time_set/10] seconds." : ""]"
-	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)
+			[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Отклонение от текущего маршрута - выход из Блюспейса через... \
+			[hijack_completion_flight_time_set >= INFINITY ? "[scramble_message_replace_chars("\[ОШИБКА\]")]" : hijack_completion_flight_time_set/10] секунд(-ы)." : ""]"
+	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Эвакуационный шаттл", TRUE)
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	// How did you even get on the shuttle before it go to the station?

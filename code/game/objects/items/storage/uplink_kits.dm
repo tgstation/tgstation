@@ -81,7 +81,7 @@
 			new /obj/item/gun/ballistic/revolver(src) // 13 tc
 			new /obj/item/ammo_box/speedloader/c357(src) // 4tc
 			new /obj/item/ammo_box/speedloader/c357(src)
-			new /obj/item/storage/belt/holster/chameleon(src) // 1 tc
+			new /obj/item/clothing/accessory/holster/chameleon(src) // 1 tc BANDASTATION EDIT: Accessory holsters
 			new /obj/item/card/emag/doorjack(src) // 3 tc replaced the emag with the doorjack
 			new /obj/item/grenade/c4(src) // 1 tc
 			new /obj/item/clothing/gloves/latex/nitrile(src) // ~1 tc for whole outfit
@@ -843,7 +843,7 @@
 	generate_items_inside(list(
 		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
 		/obj/item/clothing/head/cowboy/black/syndicate = 1,
-		/obj/item/storage/belt/holster/nukie/cowboy/full = 1,
+		/obj/item/clothing/accessory/holster/tacticool/cowboy = 1, // BANDASTATION EDIT: Accessory holsters
 		/obj/item/clothing/under/costume/dutch/syndicate = 1,
 		/obj/item/lighter/skull = 1,
 		/obj/item/sbeacondrop/horse = 1,
@@ -882,16 +882,18 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
-/obj/item/storage/box/syndicate/horse_box
-	name = "A pony box"
-	desc = "This is a set containing a syndicate pony cube and an apple, for the best cowboys in the wild station! Don't make an apple pie!"
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
+/// BANDASTATION REMOVAL START - Stupid TG Shit
+// /obj/item/storage/box/syndicate/horse_box
+// 	name = "A pony box"
+// 	desc = "This is a set containing a syndicate pony cube and an apple, for the best cowboys in the wild station! Don't make an apple pie!"
+// 	icon_state = "syndiebox"
+// 	illustration = "writing_syndie"
 
-/obj/item/storage/box/syndicate/horse_box/PopulateContents()
-	new /obj/item/food/monkeycube/dangerous_horse(src)
-	new /obj/item/slimepotion/sentience/nuclear/dangerous_horse(src)
-	new /obj/item/food/grown/apple(src)
+// /obj/item/storage/box/syndicate/horse_box/PopulateContents()
+// 	new /obj/item/food/monkeycube/dangerous_horse(src)
+// 	new /obj/item/slimepotion/sentience/nuclear/dangerous_horse(src)
+// 	new /obj/item/food/grown/apple(src)
+/// BANDASTATION REMOVAL END - Stupid TG Shit
 
 /obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
 	new /obj/item/book/granter/martial/carp(src)

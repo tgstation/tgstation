@@ -1,8 +1,8 @@
 /datum/experiment/exploration_scan
-	name = "Exploration Experiment"
-	description = "An experiment requiring drone exploration to progress"
-	exp_tag = "Exploration"
-	performance_hint = "Find a site with specific characteristics and perform the scan."
+	name = "Разведывательный эксперимент"
+	description = "Эксперимент, требующий для своего продолжения изучения дронов"
+	exp_tag = "Разведка"
+	performance_hint = "Найдите место с определенными характеристиками и выполните сканирование."
 	// Site type, scan needs to be of that type
 	var/required_site_type
 	// Condition type, scan needs to be of site with this condition
@@ -33,20 +33,20 @@
 	return !is_complete()
 
 /datum/experiment/exploration_scan/asteroid_belt
-	name = "Scan Asteroid Belt"
-	description = "We're looking for a site to test our asteroid blasting caps. Perform point scan of one."
+	name = "Сканирование пояса астероидов"
+	description = "Мы ищем место для испытания наших астероидных взрывчаток. Выполните точечное сканирование одного из них."
 	required_site_type = /datum/exploration_site/asteroid_belt
 	required_scan_type = EXOSCAN_POINT
 
 /datum/experiment/exploration_scan/black_hole
-	name = "Deep scan a black hole"
-	description = "We require more research data on black holes, perform deep scan of a system affected by one."
+	name = "Глубокое сканирование черной дыры"
+	description = "Нам требуется больше данных об исследованиях черных дыр, выполните глубокое сканирование системы, пораженной одной из них."
 	required_condition = /datum/scan_condition/black_hole
 	required_scan_type = EXOSCAN_DEEP
 
 /datum/experiment/exploration_scan/random
-	name = "Random Exoscan Experiment"
-	description = "We need scan data of specific site type"
+	name = "Случайный эксперимент экзосканирования"
+	description = "Нам нужны данные сканирования конкретного типа местности."
 	/// If not null the required_site_type will be picked from this list
 	var/list/possible_random_conditions
 	/// If not null the required_condition will be picked from this list

@@ -9,6 +9,8 @@
 
 /datum/corpse_flavor/quirk/apply_flavor(mob/living/carbon/human/working_dead, list/job_gear, list/datum/callback/on_revive_and_player_occupancy)
 	working_dead.add_quirk(quirk, announce = FALSE)
+// // BANDASTATION REMOVAL START - Feat: Augmentations
+// /datum/corpse_flavor/quirk/prosthetic_limb
+// 	quirk = /datum/quirk/prosthetic_limb
 
-/datum/corpse_flavor/quirk/prosthetic_limb
-	quirk = /datum/quirk/prosthetic_limb
+// // BANDASTATION REMOVAL END - Feat: Augmentations

@@ -1,0 +1,8 @@
+["fish analyzer"]
+nominative = "анализатор рыбы"
+genitive = "анализатора рыбы"
+dative = "анализатору рыбы"
+accusative = "анализатор рыбы"
+instrumental = "анализатором рыбы"
+prepositional = "анализаторе рыбы"
+gender = "male"

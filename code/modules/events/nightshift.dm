@@ -47,15 +47,15 @@
 
 	if(announce)
 		if(active)
-			send_announcement("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
+			send_announcement("Добрый вечер, экипаж. Для снижения энергопотребления и поддержания циркадных ритмов некоторых видов всё освещение на станции было приглушено на ночь.")
 		else
-			send_announcement("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
+			send_announcement("Доброе утро, экипаж. С наступлением дневного времени всё освещение на станции возвращено к обычной яркости.")
 
 	if(resume)
 		if(active)
-			send_announcement("Restoring night lighting configuration to normal operation.")
+			send_announcement("Восстановление штатного режима работы ночного освещения.")
 		else
-			send_announcement("Disabling night lighting: Station is in a state of emergency.")
+			send_announcement("Отключение ночного освещения: станция в режиме чрезвычайной ситуации.")
 
 	update_machines()
 

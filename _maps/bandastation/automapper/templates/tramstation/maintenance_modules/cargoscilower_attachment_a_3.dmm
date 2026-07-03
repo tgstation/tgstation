@@ -1,0 +1,209 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"n" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"o" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"J" = (
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"R" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/off,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"S" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"V" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/stock_parts/power_store/cell/empty{
+	pixel_x = -5
+	},
+/obj/item/stock_parts/power_store/cell/empty{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/stock_parts/power_store/cell/empty{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+o
+V
+V
+V
+V
+V
+V
+"}
+(2,1,1) = {"
+o
+V
+V
+V
+V
+V
+V
+"}
+(3,1,1) = {"
+o
+V
+V
+V
+V
+V
+s
+"}
+(4,1,1) = {"
+o
+V
+s
+s
+s
+s
+o
+"}
+(5,1,1) = {"
+o
+V
+s
+G
+L
+L
+v
+"}
+(6,1,1) = {"
+V
+s
+s
+L
+L
+L
+o
+"}
+(7,1,1) = {"
+V
+s
+b
+L
+L
+S
+n
+"}
+(8,1,1) = {"
+V
+s
+e
+L
+L
+R
+n
+"}
+(9,1,1) = {"
+V
+s
+J
+L
+L
+O
+n
+"}
+(10,1,1) = {"
+V
+s
+s
+a
+L
+L
+n
+"}
+(11,1,1) = {"
+V
+V
+s
+h
+Y
+L
+o
+"}
+(12,1,1) = {"
+V
+V
+s
+s
+s
+s
+o
+"}

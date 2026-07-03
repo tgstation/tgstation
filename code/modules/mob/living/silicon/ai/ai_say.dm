@@ -7,11 +7,31 @@
 		return "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
+//BANDA STATION ADDITION - AI DOOR
+/mob/living/silicon/proc/compose_open_door_href(atom/movable/speaker)
+	var/mob/living/target = speaker.GetSource()
+
+	if(!target || !isliving(target))
+		return ""
+
+	var/mob/living/silicon/ai/controller
+	if(isAI(src))
+		controller = src
+	else if(iscyborg(src))
+		var/mob/living/silicon/robot/bot = src
+		if(bot.shell && bot.connected_ai)
+			controller = bot.connected_ai
+
+	return controller ? " <a href='byond://?src=[REF(controller)];open=[REF(target)]'>\[OPEN\]</a>" : ""
+
+//BANDA STATION ADDITION END
+
 /mob/living/silicon/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
 	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
 		return ""
-	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+
+	return "[radio_freq ? " ([speaker.GetJob()])" : ""][speaker.GetSource() ? "</a>" : ""][compose_open_door_href(speaker)]" //BANDA STATION ADDITION - AI DOOR
 
 /mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	// AIs cannot speak if silent AI is on.
@@ -89,10 +109,10 @@
 	"}
 
 	var/index = 0
-	for(var/word in GLOB.vox_sounds)
+	for(var/word in get_vox_sounds(vox_type)) // BANDASTATION EDIT - VOX types - ORIGINAL TG: for(var/word in GLOB.vox_sounds)
 		index++
 		dat += "<A href='byond://?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
+		if(index != length(get_vox_sounds(vox_type))) // BANDASTATION EDIT - VOX types - ORIGINAL TG: if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
 	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
@@ -137,7 +157,7 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word])
+		if(!get_vox_sounds(vox_type)[word]) //BANDASTATION EDIT - VOX types - ORIGINAL TG: if(!GLOB.vox_sounds[word])
 			incorrect_words += word
 
 	if(incorrect_words.len)
@@ -155,7 +175,7 @@
 		var/turf/player_turf = get_turf(player_mob)
 		if(is_valid_z_level(ai_turf, player_turf))
 			players += player_mob
-	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(does_target_have_vox_off)))
+	minor_announce(capitalize(message), "[name] объявляет", players = players, should_play_sound = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(does_target_have_vox_off)))
 
 	for(var/word in words)
 		play_vox_word(word, ai_turf, null)
@@ -165,15 +185,47 @@
 
 	word = LOWER_TEXT(word)
 
+	// BANDASTATION EDIT START - Get AI for the vox Type
+	var/turf/ai_turf_as_turf = ai_turf
+	if(!istype(ai_turf_as_turf))
+		return
+
+	var/mob/living/silicon/ai/the_AI = locate(/mob/living/silicon/ai) in ai_turf_as_turf
+	if(!the_AI)
+		for(var/obj/item/aicard/card in ai_turf_as_turf.get_all_contents())
+			if(card.AI && istype(card.AI, /mob/living/silicon/ai))
+				the_AI = card.AI
+				break
+	if(!the_AI)
+		return
+
+	// BANDASTATION EDIT END
+	/* ORIGINAL TG:
 	if(GLOB.vox_sounds[word])
 
 		var/sound_file = GLOB.vox_sounds[word]
+	*/
+	// BANDASTATION EDIT START
+	var/vox_volume_modifier = 1
+	var/sound_file
+	if(the_AI.get_vox_sounds(the_AI.vox_type)[word])
+		sound_file = the_AI.get_vox_sounds(the_AI.vox_type)[word]
+		// If the vox stuff are disabled, or we failed getting the word from the list, just early return.
+		if(!sound_file)
+			return FALSE
+		switch(the_AI.vox_type)
+			if(VOX_MIL)
+				vox_volume_modifier = 0.50
+			if(VOX_HL)
+				vox_volume_modifier = 0.40 // No, my poor ears...
+	// BANDASTATION EDIT END
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
 				var/pref_volume = safe_read_pref(player_mob.client, /datum/preference/numeric/volume/sound_ai_vox)
+				pref_volume *= vox_volume_modifier // BANDASTATION EDIT
 				if(HAS_TRAIT(player_mob, TRAIT_DEAF) || !pref_volume)
 					continue
 

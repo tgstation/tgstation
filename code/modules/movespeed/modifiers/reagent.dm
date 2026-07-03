@@ -21,7 +21,7 @@
 	multiplicative_slowdown = -0.65
 
 /datum/movespeed_modifier/reagent/nitrium
-	multiplicative_slowdown = -0.65
+	multiplicative_slowdown = -0.35 // BANDASTATION EDIT
 
 /datum/movespeed_modifier/reagent/cannabis
 	multiplicative_slowdown = 0.4

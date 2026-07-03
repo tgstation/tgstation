@@ -1,12 +1,12 @@
 /datum/job/detective
 	title = JOB_DETECTIVE
-	description = "Investigate crimes, gather evidence, perform interrogations, \
-		look badass, smoke cigarettes."
+	description = "Расследуйте преступления, собирайте улики, проводите допросы, \
+		выглядите круто, курите сигареты."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOS
+	supervisors = JOB_HEAD_OF_SECURITY_RU
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
@@ -36,7 +36,7 @@
 		/obj/item/ammo_box/speedloader/c38/match = 5,
 		/obj/item/ammo_box/speedloader/c38/trac = 5,
 		/obj/item/card/id/advanced/plainclothes = 5,
-		/obj/item/storage/belt/holster/detective/full = 1,
+		/obj/item/clothing/accessory/holster/detective/full = 1, // BANDASTATION EDIT: Accessory holsters
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)

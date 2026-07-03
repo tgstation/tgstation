@@ -68,7 +68,7 @@
 #define CALIBER_40MM_SHELL "40MM_shell"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
-#define GUNPOINT_SHOOTER_STRAY_RANGE 2
+#define GUNPOINT_SHOOTER_STRAY_RANGE 4 // BANDASTATION EDIT - Increase aiming distance from 2 to 4
 
 /// A spark will be generated for each THIS amount of damage dealt to a robotic limb by a projectile.
 #define PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK 20

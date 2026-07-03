@@ -1298,11 +1298,11 @@
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "qk" = (
-/obj/machinery/telecomms/allinone,
 /obj/item/wirecutters{
 	pixel_y = 9
 	},
 /obj/machinery/light/directional/south,
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark/diagonal,
 /area/awaymission/beach)
 "ql" = (

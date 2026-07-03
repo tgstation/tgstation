@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/eject
-	name = "Leave Host"
-	desc = "Leave your host, taking their blood with you."
+	name = "Покинуть носителя"
+	desc = "Покиньте своего носителя, забрав с собой его кровь."
 
 	button_icon_state = "leave_host"
 
@@ -21,11 +21,11 @@
 	var/mob/living/carbon/human/host = worm.host
 
 	host.visible_message(
-		message = span_danger("\The [host] collapse[host.p_s()] and start[host.p_s()] shaking violently!"),
+		message = span_danger("[host.declent_ru(NOMINATIVE)] падает и начинает безудержно трястись!"),
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_danger("You begin leaving your host..."))
+	to_chat(owner, span_danger("Вы начинаете покидать своего носителя..."))
 
 	host.add_traits(list(TRAIT_FLOORED, TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED), REF(src))
 

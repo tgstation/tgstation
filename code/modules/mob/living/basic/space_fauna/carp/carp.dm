@@ -12,7 +12,7 @@
  */
 /mob/living/basic/carp
 	name = "space carp"
-	desc = "A ferocious, fang-bearing creature that resembles a fish."
+	desc = "Свирепое, клыкастое существо, внешне схожее с рыбой."
 	icon = 'icons/mob/simple/carp.dmi'
 	icon_state = "base"
 	icon_living = "base"
@@ -20,6 +20,7 @@
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
+	pass_flags = PASSMOB | PASSTABLE // BANDASTATION ADDITION: Carps can swarm and pass tables
 	health = 25
 	maxHealth = 25
 	max_stamina = 120
@@ -99,6 +100,8 @@
 	. = ..()
 	apply_colour()
 	add_traits(list(TRAIT_HEALS_FROM_CARP_RIFTS, TRAIT_SPACEWALK), INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_UNDENSE, INNATE_TRAIT) // BANDASTATION ADDITION: Carps can swarm and pass tables
+	AddComponent(/datum/component/swarming, 20, 20) // BANDASTATION ADDITION: Carps can swarm and pass tables
 
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -108,14 +111,14 @@
 	setup_eating()
 
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
-	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("скалится")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		var/static/list/food_types = list(/obj/item/food/meat)
+		var/list/food_types = string_list(list(/obj/item/food/meat)) /// BANDASTATION EDIT - CROCODILE
 		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
@@ -148,7 +151,7 @@
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
-	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
+	visible_message("[capitalize(declent_ru(NOMINATIVE))] крутится на месте и, видимо, сближается с [tamer.declent_ru(INSTRUMENTAL)].")
 
 /// Teleport when you right click away from you
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
@@ -217,9 +220,9 @@
  * Has a lot more health than a normal carp because she's meant to be a mildly more threatening pet to have to assassinate than an aging corgi.
  */
 /mob/living/basic/carp/pet/lia
-	name = "Lia"
-	real_name = "Lia"
-	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
+	name = "Лия"
+	real_name = "Лия"
+	desc = "Провальный эксперимент Nanotrasen по созданию оружия из космокарпа. Этот менее устрашающий карп теперь служит питомцем для главы службы безопасности."
 	faction = list(FACTION_NEUTRAL)
 	maxHealth = 200
 	health = 200
@@ -238,9 +241,9 @@
  * Is very talented and also capable of holding the nuclear disk.
  */
 /mob/living/basic/carp/pet/cayenne
-	name = "Cayenne"
-	real_name = "Cayenne"
-	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
+	name = "Кайенна"
+	real_name = "Кайенна"
+	desc = "Провальный эксперимент Синдиката по созданию оружия из обычного космокарпа, ныне милый талисман."
 	faction = list(ROLE_SYNDICATE)
 	/// Overlay to apply to display the disk
 	var/mutable_appearance/disk_overlay
@@ -286,9 +289,9 @@
 
 ///Carp-parasite from carpellosis disease
 /mob/living/basic/carp/ella
-	name = "Ella"
-	real_name = "Ella"
-	desc = "It came out of someone."
+	name = "Элла"
+	real_name = "Элла"
+	desc = "Карп-паразит, который живет в своём носителе до созревания и кажется он уже \"вылупился\"."
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/carp/ella/Initialize(mapload)
@@ -298,7 +301,7 @@
 ///Wild carp that just vibe ya know
 /mob/living/basic/carp/passive
 	name = "false carp"
-	desc = "A close relative of the space carp which is entirely toothless and feeds by stealing its cousin's leftovers."
+	desc = "Беззубый близкий родственник космического карпа. Питается путем воровства остатков из добычи своего кузена."
 	icon_state = "base_friend"
 	icon_living = "base_friend"
 	icon_dead = "base_friend_dead"

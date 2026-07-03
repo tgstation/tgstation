@@ -1,0 +1,8 @@
+[coveralls]
+nominative = "комбинезон"
+genitive = "комбинезона"
+dative = "комбинезону"
+accusative = "комбинезон"
+instrumental = "комбинезоном"
+prepositional = "комбинезоне"
+gender = "male"

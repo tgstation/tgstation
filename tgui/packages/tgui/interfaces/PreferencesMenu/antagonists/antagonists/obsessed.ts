@@ -2,12 +2,12 @@ import { type Antagonist, Category } from '../base';
 
 const Obsessed: Antagonist = {
   key: 'obsessed',
-  name: 'Obsessed',
+  name: 'Одержимый',
   description: [
     `
-    You're obsessed with someone! Your obsession may begin to notice their
-    personal items are stolen and their coworkers have gone missing,
-    but will they realize they are your next victim in time?
+    Вы кем-то одержимы! Ваша цель одержимости может начать замечать,
+    что их личные вещи были украдены, а коллеги пропали,
+    но поймут ли они вовремя, что она - ваша следующая жертва?
     `,
   ],
   category: Category.Midround,

@@ -1,12 +1,12 @@
 /datum/job/cargo_technician
 	title = JOB_CARGO_TECHNICIAN
-	description = "Distribute supplies to the departments that ordered them, \
-		collect empty crates, load and unload the supply shuttle, \
-		ship bounty cubes."
+	description = "Распределяйте заказы между отделами, которые их оформили, \
+		собирайте пустые ящики, загружайте и разгружайте шаттл с заказами, \
+		а также кубы с наградами за заказы."
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = SUPERVISOR_QM
+	supervisors = JOB_QUARTERMASTER_RU
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CARGO_TECHNICIAN"
 

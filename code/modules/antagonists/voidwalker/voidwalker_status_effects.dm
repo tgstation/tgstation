@@ -12,7 +12,7 @@
 
 /atom/movable/screen/alert/status_effect/veryhighgravity
 	name = "Crushing Gravity"
-	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
+	desc = "Вы будете раздавлены высокой гравитацией, из-за чего перемещение и сбор предметов замедляются. Также вы будете получать физические повреждения!"
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "paralysis"
 

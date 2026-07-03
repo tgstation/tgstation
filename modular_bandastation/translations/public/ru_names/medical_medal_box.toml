@@ -1,0 +1,8 @@
+["medical medal box"]
+nominative = "коробка с медалями медицины"
+genitive = "коробки с медалями медицины"
+dative = "коробке с медалями медицины"
+accusative = "коробку с медалями медицины"
+instrumental = "коробкой с медалями медицины"
+prepositional = "коробке с медалями медицины"
+gender = "female"

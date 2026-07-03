@@ -1,0 +1,24 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/chair/stool/directional/south,
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 8
+	},
+/mob/living/basic/mouse/factory/pizdos,
+/turf/open/floor/iron/dark/side,
+/area/station/maintenance/disposal)
+
+(1,1,1) = {"
+a
+"}

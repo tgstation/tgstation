@@ -1,7 +1,7 @@
 /datum/surgery_operation/basic/core_removal
-	name = "extract core"
-	rnd_name = "Corectomy (Extract Core)" // source: i made it up
-	desc = "Remove the core from a slime."
+	name = "Извлечение ядра"
+	rnd_name = "Коректомия (Извлечение ядра)" // source: i made it up
+	desc = "Извлечение ядра из слайма."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
@@ -15,7 +15,7 @@
 	return image(/mob/living/basic/slime)
 
 /datum/surgery_operation/basic/core_removal/all_required_strings()
-	return list("operate on a deceased slime") + ..()
+	return list("оперирование умершего слайма") + ..()
 
 /datum/surgery_operation/basic/core_removal/state_check(mob/living/patient)
 	return isslime(patient) && patient.stat == DEAD
@@ -24,9 +24,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to extract [patient]'s core..."),
-		span_notice("[surgeon] begins to extract [patient]'s core."),
-		span_notice("[surgeon] begins to extract [patient]'s core."),
+		span_notice("Вы начинаете извлекать ядро из [patient.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает извлекать ядро из [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает извлекать ядро из [patient.declent_ru(GENITIVE)]."),
 	)
 
 /datum/surgery_operation/basic/core_removal/on_success(mob/living/basic/slime/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -35,9 +35,9 @@
 		display_results(
 			surgeon,
 			patient,
-			span_notice("You successfully extract [core_count] core\s from [patient]."),
-			span_notice("[surgeon] successfully extracts [core_count] core\s from [patient]!"),
-			span_notice("[surgeon] successfully extracts [core_count] core\s from [patient]!"),
+			span_notice("Вы успешно извлекли [declent_ru(core_count, ACCUSATIVE)] ядро из [patient.declent_ru(GENITIVE)]."),
+			span_notice("[surgeon] успешно извлек [declent_ru(core_count, ACCUSATIVE)] ядро из [patient.declent_ru(GENITIVE)]!"),
+			span_notice("[surgeon] успешно извлек [declent_ru(core_count, ACCUSATIVE)] ядро из [patient.declent_ru(GENITIVE)]!"),
 		)
 	else
-		to_chat(surgeon, span_warning("There aren't any cores left in [patient]!"))
+		to_chat(surgeon, span_warning("Не осталось ни одного ядра в [patient.declent_ru(GENITIVE)]!"))

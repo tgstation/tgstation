@@ -986,7 +986,7 @@
 	cant_discount = TRUE
 
 // Base Keys
-
+/* BANDASTATION REMOVAL
 /datum/uplink_category/base_keys
 	name = "Base Keys"
 	weight = 27
@@ -1038,6 +1038,7 @@
 	with some janitorial supplies and an canister of water vapour."
 	item = /obj/item/keycard/syndicate_custodial
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+*/
 
 // Hats
 // It is fundamental for the game's health for there to be a hat crate for nuclear operatives.

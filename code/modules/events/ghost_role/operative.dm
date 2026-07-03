@@ -15,7 +15,29 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/machinery/nuclearbomb, amount_to_pick = 1)
+	// BANDASTATION EDIT START - Weighted candidate selection
+	var/mob/chosen_one
+	if(CONFIG_GET(flag/antag_weighted_selection))
+		var/list/mob/valid_candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/machinery/nuclearbomb)
+
+		// Build weighted list of candidates
+		var/list/mob/weighted_candidates = list()
+		for(var/mob/candidate as anything in valid_candidates)
+			var/client/candidate_client = GET_CLIENT(candidate)
+			if(!candidate_client)
+				continue
+			var/weight = get_candidate_weight(candidate_client.ckey)
+			weighted_candidates[candidate] = weight
+
+		if(!length(weighted_candidates))
+			return NOT_ENOUGH_PLAYERS
+
+		// Select one candidate using weighted random selection
+		chosen_one = pick_weight(weighted_candidates)
+	else
+		// Fallback to old random selection
+		chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/machinery/nuclearbomb, amount_to_pick = 1)
+	// BANDASTATION EDIT END
 	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	var/spawn_location = find_space_spawn()

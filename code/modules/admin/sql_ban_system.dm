@@ -642,6 +642,8 @@
 
 	notify_all_banned_players(player_ckey, player_ip, player_cid, player_ban_notification, other_ban_notification, is_server_ban, applies_to_admins)
 
+	SScentral.create_ban_request(player_ckey, admin_ckey, roles_to_ban, is_server_ban, reason, duration, interval, severity, player_ip, player_cid) // BANDASTATION ADDITION: Ban logging
+
 	var/datum/admin_help/linked_ahelp_ticket = admin_ticket_log(player_ckey, "[kna] [msg]")
 
 	if(is_server_ban && linked_ahelp_ticket)

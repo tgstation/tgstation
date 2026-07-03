@@ -3,6 +3,8 @@
 	"map_name": "Delta Station",
 	"map_path": "map_files/Deltastation",
 	"map_file": "DeltaStation2.dmm",
+	"fluff_name": "ИСН Керберос",
+	"welcome_sound_override": "modular_bandastation/aesthetics_sounds/sound/welcome_sounds/welcome_kerberos.ogg",
 	"shuttles": {
 		"emergency": "emergency_delta",
 		"ferry": "ferry_fancy",
@@ -10,8 +12,23 @@
 		"whiteship": "whiteship_delta"
 	},
 	"job_changes": {
+		"Captain": {
+			"no_charter": 1
+		},
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/cafeteria"]
+		},
+		"Nanotrasen Representative": {
+			"spawn_positions": 1
+		},
+		"Blueshield": {
+			"spawn_positions": 1
+		},
+		"Magistrate": {
+			"spawn_positions": 1
+		},
+		"Explorer": {
+			"spawn_positions": 4
 		}
 	},
 	"bonus_weakpoints": 2

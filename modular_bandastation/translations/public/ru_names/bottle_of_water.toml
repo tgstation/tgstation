@@ -1,0 +1,8 @@
+["bottle of water"]
+nominative = "бутылка воды"
+genitive = "бутылки воды"
+dative = "бутылке воды"
+accusative = "бутылку воды"
+instrumental = "бутылкой воды"
+prepositional = "бутылке воды"
+gender = "female"

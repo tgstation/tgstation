@@ -1,0 +1,8 @@
+[fork]
+nominative = "вилка"
+genitive = "вилки"
+dative = "вилке"
+accusative = "вилку"
+instrumental = "вилкой"
+prepositional = "вилке"
+gender = "female"

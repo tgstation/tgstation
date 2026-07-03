@@ -15,15 +15,16 @@
 	if(!.)
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	shield_uses = round(our_seed.potency / 20)
+	shield_uses = round(our_seed.potency / 50) // BANDASTATION EDIT - Original:  / 20)
 	//deliver us from evil o melon god
-	our_plant.AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
-		inventory_flags = ITEM_SLOT_HANDS, \
-		charges = shield_uses, \
-		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
-		expiration = CALLBACK(src, PROC_REF(expire)), \
-	)
+	if(shield_uses >= 1) // BANDASTATION Addition - No more shield if potency less than 50
+		our_plant.AddComponent(/datum/component/anti_magic, \
+			antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+			inventory_flags = ITEM_SLOT_HANDS, \
+			charges = shield_uses, \
+			block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+			expiration = CALLBACK(src, PROC_REF(expire)), \
+		)
 
 /// When the plant our gene is hosted in is drained of an anti-magic charge.
 /datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)

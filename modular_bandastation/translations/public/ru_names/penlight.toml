@@ -1,0 +1,8 @@
+[penlight]
+nominative = "фонарик-ручка"
+genitive = "фонарика-ручки"
+dative = "фонарику-ручке"
+accusative = "фонарик-ручку"
+instrumental = "фонариком-ручкой"
+prepositional = "фонарике-ручке"
+gender = "male"

@@ -81,3 +81,4 @@
 	emote_hear = list("honks.", "honks loudly.", "honks aggressively.")
 	emote_see = list("flaps.", "preens.", "glares around.")
 	speak = list("Honk!")
+	sound = list('modular_bandastation/mobs/sound/duck_talk1.ogg', 'modular_bandastation/mobs/sound/duck_talk2.ogg', 'modular_bandastation/mobs/sound/duck_talk3.ogg') // SS220 ADD

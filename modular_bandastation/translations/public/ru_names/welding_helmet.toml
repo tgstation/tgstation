@@ -1,0 +1,8 @@
+["welding helmet"]
+nominative = "сварочный шлем"
+genitive = "сварочного шлема"
+dative = "сварочному шлему"
+accusative = "сварочный шлем"
+instrumental = "сварочным шлемом"
+prepositional = "сварочном шлеме"
+gender = "male"

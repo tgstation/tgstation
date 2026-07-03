@@ -1,0 +1,8 @@
+["manufacturing lathe"]
+nominative = "производственный станок"
+genitive = "производственного станка"
+dative = "производственному станку"
+accusative = "производственный станок"
+instrumental = "производственным станком"
+prepositional = "производственном станке"
+gender = "male"

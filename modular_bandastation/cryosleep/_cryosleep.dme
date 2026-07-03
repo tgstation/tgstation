@@ -1,0 +1,13 @@
+#include "_cryosleep.dm"
+
+#include "code/admin.dm"
+#include "code/ai.dm"
+#include "code/config.dm"
+#include "code/cryoconsole.dm"
+#include "code/cryopod/cryopod.dm"
+#include "code/cryopod/prison_cryopod.dm"
+#include "code/cryopod/syndicate_cryopod.dm"
+#include "code/subsystem/job.dm"
+#include "code/extra_vv.dm"
+#include "code/jobs.dm"
+#include "code/mob_defines.dm"

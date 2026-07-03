@@ -28,7 +28,7 @@ export function SpellResults() {
                 icon="arrow-left"
                 onClick={() => setTabIndex(tabIndex - 2)}
               >
-                Previous Page
+                Предыдущая страница
               </Button>
               <Box textAlign="right" bold mt={-3.3} mr={1}>
                 {tabIndex}
@@ -55,7 +55,7 @@ export function SpellResults() {
                 disabled={tabIndex === 11}
                 onClick={() => setTabIndex(tabIndex + 2)}
               >
-                Next Page
+                Следующая страница
               </Button>
               <Box textAlign="left" bold mt={-3.3} ml={-59.8}>
                 {tabIndex + 1}

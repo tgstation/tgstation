@@ -1,78 +1,81 @@
 import { Box, NoticeBox, Section, Stack } from 'tgui-core/components';
 
-const ORDER_TEXT = `Each department on the station will order crates from their own personal
-        consoles. These orders are ENTIRELY FREE! They do not come out of
-        cargo's budget, and rather put the consoles on cooldown. So
-        here's where you come in: The ordered crates will show up on your
-        supply console, and you need to deliver the crates to the orderers.
-        You'll actually be paid the full value of the department crate on
-        delivery if the crate was not tampered with, making the system a good
-        source of income.`;
+const ORDER_TEXT = `Работники станции могут делать заказы на соотвествующее
+      их отделам снаряжение с помощью специальных консолей. Эти заказы абсолютно
+      бесплатны и не тратят средства из бюджета грузового отдела, а лишь имеют
+      задержку между повторными заказами. И вот где вы вступаете в игру:
+      заказанные ящики появятся на вашей консоли поставок, и вам будет
+      необходимо их доставить. Вы будете получать полную стоимость заказа при
+      доставке ящика адресату в целости и сохранности, что делает эту систему
+      хорошим источником дохода.`;
 
-const DISPOSAL_TEXT = `In addition to MULEs and hand-deliveries, you can also make use of the
-        disposals mailing system. Note that a break in the disposal piping could
-        cause your package to be lost (this hardly ever happens), so this is not
-        always the most secure ways to deliver something. You can wrap up a
-        piece of paper and mail it the same way if you (or someone at the desk)
-        wants to mail a letter.`;
+const DISPOSAL_TEXT = `Помимо МУЛ-ботов и ручной доставки, вы также можете
+      воспользоваться системой почтовой отправки через трубопровод, который
+      так же используется для доставки отходов. Обратите внимание, что разрыв в
+      трубопроводе может привести к потере посылки (это случается крайне редко),
+      поэтому это не всегда самый безопасный способ доставки. Вы также можете
+      завернуть кусок бумаги и отправить его по почте тем же способом, если вы
+      (или кто-то на стойке) хотите отправить письмо.`;
 
 export function CargoHelp(props) {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
         <Section fill scrollable>
-          <Section color="label" title="Department Orders">
+          <Section color="label" title="Заказы отдела">
             {ORDER_TEXT}
             <br />
             <br />
-            Examine a department order crate to get specific details about where
-            the crate needs to go.
+            Осмотрите ящик с заказом отдела, чтобы получить конкретные детали о
+            том, куда именно его нужно доставить.
           </Section>
-          <Section title="MULEbots">
+          <Section title="МУЛ-боты">
             <Box color="label">
-              MULEbots are slow but loyal delivery bots that will get crates
-              delivered with minimal technician effort required. It is slow,
-              though, and can be tampered with while en route.
+              МУЛ-боты - верные роботы-доставщики, которые доставят ящики с
+              минимальными усилиями технического персонала. Бот медленный, и по
+              этому с ним может случится что-то нехорошее по пути.
             </Box>
             <br />
             <Box bold color="green">
-              Setting up a MULEbot is easy:
+              Настроить МУЛ-бот очень просто:
             </Box>
-            <b>1.</b> Drag the crate you want to deliver next to the MULEbot.
+            <b>1.</b> Разместите ящик рядом с МУЛ-ботом.
             <br />
-            <b>2.</b> Drag the crate on top of MULEbot. It should load on.
+            <b>2.</b> Перетащите ящик на МУЛ-бот. Он будет загружен на него.
             <br />
-            <b>3.</b> Open your PDA.
+            <b>3.</b> Откройте ваш КПК.
             <br />
-            <b>4.</b> Click <i>Delivery Bot Control</i>.<br />
-            <b>5.</b> Click <i>Scan for Active Bots</i>.<br />
-            <b>6.</b> Choose your MULE.
+            <b>4.</b> Откройте приложение <i>BotKeeper</i>.<br />
+            <b>5.</b> Найдите необходимого МУЛ-бота.
             <br />
-            <b>7.</b> Click on <i>Destination: (set)</i>.<br />
-            <b>8.</b> Choose a destination and click OK.
+            <b>6.</b> Выберите бота.
             <br />
-            <b>9.</b> Click <i>Proceed</i>.
+            <b>7.</b> Нажмите на <i>Set Destination</i>.<br />
+            <b>8.</b> Выберите место назначения.
+            <br />
+            <b>9.</b> Намжите <i>Go to Destination</i> справа сверху.
           </Section>
-          <Section title="Disposals Delivery System">
+          <Section title="Доставка с помощью трубопровода">
             <Box color="label">{DISPOSAL_TEXT}</Box>
             <br />
             <Box bold color="green">
-              Using the Disposals Delivery System is even easier:
+              Использование трубопровода еще проще:
             </Box>
-            <b>1.</b> Wrap your item/crate in packaging paper.
+            <b>1.</b> Оберните предмет/ящик в упаковочную бумагу.
             <br />
-            <b>2.</b> Use the destinations tagger to choose where to send it.
+            <b>2.</b> Используйте <i>destinations tagger</i> для выбора места
+            доставки.
             <br />
-            <b>3.</b> Tag the package.
+            <b>3.</b> Пометьте посылку.
             <br />
-            <b>4.</b> Stick it on the conveyor and let the system handle it.
+            <b>4.</b> Разместите посылку на конвеер и запустите его.
             <br />
           </Section>
         </Section>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox textAlign="center" info mb={0}>
-          Pondering something not included here? When in doubt, ask the QM!
+          Что-то не понятно? Обратитесь к КМу!
         </NoticeBox>
       </Stack.Item>
     </Stack>

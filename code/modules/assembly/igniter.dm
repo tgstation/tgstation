@@ -15,7 +15,7 @@
 	assembly_flags = ASSEMBLY_NO_DUPLICATES
 
 /obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is trying to ignite [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is trying to ignite [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	user.ignite_mob()
 	return FIRELOSS
 

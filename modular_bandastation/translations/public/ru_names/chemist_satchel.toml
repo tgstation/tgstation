@@ -1,0 +1,8 @@
+["chemist satchel"]
+nominative = "сумка химика"
+genitive = "сумки химика"
+dative = "сумке химика"
+accusative = "сумку химика"
+instrumental = "сумкой химика"
+prepositional = "сумке химика"
+gender = "female"

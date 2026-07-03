@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. += GLOB.metal_recipes
 
 /obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [target == user ? "your" : "[target]'s"] [affecting.name]."))
 			if(!do_after(user, 5 SECONDS, target))
 				return ITEM_INTERACT_FAILURE
-		if(target.item_heal(user, brute_heal = 15, burn_heal = 15, heal_message_brute = "splintering", heal_message_burn = "charring", required_bodytype = BODYTYPE_PEG))
+		if(target.item_heal(user, brute_heal = 15, burn_heal = 15, heal_message_brute = "расколы", heal_message_burn = "обугление", required_bodytype = BODYTYPE_PEG))
 			use(1)
 		return ITEM_INTERACT_SUCCESS
 	else
@@ -530,7 +530,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white softcap", /obj/item/clothing/head/soft/mime, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	null, \
-	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2, crafting_flags = CRAFT_SKIP_MATERIALS_PARITY, category = CAT_ENTERTAINMENT), \
 	null, \
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
@@ -649,7 +649,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/costume/cardborg, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("medium box", /obj/structure/closet/crate/cardboard, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("medium box", /obj/structure/closet/crate/cardboard, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
 	null, \
 

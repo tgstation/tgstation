@@ -48,7 +48,7 @@
 			ai_roster()
 			return TRUE
 		if("Crew Monitor")
-			GLOB.crewmonitor.show(usr, src)
+			crew_monitor.attack_self(src) // BANDASTATION REPLACEMENT: GLOB.crewmonitor.show(usr, src)
 			return TRUE
 		if("Digital Messenger")
 			modularInterface?.interact(usr)

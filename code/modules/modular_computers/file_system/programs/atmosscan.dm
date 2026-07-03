@@ -8,7 +8,7 @@
 	filedesc = "AtmoZphere"
 	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	program_open_overlay = "air"
-	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
+	extended_desc = "Небольшой встроенный датчик считывает данные об атмосферных изменениях вокруг устройства."
 	size = 4
 	tgui_id = "NtosGasAnalyzer"
 	program_icon = "thermometer-half"

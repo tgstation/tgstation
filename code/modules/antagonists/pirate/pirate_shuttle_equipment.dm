@@ -65,14 +65,14 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,span_notice("You retrieve the siphoned [MONEY_NAME]!"))
+		to_chat(user,span_notice("You retrieve the siphoned credits!"))
 		credits_stored = 0
 	else
 		to_chat(user,span_notice("There's nothing to withdraw."))
 
 /// Alerts the crew about the siphon
 /obj/machinery/shuttle_scrambler/proc/send_notification()
-	priority_announce("Data theft signal detected; source registered on local GPS units.")
+	priority_announce("Обнаружен сигнал о краже данных; источник зарегистрирован на местных устройствах GPS.")
 
 /// Switches off the siphon
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
@@ -185,7 +185,7 @@
 	. = ..()
 	if (istype(I))
 		I.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
+		balloon_alert(user, "сохранён в буффер мультитула")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
@@ -222,7 +222,7 @@
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
 	///Message to display on the TGUI window.
-	var/status_report = "Ready for delivery."
+	var/status_report = "Готов к доставке."
 	///Reference to the specific pad that the control computer is linked up to.
 	var/datum/weakref/pad_ref
 	///How long does it take to warmup the pad to teleport?
@@ -253,7 +253,7 @@
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
+		to_chat(user, span_notice("Вы привязываете [declent_ru(ACCUSATIVE)] к [I.buffer] с помощью буффера [I.declent_ru(GENITIVE)]."))
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
@@ -306,7 +306,7 @@
 	if(sending)
 		return
 
-	status_report = "Predicted value: "
+	status_report = "Ожидаемая стоимость: "
 	var/value = 0
 
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
@@ -330,7 +330,7 @@
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	var/datum/export_report/report = pirate_export_loop(pad, dry_run = FALSE)
 
-	status_report = "Sold: "
+	status_report = "Получено: "
 	var/value = 0
 	for(var/datum/export/exported_datum in report.total_amount)
 		var/export_text = exported_datum.total_printout(report,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
@@ -353,9 +353,9 @@
 	points += value
 
 	if(!value)
-		status_report += "Nothing"
+		status_report += "Ничего"
 
-	pad.visible_message(span_notice("[pad] activates!"))
+	pad.visible_message(span_notice("[capitalize(pad.declent_ru(NOMINATIVE))] активируется!"))
 	pad.finish_sending()
 	sending = FALSE
 
@@ -400,8 +400,8 @@
 	if(sending)
 		return
 	sending = TRUE
-	status_report = "Sending... "
-	pad.visible_message(span_notice("[pad] starts charging up."))
+	status_report = "Отправка... "
+	pad.visible_message(span_notice("[capitalize(pad.declent_ru(NOMINATIVE))] начинает заряжаться."))
 	pad.set_is_sending(TRUE)
 	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global, user), warmup_time, TIMER_STOPPABLE)
 	if(load_holding_facility)
@@ -413,7 +413,7 @@
 	if(!sending)
 		return
 	sending = FALSE
-	status_report = "Ready for delivery."
+	status_report = "Готов к доставке."
 	if(custom_report)
 		status_report = custom_report
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()

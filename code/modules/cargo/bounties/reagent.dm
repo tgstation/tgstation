@@ -37,7 +37,7 @@
 
 
 /datum/bounty/reagent/simple_drink
-	name = "Simple Drink"
+	name = "Простой напиток"
 	reward = CARGO_CRATE_VALUE * 3
 
 /datum/bounty/reagent/simple_drink/New()
@@ -102,11 +102,11 @@
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
-	description = "CentCom is thirsty! Send a shipment of [name] to CentCom to quench the company's thirst."
+	description = "ЦК хочет пить! Отправьте посылку с [name] на ЦК для утоления жажды компании."
 	reward += rand(0, 2) * 500
 
 /datum/bounty/reagent/complex_drink
-	name = "Complex Drink"
+	name = "Комплексный напиток"
 	reward = CARGO_CRATE_VALUE * 8
 
 /datum/bounty/reagent/complex_drink/New()
@@ -143,11 +143,11 @@
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
-	description = "CentCom is offering a reward for talented mixologists. Ship a container of [name] to claim the prize."
+	description = "ЦК предлагает награду талантливым миксологам. Отправьте контейнер с [name] для получения награды."
 	reward += rand(0, 4) * 500
 
 /datum/bounty/reagent/chemical_simple
-	name = "Simple Chemical"
+	name = "Простой химикат"
 	reward = CARGO_CRATE_VALUE * 8
 	required_volume = 30
 
@@ -181,11 +181,11 @@
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
-	description = "CentCom is in desperate need of the chemical [name]. Ship a container of it to be rewarded."
+	description = "ЦК отчаянно нуждается в химикате под названием: [name]. Отправьте контейнер с ним для получения вознаграждения."
 	reward += rand(0, 4) * 500 //4000 to 6000 credits
 
 /datum/bounty/reagent/chemical_complex
-	name = "Rare Chemical"
+	name = "Редкий химикат"
 	reward = CARGO_CRATE_VALUE * 12
 	required_volume = 20
 
@@ -213,7 +213,7 @@
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
-	description = "CentCom is paying premium for the chemical [name]. Ship a container of it to be rewarded."
+	description = "ЦК выплачивает премии за химикат под названием: [name]. Отправьте контейнер с ним для получения вознаграждения.."
 	reward += rand(0, 5) * 750 //6000 to 9750 credits
 
 /datum/bounty/pill
@@ -245,7 +245,7 @@
 	return TRUE
 
 /datum/bounty/pill/simple_pill
-	name = "Simple Pill"
+	name = "Простая таблетка"
 	reward = CARGO_CRATE_VALUE * 20
 
 /datum/bounty/pill/simple_pill/New()
@@ -273,5 +273,5 @@
 	name = "[wanted_reagent.name] pills"
 	required_ammount += rand(1,60)
 	wanted_vol += rand(1,20)
-	description = "CentCom requires [required_ammount] of [name] containing at least [wanted_vol] each. Ship a container of it to be rewarded."
+	description = "ЦК требуется [required_ammount] таблеток химиката под названием: [name], содержащих как минимум [wanted_vol]u каждая. Отправьте контейнер с ними для получения вознаграждения."
 	reward += rand(1, 5) * (CARGO_CRATE_VALUE * 6)

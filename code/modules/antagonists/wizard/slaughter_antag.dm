@@ -1,6 +1,6 @@
 /datum/antagonist/slaughter
 	name = "\improper Slaughter Demon"
-	roundend_category = "demons"
+	roundend_category = "Демоны"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoDemon"
 	pref_flag = ROLE_SENTIENCE

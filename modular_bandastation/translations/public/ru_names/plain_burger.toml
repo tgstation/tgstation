@@ -1,0 +1,8 @@
+["plain burger"]
+nominative = "обычный бургер"
+genitive = "обычного бургера"
+dative = "обычному бургеру"
+accusative = "обычный бургер"
+instrumental = "обычным бургером"
+prepositional = "обычном бургере"
+gender = "male"

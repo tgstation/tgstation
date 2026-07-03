@@ -2,13 +2,13 @@
 
 /datum/quirk/all_nighter
 	name = "All Nighter"
-	desc = "You didn't get any sleep last night, and people can tell! You'll constantly be in a bad mood and will have a tendency to sleep longer. Stimulants or a nap might help, though."
+	desc = "Вы заметно не выспались прошлой ночью! У вас постоянно будет плохое настроение, а спать будете дольше. Стимуляторы или сон могут помочь."
 	icon = FA_ICON_MOON
 	value = -4
 	mob_trait = TRAIT_HEAVY_SLEEPER
-	gain_text = span_danger("You feel exhausted.")
-	lose_text = span_notice("You feel well rested.")
-	medical_record_text = "Patient appears to be suffering from sleep deprivation."
+	gain_text = span_danger("Вы чувствуете себя уставшим.")
+	lose_text = span_notice("Вы чувствуете себя отдохнувшим.")
+	medical_record_text = "Пациент, похоже, страдает от недостатка сна."
 	hardcore_value = 2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE|QUIRK_MOODLET_BASED|QUIRK_PROCESSES
 
@@ -98,7 +98,7 @@
 		quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
 	if(!all_nighter && !happy_camper)
 		quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
-		to_chat(quirk_holder, span_danger("You start feeling tired again."))
+		to_chat(quirk_holder, span_danger("Вы снова начинаете чувствовать усталость."))
 
 	//adjusts bag overlay accordingly
 	if(bodypart_overlay && beauty_sleep)

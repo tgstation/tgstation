@@ -1,0 +1,8 @@
+["Medical Office"]
+nominative = "медицинский офис"
+genitive = "медицинского офиса"
+dative = "медицинскому офису"
+accusative = "медицинский офис"
+instrumental = "медицинским офисом"
+prepositional = "медицинском офисе"
+gender = "male"

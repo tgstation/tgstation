@@ -1,6 +1,6 @@
 import { type Feature, FeatureColorInput } from '../base';
 
 export const paint_color: Feature<string> = {
-  name: 'Spray paint color',
+  name: 'Цвет краски в баллончике',
   component: FeatureColorInput,
 };

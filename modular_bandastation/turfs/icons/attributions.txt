@@ -1,0 +1,4 @@
+Creative Commons 3.0 BY-NC-SA license.
+
+All DMI files are also licensed under GNU AGPL v3.
+water.dmi by Mojave Sun | https://github.com/Mojave-Sun/mojave-sun-13/blob/HEAD/mojave/icons/turf/water.dmi

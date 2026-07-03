@@ -160,7 +160,7 @@
 	user.spawn_gibs()
 	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
 	user.set_species(/datum/species/skeleton)
-	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "bone fish suicide")
+	user.say("АААААААААААААА!!!!!!!!!!!!!!", forced = "bone fish suicide")
 	if(prob(90))
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
 		user.set_suicide(TRUE)

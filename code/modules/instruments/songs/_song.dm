@@ -119,6 +119,14 @@
 	/// Do not directly set, use update_sustain()
 	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
+	// BANDASTATION ADDITION - START
+	/// straight BPM (integer)
+	var/bpm = 120
+	/// minimal BPM
+	var/min_bpm = 1
+	/// summaraized delay
+	var/delay_residual = 0.0
+	// BANDASTATION ADDITION - END
 
 
 	///Rate at which volume goes down to 0. Not controlled in menu.
@@ -127,7 +135,7 @@
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
 	SSinstruments.on_song_new(src)
 	lines = list()
-	tempo = sanitize_tempo(tempo, TRUE)
+	// tempo = sanitize_tempo(tempo, TRUE) // BANDASTATION REMOVAL - BPM unlock
 	src.parent = parent
 	if(instrument_ids)
 		allowed_instrument_ids = islist(instrument_ids) ? instrument_ids : list(instrument_ids)
@@ -138,6 +146,7 @@
 	update_sustain()
 	if(new_range)
 		instrument_range = new_range
+	set_bpm(120) // BANDASTATION ADDITION - BPM unlock
 
 /datum/song/Destroy()
 	stop_playing()
@@ -216,6 +225,7 @@
 	SEND_SIGNAL(user, COMSIG_ATOM_STARTING_INSTRUMENT, src)
 	elapsed_delay = 0
 	delay_by = 0
+	delay_residual = 0.0 // BANDASTATION ADDITION - BPM unlock
 	current_chord = 1
 	music_player = user
 	START_PROCESSING(SSinstruments, src)
@@ -225,20 +235,46 @@
 /**
  * Attempts to find other instruments with the same ID and syncs them to our song.
  */
-/datum/song/proc/sync_play(atom/user)
-	for(var/datum/song/other_instrument as anything in SSinstruments.songs)
-		if(other_instrument == src || other_instrument.id != id)
+/datum/song/proc/sync_play()
+	// BANDASTATION EDIT START - New Musical Sync
+	// for(var/datum/song/other_instrument as anything in SSinstruments.songs)
+	// 	if(other_instrument == src || other_instrument.id != id)
+	// 		continue
+	// 	if(other_instrument.playing)
+	// 		continue
+	// 	var/atom/other_player = other_instrument.find_sync_player()
+	// 	if(isnull(other_player) || !(other_player in view(parent)))
+	// 		continue
+	// 	// copies the main song info to target songs
+	// 	other_instrument.lines = lines.Copy()
+	// 	other_instrument.max_repeats = max_repeats
+	// 	other_instrument.tempo = tempo
+	// 	other_instrument.start_playing(other_player)
+
+	if(!multi_sync_enabled)
+		var/list/targets = songs_by_id(id, TRUE)
+		for(var/datum/song/other in targets)
+			if(other.playing)
+				continue
+			transmit_song_to(other)
+			other.force_start_playing()
+		return
+
+	if(!length(multi_tracks))
+		return
+
+	for(var/list/T in multi_tracks)
+		var/target = T["target_id"]
+		if(!istext(target) || !length(target))
 			continue
-		if(other_instrument.playing)
-			continue
-		var/atom/other_player = other_instrument.find_sync_player()
-		if(isnull(other_player) || !(other_player in view(user || parent)))
-			continue
-		// copies the main song info to target songs
-		other_instrument.lines = lines.Copy()
-		other_instrument.max_repeats = max_repeats
-		other_instrument.tempo = tempo
-		other_instrument.start_playing(other_player)
+		var/delay_beats = max(0, round(T["delay_beats"] || 0))
+		var/delay_ds = delay_beats * ds_per_beat()
+		var/list/targets2 = songs_by_id(target, TRUE)
+		for(var/datum/song/other2 in targets2)
+			if(other2.playing)
+				continue
+			addtimer(CALLBACK(other2, /datum/song/proc/force_start_playing), delay_ds)
+	// BANDASTATION EDIT End - New Musical Sync
 
 /**
  * Finds a player which would reasonably be able to play this song.
@@ -253,6 +289,8 @@
  * * finished: boolean, whether the song ended via reaching the end.
  */
 /datum/song/proc/stop_playing(finished = FALSE)
+	ignore_play_checks = FALSE // BANDASTATION ADDITION - New Musical Sync
+
 	if(!playing)
 		return
 	playing = FALSE
@@ -264,32 +302,52 @@
 	hearing_mobs.len = 0
 	music_player = null
 
+	// BANDASTATION ADDITION START - New Musical Sync
+	if(auto_unison_enabled)
+		START_PROCESSING(SSinstruments, src)
+	// BANDASTATION ADDITION END - New Musical Sync
+
 /**
  * Processes our song.
  */
+#define AUTO_UNISON_PERIOD_TICKS 10 // BANDASTATION ADDITION - New Musical Sync
+
 /datum/song/proc/process_song(wait)
-	if(!length(compiled_chords))
-		stop_playing(TRUE)
+	if(playing) // BANDASTATION ADDITION - New Musical Sync
+		if(!length(compiled_chords))
+			stop_playing(TRUE)
+			return
+		if(should_stop_playing(music_player) == STOP_PLAYING)
+			stop_playing(FALSE)
+			return
+		var/list/chord = compiled_chords[current_chord]
+		elapsed_delay++
+		if(elapsed_delay < delay_by)
+			return
+		play_chord(chord)
+		elapsed_delay = 0
+		delay_by = tempodiv_to_delay(chord[length(chord)])
+		current_chord++
+		if(current_chord <= length(compiled_chords))
+			return
+		if(!repeat)
+			stop_playing(TRUE)
+			return
+		repeat--
+		current_chord = 1
+		SEND_SIGNAL(parent, COMSIG_INSTRUMENT_REPEAT, TRUE)
+
+	// BANDASTATION ADDITION START - New Musical Sync
+	if(auto_unison_enabled)
+		if(world.time >= (last_unison_check + AUTO_UNISON_PERIOD_TICKS))
+			last_unison_check = world.time
+			try_auto_unison_once()
 		return
-	if(should_stop_playing(music_player) == STOP_PLAYING)
-		stop_playing(FALSE)
-		return
-	var/list/chord = compiled_chords[current_chord]
-	elapsed_delay++
-	if(elapsed_delay < delay_by)
-		return
-	play_chord(chord)
-	elapsed_delay = 0
-	delay_by = tempodiv_to_delay(chord[length(chord)])
-	current_chord++
-	if(current_chord <= length(compiled_chords))
-		return
-	if(!repeat)
-		stop_playing(TRUE)
-		return
-	repeat--
-	current_chord = 1
-	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_REPEAT, TRUE)
+
+	return PROCESS_KILL
+
+#undef AUTO_UNISON_PERIOD_TICKS
+	// BANDASTATION ADDITION END- New Musical Sync
 
 /**
  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
@@ -297,7 +355,19 @@
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
 		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
-	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
+	// BANDASTATION EDIT START - BPM unlock
+	var/ds_per_beat = (60 SECONDS) / bpm
+	var/ds_per_div  = ds_per_beat / tempodiv
+	var/exact_ticks = ds_per_div / world.tick_lag
+
+	var/with_res = exact_ticks + delay_residual
+	var/ticks = floor(with_res)
+	if(ticks < 1)
+		ticks = 1
+	delay_residual = with_res - ticks
+
+	return ticks
+	// BANDASTATION EDIT END - BPM unlock
 
 /**
  * Compiles chords.
@@ -350,11 +420,27 @@
 /**
  * Sets our tempo from a beats-per-minute, sanitizing it to a valid number first.
  */
-/datum/song/proc/set_bpm(bpm)
-	tempo = sanitize_tempo(600 / bpm)
+// BANDASTATION EDIT START - BPM unlock
+/datum/song/proc/set_bpm(new_bpm)
+	// tempo = sanitize_tempo(600 / bpm)
+	new_bpm = clamp(round(new_bpm), min_bpm, get_max_bpm())
+	if(new_bpm == bpm)
+		return
+	bpm = new_bpm
+
+	// BANDASTATION ADD: legacy tempo = deciseconds per beat
+	tempo = sanitize_tempo((60 SECONDS) / bpm, TRUE)
+
+	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, src)
+	delay_residual = 0.0
+	// BANDASTATION EDIT END - BPM unlock
+
+/datum/song/proc/get_max_bpm()
+	// сколько тиков в минуте: 60 сек / tick_lag
+	return max(1, round((60 SECONDS) / world.tick_lag))
 
 /datum/song/process(wait)
-	if(!playing)
+	if(!playing && !auto_unison_enabled) // BANDASTATION ADDITION END- New Musical Sync
 		return PROCESS_KILL
 	// it's expected this ticks at every world.tick_lag. if it lags, do not attempt to catch up.
 	process_song(world.tick_lag)

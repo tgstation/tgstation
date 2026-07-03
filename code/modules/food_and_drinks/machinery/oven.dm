@@ -10,7 +10,7 @@
 
 /obj/machinery/oven
 	name = "oven"
-	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
+	desc = "Иногда туда залезает повар, если инженеры не починили шлюз морозильной камеры..."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "oven_off"
 	base_icon_state = "oven"
@@ -100,7 +100,7 @@
 			for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
 				if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
 					asomnia_hadders += smeller
-			visible_message(span_danger("You smell a burnt smell coming from [src]!"), ignored_mobs = asomnia_hadders)
+			visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] источает запах гари!"), ignored_mobs = asomnia_hadders)
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
 	use_energy(active_power_usage)
@@ -110,7 +110,7 @@
 		return ..()
 
 	if(user.transferItemToLoc(item, src, silent = FALSE))
-		to_chat(user, span_notice("You put [item] in [src]."))
+		to_chat(user, span_notice("Вы помещаете [item.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."))
 		add_tray_to_oven(item, user)
 
 /obj/machinery/oven/item_interaction(mob/living/user, obj/item/item, list/modifiers)
@@ -159,13 +159,13 @@
 	if(open)
 		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
-		to_chat(user, span_notice("You open [src]."))
+		to_chat(user, span_notice("Вы открываете [declent_ru(ACCUSATIVE)]."))
 		end_processing()
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
 		playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
-		to_chat(user, span_notice("You close [src]."))
+		to_chat(user, span_notice("Вы закрываете [declent_ru(ACCUSATIVE)]."))
 		if(used_tray)
 			begin_processing()
 			used_tray.vis_flags |= VIS_HIDE
@@ -184,13 +184,13 @@
 	if(open)
 		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
-		to_chat(user, span_notice("You open [src]."))
+		to_chat(user, span_notice("Вы открываете [declent_ru(ACCUSATIVE)]."))
 		end_processing()
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
 		playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
-		to_chat(user, span_notice("You close [src]."))
+		to_chat(user, span_notice("Вы закрываете [declent_ru(ACCUSATIVE)]."))
 		if(used_tray)
 			begin_processing()
 			used_tray.vis_flags |= VIS_HIDE
@@ -244,7 +244,7 @@
 
 /obj/machinery/oven/range
 	name = "range"
-	desc = "And Oven AND a Stove? I guess that's why it's got range!"
+	desc = "Плита с духовкой?! Здесь должен был быть каламбур, но вы приготовьте его сами!"
 	icon_state = "range_off"
 	base_icon_state = "range"
 	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // Like the griddle, short
@@ -261,7 +261,7 @@
 
 /obj/item/plate/oven_tray
 	name = "oven tray"
-	desc = "Time to bake cookies!"
+	desc = "Время печь печенье!"
 	icon_state = "oven_tray"
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
@@ -285,12 +285,12 @@
 		return NONE
 
 	if(length(contents) >= max_items)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, "заполнено!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))
 		// Non-tray dumping requires a do_after
-		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		to_chat(user, span_notice("Вы помещаете содержимое из [item.declent_ru(GENITIVE)] на [declent_ru(ACCUSATIVE)]..."))
 		if(!do_after(user, 2 SECONDS, target = item))
 			return ITEM_INTERACT_BLOCKING
 
@@ -304,7 +304,7 @@
 			loaded++
 			AddToPlate(tray_item, user)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] item\s into [src]."))
+		to_chat(user, span_notice("Вы помещете [loaded] [declension_ru(loaded,"предмет","предмета","предметов")] в [declent_ru(ACCUSATIVE)]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING

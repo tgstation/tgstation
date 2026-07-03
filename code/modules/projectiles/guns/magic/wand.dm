@@ -26,7 +26,7 @@
 
 /obj/item/gun/magic/wand/examine(mob/user)
 	. = ..()
-	. += "Has [charges] charge\s remaining."
+	. += "Имеет [charges] заряд[declension_ru(charges, "", "а", "ов")]."
 
 /obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[base_icon_state][charges ? null : "-drained"]"
@@ -43,7 +43,7 @@
 		return FALSE
 	if(target == user)
 		if(no_den_usage && istype(get_area(user), /area/centcom/wizard_station))
-			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
+			to_chat(user, span_warning("Вы прекрасно знаете, что не стоит нарушать безопасность Логова. Лучше для начала выйти отсюда, прежде чем использовать [declent_ru(ACCUSATIVE)]."))
 			return FALSE
 		zap_self(user)
 		. = TRUE
@@ -57,7 +57,7 @@
 
 /// Called if we poke ourselves with the wand
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user, suicide = FALSE)
-	user.visible_message(span_danger("[user] zaps [user.p_them()]self with [src]."))
+	user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] использует на себе [declent_ru(ACCUSATIVE)]."))
 	playsound(user, fire_sound, 50, TRUE)
 	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 
@@ -86,7 +86,7 @@
 		if(user.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 			if (!suicide)
-				to_chat(user, span_notice("You feel great!"))
+				to_chat(user, span_notice("Вы чувствуете себя прекрасно!"))
 			return
 	to_chat(user, span_warning("You irradiate yourself with pure negative energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]"))
@@ -122,7 +122,7 @@
 	..()
 	charges--
 	if(user.can_block_magic())
-		user.visible_message(span_warning("[src] has no effect on [user]!"))
+		user.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] не оказывает эффекта на [user.declent_ru(PREPOSITIONAL)]!"))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
@@ -134,7 +134,7 @@
 			return
 	user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 	if (!suicide)
-		to_chat(user, span_notice("You feel great!"))
+		to_chat(user, span_notice("Вы чувствуете себя прекрасно!"))
 
 /obj/item/gun/magic/wand/resurrection/do_suicide(mob/living/user)
 	. = ..()

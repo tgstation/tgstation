@@ -77,8 +77,8 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't ge
 	SSshuttle.emergency.setTimer(0)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
 	priority_announce(
-		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
-		title = "Uplink Failure",
+		text = "Ошибка системы связи эвакуационного шаттла. Шаттл будет недоступен до дальнейших указаний.",
+		title = "Сбой связи эвакуационного шаттла",
 		sound = 'sound/announcer/announcement/announce_dig.ogg',
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "grey",
@@ -103,8 +103,8 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting
 		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
 	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce(
-		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
-		title = "Uplink Restored",
+		text = "Система связи эвакуационного шаттла работает в штатном режиме. Шаттл снова доступен.",
+		title = "Связь с шаттлом восстановлена",
 		sound = 'sound/announcer/announcement/announce_dig.ogg',
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "green",

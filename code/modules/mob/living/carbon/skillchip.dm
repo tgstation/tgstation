@@ -13,7 +13,7 @@
 
 	// Check for the brain. No brain = no implant.
 	if(QDELETED(brain))
-		return "Brain not found."
+		return "Мозг не обнаружен."
 
 	if(force)
 		return brain.implant_skillchip(skillchip, force)

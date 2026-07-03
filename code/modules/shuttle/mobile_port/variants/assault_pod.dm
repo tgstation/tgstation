@@ -59,7 +59,12 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.shuttle_id]"
 
-	to_chat(user, span_notice("Landing zone set."))
+	to_chat(user, span_notice("Зона высадки установлена."))
+	// BANDASTATION ADDITION START - Assault Pod Improvements
+	say("Установлена зона высадки: [picked_area]")
+	log_game("[key_name(user)] set the landing zone for the [lzname]([REF(src)]) to [AREACOORD(T)].")
+	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] set the landing zone for the [lzname]([REF(src)]) to [ADMIN_VERBOSEJMP(T)]."))
+	// BANDASTATION ADDITION END - Assault Pod Improvements
 
 	qdel(src)
 

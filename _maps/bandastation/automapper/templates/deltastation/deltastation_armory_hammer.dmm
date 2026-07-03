@@ -1,0 +1,23 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/button/door/directional/south{
+	id = "armouryaccess";
+	name = "Armoury Access";
+	req_access = list("armory")
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 10
+	},
+/obj/structure/table/reinforced,
+/obj/item/sledgehammer/tactical{
+	pixel_y = 3
+	},
+/obj/item/sledgehammer/tactical{
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+
+(1,1,1) = {"
+a
+"}

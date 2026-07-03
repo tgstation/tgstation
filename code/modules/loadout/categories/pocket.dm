@@ -1,15 +1,15 @@
 /// Pocket items (Moved to backpack)
 /datum/loadout_category/pocket
-	category_name = "Other"
+	category_name = "Другое"
 	category_ui_icon = FA_ICON_QUESTION
 	type_to_generate = /datum/loadout_item/pocket_items
 	tab_order = /datum/loadout_category/head::tab_order + 5
 	/// How many pocket items are allowed
-	VAR_PRIVATE/max_allowed = 2
+	VAR_PRIVATE/max_allowed = 5 // BANDASTATION EDIT: 2 -> 5
 
 /datum/loadout_category/pocket/New()
 	. = ..()
-	category_info = "([max_allowed] allowed)"
+	category_info = "(максимум: [max_allowed])"
 
 /datum/loadout_category/pocket/handle_duplicate_entires(
 	datum/preference_middleware/loadout/manager,
@@ -295,7 +295,9 @@
 	if(istype(id_card, /obj/item/storage/wallet)) // Wallets station trait guard
 		return
 
-	var/obj/item/storage/wallet/wallet = new(equipper)
+	//var/obj/item/storage/wallet/wallet = new(equipper) // BANDASTATION REMOVAL: Loadout wallets
+	var/obj/item/storage/wallet/wallet = new src.item_path(equipper) // BANDASTATION ADDITION: Loadout wallets fix
+
 	if(!istype(id_card))
 		// They must have a PDA or some other thing in their ID slot, abort
 		if(!equipper.equip_to_storage(wallet, ITEM_SLOT_BACK, indirect_action = TRUE))

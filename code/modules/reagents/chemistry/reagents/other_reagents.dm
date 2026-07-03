@@ -751,10 +751,10 @@
 
 /datum/reagent/mutationtoxin/moth
 	name = "Moth Mutation Toxin"
-	description = "A glowing toxin."
+	description = "Светящийся токсин."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/moth
-	taste_description = "clothing"
+	taste_description = "ткани"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
@@ -2695,16 +2695,18 @@
 	. = ..()
 	var/newsize = current_size
 	switch(volume)
+		// BANDASTATION EDIT - START - Changes newsize to smaller values
 		if(0 to 19)
-			newsize = 1.25*RESIZE_DEFAULT_SIZE
+			newsize = 1.05*RESIZE_DEFAULT_SIZE
 		if(20 to 49)
-			newsize = 1.5*RESIZE_DEFAULT_SIZE
+			newsize = 1.10*RESIZE_DEFAULT_SIZE
 		if(50 to 99)
-			newsize = 2*RESIZE_DEFAULT_SIZE
+			newsize = 1.15*RESIZE_DEFAULT_SIZE
 		if(100 to 199)
-			newsize = 2.5*RESIZE_DEFAULT_SIZE
+			newsize = 1.20*RESIZE_DEFAULT_SIZE
 		if(200 to INFINITY)
-			newsize = 3.5*RESIZE_DEFAULT_SIZE
+			newsize = 1.25*RESIZE_DEFAULT_SIZE
+		// BANDASTATION EDIT - END
 
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize

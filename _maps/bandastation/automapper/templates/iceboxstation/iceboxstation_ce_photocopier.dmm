@@ -1,0 +1,12 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/ce)
+
+(1,1,1) = {"
+a
+"}

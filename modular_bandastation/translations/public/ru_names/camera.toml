@@ -1,0 +1,8 @@
+[camera]
+nominative = "камера"
+genitive = "камеры"
+dative = "камере"
+accusative = "камеру"
+instrumental = "камерой"
+prepositional = "камере"
+gender = "female"

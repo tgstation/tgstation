@@ -1,0 +1,70 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/command/heads_quarters/rd)
+"x" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/command/heads_quarters/rd)
+"D" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/item/folder/white,
+/obj/item/stamp/head/rd{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/rd)
+"M" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "misclab";
+	name = "Specimen Chamber Control";
+	pixel_x = -6;
+	pixel_y = -1;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "xenobiomain";
+	name = "Xenobiology Control";
+	pixel_x = -6;
+	pixel_y = 9;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "rd_office_shutters";
+	name = "Privacy Control";
+	pixel_x = 6;
+	pixel_y = -1;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "rnd2";
+	name = "Ordnance Control";
+	pixel_x = 6;
+	pixel_y = 9;
+	req_access = list("rd")
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/command/heads_quarters/rd)
+
+(1,1,1) = {"
+a
+D
+"}
+(2,1,1) = {"
+x
+M
+"}

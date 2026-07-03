@@ -9,7 +9,7 @@
 /// Beds
 /obj/structure/bed
 	name = "bed"
-	desc = "This is used to lie in, sleep in or strap on."
+	desc = "Обычно на таких лежат или спят."
 	icon_state = "bed"
 	icon = 'icons/obj/bed.dmi'
 	anchored = TRUE

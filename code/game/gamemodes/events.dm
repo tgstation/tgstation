@@ -7,7 +7,7 @@
  * but the crew themselves can return power via the engine, solars, or other means of creating power.
  */
 /proc/power_failure()
-	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
+	priority_announce("Обнаружена аномальная активность в сети питания [station_name()]. В качестве меры предосторожности питание будет отключено на неопределенный срок.", "Критический сбой системы питания", ANNOUNCER_POWEROFF)
 	var/list/all_smes = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/smes)
 	for(var/obj/machinery/power/smes/smes as anything in all_smes)
 		if(istype(get_area(smes), /area/station/ai) || !is_station_level(smes.z))
@@ -45,7 +45,7 @@
  * Magically fills ALL APCs and SMESs to capacity, and restores power to depowered areas.
  */
 /proc/power_restore()
-	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
+	priority_announce("Питание [station_name()] было восстановлено. Приносим свои извинения за доставленные неудобства.", "Системы электропитания", ANNOUNCER_POWERON)
 	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
@@ -81,7 +81,7 @@
  * Great as a less magical / more IC way to return power to a sapped station.
  */
 /proc/power_restore_quick()
-	priority_announce("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
+	priority_announce("Все СМЕСы [station_name()] полностью заряжены. Приносим свои извинения за доставленные неудобства.", "Системы электропитания", ANNOUNCER_POWERON)
 	var/list/all_smes = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/smes)
 	for(var/obj/machinery/power/smes/smes as anything in all_smes)
 		if(!is_station_level(smes.z))

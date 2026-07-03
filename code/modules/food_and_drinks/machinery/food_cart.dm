@@ -1,7 +1,7 @@
 
 /obj/machinery/food_cart
 	name = "food cart"
-	desc = "A compact unpackable mobile cooking stand. Wow! When unpacked, it reminds you of those greasy gamer setups some people on NTNet have."
+	desc = "Компактная мобильная стойка для кулинарных работ с возможностью распаковки. Вот это да! В распакованном виде она напоминает те жирные геймерские установки, которые есть у некоторых людей в NTNet."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "foodcart"
 	density = TRUE
@@ -44,16 +44,16 @@
 	. = ..()
 	if(!(machine_stat & BROKEN))
 		if(cart_griddle.machine_stat & BROKEN)
-			. += span_warning("The stand's <b>griddle</b> is completely broken!")
+			. += span_warning("<b>Гриль</b> стойки сломан!")
 		else
-			. += span_notice("The stand's <b>griddle</b> is intact.")
-		. += span_notice("The stand's <b>fridge</b> seems fine.") //weirdly enough, these fridges don't break
-		. += span_notice("The stand's <b>table</b> seems fine.")
+			. += span_notice("<b>Гриль</b> стойки целый.")
+		. += span_notice("<b>Холодильник</b> стойки целый.") //weirdly enough, these fridges don't break
+		. += span_notice("<b>Стол</b> стойки целый.")
 
 /obj/machinery/food_cart/proc/pack_up()
 	if(!unpacked)
 		return
-	visible_message(span_notice("[src] retracts all of it's unpacked components."))
+	visible_message(span_notice("[capitalize(declent_ru(NOMINATIVE))] втягивает все свои распакованные части."))
 	for(var/o in packed_things)
 		var/obj/object = o
 		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
@@ -65,9 +65,9 @@
 	if(unpacked)
 		return
 	if(!check_setup_place())
-		to_chat(user, span_warning("There isn't enough room to unpack here! Bad spaces were marked in red."))
+		to_chat(user, span_warning("Здесь не хватит места, чтобы все распаковать! Плохие места отмечены красным цветом."))
 		return
-	visible_message(span_notice("[src] expands into a full stand."))
+	visible_message(span_notice("[capitalize(declent_ru(NOMINATIVE))] расширяется, превращаясь в полноценную стойку."))
 	set_anchored(TRUE)
 	var/iteration = 1
 	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
@@ -82,15 +82,15 @@
 /obj/machinery/food_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("[src] is completely busted."))
+		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] полностью разрушена."))
 		return
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = TRUE)
 	if(!check_access(id_card))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
-	to_chat(user, span_notice("You attempt to [unpacked ? "pack up" :"unpack"] [src]..."))
+	to_chat(user, span_notice("Вы пытаетесь [unpacked ? "распаковать" :"разобрать"] [declent_ru(ACCUSATIVE)]..."))
 	if(!do_after(user, 5 SECONDS, src))
-		to_chat(user, span_warning("Your [unpacked ? "" :"un"]packing of [src] was interrupted!"))
+		to_chat(user, span_warning("Ваша [unpacked ? "распаковка" :"разборка"] [declent_ru(GENITIVE)] была прервана!"))
 		return
 	if(unpacked)
 		pack_up()
@@ -133,7 +133,7 @@
 
 /obj/effect/food_cart_stand
 	name = "food cart tent"
-	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
+	desc = "Что-то для борьбы с солнцем, ведь перерывов у работников бургерной нет."
 	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "stand"
 	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool

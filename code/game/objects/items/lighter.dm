@@ -95,11 +95,11 @@
 
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
-		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		return FIRELOSS
 	else
-		user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		return BRUTELOSS
 
 /obj/item/lighter/update_icon_state()

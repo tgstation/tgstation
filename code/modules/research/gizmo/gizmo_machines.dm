@@ -1,7 +1,7 @@
 /// Science object that behaves similairly to to strange objects/relics, but is activated by cracking wire sequences and other functions
 /obj/machinery/gizmo
 	name = "gizmo"
-	desc = "Does a function when you put the jigger at the other ends thing."
+	desc = "Невероятно! Это же... а правда, что это?"
 	icon_state = "gizmo_1"
 	icon = 'icons/obj/science/gizmos.dmi'
 
@@ -17,10 +17,10 @@
 	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 	/// Possible names to pick from to keep things confusing
-	var/static/list/possible_names = list(
-		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster", "natty gonk", "quantum quantum",
-		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", "turbo encabulator",
-		"statistic responder", "possibility matrix", "toety aaier", "phase anchor", "thingamajing",
+	var/list/possible_names = list(
+		"штуковина", "штука-дрюка", "хреновина", "полярный инвертор", "реверсивный рецептор", "флопиксель", "репопулятор", "квантовый квантовик",
+		"ну этот, как его", "делатель всякого", "квазифазер", "выполнятель задач", "интерфейсный респондер", "кинетический обсервер", "турбинный инкапсулятор",
+		"бипкодел", "агрегат", "приблуда", "прибамбас", "девайс", "плюмбус",
 	)
 
 /obj/machinery/gizmo/Initialize(mapload)

@@ -1,0 +1,8 @@
+[boxcutter]
+nominative = "канцелярский нож"
+genitive = "канцелярского ножа"
+dative = "канцелярскому ножу"
+accusative = "канцелярский нож"
+instrumental = "канцелярским ножом"
+prepositional = "канцелярском ноже"
+gender = "male"

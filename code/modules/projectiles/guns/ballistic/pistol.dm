@@ -22,7 +22,7 @@
 	drop_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_pickup1.ogg'
 	fire_sound_volume = 90
-	bolt_wording = "slide"
+	bolt_wording = "затвора"
 	suppressor_x_offset = 10
 	suppressor_y_offset = -1
 	recoil_backtime_multiplier = 1

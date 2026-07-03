@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
+import { Button } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
 
@@ -18,12 +19,29 @@ import {
 import { RandomToggleState } from './useRandomToggleState';
 import { ServerPrefs } from './useServerPrefs';
 
-export function PreferencesMenu(props) {
+export function PreferencesMenu() {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { window } = data;
+
+  const [title, setTitle] = useState('Настройки');
+  const isCharacterWindow = window === PrefsWindow.Character;
+
   return (
-    <Window width={920} height={770}>
-      <Window.Content>
+    <Window
+      width={900}
+      height={741}
+      title={title}
+      theme="ss220"
+      buttons={
+        <Button
+          icon={isCharacterWindow ? 'cog' : 'user'}
+          onClick={() => act('change_preferences_window')}
+        />
+      }
+    >
+      <Window.Content className="PreferencesMenu">
         <Suspense fallback={<LoadingScreen />}>
-          <PrefsWindowInner />
+          <PrefsWindowInner setTitle={setTitle} />
         </Suspense>
       </Window.Content>
     </Window>
@@ -53,12 +71,12 @@ function PrefsWindowInner(props) {
   let title;
   switch (window) {
     case PrefsWindow.Character:
+      title = 'Настройки персонажа';
       content = <CharacterPreferenceWindow />;
-      title = 'Character Preferences';
       break;
     case PrefsWindow.Game:
+      title = 'Настройки игры';
       content = <GamePreferenceWindow />;
-      title = 'Game Preferences';
       break;
     case PrefsWindow.Keybindings:
       content = (
@@ -66,11 +84,14 @@ function PrefsWindowInner(props) {
           startingPage={GamePreferencesSelectedPage.Keybindings}
         />
       );
-      title = 'Keybindings';
       break;
     default:
       exhaustiveCheck(window);
   }
+
+  useEffect(() => {
+    props.setTitle(title);
+  }, [window]);
 
   return (
     <ServerPrefs.Provider value={serverData}>

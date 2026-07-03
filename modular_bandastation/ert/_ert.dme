@@ -1,0 +1,5 @@
+#include "_ert.dm"
+
+#include "code/ert_manager.dm"
+#include "code/ert_outfits.dm"
+#include "code/ert_presets.dm"

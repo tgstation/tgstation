@@ -1,6 +1,6 @@
 /datum/job/bitrunner
 	title = JOB_BITRUNNER
-	description = "Surf the virtual domain for gear and loot, decrypt your rewards on station."
+	description = "Путешествуйте по виртуальному миру в поисках снаряжения и лута. Расшифровывайте свои награды на станции."
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3

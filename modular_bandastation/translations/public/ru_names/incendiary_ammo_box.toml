@@ -1,0 +1,8 @@
+["incendiary ammo box"]
+nominative = "патроны для FNX-99"
+genitive = "патронов для FNX-99"
+dative = "патронам для FNX-99"
+accusative = "патроны для FNX-99"
+instrumental = "патронами для FNX-99"
+prepositional = "патронах для FNX-99"
+gender = "plural"

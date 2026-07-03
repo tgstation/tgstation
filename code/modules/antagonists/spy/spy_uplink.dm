@@ -44,9 +44,9 @@
 
 	if(!is_our_spy(user))
 		return
-	examine_list += span_notice("You recognize this as your <i>spy uplink</i>.")
-	examine_list += span_notice("- [EXAMINE_HINT("Use it in hand")] to view your bounty list.")
-	examine_list += span_notice("- [EXAMINE_HINT("Right click")] with it on a bounty target to claim it.")
+	examine_list += span_notice("Вы узнаете в этом предмете свой <i>аплинк шпиона</i>.")
+	examine_list += span_notice("- [EXAMINE_HINT("Используйте его в руке")], чтобы просмотреть список заказов.")
+	examine_list += span_notice("- [EXAMINE_HINT("Нажмите ПКМ")] по цели заказа для кражи.")
 
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
 	SIGNAL_HANDLER
@@ -82,10 +82,10 @@
 		if(!bounty.is_stealable(stealing))
 			continue
 		if(bounty.claimed)
-			stealing.balloon_alert(spy, "bounty already claimed!")
+			stealing.balloon_alert(spy, "заказ уже выполнен!")
 			return TRUE
 		if(DOING_INTERACTION(spy, REF(src)))
-			spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
+			spy.balloon_alert(spy, "уже заняты сканированием!") // Only shown if they're trying to scan two valid targets
 			return TRUE
 		SEND_SIGNAL(stealing, COMSIG_MOVABLE_SPY_STEALING, spy, bounty)
 		INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
@@ -96,7 +96,7 @@
 /// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] cannot be extracted from there."))
+		to_chat(spy, span_warning("Ваш аплинк мигает красным: нельзя украсть [stealing.declent_ru(ACCUSATIVE)] отсюда."))
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
@@ -134,17 +134,17 @@
 /// If successful, proceeds to complete the bounty.
 /datum/component/spy_uplink/proc/steal_process(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	spy.visible_message(
-		span_warning("[spy] starts scanning [stealing] with a strange device..."),
-		span_notice("You start scanning [stealing], preparing it for extraction."),
+		span_warning("[capitalize(spy.declent_ru(NOMINATIVE))] начинает сканировать [stealing.declent_ru(ACCUSATIVE)] странным устройством..."),
+		span_notice("Вы начинаете сканировать [stealing.declent_ru(ACCUSATIVE)], приготавливая его к отправке."),
 	)
 
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
 		return FALSE
 	if(bounty.claimed)
-		to_chat(spy, span_warning("Your uplink blinks red: The bounty for [stealing] has been claimed by another spy!"))
+		to_chat(spy, span_warning("Ваш аплинк мигает красным: награда за [stealing.declent_ru(ACCUSATIVE)] уже была принята другим шпионом!"))
 		return FALSE
 	if(spy.is_holding(stealing) && !spy.dropItemToGround(stealing))
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] seems stuck to your hand!"))
+		to_chat(spy, span_warning("Ваш аплинк мигает красным: кажется, что-то прилепило вас к [stealing.declent_ru(DATIVE)]!"))
 		return FALSE
 
 	var/bounty_key = bounty.get_dupe_protection_key(stealing)
@@ -162,8 +162,8 @@
 	if(isitem(reward))
 		spy.put_in_hands(reward)
 
-	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
-		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
+	to_chat(spy, span_notice("Заказ выполнен! Ваша награда - [reward.name].\
+		[reward.loc == spy ? "" : " <i>Поищите ее у ваших ног.</i>"]"))
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

@@ -43,6 +43,8 @@ const defTag = [
   'tr',
   'u',
   'ul',
+
+  'small',
 ];
 
 // Advanced HTML tags that we can trust admins (but not players) with

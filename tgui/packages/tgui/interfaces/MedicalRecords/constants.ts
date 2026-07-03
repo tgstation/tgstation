@@ -1,42 +1,46 @@
 export const PHYSICALSTATUS2ICON = {
-  Active: 'person-running',
-  Debilitated: 'crutch',
-  Unconscious: 'moon-o',
-  Deceased: 'skull',
+  Активен: 'person-running',
+  Болезнь: 'crutch',
+  Бессознательность: 'moon-o',
+  Мертв: 'skull',
 };
 
 export const PHYSICALSTATUS2COLOR = {
-  Active: 'green',
-  Debilitated: 'purple',
-  Unconscious: 'orange',
-  Deceased: 'red',
+  Активен: 'green',
+  Болезнь: 'purple',
+  Бессознательность: 'orange',
+  Мертв: 'red',
 } as const;
 
 export const PHYSICALSTATUS2DESC = {
-  Active: 'Active. Individual is conscious and healthy.',
-  Debilitated: 'Debilitated. Individual is conscious, but unhealthy.',
-  Unconscious: 'Unconscious. Individual may require medical attention.',
-  Deceased: 'Deceased. Individual has died and begun to decay.',
+  Активен: 'Активен. Личность в сознании и здорова.',
+  Болезнь: 'Болезнь. Личность в сознании, но не здорова.',
+  Бессознательность:
+    'Бессознательность. Личности может потребоваться медицинская помощь.',
+  Мертв: 'Мертв. Личность мертва и начала разложение.',
 } as const;
 
 export const MENTALSTATUS2ICON = {
-  Stable: 'face-smile-o',
-  Watch: 'eye-o',
-  Unstable: 'scale-unbalanced-flip',
-  Insane: 'head-side-virus',
+  Стабильно: 'face-smile-o',
+  Наблюдение: 'eye-o',
+  Нестабильно: 'scale-unbalanced-flip',
+  Безумство: 'head-side-virus',
 };
 
 export const MENTALSTATUS2COLOR = {
-  Stable: 'green',
-  Watch: 'purple',
-  Unstable: 'orange',
-  Insane: 'red',
+  Стабильно: 'green',
+  Наблюдение: 'purple',
+  Нестабильно: 'orange',
+  Безумство: 'red',
 } as const;
 
 export const MENTALSTATUS2DESC = {
-  Stable: 'Stable. Individual is sane and free from psychological disorders.',
-  Watch:
-    'Watch. Individual has symptoms of mental illness. Monitor them closely.',
-  Unstable: 'Unstable. Individual has one or more mental illnesses.',
-  Insane: 'Insane. Individual exhibits severe, abnormal mental behaviors.',
+  Стабильно:
+    'Стабильно. Личность вменяема и не страдает от психических заболеваний.',
+  Наблюдение:
+    'Наблюдение. Личность имеет симптомы психического заболевания. Требуется наблюдение.',
+  Нестабильно:
+    'Нестабильно. Личность страдает от одного или более психических заболеваний.',
+  Безумство:
+    'Безумство. Личность демонстрирует тяжелое и ненормальное психическое поведение.',
 } as const;

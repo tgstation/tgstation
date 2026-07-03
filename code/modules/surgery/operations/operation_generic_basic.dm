@@ -1,10 +1,10 @@
 // Some operations that mirror basic carbon state-moving operations but for basic mobs
 /// Incision of skin for basic mobs
 /datum/surgery_operation/basic/incise_skin
-	name = "make incision"
+	name = "Сделать разрез"
 	// rnd_name = "Laparotomy / Craniotomy / Myotomy (Make Incision)" // Maybe we keep this one simple
-	desc = "Make an incision in the patient's skin to access internals. \
-		Causes \"cut skin\" surgical state."
+	desc = "Сделайте разрез на коже пациента, чтобы получить доступ к внутренним органам. \
+		Вызывает хирургическое состояние \"кожа разрезана\"."
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,
@@ -22,10 +22,10 @@
 	target_zone = null
 
 /datum/surgery_operation/basic/incise_skin/get_any_tool()
-	return "Any sharp edged item"
+	return "Любой острый предмет"
 
 /datum/surgery_operation/basic/incise_skin/all_blocked_strings()
-	return ..() + list("The patient must not have complex anatomy")
+	return ..() + list("у пациента не должно быть сложной анатомии")
 
 /datum/surgery_operation/basic/incise_skin/get_default_radial_image()
 	return image('icons/hud/surgery_radial.dmi', "make_incision")
@@ -46,20 +46,20 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to make an incision in [patient]..."),
-		span_notice("[surgeon] begins to make an incision in [patient]."),
-		span_notice("[surgeon] begins to make an incision in [patient]."),
+		span_notice("Вы начинаете делать разрез на [patient.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает делать разрез на [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает делать разрез на [patient.declent_ru(GENITIVE)]."),
 	)
-	display_pain(patient, "You feel a sharp stabbing sensation!")
+	display_pain(patient, "Вы испытываете острое колющее ощущение!")
 
 /datum/surgery_operation/basic/incise_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/basic/saw_bone
-	name = "saw bone"
-	desc = "Saw through the patient's bones to access their internal organs. \
-		Causes \"bone sawed\" surgical state."
+	name = "Распилить кость"
+	desc = "Пропилите кость пациента, чтобы получить доступ к внутренним органам. \
+		Вызывает хирургическое состояние \"кость распилена\""
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1.33,
@@ -85,10 +85,10 @@
 	target_zone = null
 
 /datum/surgery_operation/basic/saw_bone/get_any_tool()
-	return "Any sharp edged item with decent force"
+	return "Любой острый предмет, требующий усилия"
 
 /datum/surgery_operation/basic/saw_bone/all_blocked_strings()
-	return ..() + list("The patient must not have complex anatomy")
+	return ..() + list("у пациента не должно быть сложной анатомии")
 
 /datum/surgery_operation/basic/saw_bone/get_default_radial_image()
 	return image('icons/hud/surgery_radial.dmi', "mend_incision")
@@ -104,11 +104,11 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to saw through [patient]'s bones..."),
-		span_notice("[surgeon] begins to saw through [patient]'s bones."),
-		span_notice("[surgeon] begins to saw through [patient]'s bones."),
+		span_notice("Вы начинаете пилить кости в [patient.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает пилить кости в [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает пилить кости в [patient.declent_ru(GENITIVE)]."),
 	)
-	display_pain(patient, "You feel a horrid ache spread through your insides!")
+	display_pain(patient, "Вы чувствуете, как ужасная боль разливается по твоим внутренностям!")
 
 /datum/surgery_operation/basic/saw_bone/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -117,17 +117,17 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You saw [patient] open."),
-		span_notice("[surgeon] saws [patient] open!"),
-		span_notice("[surgeon] saws [patient] open!"),
+		span_notice("Вы распилили кости [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] распилил кости [patient.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] распилил кости [patient.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(patient, "It feels like something just broke!")
+	display_pain(patient, "Вы чувстуете, будто что-то сломалось!")
 
 // Closing of skin for basic mobs
 /datum/surgery_operation/basic/close_skin
-	name = "mend incision"
-	desc = "Mend the incision in the patient's skin, closing it up. \
-		Clears most surgical states."
+	name = "Прижечь разрез"
+	desc = "Прижечь разрез на коже пациента, закрывая его. \
+		Устраняет большинство хирургических состояний."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/stack/medical/suture = 1,
@@ -148,10 +148,10 @@
 	target_zone = null
 
 /datum/surgery_operation/basic/close_skin/get_any_tool()
-	return "Any heat source"
+	return "Любой источник тепла"
 
 /datum/surgery_operation/basic/close_skin/all_blocked_strings()
-	return ..() + list("The patient must not have complex anatomy")
+	return ..() + list("у пациента не должно быть сложной анатомии")
 
 /datum/surgery_operation/basic/close_skin/get_default_radial_image()
 	return image(/obj/item/cautery)
@@ -173,11 +173,11 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to mend the incision in [patient]..."),
-		span_notice("[surgeon] begins to mend the incision in [patient]."),
-		span_notice("[surgeon] begins to mend the incision in [patient]."),
+		span_notice("Вы начинаете прижигать разрез на [patient.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает прижигать разрез на [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает прижигать разрез на [patient.declent_ru(GENITIVE)]."),
 	)
-	display_pain(patient, "You are being [istype(tool, /obj/item/stack/medical/suture) ? "pinched" : "burned"]!")
+	display_pain(patient, "Вам [istype(tool, /obj/item/stack/medical/suture) ? "сшивают раны" : "обжигают раны"]!")
 
 /datum/surgery_operation/basic/close_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()

@@ -1,0 +1,667 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"as" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Trial Transfer"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/cable,
+/turf/open/floor/iron/textured,
+/area/station/security/courtroom)
+"bs" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"bQ" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Courtroom"
+	},
+/obj/item/radio/intercom/directional/north,
+/obj/structure/chair{
+	name = "Defense"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"bX" = (
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"cc" = (
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	req_access = list("magistrate")
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"cl" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"cq" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"dA" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"em" = (
+/turf/closed/wall,
+/area/station/command/heads_quarters/magistrate)
+"eu" = (
+/obj/structure/chair{
+	dir = 8;
+	name = "Judge"
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"eB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"eF" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	req_access = list("brig")
+	},
+/obj/effect/mapping_helpers/trapdoor_placer,
+/turf/open/floor/glass/reinforced,
+/area/station/security/courtroom)
+"fl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"gL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"ks" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"lo" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/office,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"lr" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"ma" = (
+/obj/machinery/computer/records/security{
+	dir = 4
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"ms" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"nc" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/paper_bin{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/skull{
+	desc = "Бедный Йорик...";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"no" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"nv" = (
+/obj/machinery/papershredder,
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"oq" = (
+/obj/machinery/light/directional/east,
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"ox" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"pm" = (
+/turf/template_noop,
+/area/template_noop)
+"pK" = (
+/obj/structure/table/wood,
+/obj/item/gavelblock{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/gavelhammer,
+/obj/item/trapdoor_remote/preloaded{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"ri" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"rn" = (
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"rG" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"rJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"se" = (
+/obj/structure/chair{
+	dir = 1;
+	name = "Prosecution"
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"sr" = (
+/obj/machinery/firealarm/directional/south,
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"vt" = (
+/turf/closed/wall,
+/area/station/security/courtroom)
+"yH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"yU" = (
+/obj/structure/chair/comfy/corp{
+	dir = 1
+	},
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"zk" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"zt" = (
+/obj/structure/chair{
+	dir = 1;
+	name = "Prosecution"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"AO" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"Bo" = (
+/obj/machinery/door/airlock/corporate{
+	name = "Magistrate's Office"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/command/magistrate,
+/obj/effect/landmark/navigate_destination,
+/obj/machinery/door/firedoor,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/magistrate)
+"Ge" = (
+/obj/structure/chair{
+	name = "Defense"
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"GO" = (
+/obj/structure/closet/secure_closet/magistrate,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"Io" = (
+/obj/machinery/computer/prisoner/management{
+	dir = 4;
+	req_access = list("magistrate")
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"Ir" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"IK" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Courtroom"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/court,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"IW" = (
+/obj/structure/table/wood,
+/obj/item/folder/blue,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"IY" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"JF" = (
+/obj/structure/filingcabinet/employment,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"KW" = (
+/obj/structure/chair{
+	dir = 8;
+	name = "Judge"
+	},
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"Lh" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"LB" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/clipboard{
+	pixel_y = 4
+	},
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/stamp/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"LO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"Mc" = (
+/turf/closed/wall/r_wall,
+/area/station/security/courtroom)
+"MN" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/machinery/fax{
+	fax_name = "Magistrate's Office";
+	name = "Magistrate's Fax Machine";
+	pixel_y = 4
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Magistrate's Office"
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"Nr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"OD" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/machinery/computer/security/telescreen/prison/directional/south,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"Pf" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"PV" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"QZ" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/megaphone{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"Ro" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"RA" = (
+/obj/machinery/requests_console/directional/south{
+	department = "Magistrate's Office";
+	name = "Magistrate's Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"RE" = (
+/obj/machinery/vending/wardrobe/law_wardrobe,
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"Te" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"Th" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"TD" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/folder/blue{
+	pixel_x = 7
+	},
+/obj/item/folder/red{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/folder{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/command/heads_quarters/magistrate)
+"VH" = (
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"Wc" = (
+/obj/structure/chair{
+	dir = 8;
+	name = "Judge"
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
+"WC" = (
+/obj/structure/closet/secure_closet/courtroom,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+
+(1,1,1) = {"
+Mc
+Nr
+Nr
+IK
+Nr
+vt
+pm
+pm
+pm
+pm
+pm
+pm
+"}
+(2,1,1) = {"
+Mc
+WC
+rn
+ms
+sr
+vt
+vt
+pm
+pm
+pm
+pm
+pm
+"}
+(3,1,1) = {"
+as
+Lh
+Lh
+bX
+rn
+bs
+vt
+pm
+pm
+pm
+pm
+pm
+"}
+(4,1,1) = {"
+Mc
+bQ
+dA
+LO
+PV
+zt
+em
+em
+em
+em
+em
+em
+"}
+(5,1,1) = {"
+IY
+Ge
+IW
+LO
+Ir
+se
+em
+zk
+MN
+ma
+Io
+em
+"}
+(6,1,1) = {"
+eF
+VH
+ks
+rG
+yH
+cl
+em
+lo
+LB
+yU
+RA
+em
+"}
+(7,1,1) = {"
+ox
+VH
+AO
+pK
+lr
+ad
+Bo
+rJ
+QZ
+nc
+Pf
+em
+"}
+(8,1,1) = {"
+no
+fl
+eu
+Wc
+KW
+cq
+em
+Ro
+Th
+ri
+eB
+em
+"}
+(9,1,1) = {"
+Mc
+vt
+vt
+vt
+vt
+vt
+em
+nv
+Te
+gL
+OD
+em
+"}
+(10,1,1) = {"
+pm
+pm
+pm
+pm
+pm
+pm
+em
+em
+GO
+cc
+JF
+em
+"}
+(11,1,1) = {"
+pm
+pm
+pm
+pm
+pm
+pm
+pm
+em
+RE
+oq
+TD
+em
+"}
+(12,1,1) = {"
+pm
+pm
+pm
+pm
+pm
+pm
+pm
+em
+em
+em
+em
+em
+"}

@@ -1,7 +1,7 @@
 /datum/lazy_template/virtual_domain/blood_drunk_miner
-	name = "Sanguine Excavation"
+	name = "Кровавые раскопки"
 	cost = BITRUNNER_COST_MEDIUM
-	desc = "Few escape the surface of Lavaland without a few scars. Some remain, maddened by the hunt."
+	desc = "Немногие покидают поверхность Лаваленда без парочки шрамов. Другие остаются, обезумев от охоты."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	forced_outfit = /datum/outfit/job/miner
 	key = "blood_drunk_miner"

@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = TRUE
-	name = "\improper Automated Announcement System"
+	name = "Автоматическая система оповещений"
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "AAS_On"
@@ -279,7 +279,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /datum/aas_config_entry/arrival
 	name = "Global: Arrival Announcement"
 	announcement_lines_map = list(
-		"Message" = "%PERSON has signed up as %RANK")
+		"Message" = "%PERSON прибывает на станцию в должности %RANK")
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with their name.",
 		"RANK" = "with their job."
@@ -290,14 +290,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if (.)
 		return
 
-	announcement_lines_map["Message"] = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!",
-		"CRITICAL ERROR 99.",
-		"ERR)#: DA#AB@#E NOT F(*ND!")
+	announcement_lines_map["Message"] = pick("#!@%ОШБ-34%2 НЕВ@ЗМОЖН@ НАЙТ# РАБ@ТУ!",
+		"КРИТИЧЕСКАЯ ОШИБКА 99.",
+		"ОШБ)#: БАЗ@ Д@ННЫХ НЕ Н@(*ЙДЕНА!")
 
 /datum/aas_config_entry/newhead
 	name = "Departmental: Head Announcement"
 	announcement_lines_map = list(
-		"Message" = "%PERSON, %RANK, is the department head.")
+		"Message" = "%PERSON, %RANK назначен(а) главой отдела.")
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with their name.",
 		"RANK" = "with their job."
@@ -308,14 +308,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if (.)
 		return
 
-	announcement_lines_map["Message"] = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!",
-		"ER)#R - B*@ TEXT F*O(ND!",
-		"AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
+	announcement_lines_map["Message"] = pick("ОВ#РЛ()Д: \[НЕИЗВЕСТНО??\] ОБНАРУЖ*#Н)!",
+		"ОШ)#КА - Т*@КСТ Н*(ДЕН!",
+		"AAS.exe не отвечает. NanoOS ищет решение проблемы.")
 
 /datum/aas_config_entry/researched_node
 	name = "Science Alert: Research Node Announcement"
 	announcement_lines_map = list(
-		"Message" = "The %NODE techweb node has been researched")
+		"Message" = "Исследован технологический узел «%NODE»")
 	vars_and_tooltips_map = list(
 		"NODE" = "will be replaced with the researched node."
 	)
@@ -327,21 +327,21 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	announcement_lines_map["Message"] = pick(
 		replacetext(/datum/aas_config_entry/researched_node::announcement_lines_map["Message"], "%NODE", /datum/techweb_node/mech_clown::display_name),
-		"R/NT1M3 A= ANNOUN-*#nt_SY!?EM.dm, LI%£ 86: N=0DE NULL!",
-		"BEPIS BEPIS BEPIS",
-		"ERR)#R - B*@ TEXT F*O(ND!")
+		"R/NT1M3 А= ОБЪЯВЛ-*#nt_SYS!?M.dm, ЛИ%£ 86: У=0ЗЕЛ НУЛЕВОЙ!",
+		"БЕПИС БЕПИС БЕПИС",
+		"ОШ)#КА - Т*@КСТ Н*Е(ЙДЕН!")
 
 /datum/aas_config_entry/arrivals_broken
 	name = "Engineering Alert: Arrivals Shuttle Malfunction Announcement"
 	announcement_lines_map = list(
-		"Message" = "The arrivals shuttle has been damaged. Docking for repairs...")
+		"Message" = "Шаттл прибытия поврежден. Стыковка для ремонта...")
 	general_tooltip = "Broadcasted, when arrivals shuttle docks for repairs. No replacable variables provided."
 	modifiable = FALSE
 
 /datum/aas_config_entry/announce_officer
 	name = "Security Alert: Officer Arrival Announcement"
 	announcement_lines_map = list(
-		"Message" = "Officer %OFFICER has been assigned to %DEPARTMENT.")
+		"Message" = "Офицер %OFFICER назначен(а) в %DEPARTMENT.")
 	vars_and_tooltips_map = list(
 		"OFFICER" = "will be replaced with the officer's name.",
 		"DEPARTMENT" = "with the department they were assigned to."

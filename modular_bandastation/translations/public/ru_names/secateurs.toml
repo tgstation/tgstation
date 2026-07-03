@@ -1,0 +1,8 @@
+[secateurs]
+nominative = "секатор"
+genitive = "секатора"
+dative = "секатору"
+accusative = "секатор"
+instrumental = "секатором"
+prepositional = "секаторе"
+gender = "male"

@@ -1,0 +1,57 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/obj/machinery/defibrillator_mount/directional/west,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/bed/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"T" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/structure/bed/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+
+(1,1,1) = {"
+p
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+T
+"}

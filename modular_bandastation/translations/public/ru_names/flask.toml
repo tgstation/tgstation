@@ -1,0 +1,8 @@
+[flask]
+nominative = "фляга"
+genitive = "фляги"
+dative = "фляге"
+accusative = "флягу"
+instrumental = "флягой"
+prepositional = "фляге"
+gender = "female"

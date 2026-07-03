@@ -151,12 +151,12 @@
 	icon_state = "terrarium"
 	density = TRUE
 	mob_species = /datum/species/pod
-	you_are_text = "You are a sentient ecosystem, an example of the mastery over life that your creators possessed."
-	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
-	the universe to every planet they could chart. You are in one such seed vault. \
-	Your goal is to protect the vault you are assigned to, cultivate the seeds passed onto you, \
-	and eventually bring life to this desolate planet while waiting for contact from your creators. \
-	Estimated time of last contact: Deployment, 5000 millennia ago."
+	you_are_text = "Вы - разумная экосистема, пример господства над жизнью, которым обладали ваши создатели."
+	flavour_text = "Ваши хозяева, какими бы великодушными они ни были, создали бесчисленные хранилища семян и распространили их по \
+	вселенной до каждой планеты, которую они могли нанести на карту. Вы находитесь в одном из таких хранилищ семян. \
+	Ваша цель - защитить хранилище, к которому вы приписаны, взрастить переданные вам семена, \
+	и в конце концов вдохните жизнь в эту пустынную планету, ожидая контакта со своими создателями. \
+	Предполагаемое время последнего контакта: Прибытие, 5000 тысячелетий назад."
 	spawner_job_path = /datum/job/lifebringer
 
 /obj/effect/mob_spawn/ghost_role/human/seed_vault/Initialize(mapload)
@@ -218,10 +218,10 @@
 	outfit = /datum/outfit/ashwalker
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
-	you_are_text = "You are an ash walker. Your tribe worships the Necropolis."
-	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. \
-	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. \
-	Fresh sacrifices for your nest."
+	you_are_text = "Вы - эшволкер. Ваше племя поклоняется Некрополю."
+	flavour_text = "Пустоши - священная земля, а обитающие в них монстры - благословенное изобилие. \
+	Вы видели вдалеке огни... Они предвещают приход чужаков, которые стремятся разрушить Некрополь и его владения. \
+	Новые жертвы для вашего гнезда."
 	spawner_job_path = /datum/job/ash_walker
 	var/datum/team/ashwalkers/team
 	var/obj/structure/ash_walker_eggshell/eggshell
@@ -284,9 +284,9 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	prompt_name = "a syndicate science technician"
-	you_are_text = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
-	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
-	important_text = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
+	you_are_text = "Вы - учённый синдиката, нанятый на самый лучший актив по производству биологического оружия."
+	flavour_text = "Увы, ваш главный враг, Нанотрейзен, начал копать в этом секторе. Продолжайте исследования пока это возможно и не палитесь."
+	important_text = "База заложена взрывчаткой, не покидайте её и не дайте ей пасть в руки врагов!"
 	outfit = /datum/outfit/lavaland_syndicate
 	spawner_job_path = /datum/job/lavaland_syndicate
 	deletes_on_zero_uses_left = FALSE
@@ -299,9 +299,9 @@
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
 	prompt_name = "a syndicate comms agent"
-	you_are_text = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
-	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
-	important_text = "DO NOT abandon the base."
+	you_are_text = "Вы - офицер связи синдиката, нанятый на самый лучший актив по производству биологического оружия."
+	flavour_text = "Увы, ваш главный враг, Нанотрейзен, начал копать в этом секторе. Следите за каждым их шагом, и старайтесь не палиться. Используйте экипировку для коммуникации, чтобы помочь агентам, и дезинформируйте Нанотрейзен, чтобы сбить их с толку. Не допустите попадание базы в руки врага!"
+	important_text = "НЕ покидайте базу."
 	outfit = /datum/outfit/lavaland_syndicate/comms
 
 /datum/outfit/lavaland_syndicate
@@ -346,7 +346,7 @@
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
 	name = "Icemoon Comms Agent"
 	prompt_name = "a syndicate comms agent"
-	you_are_text = "You are a syndicate comms agent, assigned in an underground secret listening post close to your enemy's facility."
-	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the outpost fall into enemy hands!"
-	important_text = "Do NOT let the outpost fall into enemy hands"
+	you_are_text = "Вы - офицер связи синдиката, нанятый на подземный пост прослушки рядом с вашим врагом."
+	flavour_text = "Увы, ваш главный враг, Нанотрейзен, начал копать в этом секторе. Следите за каждым их шагом, и старайтесь не палиться. Используйте экипировку для коммуникации, чтобы помочь агентам, и дезинформируйте Нанотрейзен, чтобы сбить их с толку. Не допустите попадание базы в руки врага!"
+	important_text = "НЕ дайте аванпосту попасть в руки врага!"
 	outfit = /datum/outfit/lavaland_syndicate/comms/icemoon

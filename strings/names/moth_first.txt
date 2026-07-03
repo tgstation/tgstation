@@ -1,100 +1,68 @@
-Acantharctia
-Acco
-Acherontia
-Actias
-Aemilia
-Aethria
-Antheraea
-Aphomia
-Argema
-Ascalapha
-Asota
-Athrypsiastis
-Attacus
-Autochloris
-Axylia
-Bombyx
-Callhistia
-Callosamia
-Capricornia
-Catocala
-Cheliosea
-Chloroclystis
-Cochylimorpha
-Cryphia
-Cryptophasa
-Cucullia
-Cydia
-Diaphora
-Diarsia
-Dolichohedya
-Dyspyralis
-Eacles
-Eclipsea
-Electresia
-Elysius
-Enarmonia
-Epiphyas
-Eriomastyx
-Eugnorisma
-Eupithecia
-Euplexia
-Eurosia
-Falcatula
-Fangarctia
-Fulcrifera
-Glyphidoptera
-Gracillina
-Gravitarmata
-Haemanota
-Halysidota
-Helicoverpa
-Heliomata
-Hyalophora
-Hypomartyria
-Icelita
-Isanthrene
-Isochorista
-Izatha
-Kodiosoma
-Lacida
-Leguminivora
-Leucoptera
-Lymantria
-Macrobathra
-Maruca
-Mecodina
-Megalonycta
-Metacrisia
-Mythimna
-Naenia
-Naenia
-Neuroxena
-Nodaria
-Nymphicula
-Obscurior
-Ochropleura
-Opodiphthera
-Ostrinia
-Pacificulla
-Philomusaea
-Phragmataecia
-Plodia
-Plutella
-Rachiplusia
-Sarobela
-Selenarctia
-Shiragasane
-Socioplana
-Sphingidae
-Spodoptera
-Syllomatia
-Thaumetopoea
-Timandra
-Toxoproctis
-Uranophora
-Vestura
-Vietteria
-Xanthorhoe
-Xestia
-Zomaria
+Хранитель
+Хранитель Веков
+Светоч Забвения
+Глашатай
+Голос Вечности
+Помнящий
+Часовой
+Часовой Рассвета
+Эхо Первого Света
+Страж Последней Тени
+Песнь Звёзд
+Поэт Туманов
+Сказитель Орбит
+Резчик Света
+Ткач Судеб
+Певец Чёрных Дыр
+Художник Теней
+Слово Млечного Пути
+Строитель Арок
+Кузнец
+Кузнец Сфер
+Воздвигатель Врат
+Зодчий Пустоты
+Мастер Орбит
+Творец
+Хранитель Структур
+Хранитель Знаний
+Первооткрыватель Знаний
+Архитектор Судьбы
+Слуга Звёзд
+Гонец
+Послушник Света
+Верный Огню
+Видящий Сквозь Пыль Времён
+Мудрец Тёмных Звёзд
+Хранитель Запретных Орбит
+Пророк Красных Гигантов
+Толкователь
+Толкователь Сигналов
+Защитник
+Страж
+Жрец
+Тень
+Вестник
+Смотрящий
+Меч
+Копье
+Чтец
+Чтец Знаков
+Провожающий
+Дарующий Жизнь
+Собирающий Прах
+Эгида
+Ключник
+Погружающийся Во Тьму
+Проводник
+Скиталец
+Вычислитель
+Созерцатель
+Тушащий Пламя
+Копатель
+Зодчий
+Художник
+Определяющий Судьбу
+Счетовод
+Навигатор
+Направляющий К Звёздам
+Конструктор

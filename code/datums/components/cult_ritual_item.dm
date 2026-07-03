@@ -374,9 +374,9 @@
 	var/area/summon_location = get_area(cultist)
 	var/static/cult_music_played = FALSE
 	priority_announce(
-		text = "Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!",
-		sound = cult_music_played ? 'sound/announcer/notice/notice3.ogg' : 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
-		sender_override = "[command_name()] Higher Dimensional Affairs",
+		text = "Зафиксирован призыв древнего божества культистом [cultist.real_name] в [summon_location.get_original_area_name()]. Прервите ритуал любой ценой!",
+		sound = cult_music_played ? 'sound/announcer/notice/notice3.ogg' : 'modular_bandastation/cult_overhaul/sound/announcements/cult_summon.ogg', // BANDASTATION EDIT - Cult Overhaul
+		sender_override = "[command_name()]: Отдел паранормальных явлений",
 		has_important_message = TRUE,
 	)
 	cult_music_played = TRUE
@@ -384,7 +384,7 @@
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
 	notify_ghosts(
-		"[cultist.real_name] has begun scribing a Nar'Sie rune!",
+		"[cultist.real_name] начал рисовать руну Нар'Си!",
 		source = cultist,
 		header = "Maranax Infirmux!",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

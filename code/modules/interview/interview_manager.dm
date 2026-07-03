@@ -105,7 +105,7 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	var/admins_present = send2tgs_adminless_only("panic-bunker-interview", "Interview for [ckey] enqueued for review. Current position in queue: [to_queue.pos_in_queue]")
 	if (admins_present <= 0 && to_queue.owner)
 		to_chat(to_queue.owner, span_notice("No active admins are online, your interview's submission was sent through TGS to admins who are available. This may use IRC or Discord."))
-	for(var/client/X in GLOB.admins)
+	for(var/client/X as anything in get_holders_with_rights(R_ADMIN)) /// BANDASTATION EDIT: Proper permissions
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)

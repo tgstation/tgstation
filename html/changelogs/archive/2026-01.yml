@@ -280,6 +280,11 @@
       when its torch is enabled
   - image: Plasmamen Nuclear Operatives illuminate their skull with red light instead
       of purple
+  JohnFulpWillard:
+  - bugfix: Changing the job of one person from one job position to another won't
+      set EVERYONE ELSE of the old job's paycheck department to the new one.
+  Nari Harimoto:
+  - bugfix: Camera Consoles no longer hallucinate the Gateway in a different position
   - bugfix: Chainsaws can't behead people with unremovable heads.
   - bugfix: You can only put your own head on a spear or into a box if it is possible
       to remove your head.
@@ -320,6 +325,9 @@
       been refactored - please report any oddities.
   loganuk:
   - bugfix: Making surgery beds on top of stasis beds no longer possible
+  trickyfox-inc:
+  - admin: New adminverb "show occupants PP". You can now open the PP of mobs inside
+      vehicles, closets, machinery, body bags, etc. via the RMB context menu.
   - bugfix: Shuttle purchase screen now shows price for emag shuttles as well as normal
   mcbalaam:
   - rscadd: "Big Manipulators are now Smart\u2122"

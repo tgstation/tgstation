@@ -62,7 +62,7 @@
 		if(allowed(user))
 			start_taking_pictures()
 		else
-			balloon_alert(user, "access denied!")
+			balloon_alert(user, "в доступе отказано!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

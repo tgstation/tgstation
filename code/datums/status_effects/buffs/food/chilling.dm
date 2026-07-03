@@ -9,7 +9,7 @@
 
 /atom/movable/screen/alert/status_effect/icecream_chilling
 	name = "Cooling Off"
-	desc = "Nothing beats a cup of ice cream during hot, plasma-flooded day..."
+	desc = "Ничто не сравнится со стаканчиком мороженого в жаркий, насыщенный плазмой день..."
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "food_icecream"
 

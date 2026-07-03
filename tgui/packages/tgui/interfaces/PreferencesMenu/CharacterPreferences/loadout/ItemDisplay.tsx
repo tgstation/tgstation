@@ -1,11 +1,11 @@
 import { useBackend } from 'tgui/backend';
 import {
+  Button,
   DmIcon,
   Icon,
   ImageButton,
   NoticeBox,
   Stack,
-  Tooltip,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
@@ -51,51 +51,98 @@ export function ItemIcon(props: Props) {
 type DisplayProps = {
   active: boolean;
   item: LoadoutItem;
-  scale?: number;
 };
 
 export function ItemDisplay(props: DisplayProps) {
-  const { act } = useBackend();
-  const { active, item, scale = 3 } = props;
+  const { act, data } = useBackend<LoadoutManagerData>();
+  const { donator_level, loadout_leftpoints } = data;
+  const { active, item } = props;
+
+  const costText =
+    item.cost === 1
+      ? `${item.cost} очко`
+      : item.cost < 4
+        ? `${item.cost} очка`
+        : `${item.cost} очков`;
+
+  const textInfo = (
+    <Stack fill fontSize={1.2} textAlign="left">
+      <Stack.Item
+        grow
+        fontSize={1}
+        color="gold"
+        opacity={0.75}
+        style={{ textIndent: '0.25rem' }}
+      >
+        {item.tier > 0 && `Тир ${item.tier}`}
+      </Stack.Item>
+      <Stack.Item fontSize={0.75} opacity={0.66}>
+        {costText}
+      </Stack.Item>
+    </Stack>
+  );
+
+  function tooltipInfo() {
+    const disabledInfo: string[] = [];
+    if (!active && loadout_leftpoints === 0) {
+      disabledInfo.push('Недостаточно очков.');
+    }
+
+    if (item.tier > donator_level) {
+      disabledInfo.push(
+        'Этот предмет доступен на более высоком уровне подписки чем у вас.',
+      );
+    }
+
+    return (
+      <Stack fill vertical g={0.5}>
+        <Stack.Item mb={disabledInfo.length > 0 && 2}>{item.name}</Stack.Item>
+        {disabledInfo.length > 0 &&
+          disabledInfo.map((info, index) => (
+            <>
+              {index > 0 && <Stack.Divider />}
+              <Stack.Item key={index} color="bad">
+                {info}
+              </Stack.Item>
+            </>
+          ))}
+      </Stack>
+    );
+  }
 
   return (
-    <div style={{ position: 'relative' }}>
-      <ImageButton
-        imageSize={scale * 32}
-        color={active ? 'green' : 'default'}
-        style={{ textTransform: 'capitalize', zIndex: '1' }}
-        tooltip={item.name}
-        tooltipPosition={'bottom'}
-        dmIcon={item.icon}
-        dmIconState={item.icon_state}
-        onClick={() =>
-          act('select_item', {
-            path: item.path,
-            deselect: active,
-          })
-        }
-      />
-      <div
-        style={{ position: 'absolute', top: '8px', right: '8px', zIndex: '2' }}
-      >
-        {item.information.length > 0 && (
-          <Stack vertical>
-            {item.information.map((info) => (
-              <Stack.Item
-                key={info.icon}
-                fontSize="14px"
-                textColor={'darkgray'}
-                bold
-              >
-                <Tooltip position="right" content={info.tooltip}>
-                  <Icon name={info.icon} />
-                </Tooltip>
-              </Stack.Item>
-            ))}
-          </Stack>
-        )}
-      </div>
-    </div>
+    <ImageButton
+      m={0}
+      imageSize={90}
+      tooltip={tooltipInfo()}
+      tooltipPosition={'bottom-start'}
+      dmIcon={item.icon}
+      dmIconState={item.icon_state}
+      buttons={item.information.map((info) => (
+        <Button
+          key={info.icon}
+          icon={info.icon}
+          tooltip={info.tooltip}
+          tooltipPosition="top-start"
+          color="unset"
+          textColor="lightgray"
+          fontSize={1.2}
+        />
+      ))}
+      buttonsAlt={textInfo}
+      selected={active}
+      disabled={
+        !active && (loadout_leftpoints === 0 || item.tier > donator_level)
+      }
+      onClick={() =>
+        act('select_item', {
+          path: item.path,
+          deselect: active,
+        })
+      }
+    >
+      <span style={{ textTransform: 'capitalize' }}>{item.name}</span>
+    </ImageButton>
   );
 }
 
@@ -132,31 +179,38 @@ export function ItemListDisplay(props: ListProps) {
   const itemGroups = sortByGroup(props.items);
 
   return (
-    <Stack vertical>
-      {itemGroups.length > 1 && <Stack.Item />}
+    <Stack vertical g={3}>
       {itemGroups.map((group) => (
         <Stack.Item key={group.title}>
           <Stack vertical>
             {itemGroups.length > 1 && (
               <>
-                <Stack.Item mt={-1.5} mb={-0.8} ml={1.5}>
-                  <h3 color="grey">{group.title}</h3>
+                <Stack.Item bold fontSize={1.25} px={1}>
+                  {group.title}
                 </Stack.Item>
-                <Stack.Divider />
+                <Stack.Divider
+                  style={{ borderColor: 'var(--color-primary)' }}
+                />
               </>
             )}
             <Stack.Item>
-              <Stack wrap g={0.5}>
-                {group.items.map((item) => (
-                  <Stack.Item key={item.name}>
-                    <ItemDisplay
-                      item={item}
-                      active={
-                        loadout_list && loadout_list[item.path] !== undefined
-                      }
-                    />
-                  </Stack.Item>
-                ))}
+              <Stack wrap>
+                {group.items
+                  .sort((a, b) =>
+                    a.tier === b.tier
+                      ? a.name.localeCompare(b.name)
+                      : a.tier - b.tier,
+                  )
+                  .map((item) => (
+                    <Stack.Item key={item.name}>
+                      <ItemDisplay
+                        item={item}
+                        active={
+                          loadout_list && loadout_list[item.path] !== undefined
+                        }
+                      />
+                    </Stack.Item>
+                  ))}
               </Stack>
             </Stack.Item>
           </Stack>
@@ -199,7 +253,9 @@ export function SearchDisplay(props: SearchProps) {
   const validLoadoutItems = loadout_tabs
     .flatMap((tab) => tab.contents)
     .filter(search)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+    .sort((a, b) =>
+      a.tier === b.tier ? a.name.localeCompare(b.name) : a.tier - b.tier,
+    );
 
   if (validLoadoutItems.length === 0) {
     return <NoticeBox>No items found!</NoticeBox>;

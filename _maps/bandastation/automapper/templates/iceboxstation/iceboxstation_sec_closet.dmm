@@ -1,0 +1,11 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/effect/landmark/secequipment,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/office)
+
+(1,1,1) = {"
+a
+"}

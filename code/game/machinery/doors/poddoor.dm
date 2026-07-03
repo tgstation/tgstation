@@ -122,7 +122,7 @@
 			balloon_alert(user, "open the door first!")
 			return ITEM_INTERACT_BLOCKING
 		if(!panel_open)
-			balloon_alert(user, "open the panel first!")
+			balloon_alert(user, "нужно открыть панель!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/assembly/control/blast_door/controller_item = tool
 		if(controller_item.id == -1)
@@ -160,7 +160,7 @@
 		balloon_alert(user, "open the door first!")
 		return ITEM_INTERACT_BLOCKING
 	if (!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, "нужно открыть панель!")
 		return ITEM_INTERACT_BLOCKING
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return ITEM_INTERACT_BLOCKING
@@ -178,7 +178,7 @@
 		balloon_alert(user, "open the door first!")
 		return ITEM_INTERACT_BLOCKING
 	if (!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, "нужно открыть панель!")
 		return ITEM_INTERACT_BLOCKING
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
 		return ITEM_INTERACT_BLOCKING
@@ -197,7 +197,7 @@
 		balloon_alert(user, "open the door first!")
 		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, "нужно открыть панель!")
 		return ITEM_INTERACT_SUCCESS
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
 		return

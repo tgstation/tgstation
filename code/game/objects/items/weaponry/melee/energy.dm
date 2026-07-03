@@ -172,7 +172,7 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/axe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.

@@ -40,5 +40,5 @@
 	SIGNAL_HANDLER
 	// if we were passed the output of a callback, check against that
 	if(!tertiary_condition?.Invoke() && !is_type_in_typecache(pickingup, whitelist))
-		to_chat(source, span_warning("[replacetext(message, "%TARGET", pickingup)]"))
+		to_chat(source, span_warning("[replacetext(message, "%TARGET", pickingup.declent_ru(ACCUSATIVE))]"))
 		return COMPONENT_LIVING_CANT_PUT_IN_HAND

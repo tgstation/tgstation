@@ -1,0 +1,8 @@
+[bedsheet]
+nominative = "простыня"
+genitive = "простыни"
+dative = "простыне"
+accusative = "простыню"
+instrumental = "простыней"
+prepositional = "простыне"
+gender = "female"

@@ -71,7 +71,7 @@
 		to_chat(user, span_alien("You see [target] twitch for a moment as [target.p_their()] head is covered in \a [infection] - [target.p_Theyve()] been infected."))
 
 /obj/item/mutant_hand/zombie/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is ripping [user.p_their()] brains out! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.dismember()

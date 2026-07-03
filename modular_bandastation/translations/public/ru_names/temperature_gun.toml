@@ -1,0 +1,8 @@
+["temperature gun"]
+nominative = "температурная винтовка"
+genitive = "температурной винтовки"
+dative = "температурной винтовке"
+accusative = "температурную винтовку"
+instrumental = "температурной винтовкой"
+prepositional = "температурной винтовке"
+gender = "male"

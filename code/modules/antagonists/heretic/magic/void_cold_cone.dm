@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
-	name = "Void Blast"
-	desc = "Fires a cone of chilling void in front of you, freezing everything in its path. \
-		Enemies in the cone of the blast will be damaged slightly, slowed, and chilled overtime. \
-		Additionally, objects hit will be frozen and can shatter, and ground hit will be iced over and slippery - \
-		though they may thaw shortly if used in room temperature."
+	name = "Пустотный взрыв"
+	desc = "Выпускает перед собой конус ледяной пустоты, замораживающий всё на своем пути. \
+		Попавшие под конус враги получают незначительные повреждения, замедляются и остывают. \
+		Кроме того, объекты будут заморожены и могут быть разбиты, а земля превратится в скользкий лёд - \
+		который быстро растает, если использовать навык при комнатной температуре."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon_state = "icebeam"

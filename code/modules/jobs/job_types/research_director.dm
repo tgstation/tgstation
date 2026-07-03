@@ -1,20 +1,20 @@
 /datum/job/research_director
 	title = JOB_RESEARCH_DIRECTOR
-	description = "Supervise research efforts, ensure Robotics is in working \
-		order, make sure the AI and its Cyborgs aren't rogue, replace them if \
-		they are."
+	description = "Руководите научным отделом, удостоверьтесь, что отдел робототехники \
+		штатно функционирует, следите, чтобы ИИ и киборги не были сбойными, в противном случае \
+		замените их."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = RADIO_CHANNEL_SCIENCE
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = JOB_CAPTAIN_RU
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_required_type_department = EXP_TYPE_SCIENCE
-	exp_requirements = 180
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
-	exp_granted_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_COMMAND
 	config_tag = "RESEARCH_DIRECTOR"
 
 	outfit = /datum/outfit/job/rd
@@ -49,7 +49,7 @@
 
 
 /datum/job/research_director/get_captaincy_announcement(mob/living/captain)
-	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
+	return "В связи с нехваткой персонала, недавно назначенный исполняющий обязанности капитана [captain.real_name] на борту!"
 
 
 /datum/outfit/job/rd

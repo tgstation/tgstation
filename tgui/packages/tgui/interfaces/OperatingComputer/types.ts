@@ -15,7 +15,7 @@ export type OperatingComputerData = {
 export type PatientData = {
   health: number;
   blood_type: string;
-  stat: 'Conscious' | 'Unconscious' | 'Dead';
+  stat: 'В сознании' | 'Без сознания' | 'Мёртв';
   statstate: 'good' | 'average' | 'bad';
   minHealth: number;
   maxHealth: number;
@@ -49,19 +49,19 @@ export type damageType = {
 
 export const damageTypes: damageType[] = [
   {
-    label: 'Brute',
+    label: 'Ушибы',
     type: 'bruteLoss',
   },
   {
-    label: 'Burn',
+    label: 'Ожоги',
     type: 'fireLoss',
   },
   {
-    label: 'Toxin',
+    label: 'Токсины',
     type: 'toxLoss',
   },
   {
-    label: 'Respiratory',
+    label: 'Удушье',
     type: 'oxyLoss',
   },
 ];

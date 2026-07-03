@@ -1,4 +1,4 @@
-ADMIN_VERB(policy_panel, R_ADMIN, "Policy Panel", "View all policy the server has set.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(policy_panel, R_ADMIN, "Policy Panel", "View all policy the server has set.", ADMIN_CATEGORY_HIDDEN) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_MAIN
 	if(!length(global.config?.policy))
 		tgui_alert(usr, "Policy hasn't loaded yet (or the server has none set).", "Policy Panel", list("OK"))
 		return

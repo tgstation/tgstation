@@ -1,0 +1,132 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/glass,
+/obj/machinery/computer/records/medical/laptop,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"b" = (
+/obj/structure/table/glass,
+/obj/machinery/light_switch/directional/north{
+	pixel_y = 28;
+	pixel_x = 5
+	},
+/obj/item/storage/briefcase/secure{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = -4
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"f" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"h" = (
+/obj/structure/table/glass,
+/obj/structure/cable,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
+/obj/item/folder/white,
+/obj/item/folder/blue{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/glasses/hud/health,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"o" = (
+/obj/structure/chair/office/light,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"q" = (
+/obj/structure/table/glass,
+/obj/item/paper_bin,
+/obj/item/clipboard,
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/stamp/head/cmo{
+	pixel_x = -9
+	},
+/obj/item/toy/figure/cmo,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"s" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/command/heads_quarters/cmo)
+"M" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"Q" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/machinery/fax/heads/cmo,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"S" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"T" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+"U" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
+
+(1,1,1) = {"
+b
+f
+U
+a
+"}
+(2,1,1) = {"
+Q
+s
+M
+q
+"}
+(3,1,1) = {"
+S
+T
+o
+h
+"}

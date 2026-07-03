@@ -2,7 +2,7 @@
 
 /obj/machinery/fugitive_capture
 	name = "bluespace capture machine"
-	desc = "Much, MUCH bigger on the inside to transport prisoners safely."
+	desc = "Внутри она гораздо, ГОРАЗДО больше, чтобы безопасно перевозить заключённых."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "bluespace-prison"
 	density = TRUE
@@ -11,7 +11,7 @@
 
 /obj/machinery/fugitive_capture/examine(mob/user)
 	. = ..()
-	. += span_notice("Add a prisoner by dragging them into the machine.")
+	. += span_notice("Добавьте заключённого, перетащив его в машину.")
 
 /obj/machinery/fugitive_capture/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/fugitive_hunter = user
@@ -28,7 +28,7 @@
 /obj/machinery/fugitive_capture/proc/add_prisoner(mob/living/carbon/human/fugitive, datum/antagonist/fugitive/antag)
 	fugitive.forceMove(src)
 	antag.is_captured = TRUE
-	to_chat(fugitive, span_userdanger("You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture."))
+	to_chat(fugitive, span_userdanger("Вас выбрасывает в бескрайнюю пустоту блюспейса, и по мере того, как вы погружаетесь все глубже в забвение, сравнительно небольшой проход в реальность становится все меньше и меньше, пока вы не перестаёте его видеть. Вам не удалось избежать поимки."))
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
 	use_energy(active_power_usage)
 
@@ -40,7 +40,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter
 	name = "shuttle navigation computer"
-	desc = "Used to designate a precise transit location to travel to."
+	desc = "Используется для определения точного транзитного местоположения, в который следует отправиться."
 	shuttleId = "huntership"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "huntership_custom"
@@ -68,7 +68,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker
 	name = "psyker navigation warper"
-	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
+	desc = "Использует усиленные мозговые волны, чтобы определить и нанести на карту точное местоположение шаттла псайкеров."
 	icon_screen = "recharge_comp_on"
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON //blind friendly
 	x_offset = 0
@@ -76,7 +76,7 @@
 
 /obj/machinery/fugitive_capture/psyker
 	name = "psyker recreation cell"
-	desc = "A repurposed recreation chamber frequently used by psykers, which soothes its user by bombarding them with loud noises and painful stimuli. Repurposed for the storage of prisoners, and should have no (lasting) side effects on non-psykers forced into it."
+	desc = "Перепрофилированная рекреационная камера, часто используемая псайкерами, которая успокаивает пользователя, подвергая его воздействию громких звуков и болезненных стимулов. Переоборудована для содержания заключённых и не должна оказывать (длительных) побочных эффектов на не-псайкеров, помещённых в неё принудительно."
 
 /obj/machinery/fugitive_capture/psyker/process() //I have no fucking idea how to make click-dragging work for psykers so this one just sucks them in.
 	for(var/mob/living/carbon/human/potential_victim in range(1, get_turf(src)))
@@ -88,7 +88,7 @@
 /// Psyker gear
 /obj/item/reagent_containers/hypospray/medipen/gore
 	name = "gore autoinjector"
-	desc = "A ghetto-looking autoinjector filled with gore, aka dirty kronkaine. You probably shouldn't take this while on the job, but it is a super-stimulant. Don't take two at once."
+	desc = "Автоинъектор сомнительного вида, наполненный гором, он же грязный кронкейн. Вероятно, не стоит принимать его во время работы, но это суперстимулятор. Не принимайте сразу две дозы."
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/drug/kronkaine/gore = 15)
@@ -100,9 +100,9 @@
 
 /obj/item/clothing/suit/armor/reactive/psykerboost
 	name = "reactive psykerboost armor"
-	desc = "An experimental suit of armor psykers use to push their mind further. Reacts to hostiles by powering up the wearer's psychic abilities."
-	cooldown_message = span_danger("The psykerboost armor's mental coils are still cooling down!")
-	emp_message = span_danger("The psykerboost armor's mental coils recalibrate for a moment with a soft whine.")
+	desc = "Экспериментальная броня, которую псайкеры используют, чтобы расширить возможности своего разума. Реагирует на врагов, усиливая психические способности носителя."
+	cooldown_message = span_danger("Ментальные катушки брони усиления псиоников всё ещё остывают!")
+	emp_message = span_danger("Ментальные катушки брони усиления псиоников на мгновение перекалибровываются с тихим жалобным звуком.")
 	color = "#d6ad8b"
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/cooldown_activation(mob/living/carbon/human/owner)
@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], psykerboosting [owner]'s mental powers!"))
+	owner.visible_message(span_danger("[src.declent_ru(NOMINATIVE)] блокирует [attack_text], усиливая психическую силу [owner]!"))
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)
 		if(psychic_ability.school == SCHOOL_PSYCHIC)
 			psychic_ability.reset_spell_cooldown()
@@ -118,7 +118,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], draining [owner]'s mental powers!"))
+	owner.visible_message(span_danger("[src.declent_ru(NOMINATIVE)] блокирует [attack_text], истощая психическую силу [owner]!"))
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)
 		if(psychic_ability.school == SCHOOL_PSYCHIC)
 			psychic_ability.StartCooldown()
@@ -127,7 +127,7 @@
 
 /obj/structure/bouncy_castle
 	name = "bouncy castle"
-	desc = "And if you do drugs, you go to hell before you die. Please."
+	desc = "Если вы принимаете наркотики, то перед смертью попадёте в ад. Пожалуйста."
 	icon = 'icons/obj/toys/bouncy_castle.dmi'
 	icon_state = "bouncy_castle"
 	anchored = TRUE
@@ -160,8 +160,8 @@
 
 /obj/item/paper/crumpled/fluff/fortune_teller
 	name = "scribbled note"
-	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
-		Even if it's completely useless to us, resist the urge to chew it."
+	default_raw_text = "<b>Помните!</b> Клиентам нравится, что у нас есть жевательная резинка в виде хрустального шара. \
+		Даже если это совершенно бесполезно для нас, не поддавайтесь желанию пожевать его."
 
 /**
  * # Bounty Locator
@@ -173,8 +173,8 @@
  */
 /obj/machinery/fugitive_locator
 	name = "Bounty Locator"
-	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
-		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for no matter where they're hiding."
+	desc = "Отслеживает сигнатуры целей за награду в вашем секторе. Никто на самом деле не знает, какой механизм использует эта штука для отслеживания целей. \
+		Будь то блюспейс запутанность или простой RFID-имплант, эта машина найдёт того, кого вы ищете, где бы он ни скрывался."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator-Purple"
 	density = TRUE
@@ -187,9 +187,9 @@
 		return
 	var/mob/living/bounty = locate_fugitive()
 	if(!bounty)
-		say("No bounty targets detected.")
+		say("Не обнаружено никаких целей за вознаграждение.")
 	else
-		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
+		say("Обнаружена цель для получения награды. Имя на карте цели: [bounty.real_name]. Местоположение: [get_area_name(bounty)]")
 
 	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
 
@@ -210,7 +210,7 @@
 
 /obj/item/radio/headset/psyker
 	name = "psychic headset"
-	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
+	desc = "Гарнитура, предназначенная для усиления психических волн. Защищает уши от светошумовых гранат."
 	icon_state = "psyker_headset"
 	worn_icon_state = "syndie_headset"
 	freerange = TRUE

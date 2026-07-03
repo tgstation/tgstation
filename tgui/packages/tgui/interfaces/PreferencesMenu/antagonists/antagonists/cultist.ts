@@ -2,18 +2,18 @@ import { type Antagonist, Category } from '../base';
 
 const Cultist: Antagonist = {
   key: 'cultist',
-  name: 'Cultist',
+  name: 'Культист',
   description: [
     `
-      The Geometer of Blood, Nar-Sie, has sent a number of her followers to
-      Space Station 13. As a cultist, you have an abundance of cult magics at
-      your disposal, something for all situations. You must work with your
-      brethren to summon an avatar of your eldritch goddess!
+      Богиня Крови, Нар-Си, отправила несколько своих последователей на
+      космическую станцию 13. Как культист, вы имеете в своем распоряжении
+      множество заклинаний культа, подходящих для любых ситуаций. Вы должны работать
+      вместе со своими собратьями, чтобы призвать аватар вашей мистической богини!
     `,
 
     `
-      Armed with blood magic, convert crew members to the Blood Cult, sacrifice
-      those who get in the way, and summon Nar-Sie.
+      Вооружившись магией крови, обратите членов экипажа в Культ крови,
+      принесите в жертву мешающим вам, и призовите Нар-Си.
     `,
   ],
   category: Category.Roundstart,

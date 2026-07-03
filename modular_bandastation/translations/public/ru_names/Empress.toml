@@ -1,0 +1,8 @@
+[Empress]
+nominative = "Императрица"
+genitive = "Императрицы"
+dative = "Императрице"
+accusative = "Императрицу"
+instrumental = "Императрицей"
+prepositional = "Императрице"
+gender = "female"

@@ -3,7 +3,7 @@
 	filedesc = "Plexagon Access Management"
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "id"
-	extended_desc = "Program for programming employee ID cards to access parts of the station."
+	extended_desc = "Программа для изменения доступов у ID-карт сотрудников."
 	download_access = list(ACCESS_COMMAND)
 	size = 8
 	tgui_id = "NtosCard"
@@ -164,7 +164,7 @@
 
 			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
 			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
-			var/new_name = sanitize(params["name"])
+			var/new_name = sanitize(params["name"], apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 
 			if(!new_name)
 				modified_id.registered_name = null
@@ -206,7 +206,7 @@
 		if("PRG_assign")
 			if(!computer || !authenticated_card || !modified_id)
 				return TRUE
-			var/new_asignment = trim(sanitize(params["assignment"]), MAX_NAME_LEN)
+			var/new_asignment = trim(sanitize(params["assignment"], apply_ic_filter = TRUE), MAX_NAME_LEN)
 			modified_id.assignment = new_asignment
 			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
 			modified_id.update_label()

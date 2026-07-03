@@ -1,11 +1,11 @@
 /datum/job/curator
 	title = JOB_CURATOR
-	description = "Read and write books and hand them to people, stock \
-		bookshelves, report on station news."
+	description = "Пишите и читайте книги, вручайте их людям, пополняйте \
+		книжные полки, ведите новостную колонку."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = JOB_HEAD_OF_PERSONNEL_RU
 	config_tag = "CURATOR"
 	exp_granted_type = EXP_TYPE_CREW
 

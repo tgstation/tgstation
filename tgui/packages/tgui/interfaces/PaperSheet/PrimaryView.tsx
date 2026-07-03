@@ -1,158 +1,199 @@
-import { Component, createRef, type RefObject } from 'react';
-import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
+import { type KeyboardEvent, useRef, useState } from 'react';
+import { Button, Stack } from 'tgui-core/components';
+import { KEY } from 'tgui-core/keys';
 
-import { useBackend, useLocalState } from '../../backend';
-import { TEXTAREA_INPUT_HEIGHT } from './constants';
+import { useBackend } from '../../backend';
+import {
+  REPLACEMENT_TOKEN_START_REGEX,
+  TEXTAREA_INPUT_HEIGHT,
+} from './constants';
+import { canEdit } from './helpers';
 import { PreviewView } from './Preview';
+import { ReplacementHint } from './ReplacementHint';
 import { PaperSheetStamper } from './Stamper';
-import { InteractionType, type PaperContext, type PaperInput } from './types';
+import { TextAreaSection } from './TextAreaSection';
+import type { PaperContext, PaperReplacement } from './types';
 
 // Overarching component that holds the primary view for papercode.
-export class PrimaryView extends Component {
+export function PrimaryView() {
+  const [textAreaActive, setTextAreaActive] = useState(false);
+  const [textAreaText, setTextAreaText] = useState('');
+  const [textAreaTextForPreview, setTextAreaTextForPreview] = useState('');
+  const [activeWriteButtonId, setActiveWriteButtonId] = useState('');
+  const [selectedHintButtonId, setSelectedHintButtonId] = useState(0);
+  const [paperReplacementHint, setPaperReplacementHint] = useState<
+    PaperReplacement[]
+  >([]);
+  const [lastDistanceFromBottom, setLastDistanceFromBottom] = useState(0);
+
   // Reference that gets passed to the <Section> holding the main preview.
   // Eventually gets filled with a reference to the section's scroll bar
   // funtionality.
-  scrollableRef: RefObject<HTMLDivElement | null>;
+  const scrollableRef = useRef<HTMLDivElement>(null);
+  const usedReplacementsRef = useRef<PaperReplacement[]>([]);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  // The last recorded distance the scrollbar was from the bottom.
-  // Used to implement "text scrolls up instead of down" behaviour.
-  lastDistanceFromBottom: number;
+  const { data } = useBackend<PaperContext>();
+  const { held_item_details } = data;
+  const writeMode = canEdit(held_item_details);
 
   // Event handler for the onscroll event. Also gets passed to the <Section>
   // holding the main preview. Updates lastDistanceFromBottom.
-  onScrollHandler: (this: GlobalEventHandlers, ev: Event) => any;
+  function onScrollHandler(this: GlobalEventHandlers, ev: Event) {
+    const scrollable = ev.currentTarget as HTMLDivElement;
+    if (scrollable) {
+      setLastDistanceFromBottom(scrollable.scrollHeight - scrollable.scrollTop);
+    }
+  }
 
-  constructor(props) {
-    super(props);
-    this.scrollableRef = createRef();
-    this.lastDistanceFromBottom = 0;
+  function applyReplacementByHint(buttonKey: string) {
+    if (!textAreaRef?.current) {
+      return;
+    }
 
-    this.onScrollHandler = (ev) => {
-      const scrollable = ev.currentTarget as HTMLDivElement;
-      if (scrollable) {
-        this.lastDistanceFromBottom =
-          scrollable.scrollHeight - scrollable.scrollTop;
+    const textAreaValue = textAreaRef.current.value;
+    const selectionStart = textAreaRef.current.selectionStart;
+    if (!textAreaValue || !selectionStart) {
+      return [];
+    }
+
+    const match = textAreaValue
+      .substring(0, selectionStart)
+      .match(REPLACEMENT_TOKEN_START_REGEX);
+
+    if (!match) {
+      return;
+    }
+
+    const matchedText = match[0];
+    const matchIndex = match.index;
+    if (matchIndex === undefined) {
+      return;
+    }
+
+    const updatedTextArea =
+      textAreaValue.slice(0, matchIndex) +
+      `[${buttonKey}]` +
+      textAreaValue.slice(matchIndex + matchedText.length);
+
+    setTextAreaText(updatedTextArea);
+    setTextAreaTextForPreview(updatedTextArea);
+    setPaperReplacementHint([]);
+    setSelectedHintButtonId(0);
+
+    textAreaRef.current.focus();
+  }
+
+  function handleHintListInteraction(
+    event: KeyboardEvent<HTMLTextAreaElement | HTMLDivElement>,
+  ): void {
+    if (!paperReplacementHint.length || !textAreaActive) {
+      return;
+    }
+
+    switch (event.key) {
+      case KEY.Up:
+      case KEY.Down:
+        handleArrowKeys(event.key);
+        event.preventDefault();
+        break;
+      case KEY.Tab:
+      case KEY.Enter:
+        handleEnterKey();
+        event.preventDefault();
+        break;
+    }
+  }
+
+  function handleArrowKeys(key: KEY.Up | KEY.Down) {
+    const lastIndex = paperReplacementHint.length - 1;
+    const firstIndex = 0;
+
+    setSelectedHintButtonId((id) => {
+      const newId = key === KEY.Up ? id - 1 : id + 1;
+      const clampedId = Math.max(firstIndex, Math.min(lastIndex, newId));
+      const selectedButton = document.querySelector(
+        `#Paper__Hints .Paper__Hints--hint:nth-child(${clampedId + 1})`,
+      );
+
+      if (selectedButton) {
+        selectedButton.scrollIntoView({ behavior: 'auto', block: 'nearest' });
       }
-    };
+
+      return clampedId;
+    });
   }
 
-  render() {
-    const { act, data } = useBackend<PaperContext>();
-    const {
-      raw_text_input,
-      raw_field_input,
-      default_pen_font,
-      default_pen_color,
-      paper_color,
-      held_item_details,
-      max_length,
-    } = data;
+  function handleEnterKey() {
+    applyReplacementByHint(paperReplacementHint[selectedHintButtonId].key);
+  }
 
-    const useFont = held_item_details?.font || default_pen_font;
-    const useColor = held_item_details?.color || default_pen_color;
-    const useBold = held_item_details?.use_bold || false;
-
-    const [inputFieldData, setInputFieldData] = useLocalState(
-      'inputFieldData',
-      {},
-    );
-
-    const [textAreaText, setTextAreaText] = useLocalState('textAreaText', '');
-
-    const interactMode =
-      held_item_details?.interaction_mode || InteractionType.reading;
-
-    const savableData =
-      textAreaText.length || Object.keys(inputFieldData).length;
-
-    const dmCharacters =
-      raw_text_input?.reduce((lhs: number, rhs: PaperInput) => {
-        return lhs + rhs.raw_text.length;
-      }, 0) || 0;
-
-    const usedCharacters = dmCharacters + textAreaText.length;
-
-    const tooManyCharacters = usedCharacters > max_length;
-
-    const canEdit = interactMode === InteractionType.writing;
-
-    return (
-      <>
-        <PaperSheetStamper scrollableRef={this.scrollableRef} />
-        <Flex direction="column" fillPositionedParent>
-          <Flex.Item grow={3} basis={1}>
-            <PreviewView
-              key={`${raw_field_input?.length || 0}_${
-                raw_text_input?.length || 0
-              }`}
-              scrollableRef={this.scrollableRef}
-              handleOnScroll={this.onScrollHandler}
-              textArea={textAreaText}
-              canEdit={canEdit}
-            />
-          </Flex.Item>
-          {canEdit && (
-            <Flex.Item shrink={1} height={`${TEXTAREA_INPUT_HEIGHT}px`}>
-              <Section
-                title="Insert Text"
-                fitted
-                fill
-                buttons={
-                  <>
-                    <Box
-                      inline
-                      pr={'5px'}
-                      color={tooManyCharacters ? 'bad' : 'default'}
-                    >
-                      {`${usedCharacters} / ${max_length}`}
-                    </Box>
-                    <Button.Confirm
-                      disabled={!savableData || tooManyCharacters}
-                      color="good"
-                      onClick={() => {
-                        if (textAreaText.length) {
-                          act('add_text', { text: textAreaText });
-                          setTextAreaText('');
-                        }
-                        if (Object.keys(inputFieldData).length) {
-                          act('fill_input_field', {
-                            field_data: inputFieldData,
-                          });
-                          setInputFieldData({});
-                        }
-                      }}
-                    >
-                      Save
-                    </Button.Confirm>
-                  </>
-                }
+  return (
+    <>
+      <PaperSheetStamper scrollableRef={scrollableRef} />
+      <Stack vertical fillPositionedParent g={0}>
+        <Stack.Item grow={3} basis={1}>
+          <PreviewView
+            paperContext={data}
+            scrollableRef={scrollableRef}
+            handleOnScroll={onScrollHandler}
+            activeWriteButtonId={activeWriteButtonId}
+            setActiveWriteButtonId={setActiveWriteButtonId}
+            textAreaTextForPreview={textAreaTextForPreview}
+            setTextAreaActive={setTextAreaActive}
+            usedReplacementsRef={usedReplacementsRef}
+          />
+        </Stack.Item>
+        {writeMode &&
+          (textAreaActive ? (
+            <Stack.Item
+              shrink={1}
+              height={`${TEXTAREA_INPUT_HEIGHT}px`}
+              position="relative"
+            >
+              {paperReplacementHint.length > 0 && textAreaActive && (
+                <Stack className="Paper__Hints--wrapper">
+                  <Stack.Item className="Paper__Hints" grow>
+                    <ReplacementHint
+                      onKeyDown={handleHintListInteraction}
+                      paperReplacementHint={paperReplacementHint}
+                      selectedHintButtonId={selectedHintButtonId}
+                      onHintButtonClick={applyReplacementByHint}
+                    />
+                  </Stack.Item>
+                  <Stack.Item className="Paper__Hints--blur" m={0} />
+                </Stack>
+              )}
+              <TextAreaSection
+                paperContext={data}
+                textAreaText={textAreaText}
+                activeWriteButtonId={activeWriteButtonId}
+                lastDistanceFromBottom={lastDistanceFromBottom}
+                usedReplacementsRef={usedReplacementsRef}
+                textAreaRef={textAreaRef}
+                scrollableRef={scrollableRef}
+                paperReplacementHint={paperReplacementHint}
+                handleTextAreaKeyDown={handleHintListInteraction}
+                setTextAreaText={setTextAreaText}
+                setTextAreaActive={setTextAreaActive}
+                setTextAreaTextForPreview={setTextAreaTextForPreview}
+                setPaperReplacementHint={setPaperReplacementHint}
+                setSelectedHintButtonId={setSelectedHintButtonId}
+                setActiveWriteButtonId={setActiveWriteButtonId}
+              />
+            </Stack.Item>
+          ) : (
+            <Stack.Item textAlign="right">
+              <Button
+                icon={'up-long'}
+                iconPosition="right"
+                onClick={() => setTextAreaActive(true)}
               >
-                <TextArea
-                  style={{ border: 'none' }}
-                  value={textAreaText}
-                  textColor={useColor}
-                  fontFamily={useFont}
-                  bold={useBold}
-                  height="100%"
-                  fluid
-                  backgroundColor={paper_color}
-                  onChange={(value) => {
-                    setTextAreaText(value);
-
-                    if (this.scrollableRef.current) {
-                      const thisDistFromBottom =
-                        this.scrollableRef.current.scrollHeight -
-                        this.scrollableRef.current.scrollTop;
-                      this.scrollableRef.current.scrollTop +=
-                        thisDistFromBottom - this.lastDistanceFromBottom;
-                    }
-                  }}
-                />
-              </Section>
-            </Flex.Item>
-          )}
-        </Flex>
-      </>
-    );
-  }
+                Открыть редактор
+              </Button>
+            </Stack.Item>
+          ))}
+      </Stack>
+    </>
+  );
 }

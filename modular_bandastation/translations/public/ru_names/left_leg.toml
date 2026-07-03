@@ -1,0 +1,8 @@
+["left leg"]
+nominative = "левая нога"
+genitive = "левой ноги"
+dative = "левой ноге"
+accusative = "левую ногу"
+instrumental = "левой ногой"
+prepositional = "левой ноге"
+gender = "female"

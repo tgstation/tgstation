@@ -2,12 +2,12 @@ import { type Antagonist, Category } from '../base';
 
 const BloodBrother: Antagonist = {
   key: 'bloodbrother',
-  name: 'Blood Brother',
+  name: 'Кровный брат',
   description: [
     `
-      Team up with other crew members as blood brothers to combine the strengths
-      of your departments, break each other out of prison, and overwhelm the
-      station.
+      Объединитесь с другими членами команды как кровные братья,
+      чтобы объединить сильные стороны своих отделов,
+      вызволить друг друга из тюрьмы и побороть станцию.
     `,
   ],
   category: Category.Roundstart,

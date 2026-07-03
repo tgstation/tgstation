@@ -1,7 +1,7 @@
 /datum/heretic_knowledge_tree_column/rust
 	route = PATH_RUST
 	ui_bgr = "node_rust"
-	complexity = "Medium"
+	complexity = "Умеренная"
 	complexity_color = COLOR_YELLOW
 	icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
@@ -11,31 +11,31 @@
 		"moving" = FALSE,
 	)
 	description = list(
-		"The Path of Rust revolves around durability, corruption and brute forcing your way through obstacles.",
-		"Pick this path if you enjoy a standing your ground and letting the fight come to you.",
+		"Путь Ржавчины посвящен стойкости, разложению и преодолению препятствий с помощью грубой силы.",
+		"Выбирайте этот путь, если вам нравится находиться на своей территории и позволять сражению прийти к вам самим.",
 	)
 	pros = list(
-		"Standing on rusted tiles makes you highly durable; regenerating wounds and removing stuns.",
-		"Rusted tiles harm your foes and slow them down.",
-		"You are able to destroy walls, objects, mechs, structures and airlocks with ease.",
-		"You can instantly obliterate silicons or synthetic crew members with your Mansus Grasp.",
-		"You have a high amount of disruption abilities to make it easier to fight in your territory.",
+		"Стоя на ржавом полу, вы становитесь очень стойким, заживляете раны и снимаете оглушение.",
+		"Ржавый пол наносит урон вашим врагам и замедляют их.",
+		"Вы можете с легкостью разрушать стены, предметы, мехов, сооружения и шлюзы.",
+		"Вы можете мгновенно уничтожить силиконов или синтетических членов экипажа с помощью «Хватка Мансуса».",
+		"У вас есть множество способностей, позволяющих с легкостью сражаться на своей территории.",
 	)
 	cons = list(
-		"Extremely overt; throws stealth completely out as an option.",
-		"If you are not on rusted tiles, you become significantly more vulnerable.",
-		"Being locked to a territorial conflict makes it much easier to use destructive tools (like bombs) against you.",
-		"Your high amount of defensive power is at the cost of offensive power.",
+		"Чрезвычайно открытый; полностью исключает возможность скрытности.",
+		"Если вы не стоите на ржавых плитках, вы становитесь гораздо более уязвимыми.",
+		"Будучи запертым в рамках своей территории, против вас гораздо проще использовать разрушительные средства (такие как бомбы).",
+		"Ваша высокая защита достигается за счет снижения атакующей силы.",
 	)
 	tips = list(
-		"Your Mansus Grasp will instantly destroy mechs, silicons and androids. Hitting a marked target with your blade will cause heavy disgust and make them vomit, knocking them down briefly.",
-		"Your Mansus Grasp and your spells are capable of rusting walls and floors, making them beneficial to you and harmful to the crew and silicons. Spread rust as much as possible.",
-		"Rusted turfs will heal you, regulate your blood temperature, make you resistant to batons knockdown, regenerate your stamina and blood and heal your wound and limbs once you level up your passive.",
-		"Always fight on your turf. Your opponent entering your turf are at a significant disadvantage.",
-		"Your Reassembled Raiment is only empowered while you are on your rusted tiles. If you want the most out of its power, stay on your rusted tiles.",
-		"Your ability to destroy objects and walls improves as your passive ugprade increases; eventually you will be able to melt through airlocks, reinforced walls and even titanium walls.",
-		"Spreading rust can be fairly slow, especially early on. Consider summoning a few rust walkers to help you expand your domain.",
-		"Rusted Construction allows you to produce barriers for cover or escape, or even block off someone else's escape in a pinch. Make the most of it to manipulate the environment to your needs.",
+		"Ваша «Хватка Мансуса» мгновенно уничтожает мехов, силиконов и андроидов. Попадание вашим клинком по помеченной цели вызывает сильное отвращение и рвоту, на короткое время сбивая её с ног.",
+		"Ваша «Хватка Мансуса» и ваши заклинания способны вызывать ржавчину на стенах и полах, что приносит вам пользу и наносит вред экипажу и силиконам. Распространяйте ржавчину как можно больше.",
+		"Ржавые покрытия исцеляют вас, регулируют температуру крови, делают вас устойчивыми к сбиванию с ног дубинкой, восстанавливают вашу выносливость и кровь, а также исцеляют ваши раны и конечности, как только вы повысите уровень своей пассивной способности.",
+		"Всегда сражайтесь на своей территории. Ваш противник, вторгшийся на вашу территорию, находится в крайне невыгодном положении.",
+		"«Восстановленные Обноски» получают усиление только тогда, когда вы находитесь на ржавых плитах. Если вы хотите максимально использовать его силу, оставайтесь на ржавых плитах.",
+		"Ваша способность разрушать объекты и стены улучшается по мере улучшения вашей пассивной способности; в конечном итоге вы сможете расплавлять шлюзы, укрепленные и даже титановые стены.",
+		"Распространение ржавчины может быть довольно медленным, особенно на ранних этапах. Подумайте о том, чтобы вызвать несколько ржавых ходоков, которые помогут вам расширить ваши владения.",
+		"«Возведение Ржавчины» позволяет создавать барьеры для укрытия или побега, а в крайнем случае даже блокировать путь к спасению для других. Используйте эту возможность, чтобы манипулировать окружающей средой в своих интересах.",
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
@@ -51,11 +51,11 @@
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
-	name = "Blacksmith's Tale"
-	desc = "Opens up the Path of Rust to you. \
-		Allows you to transmute a knife with any trash item into a Rusty Blade. \
-		You can only create two at a time."
-	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
+	name = "«Сказание Кузнеца»"
+	desc = "Открывает перед вами Путь Ржавчины. \
+		Позволяет трансмутировать нож с любым мусором в Ржавый клинок. \
+		Одновременно можно создать только два."
+	gain_text = "\"Позвольте мне рассказать вам историю\", сказал Кузнец, вглядываясь в глубину своего ржавого клинка."
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/trash = 1,
@@ -103,29 +103,30 @@
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/spell/rust_charge
-	name = "Rust Charge"
-	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
-	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
+	name = "Ржавый рывок"
+	desc = "Рывок, который необходимо начать на ржавой поверхности и который уничтожит все ржавые объекты, с которыми вы соприкоснетесь, нанесет большой урон другим и разносит ржавчину вокруг вас на время действия."
+	gain_text = "Холмы сверкали, и по мере того, как я приближался к ним, мои мысли начали блуждать. Я быстро собрался с духом и двинулся вперёд. Этот последний отрезок пути будет самым опасным."
 
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 2
 	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/spell/rust_construction
-	name = "Rust Construction"
-	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
-		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
-	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
-		they no longer looked man made. Or perhaps they never were in the first place."
+	name = "Возведение ржавчины"
+	desc = "Дарует вам «Возведение ржавчины» - заклинание, позволяющее возвести стену из ржавого пола. \
+		Любой человек, находящийся над стеной, будет отброшен в сторону (или вверх) и получит урон."
+	gain_text = "В моем сознании начали плясать образы иноземных и зловещих сооружений. Покрытые с ног до головы толстым слоем ржавчины, \
+		они больше не выглядели рукотворными. А может быть, они вообще никогда и не существовали."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 2
 
 /datum/heretic_knowledge/armor/rust
-	desc = "Allows you to transmute a table (or a suit), a mask and any trash item to create a Salvaged Remains. \
-			Has extra armor, tackle resistance and syringe immunity while standing on rust. \
-			Acts as a focus while hooded."
-	gain_text = "From beneath warped scrap, the Blacksmith pulls forth an ancient fabric. \
-				\"Whatever this once stood for is lost. So now, we give it new purpose.\""
+	name = "Уцелевшие обломки"
+	desc = "Позволяет трансмутировать стол (или костюм), маску и любой мусор, чтобы создать Уцелевшие обломки. \
+			Дает дополнительную броню, сопротивление захвату и невосприимчивость к шприцам, когда находится на ржавчине. \
+			Действует как фокусировка, пока надет капюшон."
+	gain_text = "Из-под искореженного металлолома кузнец извлекает древнюю ткань. \
+				\"Все, что она когда-то символизировала — утрачено. Поэтому сейчас мы придаем ей новое предназначение.\""
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust)
 	research_tree_icon_state = "rust_armor"
 	required_atoms = list(
@@ -135,19 +136,19 @@
 	)
 
 /datum/heretic_knowledge/spell/area_conversion
-	name = "Aggressive Spread"
-	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
-		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
-	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	name = "Агрессивное распространение"
+	desc = "Дарует вам заклинание «Агрессивное распространение», которое распространяет ржавчину на близлежащие поверхности. \
+		Уже заржавевшие поверхности разрушаются. \ Также улучшает способности ржавчины еретиков не Пути ржавчины."
+	gain_text = "Мудрецы знают, что не стоит посещать Ржавые холмы... Но рассказ Кузнеца был вдохновляющим."
 	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 2
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/blade_upgrade/rust
-	name = "Toxic Blade"
-	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
-	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
-		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
+	name = "Токсичный клинок"
+	desc = "Ваш Ржавый клинок теперь отвращает врагов при атаке. \ Позволяет заставить ржаветь титаниум и пластитаниум."
+	gain_text = "Кузнец протягивает вам свой клинок. \"Клинок проведет тебя через плоть, если ты позволишь ему.\" \
+		Тяжелая ржавчина утяжеляет клинок. Вы пристально вглядываетесь в него. Ржавые холмы зовут тебя."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
 
@@ -160,29 +161,29 @@
 	. = ..()
 
 /datum/heretic_knowledge/spell/entropic_plume
-	name = "Entropic Plume"
-	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
-		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
-		at friend or foe wildly. Also rusts and destroys and surfaces it hits and improves the rusting abilities of non-rust heretics."
-	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
-		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
+	name = "Шлейф энтропии"
+	desc = "Дарует вам «Шлейф энтропии», заклинание, выпускающее досаждающую волну ржавчины. \
+		Ослепляет, отравляет и накладывает «Амок» на любого язычника, по которому попадаёт, заставляя его в безумии атаковать \
+		и друзей, и врагов. Также ржавеет и разрушает поверхности, на которые попадает. Улучшает способности ржавчины еретиков не Пути ржавчины."
+	gain_text = "Коррозия была неостановима. Ржавчина была неприятной. \
+		Кузнец ушел, ты держишь его клинок. Чемпионы надежды, Повелитель ржавчины близок!"
 
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 2
 	drafting_tier = 5
 
 /datum/heretic_knowledge/ultimate/rust_final
-	name = "Rustbringer's Oath"
-	desc = "The ascension ritual of the Path of Rust. \
-		Bring 3 corpses to a transmutation rune on the bridge of the station to complete the ritual. \
-		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
-		Additionally, you will become extremely resilient on rust, healing at triple the rate \
-		and becoming immune to many effects and dangers \ You will be able to rust almost anything upon ascending."
-	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
-		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
+	name = "Клятва Несущего Ржавчину"
+	desc = "Ритуал вознесения Пути ржавчины. \
+		Принесите 3 трупа к руне трансмутации на мостик станции, чтобы завершить ритуал. \
+		После завершения, ритуальное место будет бесконечно распространять ржавчину на любую поверхность, не останавливаясь ни перед чем. \
+		Кроме того, вы станете чрезвычайно стойкими на ржавчине, исцеляясь втрое быстрее \
+		и приобретая иммунитет ко многим эффектам и опасностям. Вы сможете заставлять ржаветь почти всё."
+	gain_text = "Чемпион ржавчины. Разлагатель стали. Бойся темноты, ибо пришел ПОВЕЛИТЕЛЬ РЖАВЧИНЫ! \
+		Работа Кузнеца продолжается! Ржавые холмы, УСЛЫШЬТЕ МОЕ ИМЯ! УЗРИТЕ МОЕ ВОЗНЕСЕНИЕ!"
 
 	ascension_achievement = /datum/award/achievement/misc/rust_ascension
-	announcement_text = "%SPOOKY% Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion! %SPOOKY%"
+	announcement_text = "%SPOOKY% Бойтесь разложения, ибо Предводитель Ржавчины, %NAME%, вознесся! Никто не уйдет от коррозии! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_rust.ogg'
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
@@ -217,7 +218,7 @@
 	if(ritual_location)
 		var/area/our_area = get_area(loc)
 		if(!istype(our_area, ritual_location))
-			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!") // "must be in bridge"
+			loc.balloon_alert(user, "ритуал провален, нужно быть в [initial(ritual_location.name)]!") // "must be in bridge"
 			return FALSE
 
 	return ..()

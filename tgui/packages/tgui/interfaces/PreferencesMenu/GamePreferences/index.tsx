@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stack } from 'tgui-core/components';
+import { Stack, Tabs } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
@@ -17,7 +17,6 @@ export function GamePreferenceWindow(props: Props) {
   );
 
   let pageContents;
-
   switch (currentPage) {
     case GamePreferencesSelectedPage.Keybindings:
       pageContents = <KeybindingsPage />;
@@ -30,36 +29,28 @@ export function GamePreferenceWindow(props: Props) {
   }
 
   return (
-    <Stack vertical fill>
+    <Stack fill vertical>
       <Stack.Item>
-        <Stack fill>
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={GamePreferencesSelectedPage.Settings}
-              setPage={setCurrentPage}
-            >
-              Settings
-            </PageButton>
-          </Stack.Item>
-
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={GamePreferencesSelectedPage.Keybindings}
-              setPage={setCurrentPage}
-            >
-              Keybindings
-            </PageButton>
-          </Stack.Item>
-        </Stack>
+        <Tabs fluid textAlign="center">
+          <PageButton
+            icon="cogs"
+            currentPage={currentPage}
+            page={GamePreferencesSelectedPage.Settings}
+            setPage={setCurrentPage}
+          >
+            Настройки
+          </PageButton>
+          <PageButton
+            icon="keyboard"
+            currentPage={currentPage}
+            page={GamePreferencesSelectedPage.Keybindings}
+            setPage={setCurrentPage}
+          >
+            Управление
+          </PageButton>
+        </Tabs>
       </Stack.Item>
-
-      <Stack.Divider />
-
-      <Stack.Item grow shrink basis="1px">
-        {pageContents}
-      </Stack.Item>
+      <Stack.Item grow>{pageContents}</Stack.Item>
     </Stack>
   );
 }

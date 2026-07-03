@@ -6,17 +6,17 @@
 		return
 
 	if(!length(avatar_connection_refs))
-		balloon_alert_to_viewers("powering down domain...")
+		balloon_alert_to_viewers("отключение домена...")
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 40, vary = TRUE)
 		reset()
 		return
 
-	balloon_alert_to_viewers("notifying clients...")
+	balloon_alert_to_viewers("оповещаем клиентов...")
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 100, vary = TRUE)
 	user.visible_message(
-		span_danger("[user] begins depowering the server!"),
-		span_notice("You start disconnecting clients..."),
-		span_danger("You hear frantic keying on a keyboard."),
+		span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает отключать сервер!"),
+		span_notice("Вы отключаете клиентов..."),
+		span_danger("Вы слышите быстрый стук клавиш по клавиатуре."),
 	)
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SHUTDOWN_ALERT, user)
@@ -33,15 +33,15 @@
 		return FALSE
 
 	if(isnull(map_key))
-		balloon_alert_to_viewers("no domain specified!")
+		balloon_alert_to_viewers("домен не выбран!")
 		return FALSE
 
 	if(generated_domain)
-		balloon_alert_to_viewers("stop the current domain first!")
+		balloon_alert_to_viewers("остановите текущий домен!")
 		return FALSE
 
 	if(length(avatar_connection_refs))
-		balloon_alert_to_viewers("all clients must disconnect!")
+		balloon_alert_to_viewers("все клиенты должны отключиться!")
 		return FALSE
 
 	is_ready = FALSE
@@ -49,7 +49,7 @@
 
 	/// If any one of these fail, it reverts the entire process
 	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
-		balloon_alert_to_viewers("initialization failed!")
+		balloon_alert_to_viewers("инициализация провалена!")
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
@@ -75,7 +75,7 @@
 		setup_glitch()
 
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, vary = TRUE)
-	balloon_alert_to_viewers("domain loaded.")
+	balloon_alert_to_viewers("домен загружен.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)

@@ -1,0 +1,8 @@
+["ethanol bottle"]
+nominative = "бутылка с этанолом"
+genitive = "бутылки с этанолом"
+dative = "бутылке с этанолом"
+accusative = "бутылку с этанолом"
+instrumental = "бутылкой с этанолом"
+prepositional = "бутылке с этанолом"
+gender = "female"

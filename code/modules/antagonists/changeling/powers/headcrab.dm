@@ -22,8 +22,8 @@
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	var/confirm = tgui_alert(user, "Are we sure we wish to destroy our body and create a headslug?", "Last Resort", list("Yes", "No"))
-	if(active || confirm != "Yes")
+	var/confirm = tgui_alert(user, "Уверены ли мы в том, что хотим уничтожить свое тело и создать червя?", "Last Resort", list("Да", "Нет"))
+	if(active || confirm != "Да")
 		return
 	active = TRUE
 	..()
@@ -76,13 +76,13 @@
 			var/obj/item/organ/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
 			if(!eyes || blinded_human.is_blind())
 				continue
-			to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))
+			to_chat(blinded_human, span_userdanger("Вы ослеплены кровавым дождем!"))
 			blinded_human.Stun(4 SECONDS)
 			blinded_human.set_eye_blur_if_lower(40 SECONDS)
 			blinded_human.adjust_confusion(12 SECONDS)
 		if(issilicon(blinded))
 			var/mob/living/silicon/blinded_silicon = blinded
-			to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))
+			to_chat(blinded_silicon, span_userdanger("Ваши сенсоры отключены ливнем крови!"))
 			blinded_silicon.Paralyze(6 SECONDS)
 
 /// Creates the headrab to occupy
@@ -93,7 +93,7 @@
 
 	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)
-	to_chat(crab, span_warning("We burst out of the remains of our former body in a shower of gore!"))
+	to_chat(crab, span_warning("Вы вырываетесь из останков своего прежнего тела под ливнем кровавых ошметков!"))
 	active = FALSE
 
 /// Ruptures nearby walls using the torn_wall component. Also it destroys objects with density.

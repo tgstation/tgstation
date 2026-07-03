@@ -1,6 +1,6 @@
 /datum/antagonist/valentine
 	name = "\improper Valentine"
-	roundend_category = "valentines" //there's going to be a ton of them so put them in separate category
+	roundend_category = "Валентинки" //there's going to be a ton of them so put them in separate category
 	show_in_antagpanel = FALSE
 	suicide_cry = "FOR MY LOVE!!"
 	ui_name = null
@@ -71,7 +71,7 @@
 
 /datum/antagonist/valentine/third_wheel
 	name = "\improper Third Wheel"
-	roundend_category = "valentines"
+	roundend_category = "Валентинки"
 	show_in_antagpanel = FALSE
 
 /datum/antagonist/valentine/third_wheel/roundend_report()

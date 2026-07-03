@@ -23,6 +23,7 @@
 	var/obj/item/inventory_head = null
 	///Currently worn item on the back slot
 	var/obj/item/inventory_back = null
+	var/obj/item/inventory_mask = null	// SS220 EDIT - FASHION
 	///Is this corgi physically slow due to age, etc?
 	var/is_slow = FALSE
 	///Item slots that are available for this corgi to equip stuff into
@@ -43,6 +44,7 @@
 /mob/living/basic/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
 	QDEL_NULL(inventory_back)
+	QDEL_NULL(inventory_mask)	// SS220 EDIT - FASHION
 	QDEL_NULL(access_card)
 	UnregisterSignal(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD))
 	return ..()
@@ -53,6 +55,11 @@
 	if(gone == inventory_head)
 		dropped_something = TRUE
 		inventory_head = null
+	// SS220 EDIT - START - FASHION
+	if(gone == inventory_mask)
+		dropped_something = TRUE
+		inventory_mask = null
+	// SS220 EDIT - END - FASHION
 	if(gone == inventory_back)
 		dropped_something = TRUE
 		inventory_back = null
@@ -83,6 +90,7 @@
 /mob/living/basic/pet/dog/corgi/proc/undress_dog()
 	inventory_head?.forceMove(drop_location())
 	inventory_back?.forceMove(drop_location())
+	inventory_mask?.forceMove(drop_location()) // SS220 EDIT - FASHION
 
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
@@ -200,6 +208,28 @@
 			back_icon = equipped_back_fashion_item.get_overlay()
 
 		. += back_icon
+
+	// SS220 EDIT - START - FASHION
+	if(inventory_mask)
+		var/image/mask_icon
+		var/datum/dog_fashion/equipped_mask_fashion_item = new inventory_mask.dog_fashion(src)
+
+		if(!equipped_mask_fashion_item.obj_icon_state)
+			equipped_mask_fashion_item.obj_icon_state = inventory_mask.icon_state
+		if(!equipped_mask_fashion_item.obj_alpha)
+			equipped_mask_fashion_item.obj_alpha = inventory_mask.alpha
+		if(!equipped_mask_fashion_item.obj_color)
+			equipped_mask_fashion_item.obj_color = inventory_mask.color
+
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			mask_icon = equipped_mask_fashion_item.get_overlay(dir = EAST)
+			mask_icon.pixel_z = -14
+			mask_icon.transform = mask_icon.transform.Turn(180)
+		else
+			mask_icon = equipped_mask_fashion_item.get_overlay()
+
+		. += mask_icon
+	// SS220 EDIT - END - FASHION
 
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.

@@ -52,11 +52,11 @@
 				return FALSE
 			// Don't let people off station futz with the station network.
 			if(!is_station_level(z))
-				balloon_alert(user, "out of range!")
+				balloon_alert(user, "слишком далеко!")
 				return TRUE
 
 			expunge_record_info(target)
-			balloon_alert(user, "record expunged")
+			balloon_alert(user, "запись удалена")
 			playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
 			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
@@ -68,7 +68,7 @@
 			return TRUE
 
 		if("logout")
-			balloon_alert(user, "logged out")
+			balloon_alert(user, "выход")
 			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
 			authenticated = FALSE
 
@@ -77,22 +77,22 @@
 		if("purge_records")
 			// Don't let people off station futz with the station network.
 			if(!is_station_level(z))
-				balloon_alert(user, "out of range!")
+				balloon_alert(user, "слишком далеко!")
 				return TRUE
 
 			ui.close()
-			balloon_alert(user, "purging records...")
+			balloon_alert(user, "очистка записей...")
 			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 70, TRUE)
 
 			if(do_after(user, 5 SECONDS))
 				for(var/datum/record/crew/entry in GLOB.manifest.general)
 					expunge_record_info(entry)
 
-				balloon_alert(user, "records purged")
+				balloon_alert(user, "записи очищены")
 				playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
 				investigate_log("[key_name(user)] purged all records.", INVESTIGATE_RECORDS)
 			else
-				balloon_alert(user, "interrupted!")
+				balloon_alert(user, "прервано!")
 
 			return TRUE
 
@@ -139,12 +139,12 @@
 		return FALSE
 
 	if(!authenticated && !allowed(user))
-		balloon_alert(user, "access denied")
+		balloon_alert(user, "доступ запрещен")
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
 	if(mugshot.picture.psize_x > ICON_SIZE_X || mugshot.picture.psize_y > ICON_SIZE_Y)
-		balloon_alert(user, "photo too large!")
+		balloon_alert(user, "фотография слишком большая!")
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
@@ -155,7 +155,7 @@
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
 
-	balloon_alert(user, "record created")
+	balloon_alert(user, "запись создана")
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 70, TRUE)
 
 	qdel(mugshot)
@@ -168,11 +168,11 @@
 		return FALSE
 
 	if(!allowed(user))
-		balloon_alert(user, "access denied")
+		balloon_alert(user, "доступ запрещен")
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
-	balloon_alert(user, "logged in")
+	balloon_alert(user, "вход")
 	playsound(src, 'sound/machines/terminal/terminal_on.ogg', 70, TRUE)
 
 	return TRUE

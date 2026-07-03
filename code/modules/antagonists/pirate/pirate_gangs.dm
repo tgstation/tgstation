@@ -74,18 +74,18 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "default"
 	ship_name_pool = "rogue_names"
 
-	threat_title = "Sector protection offer"
-	threat_content = "Hey, pal, this is the %SHIPNAME. Can't help but notice you're rocking a wild \
-		and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've \
-		done a quick evaluation of your rates in this sector, and we're offering %PAYOFF to cover your \
-		shuttle in case of any disaster."
-	arrival_announcement = "Do you want to reconsider our offer? Unfortunately, the time for negotiations has passed. Open up; we're coming aboard soon."
-	possible_answers = list("Purchase Insurance.","Reject Offer.")
+	threat_title = "Предложение по защите сектора"
+	threat_content = "Привет, приятель! Это %SHIPNAME. Не могу не заметить, что у тебя дикий \
+		и сумасшедший шаттл без страховки! Безумец. Что, если с ним что-то случится?! Мы \
+		провели быструю оценку ваших доходов в этом секторе и просим %PAYOFF кредитов, чтобы покрыть вашу \
+		страховку шаттла на случай стихийного бедствия."
+	arrival_announcement = "Не хотите ли вы рассмотреть наше предложение? К сожалению, время для переговоров прошло. Открывайте, мы скоро прибудем на борт."
+	possible_answers = list("Приобрести страховку.","Отклонить предложение.")
 
-	response_received = "Sweet, free cash. Let's get outta here, boys."
-	response_rejected = "Not paying was a mistake, now you need to take an economics class."
-	response_too_late = "Payment or not, ignoring us was a matter of pride. Now it's time for us to teach some respect."
-	response_not_enough = "You thought we wouldn't notice if you underpaid? Funny. We'll be seeing you soon."
+	response_received = "Халявные деньги. Съебываем, ребята."
+	response_rejected = "Не платить было ошибкой, теперь вам нужно пройти курс по экономике."
+	response_too_late = "Платите или нет, но игнорирование нас стало вопросом нашей гордости. Теперь пришло время научить вас уважению."
+	response_not_enough = "Вы думали, мы не заметим, если вы недоплатите? Смешно. Скоро мы с вами увидимся."
 
 ///aristocrat lizards looking to hunt the serfs
 /datum/pirate_gang/silverscales
@@ -94,16 +94,16 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "silverscale"
 	ship_name_pool = "silverscale_names"
 
-	threat_title = "Tribute request"
-	threat_content = "This is the %SHIPNAME. The Silver Scales wish for some tribute \
-		from your plebeian lizards. %PAYOFF credits should do the trick."
-	arrival_announcement = "Certainly, you don't deserve all of that aboard your vessel. It's going to fit us so much better."
-	possible_answers = list("We'll pay.","Tribute? Really? Go away.")
+	threat_title = "Запрос на выплату дани"
+	threat_content = "Это %SHIPNAME. Серебряные Чешуи желают получить кое-какую дань \
+		от ваших плебейских ящеров. %PAYOFF кредитов должно хватить."
+	arrival_announcement = "Разумеется, вы не заслуживаете всего этого на борту своего судна. Оно подойдет нам гораздо лучше."
+	possible_answers = list("Мы заплатим.","Дань? Серьёзно? Проваливайте.")
 
-	response_received = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
-	response_rejected = "That's for nothing, the first rule of hunting is don't leave without booty."
-	response_too_late = "I see you're trying to pay, but the hunt is already on."
-	response_not_enough = "You've sent an insulting \"donation\". The hunt is on for you."
+	response_received = "Щедрое пожертвование. Пусть когти Тизиры дотянутся до самых дальних точек космоса."
+	response_rejected = "Не зря же первое правило охоты гласит: не уходи без добычи."
+	response_too_late = "Я вижу, что вы пытаетесь заплатить, но охота уже началась."
+	response_not_enough = "Вы отправили оскорбительное \"пожертвование\". За вами начата охота."
 
 ///undead skeleton crew looking for booty
 /datum/pirate_gang/skeletons
@@ -113,15 +113,15 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "dutchman"
 	ship_name_pool = "skeleton_names" //just points to THE ONE AND ONLY
 
-	threat_title = "Transfer of goods"
-	threat_content = "Ahoy! This be the %SHIPNAME. Cough up %PAYOFF credits or you'll walk the plank."
-	arrival_announcement = "The Jolly Roger won't wait forever, maties; we're lying alongside, ready to send you some gifts."
-	possible_answers = list("We'll pay.","We will not be extorted.")
+	threat_title = "Передача имущества"
+	threat_content = "Эгегей! Это %SHIPNAME. Выплачивайте %PAYOFF кредитов или пойдете по доске."
+	arrival_announcement = "Веселый Роджер не будет ждать вечно, дружки; мы тут распластались рядом и готовы отправить вам подарки."
+	possible_answers = list("Мы заплатим.","Мы не потерпим вымогательства.")
 
-	response_received = "Thanks for the credits, landlubbers."
-	response_rejected = "Blimey! All hands on deck, we're going to get their riches!"
-	response_too_late = "Too late to beg for mercy!"
-	response_not_enough = "Trying to cheat us? You'll regret this!"
+	response_received = "Спасибо за кредиты, аборигены."
+	response_rejected = "Черт бы побрал! Все на палубу, мы собираемся забрать их богатства."
+	response_too_late = "Слишком поздно просить пощады!"
+	response_not_enough = "Пытаетесь одурачить нас? Пожалеете об этом."
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
 /datum/pirate_gang/interdyne
@@ -131,16 +131,16 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "ex_interdyne"
 	ship_name_pool = "interdyne_names"
 
-	threat_title = "Funding for Research"
-	threat_content = "Greetings, this is the %SHIPNAME. We require some funding for our pharmaceutical operations. \
-		%PAYOFF credits should suffice."
-	arrival_announcement = "We humbly ask for a substantial amount of income for the future research of our cause. It sure would be a shame if you got sick, but we can fix that."
-	possible_answers = list("Very well.","Get a job!")
+	threat_title = "Финансирование исследований"
+	threat_content = "Приветствую вас, это %SHIPNAME. Нам требуется некоторое финансирование для наших фармацевтических операций. \
+		%PAYOFF кредитов должно быть достаточно."
+	arrival_announcement = "Мы скромно просим вас о значительном поступлении средств для будущих исследований нашего дела. Конечно, было бы неприятно, если бы вы заболели, но мы можем это исправить."
+	possible_answers = list("Ладно.","Найдите себе работу!")
 
-	response_received = "Thank you for your generosity. Your money will not be wasted."
-	response_rejected = "Oh, you're not a station, you're a tumor. Well, we're gonna have to cut it out."
-	response_too_late = "We hope you like skin cancer!"
-	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
+	response_received = "Благодарим вас за щедрость. Ваши деньги не будут потрачены понапрасну."
+	response_rejected = "О, ты не станция, ты опухоль. Что ж, придется ее вырезать."
+	response_too_late = "Поздно. Надеемся, вам понравится рак кожи!"
+	response_not_enough = "Этого недостаточно для наших операций. Боюсь, нам придется одолжить немного."
 	announcement_color = "purple"
 
 ///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
@@ -150,16 +150,16 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "grey"
 	ship_name_pool = "grey_names"
 
-	threat_title = "This is a Robbery"
-	threat_content = "Hey it's %SHIPNAME. Give us money. \
-		%PAYOFF might be enough."
-	arrival_announcement = "Nice stuff you got there, it's ours now."
-	possible_answers = list("Please don't hurt me.","YOU WILL ANSWER TO THE LAW!!")
+	threat_title = "Ограбление"
+	threat_content = "Это %SHIPNAME. Отдавайте свои деньги. \
+		%PAYOFF кредитов может быть достаточно."
+	arrival_announcement = "Отличные у вас вещи, теперь они наши."
+	possible_answers = list("Пожалуйста, не бейте.","ВЫ ОТВЕТИТЕ ПЕРЕД ЗАКОНОМ!!!")
 
-	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
-	response_rejected = "The answer to the law? We are the law! And you will be held responsible!"
-	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
-	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
+	response_received = "Подождите, вы действительно отдали свои деньги? Спасибо, но мы все равно придем за остальным!"
+	response_rejected = "Ответим перед законом? Мы и есть закон! И вы понесете ответственность!"
+	response_too_late = "Ничего, да? Похоже, \"Тайд\" прибывает на борт!"
+	response_not_enough = "Пытаетесь наебать? Ничего страшного, мы возьмем вашу станцию в качестве залога."
 	announcement_color = "yellow"
 
 ///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
@@ -170,20 +170,20 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "irs"
 	ship_name_pool = "irs_names"
 
-	threat_title = "Missing Tax Dues"
-	threat_content = "%SHIPNAME Here, We noticed that your station hasn't been paying your taxes.. \
-		Let's rectify that, Your missing tax dues amounts to %PAYOFF \
-		We highly recommend paying your taxes stat, \
-		we don't need to send a team to your station to resolve the situation do we?"
-	arrival_announcement = "This is the tax conflict resolution team, prepare for your assets to be liquidated and be charged with tax fraud, \
-		if you fail to pay your taxes in time."
-	possible_answers = list("You know, I was just about to pay that. Thanks for the reminder!","I don't care WHO the IRS sends, I'm not paying for my taxes!")
+	threat_title = "Пропущеные налоговые платежи"
+	threat_content = "%SHIPNAME на месте. Мы заметили, что ваша станция не платит налоги... \
+		Давайте исправим это. Ваши недостающие налоговые отчисления составляют %PAYOFF кредитов \
+		Мы настоятельно рекомендуем выплатить сумму налога, \
+		чтобы нам не пришлось отправлять команду на вашу станцию, для разрешения ситуации."
+	arrival_announcement = "Это команда по разрешению налоговых конфликтов, готовьтесь к тому, что ваши активы будут ликвидированы, а вас обвинят в налоговом мошенничестве, \
+		если вы не заплатите налоги вовремя."
+	possible_answers = list("Знаете, я как раз собирался заплатить. Спасибо за напоминание!","Мне все равно, кого присылает налоговая служба, я не буду платить налоги!")
 
-	response_received = "Payment received, We salute you for being law-abiding tax-paying citizens"
-	response_rejected = "We understand, I'm sending a team to your station to resolve the matter."
-	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
-	response_not_enough = "You filed your taxes incorrectly, A team has been sent to assist in liquidating assets and arrest you for tax fraud. \
-		Nothing personel kid."
+	response_received = "Оплата произведена, мы приветствуем вас как законопослушных граждан, платящих налоги."
+	response_rejected = "Понимаем, я отправляю команду на вашу станцию, чтобы решить этот вопрос."
+	response_too_late = "Слишком поздно, уже отправлена команда, которая решает этот вопрос напрямую."
+	response_not_enough = "Вы неправильно заполнили налоговую декларацию. Мы направили команду для ликвидации активов и ареста вас за налоговое мошенничество. \
+		Ничего личного, парень."
 	announcement_color = "yellow"
 
 //Mutated Ethereals who have adopted bluespace technology in all the wrong ways.
@@ -193,17 +193,17 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "geode"
 	ship_name_pool = "geode_names"
 
-	threat_title = "Unusual transmission"
-	threat_content = "The crystal of mother-void cracks, and forth comes the %SHIPNAME. We are the Lustrous, the hands of the crystal king.\
-		Our coffers of bluespace dust are low, ergo, our synthesis ceases. %PAYOFF credits shall remedy this!"
-	arrival_announcement = "We have arrived, we have always been here, and we have already left."
-	possible_answers = list("Uh, ok? Sure."," We don't have time for crazy-talk, go away.")
+	threat_title = "Странное сообщение"
+	threat_content = "Кристалл матери-пустоты трескается, и на свет появляется %SHIPNAME. Мы - Блестящие, руки хрустального короля.\
+		Наши сундуки с блюспейс пылью иссякли, поэтому наш синтез прекратился. %PAYOFF кредитов исправят это!"
+	arrival_announcement = "Мы прибыли, мы всегда были здесь, и мы уже исчезли."
+	possible_answers = list("Аа, эм, окей? Хорошо.","У нас нет времени на бредни сумасшедших, проваливайте.")
 
 
-	response_received = "An excellent haul, the synthesis shall resume."
-	response_rejected = "The rudeness in your speech needs to be neutralized. And we can help you with that right now."
-	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
-	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"
+	response_received = "Отличная посылка, синтез будет продолжен."
+	response_rejected = "Грубость в вашей речи необходимо нейтрализовать. И мы можем помочь вам в этом прямо сейчас."
+	response_too_late = "Тогда вы не были готовы, а теперь это время прошло. Мы можем идти только вперед, никогда не возвращаясь назад."
+	response_not_enough = "Вы оскорбили нас, но вражды не будет, только стремительное правосудие!"
 	announcement_color = "purple"
 
 //medieval militia, from OUTER SPACE!
@@ -214,16 +214,16 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_template_id = "medieval"
 	ship_name_pool = "medieval_names"
 
-	threat_title = "HOMAGE PAYMENT REQUEST"
-	threat_content = "SALUTATIONS, THIS IS %SHIPNAME AND WE ARE COLLECTING MONEY \
-		FROM THE VASSALS IN OUR TERRITORY, YOU JUST SO HAPPEN TO BE IN IT TOO!! NORMALLY \
-		WE SLAUGHTER WEAKLINGS LIKE YOU FOR TRESPASING ON OUR LAND, BUT WE ARE WILLING \
-		TO WELCOME YOU INTO OUR SPACE IF YOU PAY %PAYOFF AS HOMAGE TO OUR LAW. BE WISE ON YOUR CHOICE!! \
-		(send message. send message. why message not sent?)."
-	arrival_announcement = "I FIGURED OUT HOW TO FLY MY SHIP, WE WILL BE DOCKING NEXT TO YOU IN A MINUTE!!"
-	possible_answers = list("Alright, i like my skull intact.","You are dumb, go larp somewhere else.")
+	threat_title = "ЗАЯВЛЕНИЕ НА ВЫПЛАТУ ГОНОРАРА"
+	threat_content = "ПРИВЕТСТВУЮ, ЭТО %SHIPNAME И МЫ СОБИРАЕМ ДАНЬ \
+		ОТ ВАССАЛОВ НА НАШЕЙ ТЕРРИТОРИИ, ТАК ПОЛУЧИЛОСЬ, ЧТО ВЫ ТОЖЕ НА НЕЙ!!! ОБЫЧНО \
+		МЫ УБИВАЕМ ТАКИХ СЛАБАКОВ, КАК ВЫ, ЗА ВТОРЖЕНИЕ НА НАШУ ЗЕМЛЮ, НО МЫ ГОТОВЫ \
+		ПРИВЕТСТВОВАТЬ ВАС В НАШЕМ ПРОСТРАНСТВЕ, ЕСЛИ ВЫ ЗАПЛАТИТЕ %PAYOFF КРЕДИТОВ КАК ДАНЬ НАШЕМУ ПРАВУ. БУДЬТЕ МУДРЫ В СВОЕМ ВЫБОРЕ!!! \
+		(отправить сообщение. отправить сообщение. почему сообщение не отправляется?)."
+	arrival_announcement = "Я ПОНЯЛ, КАК УПРАВЛЯТЬ СВОИМ КОРАБЛЁМ, МЫ ПРИЧАЛИМ К ВАМ ЧЕРЕЗ МИНУТУ!!!"
+	possible_answers = list("Ладно, мне нравится, когда мой череп цел.","Болваны, свалите играть куда подальше.")
 
-	response_received = "THIS WILL SUFFICE, REMEMBER WHO OWNS YOU!!"
-	response_rejected = "FOOLISH DECISION, I'LL MAKE AN EXAMPLE OUT OF YOUR CARCASS!! (does anyone remember how to pilot our ship?)"
-	response_too_late = "YOU ARE ALREADY UNDER SIEGE YOU BUFFON, ARE YOU BRAINSICK OR IGNORANT?!!"
-	response_not_enough = "DO THINK OF ME AS A JESTER? YOU ARE DEAD MEAT!! (i forgot how to fly the ship, tarnation.)"
+	response_received = "ЭТОГО БУДЕТ ДОСТАТОЧНО, ПОМНИТЕ, КТО ЯВЛЯЕТСЯ ВАШИМ ВЛАДЕЛЬЦЕМ!!!"
+	response_rejected = "ГЛУПОЕ РЕШЕНИЕ, Я СДЕЛАЮ ИЗ ТВОЕЙ ТУШКИ ОБРАЗЕЦ ДЛЯ ПОДРАЖАНИЯ!!! (кто-нибудь помнит, как управлять нашим кораблём?)"
+	response_too_late = "ТЫ УЖЕ В ОСАДЕ, ШУТ, ТЫ БЕЗМОЗГЛЫЙ ИЛИ НЕВЕЖЕСТВЕННЫЙ?!"
+	response_not_enough = "ТЫ СЧИТАЕШЬ МЕНЯ ШУТОМ? ТЫ, ТУХЛОЕ МЯСО!!! (я забыл, как управлять кораблем, зараза)."

@@ -1,0 +1,8 @@
+["brass chair"]
+nominative = "бронзовое кресло"
+genitive = "бронзового кресла"
+dative = "бронзовому креслу"
+accusative = "бронзовое кресло"
+instrumental = "бронзовым креслом"
+prepositional = "бронзовом кресле"
+gender = "neuter"

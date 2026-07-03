@@ -302,7 +302,7 @@
 	if(created_name)
 		door.name = created_name
 	else if(electronics.passed_name)
-		door.name = sanitize(electronics.passed_name)
+		door.name = sanitize(electronics.passed_name, apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 	else
 		door.name = base_name
 	if(electronics.passed_cycle_id)

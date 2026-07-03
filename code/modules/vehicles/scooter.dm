@@ -109,14 +109,14 @@
 			rider.Paralyze(8 SECONDS)
 			rider.forceMove(bumped_thing)
 			forceMove(bumped_thing)
-			visible_message(span_danger("[src] crashes into [bumped_thing], and gets dumped straight into it!"))
+			visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] врезается в [bumped_thing.declent_ru(ACCUSATIVE)], и полностью погружается внутрь!"))
 			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
 			rider.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
-		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
+		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] врезается в [bumped_thing.declent_ru(ACCUSATIVE)], отправляя [rider.declent_ru(ACCUSATIVE)] в полёт!"))
 		rider.Paralyze(8 SECONDS)
 		if(iscarbon(bumped_thing))
 			var/mob/living/carbon/victim = bumped_thing

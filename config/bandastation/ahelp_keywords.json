@@ -1,0 +1,3 @@
+{
+	"ahelp_keywords": ["(?<![а-яА-ЯёЁa-zA-Z])(foobar)[а-яА-ЯёЁa-zA-Z]*"]
+}

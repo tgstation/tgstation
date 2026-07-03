@@ -1,11 +1,11 @@
 /datum/job/coroner
 	title = JOB_CORONER
-	description = "Perform autopsies whenever needed, \
-		update medical records accordingly, apply formaldehyde."
+	description = "Проводите вскрытия при необходимости, \
+		обновляйте медицинскую историю, применяйте формальдегид."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Head of Personnel and the Chief Medical Officer"
+	supervisors = "Главой Персонала, Главным Врачом"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CORONER"
 

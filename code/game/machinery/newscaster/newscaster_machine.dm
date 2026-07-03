@@ -637,14 +637,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
 	if(channel)
 		if(update_alert)
-			say("Breaking news from [channel]!")
+			say("Срочные новости от: [channel]!")
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
-		say("Attention! Wanted issue distributed!")
+		say("Внимание! Выдан ордер на арест!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
 /**
@@ -699,7 +699,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	update_static_data(user)
 	user.log_message("is about to create a cross-sector newscaster channel with the following name: [channel_name]", LOG_GAME)
 	to_chat(
-		GLOB.admins,
+		get_holders_with_rights(R_ADMIN), /// BANDASTATION EDIT: Proper permissions
 		span_adminnotice( \
 			"<b color='orange'>Cross-sector channel creation (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to create a cross-sector \
 			newscaster channel \"[html_encode(channel_name)]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
@@ -878,7 +878,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
-	say("Paid out [active_request.value] [MONEY_NAME].")
+	say("Paid out [active_request.value][MONEY_NAME].")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
 

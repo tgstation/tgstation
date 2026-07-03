@@ -18,15 +18,15 @@
 
 	sm.radio.talk_into(
 		sm,
-		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.",
+		"ОПАСНОСТЬ: ЧАСТОТА КОЛЕБАНИЙ ГИПЕРСТРУКТУРЫ ВЫШЛА ЗА ГРАНИЦЫ.",
 		sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 	var/list/messages = list(
-		"Space seems to be shifting around you...",
-		"You hear a high-pitched ringing sound.",
-		"You feel tingling going down your back.",
-		"Something feels very off.",
-		"A drowning sense of dread washes over you.",
+		"Пространство, кажется, искажается вокруг вас...",
+		"Вы слышите пронзительный звон.",
+		"Вы ощущаете покалывание, бегущее по спине.",
+		"Что-то определённо не так.",
+		"Вас накрывает волна тревожного предчувствия.",
 	)
 	dispatch_announcement_to_players(span_danger(pick(messages)), should_play_sound = FALSE)
 
@@ -57,8 +57,8 @@
 	effect_explosion(sm)
 	effect_emergency_state()
 	effect_cascade_demoralize()
-	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
-		Multiple resonance hotspots have formed. Please standby.", "Nanotrasen Star Observation Association", ANNOUNCER_SPANOMALIES)
+	priority_announce("В вашем секторе произошло событие резонансного сдвига типа «С». Сканирование указывает на локальный поток колебаний, влияющий на пространственную и гравитационную субструктуру. \
+		Образовалось несколько резонансных точек. Пожалуйста, ожидайте.", "Ассоциация Обсерваторий Нанотрейзен", ANNOUNCER_SPANOMALIES)
 	sleep(2 SECONDS)
 	effect_strand_shuttle()
 	sleep(5 SECONDS)
@@ -77,9 +77,9 @@
 
 /datum/sm_delam/cascade/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
 	var/list/messages = list()
-	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
-	messages += "Crystalline hyperstructure returning to safe operating parameters. Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated."
-	messages += "remain before resonance-induced stabilization."
+	messages += "РАССЛОЕНИЕ КРИСТАЛЛА НЕИЗБЕЖНО. Суперматерия достигла критического нарушения целостности. Превышены пределы гармонических частот. Поле дестабилизации причинности не может быть задействовано."
+	messages += "Гиперструктура кристалла возвращается к безопасным рабочим параметрам. Гармоническая частота восстановлена в пределах аварийных границ. Запущен антирезонансный фильтр."
+	messages += "ожидайте резонансно-индуцированной стабилизации."
 	return messages
 
 /datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
@@ -87,9 +87,9 @@
 		return FALSE
 	if(!can_select(sm))
 		return FALSE
-	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
-	a subject within [station_name()], a resonance collapse may occur.",
-	"Nanotrasen Star Observation Association", 'sound/announcer/alarm/airraid.ogg')
+	priority_announce("Внимание: Сканирование аномалий дальнего действия регистрирует отклонение от нормы в количестве гармонического потока, исходящего от \
+	объекта в пределах [station_name()], может произойти резонансный коллапс.",
+	"Ассоциация Обсерваторий Нанотрейзен", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
 
 /// Signal calls cant sleep, we gotta do this.

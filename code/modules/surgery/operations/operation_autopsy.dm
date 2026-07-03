@@ -1,7 +1,7 @@
 /datum/surgery_operation/limb/autopsy
-	name = "autopsy"
-	rnd_name = "Androtomy (Dissection and Autopsy)"
-	desc = "Perform a detailed analysis of a deceased patient's body."
+	name = "Аутопсия"
+	rnd_name = "Андротомия (Вскрытие и аутопсия)"
+	desc = "Проведение детального анализа тела умершего пациента."
 	implements = list(/obj/item/autopsy_scanner = 1)
 	time = 10 SECONDS
 	success_sound = 'sound/machines/printer.ogg'
@@ -14,10 +14,10 @@
 
 /datum/surgery_operation/limb/autopsy/all_required_strings()
 	. = list()
-	. += "operate on chest (target chest)"
+	. += "операция на груди"
 	. += ..()
-	. += "the patient must be deceased"
-	. += "the patient must not have been autopsied prior"
+	. += "пациент должен быть мёртвым"
+	. += "пациент ранее не должен подвергаться вскрытию"
 
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)
@@ -32,9 +32,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin performing an autopsy on [limb.owner]..."),
-		span_notice("[surgeon] uses [tool] to perform an autopsy on [limb.owner]."),
-		span_notice("[surgeon] uses [tool] on [limb.owner]'s chest."),
+		span_notice("Вы начинаете проводить вскрытие у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] использует [tool.declent_ru(ACCUSATIVE)] для проведения вскрытия у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] использует [tool.declent_ru(ACCUSATIVE)] на груди у [limb.owner.declent_ru(GENITIVE)]."),
 	)
 
 /datum/surgery_operation/limb/autopsy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
@@ -49,8 +49,8 @@
 	return ..()
 
 /datum/surgery_operation/limb/autopsy/mechanic
-	name = "system failure analysis"
-	rnd_name = "System Failure Analysis (Dissection and Autopsy)"
-	desc = "Perform a detailed analysis of a robotic patient's deactivated systems."
+	name = "Анализ системных сбоев"
+	rnd_name = "Анализ системных сбоев (Вскрытие и аутопсия)"
+	desc = "Выполнение детального анализа деактивированных систем роботизированного пациента."
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

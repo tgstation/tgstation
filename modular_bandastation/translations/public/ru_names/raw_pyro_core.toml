@@ -1,0 +1,8 @@
+["raw pyro core"]
+nominative = "сырое пиро ядро"
+genitive = "сырого пиро ядра"
+dative = "сырому пиро ядру"
+accusative = "сырое пиро ядро"
+instrumental = "сырым пиро ядром"
+prepositional = "сыром пиро ядре"
+gender = "neuter"

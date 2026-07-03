@@ -1,0 +1,264 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/pen{
+	pixel_x = -4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"e" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 9
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"n" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"q" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/vest/old,
+/obj/item/clothing/suit/armor/vest/old{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/west,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/restraints/handcuffs{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/structure/sign/poster/official/do_not_question/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"I" = (
+/turf/closed/wall,
+/area/station/maintenance/central/greater)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark_red/filled/corner,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 9
+	},
+/obj/item/wirecutters{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/old,
+/obj/item/clothing/head/helmet/old{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"W" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/folder/red{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/folder/red{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+
+(1,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(2,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(3,1,1) = {"
+I
+O
+K
+I
+v
+F
+c
+L
+n
+q
+q
+"}
+(4,1,1) = {"
+I
+S
+K
+e
+W
+Y
+j
+D
+q
+q
+q
+"}
+(5,1,1) = {"
+I
+z
+K
+I
+v
+h
+h
+D
+q
+q
+q
+"}
+(6,1,1) = {"
+I
+I
+I
+I
+H
+t
+U
+Q
+q
+q
+q
+"}
+(7,1,1) = {"
+a
+a
+a
+I
+I
+I
+I
+I
+q
+q
+q
+"}

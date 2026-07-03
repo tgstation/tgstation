@@ -296,8 +296,8 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	name = "[desired_item.name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal [desired_item.name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
+	name = "[difficulty == SPY_DIFFICULTY_HARD ? "Грандиозная ":""]Кража [desired_item.name]"
+	help = "Украдите любой [desired_item.name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
 /datum/spy_bounty/objective_item/is_stealable(atom/movable/stealing)
@@ -399,8 +399,8 @@
 			original_options_weakrefs += WEAKREF(other_machine)
 
 	location_type = machine_area.type
-	name ||= "[machine.name] Burglary"
-	help ||= "Steal \a [machine] found in [machine_area]."
+	name ||= "Кража [machine.declent_ru(ACCUSATIVE)]"
+	help ||= "Украдите [machine.declent_ru(ACCUSATIVE)], находящаяся в [machine_area]."
 	return TRUE
 
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
@@ -586,15 +586,15 @@
 	var/mob/living/carbon/human/stolen_from = stealing
 	var/obj/item/real_stolen_item = find_desired_thing(stealing)
 	stolen_from.Unconscious(10 SECONDS)
-	to_chat(stolen_from, span_warning("You feel something missing where your [real_stolen_item.name] once was."))
+	to_chat(stolen_from, span_warning("Вы чувствуете, что чего-то не хватает там, где ранее находился ваш - [real_stolen_item.name]."))
 	return ..(real_stolen_item, spy)
 
 /datum/spy_bounty/targets_person/some_item/target_found(mob/crewmember)
 	var/obj/item/desired_thing = find_desired_thing(crewmember)
 	target_original_desired_ref = WEAKREF(desired_thing)
-	name = "[crewmember.real_name]'s [desired_thing.name]"
-	help = "Steal [desired_thing] from [crewmember.real_name]. \
-		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
+	name = "[capitalize(desired_thing.declent_ru(NOMINATIVE))] у [crewmember.real_name]"
+	help = "Украдите [desired_thing.declent_ru(ACCUSATIVE)] у [crewmember.real_name]. \
+		Вы можете сделать это с помощью грубой силы или просканировав их с помощью аплинка, пока они без сознания."
 	return TRUE
 
 /// Finds the desired item type in the target crewmember.
@@ -614,7 +614,7 @@
 
 /datum/spy_bounty/targets_person/some_item/id/target_found(mob/crewmember)
 	. = ..()
-	name = "[crewmember.real_name]'s ID Card"
+	name = "ID карта [crewmember.real_name]"
 
 // Steal someone's PDA
 /datum/spy_bounty/targets_person/some_item/pda
@@ -629,7 +629,7 @@
 
 /datum/spy_bounty/targets_person/some_item/pda/target_found(mob/crewmember)
 	. = ..()
-	name = "[crewmember.real_name]'s PDA"
+	name = "КПК [crewmember.real_name]"
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
@@ -642,7 +642,7 @@
 
 /datum/spy_bounty/targets_person/some_item/heirloom/target_found(mob/crewmember)
 	. = ..()
-	name = "[crewmember.real_name]'s heirloom"
+	name = "семейная реликвия [crewmember.real_name]"
 
 // Steal a limb or organ off someone
 /datum/spy_bounty/targets_person/some_item/limb_or_organ
@@ -681,7 +681,7 @@
 
 /datum/spy_bounty/some_bot/finish_cleanup(mob/living/basic/bot/stealing)
 	if(stealing.client)
-		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
+		to_chat(stealing, span_deadsay("Вас украли! Вас отправляют на черный рынок и разбирают на запчасти..."))
 		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
 		stealing.ghostize()
 	return ..()
@@ -707,8 +707,8 @@
 
 	var/mob/living/picked = pick(possible_bots)
 	target_bot_ref = WEAKREF(picked)
-	name ||= "[picked.name] Abduction"
-	help ||= "Abduct the station's robot assistant [picked.name]."
+	name ||= "Похищение [picked.declent_ru(GENITIVE)]"
+	help ||= "Похитьте [picked.declent_ru(ACCUSATIVE)] - робота-помощника станции."
 	return TRUE
 
 /datum/spy_bounty/some_bot/is_stealable(atom/movable/stealing)
@@ -717,28 +717,28 @@
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
 	bot_type = /mob/living/basic/bot/secbot/beepsky/officer
-	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
-		Watch out, they may not take kindly to being scanned."
+	help = "Похитьте офицера Бипски - обычно встречается при патрулировании станции. \
+		Будьте осторожны, им может не понравиться сканирование."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/secbot/beepsky/ofitser
-	help = "Abduct Prison Ofitser - commonly found guarding the Gulag."
+	help = "Похитьте тюремного Офитсера - обычно охраняет ГУЛАГ."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/basic/bot/secbot/beepsky/armsky
-	help = "Abduct Sergeant-At-Armsky - commonly found guarding the station's Armory."
+	help = "Похитьте Сержанта Армски - обычно охраняет оружейную станции."
 
 /datum/spy_bounty/some_bot/pingsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/basic/bot/secbot/pingsky
-	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
+	help = "Похитьте офицера Пингски - обычно защищает ИИ станции."
 
 /datum/spy_bounty/some_bot/scrubs
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
-	help = "Abduct Scrubs, MD - commonly found mopping up blood in Medbay."
+	help = "Похитьте доктора Scrubbs - обычно убирает кровь в медотсеке."
 
 /datum/spy_bounty/some_bot/scrubs/can_claim(mob/user)
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)

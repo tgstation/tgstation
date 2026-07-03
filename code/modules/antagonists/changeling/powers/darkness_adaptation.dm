@@ -1,9 +1,9 @@
 /datum/action/changeling/darkness_adaptation
 	name = "Darkness Adaptation"
-	desc = "Our skin pigmentation and eyes rapidly change to suit the darkness. \
-		Costs 15 chemicals to enable. Slows down chemical regeneration by 15% while active."
-	helptext = "Allows us to darken and change the translucency of our pigmentation, and adapt our eyes to see in dark conditions, \
-		The translucent effect works best in dark enviroments and garments. Can be toggled on and off."
+	desc = "Пигментация кожи и глаза быстро меняется в зависимости от темноты. \
+		Для включения требуется 15 химикатов. Замедляет регенерацию химикатов на 15%."
+	helptext = "Позволяет затемнить и изменить полупрозрачность пигментации, а также адаптировать глаза для видения в темных условиях. \
+		Эффект полупрозрачности лучше всего работает в темном окружении и одежде. Можно включать и выключать."
 	button_icon_state = "darkness_adaptation"
 	category = "stealth"
 	dna_cost = 2
@@ -32,8 +32,8 @@
 		return
 
 	cling.visible_message(
-		span_warning("[cling]'s skin suddenly starts shifting and shimmering!"),
-		span_notice("We shift our skin to adapt to the darkness."),
+		span_warning("Кожа [cling.declent_ru(GENITIVE)] внезапно становится полупрозрачной!"),
+		span_notice("Теперь мы стали гораздо более скрытными и лучше видим в темноте."),
 	)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown //Slows down chem regeneration
@@ -43,8 +43,8 @@
 		return
 
 	cling.visible_message(
-		span_warning("[cling]'s skin goes from shimmering to normal."),
-		span_notice("We stop adapting our skin to the darkness."),
+		span_warning("[capitalize(cling.declent_ru(NOMINATIVE))] появляется из воздуха!"),
+		span_notice("Мы становимся внешне нормальными и теряем способность видеть в темноте."),
 	)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown += recharge_slowdown

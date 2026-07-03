@@ -44,7 +44,7 @@
 /obj/effect/bump_teleporter/proc/validate_setup(atom/movable/checkable)
 	var/message = ""
 
-	if(!ismob(checkable))
+	if(!checkable) // BANDASTATION EDIT: All atom/movable can teleport
 		return FALSE
 
 	if(!id_target)

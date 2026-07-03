@@ -11,7 +11,7 @@
 		return FALSE
 	sm.radio.talk_into(
 		sm,
-		"Warning: Critical coolant mass reached.",
+		"Предупреждение: достигнута критическая масса охлаждающего вещества.",
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 	return TRUE
@@ -72,7 +72,7 @@
 		return FALSE
 	sm.radio.talk_into(
 		sm,
-		"DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.",
+		"ОПАСНОСТЬ: ПРОИСХОДИТ ЦЕПНАЯ РЕАКЦИЯ ИНЕРЦИИ ЗАРЯДА.",
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 	return TRUE

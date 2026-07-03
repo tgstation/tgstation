@@ -1,84 +1,92 @@
-import { type ComponentProps, type ReactNode, useRef } from 'react';
-import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
+import { type ReactNode, useState } from 'react';
+import { Input, Section, Stack, Tabs } from 'tgui-core/components';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
-type TabbedMenuProps = {
-  categoryEntries: [string, ReactNode[]][];
-  contentProps?: ComponentProps<typeof Flex>;
-  searchText?: string;
-  setSearchText?: (text: string) => void;
+import type { PreferenceChild } from './GamePreferencesPage';
+
+type PreferencesTabsProps = {
+  buttons?: ReactNode;
+  categories: [string, PreferenceChild[]][];
 };
 
-export function TabbedMenu(props: TabbedMenuProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+export function TabbedMenu(props: PreferencesTabsProps) {
+  const { buttons, categories } = props;
+
+  const [selectedCategory, setSelectedCategory] = useState(categories[0][0]);
+  const categoryContent = categories.find(
+    ([category]) => category === selectedCategory,
+  )?.[1];
+
+  const allPrefsNames = categories.flatMap(([_, children]) =>
+    children.map((child) => child.name),
+  );
+  const { query, setQuery, results } = useFuzzySearch({
+    searchArray: allPrefsNames,
+    matchStrategy: 'smart',
+    getSearchString: (name) => name,
+  });
 
   return (
-    <Stack vertical fill>
-      <Stack.Item>
-        <Stack fill px={5}>
-          {props.categoryEntries.map(([category, children]) => (
-            <Stack.Item key={category} grow basis="content">
-              <Button
-                align="center"
-                fontSize="1.2em"
-                fluid
-                disabled={children.length === 0}
-                onClick={() => {
-                  const offsetTop = categoryRefs.current[category]?.offsetTop;
-                  if (offsetTop === undefined) {
-                    return;
-                  }
-
-                  const currentSection = sectionRef.current;
-                  if (!currentSection) {
-                    return;
-                  }
-
-                  currentSection.scrollTop = offsetTop;
-                }}
-              >
-                {category}
-              </Button>
-            </Stack.Item>
-          ))}
-        </Stack>
+    <Stack fill vertical g={0} fontSize={1.25}>
+      <Stack.Item className="PreferencesMenu__Section">
+        <Section
+          fill
+          fitted
+          title={
+            <Stack fill>
+              <Stack.Item className="PreferencesMenu__SectionSearch">
+                <Input
+                  expensive
+                  value={query}
+                  width={22.5}
+                  placeholder="Поиск по всем настройкам..."
+                  onChange={setQuery}
+                />
+              </Stack.Item>
+              <Stack.Item grow>
+                {query
+                  ? `Результаты поиска: ${results.length}`
+                  : selectedCategory}
+              </Stack.Item>
+            </Stack>
+          }
+        />
       </Stack.Item>
-      {!!props.setSearchText && (
-        <Stack.Item px={2} pl={5} pr={5}>
-          <Input
-            fluid
-            height="2em"
-            fontSize="1.2em"
-            placeholder="Search..."
-            value={props.searchText}
-            onChange={props.setSearchText}
-          />
-        </Stack.Item>
-      )}
-
-      <Stack.Item
-        grow
-        ref={sectionRef}
-        position="relative"
-        overflowY="scroll"
-        {...props.contentProps}
-      >
-        <Stack vertical fill px={2}>
-          {props.categoryEntries.map(([category, children]) => {
-            if (children.length === 0) return null;
-            return (
-              <div
-                key={category}
-                ref={(ref) => {
-                  categoryRefs.current[category] = ref;
-                }}
-              >
-                <Section fill title={category}>
-                  {children}
-                </Section>
-              </div>
-            );
-          })}
+      <Stack.Item grow>
+        <Stack fill g={0}>
+          <Stack.Item basis={13} className="PreferencesMenu__Section Sidebar">
+            <Section fill fontSize={1.2}>
+              <Stack fill vertical>
+                <Stack.Item grow>
+                  <Tabs vertical>
+                    {categories.map(([category]) => (
+                      <Tabs.Tab
+                        key={category}
+                        selected={!query && category === selectedCategory}
+                        onClick={() => setSelectedCategory(category)}
+                      >
+                        {category}
+                      </Tabs.Tab>
+                    ))}
+                  </Tabs>
+                </Stack.Item>
+                <Stack.Item>{buttons}</Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow className="PreferencesMenu__Content">
+            <Section fill scrollable>
+              <Stack vertical>
+                {query
+                  ? categories.flatMap(([category, children]) =>
+                      children
+                        .filter((child) => results.includes(child.name))
+                        .map((child) => child.children),
+                    )
+                  : categoryContent?.map((child) => child.children)}
+              </Stack>
+            </Section>
+          </Stack.Item>
         </Stack>
       </Stack.Item>
     </Stack>

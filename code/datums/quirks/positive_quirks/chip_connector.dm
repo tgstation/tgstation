@@ -1,11 +1,11 @@
 /datum/quirk/chip_connector
 	name = "Chip Connector"
-	desc = "You had a device installed that lets you manually add and remove skillchips! Just try not to get near any electromagnetic pulses."
+	desc = "У вас установлено устройство, позволяющее вручную добавлять и удалять чипы навыков! Только постарайтесь держаться подальше от электромагнитных импульсов."
 	icon = FA_ICON_PLUG
 	value = 4
-	gain_text = span_notice("You feel CONNECTED.")
-	lose_text = span_danger("You don't feel so CONNECTED anymore.")
-	medical_record_text = "Patient has a cybernetic implant on their back of their head that lets them install and remove skillchips at will. Gross."
+	gain_text = span_notice("Вы чувствуете СОЕДИНЕНИЕ.")
+	lose_text = span_danger("Вы больше не чувствуете СОЕДИНЕНИЯ.")
+	medical_record_text = "У пациента установлен кибернетический имплант на затылочной части головы, позволяющий произвольно устанавливать и снимать чипы навыков."
 	mail_goodies = list()
 	var/obj/item/organ/cyberimp/brain/connector/connector
 

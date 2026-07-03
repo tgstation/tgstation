@@ -1,0 +1,8 @@
+["heavy crowbar"]
+nominative = "тяжелый лом"
+genitive = "тяжелого лома"
+dative = "тяжелому лому"
+accusative = "тяжелый лом"
+instrumental = "тяжелым ломом"
+prepositional = "тяжелом ломе"
+gender = "male"

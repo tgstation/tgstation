@@ -51,6 +51,7 @@
 	if(!isnull(owner_trim))
 		var/datum/id_trim/job/trim_singlet = SSid_access.trim_singletons_by_path[owner_trim]
 		access_list |= trim_singlet.access
+		access_list |= trim_singlet.wildcard_access // BANDASTATION ADDITION - Door remote access fix
 
 /obj/item/door_remote/proc/is_my_domain(area/restricted_area)
 	for(var/area/dominion as anything in our_domain)

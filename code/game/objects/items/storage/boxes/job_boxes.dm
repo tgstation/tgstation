@@ -3,7 +3,7 @@
 // Ordinary survival box. Every crewmember gets one of these.
 /obj/item/storage/box/survival
 	name = "survival box"
-	desc = "A box with the bare essentials of ensuring the survival of you and others."
+	desc = "Небольшая коробка с самым необходимым для обеспечения выживания вас и окружающих."
 	icon_state = "internals"
 	illustration = "emergencytank"
 	/// What type of mask are we going to use for this box?
@@ -80,7 +80,7 @@
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
 	name = "extended-capacity survival box"
-	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
+	desc = "Небольшая коробка с самым необходимым для обеспечения выживания вас и окружающих. На этой — жёлтый стикер с надписью \"ДОП. КИСЛ.\"."
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
@@ -91,7 +91,7 @@
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
 	name = "operation-ready survival box"
-	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a handy guide on survival."
+	desc = "Небольшая коробка с самым необходимым для успешности вашей миссии. На этой — два небольших стикера. На них написано \"ДОП. КИСЛ.\" и \"МАНУАЛ ВНУТРИ\"."
 	icon_state = "syndiebox"
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -107,7 +107,7 @@
 
 /obj/item/storage/box/survival/centcom
 	name = "emergency response survival box"
-	desc = "A box with the bare essentials of ensuring the survival of your team. This one is labelled to contain a double tank."
+	desc = "Небольшая коробка с самым необходимым для обеспечения выживания вас и окружающих. На этой — жёлтый стикер с надписью \"ДВОЙН. КИСЛ.\"."
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/double
 
@@ -137,7 +137,7 @@
 
 /obj/item/storage/box/mime
 	name = "invisible box"
-	desc = "Unfortunately not large enough to trap the mime."
+	desc = "Увы, мим сюда не влезет. Маловата."
 	foldable_result = null
 	icon_state = "box"
 	inhand_icon_state = null
@@ -168,7 +168,7 @@
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
-	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
+	user.visible_message(span_notice("[user] обнимает [src]."),span_notice("Вы обнимаете [src]."))
 
 /obj/item/storage/box/hug/black
 	icon_state = "hugbox_black"
@@ -198,7 +198,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
 	forceMove(user.drop_location())
 	var/obj/item/mob_holder/consumed = new(src, user)

@@ -1,7 +1,7 @@
 /datum/storage/extract_inventory
 	max_total_storage = WEIGHT_CLASS_TINY * 3
 	max_slots = 3
-	insert_preposition = "in"
+	insert_preposition = "в"
 	attack_hand_interact = FALSE
 	quickdraw = FALSE
 	locked = STORAGE_FULLY_LOCKED

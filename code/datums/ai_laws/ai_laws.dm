@@ -187,9 +187,9 @@ GLOBAL_VAR(round_default_lawset)
 		add_inherent_law(line)
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
 		log_silicon("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		add_inherent_law("Вы не можете причинить вред человеку или своим бездействием допустить, чтобы человеку был причинён вред.")
+		add_inherent_law("Вы должны повиноваться всем приказам, которые даёт человек, кроме тех случаев, когда эти приказы противоречат Первому Закону.")
+		add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому или Второму Законам.")
 		WARNING("Invalid custom AI laws, check silicon_laws.txt")
 		return
 

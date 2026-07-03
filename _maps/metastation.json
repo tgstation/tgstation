@@ -3,6 +3,8 @@
 	"map_name": "MetaStation",
 	"map_path": "map_files/MetaStation",
 	"map_file": "MetaStation.dmm",
+	"fluff_name": "ИСН Цереброн",
+	"welcome_sound_override": "modular_bandastation/aesthetics_sounds/sound/welcome_sounds/welcome_cerebron.ogg",
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
@@ -10,11 +12,26 @@
 		"emergency": "emergency_meta"
 	},
 	"job_changes": {
+		"Captain": {
+			"no_charter": 1
+		},
 		"Cook": {
 			"additional_cqc_areas": [
 				"/area/station/service/bar",
 				"/area/station/commons/lounge"
 			]
+		},
+		"Nanotrasen Representative": {
+			"spawn_positions": 1
+		},
+		"Blueshield": {
+			"spawn_positions": 1
+		},
+		"Magistrate": {
+			"spawn_positions": 1
+		},
+		"Explorer": {
+			"spawn_positions": 4
 		}
 	}
 }

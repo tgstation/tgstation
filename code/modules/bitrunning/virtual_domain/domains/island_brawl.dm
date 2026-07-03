@@ -1,11 +1,11 @@
 /datum/lazy_template/virtual_domain/island_brawl
-	name = "Island Brawl"
+	name = "Островная потасовка"
 	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_HIGH
-	desc = "A 'peaceful' island tucked away in the middle of nowhere. This map will auto-complete after a number of deaths have occurred."
+	desc = "Мирный остров, спрятанный в Богом забытом месте.. Этот уровень будет автоматически завершен после того, как произойдет некоторое количесво смертей."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	forced_outfit = /datum/outfit/beachbum_combat
-	help_text = "There may be bounties laid out across the island, but the primary objective is to survive. Deaths on the island will count towards the final score."
+	help_text = "По всему острову могут быть назначены награды, но главная цель - выжить. Смерти на острове будут засчитаны в итоговый счет."
 	key = "island_brawl"
 	map_name = "island_brawl"
 	reward_points = BITRUNNER_REWARD_HIGH
@@ -49,6 +49,6 @@
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander
 	name = "Islander"
 	outfit = /datum/outfit/beachbum_combat
-	prompt_name = "a combat beach bum"
-	you_are_text = "You are a virtual islander."
-	flavour_text = "Don't let anyone ruin your idyllic vacation spot. Coordinate with others- or don't!"
+	prompt_name = "пляжный боевой бомж"
+	you_are_text = "Вы - виртуальный островитянин."
+	flavour_text = "Не позволяйте никому разрушить ваше идеальное место для отдыха. Договаривайтесь с другими... или нет!"

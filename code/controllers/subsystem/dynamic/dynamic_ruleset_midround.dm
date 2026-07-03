@@ -53,7 +53,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_spiders)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/spiders/proc/announce_spiders()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce("На борту [station_name()] обнаружены неопознанные формы жизни. Перекройте все внешние шлюзы, включая трубы и вентиляции.", "Неопознанные формы жизни", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/spiders/false_alarm()
 	announce_spiders()
@@ -92,7 +92,7 @@
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE // BANDASTATION EDIT
 	weight = 3
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -134,7 +134,7 @@
 		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
 	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
 	//send message
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
+	priority_announce("Входящий подпространственный вызов. Защищенный канал открыт на всех коммуникационных консолях.", "Входящее сообщение", SSstation.announcer.get_rand_report_sound())
 	threat.answer_callback = CALLBACK(src, PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
 	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
 	GLOB.communications_controller.send_message(threat, unique = TRUE)
@@ -232,7 +232,7 @@
 	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
 	if(ishuman(body))
 		var/mob/living/carbon/human/human_body = body
-		body.client?.prefs.safe_transfer_prefs_to(body)
+		body.client?.prefs.safe_transfer_prefs_to(body, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 		human_body.dna.remove_all_mutations()
 		human_body.dna.update_dna_identity()
 
@@ -405,7 +405,7 @@
 	return pick(GLOB.blobstart)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+	priority_announce("Вспышка биологической угрозы 5-го уровня зафиксирована на борту [station_name()]. Всему персоналу надлежит сдержать её распространение любой ценой!", "Биологическая угроза", ANNOUNCER_OUTBREAK5)
 
 	// Set status displays to biohazard alert even for false alarm
 	send_status_display_biohazard_alert()
@@ -442,7 +442,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_xenos)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/announce_xenos()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce("На борту [station_name()] обнаружены неопознанные формы жизни. Перекройте все внешние шлюзы, включая трубы и вентиляции.", "Неопознанные формы жизни", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/false_alarm()
 	announce_xenos()
@@ -495,7 +495,7 @@
 	candidate.current.move_into_vent(vent)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/proc/announce_worms()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce("На борту [station_name()] обнаружены неопознанные формы жизни. Перекройте все внешние шлюзы, включая трубы и вентиляции.", "Неопознанные формы жизни", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/false_alarm()
 	announce_worms()
@@ -556,7 +556,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_space_dragon)), rand(5, 10) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/proc/announce_space_dragon()
-	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce("Вблизи [station_name()] зафиксирован большой поток органической энергии, ожидайте дальнейших указаний.", "Неопознанная форма жизни")
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/false_alarm()
 	announce_space_dragon()
@@ -715,13 +715,14 @@
 	preview_antag_datum = /datum/antagonist/paradox_clone
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_PARADOX_CLONE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE // BANDASTATION EDIT
 	weight = 5
 	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 	/// Chance of getting another clone for the price of free
 	var/bonus_clone_chance = 20
+	var/datum/weakref/original // BANDASTATION ADDITION
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
 	. = ..()
@@ -736,7 +737,32 @@
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
 
+
+// BANDASTATION ADD - START
+#define RANDOM_CLONE "Рандом"
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/configure_ruleset(mob/admin)
+	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_CLONE]" = TRUE)
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || !(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		admin_pool += player
+
+	var/picked = tgui_input_list(admin, "Выберите игрока для клонирования", "Выбор игрока для клонирования", admin_pool)
+	switch(picked)
+		if(RANDOM_CLONE)
+			return
+		if(RULESET_CONFIG_CANCEL, null)
+			return RULESET_CONFIG_CANCEL
+		else
+			message_admins("[key_name_admin(admin)] picked [picked] to be cloned as Paradox Clone.")
+			original = WEAKREF(picked)
+
+#undef RANDOM_CLONE
+// BANDASTATION ADD - END
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate, mob/living/carbon/human/good_version)
+	good_version = original?.resolve() || find_clone() // BANDASTATION ADDITION
 	var/mob/living/carbon/human/bad_version = good_version.make_full_human_copy(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 	candidate.transfer_to(bad_version, force_key_move = TRUE)
 
@@ -973,33 +999,33 @@
 	var/announcement_title = ""
 	switch(hunter_backstory)
 		if(HUNTER_PACK_COPS)
-			announcement_text_list += "Attention Crew of [station_name()], this is the Police. A wanted criminal has been reported taking refuge on your station."
-			announcement_text_list += "We have a warrant from the SSC authorities to take them into custody. Officers have been dispatched to your location."
-			announcement_text_list += "We demand your cooperation in bringing this criminal to justice."
-			announcement_title += "Spacepol Command"
+			announcement_text_list += "Внимание, экипаж [station_name()], это межгалактическая полиция Космопола. Сообщается, что на вашей станции нашел убежище разыскиваемый преступник."
+			announcement_text_list += "У нас есть ордер от департамента защиты вашего сектора на проведение задержания. Офицеры направлены к вам."
+			announcement_text_list += "Мы требуем вашего сотрудничества в привлечении этого преступника к ответственности."
+			announcement_title += "Командование Космопола"
 		if(HUNTER_PACK_RUSSIAN)
-			announcement_text_list += "Zdraviya zhelaju, [station_name()] crew. We are coming to your station."
-			announcement_text_list += "There is a criminal aboard. We will arrest them and return them to the gulag. That's good, yes?"
-			announcement_title += "Russian Freighter"
+			announcement_text_list += "Zdraviya zhelaju, экипаж [station_name()]. Мы направляемся к вашей станции."
+			announcement_text_list += "На вашем борту находится преступник. Мы его арестуем и вернём в ГУЛАГ. Хорошо, да?"
+			announcement_title += "Разыскной шаттл НКВД КССП"
 		if(HUNTER_PACK_BOUNTY)
-			announcement_text_list += "[station_name()]. One of our bounty marks has ended up on your station. We will be arriving to collect shortly."
-			announcement_text_list += "Let's make this quick. If you don't want trouble, stay the hell out of our way."
-			announcement_title += "Unregistered Signal"
+			announcement_text_list += "[station_name()]. Одна из наших \"голов\" объявилась на вашей станции. Мы скоро прибудем, чтобы забрать её."
+			announcement_text_list += "Быстро всё сделаем и улетим. Не хотите проблем - катитесь к чёрту с нашей дороги."
+			announcement_title += "Незарегистрированный сигнал"
 		if(HUNTER_PACK_PSYKER)
-			announcement_text_list += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
-			announcement_text_list += "We're also offering fortune telling services out of the front door if you have paying customers."
-			announcement_title += "Fortune-Telling Entertainment Shuttle"
+			announcement_text_list += "ЭЙ, ВЫ НАС СЛЫШИТЕ? Мы уже на подлёте к вашей станции! У вас там гад, настоящий отпетый негодяй! Мы его должны арестовать!"
+			announcement_text_list += "Кстати, мы ещё и гадаем прямо у входа. Можете направлять к нам своих клиентов, если у них есть деньги."
+			announcement_title += "Шаттл гадания и развлечений"
 		if(HUNTER_PACK_MI13)
-			announcement_text_list += "Illegal intrusion detected in the crew monitoring network. Central Command has been informed."
-			announcement_text_list += "Please report any suspicious individuals or behaviour to your local security team."
-			announcement_title += "Nanotrasen Intrusion Countermeasures Electronics"
+			announcement_text_list += "Обнаружено несанкционированное проникновение в сеть мониторинга экипажа. Центральное командование уведомлено."
+			announcement_text_list += "Любые проявления подозрительной активности или подозрительных лиц следует немедленно сообщать в местную службу безопасности."
+			announcement_title += "Нанотрейзен: контрмеры электронному вторжению"
 
 	if(!length(announcement_text_list))
-		announcement_text_list += "Unidentified ship detected near the station."
+		announcement_text_list += "Обнаружен неопознанный шаттл вблизи станции."
 		stack_trace("Fugitive hunter announcement was unable to generate an announcement text based on backstory: [hunter_backstory]")
 
 	if(!length(announcement_title))
-		announcement_title += "Unknown Signal"
+		announcement_title += "Неизвестный сигнал"
 		stack_trace("Fugitive hunter announcement was unable to generate an announcement title based on backstory: [hunter_backstory]")
 
 	priority_announce(jointext(announcement_text_list, " "), announcement_title)

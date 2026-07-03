@@ -37,14 +37,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	/obj/item/toy/talking/owl = 2,
 	/obj/item/toy/talking/griffin = 2,
 	/obj/item/coin/antagtoken = 2,
-	/obj/item/stack/tile/fakepit/loaded = 2,
+	// /obj/item/stack/tile/fakepit/loaded = 2, /// BANDASATION REMOVAL - Remove Fun
 	/obj/item/stack/tile/eighties/loaded = 2,
 	/obj/item/toy/toy_xeno = 2,
 	/obj/item/storage/box/actionfigure = 1,
 	/obj/item/restraints/handcuffs/fake = 2,
-	/obj/item/grenade/chem_grenade/glitter/pink = 1,
-	/obj/item/grenade/chem_grenade/glitter/blue = 1,
-	/obj/item/grenade/chem_grenade/glitter = 1,
+	/// BANDASATION REMOVAL START - Remove Fun
+	// /obj/item/grenade/chem_grenade/glitter/pink = 1,
+	// /obj/item/grenade/chem_grenade/glitter/blue = 1,
+	// /obj/item/grenade/chem_grenade/glitter = 1,
+	/// BANDASATION REMOVAL END - Remove Fun
 	/obj/item/toy/eightball = 2,
 	/obj/item/toy/windup_toolbox = 2,
 	/obj/item/toy/clockwork_watch = 2,
@@ -70,4 +72,5 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	/obj/item/clothing/glasses/trickblindfold = 2,
 	/obj/item/clothing/mask/party_horn = 2,
 	/obj/item/storage/box/party_poppers = 2,
+	/obj/item/toy/plush/pig = 1, /// BANDASTATION ADDITION - Pig toy
 ))

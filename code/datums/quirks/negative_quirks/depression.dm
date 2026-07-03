@@ -1,11 +1,11 @@
 /datum/quirk/depression
 	name = "Depression"
-	desc = "You sometimes just hate life."
+	desc = "Иногда вы просто ненавидите жизнь."
 	icon = FA_ICON_FROWN
 	value = -3
-	gain_text = span_danger("You start feeling depressed.")
-	lose_text = span_notice("You no longer feel depressed.") //if only it were that easy!
-	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
+	gain_text = span_danger("У вас начинается депрессия.")
+	lose_text = span_notice("Вы больше не испытываете депрессию.") //if only it were that easy!
+	medical_record_text = "У пациента легкое расстройство настроения, вызывающее острые приступы депрессии."
 	medical_symptom_text = "Experiences persistent feelings of sadness, hopelessness, and a lack of motivation."
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES|QUIRK_TRAUMALIKE
 	hardcore_value = 2

@@ -107,7 +107,7 @@
 		return FALSE
 	to_chat(src, span_bold(playstyle_string))
 
-/mob/living/basic/construct/get_examine_name(mob/user)
+/mob/living/basic/construct/get_examine_name(mob/user, declent) // BANDASTATION EDIT - Declents
 	var/text_span
 	switch(theme)
 		if(THEME_CULT)

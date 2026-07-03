@@ -10,14 +10,14 @@
 	if (pulledby == user)
 		switch (user.grab_state)
 			if (GRAB_PASSIVE)
-				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Grip"
+				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Схватить"
 			if (GRAB_AGGRESSIVE)
-				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Choke"
+				context[SCREENTIP_CONTEXT_CTRL_LMB] = "За горло"
 			if (GRAB_NECK)
-				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Strangle"
+				context[SCREENTIP_CONTEXT_CTRL_LMB] = "Задушить"
 			else
 				return .
 	else
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Pull"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Потащить"
 
 	return CONTEXTUAL_SCREENTIP_SET

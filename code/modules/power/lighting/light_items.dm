@@ -45,7 +45,7 @@
 
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
-		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	else
 		user.visible_message(span_suicide("[user] begins to eat \the [src]! It looks like [user.p_theyre()] not very bright!"))
 		shatter()

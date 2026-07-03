@@ -50,7 +50,7 @@
 	defender.visible_message(
 		span_danger("[attacker] hits [defender] with Plasma Punch!"),
 		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		null,
 		attacker,
 	)
@@ -71,7 +71,7 @@
 	defender.visible_message(
 		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
 		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		null,
 		attacker,
 	)
@@ -103,7 +103,7 @@
 	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
-	user.say("APOTHEOSIS!!", forced="plasma fist")
+	user.say("АПОФЕОЗ!!", forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)

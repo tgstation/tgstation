@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/pointed/void_phase
-	name = "Void Phase"
-	desc = "Lets you blink to your pointed destination, causes 3x3 aoe damage bubble \
-		around your pointed destination and your current location. \
-		It has a minimum range of 3 tiles and a maximum range of 9 tiles."
+	name = "Фаза Пустоты"
+	desc = "Позволяет вам телепортироваться в указанное место, вызывая АоЕ урон площадью 3х3 \
+		вокруг указанного вами пункта назначения и вашего текущего местоположения. \
+		Минимальная дальность действия составляет 3 тайлов, а максимальная - 9 тайлов."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -28,7 +28,7 @@
 		return
 
 	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
-		cast_on.balloon_alert(owner, "too close!")
+		cast_on.balloon_alert(owner, "слишком близко!")
 		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/pointed/void_phase/cast(atom/cast_on)

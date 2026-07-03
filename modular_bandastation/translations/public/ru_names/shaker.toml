@@ -1,0 +1,8 @@
+[shaker]
+nominative = "шейкер"
+genitive = "шейкера"
+dative = "шейкеру"
+accusative = "шейкер"
+instrumental = "шейкером"
+prepositional = "шейкере"
+gender = "male"

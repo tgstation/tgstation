@@ -111,13 +111,21 @@
 	var/datum/weakref/recipient_ref = null
 
 /obj/item/gift/anything/get_gift_type()
-	var/static/list/obj/item/possible_gifts = null
+	var/static/list/possible_gifts = null
 
 	if(isnull(possible_gifts))
-		possible_gifts = get_sane_item_types(/obj/item)
+		var/list/all_items = get_sane_item_types(/obj/item)
+		// BANDASTATION EDIT START: No debug and centcom items
+		possible_gifts = list()
 
-	var/gift_type = pick(possible_gifts)
-	return gift_type
+		for(var/typepath in all_items)
+			var/type_str = "[typepath]"
+			if(findtext(type_str, "debug") || findtext(type_str, "centcom"))
+				continue
+			possible_gifts += typepath
+		// BANDASTATION EDIT END: No debug and centcom items
+
+	return pick(possible_gifts)
 
 /obj/item/gift/anything/attack_self(mob/user)
 	if (isnull(recipient_ref))

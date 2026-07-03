@@ -1,0 +1,8 @@
+[butterdog]
+nominative = "масло-дог"
+genitive = "масла-дога"
+dative = "маслу-догу"
+accusative = "масло-дог"
+instrumental = "маслом-догом"
+prepositional = "масле-доге"
+gender = "male"

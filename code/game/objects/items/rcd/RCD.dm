@@ -110,11 +110,11 @@
 	var/turf/T = get_turf(user)
 
 	if(!isopenturf(T)) // Oh fuck
-		user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		return BRUTELOSS
 
 	mode = RCD_TURF
-	user.visible_message(span_suicide("[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	if(useResource(16, user)) // It takes 16 resources to construct a wall
 		var/success = T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		T = get_turf(user)
@@ -145,6 +145,12 @@
 	 *If we are just trying to destroy something then this check is not necessary
 	 *RCD_WALLFRAME is also returned as the rcd_mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
+
+	//BANDASTATION ADD START - Engineer Skillchip RCD
+	if((rcd_mode in modes_requiring_advanced_rcd_knowledge) && !check_engineer_skillchip(user))
+		return
+	//BANDASTATION ADD END - Engineer Skillchip RCD
+
 	if(rcd_mode != RCD_WALLFRAME && rcd_mode != RCD_DECONSTRUCT)
 		var/turf/target_turf = get_turf(target)
 		//if we are trying to build a window we check for specific edge cases
@@ -261,6 +267,12 @@
 	rcd_results[RCD_DESIGN_PATH] = rcd_design_path
 
 	var/delay = rcd_results["delay"] * delay_mod
+
+	//BANDASTATION ADD START - Engineer Skillchip RCD
+	if(!check_engineer_skillchip(user, FALSE))
+		delay *= RCD_NO_SKILLCHIP_DELAY_MULTIPLIER
+	//BANDASTATION ADD END - Engineer Skillchip RCD
+
 	if (
 		!(construction_upgrades & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
 			&& !rcd_results[RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN] \
@@ -344,6 +356,10 @@
 
 	data["root_categories"] = list()
 	for(var/category in GLOB.rcd_designs)
+		//BANDASTATION ADD START - Engineer Skillchip RCD
+		if((category in categories_requiring_advanced_rcd_knowledge) && !check_engineer_skillchip(user, FALSE))
+			continue
+		//BANDASTATION ADD END - Engineer Skillchip RCD
 		data["root_categories"] += category
 	data["selected_root"] = root_category
 

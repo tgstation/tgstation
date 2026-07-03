@@ -49,7 +49,7 @@
 		if(istype(potentially_paper, /obj/item/paper) || istype(potentially_paper, /obj/item/paperplane))
 			papers_found += potentially_paper
 	if(!papers_found.len || !item_loc)
-		user.visible_message(span_suicide("[user] bashes [user.p_them()]self in the head with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] bashes [user.p_them()]self in the head with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] opens [src] and all of [user.p_their()] papers fly out!"))
@@ -58,8 +58,8 @@
 		paper.throw_at(turf_to_throw_at, 2)
 
 	stoplag(1 SECONDS)
-	user.say("ARGGHH, HOW WILL I GET THIS WORK DONE NOW?!!")
-	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("АААААА!!! КАК ЖЕ Я ТЕПЕРЬ БУДУ РАБОТАТЬ?!")
+	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 // Empty subtype

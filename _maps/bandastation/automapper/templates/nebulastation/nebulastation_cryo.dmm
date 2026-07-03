@@ -1,0 +1,506 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/common/cryopods)
+"c" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/commons/dorms)
+"h" = (
+/obj/item/clothing/suit/caution,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"i" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/herringbone,
+/area/station/commons/toilet/restrooms)
+"j" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/corner,
+/area/station/commons/dorms)
+"k" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/common/cryopods)
+"l" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/commons/toilet/restrooms)
+"m" = (
+/obj/machinery/computer/cryopod/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/trimline/dark_green/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/common/cryopods)
+"o" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/structure/bedsheetbin/empty,
+/obj/structure/sign/poster/random/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
+"p" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/white/herringbone,
+/area/station/commons/toilet/restrooms)
+"q" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/herringbone,
+/area/station/commons/toilet/restrooms)
+"t" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/turf_decal/trimline/dark_green/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/common/cryopods)
+"u" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/commons/dorms)
+"x" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/obj/machinery/duct,
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
+"A" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/commons/toilet/restrooms)
+"C" = (
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Dormitory Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"F" = (
+/obj/structure/mirror/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 4
+	},
+/obj/machinery/duct,
+/obj/item/soap/deluxe{
+	pixel_y = 2
+	},
+/obj/item/soap{
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
+"G" = (
+/obj/structure/flora/bush/jungle/c/style_2,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/flora/bush/large/style_2{
+	pixel_y = 0
+	},
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/grass,
+/area/station/common/cryopods)
+"H" = (
+/turf/closed/wall,
+/area/station/common/cryopods)
+"K" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/commons/dorms)
+"L" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/hangover,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/station/commons/dorms)
+"M" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/station/commons/toilet/restrooms)
+"N" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/trimline/dark_green/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/common/cryopods)
+"O" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/commons/dorms)
+"S" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre,
+/obj/effect/turf_decal/tile/blue/diagonal_centre,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/machinery/duct,
+/turf/open/floor/iron/white/diagonal,
+/area/station/commons/toilet/restrooms)
+"U" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryopods"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Cryopods"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/common/cryopods)
+"W" = (
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"X" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/corner,
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/obj/machinery/duct,
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
+"Y" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/station/commons/toilet/restrooms)
+
+(1,1,1) = {"
+C
+C
+C
+O
+j
+u
+c
+L
+K
+C
+C
+C
+C
+C
+"}
+(2,1,1) = {"
+H
+H
+H
+U
+H
+C
+C
+C
+l
+C
+C
+C
+C
+C
+"}
+(3,1,1) = {"
+H
+G
+m
+N
+H
+C
+C
+C
+i
+p
+C
+C
+C
+C
+"}
+(4,1,1) = {"
+H
+H
+k
+t
+H
+C
+C
+C
+C
+S
+C
+C
+C
+C
+"}
+(5,1,1) = {"
+C
+H
+b
+b
+H
+C
+C
+C
+C
+M
+C
+C
+C
+C
+"}
+(6,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+A
+C
+C
+C
+C
+"}
+(7,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+q
+Y
+C
+C
+C
+C
+"}
+(8,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(9,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(10,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(11,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+W
+C
+"}
+(12,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+o
+X
+x
+D
+h
+C
+"}
+(13,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+F
+C
+C
+C
+C
+"}

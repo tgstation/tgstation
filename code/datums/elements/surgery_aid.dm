@@ -5,7 +5,7 @@
 	/// The name of the aid, for examine and messages, in plural form
 	var/aid_name
 
-/datum/element/surgery_aid/Attach(datum/target, aid_name = "things")
+/datum/element/surgery_aid/Attach(datum/target, aid_name = "что-то")
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -29,11 +29,11 @@
 
 	var/mob/living/target_mob = target
 	if(!target_mob.has_limbs)
-		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(source, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare for surgery"
+		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(source, TRAIT_READY_TO_OPERATE) ? "Убрать [aid_name]" : "Подготовить к операции"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected)) || target_mob.get_bodypart(BODY_ZONE_CHEST)
-	context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(precise_part, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare [precise_part.plaintext_zone] for surgery"
+	context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(precise_part, TRAIT_READY_TO_OPERATE) ? "Убрать [aid_name]" : "Подготовить [precise_part.ru_plaintext_zone[NOMINATIVE]] к операции"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/surgery_aid/proc/on_item_interaction(datum/source, mob/living/user, atom/target, ...)
@@ -51,10 +51,10 @@
 	var/datum/status_effect/surgery_prepped/prep = target_mob.has_status_effect(__IMPLIED_TYPE__)
 	if(isnull(prep) || !(body_zone in prep.zones))
 		target_mob.apply_status_effect(/datum/status_effect/surgery_prepped, body_zone, aid_name)
-		target_mob.balloon_alert(surgeon, "[parse_zone(body_zone)] surgery prepared")
+		target_mob.balloon_alert(surgeon, "[parse_zone(body_zone)] подготовлена для операции")
 		return
 	prep.untrack_surgery(body_zone)
-	target_mob.balloon_alert(surgeon, "surgery cleared")
+	target_mob.balloon_alert(surgeon, "операция отменена")
 
 /// Tracks which body zones have been prepped for surgery
 /datum/status_effect/surgery_prepped
@@ -71,13 +71,13 @@
 	/// Counts movements while standing up - removes the effect if we move too much
 	var/movement_counter = 0
 
-/datum/status_effect/surgery_prepped/on_creation(mob/living/new_owner, target_zone, aid_name = "things")
+/datum/status_effect/surgery_prepped/on_creation(mob/living/new_owner, target_zone, aid_name = "что-то")
 	. = ..()
 	track_surgery(target_zone)
 	LAZYOR(surgical_aids, aid_name)
 	ADD_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id)) // needs to happen after tracking starts
 
-/datum/status_effect/surgery_prepped/refresh(mob/living/new_owner, target_zone, aid_name = "things")
+/datum/status_effect/surgery_prepped/refresh(mob/living/new_owner, target_zone, aid_name = "что-то")
 	track_surgery(target_zone)
 	LAZYOR(surgical_aids, aid_name)
 
@@ -100,8 +100,8 @@
 		zones_readable += parse_zone(zone)
 
 	var/list/aid_readable = list()
-	for(var/aid in surgical_aids)
-		aid_readable += copytext_char(aid, -1) == "s" ? aid : "\a [aid]"
+	//for(var/aid in surgical_aids) // BANDASTATION REMOVAL
+	//aid_readable += copytext_char(aid, -1) == "s" ? aid : "\a [aid]"// BANDASTATION REMOVAL
 
 	// "They have surgial drapes and a bedsheet adorning their chest, arms, and legs."
 	return "[owner.p_They()] [owner.p_have()] [english_list(aid_readable)] adorning [owner.p_their()] [english_list(zones_readable)]."
@@ -114,7 +114,7 @@
 	if(movement_counter < 4)
 		return
 	// "The surgical drapes and bedsheets adorning John fall off!"
-	owner.visible_message(span_warning("The [english_list(surgical_aids)] adorning [owner] fall off!"))
+	owner.visible_message(span_warning("Простынь спадает с [owner.declent_ru(GENITIVE)]!"))
 	qdel(src)
 
 /datum/status_effect/surgery_prepped/proc/on_attach_limb(datum/source, obj/item/bodypart/limb)

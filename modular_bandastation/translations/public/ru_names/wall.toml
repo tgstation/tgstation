@@ -1,0 +1,8 @@
+[wall]
+nominative = "стена"
+genitive = "стены"
+dative = "стене"
+accusative = "стену"
+instrumental = "стеной"
+prepositional = "стене"
+gender = "female"

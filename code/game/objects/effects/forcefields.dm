@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 /// The cosmic heretics forcefield
 /obj/effect/forcefield/cosmic_field
 	name = "Cosmic Field"
-	desc = "A field that cannot be passed by people marked with a cosmic star."
+	desc = "Поле, которое не может быть пересечено людьми, отмеченными космической звездой."
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "cosmic_carpet"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -1,0 +1,10 @@
+{
+	"stealth_cloak": [
+		{
+			"type": "icon_state",
+			"icon_state": "stealth_cloak",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

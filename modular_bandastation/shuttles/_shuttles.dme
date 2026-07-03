@@ -1,0 +1,7 @@
+#include "_shuttles.dm"
+
+#include "code/areas.dm"
+#include "code/dockers.dm"
+#include "code/docking_ports.dm"
+#include "code/landing_zones.dm"
+#include "code/terminals.dm"

@@ -190,7 +190,7 @@
 	)
 	/// List of selectable large options
 	var/static/list/graffiti_large_h = list(
-		"furrypride" = CRAYON_COST_LARGE,
+		//"furrypride" = CRAYON_COST_LARGE, // BANDASTATION REMOVAL
 		"paint" = CRAYON_COST_LARGE,
 		"secborg" = CRAYON_COST_LARGE,
 		"yiffhell" = CRAYON_COST_LARGE,
@@ -202,7 +202,7 @@
 	return isfloorturf(surface)
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	user.add_atom_colour(color_transition_filter(paint_color, SATURATION_OVERRIDE), ADMIN_COLOUR_PRIORITY)
 	return (BRUTELOSS|OXYLOSS)
 
@@ -431,7 +431,7 @@
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
-	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
+	var/static/regex/crayon_regex = new /regex(@"[^\wА-Яа-яЁё!?,.=&%#+/\-]", "ig") // BANDASTATION EDIT - Russian Crayons
 	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
 /// Is this a valid object for use_on to run on?
@@ -439,6 +439,13 @@
 	if(!isturf(target) && !istype(target, /obj/effect/decal/cleanable))
 		return FALSE
 	return TRUE
+
+// BANDASTATION ADD START - Russian Crayons
+/obj/item/toy/crayon/proc/get_unicode_letter(letter)
+	var/char_code = text2ascii(letter)
+	if((char_code >= 1072 && char_code <= 1103) || char_code == 1105)
+		return "u[char_code]"
+// BANDASTATION ADD END - Russian Crayons
 
 /// Attempts to color the target.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
@@ -542,6 +549,10 @@
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
+		// BANDASTATION ADD START - Russian Crayons
+		if(length(drawing) != length_char(drawing))
+			drawing = get_unicode_letter(drawing)
+		// BANDASTATION ADD END - Russian Crayons
 
 
 	var/list/turf/affected_turfs = list(target)
@@ -852,11 +863,11 @@
 	var/used = min(charges_left, 10)
 	if(is_capped || !actually_paints || !use_charges(user, 10, FALSE))
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
-		user.say("MEDIOCRE!!", forced = "spraycan suicide")
+		user.say("БЕЗДАРНОСТЬ!!!", forced = "spraycan suicide")
 		return SHAME
 
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
-	user.say("WITNESS ME!!", forced = "spraycan suicide")
+	user.say("ОСВИДЕТЕЛЬСТВУЙТЕ МЕНЯ!!!", forced = "spraycan suicide")
 	if(pre_noise || post_noise)
 		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	if(can_change_colour)

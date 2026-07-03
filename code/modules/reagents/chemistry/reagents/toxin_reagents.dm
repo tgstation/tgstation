@@ -381,7 +381,9 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/fakedeath)
+	// BANDASTATION EDIT - START
+	affected_mob.cure_fakedeath(type)
+	// BANDASTATION EDIT - END
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

@@ -1,0 +1,8 @@
+["curator's whip"]
+nominative = "кнут куратора"
+genitive = "кнута куратора"
+dative = "кнуту куратору"
+accusative = "кнут куратора"
+instrumental = "кнутом куратором"
+prepositional = "кнуте кураторе"
+gender = "male"

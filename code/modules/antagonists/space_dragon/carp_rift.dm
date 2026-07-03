@@ -7,7 +7,7 @@
 
 /datum/action/innate/summon_rift
 	name = "Summon Rift"
-	desc = "Summon a rift to bring forth a horde of space carp."
+	desc = "Открывает разлом призыва орды космических карпов."
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
 	button_icon = 'icons/mob/actions/actions_space_dragon.dmi'
@@ -21,18 +21,18 @@
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
-			owner.balloon_alert(owner, "already summoned a rift here!")
+			owner.balloon_alert(owner, "здесь уже есть разлом!")
 			return
 
 	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
+		owner.balloon_alert(owner, "здесь нельзя открыть разлом! вспомните цели!")
 		return
 
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
-		owner.balloon_alert(dragon, "needs stable ground!")
+		owner.balloon_alert(dragon, "нужна поверхность!")
 		return
-	owner.balloon_alert(owner, "opening rift...")
+	owner.balloon_alert(owner, "открытие разлома...")
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
@@ -42,11 +42,11 @@
 	dragon.riftTimer = -1
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
-	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
+	to_chat(owner, span_boldwarning("Разлом был открыт. Любой ценой не допустите его уничтожения!"))
 	notify_ghosts(
-		"The Space Dragon has opened a rift!",
+		"Космический дракон открыл разлом!",
 		source = new_rift,
-		header = "Carp Rift Opened",
+		header = "Открытие разлома карпов",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
@@ -109,7 +109,7 @@
  */
 /obj/structure/carp_rift
 	name = "carp rift"
-	desc = "A rift akin to the ones space carp use to travel long distances."
+	desc = "Разлом, позвляющий космическим карпам перемещаться на огромные расстояния."
 	armor_type = /datum/armor/structure_carp_rift
 	max_integrity = 300
 	icon = 'icons/obj/anomaly.dmi'
@@ -159,7 +159,9 @@
 		healing_color = COLOR_BLUE, \
 	)
 
+	/* BANDASTATION REMOVAL START - Stupid TG Shit
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/carp_rift)
+	BANDASTATION REMOVAL END */
 
 	gravity_aura = new(
 		/* host = */src,
@@ -183,12 +185,12 @@
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
 	if(time_charged < max_charge)
-		. += span_notice("It seems to be [(time_charged / max_charge) * 100]% charged.")
+		. += span_notice("Похоже, что разлом заряжен на [(time_charged / max_charge) * 100]%")
 	else
-		. += span_warning("This one is fully charged. In this state, it is poised to transport a much larger amount of carp than normal.")
+		. += span_warning("Этот разлом полностью заряжен. Теперь, он может перемещать гораздо большее количество карпов, чем обычно.")
 
 	if(isobserver(user))
-		. += span_notice("It has [carp_stored] carp available to spawn as.")
+		. += span_notice("В этом разломе находится [carp_stored] карпов для вселения призраков.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
@@ -197,7 +199,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(charge_state != CHARGE_COMPLETED)
 		if(dragon)
-			to_chat(dragon.owner.current, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
+			to_chat(dragon.owner.current, span_boldwarning("Разлом был уничтожен! Вы провалили свою задачу, и слабость одолевает вас"))
 			dragon.destroy_rifts()
 	dragon = null
 	return ..()
@@ -245,9 +247,9 @@
 			set_light_color(LIGHT_COLOR_PURPLE)
 			update_light()
 		notify_ghosts(
-			"The carp rift can summon an additional carp!",
+			"Разлом может призвать дополнительного карпа!",
 			source = src,
-			header = "Carp Spawn Available",
+			header = "Доступен космический карп",
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 		last_carp_inc -= carp_interval
@@ -256,7 +258,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/location = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		priority_announce("Пространственный объект достиг пикового заряда энергии в [initial(location.name)], будьте наготове.", "[command_name()]: Отдел Изучения Дикой Природы", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -281,7 +283,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce("Разлом создает неествественно большой поток энергии в зоне [initial(A.name)]. Остановите его любой ценой!", "[command_name()]: Отдел Изучения Дикой Природы", ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.
@@ -298,14 +300,14 @@
 	var/is_listed = FALSE
 	if (user.ckey in ckey_list)
 		if(carp_stored == 1)
-			to_chat(user, span_warning("You've already become a carp using this rift! Either wait for a backlog of carp spawns or until the next rift!"))
+			to_chat(user, span_warning("Вы уже появлялись карпом из этого разлома! Пожалуйста, ожидайте избытка карпов или следующего разлома!"))
 			return FALSE
 		is_listed = TRUE
-	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
-	if(carp_ask != "Yes" || QDELETED(src) || QDELETED(user))
+	var/carp_ask = tgui_alert(user, "Стать карпом?", "Разлом карпов", list("Да", "Нет"))
+	if(carp_ask != "Да" || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
-		to_chat(user, span_warning("The rift already summoned enough carp!"))
+		to_chat(user, span_warning("Разлом уже призвал достаточно карпов!"))
 		return FALSE
 
 	if(isnull(dragon))
@@ -313,7 +315,7 @@
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
 	SET_FACTION_AND_ALLIES_FROM(newcarp, dragon.owner.current)
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
-	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "не вкусно!")
 	dragon.wavespeak?.link_mob(newcarp)
 
 	if(!is_listed)
@@ -323,7 +325,7 @@
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)
 	dragon.carp += newcarp.mind
-	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
+	to_chat(newcarp, span_boldwarning("Вы прибыли, чтобы помочь Космическому дракону защищать разломы. Следуйте поставленной миссии и защитите разлом любой ценой!"))
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"

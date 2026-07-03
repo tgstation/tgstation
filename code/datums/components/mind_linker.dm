@@ -136,7 +136,7 @@
 
 	if(isliving(source))
 		var/mob/living/owner = source
-		to_chat(owner, span_boldwarning("Your [network_name] breaks!"))
+		to_chat(owner, span_boldwarning("Ваша [network_name] сломалась!"))
 
 	qdel(src)
 
@@ -174,8 +174,8 @@
 		return
 
 	var/mob/living/owner = parent
-	src.link_message = link_message || "You are now connected to [owner.real_name]'s [network_name]."
-	src.unlink_message = unlink_message || "You are no longer connected to [owner.real_name]'s [network_name]."
+	src.link_message = link_message || "Вы соединилсь с [network_name], владелец которой - [owner.real_name]."
+	src.unlink_message = unlink_message || "Вы отсоединились от [network_name], владелец которой - [owner.real_name]."
 
 	if(ispath(linker_action_path))
 		linker_action = new linker_action_path(src)
@@ -183,7 +183,7 @@
 	else
 		stack_trace("[type] was created without a valid linker_action_path. No one will be able to link to it.")
 
-	to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
+	to_chat(owner, span_boldnotice("Вы создали [network_name], позволяющую общаться с другими участниками телепатически."))
 
 /datum/component/mind_linker/active_linking/Destroy()
 	QDEL_NULL(linker_action)
@@ -202,9 +202,9 @@
 	RegisterSignal(to_link, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(sig_unlink_mob))
 	var/mob/living/owner = parent
 	to_chat(to_link, span_notice(link_message))
-	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
+	to_chat(owner, span_notice("Вы соединяете разум [to_link.declent_ru(GENITIVE)] к вашей [network_name]."))
 	for(var/mob/living/other_link as anything in linked_mobs)
-		to_chat(other_link, span_notice("You feel a new presence within [owner.real_name]'s [network_name]."))
+		to_chat(other_link, span_notice("Вы ощущаете новый разум в [network_name], владелец которой - [owner.real_name]."))
 
 /datum/component/mind_linker/active_linking/unlink_mob(mob/living/to_unlink)
 	. = ..()
@@ -214,14 +214,14 @@
 	UnregisterSignal(to_unlink, COMSIG_MINDSHIELD_IMPLANTED)
 	var/mob/living/owner = parent
 	to_chat(to_unlink, span_warning(unlink_message))
-	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
+	to_chat(owner, span_warning("Вы ощущаете, что кто-то отсоединился от [network_name]."))
 	for(var/mob/living/other_link as anything in linked_mobs)
-		to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
+		to_chat(other_link, span_warning("Вы ощущаете, как кто-то исчезает из [network_name], владелец которой - [owner.real_name]."))
 
 // Used in mind linker to talk to everyone in the network.
 /datum/action/innate/linked_speech
 	name = "Mind Link Speech"
-	desc = "Send a psychic message to everyone connected to your Link."
+	desc = "Отправьте мысленное сообщение всем, кто с вами связан."
 	button_icon_state = "link_speech"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
@@ -236,7 +236,7 @@
 
 	var/datum/component/mind_linker/linker = Target
 	name = "[linker.network_name] Speech"
-	desc = "Send a psychic message to everyone connected to your [linker.network_name]."
+	desc = "Отправьте мысленное сообщение всем, кто соединен с вашей [linker.network_name]."
 	button_icon = linker.speech_action_icon
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state
@@ -248,12 +248,12 @@
 	var/datum/component/mind_linker/linker = target
 	var/mob/living/linker_parent = linker.parent
 
-	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(owner, "Введите сообщения для отправки.", "Телепатия в [linker.network_name]", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 
 	if(QDELETED(linker))
-		to_chat(owner, span_warning("The link seems to have been severed."))
+		to_chat(owner, span_warning("Связь, видимо, была разорвана."))
 		return
 
 	var/formatted_message = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"

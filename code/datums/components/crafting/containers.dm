@@ -20,6 +20,7 @@
 	)
 	result = /obj/item/storage/backpack/holding
 	category = CAT_CONTAINERS
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/underwater_basket
 	name = "Underwater Basket (Bamboo)"

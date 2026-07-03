@@ -3,8 +3,8 @@
 
 /// A mob that gets mad at people at random and tries to eat nearby objects
 /mob/living/basic/goose
-	name = "goose"
-	desc = "It's loose."
+	name = "гусь"
+	desc = "Прекрасная птица для набива подушек и страха детишек."
 	icon_state = "goose"
 	icon_living = "goose"
 	icon_dead = "goose_dead"

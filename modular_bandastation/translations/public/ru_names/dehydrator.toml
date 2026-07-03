@@ -1,0 +1,8 @@
+[dehydrator]
+nominative = "иссушатель"
+genitive = "иссушателя"
+dative = "иссушателю"
+accusative = "иссушатель"
+instrumental = "иссушателем"
+prepositional = "иссушателе"
+gender = "male"

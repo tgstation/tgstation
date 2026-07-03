@@ -96,7 +96,7 @@ export function RecipeContentCompact(props: Props) {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={`Tools: ${item.tool_behaviors.join(', ')}`}
+                      content={`Инструменты: ${item.tool_behaviors.join(', ')}`}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
@@ -120,7 +120,7 @@ export function RecipeContentCompact(props: Props) {
                       })
                     }
                   >
-                    Make
+                    Создать
                   </Button>
                   {!!item.mass_craftable && (
                     <Button
@@ -128,7 +128,7 @@ export function RecipeContentCompact(props: Props) {
                       lineHeight={2.5}
                       width="32px"
                       align="center"
-                      tooltip="Repeat this craft until you run out of ingredients."
+                      tooltip="Продолжать создание, пока не закончатся ингредиенты."
                       tooltipPosition="top"
                       disabled={!craftable || busy}
                       icon="repeat"
@@ -290,7 +290,7 @@ export function RecipeContent(props: FullProps) {
                             })
                           }
                         >
-                          Make
+                          Создать
                         </Button>
                       </Stack.Item>
                       <Stack.Item>
@@ -318,7 +318,7 @@ export function RecipeContent(props: FullProps) {
                 <Stack.Item>
                   {!!item.complexity && (
                     <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
-                      Complexity: {item.complexity}
+                      Сложность: {item.complexity}
                     </Box>
                   )}
                   {!!item.foodtypes && item.foodtypes.length > 0 && (

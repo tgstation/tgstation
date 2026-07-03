@@ -11,9 +11,11 @@ describe('ChannelIterator', () => {
 
   it('should cycle through channels properly', () => {
     expect(channelIterator.current()).toBe('Say');
+    expect(channelIterator.next()).toBe('Whis'); // BANDASTATION EDIT ADDITION
     expect(channelIterator.next()).toBe('Radio');
-    expect(channelIterator.next()).toBe('Me');
     expect(channelIterator.next()).toBe('OOC');
+    expect(channelIterator.next()).toBe('LOOC'); // BANDASTATION EDIT ADDITION
+    expect(channelIterator.next()).toBe('Me');
     expect(channelIterator.next()).toBe('Pray');
     expect(channelIterator.next()).toBe('Say'); // Admin is blacklisted so it should be skipped
   });

@@ -10,10 +10,10 @@
 	icon_angle = -45
 	var/activated = FALSE
 	var/static/list/oath_lines = list(
-		"I swear to fulfill, to the best of my ability and judgment, this covenant:",
-		"I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.",
-		"I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.",
-		"If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.",
+		"Я клянусь выполнять, наилучшим образом, в соответствии с моими способностями и суждением, этот завет:",
+		"Я буду применять все необходимые меры на благо больных, избегая двух крайностей: чрезмерного ухода и терапевтического нигилизма.",
+		"Я буду помнить, что остаюсь членом общества, у которого есть особые обязательства по отношению ко всем моим собратьям - как к здоровым душой и телом, так и к немощным.",
+		"Если я не нарушу эту клятву, пусть я буду наслаждаться жизнью и искусством, меня будут уважать, пока я жив, и вспоминать с любовью после этого. Пусть мои действия всегда будут направлены на сохранение лучших традиций моего призвания, и пусть я долго буду испытывать радость от исцеления тех, кто обращается ко мне за помощью.",
 	)
 
 /obj/item/rod_of_asclepius/Initialize(mapload)

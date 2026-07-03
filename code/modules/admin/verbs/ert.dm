@@ -71,56 +71,62 @@
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
 	return preview_icon
 
-/datum/admins/proc/make_emergency_response_team(datum/ert/ertemplate = null)
+/datum/admins/proc/make_emergency_response_team(datum/ert/ertemplate = null, skip_preference_menu = FALSE) // BANDASTATION EDIT - ERT request panel
 	if (ertemplate)
-		ertemplate = new ertemplate
+		// BANDASTATION EDIT START - ERT request panel
+		if(ispath(ertemplate))
+			ertemplate = new ertemplate
+		// BANDASTATION EDIT END
 	else
 		ertemplate = new /datum/ert/centcom_official
 
 	var/human_authority_setting = CONFIG_GET(string/human_authority)
 
-	var/list/settings = list(
-		"preview_callback" = CALLBACK(src, PROC_REF(makeERTPreviewIcon)),
-		"mainsettings" = list(
-		"template" = list("desc" = "Template", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
-		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
-		"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
-		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
-		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(human_authority_setting == HUMAN_AUTHORITY_ENFORCED ? "Yes" : "No")]"),
-		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
-		"leader_experience" = list("desc" = "Pick an experienced leader", "type" = "boolean", "value" = "[(ertemplate.leader_experience ? "Yes" : "No")]"),
-		"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
-		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]"),
-		"use_custom_shuttle" = list("desc" = "Use the ERT's custom shuttle (if it has one)", "type" = "boolean", "value" = "[(ertemplate.use_custom_shuttle ? "Yes" : "No")]"),
-		"mob_type" = list("desc" = "Base Species", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/mob/living/carbon/human", "subtypesonly" = TRUE, "value" = ertemplate.mob_type),
+	// BANDASTATION EDIT START - ERT request panel
+	if(!skip_preference_menu)
+		var/list/settings = list(
+			"preview_callback" = CALLBACK(src, PROC_REF(makeERTPreviewIcon)),
+			"mainsettings" = list(
+			"template" = list("desc" = "Template", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
+			"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
+			"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
+			"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
+			"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(human_authority_setting == HUMAN_AUTHORITY_ENFORCED ? "Yes" : "No")]"),
+			"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
+			"leader_experience" = list("desc" = "Pick an experienced leader", "type" = "boolean", "value" = "[(ertemplate.leader_experience ? "Yes" : "No")]"),
+			"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
+			"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]"),
+			"use_custom_shuttle" = list("desc" = "Use the ERT's custom shuttle (if it has one)", "type" = "boolean", "value" = "[(ertemplate.use_custom_shuttle ? "Yes" : "No")]"),
+			"mob_type" = list("desc" = "Base Species", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/mob/living/carbon/human", "subtypesonly" = TRUE, "value" = ertemplate.mob_type),
+			)
 		)
-	)
 
-	var/list/pref_return = present_pref_like_picker(usr, "Customize ERT", "Customize ERT", width = 600, timeout = 0, settings = settings)
+		var/list/pref_return = present_pref_like_picker(usr, "Customize ERT", "Customize ERT", width = 600, timeout = 0, settings = settings)
 
-	if (isnull(pref_return) || pref_return["button"] != 1)
-		message_admins("[key_name_admin(owner)] changed [owner.p_their()] mind and didn't create a CentCom response team.")
-		return FALSE
+		if (isnull(pref_return) || pref_return["button"] != 1)
+			message_admins("[key_name_admin(owner)] changed [owner.p_their()] mind and didn't create a CentCom response team.")
+			return FALSE
 
-	var/list/prefs = settings["mainsettings"]
+		var/list/prefs = settings["mainsettings"]
 
-	var/templtype = prefs["template"]["value"]
-	if (!ispath(prefs["template"]["value"]))
-		templtype = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
+		var/templtype = prefs["template"]["value"]
+		if (!ispath(prefs["template"]["value"]))
+			templtype = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
 
-	if (ertemplate.type != templtype)
-		ertemplate = new templtype
+		if (ertemplate.type != templtype)
+			ertemplate = new templtype
 
-	ertemplate.teamsize = prefs["teamsize"]["value"]
-	ertemplate.mission = prefs["mission"]["value"]
-	ertemplate.polldesc = prefs["polldesc"]["value"]
-	ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" // these next 6 are effectively toggles
-	ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes"
-	ertemplate.leader_experience = prefs["leader_experience"]["value"] == "Yes"
-	ertemplate.random_names = prefs["random_names"]["value"] == "Yes"
-	ertemplate.spawn_admin = prefs["spawn_admin"]["value"] == "Yes"
-	ertemplate.use_custom_shuttle = prefs["use_custom_shuttle"]["value"] == "Yes"
-	ertemplate.mob_type = prefs["mob_type"]["value"]
+		ertemplate.teamsize = prefs["teamsize"]["value"]
+		ertemplate.mission = prefs["mission"]["value"]
+		ertemplate.polldesc = prefs["polldesc"]["value"]
+		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" // these next 6 are effectively toggles
+		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes"
+		ertemplate.leader_experience = prefs["leader_experience"]["value"] == "Yes"
+		ertemplate.random_names = prefs["random_names"]["value"] == "Yes"
+		ertemplate.spawn_admin = prefs["spawn_admin"]["value"] == "Yes"
+		ertemplate.use_custom_shuttle = prefs["use_custom_shuttle"]["value"] == "Yes"
+		ertemplate.mob_type = prefs["mob_type"]["value"]
+	// BANDASTATION EDIT END
 
 	var/list/spawn_points = GLOB.emergencyresponseteamspawn
 
@@ -169,9 +175,13 @@
 
 	if(ertemplate.spawn_admin)
 		if(isobserver(usr))
+			// BANDASTATION EDIT START - ERT brief spawn location
+			if(!brief_spawn)
+				brief_spawn = get_turf(locate(/obj/effect/landmark/ert_brief_spawn))
+			// BANDASTATION EDIT END
 			var/mob/living/carbon/human/admin_officer = new (brief_spawn || spawn_points[1])
 			var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
-			usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
+			usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 			admin_officer.equipOutfit(chosen_outfit)
 			admin_officer.PossessByPlayer(usr.key)
 
@@ -228,7 +238,7 @@
 			ert_operative = new ertemplate.mob_type(spawnloc)
 		else
 			ert_operative = new /mob/living/carbon/human(spawnloc)
-			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
+			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 		ert_operative.PossessByPlayer(chosen_candidate.key)
 
 		if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN))
@@ -237,7 +247,7 @@
 		//Give antag datum
 		var/datum/antagonist/ert/ert_antag
 
-		if((chosen_candidate == earmarked_leader) || (numagents == 1 && !leader_spawned))
+		if(ertemplate.leader_role && ((chosen_candidate == earmarked_leader) || (numagents == 1 && !leader_spawned))) // BANDASTATION EDIT - Optional ERT commander
 			ert_antag = new ertemplate.leader_role ()
 			earmarked_leader = null
 			leader_spawned = TRUE

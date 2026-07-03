@@ -1,9 +1,9 @@
 /datum/lazy_template/virtual_domain/gondola_asteroid
-	name = "Gondola Asteroid"
-	desc = "An asteroid home to a bountiful forest of gondolas. Peaceful."
-	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
-	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
-	I bet there's a way to move it myself."
+	name = "Астероид с гондолами"
+	desc = "Этот астероид является домом для обильного леса с гондолами. Умиротворительно."
+	help_text = "Какой чудесный лес. Нужный нам ящик находится в центре леса. \
+	Странно, ящик не толкнуть. А вот гондолы, похоже, без проблем его передвигают. \
+	Наверняка есть способ сдвинуть его своими силами."
 	key = "gondola_asteroid"
 	map_name = "gondola_asteroid"
 	domain_flags = DOMAIN_NO_NOHIT_BONUS

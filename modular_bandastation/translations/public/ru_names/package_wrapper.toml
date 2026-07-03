@@ -1,0 +1,8 @@
+["package wrapper"]
+nominative = "обёртка для упаковки"
+genitive = "обёртки для упаковки"
+dative = "обёртке для упаковки"
+accusative = "обёртку для упаковки"
+instrumental = "обёрткой для упаковки"
+prepositional = "обёртке для упаковки"
+gender = "female"

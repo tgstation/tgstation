@@ -63,8 +63,9 @@
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
 		// Open UI
-		ui = new(user, src, "CameraConsole", name)
+		ui = new(user, src, "CameraConsole220", name) // BANDASTATION EDIT: UI changed from CameraConsole to CameraConsole220
 		ui.open()
+		ui.set_autoupdate(FALSE) // BANDASTATION ADDITION
 		// Register map objects
 		cam_screen.display_to(user, ui.window)
 
@@ -109,6 +110,17 @@
 		update_active_camera_screen()
 
 		return TRUE
+
+// BANDASTATION ADDITION: Bodycam
+/obj/machinery/computer/security/proc/on_camera_disabled(obj/machinery/camera/camera)
+	if(active_camera != camera)
+		return
+	active_camera.on_stop_watching(src)
+	active_camera = null
+	last_camera_turf = null
+	update_active_camera_screen()
+	SStgui.update_uis(src)
+// BANDASTATION ADDITION END: Bodycam
 
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera

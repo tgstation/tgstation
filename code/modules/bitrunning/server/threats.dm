@@ -129,17 +129,17 @@
 
 /// Oh boy - transports the antag station side
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
-	antag.balloon_alert(antag, "scanning...")
+	antag.balloon_alert(antag, "сканирование...")
 	chosen_forge.setup_particles(angry = TRUE)
 	var/obj/machinery/announcement_system/aas = get_announcement_system(null, src, list(RADIO_CHANNEL_SUPPLY))
 	if (aas)
-		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(RADIO_CHANNEL_SUPPLY))
+		aas.broadcast("ПРЕДУПРЕЖДЕНИЕ КВАНТОВОГО СЕРВЕРА: обнаружено нарушение безопасности. Выполняется несанкционированная последовательность доступа…", list(RADIO_CHANNEL_SUPPLY))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
 		if (aas)
-			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
+			aas.broadcast("ПРЕДУПРЕЖДЕНИЕ КВАНТОВОГО СЕРВЕРА: произошёл неожиданный сбой протоколов фабрикации. Немедленно эвакуируйтесь из области.", list(RADIO_CHANNEL_SUPPLY))
 		timeout = 10 SECONDS
 
 	var/bitrunners_alive = 0
@@ -178,7 +178,7 @@
 	if(ishuman(antag))
 		reset_equipment(antag)
 	else if (aas)
-		aas.broadcast("QUANTUM SERVER CRITICAL ALERT: Unregistered mechanical entity deployed.", list())
+		aas.broadcast("ТРЕВОГА КВАНТОВОГО СЕРВЕРА: задействован незарегистрированный механический объект.", list())
 
 	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
 	if(istype(antag_datum))

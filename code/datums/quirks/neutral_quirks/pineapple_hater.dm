@@ -1,11 +1,11 @@
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
-	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare put it on a pizza!?"
+	desc = "Вы испытываете сильное отвращение к ананасам. Серьезно, как, черт возьми, кто-то может говорить, что они вкусные? И какой безумец вообще осмелится положить их на пиццу!?"
 	icon = FA_ICON_THUMBS_DOWN
 	value = 0
-	gain_text = span_notice("You find yourself pondering what kind of idiot actually enjoys pineapples...")
-	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
-	medical_record_text = "Patient is correct to think that pineapple is disgusting."
+	gain_text = span_notice("Вы размышляете о том, каким извращенцам нравятся ананасы...")
+	lose_text = span_notice("Ваше отношение к ананасам, похоже, вернулось к нейтральному состоянию.")
+	medical_record_text = "Пациент считает, что ананасы отвратительны."
 	mail_goodies = list( // basic pizza slices
 		/obj/item/food/pizzaslice/margherita,
 		/obj/item/food/pizzaslice/meat,

@@ -1,9 +1,9 @@
 /datum/action/changeling/defib_grasp
 	name = "Defibrillator Grasp"
-	desc = "We prepare ourselves while in stasis. If one of our enemies attempts to defibrillate us, \
-		we will snatch their arms off and instantly finalize our stasis."
-	helptext = "This ability is passive, and will trigger when a defibrillator paddle is applied to our chest \
-		while we are dead or in stasis. Will also stun cyborgs momentarily."
+	desc = "Мы готовимся, пока находимся в стазисе. Если кто-то из наших врагов попытается сделать нам дефибрилляцию, \
+		мы оторвем им руки и мгновенно завершим наш стазис."
+	helptext = "Эта способность пассивна и срабатывает, когда к нашей груди прикладывают лопатки дефибриллятора \
+		пока мы мертвы или находимся в стазисе. Также на мгновение оглушает киборгов."
 	button_icon_state = "defibrillator_grasp"
 	category = "utility"
 	owner_has_control = FALSE
@@ -54,7 +54,7 @@
 
 	if(iscyborg(defibber))
 		if(defibber.flash_act(affect_silicon = TRUE))
-			to_chat(defibber, span_userdanger("[changeling] awakens suddenly, overloading your sensors!"))
+			to_chat(defibber, span_userdanger("[capitalize(changeling.declent_ru(NOMINATIVE))] внезапно пробуждается, перегружая ваши сенсоры!"))
 			// run default visible message regardless, no overt indication of the cyborg being overloaded to watchers
 
 	else
@@ -77,18 +77,18 @@
 				defibber.emote("scream")
 
 				changeling.visible_message(
-					span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands while ripping off [removed_arms >= 2 ? "" : "one of "][defibber.p_their()] arms!"),
+					span_bolddanger("[capitalize(changeling.declent_ru(NOMINATIVE))] внезапно просыпается, выхватывает [defib.declent_ru(ACCUSATIVE)] из рук [defibber.declent_ru(GENITIVE)] при этом отрывая [removed_arms >= 2 ? "их руки" : "одну из рук"][defibber.p_their()]!"),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 					ignored_mobs = list(changeling, defibber),
 				)
-				to_chat(changeling, span_changeling("The power of [defib] course through us, reviving us from our stasis! \
-					With this newfound energy, we snap [removed_arms >= 2 ? "" : "one of "][defibber]'s arms off!"))
-				to_chat(defibber, span_userdanger("[changeling] awakens suddenly, snapping [removed_arms >= 2 ? "" : "one of "]your arms off!"))
+				to_chat(changeling, span_changeling("Сила [defib.declent_ru(GENITIVE)] проходит через нас, оживляя нас из стазиса! \
+					С этой вновь обретенной энергией мы отрываем [removed_arms >= 2 ? "руки " : "одну из рук "][defibber.declent_ru(GENITIVE)]!"))
+				to_chat(defibber, span_userdanger("[capitalize(changeling.declent_ru(NOMINATIVE))] внезапно просыпается, отрывая [removed_arms >= 2 ? "ваши руки" : "одну из ваших рук"]!"))
 				return // no default message if we got an arm
 
 	changeling.visible_message(
-		span_bolddanger("[changeling] awakens suddenly!"),
+		span_bolddanger("[capitalize(changeling.declent_ru(NOMINATIVE))] внезапно просыпается!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = changeling,
 	)
-	to_chat(changeling, span_changeling("The power of [defib] course through us, reviving us from our stasis!"))
+	to_chat(changeling, span_changeling("Сила [defib.declent_ru(GENITIVE)] проходит через нас, оживляя нас из стазиса!"))

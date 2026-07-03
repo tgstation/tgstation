@@ -191,7 +191,7 @@
 	exposed_wound_bonus = 14
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */
 

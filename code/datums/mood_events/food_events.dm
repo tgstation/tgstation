@@ -1,29 +1,29 @@
 /datum/mood_event/favorite_food
-	description = "I really enjoyed eating that."
+	description = "Мне очень понравилась эта еда."
 	mood_change = 5
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/gross_food
-	description = "I really didn't like that food."
+	description = "Мне очень не понравилась эта еда."
 	mood_change = -2
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/disgusting_food
-	description = "That food was disgusting!"
+	description = "Эта еда была отвратительна!"
 	mood_change = -6
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/allergic_food
-	description = "My throat itches."
+	description = "Моё горло зудит."
 	mood_change = -2
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FOOD
 
 /datum/mood_event/breakfast
-	description = "Nothing like a hearty breakfast to start the shift."
+	description = "Нет ничего лучше сытного завтрака, чтобы начать смену."
 	mood_change = 2
 	timeout = 10 MINUTES
 	event_flags = MOOD_EVENT_FOOD
@@ -35,7 +35,7 @@
 /datum/mood_event/food/add_effects(quality = FOOD_QUALITY_NORMAL, timeout_mod = 1)
 	mood_change = calculate_mood_change(quality)
 	timeout *= timeout_mod
-	description = "That food was [GLOB.food_quality_description[quality]]."
+	description = "Эта была [GLOB.food_quality_description[quality]] пища."
 
 /datum/mood_event/food/be_refreshed(datum/mood/home, quality, timeout_mod)
 	var/old_mood = mood_change
@@ -44,7 +44,7 @@
 	mood_change = max(mood_change, calculate_mood_change(quality))
 	// if mood_change is the same, we don't need to update the description
 	if(old_mood != mood_change)
-		description = "That food was [GLOB.food_quality_description[quality]]."
+		description = "Эта еда была [GLOB.food_quality_description[quality]]."
 	return ..()
 
 /datum/mood_event/food/proc/calculate_mood_change(base_quality)
@@ -57,7 +57,7 @@
 	return ceil(quality)
 
 /datum/mood_event/pacifist_eating_fish_item
-	description = "I shouldn't be eating living creatures..."
+	description = "Я не должен был есть живых существ..."
 	mood_change = -1 //The disgusting food moodlet already has a pretty big negative value, this is just for context.
 	timeout = 4 MINUTES
 	event_flags = MOOD_EVENT_FOOD

@@ -1,0 +1,8 @@
+["medical kiosk"]
+nominative = "медицинский киоск"
+genitive = "медицинского киоска"
+dative = "медицинскому киоску"
+accusative = "медицинский киоск"
+instrumental = "медицинским киоском"
+prepositional = "медицинском киоске"
+gender = "male"

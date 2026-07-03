@@ -1,8 +1,8 @@
 /datum/mutation/radioactive
 	name = "Radioactivity"
-	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and their surroundings."
+	desc = "Нестабильная мутация, которая заставляет носителя излучать смертельные бета-частицы. Мутация влияет на носителя и его окружение."
 	quality = NEGATIVE
-	text_gain_indication = span_warning("You can feel it in your bones!")
+	text_gain_indication = span_warning("Ты ощущаешь, как что-то проходит через твои клетки и кости!")
 	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 8
 	power_coeff = 1

@@ -1,0 +1,301 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"b" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
+/obj/item/pen,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"e" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Bridge - Council Chamber";
+	name = "command camera"
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"h" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/comfy/black,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"k" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"l" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"m" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/wood,
+/obj/item/radio/intercom/command,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"o" = (
+/obj/structure/cable,
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"p" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/lighter,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"q" = (
+/turf/closed/wall/r_wall,
+/area/station/command/meeting_room/council)
+"r" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/table/wood,
+/obj/item/pai_card,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"t" = (
+/obj/structure/table/wood,
+/obj/item/cigarette/cigar/havana{
+	pixel_x = -3
+	},
+/obj/item/cigarette/cigar/cohiba{
+	pixel_x = 3
+	},
+/obj/item/cigarette/cigar,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"u" = (
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"v" = (
+/obj/machinery/light_switch/directional/south,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"w" = (
+/obj/structure/chair/comfy/brown{
+	buildstackamount = 0;
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"y" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"A" = (
+/obj/structure/table/wood,
+/obj/item/storage/briefcase{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/briefcase/secure,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"B" = (
+/obj/structure/bookcase/random,
+/obj/item/radio/intercom/directional/south{
+	pixel_y = -38
+	},
+/obj/machinery/button/door/directional/south{
+	id = "councilblast";
+	name = "Council Blast Doors"
+	},
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"C" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/comfy/black,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"D" = (
+/obj/structure/cable,
+/obj/structure/statue/gold/galactic_map,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"E" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"F" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"H" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"I" = (
+/turf/open/floor/iron/grimy,
+/area/station/command/meeting_room/council)
+"K" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"L" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/grimy,
+/area/station/command/meeting_room/council)
+"M" = (
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"N" = (
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"O" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/folder/yellow{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/folder/red,
+/obj/item/folder/blue{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"P" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"Q" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"R" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood,
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 7
+	},
+/obj/item/phone{
+	desc = "Предположительно, это прямая линия с центральным командованием Нанотрейзен. Он даже не подключен.";
+	name = "красный телефон";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"S" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/station/command/meeting_room/council)
+"V" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/toy/figure/dsquad,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"W" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/wood,
+/area/station/command/meeting_room/council)
+"X" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"Y" = (
+/obj/structure/cable,
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+"Z" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet,
+/area/station/command/meeting_room/council)
+
+(1,1,1) = {"
+r
+t
+D
+V
+A
+"}
+(2,1,1) = {"
+k
+I
+L
+I
+B
+"}
+(3,1,1) = {"
+W
+E
+Y
+a
+Q
+"}
+(4,1,1) = {"
+u
+C
+O
+w
+N
+"}
+(5,1,1) = {"
+P
+X
+p
+F
+e
+"}
+(6,1,1) = {"
+y
+h
+Z
+o
+y
+"}
+(7,1,1) = {"
+H
+R
+m
+b
+v
+"}
+(8,1,1) = {"
+K
+I
+S
+I
+N
+"}
+(9,1,1) = {"
+l
+N
+N
+M
+q
+"}

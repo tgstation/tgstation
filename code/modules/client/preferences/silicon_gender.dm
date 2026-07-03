@@ -1,3 +1,4 @@
+/* BANDASTATION REMOVAL
 #define SILICON_MALE "He/Him"
 #define SILICON_FEMALE "She/Her"
 #define SILICON_PLURAL "They/Them"
@@ -36,3 +37,4 @@
 #undef SILICON_FEMALE
 #undef SILICON_PLURAL
 #undef SILICON_NEUTER
+*/

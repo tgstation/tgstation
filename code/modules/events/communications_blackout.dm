@@ -11,11 +11,11 @@
 	announce_when = 1
 
 /datum/round_event/communications_blackout/announce(fake)
-	var/alert = pick( "Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you*%fj00)`5vc-BZZT",
-		"Ionospheric anomalies detected. Temporary telecommunication failu*3mga;b4;'1v¬-BZZZT",
-		"Ionospheric anomalies detected. Temporary telec#MCi46:5.;@63-BZZZZT",
-		"Ionospheric anomalies dete'fZ\\kg5_0-BZZZZZT",
-		"Ionospheri:%£ MCayj^j<.3-BZZZZZZT",
+	var/alert = pick( "Обнаружены ионосферные аномалии. Временный сбой в телекоммуникации неизбежен. Пожалуйста, свяжитесь с вашим*%fj00)`5vc-BZZT",
+		"Обнаружены ионосферные аномалии. Временный сбой св*3mga;b4;'1v¬-BZZZT",
+		"Обнаружены ионосферные аномалии. Вре#MCi46:5.;@63-BZZZZT",
+		"Обнаружены ионосферные ано'fZ\\kg5_0-BZZZZZT",
+		"Ионосфе:%£ MCayj^j<.3-BZZZZZZT",
 		"#4nd%;f4y6,>£%-BZZZZZZZT",
 	)
 
@@ -24,7 +24,7 @@
 		to_chat(A, span_notice("Remember, you can transmit over holopads by right clicking on them, and can speak through them with \".[/datum/saymode/holopad::key]\"."))
 
 	if(prob(30) || fake) //most of the time, we don't want an announcement, so as to allow AIs to fake blackouts.
-		priority_announce(alert, "Anomaly Alert")
+		priority_announce(alert, "Обнаружена аномалия")
 
 
 /datum/round_event/communications_blackout/start()

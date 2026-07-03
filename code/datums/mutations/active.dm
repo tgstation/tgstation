@@ -1,8 +1,8 @@
 /datum/mutation/adrenaline_rush
 	name = "Adrenaline Rush"
-	desc = "Allows the host to trigger their body's adrenaline response at will."
+	desc = "Позволяет обладателю данной мутации при желании наполнить своё тело адреналином."
 	quality = POSITIVE
-	text_gain_indication = span_notice("You feel pumped up!")
+	text_gain_indication = span_notice("Ты чувствуешь себя накаченным!")
 	instability = POSITIVE_INSTABILITY_MODERATE
 	power_path = /datum/action/cooldown/adrenaline
 

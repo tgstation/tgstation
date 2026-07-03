@@ -1,0 +1,8 @@
+["cargo gorka"]
+nominative = "горка снабжения"
+genitive = "горки снабжения"
+dative = "горке снабжения"
+accusative = "горку снабжения"
+instrumental = "горкой снабжения"
+prepositional = "горке снабжения"
+gender = "female"

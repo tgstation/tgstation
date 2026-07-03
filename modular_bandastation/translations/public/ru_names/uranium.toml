@@ -1,0 +1,8 @@
+[uranium]
+nominative = "уран"
+genitive = "урана"
+dative = "урану"
+accusative = "уран"
+instrumental = "ураном"
+prepositional = "уране"
+gender = "male"

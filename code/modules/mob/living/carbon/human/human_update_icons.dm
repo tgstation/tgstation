@@ -121,6 +121,7 @@ There are several things that need to be remembered:
 			override_state = target_overlay,
 			override_file = handled_by_bodyshape ? icon_file : null,
 			bodyshape = bodyshape,
+			female_version = uniform.female_version, // BANDASTATION EDIT - more masks for female clothing
 		)
 
 		apply_height(uniform_overlay, ENTIRE_BODY)
@@ -325,9 +326,28 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
+		// BANDASTATION EDIT START: SPECIES CLOTHING ICONS
+		var/list/icon_files_species = list(
+			"vulpkanin" = 'icons/bandastation/mob/species/vulpkanin/clothing/head.dmi',
+			"tajaran" = 'icons/bandastation/mob/species/tajaran/clothing/head.dmi'
+		)
 
-		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		apply_height(head_overlay, UPPER_BODY)
+		var/mutant_override = FALSE
+
+		var/species_id = dna.species.id
+		if(worn_item.worn_icon_species?[species_id])
+			icon_file = worn_item.worn_icon_species[species_id]
+			mutant_override = TRUE
+		else if(icon_files_species[species_id])
+			icon_file = icon_files_species[species_id]
+			mutant_override = FALSE
+
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+			icon_file = 'icons/mob/clothing/head/default.dmi'
+			mutant_override = FALSE
+
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
+		// BANDASTATION EDIT END: SPECIES CLOTHING ICONS
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -364,9 +384,27 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = DEFAULT_SUIT_FILE
+		// BANDASTATION EDIT: SPECIES CLOTHING ICONS
+		var/list/icon_files_species = list(
+			"vulpkanin" = 'icons/bandastation/mob/species/vulpkanin/clothing/suit.dmi',
+			"tajaran" = 'icons/bandastation/mob/species/tajaran/clothing/suit.dmi'
+		)
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		apply_height(suit_overlay, ENTIRE_BODY)
+		var/mutant_override = FALSE
+
+		var/obj/item/bodypart/chest/bodypart_chest = src.get_bodypart(BODY_ZONE_CHEST)
+		if(worn_item.worn_icon_species?[bodypart_chest.limb_id])
+			icon_file = worn_item.worn_icon_species[bodypart_chest.limb_id]
+			mutant_override = TRUE
+		else if(bodypart_chest.limb_id in icon_files_species)
+			icon_file = icon_files_species[bodypart_chest.limb_id]
+			mutant_override = FALSE
+
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+			icon_file = DEFAULT_SUIT_FILE
+			mutant_override = FALSE
+
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -392,10 +430,28 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
+		var/list/icon_files_species = list(
+			"vulpkanin" = 'icons/bandastation/mob/species/vulpkanin/clothing/mask.dmi',
+			"tajaran" = 'icons/bandastation/mob/species/tajaran/clothing/mask.dmi'
+		)
 
-		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
-		apply_height(mask_overlay, LOWER_BODY)
+		var/mutant_override = FALSE
+
+		var/obj/item/bodypart/head/bodypart_head = src.get_bodypart(BODY_ZONE_HEAD)
+		if(worn_item.worn_icon_species?[bodypart_head.limb_id])
+			icon_file = worn_item.worn_icon_species[bodypart_head.limb_id]
+			mutant_override = TRUE
+		else if(bodypart_head.limb_id in icon_files_species)
+			icon_file = icon_files_species[bodypart_head.limb_id]
+			mutant_override = FALSE
+
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
+			icon_file = 'icons/mob/clothing/mask.dmi'
+			mutant_override = FALSE
+
+		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
+	// BANDASTATION EDIT STOP - SPECIES CLOTHING ICONS
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
@@ -437,13 +493,17 @@ There are several things that need to be remembered:
 	return hands
 
 /// Modifies a sprite slightly to conform to female body shapes
-/proc/wear_female_version(icon_state, icon_file_path, icon, type, greyscale_colors, bodyshape)
-	var/index = "[icon_file_path]-[icon_state]-[greyscale_colors]"
+/proc/wear_female_version(icon_state, icon, type, greyscale_colors, datum/female_uniform/female_version) // BANDASTATION EDIT - more masks for female clothing
+	var/index = "[icon_state]-[greyscale_colors]"
 	var/static/list/female_clothing_icons = list()
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
-		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) || bodyshape & BODYSHAPE_DIGITIGRADE ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
-		var/icon/female_cropping_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', female_icon_state)
+		// BANDASTATION EDIT START - more masks for female clothing
+		var/female_icon_state = female_version::mask_icon_state || \
+			"female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+		var/mask_icon = female_version::mask_icon || FEMALE_MASK_ICON_DEFAULT
+		var/icon/female_cropping_mask = icon(mask_icon, female_icon_state)
+		// BANDASTATION EDIT END
 		female_clothing_icon = icon(icon, icon_state)
 		female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 		female_clothing_icon = fcopy_rsc(female_clothing_icon)
@@ -584,6 +644,7 @@ generate/load female uniform sprites matching all previously decided variables
 	override_state = null,
 	override_file = null,
 	bodyshape = NONE,
+	datum/female_uniform/female_version, // BANDASTATION EDIT - more masks for female clothing
 )
 
 	//Find a valid icon_state from variables+arguments
@@ -602,7 +663,7 @@ generate/load female uniform sprites matching all previously decided variables
 			icon = file2use,
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
-			bodyshape = bodyshape,
+			female_version = female_version, // BANDASTATION EDIT - more masks for female clothing
 		)
 	if(!isinhands && (bodyshapes_with_variations & bodyshape))
 		building_icon = get_bodyshape_icon(

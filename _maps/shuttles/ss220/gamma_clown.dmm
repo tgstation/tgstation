@@ -1,0 +1,239 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aB" = (
+/obj/structure/sign/poster/contraband/clown,
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/gamma)
+"mE" = (
+/obj/machinery/door/airlock/bananium,
+/obj/docking_port/mobile/gamma,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/gamma)
+"nT" = (
+/mob/living/basic/clown/longface,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"qF" = (
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/obj/item/clothing/under/rank/civilian/clown,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/storage/backpack/ert/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"vM" = (
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/gamma)
+"xL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"zs" = (
+/obj/machinery/light/directional/east,
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/obj/item/clothing/under/rank/civilian/clown/blue,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/storage/backpack/ert/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"AK" = (
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"DO" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/food/burger/clown{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/food/burger/clown{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/food/burger/clown{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/food/burger/clown{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/food/burger/clown{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/food/burger/clown{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"Ei" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/megaphone/clown{
+	pixel_x = -11;
+	pixel_y = 5
+	},
+/obj/item/nullrod/clown{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/toy/figure/clown{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"FJ" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/reagent_containers/borghypo/clown{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/skillchip/job/clown{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/skillchip/job/clown{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/robot_model/clown{
+	pixel_x = 3;
+	pixel_y = 9
+	},
+/obj/item/robot_model/clown{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/borghypo/clown{
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"HU" = (
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/obj/item/clothing/under/rank/civilian/clown/yellow,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/storage/backpack/ert/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"MG" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/sbeacondrop/clownbomb{
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"Nx" = (
+/obj/machinery/light/directional/east,
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/obj/item/clothing/under/rank/civilian/clown/orange,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/storage/backpack/ert/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"NJ" = (
+/obj/structure/statue/bananium/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"ON" = (
+/mob/living/basic/clown/lube,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"QK" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"Su" = (
+/mob/living/basic/clown/banana,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"Ta" = (
+/mob/living/basic/clown/clownhulk/destroyer,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"Uw" = (
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/obj/item/clothing/under/rank/civilian/clown/purple,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/storage/backpack/ert/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"UL" = (
+/obj/item/banner/clown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+"Vv" = (
+/turf/template_noop,
+/area/template_noop)
+"YG" = (
+/mob/living/basic/clown/fleshclown,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/gamma)
+
+(1,1,1) = {"
+vM
+vM
+vM
+vM
+mE
+vM
+vM
+vM
+Vv
+"}
+(2,1,1) = {"
+vM
+UL
+MG
+DO
+AK
+FJ
+Ei
+vM
+vM
+"}
+(3,1,1) = {"
+aB
+NJ
+Ta
+ON
+YG
+nT
+Su
+QK
+xL
+"}
+(4,1,1) = {"
+vM
+UL
+zs
+HU
+qF
+Nx
+Uw
+vM
+vM
+"}
+(5,1,1) = {"
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+Vv
+"}

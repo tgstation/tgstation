@@ -47,7 +47,7 @@
 
 /datum/component/deployable/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("It can be used <b>in hand</b> to deploy into [((deployments > 1) && multiple_deployments) ? "[deployments]" : "a"] [deployed_name].")
+	examine_list += span_notice("Может быть использовано <b>в руках</b> для установки [((deployments > 1) && multiple_deployments) ? "[deployments]" : "как"] [deployed_name].")
 
 /datum/component/deployable/proc/on_attack_hand(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
@@ -64,10 +64,10 @@
 	if(user)
 		deploy_location = get_step(user, user.dir) //Gets spawn location for thing_to_be_deployed if there is a user
 		if(deploy_location.is_blocked_turf(TRUE, parent))
-			source.balloon_alert(user, "insufficient room to deploy here.")
+			source.balloon_alert(user, "недостаточно места для установки здесь")
 			return
 		new_direction = user.dir //Gets the direction for thing_to_be_deployed if there is a user
-		source.balloon_alert(user, "deploying...")
+		source.balloon_alert(user, "установка...")
 		playsound(source, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 		if(!do_after(user, deploy_time))
 			return

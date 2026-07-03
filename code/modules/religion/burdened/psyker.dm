@@ -208,7 +208,7 @@
 	if(!do_after(user, 5 SECONDS, src))
 		balloon_alert(user, "interrupted!")
 		return
-	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
+	user.say("#О великий [GLOB.deity], дай мне боеприпасы, в которых я нуждаюсь!", forced = "ammo prayer")
 	magazine.top_off()
 	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	chamber_round()

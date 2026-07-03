@@ -1,0 +1,21 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Armory - Internal - Lower"
+	},
+/obj/structure/rack,
+/obj/item/storage/toolbox/drone,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/light/small/directional/north,
+/obj/item/sledgehammer/tactical{
+	pixel_y = 3
+	},
+/obj/item/sledgehammer/tactical{
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/security/armory)
+
+(1,1,1) = {"
+a
+"}

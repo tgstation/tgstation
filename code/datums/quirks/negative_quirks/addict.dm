@@ -1,8 +1,8 @@
 /datum/quirk/item_quirk/addict
 	name = "Addict"
-	desc = "You are addicted to something that doesn't exist. Suffer."
-	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
-	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
+	desc = "Вы зависимы от того, чего не существует. Страдайте."
+	gain_text = span_danger("Вы вдруг почувствовали тягу к... чему-то? Вы не уверены, к чему конкретно.")
+	medical_record_text = "У пациента есть зависимость к чему-то, но он отказывается говорить, к чему конкретно."
 	abstract_type = /datum/quirk/item_quirk/addict
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
@@ -12,7 +12,7 @@
 	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
-	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
+	var/drug_flavour_text = "Лучше надеяться, что у вас не закончится... что именно? Вы не знаете."
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
@@ -76,20 +76,20 @@
 	if(deleted || missing_addiction)
 		if(deleted)
 			reagent_instance = new reagent_type()
-		to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
+		to_chat(quirk_holder, span_danger("Вы думали, что завязали, но чувствуете, что возвращаетесь к вредным привычкам..."))
 		for(var/addiction in reagent_instance.addiction_types)
 			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
-	desc = "You can't get enough of hard drugs."
+	desc = "Вы не можете перестать употреблять тяжелые наркотики."
 	icon = FA_ICON_PILLS
 	value = -6
-	gain_text = span_danger("You suddenly feel the craving for drugs.")
-	medical_record_text = "Patient has a history of hard drugs."
+	gain_text = span_danger("Вы вдруг почувствовали тягу к наркотикам.")
+	medical_record_text = "Пациент употребляет тяжелые наркотики."
 	hardcore_value = 4
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
-	drug_flavour_text = "Better hope you don't run out..."
+	drug_flavour_text = "Лучше надеяться, что у вас они не закончатся..."
 
 /datum/quirk_constant_data/junkie
 	associated_typepath = /datum/quirk/item_quirk/addict/junkie
@@ -109,17 +109,17 @@
 
 /datum/quirk/item_quirk/addict/smoker
 	name = "Smoker"
-	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
+	desc = "Иногда вам очень хочется закурить. Возможно, это не очень полезно для ваших легких."
 	icon = FA_ICON_SMOKING
 	value = -4
-	gain_text = span_danger("You could really go for a smoke right about now.")
-	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
-	medical_record_text = "Patient is a current smoker."
+	gain_text = span_danger("Эх, вот бы сейчас закурить.")
+	lose_text = span_notice("Вы больше не чувствуете такой сильной зависимости от никотина.")
+	medical_record_text = "Пациент - курильщик."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
 	mob_trait = TRAIT_SMOKER
 	hardcore_value = 1
-	drug_flavour_text = "Make sure you get your favorite brand when you run out."
+	drug_flavour_text = "Убедитесь, что вы получите свои любимые, до того, как они закончатся."
 	mail_goodies = list(
 		/obj/effect/spawner/random/entertainment/cigarette_pack,
 		/obj/effect/spawner/random/entertainment/cigar,
@@ -167,17 +167,17 @@
 
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
-	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
+	desc = "Вы просто не можете жить без алкоголя. Ваша печень - это машина, которая превращает этанол в ацетальдегид."
 	icon = FA_ICON_WINE_GLASS
 	value = -4
-	gain_text = span_danger("You really need a drink.")
-	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
-	medical_record_text = "Patient is an alcoholic."
+	gain_text = span_danger("Вам действительно нужно выпить.")
+	lose_text = span_notice("Алкоголь уже не кажется таким привлекательным.")
+	medical_record_text = "Пациент - алкоголик."
 	reagent_type = /datum/reagent/consumable/ethanol
 	drug_container_type = /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	mob_trait = TRAIT_HEAVY_DRINKER
 	hardcore_value = 1
-	drug_flavour_text = "Make sure you get your favorite type of drink when you run out."
+	drug_flavour_text = "Убедитесь, что запасы вашего любимого напитка не закончатся."
 	mail_goodies = list(
 		/obj/effect/spawner/random/food_or_drink/booze,
 		/obj/item/book/bible/booze,

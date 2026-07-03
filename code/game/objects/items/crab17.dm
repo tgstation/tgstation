@@ -1,6 +1,6 @@
 /obj/item/suspiciousphone
 	name = "suspicious phone"
-	desc = "This device raises pink levels to unknown highs."
+	desc = "Это устройство повышает уровень розового цвета до неизвестных максимумов."
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
@@ -11,12 +11,12 @@
 
 /obj/item/suspiciousphone/attack_self(mob/living/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("This device is too advanced for you!"))
+		to_chat(user, span_warning("Это устройство слишком продвинуто для вас!"))
 		return
 	if(dumped)
-		to_chat(user, span_warning("You already activated Protocol CRAB-17."))
+		to_chat(user, span_warning("Вы уже активировали протокол CRAB-17."))
 		return FALSE
-	if(tgui_alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, "Вы уверены, что хотите обрушить этот рынок, не оставив выживших?", "Протокол CRAB-17", list("Да", "Нет")) == "Да")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
@@ -31,7 +31,7 @@
 		for(var/datum/bank_account/B as anything in accounts_to_rob)
 			B.dumpeet(dump_machine.dump)
 
-		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
+		to_chat(user, span_notice("Вы активировали протокол CRAB-17."))
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
 
 		dumped = TRUE
@@ -39,7 +39,7 @@
 
 /obj/structure/checkoutmachine
 	name = "\improper Nanotrasen Space-Coin Market"
-	desc = "This is good for spacecoin because"
+	desc = "Это хорошо для Космокоин, потому что."
 	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -59,7 +59,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
+	. += span_info("У него есть мигающее <b>устройство считывания ID</b> для удобного обналичивания.")
 
 /**
  * Check whether any accounts in the accounts_to_rob list are still being drained.
@@ -73,7 +73,7 @@
 
 /obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!canwalk)
-		balloon_alert(user, "not ready to accept transactions!")
+		balloon_alert(user, "не готов принимать переводы!")
 		return
 
 	if(check_if_finished())
@@ -82,7 +82,7 @@
 
 	var/obj/item/card/id/card = attacking_item.GetID()
 	if(!card)
-		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
+		balloon_alert(user, "устройство считывания ID отталкивает [attacking_item.name]")
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
@@ -91,14 +91,14 @@
 		return
 
 	if(!card.registered_account)
-		balloon_alert(user, "card has no registered account!")
+		balloon_alert(user, "у карты нет зарегистрированного счета!")
 		return
 
 	if(!LAZYFIND(card.registered_account.being_dumped, src))
-		balloon_alert(user, "funds are already safe!")
+		balloon_alert(user, "средства уже находятся в безопасности!")
 		return
 
-	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
+	to_chat(user, span_warning("Вы быстро обналичиваете свои средства в более надёждной банковской среде. Средства в безопасности.")) // This is a reference and not a typo
 	accounts_to_rob -= card.registered_account
 	card.registered_account.stop_dump(src)
 
@@ -190,7 +190,7 @@
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
-	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
+	priority_announce("Машина для депозитов была уничтожена в [get_area_name(src)]. Средства станции больше не пропадают!", sender_override = "Протокол CRAB-17")
 	if(internal_account.account_balance)
 		expel_cash()
 	QDEL_NULL(internal_account)
@@ -221,7 +221,7 @@
 		var/datum/bank_account/account = bogdanoff?.get_bank_account() || internal_account
 		account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 		B.money_crabbed += amount
-		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
+		B.bank_card_talk("Вы потеряли [percentage_lost * 100]% из ваших средств! Машина для депозитов Космокоин находится в: [get_area_name(src)].")
 	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
@@ -256,7 +256,7 @@
 	name = ""
 	icon = 'icons/obj/machines/money_machine_64.dmi'
 	pixel_z = 300
-	desc = "Get out of the way!"
+	desc = "Уйди с дороги!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	plane = ABOVE_GAME_PLANE
 	icon_state = "missile_blur"
@@ -264,7 +264,7 @@
 
 /obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
-	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
+	desc = "Голографическая проекция, обозначающая зону приземления чего-либо. Наверное, лучше отойти в сторону."
 	icon = 'icons/mob/telegraphing/telegraph_holographic.dmi'
 	icon_state = "target_circle"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -279,7 +279,7 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
-	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast("Протокол CRAB-17 был активирован. Машина для депозитов Космокоин была запущена на станцию!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
 /**
  * Sets up the falling animation for the checkout machine.
@@ -287,7 +287,7 @@
 /obj/effect/dumpeet_target/proc/startLaunch()
 	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump.setup_siphoning()
-	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
+	priority_announce("Пузырь космофинансовой пирамиды лопнул! Доберитесь до машины для депозитов в [get_area(src)] и получите деньги до того, как они будут безвозвратно утеряны!", sender_override = "Протокол CRAB-17")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(end_launch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation

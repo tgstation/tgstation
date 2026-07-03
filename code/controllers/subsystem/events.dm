@@ -131,6 +131,7 @@ SUBSYSTEM_DEF(events)
 		TriggerEvent(event_to_run)
 
 ///Does the last pre-flight checks for the passed event, and runs it if the event is ready.
+
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/event_to_trigger)
 	. = event_to_trigger.preRunEvent()
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
@@ -210,7 +211,8 @@ GLOBAL_LIST(holidays)
 	if(GLOB.holidays.len)
 		shuffle_inplace(GLOB.holidays)
 		// regenerate station name because holiday prefixes.
-		set_station_name(new_station_name())
+		if(isnull(SSmapping.current_map?.fluff_name)) // BANDASTATION ADDITION - Station Fluff
+			set_station_name(new_station_name())
 		world.update_status()
 
 	return TRUE

@@ -1,0 +1,351 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Magistrate office"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/magistrate)
+"b" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"c" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/clipboard{
+	pixel_y = 4
+	},
+/obj/item/stamp/magistrate,
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"g" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light_switch/directional/east,
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/fox/fennec/fenya,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"j" = (
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"k" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/papershredder,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"l" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/corporate,
+/obj/effect/mapping_helpers/airlock/access/any/command/magistrate,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nanotrasen_representative,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/magistrate)
+"o" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"p" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood,
+/obj/item/folder{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/folder/blue,
+/obj/item/folder/red{
+	pixel_y = -5;
+	pixel_x = 5
+	},
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"q" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"r" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/paper_bin{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/skull{
+	desc = "Бедный Йорик...";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"t" = (
+/obj/machinery/button/door/directional/west{
+	id = "Magistrate office";
+	name = "Magistrate Office Shutters Control";
+	req_access = list("magistrate")
+	},
+/obj/machinery/requests_console/directional/north{
+	department = "Magistrate's Office";
+	name = "Magistrate's Office Request Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"u" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/filingcabinet/employment,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"v" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/corporate,
+/obj/effect/mapping_helpers/airlock/access/any/command/magistrate,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"w" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"y" = (
+/obj/structure/closet/secure_closet/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/megaphone{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"B" = (
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"E" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/command/magistrate,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
+"H" = (
+/obj/structure/sign/poster/official/state_laws/directional/north,
+/obj/structure/chair/comfy/corp,
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"I" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/fax{
+	fax_name = "Magistrate's Office";
+	name = "Magistrate's Fax Machine"
+	},
+/obj/structure/table/wood,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"J" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Magistrate's Office"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/computer/prisoner/management{
+	req_access = list("lawyer");
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"K" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"L" = (
+/obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"O" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"R" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"S" = (
+/obj/item/kirbyplants/organic/plant20,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"T" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/fore)
+"U" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/closet/crate/bin,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"W" = (
+/obj/machinery/holopad,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"X" = (
+/turf/closed/wall,
+/area/station/security/courtroom)
+"Y" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+"Z" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/gavelblock{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/gavelhammer,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/magistrate)
+
+(1,1,1) = {"
+T
+T
+T
+E
+T
+T
+T
+T
+T
+T
+"}
+(2,1,1) = {"
+T
+t
+r
+b
+S
+p
+I
+Y
+k
+a
+"}
+(3,1,1) = {"
+T
+H
+e
+o
+W
+K
+B
+L
+w
+l
+"}
+(4,1,1) = {"
+T
+j
+z
+R
+q
+J
+Z
+u
+U
+a
+"}
+(5,1,1) = {"
+T
+g
+q
+O
+y
+X
+X
+X
+X
+X
+"}
+(6,1,1) = {"
+T
+X
+v
+X
+X
+X
+c
+c
+c
+c
+"}

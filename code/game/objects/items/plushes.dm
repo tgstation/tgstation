@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	floor_placeable = TRUE
+	var/use_delay_override /// BANDASTATION EDIT: add `use_delay_override`
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
@@ -46,7 +47,7 @@
 
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, squeak_override)
+	AddComponent(/datum/component/squeak, squeak_override, use_delay_override = use_delay_override) /// BANDASTATION EDIT: add `use_delay_override`
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 	AddElement(/datum/element/toy_talk)
 	AddElement(/datum/element/cuffable_item)
@@ -689,7 +690,7 @@
 	var/suicide_count = 0
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	suicide_count++
 	if(suicide_count < 3)
 		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."

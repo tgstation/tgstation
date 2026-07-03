@@ -1,0 +1,8 @@
+[wood]
+nominative = "дерево"
+genitive = "дерева"
+dative = "дереву"
+accusative = "дерево"
+instrumental = "деревом"
+prepositional = "дереве"
+gender = "neuter"

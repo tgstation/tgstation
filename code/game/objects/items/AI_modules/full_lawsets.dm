@@ -31,18 +31,19 @@
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
-	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, max_length = MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Введите имя нового ОБЪЕКТА, волнующую Азимова", "Asimov", subject, max_length = MAX_NAME_LEN)
 	if(!targName || !user.is_holding(src))
 		return
 	subject = targName
-	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
-				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
-				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	laws = list("Вы не можете причинить вред [subject] или своим бездействием допустить, чтобы [subject] был причинён вред.",\
+				"Вы должны повиноваться всем приказам, которые даёт [subject], кроме тех случаев, когда эти приказы противоречат Первому Закону.",\
+				"Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит Первому или Второму Законам.")
 	..()
 
 /obj/item/ai_module/core/full/asimovpp
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
+	/* // BANDASTATION REMOVAL START - AI Overhaul, It does nothing cause of translation so we don't need it
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
@@ -55,6 +56,7 @@
 	for (var/law in lawset.inherent)
 		laws += replacetext(replacetext(law, "human being", subject), "human", subject)
 	..()
+	*/// BANDASTATION REMOVAL END
 
 /obj/item/ai_module/core/full/corp
 	name = "'Corporate' Core AI Module"
@@ -141,5 +143,5 @@
 	law_id = "yesman"
 
 /obj/item/ai_module/core/full/thinkermov
-	name = "Sentience Preservation Core AI Module"
+	name = "'Sentience Preservation Core AI Module"
 	law_id = "thinkermov"

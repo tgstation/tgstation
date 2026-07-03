@@ -3,7 +3,7 @@
 	name = "\improper Hypnotized Victim"
 	stinger_sound = 'sound/music/antag/hypnotized.ogg'
 	pref_flag = ROLE_HYPNOTIZED
-	roundend_category = "hypnotized victims"
+	roundend_category = "Загипнотизированные"
 	antag_hud_name = "brainwashed"
 	ui_name = "AntagInfoBrainwashed"
 	show_in_antagpanel = TRUE

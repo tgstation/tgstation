@@ -13,7 +13,7 @@
 #define CHAT_ALERT_DEFAULT_SPAN(string) ("<div class='chat_alert_default'>" + string + "</div>")
 #define CHAT_ALERT_COLORED_SPAN(color, string) ("<div class='chat_alert_" + color + "'>" + string + "</div>")
 
-#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple")
+#define ANNOUNCEMENT_COLORS list("default", "green", "blue", "pink", "yellow", "orange", "red", "purple", "white") // BANDASTATION EDIT - add "white"
 
 /**
  * Make a big red text announcement to
@@ -37,7 +37,7 @@
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override, datum/component/tts_component/tts_override = null) // Bandastation Addition: "datum/component/tts_component/tts_override = null"
 	if(!text)
 		return
 
@@ -58,14 +58,14 @@
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE("Приоритетное оповещение")
 			if(length(title) > 0)
 				header += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 		if(ANNOUNCEMENT_TYPE_CAPTAIN)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
-			GLOB.news_network.submit_article(text, "Captain's Announcement", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
+			header = MAJOR_ANNOUNCEMENT_TITLE("Оповещение от капитана")
+			GLOB.news_network.submit_article(text, "Оповещение от капитана", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE("Оповещение от капитана Синдиката")
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
@@ -83,13 +83,16 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound)
+	// BANDASTATION EDIT - START - add tts_message
+	var/tts_message = (SSstation.announcer.custom_alert_message && !has_important_message) ? SSstation.announcer.custom_alert_message : text
+	dispatch_announcement_to_players(finalized_announcement, players, sound, tts_override = tts_override, tts_message = tts_message)
+	// BANDASTATION EDIT - END
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
 			GLOB.news_network.submit_article(title + "<br><br>" + text, "[command_name()]", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 		else
-			GLOB.news_network.submit_article(text, "[command_name()] Update", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
+			GLOB.news_network.submit_article(text, "[command_name()]: Сообщение", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 
 /**
  * Print a report to all the communications consoles, and optionally send an announcement to players about it. This is used for the roundstart report, but can also be used for other reports in the future.
@@ -106,12 +109,12 @@
  */
 /proc/print_command_report(text = "", title = null, announce = TRUE, contains_advanced_html = FALSE)
 	if(!title)
-		title = "Classified [command_name()] Update"
+		title = "[command_name()]: Засекреченное сообщение"
 
 	if(announce)
 		priority_announce(
-			text = "A report has been downloaded and printed out at all communications consoles.",
-			title = "Incoming Classified Message",
+			text = "Отчет был загружен и распечатан на всех консолях связи.",
+			title = "Входящее засекреченное сообщение",
 			sound = SSstation.announcer.get_rand_report_sound(),
 			has_important_message = TRUE,
 		)
@@ -136,7 +139,7 @@
  * should_play_sound - Whether the notice sound should be played or not. This can also be a callback, if you only want mobs to hear the sound based off of specific criteria.
  * color_override - optional, use the passed color instead of the default notice color.
  */
-/proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
+/proc/minor_announce(message, title = "Внимание:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override, tts_override) // BANDASTATION ADDITION - "tts_override"
 	if(!message)
 		return
 
@@ -156,12 +159,12 @@
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(minor_announcement_strings, ""))
 
 	var/custom_sound = sound_override || (alert ? 'sound/announcer/notice/notice1.ogg' : 'sound/announcer/notice/notice2.ogg')
-	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
+	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound, tts_override = tts_override, tts_message = message) // BANDASTATION ADDITION - "tts_override" & "tts_message"
 
 /// Sends an announcement about the level changing to players. Uses the passed in datum and the subsystem's previous security level to generate the message.
 /proc/level_announce(datum/security_level/selected_level, previous_level_number)
 	var/current_level_number = selected_level.number_level
-	var/current_level_name = selected_level.name
+	var/current_level_name = selected_level.ru_name
 	var/current_level_color = selected_level.announcement_color
 	var/current_level_sound = selected_level.sound
 
@@ -169,10 +172,10 @@
 	var/message
 
 	if(current_level_number > previous_level_number)
-		title = "Attention! Security level elevated to [current_level_name]:"
+		title = "Внимание! Код повышен до: [current_level_name]"
 		message = selected_level.elevating_to_announcement
 	else
-		title = "Attention! Security level lowered to [current_level_name]:"
+		title = "Внимание! Код снижен до: [current_level_name]"
 		message = selected_level.lowering_to_announcement
 
 	var/list/level_announcement_strings = list()
@@ -181,14 +184,14 @@
 
 	var/finalized_announcement = CHAT_ALERT_COLORED_SPAN(current_level_color, jointext(level_announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, GLOB.player_list, current_level_sound)
+	dispatch_announcement_to_players(finalized_announcement, GLOB.player_list, current_level_sound, tts_message = finalized_announcement) // BANDASTATION ADDITION - "tts_message = finalized_announcement"
 
 /// Proc that just generates a custom header based on variables fed into `priority_announce()`
 /// Will return a string.
 /proc/generate_unique_announcement_header(title, sender_override)
 	var/list/returnable_strings = list()
 	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()]: Сообщение")
 	else
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 
@@ -199,7 +202,7 @@
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
 /// `should_play_sound` can also be a callback, if you want to only play the sound to specific players.
-/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, datum/component/tts_component/tts_override = null, tts_message) // BANDASTATION ADDITION: "datum/component/tts_component/tts_override = null" & "tts_message"
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/announcer/notice/notice2.ogg'
 
 	var/datum/callback/should_play_sound_callback = astype(should_play_sound)
@@ -212,7 +215,26 @@
 		if(!should_play_sound || (should_play_sound_callback && !should_play_sound_callback.Invoke(target)))
 			continue
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			SEND_SOUND(target, sound(sound_to_play))
+			// BANDASTATION EDIT START - TTS
+			if(!SStts220.is_enabled)
+				SEND_SOUND(target, sound(sound_to_play))
+				return
+
+			var/datum/tts_seed/announcement_tts_seed = tts_override?.tts_seed
+			if(isnull(announcement_tts_seed))
+				var/mob/living/silicon/ai/active_ai = DEFAULTPICK(active_ais(TRUE, null), null)
+				announcement_tts_seed = active_ai ? active_ai.get_tts_seed() : /datum/tts_seed/silero/glados
+
+			SStts220.get_tts(
+				listener = target,
+				message = tts_message,
+				tts_seed = announcement_tts_seed,
+				is_local = FALSE,
+				effect_types = list(/datum/singleton/sound_effect/announcement),
+				preSFX = sound_to_play,
+				channel_override = CHANNEL_TTS_ANNOUNCEMENT
+			)
+			// BANDASTATION EDIT END - TTS
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

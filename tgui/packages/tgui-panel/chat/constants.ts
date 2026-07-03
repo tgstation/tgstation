@@ -5,8 +5,8 @@
  */
 
 export const MAX_VISIBLE_MESSAGES = 2500;
-export const MAX_PERSISTED_MESSAGES = 1000;
-export const MESSAGE_SAVE_INTERVAL = 10000;
+export const MAX_PERSISTED_MESSAGES = 250;
+export const MESSAGE_SAVE_INTERVAL = 30000;
 export const MESSAGE_PRUNE_INTERVAL = 60000;
 export const COMBINE_MAX_MESSAGES = 5;
 export const COMBINE_MAX_TIME_WINDOW = 5000;
@@ -32,6 +32,7 @@ export const MESSAGE_TYPE_OOC = 'ooc';
 export const MESSAGE_TYPE_ADMINPM = 'adminpm';
 export const MESSAGE_TYPE_COMBAT = 'combat';
 export const MESSAGE_TYPE_ADMINCHAT = 'adminchat';
+export const MESSAGE_TYPE_MENTORCHAT = "mentorchat";
 export const MESSAGE_TYPE_MODCHAT = 'modchat';
 export const MESSAGE_TYPE_PRAYER = 'prayer';
 export const MESSAGE_TYPE_EVENTCHAT = 'eventchat';
@@ -71,7 +72,7 @@ export const MESSAGE_TYPES: MessageType[] = [
     name: 'Radio',
     description: 'All departments of radio messages',
     selector:
-      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling',
+      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .justiceradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling',
   },
   {
     type: MESSAGE_TYPE_ENTERTAINMENT,
@@ -128,6 +129,13 @@ export const MESSAGE_TYPES: MessageType[] = [
     name: 'Admin Chat',
     description: 'ASAY messages',
     selector: '.admin_channel, .adminsay',
+    admin: true,
+  },
+  {
+    type: MESSAGE_TYPE_MENTORCHAT,
+    name: 'Mentor Chat',
+    description: 'MSAY messages',
+    selector: '.mentorsay',
     admin: true,
   },
   {

@@ -1,0 +1,330 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/command/heads_quarters/magistrate)
+"b" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"e" = (
+/obj/structure/table/wood,
+/obj/machinery/fax{
+	fax_name = "Magistrate's Office";
+	name = "Magistrate's Fax Machine"
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/light_switch/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"i" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/corporate{
+	name = "Magistrate's Office"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/command/magistrate,
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"k" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/telescreen/prison/directional/north,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"m" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"n" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"q" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"s" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/corporate{
+	name = "Magistrate's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/magistrate,
+/turf/open/floor/wood/parquet,
+/area/station/security/courtroom)
+"u" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "magistrate_shutters";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/magistrate)
+"x" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/machinery/camera/directional/east{
+	c_tag = "Law Office"
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"A" = (
+/turf/closed/wall,
+/area/station/maintenance/fore)
+"B" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"C" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"E" = (
+/obj/structure/closet/secure_closet/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"F" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"H" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"K" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"L" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"M" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"N" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"O" = (
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"P" = (
+/obj/machinery/vending/wardrobe/law_wardrobe,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"Q" = (
+/obj/structure/table/wood,
+/obj/item/pen/fountain{
+	pixel_y = 8
+	},
+/obj/item/stamp/magistrate,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"R" = (
+/turf/closed/wall,
+/area/station/security/courtroom)
+"U" = (
+/obj/machinery/requests_console/directional/north{
+	department = "Magistrate's Office";
+	name = "Magistrate's Requests Console"
+	},
+/obj/machinery/newscaster/directional/west,
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"V" = (
+/obj/structure/chair/comfy/corp{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/west{
+	id = "magistrate_shutters";
+	name = "Privacy Shutters"
+	},
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/command/heads_quarters/magistrate)
+"X" = (
+/obj/structure/filingcabinet/employment,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"Y" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/parquet,
+/area/station/command/heads_quarters/magistrate)
+"Z" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Magistrate's Office Maintenance"
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/all/command/magistrate,
+/turf/open/floor/plating,
+/area/station/maintenance/fore)
+
+(1,1,1) = {"
+R
+R
+R
+R
+s
+R
+R
+"}
+(2,1,1) = {"
+a
+U
+V
+O
+Y
+e
+a
+"}
+(3,1,1) = {"
+a
+k
+Q
+C
+m
+n
+u
+"}
+(4,1,1) = {"
+A
+E
+K
+K
+F
+M
+i
+"}
+(5,1,1) = {"
+A
+b
+L
+L
+B
+q
+u
+"}
+(6,1,1) = {"
+Z
+H
+N
+x
+X
+P
+a
+"}
+(7,1,1) = {"
+A
+A
+A
+a
+a
+a
+a
+"}

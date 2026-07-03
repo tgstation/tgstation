@@ -1,0 +1,470 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/service/bar/backroom)
+"b" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"c" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"d" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"e" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/full,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"f" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Lathe Access"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"g" = (
+/obj/machinery/duct,
+/obj/machinery/firealarm/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/fishing_portal_generator,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"h" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/intercom/directional/north,
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/service)
+"i" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"j" = (
+/obj/machinery/modular_computer/preset/cargochat/service{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"k" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/north,
+/mob/living/basic/pig/named/Sanya,
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/service)
+"m" = (
+/mob/living/basic/chicken/wife,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"n" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"o" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"q" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"s" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Lathe Access"
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"t" = (
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"u" = (
+/obj/machinery/door/airlock{
+	name = "Bar Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar/backroom)
+"v" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/service)
+"w" = (
+/turf/closed/wall,
+/area/station/hallway/secondary/service)
+"x" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/basic/pig/named/Marina,
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/service)
+"y" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/wall_healer/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"z" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"A" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"B" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"C" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"D" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"E" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/full,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"F" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"G" = (
+/obj/machinery/rnd/production/techfab/department/service,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"H" = (
+/mob/living/basic/chicken/cock/clucky,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"I" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Service - Autolathe Room"
+	},
+/obj/structure/table,
+/obj/item/aquarium_kit,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"J" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/hydroponics/soil,
+/obj/item/hatchet,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"K" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"L" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Lathe Access"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"M" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"N" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"O" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/service)
+"P" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Hall Access"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"Q" = (
+/obj/machinery/light/dim/directional/east,
+/obj/machinery/computer/order_console/cook{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"R" = (
+/obj/machinery/light/dim/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/hydroponics/soil,
+/obj/item/shovel/spade,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"S" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"T" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"U" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"V" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"W" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/mob/living/basic/cow/black/pipa,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"X" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/flora/bush/fullgrass/style_random,
+/mob/living/basic/pig/named/Yanas,
+/turf/open/floor/grass,
+/area/station/hallway/secondary/service)
+"Y" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/dim/directional/north,
+/obj/machinery/door/window/right/directional/east{
+	name = "Garden";
+	req_access = list("kitchen")
+	},
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/service)
+"Z" = (
+/obj/machinery/newscaster/directional/north,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Service Hallway";
+	name = "Service Fax Machine"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+
+(1,1,1) = {"
+C
+E
+A
+i
+U
+A
+"}
+(2,1,1) = {"
+O
+w
+w
+f
+s
+v
+"}
+(3,1,1) = {"
+k
+m
+R
+M
+F
+z
+"}
+(4,1,1) = {"
+x
+H
+S
+T
+y
+a
+"}
+(5,1,1) = {"
+h
+W
+J
+M
+N
+a
+"}
+(6,1,1) = {"
+Y
+X
+V
+M
+D
+u
+"}
+(7,1,1) = {"
+c
+t
+t
+M
+n
+a
+"}
+(8,1,1) = {"
+I
+b
+b
+K
+g
+a
+"}
+(9,1,1) = {"
+Z
+j
+Q
+M
+q
+G
+"}
+(10,1,1) = {"
+v
+w
+w
+P
+L
+v
+"}
+(11,1,1) = {"
+d
+e
+d
+o
+B
+d
+"}

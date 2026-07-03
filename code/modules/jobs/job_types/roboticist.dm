@@ -1,10 +1,10 @@
 /datum/job/roboticist
 	title = JOB_ROBOTICIST
-	description = "Build and repair the AI and cyborgs, create mechs."
+	description = "Создавайте и обслуживайте роботов и ИИ, создавайте мехов."
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = SUPERVISOR_RD
+	supervisors = JOB_RESEARCH_DIRECTOR_RU
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW

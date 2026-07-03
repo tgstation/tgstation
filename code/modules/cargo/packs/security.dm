@@ -7,7 +7,7 @@
 	name = "Ammo Crate"
 	desc = "Contains three boxes of beanbag shotgun shells, three boxes \
 		of rubbershot shotgun shells and one of each special .38 speedloaders."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 12 // Original price: 1600 New price: 2400
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/beanbag = 3,
 					/obj/item/storage/box/rubbershot = 3,
@@ -215,7 +215,7 @@
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. \
 		Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers."
-	cost = CARGO_CRATE_VALUE * 17.5
+	cost = CARGO_CRATE_VALUE * 26 // Original price: 3500 New price: 5200
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat = 3,
 					/obj/item/storage/belt/bandolier = 3)
 	crate_name = "combat shotguns crate"
@@ -235,7 +235,7 @@
 	name = "Energy Guns Crate"
 	desc = "Contains three Energy Guns, capable of firing both nonlethal and lethal \
 		blasts of light."
-	cost = CARGO_CRATE_VALUE * 18
+	cost = CARGO_CRATE_VALUE * 27 // Original price: 3600 New price: 5400
 	contains = list(/obj/item/gun/energy/e_gun = 3)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
@@ -244,7 +244,7 @@
 	name = "Type 5 Laser Gun Crate"
 	desc = "Contains three Type 5 laser guns, developed by Nanotrasen. For when the going gets tough, you get going with the \
 		Type 5 Heat Delivery System. As developed by Nanotrasen."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 18 // Original price: 800 New price: 3600
 	contains = list(/obj/item/gun/energy/laser = 3)
 	crate_name = "\improper Type 5 laser crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
@@ -252,7 +252,7 @@
 /datum/supply_pack/security/armory/laser_carbine
 	name = "Type 5/R Laser Carbine Crate"
 	desc = "Contains three Type 5R laser carbines, developed by Nanotrasen. Fires a rapid burst of slightly weaker laser projectiles."
-	cost = CARGO_CRATE_VALUE * 9
+	cost = CARGO_CRATE_VALUE * 27 // Original price: 1800 New price: 5400
 	contains = list(/obj/item/gun/energy/laser/carbine = 3)
 	crate_name = "\improper Type 5R laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
@@ -260,7 +260,7 @@
 /datum/supply_pack/security/armory/disabler_smg
 	name = "Disabler SMG Crate"
 	desc = "Contains three disabler SMGs, capable of rapidly firing weak disabler beams."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 14 // Original price: 1400 New price: 2800
 	contains = list(/obj/item/gun/energy/disabler/smg = 3)
 	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
@@ -270,7 +270,7 @@
 	desc = "An experimental energy-based ballistic battle rifle, as developed by Nanotrasen. \
 		Only available to Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE \
 		COMPANIES. Contains three NT BR-38 rifles and 6 magazines containing .38 Standard."
-	cost = CARGO_CRATE_VALUE * 100
+	cost = CARGO_CRATE_VALUE * 60 // Original price: 20000 New price: 12000
 	contains = list(
 		/obj/item/gun/ballistic/automatic/battle_rifle = 3,
 		/obj/item/ammo_box/magazine/m38 = 6,
@@ -281,7 +281,7 @@
 	name = "NT BR-38 Magazine Crate"
 	desc = "Six .38 magazines, able to fit into the NT BR-38. Contains \
 		two standard magazines, two Hot Shot magazines and two Iceblox magazines."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 10.5 // Original price: 1400 New price: 2100
 	contains = list(
 		/obj/item/ammo_box/magazine/m38 = 2,
 		/obj/item/ammo_box/magazine/m38/hotshot = 2,
@@ -377,8 +377,8 @@
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
 		using nanites as the basis for their ammo. Can be shaken to reload."
-	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
+	cost = CARGO_CRATE_VALUE * 20 // Original price: 2000 New price: 4000
+	contains = list(/obj/item/clothing/accessory/holster/energy/thermal = 2) //BANDASTATION EDIT: Accessory holsters
 	crate_name = "thermal pistol crate"
 
 /datum/supply_pack/security/sunglasses
@@ -394,7 +394,7 @@
 	desc = "Contains two experimental thermal cannons for use by mechs. \
 		When used simultaneously, their excess power used to heat and cool the opposing weapon, \
 		increasing the reload speed."
-	cost = CARGO_CRATE_VALUE * 25
+	cost = CARGO_CRATE_VALUE * 35 // Original price: 5000 New price: 7000
 	contains = list(
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo,
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno,
@@ -406,7 +406,7 @@
 	desc = "Contains four single-use hemoparasite testing tools. \
 		These devices accurately report whether a patient is inhabited by a hemoparasite, such as the infamous space-faring blood worm. \
 		The DeForest Medical Corporation claims no liability for any mental and/or physical trauma caused to patients from the improper use of these devices."
-	cost = CARGO_CRATE_VALUE * 50 // These aren't meant to be bought en-masse.
+	cost = CARGO_CRATE_VALUE * 30 // Original price: 10000 New price: 6000
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/blood_worm_tester = 4)
 	crate_name = "hemoparasite testing crate"

@@ -87,12 +87,12 @@
 
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(affected_mob.real_name)]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, checked_target = affected_mob, alert_pic = affected_mob, role_name_text = "transformation victim")
 	if(chosen_one)
-		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
+		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Обжалуйте ваш джоббан, чтобы такого не случилось в будущем!"))
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(FALSE)
 		affected_mob.PossessByPlayer(chosen_one.ckey)
 	else
-		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
+		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Обжалуйте ваш джоббан, чтобы такого не случилось в будущем!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
 		new_mob.death()
 		if (!QDELETED(new_mob))

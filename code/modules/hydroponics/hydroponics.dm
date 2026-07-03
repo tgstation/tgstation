@@ -183,7 +183,7 @@
 	AddElement(/datum/element/simple_rotation)
 	AddComponent(/datum/component/plumbing/hydroponics)
 	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/hydroponics), only_root_path = TRUE))
-	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
+	// AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray) // BANDASTATION REMOVAL
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
@@ -473,9 +473,12 @@
 	. = ..()
 	if(GetComponent(/datum/component/rename))
 		return
-	name = current_soil ? "botanic tray" : initial(name)
+	name = current_soil ? "ботанический лоток" : initial(name)
 	if(myseed)
+		ru_names_rename(ru_names_toml(initial(name), suffix = " ([myseed.plantname])")) // BANDASTATION EDIT
 		name += " ([myseed.plantname])"
+	else
+		ru_names_rename(ru_names_toml(initial(name))) // BANDASTATION EDIT
 
 /obj/machinery/hydroponics/update_desc(updates)
 	. = ..()

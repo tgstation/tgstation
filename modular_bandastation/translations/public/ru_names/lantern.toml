@@ -1,0 +1,8 @@
+[lantern]
+nominative = "фонарь"
+genitive = "фонаря"
+dative = "фонарю"
+accusative = "фонарь"
+instrumental = "фонарем"
+prepositional = "фонаре"
+gender = "male"

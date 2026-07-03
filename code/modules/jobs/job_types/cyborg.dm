@@ -1,11 +1,11 @@
 /datum/job/cyborg
 	title = JOB_CYBORG
-	description = "Assist the crew, follow your laws, obey your AI."
+	description = "Помогайте экипажу, следуйте вашему набору законов, подчиняйтесь ИИ."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 3
-	supervisors = "your laws and the AI" //Nodrak
+	supervisors = "вашим сводом законов и ИИ" //Nodrak
 	spawn_type = /mob/living/silicon/robot
 	minimal_player_age = 21
 	exp_requirements = 120

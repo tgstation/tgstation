@@ -1,13 +1,13 @@
 /datum/antagonist/nukeop
 	name = ROLE_OPERATIVE
-	roundend_category = "syndicate operatives" //just in case
+	roundend_category = "Оперативники Синдиката" //just in case
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	pref_flag = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
-	suicide_cry = "FOR THE SYNDICATE!!"
+	suicide_cry = "ЗА СИНДИКАТ!!"
 	stinger_sound = 'sound/music/antag/ops.ogg'
 	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.5
 
@@ -39,7 +39,7 @@
 
 /datum/antagonist/nukeop/greet()
 	play_stinger()
-	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
+	to_chat(owner, span_big("Вы - агент [nuke_team ? nuke_team.syndicate_name : "Синдиката"]!"))
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/on_gain()
@@ -157,8 +157,8 @@
 			code = bombue.r_code
 			break
 	if (code)
-		antag_memory += "<B>Syndicate Nuclear Bomb Code</B>: [code]<br>"
-		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
+		antag_memory += "<B>Коды от ядерной боеголовки Синдиката</B>: [code]<br>"
+		to_chat(owner.current, "Код ядерной аутентификации: <B>[code]</B>")
 	else
 		to_chat(admin, span_danger("No valid nuke found!"))
 
@@ -176,7 +176,7 @@
 /datum/antagonist/nukeop/proc/memorize_code()
 	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
 	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke_team.memorized_code)
-	to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
+	to_chat(owner, "Код ядерной аутентификации: <B>[nuke_team.memorized_code]</B>")
 
 /// Actually moves our nukie to where they should be
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()

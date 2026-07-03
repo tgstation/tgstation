@@ -1,7 +1,9 @@
-#define MAX_TIMER (15 MINUTES)
-#define PRESET_SHORT (2 MINUTES)
-#define PRESET_MEDIUM (3 MINUTES)
-#define PRESET_LONG (5 MINUTES)
+// BANDASTATION EDIT START - Timer tweaks
+#define MAX_TIMER (30 MINUTES)
+#define PRESET_SHORT (5 MINUTES)
+#define PRESET_MEDIUM (10 MINUTES)
+#define PRESET_LONG (15 MINUTES)
+// BANDASTATION EDIT END
 
 /**
  * Brig Door control displays.
@@ -200,6 +202,13 @@
 	data["minutes"] = round((time_left - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
+	// BANDASTATION EDIT START - Verbose presets
+	data["presets"] = list(
+		"short" = PRESET_SHORT / (1 MINUTES),
+		"medium" = PRESET_MEDIUM / (1 MINUTES),
+		"long" = PRESET_LONG / (1 MINUTES)
+		)
+	// BANDASTATION EDIT END
 	for(var/datum/weakref/flash_ref as anything in flashers)
 		var/obj/machinery/flasher/flasher = flash_ref.resolve()
 		if(!flasher)

@@ -414,7 +414,14 @@
 	if (!used_overlay)
 		return
 
-	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+	/// BANDASTATION ADDITION START - Species
+	var/used_icon_file = overlay_icon_file
+	var/species_id = mod?.wearer?.dna?.species?.id
+	if(worn_icon_species?[species_id])
+		used_icon_file = worn_icon_species[species_id]
+	/// BANDASTATION ADDITION END - Species
+
+	var/mutable_appearance/module_icon = mutable_appearance(used_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(use_mod_colors)
 		module_icon.color = mod.color
 		if (mod.cached_color_filter)

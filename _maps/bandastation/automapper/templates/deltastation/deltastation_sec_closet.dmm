@@ -1,0 +1,77 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"c" = (
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"i" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"n" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"p" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security/sec,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"q" = (
+/obj/structure/closet/secure_closet/security/sec,
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+"K" = (
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
+
+(1,1,1) = {"
+a
+"}
+(2,1,1) = {"
+q
+"}
+(3,1,1) = {"
+n
+"}
+(4,1,1) = {"
+p
+"}
+(5,1,1) = {"
+i
+"}
+(6,1,1) = {"
+K
+"}
+(7,1,1) = {"
+c
+"}

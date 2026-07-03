@@ -1,0 +1,8 @@
+[Medical]
+nominative = "медицинский отдел"
+genitive = "медицинского отдела"
+dative = "медицинскому отделу"
+accusative = "медицинский отдел"
+instrumental = "медицинским отделом"
+prepositional = "медицинском отделе"
+gender = "male"

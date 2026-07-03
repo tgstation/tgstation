@@ -2,11 +2,11 @@
 #define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
 /datum/station_trait/lucky_winner
-	name = "Lucky winner"
+	name = "Счастливый победитель"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
 	show_in_report = TRUE
-	report_message = "Your station has won the grand prize of the annual station charity event. Free snacks will be delivered to the bar every now and then."
+	report_message = "Ваша станция выиграла главный приз ежегодного благотворительного мероприятия. В бар будут периодически доставлять бесплатные закуски."
 	trait_processes = TRUE
 	COOLDOWN_DECLARE(party_cooldown)
 
@@ -31,7 +31,7 @@
 	var/area/bar_area = pick(GLOB.bar_areas)
 	podspawn(list(
 		"target" = pick(bar_area.contents),
-		"path" = /obj/structure/closet/supplypod/centcompod,
+		"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = list(
 			pizza_type_to_spawn,
 			/obj/item/reagent_containers/cup/glass/bottle/beer = 6
@@ -42,42 +42,42 @@
 #undef PARTY_COOLDOWN_LENGTH_MAX
 
 /datum/station_trait/galactic_grant
-	name = "Galactic grant"
+	name = "Галактический грант"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Your station has been selected for a special grant. Some extra funds has been made available to your cargo department."
+	report_message = "Ваша станция получила специальный грант. Вашему отделу снабжения выделены дополнительные средства."
 
 /datum/station_trait/galactic_grant/on_round_start()
 	var/datum/bank_account/cargo_bank = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	cargo_bank.adjust_money(rand(2000, 5000))
 
 /datum/station_trait/premium_internals_box
-	name = "Premium internals boxes"
+	name = "Премиальные коробки"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "The internals boxes for your crew have been upsized and filled with bonus equipment."
+	report_message = "Коробки экипажа для снаряжения вашей команды были увеличены в размерах и заполнены дополнительным снаряжением."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
 
 /datum/station_trait/bountiful_bounties
-	name = "Bountiful bounties"
+	name = "Щедрые награды"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
+	report_message = "Похоже, коллекционеры в этой системе особенно заинтересованы в наградах и готовы заплатить больше, чтобы увидеть их выполнение."
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
 
 ///A positive station trait that scatters a bunch of lit glowsticks throughout maintenance
 /datum/station_trait/glowsticks
-	name = "Glowsticks party"
+	name = "Вечеринка со светящимися палочками"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
+	report_message = "У нас в запасе имелось много светящихся палочек, поэтому мы разбросали часть из них по техническим тоннелям (ещё пару напольный ламп)."
 
 /datum/station_trait/glowsticks/New()
 	..()
@@ -120,23 +120,23 @@
 			stick.turn_on()
 
 /datum/station_trait/strong_supply_lines
-	name = "Strong supply lines"
+	name = "Сильные линии снабжения"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Prices are low in this system, BUY BUY BUY!"
+	report_message = "Цены в этой системе занижены. ПОКУПАЙТЕ-ПОКУПАЙТЕ-ПОКУПАЙТЕ!"
 	blacklist = list(/datum/station_trait/distant_supply_lines)
 
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
 
 /datum/station_trait/filled_maint
-	name = "Filled up maintenance"
+	name = "Заполненные технические тоннели"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenance areas."
+	report_message = "Наши рабочие случайно забыли часть своих личных вещей в технических тоннелях."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
 
@@ -144,11 +144,11 @@
 	can_revert = FALSE
 
 /datum/station_trait/quick_shuttle
-	name = "Quick Shuttle"
+	name = "Быстрый шаттл"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department."
+	report_message = "Благодаря близости к нашей станции снабжения, грузовой шаттл быстрее доставит груз в отдел снабжения."
 	blacklist = list(/datum/station_trait/slow_shuttle)
 
 /datum/station_trait/quick_shuttle/on_round_start()
@@ -156,7 +156,7 @@
 	SSshuttle.supply.callTime *= 0.5
 
 /datum/station_trait/deathrattle_department
-	name = "deathrattled department"
+	name = "отдел с предсмертным хрипом"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	abstract_type = /datum/station_trait/deathrattle_department
@@ -170,7 +170,7 @@
 	. = ..()
 	deathrattle_group = new("[department_name] group")
 	blacklist += subtypesof(/datum/station_trait/deathrattle_department) - type //All but ourselves
-	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
+	report_message = "Всем сотрудникам [department_name] был установлен имплант, который будет оповещать друг друга в случае смерти одного из них. Это должно повысить безопасность труда!"
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
@@ -186,53 +186,53 @@
 
 
 /datum/station_trait/deathrattle_department/service
-	name = "Deathrattled Service"
+	name = "Отдел обслуживания с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
-	name = "Deathrattled Cargo"
+	name = "Отдел снабжения с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
-	name = "Deathrattled Engineering"
+	name = "Инженерный отдел с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
-	name = "Deathrattled Command"
+	name = "Командование с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
-	name = "Deathrattled Science"
+	name = "Научный отдел с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
-	name = "Deathrattled Security"
+	name = "Отдел безопасности с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
-	name = "Deathrattled Medical"
+	name = "Медицинский отдел с предсмертным хрипом"
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
 
 /datum/station_trait/deathrattle_all
-	name = "Deathrattled Station"
+	name = "Вся станция с предсмертным хрипом"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	weight = 1
-	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
+	report_message = "Всем сотрудникам станции имплантировали устройство, которое будет оповещать друг друга в случае смерти одного из них. Это должно повысить безопасность труда!"
 	var/datum/deathrattle_group/deathrattle_group
 
 /datum/station_trait/deathrattle_all/New()
@@ -249,11 +249,11 @@
 	implant_to_give.implant(spawned, spawned, TRUE, TRUE)
 
 /datum/station_trait/cybernetic_revolution
-	name = "Cybernetic Revolution"
+	name = "Кибернетическая революция"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	weight = 1
-	report_message = "The new trends in cybernetics have come to the station! Everyone has some form of cybernetic implant."
+	report_message = "Новые тренды кибернетики добрались и до станции! У каждого есть какой-нибудь кибернетический имплант."
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
@@ -293,6 +293,12 @@
 		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
 		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolkit/toolset,
 		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
+		// BANDASTATION ADD - START
+		/datum/job/nanotrasen_representative = /obj/item/organ/cyberimp/arm/toolkit/paperwork,
+		/datum/job/blueshield = /obj/item/organ/cyberimp/arm/toolkit/flash,
+		/datum/job/magistrate = /obj/item/organ/cyberimp/arm/toolkit/paperwork,
+		/datum/job/explorer = /obj/item/organ/cyberimp/arm/toolkit/toolset,
+		// BANDASTATION ADD - END
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
@@ -315,26 +321,26 @@
 	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/station_trait/luxury_escape_pods
-	name = "Luxury Escape Pods"
+	name = "Роскошные спасательные капсулы"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Due to good performance, we've provided your station with luxury escape pods."
+	report_message = "В связи с хорошими показателями производительности мы снабдили вашу станцию роскошными спасательными капсулами."
 	trait_to_give = STATION_TRAIT_BIGGER_PODS
 	blacklist = list(/datum/station_trait/cramped_escape_pods)
 
 /datum/station_trait/medbot_mania
-	name = "Advanced Medbots"
+	name = "Продвинутые медботы"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
+	report_message = "Медботы вашей станции получили обновление оборудования, что расширяет возможности лечения."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
-	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to receive more shuttle loan opportunities, with slightly higher payouts."
+	name = "Арендованный шаттл"
+	report_message = "Из-за участившихся пиратских нападений в вашем секторе в ближайшем космосе мало судов снабжения, готовых выполнить особые заказы. Ожидайте больше возможностей получить арендованный шаттл с немного более высокими выплатами."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	event_control_path = /datum/round_event_control/shuttle_loan
@@ -343,8 +349,8 @@
 	trait_to_give = STATION_TRAIT_LOANER_SHUTTLE
 
 /datum/station_trait/random_event_weight_modifier/wise_cows
-	name = "Wise Cow Invasion"
-	report_message = "Bluespace harmonic readings show unusual interpolative signals between your sector and agricultural sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
+	name = "Вторжение мудрых коров"
+	report_message = "Блюспейс показания гармоник засекли необычные интерполяционные сигналы между вашим сектором и сельскохозяйственным сектором MMF-D-02. Ожидайте увеличения числа встреч с коровами."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
 	event_control_path = /datum/round_event_control/wisdomcow
@@ -352,13 +358,13 @@
 	max_occurrences_modifier = 10 //lotta cows
 
 /datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
-	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.
-	advisory_string += "Your sector's advisory level is Cow Planet. We don't really know what this one means -- the model we use to create these threat reports hasn't produced this result before. Watch out for cows, I guess? Good luck!"
+	var/advisory_string = "Уровень предупреждения: <b>Планета коров</b></center><BR>" //We're gonna go fast and we're gonna go far.
+	advisory_string += "Уровень предупреждения для вашего сектора — планета коров. Мы не совсем понимаем, что это значит — модель, которую мы используем для создания отчётов об угрозах, раньше не давала подобных результатов. Берегитесь коров, наверное? Удачи!"
 	return advisory_string
 
 /datum/station_trait/bright_day
-	name = "Bright Day"
-	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
+	name = "Яркий день"
+	report_message = "Звёзды светят ярко, а облаков меньше, чем обычно. На поверхности Ледяной Луны сегодня ясный день."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
@@ -366,16 +372,16 @@
 	trait_to_give = STATION_TRAIT_BRIGHT_DAY
 
 /datum/station_trait/shuttle_sale
-	name = "Shuttle Firesale"
-	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Some of your emergency shuttle options have been discounted!"
+	name = "Распродажа шаттлов"
+	report_message = "Команда экстренного реагирования Нанотрейзен отмечает рекордное количество вызовов шаттлов за последний квартал. На некоторые эвакуационные шаттлы действуют скидки!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
 	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet
-	name = "Misplaced Wallet"
-	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
+	name = "Потерянный кошелек"
+	report_message = "Ремонтный техник оставил свой бумажник где-то в шкафчике. Он был бы очень признателен, если бы вы нашли и вернули его по окончании смены."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW
@@ -396,13 +402,13 @@
 	new_wallet.refreshID()
 
 	if(prob(35))
-		report_message += " The technician reports they last remember having their wallet around [get_area_name(new_wallet)]."
+		report_message += " Техник сообщает, что в последний раз помнит, что кошелек был рядом с [get_area_name(new_wallet)]."
 
 	message_admins("A missing wallet has been placed in the [locker_to_fill] locker, in the [get_area_name(locker_to_fill)] area.")
 
 /obj/item/card/id/advanced/technician_id
 	name = "Repair Technician ID"
-	desc = "Repair Technician? We don't have those in this sector, just a bunch of lazy engineers! This must have been from the between-shift crew..."
+	desc = "Ремонтный техник? У нас здесь такого нет, одни ленивые инженеры! Видимо, это оставили на промежуточной смене..."
 	registered_name = "Pluoxium LXVII"
 	registered_age = 67
 	trim = /datum/id_trim/technician_id
@@ -415,8 +421,8 @@
 
 /// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
 /datum/station_trait/assistant_gimmicks
-	name = "Geared Assistants Pilot"
-	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
+	name = "Пилотный проект «Снаряжённые ассистенты»"
+	report_message = "Отдел по работе с ассистентами Нанотрейзен проводит экспериментальную проверку, чтобы выяснить, поможет ли различное ассистентское оборудование повысить производительность!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
@@ -424,6 +430,6 @@
 	blacklist = list(/datum/station_trait/colored_assistants)
 
 /datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()
-	var/advisory_string = "Advisory Level: <b>Grey Sky</b></center><BR>"
-	advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
+	var/advisory_string = "Уровень предупреждения: <b>Серое небо</b></center><BR>"
+	advisory_string += "Уровень предупреждения в вашем секторе — Серое небо. Наши датчики фиксируют аномальную активность среди ассистентов, назначенных на вашу станцию. Рекомендуем вам внимательно следить за хранилищем инструментов, мостиком, техническим хранилищем и бригом на предмет скопления людей или мелкого воровства."
 	return advisory_string

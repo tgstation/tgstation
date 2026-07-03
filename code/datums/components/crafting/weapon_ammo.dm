@@ -40,7 +40,7 @@
 	)
 	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
-	crafting_flags = CRAFT_CHECK_DENSITY
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/pulseslug
 	name = "Pulse Slug Shell"

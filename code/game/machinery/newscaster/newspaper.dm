@@ -75,7 +75,7 @@
 		"[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... \
 		until [user.p_their()] eyes light up with realization!"\
 	))
-	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced = "newspaper suicide")
+	user.say(";ЖУРНАЛИСТИКА - МОЕ ПРИЗВАНИЕ! ВСЕ ЦЕНЯТ НЕПРЕДВЗЯТЫЙ РЕПОР...-АГПХХХР!!!", forced = "newspaper suicide")
 	var/obj/item/reagent_containers/cup/glass/bottle/whiskey/last_drink = new(user.loc)
 	playsound(user, 'sound/items/drink.ogg', vol = rand(10, 50), vary = TRUE)
 	last_drink.reagents.trans_to(user, last_drink.reagents.total_volume, transferred_by = user)

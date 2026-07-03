@@ -1,0 +1,8 @@
+["boulder refinery"]
+nominative = "переработка валунов"
+genitive = "переработки валунов"
+dative = "переработке валунов"
+accusative = "переработку валунов"
+instrumental = "переработкой валунов"
+prepositional = "переработке валунов"
+gender = "female"

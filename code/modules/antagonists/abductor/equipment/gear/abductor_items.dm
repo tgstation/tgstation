@@ -238,7 +238,9 @@
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
 	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
-	fail_message = span_abductor("Firing error, please contact Command.")
+	fail_message = span_abductor("выстрел не удался, обратитесь к Командованию.")
+	// BANDASTATION: pin must be non-removable
+	pin_removable = FALSE
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)

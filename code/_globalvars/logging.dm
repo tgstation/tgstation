@@ -7,6 +7,13 @@ GLOBAL_PROTECT(round_id)
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
 
+// BANDASTATION ADDITION START - Logis
+/// Logis extracts all of the log files, which we don't need.
+/// This will be the folder with only logs required for logis.
+GLOBAL_VAR(logis_logs_directory)
+GLOBAL_PROTECT(logis_logs_directory)
+// BANDASTATION ADDITION END - Logis
+
 #define DECLARE_LOG_NAMED(log_var_name, log_file_name, start)\
 GLOBAL_VAR(##log_var_name);\
 GLOBAL_PROTECT(##log_var_name);\

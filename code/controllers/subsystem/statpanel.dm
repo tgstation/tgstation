@@ -109,8 +109,8 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_mc", list("mc_data" = mc_data, "coord_entry" = coord_entry))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
-	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-	target.stat_panel.send_message("update_tickets", ahelp_tickets)
+	var/list/help_tickets = GLOB.ticket_manager.stat_entry(target) // BANDASTATION EDIT - Original: ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
+	target.stat_panel.send_message("update_tickets", help_tickets) // BANDASTATION EDIT - Original: ahelp_tickets
 	var/datum/interview_manager/m = GLOB.interviews
 
 	// get open interview count

@@ -1,0 +1,8 @@
+[glass]
+nominative = "стекло"
+genitive = "стекла"
+dative = "стеклу"
+accusative = "стекло"
+instrumental = "стеклом"
+prepositional = "стекле"
+gender = "neuter"

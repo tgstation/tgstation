@@ -15,7 +15,7 @@
 /datum/antagonist/battlecruiser
 	name = "Battlecruiser Crewmember"
 	show_to_ghosts = TRUE
-	roundend_category = "battlecruiser syndicate operatives"
+	roundend_category = "Экипаж боевого крейсера Синдиката"
 	suicide_cry = "FOR THE SYNDICATE!!!"
 	antag_hud_name = "battlecruiser_crew"
 	antagpanel_category = ANTAG_GROUP_SYNDICATE

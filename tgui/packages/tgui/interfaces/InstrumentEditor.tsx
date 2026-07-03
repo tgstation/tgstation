@@ -290,15 +290,39 @@ const EditingSettings = (props) => {
       <Box>
         Tempo:{' '}
         <Button
-          onClick={() => act('tempo', { tempo_change: 'increase_speed' })}
+          onClick={() =>
+            act('tempo_big_step', { tempo_change: 'decrease_speed' })
+          }
         >
-          -
+          --
         </Button>{' '}
-        {bpm} BPM{' '}
         <Button
           onClick={() => act('tempo', { tempo_change: 'decrease_speed' })}
         >
+          -
+        </Button>{' '}
+        <NumberInput
+          step={1}
+          minValue={1}
+          maxValue={999}
+          value={bpm}
+          onChange={(value) =>
+            act('set_bpm_slider', {
+              amount: value,
+            })
+          }
+        />{' '}
+        <Button
+          onClick={() => act('tempo', { tempo_change: 'increase_speed' })}
+        >
           +
+        </Button>{' '}
+        <Button
+          onClick={() =>
+            act('tempo_big_step', { tempo_change: 'increase_speed' })
+          }
+        >
+          ++
         </Button>
       </Box>
       <Box>

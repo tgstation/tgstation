@@ -115,7 +115,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(.)
 		return
 	if(!allowed(user))
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, "в доступе отказано!")
 		return
 	if(machine_stat & (NOPOWER|BROKEN|EMPED))
 		balloon_alert(user, "controls are unresponsive!")
@@ -141,7 +141,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, "нужно открыть панель!")
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
-			balloon_alert(user, "open the panel first!")
+			balloon_alert(user, "нужно открыть панель!")
 			return TRUE
 
 		change_area_name = TRUE

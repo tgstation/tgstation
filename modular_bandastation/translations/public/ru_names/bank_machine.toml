@@ -1,0 +1,8 @@
+["bank machine"]
+nominative = "банкомат"
+genitive = "банкомата"
+dative = "банкомату"
+accusative = "банкомат"
+instrumental = "банкоматом"
+prepositional = "банкомате"
+gender = "male"

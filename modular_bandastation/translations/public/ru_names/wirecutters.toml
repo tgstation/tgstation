@@ -1,0 +1,8 @@
+[wirecutters]
+nominative = "кусачки"
+genitive = "кусачек"
+dative = "кусачкам"
+accusative = "кусачек"
+instrumental = "кусачками"
+prepositional = "кусачках"
+gender = "plural"

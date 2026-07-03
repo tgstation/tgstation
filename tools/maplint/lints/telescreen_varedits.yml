@@ -1,5 +1,5 @@
 help: "Use the directional variants when possible."
-/obj/machinery/computer/security/telescreen:
+=/obj/machinery/computer/security/telescreen: # BANDASTATION EDIT - check =
   banned_variables:
     pixel_x:
     pixel_y:

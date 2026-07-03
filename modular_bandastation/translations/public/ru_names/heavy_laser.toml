@@ -1,0 +1,8 @@
+["heavy laser"]
+nominative = "тяжёлый лазерный луч"
+genitive = "тяжёлого лазерного луча"
+dative = "тяжёлому лазерному лучу"
+accusative = "тяжёлый лазерный луч"
+instrumental = "тяжёлым лазерным лучом"
+prepositional = "тяжёлом лазерном луче"
+gender = "male"

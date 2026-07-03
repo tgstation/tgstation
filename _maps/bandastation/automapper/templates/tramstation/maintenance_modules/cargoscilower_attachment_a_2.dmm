@@ -1,0 +1,186 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/relic,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"b" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"e" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"h" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"i" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"o" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"G" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"J" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"L" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"O" = (
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat/orange,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"R" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"V" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+o
+V
+V
+V
+V
+V
+V
+"}
+(2,1,1) = {"
+o
+V
+V
+h
+h
+h
+V
+"}
+(3,1,1) = {"
+o
+V
+h
+h
+h
+V
+V
+"}
+(4,1,1) = {"
+o
+V
+h
+h
+V
+s
+o
+"}
+(5,1,1) = {"
+o
+V
+h
+h
+V
+s
+v
+"}
+(6,1,1) = {"
+V
+V
+h
+h
+O
+s
+Y
+"}
+(7,1,1) = {"
+V
+h
+h
+h
+h
+e
+J
+"}
+(8,1,1) = {"
+b
+L
+G
+h
+h
+s
+n
+"}
+(9,1,1) = {"
+b
+a
+b
+i
+V
+s
+R
+"}
+(10,1,1) = {"
+L
+b
+h
+V
+V
+s
+S
+"}
+(11,1,1) = {"
+V
+h
+h
+V
+V
+s
+o
+"}
+(12,1,1) = {"
+V
+V
+V
+V
+V
+V
+o
+"}

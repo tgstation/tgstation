@@ -72,7 +72,7 @@
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.")
+				console.say("Ремонт завершен. Скоро запуск шаттла.")
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -80,7 +80,7 @@
 	else if(CheckTurfsPressure())
 		damaged = TRUE
 		if(console)
-			console.say("Alert, hull breach detected!")
+			console.say("Тревога! Обнаружена пробоина в корпусе!")
 		aas_config_announce(/datum/aas_config_entry/arrivals_broken, list(), command_span=TRUE)
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
@@ -145,7 +145,7 @@
 	var/dockTime = CONFIG_GET(number/arrivals_shuttle_dock_window)
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
-			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
+			console.say(damaged ? "Аварийная стыковка для ремонта!" : "Прибываем к: [station_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas) //for the new guy
 		setTimer(dockTime)
 
@@ -156,19 +156,19 @@
 		if(!force_depart)
 			var/cancel_reason
 			if(PersonCheck())
-				cancel_reason = "lifeform dectected on board"
+				cancel_reason = "обнаружена форма жизни на борту"
 			else if(NukeDiskCheck())
-				cancel_reason = "critical station device detected on board"
+				cancel_reason = "на борту обнаружено критически важное устройство станции"
 			if(cancel_reason)
 				mode = SHUTTLE_IDLE
 				if(console)
-					console.say("Launch cancelled, [cancel_reason].")
+					console.say("Запуск отменён, [cancel_reason].")
 				return
 		force_depart = FALSE
 	. = ..()
 	if(!. && !docked && !damaged)
 		if(console)
-			console.say("Welcome to your new life, employees!")
+			console.say("Добро пожаловать в вашу новую жизнь, сотрудники!")
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
 			C.Invoke()
@@ -190,7 +190,7 @@
 		force_depart = TRUE
 	if(mode == SHUTTLE_IDLE)
 		if(console)
-			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
+			console.say(pickingup ? "Немедленная отстыковка шаттла для нового сотрудника." : "Шаттл отправляется.")
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
 			target = SSshuttle.getDock("arrival_stationary")
@@ -202,7 +202,7 @@
 
 	Launch(TRUE)
 
-	to_chat(user, span_notice("Calling your shuttle. One moment..."))
+	to_chat(user, span_notice("Вызываю шаттл. Ожидайте..."))
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 

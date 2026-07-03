@@ -1,8 +1,8 @@
 // Ye old forbidden book, the Codex Cicatrix.
 /obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "This heavy tome is full of cryptic scribbles and impossible diagrams. \
-	According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
+	desc = "Этот тяжелый том полон загадочных каракулей и невозможных диаграмм. \
+	Согласно легенде, его можно расшифровать, чтобы раскрыть секреты завесы между мирами."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -18,8 +18,8 @@
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You remove %THEEFFECT.", \
-		tip_text = "Clear rune", \
+		success_feedback = "Вы убираете %THEEFFECT.", \
+		tip_text = "Очистить руну", \
 		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
 		effects_we_clear = list(/obj/effect/heretic_rune))
 
@@ -32,9 +32,9 @@
 	if(!IS_HERETIC(user))
 		return
 
-	. += span_notice("Can be used to tap influences for additional knowledge points.")
-	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
-	. += span_notice("Additionally, it can work as a focus for your spells when held.")
+	. += span_notice("Может быть использован на разломах для получения дополнительных очков знаний.")
+	. += span_notice("Упрощает начертание или удаление рун трансмутации.")
+	. += span_notice("Также, может быть использован как фокусировка, когда находится в руках, но рекомендуется более специализированный для этого предмет, так как этот может выпасть во время боя.")
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()
@@ -76,7 +76,7 @@
 // Upgraded version of the codex cicatrix that allows us to cast curses
 /obj/item/codex_cicatrix/morbus // I'm morbing all over
 	name = "Codex Morbus"
-	desc = "A hideous, ragged book covered in separately-blinking eyes, all of them staring at you. You have no idea how to hold this thing, and to be honest you're not sure if you want to."
+	desc = "Омерзительная, истрёпанная книга, покрытая отдельно моргающими глазами, смотрящими на вас. Вы даже не представляете, как держать ЭТО - и откровенно говоря, не уверены что вам это хочется."
 	base_icon_state = "book_morbus"
 	icon_state = "book_morbus"
 	drain_speed = 2.5 SECONDS
@@ -87,13 +87,13 @@
 /obj/item/codex_cicatrix/morbus/examine(mob/user)
 	. = ..()
 	if(IS_HERETIC(user))
-		. += span_info("Can be used to cast a curse with blood in your offhand by right clicking a rune.")
+		. += span_info("Можно использовать для наложения проклятия с кровью жертвы в другой вашей руке, щёлкнув правой кнопкой мыши по руне.")
 		return
-	. += span_danger("The eyes stop blinking. They stare at you. Their gaze burns...")
+	. += span_danger("Глаза перестают моргать. Они смотрят прямо на тебя. Их взгляд обжигает...")
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	to_chat(human_user, span_userdanger("Your mind burns as you stare at the pages!"))
+	to_chat(human_user, span_userdanger("Ваш разум пылает, когда вы смотрите на страницы!"))
 	human_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
@@ -107,7 +107,7 @@
 	var/list/curse_list = list()
 	for(var/datum/heretic_knowledge/curse/curses as anything in subtypesof(/datum/heretic_knowledge/curse))
 		curse_list[curses.name] = curses
-	var/selected_curse = tgui_input_list(user, "Cast any curse", "Select a curse!", curse_list, timeout = 0)
+	var/selected_curse = tgui_input_list(user, "Наложить любое проклятие", "Выберите проклятие!", curse_list, timeout = 0)
 	if(!selected_curse)
 		return NONE
 
@@ -116,7 +116,7 @@
 
 	var/atom/held_offhand = user.get_inactive_held_item()
 	if(!held_offhand)
-		user.balloon_alert(user, "no catalyst!")
+		user.balloon_alert(user, "нет катализатора!")
 		return
 	var/blood_samples = list()
 	for(var/blood in GET_ATOM_BLOOD_DNA(held_offhand))
@@ -126,7 +126,7 @@
 			continue
 		blood_samples += usable_reagent.data["blood_DNA"]
 	if(isnull(blood_samples))
-		user.balloon_alert(user, "no blood!")
+		user.balloon_alert(user, "нет крови!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/curse_type = curse_list[selected_curse]

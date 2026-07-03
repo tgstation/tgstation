@@ -229,14 +229,14 @@
 		return
 	if(singular_name)
 		if(get_amount()>1)
-			. += "There are [get_amount()] [singular_name]\s in the stack."
+			. += "Внутри стопки [get_amount()] единиц[declension_ru(get_amount(), "а", "ы", "")] [declent_ru(GENITIVE)]."
 		else
-			. += "There is [get_amount()] [singular_name] in the stack."
+			. += "Внутри стопки [get_amount()] единица [declent_ru(GENITIVE)]."
 	else if(get_amount()>1)
-		. += "There are [get_amount()] in the stack."
+		. += "Внутри стопки [get_amount()] единиц[declension_ru(get_amount(), "а", "ы", "")] [declent_ru(GENITIVE)]."
 	else
-		. += "There is [get_amount()] in the stack."
-	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
+		. += "Внутри стопки [get_amount()] единица [declent_ru(GENITIVE)]."
+	. += span_notice("<b>ПКМ</b> пустой рукой, чтобы взять определенное количество.")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)

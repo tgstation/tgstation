@@ -142,9 +142,9 @@
 	mob_type = /mob/living/basic/drone/derelict
 	anchored = TRUE
 	prompt_name = "a derelict drone"
-	you_are_text = "You are a drone on Kosmicheskaya Stantsiya 13."
-	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
-	important_text = "Build, repair, maintain and improve the station that housed you on activation."
+	you_are_text = "Вы - дрон на Космической Станции 13."
+	flavour_text = "Что-то вывело вас из спячки, и станция находится в ужасающем состоянии."
+	important_text = "Стройте, ремонтируйте, обслуживайте и улучшайте станцию, на которой вы находились при активации."
 	spawner_job_path = /datum/job/derelict_drone
 
 /datum/job/derelict_drone

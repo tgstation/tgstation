@@ -1,0 +1,8 @@
+["atmospheric gas mask"]
+nominative = "атмосферный противогаз"
+genitive = "атмосферного противогаза"
+dative = "атмосферному противогазу"
+accusative = "атмосферный противогаз"
+instrumental = "атмосферным противогазом"
+prepositional = "атмосферном противогазе"
+gender = "male"

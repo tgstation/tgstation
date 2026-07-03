@@ -1,8 +1,8 @@
 import { createDropdownInput, type Feature } from '../base';
 
 export const pixel_size: Feature<number> = {
-  name: 'Pixel Scaling',
-  category: 'UI',
+  name: 'Масштабирование пикселей',
+  category: 'Интерфейс',
   component: createDropdownInput({
     0: 'Stretch to fit',
     1: 'Pixel Perfect 1x',

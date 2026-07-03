@@ -126,13 +126,13 @@
 	if(!owner || owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
-		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
-		to_chat(owner, span_danger("You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."))
+		to_chat(owner, span_userdanger("Ваша Королева была повержена!"))
+		to_chat(owner, span_danger("Вас охватывает невероятная агония! Вы растеряны, и ваша связь с ульем прервана."))
 		owner.emote("roar")
 		owner.Stun(200) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
-		to_chat(owner, span_danger("You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"))
+		to_chat(owner, span_danger("Вы чувствуете раскалывающую боль в голове и приток тошноты. Вы больше не чувствуете связь с ульем!"))
 		owner.emote("scream")
 		owner.Paralyze(100)
 
@@ -151,7 +151,7 @@
 	recent_queen_death = FALSE
 	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
 		return
-	to_chat(owner, span_noticealien("The pain of the queen's death is easing. You begin to hear the hivemind again."))
+	to_chat(owner, span_noticealien("Боль от смерти королевы ослабевает. Вы снова чувствуете связь с ульем."))
 	owner.clear_alert(ALERT_XENO_NOQUEEN)
 
 #undef QUEEN_DEATH_DEBUFF_DURATION
@@ -234,11 +234,11 @@
 	if(!prob(40))
 		return
 	var/atom/play_from = owner || src
-	var/stomach_text = owner ? "\the [owner]'s stomach" : "\the [src]"
+	var/stomach_text = owner ? "желудка [owner.declent_ru(GENITIVE)]" : "[declent_ru(GENITIVE)]"
 	if(prob(25))
-		play_from.audible_message(span_warning("You hear something rumbling inside [stomach_text]..."), \
-			span_warning("You hear something rumbling."), 4,\
-			self_message = span_userdanger("Something is rumbling inside your stomach!"))
+		play_from.audible_message(span_warning("Вы слышите урчание, исходящее из [stomach_text]..."), \
+			span_warning("Вы слышите урчание."), 4,\
+			self_message = span_userdanger("Что-то урчит у вас в желудке!"))
 
 	if(user.client)
 		user.client.move_delay = world.time + 1.5 SECONDS
@@ -251,8 +251,8 @@
 		var/dmg = pokie.force || 0
 		var/list/attack_verbs = pokie.attack_verb_continuous
 		impact = rand(round(dmg / 4), dmg)
-		attack_name = pokie.name
-		attack_verb = length(attack_verbs) ? "[pick(attack_verbs)]" : "attacks"
+		attack_name = pokie.declent_ru(GENITIVE)
+		attack_verb = length(attack_verbs) ? "[pick(attack_verbs)]" : "атакует"
 
 	if(!impact)
 		return
@@ -269,8 +269,8 @@
 		if(damage_ratio < part_dam_ratio)
 			damage_ratio = part_dam_ratio
 
-	play_from.visible_message(span_danger("[user] [attack_verb] [stomach_text] wall with the [attack_name]!"), \
-			span_userdanger("[user] [attack_verb] your stomach wall with the [attack_name]!"))
+	play_from.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] [attack_verb] стенки [stomach_text] с помощью [attack_name]!"), \
+			span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] [attack_verb] стенки вашего желудка с помощью [attack_name]!"))
 
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
@@ -297,11 +297,11 @@
 		return
 	// Failure condition
 	if(isalienadult(user))
-		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
-			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
+		play_from.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] вылезает из [stomach_text], образуя дыру!"), \
+			span_userdanger("Когда еда вашего улья вылезает из вашего желудка, одна лишь мысль отзывается в разуме: \"Ох, вот что чувствуют на принимающей стороне.\""))
 	else // Just to be safe ya know?
-		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
-			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
+		play_from.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] вылезает из [stomach_text], образуя дыру!"), \
+			span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] вылезает из [stomach_text]. Черт, это было больно."))
 
 	playsound(get_turf(play_from), 'sound/mobs/non-humanoids/alien/alien_explode.ogg', 100, extrarange = 4)
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1, 8)

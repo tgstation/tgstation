@@ -34,6 +34,7 @@
 #define LIST_PAPER_FIELD_COLOR "color"
 #define LIST_PAPER_BOLD "bold"
 #define LIST_PAPER_ADVANCED_HTML "advanced_html"
+#define LIST_PAPER_CHILDREN "children"
 
 #define LIST_PAPER_FIELD_INDEX "field_index"
 #define LIST_PAPER_FIELD_DATA "field_data"

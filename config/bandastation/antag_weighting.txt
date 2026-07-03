@@ -1,0 +1,38 @@
+## WEIGHTED ANTAGONIST SELECTION SYSTEM ##
+
+## Enable weighted antagonist selection.
+#ANTAG_WEIGHTED_SELECTION
+
+## Time window in days for tracking antagonist role history.
+## Players who have taken antagonist roles within this window will have reduced selection weight.
+ANTAG_HISTORY_WINDOW_DAYS 14
+
+## Base weight for all candidates.
+## This is the starting weight before any penalties are applied.
+ANTAG_BASE_WEIGHT 100
+
+## Weight penalty per recent antagonist role assignment.
+## Each time a player was an antagonist in the time window, their weight is reduced by this amount.
+ANTAG_WEIGHT_PENALTY 10
+
+## Minimum weight a candidate can have.
+## This prevents complete exclusion - even frequent antagonists have a small chance.
+## Setting this too LOW may make frequent antags feel excluded.
+## Setting this too HIGH reduces the effectiveness of the weighting system.
+ANTAG_MIN_WEIGHT 1
+
+## List of antagonists whose activity should be tracked for roundstart selection.
+## These roles will count toward the penalty.
+TRACKED_ANTAGONISTS_ROUNDSTART /datum/antagonist/traitor
+
+## List of antagonists whose activity should be tracked for midround selection.
+## These roles will count toward the penalty.
+TRACKED_ANTAGONISTS_MIDROUND /datum/antagonist/blob
+
+## List of antagonists whose activity should be tracked for latejoin selection.
+## These roles will count toward the penalty.
+TRACKED_ANTAGONISTS_LATEJOIN /datum/antagonist/traitor
+
+## Log candidate weight calculations to the server log.
+## Useful for debugging and monitoring the weighting system.
+#LOG_ANTAG_CANDIDATE_WEIGHT

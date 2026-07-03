@@ -1,0 +1,532 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/glass/airless,
+/area/station/hallway/secondary/exit/departure_lounge)
+"d" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"e" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"f" = (
+/turf/open/space/basic,
+/area/space)
+"g" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"h" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/secondary/exit/departure_lounge)
+"i" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/exit/departure_lounge)
+"j" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"k" = (
+/obj/machinery/door/airlock/maintenance/external,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/exit/departure_lounge)
+"l" = (
+/obj/docking_port/stationary{
+	shuttle_id = "argos_home";
+	name = "SS13: Fourth Port Bay";
+	height = 17;
+	width = 12;
+	dwidth = 5;
+	dir = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"m" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"n" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"o" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 9
+	},
+/obj/structure/chair/sofa/bench/right,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"q" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"r" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"s" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"t" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"u" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
+"v" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning/corner,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"w" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"B" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"D" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"E" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"G" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"H" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"I" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"J" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/exit/departure_lounge)
+"K" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"L" = (
+/obj/docking_port/stationary{
+	dwidth = 2;
+	height = 11;
+	name = "SS13: Second Port Bay";
+	shuttle_id = "specops_home";
+	width = 5;
+	dir = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"O" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/department/medical/central)
+"P" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/left,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"Q" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/exit/departure_lounge)
+"S" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"T" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"U" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 1
+	},
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"V" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"Y" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
+"Z" = (
+/turf/closed/wall,
+/area/station/hallway/secondary/exit/departure_lounge)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+O
+a
+a
+a
+a
+f
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+Z
+k
+J
+Z
+a
+a
+f
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+b
+q
+H
+J
+f
+f
+f
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+J
+w
+S
+J
+f
+f
+f
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+b
+I
+t
+J
+f
+f
+f
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+Z
+I
+V
+Z
+J
+Z
+f
+"}
+(7,1,1) = {"
+a
+B
+E
+E
+e
+E
+D
+S
+i
+h
+Q
+f
+"}
+(8,1,1) = {"
+a
+G
+z
+G
+G
+G
+G
+T
+i
+h
+Q
+l
+"}
+(9,1,1) = {"
+a
+v
+s
+Y
+s
+s
+g
+V
+Z
+J
+Z
+f
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+Z
+j
+t
+J
+f
+f
+f
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+b
+j
+S
+J
+f
+f
+f
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+J
+j
+S
+J
+f
+f
+f
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+b
+j
+S
+J
+f
+f
+f
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+Z
+Z
+j
+T
+J
+f
+f
+f
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+u
+o
+r
+S
+J
+f
+f
+f
+"}
+(16,1,1) = {"
+Z
+Z
+Z
+Z
+Z
+d
+m
+S
+Z
+J
+Z
+f
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+Z
+P
+K
+t
+i
+h
+Q
+L
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+Z
+U
+n
+H
+Z
+J
+Z
+f
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+Z
+Z
+Z
+Z
+Z
+f
+f
+f
+"}

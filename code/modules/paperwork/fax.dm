@@ -1,5 +1,7 @@
 GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
-GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
+GLOBAL_VAR_INIT(fax_autoprinting, TRUE) /// BANDASTATION EDIT
+
+#define FAX_ID_CENTRAL_COMMAND "central_command"
 
 /obj/machinery/fax
 	name = "Fax Machine"
@@ -57,9 +59,11 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
-		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+		nanotrasen = list(fax_name = "NT HR Department", fax_id = FAX_ID_CENTRAL_COMMAND, color = "teal", emag_needed = FALSE),
 		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
+	// Regex cleaner
+	var/static/regex/html_cleaner = new("<\[^>\]*>", "g")
 
 /obj/machinery/fax/auto_name
 	name = "Auto-naming Fax Machine"
@@ -353,6 +357,22 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax cannot send all above paper on this protected network, sorry."))
 				return
 
+			// AI checkup
+			var/cached_name = fax_paper.name
+			var/cached_content = ""
+
+			cached_content = safe_get_paper_text(fax_paper)
+
+			if(!cached_content)
+				cached_content = "(Empty Paper / Unreadable Form)"
+			else
+				// Cleanup
+				cached_content = replacetext(cached_content, "<br>", "\n")
+				cached_content = html_cleaner.Replace(cached_content, " ")
+
+			// AI checkup END
+
+
 			fax_paper.request_state = TRUE
 			fax_paper.loc = null
 
@@ -362,20 +382,36 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 			history_add("Send", params["name"])
 
 			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", list("paper" = fax_paper, "destination_id" = params["id"], "sender_name" = fax_name))
-			to_chat(GLOB.admins,
-				span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)] [ADMIN_PRINT_FAX(fax_paper, fax_name, params["id"])]"),
+
+			// AI send
+			if(params["id"] == FAX_ID_CENTRAL_COMMAND)
+				var/datum/ai_bridge/AI = get_ai_bridge()
+				if(AI)
+					var/real_sender = "[fax_name] ([usr.real_name])"
+					AI.process_incoming_fax(cached_name, cached_content, real_sender, params["id"])
+
+			var/list/admins = get_holders_with_rights(R_ADMIN) /// BANDASTATION EDIT: Proper permissions
+			to_chat(admins, /// BANDASTATION EDIT: Proper permissions
+				span_adminnotice("[icon2html(src.icon, admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)] [ADMIN_PRINT_FAX(fax_paper, fax_name, params["id"])]"), /// BANDASTATION EDIT: Proper permissions
 				type = MESSAGE_TYPE_PRAYER,
 				confidential = TRUE)
-			for(var/client/staff as anything in GLOB.admins)
+			for(var/client/staff as anything in admins) /// BANDASTATION EDIT: Proper permissions
 				if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
 					SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
 
 			if(GLOB.fax_autoprinting)
+				var/original_sent = FALSE /// BANDASTATION EDIT
 				for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
 					if(FAX.fax_id != params["id"])
 						continue
-					FAX.receive(fax_paper, fax_name)
-					break
+					/// BANDASTATION EDIT START
+					if(!original_sent)
+						original_sent=TRUE
+						FAX.receive(fax_paper, fax_name)
+						continue
+
+					FAX.receive(fax_paper.copy(), fax_name)
+					/// BANDASTATION EDIT END
 
 			log_fax(fax_paper, params["id"], params["name"])
 			loaded_item_ref = null
@@ -395,7 +431,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 /obj/machinery/fax/proc/log_fax(obj/item/sent, destination_id, name)
 	if (istype(sent, /obj/item/paper))
 		var/obj/item/paper/sent_paper = sent
-		log_paper("[usr] has sent a fax with the message \"[sent_paper.get_raw_text()]\" to [name]/[destination_id].")
+		log_paper("[usr] has sent a fax with the message \"[sent_paper.name]\" to [name]/[destination_id].")
 		return
 	log_game("[usr] has faxed [sent] to [name]/[destination_id].]")
 
@@ -620,3 +656,36 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	else
 		return FALSE
 	return TRUE
+
+/proc/get_paper_input_text_recursive(datum/paper_input/I)
+	if(!I)
+		return ""
+
+	var/text = ""
+	if("raw_text" in I.vars)
+		var/txt = I.vars["raw_text"]
+		if(txt)
+			text += txt + "\n"
+
+	if("children" in I.vars)
+		var/list/kids = I.vars["children"]
+		if(length(kids))
+			for(var/datum/paper_input/child in kids)
+				text += get_paper_input_text_recursive(child)
+
+	return text
+
+/proc/safe_get_paper_text(obj/item/paper/P)
+	if(!istype(P) || !("raw_text_inputs" in P.vars))
+		return ""
+
+	var/list/inputs = P.vars["raw_text_inputs"]
+	if(!length(inputs)) return ""
+
+	var/full_text = ""
+	for(var/datum/paper_input/I in inputs)
+		full_text += get_paper_input_text_recursive(I)
+
+	return full_text
+
+#undef FAX_ID_CENTRAL_COMMAND

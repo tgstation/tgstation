@@ -1,0 +1,8 @@
+["box of petridishes"]
+nominative = "коробка с чашками Петри"
+genitive = "коробки с чашками Петри"
+dative = "коробке с чашками Петри"
+accusative = "коробку с чашками Петри"
+instrumental = "коробкой с чашками Петри"
+prepositional = "коробке с чашками Петри"
+gender = "female"

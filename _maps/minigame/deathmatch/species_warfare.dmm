@@ -261,8 +261,8 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/rnd/production/protolathe/offstation,
 /obj/machinery/light/directional/east,
+/obj/machinery/rnd/production/protolathe/offstation,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "ko" = (
@@ -430,8 +430,8 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/rnd/production/circuit_imprinter/offstation,
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator,
+/obj/structure/rack,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "rO" = (
@@ -1344,7 +1344,8 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/rnd/destructive_analyzer,
+/obj/structure/table,
+/obj/item/binoculars,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "YQ" = (

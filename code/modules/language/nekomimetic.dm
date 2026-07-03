@@ -1,6 +1,6 @@
 /datum/language/nekomimetic
 	name = "Nekomimetic"
-	desc = "To the casual observer, this language is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
+	desc = "Для непосвящённого этот язык представляет собой непонятную мешанину из ломаного японского. Для фелинидов же он каким-то образом понятен."
 	key = "f"
 	space_chance = 15
 	sentence_chance = 0
@@ -9,11 +9,11 @@
 	additional_syllable_low = -1
 	additional_syllable_high = 1
 	syllables = list(
-		"neko", "nyan", "mimi", "moe", "mofu", "fuwa", "kyaa", "kawaii", "poka", "munya",
-		"puni", "munyu", "ufufu", "uhuhu", "icha", "doki", "kyun", "kusu", "nya", "nyaa",
-		"desu", "kis", "ama", "chuu", "baka", "hewo", "boop", "gato", "kit", "sune", "yori",
-		"sou", "baka", "chan", "san", "kun", "mahou", "yatta", "suki", "usagi", "domo", "ori",
-		"uwa", "zaazaa", "shiku", "puru", "ira", "heto", "etto"
+		"неко", "нян", "мими", "моэ", "мофу", "фува", "кяа", "каваи", "пока", "муня",
+		"пуни", "мую", "уфуфу", "ухуху", "ича", "доки", "кюн", "кусу", "ня", "няа",
+		"десу", "кис", "ама", "чю", "бака", "хево", "буп", "гато", "кит", "суне", "ёри",
+		"со", "бака", "тян", "сан", "кун", "махо", "ятта", "суки", "усаги", "домо", "ори",
+		"ува", "дзаадзаа", "шику", "пуру", "ира", "хето", "этто"
 	)
 	icon_state = "neko"
 	default_priority = 90

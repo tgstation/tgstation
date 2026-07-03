@@ -1,0 +1,8 @@
+[eyepatch]
+nominative = "глазная повязка"
+genitive = "глазной повязки"
+dative = "глазной повязке"
+accusative = "глазную повязку"
+instrumental = "глазной повязкой"
+prepositional = "глазной повязке"
+gender = "female"

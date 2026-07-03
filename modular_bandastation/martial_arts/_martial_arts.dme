@@ -1,0 +1,7 @@
+#include "_martial_arts.dm"
+
+#include "code/_defines.dm"
+#include "code\judo\belt.dm"
+#include "code\judo\effect.dm"
+#include "code\judo\judo.dm"
+#include "code\judo\verb.dm"

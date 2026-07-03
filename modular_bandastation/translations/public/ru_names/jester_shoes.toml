@@ -1,0 +1,8 @@
+["jester shoes"]
+nominative = "туфли шута"
+genitive = "туфель шута"
+dative = "туфлям шута"
+accusative = "туфли шута"
+instrumental = "туфлями шута"
+prepositional = "туфлях шута"
+gender = "plural"

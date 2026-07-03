@@ -1,0 +1,202 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ln" = (
+/obj/structure/table_frame,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/storage/medkit/advanced{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"mE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Gamma Armory Shuttle Airlock"
+	},
+/obj/docking_port/mobile/gamma,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/shuttle/gamma)
+"nP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"nS" = (
+/obj/item/construction/rcd/loaded,
+/obj/item/rcd_ammo/large{
+	pixel_x = -8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"nT" = (
+/obj/item/shard,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"qR" = (
+/obj/machinery/suit_storage_unit/security,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"tb" = (
+/obj/item/wallframe/extinguisher_cabinet,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/catwalk_floor/titanium/airless,
+/area/shuttle/gamma)
+"vp" = (
+/obj/item/stock_parts/power_store/cell/hyper,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/spear/grey_tide,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"vM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/gamma)
+"vX" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"xL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"II" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/gamma)
+"Kz" = (
+/obj/item/wallframe/apc,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"Lu" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/machinery/light/broken/directional/east,
+/obj/item/construction/rcd/loaded{
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"Nm" = (
+/obj/effect/turf_decal/stripes/red/end,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/secure_closet/gamma_armor,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"Nx" = (
+/obj/machinery/light/red/directional/east,
+/obj/item/tank/internals/oxygen/empty,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/catwalk_floor/titanium/airless,
+/area/shuttle/gamma)
+"NJ" = (
+/obj/structure/frame,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/sign/warning/directional/east,
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"QD" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/medical/full{
+	pixel_y = 7;
+	pixel_x = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"QK" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"SH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/item/tank/internals/oxygen,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/gun/energy/e_gun/nuclear,
+/turf/open/floor/mineral/titanium/airless,
+/area/shuttle/gamma)
+"Vv" = (
+/turf/template_noop,
+/area/template_noop)
+"Ww" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"WB" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/catwalk_floor/titanium/airless,
+/area/shuttle/gamma)
+
+(1,1,1) = {"
+Vv
+Vv
+Vv
+II
+mE
+vM
+vM
+vM
+Vv
+"}
+(2,1,1) = {"
+Vv
+Vv
+ln
+QD
+Kz
+tb
+vX
+vM
+vM
+"}
+(3,1,1) = {"
+Vv
+nP
+vp
+nT
+nS
+WB
+SH
+QK
+xL
+"}
+(4,1,1) = {"
+Ww
+nP
+Lu
+Nm
+NJ
+Nx
+qR
+vM
+vM
+"}
+(5,1,1) = {"
+vM
+vM
+II
+II
+vM
+vM
+vM
+vM
+Vv
+"}

@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cnds/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 /obj/item/food/cnds/caramel

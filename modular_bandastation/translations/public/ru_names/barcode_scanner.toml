@@ -1,0 +1,8 @@
+["barcode scanner"]
+nominative = "сканер штрихкодов"
+genitive = "сканера штрихкодов"
+dative = "сканеру штрихкодов"
+accusative = "сканер штрихкодов"
+instrumental = "сканером штрихкодов"
+prepositional = "сканере штрихкодов"
+gender = "male"

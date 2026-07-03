@@ -64,16 +64,16 @@
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
-	. += span_notice("Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
+	. += span_notice("Может держать в себе [max_syringes] шприц[declension_ru(max_syringes, "", "а", "ов")]. Имеет внутри [syringes.len] шприц[declension_ru(syringes.len, "", "а", "ов")].")
 	if (low_power)
-		. += span_notice("Its pressure regulator is set to low power mode, making sure that syringes shot will embed and slowly bleed their reagents into their target.")
+		. += span_notice("Регулятор давление выставлен в минимальный режим, что гарантирует, что шприцы будут медленно впрыскивать реагенты в цель.")
 	else
-		. += span_notice("Its pressure regulator is cranked to the max, instantly injecting the reagents at the cost of breaking the syringes fired.")
-	. += span_notice("Right-click [src] in-hand to switch it to [low_power ? "full" : "low"] power.")
+		. += span_notice("Регулятор давление выкручен на максимум, что гарантирует моментальный ввод реагентов, уничтожая при этом шприц.")
+	. += span_notice("ПКМ по [src] в руке для переключения давления в [low_power ? "максимальный" : "минимальный"] режим.")
 
 /obj/item/gun/syringe/attack_self(mob/living/user, list/modifiers)
 	if (!syringes.len)
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, "пусто!")
 		return FALSE
 
 	var/obj/item/reagent_containers/syringe/syringe = syringes[syringes.len]
@@ -83,7 +83,7 @@
 	user.put_in_hands(syringe)
 
 	syringes.Remove(syringe)
-	balloon_alert(user, "[syringe.name] unloaded")
+	balloon_alert(user, "снятие [syringe.declent_ru(GENITIVE)]")
 	update_appearance()
 	return TRUE
 
@@ -104,20 +104,20 @@
 
 /obj/item/gun/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/syringe/bluespace))
-		balloon_alert(user, "[tool.name] is too big!")
+		balloon_alert(user, "[tool.declent_ru(NOMINATIVE)] не влезает!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
 		return NONE
 
 	if(syringes.len >= max_syringes)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, "нет места!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[tool.name] loaded")
+	balloon_alert(user, "вставка [tool.declent_ru(GENITIVE)]")
 	syringes += tool
 	recharge_newshot()
 	update_appearance()
@@ -191,18 +191,18 @@
 	if(istype(tool, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = tool
 		if(D.used)
-			balloon_alert(user, "[D.name] is used up!")
+			balloon_alert(user, "внутри [D.declent_ru(GENITIVE)] пусто!")
 			return ITEM_INTERACT_BLOCKING
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "[D.name] loaded")
+			balloon_alert(user, "вставка [D.declent_ru(GENITIVE)]")
 			syringes += D
 			recharge_newshot()
 			update_appearance()
 			playsound(loc, load_sound, 40)
 			return ITEM_INTERACT_SUCCESS
-		balloon_alert(user, "it's already full!")
+		balloon_alert(user, "нет места!")
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -232,6 +232,6 @@
 	. = ..()
 	if(!.)
 		return
-	visible_message(span_danger("[user] shoots the blowgun!"))
+	visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] стреляет из [declent_ru(GENITIVE)]!"))
 	user.adjust_stamina_loss(20, updating_stamina = FALSE)
 	user.adjust_oxy_loss(20)

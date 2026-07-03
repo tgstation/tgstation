@@ -1,0 +1,98 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"n" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/folder/white,
+/obj/item/pen,
+/obj/item/stamp/head/rd,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"q" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "rdordnance";
+	name = "Ordnance Containment Control";
+	pixel_x = -7;
+	pixel_y = -4;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "sci_experimentor";
+	name = "Experimentor Containment Control";
+	pixel_x = -7;
+	pixel_y = 7;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "rdrnd";
+	name = "Research and Development Containment Control";
+	pixel_x = 7;
+	pixel_y = 7;
+	req_access = list("rd")
+	},
+/obj/machinery/button/door{
+	id = "rdoffice";
+	name = "Privacy Control";
+	pixel_x = 7;
+	pixel_y = -4;
+	req_access = list("rd")
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"v" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"Q" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+"Y" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/rd)
+
+(1,1,1) = {"
+Q
+v
+"}
+(2,1,1) = {"
+a
+q
+"}
+(3,1,1) = {"
+Y
+n
+"}

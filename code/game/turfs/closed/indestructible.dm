@@ -206,8 +206,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass/Initialize(mapload)
 	. = ..()
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01, src) //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02, src) //add the plating underlay, below the grille
+	// BANDASTATION ADDITION - appearance flags
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille", layer - 0.01, src, appearance_flags = RESET_COLOR|KEEP_APART) //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating", layer - 0.02, src, appearance_flags = RESET_COLOR|KEEP_APART) //add the plating underlay, below the grille
 
 /turf/closed/indestructible/opsglass
 	name = "window"

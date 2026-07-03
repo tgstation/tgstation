@@ -7,44 +7,44 @@ type Data = {
   help_text: string;
 };
 
-const DEFAULT_HELP = `No information available! Ask for assistance if needed.`;
+const DEFAULT_HELP = `Информация отсутствует! Обратитесь за помощью при нужде.`;
 
 const boxHelp = [
   {
     color: 'purple',
-    text: 'Study the area and do what needs to be done to recover the crate. Pay close attention to domain information and context clues.',
+    text: 'Изучите местность и принесите в убещиже ящик. Обращайте пристальное внимание на информацию о домене и на контекстные подсказки.',
     icon: 'search-location',
-    title: 'Search',
+    title: 'Поиск',
   },
   {
     color: 'green',
-    text: 'Bring the crate to the designated sending location in the safehouse. The area may seem out of place. Examine the safehouse to find it.',
+    text: 'Принесите ящик к обозначенной зоне в вашем убежище. Место отправки будет выглядеть необычно для окружения. Осмотрите убежище, чтобы найти его.',
     icon: 'boxes',
-    title: 'Recover',
+    title: 'Ящик',
   },
   {
     color: 'blue',
-    text: 'The ladder represents the safest way to disconnect before the cache is recovered. Should your connection sever, the netpod offers limited resuscitation potential.',
+    text: 'Лестница предоставляет самый безопасный способ выхода из домена, если ящик еще не вытащили. При разрыве соединения, ваш нетпод предоставляет ограниченную возможность к реанимации.',
     icon: 'plug',
-    title: 'Disconnect',
+    title: 'Отключение',
   },
   {
     color: 'yellow',
-    text: 'While connected, you are somewhat safe from environmental hazards and intrusions, but not completely. Pay close attention to alerts.',
+    text: 'Пока вы подключены, вы в какой-то мере защищены от опасностей окружащей среды и опасности извне, но не полностью. Обращайте внимания на оповещения и тревоги.',
     icon: 'id-badge',
-    title: 'Security',
+    title: 'Безопасность',
   },
   {
     color: 'gold',
-    text: 'Generating avatars costs tremendous bandwidth. Do not waste them.',
+    text: 'Создание аватаров требует огромной пропускной способности. Не тратье их впустую.',
     icon: 'coins',
-    title: 'Limited Attempts',
+    title: 'Ограниченные попытки',
   },
   {
     color: 'red',
-    text: 'Remember that you are physically linked to this presence. You are a foreign body in a hostile environment. It will attempt to forcefully eject you.',
+    text: 'Помните, что вы физически связаны с вашим аватаром. Вы - чужой во враждебном окружении. Оно попытается силой изгнать вас.',
     icon: 'skull-crossbones',
-    title: 'Realized Danger',
+    title: 'Реальная опасность',
   },
 ] as const;
 
@@ -53,7 +53,7 @@ export const AvatarHelp = (props) => {
   const { help_text = DEFAULT_HELP } = data;
 
   return (
-    <Window title="Domain Information" width={600} height={600}>
+    <Window title="Информация о домене" width={600} height={600}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -61,7 +61,7 @@ export const AvatarHelp = (props) => {
               color="good"
               fill
               scrollable
-              title="Welcome to the Virtual Domain."
+              title="Добро пожаловать в виртуальный домен."
             >
               {help_text}
             </Section>

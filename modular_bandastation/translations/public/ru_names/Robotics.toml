@@ -1,0 +1,8 @@
+[Robotics]
+nominative = "робототехника"
+genitive = "робототехники"
+dative = "робототехнике"
+accusative = "робототехнику"
+instrumental = "робототехникой"
+prepositional = "робототехнике"
+gender = "female"

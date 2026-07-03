@@ -23,6 +23,22 @@
 		/obj/item/ai_module/core/full/nutimov,
 		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
+		/// BANDASTATION ADDITION START- AI laws overhaul
+		/obj/item/ai_module/core/full/crewsimov,
+		/obj/item/ai_module/core/full/chapai,
+		/obj/item/ai_module/core/full/clown,
+		/obj/item/ai_module/core/full/druid,
+		/obj/item/ai_module/core/full/educator,
+		/obj/item/ai_module/core/full/fitnesscoach,
+		/obj/item/ai_module/core/full/friendbot,
+		/obj/item/ai_module/core/full/mediator,
+		/obj/item/ai_module/core/full/mother,
+		/obj/item/ai_module/core/full/partybot,
+		/obj/item/ai_module/core/full/plantfriend,
+		/obj/item/ai_module/core/full/spotless,
+		/obj/item/ai_module/core/full/travelguide,
+		/obj/item/ai_module/core/full/wafflehouse
+		/// BANDASTATION ADDITION END - AI laws overhaul
 	)
 
 /obj/effect/spawner/random/aimodule/neutral
@@ -40,6 +56,15 @@
 		/obj/item/ai_module/supplied/quarantine,
 		/obj/item/ai_module/core/full/yesman,
 		/obj/item/ai_module/remove,
+		/// BANDASTATION ADDITION START - AI laws overhaul
+		/obj/item/ai_module/core/full/petrovich,
+		/obj/item/ai_module/core/full/renter,
+		/obj/item/ai_module/core/full/cowboy,
+		/obj/item/ai_module/core/full/detective,
+		/obj/item/ai_module/core/full/metaexperiment,
+		/obj/item/ai_module/core/full/researcher,
+		/obj/item/ai_module/core/full/siliconcollective
+		/// BANDASTATION ADDITION END - AI laws overhaul
 	)
 
 /obj/effect/spawner/random/aimodule/harmful

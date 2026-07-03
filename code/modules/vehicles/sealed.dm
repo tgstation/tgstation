@@ -56,7 +56,7 @@
 
 
 /obj/vehicle/sealed/proc/mob_try_enter(mob/rider)
-	if(!istype(rider))
+	if(!istype(rider) || !isliving(rider))
 		return FALSE
 	var/enter_delay = get_enter_delay(rider)
 	if (enter_delay == 0)

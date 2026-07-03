@@ -1,9 +1,9 @@
 /datum/surgery_operation/organ/asthmatic_bypass
-	name = "force open windpipe"
+	name = "Открытие трахеи с усилием"
 	// google says the *actual* operation used to relieve asthma is called bronchial thermoplasty but this operation doesn't resemble that at all
 	// local doctors suggested "bronchial dilatation" instead
-	rnd_name = "Bronchial Dilatation (Asthmatic Bypass)"
-	desc = "Forcibly expand a patient's windpipe, relieving asthma symptoms."
+	rnd_name = "Расширение бронхов (Астматическое шунтирование)"
+	desc = "Принудительное расширение трахеи пациента, для облегчения симптомов астмы."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_RETRACTOR = 1.25,
@@ -18,7 +18,7 @@
 	var/inflammation_reduction = 75
 
 /datum/surgery_operation/organ/asthmatic_bypass/all_required_strings()
-	return list("the patient must be asthmatic") + ..()
+	return list("пациент должен быть астматиком") + ..()
 
 /datum/surgery_operation/organ/asthmatic_bypass/state_check(obj/item/organ/organ)
 	if(!organ.owner.has_quirk(/datum/quirk/item_quirk/asthma))
@@ -29,11 +29,11 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to stretch [organ.owner]'s windpipe, trying your best to avoid nearby blood vessels..."),
-		span_notice("[surgeon] begins to stretch [organ.owner]'s windpipe, taking care to avoid any nearby blood vessels."),
-		span_notice("[surgeon] begins to stretch [organ.owner]'s windpipe."),
+		span_notice("Вы начинаете растягивать трахею у [organ.owner.declent_ru(GENITIVE)], изо всех сил стараясь избежать попадания в близлежащие кровеносные сосуды..."),
+		span_notice("[surgeon] начинает растягивать трахею у [organ.owner.declent_ru(GENITIVE)], стараясь не задеть близлежащие кровеносные сосуды."),
+		span_notice("[surgeon] начинает растягивать трахею у [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You feel an agonizing stretching sensation in your neck!")
+	display_pain(organ.owner, "Вы чувствуете мучительное растяжение в шее!")
 
 /datum/surgery_operation/organ/asthmatic_bypass/on_success(obj/item/organ/lungs/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/quirk/item_quirk/asthma/asthma = organ.owner.get_quirk(/datum/quirk/item_quirk/asthma)
@@ -45,9 +45,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You stretch [organ.owner]'s windpipe with [tool], managing to avoid the nearby blood vessels."),
-		span_notice("[surgeon] succeeds at stretching [organ.owner]'s windpipe with [tool], avoiding the nearby blood vessels."),
-		span_notice("[surgeon] finishes stretching [organ.owner]'s windpipe.")
+		span_notice("Вы растягиваете трахею у [organ.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)], умудряясь не задеть близлежащие кровеносные сосуды."),
+		span_notice("[surgeon] успешно растягивает трахею у [organ.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)], избегая попадания в близлежащие кровеносные сосуды."),
+		span_notice("[surgeon] заканчивает растягивать трахею у [organ.owner.declent_ru(GENITIVE)].")
 	)
 
 /datum/surgery_operation/organ/asthmatic_bypass/on_failure(obj/item/organ/lungs/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -60,9 +60,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You stretch [organ.owner]'s windpipe with [tool], but accidentally clip a few arteries!"),
-		span_warning("[surgeon] succeeds at stretching [organ.owner]'s windpipe with [tool], but accidentally clips a few arteries!"),
-		span_warning("[surgeon] finishes stretching [organ.owner]'s windpipe, but screws up!"),
+		span_warning("Вы растягиваете трахею у [organ.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)], но случайно перерезаете несколько артерий!"),
+		span_warning("[surgeon] растягивает трахею у [organ.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)], но случайно пережимает несколько артерий!"),
+		span_warning("[surgeon] заканчивает растягивать трахею у [organ.owner.declent_ru(GENITIVE)], но облажался!"),
 	)
 
 	organ.owner.losebreath++

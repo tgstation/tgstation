@@ -43,7 +43,7 @@ jobs:
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          python tools/ss13_genchangelog.py html/changelogs
+          python tools/ss13_genchangelog.py html/changelogs/bandastation
 
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
@@ -51,7 +51,7 @@ jobs:
           git config --local user.name "tgstation-ci[bot]"
           git config --local user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
           git pull origin master
-          git add html/changelogs
+          git add html/changelogs/bandastation
           git commit -m "Automatic changelog compile [ci skip]" -a || true
 
       - name: Generate App Token

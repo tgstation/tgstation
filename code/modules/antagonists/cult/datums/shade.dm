@@ -1,5 +1,5 @@
 /datum/antagonist/cult/shade
-	name = "\improper Cult Shade"
+	name = "Тень культа"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
@@ -11,10 +11,10 @@
 
 /datum/antagonist/cult/shade/check_invoke_validity()
 	if(isnull(release_time))
-		to_chat(owner.current, span_alert("You cannot invoke runes from inside of a soulstone!"))
+		to_chat(owner.current, span_alert("Вы не можете вызывать руны, находясь в камне душ!"))
 		return FALSE
 
 	if(release_time + invoke_delay > world.time)
-		to_chat(owner.current, span_alert("You haven't gathered enough power to invoke runes yet. You need to remain out of your soulstone for a while longer!"))
+		to_chat(owner.current, span_alert("Вы не накопили достаточно сил для вызова рун. Вам нужно некоторое время с момента выхода из камня душ!"))
 		return FALSE
 	return TRUE

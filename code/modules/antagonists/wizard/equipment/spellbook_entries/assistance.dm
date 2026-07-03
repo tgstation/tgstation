@@ -1,49 +1,49 @@
-#define SPELLBOOK_CATEGORY_ASSISTANCE "Assistance"
+#define SPELLBOOK_CATEGORY_ASSISTANCE "Поддержка"
 // Wizard spells that assist the caster in some way
 /datum/spellbook_entry/summonitem
 	name = "Summon Item"
-	desc = "Recalls a previously marked item to your hand from anywhere in the universe."
+	desc = "Возвращает в вашу руку ранее отмеченный предмет из любой точки вселенной."
 	spell_type = /datum/action/cooldown/spell/summonitem
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/charge
 	name = "Charge"
-	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
+	desc = "Это заклинание можно использовать для подзарядки самых разных предметов в ваших руках, от магических артефактов до электрических компонентов. Креативный волшебник может даже использовать его, чтобы наделить магической силой своего товарища."
 	spell_type = /datum/action/cooldown/spell/charge
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
-	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	desc = "Примите на время облик другого существа, чтобы использовать его способности. После того как вы сделали свой выбор, его нельзя изменить."
 	spell_type = /datum/action/cooldown/spell/shapeshift/wizard
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/tap
 	name = "Soul Tap"
-	desc = "Fuel your spells using your own soul!"
+	desc = "Заряжайте свои заклинания, используя собственную душу!"
 	spell_type = /datum/action/cooldown/spell/tap
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
-	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
+	desc = "Арканный посох, способный стрелять зарядами эльдрической энергии, которые заставляют оживать неодушевленные предметы. Эта магия не действует на машины."
 	item_path = /obj/item/gun/magic/staff/animate
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/soulstones
 	name = "Soulstone Shard Kit"
-	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. \
-		The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	desc = "Осколки камней душ - древние инструменты, способные захватить и использовать души мертвых и умирающих. \
+		Заклинание Artificer позволяет создавать магические машины для пойманных душ, которыми они могут управлять."
 	item_path = /obj/item/storage/belt/soulstone/full
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/soulstones/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
-	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+	to_chat(user, span_notice("[capitalize(to_equip.declent_ru(NOMINATIVE))] призывается [was_equipped ? "на вашем поясе" : "у ваших ног"]."))
 
 /datum/spellbook_entry/item/soulstones/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	. =..()
@@ -55,30 +55,30 @@
 
 /datum/spellbook_entry/item/necrostone
 	name = "A Necromantic Stone"
-	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
+	desc = "Камень некроманта способен воскресить трех мертвецов в виде скелетов-рабов, подчиненных вам."
 	item_path = /obj/item/necromantic_stone
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
-	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	desc = "Магический контракт, привязывающий ученика волшебника к вашей службе, при использовании вызовет его на вашу сторону."
 	item_path = /obj/item/antag_spawner/contract
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	refundable = TRUE
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
-	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
-	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
+	desc = "Колода карт хранителей Таро, способная привязать к вашему телу личного хранителя. Существует несколько типов хранителей, но они все будут переносить на вас определенный урон. \
+	Разумно будет избегать покупки их с чем-то, что может заставить вас поменяться телами с другими."
 	item_path = /obj/item/guardian_creator/wizard
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
-	desc = "A bottle of magically infused blood, the smell of which will \
-		attract extradimensional beings when broken. Be careful though, \
-		the kinds of creatures summoned by blood magic are indiscriminate \
-		in their killing, and you yourself may become a victim."
+	desc = "Бутылка с магической кровью, запах которой привлекает \
+		внепространственных существ, если ее разбить. Но будьте осторожны, \
+		существа, вызываемые магией крови, неизбирательны \
+		в своих убийствах, и вы сами можете стать жертвой."
 	item_path = /obj/item/antag_spawner/slaughter_demon
 	limit = 3
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
@@ -86,13 +86,13 @@
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
-	desc = "A bottle of magically infused fun, the smell of which will \
-		attract adorable extradimensional beings when broken. These beings \
-		are similar to slaughter demons, but they do not permanently kill \
-		their victims, instead putting them in an extradimensional hugspace, \
-		to be released on the demon's death. Chaotic, but not ultimately \
-		damaging. The crew's reaction to the other hand could be very \
-		destructive."
+	desc = "Бутылка с волшебным напитком, запах которого притягивает  \
+		очаровательных внепространственных существ, если его разбить. Эти существа \
+		похожи на демонов резни, но они не убивают своих жертв навсегда, \
+		вместо этого помещая их во внепространственный мир обьятий, \
+		из которого они освобождаются после смерти демона. Хаотично, но не окончательно \
+		деструктивно. С другой стороны, реакция экипажа может быть очень \
+		разрушительной."
 	item_path = /obj/item/antag_spawner/slaughter_demon/laughter
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
@@ -101,10 +101,10 @@
 
 /datum/spellbook_entry/item/vendormancer
 	name = "Scepter of Vendormancy"
-	desc = "A scepter containing the power of Runic Vendormancy.\
-		It can summon up to 3 Runic Vendors that decay over time, but can be \
-		throw around to squash oponents or be directly detonated. When out of \
-		charges a long channel will restore the charges."
+	desc = "Скипетр, содержащий силу Рунической Вендормантии. \
+		Он может вызвать до 3 рунических вендоров, которые со временем разлагаются, но могут быть \
+		брошены в противников или непосредственно взорваны. Если заряды \
+		кончатся, после длительного периода времени они восстановятся."
 	item_path = /obj/item/runic_vendor_scepter
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
 

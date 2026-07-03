@@ -1,0 +1,8 @@
+["wooden table"]
+nominative = "деревянный стол"
+genitive = "деревявянного стола"
+dative = "деревянному столу"
+accusative = "деревянный стол"
+instrumental = "деревенянным столом"
+prepositional = "деревянном столе"
+gender = "male"

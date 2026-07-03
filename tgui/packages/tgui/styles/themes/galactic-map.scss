@@ -1,0 +1,26 @@
+@use '../base';
+
+.theme-galactic-map:root {
+  --color-base: #156993;
+  --secondary-lightness-adjustment: 0;
+  --base-gradient-spread: 0;
+  --titlebar-background: black;
+  --titlebar-shadow-color: transparent;
+  --titlebar-shadow-core: transparent;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .Layout__content {
+    background-image: none;
+  }
+
+  .Window__contentPadding {
+    margin: 2px;
+    height: calc(100% - 4px);
+    background-color: black;
+  }
+}

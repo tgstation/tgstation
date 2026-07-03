@@ -1,0 +1,8 @@
+[micro-servo]
+nominative = "микросервопривод"
+genitive = "микросервопривода"
+dative = "микросервоприводу"
+accusative = "микросервопривод"
+instrumental = "микросервоприводом"
+prepositional = "микросервоприводе"
+gender = "male"

@@ -43,16 +43,16 @@
 		new_name = "[user.real_name] \"[nickname]\""
 	user.real_name = new_name
 	used_up = TRUE
-	user.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
+	user.say("Как горит этот святой, так будет гореть и моя душа. Я вхожу живым, и мне придётся выйти мертвым.", forced = /obj/item/virgin_mary)
 	to_chat(user, span_userdanger("Being inducted into the mafia does not grant antagonist status."))
 
 #undef NICKNAME_CAP
 
 /obj/item/virgin_mary/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!"))
-	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
+	user.say("Радуйся, Мария, благодати полная! Господь с Тобою. Благословенна Ты между жёнами, и благословен плод чрева Твоего Иисус. Святая Мария, Матерь Божия, молись о нас, грешных, ныне и в час смерти нашей. Аминь.", forced = /obj/item/virgin_mary)
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 7.5 SECONDS)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, say), "O my Mother, preserve me this day from mortal sin..."), 5 SECONDS)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, say), "О Матерь моя, сохрани меня в этот день от смертного греха..."), 5 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)

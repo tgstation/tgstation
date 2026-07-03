@@ -1,4 +1,4 @@
-#define SPELLBOOK_CATEGORY_PERKS "Perks"
+#define SPELLBOOK_CATEGORY_PERKS "Перки"
 
 /datum/spellbook_entry/perks
 	desc = "Main node of perks"

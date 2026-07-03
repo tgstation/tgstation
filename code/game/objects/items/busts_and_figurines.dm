@@ -76,7 +76,7 @@
 	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
 		to_chat(user, span_warning("You've already sworn a vow. You start preparing to rescind it..."))
 		if(do_after(user, 5 SECONDS, target = user))
-			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic hippocrisy")
+			user.say("Да уж, с этим 'Гиппопотамом' ничего не вышло. Я ухожу!", forced = "hippocratic hippocrisy")
 			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
 
 	// they can still do it for rp purposes
@@ -86,20 +86,20 @@
 
 	to_chat(user, span_notice("You remind yourself of the Hippocratic Oath's contents and prepare to swear yourself to it..."))
 	if(do_after(user, 4 SECONDS, target = user))
-		user.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
+		user.say("Я клянусь выполнять, наилучшим образом, в соответствии с моими способностями и суждением, этот завет:", forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 	if(do_after(user, 2 SECONDS, target = user))
-		user.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
+		user.say("Я буду применять все необходимые меры на благо больных, избегая двух крайностей: чрезмерного ухода и терапевтического нигилизма.", forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 	if(do_after(user, 3 SECONDS, target = user))
-		user.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
+		user.say("Я буду помнить, что остаюсь членом общества, у которого есть особые обязательства по отношению ко всем моим собратьям - как к здоровым душой и телом, так и к немощным.", forced = "hippocratic oath")
 	else
 
 		return fuck_it_up(user)
 	if(do_after(user, 3 SECONDS, target = user))
-		user.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
+		user.say("Если я не нарушу эту клятву, пусть я буду наслаждаться жизнью и искусством, меня будут уважать, пока я жив, и вспоминать с любовью после этого. Пусть мои действия всегда будут направлены на сохранение лучших традиций моего призвания, и пусть я долго буду испытывать радость от исцеления тех, кто обращается ко мне за помощью.", forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 

@@ -40,7 +40,7 @@
 	/// Custom atom description (leave `null` for initial).
 	var/atom_desc = null
 	/// Custom atom dir (leave `null` for `2`).
-	var/atom_dir = 1
+	var/atom_dir = null // BANDASTATION EDIT: No more facing up objects/mobs
 	/// An associative list of x-y-z offsets.
 	var/offset = list()
 	/// The pivot point for offsetting — relative or absolute.
@@ -71,6 +71,11 @@
 		return FALSE
 
 	switch(action)
+		// BANDASTATION EDIT START: More handy verb
+		if("game-mode-panel")
+			dynamic_panel(usr)
+			return TRUE
+		// BANDASTATION EDIT END: More handy verb
 		if("select-new-DMI")
 			var/icon/new_icon = input("Select a new icon file:", "Icon") as null|icon
 			if(new_icon)
@@ -131,7 +136,7 @@
 			var/list/spawn_params = list(
 				"selected_atom" = selected_atom,
 				"offset" = params["offset"],
-				"atom_dir" = text2num(params["atom_dir"]) || 1,
+				"atom_dir" = text2num(params["atom_dir"]) || SOUTH, // BANDASTATION EDIT: No more facing up objects/mobs
 				"atom_amount" = text2num(params["atom_amount"]) || 1,
 				"atom_name" = params["atom_name"],
 				"where_target_type" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,

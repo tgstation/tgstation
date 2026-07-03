@@ -1,7 +1,7 @@
 /// A handheld gizmo, with some different activation modes
 /obj/item/gizmo
 	name = "gizmo"
-	desc = "Fliggoes the giggoe when its oven in hot the device."
+	desc = "Невероятно! Это же... а правда, что это? Оно ещё и маленькое..."
 	icon = 'icons/obj/science/gizmos.dmi'
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -10,9 +10,17 @@
 	var/list/icon_states = list("gizmo_item_1")
 	/// Reference to the gizmo master controller that handles all the other gizmo stuff
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller/item
+	// BANDASTATION EDIT START: gizmo name randomizing
+	var/list/possible_names = list(
+		"штуковина", "штука-дрюка", "хреновина", "полярный инвертор", "реверсивный рецептор", "флопиксель", "репопулятор", "квантовый квантовик",
+		"ну этот, как его", "делатель всякого", "квазифазер", "выполнятель задач", "интерфейсный респондер", "кинетический обсервер", "турбинный энкапсулятор",
+		"бипкодел", "агрегат", "приблуда", "прибамбас", "девайс", "плюмбус",
+	)
+	// BANDASTATION EDIT END
 
 /obj/item/gizmo/Initialize(mapload)
 	. = ..()
+	name = pick(possible_names) // BANDASTATION EDIT:  gizmo name randomizing
 
 	if(icon_states)
 		base_icon_state = pick(icon_states)

@@ -5,7 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/choiced/ghost_lighting/create_default_value()
-	return "Darker"
+	return "Темнее"
 
 /datum/preference/choiced/ghost_lighting/init_possible_values()
 	var/list/values = list()

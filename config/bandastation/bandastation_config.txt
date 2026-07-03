@@ -1,0 +1,75 @@
+## Text-to-speech
+#TTS_TOKEN_SILERO mytoken
+#TTS_ENABLED
+#TTS_CACHE_ENABLED
+#TTS_API_URL_SILERO
+
+## Localhost donate tier
+LOCALHOST_DONATE_TIER 5
+
+## AI Secretary
+AI_SECRETARY_URL https://ollama.com
+AI_SECRETARY_TOKEN my_secret_token
+AI_SECRETARY_MODEL gpt-oss:20b-cloud
+
+## SS Central
+#SS_CENTRAL_URL http://127.0.0.1:8000/v1
+#SS_CENTRAL_TOKEN 12345678
+#SERVER_TYPE default
+#FORCE_DISCORD_VERIFICATION
+## Entry from the general config.txt
+## New behavior - enabled PANIC_BUNKER_INTERVIEW allows only whitelisted players to play, passing interview gives a year long whitelist
+#USEWHITELIST
+#PANIC_BUNKER_INTERVIEW
+
+## A minimum amount of security required on roundstart
+## If there is less security than this value, a percent of roundstart threat will be pushed to midround
+## Example: with value of 5, if there is 2 security members out of 5, then 3/5 of roundstart threat will be moved to midround
+#ROUNDSTART_SECURITY_FOR_THREAT 5
+
+## Webhooks
+#TRANSLATE_SUGGEST_WEBHOOK_URL
+
+#INTERVIEW_WEBHOOK_URL
+
+## Bandastation Races
+ROUNDSTART_RACES vulpkanin
+ROUNDSTART_RACES tajaran
+
+## Automatic crew transfer
+
+## Time after the roundstart the automatic crew transfer will run. 1.5 hours by default
+#AUTOMATIC_CREW_TRANSFER_VOTE_DELAY 54000
+## Time the automatic crew transfer vote will automatically run after if previous one not passed. 30 minutes by default
+#AUTOMATIC_CREW_TRANSFER_VOTE_INTERVAL 18000
+## If players are able to create crew transfer vote
+#ALLOW_CREW_TRANSFER_VOTE
+## If automatic crew transfer is enabled
+#ENABLE_AUTOMATIC_CREW_TRANSFER
+
+# Cryo
+## Time in deciseconds the mob must be clientless for to be despawned by cryopod. 30 minutes by default
+#CRYO_MIN_SSD_TIME 18000
+
+## Speech filter for players
+
+## If enabled, some words will be removed from player's messages.
+# ENABLE_SPEECH_FILTER
+## List of ckeys, that bypass speech filter.
+# SPEECH_FILTER_BYPASS ckey
+# SPEECH_FILTER_BYPASS ckey
+
+## SQL table to load admins
+admin_table admin
+
+## Will player get a permanent severe brain trauma at 200 brain damage once per round
+BRAIN_PERMANENT_TRAUMAS
+## Decay rate for a brain organ, default - 0.5 (30 min), works only with BRAIN_PERMANENT_TRAUMAS enabled
+BRAIN_DECAY_RATE 2
+
+#DISCORD_URL
+
+#round_end_webhook_url
+#round_end_webhook_name
+#round_end_webhook_avatar_url
+#round_end_webhook_ping_role_id

@@ -1,61 +1,52 @@
-## /tg/station codebase
+# Добро пожаловать в репозиторий BandaStation по игре Space Station 13
 
-[![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
+[![Build Status](https://github.com/ss220club/BandaStation/workflows/CI%20Suite/badge.svg)](https://github.com/ss220club/BandaStation/actions?query=workflow%3A%22CI+Suite%22)
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/ss220club/BandaStation.svg)](https://isitmaintained.com/project/ss220club/BandaStation "Percentage of issues still open")
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/ss220club/BandaStation.svg)](https://isitmaintained.com/project/ss220club/BandaStation "Average time to resolve an issue")
 ![Coverage](https://img.shields.io/badge/coverage---4%25-red.svg)
 
 [![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-| Website             | Link                                                  |
-| ------------------- | ----------------------------------------------------- |
-| Website             | https://tgstation13.org                               |
-| Code                | https://github.com/tgstation/tgstation                |
-| Server Config       | https://github.com/tgstation-operations/server-config |
-| Wiki                | https://tgstation13.org/wiki/Main_Page                |
-| Codedocs            | https://codedocs.tgstation13.org/                     |
-| /tg/station Discord | https://tgstation13.org/phpBB/viewforum.php?f=60      |
-| Coderbus Discord    | https://discord.gg/Vh8TJp9                            |
+| Website          | Link                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------- |
+| Website          | [https://ss220.club](https://ss220.club)                                               |
+| Code             | [https://github.com/ss220club/BandaStation](https://github.com/ss220club/BandaStation) |
+| Wiki             | [https://bs.ss220.club](https://tg.ss220.club)                                         |
+| Codedocs         | [https://ss220club.github.io/BandaStation/](https://ss220club.github.io/BandaStation/) |
+| SS220 Discord    | [https://discord.gg/ss220](https://discord.gg/ss220)                                   |
+| Coderbus Discord | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)                               |
 
-This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
+## Загрузка
 
-Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
+[Загрузка](.github/guides/DOWNLOADING.md)
 
-_All github inquiries (such as moderation actions) may be handled via the /tg/station discord [#coding-general](https://discord.com/channels/326822144233439242/326831214667235328). Simply ping the `@Maintainer` role, following the guide on asking questions located in the channel description, with your issue!_
+[Запуск сервера](.github/guides/RUNNING_A_SERVER.md)
 
-## DOWNLOADING
+[Карты и руины](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
 
-[Downloading](.github/guides/DOWNLOADING.md)
+## Компиляция
 
-[Running a server](.github/guides/RUNNING_A_SERVER.md)
+**Быстрый способ**. Найдите `bin/server.cmd` в этой папке и дважды щелкните по нему, чтобы автоматически собрать и запустить сервер на порту 1337.
 
-[Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
+**Долгий способ**. Найдите `bin/build.cmd` в этой папке и дважды щелкните по нему, чтобы начать сборку. Она состоит из нескольких шагов и может занять около 1-5 минут для компиляции. Если оно закроется, это значит, что работа завершена. Затем вы можете [настроить сервер](.github/guides/RUNNING_A_SERVER.md) как обычно, открыв `tgstation.dmb` в DreamDaemon.
 
-## Compilation
+**Сборка tgstation напрямую в DreamMaker устарела и может вызвать ошибки**, такие как `‘tgui.bundle.js’: не удается найти файл`.
 
-**The quick way**. Find `bin/server.cmd` in this folder and double click it to automatically build and host the server on port 1337.
+**[Как компилировать в VSCode и другие варианты сборки](tools/build/README.md).**
 
-**The long way**. Find `bin/build.cmd` in this folder, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile. If it closes, it means it has finished its job. You can then [setup the server](.github/guides/RUNNING_A_SERVER.md) normally by opening `tgstation.dmb` in DreamDaemon.
+## Начало работы
 
-**Building tgstation in DreamMaker directly is deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
+Для руководств по вкладу смотрите [Руководства для участников](.github/CONTRIBUTING.md).
 
-**[How to compile in VSCode and other build options](tools/build/README.md).**
+Для начала работы (окружение разработчика, компиляция) смотрите документ HackMD [здесь](https://hackmd.io/@tgstation/HJ8OdjNBc#tgstation-Development-Guide).
 
-## Getting started
-
-For contribution guidelines refer to the [Guides for Contributors](.github/CONTRIBUTING.md).
-
-For getting started (dev env, compilation) see the HackMD document [here](https://hackmd.io/@tgstation/HJ8OdjNBc#tgstation-Development-Guide).
-
-For overall design documentation see [HackMD](https://hackmd.io/@tgstation).
-
-For lore, [see Common Core](https://github.com/tgstation/common_core).
+Для общей документации по дизайну смотрите [HackMD](https://hackmd.io/@tgstation).
 
 ## LICENSE
 
-All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/12/31 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
+All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/ss220club/BandaStation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 
-All code before [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/12/31 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
+All code before [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/ss220club/BandaStation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
 (Including tools unless their readme specifies otherwise.)
 
 See LICENSE and GPLv3.txt for more details.

@@ -99,7 +99,7 @@
 	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	if(use(3))
 		var/obj/item/delivery/big/parcel = new(get_turf(user.loc))
 		parcel.base_icon_state = "deliverypackage5"

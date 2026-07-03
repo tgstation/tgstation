@@ -521,7 +521,7 @@
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
 	suit = /obj/item/clothing/suit/armor/vest/marine/medic
-	suit_store = /obj/item/storage/belt/holster/detective/full/ert
+	accessory = /obj/item/clothing/accessory/holster/tacticool/ert_gp93r //BANDASTATION EDIT: Accessory holsters
 	back = /obj/item/storage/backpack/ert/medical
 	l_pocket = /obj/item/healthanalyzer
 	head = /obj/item/clothing/head/helmet/marine/medic
@@ -557,7 +557,7 @@
 	name = "Militia Man"
 
 	id = /obj/item/card/id/advanced/centcom/ert/militia
-	belt = /obj/item/storage/belt/holster/energy/smoothbore
+	accessory = /obj/item/clothing/accessory/holster/energy/smoothborne //BANDASTATION EDIT: Accessory holsters
 	suit = /obj/item/clothing/suit/armor/militia
 	suit_store = /obj/item/gun/energy/laser/musket
 	head = /obj/item/clothing/head/cowboy/black

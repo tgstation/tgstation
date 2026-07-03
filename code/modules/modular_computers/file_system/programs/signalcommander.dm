@@ -3,7 +3,7 @@
 	filedesc = "SignalCommander"
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "signal"
-	extended_desc = "A small built-in frequency app that sends out signaller signals with the appropriate hardware."
+	extended_desc = "Небольшое встроенное частотное приложение, которое подает сигналы при наличии соответствующего оборудования."
 	size = 2
 	tgui_id = "NtosSignaler"
 	program_icon = "satellite-dish"

@@ -1,0 +1,8 @@
+[cloth]
+nominative = "ткань"
+genitive = "ткани"
+dative = "ткани"
+accusative = "ткань"
+instrumental = "тканью"
+prepositional = "ткани"
+gender = "female"

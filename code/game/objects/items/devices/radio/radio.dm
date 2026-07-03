@@ -351,7 +351,7 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !(special_channels & RADIO_SPECIAL_SYNDIE))
+	if(is_within_radio_jammer_range(src, freq)) // BANDASTATION EDIT - Jammer whitelisted channels: added `freq`
 		return
 
 	// Determine the identity information which will be attached to the signal.
@@ -371,7 +371,7 @@
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
-		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
+		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown)) // BANDASTATION EDIT - Remove: signal.frequency != FREQ_COMMON
 			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
 			var/sound/radio_noise = sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier)
 			radio_noise.frequency = get_rand_frequency_low_range()
@@ -452,7 +452,8 @@
 
 	if(!isliving(loc))
 		return
-
+	// BANDASTATION REMOVAL - START
+	/**
 	var/mob/living/holder = loc
 	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
@@ -468,6 +469,8 @@
 		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg', volume = volume_modifier)
 		radio_important.frequency = get_rand_frequency_low_range()
 		SEND_SOUND(holder, radio_important)
+	*/
+	// BANDASTATION REMOVAL - END
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -568,13 +571,13 @@
 			SEND_SOUND(user, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
 
 /obj/item/radio/examine(mob/user)
-	. = ..()
+	. = ..() // translate
 	if (frequency && in_range(src, user))
-		. += span_notice("It is set to broadcast over the [span_radio("[frequency/10]")] frequency.")
+		. += span_notice("Передача настроена на частоту [span_radio("[frequency/10]")].")
 	if (unscrewed)
-		. += span_notice("It can be attached and modified.")
+		. += span_notice("Можно подсоединить или модифицировать.")
 	else
-		. += span_notice("It cannot be modified or attached.")
+		. += span_notice("Нельзя модифицировать или подсоединить.")
 
 /obj/item/radio/update_overlays()
 	. = ..()
@@ -671,7 +674,7 @@
 	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 20 SECONDS)
 
 /obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/radio/proc/end_emp_effect(curremp)

@@ -47,18 +47,18 @@ export const NetpodOutfits = (props) => {
     'None';
 
   return (
-    <Window title="Net Pod" height={300} width={400}>
+    <Window title="Нетпод" height={300} width={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
               fill
-              title="Select an outfit"
+              title="Выберите образ"
               buttons={
                 <Input
                   autoFocus
                   onChange={setSearch}
-                  placeholder="Search"
+                  placeholder="Поиск"
                   value={search}
                 />
               }

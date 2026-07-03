@@ -1,0 +1,533 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/station/security/armory)
+"b" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"c" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/pick_laser_loadout,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"e" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 5;
+	name = "SS13: Gamma Armory";
+	shuttle_id = "gamma_home";
+	width = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"f" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"g" = (
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"h" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"i" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"j" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"l" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/disablers,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"m" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"n" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/effect/spawner/random/armory/dragnet,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"o" = (
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "Lethal Armaments";
+	req_access = list("armory")
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"p" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"q" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/energy/temperature/security,
+/obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"r" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	name = "Requests Window"
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Weapon Distribution";
+	req_access = list("armory")
+	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/security/armory)
+"s" = (
+/obj/machinery/door/airlock/highsecurity,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/armory)
+"t" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"u" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"v" = (
+/obj/structure/rack,
+/obj/item/storage/box/teargas{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/effect/spawner/random/armory/barrier_grenades{
+	pixel_y = 3
+	},
+/obj/machinery/camera/motion/directional/south,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"w" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"x" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"y" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"B" = (
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/turf/open/floor/engine,
+/area/station/security/armory)
+"D" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"F" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/riot_helmet,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"G" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/riot_shield,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/button/door/directional/west{
+	id = "armory";
+	name = "Armory Shutters"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"H" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"K" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"L" = (
+/obj/machinery/door/poddoor/shuttledock{
+	checkdir = 8
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/plating,
+/area/station/security/armory)
+"M" = (
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access = list("armory")
+	},
+/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"N" = (
+/obj/effect/spawner/random/armory/shotgun,
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"O" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"P" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/armory/e_gun,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"R" = (
+/obj/structure/rack,
+/obj/item/storage/box/flashes{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/gun/grenadelauncher{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/hud/security/sunglasses{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/hud/security/sunglasses{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/item/sledgehammer/tactical{
+	pixel_y = 3
+	},
+/obj/item/sledgehammer/tactical{
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"S" = (
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "Armory Shutters"
+	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"U" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"V" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/station/security/armory)
+"W" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/security/armory)
+"X" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"Z" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+
+(1,1,1) = {"
+B
+B
+a
+a
+S
+r
+s
+a
+B
+B
+B
+"}
+(2,1,1) = {"
+B
+B
+a
+G
+g
+J
+Z
+a
+a
+B
+B
+"}
+(3,1,1) = {"
+B
+B
+a
+w
+J
+f
+H
+q
+a
+B
+B
+"}
+(4,1,1) = {"
+B
+B
+a
+F
+U
+i
+t
+l
+a
+B
+B
+"}
+(5,1,1) = {"
+B
+B
+a
+a
+a
+X
+y
+v
+a
+B
+B
+"}
+(6,1,1) = {"
+B
+B
+a
+P
+O
+h
+t
+n
+a
+B
+B
+"}
+(7,1,1) = {"
+B
+B
+a
+c
+o
+K
+g
+N
+a
+B
+B
+"}
+(8,1,1) = {"
+B
+B
+a
+M
+u
+j
+U
+R
+a
+B
+B
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+L
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+p
+D
+D
+D
+e
+D
+D
+D
+b
+a
+"}
+(11,1,1) = {"
+a
+W
+C
+C
+C
+C
+C
+C
+C
+V
+a
+"}
+(12,1,1) = {"
+a
+W
+C
+C
+C
+C
+C
+C
+C
+V
+a
+"}
+(13,1,1) = {"
+a
+W
+C
+C
+C
+C
+C
+C
+C
+V
+a
+"}
+(14,1,1) = {"
+a
+m
+x
+x
+x
+x
+x
+x
+x
+z
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

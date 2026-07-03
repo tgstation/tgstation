@@ -1,0 +1,92 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"mE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Gamma Armory Shuttle Airlock"
+	},
+/obj/docking_port/mobile/gamma,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/gamma)
+"vM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/gamma)
+"xL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"Lu" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/gamma)
+"Nx" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/gamma)
+"NJ" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/gamma)
+"QK" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"Vv" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+vM
+vM
+vM
+vM
+mE
+vM
+vM
+vM
+Vv
+"}
+(2,1,1) = {"
+vM
+NJ
+NJ
+NJ
+NJ
+NJ
+NJ
+vM
+vM
+"}
+(3,1,1) = {"
+Lu
+NJ
+NJ
+NJ
+NJ
+NJ
+NJ
+QK
+xL
+"}
+(4,1,1) = {"
+vM
+NJ
+Nx
+NJ
+NJ
+Nx
+NJ
+vM
+vM
+"}
+(5,1,1) = {"
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+Vv
+"}

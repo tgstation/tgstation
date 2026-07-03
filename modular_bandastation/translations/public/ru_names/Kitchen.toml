@@ -1,0 +1,8 @@
+[Kitchen]
+nominative = "кухня"
+genitive = "кухни"
+dative = "кухне"
+accusative = "кухню"
+instrumental = "кухней"
+prepositional = "кухне"
+gender = "female"

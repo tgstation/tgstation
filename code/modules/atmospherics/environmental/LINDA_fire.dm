@@ -230,7 +230,7 @@
 	var/heat_r = heat2colour_r(temperature)
 	var/heat_g = heat2colour_g(temperature)
 	var/heat_b = heat2colour_b(temperature)
-	var/heat_a = 255
+	var/heat_a = 180 // BANDASTATION EDIT: NEW FIRE ICON ORIGINAL: 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 
 	if(cold_fire)
@@ -255,7 +255,7 @@
 		sparkle_overlay.alpha = sparkle_amt * 255
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
-		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/fire.dmi', "overcharged")
+		var/mutable_appearance/lightning_overlay = mutable_appearance('modular_bandastation/aesthetics/fire/icons/fire.dmi', "overcharged") // BANDASTATION EDIT: NEW FIRE ICON
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
@@ -321,6 +321,11 @@
 
 	if(bypassing)
 		set_fire_stage("heavy")
+		// BANDASTATION ADDITION START: NEW FIRE RISES
+		var/mutable_appearance/heavy_heat_overlay = mutable_appearance('modular_bandastation/aesthetics/fire/icons/fire.dmi', "heavy")
+		heavy_heat_overlay.blend_mode = BLEND_ADD
+		add_overlay(heavy_heat_overlay)
+		// BANDASTATION ADDITION END: NEW FIRE RISES
 		if(!cold_fire)
 			location.burn_tile()
 
@@ -337,8 +342,18 @@
 	else
 		if(volume > CELL_VOLUME*0.4)
 			set_fire_stage("medium")
+			// BANDASTATION ADDITION START: NEW FIRE RISES
+			var/mutable_appearance/medium_heat_overlay = mutable_appearance('modular_bandastation/aesthetics/fire/icons/fire.dmi', "medium")
+			medium_heat_overlay.blend_mode = BLEND_ADD
+			add_overlay(medium_heat_overlay)
+			// BANDASTATION ADDITION END: NEW FIRE RISES
 		else
 			set_fire_stage("light")
+			// BANDASTATION ADDITION START: NEW FIRE RISES
+			var/mutable_appearance/light_heat_overlay = mutable_appearance('modular_bandastation/aesthetics/fire/icons/fire.dmi', "light")
+			light_heat_overlay.blend_mode = BLEND_ADD
+			add_overlay(light_heat_overlay)
+			// BANDASTATION ADDITION END: NEW FIRE RISES
 
 	if((visual_update_tick++ % 7) == 0)
 		update_color()

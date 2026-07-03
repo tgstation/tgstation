@@ -27,7 +27,7 @@
 	savefile_key = "feature_lizard_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Body markings"
+	main_feature_name = "Метки на теле"
 	should_generate_icons = TRUE
 	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
 
@@ -66,7 +66,7 @@
 	savefile_key = "feature_lizard_horns"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Horns"
+	main_feature_name = "Рога"
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/horns
 
@@ -116,7 +116,7 @@
 	savefile_key = "feature_lizard_snout"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
-	main_feature_name = "Snout"
+	main_feature_name = "Морда"
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/snout
 

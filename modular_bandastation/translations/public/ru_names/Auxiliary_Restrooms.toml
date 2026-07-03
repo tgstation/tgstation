@@ -1,0 +1,8 @@
+["Auxiliary Restrooms"]
+nominative = "резервный санузел"
+genitive = "резервного санузла"
+dative = "резервному санузлу"
+accusative = "резервный санузел"
+instrumental = "резервным санузлом"
+prepositional = "резервном санузле"
+gender = "male"

@@ -140,7 +140,7 @@
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
-	desc = "Used to seal minor hull breaches."
+	desc = "Используется для закрытия небольших пробоин в корпусе."
 	icon = 'icons/obj/machines/shield_generator.dmi'
 	icon_state = "shieldoff"
 	density = TRUE

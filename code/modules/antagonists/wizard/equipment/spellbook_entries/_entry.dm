@@ -25,7 +25,7 @@
 	/// Is this refundable?
 	var/refundable = TRUE
 	/// Flavor. Verb used in saying how the spell is acquired. Ex "[Learn] Fireball" or "[Summon] Ghosts"
-	var/buy_word = "Learn"
+	var/buy_word = "Выучить"
 	/// The cooldown of the spell
 	var/cooldown
 	/// Whether the spell requires wizard garb or not
@@ -95,10 +95,10 @@
 	if(existing)
 		var/before_name = existing.name
 		if(!existing.level_spell())
-			to_chat(user, span_warning("This spell cannot be improved further!"))
+			to_chat(user, span_warning("Это заклинание не может быть болeе улучшено!"))
 			return FALSE
 
-		to_chat(user, span_notice("You have improved [before_name] into [existing.name]."))
+		to_chat(user, span_notice("Вы улучшили [before_name] в [existing.name]."))
 		name = existing.name
 
 		//we'll need to update the cooldowns for the spellbook
@@ -113,7 +113,7 @@
 	//No same spell found - just learn it
 	var/datum/action/cooldown/spell/new_spell = new spell_type(user.mind || user)
 	new_spell.Grant(user)
-	to_chat(user, span_notice("You have learned [new_spell.name]."))
+	to_chat(user, span_notice("Вы выучили - [new_spell.name]."))
 
 	if(log_buy)
 		log_spellbook("[key_name(user)] learned [new_spell] for [cost] points")
@@ -172,7 +172,7 @@
 /datum/spellbook_entry/proc/refund_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
 	var/area/centcom/wizard_station/wizard_home = GLOB.areas_by_type[/area/centcom/wizard_station]
 	if(get_area(user) != wizard_home)
-		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
+		to_chat(user, span_warning("Вы можете вернуть очки за заклинания только в логове волшебника!"))
 		return -1
 
 	for(var/datum/action/cooldown/spell/to_refund in user.actions)
@@ -205,7 +205,7 @@
 /// Item summons, they give you an item.
 /datum/spellbook_entry/item
 	refundable = FALSE
-	buy_word = "Summon"
+	buy_word = "Призвать"
 	/// Typepath of what item we create when purchased
 	var/obj/item/item_path
 
@@ -226,14 +226,14 @@
 /// Attempts to give the item to the buyer on purchase.
 /datum/spellbook_entry/item/proc/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_put_in_hands = user.put_in_hands(to_equip)
-	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_put_in_hands ? "in your hands" : "at your feet"]."))
+	to_chat(user, span_notice("Приобретенный [to_equip.declent_ru(NOMINATIVE)] призывается [was_put_in_hands ? "в ваши руки" : "у ваших ног"]."))
 
 /// Ritual, these cause station wide effects and are (pretty much) a blank slate to implement stuff in
 /datum/spellbook_entry/summon
-	category = "Rituals"
+	category = "Ритуалы"
 	limit = 1
 	refundable = FALSE
-	buy_word = "Cast"
+	buy_word = "Провести"
 
 /datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	if(log_buy)
@@ -246,9 +246,9 @@
 /// Non-purchasable flavor spells to populate the spell book with, for style.
 /datum/spellbook_entry/challenge
 	name = "Take the Challenge"
-	category = "Challenges"
+	category = "Испытания"
 	refundable = FALSE
-	buy_word = "Accept"
+	buy_word = "Принять"
 
 // See, non-purchasable.
 /datum/spellbook_entry/challenge/can_buy(mob/living/carbon/human/user, obj/item/spellbook/book)

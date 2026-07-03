@@ -23,6 +23,7 @@
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/gun/energy/eg_14, /// BANDASTATION ADDITION - Blueshield
 	))
 
 ///Energy holster
@@ -40,6 +41,9 @@
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/laser/pistol,
 		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/gun/energy/eg_14, /// BANDASTATION ADDITION - Blueshield
+		/obj/item/gun/energy/disabler/smoothbore,
+		/obj/item/gun/energy/pulse/pistol,
 	)
 
 	return ..()
@@ -67,6 +71,7 @@
 		/obj/item/gun/energy/laser/pistol,
 		/obj/item/gun/energy/e_gun/hos,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
+		/obj/item/gun/energy/eg_14, /// BANDASTATION ADDITION - Blueshield
 	)
 
 	return ..()
@@ -94,6 +99,7 @@
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/laser/pistol,
 		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/gun/energy/eg_14, /// BANDASTATION ADDITION - Blueshield
 	)
 
 	return ..()
@@ -105,7 +111,21 @@
 
 /datum/storage/holster/nukie/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound, list/holdables)
 	holdables = list(
-		/obj/item/gun, // ALL guns.
+		/obj/item/gun/ballistic/automatic/pistol, // BANDASTATION EDIT BEGIN: Accessory holsters
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+		/obj/item/gun/ballistic/automatic/cm5/compact,
+		/obj/item/gun/ballistic/automatic/proto/unrestricted,
+		/obj/item/gun/ballistic/automatic/mini_uzi,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/laser/pistol,
+		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/gun/energy/eg_14,
+		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/knife/combat, // BANDASTATION EDIT END: Accessory holsters
 		/obj/item/ammo_box/magazine, // ALL magazines.
 		/obj/item/ammo_box/speedloader, // ALL speedloaders (there's 3 types at time of writing so it's probably fine)
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.

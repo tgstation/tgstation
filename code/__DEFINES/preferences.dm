@@ -43,12 +43,12 @@
 /// File path to the dev preference json file, which is loaded by guests while localhosting.
 #define DEV_PREFS_PATH "config/dev_preferences.json"
 
-#define PARALLAX_INSANE "Insane"
-#define PARALLAX_HIGH "High"
-#define PARALLAX_MED "Medium"
-#define PARALLAX_LOW "Low"
-#define PARALLAX_BOOMER "Old"
-#define PARALLAX_DISABLE "Disabled"
+#define PARALLAX_INSANE "Безумный"
+#define PARALLAX_HIGH "Высокий"
+#define PARALLAX_MED "Средний"
+#define PARALLAX_LOW "Низкий"
+#define PARALLAX_BOOMER "Старый"
+#define PARALLAX_DISABLE "Отключен"
 
 #define SCALING_METHOD_NORMAL "normal"
 #define SCALING_METHOD_DISTORT "distort"
@@ -58,11 +58,11 @@
 #define PARALLAX_DELAY_MED 1
 #define PARALLAX_DELAY_LOW 2
 
-#define SEC_DEPT_NONE "None"
-#define SEC_DEPT_ENGINEERING "Engineering"
-#define SEC_DEPT_MEDICAL "Medical"
-#define SEC_DEPT_SCIENCE "Science"
-#define SEC_DEPT_SUPPLY "Supply"
+#define SEC_DEPT_NONE "Нет"
+#define SEC_DEPT_ENGINEERING "Инженерный"
+#define SEC_DEPT_MEDICAL "Медицинский"
+#define SEC_DEPT_SCIENCE "Исследовательский"
+#define SEC_DEPT_SUPPLY "Снабжения"
 
 // Playtime tracking system, see jobs_exp.dm
 #define EXP_TYPE_LIVING "Living"

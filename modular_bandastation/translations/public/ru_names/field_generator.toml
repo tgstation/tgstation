@@ -1,0 +1,8 @@
+["field generator"]
+nominative = "генератор поля"
+genitive = "генератора поля"
+dative = "генератору поля"
+accusative = "генератор поля"
+instrumental = "генератором поля"
+prepositional = "генераторе поля"
+gender = "male"

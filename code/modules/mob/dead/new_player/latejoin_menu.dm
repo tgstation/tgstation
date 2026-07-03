@@ -4,6 +4,29 @@
 
 GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
+// BANDASTATION ADDITION: Job restrictions
+/datum/latejoin_menu/proc/is_job_allowed_for_species_with_string(job_title, mob/dead/new_player/owner)
+	var/species = owner.client?.prefs?.read_preference(/datum/preference/choiced/species)
+	if(!species)
+		return TRUE
+
+	if(locate(/datum/station_trait/xenobureaucracy_error) in GLOB.lobby_station_traits)
+		return TRUE
+
+	if(!job_title)
+		return TRUE
+
+	var/list/job_restrictions = CONFIG_GET(str_list/job_restrictions)
+	if(!(job_title in job_restrictions))
+		return TRUE
+
+	var/list/allowed_species = CONFIG_GET(str_list/allowed_species)
+	if(!allowed_species || !length(allowed_species))
+		return TRUE
+
+	return ("[species]" in allowed_species)
+// BANDASTATION ADDITION END
+
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	var/list/jobs = list()
@@ -166,6 +189,12 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
+			// BANDASTATION ADDITION: Job restriction
+			if(!is_job_allowed_for_species_with_string(params["job"], owner))
+				to_chat(usr,span_alertwarning("Выбранная раса несовместима с выбранной профессией!"))
+				return TRUE
+			// BANDASTATION ADDITION END
+
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 		if("viewpoll")
@@ -196,20 +225,20 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			dept_data += job_datum.title
 
 	if(dept_data.len <= 0) //Congratufuckinglations
-		tgui_alert(owner, "There are literally no random jobs available for you on this server, ahelp for assistance.", "Oh No!")
+		tgui_alert(owner, "В данный момент для вас нет случайной профессии. Обратитесь в ahelp за помощью.", "О нет!")
 		return
 
 	var/random_job
 
 	while(random_job != JOB_CHOICE_YES)
 		if(dept_data.len <= 0)
-			tgui_alert(owner, "It seems that there are no more random jobs available for you!", "Oh No!")
+			tgui_alert(owner, "В данный момент нет доступных для вас случайных профессий!", "О нет!")
 			return
 
 		var/random = pick_n_take(dept_data)
 		var/list/random_job_options = list(JOB_CHOICE_YES, JOB_CHOICE_REROLL, JOB_CHOICE_CANCEL)
 
-		random_job = tgui_alert(owner, "[random]?", "Random Job", random_job_options)
+		random_job = tgui_alert(owner, "[job_title_ru(random)]?", "Случайная должность", random_job_options)
 
 		if(random_job == JOB_CHOICE_CANCEL)
 			return

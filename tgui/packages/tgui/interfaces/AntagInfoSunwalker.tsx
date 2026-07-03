@@ -18,15 +18,15 @@ export const AntagInfoSunwalker = (props) => {
           <Stack.Item width="40%">
             <Section fill>
               <Stack vertical fill>
-                <Stack.Item fontSize="25px">You are the Sunwalker</Stack.Item>
+                <Stack.Item fontSize="25px">Вы - Санволкер</Stack.Item>
                 <Stack.Item>
                   <BlockQuote>
-                    You are an ancient voidwalker, having been caught in a
-                    supernova. You are altered, and hateful.
+                    Вы древний войдволкер, попавший в ловушку
+                    сверхновой. Вы изменились и полны ненависти.
                   </BlockQuote>
                   <BlockQuote>
-                    There will be no lessons or enlightenment, they wont survive
-                    to learn from it.
+                    Не будет ни уроков, ни просветления, они не выживут
+                    чтобы извлечь из этого урок.
                   </BlockQuote>
                 </Stack.Item>
                 <Stack.Divider />
@@ -34,23 +34,25 @@ export const AntagInfoSunwalker = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item width="60%">
-            <Section fill title="Powers">
+            <Section fill title="Способности">
               <LabeledList>
                 <LabeledList.Item label="Space Dive">
-                  You can move under the station from space, use this to hunt
-                  and get to isolated sections of space.
+                  Вы можете перемещаться под станцией по космосу, используйте
+                  это для охоты и проникновения в изолированные участки космоса.
                 </LabeledList.Item>
                 <LabeledList.Item label="Burning Slash">
-                  Your attacks deal great burn damage and ignite those hit.
+                  Ваши атаки наносят большой ожоговый урон
+                  и поджигают пораженных.
                 </LabeledList.Item>
                 <LabeledList.Item label="Burning Physiology">
-                  Your very skin heats the air around you, while the vacuum of
-                  space mends any wounds your body might have sustained. You can
-                  move through glass freely, but are slowed in gravity.
+                  Сама ваша кожа нагревает воздух вокруг вас, в то время как
+                  вакуум космоса заживляет любые раны, которые могли быть
+                  нанесены вашему телу. Вы можете свободно проходить сквозь
+                  стекло, но замедляетесь из-за гравитации.
                 </LabeledList.Item>
                 <LabeledList.Item label="Stellar Charge">
-                  With an exploding burning speed, charge forwards, dealing
-                  damage and burning the surroundings.
+                  С огромной взрывающейся горящей скоростью мчитесь вперёд,
+                  нанося урон и сжигая всё вокруг себя.
                 </LabeledList.Item>
               </LabeledList>
             </Section>

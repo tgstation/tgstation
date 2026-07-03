@@ -1,7 +1,7 @@
 /datum/heretic_knowledge_tree_column/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
-	complexity = "Easy"
+	complexity = "Низкая"
 	complexity_color = COLOR_GREEN
 	icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
@@ -11,28 +11,28 @@
 		"moving" = FALSE,
 	)
 	description = list(
-		"The Path of Ash revolves around fire, mobility and brutal crowd control against single opponents.",
-		"Play this path if you are new to Heretic, or really enjoy hit and run playstyles.",
+		"Путь Пепла завязан на огне, подвижности и беспощадном контроле над одиночными противниками.",
+		"Выбирайте этот путь, если вы начинающий еретик или вам нравится стиль игры «бей и беги».",
 	)
 	pros = list(
-		"Very potent even from the beginning of the path.",
-		"Easy access to a mobility spells and expanded vision.",
-		"Very powerful mark effect.",
+		"Очень силен, даже в начале своего пути.",
+		"Легкий доступ к заклинаниям передвижения и расширенному зрению.",
+		"Очень мощный эффект от метки.",
 	)
 	cons = list(
-		"Has less power than most heretics beyond their starting abilities.",
-		"Lacks durability in long conflicts.",
-		"Reliant on hitting fast and hard before their opponents can mount proper countermeasures.",
+		"Обладает меньшей силой, чем большинство еретиков, за исключением их начальных способностей.",
+		"Недостаточно устойчив в затяжных противостояниях.",
+		"Полагается на быстрые и мощные удары, прежде чем его противники успеют принять надлежащие контрмеры.",
 	)
 	tips = list(
-		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
-		"Selecting this path makes you immune to high temperature damage. Remember, however, that your clothes can still burn! If you want to protect yourself from your own fire, wear a Scorched Mantle.",
-		"Your Scorched Mantle will cause you to generate firestacks on your own body (Make sure you toggle the effect!). Upon reaching 5 fire stacks, your ashen spells will be  empowered (indicated by your spells being highlighted in green).",
-		"Your Ashen passage is a short cooldown jaunt capable of removing restraints. If empowered, it gains a longer jaunt time, and also will remove stuns and stamina crit.",
-		"Volcano blast can make short work of your enemies, should they be foolish enough to stick close to each other. If empowered, it will have no cast time and generate twice the amount of firestacks. Burn the heathens to ashes!",
-		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
-		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
-		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident.",
+		"«Хватка Мансуса» накладывает короткую слепоту и метку, которая при срабатывании вашего клинка наносит противнику критический урон по выносливости. Метка может распространяться на ближайших противников.",
+		"Выбирая этот путь, вы станете невосприимчивы к высоким температурам. Однако помните, что ваша одежда всё равно может сгореть! Если вы хотите защитить себя от собственного огня, наденьте Выжженную мантию.",
+		"Ваша Выжженная мантия будет генерировать огненные заряды на вашем теле (убедитесь, что вы включили этот эффект!). При достижении 5 огненных зарядов ваши пепельные заклинания станут сильнее (об этом будет свидетельствовать выделение заклинаний зеленым цветом).",
+		"«Пепельный проход» имеет короткое время перезарядки и способно снимать оковы. При усилении оно даёт более длительный сдвиг, а также снимает оглушение и критический урон по выносливости.",
+		"«Взрыв вулкана» может быстро расправиться с вашими врагами, если они будут настолько глупы, что соберутся вместе. Если усилить эту способность, она не будет требовать времени на применение и будет генерировать в два раза больше огненных зарядов. Сожги язычников до пепла!",
+		"Не пренебрегайте маской Безумия. Она будет медленно истощать силы ваших врагов и вызывать у них галлюцинации.",
+		"Постарайтесь поджечь как можно больше врагов! «Перерождение Ночного Дозорного» исцелит вас, а время восстановления умения сократится в зависимости от того, сколько существ вы поглотили.",
+		"Ваше вознесение даёт вам полную неуязвимость к опасностям окружающей среды, включая бомбы! Но вы по-прежнему уязвимы для более традиционного оружия. Не будьте слишком самоуверенны.",
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
@@ -48,11 +48,11 @@
 	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash
-	name = "Nightwatcher's Secret"
-	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
-		You can only create two at a time."
-	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
+	name = "Секрет Ночного Дозорного"
+	desc = "Открывает перед вами путь пепла. \
+		Позволяет трансмутировать спичку и нож в Пепельный клинок. \
+		Одновременно можно иметь только два."
+	gain_text = "Городская стража знает своих дозорных. Если вы спросите их ночью, они могут рассказать вам о пепельном фонаре."
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
@@ -72,7 +72,7 @@
 	if(!target.get_organ_slot(ORGAN_SLOT_EYES))
 		return
 
-	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
+	to_chat(target, span_danger("Яркий зеленый свет ужасно жжет глаза!"))
 	target.adjust_organ_loss(ORGAN_SLOT_EYES, 15)
 	target.set_eye_blur_if_lower(20 SECONDS)
 
@@ -88,33 +88,34 @@
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/spell/ash_passage
-	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, allowing you to traverse a short distance, passing though any walls. \
-			When empowered, it will break you out of any stuns and restraints, and will have a longer range."
-	gain_text = "He knew how to walk between the planes."
+	name = "Пепельный проход"
+	desc = "Дарует вам «Пепельный проход» - заклинание, которое позволяет вам исчезнуть из реальности и переместиться на небольшое расстояние, пройдя сквозь любые стены. \
+			При усиленном заклинании избавит вас от оглушения и оков, а также увеличит радиус действия."
+	gain_text = "Он знал, как ходить между мирами."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 2
 	drafting_tier = 5
 
 /datum/heretic_knowledge/spell/fire_blast
-	name = "Volcano Blast"
-	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
-		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target. \
-		When empowered, has instant cast time and blasts enemies with more flames."
-	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
+	name = "Взрыв вулкана"
+	desc = "Дарует вам «Взрыв вулкана» - заклинание, которое после короткой зарядки выстреливает лучом энергии \
+		в ближайшего врага, поджигая и обжигая его. Если они не потушат себя, \
+		луч продолжит движение к другой цели. \
+		При усилении не имеет зарядки и выстреливает большим количеством пламени."
+	gain_text = "Ни один огонь не был достаточно горячим, чтобы разжечь их. Ни один огонь не был достаточно ярким, чтобы спасти их. Ни один огонь не вечен."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 2
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/armor/ash
-	desc = "Allows you to transmute a table (or a suit), a mask and a match to create a scorched mantle. \
-		It provides completes protection from fire, and is able to produce more flames passively. \
-		When you have enough fire, you may cast empowered versions of your ashen spells. \
-		Acts as a focus while hooded."
-	gain_text = "The Watch remain as they fell, crumbling away from sight. \
-			Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
+	name = "Выжженная мантия"
+	desc = "Позволяет трансмутировать стол (или костюм), маску и спичку, чтобы создать Выжженную мантию. \
+		Она обеспечивает полную защиту от огня и способна пассивно генерировать больше огненных зарядов. \
+		Когда у вас будет достаточно огня, вы сможете использовать усиленные версии своих пепельных заклинаний. \
+		Позволяет фокусироваться, находясь в капюшоне."
+	gain_text = "Стражи остаются там, где упали, и исчезают из виду. \
+			И всё же ветер, гуляющий по городу, зовёт их обратно на службу, в воздух поднимается пыль, а силуэт павшего растворяется в дымке."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
 	research_tree_icon_state = "ash_armor"
 	required_atoms = list(
@@ -124,11 +125,11 @@
 	)
 
 /datum/heretic_knowledge/mad_mask
-	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
-		It can also be forced onto a heathen, to make them unable to take it off..."
-	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
+	name = "Маска Безумия"
+	desc = "Позволяет трансмутировать любую маску, четыре свечи, станбатон и печень, чтобы создать маску Безумия. \
+		Маска вселяет страх в язычников, которые становятся ее свидетелями, вызывая у них потерю стамины, галлюцинации и безумие. \
+		Его также можно насильно надеть на язычника, чтобы он не смог его снять..."
+	gain_text = "Ночной Дозорный был потерян. Так считал Дозор. И все же он ходил по миру, незамеченный массами."
 	required_atoms = list(
 		/obj/item/organ/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
@@ -141,10 +142,10 @@
 	research_tree_icon_state = "mad_mask"
 
 /datum/heretic_knowledge/blade_upgrade/ash
-	name = "Fiery Blade"
-	desc = "Your blade now lights enemies ablaze on attack."
-	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
-		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
+	name = "Огненный клинок"
+	desc = "Ваш клинок теперь поджигает врагов при атаке."
+	gain_text = "Он вернулся, с клинком в руке, он размахивал и размахивал, когда пепел падал с неба. \
+		Его город, люди, за которыми он поклялся наблюдать... и он наблюдал, пока все они сгорали дотла."
 
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -158,32 +159,32 @@
 	target.ignite_mob()
 
 /datum/heretic_knowledge/spell/flame_birth
-	name = "Nightwatcher's Rebirth"
-	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
-		If any victims afflicted are in critical condition, they will also instantly die."
-	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
-		The Nightwatcher was a particular man, always watching."
+	name = "Перерождение Ночного Дозорного"
+	desc = "Дарует вам «Прерождение Ночного Дозорного» - заклинание, которое тушит вас \
+		и обжигает всех ближайших язычников, которые в данный момент горят, исцеляя вас за каждую пораженную цель. \
+		Если цель находится в критическом состоянии, она мгновенно умрёт."
+	gain_text = "Огонь был неизбежным, и все же жизнь оставалась в его обугленном теле. \
+		Ночной дозорный был конкретным человеком, всегда бдительным."
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 2
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/ash_final
-	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
-		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		Some ashen spells you already knew will be empowered as well. \
-		You will also become immune to flames, space, and similar environmental hazards."
-	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
-		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
-		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
+	name = "Ритуал Пепельного Лорда"
+	desc = "Ритуал вознесения Пути пепла. \
+		Принесите 3 горящих трупа или хаска к руне трансмутации, чтобы завершить ритуал. \
+		После завершения вы становитесь предвестником пламени и получаете две способности. \
+		«Каскад», который вызывает массивное, растущее огненное кольцо вокруг вас, \
+		и «Клятва пламени», заставляющая вас пассивно создавать кольцо пламени, во время передвижения. \
+		Некоторые известные заклинания пепла также будут усилены. \
+		У вас также появится иммунитет к огню, космосу и подобным опасностям окружающей среды."
+	gain_text = "Дозор мертв, и Ночной Дозорный сгорел вместе с ним. И все же его огонь горит вечно, \
+		ибо он принес человечеству обряд! Его взгляд продолжается, и теперь я един с пламенем, \
+		УЗРИТЕ МОЕ ВОЗНЕСЕНИЕ, ПЕПЕЛЬНЫЙ ФОНАРЬ ВОСПЛАМЕНИТСЯ ВНОВЬ!"
 
 	ascension_achievement = /datum/award/achievement/misc/ash_ascension
-	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_text = "%SPOOKY% Бойтесь пламени, ибо Пепельный Лорд, %NAME%, вознесся! Пламя поглотит всех! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(

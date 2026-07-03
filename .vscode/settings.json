@@ -19,11 +19,73 @@
 		"editor.formatOnSave": true,
 		"editor.rulers": [80]
 	},
+	"[toml]": {
+		"editor.defaultFormatter": "tombi-toml.tombi",
+		"editor.formatOnSave": true
+	},
 	"workbench.editorAssociations": {
 		"*.dmi": "dmiEditor.dmiEditor"
 	},
 	"search.exclude": {
 		"**/node_modules": true
 	},
-	"Lua.diagnostics.enable": false
+	"Lua.diagnostics.enable": false,
+	"logFileHighlighter.customPatterns": [
+		{
+			"pattern": "(GAME: )?(RUNTIME|DYNAMIC: FAIL|SUSPICIOUS_LOGINS|ADMINPRIVATE): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#FF0000",
+			"fontStyle": "bold"
+		},
+		{
+			"pattern": "(GAME: )?(RUNTIME|DYNAMIC: FAIL): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"background": "#550000"
+		},
+		{
+			"pattern": "(GAME: )?ADMIN(: (Announce|PRIVATE|PRIVATE-ASAY|PRIVATE: PM)?)?: .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#FF8000"
+		},
+		{
+			"pattern": "(GAME: )?GAME-ACCESS(: (Login|Logout|Mob Login)?): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#FFB84D"
+		},
+		{
+			"pattern": "(GAME: )?(DEBUG-(MAPPING|MOBTAG: TAG)|CAVE-GENERATION|CONFIG|ECONOMY|Station Trait): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#FFD700"
+		},
+		{
+			"pattern": "(GAME: )?(HREF-TGUI|HREF|MANIFEST|MECHA|PAPER|PDA): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#0099CC"
+		},
+		{
+			"pattern": "(GAME: )?(SHUTTLE|SIGNAL|SILICON(: (CYBORG|LAW)?)?|SILO|TRANSPORT(: (PE8VN|Sub|TC|VkLiD)?)?|TOOL|TELECOMMS): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#14A833"
+		},
+		{
+			"pattern": "(GAME: )?(UPLINK(-CHANGELING|-HERETIC)?|SPEECH-INDICIATOR|ATTACK): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#AC2EA1"
+		},
+		{
+			"pattern": "(GAME: )?(RU_NAMES_SUGGEST|VIRUS|TARGET-ZONE-SWITCH): .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#A8732B"
+		},
+		{
+			"pattern": "(GAME: )?GAME-OOC: .+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#8888DD"
+		},
+		{
+			"pattern": "GAME:(?! [\\w-]+:).+?(?=\n(\\[|$))",
+			"patternFlags": "s",
+			"foreground": "#666666"
+		}
+	]
 }

@@ -1,0 +1,8 @@
+[chisel]
+nominative = "долото"
+genitive = "долота"
+dative = "долоту"
+accusative = "долото"
+instrumental = "долотом"
+prepositional = "долоте"
+gender = "neuter"

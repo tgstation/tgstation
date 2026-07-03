@@ -1,0 +1,8 @@
+[labcoat]
+nominative = "лабораторный халат"
+genitive = "лабораторного халата"
+dative = "лабораторному халату"
+accusative = "лабораторный халат"
+instrumental = "лабораторным халатом"
+prepositional = "лабораторном халате"
+gender = "male"

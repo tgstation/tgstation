@@ -1,0 +1,30 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/machinery/recharger{
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/recharger{
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"F" = (
+/obj/structure/table,
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/sledgehammer/tactical{
+	pixel_y = 3
+	},
+/obj/item/sledgehammer/tactical{
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+
+(1,1,1) = {"
+F
+a
+"}

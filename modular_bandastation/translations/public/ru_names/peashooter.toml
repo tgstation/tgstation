@@ -1,0 +1,8 @@
+[peashooter]
+nominative = "горохострел"
+genitive = "горохострела"
+dative = "горохострелу"
+accusative = "горохострел"
+instrumental = "горохострелом"
+prepositional = "горохостреле"
+gender = "male"

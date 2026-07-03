@@ -1,0 +1,593 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
+"d" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"h" = (
+/turf/closed/wall,
+/area/station/security/mechbay)
+"i" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"j" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Firing Range"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"k" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"l" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/office)
+"m" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/security_officer,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"n" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"o" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
+"p" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
+"r" = (
+/turf/closed/wall/r_wall,
+/area/station/security/mechbay)
+"s" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"u" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
+"v" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/office)
+"w" = (
+/turf/open/floor/iron,
+/area/station/security/range)
+"x" = (
+/turf/open/space/basic,
+/area/space)
+"y" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"z" = (
+/obj/machinery/door/poddoor/shuttledock{
+	checkdir = 8
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/plating,
+/area/station/security/office)
+"A" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/station/security/office)
+"B" = (
+/obj/item/gun/energy/laser/carbine/practice{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/gun/energy/laser/practice{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/laser/practice{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"C" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"D" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/space/basic,
+/area/space/nearstation)
+"E" = (
+/obj/item/target,
+/obj/item/target,
+/obj/item/target/alien,
+/obj/item/target/alien,
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/syndicate,
+/obj/item/target/syndicate,
+/obj/structure/closet/crate/secure{
+	desc = "A secure crate containing various materials for building a customised test-site.";
+	name = "Firing Range Gear Crate";
+	req_access = list("security")
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Firing Range"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"F" = (
+/turf/closed/wall/r_wall,
+/area/station/security/range)
+"I" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/range)
+"J" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"L" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/table,
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"M" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/security/range)
+"N" = (
+/turf/closed/wall/r_wall,
+/area/station/security/office)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"Q" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/office)
+"R" = (
+/obj/structure/sign/warning/docking/directional/west,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
+"S" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"T" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 4;
+	height = 5;
+	name = "SS13: Gamma Armory";
+	shuttle_id = "gamma_home";
+	width = 9
+	},
+/turf/open/space/basic,
+/area/space)
+"U" = (
+/obj/item/target/syndicate,
+/obj/structure/training_machine,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron,
+/area/station/security/range)
+"V" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Firing Range"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"W" = (
+/turf/closed/wall,
+/area/station/security/range)
+"X" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/range)
+"Z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
+
+(1,1,1) = {"
+D
+u
+u
+i
+i
+i
+u
+u
+u
+i
+D
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+i
+x
+x
+x
+x
+x
+x
+x
+x
+x
+i
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+u
+x
+x
+x
+x
+x
+x
+x
+x
+x
+i
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+u
+x
+x
+x
+x
+x
+x
+x
+x
+x
+i
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+u
+x
+x
+x
+x
+x
+x
+x
+x
+x
+i
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+i
+x
+x
+x
+x
+T
+x
+x
+x
+x
+i
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+D
+i
+u
+N
+N
+z
+N
+N
+N
+N
+N
+N
+N
+N
+a
+"}
+(8,1,1) = {"
+x
+x
+x
+l
+R
+p
+p
+A
+p
+b
+p
+p
+p
+A
+p
+"}
+(9,1,1) = {"
+x
+x
+x
+l
+v
+Q
+Q
+Q
+Q
+Q
+Q
+Z
+Z
+o
+Z
+"}
+(10,1,1) = {"
+x
+x
+x
+F
+W
+I
+W
+W
+I
+W
+W
+j
+W
+h
+a
+"}
+(11,1,1) = {"
+x
+x
+x
+F
+S
+g
+g
+g
+g
+d
+L
+s
+C
+h
+a
+"}
+(12,1,1) = {"
+x
+x
+x
+F
+n
+U
+w
+w
+w
+V
+y
+m
+M
+h
+a
+"}
+(13,1,1) = {"
+x
+x
+x
+F
+k
+O
+O
+O
+O
+X
+J
+B
+E
+h
+a
+"}
+(14,1,1) = {"
+x
+x
+x
+F
+F
+I
+F
+F
+I
+F
+F
+F
+F
+r
+a
+"}
+(15,1,1) = {"
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+r
+a
+"}
+(16,1,1) = {"
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+x
+r
+a
+"}

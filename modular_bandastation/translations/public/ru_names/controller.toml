@@ -1,0 +1,8 @@
+[controller]
+nominative = "контроллер"
+genitive = "контроллера"
+dative = "контроллеру"
+accusative = "контроллер"
+instrumental = "контроллером"
+prepositional = "контроллере"
+gender = "male"

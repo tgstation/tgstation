@@ -159,7 +159,7 @@ function ShoppingTab(props) {
                 </Table.Cell>
                 <Table.Cell fontSize="10px" collapsing textAlign="right">
                   <Tooltip
-                    content={`Costs ${item.cost} ${credit_type} per order`}
+                    content={`Стоимость ${item.cost} ${credit_type} заказа`}
                     position="top"
                   >
                     {item.cost} <CreditIcon credit_type={credit_type} />
@@ -233,17 +233,17 @@ function CheckoutTab(props) {
           <Table>
             <Table.Row>
               <Table.Cell header colSpan={3} textAlign="center" color="label">
-                Checkout list:
+                Список покупок:
               </Table.Cell>
             </Table.Row>
             {!checkout_list.length && (
               <>
                 <Box align="center" mt="15%" fontSize="40px">
-                  Nothing!
+                  Ничего!
                 </Box>
                 <br />
                 <Box align="center" mt={2} fontSize="15px">
-                  (Go order something, will ya?)
+                  (Закажем чего, а?)
                 </Box>
               </>
             )}
@@ -295,13 +295,13 @@ function CheckoutTab(props) {
                   disabled={total_cargo_cost < cargo_value}
                   tooltip={
                     total_cargo_cost < cargo_value
-                      ? `Total must be above or equal to ${cargo_value}`
+                      ? `Общая сумма должна быть больше или равна ${cargo_value}`
                       : purchase_tooltip
                   }
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
                 >
-                  Purchase: {total_cargo_cost}{' '}
+                  Покупки: {total_cargo_cost}{' '}
                   <CreditIcon credit_type={credit_type} color="white" />
                 </Button>
               </Stack.Item>
@@ -313,12 +313,12 @@ function CheckoutTab(props) {
                 color="yellow"
                 disabled={total_cost <= 0}
                 tooltip={
-                  total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
+                  total_cost <= 0 ? 'Закажите хотя бы 1 предмет' : express_tooltip
                 }
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
               >
-                Express: {total_cost * express_cost_multiplier}{' '}
+                Экспресс: {total_cost * express_cost_multiplier}{' '}
                 <CreditIcon credit_type={credit_type} color="black" />
               </Button>
             </Stack.Item>
@@ -374,7 +374,7 @@ export function ProduceConsole(props) {
                         icon="cart-plus"
                         onClick={() => setTabIndex(Tab.Shopping)}
                       >
-                        Shopping
+                        Покупки
                       </Button>
                     </Stack.Item>
                     <Stack.Item grow>
@@ -385,7 +385,7 @@ export function ProduceConsole(props) {
                         icon="dollar-sign"
                         onClick={() => setTabIndex(Tab.Checkout)}
                       >
-                        Checkout
+                        Оплата
                       </Button>
                     </Stack.Item>
                   </Stack>
@@ -397,7 +397,7 @@ export function ProduceConsole(props) {
                         color={condensed ? 'green' : 'red'}
                         onClick={() => setCondensed(!condensed)}
                       >
-                        {condensed ? 'Expand' : 'Condense'}
+                        {condensed ? 'Расширить' : 'Сжать'}
                       </Button>
                     </Stack.Item>
                     <Stack.Item>

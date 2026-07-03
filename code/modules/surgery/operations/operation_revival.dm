@@ -1,7 +1,7 @@
 /datum/surgery_operation/basic/revival
-	name = "shock brain"
-	rnd_name = "Brain Defibrillation (Revival)"
-	desc = "Use a defibrillator to shock a patient's brain back to life."
+	name = "Дефибрилляция мозга"
+	rnd_name = "Дефибриляция мозга (Оживление)"
+	desc = "Использование дефибриллятора, чтобы вернуть мозг пациента к жизни."
 	implements = list(
 		/obj/item/shockpaddles = 1,
 		/obj/item/melee/touch_attack/shock = 1,
@@ -23,7 +23,7 @@
 	return image(/obj/item/shockpaddles)
 
 /datum/surgery_operation/basic/revival/all_required_strings()
-	return ..() + list("the patient must be deceased", "the patient must be in a revivable state")
+	return ..() + list("пациент должен быть мёртв", "пациент должен быть в состоянии, пригодном для реанимации")
 
 /datum/surgery_operation/basic/revival/state_check(mob/living/patient)
 	if(patient.stat != DEAD)
@@ -61,19 +61,19 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You prepare to give [patient]'s brain the spark of life with [tool]."),
-		span_notice("[surgeon] prepares to give [patient]'s brain the spark of life with [tool]."),
-		span_notice("[surgeon] prepares to give [patient]'s brain the spark of life."),
+		span_notice("Вы готовитесь дать мозгу [patient] искру жизни с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] готовится дать мозгу [patient] искру жизни с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] готовится дать мозгу [patient] искру жизни."),
 	)
-	patient.notify_revival("Someone is trying to zap your brain.", source = patient)
+	patient.notify_revival("Кто‑то пытается дать разряд вашему мозгу.", source = patient)
 
 /datum/surgery_operation/basic/revival/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You successfully shock [patient]'s brain with [tool]..."),
-		span_notice("[surgeon] sends a powerful shock to [patient]'s brain with [tool]..."),
-		span_notice("[surgeon] sends a powerful shock to [patient]'s brain..."),
+		span_notice("Вам удаётся успешно ударить мозг [patient] разрядом с помощью [tool.declent_ru(ACCUSATIVE)]..."),
+		span_notice("[surgeon] посылает мощный разряд в мозг [patient] с помощью [tool.declent_ru(ACCUSATIVE)]..."),
+		span_notice("[surgeon] посылает мощный разряд в мозг [patient]..."),
 	)
 	patient.grab_ghost()
 	patient.adjust_oxy_loss(-50)
@@ -88,7 +88,7 @@
 
 /// Called when you have been successfully raised from the dead
 /datum/surgery_operation/basic/revival/proc/on_revived(mob/living/surgeon, mob/living/patient)
-	patient.visible_message(span_notice("...[patient] wakes up, alive and aware!"))
+	patient.visible_message(span_notice("...[patient] приходит в себя - живой и в сознании!"))
 	patient.emote("gasp")
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID)) // Contrary to their typical hatred of resurrection, it wouldn't be very thematic if morbid people didn't love playing god
 		surgeon.add_mood_event("morbid_revival_success", /datum/mood_event/morbid_revival_success)
@@ -96,20 +96,20 @@
 
 /// Called when revival fails
 /datum/surgery_operation/basic/revival/proc/on_no_revive(mob/living/surgeon, mob/living/patient)
-	patient.visible_message(span_warning("...[patient.p_they()] convulse[patient.p_s()], then lie[patient.p_s()] still."))
+	patient.visible_message(span_warning("...[patient.p_they()] дёргает [patient.p_s()] в конвульсиях и замирает [patient.p_s()]."))
 	patient.adjust_organ_loss(ORGAN_SLOT_BRAIN, 50, 199) // MAD SCIENCE
 
 /datum/surgery_operation/basic/revival/on_failure(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You shock [patient]'s brain with [tool], but [patient.p_they()] don't react."),
-		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient.p_they()] don't react."),
-		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient.p_they()] don't react."),
+		span_warning("Вы бьёте мозг [patient] разрядом с помощью [tool.declent_ru(ACCUSATIVE)], но [patient.p_they()] никак не реагирует[patient.p_s()]."),
+		span_warning("[surgeon] бьёт мозг [patient] разрядом с помощью [tool.declent_ru(ACCUSATIVE)], но [patient.p_they()] никак не реагирует[patient.p_s()]."),
+		span_warning("[surgeon] бьёт мозг [patient] разрядом с помощью [tool.declent_ru(ACCUSATIVE)], но [patient.p_they()] никак не реагирует[patient.p_s()]."),
 	)
 
 /datum/surgery_operation/basic/revival/mechanic
-	name = "full system reboot"
+	name = "Полная перезагрузка системы"
 	required_biotype = MOB_ROBOTIC
 
 /datum/surgery_operation/basic/revival/mechanic/brain_check(obj/item/organ/brain/brain)

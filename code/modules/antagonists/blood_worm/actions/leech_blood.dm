@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech
-	name = "Leech Blood"
-	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on reagent containers like blood packs. Leeching will be canceled if you do any other actions."
+	name = "Высасывание крови"
+	desc = "Агрессивно захватываете жертву зубами и высасываете из неё кровь. Также работает с контейнерами, реагентами (пакеты для крови) и животными. Другие действия прерывают высасывание."
 
 	button_icon_state = "leech_blood"
 
@@ -41,10 +41,10 @@
 	if (!ismovable(target))
 		return FALSE
 	if (!owner.Adjacent(target))
-		target.balloon_alert(owner, "too far away!")
+		target.balloon_alert(owner, "слишком далеко!")
 		return FALSE
 	if (!target.IsReachableBy(owner))
-		target.balloon_alert(owner, "can't reach!")
+		target.balloon_alert(owner, "не достать!")
 		return FALSE
 
 	// If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
@@ -55,7 +55,7 @@
 	else if (is_reagent_container(target))
 		leech_container(owner, target)
 	else
-		target.balloon_alert(owner, "can't leech from this!")
+		target.balloon_alert(owner, "не можете питаться этим!")
 
 	return TRUE // Prevents biting.
 
@@ -64,13 +64,13 @@
 		return
 
 	leech.visible_message(
-		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
-		self_message = span_danger("You start trying to bite into \the [target]!"),
+		message = span_danger("[leech.declent_ru(NOMINATIVE)] пытается вгрызться в [target.declent_ru(ACCUSATIVE)]!"),
+		self_message = span_danger("Вы пытаетесь вгрызться в [target.declent_ru(ACCUSATIVE)]!"),
 		ignored_mobs = list(target)
 	)
 
 	target.show_message(
-		msg = span_userdanger("\The [leech] start[leech.p_s()] trying to bite into you!"),
+		msg = span_userdanger("[leech.declent_ru(NOMINATIVE)] пытается вас укусить!"),
 		type = MSG_VISUAL
 	)
 
@@ -79,8 +79,8 @@
 	if (!do_after(leech, leech_grab_delay, target, extra_checks = CALLBACK(src, PROC_REF(leech_living_start_check), leech, target)))
 		return
 
-	if (leech.pulling != target && leech.grab(target) != GRAB_SUCCESS)
-		target.balloon_alert(leech, "unable to grab!")
+	if (leech.pulling != target && !leech.grab(target))
+		target.balloon_alert(leech, "не выходит захватить!")
 		return
 
 	if (leech.grab_state < GRAB_AGGRESSIVE)
@@ -99,16 +99,16 @@
 	RegisterSignal(target, COMSIG_MOB_LOGOUT, PROC_REF(incapacitate_leech_living_target))
 
 	leech.visible_message(
-		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
-		self_message = span_danger("You bite into \the [target]!"),
-		blind_message = span_hear("You hear a bite, followed by a sickening crunch!"),
+		message = span_danger("[leech.declent_ru(NOMINATIVE)] жадно вгрызается в [target.declent_ru(ACCUSATIVE)]!"),
+		self_message = span_danger("Вы вгрызаетесь в [target.declent_ru(ACCUSATIVE)]!"),
+		blind_message = span_hear("Вы слышите звук укуса, за которым следует отвратительный хруст!"),
 		ignored_mobs = list(target)
 	)
 
 	target.show_message(
-		msg = span_userdanger("\The [leech] bite[leech.p_s()] into you!"),
+		msg = span_userdanger("[leech.declent_ru(NOMINATIVE)] вгрызается в вас!"),
 		type = MSG_VISUAL,
-		alt_msg = span_userdanger("You feel something bite into you!"),
+		alt_msg = span_userdanger("Вы чувствуете, как что-то вгрызается в тебя!"),
 		alt_type = MSG_AUDIBLE
 	)
 
@@ -143,22 +143,22 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0)
-		target.balloon_alert(leech, "no blood!")
+		target.balloon_alert(leech, "нет крови!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
-		target.balloon_alert(leech, "occupied by our kin!")
+		target.balloon_alert(leech, "занято нашим сородичем!")
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0)
-		target.balloon_alert(leech, "no more blood!")
+		target.balloon_alert(leech, "недостаточно крови!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
-		target.balloon_alert(leech, "occupied by our kin!")
+		target.balloon_alert(leech, "занято нашим сородичем!")
 		return FALSE
 	if (!leech.Adjacent(target) || leech.pulling != target || leech.grab_state < GRAB_AGGRESSIVE)
-		target.balloon_alert(leech, "grab lost!")
+		target.balloon_alert(leech, "захват потерян!")
 		return FALSE
 	return TRUE
 
@@ -175,8 +175,8 @@
 		return
 
 	leech.visible_message(
-		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
-		self_message = span_danger("You start trying to bite into \the [target]!")
+		message = span_danger("[leech.declent_ru(NOMINATIVE)] пытается вгрызться в [target.declent_ru(ACCUSATIVE)]!"),
+		self_message = span_danger("Вы пытаетесь вгрызться в [target.declent_ru(ACCUSATIVE)]!")
 	)
 
 	leech.changeNext_move(CLICK_CD_CLICK_ABILITY)
@@ -185,9 +185,9 @@
 		return
 
 	leech.visible_message(
-		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
-		self_message = span_danger("You bite into \the [target]!"),
-		blind_message = span_hear("You hear a bite!"),
+		message = span_danger("[leech.declent_ru(NOMINATIVE)] вгрызается в [target.declent_ru(ACCUSATIVE)]!"),
+		self_message = span_danger("Вы вгрызаетесь в [target.declent_ru(ACCUSATIVE)]!"),
+		blind_message = span_hear("Вы слышите звук укуса!"),
 		ignored_mobs = list(target)
 	)
 
@@ -235,13 +235,13 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 	if (!length(get_blood_in_container(target)))
 		if (feedback)
-			target.balloon_alert(leech, "no blood!")
+			target.balloon_alert(leech, "нет крови!")
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_active_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
 	if (!length(get_blood_in_container(target)))
-		target.balloon_alert(leech, "no more blood!")
+		target.balloon_alert(leech, "кровь закончилась!")
 		return FALSE
 	return TRUE
 

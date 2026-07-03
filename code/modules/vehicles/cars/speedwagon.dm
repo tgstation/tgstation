@@ -29,7 +29,7 @@
 		if(ismovable(bumped))
 			var/atom/movable/flying_debris = bumped
 			flying_debris.throw_at(get_edge_target_turf(bumped, dir), 4, 3)
-		visible_message(span_danger("[src] crashes into [bumped]!"))
+		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] врезается в [bumped.declent_ru(ACCUSATIVE)]!"))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	if(!ishuman(bumped))
 		return
@@ -39,7 +39,7 @@
 	rammed.apply_damage(rand(20,35), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(bumped, dir), 4, 3)
-		visible_message(span_danger("[src] crashes into [rammed]!"))
+		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] врезается в [rammed.declent_ru(ACCUSATIVE)]!"))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/sealed/car/speedwagon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)

@@ -172,6 +172,10 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		. += "[seperator]AUTOLOGIN"
 	if(rights & R_DBRANKS)
 		. += "[seperator]DBRANKS"
+	// BANDASTATION ADDITION START - Mentors
+	if(rights & R_MENTOR)
+		. += "[seperator]MENTOR"
+	// BANDASTATION ADDITION END - Mentors
 	if(!.)
 		. = "NONE"
 	return .

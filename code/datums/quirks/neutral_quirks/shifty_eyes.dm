@@ -1,8 +1,8 @@
 /datum/quirk/shifty_eyes
 	name = "Shifty Eyes"
-	desc = "Your eyes tend to wander all over the place, whether you mean to or not, causing people to sometimes think you're looking directly at them when you aren't."
+	desc = "Ваши глаза склонны блуждать по сторонам, независимо от того, хотите вы этого или нет, из-за чего люди иногда думают, что вы смотрите прямо на них, хотя это не так."
 	icon = FA_ICON_EYE
 	value = 0
-	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
+	medical_record_text = "Этот чертов урод пялился на меня весь осмотр. Я диагностирую это только потому, что это менее неловко, чем думать, что это было специально."
 	mob_trait = TRAIT_SHIFTY_EYES
 	mail_goodies = list(/obj/item/clothing/head/costume/papersack, /obj/item/clothing/head/costume/papersack/smiley)

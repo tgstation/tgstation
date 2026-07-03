@@ -7,14 +7,14 @@
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/magic/lumiphobia
-	name = "Lumiphobia"
-	desc = "Patient has an inexplicable adverse reaction to light."
-	scan_desc = "light hypersensitivity"
-	symptoms = "Exhibits extreme discomfort and adverse reactions when exposed to bright light sources, \
-		and will go to great lengths to avoid illuminated areas. \
-		This sensitivity can lead to skin irritation, similar to that of a severe sunburn."
-	gain_text = span_warning("You feel a craving for darkness.")
-	lose_text = span_notice("Light no longer bothers you.")
+	name = "Люмифобия"
+	desc = "У пациента необъяснимая побочная реакция на свет."
+	scan_desc = "светочувствительность"
+	symptoms = "Испытывает сильный дискомфорт и выраженные негативные реакции при воздействии ярких источников света, \
+		и готов предпринимать значительные усилия, чтобы избегать освещённых зон. \
+		Такая чувствительность может приводить к раздражению кожи, похожему на сильный солнечный ожог."
+	gain_text = span_warning("Вы чувствуете тягу к темноте.")
+	lose_text = span_notice("Свет больше не беспокоит вас.")
 	/// Cooldown to prevent warning spam
 	COOLDOWN_DECLARE(damage_warning_cooldown)
 	var/next_damage_warning = 0
@@ -29,18 +29,18 @@
 		return
 
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))
-		to_chat(owner, span_warning("<b>The light burns you!</b>"))
+		to_chat(owner, span_warning("<b>Свет обжигает вас!</b>"))
 		COOLDOWN_START(src, damage_warning_cooldown, 10 SECONDS)
 	owner.take_overall_damage(burn = 1.5 * seconds_per_tick)
 
 /datum/brain_trauma/magic/poltergeist
-	name = "Poltergeist"
-	desc = "Patient appears to be targeted by a violent invisible entity."
-	scan_desc = "paranormal activity"
-	symptoms = "Experiences frequent and unprovoked physical disturbances in their immediate vicinity, \
-		such as objects being thrown or moved without any apparent cause."
-	gain_text = span_warning("You feel a hateful presence close to you.")
-	lose_text = span_notice("You feel the hateful presence fade away.")
+	name = "Полтергейст"
+	desc = "Пациент, похоже, подвергается нападению невидимой агрессивной сущности."
+	scan_desc = "паранормальная активность"
+	symptoms = "Испытывает частые и ничем не спровоцированные физические нарушения в непосредственной близости, \
+		например, предметы могут быть брошены или перемещены без какой-либо очевидной причины."
+	gain_text = span_warning("Вы чувствуете ненавистное присутствие рядом с собой.")
+	lose_text = span_notice("Вы чувствуете, как ненавистное присутствие исчезает.")
 
 /datum/brain_trauma/magic/poltergeist/on_life(seconds_per_tick)
 	..()
@@ -59,13 +59,13 @@
 		throwing.throw_at(owner, 8, 2)
 
 /datum/brain_trauma/magic/antimagic
-	name = "Athaumasia"
-	desc = "Patient is completely inert to magical forces."
-	scan_desc = "thaumic blank"
-	symptoms = "Exhibits a complete immunity to effects unexplainable by conventional science, \
-		such as the abilities demonstrated by members of the Wizard Federation."
-	gain_text = span_notice("You realize that magic cannot be real.")
-	lose_text = span_notice("You realize that magic might be real.")
+	name = "Атаумазия"
+	desc = "Пациент совершенно невосприимчив к магическим силам."
+	scan_desc = "таумическая пустота"
+	symptoms = "Проявляет полную невосприимчивость к эффектам, необъяснимым с точки зрения традиционной науки, \
+		таким как способности, демонстрируемые членами Федерации магов."
+	gain_text = span_notice("Вы понимаете, что магия не может быть реальной.")
+	lose_text = span_notice("Вы понимаете, что магия может быть реальной.")
 
 /datum/brain_trauma/magic/antimagic/on_gain()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
@@ -76,14 +76,14 @@
 	..()
 
 /datum/brain_trauma/magic/stalker
-	name = "Stalking Phantom"
-	desc = "Patient is stalked by a phantom only they can see."
-	scan_desc = "extra-sensory paranoia"
-	symptoms = "Feels an unshakable sensation of being watched or pursued by an unseen entity, \
-		leading to heightened anxiety, paranoia, and occasional hallucinations of a ghostly figure in their vicinity. \
-		Extreme cases may even result in physical harm inflicted upon the patient by a seemingly invisible force."
-	gain_text = span_warning("You feel like something wants to kill you...")
-	lose_text = span_notice("You no longer feel eyes on your back.")
+	name = "Преследующий призрак"
+	desc = "Пациента преследует призрак, видимый только ему."
+	scan_desc = "экстрасенсорная паранойя"
+	symptoms = "Испытывает неотступное ощущение, будто за ним наблюдают или его преследует невидимая сущность, \
+		что приводит к повышенной тревожности, паранойе и периодическим галлюцинациям призрачной фигуры поблизости. \
+		В крайних случаях это может даже приводить к физическому вреду, наносимому пациенту, по-видимому, невидимой силой."
+	gain_text = span_warning("Вы чувствуете себя так, словно что-то хочет убить вас...")
+	lose_text = span_notice("Вы больше не чувствуете, что кто-то смотрит вам в спину.")
 	/// Type of stalker that is chasing us
 	var/stalker_type = /obj/effect/client_image_holder/stalker_phantom
 	/// Reference to the stalker that is chasing us
@@ -119,7 +119,7 @@
 
 	if(get_dist(owner, stalker) <= 1)
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50)
-		owner.visible_message(span_warning("[owner] is torn apart by invisible claws!"), span_userdanger("Ghostly claws tear your body apart!"))
+		owner.visible_message(span_warning("[declent_ru(owner, GENITIVE)] разорвало на части невидимыми когтями!"), span_userdanger("Призрачные когти разрывают ваше тело на части!"))
 		owner.take_bodypart_damage(rand(20, 45), wound_bonus=CANT_WOUND)
 	else if(SPT_PROB(30, seconds_per_tick))
 		stalker.forceMove(get_step_towards(stalker, owner))
@@ -136,7 +136,7 @@
 
 /obj/effect/client_image_holder/stalker_phantom
 	name = "???"
-	desc = "It's coming closer..."
+	desc = "Оно приближается..."
 	image_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	image_state = "curseblob"
 

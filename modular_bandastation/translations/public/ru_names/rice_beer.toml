@@ -1,0 +1,8 @@
+["rice beer"]
+nominative = "рисовое пиво"
+genitive = "рисового пива"
+dative = "рисовому пиву"
+accusative = "рисовое пиво"
+instrumental = "рисовым пивом"
+prepositional = "рисовом пиве"
+gender = "neuter"

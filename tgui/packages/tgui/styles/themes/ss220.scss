@@ -1,0 +1,127 @@
+.theme-ss220:root {
+  // Allow size animations
+  interpolate-size: allow-keywords;
+
+  // Preferences colors
+  --pref-background: hsl(from var(--color-base) h s calc(l - 2.5));
+  --comp-background: hsl(from var(--pref-background) h s calc(l - 2.5));
+  --comp-border: hsl(from var(--pref-background) h s calc(l + 7.5));
+
+  // Department colors
+  --color-security: oklch(0.533 0.155 25);
+  --color-justice: oklch(0.525 0.175 352.5);
+  --color-science: oklch(0.525 0.175 300);
+  --color-command: oklch(0.5 0.2 255);
+  --color-centcom: oklch(0.425 0.15 265);
+  --color-silicon: oklch(0.5 0.065 250);
+  --color-medical: oklch(0.55 0.1 225);
+  --color-service: oklch(0.55 0.135 150);
+  --color-engineering: oklch(0.6 0.125 75);
+  --color-cargo: oklch(0.6 0.085 75);
+
+  // Background colors
+  --color-base: hsl(var(--primary-hue), 30%, 15%);
+  --secondary-saturation: calc(s + 7.5);
+  --base-gradient-spread: 1;
+
+  // Base
+  --primary-hue: 202.5;
+  --primary-saturation: 55%;
+  --primary-lightness: 40%;
+  --color-text: hsl(var(--primary-hue), 7.5%, 95%);
+  --color-border-primary: var(--color-primary);
+  --color-border-secondary: hsl(
+    from var(--color-border-primary) h calc(s + 15) calc(l + 17.5)
+  );
+
+  // Components
+  --button-background-default: hsl(
+    from var(--color-primary) h calc(s - 5) calc(l - 2.5)
+  );
+  --dimmer-background: hsl(from var(--color-base) h s calc(l - 5) / 0.75);
+  --progress-bar-background: var(--input-background);
+  --input-background-lightness: 9;
+  --tooltip-background-lightness: 12.5;
+  --imagebutton-transparecy: 0.3;
+
+  :focus-visible {
+    outline: none;
+  }
+
+  .Modal {
+    padding: var(--space-m);
+  }
+
+  .Section {
+    &__content {
+      scrollbar-width: thin;
+    }
+
+    &--scrollable .Section__content {
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+    }
+  }
+
+  .Input,
+  .TextArea {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    transition-property: border-color, height;
+    transition-duration: var(--transition-time-medium);
+
+    &:hover:not(:focus, .Input--disabled) {
+      border-color: hsl(
+        from var(--input-border-color) h calc(s - 5) calc(l + 7.5)
+      );
+    }
+  }
+
+  .Dimmer {
+    backdrop-filter: var(--blur-medium);
+  }
+
+  &::selection {
+    background-color: var(--color-primary) !important;
+    color: var(--color-white) !important;
+    text-shadow:
+      1px 1px 0px hsla(0, 0%, 0%, 0.5),
+      2px 2px 4px hsla(0, 0%, 0%, 1) !important;
+  }
+
+  // Preferences toggle
+  .Toggle {
+    --toggle-size: 1.667em;
+    --toggle-size-border: calc(var(--toggle-size) * 0.1);
+    cursor: var(--cursor-pointer);
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--toggle-size) * 2 + var(--toggle-size-border) * 2);
+    height: var(--toggle-size);
+    background-color: var(--comp-background);
+    border: var(--toggle-size-border) solid var(--comp-border);
+    border-radius: var(--border-radius-medium);
+    transition: border-color var(--transition-time-medium);
+
+    &--checked {
+      --switch-transform: 100%;
+      --comp-border: var(--color-primary);
+    }
+
+    &__Switch {
+      aspect-ratio: 1 / 1;
+      width: var(--toggle-size);
+      background-color: var(--comp-border);
+      border-radius: var(--border-radius-tiny);
+      transition-property: transform, background-color;
+      transition-duration: var(--transition-time-medium);
+      transform: scale(0.6) translateX(var(--switch-transform, -100%));
+    }
+
+    &:hover .Toggle__Switch {
+      background-color: hsl(
+        from var(--comp-border) h s calc(l + var(--adjust-hover))
+      );
+    }
+  }
+}

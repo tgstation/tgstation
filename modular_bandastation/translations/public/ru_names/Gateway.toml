@@ -1,0 +1,8 @@
+[Gateway]
+nominative = "врата"
+genitive = "врат"
+dative = "вратам"
+accusative = "врата"
+instrumental = "вратами"
+prepositional = "вратах"
+gender = "plural"

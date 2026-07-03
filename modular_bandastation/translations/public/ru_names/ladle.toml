@@ -1,0 +1,8 @@
+[ladle]
+nominative = "поварёшка"
+genitive = "поварёшки"
+dative = "поварёшке"
+accusative = "поварёшку"
+instrumental = "поварёшкой"
+prepositional = "поварёшке"
+gender = "female"

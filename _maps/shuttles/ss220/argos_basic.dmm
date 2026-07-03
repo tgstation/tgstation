@@ -1,0 +1,916 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"ay" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/siding/dark/inner_corner{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"aJ" = (
+/turf/open/floor/glass/reinforced,
+/area/shuttle/argos)
+"cs" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron/dark,
+/area/shuttle/argos)
+"cP" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/rag{
+	pixel_x = 3;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = 9;
+	pixel_y = 17
+	},
+/obj/item/storage/box/matches{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/stack/spacecash/c1000{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/shuttle/argos)
+"cX" = (
+/obj/machinery/suit_storage_unit/centcom,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"dp" = (
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/argos)
+"dv" = (
+/turf/open/floor/plating,
+/area/shuttle/argos)
+"dK" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/argos)
+"ep" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"eq" = (
+/obj/structure/chair/comfy/corp{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"eN" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"gi" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"gr" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"hP" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	pixel_y = 9
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"ia" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/siding/dark/end,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"jn" = (
+/obj/structure/fake_stairs/directional/west{
+	color = "#6d6e73"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"jv" = (
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/argos)
+"jx" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"jV" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/argos)
+"kf" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/argos)
+"ks" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/argos)
+"kI" = (
+/obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/light/directional/south,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/argos)
+"kQ" = (
+/obj/effect/turf_decal/siding/dark/inner_corner{
+	dir = 1
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"lc" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"no" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/obj/machinery/fax/admin,
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"oh" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"pz" = (
+/obj/machinery/suit_storage_unit/centcom,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("cent_general")
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"qb" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/argos,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"qH" = (
+/obj/structure/chair/comfy/corp,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"st" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("cent_general")
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/argos)
+"sY" = (
+/obj/structure/closet/cabinet,
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"sZ" = (
+/obj/machinery/computer/operating,
+/obj/effect/turf_decal/siding/blue,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/argos)
+"th" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/argos)
+"tI" = (
+/turf/template_noop,
+/area/template_noop)
+"tU" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/shuttle/argos)
+"uA" = (
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/argos)
+"uB" = (
+/obj/structure/table/reinforced,
+/obj/item/implanter/mindshield{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/implanter/mindshield{
+	pixel_x = -6
+	},
+/obj/item/storage/box/trackimp{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/item/storage/box/chemimp{
+	pixel_x = 2;
+	pixel_y = 15
+	},
+/obj/item/storage/box/deathimp{
+	pixel_x = 7;
+	pixel_y = 15
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/siding/dark/inner_corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"uT" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"vu" = (
+/obj/structure/sign/poster/official/nanotrasen_logo,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/shuttle/argos)
+"vH" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"vM" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = -5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"wD" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/obj/structure/secure_safe/directional/east,
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"wW" = (
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"xl" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/surgery_tray/full/advanced,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -9;
+	pixel_y = 16
+	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/argos)
+"xt" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/computer/communications{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark/end,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"xI" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"yq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/jade,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
+/turf/template_noop,
+/area/shuttle/argos)
+"yx" = (
+/obj/structure/sign/poster/official/nanotrasen_logo,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/argos)
+"yB" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/stasis{
+	dir = 8
+	},
+/obj/structure/curtain,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 1
+	},
+/area/shuttle/argos)
+"yE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	name = "Argos Window Protector";
+	id = "argos_window"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/argos)
+"zb" = (
+/obj/machinery/modular_computer/preset/id/centcom,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"zL" = (
+/obj/machinery/computer/shuttle/argos,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"zU" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 4
+	},
+/area/shuttle/argos)
+"Am" = (
+/obj/structure/sink/directional/west,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/argos)
+"AQ" = (
+/obj/machinery/door/airlock/external,
+/obj/docking_port/mobile/argos,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/machinery/door/poddoor/ert{
+	id = "argos_exit";
+	name = "Argos Blast Door"
+	},
+/obj/machinery/button/door/indestructible{
+	pixel_x = -28;
+	id = "argos_exit";
+	name = "Argos Blast Door";
+	req_access = list("cent_general")
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"BE" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/argos)
+"CS" = (
+/obj/machinery/door/airlock/centcom,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"DA" = (
+/obj/structure/table/optable,
+/obj/item/tank/internals/anesthetic{
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/surgical_drapes,
+/obj/item/clothing/mask/breath/muzzle,
+/obj/effect/turf_decal/siding/blue,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/argos)
+"DW" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"EC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/shuttle/argos)
+"EE" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/argos)
+"EF" = (
+/obj/structure/table/wood,
+/obj/item/folder/blue{
+	pixel_x = -7
+	},
+/obj/item/folder/red{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/folder{
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/stamp/centcom{
+	pixel_x = 5
+	},
+/obj/item/stamp/granted{
+	pixel_x = 8
+	},
+/obj/item/stamp/denied{
+	pixel_x = 11
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"FO" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	req_access = list("cent_general")
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"Gd" = (
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"GK" = (
+/obj/machinery/sleeper/syndie/fullupgrade/nt{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/argos)
+"GZ" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/white/smooth_corner,
+/area/shuttle/argos)
+"JW" = (
+/obj/structure/table/wood/fancy/black,
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"Kf" = (
+/obj/structure/chair/comfy/corp{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"Lq" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/button/door/indestructible{
+	pixel_x = 6;
+	id = "argos_exit";
+	name = "Argos Blast Door";
+	req_access = list("cent_captain")
+	},
+/obj/machinery/button/door/indestructible{
+	pixel_x = -6;
+	id = "argos_window";
+	name = "Argos Window Protector";
+	req_access = list("cent_captain")
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"Lu" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/argos)
+"Nh" = (
+/obj/effect/turf_decal/siding/dark/inner_corner{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"Nx" = (
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"NB" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/machinery/door/poddoor/ert{
+	id = "argos_exit";
+	name = "Argos Blast Door"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/argos)
+"NJ" = (
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"NX" = (
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/argos)
+"Oh" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "prisoner transfer chair"
+	},
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	req_access = list("cent_general")
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/argos)
+"QY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/argos)
+"Rs" = (
+/obj/structure/dresser,
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/argos)
+"RF" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/siding/dark/inner_corner,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/argos)
+"TK" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/argos)
+"Ua" = (
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/shuttle/argos)
+"Ur" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "prisoner transfer chair"
+	},
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	req_access = list("cent_general")
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/argos)
+"VS" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/argos)
+"Wa" = (
+/obj/structure/chair/comfy/corp{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/shuttle/argos)
+"Wq" = (
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/argos)
+"Yj" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/medkit/tactical/premium{
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/tactical/premium{
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/tactical/premium{
+	pixel_y = 9
+	},
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen{
+	pixel_y = -4
+	},
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen,
+/obj/item/reagent_containers/hypospray/combat/nanites,
+/obj/item/reagent_containers/hypospray/combat/nanites{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 8
+	},
+/area/shuttle/argos)
+"YB" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating,
+/area/shuttle/argos)
+"ZW" = (
+/obj/machinery/vending/boozeomat,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/shuttle/argos)
+
+(1,1,1) = {"
+yE
+yE
+yE
+tU
+tU
+yE
+yE
+TK
+yE
+yE
+yE
+yE
+tU
+yq
+TK
+YB
+tI
+"}
+(2,1,1) = {"
+yE
+zL
+wW
+vH
+TK
+ep
+aJ
+ZW
+qH
+vM
+JW
+eq
+tU
+tU
+TK
+TK
+YB
+"}
+(3,1,1) = {"
+yE
+qb
+gr
+jn
+TK
+hP
+aJ
+cP
+Nx
+Wa
+Kf
+NJ
+TK
+pz
+cX
+tU
+YB
+"}
+(4,1,1) = {"
+yE
+jx
+Lq
+FO
+tU
+tU
+jv
+aJ
+Nx
+Nx
+Nx
+tU
+tU
+dK
+NX
+tU
+YB
+"}
+(5,1,1) = {"
+yE
+vu
+tU
+Gd
+QY
+tU
+oh
+ia
+tU
+cs
+TK
+tU
+Lu
+st
+tU
+tU
+tU
+"}
+(6,1,1) = {"
+kf
+EC
+yE
+Gd
+ao
+TK
+TK
+tU
+tU
+dp
+VS
+VS
+dp
+dp
+CS
+jV
+AQ
+"}
+(7,1,1) = {"
+kf
+EC
+yE
+Gd
+Gd
+uT
+Wq
+EE
+BE
+Wq
+Wq
+Wq
+Wq
+Wq
+CS
+dv
+NB
+"}
+(8,1,1) = {"
+yE
+yx
+TK
+xI
+TK
+TK
+ay
+Ua
+kQ
+tU
+TK
+th
+ks
+TK
+TK
+tU
+tU
+"}
+(9,1,1) = {"
+yE
+Nh
+xt
+Nx
+sY
+TK
+TK
+eN
+tU
+tU
+sZ
+uA
+GZ
+zU
+kI
+tU
+YB
+"}
+(10,1,1) = {"
+yE
+zb
+gi
+lc
+Rs
+TK
+uB
+wW
+Ur
+TK
+DA
+uA
+Yj
+yB
+GK
+tU
+YB
+"}
+(11,1,1) = {"
+yE
+no
+EF
+Nx
+wD
+TK
+RF
+DW
+Oh
+TK
+xl
+Am
+tU
+tU
+TK
+TK
+YB
+"}
+(12,1,1) = {"
+yE
+yE
+yE
+TK
+TK
+TK
+TK
+TK
+TK
+TK
+TK
+TK
+tU
+yq
+TK
+YB
+tI
+"}

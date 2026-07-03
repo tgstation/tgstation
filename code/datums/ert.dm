@@ -14,7 +14,7 @@
 	///Defines the color/alert code of the response team. Unused if a polldesc is defined.
 	var/code
 	///The mission given to this ERT type in their flavor text.
-	var/mission = "Assist the station."
+	var/mission = "Помогите станции."
 	///The number of players for consideration.
 	var/teamsize = 5
 	///The "would you like to play as XXX" message used when polling for players.

@@ -41,7 +41,7 @@
 	name = "Lesser Carp Rift"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "rift"
-	desc = "Open a rift through the carp stream, allowing passage to somewhere close by."
+	desc = "Открывает малый разлом карпов, который позволяет перемещаться на малое расстояние."
 	cooldown_time = 15 SECONDS
 	melee_cooldown_time = 0 SECONDS // Handled by rift
 	/// How far away can you place a rift?
@@ -57,7 +57,7 @@
 
 /datum/action/cooldown/mob_cooldown/lesser_carp_rift/proc/make_rift(atom/target_atom)
 	if (owner.Adjacent(target_atom))
-		owner.balloon_alert(owner, "too close!")
+		owner.balloon_alert(owner, "слишком близко!")
 		return FALSE
 
 	var/turf/owner_turf = get_turf(owner)
@@ -75,7 +75,7 @@
 		open_exit_turfs += potential_exit
 
 	if (!length(open_exit_turfs))
-		owner.balloon_alert(owner, "no exit!")
+		owner.balloon_alert(owner, "нет выхода!")
 		return FALSE
 	if (!target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		open_exit_turfs += target_turf

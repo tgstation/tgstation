@@ -42,6 +42,7 @@ const displayTypeMap = {
   request_nuke: 'NUKE CODE',
   request_fax: 'FAX',
   request_internet_sound: 'INTERNET SOUND',
+  request_ert: 'ERT REASON', // BANDASTATION ADDITION - START
 };
 
 export const RequestManager = (props) => {
@@ -174,6 +175,13 @@ const RequestControls = (props) => {
       {request.req_type === 'request_internet_sound' && (
         <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
       )}
+      {/** BANDASTATION ADDITION - START */}
+      {request.req_type === 'request_ert' && (
+        <Button onClick={() => act('requestert', { id: request.id })}>
+          ERT
+        </Button>
+      )}
+      {/** BANDASTATION ADDITION - END */}
     </div>
   );
 };

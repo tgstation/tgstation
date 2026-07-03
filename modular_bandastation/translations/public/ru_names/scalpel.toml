@@ -1,0 +1,8 @@
+[scalpel]
+nominative = "скальпель"
+genitive = "скальпеля"
+dative = "скальпелю"
+accusative = "скальпель"
+instrumental = "скальпелем"
+prepositional = "скальпеле"
+gender = "male"

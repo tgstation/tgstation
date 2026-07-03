@@ -3,7 +3,7 @@
 	filedesc = "AI Manager & Restorer"
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	program_open_overlay = "generic"
-	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
+	extended_desc = "Специальный инструмент для восстановления прошивки, способный восстанавливать поврежденные системы ИИ. Требуется прямое подключение к ИИ через слот интел-карты."
 	size = 12
 	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	download_access = list(ACCESS_RD)

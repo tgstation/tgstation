@@ -1,0 +1,147 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"e" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/specops)
+"f" = (
+/obj/machinery/computer/shuttle/specops{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"i" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"j" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/specops)
+"k" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/specops{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"p" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"r" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/specops)
+"F" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"K" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"M" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/specops)
+"O" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"T" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+"W" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile/specops,
+/turf/open/floor/plating,
+/area/shuttle/specops)
+"Z" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/specops)
+
+(1,1,1) = {"
+r
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+"}
+(2,1,1) = {"
+j
+j
+i
+i
+i
+i
+i
+k
+f
+M
+e
+"}
+(3,1,1) = {"
+W
+T
+d
+T
+d
+T
+d
+T
+F
+M
+e
+"}
+(4,1,1) = {"
+j
+j
+K
+Z
+T
+T
+Z
+O
+p
+M
+e
+"}
+(5,1,1) = {"
+r
+j
+j
+j
+s
+s
+j
+j
+j
+j
+e
+"}

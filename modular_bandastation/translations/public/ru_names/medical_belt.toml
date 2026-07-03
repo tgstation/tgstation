@@ -1,0 +1,8 @@
+["medical belt"]
+nominative = "медицинский пояс"
+genitive = "медицинского пояса"
+dative = "медицинскому поясу"
+accusative = "медицинский пояс"
+instrumental = "медицинским поясом"
+prepositional = "медицинском поясе"
+gender = "male"

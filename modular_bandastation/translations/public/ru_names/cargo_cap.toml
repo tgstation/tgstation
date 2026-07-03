@@ -1,0 +1,8 @@
+["cargo cap"]
+nominative = "кепка снабжения"
+genitive = "кепки снабжения"
+dative = "кепке снабжения"
+accusative = "кепку снабжения"
+instrumental = "кепкой снабжения"
+prepositional = "кепке снабжения"
+gender = "female"

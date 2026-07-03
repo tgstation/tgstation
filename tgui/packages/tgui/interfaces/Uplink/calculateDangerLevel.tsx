@@ -20,52 +20,52 @@ export type Rank = {
 export const ranks: Rank[] = [
   {
     minutesLessThan: 5,
-    title: 'None',
+    title: 'Отсутствует',
     gradient: badGradient,
   },
   {
     minutesLessThan: 10,
-    title: 'Miniscule',
+    title: 'Мизерная',
     gradient: normalGradient,
   },
   {
     minutesLessThan: 20,
-    title: 'Insignificant',
+    title: 'Несущественная',
     gradient: normalGradient,
   },
   {
     minutesLessThan: 30,
-    title: 'Low',
+    title: 'Низкая',
     gradient: goodGradient,
   },
   {
     minutesLessThan: 50,
-    title: 'Standard',
+    title: 'Стандартная',
     gradient: goodGradient,
   },
   {
     minutesLessThan: 70,
-    title: 'Moderate',
+    title: 'Умеренная',
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 90,
-    title: 'Significant',
+    title: 'Существенная',
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 110,
-    title: 'High',
+    title: 'Высокая',
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: 140,
-    title: 'Extreme',
+    title: 'Экстремальная',
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: -1,
-    title: 'Pinnacle',
+    title: 'Кульминация',
     gradient: bestGradient,
   },
 ];

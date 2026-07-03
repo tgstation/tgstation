@@ -1,0 +1,8 @@
+[Restrooms]
+nominative = "санузел"
+genitive = "санузла"
+dative = "санузлу"
+accusative = "санузел"
+instrumental = "санузлом"
+prepositional = "санузле"
+gender = "male"

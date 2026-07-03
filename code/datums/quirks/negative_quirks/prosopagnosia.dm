@@ -1,9 +1,9 @@
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
-	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
+	desc = "У вас психическое расстройство, из-за которого вы вообще не можете распознавать лица."
 	icon = FA_ICON_USER_SECRET
 	value = -4
-	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
+	medical_record_text = "Пациент страдает прозопагнозией и не может распознавать лица."
 	medical_symptom_text = "Unable to recognize familiar faces, often relying on alternative cues such as \
 		voice, clothing, identification, or context to identify individuals."
 	hardcore_value = 5

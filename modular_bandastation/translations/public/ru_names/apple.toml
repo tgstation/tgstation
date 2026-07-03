@@ -1,0 +1,8 @@
+[apple]
+nominative = "яблоко"
+genitive = "яблока"
+dative = "яблоку"
+accusative = "яблоко"
+instrumental = "яблоком"
+prepositional = "яблоке"
+gender = "neuter"

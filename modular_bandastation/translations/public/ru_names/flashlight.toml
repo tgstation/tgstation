@@ -1,0 +1,8 @@
+[flashlight]
+nominative = "фонарик"
+genitive = "фонарика"
+dative = "фонарику"
+accusative = "фонарик"
+instrumental = "фонариком"
+prepositional = "фонарике"
+gender = "male"

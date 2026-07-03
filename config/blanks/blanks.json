@@ -1,0 +1,366 @@
+[
+	{
+		"code": "NT-GENERAL",
+		"category": "Общие формы",
+		"name": "Бланк для любых целей",
+		"info": "markdown/nt_general.md"
+	},
+	{
+		"code": "NT-E-112",
+		"category": "Общие формы",
+		"name": "Экстренное Письмо",
+		"info": "markdown/nt_e_112.md"
+	},
+	{
+		"code": "NT-POD",
+		"category": "Общие формы",
+		"name": "Квитанция о продаже пода",
+		"info": "markdown/nt_pod_sale.md"
+	},
+	{
+		"code": "NT-COM-ACAP",
+		"category": "Главы станции",
+		"name": "Заявление о повышении главы отдела до и.о. капитана",
+		"info": "markdown/com/nt_com_acap.md"
+	},
+	{
+		"code": "NT-COM-ACOM",
+		"category": "Главы станции",
+		"name": "Заявление о повышении сотрудника до и.о. главы отдела",
+		"info": "markdown/com/nt_com_acom.md"
+	},
+	{
+		"code": "NT-COM-LCOM",
+		"category": "Главы станции",
+		"name": "Заявление об увольнении главы отделения",
+		"info": "markdown/com/nt_com_lcom.md"
+	},
+	{
+		"code": "NT-COM-OS",
+		"category": "Главы станции",
+		"name": "Отчёт об выполнении цели",
+		"info": "markdown/com/nt_com_os.md"
+	},
+	{
+		"code": "NT-COM-REQ",
+		"category": "Главы станции",
+		"name": "Запрос на поставку с Центрального командования",
+		"info": "markdown/com/nt_com_req.md"
+	},
+	{
+		"code": "NT-COM-ST",
+		"category": "Главы станции",
+		"name": "Отчёт о ситуации на станции",
+		"info": "markdown/com/nt_com_st.md"
+	},
+	{
+		"code": "NT-HR-00",
+		"category": "Отдел кадров",
+		"name": "Бланк заявления (Отдел кадров)",
+		"info": "markdown/hr/nt_hr_00.md"
+	},
+	{
+		"code": "NT-HR-01",
+		"category": "Отдел кадров",
+		"name": "Заявление о приеме на работу",
+		"info": "markdown/hr/nt_hr_01.md"
+	},
+	{
+		"code": "NT-HR-02",
+		"category": "Отдел кадров",
+		"name": "Заявление на смену должности",
+		"info": "markdown/hr/nt_hr_02.md"
+	},
+	{
+		"code": "NT-HR-03",
+		"category": "Отдел кадров",
+		"name": "Заявление об увольнении",
+		"info": "markdown/hr/nt_hr_03.md"
+	},
+	{
+		"code": "NT-HR-04",
+		"category": "Отдел кадров",
+		"name": "Заявление на выдачу новой ID карты",
+		"info": "markdown/hr/nt_hr_04.md"
+	},
+	{
+		"code": "NT-HR-05",
+		"category": "Отдел кадров",
+		"name": "Заявление на дополнительный доступ",
+		"info": "markdown/hr/nt_hr_05.md"
+	},
+	{
+		"code": "NT-HR-06",
+		"category": "Отдел кадров",
+		"name": "Лицензия на создание организации/отдела",
+		"info": "markdown/hr/nt_hr_06.md"
+	},
+	{
+		"code": "NT-HR-07",
+		"category": "Отдел кадров",
+		"name": "Разрешение на перестройку/перестановку",
+		"info": "markdown/hr/nt_hr_07.md"
+	},
+	{
+		"code": "NT-HR-08",
+		"category": "Отдел кадров",
+		"name": "Приказ на смену должности",
+		"info": "markdown/hr/nt_hr_08.md"
+	},
+	{
+		"code": "NT-HR-09",
+		"category": "Отдел кадров",
+		"name": "Приказ об увольнении",
+		"info": "markdown/hr/nt_hr_09.md"
+	},
+	{
+		"code": "NT-MD-01",
+		"category": "Медицинский отдел",
+		"name": "Постановление на поставку медикаментов",
+		"info": "markdown/md/nt_md_01.md"
+	},
+	{
+		"code": "NT-MD-02",
+		"category": "Медицинский отдел",
+		"name": "Отчёт о вскрытии",
+		"info": "markdown/md/nt_md_02.md"
+	},
+	{
+		"code": "NT-MD-03",
+		"category": "Медицинский отдел",
+		"name": "Постановление на изготовление химических препаратов",
+		"info": "markdown/md/nt_md_03.md"
+	},
+	{
+		"code": "NT-MD-04",
+		"category": "Медицинский отдел",
+		"name": "Сводка о вирусе",
+		"info": "markdown/md/nt_md_04.md"
+	},
+	{
+		"code": "NT-MD-05",
+		"category": "Медицинский отдел",
+		"name": "Отчет о психологическом состоянии",
+		"info": "markdown/md/nt_md_05.md"
+	},
+	{
+		"code": "NT-MD-VRR",
+		"category": "Медицинский отдел",
+		"name": "Запрос на распространение вируса",
+		"info": "markdown/md/nt_md_vrr.md"
+	},
+	{
+		"code": "NT-SEC-01",
+		"category": "Служба безопасности",
+		"name": "Свидетельские показания",
+		"info": "markdown/sec/nt_sec_01.md"
+	},
+	{
+		"code": "NT-SEC-02",
+		"category": "Служба безопасности",
+		"name": "Отчёт по результатам расследования",
+		"info": "markdown/sec/nt_sec_02.md"
+	},
+	{
+		"code": "NT-SEC-03",
+		"category": "Служба безопасности",
+		"name": "Заявление о краже",
+		"info": "markdown/sec/nt_sec_03.md"
+	},
+	{
+		"code": "NT-SEC-04",
+		"category": "Служба безопасности",
+		"name": "Заявление о причинении вреда здоровью или имуществу",
+		"info": "markdown/sec/nt_sec_04.md"
+	},
+	{
+		"code": "NT-SEC-05",
+		"category": "Служба безопасности",
+		"name": "Разрешение на оружие",
+		"info": "markdown/sec/nt_sec_05.md"
+	},
+	{
+		"code": "NT-SEC-06",
+		"category": "Служба безопасности",
+		"name": "Разрешение на присваивание канала связи",
+		"info": "markdown/sec/nt_sec_06.md"
+	},
+	{
+		"code": "NT-SEC-07",
+		"category": "Служба безопасности",
+		"name": "Лицензия на использование канала связи и владение дополнительным оборудованием",
+		"info": "markdown/sec/nt_sec_07.md"
+	},
+	{
+		"code": "NT-SEC-08",
+		"category": "Служба безопасности",
+		"name": "Лицензирование вооружения и экипировки для исполнения деятельности",
+		"info": "markdown/sec/nt_sec_08.md"
+	},
+	{
+		"code": "NT-SEC-09",
+		"category": "Служба безопасности",
+		"name": "Запрет на реанимацию",
+		"info": "markdown/sec/nt_sec_09.md"
+	},
+	{
+		"code": "NT-SEC-11",
+		"category": "Служба безопасности",
+		"name": "Ордер на обыск",
+		"info": "markdown/sec/nt_sec_11.md"
+	},
+	{
+		"code": "NT-SEC-21",
+		"category": "Служба безопасности",
+		"name": "Ордер на арест",
+		"info": "markdown/sec/nt_sec_21.md"
+	},
+	{
+		"code": "NT-LD-00",
+		"category": "Юридический отдел",
+		"name": "Бланк заявления (Юридический отдел)",
+		"info": "markdown/ld/nt_ld_00.md"
+	},
+	{
+		"code": "NT-LD-01",
+		"category": "Юридический отдел",
+		"name": "Судебный приговор",
+		"info": "markdown/ld/nt_ld_01.md"
+	},
+	{
+		"code": "NT-LD-02",
+		"category": "Юридический отдел",
+		"name": "Смертный приговор",
+		"info": "markdown/ld/nt_ld_02.md"
+	},
+	{
+		"code": "NT-LD-03",
+		"category": "Юридический отдел",
+		"name": "Заявление о нарушении СРП членом экипажа",
+		"info": "markdown/ld/nt_ld_03.md"
+	},
+	{
+		"code": "NT-LD-04",
+		"category": "Юридический отдел",
+		"name": "Заявление о нарушении СРП одним из отделов",
+		"info": "markdown/ld/nt_ld_04.md"
+	},
+	{
+		"code": "NT-LD-05",
+		"category": "Юридический отдел",
+		"name": "Отчет юриста",
+		"info": "markdown/ld/nt_ld_05.md"
+	},
+	{
+		"code": "NT-LD-06",
+		"category": "Юридический отдел",
+		"name": "Бланк жалоб юриста",
+		"info": "markdown/ld/nt_ld_06.md"
+	},
+	{
+		"code": "NT-RND-01",
+		"category": "Отдел исследований",
+		"name": "Отчет о странном предмете",
+		"info": "markdown/rnd/nt_rnd_01.md"
+	},
+	{
+		"code": "NT-RND-02",
+		"category": "Отдел исследований",
+		"name": "Заявление на киберизацию",
+		"info": "markdown/rnd/nt_rnd_02.md"
+	},
+	{
+		"code": "NT-RND-03",
+		"category": "Отдел исследований",
+		"name": "Заявление на получение и установку импланта",
+		"info": "markdown/rnd/nt_rnd_03.md"
+	},
+	{
+		"code": "NT-RND-04",
+		"category": "Отдел исследований",
+		"name": "Запрос о постройке меха",
+		"info": "markdown/rnd/nt_rnd_04.md"
+	},
+	{
+		"code": "NT-REQ-01",
+		"category": "Отдел снабжения",
+		"name": "Запрос на поставку",
+		"info": "markdown/sup/nt_req_01.md"
+	},
+	{
+		"code": "NT-SUP-01",
+		"category": "Отдел снабжения",
+		"name": "Регистрационная форма для подтверждения заказа",
+		"info": "markdown/sup/nt_sup_01.md"
+	},
+	{
+		"code": "NT-CENTCOM-00",
+		"category": "Центральное командование",
+		"name": "Официальный меморандум центрального командования",
+		"info": "markdown/centcom/nt_centcom_00.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-01",
+		"category": "Центральное командование",
+		"name": "КОНФИДЕНЦИАЛЬНАЯ ИНФОРМАЦИЯ - НАИВЫСШИЙ ПРИОРИТЕТ",
+		"info": "markdown/centcom/nt_centcom_01.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-02",
+		"category": "Центральное командование",
+		"name": "Запрос от центрального командования",
+		"info": "markdown/centcom/nt_centcom_02.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-03",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта общего состояния станции",
+		"info": "markdown/centcom/nt_centcom_03.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-04",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта состояния трудовых активов станции",
+		"info": "markdown/centcom/nt_centcom_04.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-05",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта криминального статуса станции",
+		"info": "markdown/centcom/nt_centcom_05.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-06",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта здравоохранения станции",
+		"info": "markdown/centcom/nt_centcom_06.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-07",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта научно-технического прогресса станции",
+		"info": "markdown/centcom/nt_centcom_07.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-08",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта инженерного обеспечения станции",
+		"info": "markdown/centcom/nt_centcom_08.md",
+		"required_access": "cent_general"
+	},
+	{
+		"code": "NT-CENTCOM-09",
+		"category": "Центральное командование",
+		"name": "Запрос отчёта статуса снабжения станции",
+		"info": "markdown/centcom/nt_centcom_09.md",
+		"required_access": "cent_general"
+	}
+]

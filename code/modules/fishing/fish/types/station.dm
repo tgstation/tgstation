@@ -153,7 +153,7 @@
 
 /obj/item/fish/fryish/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.say("Mmmm! Delicious!", forced = "fryfish suicide")
+	user.say("Мммм! Вкуснятина!", forced = "fryfish suicide")
 	qdel(src)
 	return OXYLOSS
 

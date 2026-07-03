@@ -1,0 +1,8 @@
+["USCM flask"]
+nominative = "фляга ККМП"
+genitive = "фляги ККМП"
+dative = "фляге ККМП"
+accusative = "флягу ККМП"
+instrumental = "флягой ККМП"
+prepositional = "фляге ККМП"
+gender = "female"

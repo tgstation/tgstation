@@ -1,4 +1,4 @@
-ADMIN_VERB(reestablish_db_connection, R_NONE, "Reestablish DB Connection", "Attempts to (re)establish the DB Connection", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(reestablish_db_connection, R_DEBUG|R_SERVER, "Reestablish DB Connection", "Attempts to (re)establish the DB Connection", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/sql_enabled))
 		to_chat(user, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
 		return

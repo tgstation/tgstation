@@ -3,7 +3,7 @@
 	filedesc = "Camera"
 	program_open_overlay = "camera"
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
-	extended_desc = "This program allows the taking of pictures."
+	extended_desc = "Эта программа позволяет делать фотографии."
 	size = 4
 	can_run_on_flags = PROGRAM_PDA
 	tgui_id = "NtosCamera"

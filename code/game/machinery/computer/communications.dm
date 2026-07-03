@@ -206,6 +206,11 @@
 			if (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_DELTA)
 				to_chat(user, span_warning("Central Command has placed a lock on the alert level due to a doomsday!"))
 				return
+			// BANDASTATION ADD Start - Sec Levels
+			if (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_GAMMA) // GAMMA and EPSILON
+				to_chat(user, span_warning("Центральным командованием установлено военное положение. Изменение кода невозможно."))
+				return
+			// BANDASTATION ADD End - Sec Levels
 			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
 				return
 
@@ -282,7 +287,7 @@
 			bank_account.adjust_money(-shuttle.credit_cost)
 
 			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : user.real_name
-			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] [MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+			minor_announce("[purchaser_name] купил [shuttle.name] за [shuttle.credit_cost][MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Покупка шаттла")
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] purchased [shuttle.name].")
 			log_shuttle("[key_name(user)] has purchased [shuttle.name].")
@@ -302,9 +307,29 @@
 			nuke_request(reason, user)
 			to_chat(user, span_notice("Request sent."))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
-			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
+			priority_announce("[user] запросил коды для запуска механизма ядерного самоуничтожения станции. В ближайшее время будет отправлено уведомление о подтверждении или отклонении данного запроса.", "Запрос кода самоуничтожения станции", SSstation.announcer.get_rand_report_sound())
 			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+		// BANDASTATION ADDITION - START
+		if ("requestERT")
+			if (!authenticated_as_non_silicon_captain(user))
+				return
+			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
+				return
+			var/reason = trim(html_encode(params["reason"]), MAX_MESSAGE_LEN)
+			var/insert_this = list(list(
+				"time" = round_timestamp(),
+				"sender_real_name" = "[user.real_name ? user.real_name : user.name]",
+				"sender_uid" = REF(user),
+				"message" = reason))
+			GLOB.ert_request_messages.Insert(1, insert_this) // insert it to the top of the list
+			ert_request(reason, user)
+			to_chat(user, span_notice("ERT request sent."))
+			user.log_message("has requested an Emergency Response Team from CentCom with reason \"[reason]\"", LOG_SAY)
+			priority_announce("Отправлен запрос ОБР. Инициатор: [user]. Запрос принят к рассмотрению.", "[command_name()]: Служба быстрого реагирования", SSstation.announcer.get_rand_report_sound())
+			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+		// BANDASTATION ADDITION - END
 		if ("restoreBackupRoutingData")
 			if (!authenticated_as_non_silicon_captain(user))
 				return
@@ -348,7 +373,7 @@
 
 			user.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
 			to_chat(
-				GLOB.admins,
+				get_holders_with_rights(R_ADMIN), /// BANDASTATION EDIT: Proper permissions
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
@@ -454,7 +479,7 @@
 			SSjob.safe_code_request_loc = pod_location
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+			minor_announce("Из-за нехватки персонала вашей станции была одобрена доставка кодов доступа к запасной ID карте капитана. Доставка с помощью портала произойдёт в [get_area(pod_location)]. Время ожидания: 120 секунд.")
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
@@ -487,7 +512,7 @@
 		payload["is_filtered"] = TRUE
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
-	minor_announce(message, title = "Outgoing message to allied station")
+	minor_announce(message, title = "Исходящее сообщение на союзную станцию")
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
@@ -532,6 +557,7 @@
 				data["canMessageAssociates"] = FALSE
 				data["canRecallShuttles"] = !HAS_SILICON_ACCESS(user)
 				data["canRequestNuke"] = FALSE
+				data["canRequestERT"] = FALSE // BANDASTATION ADDITION
 				data["canSendToSectors"] = FALSE
 				data["canSetAlertLevel"] = FALSE
 				data["canToggleEmergencyAccess"] = FALSE
@@ -549,6 +575,7 @@
 				if (authenticated_as_non_silicon_captain(user))
 					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
+					data["canRequestERT"] = TRUE // BANDASTATION ADDITION
 
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE
@@ -862,15 +889,15 @@
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
-				"Attention crew: sector monitoring reports a jump-trace from an unidentified vessel destined for your system. Prepare for probable contact.",
-				"[command_name()] High-Priority Update",
+				"Внимание экипажу, система секторного мониторинга сообщает о массивном прыжковом следе неизвестного космического судна, направляющегося в вашу систему. Приготовьтесь к возможному контакту.",
+				"[command_name()]: Высокоприоритетное оповещение",
 			)
 			SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_ghosts/fugitives)
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			priority_announce(
-				"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
-				"[command_name()] High-Priority Update",
+				"Внимание экипажу, похоже, зафиксирован взлом системы телекоммуникаций с последующей передачей неизвестного сигнала.",
+				"[command_name()]: Высокоприоритетное оповещение",
 			)
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 40), 1, 3)
 			if(!SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_living/traitor, forced_max_cap = max_number_of_sleepers))

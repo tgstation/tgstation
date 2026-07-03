@@ -38,9 +38,9 @@ const UnauthorizedView = (props) => {
         </Stack.Item>
         <Stack.Item>
           <NoticeBox align="right">
-            You are not logged in.
+            Вы не вошли.
             <Button ml={2} icon="lock-open" onClick={() => act('login')}>
-              Login
+              Войти
             </Button>
           </NoticeBox>
         </Stack.Item>
@@ -64,7 +64,7 @@ const AuthView = (props) => {
           </Stack.Item>
           <Stack.Item>
             <NoticeBox align="right" info>
-              Secure Your Workspace.
+              Обеспечивайте безопасность рабочего места.
               <Button
                 align="right"
                 icon="lock"
@@ -72,7 +72,7 @@ const AuthView = (props) => {
                 ml={2}
                 onClick={() => act('logout')}
               >
-                Log Out
+                Выйти
               </Button>
             </NoticeBox>
           </Stack.Item>

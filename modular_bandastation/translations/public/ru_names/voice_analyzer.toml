@@ -1,0 +1,8 @@
+["voice analyzer"]
+nominative = "анализатор голоса"
+genitive = "анализатора голоса"
+dative = "анализатору голоса"
+accusative = "анализатор голоса"
+instrumental = "анализатором голоса"
+prepositional = "анализаторе голоса"
+gender = "male"

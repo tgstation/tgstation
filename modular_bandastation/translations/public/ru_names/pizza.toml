@@ -1,0 +1,8 @@
+[pizza]
+nominative = "пицца"
+genitive = "пиццы"
+dative = "пицце"
+accusative = "пиццу"
+instrumental = "пиццей"
+prepositional = "пицце"
+gender = "female"

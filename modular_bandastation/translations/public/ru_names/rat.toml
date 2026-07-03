@@ -1,0 +1,8 @@
+[rat]
+nominative = "крыса"
+genitive = "крысы"
+dative = "крысе"
+accusative = "крысу"
+instrumental = "крысой"
+prepositional = "крысе"
+gender = "female"

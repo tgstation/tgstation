@@ -96,6 +96,7 @@
 	)
 	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
@@ -158,6 +159,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
@@ -328,7 +330,7 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
-/datum/crafting_recipe/ratvarian_repeater
+/datum/crafting_recipe/Ratvarian_Repeater
 	name = "Emplaced Ratvarian Repeater"
 	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WRENCH)
 	result = /obj/structure/mounted_gun/ratvarian_repeater
@@ -343,6 +345,7 @@
 	time = 15 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
+	non_craftable = TRUE // BANDASTATION ADDITION: REPEATER REMOVAL
 
 /datum/crafting_recipe/detached_ratvarian_repeater
 	name = "Iconoclast's Repeater"
@@ -354,7 +357,6 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
-
 
 /datum/crafting_recipe/large_ballista
 	name = "Improvised Ballista"
@@ -478,6 +480,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/sks
 	name = "Sakhno SKS semi-automatic rifle"
@@ -505,3 +508,4 @@
 	steps = list(
 		"use high quality gibtonite and advanced release or large grenades for better yield",
 	)
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround

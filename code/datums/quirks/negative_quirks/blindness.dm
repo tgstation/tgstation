@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
-	desc = "You are completely blind, nothing can counteract this."
+	desc = "Вы полностью слепой, и это необратимо."
 	icon = FA_ICON_BLIND
 	value = -16
-	gain_text = span_danger("You can't see anything.")
-	lose_text = span_notice("You miraculously gain back your vision.")
-	medical_record_text = "Patient has permanent blindness."
+	gain_text = span_danger("Вы ослепли и ничего не видите.")
+	lose_text = span_notice("Чудесным образом к вам вернулось зрение.")
+	medical_record_text = "У пациента необратимая слепота."
 	hardcore_value = 15
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/glasses/sunglasses, /obj/item/cane/white)

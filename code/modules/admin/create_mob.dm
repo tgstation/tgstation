@@ -18,6 +18,9 @@
 	// Snowflake for Ethereals
 	human.updatehealth()
 	human.updateappearance(mutcolor_update = TRUE)
+	// BANDASTATION ADD Start - TTS
+	human.AddComponent(/datum/component/tts_component)
+	// BANDASTATION ADD End - TTS
 
 /**
  * Randomizes a human, but produces someone who looks exceedingly average (by most standards).
@@ -48,3 +51,6 @@
 	human.updatehealth()
 	if(update_body)
 		human.updateappearance(mutcolor_update = TRUE)
+	// BANDASTATION ADD Start - TTS
+	human.AddComponent(/datum/component/tts_component)
+	// BANDASTATION ADD End - TTS

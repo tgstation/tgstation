@@ -45,7 +45,7 @@ export const PatientStateView = (props: PatientStateViewProps) => {
     return (
       <Section fill>
         <NoticeBox color="red" align="center">
-          No patient detected
+          Пациент не обнаружен
         </NoticeBox>
       </Section>
     );
@@ -84,13 +84,13 @@ const PatientStateMainStateView = (props: PatientStateMainStateViewProps) => {
 
   return (
     <LabeledList>
-      <LabeledList.Item label="State" color={patient.statstate}>
+      <LabeledList.Item label="Состояние" color={patient.statstate}>
         {patient.stat}
       </LabeledList.Item>
-      <LabeledList.Item label="Blood Type">
-        {patient.blood_type || 'Unable to determine blood type'}
+      <LabeledList.Item label="Группа крови">
+        {patient.blood_type || 'Не удалось определить группу крови'}
       </LabeledList.Item>
-      <LabeledList.Item label="Health">
+      <LabeledList.Item label="Здоровье">
         <ProgressBar
           value={patient.health}
           minValue={patient.minHealth}
@@ -103,7 +103,7 @@ const PatientStateMainStateView = (props: PatientStateMainStateViewProps) => {
           />
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label="Blood Level">
+      <LabeledList.Item label="Уровень крови">
         <ProgressBar
           value={patient.blood_level}
           minValue={0}
@@ -188,7 +188,7 @@ const PatientStateNextOperationsView = (
     (operation) => operation.show_as_next,
   );
 
-  const allTools = ['all tools'].concat(
+  const allTools = ['Все инструменты'].concat(
     possible_next_operations
       .map((operation) => operation.tool_rec)
       .flatMap((tool) => tool.split(' / '))
@@ -222,13 +222,13 @@ const PatientStateNextOperationsView = (
 
   return (
     <Section
-      title="Possible Operations"
+      title="Возможные операции"
       scrollable
       fill
       buttons={
         <Button
           icon="filter"
-          tooltip="Filter by recommended tool. Right click to reset."
+          tooltip="Фильтр по рекомендуемому инструменту. Правый клик - сброс."
           tooltipPosition="top"
           width="100px"
           ellipsis
@@ -248,7 +248,7 @@ const PatientStateNextOperationsView = (
         {possible_next_operations.length === 0 ? (
           <Stack.Item>
             <NoticeBox color="green" align="center">
-              No operations available
+              Нет доступных операций
             </NoticeBox>
           </Stack.Item>
         ) : (
@@ -269,7 +269,7 @@ const PatientStateNextOperationsView = (
                         {!!operation.priority && (
                           <Stack.Item color="orange">
                             <Icon name="exclamation" mr={1} />
-                            Recommended next step
+                            Рекомендуемый следующий шаг
                           </Stack.Item>
                         )}
                         {pinnedOperations.includes(operation.name) && (
@@ -280,11 +280,11 @@ const PatientStateNextOperationsView = (
                         )}
                         <Stack.Item>{operation.desc}</Stack.Item>
                         <Stack.Item italic fontSize="0.9rem">
-                          {`Left click ${
+                          {`Левый клик ${
                             pinnedOperations.includes(operation.name)
-                              ? 'unpins operation from'
-                              : 'pins operation to'
-                          } the top.`}
+                              ? 'открепляет операцию от'
+                              : 'закрепляет операцию в'
+                          } верхней части списка.`}
                         </Stack.Item>
                         {!!operation.show_in_list && (
                           <Stack.Item italic fontSize="0.9rem">

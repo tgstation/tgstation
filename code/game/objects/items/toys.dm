@@ -441,7 +441,7 @@
 	if(!myhead)
 		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
 		return SHAME
-	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] consumes [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3 SECONDS))
@@ -550,7 +550,7 @@
 	src.bullets--
 	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
 		span_danger("You fire [src] at [interacting_with]!"), \
-		span_hear("You hear a gunshot!"))
+		span_hear("Вы слышите выстрел!"))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/ammo
@@ -1552,7 +1552,7 @@
  */
 /obj/item/toy/reality_pierce
 	name = "Pierced reality"
-	desc = "Hah. You thought it was the real deal!"
+	desc = "Ха! Поверил, что он настоящий?"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	item_flags = NO_PIXEL_RANDOM_DROP
@@ -1869,6 +1869,11 @@ GLOBAL_LIST_EMPTY(intento_players)
 	if(dist < min_reach)
 		to_chat(user, span_warning("[M] is too close to use [src] on."))
 		return
+// BANDASTATION MOD START: Pacifism fix
+	if(isliving(M) && HAS_TRAIT(user, TRAIT_PACIFISM) && user.combat_mode)
+		to_chat(user, span_warning("Вы не хотите причинять вред другим живым существам!"))
+		return
+// BANDASTATION MOD END
 	M.attack_hand(user, modifiers)
 
 /obj/item/banhammer

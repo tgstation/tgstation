@@ -255,7 +255,7 @@ ADMIN_VERB(mass_modify_traits, R_FUN, "Mass Modify Traits", "Adds or removes a t
 			out += GLOB.admin_visible_traits[key]
 	return out
 
-ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN, mob/living/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_HIDDEN, mob/living/target in world) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_FUN
 	var/punishment = tgui_input_list(user, "Choose a punishment", "DIVINE SMITING", GLOB.smites)
 
 	if(QDELETED(target) || !punishment)

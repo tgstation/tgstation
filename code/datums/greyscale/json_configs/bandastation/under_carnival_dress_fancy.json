@@ -1,0 +1,22 @@
+{
+	"dress_fancy": [
+		{
+			"type": "icon_state",
+			"icon_state": "dress_fancy_general",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "dress_fancy_sides",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "dress_fancy_blouse",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}

@@ -1,6 +1,6 @@
 /obj/item/storage/lockbox
 	name = "lockbox"
-	desc = "A locked box."
+	desc = "Закрытый ящик."
 	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "lockbox+l"
 	inhand_icon_state = "lockbox"
@@ -32,7 +32,7 @@
 		return NONE
 	if(!held_item.GetID())
 		return NONE
-	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Отпереть ID-картой" : "Запереть ID-картой"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -50,12 +50,12 @@
 	if(check_access(id_card))
 		return TRUE
 	if(!silent)
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, "в доступе отказано!")
 	return FALSE
 
 /obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
 	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
-	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
+	balloon_alert(user, atom_storage.locked ? "закрыт" : "открыт")
 
 /obj/item/storage/lockbox/update_icon_state()
 	. = ..()
@@ -72,16 +72,16 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
-		balloon_alert(user, "lock destroyed")
+		balloon_alert(user, "замок сломан")
 		if (emag_card && user)
-			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
+			user.visible_message(span_warning("[user.declent_ru(NOMINATIVE)] проводит [emag_card] по [src.declent_ru(ACCUSATIVE)], ломая его!"))
 		return TRUE
 	return FALSE
 
 /obj/item/storage/lockbox/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_notice("It appears to be broken.")
+		. += span_notice("Похоже, он сломан.")
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -104,7 +104,7 @@
 
 /obj/item/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
-	desc = "You have a bad feeling about opening this."
+	desc = "Вас не покидает плохое предчувствие, когда вы открываете это."
 	req_access = list(ACCESS_SECURITY)
 
 /obj/item/storage/lockbox/clusterbang/PopulateContents()
@@ -112,7 +112,7 @@
 
 /obj/item/storage/lockbox/medal
 	name = "medal box"
-	desc = "A locked box used to store medals of honor."
+	desc = "Запертый ящик, в котором хранятся почётные медали."
 	icon_state = "medalbox+l"
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -128,7 +128,7 @@
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
 	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+		. += span_notice("Alt-ЛКМ чтобы [open ? "закрыть":"открыть"] контейнер.")
 
 /obj/item/storage/lockbox/medal/click_alt(mob/user)
 	if(!atom_storage.locked)
@@ -165,7 +165,7 @@
 
 /obj/item/storage/lockbox/medal/hop
 	name = "Head of Personnel medal box"
-	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые тем, кто проявил выдающиеся управленческие способности."
 	req_access = list(ACCESS_HOP)
 	icon_state = "hopbox+l"
 	icon_locked = "hopbox+l"
@@ -178,7 +178,7 @@
 
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"
-	desc = "A locked box used to store medals to be given to members of the security department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые выделившимся сотрудникам отдела безопасности."
 	req_access = list(ACCESS_HOS)
 	icon_state = "secbox+l"
 	icon_locked = "secbox+l"
@@ -186,7 +186,7 @@
 
 /obj/item/storage/lockbox/medal/med
 	name = "medical medal box"
-	desc = "A locked box used to store medals to be given to members of the medical department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые выделившимся сотрудникам медицинского отдела."
 	req_access = list(ACCESS_CMO)
 	icon_state = "medbox+l"
 	icon_locked = "medbox+l"
@@ -204,7 +204,7 @@
 
 /obj/item/storage/lockbox/medal/cargo
 	name = "cargo award box"
-	desc = "A locked box used to store awards to be given to members of the cargo department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые выделившимся сотрудникам отдела снабжения."
 	req_access = list(ACCESS_QM)
 	icon_state = "cargobox+l"
 	icon_locked = "cargobox+l"
@@ -215,7 +215,7 @@
 
 /obj/item/storage/lockbox/medal/service
 	name = "service award box"
-	desc = "A locked box used to store awards to be given to members of the service department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые выделившимся сотрудникам отдела обслуживания."
 	req_access = list(ACCESS_HOP)
 	icon_state = "srvbox+l"
 	icon_locked = "srvbox+l"
@@ -226,7 +226,7 @@
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"
-	desc = "A locked box used to store medals to be given to members of the science department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые выделившимся сотрудникам исследовательского отдела."
 	req_access = list(ACCESS_RD)
 	icon_state = "scibox+l"
 	icon_locked = "scibox+l"
@@ -239,7 +239,7 @@
 
 /obj/item/storage/lockbox/medal/engineering
 	name = "engineering medal box"
-	desc = "A locked box used to store awards to be given to members of the engineering department."
+	desc = "Запертый ящик, в котором хранятся медали, вручаемые самым лучшим сотрудникам инженерного отдела."
 	req_access = list(ACCESS_CE)
 	icon_state = "engbox+l"
 	icon_locked = "engbox+l"
@@ -252,7 +252,7 @@
 
 /obj/item/storage/lockbox/order
 	name = "order lockbox"
-	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
+	desc = "Ящик, используемый для защиты небольших заказов от кражи. Да, грузчик, речь именно о тебе."
 	icon_state = "secure"
 	icon_closed = "secure"
 	icon_locked = "secure_locked"
@@ -279,7 +279,7 @@
 
 /obj/item/storage/lockbox/dueling
 	name = "dueling pistol case"
-	desc = "Let's solve this like gentlespacemen."
+	desc = "Давайте решим это как цивилизованные космонавтики."
 	icon_state = "medalbox+l"
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -301,7 +301,7 @@
 
 /obj/item/storage/lockbox/bitrunning
 	name = "base class curiosity"
-	desc = "Talk to a coder."
+	desc = "Поговори с программистом."
 	req_access = list(ACCESS_INACCESSIBLE)
 	icon_state = "bitrunning+l"
 	inhand_icon_state = "bitrunning"
@@ -313,7 +313,7 @@
 
 /obj/item/storage/lockbox/bitrunning/encrypted
 	name = "encrypted curiosity"
-	desc = "Needs to be decrypted at the safehouse to be opened."
+	desc = "Для открытия необходимо расшифровать данные в убежище."
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// Path for the loot we are assigned
 	var/loot_path
@@ -323,7 +323,7 @@
 
 /obj/item/storage/lockbox/bitrunning/decrypted
 	name = "decrypted curiosity"
-	desc = "Compiled from the virtual domain. An extra reward of a successful bitrunner."
+	desc = "Скомпилирован из виртуального домена. Дополнительная награда за успешное прохождение битрана."
 	storage_type = /datum/storage/lockbox/bitrunning_decrypted
 
 	/// What virtual domain did we come from.

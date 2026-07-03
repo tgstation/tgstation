@@ -1,0 +1,8 @@
+[terminal]
+nominative = "клемма"
+genitive = "клеммы"
+dative = "клемме"
+accusative = "клемму"
+instrumental = "клеммой"
+prepositional = "клемме"
+gender = "female"

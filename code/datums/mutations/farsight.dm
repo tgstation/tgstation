@@ -1,10 +1,10 @@
 /datum/mutation/farsight
 	name = "Farsight"
-	desc = "The subject's eyes are able to see further than normal."
+	desc = "Глаза субъекта способны видеть дальше, чем обычно."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINOR
-	text_gain_indication = span_notice("You feel your eyes tingle.")
-	text_lose_indication = span_notice("Your eyes feel normal.")
+	text_gain_indication = span_notice("Ты ощущаешь покалывания в глазах.")
+	text_lose_indication = span_notice("Твои глаза ощущаются нормальными.")
 	difficulty = 16
 	power_coeff = 1
 	power_path = /datum/action/cooldown/spell/farsight

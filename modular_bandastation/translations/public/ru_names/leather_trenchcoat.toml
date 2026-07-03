@@ -1,0 +1,8 @@
+["leather trenchcoat"]
+nominative = "кожаный тренч"
+genitive = "кожаного тренча"
+dative = "кожаному тренчу"
+accusative = "кожаное тренч"
+instrumental = "кожаным тренчем"
+prepositional = "кожаном тренче"
+gender = "neuter"

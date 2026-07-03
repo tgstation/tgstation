@@ -2,19 +2,21 @@ import { type Antagonist, Category } from '../base';
 
 const SpaceNinja: Antagonist = {
   key: 'spaceninja',
-  name: 'Space Ninja',
+  name: 'Космический ниндзя',
   description: [
     `
-      The Spider Clan practice a sort of augmentation of human flesh in order to
-      achieve a more perfect state of being and follow Postmodern Space Bushido.
+      Клан Пауков практикует своего рода аугментацию человеческой плоти,
+      чтобы достичь более совершенного состояния бытия
+      и следовать постмодернистскому космическому бусидо.
     `,
 
     `
-      Become a conniving space ninja, equipped with a katana, gloves to hack
-      into airlocks and APCs, a suit to make you go near-invisible,
-      as well as a variety of abilities in your kit. Hack into arrest consoles
-      to mark everyone as arrest, and even hack into communication consoles to
-      summon more threats to cause chaos on the station!
+      Станьте коварным космическим ниндзя, вооружившись катаной,
+      перчатками для взлома шлюзов и ЛКП, костюмом, делающим вас
+      практически невидимым, а также разнообразными способностями в вашем наборе.
+      Взломайте консоли СБ, чтобы пометить всех как арестованных,
+      и даже взломайте консоли связи, чтобы вызвать новые угрозы
+      для большего хаоса на станции!
     `,
   ],
   category: Category.Midround,

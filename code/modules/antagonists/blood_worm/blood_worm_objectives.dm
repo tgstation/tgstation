@@ -6,8 +6,8 @@
 	return team
 
 /datum/objective/blood_worm/kill
-	name = "KILL"
-	explanation_text = "We must prevent all members of station command from escaping alive on the emergency shuttle."
+	name = "УБЕЙ"
+	explanation_text = "Мы должны помешать всем членам командования спастись живыми на эвакуационном шаттле."
 
 /datum/objective/blood_worm/kill/check_completion()
 	for (var/mob/player_mob as anything in GLOB.player_list)
@@ -24,7 +24,7 @@
 	return TRUE
 
 /datum/objective/blood_worm/consume
-	name = "CONSUME"
+	name = "ПОГЛОТИ"
 
 	var/blood_required = 0
 
@@ -33,13 +33,13 @@
 	update_explanation_text()
 
 /datum/objective/blood_worm/consume/update_explanation_text()
-	explanation_text = "We must consume a total of at least [blood_required] units of real blood to sate our appetite."
+	explanation_text = "Мы должны поглотить не менее [blood_required] единиц реальной крови, чтобы утолить наш аппетит."
 
 /datum/objective/blood_worm/consume/check_completion()
 	return get_blood_worm_team().blood_consumed_total >= blood_required
 
 /datum/objective/blood_worm/multiply
-	name = "MULTIPLY"
+	name = "РАЗМНОЖЬСЯ"
 
 	var/times_required = 0
 
@@ -48,13 +48,13 @@
 	update_explanation_text()
 
 /datum/objective/blood_worm/multiply/update_explanation_text()
-	explanation_text = "At least [times_required] of us must reproduce to pave the way for our overwhelming numbers."
+	explanation_text = "Нас должно расплодиться как минимум [times_required], чтобы ничто не могло остановить наше распространение."
 
 /datum/objective/blood_worm/multiply/check_completion()
 	return get_blood_worm_team().times_reproduced_total >= times_required
 
 /datum/objective/blood_worm/conquer
-	name = "CONQUER"
+	name = "ЗАХВАТИ"
 
 	var/worms_required = 0
 
@@ -63,7 +63,7 @@
 	update_explanation_text()
 
 /datum/objective/blood_worm/conquer/update_explanation_text()
-	explanation_text = "At least [worms_required] of us must escape alive on the emergency shuttle to conquer what is on the other side."
+	explanation_text = "Как минимум [worms_required] из нас должны улететь живыми на эвакуационном шаттле, чтобы захватить то, что находится на другой стороне."
 
 /datum/objective/blood_worm/conquer/check_completion()
 	var/conquerors = 0

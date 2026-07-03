@@ -82,7 +82,7 @@
 	var/mob/living/carbon/human/santa //who is our santa?
 
 /datum/round_event/ghost_role/santa/announce(fake)
-	priority_announce("Santa is coming to town!", "Unknown Transmission")
+	priority_announce("Санта прибывает в город!", "Неизвестная радиопередача")
 
 /datum/round_event/ghost_role/santa/start()
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Santa is coming to town! Do you want to be [span_notice("Santa")]?", poll_time = 15 SECONDS, alert_pic = /obj/item/clothing/head/costume/santa, role_name_text = "Santa", amount_to_pick = 1)

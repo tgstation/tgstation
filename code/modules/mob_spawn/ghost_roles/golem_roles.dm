@@ -84,8 +84,10 @@
 /obj/effect/mob_spawn/ghost_role/human/golem/servant
 	name = "inert servant golem shell"
 	prompt_name = "a servant golem"
-	you_are_text = "You are a golem."
-	flavour_text = "You are highly resistant to heat and cold as well as blunt trauma. You must consume minerals to maintain motion. You are unable to wear clothes, but can still use most tools."
+	you_are_text = "Вы голем-слуга."
+	flavour_text = "Вы - искусственно созданный голем, обязанный подчиняться всем приказам вашего создателя. Будучи големом, вы крайне устойчивы к теплу, холоду и физическим повреждениям. \
+	Вам необходимо употреблять минералы для поддержания активности вашей оболочки. \
+	Вы не можете носить большую часть одежды, однако всё ещё можете использовать различные инструменты."
 	spawner_job_path = /datum/job/servant_golem
 	/// Weakref to the creator of this golem shell.
 	var/datum/weakref/owner_ref

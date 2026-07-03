@@ -1,11 +1,11 @@
 /datum/job/psychologist
 	title = JOB_PSYCHOLOGIST
-	description = "Advocate sanity, self-esteem, and teamwork in a station \
-		staffed with headcases."
+	description = "Следите за рассудком экипажа, а также за своим, и помогайте экипажу \
+		с их бедами с башкой."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Head of Personnel and the Chief Medical Officer"
+	supervisors = "Главой Персонала, Главным Врачом"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "PSYCHOLOGIST"
 

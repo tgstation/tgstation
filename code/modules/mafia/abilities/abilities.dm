@@ -1,6 +1,6 @@
 /datum/mafia_ability
-	var/name = "Mafia Ability"
-	var/ability_action = "brutally murder"
+	var/name = "Способности мафии"
+	var/ability_action = "жестоко убить"
 
 	///The priority level this action must be sent at. Setting this to null will prevent it from being triggered automatically.
 	///(COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE|COMSIG_MAFIA_NIGHT_ACTION_PHASE|COMSIG_MAFIA_NIGHT_KILL_PHASE)
@@ -59,26 +59,26 @@
 	if(host_role.mafia_game_controller.phase != valid_use_period)
 		return FALSE
 	if(host_role.role_flags & ROLE_ROLEBLOCKED)
-		host_role.send_message_to_player(span_warning("You were roleblocked!"))
+		host_role.send_message_to_player(span_warning("Вы были заблокированы!"))
 		return FALSE
 
 	if(potential_target)
 		if(use_flags & CAN_USE_ON_DEAD)
 			if(potential_target.game_status != MAFIA_DEAD)
 				if(!silent)
-					host_role.send_message_to_player(span_notice("This can only be used on dead players."))
+					host_role.send_message_to_player(span_notice("Это можно использовать только на мертвых игроках."))
 				return FALSE
 		else if(potential_target.game_status == MAFIA_DEAD)
 			if(!silent)
-				host_role.send_message_to_player(span_notice("This can only be used on living players."))
+				host_role.send_message_to_player(span_notice("Это можно использовать только на живых игроках."))
 			return FALSE
 		if(!(use_flags & CAN_USE_ON_SELF) && (potential_target == host_role))
 			if(!silent)
-				host_role.send_message_to_player(span_notice("This can only be used on others."))
+				host_role.send_message_to_player(span_notice("Это можно использовать только на других."))
 			return FALSE
 		if(!(use_flags & CAN_USE_ON_OTHERS) && (potential_target != host_role))
 			if(!silent)
-				host_role.send_message_to_player(span_notice("This can only be used on yourself."))
+				host_role.send_message_to_player(span_notice("Это можно использовать только на себе."))
 			return FALSE
 	return TRUE
 
@@ -100,7 +100,7 @@
 
 	if(target_role)
 		if(SEND_SIGNAL(target_role, COMSIG_MAFIA_ON_VISIT, game, host_role) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
-			host_role.send_message_to_player(span_danger("Your [name] was interrupted!"))
+			host_role.send_message_to_player(span_danger("Ваш [name] был прерван!"))
 			return FALSE
 
 	return TRUE
@@ -116,7 +116,7 @@
 	if(!validate_action_target(new_target))
 		return FALSE
 
-	var/feedback_text = "You will %WILL_PERFORM% [ability_action]%SELF%"
+	var/feedback_text = "Вы%WILL_PERFORM% готовитесь [ability_action]%SELF%"
 	if(use_flags & CAN_USE_ON_SELF)
 		feedback_text = replacetext(feedback_text, "%SELF%", ".")
 	else
@@ -125,11 +125,11 @@
 	if(target_role == new_target)
 		using_ability = FALSE
 		target_role = null
-		feedback_text = replacetext(feedback_text, "%WILL_PERFORM%", "not")
+		feedback_text = replacetext(feedback_text, "%WILL_PERFORM%", " более не")
 	else
 		using_ability = TRUE
 		target_role = new_target
-		feedback_text = replacetext(feedback_text, "%WILL_PERFORM%", "now")
+		feedback_text = replacetext(feedback_text, "%WILL_PERFORM%", "")
 
 	host_role.send_message_to_player(span_notice(feedback_text))
 	return TRUE

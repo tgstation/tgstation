@@ -102,12 +102,12 @@
 /obj/item/clothing/head/costume/foilhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
 	var/static/list/conspiracy_line = list(
-		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",
-		";HOW CAN I LIVE IN A WORLD WHERE MY FATE AND EXISTENCE IS DECIDED BY A GROUP OF INDIVIDUALS?!!",
-		";THEY'RE TOYING WITH ALL OF YOUR MINDS AND TREATING YOU AS EXPERIMENTS!!",
-		";THEY HIRE ASSISTANTS WITHOUT DOING BACKGROUND CHECKS!!",
-		";WE LIVE IN A ZOO AND WE ARE THE ONES BEING OBSERVED!!",
-		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
+		";ОНИ СКРЫВАЮТ КАМЕРЫ В ПОТОЛКАХ! ОНИ ВИДЯТ ВСЁ, ЧТО МЫ ДЕЛАЕМ!!",
+		";КАК Я МОГУ ЖИТЬ В МИРЕ, ГДЕ МОЯ СУДЬБА И СУЩЕСТВОВАНИЕ РЕШАЕТСЯ КАКОЙ-ТО ГРУППОЙ ЛИЦ?!!",
+		";ОНИ ИГРАЮТ СО ВСЕМИ ВАШИМИ УМАМИ И ОТНОСЯТСЯ К ВАМ КАК К ПОДОПЫТНЫМ!!",
+		";ОНИ НАНИМАЮТ АССИСТЕНТОВ, НЕ ПРОВЕРЯЯ ИХ БИОГРАФИЮ!!",
+		";МЫ ЖИВЕМ В ЗООПАРКЕ, И МЫ - ТЕ, ЗА КЕМ ЗДЕСЬ ПРИСМАТРИВАЮТ!!",
+		";МЫ ПОВТОРЯЕМ СВОЮ ЖИЗНЬ ЕЖЕДНЕВНО, НЕ ЗАДАВАЯ ЛИШНИХ ВОПРОСОВ!!"
 	)
 	user.say(pick(conspiracy_line), forced=type)
 	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)

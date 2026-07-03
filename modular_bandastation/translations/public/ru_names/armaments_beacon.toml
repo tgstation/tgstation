@@ -1,0 +1,8 @@
+["armaments beacon"]
+nominative = "маяк вооружения"
+genitive = "маяка вооружения"
+dative = "маяку вооружения"
+accusative = "маяк вооружения"
+instrumental = "маяком вооружения"
+prepositional = "маяке вооружения"
+gender = "male"

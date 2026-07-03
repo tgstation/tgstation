@@ -1,0 +1,8 @@
+["combat shotgun"]
+nominative = "боевой дробовик"
+genitive = "боевого дробовика"
+dative = "боевому дробовику"
+accusative = "боевой дробовик"
+instrumental = "боевым дробовиком"
+prepositional = "боевом дробовике"
+gender = "male"

@@ -2,7 +2,7 @@
 	filename = "mafia"
 	filedesc = "Mafia"
 	program_open_overlay = "mafia"
-	extended_desc = "A program that allows you to play the infamous Mafia game, straight from your Modular PC."
+	extended_desc = "Программа, позволяющая играть в печально известную игру Мафия прямо с вашего модульного ПК."
 	downloader_category = PROGRAM_CATEGORY_GAMES
 	size = 6
 	tgui_id = "NtosMafiaPanel"

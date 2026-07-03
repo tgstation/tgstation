@@ -1,0 +1,28 @@
+#include "_augmentation_preferences.dm"
+
+#include "code/body_modifications/_body_modifications_datum.dm"
+#include "code/body_modifications/implants.dm"
+#include "code/body_modifications/supply_packs.dm"
+
+#include "code/body_modifications/body_part/amputations.dm"
+#include "code/body_modifications/body_part/prosthetics.dm"
+
+#include "code/body_modifications/body_part/robotic_limbs/bishop.dm"
+#include "code/body_modifications/body_part/robotic_limbs/bishop_nano.dm"
+#include "code/body_modifications/body_part/robotic_limbs/bishop_mk2.dm"
+#include "code/body_modifications/body_part/robotic_limbs/etamin_industry.dm"
+#include "code/body_modifications/body_part/robotic_limbs/etamin_industry_lumineux.dm"
+#include "code/body_modifications/body_part/robotic_limbs/gromtech.dm"
+#include "code/body_modifications/body_part/robotic_limbs/hephaestus.dm"
+#include "code/body_modifications/body_part/robotic_limbs/hephaestus_titan.dm"
+#include "code/body_modifications/body_part/robotic_limbs/interdyne.dm"
+#include "code/body_modifications/body_part/robotic_limbs/morpheus.dm"
+#include "code/body_modifications/body_part/robotic_limbs/shellguard.dm"
+#include "code/body_modifications/body_part/robotic_limbs/wardtakahashi.dm"
+#include "code/body_modifications/body_part/robotic_limbs/wardtakahashi_pro.dm"
+#include "code/body_modifications/body_part/robotic_limbs/xion.dm"
+#include "code/body_modifications/body_part/robotic_limbs/xion_light.dm"
+#include "code/body_modifications/body_part/robotic_limbs/zenghu.dm"
+
+#include "code/preferences/body_modification_preference_middleware.dm"
+#include "code/preferences/body_modification_preference.dm"

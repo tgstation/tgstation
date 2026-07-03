@@ -2,7 +2,7 @@
 /datum/religion_rites/forgive
 	name = "Forgive"
 	desc = "Forgives someone, making them no longer considered guilty. A kind gesture, all things considered!"
-	invoke_msg = "You are absolved of sin."
+	invoke_msg = "Я отпускаю твои грехи."
 	var/mob/living/who
 
 /datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
@@ -35,7 +35,7 @@
 /datum/religion_rites/summon_rules
 	name = "Summon Honorbound Rules"
 	desc = "Enscribes a paper with the honorbound rules and regulations."
-	invoke_msg = "Bring forth the holy writ!"
+	invoke_msg = "Взываю к святому писанию!"
 	///paper to turn into holy writ
 	var/obj/item/paper/writ_target
 

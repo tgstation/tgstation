@@ -5,7 +5,7 @@
 	filedesc = "AmpCheck"
 	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	program_open_overlay = "power_monitor"
-	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
+	extended_desc = "Эта программа подключается к датчикам на станции и предоставляет информацию об электрических системах"
 	ui_header = "power_norm.gif"
 	download_access = list(ACCESS_ENGINEERING)
 	can_run_on_flags = PROGRAM_CONSOLE

@@ -8,8 +8,8 @@
 /datum/keybinding/artificial_intelligence/reconnect
 	hotkey_keys = list("-")
 	name = "reconnect"
-	full_name = "Reconnect to shell"
-	description = "Reconnects you to your most recently used AI shell"
+	full_name = "Переподключиться к оболочке"
+	description = "Подключает к ИИ оболочке, которая была подключена последней"
 	keybind_signal = COMSIG_KB_SILICON_RECONNECT_DOWN
 
 /datum/keybinding/artificial_intelligence/reconnect/down(client/user, turf/target, mousepos_x, mousepos_y)

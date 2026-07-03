@@ -112,15 +112,15 @@
 	///Store the integrity for calculations
 	var/critical_threshold_proximity_archived = 0
 	///Our "Shit is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
-	var/safe_alert = "Main containment field returning to safe operating parameters."
+	var/safe_alert = "Главное защитное поле возвращается к безопасным рабочим параметрам."
 	///The point at which we should start sending messeges about the critical_threshold_proximity to the engi channels.
 	var/warning_point = 50
 	///The alert we send when we've reached warning_point
-	var/warning_alert = "Danger! Magnetic containment field faltering!"
+	var/warning_alert = "Опасность! Магнитное поле сдерживания ослабевает!"
 	///The point at which we start sending messages to the common channel
 	var/emergency_point = 700
 	///The alert we send when we've reached emergency_point
-	var/emergency_alert = "HYPERTORUS MELTDOWN IMMINENT."
+	var/emergency_alert = "РАЗРУШЕНИЕ ГИПЕРТОРУСА НЕИЗБЕЖНО."
 	///The point at which we melt
 	var/melting_point = 900
 	///Boolean used for logging if we've passed the emergency point
@@ -209,5 +209,5 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
 	internal_pressure = max(internal_fusion.return_pressure(), moderator_internal.return_pressure())
 	if(internal_pressure)
-		say("WARNING - Core can contain hazardous gases, deconstruct with caution!")
+		say("ВНИМАНИЕ. Активная зона может содержать опасные газы, при разборке соблюдайте осторожность!")
 	return ..(user, tool, internal_pressure)

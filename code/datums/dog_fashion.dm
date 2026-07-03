@@ -113,8 +113,8 @@
 	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of them.")
 
 /datum/dog_fashion/head/detective
-	name = "Detective %REAL_NAME%"
-	desc = "%NAME% sees through your lies..."
+	name = "Детектив %REAL_NAME%"
+	desc = "%NAME% видит твою ложь на прогнившей станции..."
 	emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.","takes a candycorn from the hat.")
 
 /datum/dog_fashion/head/nurse

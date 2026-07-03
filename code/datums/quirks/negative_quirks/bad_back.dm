@@ -1,12 +1,12 @@
 /datum/quirk/badback
 	name = "Bad Back"
-	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
+	desc = "Из-за плохой осанки рюкзаки и другие сумки никогда не сидят на вашей спине правильно. Впрочем, более равномерно взвешенные предметы вполне подойдут."
 	icon = FA_ICON_HIKING
 	value = -8
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
-	gain_text = span_danger("Your back REALLY hurts!")
-	lose_text = span_notice("Your back feels better.")
-	medical_record_text = "Patient scans indicate severe and chronic back pain."
+	gain_text = span_danger("Ваша спина действительно болит!")
+	lose_text = span_notice("Ваша спина чувствует себя лучше.")
+	medical_record_text = "Сканирование пациента показывает сильную хроническую боль в спине."
 	hardcore_value = 4
 	mail_goodies = list(/obj/item/cane)
 	var/datum/weakref/backpack

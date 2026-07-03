@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, type_override =  NONE, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
+/mob/proc/emote(act, type_override =  NONE, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE, message_override = null) // BANDASTATION EDIT - Emote Panel
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -24,7 +24,7 @@
 
 	if(!length(key_emotes))
 		if(intentional && !force_silence)
-			to_chat(src, span_notice("'[act]' emote does not exist. Say *help for a list."))
+			to_chat(src, span_notice("Эмоция '[act]' не существует. Скажите '*help', чтобы получить список доступных эмоций."))
 		return FALSE
 	var/silenced = FALSE
 	for(var/datum/emote/emote in key_emotes)
@@ -36,12 +36,12 @@
 		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, type_override, intentional, emote) & COMPONENT_CANT_EMOTE)
 			silenced = TRUE
 			continue
-		emote.run_emote(src, param, type_override, intentional)
-		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, type_override, message, intentional)
+		emote.run_emote(src, param, type_override, intentional, message_override)  // BANDASTATION EDIT - Emote Panel
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, type_override, message, intentional, message_override)  // BANDASTATION EDIT - Emote Panel
 		SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
 		return TRUE
 	if(intentional && !silenced && !force_silence)
-		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))
+		to_chat(src, span_notice("Невозможно проиграть эмоцию '[act]'. Скажите '*help', чтобы получить список доступных эмоций."))
 	return FALSE
 
 /datum/emote/help
@@ -51,8 +51,8 @@
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/list/keys = list()
-	var/list/message = list("Available emotes, you can use them with say [span_bold("\"*emote\"")]: \n")
-	message += span_smallnoticeital("Note - emotes highlighted in blue play a sound \n\n")
+	var/list/message = list("Доступные эмоции, которые можно проиграть, сказав [span_bold("\"*emote\"")]: \n")
+	message += span_smallnoticeital("Примечание - помеченные синим эмоциии имеют звук \n\n")
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote_action in GLOB.emote_list[key])
@@ -100,15 +100,15 @@
 		if(prob(fall_over_prob))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
-				span_notice("[flippy_mcgee] attempts to do a flip and falls over, what a doofus!"),
-				span_notice("You attempt to do a flip while still off balance from the last flip and fall down!")
+				span_notice("[flippy_mcgee.declent_ru(NOMINATIVE)] пытается сделать сальто и падает. Вот болван!"),
+				span_notice("Вы пытаетесь сделать сальто, не восстановив баланс после предыдущего, и падаете!")
 			)
 			if(prob(fall_over_prob/2))
 				flippy_mcgee.adjust_brute_loss(1)
 		else
 			flippy_mcgee.visible_message(
-				span_notice("[flippy_mcgee] stumbles a bit after their flip."),
-				span_notice("You stumble a bit from still being off balance from your last flip.")
+				span_notice("[flippy_mcgee.declent_ru(NOMINATIVE)] немного покачивается после сальто."),
+				span_notice("Вы немного пошатываетесь, всё ещё не восстановив равновесие после прошлого сальто.")
 			)
 
 /datum/emote/flip/backflip

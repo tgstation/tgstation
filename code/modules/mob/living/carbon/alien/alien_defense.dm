@@ -24,17 +24,17 @@ In all, this is a lot like the monkey code. /N
 		AdjustParalyzed(-6 SECONDS)
 		AdjustUnconscious(-6 SECONDS)
 		AdjustSleeping(-10 SECONDS)
-		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
+		visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] трётся головой об [declent_ru(ACCUSATIVE)], пытаясь [ru_p_them()] разбудить!"))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message(span_danger("[user.name] bites [src]!"), \
-						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You bite [src]!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] кусает [declent_ru(ACCUSATIVE)]!"), \
+						span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] кусает вас!"), span_hear("Вы слышите кусание!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("Вы кусаете [declent_ru(ACCUSATIVE)]!"))
 		adjust_brute_loss(1)
 		log_combat(user, src, "attacked")
 	else
-		to_chat(user, span_warning("[name] is too injured for that."))
+		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] слишком ранен для этого."))
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)

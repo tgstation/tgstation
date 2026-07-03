@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return FIRELOSS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

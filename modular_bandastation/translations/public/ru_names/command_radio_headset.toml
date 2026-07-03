@@ -1,0 +1,8 @@
+["command radio headset"]
+nominative = "гарнитура командования"
+genitive = "гарнитуры командования"
+dative = "гарнитуре командования"
+accusative = "гарнитуру командования"
+instrumental = "гарнитурой командования"
+prepositional = "гарнитуре командования"
+gender = "female"

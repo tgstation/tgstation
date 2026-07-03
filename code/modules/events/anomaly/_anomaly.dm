@@ -28,7 +28,7 @@
 /datum/round_event/anomaly/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Энергетический поток обнаружен на [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.declent_ru(NOMINATIVE)].", "Обнаружена аномалия")
 
 /datum/round_event/anomaly/start()
 	var/turf/anomaly_turf

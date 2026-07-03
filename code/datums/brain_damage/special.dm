@@ -5,13 +5,13 @@
 	abstract_type = /datum/brain_trauma/special
 
 /datum/brain_trauma/special/godwoken
-	name = "Godwoken Syndrome"
-	desc = "Patient occasionally and uncontrollably channels an eldritch god when speaking."
-	scan_desc = "god delusion"
+	name = "Синдром пробужденного Бога"
+	desc = "Время от времени пациент неконтролируемо транслирует речь древнего бога."
+	scan_desc = "божественная иллюзия"
 	symptoms = "Occasionally utters phrases or commands in a commanding tone, often accompanied by a sense of divine authority. \
 		These utterances can influence the behavior of others, compelling them to act in accordance with the spoken words."
-	gain_text = span_notice("You feel a higher power inside your mind...")
-	lose_text = span_warning("The divine presence leaves your head, no longer interested.")
+	gain_text = span_notice("Вы чувствуете высшую силу внутри своего разума...")
+	lose_text = span_warning("Божественное присутствие покидает вашу голову, потеряв интерес.")
 
 /datum/brain_trauma/special/godwoken/on_life(seconds_per_tick)
 	..()
@@ -51,13 +51,13 @@
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name, TRUE)
 
 /datum/brain_trauma/special/bluespace_prophet
-	name = "Bluespace Prophecy"
-	desc = "Patient can sense the bob and weave of bluespace around them, showing them passageways no one else can see."
+	name = "Блюспейс пророчество"
+	desc = "Пациент может ощущать колебания и переплетения блюспейса вокруг себя, показывающего проходы, которые никто другой не может увидеть."
 	scan_desc = "bluespace attunement"
 	symptoms = "Gains the ability to perceive hidden pathways through bluespace, allowing for spontaneous creation of temporary portals \
 		that connect two distant locations. To the average eye, the patient appears to disappear into thin air, only to reappear elsewhere nearby."
-	gain_text = span_notice("You feel the bluespace pulsing around you...")
-	lose_text = span_warning("The faint pulsing of bluespace fades into silence.")
+	gain_text = span_notice("Вы чувствуете, как блюспейс пульсирует вокруг тебя...")
+	lose_text = span_warning("Слабая пульсация блюспейса сменяется тишиной.")
 	/// Cooldown so we can't teleport literally everywhere on a whim
 	COOLDOWN_DECLARE(portal_cooldown)
 
@@ -100,7 +100,7 @@
 
 /obj/effect/client_image_holder/bluespace_stream
 	name = "bluespace stream"
-	desc = "You see a hidden pathway through bluespace..."
+	desc = "Вы видите скрытый проход через блюспейс..."
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
@@ -128,13 +128,13 @@
 	if(!(user in who_sees_us) || !linked_to)
 		return
 
-	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\
-		"sticks one leg straight out, wiggles [user.p_their()] foot, and is suddenly gone", "stops, then blinks out of reality", \
-		"is pulled into an invisible vortex, vanishing from sight")
-	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
-		"slides out of a fold in spacetime")
+	var/slip_in_message = pick("странным образом скользит в сторону и исчезает", "прыгает в невидимое измерение",\
+		"вытягивает одну ногу прямо, шевелит своей ногой и внезапно исчезает", "останавливается, затем исчезает из реальности", \
+		"затягивается в невидимый вихрь, исчезая из виду")
+	var/slip_out_message = pick("бесшумно появляется из ниоткуда", "выпрыгивает из воздуха","появляется", "выходит из невидимого дверного проема",\
+		"выскальзывает из складки пространства-времени")
 
-	to_chat(user, span_notice("You try to align with the bluespace stream..."))
+	to_chat(user, span_notice("Вы пытаетесь приспособиться к потоку блюспейса..."))
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 
@@ -147,9 +147,9 @@
 	user.visible_message(span_warning("[user] [slip_in_message]."), ignored_mobs = user)
 
 	if(do_teleport(user, destination_turf, no_effects = TRUE))
-		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...и найти дорогу на другую сторону."))
 	else
-		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), span_notice("...and find yourself where you started?"))
+		user.visible_message(span_warning("[user] [slip_out_message], оказавшись точно там же, откуда ушли."), span_notice("...и окажетесь там, где начали?"))
 
 
 /obj/effect/client_image_holder/bluespace_stream/attack_tk(mob/user)
@@ -157,13 +157,13 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/brain_trauma/special/quantum_alignment
-	name = "Quantum Alignment"
-	desc = "Patient is prone to frequent spontaneous quantum entanglement, against all odds, causing spatial anomalies."
-	scan_desc = "quantum alignment"
+	name = "Квантовое выравнивание"
+	desc = "Пациент склонен к частой спонтанной квантовой запутанности, вопреки всем обстоятельствам, что приводит к пространственным аномалиям."
+	scan_desc = "квантовое выравнивание"
 	symptoms = "Frequently experiences spontaneous quantum entanglement with nearby objects or beings, \
 		resulting in sudden and unpredictable teleportation events that connect the patient to the entangled target."
-	gain_text = span_notice("You feel faintly connected to everything around you...")
-	lose_text = span_warning("You no longer feel connected to your surroundings.")
+	gain_text = span_notice("Вы чувствуете слабую связь со всем, что вас окружает...")
+	lose_text = span_warning("Вы больше не чувствуете связи со своим окружением.")
 	var/atom/linked_target = null
 	var/linked = FALSE
 	var/returning = FALSE
@@ -213,7 +213,7 @@
 	entangle(get_turf(owner))
 
 /datum/brain_trauma/special/quantum_alignment/proc/entangle(atom/target)
-	to_chat(owner, span_notice("You start feeling a strong sense of connection to [target]."))
+	to_chat(owner, span_notice("Вы начинаете испытывать сильное чувство связи с [target]."))
 	linked_target = target
 	linked = TRUE
 	COOLDOWN_START(src, snapback_cooldown, rand(45 SECONDS, 10 MINUTES))
@@ -223,7 +223,7 @@
 		linked_target = null
 		linked = FALSE
 		return
-	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
+	to_chat(owner, span_warning("Ваша связь с [linked_target] внезапно становится невероятно сильной... вы можете почувствовать, как она притягивает вас!"))
 	owner.playsound_local(owner, 'sound/effects/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
 	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
@@ -231,24 +231,24 @@
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
 	if(QDELETED(linked_target))
-		to_chat(owner, span_notice("The connection fades abruptly, and the pull with it."))
+		to_chat(owner, span_notice("Связь резко обрывается, а вместе с ней и притяжение."))
 		linked_target = null
 		linked = FALSE
 		return
-	to_chat(owner, span_warning("You're pulled through spacetime!"))
+	to_chat(owner, span_warning("Вас тянет сквозь пространство-время!"))
 	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
 	owner.playsound_local(owner, 'sound/effects/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
 	linked = FALSE
 
 /datum/brain_trauma/special/psychotic_brawling
-	name = "Violent Psychosis"
-	desc = "Patient fights in unpredictable ways, ranging from helping his target to hitting them with brutal strength."
-	scan_desc = "violent psychosis"
+	name = "Насильственный психоз"
+	desc = "Пациент сражается непредсказуемыми способами, начиная от оказания помощи своей жертве и заканчивая нанесением ей жестоких ударов."
+	scan_desc = "насильственный психоз"
 	symptoms = "Exhibits erratic and potentially violent behavior when in physical contact with others, \
 		often accidentally attacking those they intend to offer a hand, or hugging those who they mean to strike."
-	gain_text = span_warning("You feel unhinged...")
-	lose_text = span_notice("You feel more balanced.")
+	gain_text = span_warning("Вы чувствуете себя расстроенными...")
+	lose_text = span_notice("Вы чувствуете себя более уравновешенным.")
 	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
@@ -263,17 +263,16 @@
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
-	name = "Chemical Violent Psychosis"
-	known_trauma = FALSE
+	name = "Химический насильственный психоз"
 
 /datum/brain_trauma/special/tenacity
-	name = "Tenacity"
-	desc = "Patient is psychologically unaffected by pain and injuries, and can remain standing far longer than a normal person."
-	scan_desc = "traumatic neuropathy"
+	name = "Упорство"
+	desc = "Пациент психологически нечувствителен к боли и травмам и может оставаться на ногах гораздо дольше обычного человека."
+	scan_desc = "травматическая невропатия"
 	symptoms = "Exhibits a remarkable resistance to pain and physical trauma, \
 		allowing them to sustain severe injuries that would incapacitate an otherwise normal individual."
-	gain_text = span_warning("You suddenly stop feeling pain.")
-	lose_text = span_warning("You realize you can feel pain again.")
+	gain_text = span_warning("Вы внезапно перестаете чувствовать боль.")
+	lose_text = span_warning("Вы понимаете, что снова можете чувствовать боль.")
 
 /datum/brain_trauma/special/tenacity/on_gain()
 	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
@@ -284,13 +283,13 @@
 	..()
 
 /datum/brain_trauma/special/death_whispers
-	name = "Functional Cerebral Necrosis"
-	desc = "Patient's brain is stuck in a functional near-death state, causing occasional moments of lucid hallucinations, which are often interpreted as the voices of the dead."
-	scan_desc = "chronic functional necrosis"
+	name = "Функциональный церебральный некроз"
+	desc = "Мозг пациента находится в функциональном предсмертном состоянии, что время от времени вызывает осознанные галлюцинации, которые часто интерпретируются как голоса умерших."
+	scan_desc = "хронический функциональный некроз"
 	symptoms = "Experiences intermittent auditory hallucinations characterized by whispering voices, \
 		which are often perceived as communications from the deceased."
-	gain_text = span_warning("You feel dead inside.")
-	lose_text = span_notice("You feel alive again.")
+	gain_text = span_warning("Вы чувствуете себя мертвым внутри.")
+	lose_text = span_notice("Вы снова чувствуете себя живым.")
 	var/active = FALSE
 
 /datum/brain_trauma/special/death_whispers/on_life()
@@ -313,13 +312,13 @@
 	active = FALSE
 
 /datum/brain_trauma/special/existential_crisis
-	name = "Existential Crisis"
-	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
-	scan_desc = "existential crisis"
+	name = "Экзистенциальный кризис"
+	desc = "Связь пациента с реальностью ослабевает, вызывая периодические эпизоды несуществования."
+	scan_desc = "экзистенциальный кризис"
 	symptoms = "Experiences sporadic episodes of \"non-existence\", during which the patient temporarily fades out of reality, \
 		becoming intangible and invisible to others. Often accompanied by feelings of detachment, depression, and disorientation."
-	gain_text = span_warning("You feel less real.")
-	lose_text = span_notice("You feel more substantial again.")
+	gain_text = span_warning("Вы чувствуете себя менее реальным.")
+	lose_text = span_notice("Вы снова чувствуете себя более значимым.")
 	var/obj/effect/abstract/sync_holder/veil/veil
 	/// A cooldown to prevent constantly erratic dolphining through the fabric of reality
 	COOLDOWN_DECLARE(crisis_cooldown)
@@ -341,12 +340,12 @@
 	var/duration = rand(5 SECONDS, 45 SECONDS)
 	veil = new(owner.drop_location())
 	to_chat(owner, span_warning("[pick(list(
-			"Do you even exist?",
-			"To be or not to be...",
-			"Why exist?",
-			"You simply fade away.",
-			"You stop keeping it real.",
-			"You stop thinking for a moment. Therefore you are not.",
+			"Вы вообще существуете?",
+			"Быть или не быть...",
+			"Зачем существовать?",
+			"Вы просто исчезаете.",
+			"Вы перестаете быть настоящим.",
+			"Вы на мгновение перестаете думать. Следовательно, вас нет.",
 		))]"))
 	owner.forceMove(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
@@ -354,20 +353,20 @@
 
 /datum/brain_trauma/special/existential_crisis/proc/fade_in()
 	QDEL_NULL(veil)
-	to_chat(owner, span_notice("You fade back into reality."))
+	to_chat(owner, span_notice("Вы возвращаетесь в реальность."))
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 
 //base sync holder is in desynchronizer.dm
 /obj/effect/abstract/sync_holder/veil
-	name = "non-existence"
-	desc = "Existence is just a state of mind."
+	name = "небытие"
+	desc = "Существование - это просто состояние ума."
 
 /datum/brain_trauma/special/beepsky
-	name = "Criminal"
-	desc = "Patient seems to be a criminal."
-	scan_desc = "criminal mind"
-	gain_text = span_warning("Justice is coming for you.")
-	lose_text = span_notice("You were absolved for your crimes.")
+	name = "Преступник"
+	desc = "Пациент, похоже, преступник."
+	scan_desc = "преступный склад ума"
+	gain_text = span_warning("Правосудие придет за вами.")
+	lose_text = span_notice("Вы были освобождены от ответственности за ваши преступления.")
 	random_gain = FALSE
 	known_trauma = FALSE
 	/// A ref to our fake beepsky image that we chase the owner with
@@ -407,7 +406,7 @@
 
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
-		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
+		owner.visible_message(span_warning("Тело [declent_ru(owner, GENITIVE)] дергается, как будто его ударили током."), span_userdanger("Вы чувствуете силу ЗАКОНА."))
 		owner.adjust_stamina_loss(rand(40, 70))
 		QDEL_NULL(beepsky)
 
@@ -416,7 +415,7 @@
 
 /obj/effect/client_image_holder/securitron
 	name = "Securitron"
-	desc = "The LAW is coming."
+	desc = "Приближается ЗАКОН."
 	image_icon = 'icons/mob/silicon/aibots.dmi'
 	image_state = "secbot-c"
 
@@ -443,16 +442,15 @@
 
 // Used by Veteran Security Advisor job.
 /datum/brain_trauma/special/ptsd
-	name = "Combat PTSD"
-	desc = "The patient is experiencing PTSD stemming from past combat exposure, resulting in a lack of emotions. Additionally, they are experiencing mild hallucinations."
-	scan_desc = "PTSD"
+	name = "Боевое ПТСР"
+	desc = "Пациент испытывает посттравматическое стрессовое расстройство, вызванное пережитыми боевыми действиями, что приводит к отсутствию эмоций. Кроме того, у него наблюдаются лёгкие галлюцинации."
+	scan_desc = "ПТСР"
 	symptoms = "Witnessed or experienced a traumatic, horrific, or potentially life threatening event, \
 		resulting in avoidance, intrusive thoughts, flashbacks, auditory hallucinations, \
 		emotional numbness, detachment from others, and heightened reactivity to stimuli - \
 		particularly in situations reminiscent of the traumatic event."
-
-	gain_text = span_warning("You're thrust back into the chaos of past! Explosions! Gunfire! Emotions, gone AWOL!")
-	lose_text = span_notice("You feel flashbacks of past fade, as your emotions return and mind clear.")
+	gain_text = span_warning("Вы возвращаетесь в хаос прошлого! Взрывы! Стрельба! Эмоции покинули строй!")
+	lose_text = span_notice("Вы чувствуете, как исчезают воспоминания о прошлом, как возвращаются ваши эмоции и проясняется разум.")
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 	can_gain = TRUE
 	random_gain = FALSE
@@ -495,14 +493,14 @@
 	return ..()
 
 /datum/brain_trauma/special/primal_instincts
-	name = "Feral Instincts"
-	desc = "Patient's mind is stuck in a primal state, causing them to act on instinct rather than reason."
-	scan_desc = "ferality"
+	name = "Дикие инстинкты"
+	desc = "Разум пациента застревает в первобытном состоянии, заставляя его действовать скорее инстинктивно, чем разумно."
+	scan_desc = "одичание"
 	symptoms = "Rarely experiences episodes where higher cognitive functions are suppressed, \
 		resulting in behavior driven primarily by primal instincts. During these episodes, \
 		the patient may exhibit increased aggression, territoriality, and a focus on basic survival needs."
-	gain_text = span_warning("Your pupils dilate, and it becomes harder to think straight.")
-	lose_text = span_notice("Your mind clears, and you feel more in control.")
+	gain_text = span_warning("Ваши зрачки расширяются, и вам становится все труднее мыслить здраво.")
+	lose_text = span_notice("Ваш разум проясняется, и вы чувствуете, что лучше контролируете ситуацию.")
 	resilience = TRAUMA_RESILIENCE_SURGERY
 	/// Tracks any existing AI controller, so we can restore it when we're cured
 	var/old_ai_controller_type
@@ -541,46 +539,46 @@
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
 		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
-		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
+		to_chat(owner, span_warning("Вы чувствуете непреодолимое желание действовать в соответствии со своими первобытными инстинктами..."))
 	// extend original timer if we roll the effect while it's already ongoing
 	addtimer(CALLBACK(src, PROC_REF(primal_instincts_off)), rand(20 SECONDS, 40 SECONDS), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	to_chat(owner, span_green("The urge subsides."))
+	to_chat(owner, span_green("Желание утихает."))
 
 /datum/brain_trauma/special/axedoration
-	name = "Axe Delusions"
-	desc = "Patient feels an immense sense of duty towards protecting an axe and has hallucinations regarding it."
-	scan_desc = "object attachment"
-	gain_text = span_notice("You feel like protecting the fire axe is one of your greatest duties.")
-	lose_text = span_warning("You feel like you lost your sense of duty.")
+	name = "Галлюцинации с топором"
+	desc = "Пациент испытывает огромное чувство долга по отношению к защите топора и испытывает галлюцинации, связанные с ним."
+	scan_desc = "привязанность к объекту"
+	gain_text = span_notice("Вы чувствуете, что защита пожарного топора - одна из ваших главных обязанностей.")
+	lose_text = span_warning("Вы чувствуете, что потеряли чувство долга.")
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 	random_gain = FALSE
 	known_trauma = FALSE
 	var/static/list/talk_lines = list(
-		"I'm proud of you.",
-		"I believe in you!",
-		"Do I bother you?",
-		"Praise me!",
-		"Fires burn.",
-		"We made it!",
-		"Mother, my body disgusts me.",
-		"There's a gap where we meet, where I end and you begin.",
-		"Humble yourself.",
+		"Я горжусь тобой.",
+		"Я верю в тебя!",
+		"Я тебе не мешаю?",
+		"Восхваляй меня!",
+		"Горят костры.",
+		"Мы сделали это!",
+		"Мама, моё тело мне отвратительно.",
+		"Там, где мы встречаемся, есть пропасть, где заканчиваюсь я и начинаешься ты..",
+		"Смири себя.",
 	)
 	var/static/list/hurt_lines = list(
-		"Ow!",
-		"Ouch!",
-		"Ack!",
-		"It burns!",
-		"Stop!",
-		"Arghh!",
-		"Please!",
-		"End it!",
-		"Cease!",
-		"Ah!",
+		"Ой!",
+		"Ай!",
+		"Эй!",
+		"Горит!",
+		"Стой!",
+		"Ааааа!",
+		"Пожалуйста!",
+		"Покончи с этим!",
+		"Прекрати!",
+		"Ах!",
 	)
 
 /datum/brain_trauma/special/axedoration/on_life(seconds_per_tick)
@@ -589,7 +587,7 @@
 
 	if(!GLOB.bridge_axe)
 		if(SPT_PROB(0.5, seconds_per_tick))
-			to_chat(owner, span_warning("I've failed my duty..."))
+			to_chat(owner, span_warning("Мой долг не выполнен..."))
 			owner.set_jitter_if_lower(5 SECONDS)
 			owner.set_stutter_if_lower(5 SECONDS)
 			if(SPT_PROB(20, seconds_per_tick))
@@ -606,10 +604,10 @@
 			return
 		var/datum/job/holder_job = axe_holder.mind?.assigned_role
 		if(holder_job && (/datum/job_department/command in holder_job.departments_list))
-			to_chat(owner, span_notice("I hope the axe is in good hands..."))
+			to_chat(owner, span_notice("Я надеюсь, что топор находится в надежных руках..."))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 			return
-		to_chat(owner, span_warning("You start having a bad feeling..."))
+		to_chat(owner, span_warning("У вас появляется дурное предчувствие..."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 		return
 
@@ -618,13 +616,13 @@
 		return
 
 	if(istype(axe_location, /area/station/command))
-		to_chat(owner, span_notice("You feel a sense of relief..."))
+		to_chat(owner, span_notice("Вы испытываете чувство облегчения..."))
 		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
 			return
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
 
-	to_chat(owner, span_warning("You start having a bad feeling..."))
+	to_chat(owner, span_warning("У вас появляется дурное предчувствие..."))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
 /datum/brain_trauma/special/axedoration/on_gain()
@@ -654,7 +652,7 @@
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)
 	SIGNAL_HANDLER
-	to_chat(owner, span_danger("You feel a great disturbance in the force."))
+	to_chat(owner, span_danger("Вы чувствуете сильное возмущение Силы."))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 	owner.set_jitter_if_lower(15 SECONDS)
 	owner.set_stutter_if_lower(15 SECONDS)
@@ -665,11 +663,11 @@
 		return
 	owner.set_jitter_if_lower(3 SECONDS)
 	if(picked_up == GLOB.bridge_axe)
-		to_chat(owner, span_hypnophrase("I have it. It's time to put it back."))
+		to_chat(owner, span_hypnophrase("Он у меня. Пришло время положить его на место."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_held)
 		return
 	ADD_TRAIT(picked_up, TRAIT_NODROP, type)
-	to_chat(owner, span_warning("...This is not the one I'm looking after."))
+	to_chat(owner, span_warning("...Это не тот, за каким я присматриваю."))
 	owner.Immobilize(2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(throw_faker), picked_up), 2 SECONDS)
 
@@ -678,7 +676,7 @@
 	var/held_index = owner.get_held_index_of_item(faker)
 	if(!held_index)
 		return
-	to_chat(owner, span_warning("Be gone with you."))
+	to_chat(owner, span_warning("Уйду с тобой."))
 	owner.swap_hand(held_index, silent = TRUE)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, faker.throw_range)
 	owner.throw_item(target_turf)
@@ -691,14 +689,14 @@
 		return
 	if(istype(new_location, /obj/structure/fireaxecabinet))
 		if(istype(get_area(new_location), /area/station/command))
-			to_chat(owner, span_nicegreen("Ah! Back where it belongs!"))
+			to_chat(owner, span_nicegreen("Ах! Вернулся туда, где должен быть!"))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "smile")
 			return
-		to_chat(owner, span_warning("Leaving it outside of command? Am I sure about that?"))
+		to_chat(owner, span_warning("Оставить его вне мостика? Я в этом уверен?"))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
-	to_chat(owner, span_warning("Should I really leave it here?"))
+	to_chat(owner, span_warning("Мне действительно стоит оставить его здесь?"))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 
 /datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
@@ -706,9 +704,9 @@
 	if(!istype(target, /obj/item/fireaxe))
 		return
 	if(target == GLOB.bridge_axe)
-		examine_strings += span_notice("It's the axe I've sworn to protect.")
+		examine_strings += span_notice("Это топор, который я поклялся защищать.")
 	else
-		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
+		examine_strings += span_warning("Это симулякр, фальшивый топор, созданный для того, чтобы одурачить массы.")
 
 /datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER

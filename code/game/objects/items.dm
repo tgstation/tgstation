@@ -403,6 +403,7 @@
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
+	set category = null // BANDASTATION REPLACEMENT: Original: "Object"
 	set src in oview(1)
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
@@ -428,12 +429,12 @@
 	if(item_flags & BLUESPACE_INTERFERENCE)
 		.["bluespace-active"] = "It is highly active in bluespace and will cause malfunctions in teleporters."
 	if (siemens_coefficient == 0)
-		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
+		.["изолирующий"] = "Предмет изготовлен из прочного изолятора и блокирует проходящее через него электричество!"
 	else if (siemens_coefficient <= 0.5)
-		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
+		.["частично изолирующий"] = "Предмет изготовлен из плохого изолятора, который гасит (но не полностью блокирует) проходящее через него электричество."
 
 /obj/item/examine_descriptor(mob/user)
-	return "item"
+	return "предмет"
 
 /obj/item/examine(mob/user)
 	// lazily initialize the weapon description element if it hasn't been already
@@ -621,12 +622,12 @@
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "атаку", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type) & COMPONENT_HIT_REACTION_BLOCK)
 		return TRUE
 
 	if(prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		owner.visible_message(span_danger("[capitalize(owner.declent_ru(NOMINATIVE))] блокирует [attack_text] с помощью [declent_ru(GENITIVE)]!"))
 		var/owner_turf = get_turf(owner)
 		new block_effect(owner_turf, COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
@@ -824,6 +825,7 @@
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
+	set category = null // BANDASTATION REPLACEMENT: Original: "Object"
 	set name = "Pick up"
 
 	if(usr.incapacitated || !Adjacent(usr))
@@ -1159,9 +1161,9 @@
 	if(last_force_string_check != force && !(item_flags & FORCE_STRING_OVERRIDE))
 		set_force_string()
 	if(!(item_flags & FORCE_STRING_OVERRIDE))
-		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+		openToolTip(user, src, params, title = get_tip_name(), content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]", theme = "")
 	else
-		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
+		openToolTip(user, src, params, title = get_tip_name(), content = "[desc]<br><b>Force:</b> [force_string]", theme = "")
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()
@@ -1775,7 +1777,7 @@
 
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)
-	var/chosen_color = tgui_color_picker(user, "Pick new color", "[src]", default_color)
+	var/chosen_color = tgui_color_picker(user, "Выберите новый цвет", "[src]", default_color)
 	if(!chosen_color || QDELETED(src) || IS_DEAD_OR_INCAP(user) || !user.is_holding(src))
 		return
 	set_painting_tool_color(chosen_color)
@@ -1821,15 +1823,15 @@
 	if(show_visible_message)
 		if(HAS_TRAIT(equipping, TRAIT_DANGEROUS_OBJECT))
 			target.visible_message(
-				span_danger("[user] tries to put [equipping] on [target]."),
-				span_userdanger("[user] tries to put [equipping] on you."),
+				span_danger("[capitalize(user.declent_ru(NOMINATIVE))] пытается экипировать [equipping.declent_ru(ACCUSATIVE)] на [target.declent_ru(ACCUSATIVE)]."),
+				span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] пытается экипировать на вас [equipping.declent_ru(ACCUSATIVE)]."),
 				ignored_mobs = user,
 			)
 
 		else
 			target.visible_message(
-				span_notice("[user] tries to put [equipping] on [target]."),
-				span_notice("[user] tries to put [equipping] on you."),
+				span_notice("[capitalize(user.declent_ru(NOMINATIVE))] пытается экипировать [equipping.declent_ru(ACCUSATIVE)] на [target.declent_ru(ACCUSATIVE)]."),
+				span_notice("[capitalize(user.declent_ru(NOMINATIVE))] пытается экипировать на вас [equipping.declent_ru(ACCUSATIVE)]."),
 				ignored_mobs = user,
 			)
 
@@ -1837,14 +1839,14 @@
 			var/mob/living/carbon/human/victim_human = target
 			if(victim_human.key && !victim_human.client) // AKA braindead
 				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					var/list/new_entry = list(list(user.name, "пытался экипировать на вас [equipping.declent_ru(ACCUSATIVE)]", world.time))
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
 			else if(victim_human.is_blind())
-				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+				to_chat(target, span_userdanger("Вы чувствуете, как кто-то пытается что-то экипировать на вас."))
 	user.do_item_attack_animation(target, used_item = equipping, animation_type = ATTACK_ANIMATION_BLUNT)
 
-	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
+	to_chat(user, span_notice("Вы пытаетесь экипировать [equipping.declent_ru(ACCUSATIVE)] на [target.declent_ru(PREPOSITIONAL)]..."))
 
 	user.log_message("is putting [equipping] on [key_name(target)]", LOG_ATTACK, color="red")
 	target.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)

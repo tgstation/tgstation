@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/shapeshift/shed_human_form
-	name = "Shed form"
-	desc = "Shed your fragile form, become one with the arms, become one with the emperor. \
-		Causes heavy amounts of brain damage and sanity loss to nearby mortals."
+	name = "Сброс облика"
+	desc = "Сбросьте свою хрупкую форму, стань единым с оружием, стань единым с Императором. \
+		Вызывает тяжелые повреждения мозга и потерю рассудка у находящихся поблизости смертных."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

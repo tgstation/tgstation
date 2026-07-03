@@ -62,6 +62,24 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --re
 cp -f target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+# update rust-utils
+if [ ! -d "rust-utils" ]; then
+	echo "Cloning rust-utils..."
+	git clone https://github.com/ss220club/rust-utils
+	cd rust-utils
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+else
+	echo "Fetching rust-utils..."
+	cd rust-utils
+	git fetch
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+fi
+
+echo "Deploying rust utils..."
+git checkout "$RUST_UTILS_VERSION"
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
+mv target/i686-unknown-linux-gnu/release/librust_utils.so "$1/librust_utils.so"
+cd ..
 #
 cd "$original_dir"
 # update dreamluau

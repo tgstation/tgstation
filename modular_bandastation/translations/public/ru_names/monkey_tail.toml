@@ -1,0 +1,8 @@
+["monkey tail"]
+nominative = "обезьяний хвост"
+genitive = "обезьяньего хвоста"
+dative = "обезьяньему хвосту"
+accusative = "обезьяний хвост"
+instrumental = "обезьяньим хвостом"
+prepositional = "обезьяньем хвосте"
+gender = "male"

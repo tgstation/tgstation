@@ -61,6 +61,7 @@
 	result = /obj/item/food/taco/fish
 	cuisine_category = CUISINE_MEXICAN
 	dish_category = DISH_TACO
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/vegetariansushiroll
 	name = "Vegetarian sushi roll"

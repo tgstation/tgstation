@@ -1,0 +1,8 @@
+[engineer]
+nominative = "инженер"
+genitive = " инженера"
+dative = "инженеру"
+accusative = "инженера"
+instrumental = "инженером"
+prepositional = "инженере"
+gender = "male"

@@ -1,0 +1,8 @@
+[beanie]
+nominative = "шапка"
+genitive = "шапки"
+dative = "шапке"
+accusative = "шапку"
+instrumental = "шапкой"
+prepositional = "шапке"
+gender = "female"

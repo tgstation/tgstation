@@ -4,10 +4,10 @@
  * A disk should contain several of these in a list. Only one should get picked for the final paper.
  */
 /datum/experiment/ordnance
-	name = "Toxin Research"
-	description = "An experiment conducted in the ordnance subdepartment."
-	exp_tag = "ordnance"
-	performance_hint = "Perform research experiments in the ordnance lab using the specified equipment, print them unto a data disk, and publish them with the NT Frontier app."
+	name = "Исследование токсинов"
+	description = "Эксперимент, проведенный в отделе боеприпасов."
+	exp_tag = "вооружение"
+	performance_hint = "Проведите исследовательские эксперименты в лаборатории боеприпасов с помощью указанного оборудования, распечатайте их на диске с данными и опубликуйте с помощью приложения NT Frontier."
 	/// Lookup experiments are initialized using subtypes, 
 	/// this lets us ignore the ones made for subtyping.
 	var/experiment_proper = FALSE
@@ -22,7 +22,7 @@
 	return completed 
 		
 /datum/experiment/ordnance/check_progress()
-	var/status_message = "You must publish a paper on [name] using the NT Frontier app"
+	var/status_message = "Вы должны опубликовать отчёт по \"[name]\" с помощью приложения NT Frontier"
 	. += EXPERIMENT_PROG_BOOL(status_message, is_complete())
 
 /datum/experiment/ordnance/actionable(datum/component/experiment_handler/experiment_handler)

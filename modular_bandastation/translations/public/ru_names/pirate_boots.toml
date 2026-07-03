@@ -1,0 +1,8 @@
+["pirate boots"]
+nominative = "пиратские ботинки"
+genitive = "пиратских ботинок"
+dative = "пиратским ботинкам"
+accusative = "пиратские ботинки"
+instrumental = "пиратскими ботинками"
+prepositional = "пиратских ботинках"
+gender = "plural"

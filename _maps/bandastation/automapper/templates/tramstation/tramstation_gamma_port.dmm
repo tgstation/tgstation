@@ -1,0 +1,228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"k" = (
+/obj/docking_port/stationary{
+	dwidth = 4;
+	height = 5;
+	name = "SS13: Gamma Armory";
+	shuttle_id = "gamma_home";
+	width = 9
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"o" = (
+/obj/machinery/door/poddoor/shuttledock{
+	checkdir = 1
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"t" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"u" = (
+/turf/closed/wall/r_wall,
+/area/station/security/armory)
+"C" = (
+/turf/template_noop,
+/area/template_noop)
+"K" = (
+/obj/structure/sign/warning/docking/directional/north,
+/turf/template_noop,
+/area/space/nearstation)
+"N" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/template_noop,
+/area/space/nearstation)
+"R" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"U" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+
+(1,1,1) = {"
+C
+C
+C
+t
+t
+C
+C
+C
+C
+"}
+(2,1,1) = {"
+C
+C
+t
+t
+t
+C
+C
+C
+C
+"}
+(3,1,1) = {"
+C
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(4,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(5,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(6,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(7,1,1) = {"
+t
+t
+t
+t
+t
+u
+u
+u
+N
+"}
+(8,1,1) = {"
+t
+t
+t
+t
+k
+o
+U
+R
+a
+"}
+(9,1,1) = {"
+t
+t
+t
+t
+t
+u
+u
+u
+K
+"}
+(10,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(11,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(12,1,1) = {"
+t
+t
+t
+t
+t
+C
+C
+C
+C
+"}
+(13,1,1) = {"
+C
+t
+t
+t
+C
+C
+C
+C
+C
+"}
+(14,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(15,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}

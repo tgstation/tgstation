@@ -1,0 +1,3 @@
+#include "_skillchip_rcd.dm"
+
+#include "code/skillchip_rcd.dm"

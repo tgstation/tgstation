@@ -98,6 +98,8 @@ GLOBAL_PROTECT(protected_ranks)
 				flag = R_SPAWN
 			if("AUTOADMIN")
 				flag = R_AUTOADMIN
+			if("MENTOR")
+				flag = R_MENTOR
 			if("DBRANKS")
 				flag = R_DBRANKS
 			if("@")
@@ -242,6 +244,12 @@ GLOBAL_PROTECT(protected_ranks)
 
 	return jointext(names, "+")
 
+// BANDASTATION ADD - Prime Admins
+/datum/config_entry/string/admin_table
+	protection = CONFIG_ENTRY_LOCKED
+	default = "admin"
+// BANDASTATION ADD - Prime Admins
+
 /// (Re)Loads the admin list.
 /// returns TRUE if database admins had to be loaded from the backup json
 /proc/load_admins(no_update, initial = FALSE)
@@ -280,7 +288,7 @@ GLOBAL_PROTECT(protected_ranks)
 		new /datum/admins(ranks_from_rank_name(admin_rank), ckey(admin_key), force_active = FALSE, protected = TRUE)
 
 	if(!CONFIG_GET(flag/admin_legacy_system) && !dbfail)
-		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank`, feedback FROM [format_table_name("admin")] ORDER BY `rank`")
+		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank`, feedback FROM [format_table_name(CONFIG_GET(string/admin_table))] ORDER BY `rank`") // BANDASTATION EDIT - Prime Admins
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
@@ -296,7 +304,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 				if(admin_ranks.len == 0)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
-					skip = 1
+					// skip = 1 // BANDASTATION EDIT - Allow loading admin datums w/o ranks
 				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
 					skip = 1
 				if(!skip)
@@ -394,8 +402,8 @@ GLOBAL_PROTECT(protected_ranks)
 	for(var/holder_ckey in GLOB.protected_admins)
 		var/datum/admins/holder = GLOB.protected_admins[holder_ckey]
 		sql_admins += list(list("ckey" = holder.target, "rank" = holder.rank_names()))
-	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
-	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] AS p INNER JOIN [format_table_name("admin")] AS a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	SSdbcore.MassInsert(format_table_name(CONFIG_GET(string/admin_table)), sql_admins, duplicate_key = TRUE) // BANDASTATION EDIT - Prime Admins
+	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] AS p INNER JOIN [format_table_name(CONFIG_GET(string/admin_table))] AS a ON p.ckey = a.ckey SET p.lastadminrank = a.rank") // BANDASTATION EDIT - Prime Admins
 	query_admin_rank_update.Execute()
 	qdel(query_admin_rank_update)
 

@@ -1,7 +1,7 @@
 /datum/action/changeling/adrenaline
 	name = "Gene Stim"
-	desc = "We concentrate our chemicals into a potent stimulant, rendering our form stupendously robust against being incapacitated. Costs 25 chemicals."
-	helptext = "Disregard any condition that has stunned us and suffuse our form with FOUR units of Changeling Adrenaline; our form recovers massive stamina and simply disregards any pain or fatigue during its effects."
+	desc = "Мы концентрируем наши химикаты в мощный стимулятор, делающий нашу форму потрясающе устойчивой к недееспособности. Стоит 25 химикатов"
+	helptext = "Избавляет от любого оглушения и вливает в нашу форму ЧЕТЫРЕ единицы адреналина генокрада; наша форма восстанавливает огромное количество выносливости и просто не замечает боли или усталости во время его воздействия."
 	button_icon_state = "adrenaline"
 	category = "combat"
 	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes

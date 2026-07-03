@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/pointed/void_prison
-	name = "Void Prison"
-	desc = "Sends a heathen into the void for 10 seconds. \
-		They will be unable to perform any actions for the duration. \
-		Afterwards, they will be chilled and returned to the mortal plane."
+	name = "Пустотная тюрьма"
+	desc = "Отправляет язычника в Пустоту на 10 секунд. \
+		В течение этого времени цель не может выполнять какие-либо действия. \
+		По истечении времени они будут охлаждены и возвращены обратно."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -30,8 +30,8 @@
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("A swirling, cold void wraps around [cast_on], but they burst free in a wave of heat!"),
-			span_danger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
+			span_danger("Вихрящаяся холодная пустота окутывает [cast_on.declent_ru(GENITIVE)], но [cast_on.ru_p_they()] вырывается на свободу во вспышке жара!"),
+			span_danger("Перед вами начинает открываться зияющая Пустота, но огромная волна жара разрывает её на части! Вы защищены!!")
 		)
 		return
 	cast_on.apply_status_effect(/datum/status_effect/void_prison, "void_stasis")
@@ -95,8 +95,8 @@
 
 //---- Screen alert
 /atom/movable/screen/alert/status_effect/void_prison
-	name = "Void Prison"
-	desc = "A Yawning void encases your mortal coil." //Go straight to jail, do not pass GO, do not collect 200$
+	name = "Пустотная Тюрьма"
+	desc = "Зияющая Пустота окутывает твою бренную оболочку." //Go straight to jail, do not pass GO, do not collect 200$
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	icon_state = "heretic_template"
 	overlay_icon = 'icons/mob/actions/actions_ecult.dmi'

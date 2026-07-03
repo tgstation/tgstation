@@ -1,0 +1,9 @@
+/obj/machinery/camera{dir = 1} : /obj/machinery/camera/directional/north{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 2} : /obj/machinery/camera/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 4} : /obj/machinery/camera/directional/east{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 5} : /obj/machinery/camera/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 6} : /obj/machinery/camera/directional/east{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 8} : /obj/machinery/camera/directional/west{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 9} : /obj/machinery/camera/directional/north{@OLD;dir=@SKIP}
+/obj/machinery/camera{dir = 10} : /obj/machinery/camera/directional/west{@OLD;dir=@SKIP}
+/obj/machinery/camera : /obj/machinery/camera/directional/south{@OLD;dir=@SKIP}

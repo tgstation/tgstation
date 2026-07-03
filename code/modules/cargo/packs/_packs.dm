@@ -31,9 +31,13 @@
 	var/test_ignored = FALSE
 	/// Various properties for cargo order mostly used to determine which consoles can see it
 	var/order_flags = NONE
+	/// To highlight important items in the console window
+	var/highlight_in_console = FALSE
 
 /datum/supply_pack/New()
+	..()
 	id = type
+	if(!crate_name) crate_name = name
 
 /// Returns data used for cargo purchasing UI
 /datum/supply_pack/proc/get_contents_ui_data()

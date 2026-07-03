@@ -7,7 +7,7 @@
 /datum/antagonist/abductee
 	name = "\improper Abductee"
 	stinger_sound = 'sound/music/antag/abductee.ogg'
-	roundend_category = "abductees"
+	roundend_category = "Похищенные"
 	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	antag_hud_name = "abductee"
 

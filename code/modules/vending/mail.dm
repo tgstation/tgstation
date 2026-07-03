@@ -29,11 +29,13 @@
 	var/static/list/sorting_departments = list(
 		DEPARTMENT_ENGINEERING,
 		DEPARTMENT_SECURITY,
+		DEPARTMENT_JUSTICE,
 		DEPARTMENT_MEDICAL,
 		DEPARTMENT_SCIENCE,
 		DEPARTMENT_CARGO,
 		DEPARTMENT_SERVICE,
 		DEPARTMENT_COMMAND,
+		DEPARTMENT_NANOTRASEN_REPRESENTATION,
 	)
 	var/static/list/choices = list(
 		"Eject" = icon('icons/hud/radial.dmi', "radial_eject"),

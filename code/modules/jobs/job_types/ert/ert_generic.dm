@@ -1,2 +1,2 @@
 /datum/job/ert_generic
-	title = "ERT Generic"
+	title = "Сотрудник ОБР"

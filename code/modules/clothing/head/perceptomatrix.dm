@@ -5,9 +5,7 @@
 /// Helmet which can turn you into a BEAST!! once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
 	name = "perceptomatrix helm"
-	desc = "This piece of headgear harnesses the energies of a hallucinatory anomaly to create a safe audiovisual replica of -all- external stimuli directly into the cerebral cortex, \
-		granting the user effective immunity to both psychic threats, and anything that would affect their perception - be it ear, eye, or even brain damage. \
-		It can also violently discharge said energy, inducing hallucinations in others."
+	desc = "Данный шлем использует мощь галлюцинаторной аномалии, как для защиты мозга носителя, так и для направления галлюцинаций на других."
 	icon_state = "perceptomatrix_helmet_inactive"
 	worn_icon_state = "perceptomatrix_helmet_inactive"
 	base_icon_state = "perceptomatrix_helmet"
@@ -84,7 +82,7 @@
 /obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
 	if((!core_installed) && spell.school == SCHOOL_PSYCHIC)
-		to_chat(caster, span_warning("You can't zap minds through [src]'s shielding without a core installed!"))
+		to_chat(caster, span_warning("Вы не можете воздействовать на чей-то разум через экранирование [declent_ru(GENITIVE)], пока в нём нет ядра!"))
 		return SPELL_CANCEL_CAST
 
 /obj/item/clothing/head/helmet/perceptomatrix/proc/update_anomaly_state()
@@ -119,7 +117,7 @@
 /obj/item/clothing/head/helmet/perceptomatrix/examine(mob/user)
 	. = ..()
 	if (!core_installed)
-		. += span_warning("It requires a hallucination anomaly core in order to function.")
+		. += span_warning("Для работы требуется галлюцинаторное аномальное ядро.")
 
 /obj/item/clothing/head/helmet/perceptomatrix/update_icon_state()
 	icon_state = base_icon_state + (core_installed ? "" : "_inactive")
@@ -129,7 +127,7 @@
 /obj/item/clothing/head/helmet/perceptomatrix/item_interaction(mob/user, obj/item/weapon, params)
 	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/hallucination))
 		return NONE
-	balloon_alert(user, "inserting...")
+	balloon_alert(user, "вставка...")
 	if (!do_after(user, delay = 3 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 	qdel(weapon)
@@ -143,8 +141,8 @@
 	core_installed = TRUE
 
 /datum/action/cooldown/spell/pointed/percept_hallucination
-	name = "Hallucinate"
-	desc = "Redirect perceptual energies towards a target, staggering them."
+	name = "Направить галлюцинации"
+	desc = "Перенаправьте энергию ядра на цель, чтобы вызвать ошеломление."
 	button_icon_state = "blind"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 
@@ -156,7 +154,7 @@
 	spell_requirements = NONE
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
-	active_msg = "You prepare to zap a target with hallucinations..."
+	active_msg = "Вы готовитесь поразить цель галлюцинациями..."
 
 	/// The amount of blurriness to apply
 	var/eye_blur_duration = 7 SECONDS
@@ -179,8 +177,8 @@
 /datum/action/cooldown/spell/pointed/percept_hallucination/proc/blows_up_pancakes_with_mind(obj/item/food/pancakes/pancakes)
 
 	owner.visible_message(
-		span_userdanger("[owner] blows up [pancakes] with [owner.p_their()] mind!"),
-		span_userdanger("You blow up [pancakes] with your mind!")
+		span_userdanger("[owner] взрывает [pancakes.declent_ru(ACCUSATIVE)] силой мысли!"),
+		span_userdanger("Вы взрываете [pancakes.declent_ru(ACCUSATIVE)] силой мысли!")
 	)
 
 	for(var/mob/chef in get_hearers_in_view(7, pancakes))
@@ -188,7 +186,7 @@
 			continue
 		// if cooked by chef, or if EITHER 5% chance OR its april fools. a || (b || c)
 		if(HAS_TRAIT_FROM(pancakes, TRAIT_HANDMADE, REF(chef.mind)) || (prob(5) || check_holidays(APRIL_FOOLS)))
-			chef.say("Ma fuckin' pancakes!")
+			chef.say("Мои, сука, блинчики!")
 
 	playsound(pancakes, 'sound/effects/fuse.ogg', 80)
 	animate(pancakes, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
@@ -218,11 +216,11 @@
 		return
 
 	if(cast_on.can_block_magic(antimagic_flags))
-		to_chat(cast_on, span_notice("You feel psychic energies reflecting off you."))
-		to_chat(owner, span_warning("[cast_on] deflects the energy!"))
+		to_chat(cast_on, span_notice("Вы чувствуете, как пси-энергия отражается от вас."))
+		to_chat(owner, span_warning("[cast_on] отражает пси-энергию!"))
 		return
 
-	to_chat(cast_on, span_warning("Your brain feels like it's on fire!"))
+	to_chat(cast_on, span_warning("Ваш мозг будто в огне!"))
 	cast_on.emote("scream")
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	cast_on.adjust_staggered(stagger_duration)

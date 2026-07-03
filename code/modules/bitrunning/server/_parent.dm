@@ -6,7 +6,7 @@
 
 	circuit = /obj/item/circuitboard/machine/quantum_server
 	density = TRUE
-	desc = "A hulking computational machine designed to fabricate virtual domains."
+	desc = "Громоздкая вычислительная машина, предназначенная для создания виртуальных доменов."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	base_icon_state = "qserver"
 	icon_state = "qserver"
@@ -79,39 +79,39 @@
 		return
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Закрыть" : "Открыть"] панель"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		context[SCREENTIP_CONTEXT_LMB] = "Разбор"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
 
-	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+	. += span_infoplain("Может требовать много ресурсов при работе. Обеспечьте достаточное энергоснабжение.")
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice("Панель технического обслуживания может быть [panel_open ? "закрыта" : "открыта"] [EXAMINE_HINT("с помощью гаечного ключа")].")
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice("Может быть разобран, если [EXAMINE_HINT("поддеть")] чем-то.")
 
 	var/upgraded = FALSE
 	if(capacitor_coefficient < 1)
-		. += span_infoplain("- Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+		. += span_infoplain("- Вместимость охладителя уменьшает время задержки на [(1 - capacitor_coefficient) * 100]%.")
 		upgraded = TRUE
 
 	if(servo_bonus > 0.2)
-		. += span_infoplain("- Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		. += span_infoplain("- Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+		. += span_infoplain("- Потенциал манипуляторов увеличивает награду на [servo_bonus]x.")
+		. += span_infoplain("- Повреждения, получаемые при небезопасном выходе, уменьшены на [servo_bonus * 100]%.")
 		upgraded = TRUE
 
 	if(!upgraded)
-		. += span_notice("Its output is suboptimal. Improved components will grant domain information, reduce cooldowns and increase rewards.")
+		. += span_notice("Его производительность неоптимальна. Улучшенные компоненты дадут информацию о домене, сократят время действия и увеличат награду.")
 
 	if(!is_ready)
-		. += span_notice("It is currently cooling down. Give it a few moments.")
+		. += span_notice("Сервер охлаждается, пожалуйста, ожидайте.")
 
 	if(isobserver(user) && (obj_flags & EMAGGED))
-		. += span_notice("Ominous warning lights are blinking red. This server has been tampered with.")
+		. += span_notice("Предупреждающие индикаторы зловеще мигают красным. Этот сервер подвергся вмешательству.")
 
 
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -125,7 +125,7 @@
 	threat_prob_max *= 2
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
-	balloon_alert(user, "system jailbroken...")
+	balloon_alert(user, "система взломана...")
 	playsound(src, 'sound/effects/sparks/sparks1.ogg', 35, vary = TRUE)
 
 
@@ -154,7 +154,7 @@
 	if(!istype(tool, /obj/item/bitrunning_debug))
 		return NONE
 
-	balloon_alert(user, "*hacker voice* i'm in")
+	balloon_alert(user, "*голос хакера* я внутри")
 	obj_flags |= EMAGGED
 	glitch_chance = 0.5
 	capacitor_coefficient = 0.1
@@ -163,16 +163,16 @@
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	if(!is_ready)
-		balloon_alert(user, "it's scalding hot!")
+		balloon_alert(user, "обжигающе горячо!")
 		return ITEM_INTERACT_FAILURE
 	if(length(avatar_connection_refs))
-		balloon_alert(user, "all clients must disconnect!")
+		balloon_alert(user, "все клиенты должны отключиться!")
 		return ITEM_INTERACT_FAILURE
 	return default_deconstruction_crowbar(user, crowbar)
 
 /obj/machinery/quantum_server/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(!is_ready)
-		balloon_alert(user, "it's scalding hot!")
+		balloon_alert(user, "обжигающе горячо!")
 		return ITEM_INTERACT_FAILURE
 	return default_deconstruction_screwdriver(user, screwdriver)
 
@@ -196,8 +196,8 @@
 	return ..()
 
 /datum/aas_config_entry/bitrunning_QS_ready_announcement
-	name = "Cargo Alert: Bitrunning QS Ready"
+	name = "Карго оповещение: квантовый сервер битрана готов к работе"
 	general_tooltip = "Announces when the quantum server is ready to be used. No variables provided"
 	announcement_lines_map = list(
-		"Message" = "Quantum Server report: Thermal systems within operational parameters. Proceeding to domain configuration."
+		"Message" = "Отчёт квантового сервера: тепловые системы в рабочем состоянии. Переходим к настройке домена."
 	)

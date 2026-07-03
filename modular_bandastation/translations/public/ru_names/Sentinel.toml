@@ -1,0 +1,8 @@
+[Sentinel]
+nominative = "Страж"
+genitive = "Стража"
+dative = "Стражу"
+accusative = "Стража"
+instrumental = "Стражем"
+prepositional = "Страже"
+gender = "female"

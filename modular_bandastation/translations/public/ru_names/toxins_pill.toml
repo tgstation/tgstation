@@ -1,0 +1,8 @@
+["toxins pill"]
+nominative = "таблетка с токсином"
+genitive = "таблетки с токсином"
+dative = "таблетке с токсином"
+accusative = "таблетку с токсином"
+instrumental = "таблеткой с токсином"
+prepositional = "таблетке с токсином"
+gender = "female"

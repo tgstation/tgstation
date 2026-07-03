@@ -5,7 +5,7 @@
 
 /obj/item/grenade/chem_grenade/rust_sower
 	name = "\improper Rust sower"
-	desc = "A nifty little thing that explodes into rust. Causes borgs and mechs to get utterly obliterated"
+	desc = "Изящная вещица, распространяющая ржавчину при подрыве. Приводит к полному уничтожению боргов и мехов."
 	possible_fuse_time = list("5")
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
@@ -49,7 +49,7 @@
 
 /datum/reagent/heretic_rust
 	name = "Eldritch Rust"
-	description = "A slurry of viscous, chunky brown liquid."
+	description = "Суспензия из вязкой плотной коричневой жидкости."
 	color = COLOR_CARGO_BROWN // Rust color
 	taste_description = "rotten copper"
 	penetrates_skin = NONE
@@ -95,7 +95,7 @@
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
-				to_chat(exposed_mob, span_danger("[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]"))
+				to_chat(exposed_mob, span_danger("[pick("Ваша голова раскалывается.", "Кажется, словно у вас во рту пожар.", "Вы чувствуете головокружение.")]"))
 			if(prob(10))
 				victim.set_eye_blur_if_lower(2 SECONDS)
 			if(prob(10))

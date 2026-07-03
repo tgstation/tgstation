@@ -1,9 +1,9 @@
 // Rust charge, a charge action that can only be started on rust (and only destroys rust tiles)
 /datum/action/cooldown/mob_cooldown/charge/rust
-	name = "Rust Charge"
-	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, \
-		will deal high damage to others and rust around you during the charge. \
-		As it is the rust that empowers you with this ability, no focus is needed."
+	name = "Ржавый рывок"
+	desc = "Рывок, который должен начаться на ржавой поверхности, уничтожающий все ржавые объекты по пути. \
+		Наносит большой урон остальным и создает ржавчину вокруг вас во время рывка. \
+		Так как сама ржавчина дает вам эту способность, фокусировка не нунжна."
 	charge_distance = 10
 	charge_damage = 25
 	cooldown_time = 45 SECONDS

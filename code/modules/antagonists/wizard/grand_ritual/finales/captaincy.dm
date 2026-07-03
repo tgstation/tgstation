@@ -33,7 +33,7 @@
 
 	dress_candidate(invoker)
 	GLOB.manifest.modify(invoker.real_name, JOB_CAPTAIN, JOB_CAPTAIN)
-	minor_announce("Captain [invoker.real_name] on deck!")
+	minor_announce("Капитан [invoker.real_name] на палубе!")
 
 	// Enlist some crew to try and restore the natural order
 	for (var/mob/living/carbon/human/former_captain as anything in former_captains)

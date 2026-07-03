@@ -1,0 +1,8 @@
+[carpet]
+nominative = "ковёр"
+genitive = "ковра"
+dative = "ковру"
+accusative = "ковёр"
+instrumental = "ковром"
+prepositional = "ковре"
+gender = "male"

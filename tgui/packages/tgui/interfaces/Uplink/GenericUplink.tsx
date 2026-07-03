@@ -68,7 +68,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   lineHeight={2}
                   textAlign="center"
                   icon={compactMode ? 'maximize' : 'minimize'}
-                  tooltip={compactMode ? 'Detailed view' : 'Compact view'}
+                  tooltip={compactMode ? 'Подробный' : 'Компактный'}
                   onClick={() => setCompactMode(!compactMode)}
                 />
               </Stack.Item>
@@ -109,8 +109,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           {items.length === 0 ? (
             <NoticeBox>
               {searchText.length === 0
-                ? 'No items in this category.'
-                : 'No results found.'}
+                ? 'В этой категории пусто.'
+                : 'Нет результатов поиска.'}
             </NoticeBox>
           ) : (
             <ItemList

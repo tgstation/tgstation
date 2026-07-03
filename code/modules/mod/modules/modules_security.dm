@@ -176,6 +176,7 @@
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= voicespan
+	LAZYADD(speech_args[SPEECH_MODS][MODE_TTS_FILTERS], /datum/singleton/sound_effect/megaphone) // Bandastation Addition
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)

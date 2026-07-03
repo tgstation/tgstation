@@ -1,0 +1,8 @@
+["HUD gar glasses"]
+nominative = "гар ИЛС очки"
+genitive = "гар ИЛС очков"
+dative = "гар ИЛС очкам"
+accusative = "гар ИЛС очки"
+instrumental = "гар ИЛС очками"
+prepositional = "гар ИЛС очках"
+gender = "plural"

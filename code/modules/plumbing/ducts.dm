@@ -160,7 +160,11 @@
 	if(!net)
 		return ..()
 
-	var/list/atom/movable/visited = list(src = TRUE)
+	// BANDASTATION EDIT - TEMPORAL FIX - START
+	var/list/atom/movable/visited = list()
+	visited[src] = TRUE
+	// BANDASTATION EDIT - TEMPORAL FIX - END
+
 	while(neighbours.len)
 		var/atom/movable/neighbour = popleft(neighbours)
 

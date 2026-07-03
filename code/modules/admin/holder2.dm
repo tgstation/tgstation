@@ -190,7 +190,7 @@ GLOBAL_PROTECT(href_token)
 	if (!SSdbcore.IsConnected())
 		return null
 
-	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name(CONFIG_GET(string/admin_table))] WHERE ckey = '[owner.ckey]'") // BANDASTATION EDIT - Prime Admins
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
@@ -422,6 +422,10 @@ GLOBAL_PROTECT(href_token)
 
 /// Get the rank name of the admin
 /datum/admins/proc/rank_names()
+	// BANDASTATION EDIT START - Allow loading admin datums w/o ranks
+	if(!length(ranks))
+		return "!EMPTY!"
+	// BANDASTATION EDIT END
 	return join_admin_ranks(ranks)
 
 /// Get the rank flags of the admin

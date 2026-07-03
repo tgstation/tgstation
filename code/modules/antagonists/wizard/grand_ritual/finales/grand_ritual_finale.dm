@@ -69,7 +69,7 @@
  */
 /datum/antagonist/wizard_prank_vendetta
 	name = "\improper Wizard Prank Victim"
-	roundend_category = "wizard prank victims"
+	roundend_category = "Жертвы пранка волебшника"
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_CREW
 	show_name_in_check_antagonists = TRUE

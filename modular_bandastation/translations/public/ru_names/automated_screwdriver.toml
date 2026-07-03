@@ -1,0 +1,8 @@
+["automated screwdriver"]
+nominative = "автоматическая отвёртка"
+genitive = "автоматической отвёртки"
+dative = "автоматической отвёртке"
+accusative = "автоматическую отвёртку"
+instrumental = "автоматической отвёрткой"
+prepositional = "автоматической отвёртке"
+gender = "female"

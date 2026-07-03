@@ -1,0 +1,8 @@
+[Courtroom]
+nominative = "зал суда"
+genitive = "зала суда"
+dative = "залу суда"
+accusative = "зал суда"
+instrumental = "залом суда"
+prepositional = "зале суда"
+gender = "male"

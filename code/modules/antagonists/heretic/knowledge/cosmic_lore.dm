@@ -1,7 +1,7 @@
 /datum/heretic_knowledge_tree_column/cosmic
 	route = PATH_COSMIC
 	ui_bgr = "node_cosmos"
-	complexity = "Hard"
+	complexity = "Высокая"
 	complexity_color = COLOR_RED
 	icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
@@ -11,28 +11,28 @@
 		"moving" = FALSE,
 	)
 	description = list(
-		"The Path of Cosmos revolves around area denial, teleporation, and mastery over space.",
-		"Pick this path if you enjoy adapting to your environment and thinking outside (or inside) the box.",
+		"Путь Космоса фокусируется на ограничении передвижений, телепортациях, и контроле пространства.",
+		"Выбирайте этот путь, если вам нравится приспосабливаться к окружающей среде, и мыслить вне рамок (или внутри них).",
 	)
 	pros = list(
-		"Control the movement of foes with cosmic fields",
-		"Move in and around space with ease.",
-		"Teleport rapidly across the station.",
-		"Confound opponents with barriers upon barriers.",
+		"Ограничивайте передвижения противника при помощи космических полей.",
+		"С лёгкостью выходите в космос, и возвращайтесь обратно.",
+		"Быстро телепортируйтесь по всей станции.",
+		"Ставьте противников в тупик, воздвигая барьер за барьером.",
 	)
 	cons = list(
-		"Requires you spread your star mark to affect opponents with your cosmic fields.",
-		"Relatively low damage.",
-		"Relatively low direct defense, highly reliant on proper use of abilities.",
+		"Требуется распространять «Звездные Метки», чтобы влиять на противника космическими полями.",
+		"Относительно низкий урон.",
+		"Относительно низкая выживаемость, с сильной зависимостью от правильного использования способностей.",
 	)
 	tips = list(
-		"Your Mansus Grasp will mark your opponent with a star mark, as well as leave a mark that, when detonated, will teleport your opponent back to the place where the mark was applied and briefly paralyze them.",
-		"Your cosmic runes can quickly teleport you from two different locations instantly. Beware, however; non-heretics are also able to travel through them. Be creative and have your opponents teleport right into a trap. They come out star marked!",
-		"When standing on top of a cosmic rune, you can click on yourself with a empty hand to activate it.",
-		"Star marked opponents cannot cross your cosmic fields willingly. But they can be dragged through!",
-		"Star Blast is both a jaunt ability as well as a disabling tool. Use it to catch several people in your cosmic fields at once.",
-		"Star Touch will prevent your target from teleporting away. Should they fail to break the tether, they will be put to sleep and then teleport to your feet.",
-		"It's Always a good idea to leave one cosmic rune near your ritual rune, it will allow you to quickly kidnap your targets to sacrifice them.",
+		"«Хватка Мансуса» помечает вашего противника «Звездной Меткой», а также запоминает место, где он её получил. При активации, помеченый враг перемещается в место, где метка была нанесена и ненадолго лишается способности двигаться.",
+		"«Космические руны» позволяют мгновенно переноситься между ними. Однако стоит быть осторожным, так как ими могут воспользоваться и неверные. Будьте креативны, заставьте своих противников перенестись прямо в ловушку. После перемещения, они также получат «Звездную Метку»!",
+		"Когда вы стоите на «Космической руне», вы можете нажать на себя пустой рукой и активировать её.",
+		"Противники помеченные Звездой не могут самостоятельно пересечь границу звездного поля. Однако, ничто не помешает их оттуда вытащить!",
+		"«Звёздный взрыв» одновременно является способностью повышающей вашу подвижность, а также неплохим способом выйти или вывести кого-то из боя. Используйте её, чтобы поймать в своё звездное поле сразу несколько человек.",
+		"«Касание Звезды» не даст цели телепортироваться от вас. Если они не смогут разорвать связь, то будут усыплены, а после телепортируются к вашим ногам.",
+		"Всегда полезно оставить одну «Космическую руну» рядом с вашей ритуальной руной, это позволит вам быстро похищать свои цели, чтобы принести их в жертву.",
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
@@ -48,11 +48,11 @@
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
-	name = "Eternal Gate"
-	desc = "Opens up the Path of Cosmos to you. \
-		Allows you to transmute a sheet of plasma and a knife into an Cosmic Blade. \
-		You can only create two at a time."
-	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
+	name = "Вечные врата"
+	desc = "Открывает перед вами Путь Космоса. \
+		Позволяет трансмутировать лист плазмы и нож в Космический клинок. \
+		Одновременно можно иметь только два."
+	gain_text = "Туманность появилась в небе, ее пламенное рождение озарило меня. Это было начало великой трансценденции"
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
@@ -67,35 +67,35 @@
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
-	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
+	to_chat(target, span_danger("Над вашей головой появилось космическое кольцо!"))
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	create_cosmic_field(get_turf(source), source)
 
 /datum/heretic_knowledge/spell/cosmic_runes
-	name = "Cosmic Runes"
-	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with each other for easy teleportation. \
-		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark. \
-		However, people with a star mark will get transported along with another person using the rune."
-	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
-		I spoke, and heard my own words echoed back."
+	name = "Космические руны"
+	desc = "Дарует вам «Космические руны» - заклинание, создающее две руны, связанные друг с другом, позволяющие легко переноситься между ними. \
+		Только сущность активировавшая руну будет перенесена, использование руну доступно любому созданию, не обладающий «Меткой Звезды». \
+		Однако люди с «Звездной Меткой» будут перенесены вместе с тем, кто использует руну."
+	gain_text = "Далекие звезды закрались в мои сны, беспричинно ревя и крича. \
+		Я заговорил и услышал, как мои же слова отозвались эхом."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 2
 	drafting_tier = 5
 
 /datum/heretic_knowledge/spell/star_blast
-	name = "Star Blast"
-	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
-		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
-	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
+	name = "Звёздный взрыв"
+	desc = "Дарует вам «Звёздный взрыв» - заклинание, пускающее медленно движущийся снаряд, создающий космические поля на своем пути. \
+		Любой, пораженный снарядом, получит урон от огня, потеряет сознание и распространит на людей в радиусе трёх клеток от себя Звёздную Метку."
+	gain_text = "С каждой новой жертвой, как никогда ранее четко, слышу я слова Зверя, стоящего за мной."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
 
 /datum/heretic_knowledge/armor/cosmic
-
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak, grants protection from the hazards of space while granting to the user the ability to levitate at will. \
-			Acts as a focus while hooded."
-	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
-				The eyes of the Beast rested upon me, and through me."
+	name = "Плащ сотканный из звёзд"
+	desc = "Позволяет трансмутировать стол (или костюм), маску и лист плазмы в Сотканный из звёзд плащ, дающий защиту от космического пространства, а также способность левитировать по желанию. \
+			Действует как фокусировка, пока надет капюшон."
+	gain_text = "Подобно сияющим нитям, сияли звезды, соединяясь в шелковистую форму развевающегося плаща, который одновременно окутывает и обнажает мои плечи. \
+				Глаза Зверя смотрят на меня и сквозь меня."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
 	research_tree_icon_state = "cosmic_armor"
 	required_atoms = list(
@@ -105,24 +105,24 @@
 	)
 
 /datum/heretic_knowledge/spell/star_touch
-	name = "Star Touch"
-	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
-		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
-		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
-		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
-	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
-		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+	name = "Касание Звезды"
+	desc = "Дарует вам «Касание Звезды» - заклинание, ставящее «Метку Звезды» на вашу цель \
+		и создающее космическое поле у ваших ног и на тайлах рядом с вами. Цели, которые уже имеют «Метку Звезды» \
+		будут усыплены на 4 секунды. Когда жертва получает удар, она также создает обжигающий луч. \
+		Луч действует в течение минуты, пока луч не будет прегражден или пока не будет найдена новая цель."
+	gain_text = "Проснувшись в холодном поту, я почувствовал ладонь на своем скальпе, сигил был выжжен на мне. \
+		Теперь мои вены изучали странное фиолетовое сияние: Зверь знает, что я превзойду их ожидания."
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
-	name = "Cosmic Blade"
-	desc = "Your blade now star marks your victims, and allows you to attack star marked heathens from further away. \
-		Your attacks will chain bonus damage to up to two previous victims. \
-		The combo is reset after two seconds without making an attack, or if you attack someone already marked. \
-		If you combo three attacks you will receive a cosmic trail and increase your combo timer up to ten seconds."
-	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
-		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
+	name = "Космический клинок"
+	desc = "Теперь ваш клинок своими ударами наносит «Метку Звезды» своим жертвам, позволяя атаковать язычников с меткой на расстоянии. \
+		Ваши атаки также наносят бонусный урон к двум предыдущим жертвам.\
+		Комбо сбрасывается после двух секунд без атаки, или если вы атакуете кого-то уже отмеченного. \
+		При комбинировании трёх атак вы получите космический след и увеличите таймер вашего комбо до 10 секунд."
+	gain_text = "Когда Зверь взял мои клинки в свою руку, я упал на колени и почувствовал острую боль \
+		Клинки теперь сверкали раздробленной силой. Я упал на землю и зарыдал у ног Зверя."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_cosmos"
 	/// Storage for the second target.
@@ -207,32 +207,32 @@
 		combo_duration += increase_amount
 
 /datum/heretic_knowledge/spell/cosmic_expansion
-	name = "Cosmic Expansion"
-	desc = "Grants you Cosmic Expansion, a spell that creates a 5x5 area of cosmic fields around you. \
-		Nearby beings will also receive a star mark."
-	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
+	name = "Космическая экспансия"
+	desc = "Дарует вам «Космическая экспансия» - заклинание, создающее вокруг вас область космических полей размером 5x5. \
+		Ближайшие существа также будут отмечены «Меткой Звезды»."
+	gain_text = "Теперь земля содрогалась подо мной. Зверь вселился во меня, и голос его опьянял меня."
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 2
 	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/cosmic_final
-	name = "Creators's Gift"
-	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
-		When completed, you become the owner of a Star Gazer. \
-		You will be able to command the Star Gazer with Alt+click. \
-		You can also give it commands through speech. \
-		The Star Gazer is a strong ally who can even break down reinforced walls. \
-		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
-		Your cosmic expansion spell and your blades also become greatly empowered."
-	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
-		I clung on to them, they would protect me, and I would protect it. \
-		I closed my eyes with my head laid against their form. I was safe. \
-		WITNESS MY ASCENSION!"
+	name = "Дар Создателей"
+	desc = "Ритуал вознесения Пути Космоса. \
+		Для завершения ритуала принесите 3 трупа с «Меткой звезды» к руне трансмутации. \
+		После завершения вы станете обладателем Звездочета. \
+		Вы сможете управлять Звездочетом с помощью Альт-Клик. \
+		Вы также можете отдавать ему команды с помощью речи. \
+		Звездочет - сильный союзник, который может даже разрушить укрепленные стены. \
+		Звездочет обладает аурой, которая исцеляет вас и наносит урон противникам. \
+		«Касание Звезды» теперь может телепортировать вас к Звездочету, когда активируется в вашей руке. \
+		Заклинание «Космическая экспансия» и ваши клинки также значительно усилены."
+	gain_text = "Зверь протянул руку, я ухватился за нее, и он притянул меня к себе. Их тело возвышалось надо моим, но также казалось настолько крохотными и слабым после всех их историй в моей голове. \
+		Я прижался к ним, они защитят меня, и я защищаю их. \
+		Я закрыл глаза, прижавшись головой к их телу. Я был в безопасности. \
+		УЗРИТЕ МОЕ ВОЗНЕСЕНИЕ!"
 
 	ascension_achievement = /datum/award/achievement/misc/cosmic_ascension
-	announcement_text = "%SPOOKY% A Star Gazer has arrived into the station, %NAME% has ascended! This station is the domain of the Cosmos! %SPOOKY%"
+	announcement_text = "%SPOOKY% Звездочет прибыл на станцию, %NAME% вознесся! Эта станция - владения Космоса! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_cosmic.ogg'
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
@@ -295,8 +295,8 @@
 
 /// Replace an annoying griefer you were paired up to with a different but probably no less annoying player.
 /datum/action/cooldown/mob_cooldown/replace_star_gazer
-	name = "Reset Star Gazer Consciousness"
-	desc = "Replaces the mind of your summon with that of a different ghost."
+	name = "Перезагрузка сознания Звездочета"
+	desc = "Заменяет разум вызванного вами призрака разумом другого призрака."
 	button_icon = 'icons/mob/simple/mob.dmi'
 	button_icon_state = "ghost"
 	background_icon_state = "bg_heretic"
@@ -314,15 +314,15 @@
 
 	var/mob/living/to_reset = bad_dog.resolve()
 
-	to_chat(owner, span_hierophant("You prompt [to_reset] to shift it\'s personality..."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
+	to_chat(owner, span_hierophant("Вы предлагаете изменить личность [to_reset]..."))
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Хотите ли вы играть за [span_danger("[owner.real_name]")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
 	if(isnull(chosen_one))
-		to_chat(owner, span_hierophant("Your request to shift [to_reset]'\s personality appears to have been denied... Looks like you're stuck with it for now."))
+		to_chat(owner, span_hierophant("Ваш запрос о смене личности [to_reset], судя по всему, был отклонён... Похоже пока придётся мириться с этим."))
 		StartCooldown()
 		return FALSE
-	to_chat(to_reset, span_hierophant("Your summoner reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(owner, span_hierophant("The mind of [to_reset] has twisted itself to suit you better."))
-	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(to_reset)])")
+	to_chat(to_reset, span_hierophant("Ваш призыватель перезагрузил вас, и вашим телом завладел призрак. Похоже, он был не очень доволен вашими действиями."))
+	to_chat(owner, span_hierophant("Разум [to_reset] изменился, чтобы лучше подходить вам."))
+	message_admins("[key_name_admin(chosen_one)] взял контроль над ([ADMIN_LOOKUPFLW(to_reset)])")
 	to_reset.ghostize(FALSE)
 	to_reset.PossessByPlayer(chosen_one.key)
 	StartCooldown()

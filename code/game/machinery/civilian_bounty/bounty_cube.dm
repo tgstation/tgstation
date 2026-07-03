@@ -40,7 +40,7 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> remains until <b>[bounty_value * speed_bonus]</b> [MONEY_NAME_SINGULAR] speedy delivery bonus lost.")
+		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> остаётся до потери бонуса за быструю доставку в размере <b>[bounty_value * speed_bonus]</b>[MONEY_NAME_SINGULAR].")
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> [MONEY_NAME_SINGULAR] handling tip.")
 
@@ -48,7 +48,7 @@
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
 		//set up our fallback message, in case of AAS being broken it will be sent to card holders
-		var/nag_message = "[src] is unsent in [get_area(src)]."
+		var/nag_message = "[capitalize(declent_ru(NOMINATIVE))] лежит неотправленным в [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
 		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src, list(RADIO_CHANNEL_SUPPLY))
@@ -82,7 +82,7 @@
 	bounty_holder_accounts = my_bounty.contribution
 
 	name = "\improper [bounty_value] [MONEY_SYMBOL] [name]"
-	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
+	desc += " Торговая бирка показывает, что этот куб-награда для <i>[bounty_holder] ([bounty_holder_job])</i> за выполнение заказа \"<i>[bounty_name]</i>\" ."
 	AddComponent(/datum/component/pricetag, bounty_holder_accounts.Copy(), holder_cut, FALSE)
 	AddComponent(/datum/component/gps, "[src]")
 

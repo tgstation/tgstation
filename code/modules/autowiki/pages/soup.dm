@@ -65,20 +65,20 @@
 		// -- Compiles a list of required reagents and food items --
 		var/list/all_needs_text = list()
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.required_reagents)
-			all_needs_text += "[soup_recipe.required_reagents[reagent_type]] units [initial(reagent_type.name)]"
+			all_needs_text += "[soup_recipe.required_reagents[reagent_type]] единиц[declension_ru(soup_recipe.required_reagents[reagent_type], "а", "ы", "")] [declent_ru_initial(reagent_type::name, GENITIVE, reagent_type::name)]"
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.required_catalysts)
-			all_needs_text += "[soup_recipe.required_catalysts[reagent_type]] units [initial(reagent_type.name)] (not consumed)"
+			all_needs_text += "[soup_recipe.required_catalysts[reagent_type]] единиц[declension_ru(soup_recipe.required_reagents[reagent_type], "а", "ы", "")] [declent_ru_initial(reagent_type::name, GENITIVE, reagent_type::name)] (не тратится)"
 
 		for(var/obj/item/food_type as anything in soup_recipe.required_ingredients)
 			var/num_needed = soup_recipe.required_ingredients[food_type]
 			// Instantiating this so we can do plurality correctly.
 			// We can use initial but it'll give us stuff like "eyballss".
 			var/obj/item/food = new food_type()
-			all_needs_text += "[num_needed] [food.name]\s"
+			all_needs_text += "[num_needed] шт. [food.declent_ru(GENITIVE)]"
 			qdel(food)
 
 		all_needs_text += soup_recipe.describe_recipe_details()
-		all_needs_text += "At temperature [soup_recipe.required_temp]K"
+		all_needs_text += "При температуре [soup_recipe.required_temp]K"
 		var/compiled_requirements = ""
 		for(var/req_text in all_needs_text)
 			if(length(req_text))
@@ -90,9 +90,9 @@
 		var/list/all_results_text = list()
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.results)
 			var/num_given = soup_recipe.results[reagent_type]
-			all_results_text += "[num_given] units [initial(reagent_type.name)]"
+			all_results_text += "[num_given] единиц[declension_ru(num_given, "а", "ы", "")] [declent_ru_initial(reagent_type::name, NOMINATIVE, reagent_type::name)]"
 		if(soup_recipe.resulting_food_path)
-			all_results_text += "1 [initial(soup_recipe.resulting_food_path.name)]"
+			all_results_text += "1 [declent_ru_initial(initial(soup_recipe.resulting_food_path.name), NOMINATIVE, initial(soup_recipe.resulting_food_path.name))]"
 
 		all_results_text += soup_recipe.describe_result()
 		var/compiled_results = ""
@@ -113,9 +113,9 @@
 			template_list["description"] = "A custom soup recipe, allowing you to throw whatever you want in the pot."
 
 		else
-			var/foodtypes_readable = jointext(bitfield_to_list(soup_food_types, FOOD_FLAGS_IC), ", ") || "None"
-			template_list["name"] = escape_value(result_name)
-			template_list["taste"] = escape_value(length(result_tastes) ? capitalize(jointext(result_tastes, ", ")) : "No taste")
+			var/foodtypes_readable = jointext(bitfield_to_list(soup_food_types, FOOD_FLAGS_IC), ", ") || "Никакой"
+			template_list["name"] = escape_value(declent_ru_initial(result_name, NOMINATIVE, result_name))
+			template_list["taste"] = escape_value(length(result_tastes) ? capitalize(jointext(result_tastes, ", ")) : "Без вкуса")
 			template_list["foodtypes"] = escape_value(foodtypes_readable)
 			template_list["description"] = escape_value(result_desc)
 

@@ -1,0 +1,8 @@
+[crate]
+nominative = "ящик"
+genitive = "ящика"
+dative = "ящику"
+accusative = "ящик"
+instrumental = "ящиком"
+prepositional = "ящике"
+gender = "male"

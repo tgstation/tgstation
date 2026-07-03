@@ -1,7 +1,7 @@
 /datum/action/changeling/regenerate
 	name = "Regenerate"
-	desc = "Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel, healing major wounds, and restoring blood volume. Costs 10 chemicals."
-	helptext = "Will alert nearby crew if any external limbs are regenerated. Can be used while unconscious."
+	desc = "Позволяет регенерировать и восстанавливать отсутствующие внешние конечности и жизненно важные внутренние органы, а также удалять осколки, заживлять серьезные раны и восстанавливать объем крови. Стоит 10 химикатов."
+	helptext = "Оповестит ближайших членов экипажа о регенерации внешних конечностей. Можно использовать в бессознательном состоянии."
 	button_icon_state = "regenerate"
 	chemical_cost = 10
 	dna_cost = CHANGELING_POWER_INNATE
@@ -9,11 +9,11 @@
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	if(!iscarbon(user))
-		user.balloon_alert(user, "nothing missing!")
+		user.balloon_alert(user, "ничего не утеряно!")
 		return FALSE
 
 	..()
-	to_chat(user, span_notice("You feel an itching, both inside and outside as your tissues knit and reknit."))
+	to_chat(user, span_notice("Вы чувствуете зуд, как внутри, так и снаружи, когда ваши ткани плоти вяжутся и перевязываются."))
 	var/mob/living/carbon/carbon_user = user
 	var/got_limbs_back = length(carbon_user.get_missing_limbs()) >= 1
 	carbon_user.fully_heal(HEAL_BODY)
@@ -21,9 +21,9 @@
 	if(got_limbs_back)
 		playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		carbon_user.visible_message(
-			span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
-			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
-			span_hear("You hear organic matter ripping and tearing!"),
+			span_warning("Отсутствующие конечности [user.declent_ru(GENITIVE)] срастаются, издавая громкий, жуткий звук!"),
+			span_userdanger("Ваши конечности отрастают, издавая громкий хрустящий звук и причиняя вам сильную боль!"),
+			span_hear("Вы слышите, как рвется и разрывается органическая масса!"),
 		)
 		carbon_user.emote("scream")
 

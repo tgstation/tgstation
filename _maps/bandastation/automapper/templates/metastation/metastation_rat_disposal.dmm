@@ -1,0 +1,10 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/mob/living/basic/mouse/factory/pizdos,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
+
+(1,1,1) = {"
+a
+"}

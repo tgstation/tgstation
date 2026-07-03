@@ -26,6 +26,7 @@
 			),
 		)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE) // BANDASTATION Addition
 
 	board = !isnull(new_board) ? new_board : new board(src) // i got board
 	if(board.loc != src)

@@ -5,8 +5,8 @@
  * The attacker will always be the first person in the list, killing them will go to the next.
  */
 /datum/mafia_ability/changeling_kill
-	name = "Kill Vote"
-	ability_action = "attempt to absorb"
+	name = "Голос за убийство"
+	ability_action = "попробовать поглотить"
 	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
 	///Boolean on whether a Changeling has been sent to attack someone yet.
 	var/static/ling_sent = FALSE
@@ -30,8 +30,8 @@
 
 	ling_sent = TRUE
 	if(target_role.kill(game, host_role, FALSE))
-		target_role.send_message_to_player(span_userdanger("You have been killed by a Changeling!"))
-	game.send_message(span_danger("[host_role.body.real_name] was selected to attack [target_role.body.real_name] tonight!"), MAFIA_TEAM_MAFIA)
+		target_role.send_message_to_player(span_userdanger("Вы были убиты генокрадом!"))
+	game.send_message(span_danger("[host_role.body.real_name] был выбран для атаки [target_role.body.real_name] этой ночью!"), MAFIA_TEAM_MAFIA)
 	return TRUE
 
 /datum/mafia_ability/changeling_kill/set_target(datum/mafia_role/new_target)

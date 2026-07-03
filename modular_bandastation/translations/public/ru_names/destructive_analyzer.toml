@@ -1,0 +1,8 @@
+["destructive analyzer"]
+nominative = "разборочный анализатор"
+genitive = "разборочного анализатора"
+dative = "разборочному анализатору"
+accusative = "разборочный анализатор"
+instrumental = "разборочным анализатором"
+prepositional = "разборочном анализаторе"
+gender = "male"

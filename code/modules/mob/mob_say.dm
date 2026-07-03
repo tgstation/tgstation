@@ -5,7 +5,7 @@
 	set name = VERB_SAY
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger("Общение было заблокировано администрацией."))
 		return
 
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
@@ -18,7 +18,7 @@
 	set name = VERB_WHISPER
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger("Общение было заблокировано администрацией."))
 		return
 
 	if(message)
@@ -39,10 +39,14 @@
 	set name = VERB_ME
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger("Общение было заблокировано администрацией."))
 		return
 
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	// BANDASTATION EDIT START - Sanitize emotes
+	message = trim(copytext_char(sanitize(message, apply_ic_filter = TRUE), 1, MAX_MESSAGE_LEN))
+	if(!message)
+		return
+	// BANDASTATION EDIT END - Sanitize emotes
 
 	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", NONE, message, TRUE), SSspeech_controller)
 
@@ -57,7 +61,7 @@
 
 	if(filter_result && !filterproof)
 		//The filter warning message shows the sanitized message though.
-		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
+		to_chat(src, span_warning("Ваше сообщение содержит недопустимое для IC слово! Вам следует пересмотреть правила сервера."))
 		to_chat(src, span_warning("\"[message]\""))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		log_filter("IC", message, filter_result)
@@ -65,7 +69,7 @@
 		return FALSE
 
 	if(soft_filter_result && !filterproof)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,"Ваше сообщение содержит \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Вы уверены, что хотите сказать это?", "Слабо-допустимое слово", list("Да", "Нет")) != "Да")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 			log_filter("Soft IC", message, filter_result)
 			return FALSE
@@ -76,7 +80,7 @@
 
 	if(client && !(ignore_spam || forced))
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, span_danger("You cannot speak IC (muted)."))
+			to_chat(src, span_danger("Вы не можете разговаривать в IC-чате (мут)."))
 			return FALSE
 		if(client.handle_spam_prevention(message, MUTE_IC))
 			return FALSE
@@ -89,9 +93,9 @@
 
 	if(!..()) // the can_speak check
 		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
-			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
+			to_chat(src, span_green("Ваш обет молчания не позволяет вам говорить!"))
 		else
-			to_chat(src, span_warning("You find yourself unable to speak!"))
+			to_chat(src, span_warning("Вы осознаете, что не можете говорить!"))
 		return FALSE
 
 	return TRUE
@@ -114,7 +118,7 @@
 	var/alt_name = ""
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger("Общение было заблокировано администрацией."))
 		return
 
 	var/jb = is_banned_from(mannequin_controller?.ckey || ckey, "Deadchat")
@@ -122,17 +126,17 @@
 		return
 
 	if(jb)
-		to_chat(src, span_danger("You have been banned from deadchat."))
+		to_chat(src, span_danger("Вы были забанены от чата мертвых."))
 		return
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, span_danger("You cannot talk in deadchat (muted)."))
+			to_chat(src, span_danger("Вы не можете говорить в чате мертвых (мут)."))
 			return
 
 		if(SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && src == usr)
 			if(!COOLDOWN_FINISHED(client, say_slowmode))
-				to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+				to_chat(src, span_warning("Сообщение не было отправлено из-за слоумода. Пожалуйста, ждите [SSlag_switch.slowmode_cooldown/10] секунд между сообщениями.\n\"[message]\""))
 				return
 			COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
@@ -148,10 +152,10 @@
 		else
 			name = real_name
 		if(name != real_name)
-			alt_name = " (died as [real_name])"
+			alt_name = " (умер как [real_name])"
 
 	var/spanned = generate_messagepart(message)
-	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
+	var/source = "<span class='game'><span class='prefix'>МЕРТВ:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
 	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)
@@ -184,7 +188,7 @@
 	message = copytext(message, customsaypos + 1)
 	if (!message)
 		mods[MODE_CUSTOM_SAY_ERASE_INPUT] = TRUE
-		message = "an interesting thing to say"
+		// message = "an interesting thing to say" // BANDASTATION REMOVAL
 	return message
 /**
  * Extracts and cleans message of any extenstions at the begining of the message

@@ -123,13 +123,13 @@
 		turn_off()
 
 	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
-		real_parent.balloon_alert_to_viewers("no power!")
+		real_parent.balloon_alert_to_viewers("нет питания!")
 		return
 
 	else
 		turn_on()
 
-	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
+	real_parent.balloon_alert_to_viewers("прожиг [on ? "включен" : "отключен"]")
 	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
 	playsound(real_parent, on ? 'sound/items/tools/welderactivate.ogg' : 'sound/items/tools/welderdeactivate.ogg', 15, TRUE)
 
@@ -147,13 +147,13 @@
 	if(!attacking_item.is_open_container())
 		return
 	if(!isnull(container))
-		to_chat(user, span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
-			What if it cross contaminates?"))
+		to_chat(user, span_warning("Вы не посмеете приготовить два разных блюда в одной печи. \
+			Что если их содержимое пересечется?"))
 		return COMPONENT_NO_AFTERATTACK
 
 	if(user.transferItemToLoc(attacking_item, parent))
 		add_container(attacking_item, user)
-		to_chat(user, span_notice("You put [attacking_item] onto [parent]."))
+		to_chat(user, span_notice("Вы перемещаете [attacking_item.declent_ru(ACCUSATIVE)] на [parent.declent_ru(ACCUSATIVE)]."))
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/stove/proc/on_exited(obj/machinery/source, atom/movable/gone, direction)
@@ -193,17 +193,17 @@
 	SIGNAL_HANDLER
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off":"on"] burner"
+		context[SCREENTIP_CONTEXT_RMB] = "[on ? "Выключить":"включить"] прожиг"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item.is_open_container())
-		context[SCREENTIP_CONTEXT_LMB] = "Place container"
+		context[SCREENTIP_CONTEXT_LMB] = "Положить контейнер"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/component/stove/proc/on_examine(obj/machinery/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("You can turn the stovetop burners [on ? "off" : "on"] with <i>right click</i>.")
+	examine_list += span_notice("Вы можете  [on ? "выключить" : "включить"] прожиг с помощью <i>ПКМ</i>.")
 
 /datum/component/stove/proc/on_refresh_parts(obj/machinery/source)
 	SIGNAL_HANDLER

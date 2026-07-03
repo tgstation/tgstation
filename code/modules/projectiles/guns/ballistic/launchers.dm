@@ -93,7 +93,7 @@
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
 	internal_magazine = TRUE
-	cartridge_wording = "rocket"
+	cartridge_wording = "ракет"
 	empty_indicator = TRUE
 	tac_reloads = FALSE
 	can_muzzle_flash = FALSE

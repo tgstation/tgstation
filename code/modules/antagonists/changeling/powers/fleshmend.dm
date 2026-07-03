@@ -1,7 +1,7 @@
 /datum/action/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath, as well as hiding all of our scars. Costs 20 chemicals."
-	helptext = "If we are on fire, the healing effect will not function. Does not regrow limbs or restore lost blood. Functions while unconscious."
+	desc = "Наша плоть быстро регенерирует, заживляя ожоги и ушибы, одышку, а также скрывая все шрамы. Стоит 20 химикатов."
+	helptext = "Если мы находимся в огне, эффект лечения не действует. Не отращивает конечности и не восстанавливает потерянную кровь. Действует в бессознательном состоянии."
 	button_icon_state = "fleshmend"
 	category = "combat"
 	chemical_cost = 20
@@ -12,10 +12,10 @@
 //Can be used whilst unconscious.
 /datum/action/changeling/fleshmend/sting_action(mob/living/user)
 	if(user.has_status_effect(/datum/status_effect/fleshmend))
-		user.balloon_alert(user, "already fleshmending!")
+		user.balloon_alert(user, "уже лечимся!")
 		return
 	..()
-	to_chat(user, span_notice("We begin to heal rapidly."))
+	to_chat(user, span_notice("Мы начинаем быстро выздоравливать."))
 	user.apply_status_effect(/datum/status_effect/fleshmend)
 	return TRUE
 

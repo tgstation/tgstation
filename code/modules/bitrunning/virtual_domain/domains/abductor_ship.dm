@@ -1,12 +1,12 @@
 /datum/lazy_template/virtual_domain/abductor_ship
-	name = "Abductor Ship"
+	name = "Корабль абдукторов"
 	cost = BITRUNNER_COST_MEDIUM
-	desc = "Board an abductor ship and take their goodies."
+	desc = "Высадитесь на корабль абдукторов и заберите их ценности."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	completion_loot = list(/obj/item/toy/plush/abductor/agent = 1)
-	help_text = "An abductor mothership unknowingly entered a hostile environment. \
-	They are currently preparing to escape the area with their gear and loot including \
-	the crate. 	Be careful, they are known for their advanced weaponry."
+	help_text = "Материнский корабль абдукторов непреднамеренно вошел во враждебное окружение. \
+	В настоящее время они готовятся покинуть зону, прихватив своё снаряжение и добычу, включая \
+	ящик. Будьте осторожны, так как абдукторы известны своим продвинутым вооружением."
 	is_modular = TRUE
 	key = "abductor_ship"
 	map_name = "abductor_ship"

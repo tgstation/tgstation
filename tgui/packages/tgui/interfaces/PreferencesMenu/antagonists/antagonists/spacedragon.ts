@@ -2,11 +2,11 @@ import { type Antagonist, Category } from '../base';
 
 const SpaceDragon: Antagonist = {
   key: 'spacedragon',
-  name: 'Space Dragon',
+  name: 'Космический дракон',
   description: [
     `
-      Become a ferocious space dragon. Breathe fire, summon an army of space
-      carps, crush walls, and terrorize the station.
+      Станьте свирепым Космическим драконом. Дышите огнем, призывайте армию
+      космических карпов, крушите стены и наводите ужас на станцию.
     `,
   ],
   category: Category.Midround,

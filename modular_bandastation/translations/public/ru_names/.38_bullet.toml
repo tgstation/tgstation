@@ -1,0 +1,8 @@
+[".38 bullet"]
+nominative = "пуля .38 калибра"
+genitive = "пули .38 калибра"
+dative = "пуле .38 калибра"
+accusative = "пулю .38 калибра"
+instrumental = "пулей .38 калибра"
+prepositional = "пуле .38 калибра"
+gender = "female"

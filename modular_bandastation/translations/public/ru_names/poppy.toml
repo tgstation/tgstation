@@ -1,0 +1,8 @@
+[poppy]
+nominative = "мак"
+genitive = "мака"
+dative = "маку"
+accusative = "мак"
+instrumental = "маком"
+prepositional = "маке"
+gender = "male"

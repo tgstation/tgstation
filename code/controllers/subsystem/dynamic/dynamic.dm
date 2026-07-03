@@ -278,7 +278,8 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
 		if(picked_ruleset.solo)
 			log_dynamic("Roundstart: Ruleset is a solo ruleset. Cancelling other picks.")
-			picked_rulesets.Cut()
+			QDEL_LIST(picked_rulesets)
+			total_weight -= rulesets_weighted[picked_ruleset] // BANDASTATION ADDITION: Repeatable rulesets fix
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset.type
 			break
@@ -289,6 +290,7 @@ SUBSYSTEM_DEF(dynamic)
 				total_weight -= rulesets_weighted[high_impact_ruleset]
 				rulesets_weighted -= high_impact_ruleset
 		if(!picked_ruleset.repeatable)
+			total_weight -= rulesets_weighted[picked_ruleset] // BANDASTATION ADDITION: Repeatable rulesets fix
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset.type
 			continue
@@ -345,7 +347,7 @@ SUBSYSTEM_DEF(dynamic)
 	message_admins("Midround ([range]): Executing [picked_ruleset.config_tag] \
 		[MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
 	// if we have admins online, we have a waiting period before execution to allow them to cancel or reroll
-	if(length(GLOB.admins))
+	if(length(get_holders_with_rights(R_ADMIN))) /// BANDASTATION EDIT: Proper permissions
 		COOLDOWN_START(src, midround_admin_cancel_period, 15 SECONDS)
 		while(!COOLDOWN_FINISHED(src, midround_admin_cancel_period))
 			if(midround_admin_cancel)

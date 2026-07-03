@@ -1,0 +1,8 @@
+["command banner"]
+nominative = "знамя командования"
+genitive = "знамени командования"
+dative = "знамени командования"
+accusative = "знамя командования"
+instrumental = "знаменем командования"
+prepositional = "знамени командования"
+gender = "neuter"

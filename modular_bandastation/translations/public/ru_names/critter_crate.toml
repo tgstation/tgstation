@@ -1,0 +1,7 @@
+["critter crate"]
+nominative = "ящик для животных"
+genitive = "ящика для животных"
+dative = "ящику для животных"
+accusative = "ящик для животных"
+instrumental = "ящиком для животных"
+prepositional = "ящике для животных"

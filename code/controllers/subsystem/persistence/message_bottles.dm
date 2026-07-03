@@ -7,7 +7,7 @@
 	data["bottle_type"] = text2path(bottle_type)
 	if(istype(message, /obj/item/paper))
 		var/obj/item/paper/paper = message
-		if(!length(paper.raw_text_inputs) && !length(paper.raw_stamp_data) && !length(paper.raw_field_input_data))
+		if(!length(paper.raw_text_inputs) && !length(paper.raw_stamp_data))
 			return
 		data["paper"] = paper.convert_to_data()
 	else if(istype(message, /obj/item/photo))

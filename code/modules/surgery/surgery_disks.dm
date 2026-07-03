@@ -1,6 +1,6 @@
 /obj/item/disk/surgery
-	name = "surgery procedure disk"
-	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	name = "диск хирургических процедур"
+	desc = "Диск с продвинутыми хирургическими операциями, его нужно загрузить в хирургическую консоль."
 	icon_state = "datadisk1"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	/// List of surgical operations contained on this disk
@@ -19,8 +19,8 @@
 		surgeries += operation.type
 
 /obj/item/disk/surgery/advanced_plastic_surgery
-	name = "advanced plastic surgery disk"
-	desc = "Provides instructions on how to perform more intricate plastic surgeries."
+	name = "диск продвинутой пластической хирургии"
+	desc = "Содержит инструкции по проведению более сложных пластических операций."
 
 	surgeries = list(
 		/datum/surgery_operation/limb/add_plastic,
@@ -28,31 +28,31 @@
 
 /obj/item/disk/surgery/advanced_plastic_surgery/examine(mob/user)
 	. = ..()
-	. += span_info("Unlocks the <b>[/datum/surgery_operation/limb/add_plastic::name]</b> surgical operation.")
-	. += span_info("Performing this before a <i>[/datum/surgery_operation/limb/plastic_surgery::name]</i> upgrades the operation, \
-		allowing you to copy the appearance of any individual - \
-		provided you have a photo of them in your offhand during the surgery.")
+	. += span_info("Открывает хирургическую операцию <b>[/datum/surgery_operation/limb/add_plastic::name]</b>.")
+	. += span_info("Если выполнить её перед <i>[/datum/surgery_operation/limb/plastic_surgery::name]</i>, операция улучшается, \
+		позволяя копировать внешность любого человека - \
+		при условии, что во второй руке у вас есть его фотография во время операции.")
 
 /obj/item/disk/surgery/advanced_plastic_surgery/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/examine_lore, \
-		lore = "Most forms of plastic surgery became obsolete due in no small part to advances in genetics technology. \
-			Very basic methods still remain in use, but scarcely, and primarily to reverse a patient's disfigurements. \
-			As a consequence, this item became an antique to many collectors - \
-			though some back alley surgeons still seek one out for its now uncommon knowledge." \
+		lore = "Большинство видов пластической хирургии устарели во многом из‑за прогресса в области генетики. \
+			Самые простые методы всё ещё используются, но редко и в основном для устранения обезображиваний пациентов. \
+			В результате этот предмет стал антиквариатом для многих коллекционеров - \
+			хотя некоторые подпольные хирурги до сих пор охотятся за ним ради его редких знаний." \
 	)
 
 /obj/item/disk/surgery/brainwashing
-	name = "brainwashing surgery disk"
-	desc = "Provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
+	name = "диск операции по промыванию мозгов"
+	desc = "Содержит инструкции по закреплению приказа в мозге, делая его основной целью пациента."
 	surgeries = list(
 		/datum/surgery_operation/organ/brainwash,
 		/datum/surgery_operation/organ/brainwash/mechanic,
 	)
 
 /obj/item/disk/surgery/sleeper_protocol
-	name = "suspicious surgery disk"
-	desc = "Provides instructions on how to convert a patient into a sleeper agent for the Syndicate."
+	name = "подозрительный хирургический диск"
+	desc = "Содержит инструкции по превращению пациента в спящего агента Синдиката."
 	surgeries = list(
 		/datum/surgery_operation/organ/brainwash/sleeper,
 		/datum/surgery_operation/organ/brainwash/sleeper/mechanic,

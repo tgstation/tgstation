@@ -1,0 +1,8 @@
+[Bar]
+nominative = "бар"
+genitive = "бара"
+dative = "бару"
+accusative = "бар"
+instrumental = "баром"
+prepositional = "баре"
+gender = "male"

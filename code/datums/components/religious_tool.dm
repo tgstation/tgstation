@@ -203,6 +203,10 @@
 	for(var/path in subtypesof(/datum/religion_sect))
 		var/list/sect = list()
 		var/datum/religion_sect/not_a_real_instance_rs = path
+		// BANDASTATION EDIT START - Religion blacklist
+		if(!not_a_real_instance_rs::obtainable)
+			continue
+		// BANDASTATION EDIT END - Religion blacklist
 		sect["name"] = initial(not_a_real_instance_rs.name)
 		sect["desc"] = initial(not_a_real_instance_rs.desc)
 		sect["alignment"] = initial(not_a_real_instance_rs.alignment)

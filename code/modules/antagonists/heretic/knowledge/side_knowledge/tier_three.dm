@@ -1,12 +1,11 @@
 /*!
  * Tier 3 knowledge: Summons
  */
-
 /datum/heretic_knowledge/summon/rusty
-	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
-		Rust Walkers excel at spreading rust and are moderately strong in combat."
-	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
+	name = "Ритуал Ржавчины"
+	desc = "Позволяет трансмутировать лужу рвоты, 15 мотков провода, и 10 листов железа, чтобы создать Ржавохода. \
+		Ржавоход превосходно распространяет ржавчину и умеренно силён в бою."
+	gain_text = "Я объединил свои знания о созидании с моим стремлением к разрушению. Маршал знал моё имя, и Ржавые Холмы отозвались эхом."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
 		/obj/item/stack/sheet/iron = 10,
@@ -18,12 +17,12 @@
 	drafting_tier = 3
 
 /datum/heretic_knowledge/summon/maid_in_mirror
-	name = "Maid in the Mirror"
-	desc = "Allows you to transmute five sheets of glass, any suit, and a pair of lungs to create a Maid in the Mirror. \
-			Maid in the Mirrors are decent combatants that can become incorporeal by phasing in and out of the mirror realm, serving as powerful scouts and ambushers. \
-			Their attacks also apply a stack of void chill."
-	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
-		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
+	name = "Горничная из Зазеркалья"
+	desc = "Позволяет трансмутировать 5 листов стекла, любой костюм и лёгкие, чтобы создать горничную из Зазеркалья. \
+			Горничные из Зазеркалья сильные бойцы, способные становиться бестелесными, входя в Зазеркальное царство и выходя из него, они выполняют роль разведчиков и мастеров засад.\
+			Их атаки также накладывают Холод Пустоты."
+	gain_text = "В каждом отражении скрыты врата в невообразимый мир невиданных цветов и людей, что никогда не встречались.\
+			Подъём сделан из стекла, а стены - из ножей. И каждый шаг - это кровь, если у вас нет проводника."
 
 	required_atoms = list(
 		/obj/item/stack/sheet/glass = 5,
@@ -37,12 +36,12 @@
 	drafting_tier = 3
 
 /datum/heretic_knowledge/summon/ashy
-	name = "Ashen Ritual"
-	desc = "Allows you to transmute a Bonfire and a book to create an Ash Spirit. \
-		Ash Spirits have a short range jaunt and the ability to cause bleeding in foes at range. \
-		They also have the ability to create a ring of fire around themselves for a length of time. \
-		They have a low amount of health, but will passively recover given enough time to do so."
-	gain_text = "I combined my principle of hunger with my desire for destruction. The Marshal knew my name, and the Nightwatcher gazed on."
+	name = "Пепельный ритуал"
+	desc = "Позволяет трансмутировать костёр, горсть пепла и книгу для создания духа пепла. \
+		Духи пепла обладают рывком на короткую дистанцию и способны дистанционно вызывать кровотечение у врагов. \
+		Также они могут, на некоторое время, создать вокруг себя кольцо огня. \
+		И хотя их запас здоровья довольно мал, они могут пассивно восстанавливать его со временем."
+	gain_text = "Я объединил свой голод с жаждой разрушения. Маршал знал моё имя, а Ночной Дозорный наблюдал за происходящим."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
 		/obj/item/book = 1,
@@ -58,14 +57,14 @@
 #define RISEN_MAX_HEALTH 125
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
-	name = "Shattered Ritual"
-	desc = "Allows you to transmute a corpse with a soul, a pair of latex or nitrile gloves, and \
-		and any exosuit clothing (such as armor) to create a Shattered Risen. \
-		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
-		instead having two brutal weapons for hands. You can only create one at a time."
-	gain_text = "I witnessed a cold, rending force drag this corpse back to near-life. \
-		When it moves, it crunches like broken glass. Its hands are no longer recognizable as human - \
-		each clenched fist contains a brutal nest of sharp bone-shards instead."
+	name = "Разбитый ритуал"
+	desc = "Позволяет трансмутировать труп с душой, пару латексных или нитриловых перчаток, \
+		и любой костюм, чтобы создать Разбитого восставшего. \
+		Разбитые восставшие это сильные гули с 125 здоровья, но не могут держать предметы, \
+		вместо этого имеют в руках два жестоких оружия. Вы можете иметь только одного."
+	gain_text = "Я узрел как холодная, раздирающая сила вернула этот труп к полу-жизни. \
+		Движения хрустящие, как сломанное стекло. Руки больше не похожи на человеческие - \
+		в каждом сжатом кулаке жестокие гнезда острых костяных осколков."
 
 	required_atoms = list(
 		/obj/item/clothing/suit = 1,
@@ -86,33 +85,33 @@
 		if(body.stat != DEAD)
 			continue
 		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
-			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
+			to_chat(user, span_hierophant_warning("[capitalize(body.declent_ru(NOMINATIVE))] не в подходящем состоянии для превращения в гуля."))
 			continue
 		if(!body.mind)
-			to_chat(user, span_hierophant_warning("[body] is mindless and cannot be made into a ghoul."))
+			to_chat(user, span_hierophant_warning("[capitalize(body.declent_ru(NOMINATIVE))] не имеет разума и не может быть превращен в гуля."))
 			continue
 		if(!body.client && !body.mind.get_ghost(ghosts_with_clients = TRUE))
-			to_chat(user, span_hierophant_warning("[body] is soulless and cannot be made into a ghoul."))
+			to_chat(user, span_hierophant_warning("[capitalize(body.declent_ru(NOMINATIVE))] не имеет души и не может быть превращен в гуля."))
 			continue
 
 		// We will only accept valid bodies with a mind, or with a ghost connected that used to control the body
 		selected_atoms += body
 		return TRUE
 
-	loc.balloon_alert(user, "ritual failed, no valid body!")
+	loc.balloon_alert(user, "ритуал провален, нет подходящего тела!")
 	return FALSE
 
 /datum/heretic_knowledge/limited_amount/risen_corpse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
 	if(QDELETED(soon_to_be_ghoul)) // No body? No ritual
 		stack_trace("[type] reached on_finished_recipe without a human in selected_atoms to make a ghoul out of.")
-		loc.balloon_alert(user, "ritual failed, no valid body!")
+		loc.balloon_alert(user, "ритуал провален, нет подходящего тела!")
 		return FALSE
 
 	soon_to_be_ghoul.grab_ghost()
 	if(!soon_to_be_ghoul.mind || !soon_to_be_ghoul.client)
 		stack_trace("[type] reached on_finished_recipe without a minded / cliented human in selected_atoms to make a ghoul out of.")
-		loc.balloon_alert(user, "ritual failed, no valid body!")
+		loc.balloon_alert(user, "ритуал провален, нет подходящего тела!")
 		return FALSE
 
 	selected_atoms -= soon_to_be_ghoul
@@ -148,7 +147,7 @@
 /// The "hand" "weapon" used by shattered risen
 /obj/item/mutant_hand/shattered_risen
 	name = "bone-shards"
-	desc = "What once appeared to be a normal human fist, now holds a mauled nest of sharp bone-shards."
+	desc = "То, что когда-то казалось обычным человеческим кулаком, теперь превратилось в гнездо острых костяных осколков."
 	color = "#001aff"
 	hitsound = SFX_SHATTER
 	force = 16
@@ -158,11 +157,11 @@
 	sharpness = SHARP_EDGED
 
 /datum/heretic_knowledge/summon/fire_shark
-	name = "Scorching Shark"
-	desc = "Allows you to transmute a pool of ash, a liver, and a sheet of plasma into a Fire Shark. \
-		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
-		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
-	gain_text = "The cradle of the nebula was cold, but not dead. Light and heat flits even through the deepest darkness, and is hunted by its own predators."
+	name = "Пылающая акула"
+	desc = "Позволяет трансмутировать горсть пепла, печень и лист плазмы, чтобы создать огненную акулу. \
+		Огненные акулы быстры и сильны в группах, но быстро погибают. Они также обладают высокой устойчивостью к огненным атакам. \
+		Огненные акулы впрыскивают флогистон в своих жертв и извергают плазму после своей смерти."
+	gain_text = "Колыбель туманности была холодной, но не мертвой. Свет и тепло проникают даже в самую глубокую тьму, и за ними охотятся их собственные хищники."
 
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,

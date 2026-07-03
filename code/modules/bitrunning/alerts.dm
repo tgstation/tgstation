@@ -1,11 +1,11 @@
 /atom/movable/screen/alert/bitrunning
-	name = "Generic Bitrunning Alert"
+	name = "Общее предупреждение битрана"
 	icon_state = "template"
 	timeout = 10 SECONDS
 
 /atom/movable/screen/alert/bitrunning/qserver_domain_complete
-	name = "Domain Completed"
-	desc = "The domain is completed. Activate to exit."
+	name = "Домен завершен"
+	desc = "Домен завершён. Активируйте для выхода."
 	timeout = 20 SECONDS
 	clickable_glow = TRUE
 
@@ -18,6 +18,6 @@
 	if(!isliving(living_owner))
 		return
 
-	if(tgui_alert(living_owner, "Disconnect safely?", "Server Message", list("Exit", "Remain"), 10 SECONDS) == "Exit")
+	if(tgui_alert(living_owner, "Вы согласны на безопасное отключение", "Сообщение сервера", list("Выйти", "Остаться"), 10 SECONDS) == "Выйти")
 		SEND_SIGNAL(living_owner, COMSIG_BITRUNNER_ALERT_SEVER)
 

@@ -5,7 +5,7 @@
 	icon_state = "snake"
 	icon_living = "snake"
 	icon_dead = "snake_dead"
-	speak_emote = list("hisses")
+	speak_emote = list("шипит")
 
 	health = 20
 	maxHealth = 20
@@ -70,7 +70,7 @@
 	. = ..()
 	if(!.)
 		return
-	visible_message("[src] hisses happily as it seems to bond with [new_friend].")
+	visible_message("[src] шипит радостно, сближаясь с [new_friend].")
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake

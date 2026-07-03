@@ -1,43 +1,42 @@
-As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will talking to it with telepathy.
-As the Captain, you can use a whetstone to sharpen your fancy fountain pen for extra robustness.
-As the Lawyer, you are the last bastion of roleplay-focused jobs. Even the curator got a whip to go fight people with, that sellout!
-Ask and you shall receive.
-Bitrunning is a crime.
-Blobs are weak to fire! Use a flame thrower for maximum damage!
-Cleanbot.
-Completing your objectives is good practice, but the best antagonists will strive to do more than the bare minimum to really leave an impression.
-DEATH IS IMMINENT!
-Demoman takes skill.
-Did you know that tossing the clown into a singularity will either increase or decrease its size by a large amount?
-Did you know that tossing the clown into the Supermatter engine can destabilize or fix it massively?
-Do not go gentle into that good night.
-FEED ME A STRAY CAT
-Gorillas can be killed by land mines placed along forest paths.
-It's fun to try and predict the round type from the tip of the round message.
-Just like real life the entropy of the game can only increase with time. If things aren't on fire yet, just wait.
-Just the tip?
-Killing the entire station isn't fun except when it is.
-Make sure you put the fresh corpse on a Nanotrasen-Brand Stasis Bed! (Patent Pending)
-Most items have names longer than "soap".
-Nanotrasen doesn't want you to know, you can print Tinfoil Hats by hacking the Autolathe at cargo. It will protect you from... aliens, and a... plethora of mind-based magic.
-Occasionally the tip of the round might lie to you. Don't panic, this is normal.
-Plenty of things that aren't traditionally considered weapons can still be used to slowly brutalize someone to death, get creative!
-Some people are unable to read text on a game where half of it is based on text.
-Sometimes a round will just be a bust. C'est la vie.
-Sometimes admins will just do stuff. Roll with it.
-Sometimes you won't be able to avoid dying no matter how good you are at the game. Try not to stress too much about it.
-Space is cold and it will quickly freeze you to death if you don't protect yourself. This isn't how thermodynamics really works but just go with it.
-The bird remembers.
-The more obscure and underused a game mechanic is, the less likely your victims are to be able to deal with it.
-The quartermaster is only a head of staff so their feelings aren’t hurt. Don’t tell them.
-The remake will never come out.
-The wizard is supposed to be extremely strong in one on one combat, stop getting mad about it.
-There are at least 11 ways to get through plastic flaps. How many can you name?
-This game is older than most of the people playing it.
-This is a game that is constantly being developed for. Expect things to be added, removed, fixed, and broken on a daily basis.
-To defeat the slaughter demon, shoot at it until it dies.
-When a round ends nearly everything about it is lost forever, leave your salt behind with it.
-You can light a match with the heel of your boot. ...What's that? Friction matches went out of style in the 19th century? That's nonsense!
-You can win a pulse rifle from the arcade machine. Honest.
-Your sprite represents your hitbox, so that afro makes you easier to kill. The sacrifices we make for style.
-Santa Claus will listen to your prayers if you call him.
+Будучи инженером, помните, что осколок суперматерии является чрезвычайно опасным объектом: прикосновение к нему приведет к дезинтеграции. Как и общение с ним с помощью телепатии.
+Будучи капитаном, вы можете заточить свою модную перьевую ручку с помощью точильного камня для дополнительной робастности.
+Будучи Юристом, вы - последний бастион ролеплейных должностей. Даже куратор обзавелся кнутом, чтобы сражаться с людьми, этот продажный ублюдок!
+Просите, и вы получите.
+Битраннинг является преступлением.
+Блобы слабы к огню! Используйте огнемет, чтобы нанести максимальный урон!
+Клинбот.
+Выполнение поставленных задач - хорошая практика, но самые лучшие антагонисты будут стремиться сделать больше, чем минимум, чтобы произвести впечатление.
+СМЕРТЬ НЕМИНУЕМА!
+Подрывник требует навыка.
+Знаете ли вы, что если бросить клоуна в сингулярность, то ее размер либо увеличится, либо уменьшится на большую величину?
+Знаете ли вы, что бросив клоуна в кристалл суперматерии, можно значительно дестабилизировать или восстановить его?
+Не уходи безропотно во тьму.
+НАКОРМИ МЕНЯ БРОДЯЧЕЙ КОШКОЙ
+Забавно пытаться предсказать режим раунда по совету раунда.
+Как и в реальной жизни, энтропия игры может только увеличиваться со временем. Если пока всё вокруг ещё не в огне, просто подождите.
+Просто совет?
+Убивать всю станцию это не очень весело, за исключением тех случаев когда это весело.
+Убедитесь, что вы положили свежий труп на стазис-кровать НаноТрейзен! (Патент заявлен)
+Большинство предметов имеют названия длиннее, чем «мыло».
+НаноТрейзен не хочет, чтобы вы знали, что вы можете печатать шапочки из фольги, взломав автолат в карго. Это защитит вас от... пришельцев и... множества видов магии, основанной на разуме.
+Иногда совет раунда может обмануть вас. Не паникуйте, это нормально.
+Множество вещей, которые традиционно не считаются оружием, все равно можно использовать для медленной и жестокой смерти, проявите изобретательность!
+Некоторые люди не могут читать текст в игре, половина которой основана на тексте.
+Иногда раунд оказывается неудачным. C'est la vie.
+Иногда админы просто делают что-то. Смиритесь с этим.
+Иногда вам не удастся избежать смерти, как бы хороши вы ни были в игре. Постарайтесь не переживать по этому поводу.
+Космос холоден и быстро заморозит вас до смерти, если вы не защитите себя. На самом деле термодинамика работает не так, но смиритесь с этим.
+Птица всё помнит.
+Чем более непонятной и малоиспользуемой является игровая механика, тем меньше вероятность того, что ваши жертвы смогут с ней справиться.
+Квартермейстер - всего лишь начальник отдела, так что их чувства не задеты. Не говорите им.
+Ремейк никогда не выйдет. Как и фелениды.
+Волшебник должен быть очень силен в бою один на один, перестаньте злиться из-за этого.
+Существует как минимум 11 способов пробраться через пластиковые шторки. Сколько из них вы можете назвать?
+Эта игра старше многих людей, играющих в нее.
+Это игра, над которой постоянно ведется разработка. Ожидайте, что ежедневно в игру будут добавляться, удаляться, исправляться и ломаться различные вещи.
+Чтобы победить демона резни, стреляйте в него, пока он не умрет.
+Когда раунд заканчивается, почти все, что в нем было, теряется навсегда, оставьте свою соль вместе с ним.
+Спичку можно зажечь с помощью подошвы ботинка. ...Что? Спички вышли из моды в 19 веке? Какая чушь!
+Вы можете выиграть пульсовую винтовку из игрового автомата. Честно.
+Ваш спрайт представляет собой хитбокс, так что с афро вас будет легче убить. На какие жертвы мы идем ради стиля.
+Санта Клаус будет слышать ваши молитвы, если вы обратитесь к нему.

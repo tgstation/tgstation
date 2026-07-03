@@ -1,0 +1,8 @@
+[recycler]
+nominative = "переработчик"
+genitive = "переработчика"
+dative = "переработчику"
+accusative = "переработчик"
+instrumental = "переработчиком"
+prepositional = "переработчике"
+gender = "male"

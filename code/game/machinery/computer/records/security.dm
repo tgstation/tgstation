@@ -211,7 +211,7 @@
 
 	var/max = CONFIG_GET(number/maxfine)
 	if(params["fine"] > max)
-		to_chat(usr, span_warning("The maximum fine is [max] [MONEY_NAME]."))
+		to_chat(usr, span_warning("The maximum fine is [max][MONEY_NAME]."))
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
@@ -334,12 +334,12 @@
 /// Handles printing records via UI. Takes the params from UI_act.
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
-		balloon_alert(user, "printer busy")
+		balloon_alert(user, "принтер занят")
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	printing = TRUE
-	balloon_alert(user, "printing")
+	balloon_alert(user, "распечатывание")
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/printable
@@ -357,16 +357,16 @@
 		if("wanted")
 			var/list/crimes = target.crimes
 			if(!length(crimes))
-				balloon_alert(user, "no crimes")
+				balloon_alert(user, "нет преступлений")
 				return FALSE
 
-			input_description += "\n\n<b>WANTED FOR:</b>"
+			input_description += "\n\n<b>РАЗЫСКИВАЕТСЯ:</b>"
 			for(var/datum/crime/incident in crimes)
 				if(!incident.valid)
-					input_description += "<b>--REDACTED--</b>"
+					input_description += "<b>--РЕДАКТИРОВАНО--</b>"
 					continue
-				input_description += "\n<bCrime:</b> [incident.name]\n"
-				input_description += "<b>Details:</b> [incident.details]\n"
+				input_description += "\n<b>Преступление:</b> [incident.name]\n"
+				input_description += "<b>Детали:</b> [incident.details]\n"
 
 			var/obj/item/photo/mugshot = target.get_front_photo()
 			var/obj/item/poster/wanted/wanted_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
@@ -376,7 +376,7 @@
 		if("rapsheet")
 			var/list/crimes = target.crimes
 			if(!length(crimes))
-				balloon_alert(user, "no crimes")
+				balloon_alert(user, "нет преступлений")
 				return FALSE
 
 			var/obj/item/paper/rapsheet = target.get_rapsheet(input_alias, input_header, input_description)

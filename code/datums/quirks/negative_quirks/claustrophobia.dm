@@ -1,9 +1,9 @@
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
-	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
+	desc = "Вы боитесь маленьких пространств и некоторых праздничных персонажей. Если вы оказываетесь внутри какого-либо контейнера, шкафчика или механизма, у вас начинается приступ паники и вам становится труднее дышать."
 	icon = FA_ICON_BOX_OPEN
 	value = -4
-	medical_record_text = "Patient demonstrates a fear of tight spaces."
+	medical_record_text = "Пациент испытывает страх в замкнутых пространствах."
 	medical_symptom_text = "Experiences panic attacks and shortness of breath when confined in small spaces. \
 		Medication such as Psicodine may lessen the severity of the reaction."
 	hardcore_value = 5

@@ -1,7 +1,7 @@
 /datum/action/changeling/biodegrade
 	name = "Biodegrade"
-	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
-	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. Works against grabs."
+	desc = "Растворяет наручники и другие предметы, мешающие свободному движению. Стоит 30 химикатов."
+	helptext = "Это очевидно для находящихся рядом людей и может разрушить стандартные наручники и шкафы. Работает против захватов."
 	button_icon_state = "biodegrade"
 	category = "utility"
 	chemical_cost = 30
@@ -31,7 +31,7 @@
 		straitjacket = null
 
 	if(!handcuffs && !legcuffs && !straitjacket && !prisoner_shoes && !knotted_shoes && !some_manner_of_cage && !space_invader)
-		user.balloon_alert(user, "already free!")
+		user.balloon_alert(user, "уже свободен!")
 		return .
 	..()
 
@@ -50,11 +50,11 @@
 
 	for(var/obj/restraint as anything in restraints)
 		if(restraint.obj_flags & (INDESTRUCTIBLE | ACID_PROOF | UNACIDABLE))
-			to_chat(user, span_changeling("We cannot use bio-acid to destroy [restraint]!"))
+			to_chat(user, span_changeling("Мы не можем использовать био-кислоту для уничтожения [restraint.declent_ru(ACCUSATIVE)]!"))
 			continue
 
 		if(restraint == user.loc)
-			restraint.visible_message(span_warning("Bubbling acid start spewing out of [restraint]..."))
+			restraint.visible_message(span_warning("Пузырящаяся кислота начинает извергаться из [restraint.declent_ru(ACCUSATIVE)]..."))
 			addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 4 SECONDS)
 			for(var/beat in 1 to 3)
 				addtimer(CALLBACK(src, PROC_REF(make_puddle), restraint), beat SECONDS)
@@ -65,9 +65,9 @@
 		addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 1.5 SECONDS)
 		log_combat(user = user, target = restraint, what_done = "melted restraining item", addition = "(biodegrade)")
 		user.visible_message(
-			span_warning("[user] spews torrents of acid onto [restraint], melting them with horrifying ease."),
-			user.balloon_alert(user, "melting restraints..."),
-			span_danger("You hear retching, then the sizzling of powerful acid, closer to the sound of hissing steam."))
+			span_warning("[user.declent_ru(NOMINATIVE)] извергает потоки кислоты на [restraint.declent_ru(ACCUSATIVE)], расплавляя его с ужасающей легкостью."),
+			user.balloon_alert(user, "расплавляем оковы..."),
+			span_danger("Вы слышите рвотный позыв, затем шипение мощной кислоты, ближе к звуку шипящего пара."))
 		playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
 		. = TRUE
 
@@ -94,16 +94,16 @@
 	playsound(user, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', 50, TRUE)
 	if(IS_CHANGELING(hapless_manhandler))
 		user.visible_message(
-			span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler]... but nothing happens!"),
-			span_changeling("We prepare our escape, spraying bio-acid on our captor... [span_danger("But nothing happened?!")]"),
-			span_danger("You hear retching, then a sizzling that terminates quite abruptly.")
+			span_danger("[user.declent_ru(NOMINATIVE)] извергает струю шипящей кислоты на [hapless_manhandler.declent_ru(ACCUSATIVE)]... но ничего не произошло!"),
+			span_changeling("Мы готовим наш побег, распыляя био-кислоту на нашего похитителя... [span_danger("Но ничего не произошло?!")]"),
+			span_danger("Вы слышите рвотный позыв, затем шипение, которое довольно резко прекращается.")
 			)
-		to_chat(hapless_manhandler, span_changeling("Our prey attempts to dissuade us with one of our biology's simplest adaptions. Quaint."))
+		to_chat(hapless_manhandler, span_changeling("Наша добыча пытается отпугнуть нас одной из простейших адаптаций нашей же биологии. Забавно."))
 		return
 	user.visible_message(
-		span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler], using the opportunity to wrestle away."),
-		user.balloon_alert(user, "dissuading captor..."),
-		span_danger("You hear retching, then sizzling, quickly muffled by a loud keening of pain."))
+		span_danger("[user.declent_ru(NOMINATIVE)] извергает струю шипящей кислоты на [hapless_manhandler.declent_ru(ACCUSATIVE)], используя возможность вырваться."),
+		user.balloon_alert(user, "отпугиваем похитителя..."),
+		span_danger("Вы слышите рвотный позыв, затем шипение, быстро заглушаемое громким стоном боли."))
 	hapless_manhandler.Stun(2 SECONDS)
 	hapless_manhandler.emote("scream")
 	hapless_manhandler.stop_pulling()

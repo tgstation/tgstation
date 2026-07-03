@@ -2,11 +2,9 @@ export type PaperContext = {
   // ui_static_data
   default_pen_color: string;
   default_pen_font: string;
-  max_input_field_length: number;
   max_length: number;
   paper_color: string;
   paper_name: string;
-  raw_field_input?: FieldInput[];
   raw_stamp_input?: StampInput[];
   raw_text_input?: PaperInput[];
   sanitize_text: boolean;
@@ -15,21 +13,19 @@ export type PaperContext = {
 
   // ui_data
   held_item_details?: WritingImplement;
-};
-
-export type FieldInput = {
-  field_index: string;
-  field_data: PaperInput;
-  is_signature: boolean;
+  advanced_html_user: boolean;
+  replacements?: PaperReplacement[];
 };
 
 export type PaperInput = {
   raw_text: string;
+  ref: string;
 } & Partial<{
   font: string;
   color: string;
   bold: boolean;
   advanced_html: boolean;
+  children: PaperInput[];
 }>;
 
 type StampInput = {
@@ -55,3 +51,14 @@ export type WritingImplement = {
   stamp_icon_state: string;
   use_bold: boolean;
 }>;
+
+export type WriteButtonLocation = {
+  paperInputRef: string;
+  fieldId: number;
+};
+
+export type PaperReplacement = {
+  key: string;
+  name: string;
+  value: string;
+};

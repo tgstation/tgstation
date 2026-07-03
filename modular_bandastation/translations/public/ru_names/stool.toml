@@ -1,0 +1,8 @@
+[stool]
+nominative = "табурет"
+genitive = "табурета"
+dative = "табурету"
+accusative = "табурет"
+instrumental = "табуретом"
+prepositional = "табурете"
+gender = "male"

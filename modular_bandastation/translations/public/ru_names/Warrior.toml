@@ -1,0 +1,8 @@
+[Warrior]
+nominative = "Воин"
+genitive = "Воина"
+dative = "Воину"
+accusative = "Воина"
+instrumental = "Воином"
+prepositional = "Воине"
+gender = "female"

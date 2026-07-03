@@ -1,0 +1,45 @@
+name: Changelog validation
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+on:
+  pull_request_target:
+    types: [opened, reopened, edited, labeled, unlabeled, ready_for_review]
+
+jobs:
+  CheckCL:
+    runs-on: ubuntu-latest
+    if: github.base_ref == 'master' && github.event.pull_request.draft == false
+
+    steps:
+      - id: create_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+      - run: echo "GH_TOKEN=${{ steps.create_token.outputs.token }}" >> "$GITHUB_ENV"
+
+      - name: Downloading scripts
+        run: |
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.base_ref }}/tools/changelog/changelog_utils.py
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.base_ref }}/tools/changelog/check_changelog.py
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.base_ref }}/tools/changelog/tags.yml
+
+      - name: Installing Python
+        uses: actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1
+        with:
+          python-version: "3.x"
+
+      - name: Installing deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruamel.yaml PyGithub
+
+      - name: Changelog validation
+        env:
+          GITHUB_TOKEN: ${{ env.GH_TOKEN }}
+        run: python check_changelog.py

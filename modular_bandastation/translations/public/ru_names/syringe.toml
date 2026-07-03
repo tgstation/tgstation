@@ -1,0 +1,8 @@
+[syringe]
+nominative = "шприц"
+genitive = "шприца"
+dative = "шприцу"
+accusative = "шприц"
+instrumental = "шприцом"
+prepositional = "шприце"
+gender = "male"

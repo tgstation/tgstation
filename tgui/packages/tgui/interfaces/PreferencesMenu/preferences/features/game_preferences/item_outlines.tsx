@@ -1,8 +1,8 @@
 import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const itemoutline_pref: FeatureToggle = {
-  name: 'Item outlines',
-  category: 'GAMEPLAY',
-  description: 'When enabled, hovering over items will outline them.',
+  name: 'Контуры предметов',
+  category: 'Геймплей',
+  description: 'Показывать контур предметов при наведении на них.',
   component: CheckboxInput,
 };

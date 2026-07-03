@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	filename = "virtualpet"
 	filedesc = "Virtual Pet"
 	downloader_category = PROGRAM_CATEGORY_GAMES
-	extended_desc = "Download your very own Orbie today!"
+	extended_desc = "Загрузите свой собственный Orbie сегодня!"
 	program_open_overlay = "generic"
 	program_flags = PROGRAM_ON_NTNET_STORE
 	size = 3

@@ -221,22 +221,20 @@
 		we have the most modern russian military equipment the black market can offer, for the right price of course. \
 		No lock, best price."
 	order_flags = ORDER_CONTRABAND
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 20 // BANDASTATION EDIT: ORIGINAL: cost = CARGO_CRATE_VALUE * 12
 	contains = list(
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/speedloader/strilka310,
 		/obj/item/ammo_box/speedloader/strilka310/surplus,
 		/obj/effect/spawner/random/armory/strilka,
 		/obj/item/gun_maintenance_supplies,
-		/obj/item/clothing/suit/armor/vest/russian,
-		/obj/item/clothing/head/helmet/rus_helmet,
+		/obj/effect/spawner/random/clothing/soviet_armor, // BANDASTATION EDIT: ORIGINAL: 	/obj/item/clothing/suit/armor/vest/russian, /obj/item/clothing/suit/armor/vest/russian_coat,
+		/obj/effect/spawner/random/clothing/soviet_helmet, // BANDASTATION EDIT: ORIGINAL: 	/obj/item/clothing/head/helmet/rus_helmet, 	/obj/item/clothing/head/helmet/rus_ushanka,
 		/obj/item/clothing/shoes/russian,
 		/obj/item/clothing/gloves/tackler/combat,
-		/obj/item/clothing/under/syndicate/rus_army,
-		/obj/item/clothing/under/costume/soviet,
+		/obj/effect/spawner/random/clothing/rus_camosuits, // BANDASTATION EDIT: ORIGINAL: /obj/item/clothing/under/syndicate/rus_army,
+		/obj/item/clothing/under/rank/ussp/soldier, // BANDASTATION EDIT: ORIGINAL: /obj/item/clothing/under/costume/soviet,
 		/obj/item/clothing/mask/russian_balaclava,
-		/obj/item/clothing/head/helmet/rus_ushanka,
-		/obj/item/clothing/suit/armor/vest/russian_coat,
 		/obj/item/storage/toolbox/guncase/soviet = 2,
 	)
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

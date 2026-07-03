@@ -30,7 +30,7 @@
 
 		var/obj/item/temp = typepath
 		var/datum/data/vending_product/new_record = new
-		new_record.name = initial(temp.name)
+		new_record.name = capitalize(declent_ru_initial(temp::name, NOMINATIVE, temp::name))
 		new_record.product_path = typepath
 		if(!start_empty)
 			new_record.amount = amount
@@ -189,7 +189,7 @@
 			return
 
 	if(last_shopper != REF(user) || purchase_message_cooldown < world.time)
-		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
+		var/vend_response = vend_reply || "Благодарим за использование [replacetext(src.name, "\improper ", "")]!"
 		speak(vend_response)
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
@@ -284,6 +284,6 @@
 
 	//transfer money to machine
 	SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-	log_econ("[price_to_use] [MONEY_NAME] were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	log_econ("[price_to_use][MONEY_NAME] were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE

@@ -1,6 +1,6 @@
 /obj/item/pinpointer/crew/contractor
 	name = "contractor pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. Ignores suit sensors, but is much less accurate."
+	desc = "Портативное устройство слежения, которое фиксирует определенные сигналы. Игнорирует датчики костюма, но гораздо менее точен."
 	icon_state = "pinpointer_syndicate"
 	worn_icon_state = "pinpointer_black"
 	minimum_range = 25
@@ -8,36 +8,36 @@
 
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
-	default_raw_text = {"Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,\
-		this kit will provide you contracts to take on for TC payments.\
-		<p>Provided within, we give your specialist contractor space suit. It's even more compact, being able to fit into a pocket, and faster than the \
-		Syndicate space suit available to you on the uplink. We also provide your chameleon jumpsuit and mask, both of which can be changed \
-		to any form you need for the moment. The cigarettes are a special blend - it'll heal your injuries slowly overtime.</p>\
-		<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your \
-		targets.</p>\
-		<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep, \
-		with two Rep being provided each time you complete a contract.</p>\
-		<h3>Using the tablet</h3>\
+	default_raw_text = {"Приветствую вас, агент, поздравляю с новой должностью контрактника. Помимо уже поставленных целей,\
+		этот комплект предоставит вам возможность брать контракты с оплатой в виде телекристалов.\
+		<p>В комплекте мы выдаем вам специализированный скафандр контрактника. Он намного компактнее, его можно поместить в карман, и в нем удобнее передвигатся, в отличии \
+		от обычного скафандра Синдиката доступного в вашем аплинке. Мы также предоставляем вам костюм и маску хамелеон, которые оба могут быть изменены \
+		в любую форму которая вам может быть необходима. В сигаретах содержится особая смесь - она будет медленно лечить ваши раны.</p>\
+		<p>Выданная вам дубинка бьет сильнее чем та, к который вы привыкли, и, скорее всего, будет вашим лучшим оружием для похищения ваших \
+		целей.</p>\
+		<p>Магазин контрактника, находящийся в правом верхнем угле аплинка, предоставит вам уникальные предметы и возможности. Они могут быть куплены за репутацию контрактника, \
+		с каждым выполненным контрактом вы будете получать по 2 очка репутации.</p>\
+		<h3>Использование планшета</h3>\
 		<ol>\
-			<li>Open the Syndicate Contract Uplink program.</li>\
-			<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>\
-			<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the \
-			other number regardless of if they were alive or dead.</li>\
-			<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them \
-			inside the pod.</li>\
+			<li>Откройте программу Syndicate Contract Uplink.</li>\
+			<li>В этой программе вы можете принять контракт, а также получить оплату с выполненых контрактов.</li>\
+			<li>Цифры в скобках это ваша премия за то что вы доставите вашу цель <b>живой</b>. Вы получите \
+			определённую сумму независимо от того будет ли ваша цель живой или нет.</li>\
+			<li>Чтобы выполнить контракт, вам нужно принести цель до назначенного места высадки, вызвать под отправки и положить \
+			цель внутрь пода</li>\
 		</ol>\
-		<p>Be careful when accepting a contract. While you'll be able to see the location of the dropoff point, cancelling will make it \
-		unavailable to take on again.</p>\
-		<p>The tablet can also be recharged at any cell charger.</p>\
-		<h3>Extracting</h3>\
+		<p>Будьте осторожны принимая контракт. Хоть вы и сможете видеть местоположение точки высадки, отмена контракта сделает \
+		его более недоступным для выбора</p>\
+		<p>Планшет может быть заряжен в любом заряднике для батарей.</p>\
+		<h3>Отправление</h3>\
 		<ol>\
-			<li>Make sure both yourself and your target are at the dropoff.</li>\
-			<li>Call the extraction, and stand back from the drop point.</li>\
-			<li>If it fails, make sure your target is inside, and there's a free space for the pod to land.</li>\
-			<li>Grab your target, and drag them into the pod.</li>\
+			<li>Убедитесь, что и вы, и ваша цель находятся на месте высадки.</li>\
+			<li>Вызовите под отправки и отойдите от зоны приземления.</li>\
+			<li>Если попытка вызвать под провалилась, проверьте чтобы ваша цель была внутри зоны и есть ли достаточно место для приземления пода.</li>\
+			<li>Схватите свою цель и поместите ее в под.</li>\
 		</ol>\
-		<h3>Ransoms</h3>\
-		<p>We need your target for our own reasons, but we ransom them back to your mission area once their use is served. They will return back
-		from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever \
-		ID card you have equipped, on top of the TC payment we give.</p>\
-		<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
+		<h3>Выкупы</h3>\
+		<p>Нам нужна ваша цель по нашим собственным причинам, но мы вернем ее за выкуп в район вашей миссии, как только она будет больше не нужна. Она вернется обратно \
+		откуда вы их отправили через несколько минут. Не волнуйтесь, мы отдаем вам часть выкупа. Оплата приходит на \
+		любую ID карту которая экипированая на вас, помимо оплаты телекристалами, которую мы вам даем.</p>\
+		<p>Удачи, агент. Вы можете сжечь этот документ с помощью прилагаемой зажигалки.</p>"}

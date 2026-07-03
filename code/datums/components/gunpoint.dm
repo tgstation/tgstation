@@ -7,9 +7,9 @@
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
 #define GUNPOINT_MULT_STAGE_1 1.25
 /// As above, for stage 2
-#define GUNPOINT_MULT_STAGE_2 2
+#define GUNPOINT_MULT_STAGE_2 1.75 // BANDASTATION EDIT - reduce damage multiplier from 2 to 1.75 due to increased aim distance
 /// As above, for stage 3
-#define GUNPOINT_MULT_STAGE_3 2.5
+#define GUNPOINT_MULT_STAGE_3 2.25 // BANDASTATION EDIT - reduce damage multiplier from 2.5 to 2.25 due to increased aim distance
 
 
 /datum/component/gunpoint

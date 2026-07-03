@@ -44,13 +44,13 @@
 	ADD_TRAIT(owner, TRAIT_REVENANT_INHIBITED, TRAIT_STATUS_EFFECT(id))
 	owner.update_appearance(UPDATE_ICON)
 
-	owner.balloon_alert(owner, "inhibited!")
+	owner.balloon_alert(owner, "замедлен!")
 
 /datum/status_effect/revenant/inhibited/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_INHIBITED, TRAIT_STATUS_EFFECT(id))
 	owner.update_appearance(UPDATE_ICON)
 
-	owner.balloon_alert(owner, "uninhibited")
+	owner.balloon_alert(owner, "замедление пропало")
 	return ..()
 
 /datum/status_effect/incapacitating/paralyzed/revenant
@@ -63,13 +63,13 @@
 	owner.orbiting?.end_orbit(src)
 
 	ADD_TRAIT(owner, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
-	owner.balloon_alert(owner, "can't move!")
+	owner.balloon_alert(owner, "нельзя двигаться!")
 	owner.update_mob_action_buttons()
 	owner.update_appearance(UPDATE_ICON)
 
 /datum/status_effect/incapacitating/paralyzed/revenant/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	owner.update_mob_action_buttons()
-	owner.balloon_alert(owner, "can move again")
+	owner.balloon_alert(owner, "можно двигаться")
 
 	return ..()

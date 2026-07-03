@@ -1,0 +1,8 @@
+["chem dispenser"]
+nominative = "химический раздатчик"
+genitive = "химического раздатчика"
+dative = "химическому раздатчику"
+accusative = "химического раздатчика"
+instrumental = "химическим раздатчиком"
+prepositional = "химическом раздатчике"
+gender = "male"

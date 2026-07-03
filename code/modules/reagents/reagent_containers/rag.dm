@@ -75,7 +75,7 @@
 		holder.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 
 /obj/item/rag/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 /obj/item/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

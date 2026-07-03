@@ -1,0 +1,11 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/warm/directional/north,
+/obj/structure/statue/gold/galactic_map,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
+
+(1,1,1) = {"
+a
+"}

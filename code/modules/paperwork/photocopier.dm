@@ -1,5 +1,6 @@
 /// Name of the blanks file
-#define BLANKS_FILE_NAME "config/blanks.json"
+#define BLANKS_FOLDER "config/blanks"
+#define BLANKS_FILE_NAME "[BLANKS_FOLDER]/blanks.json"
 
 /// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
 #define PHOTO_GREYSCALE "Greyscale"
@@ -53,7 +54,17 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	var/list/parsed_blanks = list()
 	for(var/paper_blank in blanks_json)
-		parsed_blanks += list("[paper_blank["code"]]" = paper_blank)
+		var/blank_info = paper_blank["info"]
+		var/info_file_path = "[BLANKS_FOLDER]/[blank_info]"
+		if(islist(blank_info))
+			var/list/blank_info_list = blank_info
+			paper_blank["info"] = blank_info_list.Join("")
+		else if(fexists(info_file_path))
+			paper_blank["info"] = file2text(info_file_path)
+		else
+			continue
+
+		parsed_blanks["[paper_blank["code"]]"] = paper_blank
 
 	return parsed_blanks
 
@@ -211,11 +222,20 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/ui_static_data(mob/user)
 	var/list/static_data = list()
 
+	var/list/user_access = list()
+	if(isliving(user))
+		var/mob/living/living_user = user
+		user_access = living_user.get_access()
+
 	var/list/blank_infos = list()
 	var/list/category_names = list()
 	if(GLOB.paper_blanks)
 		for(var/blank_id in GLOB.paper_blanks)
 			var/list/paper_blank = GLOB.paper_blanks[blank_id]
+			var/required_access = paper_blank["required_access"]
+			if(required_access && !(required_access in user_access))
+				continue
+
 			blank_infos += list(list(
 				name = paper_blank["name"],
 				category = paper_blank["category"],
@@ -361,7 +381,21 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank, ui.user), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
+			return TRUE
+		if("select_paper_type")
+			if(check_busy(usr))
+				return FALSE
+
+			var/paper_path = text2path(params["created_paper"])
+
+			if(!ispath(paper_path, /obj/item/paper))
+				return FALSE
+
+			if(!paper_stack[paper_path])
+				return FALSE
+
+			created_paper = paper_path
 			return TRUE
 		if("select_paper_type")
 			if(check_busy(usr))
@@ -604,17 +638,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return copied_paperwork
 
 /// Handles the copying of blanks. No mutating state, so this should not fail.
-/obj/machinery/photocopier/proc/make_blank_print(list/blank)
+/obj/machinery/photocopier/proc/make_blank_print(list/blank, mob/user)
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper(created_paper)
 
 	var/printname = blank["name"]
-	var/list/printinfo
-	for(var/infoline in blank["info"])
-		printinfo += infoline
+	var/printinfo = blank["info"]
 
 	printblank.name = "paper - '[printname]'"
-	printblank.add_raw_text(printinfo, color = copy_colour)
+	printblank.add_raw_text(replace_text_keys(printinfo, user), color = copy_colour, advanced_html = TRUE)
 	printblank.update_appearance()
 	use_toner(PAPER_TONER_USE)
 	return printblank
@@ -915,6 +947,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 #undef PHOTOCOPIER_FEE
 #undef BLANKS_FILE_NAME
+#undef BLANKS_FOLDER
 #undef PAPER_PAPER_USE
 #undef PHOTO_PAPER_USE
 #undef DOCUMENT_PAPER_USE

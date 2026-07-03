@@ -52,24 +52,24 @@
 		voice = SStts.tram_voice
 	switch(response_code)
 		if(REQUEST_SUCCESS)
-			say("The tram has been called to the platform.")
+			say("Трамвай вызван на платформу.")
 
 		if(REQUEST_FAIL)
 			switch(response_info)
 				if(BROKEN_BEYOND_REPAIR)
-					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
+					say("Трамвай потерпел катастрофическую аварию. Пожалуйста, воспользуйтесь альтернативными способами передвижения.")
 				if(NOT_IN_SERVICE) //tram has no power or other fault, but it's not broken forever
-					say("The tram is not in service due to loss of power or system problems. Please contact the nearest engineer to check power and controller.")
+					say("Трамвай не работает из-за отключения электроэнергии или системных проблем. Обратитесь к техническому специалисту для проверки питания и контроллера.")
 				if(INVALID_PLATFORM) //engineer needs to fix button
-					say("Button configuration error. Please contact the nearest engineer.")
+					say("Ошибка конфигурации кнопки. Пожалуйста, свяжитесь с техническим специалистом.")
 				if(TRANSPORT_IN_USE)
-					say("The tram is tramversing the station, please wait.")
+					say("Трамвай в пути, пожалуйста, подождите.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
 				if(NO_CALL_REQUIRED) //already here
-					say("The tram is already here. Please board the tram and select a destination.")
+					say("Трамвай уже в пункте назначения. Пожалуйста, займите место и выберите пункт назначения.")
 				else
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
 
 /obj/item/assembly/control/transport/call_button/activate()
 	if(cooldown)

@@ -23,137 +23,137 @@ export const AntagInfoBloodWorm = (props) => {
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
-              You are a Blood Worm!
+              Вы - кровяной червь!
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item bold>Your team status:</Stack.Item>
+                <Stack.Item bold>Статус ваших задач:</Stack.Item>
                 <Stack.Item>
-                  - Total blood consumed: {team.blood_consumed_total} units<br/>
-                  - Total times reproduced: {team.times_reproduced_total} times
+                  - Общее количество поглощённой крови: {team.blood_consumed_total} юнитов<br/>
+                  - Общее количество размножившихся особей: {team.times_reproduced_total}
                 </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Item>
-              <Section fill title="Powers">
+              <Section fill title="Способности">
                 <LabeledList>
-                  <LabeledList.Item label="Space Immunity">
-                  You are immune to low temperature, low pressure and don't need to breathe.
-                  Your hosts don't have to breathe either, but their bodies remain vulnerable to space.
+                  <LabeledList.Item label="Защита от космоса">
+                  Вы невосприимчивы к низкой температуре, низкому давлению и вам не нужно дышать.
+                  Вашим носителям также не нужен воздух, однако их тела остаются уязвимыми к воздействию космоса.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Blood Consumption">
-                  You can grow by using Leech Blood or Invade Corpse to consume blood,
-                  but synthetic blood, such as from monkeys, has a limit.
-                  You can see blood levels at a glance using your HUD,
-                  and examining targets yields advanced information on their blood.
+                  <LabeledList.Item label="Поглощение крови">
+                  Вы можете расти, используя «Высасывание крови» или поглощать кровь вселившись в чей-то труп, использовав навык «Захват трупа».
+                  Вы можете питаться синтетической кровью, например кровью обезьян, но этот способ имеет ограничение.
+                  Вы можете сразу увидеть уровень крови жертвы при помощи своего ИЛС,
+                  осмотр цели позволит получить подробную информацию о крови цели.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Growth Stages">
-                  You can track your growth in your status tab. Once you're fully grown,
-                  you can incubate in a cocoon to reach the next growth stage.
-                  Reaching juvenile lets you spit blood, and adults are extremely strong.
+                  <LabeledList.Item label="Стадии роста">
+                  Вы можете отслеживать свой прогресс роста нажав на иконку навыка «Взросление». Как только вы полностью вырастете,
+                  вы сможете поместить себя в кокон для достижения следующей стадии роста.
+                  Достижение стадии молодого кровавого червя даст вам возможность плеватсья токсичной кровью, взрослые особи усиливают этот навык и становятся довольно опасными.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Ventcrawling">
-                  Hatchlings can ventcrawl. Once you grow up, you lose the ability to ventcrawl,
-                  becoming reliant on doorcrawling, breaking doors and ID access to move around.
-                  Secure a good spot or a host before maturing to a juvenile.
+                  <LabeledList.Item label="Перемещение по вентиляции">
+                  Личинки могут ползать по вентиляционным трубам. Когда вы вырастаете, вы теряете эту способность,
+                  для передвижения взрослым особям приходится протискиваться под шлюзами или прибегать к взлому и получению доступов через чужие ID-карты.
+                  Подберите хорошее место или носителя, прежде чем превращаться молодого червя.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Doorcrawling">
-                  Hatchlings and juveniles can slide under doors, but adults can't,
-                  becoming entirely reliant on breaking doors and ID access to move around.
-                  Secure a really good spot or a host before maturing to an adult.
+                  <LabeledList.Item label="Протискивание">
+                  Личинка и молодая особь могут протискиваться под шлюзами, в то время как взрослая особь
+                  вынуждена полагаться только на грубую силу и получение ID-карт с доступом, для перемещения по станции.
+                  Подберите хорошее место или носителя, прежде чем превращаться крупного червя.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Reproduction">
-                  Once you enter your final stage of growth as an adult, you can reproduce to create 3 new hatchlings, in exchange for reverting into one yourself.
+                  <LabeledList.Item label="Размножение">
+                  Как только вы достигнете заключительной стадии взросления, вы сможете размножиться, чтобы произвести на свет 3 новые личинки, в обмен на то, что вы сами превратитесь в одну из них.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Parasitism">
-                  You have the supernatural ability to turn into blood upon command.
-                  This allows you to enter a corpse, taking it as your host.
+                  <LabeledList.Item label="Паразитизм">
+                  Вы обладаете сверхъестественной способностью превращаться в кровь по команде.
+                  Это позволяет вам проникнуть в труп, сделав его своим носителем.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Regeneration">
-                  You slowly heal over time, taking roughly 5 minutes to fully heal from near-death. While in a host, this translates to recovering blood volume over time.
-                  You can inject blood into the damaged tissues of your host to rapidly heal them in exchange for your own health.
+                  <LabeledList.Item label="Восстановление">
+                  Со временем вы медленно исцеляетесь; восстановление от предсмертного состояния занимает примерно 5 минут. Внутри носителя это обозначено как восстановление крови.
+                  Вы можете ввести кровь в поврежденные ткани вашего носителя, чтобы быстро залечить их в обмен на свое собственное здоровье.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Life Support">
-                  While inside of a host, your host doesn't need vital organs to survive, except for a brain. Lungs let you speak, and a liver lets you process chems.
-                  You can insert organs into your host by picking them up and right-clicking on your host with them. This works for cybernetics too.
+                  <LabeledList.Item label="Обеспечение жизнеспособности">
+                  Находясь внутри носителя, ваш организм не нуждается в жизненно важных органах для выживания, за исключением мозга. Однако лёгкие позволяют вам говорить, а печень - перерабатывать химические вещества.
+                  Вы можете вставить органы в свой носитель, взяв их в руки и щелкнув ПКМ на тело носителя, держа их в руках. Работает также с кибернетичесскими органами.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Alien Mind">
-                  Your mind is not that of a human. You don't experience cravings, fear, sadness or joy from normal sources, even while in a host.
+                  <LabeledList.Item label="Разум пришельца">
+                  Ваш разум отличается от человеческого. Вы не испытываете влечения, страха, печали или радости из обычных источников, даже находясь в теле носителя.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>
             <Stack.Item>
-              <Section fill title="Weaknesses">
+              <Section fill title="Слабости">
                 <LabeledList>
-                  <LabeledList.Item label="High Heat">
-                  Your species is averse to heat and will rapidly burn up in hot environments. Your body is also flammable, so stay away from fires.
-                  This weakness applies even while in a host, but can be covered by equipping your host with fire-resistant gear.
+                  <LabeledList.Item label="Высокие температуры">
+                  Ваш вид крайне чувствителен к высокой температуре и будет быстро сгорать в среде с высокой температурой. Ваше тело отлично горит, поэтому держитесь подальше от открытых источников огня.
+                  Эта слабость сохраняется даже при нахождении в носителе, однако её можно компенсировать, экипировав огнестойкое снаряжение.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Bleeding">
-                  While in a host, you are transformed entirely into blood. This renders you extremely vulnerable to bleeding wounds.
-                  When your host bleeds, it directly damages you, and your hosts continue bleeding even while dead.
-                  Your hosts also bleed 50% faster than normal people.
+                  <LabeledList.Item label="Кровопотеря">
+                  Находясь в носителе, вы полностью преобразуетесь в кровь. Это делает вас крайне уязвимым к кровоточащим ранам.
+                  Когда ваш носитель истекает кровью, урон передаётся вам, носитель будет кровоточить даже после своей смерти!
+                  Также, он будет истекать кровью на 50% быстрее, чем обычные люди.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Inferior Biology">
-                  Your hosts lack your advanced senses, leaving them vulnerable to ordinary impediments like darkness and flashbangs.
-                  You can use human tools like night-vision goggles, eye protection and ear protection to circumvent this.
+                  <LabeledList.Item label="Низший биологичесский вид">
+                  У ваших носителей отсутствуют ваши развитые органы чувств, что делает их уязвимыми для обычных препятствий, таких как темнота и светошумовые гранаты.
+                  Вы можете использовать человеческие средства, такие как очки ночного видения, средства защиты глаз и ушей, чтобы обойти это ограничение.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Testing">
-                  The DeForest corporation has engineered single-use devices for detecting blood worms. They can be ordered by security
-                  and take no time to use, but using them is painful for the target and they're really expensive.
+                  <LabeledList.Item label="Тестирование">
+                  Корпорация DeForest разработала одноразовые устройства для обнаружения кровяных червей. Их можно заказать в службе безопасности
+                  и могут быть использованны в тот же момент, однако их использование крайне болезненно для пациента, и они очень дорогие.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>
             <Stack.Item>
-              <Section fill title="Tips">
+              <Section fill title="Советы">
                 <LabeledList>
-                  <LabeledList.Item label="Stealthy Healing">
-                  Using medbay to heal your host instead of spending blood will avoid leaving your host with deathly pale skin.
-                  As a bonus, you get to have more blood for spitting and healing later.
+                  <LabeledList.Item label="Скрытное восстановление">
+                  Использование медицинского отдела для лечения вашего носителя вместо того, чтобы тратить кровь, позволит избежать того, что кожа вашего носителя станет мертвенно-бледной.
+                  Это также позволит сохранить кровь, которую можно потрать на плевки токсичной кровью.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Surprise Worms">
-                  You can leave your host to surprise attack people, which is especially effective as an adult. Be sure to block
-                  off any paths of escape first, as it takes 3 seconds to leave your host.
+                  <LabeledList.Item label="Неожиданные черви">
+                  Вы можете оставить тело носителя чтобы напасть на людей, застав их врасплох, что особенно эффективно для взрослого червя.
+                  Прежде чем удивлять ваших жертв, обязательно перекройте все пути к отступлению, так как для того, чтобы покинуть своего носителя, требуется 3 секунды.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Door Stalking">
-                  As a hatchling or a juvenile, you can slide under a door to stalk nearby victims. Be wary of anyone coming to open the door.
+                  <LabeledList.Item label="Протискивание под шлюзами">
+                  Будучи личинкой или юной особью, вы можете проскользнуть под шлюзом, чтобы подкрасться к жертвам. Будь наготове, что кто-то случайно откроет дверь, где вы скрываетесь.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Meatshields">
-                  Hosts are practically meatshields for you, just keep track of any fires, bleeding wounds, cremators or gibbing mechanisms.
-                  Remember to also heal your host periodically using Inject Blood whenever they get too low.
+                  <LabeledList.Item label="Мясной щит">
+                  Носители это буквально ваш щит из плоти, однако, вам всё равно следует следить за пожарами, кровоточащими ранами и постараться не оказаться в крематории или другой подобной машинерии.
+                  Не стоит забывать также периодически лечить тело носителя с помощью «Инъекций крови».
                   </LabeledList.Item>
-                  <LabeledList.Item label="Life Insurance">
-                  Because you can't control corpses while you have less than a tenth of your health in blood volume, you will be ejected from your host when you get really low.
-                  You can use this as insurance to get a last ditch escape attempt.
+                  <LabeledList.Item label="Страхование жизни">
+                  Поскольку вы не можете управлять трупами, если объём вашей крови составляет менее одной десятой от максимального здоровья, при сильном истощении вы будете выброшены из своего носителя.
+                  Используйте это как последний, отчаянный шанс на спасение.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Medbay Buffet">
-                  Medbay's blood freezers are all-you-can-eat buffets for you! They are only half synthetic and their high volumes grant you a lot of growth.
-                  Be careful of nearby crew, as the sounds of breaking freezers can travel through walls.
+                  <LabeledList.Item label="Буфет мед.отдела">
+                  Холодильники для крови медицинского отдела - это то, что доктор прописал для здорового питания юных червей! Кровь из холодильника синтетическая лишь на половину, и может заметно ускорить ваш рост.
+                  Но будьте осторожны чтобы не попасться другим членам экипажа, звук ломающегося холодильника с кровью можно услышать даже из-за стены!
                   </LabeledList.Item>
-                  <LabeledList.Item label="Fast Food">
-                  You can enter corpses to consume all of their blood extremely quickly. Blood gained while already in a host doesn't affect your growth.
-                  Duplicated blood does, but it's synthetic, limiting its effectiveness.
+                  <LabeledList.Item label="Быстрое питание">
+                  Вы можете проникать в трупы, чтобы очень быстро выпить всю их кровь. Кровь полученная, при нахождении внутри носителя, никак не влияет на ваш рост!
+                  Сдублированная кровь тоже подходит, но она синтетическая, что ограничивает её эффективность.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Nomadic">
-                  You have night vision and no territory, meaning you can thrive anywhere. Hatchlings can ventcrawl, while
-                  juveniles and adults can break doors and other obstacles with their bare teeth. Nowhere is safe from you!
+                  <LabeledList.Item label="С места на место">
+                  У вас есть ночное зрение и нет места, где вам нужно осесть, а значит вы свободны перемещаться по станции куда угодно! Личинки могут перемещаться по вентиляции, в то время как более взрослые особи
+                  могут ломать шлюзы и прочие преграды при помощи своих острых зубов. Вашим жертвам не скрыться!
                   </LabeledList.Item>
-                  <LabeledList.Item label="Team Up">
-                  Your kin often share your goals and are willing to work together. You have your own language, Wormspeak,
-                  which is only understandable to your kin. You can tell if someone is a blood worm host via a HUD icon.
+                  <LabeledList.Item label="Объединяйтесь">
+                  Ваш род часто разделяют общие цели и готовы работать сообща. У вас есть свой язык - червиное наречие,
+                  которое понимает только ваш род. Вы можете определить, является ли кто-либо носителем кровяного червя, по значку на ИЛС.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Jail Time">
-                  Sec got you? You can break any restraints on your host, including lockers and such, by right-clicking with Spit Blood active.
-                  You can also leave your host and ventcrawl out or break through the door.
+                  <LabeledList.Item label="Время тюрьмы">
+                  Вас поймала охрана? Не беда! Вы можете снять любые оковы с вашего носителя, в том числе закрытые шкафчики и прочее, нажав ПКМ при использовании «Плевка токсичной кровью».
+                  Вы также можете покинуть тело и уползти по вентиляции или выломав шлюз.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Jumpstart">
-                  As an adult, you can gather corpses for your offspring to use as hosts. Gathering blood can jumpstart the growth of your
-                  hatchlings to juveniles, or even send them all the way to adulthood.
+                  <LabeledList.Item label="Быстрый старт">
+                  Став взрослой особью, вы можете собирать трупы для своего потомства, чтобы использовать их в качестве носителей для вас и ваших личинок. Подготовка крови для кормления молодняка ускорит их рост,
+                 позволив взрастить их сразу до юной или даже взрослой особи.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>

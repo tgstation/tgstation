@@ -1,11 +1,11 @@
 /datum/job/ai
 	title = JOB_AI
-	description = "Assist the crew, follow your laws, coordinate your cyborgs."
+	description = "Помогайте экипажу, следуйте в соответствии с вашим сводом законов, координируйте киборгов."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "your laws"
+	supervisors = "вашими законами"
 	spawn_type = /mob/living/silicon/ai
 	req_admin_notify = TRUE
 	minimal_player_age = 30
@@ -78,14 +78,14 @@
 /datum/job/ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("[joining_mob] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(joining_mob)].")
+		minor_announce("[joining_mob] был загружен в пустое ядро ИИ с блюспейс сетью в [AREACOORD(joining_mob)].")
 
 
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)
 
 /datum/job/ai/get_radio_information()
-	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"
+	return "<b>Для коммуникации с киборгами и другими ИИ используйте префикс :b.</b>"
 
 /datum/job/ai/on_respawn(mob/new_character)
 	new_character.AIize()

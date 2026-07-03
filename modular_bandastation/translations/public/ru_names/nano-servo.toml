@@ -1,0 +1,8 @@
+[nano-servo]
+nominative = "наносервопривод"
+genitive = "наносервопривода"
+dative = "наносервоприводу"
+accusative = "наносервопривод"
+instrumental = "наносервоприводом"
+prepositional = "наносервоприводе"
+gender = "male"

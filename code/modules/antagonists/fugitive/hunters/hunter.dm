@@ -1,13 +1,13 @@
 //The hunters!!
 /datum/antagonist/fugitive_hunter
-	name = "Fugitive Hunter"
-	roundend_category = "Fugitive"
+	name = "Охотник за беглецами"
+	roundend_category = "Беглецы"
 	silent = TRUE //greet called by the spawn
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antagpanel_category = ANTAG_GROUP_HUNTERS
 	antag_hud_name = "fugitive_hunter"
-	suicide_cry = "FOR GLORY!!"
+	suicide_cry = "ЗА ЧЕСТЬ!!"
 	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
@@ -19,34 +19,34 @@
 /datum/antagonist/fugitive_hunter/forge_objectives() //this isn't an actual objective because it's about round end rosters
 	var/datum/objective/capture = new /datum/objective
 	capture.owner = owner
-	capture.explanation_text = "Capture the fugitives in the station and put them into the bluespace capture machine on your ship."
+	capture.explanation_text = "Захватите беглецов на станции и поместите их в блюспейс устройство захвата на вашем корабле."
 	objectives += capture
 
 /datum/antagonist/fugitive_hunter/greet()
 	switch(backstory)
 		if(HUNTER_PACK_COPS)
-			to_chat(owner, span_bolddanger("Justice has arrived. I am a member of the Spacepol!"))
-			to_chat(owner, "<B>The criminals should be on the station, we have special huds implanted to recognize them.</B>")
-			to_chat(owner, "<B>As we have lost pretty much all power over these damned lawless megacorporations, it's a mystery if their security will cooperate with us.</B>")
+			to_chat(owner, span_bolddanger("Правосудие прибыло. Я являюсь членом Космопола!"))
+			to_chat(owner, "<B>Преступники должны находиться на станции. У нас установлены специальные импланты ИЛС для их распознавания.</B>")
+			to_chat(owner, "<B>Так как мы практически потеряли контроль над этими проклятыми беззаконными мегакорпорациями, остаётся загадкой, будет ли сотрудничать с нами их служба безопасности.</B>")
 		if(HUNTER_PACK_RUSSIAN)
-			to_chat(owner, span_danger("Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!"))
-			to_chat(owner, span_danger("We were hailed by a man in a green uniform, promising the safe return of our goods in exchange for a favor:"))
-			to_chat(owner, span_danger("There is a local station housing fugitives that the man is after, he wants them returned; dead or alive."))
-			to_chat(owner, span_danger("We will not be able to make ends meet without our cargo, so we must do as he says and capture them."))
+			to_chat(owner, span_danger("Ай бля. Я космический русский контрабандист! Мы были в полёте, когда наш груз телепортировали с нашего корабля!"))
+			to_chat(owner, span_danger("Нас окликнул мужчина в зелёной форме, пообещавший вернуть наши товары целыми и невредимыми в обмен на услугу:"))
+			to_chat(owner, span_danger("на местной станции скрываются беглецы, которых этот человек хочет поймать; живыми или мёртвыми."))
+			to_chat(owner, span_danger("Без нашего груза нам не удастся свести концы с концами, поэтому мы вынуждены подчиниться его требованиям и захватить беглецов."))
 		if(HUNTER_PACK_BOUNTY)
-			to_chat(owner, span_danger("Time to clock in. I am a bounty hunter! We should be arriving at our mark's hideout shortly."))
-			to_chat(owner, span_danger("The briefing mentioned our destination was a research station. An unusual place for a target to try and lay low."))
-			to_chat(owner, span_danger("Our client promised us big bucks, and we intend to make good on our delivery. Let's hope this is an easy paycheck..."))
+			to_chat(owner, span_danger("Время приступить к делу. Я охотник за головами! Скоро мы прибудем к укрытию нашей цели."))
+			to_chat(owner, span_danger("Разведданные сообщили, что наша цель находится на исследовательской станции. Необычное место для преступника, чтобы залечь на дно."))
+			to_chat(owner, span_danger("Наш клиент пообещал нам большие деньги, и мы намерены оправдать ожидания клиента и доставить цель. Надеюсь, эта работа окажется простой и хорошо оплачиваемой..."))
 		if(HUNTER_PACK_PSYKER)
-			to_chat(owner, span_danger("GOOD EVENING, WE ARE PSYKER HUNTE- NO, PSYKER SHIKARIS!"))
-			to_chat(owner, span_danger("A brainling hit us up on the holopad with an offer we could NOT pass up. We kidnap some fools for them, and in exchange we get a LIFETIME SUPPLY OF GORE."))
-			to_chat(owner, span_danger("Our gore supply has been running thin as of late -- How could we say no? The binge MUST go on!"))
+			to_chat(owner, span_danger("ДОБРЫЙ ВЕЧЕР, МЫ ПСАЙКЕРЫ ОХОТН... НЕТ, ПСАЙКЕРЫ ШИКАРИ!"))
+			to_chat(owner, span_danger("Один мозгляк связался с нами через голографический коммуникатор с предложением, от которого мы не смогли отказаться. Мы похищаем для них кое-кого, а взамен получаем ПОЖИЗНЕННЫЙ ЗАПАС ГОРА."))
+			to_chat(owner, span_danger("Запасы гора у нас стали истощаться последнее время - как же мы могли отказать? Пьянка ДОЛЖНА продолжаться!"))
 		if(HUNTER_PACK_MI13)
-			to_chat(owner, span_danger("Agents, we have detected a wanted fugitive in Nanotrasen controlled space."))
-			to_chat(owner, span_danger("Your mission is simple. Infiltrate the facility and extract the target, dead or alive."))
-			to_chat(owner, span_danger("This is a stealth infiltration mission in hostile enemy territory. Be wary, and avoid being caught if possible."))
+			to_chat(owner, span_danger("Агенты, мы засекли разыскиваемого беглеца в зоне, контролируемой Нанотрейзен."))
+			to_chat(owner, span_danger("Ваша задача проста. Проникните на объект и захватите цель - живой или мёртвой."))
+			to_chat(owner, span_danger("Это миссия скрытного проникновения на вражескую территорию. Будьте осторожны и постарайтесь избежать обнаружения, если возможно."))
 
-	to_chat(owner, span_bolddanger("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
+	to_chat(owner, span_bolddanger("Вы не являетесь антагонистом в том смысле, что можете убивать, кого вам заблагорассудится, но вы можете сделать всё, чтобы обеспечить поимку беглецов, даже если для этого придётся пройти через всю станцию."))
 	owner.announce_objectives()
 
 /datum/antagonist/fugitive_hunter/create_team(datum/team/fugitive_hunters/new_team)
@@ -148,42 +148,42 @@
 
 	var/list/result = list()
 
-	result += "<div class='panel redborder'>...And <B>[members.len]</B> [backstory]s tried to hunt them down!"
+	result += "<div class='panel redborder'>...и <B>[members.len]</B> [backstory] пытался выследить их!"
 
 	for(var/datum/mind/M in members)
 		result += "<b>[printplayer(M)]</b>"
 
 	switch(get_result())
 		if(FUGITIVE_RESULT_BADASS_HUNTER)//use defines
-			result += "<span class='greentext big'>Badass [capitalize(backstory)] Victory!</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, alive!</B>"
+			result += "<span class='greentext big'>Безупречная победа [capitalize(backstory)]!</span>"
+			result += "<B>[capitalize(backstory)] захватили всех беглецов живыми!</B>"
 		if(FUGITIVE_RESULT_POSTMORTEM_HUNTER)
-			result += "<span class='greentext big'>Postmortem [capitalize(backstory)] Victory!</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, but all of them died! Spooky!</B>"
+			result += "<span class='greentext big'>Посмертная победа [capitalize(backstory)]!</span>"
+			result += "<B>[capitalize(backstory)] удалось поймать каждого беглеца, но все они погибли! Ужас!</B>"
 		if(FUGITIVE_RESULT_MAJOR_HUNTER)
-			result += "<span class='greentext big'>Major [capitalize(backstory)] Victory</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, dead or alive.</B>"
+			result += "<span class='greentext big'>Разгромная победа [capitalize(backstory)]</span>"
+			result += "<B>[capitalize(backstory)] удалось поймать каждого беглеца, живого или мёртвого.</B>"
 		if(FUGITIVE_RESULT_HUNTER_VICTORY)
-			result += "<span class='greentext big'>[capitalize(backstory)] Victory</span>"
-			result += "<B>The [backstory]s managed to capture a fugitive, dead or alive.</B>"
+			result += "<span class='greentext big'>Победа [capitalize(backstory)]</span>"
+			result += "<B>[capitalize(backstory)] удалось поймать беглеца, живого или мёртвого.</B>"
 		if(FUGITIVE_RESULT_MINOR_HUNTER)
-			result += "<span class='greentext big'>Minor [capitalize(backstory)] Victory</span>"
-			result += "<B>All the [backstory]s died, but managed to capture a fugitive, dead or alive.</B>"
+			result += "<span class='greentext big'>Незначительная победа [capitalize(backstory)]</span>"
+			result += "<B>Все [capitalize(backstory)] погибли, но им удалось поймать беглеца, живого или мёртвого.</B>"
 		if(FUGITIVE_RESULT_STALEMATE)
-			result += "<span class='neutraltext big'>Bloody Stalemate</span>"
-			result += "<B>Everyone died, and no fugitives were recovered!</B>"
+			result += "<span class='neutraltext big'>Кровавый тупик</span>"
+			result += "<B>Все погибли, и никого из беглецов не удалось вернуть.</B>"
 		if(FUGITIVE_RESULT_MINOR_FUGITIVE)
-			result += "<span class='redtext big'>Minor Fugitive Victory</span>"
-			result += "<B>All the fugitives died, but none were recovered!</B>"
+			result += "<span class='redtext big'>Незначительная победа беглецов</span>"
+			result += "<B>Все беглецы погибли, но ни один из них не был возвращён!</B>"
 		if(FUGITIVE_RESULT_FUGITIVE_VICTORY)
-			result += "<span class='redtext big'>Fugitive Victory</span>"
-			result += "<B>A fugitive survived, and no bodies were recovered by the [backstory]s.</B>"
+			result += "<span class='redtext big'>Победа беглецов</span>"
+			result += "<B>Беглец выжил, и ни одно тело не было забрано [capitalize(backstory)].</B>"
 		if(FUGITIVE_RESULT_MAJOR_FUGITIVE)
-			result += "<span class='redtext big'>Major Fugitive Victory</span>"
-			result += "<B>All of the fugitives survived and avoided capture!</B>"
+			result += "<span class='redtext big'>Разгромная победа беглецов</span>"
+			result += "<B>Все беглецы выжили и избежали поимки!</B>"
 		else //get_result returned null- either bugged or no fugitives showed
-			result += "<span class='neutraltext big'>Prank Call!</span>"
-			result += "<B>[capitalize(backstory)]s were called, yet there were no fugitives...?</B>"
+			result += "<span class='neutraltext big'>Телефонный розыгрыш!</span>"
+			result += "<B>[capitalize(backstory)] были вызваны, но беглецов не было...?</B>"
 
 	result += "</div>"
 

@@ -1,0 +1,15 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair{
+	name = "Prosecution";
+	dir = 4
+	},
+/mob/living/basic/mothroach/wrynroach{
+	name = "Жужука"
+	},
+/turf/open/floor/wood/large,
+/area/station/service/barber)
+
+(1,1,1) = {"
+a
+"}

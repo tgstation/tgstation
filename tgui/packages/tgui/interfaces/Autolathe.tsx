@@ -51,13 +51,13 @@ export const Autolathe = (props) => {
   }
 
   return (
-    <Window title="Autolathe" width={670} height={600}>
+    <Window title="Автолат" width={800} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section title="Total Materials">
+            <Section title="Всего материалов">
               <LabeledList>
-                <LabeledList.Item label="Total Materials">
+                <LabeledList.Item label="Всего материалов">
                   <ProgressBar
                     value={materialtotal}
                     minValue={0}
@@ -71,12 +71,12 @@ export const Autolathe = (props) => {
                     {materialtotal / SHEET_MATERIAL_AMOUNT +
                       '/' +
                       materialsmax / SHEET_MATERIAL_AMOUNT +
-                      ' sheets'}
+                      ' листов'}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
                   {filteredMaterials.length > 0 && (
-                    <Collapsible title="Materials">
+                    <Collapsible title="Материалы">
                       <LabeledList>
                         {filteredMaterials.map((material) => (
                           <LabeledList.Item
@@ -96,7 +96,7 @@ export const Autolathe = (props) => {
                                 >
                                   <div style={{ transform: 'scaleX(-1)' }}>
                                     {material.amount / SHEET_MATERIAL_AMOUNT +
-                                      ' sheets'}
+                                      ' листов'}
                                   </div>
                                 </ProgressBar>
                               </Stack.Item>
@@ -318,7 +318,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       >
         <Button.Input
           color="transparent"
-          buttonText={`[Max: ${maxmult}]`}
+          buttonText={`[Макс: ${maxmult}]`}
           onCommit={(value) =>
             act('make', {
               id: design.id,

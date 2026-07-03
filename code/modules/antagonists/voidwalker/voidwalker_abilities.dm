@@ -1,7 +1,7 @@
 /// Remain in someones view without breaking line of sight
 /datum/action/cooldown/spell/pointed/unsettle
 	name = "Unsettle"
-	desc = "Stare directly into someone who doesn't see you. Remain in their view for a bit to stun them for 2 seconds and announce your presence to them. "
+	desc = "Смотрите прямо в глаза тому, кто вас не видит. Задержитесь на некоторое время в поле его зрения, чтобы оглушить его на 2 секунды и сообщить о своем присутствии."
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "unsettle"
 	background_icon_state = "bg_void"
@@ -9,8 +9,8 @@
 	spell_requirements = NONE
 	cooldown_time = 12 SECONDS
 	cast_range = 9
-	active_msg = "You prepare to stare down a target..."
-	deactive_msg = "You refocus your eyes..."
+	active_msg = "Вы готовитесь пристально смотреть на цель..."
+	deactive_msg = "Вы перефокусируете свой взгляд..."
 
 	/// how long we need to stare at someone to unsettle them (woooooh)
 	var/stare_time = 6 SECONDS
@@ -25,11 +25,11 @@
 	. = ..()
 
 	if(!isliving(cast_on))
-		cast_on.balloon_alert(owner, "cannot be targeted!")
+		cast_on.balloon_alert(owner, "не может быть выбран целью!")
 		return FALSE
 
 	if(!check_if_staring(cast_on))
-		owner.balloon_alert(owner, "cannot see you!")
+		owner.balloon_alert(owner, "не может вас видеть!")
 		return FALSE
 
 	return .
@@ -51,10 +51,10 @@
 	SIGNAL_HANDLER
 
 	if(target.is_blind() || !(owner in view(target, world.view)))
-		owner.balloon_alert(owner, "line of sight broken!")
+		owner.balloon_alert(owner, "нарушена видимость!")
 		return FALSE
 	if(in_combat)
-		owner.balloon_alert(owner, "interrupted by combat!")
+		owner.balloon_alert(owner, "прервано боем!")
 		in_combat = FALSE
 	return TRUE
 
@@ -134,5 +134,5 @@
 	if(istype(get_turf(target), valid_target_turf))
 		return ..()
 
-	owner.balloon_alert(owner, "must target [initial(valid_target_turf.name)]!")
+	owner.balloon_alert(owner, "должен быть целью [initial(valid_target_turf.name)]!")
 	return FALSE

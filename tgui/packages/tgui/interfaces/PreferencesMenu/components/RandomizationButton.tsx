@@ -5,35 +5,31 @@ import { RandomSetting } from '../types';
 
 const options = [
   {
-    displayText: 'Do not randomize',
     value: RandomSetting.Disabled,
+    displayText: 'Не рандомизировать',
   },
-
   {
-    displayText: 'Always randomize',
     value: RandomSetting.Enabled,
+    displayText: 'Всегда рандомизировать',
   },
-
   {
-    displayText: 'Randomize when antagonist',
     value: RandomSetting.AntagOnly,
+    displayText: 'Рандомизировать при антагонизме',
   },
 ];
 
 type Props = {
-  dropdownProps?: Record<string, unknown>;
   setValue: (newValue: RandomSetting) => void;
   value: RandomSetting;
 };
 
 export function RandomizationButton(props: Props) {
-  const { dropdownProps = {}, setValue, value } = props;
+  const { setValue, value } = props;
 
   let color;
-
   switch (value) {
     case RandomSetting.AntagOnly:
-      color = 'orange';
+      color = 'yellow';
       break;
     case RandomSetting.Disabled:
       color = 'red';
@@ -47,14 +43,14 @@ export function RandomizationButton(props: Props) {
 
   return (
     <Dropdown
-      color={color}
-      {...dropdownProps}
-      icon="dice-d20"
       iconOnly
+      icon="dice"
+      color={color}
+      width="auto"
+      menuWidth="auto"
+      selected="NONE"
       options={options}
       onSelected={setValue}
-      menuWidth={20}
-      selected="None"
     />
   );
 }

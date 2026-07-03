@@ -147,21 +147,34 @@
 	return
 
 /obj/item/transfer_valve/proc/try_attach_tank(obj/item/tank/new_tank, mob/user)
+	var/attached = FALSE // BANDASTATION MOD
 	if(!tank_one)
 		if(!user.transferItemToLoc(new_tank, src))
 			return FALSE
 		tank_one = new_tank
+		attached = TRUE // BANDASTATION MOD
 		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's primary port."))
 	else if(!tank_two)
 		if(!user.transferItemToLoc(new_tank, src))
 			return FALSE
 		tank_two = new_tank
+		attached = TRUE // BANDASTATION MOD
 		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's secondary port."))
 	else
 		to_chat(user, span_warning("There are already two tanks attached, remove one first!"))
 		return FALSE
 
 	update_appearance()
+
+	// BANDASTATION MOD START
+	if(attached && tank_one && tank_two)
+		var/datum/gas_mixture/air1 = tank_one.return_air()
+		var/t1_data = "P:[air1.return_pressure()]kPa, T:[air1.return_temperature()]K]"
+		var/datum/gas_mixture/air2 = tank_two.return_air()
+		var/t2_data = "P:[air2.return_pressure()]kPa, T:[air2.return_temperature()]K]"
+		var/tanks_info = "[tank_one.name] ([t1_data]) + [tank_two.name] ([t2_data])"
+		log_bomber(user, "assembled a ttv bomb", src, "Tanks: [tanks_info]")
+	// BANDASTATION MOD END
 	return TRUE
 
 /obj/item/transfer_valve/proc/try_attach_assembly(obj/item/assembly/A, mob/user)

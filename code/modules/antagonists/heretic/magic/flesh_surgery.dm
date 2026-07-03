@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/touch/flesh_surgery
-	name = "Knit Flesh"
-	desc = "A touch spell that allows you to either harvest or restore flesh of target. \
-		Left-clicking will extract the organs of a victim without needing to complete surgery or disembowel. \
-		You can also pick up a loose organ and insert it into your vitcim. \
-		Right-clicking, if done on summons or minions, will restore health. Can also be used to heal damaged organs."
+	name = "Переплетение плоти"
+	desc = "Заклинание прикосновения, которое позволяет вам либо собрать, либо восстановить плоть цели. \
+		Нажав левой кнопкой мыши, можно извлечь органы жертвы, не прибегая к хирургическому вмешательству или расчленению. \
+		Вы также можете подобрать свободный орган и вставить его в свою жертву. \
+		Щелчок правой кнопкой мыши на призванных или миньонах восстанавливает здоровье. Также может использоваться для лечения поврежденных органов."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -93,18 +93,18 @@
 
 		if(iscarbon(mob_victim))
 			if(held_organ)
-				context[SCREENTIP_CONTEXT_LMB] = "Insert organ"
+				context[SCREENTIP_CONTEXT_LMB] = "Вставить орган"
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "Extract organ"
+				context[SCREENTIP_CONTEXT_LMB] = "Извлечь орган"
 			. = CONTEXTUAL_SCREENTIP_SET
 
 		if(HAS_TRAIT(mob_victim, TRAIT_HERETIC_SUMMON))
-			context[SCREENTIP_CONTEXT_RMB] = "Heal [ishuman(mob_victim) ? "minion" : "summon"]"
+			context[SCREENTIP_CONTEXT_RMB] = "Вылечить [ishuman(mob_victim) ? "миньона" : "призванное существо"]"
 			. = CONTEXTUAL_SCREENTIP_SET
 
 	else if(isorgan(victim))
-		context[SCREENTIP_CONTEXT_LMB] = "Pick up organ"
-		context[SCREENTIP_CONTEXT_RMB] = "Heal organ"
+		context[SCREENTIP_CONTEXT_LMB] = "Поднять орган"
+		context[SCREENTIP_CONTEXT_RMB] = "Вылечить орган"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return .
@@ -112,13 +112,13 @@
 /// If cast on an organ with left-click, we'll try to grab it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/grab_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_grab, mob/living/carbon/caster)
 	if(held_organ)
-		hand.balloon_alert(caster, "already holding organ!")
+		hand.balloon_alert(caster, "уже держу орган!")
 		return ITEM_INTERACT_FAILURE
 	if(to_grab.organ_flags & ORGAN_ROBOTIC && !allow_cyber_organs)
-		hand.balloon_alert(caster, "cybernetic organs not allowed!")
+		hand.balloon_alert(caster, "кибернетические органы недопустимы!")
 		return ITEM_INTERACT_FAILURE
 	if(!caster.transferItemToLoc(to_grab, hand))
-		hand.balloon_alert(caster, "couldn't grab organ!")
+		hand.balloon_alert(caster, "не могу взять орган!")
 		return ITEM_INTERACT_FAILURE
 	register_held_organ(to_grab, hand)
 	return ITEM_INTERACT_SUCCESS
@@ -151,46 +151,46 @@
 /// If cast on an organ with right-click, we'll restore its health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)
 	if(held_organ)
-		hand.balloon_alert(caster, "drop held organ first!")
+		hand.balloon_alert(caster, "сначала отпустите удерживаемый орган!")
 		return FALSE
 	if(to_heal.damage == 0)
-		to_heal.balloon_alert(caster, "already in good condition!")
+		to_heal.balloon_alert(caster, "уже в хорошем состоянии!")
 		return FALSE
-	to_heal.balloon_alert(caster, "healing organ...")
+	to_heal.balloon_alert(caster, "лечение органа...")
 	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, PROC_REF(heal_checks), hand, to_heal, caster)))
-		to_heal.balloon_alert(caster, "interrupted!")
+		to_heal.balloon_alert(caster, "прервано!")
 		return FALSE
 
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
 	to_heal.set_organ_damage(max(0 , to_heal.damage - organ_hp_to_heal))
-	to_heal.balloon_alert(caster, "organ healed")
+	to_heal.balloon_alert(caster, "орган исцелен")
 	playsound(to_heal, 'sound/effects/magic/staff_healing.ogg', 30)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
-	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
+	var/condition = (to_heal.damage > 0) ? "лучше" : "превосходно"
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore \the [to_heal] to [condition] condition!"),
-		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
+		span_warning("Рука [caster.declent_ru(GENITIVE)] светится ярким красным светом, [to_heal.declent_ru(NOMINATIVE)] восстанавливается до состояния - [condition]!"),
+		span_notice("Ваша рука светится ярким красным светом, [to_heal.declent_ru(NOMINATIVE)] восстанавливается до состояния - [condition]!"),
 	)
 
 	return TRUE
 
 /// If cast on a heretic monster who's not dead we'll heal it a bit.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_heretic_monster(obj/item/melee/touch_attack/hand, mob/living/to_heal, mob/living/carbon/caster)
-	var/what_are_we = ishuman(to_heal) ? "minion" : "summon"
-	to_heal.balloon_alert(caster, "healing [what_are_we]...")
+	var/what_are_we = ishuman(to_heal) ? "миньон" : "призванное существо"
+	to_heal.balloon_alert(caster, "[what_are_we] исцеляется...")
 	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, PROC_REF(heal_checks), hand, to_heal, caster)))
-		to_heal.balloon_alert(caster, "interrupted!")
+		to_heal.balloon_alert(caster, "прервано!")
 		return FALSE
 
 	// Keep in mind that, for simplemobs(summons), this will just flat heal the combined value of both brute and burn healing,
 	// while for human minions(ghouls), this will heal brute and burn like normal. So be careful adjusting to bigger numbers
-	to_heal.balloon_alert(caster, "[what_are_we] healed")
+	to_heal.balloon_alert(caster, "[what_are_we] исцелён!")
 	to_heal.heal_overall_damage(monster_brute_healing, monster_burn_healing)
 	playsound(to_heal, 'sound/effects/magic/staff_healing.ogg', 30)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] [to_heal] to good condition!"),
-		span_notice("Your hand glows a brilliant red as you restore [to_heal] to good condition!"),
+		span_warning("Рука [caster.declent_ru(GENITIVE)] светится ярким красным светом, [to_heal.declent_ru(NOMINATIVE)] восстанавливается до хорошего состояния!"),
+		span_notice("Ваша рука светится ярким красным светом, [to_heal.declent_ru(NOMINATIVE)] восстанавливается до хорошего состояния!"),
 	)
 	return TRUE
 
@@ -198,12 +198,12 @@
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/steal_organ_from_mob(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	var/mob/living/carbon/carbon_victim = victim
 	if(!istype(carbon_victim) || !length(carbon_victim.organs))
-		victim.balloon_alert(caster, "no organs!")
+		victim.balloon_alert(caster, "нет органов!")
 		return FALSE
 
 	// Round u pto the nearest generic zone (body, chest, arm)
 	var/zone_to_check = check_zone(caster.zone_selected)
-	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check)
+	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check, declent = DATIVE)
 
 	var/list/organs_we_can_remove = list()
 	for(var/obj/item/organ/organ as anything in carbon_victim.organs)
@@ -217,10 +217,10 @@
 		organs_we_can_remove[organ.name] = organ
 
 	if(!length(organs_we_can_remove))
-		victim.balloon_alert(caster, "no organs there!")
+		victim.balloon_alert(caster, "тут нет органов!")
 		return FALSE
 
-	var/chosen_organ = tgui_input_list(caster, "Which organ do you want to extract?", name, sort_list(organs_we_can_remove))
+	var/chosen_organ = tgui_input_list(caster, "Какой орган вы хотите извлечь?", name, sort_list(organs_we_can_remove))
 	if(isnull(chosen_organ))
 		return FALSE
 	var/obj/item/organ/picked_organ = organs_we_can_remove[chosen_organ]
@@ -232,27 +232,27 @@
 
 	// Sure you can remove your own organs, fun party trick
 	if(carbon_victim == caster)
-		var/are_you_sure = tgui_alert(caster, "Are you sure you want to remove your own [chosen_organ]?", "Are you sure?", list("Yes", "No"))
-		if(are_you_sure != "Yes" || !extraction_checks(picked_organ, hand, victim, caster))
+		var/are_you_sure = tgui_alert(caster, "Вы уверены, что хотите удалить [picked_organ.declent_ru(ACCUSATIVE)] у себя?", "Вы уверены?", list("Да", "Нет"))
+		if(are_you_sure != "Да" || !extraction_checks(picked_organ, hand, victim, caster))
 			return FALSE
 
 		time_it_takes = 6 SECONDS
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [caster.p_their()] own [parsed_zone]!"),
-			span_userdanger("Your hand glows a brilliant red as you reach directly into your own [parsed_zone]!"),
+			span_danger("Рука [caster.declent_ru(GENITIVE)] светится ярким красным светом, когда протягивается к своей [parsed_zone]!"),
+			span_userdanger("Ваша рука светится ярким красным светом, когда вы тянетесь к своей [parsed_zone]!"),
 		)
 
 	else
 		carbon_victim.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [carbon_victim]'s [parsed_zone]!"),
-			span_userdanger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into your [parsed_zone]!"),
+			span_danger("Рука [caster.declent_ru(GENITIVE)] светится ярким красным светом, когда протягивается к [parsed_zone] [carbon_victim.declent_ru(GENITIVE)]!"),
+			span_userdanger("Рука [caster.declent_ru(GENITIVE)] светится ярким красным светом, когда протягивается к вашей [parsed_zone]!"),
 		)
 
-	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
+	carbon_victim.balloon_alert(caster, "начало извлечения [picked_organ.declent_ru(GENITIVE)]...")
 	playsound(victim, 'sound/items/weapons/slice.ogg', 50, TRUE)
 	carbon_victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
 	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, PROC_REF(extraction_checks), picked_organ, hand, victim, caster)))
-		carbon_victim.balloon_alert(caster, "interrupted!")
+		carbon_victim.balloon_alert(caster, "прервано!")
 		carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 		return FALSE
 
@@ -260,18 +260,18 @@
 	// Mainly so it gets across if you're taking the eyes of someone who's conscious
 	if(carbon_victim == caster)
 		caster.visible_message(
-			span_bolddanger("[caster] pulls [caster.p_their()] own [chosen_organ] out of [caster.p_their()] [parsed_zone]!!"),
-			span_userdanger("You pull your own [chosen_organ] out of your [parsed_zone]!!"),
+			span_bolddanger("[capitalize(caster.declent_ru(NOMINATIVE))] извлекает [picked_organ.declent_ru(ACCUSATIVE)] из [victim.parse_zone_with_bodypart(zone_to_check, declent = GENITIVE)]!!"),
+			span_userdanger("Вы извлекаете [picked_organ.declent_ru(ACCUSATIVE)] из [victim.parse_zone_with_bodypart(zone_to_check, declent = GENITIVE)]!!"),
 		)
 
 	else
 		carbon_victim.visible_message(
-			span_bolddanger("[caster] pulls [carbon_victim]'s [chosen_organ] out of [carbon_victim.p_their()] [parsed_zone]!!"),
-			span_userdanger("[caster] pulls your [chosen_organ] out of your [parsed_zone]!!"),
+			span_bolddanger("[capitalize(caster.declent_ru(NOMINATIVE))] извлекает [picked_organ.declent_ru(ACCUSATIVE)] из [victim.parse_zone_with_bodypart(zone_to_check, declent = GENITIVE)] [carbon_victim]!!"),
+			span_userdanger("[capitalize(caster.declent_ru(NOMINATIVE))] извлекает [picked_organ.declent_ru(ACCUSATIVE)] из вашей [victim.parse_zone_with_bodypart(zone_to_check, declent = GENITIVE)]!!"),
 		)
 
 	picked_organ.Remove(carbon_victim)
-	carbon_victim.balloon_alert(caster, "[chosen_organ] removed")
+	carbon_victim.balloon_alert(caster, "извлечение [picked_organ.declent_ru(GENITIVE)]")
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
 	if(carbon_victim.stat == CONSCIOUS)
@@ -284,18 +284,18 @@
 
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/insert_organ_into_mob(obj/item/organ/inserted_organ, obj/item/melee/touch_attack/flesh_surgery/hand, mob/living/carbon/victim, mob/living/carbon/caster)
 	if(!istype(victim))
-		hand.balloon_alert(caster, "no organs!")
+		hand.balloon_alert(caster, "нет органов!")
 		return FALSE
 
 	var/zone_organ_goes_in = inserted_organ.zone
 	if(!victim.get_bodypart(deprecise_zone(zone_organ_goes_in)))
-		hand.balloon_alert(caster, "nowhere for organ to go!")
+		hand.balloon_alert(caster, "нет места для органа!")
 		return FALSE
 
 	var/slot_organ_goes_in = inserted_organ.slot
 	var/obj/item/organ/organ_victim_already_has = victim.get_organ_slot(slot_organ_goes_in)
 	if(organ_victim_already_has?.organ_flags & ORGAN_VITAL|ORGAN_UNREMOVABLE)
-		hand.balloon_alert(caster, "can't replace organ!")
+		hand.balloon_alert(caster, "нельзя заменить орган!")
 		return FALSE
 
 	var/time_it_takes
@@ -312,9 +312,9 @@
 
 	if(using_on_self && replacing_with_failing)
 		var/are_you_sure = tgui_alert(caster,
-			"Are you sure you want to replace your [organ_victim_already_has.name] with a non-functional [inserted_organ.name]?",
-			"Are you sure?",
-			list("Yes", "No"))
+			"Вы уверены что хотите заменить ваш [organ_victim_already_has.name] непригодным [inserted_organ.name]?",
+			"Вы точно уверены?",
+			list("Да", "Нет"))
 		if(!are_you_sure)
 			return FALSE
 
@@ -323,20 +323,20 @@
 
 	if(using_on_self)
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_es()] forcing [inserted_organ] into [caster.p_their()] [zone_organ_goes_in]!!"),
-			span_userdanger("You begin forcing [inserted_organ] into your [zone_organ_goes_in]!")
+			span_danger("Рука [caster.declent_ru(GENITIVE)] светилась ярко красным, когда [caster.ru_p_they()] начал[genderize_ru(caster.gender, "", "а", "о", "и")] засовывать [inserted_organ.declent_ru(NOMINATIVE)] в [caster.ru_p_them()] [zone_organ_goes_in]!!"),
+			span_userdanger("Вы с силой вводите [inserted_organ.declent_ru(NOMINATIVE)] в [zone_organ_goes_in]!")
 		)
 	else
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_es()] forcing [inserted_organ] into [victim]'s [zone_organ_goes_in]!!"),
-			span_notice("You begin forcing [inserted_organ] into [victim]'s [zone_organ_goes_in].")
+			span_danger("Рука [caster.declent_ru(GENITIVE)] светилась ярко красным, когда [caster.ru_p_they()] начинает засовывать [inserted_organ.declent_ru(NOMINATIVE)] в [zone_organ_goes_in] [victim.declent_ru(GENITIVE)]!!"),
+			span_notice("Вы начинаете вставлять [inserted_organ.declent_ru(NOMINATIVE)] в [zone_organ_goes_in] [victim.declent_ru(GENITIVE)].")
 		)
 
-	victim.balloon_alert(caster, "inserting [inserted_organ]...")
+	victim.balloon_alert(caster, "вставляем [inserted_organ.declent_ru(GENITIVE)]...")
 	playsound(victim, 'sound/items/weapons/slice.ogg', 50, TRUE)
 	victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
 	if(!do_after(caster, time_it_takes, victim, extra_checks = CALLBACK(src, PROC_REF(insertion_checks), inserted_organ, hand, victim, caster)))
-		victim.balloon_alert(caster, "interrupted!")
+		victim.balloon_alert(caster, "прервано!")
 		victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 		return FALSE
 
@@ -344,18 +344,18 @@
 
 	if(using_on_self)
 		caster.visible_message(
-			span_danger("[caster] crams [inserted_organ] into [caster.p_their()] own [zone_organ_goes_in][organ_victim_already_has ? ", forcing out [caster.p_their()] [organ_victim_already_has.name]": ""]!"),
-			span_userdanger("You finish inserting [inserted_organ] into your [zone_organ_goes_in][organ_victim_already_has ? ", forcing out your [organ_victim_already_has]" : ""]!")
+			span_danger("Вы помещаете [inserted_organ.declent_ru(NOMINATIVE)] внутрь [zone_organ_goes_in][organ_victim_already_has ? ", вытесняя [organ_victim_already_has.name]": ""]!"),
+			span_userdanger("Вы заканчиваете вставлять [inserted_organ.declent_ru(NOMINATIVE)] в ваш [zone_organ_goes_in][organ_victim_already_has ? ", вытеснив [organ_victim_already_has]" : ""]!")
 		)
 	else
 		caster.visible_message(
-			span_danger("[caster] crams [inserted_organ] into [victim]'s [zone_organ_goes_in][organ_victim_already_has ? ", forcing out [victim.p_their()] [organ_victim_already_has.name]": ""]!"),
-			span_notice("You finish inserting [inserted_organ] into [victim]'s [zone_organ_goes_in][organ_victim_already_has ? ", forcing out [victim.p_their()] [organ_victim_already_has.name]": ""].")
+			span_danger("[capitalize(caster)] помещает [inserted_organ.declent_ru(NOMINATIVE)] в [zone_organ_goes_in] [victim.declent_ru(ACCUSATIVE)] [organ_victim_already_has ? ", вытесняя [victim.ru_p_them()] [organ_victim_already_has.name]": ""]!"),
+			span_notice("Вы заканчиваете вставлять [inserted_organ.declent_ru(NOMINATIVE)] внутрь в [zone_organ_goes_in] [victim.declent_ru(ACCUSATIVE)][organ_victim_already_has ? ", вытеснив [victim.ru_p_them()] [organ_victim_already_has.name]": ""].")
 		)
 
 	unregister_held_organ(inserted_organ)
 	inserted_organ.Insert(victim)
-	victim.balloon_alert(caster, "[inserted_organ] inserted")
+	victim.balloon_alert(caster, "[inserted_organ.declent_ru(NOMINATIVE)] вставлен[genderize_ru(inserted_organ.gender, "", "а", "о", "ы")]")
 	victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
 	if(victim.stat == CONSCIOUS)
@@ -390,8 +390,8 @@
 	return TRUE
 
 /obj/item/melee/touch_attack/flesh_surgery
-	name = "\improper knit flesh"
-	desc = "Let's go practice medicine."
+	name = "knit flesh"
+	desc = "Давайте практиковать медицину!"
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

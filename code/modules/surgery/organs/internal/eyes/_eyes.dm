@@ -67,6 +67,8 @@
 	var/pupils_name = "pupils"
 	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
 	var/light_reactive = TRUE
+	/// variable to hold the eye icon state path for different eye types
+	var/icon_eyes_path = 'icons/mob/human/human_face.dmi' // BANDASTATION ADDITION  - Feat: Augmentation
 
 /obj/item/organ/eyes/Initialize(mapload)
 	. = ..()
@@ -275,27 +277,27 @@
 	if(owner.is_blind())
 		if(advanced)
 			if(owner.is_blind_from(QUIRK_TRAIT))
-				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+				return conditional_tooltip("Субъект полностью слеп.", "Не поддаётся лечению в обычных условиях.", add_tooltips)
 			if(owner.is_blind_from(EYE_SCARRING_TRAIT))
-				return conditional_tooltip("Subject is blind from widespread ocular scarring.", "Surgically replace eyes, irreparable otherwise.", add_tooltips)
+				return conditional_tooltip("Субъект слеп из-за обширных рубцов на глазах.", "Требуется хирургическая замена глаз, иначе состояние необратимо.", add_tooltips)
 			if(owner.is_blind_from(TRAUMA_TRAIT))
-				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
+				return conditional_tooltip("Субъект слеп из-за психической травмы.", "Лечится устранением связанной травмы.", add_tooltips)
 			if(owner.is_blind_from(GENETIC_MUTATION))
-				return conditional_tooltip("Subject is genetically blind.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
+				return conditional_tooltip("Субъект страдает генетической слепотой.", "Используйте медикаменты, такие как [/datum/reagent/medicine/mutadone::name].", add_tooltips)
 			if(owner.is_blind_from(EYE_DAMAGE))
-				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
-		return "Subject is blind."
+				return conditional_tooltip("Субъект слеп из-за повреждения глаз.", "Восстановите хирургически, используйте медикаменты, такие как [/datum/reagent/medicine/oculine::name], или защитите глаза повязкой.", add_tooltips)
+		return "Субъект слеп."
 	if(owner.is_nearsighted())
 		if(advanced)
 			if(owner.is_nearsighted_from(QUIRK_TRAIT))
-				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+				return conditional_tooltip("Субъект страдает от постоянной близорукости.", "Не поддаётся лечению в обычных условиях. Очки с диоптриями смягчат эффект.", add_tooltips)
 			if(owner.is_nearsighted_from(TRAIT_RIGHT_EYE_SCAR) || owner.is_nearsighted_from(TRAIT_LEFT_EYE_SCAR))
-				return conditional_tooltip("Subject is nearsighted from severe ocular scarring.", "Surgically replace eyes, irreparable otherwise.", add_tooltips)
+				return conditional_tooltip("Субъект страдает близорукостью из-за серьёзных рубцов на глазах.", "Требуется хирургическая замена глаз, иначе состояние необратимо.", add_tooltips)
 			if(owner.is_nearsighted_from(GENETIC_MUTATION))
-				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
+				return conditional_tooltip("Субъект страдает генетической близорукостью.", "Используйте медикаменты, такие как [/datum/reagent/medicine/mutadone::name]. Очки с диоптриями смягчат эффект.", add_tooltips)
 			if(owner.is_nearsighted_from(EYE_DAMAGE))
-				return conditional_tooltip("Subject is nearsighted from eye damage.", "Repair surgically or use medication such as [/datum/reagent/medicine/oculine::name]. Prescription glasses will assuage the effects.", add_tooltips)
-		return "Subject is nearsighted."
+				return conditional_tooltip("Субъект страдает близорукостью из-за повреждения глаз.", "Восстановите хирургически или используйте медикаменты, такие как [/datum/reagent/medicine/oculine::name]. Очки с диоптриями смягчат эффект.", add_tooltips)
+		return "Субъект страдает близорукостью."
 	return ""
 
 /obj/item/organ/eyes/show_on_condensed_scans()
@@ -326,12 +328,12 @@
 			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
-		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER)
+		var/mutable_appearance/right_scar = mutable_appearance(eye_icon, "eye_scar_right", -EYES_LAYER) // BANDASTATION EDIT - Feat: Augmentation
 		right_scar.color = my_head.draw_color
 		overlays += right_scar
 
 	if (scarring & LEFT_EYE_SCAR)
-		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER)
+		var/mutable_appearance/left_scar = mutable_appearance(eye_icon, "eye_scar_left", -EYES_LAYER) // BANDASTATION EDIT - Feat: Augmentation
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 

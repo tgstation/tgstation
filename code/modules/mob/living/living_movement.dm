@@ -131,7 +131,7 @@
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated)
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
+			to_chat(rider || src, span_warning("[rider ? "[declent_ru(NOMINATIVE)] не может" : "Вы не можете"] сейчас это сделать!"))
 		return FALSE
 	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
 		if(!(z_move_flags & ZMOVE_FALL_CHECKS) && incorporeal_move && (!rider || rider.incorporeal_move))
@@ -149,7 +149,7 @@
 			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
 				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, span_warning("Unbuckle from [buckled] first."))
+				to_chat(src, span_warning("Для начала отстегнитесь от [buckled.declent_ru(GENITIVE)]."))
 			return FALSE
 
 /mob/set_currently_z_moving(value)
@@ -161,3 +161,21 @@
 	if(stat > SOFT_CRIT)
 		return
 	return ..()
+// BANDASTATION ADDITION: Limp Quirk
+/mob/living/toggle_move_intent(new_intent)
+
+	if(HAS_TRAIT(src, TRAIT_LIMP))
+
+		var/target_intent = new_intent
+
+		if(!target_intent)
+			if(move_intent == MOVE_INTENT_RUN)
+				target_intent = MOVE_INTENT_WALK
+			else
+				target_intent = MOVE_INTENT_RUN
+
+		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_TOGGLE_MOVE_INTENT, target_intent) & COMPONENT_PREVENT_TOGGLE_MOVE_INTENT)
+			return
+
+	return ..()
+// BANDASTATION ADDITION: END

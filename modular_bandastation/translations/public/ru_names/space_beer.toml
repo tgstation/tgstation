@@ -1,0 +1,8 @@
+["space beer"]
+nominative = "космическое пиво"
+genitive = "космического пива"
+dative = "космическому пиву"
+accusative = "космическое пиво"
+instrumental = "космическим пивом"
+prepositional = "космическом пиве"
+gender = "neuter"

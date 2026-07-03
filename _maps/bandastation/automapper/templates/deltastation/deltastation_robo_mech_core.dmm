@@ -1,0 +1,18 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/mid_joiner{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/borg_fancy_1/directional/west,
+/obj/structure/table/reinforced,
+/obj/machinery/ecto_sniffer,
+/obj/item/mecha_parts/core,
+/turf/open/floor/iron/dark/textured_half,
+/area/station/science/robotics/lab)
+
+(1,1,1) = {"
+a
+"}

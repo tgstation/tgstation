@@ -8,7 +8,7 @@ export function extractSurgeryName(
   // operation names may be "make incision", "lobotomy", or "disarticulation (amputation)"
   const { name, tool_rec } = operation;
   if (!name) {
-    return { name: 'Error Surgery', tool: 'Error' };
+    return { name: 'Ошибка операции', tool: 'Error' };
   }
   const parenthesis = name.indexOf('(');
   if (parenthesis === -1) {
@@ -48,29 +48,29 @@ export function extractRequirementMap(
 
   const optional_title = () => {
     if (optional_requirements.length === 1) {
-      if (hard_requirements.length === 0) return 'The following is optional:';
-      return 'Additionally, the following is optional:';
+      if (hard_requirements.length === 0) return 'Необязательное требование:';
+      return 'Дополнительно, необязательное требование:';
     }
     if (hard_requirements.length === 0)
-      return 'All of the following are optional:';
-    return 'Additionally, all of the following are optional:';
+      return 'Все следующие требования необязательны:';
+    return 'Дополнительно, все следующие требования необязательны:';
   };
 
   const blocked_title = () => {
     if (blocked_requirements.length === 1) {
       if (hard_requirements.length === 0)
-        return 'The following would block the procedure:';
-      return 'However, the following would block the procedure:';
+        return 'Следующее заблокирует процедуру:';
+      return 'Однако, следующее заблокирует процедуру:';
     }
     if (hard_requirements.length === 0)
-      return 'Any of the following would block the procedure:';
-    return 'However, any of the following would block the procedure:';
+      return 'Любое из следующего заблокирует процедуру:';
+    return 'Однако, любое из следующего заблокирует процедуру:';
   };
 
   return {
-    [`${hard_requirements.length === 1 ? 'The' : 'All of the'} following are required:`]:
+    [`${hard_requirements.length === 1 ? 'Требуется следующее:' : 'Все следующие требования обязательны:'}`]:
       hard_requirements,
-    'Additionally, one of the following is required:': soft_requirements,
+    'Дополнительно, требуется одно из следующего:': soft_requirements,
     [optional_title()]: optional_requirements,
     [blocked_title()]: blocked_requirements,
   };

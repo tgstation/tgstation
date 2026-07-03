@@ -10,11 +10,11 @@
 	announce_when = 1
 
 /datum/round_event/processor_overload/announce(fake)
-	var/alert = pick("Exospheric bubble inbound. Processor overload is likely. Please contact you*%xp25)`6cq-BZZT",
-		"Exospheric bubble inbound. Processor overload is likel*1eta;c5;'1v¬-BZZZT",
-		"Exospheric bubble inbound. Processor ov#MCi46:5.;@63-BZZZZT",
-		"Exospheric bubble inbo'Fz\\k55_@-BZZZZZT",
-		"Exospheri:%£ QCbyj^j</.3-BZZZZZZT",
+	var/alert = pick("Приближается экзосферный пузырь. Возможна перегрузка процессора. Пожалуйста, свяжитесь с ваши*%xp25)`6cq-BZZT",
+		"Приближается экзосферный пузырь. Возможна перегрузка процl*1eta;c5;'1v¬-BZZZT",
+		"Приближается экзосферный пузырь. Возможна пер#MCi46:5.;@63-BZZZZT",
+		"Приближается экзосферн'Fz\\k55_@-BZZZZZT",
+		"Приближается экз:%£ QCbyj^j</.3-BZZZZZZT",
 		"!!hy%;f3l7e,<$^-BZZZZZZZT",
 	)
 
@@ -26,7 +26,7 @@
 	// whether it's, say, a tesla zapping tcomms, or some selective
 	// modification of the tcomms bus
 	if(prob(80) || fake)
-		priority_announce(alert, "Anomaly Alert")
+		priority_announce(alert, "Обнаружена аномалия")
 
 /datum/round_event/processor_overload/start()
 	for(var/obj/machinery/telecomms/processor/spinny_thing in GLOB.telecomm_machines)

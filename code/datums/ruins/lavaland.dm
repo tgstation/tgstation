@@ -129,6 +129,7 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
+	unpickable = TRUE //BANDASTATION EDIT
 	terrain_padding = 2
 
 /datum/map_template/ruin/lavaland/ratvar

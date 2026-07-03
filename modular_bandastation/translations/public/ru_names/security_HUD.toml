@@ -1,0 +1,8 @@
+["security HUD"]
+nominative = "охранный ИЛС"
+genitive = "охранного ИЛС"
+dative = "охранному ИЛС"
+accusative = "охранный ИЛС"
+instrumental = "охранным ИЛС"
+prepositional = "охранном ИЛС"
+gender = "male"

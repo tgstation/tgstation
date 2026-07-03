@@ -168,8 +168,8 @@
 	)
 
 /mob/living/basic/pet/cat/space
-	name = "space cat"
-	desc = "They're a cat... in space!"
+	name = "космокот"
+	desc = "Космический котенок!!! Он наблюдал за горизонт событий."
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
@@ -179,8 +179,8 @@
 	held_state = "spacecat"
 
 /mob/living/basic/pet/cat/breadcat
-	name = "bread cat"
-	desc = "They're a cat... with a bread!"
+	name = "котохлеб"
+	desc = "Не ешь его, он не хлеб!"
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"

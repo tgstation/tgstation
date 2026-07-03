@@ -2,7 +2,7 @@
 
 /datum/objective/revenant/New()
 	target_amount = rand(350, 600)
-	explanation_text = "Absorb [target_amount] points of essence from humans."
+	explanation_text = "Поглотите [target_amount] очков эссенции с гуманоидов."
 	return ..()
 
 /datum/objective/revenant/check_completion()
@@ -18,15 +18,17 @@
 
 /datum/objective/revenant_fluff/New()
 	var/list/explanation_texts = list(
-		"Assist and exacerbate existing threats at critical moments.",
-		"Cause as much chaos and anger as you can without being killed.",
-		"Damage and render as much of the station rusted and unusable as possible.",
-		"Disable and cause malfunctions in as many machines as possible.",
-		"Ensure that any holy weapons are rendered unusable.",
-		"Heed and obey the requests of the dead, provided that carrying them out wouldn't be too inconvenient or self-destructive.",
-		"Impersonate or be worshipped as a God.",
-		"Make the crew as miserable as possible.",
-		"Prevent the use of energy weapons where possible.",
+		"Помогайте существующим угрозам и усугубляйте их в критические моменты.",
+		"Вызывайте как можно больше хаоса и гнева, избегая смерти.",
+		"Повреждайте и приводите в негодность как можно больше оборудования станции.",
+		"Выводите из строя и вызывайте сбои в работе как можно большего числа машин.",
+		"Убедитесь, что любое святое оружие стало непригодным для использования.",
+		"Прислушивайтесь к просьбам мёртвых и выполняйте их, если это не слишком неудобно или не ведёт к самоуничтожению.",
+		"Выдавайте себя за Бога или добивайтесь поклонения себе как Божеству.",
+		"Доставляйте капитану как можно больше страданий.",
+		"Доставляйте клоуну как можно больше страданий.",
+		"Доставляйте экипажу как можно больше страданий.",
+		"По возможности предотвращайте использование энергетического оружия.",
 	)
 	if(SSjob.assigned_captain)
 		explanation_texts += "Make the captain as miserable as possible."

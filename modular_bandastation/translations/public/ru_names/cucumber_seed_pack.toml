@@ -1,0 +1,8 @@
+["cucumber seed pack"]
+nominative = "огурец (семена)"
+genitive = "огурца (семена)"
+dative = "огурцу (семена)"
+accusative = "огурец (семена)"
+instrumental = "огурцом (семена)"
+prepositional = "огурце (семена)"
+gender = "male"

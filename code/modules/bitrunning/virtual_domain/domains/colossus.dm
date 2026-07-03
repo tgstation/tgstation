@@ -1,7 +1,7 @@
 /datum/lazy_template/virtual_domain/colossus
-	name = "Celestial Trial"
+	name = "Небесное испытание"
 	cost = BITRUNNER_COST_HIGH
-	desc = "A massive, ancient beast named the Colossus. Judgment comes."
+	desc = "Массивное древнее чудовище по имени Колосс. Суд грядёт."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	forced_outfit = /datum/outfit/job/miner
 	key = "colossus"

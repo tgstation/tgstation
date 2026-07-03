@@ -10,7 +10,7 @@
 
 /datum/grand_finale/cheese/trigger(mob/living/invoker)
 	message_admins("[key_name(invoker)] has summoned forth The Wabbajack and cursed the crew with madness!")
-	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "[command_name()] Higher Dimensional Affairs", 'sound/effects/glass/glassbr1.ogg')
+	priority_announce("Опасность: на станции был вызван чрезвычайно мощный объект, искажающий саму ткань реальности. Рекомендуется немедленная эвакуация. Приготовиться к удару.", "[command_name()]: Отдел паранормальных явлений", 'sound/effects/glass/glassbr1.ogg')
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (isnull(crewmate.mind))

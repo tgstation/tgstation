@@ -2,18 +2,18 @@ import { type Antagonist, Category } from '../base';
 
 const Spy: Antagonist = {
   key: 'spy',
-  name: 'Spy',
+  name: 'Шпион',
   description: [
     `
-      Your mission, should you choose to accept it: Infiltrate Space Station 13.
-      Disguise yourself as a member of their crew and steal vital equipment.
-      Should you be caught or killed, your employer will disavow any knowledge
-      of your actions. Good luck agent.
+      Ваша миссия, если вы решитесь взяться за нее: проникнуть на космическую станцию 13.
+      Замаскируйтесь под ее члена экипажа и украдите жизненно важное оборудование.
+      Если вас поймают или убьют, ваш работодатель будет отрицать любую информацию,
+      связанную с вашими действиями тут. Удачи, агент.
     `,
 
     `
-      Complete Spy Bounties to earn rewards from your employer.
-      Use these rewards to sow chaos and mischief!
+      Выполняйте шпиноские заказы, чтобы заработать награды от вашего работодателя.
+      Используйте эти награды для того, чтобы сеять хаос и беду!
     `,
   ],
   category: Category.Roundstart,

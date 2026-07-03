@@ -39,29 +39,29 @@
 
 	var/growth_string = ""
 	if (HAS_TRAIT(bloodbag, TRAIT_BLOOD_WORM_HOST))
-		growth_string = ", but consuming it is impossible, as they are a host"
+		growth_string = ", поглощение которых невозможно, так как тело пренадлежит другому червю"
 	else if (total_blood_now < cocoon_action?.total_blood_required)
 		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
 		if (rounded_growth > 0)
-			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+			growth_string = ", поглощение которых внесет <b>[rounded_growth]%</b> вклада в ваш рост"
 		else
-			growth_string = ", but consuming it wouldn't contribute to your growth"
+			growth_string = ", поглощение которых не поспособствует вашему росту"
 	else
 		if (!istype(src, /mob/living/basic/blood_worm/adult))
-			growth_string = ". You are already ready to mature"
+			growth_string = ". Вы готовы к взрослению"
 		else
-			growth_string = ". You are already fully grown"
+			growth_string = ". Вы достигли пика роста"
 
 	var/synth_string = "[ceil(synth_content * 100)]%"
 	switch(synth_content)
 		if (-INFINITY to 0)
-			synth_string = "not"
+			synth_string = "не является"
 		if (1 to INFINITY)
-			synth_string = "fully"
+			synth_string = "является"
 		if (0 to 1)
 			synth_string = "[ceil(synth_content * 100)]%"
 
-	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of blood[growth_string]. [target.p_Their()] blood is <b>[synth_string]</b> synthetic.")
+	result += span_notice("У [target.ru_p_theirs()] есть [rounded_volume] юнитов крови[growth_string]. [capitalize(target.ru_p_them())] кровь <b>[synth_string]</b> синтетической.")
 
 /mob/living/basic/blood_worm/get_status_tab_items()
 	return ..() + get_special_status_tab_items()

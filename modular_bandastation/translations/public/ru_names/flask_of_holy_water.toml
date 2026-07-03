@@ -1,0 +1,8 @@
+["flask of holy water"]
+nominative = "фляга с святой водой"
+genitive = "фляги с святой водой"
+dative = "фляге с святой водой"
+accusative = "флягу с святой водой"
+instrumental = "флягой с святой водой"
+prepositional = "фляге с святой водой"
+gender = "female"

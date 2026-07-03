@@ -231,7 +231,7 @@
 
 /// Called to remove an organ from a limb. Do not put any mob operations here (except the bodypart_getter at the start)
 /// Give EITHER a limb OR a limb_owner
-/obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner, movement_flags)
+/obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner, movement_flags, atom/drop_location) // BANDASTATION ADDITION - Don't move organs to nullspace to move later: (atom/drop_location)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!isnull(limb_owner))
@@ -239,9 +239,14 @@
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
 
+	// BANDASTATION ADDITION START - Don't move organs to nullspace to move later
 	// The true movement is here
-	moveToNullspace()
+	if(drop_location)
+		forceMove(drop_location)
+	else
+		moveToNullspace()
 	bodypart_owner = null
+	// BANDASTATION ADDITION END - Don't move organs to nullspace to move later
 
 	if(!isnull(limb))
 		on_bodypart_remove(limb)

@@ -37,7 +37,7 @@
 /obj/item/mod/module/stealth/proc/unstealth(datum/source)
 	SIGNAL_HANDLER
 
-	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
+	to_chat(mod.wearer, span_warning("[capitalize(declent_ru(NOMINATIVE))] отключается от контакта!"))
 	do_sparks(2, TRUE, src)
 	drain_power(use_energy_cost)
 	deactivate()
@@ -213,9 +213,9 @@
 
 /obj/item/mod/module/hacker/proc/charge_message(atom/drained_atom, drain_amount)
 	if(drain_amount)
-		to_chat(mod.wearer, span_notice("Gained <B>[drain_amount]</B> units of energy from [drained_atom]."))
+		to_chat(mod.wearer, span_notice("Получено <B>[drain_amount]</B> единиц энергии из [drained_atom.declent_ru(GENITIVE)]."))
 	else
-		to_chat(mod.wearer, span_warning("[drained_atom] has run dry of energy, you must find another source!"))
+		to_chat(mod.wearer, span_warning("У [drained_atom.declent_ru(GENITIVE)] закончилась энергия, вы должны найти другой источник!"))
 
 //Security Records, Ninja objective This notifies the AI and sets everyone on arrest.
 /obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -707,23 +707,23 @@
 	if(!linked_weapon)
 		var/obj/item/weapon_to_link = mod.wearer.is_holding_item_of_type(accepted_type)
 		if(!weapon_to_link)
-			balloon_alert(mod.wearer, "no linked weapon!")
+			balloon_alert(mod.wearer, "нет привязанного оружия!")
 			return
 		set_weapon(weapon_to_link)
-		balloon_alert(mod.wearer, "[linked_weapon.name] linked")
+		balloon_alert(mod.wearer, "связь с [linked_weapon.declent_ru(INSTRUMENTAL)] установлена")
 		return
 	if(linked_weapon in mod.wearer.get_all_contents())
-		balloon_alert(mod.wearer, "already on self!")
+		balloon_alert(mod.wearer, "уже у вас!")
 		return
 	var/distance = get_dist(mod.wearer, linked_weapon)
 	var/in_view = (linked_weapon in view(mod.wearer)) && !(linked_weapon in get_turf(mod.wearer))
 	if(!in_view && !drain_power(use_energy_cost * distance))
-		balloon_alert(mod.wearer, "not enough charge!")
+		balloon_alert(mod.wearer, "недостаточно заряда!")
 		return
 	linked_weapon.forceMove(linked_weapon.drop_location())
 	if(in_view)
 		do_sparks(5, FALSE, linked_weapon)
-		mod.wearer.visible_message(span_danger("[linked_weapon] flies towards [mod.wearer]!"),span_warning("You hold out your hand and [linked_weapon] flies towards you!"))
+		mod.wearer.visible_message(span_danger("[capitalize(linked_weapon.declent_ru(NOMINATIVE))] летит в сторону [mod.wearer.declent_ru(GENITIVE)]!"), span_warning("Вы протягиваете руку, и [linked_weapon.declent_ru(NOMINATIVE)] летит к вам!"))
 		linked_weapon.throw_at(mod.wearer, distance+1, linked_weapon.throw_speed, mod.wearer)
 	else
 		recall_weapon()
@@ -737,16 +737,16 @@
 	linked_weapon.forceMove(get_turf(src))
 	var/alert = ""
 	if(mod.wearer.put_in_hands(linked_weapon))
-		alert = "[linked_weapon.name] teleports to your hand"
+		alert = "[linked_weapon.declent_ru(NOMINATIVE)] телепортируется в вашу руку"
 	else if(mod.wearer.equip_to_slot_if_possible(linked_weapon, ITEM_SLOT_BELT, disable_warning = TRUE))
-		alert = "[linked_weapon.name] sheathes itself in your belt"
+		alert = "[linked_weapon.declent_ru(NOMINATIVE)] закрепляется на вашем поясе"
 	else
-		alert = "[linked_weapon.name] teleports under you"
+		alert = "[linked_weapon.declent_ru(NOMINATIVE)] телепортируется под вас"
 	if(caught)
 		if(mod.wearer.is_holding(linked_weapon))
-			alert = "you catch [linked_weapon.name]"
+			alert = "вы ловите [linked_weapon.declent_ru(ACCUSATIVE)]"
 		else
-			alert = "[linked_weapon.name] lands under you"
+			alert = "[linked_weapon.declent_ru(NOMINATIVE)] приземляется под вами"
 	else
 		do_sparks(5, FALSE, linked_weapon)
 	if(alert)
@@ -782,10 +782,10 @@
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user) || user != mod.wearer)
 		return
 	if(mod.ai_assistant == user)
-		to_chat(mod.ai_assistant, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+		to_chat(mod.ai_assistant, span_danger("<B>фАТальНая ОШибкА</B>: 381200-*#00КОД <B>СИНИЙ</B>\nВМЕшАТЕльСТВО ИИ оБНаРуЖЕнно\nДЕЙСтВИе ОТМенЕно"))
 		return
 	var/mob/living/living_user = user
-	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
+	to_chat(living_user, span_danger("<B>фАТальНая ОШибкА</B>: 382200-*#00КОД <B>КРАСНЫЙ</B>\nОБНАруЖЕно НЕАВТОРИЗИРОВАННОЕ ИСпОЛЬзоВанИе\nНаЧАЛО ПОДР0СиСТЕМы3 13...\nУНИчТОЖЕНИЕ П-П-ПОЛЬЗОВАТЕЛЯ..."))
 	living_user.investigate_log("has been gibbed by using a MODsuit equipped with [src].", INVESTIGATE_DEATHS)
 	living_user.gib(DROP_ALL_REMAINS)
 
@@ -895,7 +895,7 @@
 	var/obj/item/mod/module/energy_net/module = net_module?.resolve()
 	if(module)
 		module.add_net(net)
-	firer?.visible_message(span_danger("[firer] caught [target] with an energy net!"), span_notice("You caught [target] with an energy net!"))
+	firer?.visible_message(span_danger("[firer] поймал [target] с помощью энергосетки!"), span_notice("Вы поймали [target] с помощью энергосетки!"))
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, force = TRUE)
 	net.buckle_mob(target, force = TRUE)
@@ -972,14 +972,14 @@
 
 /obj/item/mod/module/adrenaline_boost/used()
 	if(!reagents.has_reagent(reagent_required, reagent_required_amount))
-		balloon_alert(mod.wearer, "no charge!")
+		balloon_alert(mod.wearer, "нет заряда!")
 		return FALSE
 	return ..()
 
 /obj/item/mod/module/adrenaline_boost/on_use(mob/activator)
 	if(IS_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
-	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
+	to_chat(mod.wearer, span_notice("Вы использовали адреналиновый заряд."))
 	mod.wearer.SetAllImmobility(0)
 	mod.wearer.adjust_stamina_loss(-200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
@@ -1005,15 +1005,15 @@
 	if(!attacking_item.is_open_container())
 		return FALSE
 	if(reagents.has_reagent(reagent_required, reagent_required_amount))
-		balloon_alert(mod.wearer, "already charged!")
+		balloon_alert(mod.wearer, "уже заряжен!")
 		return FALSE
 	if(!attacking_item.reagents.trans_to(src, reagent_required_amount, target_id = reagent_required))
 		return FALSE
-	balloon_alert(mod.wearer, "charge [reagents.has_reagent(reagent_required, reagent_required_amount) ? "fully" : "partially"] reloaded")
+	balloon_alert(mod.wearer, "заряд [reagents.has_reagent(reagent_required, reagent_required_amount) ? "полностью" : "частично"] перезаряжен")
 	return TRUE
 
 /obj/item/mod/module/adrenaline_boost/proc/boost_aftereffects(mob/affected_mob)
 	if(!affected_mob)
 		return
 	reagents.trans_to(affected_mob, reagents.total_volume)
-	to_chat(affected_mob, span_danger("You are beginning to feel the after-effect of the injection."))
+	to_chat(affected_mob, span_danger("Вы начинаете ощущать последствия инъекции."))

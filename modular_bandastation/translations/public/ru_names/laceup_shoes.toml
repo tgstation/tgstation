@@ -1,0 +1,8 @@
+["laceup shoes"]
+nominative = "шнурованные туфли"
+genitive = "шнурованных туфель"
+dative = "шнурованным туфлям"
+accusative = "шнурованные туфли"
+instrumental = "шнурованными туфлями"
+prepositional = "шнурованных туфлях"
+gender = "plural"

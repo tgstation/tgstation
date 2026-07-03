@@ -3,37 +3,37 @@
 
 /datum/bounty/item/slime/New()
 	..()
-	description = "Nanotrasen's science lead is hunting for the rare and exotic [name]. A bounty has been offered for finding it."
+	description = "Научный руководитель Нанотрейзен охотится за редким и экзотическим [name]. За его нахождение полагается награда."
 	reward += rand(0, 4) * 500
 
 /datum/bounty/item/slime/green
-	name = "Green Slime Extract"
+	name = "зелёным экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/green = TRUE)
 
 /datum/bounty/item/slime/pink
-	name = "Pink Slime Extract"
+	name = "розовым экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/pink = TRUE)
 
 /datum/bounty/item/slime/gold
-	name = "Gold Slime Extract"
+	name = "золотым экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/gold = TRUE)
 
 /datum/bounty/item/slime/oil
-	name = "Oil Slime Extract"
+	name = "масляным экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/oil = TRUE)
 
 /datum/bounty/item/slime/black
-	name = "Black Slime Extract"
+	name = "чёрным экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/black = TRUE)
 
 /datum/bounty/item/slime/lightpink
-	name = "Light Pink Slime Extract"
+	name = "светло-розовым экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/lightpink = TRUE)
 
 /datum/bounty/item/slime/adamantine
-	name = "Adamantine Slime Extract"
+	name = "адамантитовым экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/adamantine = TRUE)
 
 /datum/bounty/item/slime/rainbow
-	name = "Rainbow Slime Extract"
+	name = "радужным экстрактом слайма"
 	wanted_types = list(/obj/item/slime_extract/rainbow = TRUE)

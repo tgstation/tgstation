@@ -1,10 +1,10 @@
 /datum/quirk/item_quirk/narcolepsy
 	name = "Narcolepsy"
-	desc = "You feel drowsy often, and could fall asleep at any moment. Staying caffeinated, walking or even supressing symptoms with stimulants, prescribed or otherwise, can help you get through the shift..."
+	desc = "Вас часто одолевает сонливость, и вы можете уснуть в любую минуту. Чтобы продержаться смену, можно поддерживать себя кофеином, прогулками или даже подавлять симптомы стимуляторами, прописанными врачом, или иными средствами..."
 	icon = FA_ICON_BED
 	value = -8
 	hardcore_value = 8
-	medical_record_text = "Patient may involuntarily fall asleep during normal activities, and feel drowsy at any given moment."
+	medical_record_text = "Пациент может непроизвольно засыпать во время обычной деятельности и испытывать сонливость в любое время."
 	mail_goodies = list(
 		/obj/item/reagent_containers/cup/glass/coffee,
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
@@ -24,7 +24,7 @@
 			LOCATION_RPOCKET,
 			LOCATION_HANDS,
 		),
-		flavour_text = "Given to you to aid in staying awake this shift...",
+		flavour_text = "Дано вам, чтобы помочь не заснуть в эту смену...",
 		notify_player = TRUE,
 	)
 

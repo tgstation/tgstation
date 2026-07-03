@@ -42,21 +42,21 @@
 	var/half_max_charge = cell.max_charge() / 2
 	// Ethereals can't drain APCs under half charge, so that they are forced to look to alternative power sources if the station is running low
 	if(cell.charge() < half_max_charge)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "safeties prevent draining!"), ETHEREAL_APC_ALERT_DELAY)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "протоколы безопасности предотвращают выкачивание энергии!"), ETHEREAL_APC_ALERT_DELAY)
 		return
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power..."), ETHEREAL_APC_ALERT_DELAY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "выкачивание энергии..."), ETHEREAL_APC_ALERT_DELAY)
 	while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
-			balloon_alert(user, "stomach removed!?")
+			balloon_alert(user, "желудок извлечён!?")
 			return
 		if(isnull(cell))
-			balloon_alert(user, "cell removed!")
+			balloon_alert(user, "батарейка извлечена!")
 			return
 		if(cell.charge() < half_max_charge)
-			balloon_alert(user, "safeties kicked in!")
+			balloon_alert(user, "активирован протокол безопасности!")
 			return
 
 		var/our_available_charge = cell.charge() - half_max_charge
@@ -67,31 +67,31 @@
 		used_stomach.adjust_charge(energy_drained)
 
 		if(stomach_cell.used_charge() <= 0)
-			balloon_alert(user, "your charge is full!")
+			balloon_alert(user, "ваш заряд полон!")
 			return
 		if(cell.charge() <= 0)
-			balloon_alert(user, "apc is empty!")
+			balloon_alert(user, "ЛКП пуст!")
 			return
 
 /// Handles charging our internal cell from an ethereal and their stomach
 /obj/machinery/power/apc/proc/charge_from_ethereal(mob/living/carbon/human/user, obj/item/organ/stomach/ethereal/used_stomach)
 	if(cell.charge() >= cell.max_charge())
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "apc full!"), ETHEREAL_APC_ALERT_DELAY)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "ЛКП полностью заряжен!"), ETHEREAL_APC_ALERT_DELAY)
 		return
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	if(stomach_cell.charge() <= 0)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "charge is too low!"), ETHEREAL_APC_ALERT_DELAY)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "слишком мало заряда!"), ETHEREAL_APC_ALERT_DELAY)
 		return
 
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "transferring power..."), ETHEREAL_APC_ALERT_DELAY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "передача энергии..."), ETHEREAL_APC_ALERT_DELAY)
 	if(!do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		return
 	if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
-		balloon_alert(user, "stomach removed!?")
+		balloon_alert(user, "желудок извлечён!?")
 		return
 	if(isnull(cell))
-		balloon_alert(user, "cell removed!")
+		balloon_alert(user, "батарейка извлечена!")
 		return
 
 	var/stomach_charge = stomach_cell.charge()
@@ -102,10 +102,10 @@
 	cell.give(-energy_drained)
 
 	if(cell.used_charge() <= 0)
-		balloon_alert(user, "apc is full!")
+		balloon_alert(user, "ЛКП полностью заряжен!")
 		return
 	if(stomach_cell.charge() <= 0)
-		balloon_alert(user, "out of charge!")
+		balloon_alert(user, "заряд закончился!")
 		return
 
 
@@ -117,8 +117,8 @@
 
 	if(opened && (!issilicon(user)))
 		if(cell)
-			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
-			balloon_alert(user, "cell removed")
+			user.visible_message(span_notice("[user] вытаскивает [cell.declent_ru(ACCUSATIVE)] из [declent_ru(GENITIVE)]!"))
+			balloon_alert(user, "батарея извлечена")
 			user.put_in_hands(cell)
 		return
 	if((machine_stat & MAINT) && !opened) //no board; no interface
@@ -152,7 +152,7 @@
 		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
 			. = FALSE
 	if (!. && !loud)
-		balloon_alert(user, "it's disabled!")
+		balloon_alert(user, "он отключён!")
 	return .
 
 /obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff)

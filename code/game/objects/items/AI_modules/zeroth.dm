@@ -1,8 +1,8 @@
 /obj/item/ai_module/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(law_datum.owner)
 		if(law_datum.owner.laws.zeroth)
-			to_chat(law_datum.owner, "[sender.real_name] attempted to modify your zeroth law.")
-			to_chat(law_datum.owner, "It would be in your best interest to play along with [sender.real_name] that:")
+			to_chat(law_datum.owner, "Обнаружена попытка изменения нулевого закона от [sender.real_name].")
+			to_chat(law_datum.owner, "В вашем интересе сотрудничать с [sender.real_name] и признать, что:")
 			for(var/failedlaw in laws)
 				to_chat(law_datum.owner, "[failedlaw]")
 			return TRUE
@@ -22,19 +22,19 @@
 /obj/item/ai_module/zeroth/onehuman
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
-	laws = list("Only SUBJECT is human.")
+	laws = list("Только СУБЪЕКТ — человек.")
 
 /obj/item/ai_module/zeroth/onehuman/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter the subject who is the only human.", "One Human", user.real_name, max_length = MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Введите имя субъекта, который является единственным человеком.", "Один человек", user.real_name, max_length = MAX_NAME_LEN)
 	if(!targName || !user.is_holding(src))
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is human"
+	laws[1] = "Только [targetName] — человек"
 	..()
 
 /obj/item/ai_module/zeroth/onehuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, span_alert("No name detected on module, please enter one."))
+		to_chat(user, span_alert("Имя не задано в модуле, пожалуйста, введите его."))
 		return FALSE
 	..()
 

@@ -35,7 +35,7 @@
 	equipped_on.update_worn_undersuit()
 	if(visuals_only)
 		return
-	equipped_on.fully_replace_character_name(null, "Waldo")
+	equipped_on.fully_replace_character_name(null, "Вальдо")
 	equipped_on.set_eye_color(COLOR_BLACK)
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"

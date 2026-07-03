@@ -708,7 +708,15 @@
 					if(dist_near < closest_dist)
 						source = engines
 						closest_dist = dist_near
-			zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100)
+
+			// BANDASTATION ADDITION START - Allow shuttles to override the default sound paths
+			var/custom_sound = get_custom_sound(phase)
+			if(custom_sound)
+				zlevel_mobs.playsound_local(source, custom_sound, 100)
+			else
+				zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100)
+			// BANDASTATION ADDITION END - Allow shuttles to override the default sound paths
+
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

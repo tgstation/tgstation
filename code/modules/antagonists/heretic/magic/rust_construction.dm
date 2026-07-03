@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/rust_construction
-	name = "Rust Formation"
-	desc = "Transforms a rusted floor into a full wall of rust. Creating a wall underneath a mob will harm it."
+	name = "Возведение ржавчины"
+	desc = "Превращает ржавый пол в полноценную стену из ржавчины. Создание стены под целью откинет её и нанесет вред."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon_state = "shield"
@@ -12,8 +12,8 @@
 	unset_after_click = FALSE
 
 	// Both of these are changed in before_cast
-	invocation = "Someone raises a wall of rust."
-	invocation_self_message = "You raise a wall of rust."
+	invocation = "Кто-то поднимает стену из ржавчины."
+	invocation_self_message = "Вы поднимаете стену из ржавчины."
 	invocation_type = INVOCATION_EMOTE
 	spell_requirements = NONE
 
@@ -30,12 +30,12 @@
 
 /datum/action/cooldown/spell/pointed/rust_construction/is_valid_target(atom/cast_on)
 	if(!isturf(cast_on))
-		cast_on.balloon_alert(owner, "not a wall or floor!")
+		cast_on.balloon_alert(owner, "не стена и не пол!!")
 		return FALSE
 
 	if(!HAS_TRAIT(cast_on, TRAIT_RUSTY))
 		if(owner)
-			cast_on.balloon_alert(owner, "not rusted!")
+			cast_on.balloon_alert(owner, "не ржавый!")
 		return FALSE
 
 	return TRUE
@@ -46,16 +46,16 @@
 		return
 
 	var/mob/living/living_owner = owner
-	invocation = span_danger("<b>[owner]</b> drags [owner.p_their()] hand[living_owner.usable_hands == 1 ? "":"s"] upwards as a wall of rust rises out of [cast_on]!")
-	invocation_self_message = span_notice("You drag [living_owner.usable_hands == 1 ? "a hand":"your hands"] upwards as a wall of rust rises out of [cast_on].")
+	invocation = span_danger("<b>[capitalize(owner.declent_ru(NOMINATIVE))]</b> тянет свою рук[living_owner.usable_hands == 1 ? "у": "и"] вверх, когда стена ржавчины поднимается из [cast_on.declent_ru(GENITIVE)]!")
+	invocation_self_message = span_notice("Вы тащите рук[living_owner.usable_hands == 1 ? "у": "и"] вверх, когда из [cast_on.declent_ru(GENITIVE)] поднимается стена ржавчины")
 
 /datum/action/cooldown/spell/pointed/rust_construction/cast(turf/cast_on)
 	. = ..()
-	var/rises_message = "rises out of [cast_on]"
+	var/rises_message = "поднимается из [cast_on.declent_ru(GENITIVE)]"
 
 	// If we casted at a wall we'll try to rust it. In the case of an enchanted wall it'll deconstruct it
 	if(isclosedturf(cast_on))
-		cast_on.visible_message(span_warning("\The [cast_on] quakes as the rust causes it to crumble!"))
+		cast_on.visible_message(span_warning("[capitalize(cast_on.declent_ru(NOMINATIVE))] дрожит, когда ржавчина заставляет сыпаться!"))
 		var/mob/living/living_owner = owner
 		living_owner?.do_rust_heretic_act(cast_on)
 		// ref transfers to floor
@@ -89,13 +89,13 @@
 		message_shown = TRUE
 		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			living_mob.visible_message(
-				span_warning("\A [new_wall] [rises_message] and pushes along [living_mob]!"),
-				span_notice("\A [new_wall] [rises_message] beneath your feet and pushes you along!"),
+				span_warning("[capitalize(new_wall.declent_ru(NOMINATIVE))] [rises_message] и толкает [living_mob.declent_ru(ACCUSATIVE)]!"),
+				span_notice("[capitalize(new_wall.declent_ru(NOMINATIVE))] [rises_message] под вашими ногами и толкает вас!"),
 			)
 		else
 			living_mob.visible_message(
-				span_warning("\A [new_wall] [rises_message] and slams into [living_mob]!"),
-				span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
+				span_warning("[capitalize(new_wall.declent_ru(NOMINATIVE))] [rises_message] и врезается в [living_mob.declent_ru(ACCUSATIVE)]!"),
+				span_userdanger("[capitalize(new_wall.declent_ru(NOMINATIVE))] [rises_message] под вашими ногами и врезается в вас!"),
 			)
 			living_mob.apply_damage(10, BRUTE, wound_bonus = 10)
 			living_mob.Knockdown(5 SECONDS)

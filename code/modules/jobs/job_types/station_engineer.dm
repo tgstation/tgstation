@@ -1,11 +1,11 @@
 /datum/job/station_engineer
 	title = JOB_STATION_ENGINEER
-	description = "Start the Supermatter, wire the solars, repair station hull \
-		and wiring damage."
+	description = "Запускайте двигатель Суперматерии, чините солнечные панели, чините обшивку станции \
+		и поврежденную технику."
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = SUPERVISOR_CE
+	supervisors = JOB_CHIEF_ENGINEER_RU
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW

@@ -749,7 +749,7 @@
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
-	if (!ispath(pod.style, /datum/pod_style/invisible))
+	if (!ispath(pod.style, /datum/pod_style/invisible) && !ispath(pod.style, /datum/pod_style/teleport))
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, PROC_REF(end_launch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 

@@ -1,6 +1,6 @@
 /obj/machinery/gibber
 	name = "gibber"
-	desc = "The name isn't descriptive enough?"
+	desc = "Название недостаточно информативное?"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	base_icon_state = "grinder"
@@ -26,10 +26,11 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	if(prob(5))
 		name = "meat grinder"
-		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
-			you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
-			push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
-			Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
+		ru_names_rename(ru_names_toml(name))
+		desc = "Ладно, если я... если я измельчу тебя в мясорубке, и единственное, что от тебя останется, - это глазное яблоко, \
+		то ты... ты ТОЧНО УМРЕШЬ! Ты, наверное, - не ты, я просто говорю, что если бы ты... если бы кто-то, типа, \
+			если тебя заталкивают в мясорубку, и, к примеру, одна из косточек твоего пальца все еще цела, они не станут ее поднимать и уходить, \
+			видите ли, да, это не было смертельно опасно, это не было мгновенным убийством! У тебя еще осталась часть пальца!"
 		dirty = TRUE
 		update_appearance(UPDATE_OVERLAYS)
 
@@ -47,10 +48,10 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[efficiency]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += span_notice("На дисплее состояния отображается: Вывод <b>[efficiency]</b> мясных кусков через <b>[gibtime*0.1]</b> секунд работы.")
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
-				. += span_notice("[src] has been upgraded to process inorganic materials.")
+				. += span_notice("Машина была модернизирована для обработки неорганических материалов.")
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
@@ -94,36 +95,36 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		to_chat(user, span_danger("It's locked and running."))
+		to_chat(user, span_danger("Машина работает, потому доступ заблокирован."))
 		return
 
 	if(!anchored)
-		to_chat(user, span_warning("[src] cannot be used unless bolted to the ground!"))
+		to_chat(user, span_warning("Нельзя использовать [declent_ru(ACCUSATIVE)], пока [ru_p_they()] не прикручена к полу!"))
 		return
 
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, span_warning("This item is not suitable for [src]!"))
+			to_chat(user, span_warning("Этот предмет не подходит для [declent_ru(GENITIVE)]!"))
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled || C.has_buckled_mobs())
-			to_chat(user, span_warning("[C] is attached to something!"))
+			to_chat(user, span_warning("Тело [C.declent_ru(GENITIVE)] к чему-то пристегнуто!"))
 			return
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
-					to_chat(user, span_warning("Subject may not have abiotic items on!"))
+					to_chat(user, span_warning("На объекте не должно быть абиотических предметов!"))
 					return
 
-		user.visible_message(span_danger("[user] starts to put [C] into [src]!"))
+		user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает запихивать [C.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]!"))
 
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message(span_danger("[user] stuffs [C] into [src]!"))
+				user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] запихивает [C.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]!"))
 				C.forceMove(src)
 				set_occupant(C)
 				update_appearance()
@@ -165,18 +166,18 @@
 		return
 
 	if(!occupant)
-		audible_message(span_hear("You hear a loud metallic grinding sound."))
+		audible_message(span_hear("Вы слышите громкий металлический скрежет."))
 		return
 
 	if(occupant.flags_1 & HOLOGRAM_1)
-		audible_message(span_hear("You hear a very short metallic grinding sound."))
+		audible_message(span_hear("Вы слышите очень короткий металлический скрежет."))
 		playsound(loc, 'sound/machines/hiss.ogg', 20, TRUE)
 		qdel(occupant)
 		set_occupant(null)
 		return
 
 	use_energy(active_power_usage)
-	audible_message(span_hear("You hear a loud squelchy grinding sound."))
+	audible_message(span_hear("Вы слышите громкий хлюпающий скрежещущий звук."))
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_appearance()

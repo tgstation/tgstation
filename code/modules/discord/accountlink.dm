@@ -1,3 +1,4 @@
+/* BANDASTATION REMOVAL
 // IF you have linked your account, this will trigger a verify of the user
 /client/verb/verify_in_discord()
 	set category = "OOC"
@@ -35,5 +36,5 @@
 	var/datum/browser/window = new /datum/browser(usr, "discordverification", "Discord Verification")
 	window.set_content("<div>[message]</div>")
 	window.open()
-
+*/
 

@@ -1,6 +1,6 @@
 /datum/antagonist/abductor
 	name = "\improper Abductor"
-	roundend_category = "abductors"
+	roundend_category = "Абдукторы"
 	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	pref_flag = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"

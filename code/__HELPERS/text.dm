@@ -30,14 +30,21 @@
 	if(!result)
 		tgui_alert(usr, "Invalid name.")
 		return ""
-	return sanitize(result)
+	return sanitize(result, apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 
+// BANDASTATION EDIT START - Sanitize emotes
+/**
+ * Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
+ * Arguments:
+ * * apply_ic_filter - sanitizes all symbols except `a-zA-Za-åa-ö-w-я 0-9/@%\"!#?¨'.,:*+`
+*/
+/proc/sanitize(text, apply_ic_filter = FALSE)
+	text = rustutils_regex_replace(text, "\[\n\t\]", "i", "#")
+	if(apply_ic_filter)
+		text = rustutils_regex_replace(text, "\[^a-zA-Za-åa-ö-w-я 0-9/@%\"!#?¨'.,:;*+\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF\u1100-\u11FF]", "i", "")
 
-/// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
-/proc/sanitize(text)
-	var/static/regex/regex = regex(@"[\n\t]", "g")
-	return html_encode(regex.Replace(text, "#"))
-
+	return html_encode(text)
+// BANDASTATION EDIT END - Sanitize emotes
 
 /// Runs STRIP_HTML_SIMPLE and sanitize.
 /proc/strip_html(text, limit = MAX_MESSAGE_LEN)
@@ -92,7 +99,7 @@
 	if(ascii_only)
 		if(length(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n]")
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n\u0400-\u04FF]") // BANDASTATION EDIT: Allow cyrillic symbols
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
@@ -179,12 +186,12 @@
 		switch(text2ascii(char))
 
 			// A  .. Z
-			if(65 to 90) //Uppercase Letters
+			if(65 to 90, 1040 to 1071, 1025) //Uppercase Letters // BANDASTATION EDIT CHANGE - Cyrillic Fixes
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
 			// a  .. z
-			if(97 to 122) //Lowercase Letters
+			if(97 to 122, 1072 to 1103, 1105) //Lowercase Letters // BANDASTATION EDIT CHANGE - Cyrillic Fixes
 				if(((last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED) && cap_at_start) || (cap_after_symbols && last_char_group == SYMBOLS_DETECTED)) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
@@ -222,7 +229,7 @@
 					continue
 				last_char_group = SPACES_DETECTED
 
-			if(127 to INFINITY)
+			if(127 to 1024, 1026 to 1104, 1106 to INFINITY) // BANDASTATION EDIT CHANGE - Cyrillic Fixes - Ёё
 				if(ascii_only)
 					if(strict)
 						return
@@ -372,6 +379,7 @@
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
+	t = format_text(t) // BANDASTATION ADDITION - Declents
 	. = t
 	if(t)
 		. = t[1]
@@ -1189,33 +1197,33 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/weight_class_to_text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
-			. = "tiny"
+			. = "крохотного размера"
 		if(WEIGHT_CLASS_SMALL)
-			. = "small"
+			. = "маленького размера"
 		if(WEIGHT_CLASS_NORMAL)
-			. = "normal-sized"
+			. = "обычного размера"
 		if(WEIGHT_CLASS_BULKY)
-			. = "bulky"
+			. = "громоздкого размера"
 		if(WEIGHT_CLASS_HUGE)
-			. = "huge"
+			. = "огромного размера"
 		if(WEIGHT_CLASS_GIGANTIC)
-			. = "gigantic"
+			. = "гигантского размера"
 		else
 			. = ""
 
 /proc/weight_class_to_tooltip(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY to WEIGHT_CLASS_SMALL)
-			return "This item can fit into pockets, boxes and backpacks."
+			return "Этот предмет помещается в карманы, коробки и сумки."
 		if(WEIGHT_CLASS_NORMAL)
-			return "This item can fit into backpacks."
+			return "Этот предмет помещается в сумки."
 		if(WEIGHT_CLASS_BULKY to WEIGHT_CLASS_GIGANTIC)
-			return "This item is too large to fit into any standard storage."
+			return "Этот предмет слишком большой, чтобы поместиться в стандартные хранилища."
 	return ""
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
-	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
+	var/static/regex/regex = new(@"[^a-zA-Z0-9а-яА-ЯёЁ]","g") // BANDASTATION EDIT: Add Cyrillic support for this proc
 	return replacetext(name, regex, "")
 
 /// Converts a semver string into a list of numbers

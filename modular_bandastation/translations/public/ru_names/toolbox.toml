@@ -1,0 +1,8 @@
+[toolbox]
+nominative = "ящик для инструментов"
+genitive = "ящика для инструментов"
+dative = "ящику для инструментов"
+accusative = "ящик для инструментов"
+instrumental = "ящиком для инструментов"
+prepositional = "ящике для инструментов"
+gender = "male"

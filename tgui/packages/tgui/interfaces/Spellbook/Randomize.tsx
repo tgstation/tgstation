@@ -11,30 +11,30 @@ export function Randomize(props) {
     <Stack fill vertical>
       {points < 10 && <PointLocked />}
       <Stack.Item>
-        Semi-Randomize will ensure you at least get some mobility and lethality.
-        Guaranteed to have {semi_random_bonus} points worth of spells.
+        Частичная рандомизация гарантирует получение хотя бы некоторой мобильности и смертоносности.
+        Гарантировано получение заклинаний на {semi_random_bonus} очков.
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
-          confirmContent="Cowabunga it is?"
+          confirmContent="Погнали?"
           confirmIcon="dice-three"
           lineHeight={6}
           fluid
           icon="dice-three"
           onClick={() => act('semirandomize')}
         >
-          Semi-Randomize
+          Частичная рандомизация
         </Button.Confirm>
         <Divider />
       </Stack.Item>
       <Stack.Item>
-        Full Random will give you anything. There&apos;s no going back, either!
-        Guaranteed to have {full_random_bonus} points worth of spells.
+        Полная рандомизация даст что угодно. И назад дороги нет!
+        Гарантировано получение заклинаний на {full_random_bonus} очков.
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger>
           <Button.Confirm
-            confirmContent="Cowabunga it is?"
+            confirmContent="Погнали?"
             confirmIcon="dice"
             lineHeight={6}
             fluid
@@ -42,7 +42,7 @@ export function Randomize(props) {
             icon="dice"
             onClick={() => act('randomize')}
           >
-            Full Random
+            Полная рандомизация
           </Button.Confirm>
         </NoticeBox>
       </Stack.Item>

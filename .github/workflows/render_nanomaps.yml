@@ -1,0 +1,50 @@
+# GitHub action to autorender nanomaps outside the game
+# This kills off the awful verb we have that takes a full 50 seconds and hangs the whole server
+# The file names and locations are VERY important here
+# DO NOT EDIT THIS UNLESS YOU KNOW WHAT YOU ARE DOING
+# -aa
+name: "Render Nanomaps"
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  generate_maps:
+    name: "Generate NanoMaps"
+    runs-on: ubuntu-latest
+    steps:
+      - id: create_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+      - run: echo "GH_TOKEN=${{ steps.create_token.outputs.token }}" >> "$GITHUB_ENV"
+
+      - name: "Update Branch"
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.create_token.outputs.token }}
+
+      - name: Branch
+        run: |
+          git branch -f nanomap-render
+          git checkout nanomap-render
+          git reset --hard origin/master
+
+      - name: "Generate Maps"
+        run: "./tools/nanomap_renderer/nanomap-renderer-invoker.sh"
+
+      - name: "Commit Maps and open PR"
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "NanoMap Generation"
+          git pull origin master
+          git commit -m "NanoMap Auto-Update (`date`)" -a || true
+          git push -f -u origin nanomap-render
+          result=$(gh pr create -t "Automatic NanoMap Update" -b "This pull request updates the server NanoMaps. Please review the diff images before merging." -l "NanoMaps" -H "nanomap-render" -B "master") || true
+          if echo "$result" | grep -q "No commits between master and nanomap-render"; then
+            echo "No NanoMaps update required, skipping."
+            exit 78
+          fi

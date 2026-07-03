@@ -269,15 +269,15 @@ SUBSYSTEM_DEF(shuttle)
 		return //no players no autoevac
 
 	if(alive / total <= threshold)
-		var/msg = "Automatically dispatching emergency shuttle due to crew death."
+		var/msg = "Автоматическая отправка эвакуационного шаттла в связи с гибелью экипажа."
 		message_admins(msg)
 		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
 		emergency_no_recall = TRUE
 		priority_announce(
-			text = "Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.",
-			title = "Emergency Shuttle Dispatched",
+			text = "Обнаружены катастрофические потери: активированы протоколы кризисного шаттла - глушение сигналов отзыва на всех частотах.",
+			title = "Отправлен эвакуационный шаттл",
 			sound = ANNOUNCER_SHUTTLECALLED,
-			sender_override = "Emergency Shuttle Uplink Alert",
+			sender_override = "Система оповещения эвакуационного шаттла",
 			color_override = "orange",
 		)
 		if(EMERGENCY_IDLE_OR_RECALLED || emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
@@ -288,10 +288,10 @@ SUBSYSTEM_DEF(shuttle)
 		CRASH("Emergency shuttle block was called, but missing a value for the lockout duration")
 	if(admin_emergency_no_recall)
 		priority_announce(
-			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
-			title = "Uplink Interference",
+			text = "Обнаружены помехи в системах связи эвакуационного шаттла, вызов шаттла невозможен на время реинициализации системы. Предполагаемое восстановление через [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
+			title = "Помехи в работе систем связи эвакуационного шаттла",
 			sound = 'sound/announcer/announcement/announce_dig.ogg',
-			sender_override = "Emergency Shuttle Uplink Alert",
+			sender_override = "Система оповещения эвакуационного шаттла",
 			color_override = "grey",
 		)
 		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
@@ -302,10 +302,10 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
 	if(admin_emergency_no_recall)
 		priority_announce(
-			text= "Emergency shuttle uplink services are now back online.",
-			title = "Uplink Restored",
+			text= "Системы связи эвакуационного шаттла работают в штатном режиме.",
+			title = "Связь с аварийным шаттлом восстановлена",
 			sound = 'sound/announcer/announcement/announce_dig.ogg',
-			sender_override = "Emergency Shuttle Uplink Alert",
+			sender_override = "Система оповещения эвакуационного шаттла",
 			color_override = "green",
 		)
 		return
@@ -328,21 +328,21 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/canEvac()
 	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
+		return "Эвакуационный шаттл на дозаправке. Следующий вызов будет доступен в течении [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))]."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			return "The emergency shuttle may not be called while returning to CentCom."
+			return "Эвакуационный шаттл не может быть отозван на пути к Центральному Командованию."
 		if(SHUTTLE_CALL)
-			return "The emergency shuttle is already on its way."
+			return "Эвакуационный шаттл уже в пути."
 		if(SHUTTLE_DOCKED)
-			return "The emergency shuttle is already here."
+			return "Эвакуационный шаттл уже состыкован со станцией."
 		if(SHUTTLE_IGNITING)
-			return "The emergency shuttle is firing its engines to leave."
+			return "Эвакуационный шаттл производит запуск двигателей для отлёта."
 		if(SHUTTLE_ESCAPE)
-			return "The emergency shuttle is moving away to a safe distance."
+			return "Эвакуационный шаттл удаляется на безопасное расстояние."
 		if(SHUTTLE_STRANDED)
-			return "The emergency shuttle has been disabled by CentCom."
+			return "Вызов эвакуационного шаттла был заблокирован Центральным Командованием."
 
 	return TRUE
 
@@ -405,7 +405,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	call_reason = trim(html_encode(call_reason))
 
-	var/emergency_reason = "\n\nNature of emergency:\n[call_reason]"
+	var/emergency_reason = "\n\nХарактер происшествия:\n[call_reason]"
 
 	emergency.request(
 		signal_origin = signal_origin,
@@ -599,20 +599,20 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.timer = null
 		emergency.sound_played = FALSE
 		priority_announce(
-			text = "Departure has been postponed indefinitely pending conflict resolution.",
-			title = "Hostile Environment Detected",
+			text = "Отправка была отложена на неопределенный срок до разрешения конфликта.",
+			title = "Обнаружено враждебное окружение",
 			sound = 'sound/announcer/notice/notice1.ogg',
-			sender_override = "Emergency Shuttle Uplink Alert",
+			sender_override = "Система оповещения эвакуационного шаттла",
 			color_override = "grey",
 		)
 	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED || emergency.mode == SHUTTLE_DOCKED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
 		priority_announce(
-			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
-			title = "Hostile Environment Resolved",
+			text = "У вас есть [DisplayTimeText(emergency_dock_time)], чтобы добраться до эвакуационного шаттла.",
+			title = "Враждебное окружение устранено",
 			sound = 'sound/announcer/announcement/announce_dig.ogg',
-			sender_override = "Emergency Shuttle Uplink Alert",
+			sender_override = "Система оповещения эвакуационного шаттла",
 			color_override = "green",
 		)
 

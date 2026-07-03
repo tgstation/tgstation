@@ -1,0 +1,8 @@
+[lemon]
+nominative = "лимон"
+genitive = "лимона"
+dative = "лимону"
+accusative = "лимон"
+instrumental = "лимоном"
+prepositional = "лимоне"
+gender = "male"

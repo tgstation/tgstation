@@ -12,6 +12,11 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
+import {
+  DEPARTMENTS_RU,
+  JOBS_RU,
+  ReverseJobsRu,
+} from '../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
 
@@ -50,7 +55,7 @@ type JobEntryProps = {
 function JobEntry(props: JobEntryProps) {
   const { jobName, job, department, onClick } = props;
 
-  const jobIcon = JOB2ICON[jobName] || null;
+  const jobIcon = JOB2ICON[ReverseJobsRu(jobName)] || null;
 
   return (
     <Button
@@ -89,10 +94,16 @@ function JobEntry(props: JobEntryProps) {
       <Stack fill>
         {jobIcon && (
           <Stack.Item>
-            <Icon name={jobIcon} />
+            <Icon style={{ marginRight: '0.1em' }} name={jobIcon} />
           </Stack.Item>
         )}
-        <Stack.Item grow>{job.command ? <b>{jobName}</b> : jobName}</Stack.Item>
+        <Stack.Item grow>
+          {job.command ? (
+            <b>{JOBS_RU[jobName] || jobName}</b>
+          ) : (
+            JOBS_RU[jobName] || jobName
+          )}
+        </Stack.Item>
         <Stack.Item>
           <span
             style={{
@@ -131,9 +142,7 @@ function DepartmentEntry(props: DepartmentEntryProps) {
                 color: Color.fromHex(department.color).darken(60).toString(),
               }}
             >
-              {department.open_slots +
-                (department.open_slots === 1 ? ' slot' : ' slots') +
-                ' available'}
+              {`позиций доступно: ${department.open_slots}`}
             </span>
           </>
         }
@@ -191,9 +200,9 @@ export function JobSelection(props) {
           buttons={
             <Button
               onClick={() => act('select_job', { job: 'Random' })}
-              tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
+              tooltip="Случайно выбрать профессию. Вы можете повторно выбирать случайную профессию или отказаться от этого."
             >
-              Random Job!
+              Случайная профессия!
             </Button>
           }
           fill
@@ -209,7 +218,11 @@ export function JobSelection(props) {
         >
           <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map(([name, department]) => (
-              <DepartmentEntry key={name} name={name} department={department} />
+              <DepartmentEntry
+                key={name}
+                name={DEPARTMENTS_RU[name] || name}
+                department={department}
+              />
             ))}
           </Box>
         </Section>

@@ -1,0 +1,8 @@
+[spade]
+nominative = "лопатка"
+genitive = "лопатки"
+dative = "лопатке"
+accusative = "лопатку"
+instrumental = "лопаткой"
+prepositional = "лопатке"
+gender = "female"

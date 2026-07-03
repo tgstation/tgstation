@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	acid = 100
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/fifty
@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	acid = 100
 
 /obj/item/shard/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide."))
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! Кажется, [user.ru_p_they()] пытается совершить самоубийство."))
 	return BRUTELOSS
 
 /obj/item/shard/Initialize(mapload)

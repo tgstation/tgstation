@@ -23,7 +23,7 @@
 	new /obj/item/clothing/glasses/night(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/belt/military(src)
-	new /obj/item/storage/belt/holster/nukie(src)
+	new /obj/item/clothing/accessory/holster/tacticool(src) //BANDASTATION EDIT: Accessory holsters
 	new /obj/item/radio/headset/syndicate(src)
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/under/syndicate/skirt(src)

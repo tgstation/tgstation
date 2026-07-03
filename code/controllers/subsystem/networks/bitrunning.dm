@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(bitrunning)
 		UNTYPED_LIST_ADD(levels, list(
 			"announce_ghosts" = domain.announce_to_ghosts,
 			"cost" = domain.cost,
-			"desc" = can_view ? domain.desc : "Limited scanning capabilities. Cannot infer domain details.",
+			"desc" = can_view ? domain.desc : "Возможности сканирования ограничены. Не удается определить данные о домене.",
 			"difficulty" = domain.difficulty,
 			"id" = domain.key,
 			"is_modular" = domain.is_modular,

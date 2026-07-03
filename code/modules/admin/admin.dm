@@ -1,14 +1,16 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins,
+	to_chat(
+		get_holders_with_rights(R_ADMIN), /// BANDASTATION EDIT: Proper permissions
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
 		confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins,
+	to_chat(
+		get_holders_with_rights(R_ADMIN), /// BANDASTATION EDIT: Proper permissions
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
 		confidential = TRUE)
@@ -85,7 +87,7 @@ ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop."
 	else
 		var/obj/structure/closet/supplypod/pod = podspawn(list(
 			"target" = target_turf,
-			"path" = /obj/structure/closet/supplypod/centcompod,
+			"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/centcompod,
 		))
 		//we need to set the admin spawn flag for the spawned items so we do it outside of the podspawn proc
 		var/atom/A = new chosen(pod)

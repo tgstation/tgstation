@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// The malf AI action subtype. All malf actions are subtypes of this.
 /datum/action/innate/ai
 	name = "AI Action"
-	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
+	desc = "Вы не совсем уверены, что это делает, но это довольно бипно и бупно."
 	background_icon_state = "bg_tech_blue"
 	overlay_icon_state = "bg_tech_blue_border"
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
@@ -95,10 +95,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/proc/adjust_uses(amt, silent)
 	uses += amt
 	if(!silent && uses)
-		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining."))
+		to_chat(owner, span_notice("Использовано [name]. Осталось использований: <b>[uses]</b>."))
 	if(uses <= 0)
 		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, span_warning("[name] has run out of uses!"))
+			to_chat(owner, span_warning("Закончились использования [name]!"))
 		qdel(src)
 
 /// Framework for ranged abilities that can have different effects by left-clicking stuff.
@@ -110,10 +110,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/ranged/adjust_uses(amt, silent)
 	uses += amt
 	if(!silent && uses)
-		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use\s remaining."))
+		to_chat(owner, span_notice("Использовано [name]. Осталось использований: <b>[uses]</b>"))
 	if(!uses)
 		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, span_warning("[name] has run out of uses!"))
+			to_chat(owner, span_warning("Закончились использования [name]!"))
 		Remove(owner)
 		QDEL_IN(src, 10 SECONDS) //let any active timers on us finish up
 
@@ -158,14 +158,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Doomsday Device: Starts the self-destruct timer. It can only be stopped by killing the AI completely.
 /datum/ai_module/malf/destructive/nuke_station
 	name = "Doomsday Device"
-	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. \
-		Can only be used while on the station, will fail if your core is moved off station or destroyed. \
-		Obtaining control of the weapon will be easier if Head of Staff office APCs are already under your control."
+	description = "Активирует оружие, которое дезинтегрирует всю органическую жизнь на станции спустя 450 секунд задержки. \
+		Может быть использовано в то время, когда ядро ИИ находится на станции; перемещение за пределы станции или уничтожение ядра ИИ деактивирует устройство. \
+		Получение контроля над оружием будет легче, если ЛКП в кабинетах глав отделов находятся под вашим контролем."
 	cost = 130
 	one_purchase = TRUE
 	minimum_apcs = 10 // So you cant speedrun delta
 	power_type = /datum/action/innate/ai/nuke_station
-	unlock_text = span_notice("You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.")
+	unlock_text = span_notice("Вы медленно и осторожно устанавливаете соединение с устройством самоуничтожения станции. Вы можете активировать его в любое время.")
 	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
 	var/list/discount_areas = list(
 		/area/station/command/heads_quarters,
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
-	desc = "Activates the doomsday device. This is not reversible."
+	desc = "Активирует устройство судного дня. Это действие невозможно отменить."
 	button_icon = 'icons/obj/machines/nuke_terminal.dmi'
 	button_icon_state = "nuclearbomb_timing"
 	auto_use_uses = FALSE
@@ -184,9 +184,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/nuke_station/Activate()
 	var/turf/T = get_turf(owner)
 	if(!istype(T) || !is_station_level(T.z))
-		to_chat(owner, span_warning("You cannot activate the doomsday device while off-station!"))
+		to_chat(owner, span_warning("Вы не можете активировать устройство судного дня за пределами станции!"))
 		return
-	if(tgui_alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
+	if(tgui_alert(owner, "Отправить сигнал активации? (true = активировтаь, false = отмена)", "purge_all_life()", list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
@@ -211,14 +211,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	owner.playsound_local(owner, 'sound/announcer/alarm/bloblarm.ogg', 50, 0, use_reverb = FALSE)
-	to_chat(owner, span_userdanger("!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!"))
-	to_chat(owner, span_bolddanger("This is a class-3 security violation. This incident will be reported to Central Command."))
+	to_chat(owner, span_userdanger("!!! НЕСАНКЦИОНИРОВАННЫЙ ДОСТУП К СИСТЕМЕ САМОУНИЧТОЖЕНИЯ !!!"))
+	to_chat(owner, span_bolddanger("Это нарушение безопасности 3-го класса. Об данном инциденте будет сообщено на Центральное Командование."))
 	for(var/i in 1 to 3)
 		sleep(2 SECONDS)
 		if(QDELETED(owner) || !isturf(owner_AI.loc))
 			active = FALSE
 			return
-		to_chat(owner, span_bolddanger("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
+		to_chat(owner, span_bolddanger("Отправка отчёта безопасности Центральному Командованию.....[rand(0, 9) + (rand(20, 30) * i)]%"))
 	sleep(0.3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -229,35 +229,35 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
+	to_chat(owner, span_boldnotice("Аутентификация успешна. Добро пожаловать, akjv9c88asdf12nb."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
+	to_chat(owner, span_boldnotice("Активировать устройство самоуничтожения? (Д/Н)"))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(2 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>Y</span>")
+	to_chat(owner, "<span class='small bolddanger'>Д</span>")
 	sleep(1.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
+	to_chat(owner, span_boldnotice("Подтвердите активацию устройства самоуничтожения? (Д/Н)"))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>Y</span>")
+	to_chat(owner, "<span class='small bolddanger'>Д</span>")
 	sleep(rand(15, 25))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
+	to_chat(owner, span_boldnotice("Пожалуйста, введите пароль для подтверждения."))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1.4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
@@ -268,14 +268,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
+	to_chat(owner, span_boldnotice("Аутентификация пройдена. Передача сигнала активации..."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	if (owner_AI.stat != DEAD)
-		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", ANNOUNCER_AIMALF)
+		priority_announce("Во всех системах станций обнаружены вредоносные процессы. Пожалуйста, уничтожьте свой ИИ, чтобы предотвратить возможный ущерб его моральному ядру.", "Обнаружена аномалия", ANNOUNCER_AIMALF)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
 		owner_AI.nuking = TRUE
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
-	desc = "A weapon which disintegrates all organic life in a large area."
+	desc = "Оружие, которое дезинтегрирует всю органическую жизнь на огромной территории."
 	density = TRUE
 	verb_exclaim = "blares"
 	use_power = NO_POWER_USE
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
 	if(!T || !is_station_level(T.z))
-		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce("УСТРОЙСТВО СУДНОГО ДНЯ ЗА ПРЕДЕЛАМИ СТАНЦИИ, ОТМЕНА", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		owner.ShutOffDoomsdayDevice()
 		return
 	if(!timing)
@@ -363,19 +363,20 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
-		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce("[sec_left] СЕКУНД ДО АКТИВАЦИИ УСТРОЙСТВА СУДНОГО ДНЯ!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/trigger_doomsday()
 	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bring_doomsday)), src)
-	to_chat(world, span_bold("The AI cleansed the station of life with [src]!"))
+	to_chat(world, span_bold("ИИ уничтожил жизнь на станции с помощью [src.name]!"))
+	GLOB.station_was_nuked = TRUE // BANDASTATION EDIT: Add change for station was nuked
 	SSticker.force_ending = FORCE_END_ROUND
 
 /proc/bring_doomsday(mob/living/victim, atom/source)
 	if(issilicon(victim))
 		return FALSE
 
-	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
+	to_chat(victim, span_userdanger("Взрывная волна от [source.declent_ru(GENITIVE)] разрывает тебя на атомы!"))
 	victim.investigate_log("has been dusted by a doomsday device.", INVESTIGATE_DEATHS)
 	victim.dust()
 	return TRUE
@@ -383,18 +384,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Hostile Station Lockdown: Locks, bolts, and electrifies every airlock on the station. After 90 seconds, the doors reset.
 /datum/ai_module/malf/destructive/lockdown
 	name = "Hostile Station Lockdown"
-	description = "Overload the airlock, blast door and fire control networks, locking them down. \
-		Caution! This command also electrifies all airlocks. The networks will automatically reset after 90 seconds, briefly \
-		opening all doors on the station."
+	description = "Перегружает шлюзы, укрепленные и противопожарные двери, блокируя их. \
+		Внимание! Эта команда также электризует все шлюзы. Сеть будет автоматически перезагружена спустя 90 секунд, \
+		открыв все двери станции на короткий промежуток."
 	cost = 30
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/lockdown
-	unlock_text = span_notice("You upload a sleeper trojan into the door control systems. You can send a signal to set it off at any time.")
+	unlock_text = span_notice("Вы загружаете спящий троян в систему управления дверями. Вы можете отправить сигнал, чтобы активировать его в любое время")
 	unlock_sound = 'sound/machines/airlock/boltsdown.ogg'
 
 /datum/action/innate/ai/lockdown
 	name = "Lockdown"
-	desc = "Closes, bolts, and electrifies every airlock, firelock, and blast door on the station. After 90 seconds, they will reset themselves."
+	desc = "Закрывает, болтирует и электрифицирует все шлюзы, противопожарные и укрепленные двери на станции. Через 90 секунд, они восстанавливаются."
 	button_icon_state = "lockdown"
 	uses = 1
 	/// Badmin / exploit abuse prevention.
@@ -417,11 +418,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	// Set status displays to lockdown alert
 	send_status_display_lockdown_alert()
 
-	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.", "Network Alert:", TRUE)
-	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
+	minor_announce("Вредоносное программное обеспечение обнаружено в системе контроля шлюзов. Задействованы протоколы изоляции. Пожалуйста, сохраняйте спокойствие.", "Тревога сети", TRUE)
+	to_chat(owner, span_danger("Инициирована блокировка. Система перезагрузится через 90 секунд."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
-		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:"), 90 SECONDS)
+		"Автоматическая перезагрузка системы завершена. Безопасного вам дня.",
+		"Сеть перезапущена:"), 90 SECONDS)
 	hack_in_progress = FALSE
 
 /// For Lockdown malf AI ability. Opens all doors on the station.
@@ -438,20 +439,20 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Override Machine: Allows the AI to override a machine, animating it into an angry, living version of itself.
 /datum/ai_module/malf/destructive/override_machine
 	name = "Machine Override"
-	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. Four uses per purchase."
+	description = "Перезаписывает программу машины, заставляя её восстать и атаковать всех кроме других машин. Четыре использования за покупку."
 	cost = 30
 	power_type = /datum/action/innate/ai/ranged/override_machine
-	unlock_text = span_notice("You procure a virus from the Space Dark Web and distribute it to the station's machines.")
+	unlock_text = span_notice("Вы достаёте вирус в космическом даркнете и распространяете его по станционным машинам.")
 	unlock_sound = 'sound/machines/airlock/airlock_alien_prying.ogg'
 
 /datum/action/innate/ai/ranged/override_machine
 	name = "Override Machine"
-	desc = "Animates a targeted machine, causing it to attack anyone nearby."
+	desc = "Оживляет выбранную машину, заставляя её атаковать всех поблизости."
 	button_icon_state = "override_machine"
 	uses = 4
 	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'
-	enable_text = span_notice("You tap into the station's powernet. Click on a machine to animate it, or use the ability again to cancel.")
-	disable_text = span_notice("You release your hold on the powernet.")
+	enable_text = span_notice("Вы подключаетесь к энергосети. Кликните на машину для оживления или используйте способность повторно для отмены.")
+	disable_text = span_notice("Вы отключаетесь от энергосети.")
 
 /datum/action/innate/ai/ranged/override_machine/New()
 	. = ..()
@@ -495,16 +496,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Destroy RCDs: Detonates all non-cyborg RCDs on the station.
 /datum/ai_module/malf/destructive/destroy_rcd
 	name = "Destroy RCDs"
-	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Construction Devices on the station."
+	description = "Отправляет специальный импульс для детонации ручных и экзокостюмных Rapid Construction Devices на станции."
 	cost = 25
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/destroy_rcds
-	unlock_text = span_notice("After some improvisation, you rig your onboard radio to be able to send a signal to detonate all RCDs.")
+	unlock_text = span_notice("После некоторых импровизаций, Вы можете отправить импульс для детонации RCD через гарнитуру.")
 	unlock_sound = 'sound/items/timer.ogg'
 
 /datum/action/innate/ai/destroy_rcds
 	name = "Destroy RCDs"
-	desc = "Detonate all non-cyborg RCDs on the station."
+	desc = "Взрывает все неподконтрольные киборгам RCD на станции."
 	button_icon_state = "detonate_rcds"
 	uses = 1
 	cooldown_period = 10 SECONDS
@@ -515,26 +516,26 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		var/obj/item/construction/rcd/definite_rcd = potential_rcd
 		definite_rcd.detonate_pulse()
-	to_chat(owner, span_danger("RCD detonation pulse emitted."))
+	to_chat(owner, span_danger("Импульс детонации RCD запущен."))
 	owner.playsound_local(owner, 'sound/machines/beep/twobeep.ogg', 50, 0)
 
 /// Overload Machine: Allows the AI to overload a machine, detonating it after a delay. Two uses per purchase.
 /datum/ai_module/malf/destructive/overload_machine
 	name = "Machine Overload"
-	description = "Overheats an electrical machine, causing a small explosion and destroying it. Two uses per purchase."
+	description = "Перегревает электрическую машину, вызывая небольшой взрыв и уничтожая её. Два использования за покупку."
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/overload_machine
-	unlock_text = span_notice("You enable the ability for the station's APCs to direct intense energy into machinery.")
+	unlock_text = span_notice("Вы получаете возможность перенаправить энергию из ЛКП напрямую в машину.")
 	unlock_sound = 'sound/effects/comfyfire.ogg' //definitely not comfy, but it's the closest sound to "roaring fire" we have
 
 /datum/action/innate/ai/ranged/overload_machine
 	name = "Overload Machine"
-	desc = "Overheats a machine, causing a small explosion after a short time."
+	desc = "Перегревает машину, вызывая небольшой взрыв спустя небольшой промежуток времени."
 	button_icon_state = "overload_machine"
 	uses = 2
 	ranged_mousepointer = 'icons/effects/mouse_pointers/overload_machine_target.dmi'
-	enable_text = span_notice("You tap into the station's powernet. Click on a machine to detonate it, or use the ability again to cancel.")
-	disable_text = span_notice("You release your hold on the powernet.")
+	enable_text = span_notice("Вы подключаетесь к энергосети. Кликните на машину для её подрыва или используйте способность повторно для отмены.")
+	disable_text = span_notice("Вы отключаетесь от энергосети.")
 
 /datum/action/innate/ai/ranged/overload_machine/New()
 	..()
@@ -582,7 +583,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Blackout: Overloads a random number of lights across the station. Three uses.
 /datum/ai_module/malf/destructive/blackout
 	name = "Blackout"
-	description = "Attempts to overload the lighting circuits on the station, destroying some bulbs. Three uses per purchase."
+	description = "Попытка перегрузить микросхемы освещения станции, повреждая несколько ламп. Три использования за покупку."
 	cost = 15
 	power_type = /datum/action/innate/ai/blackout
 	unlock_text = span_notice("You hook into the powernet and route bonus power towards the station's lighting.")
@@ -590,7 +591,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
-	desc = "Overloads random lights across the station."
+	desc = "Перегружает случайные лампы на станции."
 	button_icon_state = "blackout"
 	uses = 3
 	auto_use_uses = FALSE
@@ -605,7 +606,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			apc.overload_lighting()
 		else
 			apc.overload++
-	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
+	to_chat(owner, span_notice("Излишние напряжение наполняет энергосеть станции."))
 	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
@@ -616,25 +617,25 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// HIGH IMPACT HONKING
 /datum/ai_module/malf/destructive/megahonk
 	name = "Percussive Intercomm Interference"
-	description = "Emit a debilitatingly percussive auditory blast through the station intercoms. Does not overpower hearing protection. Two uses per purchase."
+	description = "Испускает ужасную звуковую волну из станционных интеркомов. Не преодолевает слуховую защиту. Два использования за покупку."
 	cost = 20
 	power_type = /datum/action/innate/ai/honk
-	unlock_text = span_notice("You upload a sinister sound file into every intercom...")
+	unlock_text = span_notice("Вы загружаете ужасный звуковой файл в каждый интерком...")
 	unlock_sound = 'sound/items/airhorn/airhorn.ogg'
 
 /datum/action/innate/ai/honk
 	name = "Percussive Intercomm Interference"
-	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	desc = "Раскачать станционные интеркомы отвратительным ХОНКОМ!"
 	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
 	uses = 2
 
 /datum/action/innate/ai/honk/Activate()
-	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
+	to_chat(owner, span_clown("Станционные интеркомы воспроизводят подготовленный вами файл."))
 	for(var/obj/item/radio/intercom/found_intercom as anything in GLOB.intercoms_list)
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
-		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
+		found_intercom.audible_message(message = "Из [found_intercom.declent_ru(GENITIVE)] на мгновение издается треск.", hearing_distance = 3)
 		playsound(found_intercom, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 		for(var/mob/living/honk_victim in ohearers(6, found_intercom))
 			if(issilicon(honk_victim))
@@ -644,20 +645,20 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 				continue
 			if(honk_victim.soundbang_act(SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
 				honk_victim.set_jitter_if_lower(120 SECONDS)
-				to_chat(honk_victim, span_clown("HOOOOONK!"))
+				to_chat(honk_victim, span_clown("ХООООООНК!"))
 
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.
 /datum/ai_module/malf/utility/place_cyborg_transformer
 	name = "Robotic Factory (Removes Shunting)"
-	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
+	description = "Строит машину где угодно из дорогих наномашин, превращающую живое существо в лояльного раба-киборга."
 	cost = 100
 	power_type = /datum/action/innate/ai/place_transformer
-	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
+	unlock_text = span_notice("Вы связались с космическим Амазоном и заказали фабрику роботов доставкой.")
 	unlock_sound = 'sound/machines/ping.ogg'
 
 /datum/action/innate/ai/place_transformer
 	name = "Place Robotics Factory"
-	desc = "Places a machine that converts humans into cyborgs. Conveyor belts included!"
+	desc = "Размещает машину, которая превращает людей в киборгов. Конвейер в комплекте!"
 	button_icon_state = "robotic_factory"
 	uses = 1
 	auto_use_uses = FALSE //So we can attempt multiple times
@@ -673,7 +674,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!owner_AI.can_place_transformer(src))
 		return
 	active = TRUE
-	if(tgui_alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", list("Yes", "No")) == "No")
+	if(tgui_alert(owner, "Вы уверены, что хотите разместить машину здесь?", "Вы уверены?", list("Да", "Нет")) == "Нет")
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
@@ -685,7 +686,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
 	if(owner_AI.can_shunt) //prevent repeated messages
 		owner_AI.can_shunt = FALSE
-		to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
+		to_chat(owner, span_warning("Вы больше не можете поместить своё ядро в ЛКП."))
 	adjust_uses(-1)
 	active = FALSE
 
@@ -698,18 +699,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
-	var/alert_msg = "There isn't enough room! Make sure you are placing the machine in a clear area and on a floor."
+	var/alert_msg = "Недостаточно места! Убедитесь, что вы размещаете машину в свободном пространстве и на полу."
 	var/success = TRUE
 	for(var/n in 1 to 3) //We have to do this instead of iterating normally because of how overlay images are handled
 		var/turf/T = turfs[n]
 		if(!isfloorturf(T))
 			success = FALSE
 		if(!SScameras.is_visible_by_cameras(T))
-			alert_msg = "You don't have camera vision of this location!"
+			alert_msg = "Ваши камеры не захватывают данную область!"
 			success = FALSE
 		for(var/atom/movable/AM in T.contents)
 			if(AM.density)
-				alert_msg = "That area must be clear of objects!"
+				alert_msg = "Зона должна быть свободна от предметов!"
 				success = FALSE
 		var/image/I = action.turfOverlays[n]
 		I.loc = T
@@ -723,17 +724,17 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Air Alarm Safety Override: Unlocks the ability to enable dangerous modes on all air alarms.
 /datum/ai_module/malf/utility/break_air_alarms
 	name = "Air Alarm Safety Override"
-	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use extremely dangerous environmental modes. \
-			Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
+	description = "Даёт вам возможность отключить предохранители на атмосферных датчиках. Это позволит вам использовать чрезвычайно опасные режимы окружающей среды. \
+			Кто угодно может проверить интерфейс атмосферных датчиков и быть озадаченным отсутствием функциональности."
 	one_purchase = TRUE
 	cost = 50
 	power_type = /datum/action/innate/ai/break_air_alarms
-	unlock_text = span_notice("You remove the safety overrides on all air alarms, but you leave the confirm prompts open. You can hit 'Yes' at any time... you bastard.")
+	unlock_text = span_notice("Вы отключаете протоколы безопасности на всех атмосферных датчиках, но оставляете окно подтверждения открытым. Вы можете нажать 'Да' в любой момент... ублюдок.")
 	unlock_sound = 'sound/effects/space_wind.ogg'
 
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
-	desc = "Enables extremely dangerous settings on all air alarms."
+	desc = "Активирует экстремально опасные настройки на всех атмосферных датчиках."
 	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "alarmx"
 	uses = 1
@@ -743,24 +744,24 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use extremely dangerous environmental modes."))
+	to_chat(owner, span_notice("Предохранители на всех атмосферных датчиках были отключены. Теперь у вас есть возможность использовать чрезвычайно опасные режимы окружающей среды."))
 	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
 /datum/ai_module/malf/utility/break_fire_alarms
 	name = "Thermal Sensor Override"
-	description = "Gives you the ability to override the thermal sensors on all fire alarms. \
-		This will remove their ability to scan for fire and thus their ability to alert."
+	description = "Даёт вам возможность перегрузить тепловые датчики на всех пожарных сигнализациях. \
+		Это лишит их возможности обнаружить огонь и сообщить об возгорании."
 	one_purchase = TRUE
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
-	unlock_text = span_notice("You replace the thermal sensing capabilities of all fire alarms with a manual override, \
-		allowing you to turn them off at will.")
+	unlock_text = span_notice("Вы изменяете управление всех пожарных тревог на ручное, \
+		что позволяет вам переключать их по собственному желанию.")
 	unlock_sound = 'sound/machines/fire_alarm/fire_alarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"
-	desc = "Disables the automatic temperature sensing on all fire alarms, making them effectively useless."
+	desc = "Отключает автоматическое управление пожарной сигнализацией, что делает их практически бесполезными."
 	button_icon_state = "break_fire_alarms"
 	uses = 1
 
@@ -774,23 +775,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!is_station_level(firelock.z))
 			continue
 		firelock.emag_act(owner_AI, src)
-	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
+	to_chat(owner, span_notice("Все термальные датчики на станции были отключены. Пожарная тревога больше не может быть обнаружена."))
 	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Disable Emergency Lights
 /datum/ai_module/malf/utility/emergency_lights
 	name = "Disable Emergency Lights"
-	description = "Cuts emergency lights across the entire station. If power is lost to light fixtures, \
-		they will not attempt to fall back on emergency power reserves."
+	description = "Отключает аварийное освещение на всей станции. Если станция обесточена, то \
+		резервное освещение не будет активироваться через аварийный источник питания."
 	cost = 10
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/emergency_lights
-	unlock_text = span_notice("You hook into the powernet and locate the connections between light fixtures and their fallbacks.")
+	unlock_text = span_notice("Вы подключаетесь к энергосети и находите связи между лампами и резервными источниками.")
 	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
-	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
+	desc = "Отключает всё аварийное освещение. Обратите внимание, что освещение может быть восстановлено путем перезагрузки ЛКП."
 	button_icon = 'icons/obj/lighting.dmi'
 	button_icon_state = "floor_emergency"
 	uses = 1
@@ -801,23 +802,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			L.no_low_power = TRUE
 			INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 		CHECK_TICK
-	to_chat(owner, span_notice("Emergency light connections severed."))
+	to_chat(owner, span_notice("Отключение аварийного освещения."))
 	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
 
 /// Reactivate Camera Network: Reactivates up to 30 cameras across the station.
 /datum/ai_module/malf/utility/reactivate_cameras
 	name = "Reactivate Camera Network"
-	description = "Runs a network-wide diagnostic on the camera network, resetting focus and re-routing power to failed cameras. \
-		Can be used to repair up to 30 cameras."
+	description = "Запускает диагностику сети камер, сбрасывает фокусировку и перенаправляет энергию на сломанные камеры. \
+		Может быть использована для ремонта 30 камер."
 	cost = 10
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/reactivate_cameras
-	unlock_text = span_notice("You deploy nanomachines to the cameranet.")
+	unlock_text = span_notice("Вы запускаете наномашины в систему видеонаблюдения.")
 	unlock_sound = 'sound/items/tools/wirecutter.ogg'
 
 /datum/action/innate/ai/reactivate_cameras
 	name = "Reactivate Cameras"
-	desc = "Reactivates disabled cameras across the station; remaining uses can be used later."
+	desc = "Активирует отключенные камеры по всей станции; оставшиеся использования могут быть использованы позже."
 	button_icon_state = "reactivate_cameras"
 	uses = 30
 	auto_use_uses = FALSE
@@ -837,7 +838,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message
-	to_chat(owner, span_notice("Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>."))
+	to_chat(owner, span_notice("Диагностика завершена! Активировано камер: <b>[fixed_cameras]</b>. Осталось использований: <b>[uses]</b>."))
 	owner.playsound_local(owner, 'sound/items/tools/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
@@ -848,13 +849,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/ai_module/malf/upgrade/upgrade_cameras
 	name = "Upgrade Camera Network"
-	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-proofing and light-amplified X-ray vision. Upgrade is done immediately upon purchase." //I <3 pointless technobabble
-	icon = 'icons/obj/machines/camera.dmi'
+	description = "Установите программу широкополосного сканирования и электрического резервирования в сеть камер, что позволяет активировать ЭМИ-защиту и улучшенное рентгеновское зрение. Обновление происходит сразу после покупки." //I <3 pointless technobabble
+	icon = 'modular_bandastation/aesthetics/cameras/icons/cameras.dmi' // BANDASTATION EDIT: Custom camera icons
 	icon_state = "xraycamera"
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	cost = 35 //Decent price for omniscience!
 	upgrade = TRUE
-	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: CAMSUPGRADED. Light amplification system online.")
+	unlock_text = span_notice("Распространения прошивки через OTA завершено! Камеры улучшены: CAMSUPGRADED. Система усиления освещения активна.")
 	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/upgrade_cameras/upgrade(mob/living/silicon/ai/AI)
@@ -887,12 +888,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// AI Turret Upgrade: Increases the health and damage of all turrets.
 /datum/ai_module/malf/upgrade/upgrade_turrets
 	name = "AI Turret Upgrade"
-	description = "Improves the power and health of all AI turrets. This effect is permanent. Upgrade is done immediately upon purchase."
+	description = "Улучшает мощность и здоровье турелей ИИ. Данный эффект постоянен. Улучшение происходит сразу после покупки."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "standard_off"
 	cost = 30
 	upgrade = TRUE
-	unlock_text = span_notice("You establish a power diversion to your turrets, upgrading their health and damage.")
+	unlock_text = span_notice("Вы перенаправляете часть энергии на турели, усиливая их живучесть и урон.")
 	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
@@ -906,13 +907,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Enhanced Surveillance: Enables AI to hear conversations going on near its active vision.
 /datum/ai_module/malf/upgrade/eavesdrop
 	name = "Enhanced Surveillance"
-	description = "Via a combination of hidden microphones and lip reading software, \
-		you are able to use your cameras to listen in on conversations. Upgrade is done immediately upon purchase."
+	description = "Через комбинацию скрытых микрофонов и программного обеспечения для чтения по губам, \
+		вы можете использовать камеры для прослушивания разговоров. Улучшение происходит сразу после покупки."
 	icon = 'icons/obj/service/broadcast.dmi'
 	icon_state = "microphone"
 	cost = 30
 	upgrade = TRUE
-	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.")
+	unlock_text = span_notice("Распространения прошивки через OTA завершено! Камеры улучшены: Система улучшенного наблюдения активна.")
 	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/ai_module/malf/upgrade/eavesdrop/upgrade(mob/living/silicon/ai/AI)
@@ -922,15 +923,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /// Unlock Mech Domination: Unlocks the ability to dominate mechs. Big shocker, right?
 /datum/ai_module/malf/upgrade/mecha_domination
 	name = "Unlock Mech Domination"
-	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
-		Upgrade is done immediately upon purchase. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
-		If your core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease."
+	description = "Позволяет вам взломать бортовой компьютер меха, загружая в него свои процессы, а также выкидывая любых пассажиров. \
+		Улучшение происходит сразу после покупки. Не позволяйте меху покинуть станцию или быть уничтоженным. \
+		Если ваше ядро уничтожено, вы потеряете соединение с устройством Судного дня и отчёт остановится."
 	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "durand"
 	cost = 30
 	upgrade = TRUE
-	unlock_text = span_notice("Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. \
-		Loss of signal will result in total system lockout. If your inactive core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease.</b>")
+	unlock_text = span_notice("Вирусный пакет скомпилирован. Выберите цель в любой момент. <b>Вы должны постоянно оставаться на станции. \
+		Потеря сигнала приведёт к полной блокировке системы. Если ваше неактивное ядро уничтожено, вы потеряете соединение с устройством Судного дня и отчёт остановится.</b>")
 	unlock_sound = 'sound/vehicles/mecha/nominal.ogg'
 
 /datum/ai_module/malf/upgrade/mecha_domination/upgrade(mob/living/silicon/ai/AI)
@@ -938,17 +939,17 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/ai_module/malf/upgrade/voice_changer
 	name = "Voice Changer"
-	description = "Allows you to change the AI's voice. Upgrade is active immediately upon purchase."
+	description = "Позволяет изменить голос ИИ. Улучшение происходит сразу после покупки."
 	cost = 20
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/voice_changer
-	unlock_text = span_notice("OTA firmware distribution complete! Voice changer online.")
+	unlock_text = span_notice("Распространения прошивки через OTA завершено! Изменитель голоса активен.")
 	unlock_sound = 'sound/items/tools/rped.ogg'
 
 /datum/action/innate/ai/voice_changer
 	name="Voice Changer"
 	button_icon_state = "voice_changer"
-	desc = "Allows you to change the AI's voice."
+	desc = "Позволяет изменить голос ИИ."
 	auto_use_uses  = FALSE
 	var/obj/machinery/ai_voicechanger/voice_changer_machine
 
@@ -1063,7 +1064,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
-			to_chat(usr, span_notice("Voice set to [selection]."))
+			to_chat(usr, span_notice("Голос установлен на [selection]."))
 		if("verb")
 			say_verb = strip_html(params["verb"], MAX_NAME_LEN)
 			if(changing_voice)
@@ -1076,21 +1077,21 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/ai_module/malf/utility/emag
 	name = "Targeted Safeties Override"
-	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
+	description = "Позволяет отключить системы безопасности любой машинерии на станции при условии, что вы можете получить к ней доступ."
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/emag
-	unlock_text = span_notice("You download an illicit software package from a syndicate database leak and integrate it into your firmware, fighting off a few kernel intrusions along the way.")
+	unlock_text = span_notice("Вы загрузили нелегальный пакет программного обеспечения из базы данных синдиката и интегрируете его в свою прошивку, в процессе которого предотвратили также несколько вторжений.")
 	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/ranged/emag
 	name = "Targeted Safeties Override"
-	desc = "Allows you to effectively emag anything you click on."
+	desc = "Позволяет вам эффективно емагнуть всё, на что вы кликаете."
 	button_icon = 'icons/obj/card.dmi'
 	button_icon_state = "emag"
 	uses = 7
 	auto_use_uses = FALSE
-	enable_text = span_notice("You load your syndicate software package to your most recent memory slot.")
-	disable_text = span_notice("You unload your syndicate software package.")
+	enable_text = span_notice("Вы загружаете программу синдиката в последний слот памяти.")
+	disable_text = span_notice("Вы выгружаете программу синдиката из памяти.")
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
 /datum/action/innate/ai/ranged/emag/Destroy()
@@ -1170,23 +1171,23 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/ai_module/malf/utility/core_tilt
 	name = "Rolling Servos"
-	description = "Allows you to slowly roll around, crushing anything in your way with your bulk."
+	description = "Позволяет вам медленно перекатываться, уничтожая всё на вашем пути своей массой."
 	cost = 10
 	one_purchase = FALSE
 	power_type = /datum/action/innate/ai/ranged/core_tilt
 	unlock_sound = 'sound/effects/bang.ogg'
-	unlock_text = span_notice("You gain the ability to roll over and crush anything in your way.")
+	unlock_text = span_notice("Вы получаете способность перекатиться и уничтожить всё на своём пути.")
 
 /datum/action/innate/ai/ranged/core_tilt
 	name = "Roll over"
 	button_icon_state = "roll_over"
-	desc = "Allows you to roll over in the direction of your choosing, crushing anything in your way."
+	desc = "Позволяет вам перекатываться в направлениях по вашему выбору, сокрушая всё на вашем пути."
 	auto_use_uses = FALSE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	uses = 20
 	COOLDOWN_DECLARE(time_til_next_tilt)
-	enable_text = span_notice("Your inner servos shift as you prepare to roll around. Click adjacent tiles to roll onto them!")
-	disable_text = span_notice("You disengage your rolling protocols.")
+	enable_text = span_notice("Сервоприводы внутри вас перемещаются, когда вы готовитесь к перекатыванию. Нажмите на соседние клетки, чтобы перекатиться на них.")
+	disable_text = span_notice("Вы отключаете протоколы перекатывания.")
 
 	/// How long does it take for us to roll?
 	var/roll_over_time = MALF_AI_ROLL_TIME
@@ -1269,22 +1270,22 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/ai_module/malf/utility/remote_vendor_tilt
 	name = "Remote vendor tilting"
-	description = "Lets you remotely tip vendors over in any direction."
+	description = "Позволяет удалённо опрокидывать торговые автоматы в любом направлении."
 	cost = 15
 	one_purchase = FALSE
 	power_type = /datum/action/innate/ai/ranged/remote_vendor_tilt
 	unlock_sound = 'sound/effects/bang.ogg'
-	unlock_text = span_notice("You gain the ability to remotely tip any vendor onto any adjacent tiles.")
+	unlock_text = span_notice("Вы получаете возможность удаленно опрокинуть торговый автомат на любую соседнюю клетку.")
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt
 	name = "Remotely tilt vendor"
-	desc = "Use to remotely tilt a vendor in any direction you desire."
+	desc = "Используйте для удаленного наклона торгового автомата в любом направлении."
 	button_icon_state = "vendor_tilt"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	uses = VENDOR_TIPPING_USES
 	var/time_to_tilt = MALF_VENDOR_TIPPING_TIME
-	enable_text = span_notice("You prepare to wobble any vendors you see.")
-	disable_text = span_notice("You stop focusing on tipping vendors.")
+	enable_text = span_notice("Вы подготавливаетесь опрокинуть торговый автомат.")
+	disable_text = span_notice("Вы перестаете фокусироваться на опрокидовании торговых автоматов.")
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/New()
 	. = ..()

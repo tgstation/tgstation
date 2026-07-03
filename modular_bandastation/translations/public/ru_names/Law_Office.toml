@@ -1,0 +1,8 @@
+["Law Office"]
+nominative = "юридический офис"
+genitive = "юридического офиса"
+dative = "юридическому офису"
+accusative = "юридический офис"
+instrumental = "юридическим офисом"
+prepositional = "юридическом офисе"
+gender = "male"

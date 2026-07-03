@@ -1,10 +1,10 @@
 /datum/job/bartender
 	title = JOB_BARTENDER
-	description = "Serve booze, mix drinks, keep the crew drunk."
+	description = "Подавайте спиртное, смешивайте напитки, следите за тем, чтобы экипаж был пьян."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = JOB_HEAD_OF_PERSONNEL_RU
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "BARTENDER"
 
@@ -69,4 +69,4 @@
 	var/obj/item/card/id/W = H.wear_id
 	if(H.age < AGE_MINOR)
 		W.registered_age = AGE_MINOR
-		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
+		to_chat(H, span_notice("Формально вы еще не совершеннолетний, чтобы иметь доступ к алкоголю или подавать его, но ваше удостоверение личности было незаметно изменено, чтобы отображать ваш возраст как [AGE_MINOR]. Постарайтесь сохранить это в тайне!"))

@@ -1,0 +1,78 @@
+"TGUI":
+  - changed-files:
+      - any-glob-to-any-file: ["tgui/**"]
+
+":sound: Звук":
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.ogg"]
+
+":world_map: Изменение Карты":
+  - all:
+      - changed-files:
+          - any-glob-to-any-file: ["**/*.dmm"]
+
+":paintbrush: Спрайты":
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.dmi"]
+
+":guitar: Инструменты":
+  - changed-files:
+      - any-glob-to-any-file:
+          [".github/**", "tools/**", ".vscode/**", ".bin/**"]
+
+":floppy_disk: Изменение конфига":
+  - changed-files:
+      - any-glob-to-any-file: ["config/**"]
+
+":neckbeard: Документация":
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md"]
+
+":cd: SQL":
+  - changed-files:
+      - any-glob-to-any-file: ["SQL/**"]
+
+":construction: UpdatePaths":
+  - changed-files:
+      - any-glob-to-any-file: ["tools/UpdatePaths/Scripts/**"]
+
+":feelsgood: Частичная модульность":
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              [
+                "code/**",
+                "icons/**",
+                "sounds/**",
+                "_maps/map_files/**",
+                "tgui/**",
+              ]
+          - any-glob-to-any-file: [modular_bandastation/**]
+      - base-branch: "master"
+      - head-branch: "^(?!merge[-_]upstream$).*"
+
+":finnadie: НЕ МОДУЛЬНО":
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              ["code/**", "icons/**", "sounds/**", "_maps/map_files/**"]
+          - all-globs-to-all-files: "!modular_bandastation/**"
+      - base-branch: "master"
+      - head-branch: "^(?!merge[-_]upstream$).*"
+
+":pray: Слияние с восходящим потоком":
+  - all:
+      - base-branch: "master"
+      - head-branch: "merge[-_]upstream"
+
+":pencil: Перевод":
+  - head-branch: ["^translate", "translate", "^translation", "translation"]
+
+":wrench: Фикс":
+  - head-branch: ["^fix", "fix"]
+
+":trollface: Фича":
+  - head-branch: ["^feat", "feat"]
+
+":shipit: Улучшение":
+  - head-branch: ["^tweak", "tweak"]

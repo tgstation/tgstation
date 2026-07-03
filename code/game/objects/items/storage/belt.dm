@@ -17,7 +17,7 @@
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/storage/belt/update_overlays()
@@ -54,6 +54,7 @@
 /obj/item/storage/belt/utility/chief/full
 	preload = TRUE
 
+// BANDASTATION EDIT - Bring back T2 tools to CE
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
@@ -64,6 +65,7 @@
 	SSwardrobe.provide_type(/obj/item/analyzer, src)
 	//much roomier now that we've managed to remove two tools
 
+// BANDASTATION EDIT - Bring back T2 tools to CE
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver/power

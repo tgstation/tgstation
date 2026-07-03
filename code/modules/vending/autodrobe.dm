@@ -227,8 +227,8 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	icon_state = "theater"
 	icon_deny = "theater-deny"
 	panel_type = "panel16"
-	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
-	vend_reply = "Thank you for using AutoDrobe!"
+	product_slogans = "Одежда для успеха!;Одет и обут!;Время шоу!;Зачем оставлять стиль на произвол судьбы? Воспользуйся AutoDrobe!"
+	vend_reply = "Благодарим за использование AutoDrobe!"
 
 	/**
 	 * Categories are filled in Initialize!

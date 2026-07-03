@@ -9,7 +9,7 @@
 	var/desc_controls
 
 	/// The context returned when an attack against this object doesn't deal any traditional damage to the object.
-	var/no_damage_feedback = "without leaving a mark"
+	var/no_damage_feedback = "не оставляя следов"
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
@@ -105,12 +105,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 				message_verb_continuous = "pulverises"
 
 		if(demo_mod < 1)
-			message_verb_simple = "ineffectively " + message_verb_simple
-			message_verb_continuous = "ineffectively " + message_verb_continuous
+			message_verb_simple = "слабо " + ru_attack_verb(message_verb_simple)
+			message_verb_continuous = "слабо " + ru_attack_verb(message_verb_continuous)
 
 		user.visible_message(
-			span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
-			span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger("[capitalize(user.declent_ru(NOMINATIVE))] [message_verb_continuous] [declent_ru(ACCUSATIVE)] с помощью [attacking_item.declent_ru(GENITIVE)][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger("Вы [message_verb_simple] [declent_ru(ACCUSATIVE)] с помощью [attacking_item.declent_ru(GENITIVE)][damage ? "." : ", [no_damage_feedback]!"]"),
 			null,
 			COMBAT_MESSAGE_RANGE,
 		)
@@ -226,9 +226,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/examine_tags(mob/user)
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
-		.["renameable"] = "Use a pen on it to rename it or change its description."
+		.["с возможностью переименования"] = "Используйте ручку на предмете, чтобы переименовать его или изменить его описание."
 	if(obj_flags & CONDUCTS_ELECTRICITY)
-		.["conductive"] = "It appears to be a good conductor of electricity."
+		.["проводящий"] = "Похоже, это является хорошим проводником электричества."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -276,7 +276,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] не имеет под собой пол, к которому можно было бы прикрутить!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -287,22 +287,22 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	var/turf/ground = get_turf(src)
 	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		to_chat(user, span_notice("You fail to secure [src]."))
+		to_chat(user, span_notice("Вам не удалось прикрутить [declent_ru(ACCUSATIVE)]."))
 		return CANT_UNFASTEN
 	var/can_be_unfasten = can_be_unfasten_wrench(user)
 	if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 		return can_be_unfasten
 	if(time)
-		to_chat(user, span_notice("You begin [anchored ? "un" : ""]securing [src]..."))
+		to_chat(user, span_notice("Вы начинаете [anchored ? "от" : "при"]креплять [declent_ru(ACCUSATIVE)]..."))
 	wrench.play_tool_sound(src, 50)
 	var/prev_anchored = anchored
 	//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 	if(!wrench.use_tool(src, user, time, extra_checks = CALLBACK(src, PROC_REF(unfasten_wrench_check), prev_anchored, user)))
 		return FAILED_UNFASTEN
 	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		to_chat(user, span_notice("You fail to secure [src]."))
+		to_chat(user, span_notice("Вам не удалось прикрутить [declent_ru(ACCUSATIVE)]."))
 		return CANT_UNFASTEN
-	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+	to_chat(user, span_notice("Вы [anchored ? "от" : "при"]кручиваете [declent_ru(ACCUSATIVE)]."))
 	set_anchored(!anchored)
 	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

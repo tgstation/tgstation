@@ -2,20 +2,92 @@ import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
-  Box,
   Button,
   FitText,
   Icon,
   Input,
-  LabeledList,
-  Modal,
   Section,
   Stack,
-  TrackOutsideClicks,
 } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
+import { useBackend } from '../../../backend';
+import { LoadingScreen } from '../../common/LoadingScreen';
 import type { Name } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+
+type NameInputProps = {
+  name: string;
+  nameType: string;
+  canRandomize: BooleanLike;
+  large?: boolean;
+};
+
+export function NameInput(props: NameInputProps) {
+  const { name, nameType, canRandomize, large } = props;
+  const { act } = useBackend();
+  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
+    null,
+  );
+
+  const editing = lastNameBeforeEdit === name;
+  function updateName(value) {
+    setLastNameBeforeEdit(null);
+    act('set_preference', {
+      preference: nameType,
+      value,
+    });
+  }
+
+  return (
+    <Stack fill fontSize={large && 1.33}>
+      <Stack.Item grow className="PreferencesMenu__Name">
+        <Button
+          fluid
+          captureKeys={!editing}
+          onClick={() => setLastNameBeforeEdit(name)}
+        >
+          <Stack fill>
+            {large && !editing && (
+              <Stack.Item>
+                <Icon name="edit" />
+              </Stack.Item>
+            )}
+            <Stack.Item grow>
+              {editing ? (
+                <>
+                  <Input
+                    autoSelect
+                    value={name}
+                    onBlur={updateName}
+                    onEscape={() => {
+                      setLastNameBeforeEdit(null);
+                    }}
+                  />
+                  <Icon name="question" /> {/* Save layout on edit */}
+                </>
+              ) : (
+                <FitText maxFontSize={large ? 16 : 13} maxWidth={130}>
+                  {name || '(нет имени)'}
+                </FitText>
+              )}
+            </Stack.Item>
+          </Stack>
+        </Button>
+      </Stack.Item>
+      {!!canRandomize && !editing && (
+        <Stack.Item>
+          <Button
+            icon="dice"
+            tooltip="Рандомизировать"
+            tooltipPosition="right"
+            onClick={() => act('randomize_name', { preference: nameType })}
+          />
+        </Stack.Item>
+      )}
+    </Stack>
+  );
+}
 
 type NameWithKey = {
   key: string;
@@ -34,20 +106,16 @@ function sortNameWithKeyEntries(array: [string, NameWithKey[]][]) {
 }
 
 type MultiNameProps = {
-  handleClose: () => void;
-  handleRandomizeName: (nameType: string) => void;
-  handleUpdateName: (nameType: string, value: string) => void;
   names: Record<string, string>;
 };
 
-export function MultiNameInput(props: MultiNameProps) {
-  const { handleUpdateName, handleRandomizeName } = props;
-
+export function AlternativeNames(props: MultiNameProps) {
   const data = useServerPrefs();
-  if (!data) return;
+  if (!data) {
+    return <LoadingScreen />;
+  }
 
   const namesIntoGroups: Record<string, NameWithKey[]> = {};
-
   for (const [key, name] of Object.entries(data.names.types)) {
     namesIntoGroups[name.group] = binaryInsertName(
       namesIntoGroups[name.group] || [],
@@ -59,161 +127,27 @@ export function MultiNameInput(props: MultiNameProps) {
   }
 
   return (
-    <Modal>
-      <TrackOutsideClicks onOutsideClick={props.handleClose}>
-        <Section
-          buttons={
-            <Button color="red" onClick={props.handleClose}>
-              Close
-            </Button>
-          }
-          title="Alternate names"
-        >
-          <LabeledList>
-            {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
-              ([_, names], index, collection) => (
-                <>
-                  {names.map(({ key, name }) => {
-                    return (
-                      <LabeledList.Item key={key} label={name.explanation}>
-                        <Stack fill>
-                          <Stack.Item grow>
-                            <Button.Input
-                              fluid
-                              onCommit={(value) => handleUpdateName(key, value)}
-                              value={props.names[key]}
-                            />
-                          </Stack.Item>
-                          {!!name.can_randomize && (
-                            <Stack.Item>
-                              <Button
-                                icon="dice"
-                                tooltip="Randomize"
-                                tooltipPosition="right"
-                                onClick={() => handleRandomizeName(key)}
-                              />
-                            </Stack.Item>
-                          )}
-                        </Stack>
-                      </LabeledList.Item>
-                    );
-                  })}
-
-                  {index !== collection.length - 1 && <LabeledList.Divider />}
-                </>
-              ),
-            )}
-          </LabeledList>
-        </Section>
-      </TrackOutsideClicks>
-    </Modal>
-  );
-}
-
-type NameInputProps = {
-  handleUpdateName: (name: string) => void;
-  name: string;
-  openMultiNameInput: () => void;
-};
-
-export function NameInput(props: NameInputProps) {
-  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
-    null,
-  );
-  const editing = lastNameBeforeEdit === props.name;
-
-  function updateName(value) {
-    setLastNameBeforeEdit(null);
-    props.handleUpdateName(value);
-  }
-
-  const data = useServerPrefs();
-
-  return (
-    <Button
-      captureKeys={!editing}
-      onClick={() => {
-        setLastNameBeforeEdit(props.name);
-      }}
-      textAlign="center"
-      width="100%"
-      height="28px"
-    >
-      <Stack align="center" fill>
-        <Stack.Item>
-          <Icon
-            style={{
-              color: 'rgba(255, 255, 255, 0.5)',
-              fontSize: '17px',
-            }}
-            name="edit"
-          />
-        </Stack.Item>
-
-        <Stack.Item grow position="relative">
-          {editing ? (
-            <Input
-              autoSelect
-              onBlur={updateName}
-              onEscape={() => {
-                setLastNameBeforeEdit(null);
-              }}
-              value={props.name}
-            />
-          ) : (
-            <FitText maxFontSize={16} maxWidth={130}>
-              {props.name}
-            </FitText>
-          )}
-
-          <Box
-            style={{
-              borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-              right: '50%',
-              transform: 'translateX(50%)',
-              position: 'absolute',
-              width: '90%',
-              bottom: '-1px',
-            }}
-          />
-        </Stack.Item>
-
-        {/* We only know other names when the server tells us */}
-        {data?.names && (
-          <Stack.Item>
-            <Button
-              as="span"
-              tooltip="Alternate Names"
-              tooltipPosition="bottom"
-              style={{
-                background: 'rgba(0, 0, 0, 0.7)',
-                position: 'absolute',
-                right: '2px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '2%',
-              }}
-              onClick={(event) => {
-                props.openMultiNameInput();
-
-                // We're a button inside a button.
-                // Did you know that's against the W3C standard? :)
-                event.cancelBubble = true;
-                event.stopPropagation();
-              }}
-            >
-              <Icon
-                name="ellipsis-v"
-                style={{
-                  position: 'relative',
-                  left: '-1px',
-                  minWidth: '0px',
-                }}
-              />
-            </Button>
-          </Stack.Item>
+    <Section fill scrollable title="Альтернативные имена">
+      <Stack vertical>
+        {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
+          ([_, names], index, collection) =>
+            index !== 0 &&
+            names.map(({ key, name }) => {
+              return (
+                <Stack key={key} vertical className="PreferencesMenu__AltName">
+                  <Stack.Item className="PreferencesMenu__AltName--explanation">
+                    {name.explanation}
+                  </Stack.Item>
+                  <NameInput
+                    name={props.names[key]}
+                    nameType={key}
+                    canRandomize={name.can_randomize}
+                  />
+                </Stack>
+              );
+            }),
         )}
       </Stack>
-    </Button>
+    </Section>
   );
 }

@@ -255,7 +255,7 @@
 	. += focus_overlay
 
 /obj/item/tk_grab/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 #undef TK_MAXRANGE

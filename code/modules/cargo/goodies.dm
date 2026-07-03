@@ -15,35 +15,35 @@
 /datum/supply_pack/goody/dumdum38
 	name = ".38 DumDum Speedloader Single-Pack"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
-	cost = PAYCHECK_CREW * 2
+	cost = PAYCHECK_CREW * 4 // Original price: 100 New price: 200
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/speedloader/c38/dumdum)
 
 /datum/supply_pack/goody/match38
 	name = ".38 Match Grade Speedloader Single-Pack"
 	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots."
-	cost = PAYCHECK_CREW * 2
+	cost = PAYCHECK_CREW * 4 // Original price: 100 New price: 200
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/speedloader/c38/match)
 
 /datum/supply_pack/goody/rubber
 	name = ".38 Rubber Speedloader Single-Pack"
 	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
-	cost = PAYCHECK_CREW * 1.5
+	cost = PAYCHECK_CREW * 3 // Original price: 75 New price: 150
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/speedloader/c38/match/bouncy)
 
 /datum/supply_pack/goody/dumdum38br
 	name = ".38 DumDum Magazine Single-Pack"
 	desc = "Contains one magazine of .38 DumDum ammunition, good for embedding in soft targets."
-	cost = PAYCHECK_CREW * 2
+	cost = PAYCHECK_CREW * 4 // Original price: 100 New price: 200
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/magazine/m38/dumdum)
 
 /datum/supply_pack/goody/match38br
 	name = ".38 Match Grade Magazine Single-Pack"
 	desc = "Contains one magazine of match grade .38 ammunition, perfect for showing off trickshots."
-	cost = PAYCHECK_CREW * 2
+	cost = PAYCHECK_CREW * 4 // Original price: 100 New price: 200
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/magazine/m38/match)
 
@@ -57,7 +57,7 @@
 /datum/supply_pack/goody/mars_single
 	name = "Colt Detective Special Single-Pack"
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
-	cost = PAYCHECK_CREW * 40 //they really mean a premium here
+	cost = PAYCHECK_CREW * 60 // Original price: 2000 New price: 3000
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
@@ -77,7 +77,7 @@
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
-	cost = PAYCHECK_COMMAND * 15
+	cost = PAYCHECK_COMMAND * 22.5 // Original price: 1500 New price: 2250
 	access_view = ACCESS_ARMORY
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/automatic/combat,
@@ -89,19 +89,19 @@
 	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in an energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/holster/energy/disabler)
+	contains = list(/obj/item/clothing/accessory/holster/energy/disabler) //BANDASTATION EDIT: Accessory holsters
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both non-lethal and lethal blasts of light."
-	cost = PAYCHECK_COMMAND * 12
+	cost = PAYCHECK_COMMAND * 18 // Original price: 1200 New price: 1800
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
 	name = "Type 5 Laser Gun Single-Pack"
 	desc = "Contains one Type 5 laser gun, the lethal workhorse of Nanotrasen security everywhere."
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 9 // Original price: 600 New price: 900
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
 
@@ -117,7 +117,7 @@
 	desc = "Contains one Type 5C laser pistol in an energy shoulder holster. Groovy."
 	cost = PAYCHECK_COMMAND * 2
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/holster/energy/laser_pistol)
+	contains = list(/obj/item/clothing/accessory/holster/energy/laser_pistol) //BANDASTATION EDIT: Accessory holsters
 
 /datum/supply_pack/goody/laser_single_soul
 	name = "Type 3 Laser Gun Single-Pack"
@@ -147,7 +147,7 @@
 	desc = "Contains twinned thermal pistols in a holster, ready for use in the field."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/storage/belt/holster/energy/thermal)
+	contains = list(/obj/item/clothing/accessory/holster/energy/thermal) //BANDASTATION EDIT: Accessory holsters
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"
@@ -292,7 +292,7 @@
 /datum/supply_pack/goody/rapid_lighting_device
 	name = "Rapid Lighting Device (RLD) Single-Pack"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
-	cost = PAYCHECK_CREW * 10
+	cost = PAYCHECK_CREW * 4 // Original price: 500 New price: 200
 	contains = list(/obj/item/construction/rld)
 
 /datum/supply_pack/goody/fishing_toolbox
@@ -406,7 +406,7 @@
 /datum/supply_pack/goody/double_barrel
 	name = "Double-barreled Shotgun Single-Pack"
 	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun as long as you can pay the absurd fees."
-	cost = PAYCHECK_COMMAND * 18
+	cost = PAYCHECK_COMMAND * 27 // Original price: 1800 New price: 2700
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
 

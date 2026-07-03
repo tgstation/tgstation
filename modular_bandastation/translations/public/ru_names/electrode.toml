@@ -1,0 +1,8 @@
+[electrode]
+nominative = "электрод"
+genitive = "электрода"
+dative = "электроду"
+accusative = "электрод"
+instrumental = "электродом"
+prepositional = "электроде"
+gender = "male"

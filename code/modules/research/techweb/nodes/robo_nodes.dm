@@ -1,8 +1,8 @@
 /datum/techweb_node/robotics
 	id = TECHWEB_NODE_ROBOTICS
 	starting_node = TRUE
-	display_name = "Robotics"
-	description = "Programmable machines that make our lives lazier."
+	display_name = "Робототехника"
+	description = "Программируемые машины, что делают нас ленивее."
 	design_ids = list(
 		"botnavbeacon",
 		"mechfab",
@@ -11,8 +11,8 @@
 
 /datum/techweb_node/exodrone
 	id = TECHWEB_NODE_EXODRONE
-	display_name = "Exploration Drones"
-	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
+	display_name = "Исследовательские дроны"
+	description = "Адаптированные аркадные автоматы для скрытого использования навыков геймеров в управлении настоящими дронами в практических целях."
 	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
 		"exodrone_console",
@@ -25,8 +25,8 @@
 // AI root node
 /datum/techweb_node/ai
 	id = TECHWEB_NODE_AI
-	display_name = "Artificial Intelligence"
-	description = "Exploration of AI systems, more intelligent than the entire crew put together."
+	display_name = "Искусственный интеллект"
+	description = "Исследование систем искусственного интеллекта, более интеллектуальных, чем весь экипаж вместе взятый."
 	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
 		"aicore",
@@ -69,8 +69,8 @@
 
 /datum/techweb_node/ai_laws
 	id = TECHWEB_NODE_AI_LAWS
-	display_name = "Advanced AI Upgrades"
-	description = "Delving into sophisticated AI directives, with hopes that they won't lead to humanity's extinction."
+	display_name = "Улучшенные модули ИИ"
+	description = "Углубление в сложные директивы ИИ, в надежде, что они не приведут к вымиранию человечества."
 	prereq_ids = list(TECHWEB_NODE_AI)
 	design_ids = list(
 		"ai_power_upgrade",

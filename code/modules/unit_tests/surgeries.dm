@@ -52,7 +52,7 @@
 	bobs_head.drop_limb()
 
 	TEST_ASSERT_EQUAL(alice.get_bodypart(BODY_ZONE_HEAD), null, "Alice still has a head after dismemberment")
-	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Unknown", "Alice's head was dismembered, but they are not Unknown")
+	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Неизвестный", "Alice's head was dismembered, but they are not Неизвестный") // BANDASTATION EDIT - Unknown are no more, we are Неизвестный
 
 	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
 

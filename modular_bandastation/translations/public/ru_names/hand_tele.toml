@@ -1,0 +1,8 @@
+["hand tele"]
+nominative = "ручной телепортер"
+genitive = "ручного телепортера"
+dative = "ручному телепортеру"
+accusative = "ручной телепортер"
+instrumental = "ручным телепортером"
+prepositional = "ручном телепортере"
+gender = "male"

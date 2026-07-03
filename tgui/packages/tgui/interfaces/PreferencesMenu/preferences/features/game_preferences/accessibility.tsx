@@ -1,30 +1,30 @@
 import { CheckboxInput, type Feature, type FeatureToggle, FeatureSliderInput } from '../base';
 
 export const darkened_flash: FeatureToggle = {
-  name: 'Enable darkened flashes',
-  category: 'ACCESSIBILITY',
+  name: 'Включить затемненные вспышки',
+  category: 'Доступность',
   description: `
-    When toggled, being flashed will show a dark screen rather than a
-    bright one.
+    Если включено, яркие вспышки теперь будут затемнять
+    ваш экран.
   `,
   component: CheckboxInput,
 };
 
 export const screen_shake_darken: FeatureToggle = {
-  name: 'Darken screen shake',
-  category: 'ACCESSIBILITY',
+  name: 'Замена дрожи экрана затемнением',
+  category: 'Доступность',
   description: `
-      When toggled, experiencing screen shake will darken your screen.
+      Если включено, дрожь экрана будет заменена затемнением экрана.
     `,
   component: CheckboxInput,
 };
 
 export const remove_double_click: FeatureToggle = {
-  name: 'Remove double click',
-  category: 'ACCESSIBILITY',
+  name: 'Убрать двойной клик',
+  category: 'Доступность',
   description: `
-      When toggled, actions that require a double click will instead offer
-      alternatives, good if you have a not-so-functional mouse.
+      Если включено, действия, требующие двойного клика, будут предлагать
+      альтернативные варианты, что очень удобно, если у вас не очень функциональная мышь.
     `,
   component: CheckboxInput,
 };

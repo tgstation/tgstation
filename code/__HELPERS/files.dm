@@ -7,12 +7,12 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "gz", "json"))
 	// wow why was this ever a parameter
-	var/root = "data/logs/"
+	var/root = "data/logis_logs/" // BANDASTATION EDIT - Logis: ("data/logis_logs/")
 	switch(root_type)
 		if(BROWSE_ROOT_ALL_LOGS)
-			root = "data/logs/"
+			root = "data/logis_logs/" // BANDASTATION EDIT - Logis: ("data/logis_logs/")
 		if(BROWSE_ROOT_CURRENT_LOGS)
-			root = "[GLOB.log_directory]/"
+			root = "[GLOB.logis_logs_directory]/" // BANDASTATION EDIT - Logis: ("[GLOB.logis_logs_directory]/")
 	var/path = root
 
 	for(var/i in 1 to max_iterations)

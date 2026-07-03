@@ -1,0 +1,8 @@
+["work boots"]
+nominative = "рабочие ботинки"
+genitive = "рабочих ботинок"
+dative = "рабочим ботинкам"
+accusative = "рабочие ботинки"
+instrumental = "рабочими ботинками"
+prepositional = "рабочих ботинках"
+gender = "plural"

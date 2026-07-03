@@ -1,0 +1,8 @@
+["food cart"]
+nominative = "тележка с едой"
+genitive = "тележки с едой"
+dative = "тележке с едой"
+accusative = "тележку с едой"
+instrumental = "тележкой с едой"
+prepositional = "тележке с едой"
+gender = "female"

@@ -227,6 +227,10 @@
 #define BLOOD_COLOR_OIL "#2C2C2C"
 #define BLOOD_COLOR_BLACK "#1F1A00"
 #define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
+/// BANDASTATION ADDITION START - Species
+#define BLOOD_COLOR_MOTH "#b9ae9c"
+#define BLOOD_COLOR_SKRELL "#1e40ff"
+/// BANDASTATION ADDITION END - Species
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"

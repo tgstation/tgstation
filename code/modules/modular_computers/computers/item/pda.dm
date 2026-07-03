@@ -46,6 +46,7 @@
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
 		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/navigator, // BANDASTATION ADDITION
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
@@ -116,10 +117,10 @@
 		return ..()
 	var/obj/item/disk/computer/virus/clown/installed_cartridge = inserted_disk
 	if(!installed_cartridge.charges)
-		to_chat(user, span_notice("Out of virus charges."))
+		to_chat(user, span_notice("Закончились заряды вируса."))
 		return ..()
 
-	to_chat(user, span_notice("You upload the virus to [target]!"))
+	to_chat(user, span_notice("Вы загрузили вирус в [target.declent_ru(ACCUSATIVE)]!"))
 	var/sig_list = list(COMSIG_ATOM_ATTACK_HAND)
 	if(istype(target,/obj/machinery/door/airlock))
 		sig_list = list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
@@ -136,10 +137,10 @@
 	. = ..()
 
 	if(inserted_item)
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove [inserted_item]"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Достать [inserted_item.declent_ru(ACCUSATIVE)]"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(istype(held_item) && is_type_in_list(held_item, contained_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert [held_item]"
+		context[SCREENTIP_CONTEXT_LMB] = "Вставить [held_item.declent_ru(ACCUSATIVE)]"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
@@ -156,14 +157,14 @@
 	if(!is_type_in_list(tool, contained_item))
 		return NONE
 	if(tool.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
-		user.balloon_alert(user, "too big!")
+		user.balloon_alert(user, "слишком большой!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	if(inserted_item)
 		swap_pen(user, tool)
 	else
-		balloon_alert(user, "inserted [tool]")
+		balloon_alert(user, "вставлен[genderize_ru(tool.gender, "", "а", "о")] [tool.declent_ru(NOMINATIVE)]")
 		inserted_item = tool
 		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -188,7 +189,7 @@
 		return
 
 	if(inserted_item)
-		balloon_alert(user, "removed [inserted_item]")
+		balloon_alert(user, "извлечен[genderize_ru(inserted_item.gender, "", "а", "о")] [inserted_item.declent_ru(NOMINATIVE)]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
@@ -196,7 +197,7 @@
 
 /obj/item/modular_computer/pda/proc/swap_pen(mob/user, obj/item/tool)
 	if(inserted_item)
-		balloon_alert(user, "swapped pens")
+		balloon_alert(user, "ручки поменяны местами")
 		user.put_in_hands(inserted_item)
 		inserted_item = tool
 		update_appearance()
@@ -213,13 +214,13 @@
 	if (ismob(loc))
 		var/mob/loc_mob = loc
 		loc_mob.show_message(
-			msg = span_userdanger("Your [src] explodes!"),
+			msg = span_userdanger("Ваш [declent_ru(NOMINATIVE)] взрывается!"),
 			type = MSG_VISUAL,
-			alt_msg = span_warning("You hear a loud *pop*!"),
+			alt_msg = span_warning("Вы слышите громкий хлопок!"),
 			alt_type = MSG_AUDIBLE,
 		)
 	else
-		visible_message(span_danger("[src] explodes!"), span_warning("You hear a loud *pop*!"))
+		visible_message(span_danger("[declent_ru(NOMINATIVE)] взрывается!"), span_warning("Вы слышите громкий хлопок!"))
 
 	target.client?.give_award(/datum/award/achievement/misc/clickbait, target)
 

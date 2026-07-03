@@ -1,19 +1,19 @@
 /datum/job/chief_engineer
 	title = JOB_CHIEF_ENGINEER
-	description = "Coordinate engineering, ensure equipment doesn't get stolen, \
-		make sure the Supermatter doesn't blow up, maintain telecommunications."
+	description = "Руководите инженерным отделом, следите, чтобы никакое оборудование не было украдено, \
+		чтобы кристалл Суперматерии не взорвался, а также обслуживайте телекоммуникации."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = RADIO_CHANNEL_ENGINEERING
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = JOB_CAPTAIN_RU
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_requirements = 180
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_ENGINEERING
-	exp_granted_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_COMMAND
 	config_tag = "CHIEF_ENGINEER"
 
 	outfit = /datum/outfit/job/ce
@@ -55,7 +55,7 @@
 	spawned.add_mob_memory(/datum/memory/key/message_server_key, decrypt_key = GLOB.preset_station_message_server_key)
 
 /datum/job/chief_engineer/get_captaincy_announcement(mob/living/captain)
-	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
+	return "В связи с нехваткой персонала, недавно назначенный исполняющий обязанности капитана [captain.real_name] на борту!"
 
 
 /datum/outfit/job/ce

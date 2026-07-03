@@ -1,0 +1,4 @@
+#include "_job_slots_preferences.dm"
+
+#include "code/job_slots_preferences.dm"
+#include "code/pref_job_slots_middleware.dm"

@@ -450,13 +450,13 @@
 	/// The amount of damage the implant adds to the upper punching force of our arm.
 	var/upper_punch_damage = 2
 	/// The amount of punch effectiveness (AKA accuracy and crit potential) the implant adds to our arm
-	var/punch_effectiveness_added = 10
+	var/punch_effectiveness_added = 4 // BANDASTATION MOD: Remove strong-arm lavaland fauna bane
 	/// How much extra damage does our implant allow the implanted while grabbing someone and they are unable to break the grapple?
 	var/bonus_grab_damage = 20
 	/// Biotypes we apply an additional amount of damage too
 	var/biotype_bonus_targets = MOB_SPECIAL | MOB_MINING
 	/// Extra damage dealt to our targeted mobs
-	var/biotype_bonus_damage = 20
+	var/biotype_bonus_damage = 0 // BANDASTATION MOD: Remove strong-arm lavaland fauna bane
 	/// IF true, the throw attack will not smash people into walls
 	var/non_harmful_throw = TRUE
 	/// How far away your attack will throw your oponent
@@ -588,7 +588,7 @@
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
 		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		COMBAT_MESSAGE_RANGE,
 		source,
 	)

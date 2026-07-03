@@ -2,7 +2,7 @@
 
 /datum/language/spinwarder
 	name = "Spinwarder"
-	desc = "The official language of the Spinward Stellar Coalition, as inherited from the Third Soviet Union."
+	desc = "Официальный язык Звёздной Коалиции Спинвард, унаследованный от Третьего Советского Союза."
 	key = "s"
 	space_chance = 20
 	sentence_chance = 0
@@ -12,13 +12,13 @@
 	additional_syllable_high = 0
 	flags = TONGUELESS_SPEECH
 	syllables = list(
-		"v", "od", "noy", "ned", "ele", "dn", "ey", "da", "ny", "et", "mes", "yat",
-		"che", "bu", "pol", "ye", "eli", "nyy", "se", "god", "ya", "dom", "ash", "zav",
-		"vzy", "vch", "hod", "noy", "in", "sek", "pyat", "vos", "des", "spl", "kaz", "den",
-		"bez", "noc", "vay", "vst", "sya", "osta", "cha", "ste", "dit", "mas", "no", "och",
-		"ispo", "yut", "yet", "zhen", "rab", "po", "prya", "vper", "zag", "nite", "mne", "uzh",
-		"smet", "yot", "shut", "koy", "tov", "mak", "ya", "vosk", "dale", "kiy", "tsi",
-		"nok",  "khor",  "kra",  "siv",  "akt",  "utyo",  "prek",  "leb",  "dya",  "trud",
+		"в", "од", "ной", "нед", "еле", "дн", "ей", "да", "ны", "ет", "мес", "ят",
+		"че", "бу", "пол", "е", "ели", "ный", "се", "год", "я", "дом", "аш", "зав",
+		"взы", "вч", "ход", "ной", "ин", "сек", "пять", "вос", "дес", "спл", "каз", "ден",
+		"без", "ноц", "вай", "вст", "ся", "оста", "ча", "сте", "дит", "мас", "но", "оч",
+		"испо", "ют", "ет", "жен", "раб", "по", "пря", "впер", "заг", "ните", "мне", "уж",
+		"смет", "ёт", "шут", "кой", "тов", "мак", "я", "воск", "дале", "кий", "ци",
+		"нок",  "хор",  "кра",  "сив",  "акт",  "утё",  "прек",  "леб",  "дя",  "труд",
 	)
 	special_characters = list("'")
 	icon_state = "spinwarder"

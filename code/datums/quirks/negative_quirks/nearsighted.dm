@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
-	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
+	desc = "У вас близорукость, но зато с парой очков выписанных по рецепту."
 	icon = FA_ICON_GLASSES
 	value = -4
-	gain_text = span_danger("Things far away from you start looking blurry.")
-	lose_text = span_notice("You start seeing faraway things normally again.")
-	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
+	gain_text = span_danger("Предметы, находящиеся на большом расстоянии от вас, выглядят размыто.")
+	lose_text = span_notice("Вы начинаете видеть вещи на далеком расстоянии как обычно.")
+	medical_record_text = "Пациенту требуются специальные очки для борьбы с близорукостью."
 	hardcore_value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/glasses/regular) // extra pair if orginal one gets broken by somebody mean

@@ -8,6 +8,7 @@ export const JOB2ICON = {
   Bartender: 'cocktail',
   'Bit Avatar': 'code',
   Bitrunner: 'gamepad',
+  Explorer: 'compass',
   Botanist: 'seedling',
   'Bridge Assistant': 'building-shield',
   Captain: 'crown',
@@ -56,4 +57,7 @@ export const JOB2ICON = {
   'Veteran Security Advisor': 'ribbon',
   'Pun Pun': 'paw',
   Warden: 'handcuffs',
+  Blueshield: 'shield',
+  'Nanotrasen Representative': 'user-tie',
+  Magistrate: 'scale-balanced',
 } as const;

@@ -75,8 +75,8 @@
 	. = ..()
 	AddComponent(/datum/component/splat, hit_callback = CALLBACK(src, PROC_REF(stun_and_blur)))
 
-/obj/item/food/pie/cream/proc/stun_and_blur(mob/living/victim, can_splat_on)
-	if(stunning)
+/obj/item/food/pie/cream/proc/stun_and_blur(mob/living/victim, can_splat_on, datum/thrownthing/throwing_datum)
+	if(stunning && throwing_datum && (throwing_datum.force >= (victim.move_resist * MOVE_FORCE_FORCEPUSH_RATIO)))
 		victim.Paralyze(2 SECONDS) //splat!
 	if(can_splat_on)
 		victim.adjust_eye_blur(2 SECONDS)

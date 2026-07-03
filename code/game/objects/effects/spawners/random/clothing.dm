@@ -66,6 +66,8 @@
 		/obj/item/clothing/under/syndicate/soviet,
 		/obj/item/clothing/under/syndicate/combat,
 		/obj/item/clothing/under/syndicate/rus_army,
+		/obj/item/clothing/under/syndicate/rus_army/berezka, //  BANDASTATION ADDITION
+		/obj/item/clothing/under/syndicate/rus_army/flora, //  BANDASTATION ADDITION
 		/obj/item/clothing/under/syndicate/bloodred/sleepytime,
 	)
 

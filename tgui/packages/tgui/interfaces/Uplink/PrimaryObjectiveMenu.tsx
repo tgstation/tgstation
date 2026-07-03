@@ -14,10 +14,10 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   return (
     <Section fill scrollable align="center">
       <Box my={4} bold fontSize={1.2} color="green">
-        WELCOME, AGENT.
+        ПРИВЕТСТВУЕМ, АГЕНТ.
       </Box>
       <Box my={4} bold fontSize={1.2}>
-        Your Primary Objectives are as follows. Complete these at all costs.
+        Агент, это ваши основные задачи. Выполните их любой ценой.
       </Box>
       <Stack vertical>
         {primary_objectives.map((prim_obj, index) => (
@@ -33,9 +33,9 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       {!!can_renegotiate && (
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           <Button
-            content={'Renegotiate Contract'}
+            content={'Перезаключить контракт'}
             tooltip={
-              'Replace your existing primary objectives with a custom one. This action can only be performed once.'
+              'Замените свои текущие основные задачи на пользовательские. Это действие можно совершить лишь единожды.'
             }
             onClick={() => act('renegotiate_objectives')}
           />
@@ -43,7 +43,7 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       )}
       <Box my={4} fontSize={0.8}>
         <Box>SyndOS Version 3.17</Box>
-        <Box color="green">Connection Secure</Box>
+        <Box color="green">Безопасное соединение</Box>
       </Box>
     </Section>
   );

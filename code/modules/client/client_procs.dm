@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			topiclimiter[SECOND_COUNT] = 0
 		topiclimiter[SECOND_COUNT] += 1
 		if (topiclimiter[SECOND_COUNT] > stl)
-			to_chat(src, span_danger("Your previous action was ignored because you've done too many in a second"))
+			to_chat(src, span_danger("Превышен лимит действий в секунду, ваше предыдущее действие было проигнорировано."))
 			return
 
 	// Tgui Topic middleware
@@ -106,9 +106,11 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
+	/* BANDASTATION REMOVAL
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
 		return
+	*/
 	// Admin message
 	if(href_list["messageread"])
 		var/message_id = round(text2num(href_list["messageread"]), 1)
@@ -267,10 +269,14 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		reconnecting = TRUE
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
 	else
-		persistent_client = new(ckey)
+		persistent_client = new(ckey, key) // BANDASTATION ADDITION - Mentors: (key)
 	persistent_client.set_client(src)
 
-	winset(src, null, list("browser-options" = "find,refresh"))
+	if(SScentral.can_run())
+		SScentral.update_player_discord_async(ckey)
+		SScentral.update_player_donate_tier_blocking(src)
+
+	winset(src, null, list("browser-options" = "find")) // BANDASTATION EDIT - Removed 'refresh'
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -285,7 +291,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	set_right_click_menu_mode(TRUE)
 
-	GLOB.ahelp_tickets.ClientLogin(src)
+	GLOB.ticket_manager.client_login(persistent_client) // BANDASTATION REPLACEMENT - Original: GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
 	GLOB.requests.client_login(src)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
@@ -554,7 +560,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	apply_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		to_chat(src, span_info("You have unread updates in the changelog."))
+		to_chat(src, span_info("У вас есть непрочитанные обновления в чейнджлоге."))
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 
@@ -614,12 +620,13 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	GLOB.clients -= src
 	GLOB.directory -= ckey
 	if(persistent_client)
+		GLOB.ticket_manager.client_logout(persistent_client) // BANDASTATION ADDITION
 		persistent_client.set_client(null)
 	else
 		stack_trace("A client was Del()'d without a persistent_client! This should not be happening.")
 
 	log_access("Logout: [key_name(src)]")
-	GLOB.ahelp_tickets.ClientLogout(src)
+	// GLOB.ahelp_tickets.ClientLogout(src) // BANDASTATION REMOVAL
 	GLOB.interviews.client_logout(src)
 	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
@@ -644,6 +651,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(parallax_rock)
+	QDEL_NULL(who) // BANDASTATION ADDITION - TGUI Who
 	seen_messages = null
 	sound_tokens = null
 	Master.UpdateTickRate()
@@ -688,6 +696,20 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		return
 
 	var/client_is_in_db = query_client_in_db.NextRow()
+
+	if(GLOB.clients.len >= CONFIG_GET(number/extreme_popcap))
+		if(!GLOB.joined_player_list.Find(ckey) && !holder && !GLOB.deadmins[ckey])
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
+			if(panic_addr && !connectiontopic_a["redirect"])
+				var/panic_name = CONFIG_GET(string/panic_server_name)
+				to_chat_immediate(src, span_notice("Sending you to [panic_name ? panic_name : panic_addr]."))
+				winset(src, null, "command=.options")
+				src << link("[panic_addr]?redirect=1")
+				qdel(query_client_in_db)
+				qdel(src)
+				return
+
 	// If we aren't an admin, and the flag is set (the panic bunker is enabled).
 	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 		// The amount of hours needed to bypass the panic bunker.
@@ -1037,9 +1059,15 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if(ADMIN_CHANNEL)
-					if(holder)
+					if(check_rights_for(src, R_ADMIN))
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
+					else
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+				if(MENTOR_CHANNEL)
+					if(check_rights_for(src, R_MENTOR))
+						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 	calculate_move_dir()

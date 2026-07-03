@@ -38,7 +38,7 @@
 		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color, comsig_toggle = COMSIG_CLICK_ALT_SECONDARY)
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/visor_toggling()
@@ -90,7 +90,7 @@
 	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/meson/night
@@ -141,7 +141,7 @@
 	acid = 100
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 /obj/item/clothing/glasses/science/night

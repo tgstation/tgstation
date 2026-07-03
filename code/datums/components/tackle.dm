@@ -160,8 +160,8 @@
 	tackle.gentle = TRUE
 
 	if(target.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
-		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
-		to_chat(target, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+		user.visible_message(span_danger("[capitalize(target.declent_ru(NOMINATIVE))] блокирует захват [user.declent_ru(GENITIVE)], смягчяя эффект!"), span_userdanger("[capitalize(target.declent_ru(NOMINATIVE))] блокирует ваш захват, смягчяя эффект!"), ignored_mobs = target)
+		to_chat(target, span_userdanger("[capitalize(target.declent_ru(NOMINATIVE))] блокирует попытку захвата [user.declent_ru(GENITIVE)], смягчяя эффект!"))
 		neutral_outcome(user, target, tackle_word) //Forces a neutral outcome so you're not screwed too much from being blocked while tackling
 		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 

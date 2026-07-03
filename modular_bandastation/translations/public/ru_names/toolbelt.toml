@@ -1,0 +1,8 @@
+[toolbelt]
+nominative = "пояс для инструментов"
+genitive = "пояса для инструментов"
+dative = "поясу для инструментов"
+accusative = "пояс для инструментов"
+instrumental = "поясом для инструментов"
+prepositional = "поясе для инструментов"
+gender = "male"

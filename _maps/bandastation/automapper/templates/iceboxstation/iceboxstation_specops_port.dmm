@@ -1,0 +1,155 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"g" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"h" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 11;
+	name = "port bay 3";
+	shuttle_id = "specops_home";
+	width = 5
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"p" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/mapping_helpers/no_atoms_ontop,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+p
+a
+a
+a
+"}
+(2,1,1) = {"
+f
+f
+g
+f
+f
+f
+g
+f
+f
+f
+f
+f
+a
+a
+"}
+(3,1,1) = {"
+f
+g
+f
+f
+g
+f
+f
+f
+f
+f
+f
+f
+g
+a
+"}
+(4,1,1) = {"
+h
+g
+g
+f
+g
+f
+f
+f
+f
+f
+f
+f
+g
+a
+"}
+(5,1,1) = {"
+g
+g
+g
+g
+f
+g
+f
+f
+f
+f
+f
+f
+g
+a
+"}
+(6,1,1) = {"
+f
+g
+f
+f
+f
+g
+f
+f
+f
+g
+f
+f
+g
+a
+"}
+(7,1,1) = {"
+f
+p
+g
+f
+g
+f
+g
+f
+f
+f
+p
+f
+g
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+p
+"}

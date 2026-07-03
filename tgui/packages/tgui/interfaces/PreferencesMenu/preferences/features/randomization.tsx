@@ -1,63 +1,28 @@
 import { useBackend } from 'tgui/backend';
-import { Button, Stack } from 'tgui-core/components';
 
 import { RandomizationButton } from '../../components/RandomizationButton';
 import { type PreferencesMenuData, RandomSetting } from '../../types';
-import { useRandomToggleState } from '../../useRandomToggleState';
 import { CheckboxInput, type Feature, type FeatureToggle } from './base';
 
+export const random_hardcore: FeatureToggle = {
+  name: 'Тотальный рандом',
+  component: CheckboxInput,
+};
+
 export const random_body: Feature<RandomSetting> = {
-  name: 'Random body',
+  name: 'Случайное тело',
   component: (props) => {
-    const [randomToggle, setRandomToggle] = useRandomToggleState();
-    const { act } = useBackend();
-
     return (
-      <Stack>
-        <Stack.Item>
-          <RandomizationButton
-            setValue={(newValue) => props.handleSetValue(newValue)}
-            value={props.value}
-          />
-        </Stack.Item>
-
-        {randomToggle ? (
-          <>
-            <Stack.Item>
-              <Button
-                color="green"
-                onClick={() => {
-                  act('randomize_character');
-                  setRandomToggle(false);
-                }}
-              >
-                Randomize
-              </Button>
-            </Stack.Item>
-
-            <Stack.Item>
-              <Button color="red" onClick={() => setRandomToggle(false)}>
-                Cancel
-              </Button>
-            </Stack.Item>
-          </>
-        ) : (
-          <Stack.Item>
-            <Button onClick={() => setRandomToggle(true)}>Randomize</Button>
-          </Stack.Item>
-        )}
-      </Stack>
+      <RandomizationButton
+        setValue={(value) => props.handleSetValue(value)}
+        value={props.value}
+      />
     );
   },
 };
 
-export const random_hardcore: FeatureToggle = {
-  name: 'Hardcore random',
-  component: CheckboxInput,
-};
-
 export const random_name: Feature<RandomSetting> = {
-  name: 'Random name',
+  name: 'Случайное имя',
   component: (props) => {
     return (
       <RandomizationButton
@@ -69,10 +34,9 @@ export const random_name: Feature<RandomSetting> = {
 };
 
 export const random_species: Feature<RandomSetting> = {
-  name: 'Random species',
+  name: 'Случайный вид',
   component: (props) => {
     const { act, data } = useBackend<PreferencesMenuData>();
-
     const species = data.character_preferences.randomization.species;
 
     return (
@@ -88,3 +52,25 @@ export const random_species: Feature<RandomSetting> = {
     );
   },
 };
+
+// BANDASTATION ADDITION START - TTS
+export const random_tts_seed: Feature<RandomSetting> = {
+  name: 'Случайный голос',
+  component: (props) => {
+    const { act, data } = useBackend<PreferencesMenuData>();
+    const tts_seed = data.character_preferences.randomization.tts_seed;
+
+    return (
+      <RandomizationButton
+        setValue={(newValue) =>
+          act('set_random_preference', {
+            preference: 'tts_seed',
+            value: newValue,
+          })
+        }
+        value={tts_seed || RandomSetting.Disabled}
+      />
+    );
+  },
+};
+// BANDASTATION ADDITION END - TTS

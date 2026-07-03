@@ -2,7 +2,7 @@
 	name = "hololadder"
 
 	anchored = TRUE
-	desc = "An abstract representation of the means to disconnect from the virtual domain."
+	desc = "Абстрактное представление средства отключения от виртуального пространства."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	obj_flags = BLOCK_Z_OUT_DOWN
@@ -23,21 +23,21 @@
 /obj/structure/hololadder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_LMB] = "Disconnect"
+	context[SCREENTIP_CONTEXT_LMB] = "отключить"
 
 
 /obj/structure/hololadder/examine(mob/user)
 	. = ..()
 
 	if(isnull(server_ref.resolve()))
-		. += span_infoplain("It's not connected to anything.")
+		. += span_infoplain("Ни к чему не подключено.")
 		return
 
 	if(isobserver(user))
-		. += span_notice("Left click to view the server that this ladder is connected to.")
+		. += span_notice("Щелкните левой кнопкой мыши, чтобы просмотреть сервер, к которому подключена эта лестница.")
 		return
 
-	. += span_infoplain("This ladder is connected to a server. You can click on it or walk over it to disconnect.")
+	. += span_infoplain("Эта лестница подключена к серверу. Вы можете нажать на неё или пройти по ней, чтобы отключиться.")
 
 
 /obj/structure/hololadder/attack_hand(mob/user, list/modifiers)
@@ -73,10 +73,10 @@
 				return
 
 	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
-		balloon_alert(user, "no connection detected")
+		balloon_alert(user, "соединение не обнаружено")
 		return
 
-	balloon_alert(user, "disconnecting...")
+	balloon_alert(user, "отключение...")
 	if(do_after(user, travel_time, src))
 		SEND_SIGNAL(user, COMSIG_BITRUNNER_LADDER_SEVER)
 

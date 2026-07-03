@@ -143,6 +143,7 @@
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
 
 	var/atom/atom_target = target
+	atom_target.ru_names_rename(ru_names_toml(picked_item::name))
 	atom_target.name = picked_item::name
 	atom_target.desc = picked_item::desc
 	atom_target.icon_state = picked_item::post_init_icon_state || picked_item::icon_state

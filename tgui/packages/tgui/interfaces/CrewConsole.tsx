@@ -26,7 +26,7 @@ const SORT_OPTIONS = [
     name: 'Job',
     sort: (a: CrewSensor, b: CrewSensor) => {
       return a.ijob - b.ijob;
-    }
+    },
   },
   {
     name: 'Name',
@@ -34,7 +34,7 @@ const SORT_OPTIONS = [
       if (a.name > b.name) return 1;
       if (a.name < b.name) return -1;
       return 0;
-    }
+    },
   },
   {
     name: 'Area',
@@ -44,7 +44,7 @@ const SORT_OPTIONS = [
       if (a.area > b.area) return 1;
       if (a.area < b.area) return -1;
       return 0;
-    }
+    },
   },
   {
     name: 'Vitals',
@@ -59,8 +59,16 @@ const SORT_OPTIONS = [
       if (a.health > b.health) return 1;
 
       return 0;
-    }
-  }
+    },
+  },
+  {
+    name: 'Head',
+    sort: (a: CrewSensor, b: CrewSensor) => {
+      if (a.ijob % 10 === 0 && b.ijob % 10 !== 0) return -1;
+      else if (a.ijob % 10 !== 0 && b.ijob % 10 === 0) return 1;
+      else return a.ijob - b.ijob;
+    },
+  },
 ];
 
 const jobToColor = (jobId: number) => {
@@ -172,17 +180,21 @@ const CrewTable = () => {
 
   const nameSearch = createSearch(searchQuery, (crew: CrewSensor) => crew.name);
 
-  const sorted = sensors.filter(nameSearch).sort((a, b) =>
-    sortAsc
-      ? SORT_OPTIONS[indexOfSortingOption].sort(a, b)
-      : SORT_OPTIONS[indexOfSortingOption].sort(b, a)
-  );
+  const sorted = sensors
+    .filter(nameSearch)
+    .sort((a, b) =>
+      sortAsc
+        ? SORT_OPTIONS[indexOfSortingOption].sort(a, b)
+        : SORT_OPTIONS[indexOfSortingOption].sort(b, a),
+    );
 
   return (
     <Section
       title={
         <>
-          <Button onClick={cycleSortBy}>{SORT_OPTIONS[indexOfSortingOption].name}</Button>
+          <Button onClick={cycleSortBy}>
+            {SORT_OPTIONS[indexOfSortingOption].name}
+          </Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}

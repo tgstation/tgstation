@@ -1,6 +1,7 @@
 #define COMMUNICATION_COOLDOWN (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
+#define STATION_REPORT_TEMPLATE_PATH "modular_bandastation/paperwork/templates/station_report.md" /// BANDASTATION ADDITION - UPDATED INTERCEPT TEMPLATE
 
 GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, new)
 
@@ -24,9 +25,9 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	var/area/captivity_area
 
 	/// What is the lower bound of when the roundstart announcement is sent out?
-	var/waittime_l = 60 SECONDS
+	var/waittime_l = 1 SECONDS /// BANDASTATION EDIT
 	/// What is the higher bound of when the roundstart announcement is sent out?
-	var/waittime_h = 180 SECONDS
+	var/waittime_h = 5 SECONDS /// BANDASTATION EDIT
 
 	/// Tracks if we have announced greenshift at the start of the round or not
 	var/announced_greenshift = FALSE
@@ -43,14 +44,14 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] announces:", players = players)
+		minor_announce(html_decode(input),"[user.name] объявляет", players = players)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		var/list/message_data = user.treat_message(input)
 		if(syndicate)
-			priority_announce(html_decode(message_data["message"]), null, 'sound/announcer/announcement/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players, color_override = "red")
+			priority_announce(html_decode(message_data["message"]), null, 'sound/announcer/announcement/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players, color_override = "red", tts_override = user.GetComponent(/datum/component/tts_component)) // Bandastation Addition: "tts_override = user.GetComponent(/datum/component/tts_component)"
 		else
-			priority_announce(html_decode(message_data["message"]), null, 'sound/announcer/announcement/announce.ogg', ANNOUNCEMENT_TYPE_CAPTAIN, has_important_message = TRUE, players = players)
+			priority_announce(html_decode(message_data["message"]), null, 'sound/announcer/announcement/announce.ogg', ANNOUNCEMENT_TYPE_CAPTAIN, has_important_message = TRUE, players = players, tts_override = user.GetComponent(/datum/component/tts_component)) // Bandastation Addition: "tts_override = user.GetComponent(/datum/component/tts_component)"
 		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
@@ -74,99 +75,97 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 /datum/communciations_controller/proc/queue_roundstart_report()
 	addtimer(CALLBACK(src, PROC_REF(send_roundstart_report)), rand(waittime_l, waittime_h))
 
+// BANDASTATION EDIT START - Updated intercept template
 /datum/communciations_controller/proc/send_roundstart_report(greenshift)
 	if(block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
 		addtimer(CALLBACK(src, PROC_REF(send_roundstart_report), greenshift), 10 SECONDS)
 		return
 
-	. = ""
-	. += "<center><img src='[SSassets.transport.get_asset_url("nanotrasen-logo")]' width='50%'></center><hr>"
-	. += "<center><h2>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
-	. += command_report_main_content || get_main_report_content()
-	if(CONFIG_GET(flag/no_dynamic_report))
-		if(isnull(greenshift))
-			greenshift = SSdynamic.current_tier.tier == 0
-	else
-		var/dynamic_report = SSdynamic.get_advisory_report()
-		if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
-			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
+	// Ensure NT logo asset is registered before we reference it in the report HTML
+	get_asset_datum(/datum/asset/simple/logos)
 
-		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector:</h3>"
-		. += dynamic_report
+	SSstation.generate_station_goals(CONFIG_GET(number/station_goal_budget))
 
-	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
+	var/station_report_template = file2text(STATION_REPORT_TEMPLATE_PATH)
 
+	var/station_goals_section = ""
 	var/list/station_goal_strings = list()
-	if(greenshift)
-		station_goal_strings += "All special orders have been authorized for the shift. \
-			Feel free to pick one your crew wishes to specialize in - you are not expected to complete them all."
-		announced_greenshift = TRUE
+	for(var/datum/station_goal/station_goal as anything in SSstation.get_station_goals())
+		station_goal.on_report()
+		station_goal_strings += station_goal.get_report()
 
-	else
-		for(var/datum/station_goal/station_goal as anything in SSstation.get_station_goals())
-			station_goal.on_report()
-			station_goal_strings += station_goal.get_report()
+	if(length(station_goal_strings))
+		station_goals_section = list(
+			"# === Цели на смену ===\n\n",
+			station_goal_strings.Join("\n\n---\n\n"),
+		).Join()
 
-	if(length(station_goal_strings) > 0) // if we have any special orders to report, add them in
-		. += "<hr><h4>Special Orders for [station_name()]:</h4>"
-		. += station_goal_strings.Join("<hr>")
+	station_report_template = replacetext(station_report_template, "%STATION_GOALS", station_goals_section)
 
-	var/list/trait_list_strings = list()
+	var/trait_reports_section = ""
+	var/list/trait_reports = list()
 	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
 		if(!station_trait.show_in_report)
 			continue
-		trait_list_strings += "[station_trait.get_report()]<BR>"
-	if(trait_list_strings.len > 0)
-		. += "<hr><h4>Identified shift divergencies:</h4>" + trait_list_strings.Join()
+		trait_reports += "- [station_trait.get_report()]"
 
+	if(length(trait_reports))
+		trait_reports_section = list(
+			"\n\n---\n\n",
+			"# === Обнаруженные отклонения ===\n\n",
+			trait_reports.Join("\n")
+		).Join()
+
+	station_report_template = replacetext(station_report_template, "%TRAIT_REPORTS", trait_reports_section)
+
+	var/footnote_section = ""
 	if(length(command_report_footnotes))
-		var/footnote_pile = ""
+		var/list/footnotes = list()
+		for(var/datum/command_footnote/footnote in command_report_footnotes)
+			footnotes += "**[footnote.message]**\n\n"
+			footnotes += "*[footnote.signature]*\n\n"
 
-		for(var/datum/command_footnote/footnote as anything in command_report_footnotes)
-			footnote_pile += "[footnote.message]<BR>"
-			footnote_pile += "~ <i>[footnote.signature]</i><BR>"
-			footnote_pile += "<BR>"
+		footnote_section = list(
+			"\n\n---\n\n",
+			"# === Дополнительная информация ===\n\n",
+			footnotes.Join()
+		).Join()
 
-		. += "<hr><h4>Additional Notes: </h4>" + footnote_pile
+	station_report_template = replacetext(station_report_template, "%FOOTNOTES", footnote_section)
+
+	var/signing_officer = generate_random_name_species_based(
+		gender = pick(list(MALE, FEMALE)),
+		unique = TRUE,
+		species_type = /datum/species/human
+	)
+	station_report_template = replacetext(station_report_template, "%SIGNING_OFFICER", signing_officer)
 
 #ifndef MAP_TEST
-	print_command_report(., "[command_name()] Status Summary", announce = FALSE, contains_advanced_html = TRUE)
-	if(greenshift)
-		priority_announce(
-			"Thanks to the tireless efforts of our security and intelligence divisions, \
-				there are currently no credible threats to [station_name()]. \
-				All station construction projects have been authorized. Have a secure shift!",
-			"Security Report",
-			SSstation.announcer.get_rand_report_sound(),
-			color_override = "green",
-		)
-	else if(CONFIG_GET(flag/roundstart_blue_alert))
+	station_report_template = replace_text_keys(station_report_template, null)
+	print_command_report(station_report_template, "[command_name()]. Отчет об обстановке", announce = FALSE, contains_advanced_html = FALSE)
+	if(CONFIG_GET(flag/roundstart_blue_alert))
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
 		priority_announce(
 			"[SSsecurity_level.current_security_level.elevating_to_announcement]\n\n\
-				A summary has been copied and printed to all communications consoles.",
-			"Security level elevated.",
+				Отчет был скопирован и распечатан на всех консолях связи.",
+			"Уровень угрозы повышен.",
 			ANNOUNCER_INTERCEPT,
 			color_override = SSsecurity_level.current_security_level.announcement_color,
 		)
 	else
 		priority_announce(
-			"A summary of the station's situation has been copied and printed to all communications consoles.",
-			"Security Report",
+			"Отчет был скопирован и распечатан на всех консолях связи.",
+			"Отчет об обстановке",
 			SSstation.announcer.get_rand_report_sound(),
 		)
 
 #endif
-
-	return .
-
-/// Return a random flavor/meme report to use in the command report
-/datum/communciations_controller/proc/get_main_report_content()
-	if(istype(SSstation.announcer, /datum/centcom_announcer/intern))
-		return pick_list_replacements("flavor_reports.json", "intern_reports")
-	return pick_list_replacements("flavor_reports.json", "reports")
+// BANDASTATION EDIT END
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI
 #undef COMMUNICATION_COOLDOWN_MEETING
+
+/// BANDASTATION ADDITION - UPDATED INTERCEPT TEMPLATE
+#undef STATION_REPORT_TEMPLATE_PATH

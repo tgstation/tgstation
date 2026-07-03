@@ -60,10 +60,10 @@ SUBSYSTEM_DEF(polling)
 	if(role && !role_name_text)
 		role_name_text = role
 	if(role_name_text && !question)
-		question = "Do you want to play as [span_notice(role_name_text)]?"
+		question = "Вы хотите сыграть за [span_notice(role_name_text)]?"
 	if(!question)
-		question = "Do you want to play as a special role?"
-	log_ghost_poll("Candidate poll started.", data = list(
+		question = "Вы хотите сыграть за специальную роль?"
+	log_ghost_poll("Начался выбор кандидатов.", data = list(
 		"role name" = role_name_text,
 		"poll question" = question,
 		"poll duration" = DisplayTimeText(poll_time),
@@ -152,11 +152,11 @@ SUBSYSTEM_DEF(polling)
 		var/custom_link_style_start = "<style>a:visited{color:Crimson !important}</style>"
 		var/custom_link_style_end = "style='color:DodgerBlue;font-weight:bold;-dm-text-outline: 1px black'"
 		if(isatom(alert_pic) && isobserver(candidate_mob))
-			act_jump = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Teleport\]</a>"
-		var/act_signup = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
+			act_jump = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Телепорт\]</a>"
+		var/act_signup = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Отписаться" : "Записаться"]\]</a>"
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
+			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Не в этом раунде\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
 
@@ -307,7 +307,7 @@ SUBSYSTEM_DEF(polling)
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
 
-	log_ghost_poll("Candidate poll completed.", data = list(
+	log_ghost_poll("Выбор кандидатов завершён.", data = list(
 		"role name" = finishing_poll.role,
 		"poll question" = finishing_poll.question,
 		"signed up count" = length_pre_trim,

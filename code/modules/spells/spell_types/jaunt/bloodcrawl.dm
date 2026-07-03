@@ -116,7 +116,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	if(!forced)
 		if(HAS_TRAIT(jaunter, TRAIT_NO_TRANSFORM))
-			to_chat(jaunter, span_warning("You cannot exit yet!!"))
+			to_chat(jaunter, span_warning("Вы еще не можете выйти!!"))
 			return FALSE
 
 		if(exit_blood_time > 0 SECONDS)

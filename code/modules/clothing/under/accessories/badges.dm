@@ -11,7 +11,7 @@
 /obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
 	. = ..()
 	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "[src]")
+		user.say("Свидетельские показания противоречат уликам!", forced = "[src]")
 	user.point_at(src)
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
@@ -84,7 +84,7 @@
 
 /obj/item/clothing/accessory/pocketprotector
 	name = "pocket protector"
-	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
+	desc = "Может защитить вашу одежду от чернильных пятен, но вы будете выглядеть как зануда, если будете им пользоваться."
 	icon_state = "pocketprotector"
 
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)

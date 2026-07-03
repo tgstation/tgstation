@@ -1,0 +1,8 @@
+[coffeemaker]
+nominative = "кофемашина"
+genitive = "кофемашины"
+dative = "кофемашине"
+accusative = "кофемашину"
+instrumental = "кофемашиной"
+prepositional = "кофемашине"
+gender = "female"

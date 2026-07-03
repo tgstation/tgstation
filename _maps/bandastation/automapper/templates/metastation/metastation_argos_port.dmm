@@ -1,0 +1,242 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/space)
+"b" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"c" = (
+/turf/closed/wall,
+/area/station/hallway/secondary/entry)
+"e" = (
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"f" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"i" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"j" = (
+/obj/docking_port/stationary{
+	shuttle_id = "argos_home";
+	name = "port bay 4";
+	height = 17;
+	width = 12;
+	dwidth = 5;
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"k" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"l" = (
+/obj/structure/sign/warning/docking,
+/turf/closed/wall/r_wall,
+/area/station/hallway/secondary/entry)
+"p" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/olive,
+/turf/open/space/basic,
+/area/space/nearstation)
+"w" = (
+/turf/closed/wall/r_wall,
+/area/station/hallway/secondary/entry)
+"x" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"C" = (
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"M" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"N" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"Q" = (
+/obj/structure/sign/warning/docking,
+/turf/closed/wall,
+/area/station/hallway/secondary/entry)
+"R" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"W" = (
+/obj/structure/lattice/catwalk,
+/obj/item/instrument/musicalmoth{
+	name = "Syl Labee"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"Y" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+
+(1,1,1) = {"
+W
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+k
+a
+a
+a
+a
+a
+a
+a
+j
+a
+a
+"}
+(3,1,1) = {"
+k
+a
+a
+a
+a
+a
+l
+N
+N
+w
+a
+"}
+(4,1,1) = {"
+k
+a
+a
+a
+a
+a
+b
+R
+R
+b
+a
+"}
+(5,1,1) = {"
+k
+a
+a
+a
+a
+a
+b
+x
+M
+w
+a
+"}
+(6,1,1) = {"
+C
+C
+C
+C
+C
+C
+w
+f
+f
+w
+p
+"}
+(7,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+E
+O
+b
+k
+"}
+(8,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+e
+i
+Q
+k
+"}
+(9,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+e
+i
+b
+k
+"}
+(10,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+e
+Y
+c
+k
+"}

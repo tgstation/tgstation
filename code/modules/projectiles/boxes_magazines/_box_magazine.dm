@@ -85,8 +85,8 @@
 	var/list/readout = list()
 
 	if(caliber && max_ammo) // Text references a 'magazine' as only magazines generally have the caliber variable initialized
-		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
-		\nAccidentally discharging any of these projectiles may void your insurance contract."
+		readout += "До [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] могут находиться в магазине. \
+		\nСлучайное применение любого из этих снарядов может привести к аннулированию страховки."
 
 	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 
@@ -244,7 +244,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, span_notice("You load [num_loaded > 1 ? "[num_loaded] [casing_phrasing]s" : "a [casing_phrasing]"] into \the [src]!"))
+			to_chat(user, span_notice("Вы заряжаете [num_loaded] патрон[declension_ru(num_loaded, "", "а", "ов")] в [declent_ru(ACCUSATIVE)]!"))
 			playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_appearance()
 
@@ -259,7 +259,7 @@
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, span_notice("You remove a [casing_phrasing] from [src]!"))
+	to_chat(user, span_notice("Вы извлекаете патрон из [declent_ru(GENITIVE)]!"))
 	update_appearance()
 
 /obj/item/ammo_box/examine(mob/user)
@@ -268,10 +268,10 @@
 	var/obj/item/ammo_casing/top_round = get_round()
 	if(!top_round)
 		return
-	. += "It has <b>[shells_left]</b> [casing_phrasing]\s remaining."
+	. += "Внутри остал[declension_ru(shells_left, "ся", "ось", "ись")] <b>[shells_left]</b> патрон[declension_ru(shells_left, "", "а", "ов")]."
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
-	. += span_notice("\A <b>[top_round]</b> is ready.")
+	. += span_notice("<b>[top_round]</b> готов[genderize_ru(top_round, "", "а", "о", "ы")] к стрельбе.")
 
 /obj/item/ammo_box/update_icon_state()
 	. = ..()

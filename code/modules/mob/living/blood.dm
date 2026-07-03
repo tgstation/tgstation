@@ -193,27 +193,27 @@
 	// Some effects are halved mid-combat.
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
-	var/word = pick("dizzy","woozy","faint")
+	var/word = pick("головокружение","дурость","слабость")
 	switch(modified_blood_volume)
 		// Way too much blood!
 		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+				to_chat(src, span_userdanger("Кровь начинает разрывать вашу кожу. Вы сейчас лопнете!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
 		// Too much blood
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel terribly bloated."))
+				to_chat(src, span_warning("Вы чувствуете, как ужасно вздулись."))
 		// Low blood but not a big deal in the immediate
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				set_eye_blur_if_lower(2 SECONDS * determined_mod)
 				if(prob(50))
-					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
+					to_chat(src, span_danger("Вы чувствуете [word]. Становится немного сложнее дышать."))
 					losebreath += 0.5 * determined_mod * seconds_per_tick
 				else if(get_stamina_loss() < 25 * determined_mod)
-					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
+					to_chat(src, span_danger("Вы чувствуете [word]. Становится немного сложнее сфокусироваться."))
 					adjust_stamina_loss(5 * determined_mod * seconds_per_tick)
 		// Pretty low blood, getting dangerous!
 		if(BLOOD_VOLUME_RISKY to BLOOD_VOLUME_OKAY)
@@ -221,10 +221,10 @@
 				set_eye_blur_if_lower(2 SECONDS * determined_mod)
 				set_dizzy_if_lower(2 SECONDS * determined_mod)
 				if(prob(50))
-					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
+					to_chat(src, span_bolddanger("Вы сильно чувствуете [word]. Становится сложнее дышать!"))
 					losebreath += 1 * determined_mod
 				else if(get_stamina_loss() < 40 * determined_mod)
-					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
+					to_chat(src, span_bolddanger("Вы сильно чувствуете [word]. Становится сложнее оставаться в сознании!"))
 					adjust_stamina_loss(7.5 * determined_mod)
 		// Very low blood, danger!!
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_RISKY)
@@ -232,16 +232,16 @@
 				set_eye_blur_if_lower(4 SECONDS * determined_mod)
 				set_dizzy_if_lower(4 SECONDS * determined_mod)
 				if(prob(50))
-					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
+					to_chat(src, span_userdanger("Вы очень сильно чувствуете [word]! Становится гораздо сложнее дышать!"))
 					losebreath += 1.5 * determined_mod
 				else if(get_stamina_loss() < 80 * determined_mod)
-					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
+					to_chat(src, span_userdanger("Вы очень сильно чувствуете [word]! Становится гораздо сложнее оставаться в сознании!"))
 					adjust_stamina_loss(10 * determined_mod)
 		// Critically low blood, death is near! Adrenaline won't help you here.
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				Unconscious(rand(1 SECONDS, 2 SECONDS))
-				to_chat(src, span_userdanger("You black out for a moment!"))
+				to_chat(src, span_userdanger("Вы на мгновение вырубаетесь!"))
 		// Instantly die upon this threshold
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 			if(!HAS_TRAIT(src, TRAIT_NODEATH))
@@ -318,23 +318,23 @@
 		if(-INFINITY to 0)
 			return
 		if(0 to 1)
-			bleeding_severity = "You feel light trickles of blood across your skin"
+			bleeding_severity = "Вы чувствуете легкие струйки крови на коже"
 			next_cooldown *= 2.5
 		if(1 to 3)
-			bleeding_severity = "You feel a small stream of blood running across your body"
+			bleeding_severity = "Вы чувствуете небольшую струйку крови, текущую через ваше тело"
 			next_cooldown *= 2
 		if(3 to 5)
-			bleeding_severity = "You skin feels clammy from the flow of blood leaving your body"
+			bleeding_severity = "Вы чувствуете, как ваша кожа становится липкой от протекающей крови"
 			next_cooldown *= 1.7
 		if(5 to 7)
-			bleeding_severity = "Your body grows more and more numb as blood streams out"
+			bleeding_severity = "Вы чувствуете, как ваше тело немеет всё больше и больше по мере кровотечения"
 			next_cooldown *= 1.5
 		if(7 to INFINITY)
-			bleeding_severity = "Your heartbeat thrashes wildly trying to keep up with your bloodloss"
+			bleeding_severity = "Ваше сердце бешенно стучит, пытаясь справиться с кровопотерей"
 
-	var/rate_of_change = ", but it's getting better." // if there's no wounds actively getting bloodier or maintaining the same flow, we must be getting better!
+	var/rate_of_change = ", но кровотечение чуть замедляется." // if there's no wounds actively getting bloodier or maintaining the same flow, we must be getting better!
 	if(HAS_TRAIT(src, TRAIT_COAGULATING)) // if we have coagulant, we're getting better quick
-		rate_of_change = ", but it's clotting up quickly!"
+		rate_of_change = ", и кровь быстро сворачивается!"
 	else
 		// flick through our wounds to see if there are any bleeding ones getting worse or holding flow (maybe move this to handle_blood and cache it so we don't need to cycle through the wounds so much)
 		for(var/datum/wound/iter_wound as anything in all_wounds)
@@ -343,10 +343,10 @@
 			var/iter_wound_roc = iter_wound.get_bleed_rate_of_change()
 			switch(iter_wound_roc)
 				if(BLOOD_FLOW_INCREASING) // assume the worst, if one wound is getting bloodier, we focus on that
-					rate_of_change = ", <b>and it's getting worse!</b>"
+					rate_of_change = ", <b>и всё становится только хуже!</b>"
 					break
 				if(BLOOD_FLOW_STEADY) // our best case now is that our bleeding isn't getting worse
-					rate_of_change = ", and it's holding steady."
+					rate_of_change = ", и скорость кровопотери не изменяется."
 				if(BLOOD_FLOW_DECREASING) // this only matters if none of the wounds fit the above two cases, included here for completeness
 					continue
 

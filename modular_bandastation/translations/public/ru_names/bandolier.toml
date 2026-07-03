@@ -1,0 +1,8 @@
+[bandolier]
+nominative = "бандольер"
+genitive = "бандольера"
+dative = "бандольеру"
+accusative = "бандольер"
+instrumental = "бандольером"
+prepositional = "бандольере"
+gender = "male"

@@ -1,0 +1,8 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Chainsaws can't behead people with unremovable heads."
+  - bugfix: "You can only put your own head on a spear or into a box if it is possible to remove your head."
+  - bugfix: "Heretic rifts can only remove your arms if your arms can be removed."
+  - bugfix: "Paperwork can only cut off your head if your head can be cut off."
+  - bugfix: "Smite being reflected can only blow off your arm if your arm can be removed."

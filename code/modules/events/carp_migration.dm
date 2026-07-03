@@ -29,7 +29,7 @@
 	/// Rarer mob type to spawn, must also be a child of /mob/living/basic/carp. If one of these is created, it will take priority to show ghosts.
 	var/boss_type = /mob/living/basic/carp/mega
 	/// What to describe detecting near the station
-	var/fluff_signal = "Unknown biological entities"
+	var/fluff_signal = "Неизвестные биологические объекты"
 	/// Associated lists of z level to a list of points to travel to, so that grouped fish move to the same places
 	var/list/z_migration_paths = list()
 
@@ -37,7 +37,7 @@
 	start_when = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
-	priority_announce("[fluff_signal] have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce("[fluff_signal] были обнаружены вблизи [station_name()], будьте наготове.", "Неопознанные формы жизни")
 
 /datum/round_event/carp_migration/start()
 	// Stores the most recent fish we spawn

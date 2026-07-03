@@ -1,0 +1,8 @@
+[timer]
+nominative = "таймер"
+genitive = "таймера"
+dative = "таймеру"
+accusative = "таймер"
+instrumental = "таймером"
+prepositional = "таймере"
+gender = "male"

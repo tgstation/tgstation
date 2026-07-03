@@ -13,10 +13,20 @@
 #define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
-/// percent before rise
-#define CULT_RISEN 0.2
-/// percent before ascend
-#define CULT_ASCENDENT 0.4
+
+/// BANDASTATION EDIT START - Cult thresholds rebalance
+/// amount of alive people for highpop cult threshold
+#define CULT_HIGHPOP_THRESHOLD 70
+/// percent before rise (lowpop)
+#define CULT_RISEN_LOWPOP 0.2
+/// percent before ascend (lowpop)
+#define CULT_ASCENDENT_LOWPOP 0.3
+/// percent before rise (highpop)
+#define CULT_RISEN_HIGHPOP 0.1
+/// percent before ascend (highpop)
+#define CULT_ASCENDENT_HIGHPOP 0.2
+/// BANDASTATION EDIT END - Cult thresholds rebalance
+
 #define BLOOD_HALBERD_COST 150
 #define BLOOD_BARRAGE_COST 300
 #define BLOOD_BEAM_COST 500

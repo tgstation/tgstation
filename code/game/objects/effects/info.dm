@@ -23,7 +23,7 @@
 /obj/effect/abstract/info/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "info_hovered"
-	openToolTip(usr, src, params, title = name, content = info_text, theme = tooltip_theme)
+	openToolTip(usr, src, params, title = get_tip_name(), content = info_text, theme = tooltip_theme)
 
 /obj/effect/abstract/info/MouseExited()
 	. = ..()

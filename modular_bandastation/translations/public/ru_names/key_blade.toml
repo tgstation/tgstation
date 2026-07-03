@@ -1,0 +1,8 @@
+["key blade"]
+nominative = "ключ-клинок"
+genitive = "ключа-клинка"
+dative = "ключу-клинку"
+accusative = "ключ-клинок"
+instrumental = "ключом-клинком"
+prepositional = "ключе-клинке"
+gender = "male"

@@ -1,0 +1,8 @@
+["soda water"]
+nominative = "газированная вода"
+genitive = "газированной воды"
+dative = "газированной воде"
+accusative = "газированную воду"
+instrumental = "газированной водой"
+prepositional = "газированной воде"
+gender = "female"

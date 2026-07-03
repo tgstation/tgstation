@@ -1,0 +1,8 @@
+["monkey cube box"]
+nominative = "коробка с кубами обезьян"
+genitive = "коробки с кубами обезьян"
+dative = "коробке с кубами обезьян"
+accusative = "коробку с кубами обезьян"
+instrumental = "коробкой с кубами обезьян"
+prepositional = "коробке с кубами обезьян"
+gender = "female"

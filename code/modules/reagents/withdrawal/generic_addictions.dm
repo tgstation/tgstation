@@ -275,7 +275,7 @@
 		to_chat(affected_carbon, organ.high_threshold_passed)
 		return
 
-	to_chat(affected_carbon, span_warning("You feel a dull pain in your [organ.name]."))
+	to_chat(affected_carbon, span_warning("You feel a dull pain in your [declent_ru(organ.name, ACCUSATIVE)]."))
 
 /datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()

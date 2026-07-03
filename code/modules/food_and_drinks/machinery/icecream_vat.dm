@@ -2,13 +2,13 @@
 #define CONE_REAGENT_NEEDED 1
 
 ///The vat is set to dispense ice cream.
-#define VAT_MODE_ICECREAM "ice cream"
+#define VAT_MODE_ICECREAM "мороженное"
 ///The vat is set to dispense cones.
-#define VAT_MODE_CONES "cones"
+#define VAT_MODE_CONES "рожок"
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
-	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
+	desc = "Смотря на машину, вы вспоминаете мелодию вашего любимого кафе с мороженным. Теперь таким кафе стало Нанотрейзен!"
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_vat"
 	density = TRUE
@@ -93,26 +93,26 @@
 /obj/machinery/icecream_vat/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
 		if(is_reagent_container(held_item))
-			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
-			context[SCREENTIP_CONTEXT_RMB] = "Transfer beaker reagents"
+			context[SCREENTIP_CONTEXT_LMB] = "Вставить мензурку"
+			context[SCREENTIP_CONTEXT_RMB] = "Передать реагенты мензурки"
 		else if(istype(held_item, /obj/item/food/icecream))
-			context[SCREENTIP_CONTEXT_LMB] = "Take scoop of [selected_flavour] ice cream"
+			context[SCREENTIP_CONTEXT_LMB] = "Взять шарик [selected_flavour] мороженного"
 		else if(istype(held_item, /obj/item/kitchen/spoon) || istype(held_item, /obj/item/kitchen/spoon/soup_ladle))
-			context[SCREENTIP_CONTEXT_RMB] = "Spill reagent"
+			context[SCREENTIP_CONTEXT_RMB] = "Разлить реагент"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch(vat_mode)
 		if(VAT_MODE_ICECREAM)
-			context[SCREENTIP_CONTEXT_LMB] = "Select flavor"
-			context[SCREENTIP_CONTEXT_RMB] = "Change mode to cones"
+			context[SCREENTIP_CONTEXT_LMB] = "Выбрать вкус"
+			context[SCREENTIP_CONTEXT_RMB] = "Переключить режим на рожки"
 		if(VAT_MODE_CONES)
-			context[SCREENTIP_CONTEXT_LMB] = "Make cone"
-			context[SCREENTIP_CONTEXT_RMB] = "Change mode to flavors"
+			context[SCREENTIP_CONTEXT_LMB] = "Сделать рожок"
+			context[SCREENTIP_CONTEXT_RMB] = "Переключить режим на вкусы"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/icecream_vat/examine(mob/user)
 	. = ..()
-	. += "You can use a [EXAMINE_HINT("spoon")] or [EXAMINE_HINT("soup ladle")] to spill reagents."
+	. += "Вы можете использовать [EXAMINE_HINT("ложку")] или [EXAMINE_HINT("половник")] для разлива содержимого."
 
 /obj/machinery/icecream_vat/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -130,14 +130,14 @@
 	if(custom_ice_cream_beaker)
 		if(user.transferItemToLoc(beaker, src))
 			try_put_in_hand(custom_ice_cream_beaker, user)
-			balloon_alert(user, "beakers swapped")
+			balloon_alert(user, "мензурки заменены")
 			custom_ice_cream_beaker = beaker
 		else
-			balloon_alert(user, "beaker slot full!")
+			balloon_alert(user, "уже имеется мензурка!")
 		return
 	if(!user.transferItemToLoc(beaker, src))
 		return
-	balloon_alert(user, "beaker inserted")
+	balloon_alert(user, "мензурка вставлена")
 	custom_ice_cream_beaker = beaker
 
 /obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, list/modifiers, list/attack_modifiers)
@@ -153,10 +153,10 @@
 			beaker.reagents.trans_to(src, beaker_reagents.volume, target_id = beaker_reagents.type)
 
 	if(added_reagents)
-		balloon_alert(user, "refilling reagents")
+		balloon_alert(user, "перезарядка реагентов")
 		playsound(src, 'sound/items/drink.ogg', 25, TRUE)
 	else
-		balloon_alert(user, "no reagents to transfer!")
+		balloon_alert(user, "нет реагентов для передачи!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/icecream_vat/attack_hand_secondary(mob/user, list/modifiers)
@@ -172,7 +172,7 @@
 /obj/machinery/icecream_vat/click_alt(mob/user)
 	if(!custom_ice_cream_beaker)
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "removed beaker")
+	balloon_alert(user, "мензурка убрана")
 	try_put_in_hand(custom_ice_cream_beaker, user)
 	return CLICK_ACTION_SUCCESS
 
@@ -213,7 +213,7 @@
 	var/datum/ice_cream_flavour/flavor = GLOB.ice_cream_flavours[choice]
 	if(flavor)
 		selected_flavour = flavor.name
-		balloon_alert(user, "making [selected_flavour]")
+		balloon_alert(user, "делается [selected_flavour]")
 	var/obj/item/food/icecream/cone = cone_prototypes[choice]
 	if(cone)
 		make_cone(user, choice, cone.ingredients)
@@ -223,7 +223,7 @@
 	var/datum/reagent/reagent_to_remove = tgui_input_list(user, "Select a reagent to purge from the vat.", "Remove reagent", reagents.reagent_list, ui_state = GLOB.conscious_state)
 	if(isnull(reagent_to_remove) || !user.can_perform_action(src, action_bitflags = ALLOW_RESTING))
 		return
-	balloon_alert(user, "spilled [reagent_to_remove.name]")
+	balloon_alert(user, "[reagent_to_remove.name] разливается")
 	reagents.remove_reagent(reagent_to_remove.type, reagent_to_remove.volume)
 
 /obj/machinery/icecream_vat/proc/make_ice_cream_color(datum/ice_cream_flavour/flavor)
@@ -243,7 +243,7 @@
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
 	for(var/reagents_needed in ingredients)
 		if(!reagents.has_reagent(reagents_needed, CONE_REAGENT_NEEDED))
-			balloon_alert(user, "not enough ingredients!")
+			balloon_alert(user, "не хватает ингредиентов!")
 			return
 	var/cone_type = cone_prototypes[make_type].type
 	if(!cone_type)
@@ -252,7 +252,7 @@
 
 	for(var/reagents_used in ingredients)
 		reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
-	balloon_alert_to_viewers("cooks up [cone.name]", "cooks up [cone.name]")
+	balloon_alert_to_viewers("делается [cone.declent_ru(NOMINATIVE)]", "делается [cone.declent_ru(NOMINATIVE)]")
 	try_put_in_hand(cone, user)
 
 ///Makes ice cream if it can, then puts it in the ice cream cone we're being attacked with.
@@ -263,14 +263,14 @@
 
 	for(var/reagents_needed in flavor.ingredients)
 		if(!reagents.has_reagent(reagents_needed, CONE_REAGENT_NEEDED))
-			balloon_alert(user, "not enough ingredients!")
+			balloon_alert(user, "не хватает ингредиентов!")
 			return
 
 	var/should_use_custom_ingredients = (flavor.takes_custom_ingredients && custom_ice_cream_beaker && custom_ice_cream_beaker.reagents.total_volume)
 	if(flavor.add_flavour(source, should_use_custom_ingredients ? custom_ice_cream_beaker.reagents : null))
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
-		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+		balloon_alert_to_viewers("набирает шарик с [selected_flavour]", "набирает шарик с [selected_flavour]")
 
 	if(istype(cone))
 		if(isnull(cone.crafted_food_buff))
@@ -287,7 +287,7 @@
 			vat_mode = VAT_MODE_CONES
 		if(VAT_MODE_CONES)
 			vat_mode = VAT_MODE_ICECREAM
-	balloon_alert(user, "dispensing [vat_mode]")
+	balloon_alert(user, "выдается [vat_mode]")
 	return TRUE
 
 ///Allows any user to see what reagents are in the ice cream vat regardless of special gear.

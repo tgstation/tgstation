@@ -1,0 +1,8 @@
+[igniter]
+nominative = "запал"
+genitive = "запала"
+dative = "запалу"
+accusative = "запал"
+instrumental = "запалом"
+prepositional = "запале"
+gender = "male"

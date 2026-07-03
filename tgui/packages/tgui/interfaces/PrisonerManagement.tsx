@@ -57,7 +57,7 @@ const ImplantDisplay = (props: { implant: ImplantInfo }) => {
             </LabeledList.Item>
           ))}
           {buttons.length !== 0 && (
-            <LabeledList.Item label={'Options'}>
+            <LabeledList.Item label={'Настройки'}>
               {buttons.map((button) => (
                 <Button
                   key={button.action_key}
@@ -136,7 +136,7 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
             <ImplantDisplay key={implant.ref} implant={implant} />
           ))
         ) : (
-          <NoticeBox>No implants detected.</NoticeBox>
+          <NoticeBox>Импланты не обнаружены.</NoticeBox>
         )}
       </Stack.Item>
     </Stack>
@@ -177,7 +177,7 @@ const IdShowcase = (props: { id: IDInfo | null }) => {
             </>
           ) : (
             <LabeledList.Item label="ID">
-              <Button onClick={() => act('insert_id')}>No ID Inserted</Button>
+              <Button onClick={() => act('insert_id')}>ID не вставлена</Button>
             </LabeledList.Item>
           )}
         </LabeledList>
@@ -185,8 +185,8 @@ const IdShowcase = (props: { id: IDInfo | null }) => {
       {!!id && (
         <Stack.Item>
           <NoticeBox>
-            Space Law recommends quotas of 100 points per minute they would
-            normally serve in the brig.
+            Космический закон рекомендует квоты в размере 100 очков за каждую
+            минуту, которую бы отсидел нарушитель.
           </NoticeBox>
         </Stack.Item>
       )}
@@ -200,18 +200,18 @@ const ManagementConsole = () => {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Section title="ID Management">
+        <Section title="Управление ID">
           <IdShowcase id={data.inserted_id} />
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section title="Security Implants" scrollable fill>
+        <Section title="Охранные импланты" scrollable fill>
           <AllImplantDisplay implants={data.implants} />
         </Section>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox align="right" info>
-          Secure Your Workspace.
+          Обеспечивайте безопасность рабочего места.
           <Button
             align="right"
             icon="lock"
@@ -219,7 +219,7 @@ const ManagementConsole = () => {
             ml={2}
             onClick={() => act('logout')}
           >
-            Log Out
+            Выйти
           </Button>
         </NoticeBox>
       </Stack.Item>
@@ -246,9 +246,9 @@ const LogIn = () => {
         </Stack.Item>
         <Stack.Item>
           <NoticeBox align="right">
-            You are not logged in.
+            Вы не вошли.
             <Button ml={2} icon="lock-open" onClick={() => act('login')}>
-              Login
+              Войти
             </Button>
           </NoticeBox>
         </Stack.Item>

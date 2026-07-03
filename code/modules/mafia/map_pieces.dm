@@ -47,42 +47,42 @@
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
-	description = "The original, the OG. The 2020 Summer ball was where mafia came from, with this map."
+	description = "Оригинал, OG. Summer ball 2020 - это место, где появилась мафия с этой картой."
 	map_suffix = "mafia_ball.dmm"
 
 /datum/map_template/mafia/ufo
-	name = "Alien Mothership"
-	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
+	name = "Корабль пришельцев"
+	description = "Тур с призраками и НЛО сорвался, теперь нашим прекрасным горожанам и любителям страшилок предстоит убить настоящих инопланетных генокрадов..."
 	map_suffix = "mafia_ayylmao.dmm"
 	custom_outfit = /datum/outfit/mafia/abductee
 
 /datum/map_template/mafia/spider_clan
-	name = "Spider Clan Kidnapping"
-	description = "New and improved spider clan kidnappings are a lot less boring and have a lot more lynching. Damn westaboos!"
+	name = "Похищение клана Пауков"
+	description = "Новые и улучшенные похищения клана Паука менее скучны и содержат гораздо больше линчеваний."
 	map_suffix = "mafia_spiderclan.dmm"
 	custom_outfit = /datum/outfit/mafia/ninja
 
 /datum/map_template/mafia/gothic
-	name = "Vampire's Castle"
-	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
+	name = "Замок вампиров"
+	description = "Вампиры и генокрады вступают в схватку, чтобы выяснить, кто из кровососущих монстров лучше на этой карте жуткого замка."
 	map_suffix = "mafia_gothic.dmm"
 	custom_outfit = /datum/outfit/mafia/gothic
 
 /datum/map_template/mafia/syndicate
-	name = "Syndicate Megastation"
-	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
+	name = "Мегастанция синдиката"
+	description = "Да, сегодня очень запутанный день на Мегастанции. Удастся ли оперативникам Синдиката разрешить конфликт?"
 	map_suffix = "mafia_syndie.dmm"
 	custom_outfit = /datum/outfit/mafia/syndie
 
 /datum/map_template/mafia/snowy
 	name = "Snowdin"
-	description = "Based off of the icy moon map of the same name, the guy who reworked it did a good enough job to receive a derivative piece of work based on it. Cool!"
+	description = "Основанная на одноименной карте Ice Moon. Парень, который переделал её, очень постарался. Круто!"
 	map_suffix = "mafia_snow.dmm"
 	custom_outfit = /datum/outfit/mafia/snowy
 
 /datum/map_template/mafia/lavaland
-	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
+	name = "Экскурсия по Лаваланду"
+	description = "Станция понятия не имеет, что сейчас происходит на Лаваланде. У нас есть генокрады... предатели, и хуже всего... адвокаты, которые мешают вам каждую ночь."
 	map_suffix = "mafia_lavaland.dmm"
 	custom_outfit = /datum/outfit/mafia/lavaland
 

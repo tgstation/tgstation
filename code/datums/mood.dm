@@ -392,89 +392,89 @@
 
 /// Prints the users mood, sanity, and moodies to chat
 /datum/mood/proc/print_mood(mob/user)
-	var/msg = "[span_info("<EM>My current mental status:</EM>")]<br>"
+	var/msg = "[span_info("<EM>Мое текущее ментальное состояние:</EM>")]<br>"
 
 	if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
-		msg += span_notice("My hunger: ")
+		msg += span_notice("Мой текущий голод: ")
 		var/nutrition = mob_parent.nutrition
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FULL to INFINITY)
-				msg += "[span_info("I'm completely stuffed!")]<br>"
+				msg += "[span_info("У меня полный желудок!")]<br>"
 			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				msg += "[span_info("I'm well fed!")]<br>"
+				msg += "[span_info("Я неплохо поел!")]<br>"
 			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				msg += "[span_info("I'm not hungry.")]<br>"
+				msg += "[span_info("Я не голоден.")]<br>"
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				msg += "[span_info("I could use a bite to eat.")]<br>"
+				msg += "[span_info("Было бы неплохо что-то съесть.")]<br>"
 			if(NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
-				msg += "[span_warning("I'm feeling hungry.")]<br>"
+				msg += "[span_warning("Я немного голоден.")]<br>"
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
-				msg += "[span_warning("I feel quite hungry.")]<br>"
+				msg += "[span_warning("Я очень голоден.")]<br>"
 			if(0 to NUTRITION_LEVEL_STARVING)
-				msg += "[span_boldwarning("I'm starving!")]<br>"
+				msg += "[span_boldwarning("Я умираю с голоду!")]<br>"
 
 	var/drunkness = mob_parent.get_drunk_amount()
 	if(drunkness >= 1)
-		msg += span_notice("My current drunkenness: ")
+		msg += span_notice("Моё текущее опьянение: ")
 		switch(drunkness)
 			if(1 to 10)
-				msg += "[span_info("I'm feeling a little tipsy.")]<br>"
+				msg += "[span_info("Я слегка навеселе.")]<br>"
 			if(11 to 21)
-				msg += "[span_info("I'm feeling a bit drunk.")]<br>"
+				msg += "[span_info("Я чувствую себя немного пьяным.")]<br>"
 			if(21 to 41)
-				msg += "[span_info("I'm feeling quite drunk.")]<br>"
+				msg += "[span_info("Я чувствую себя довольно пьяным.")]<br>"
 			if(41 to 61)
-				msg += "[span_info("I'm feeling very drunk.")]<br>"
+				msg += "[span_info("Сколько я выпил?")]<br>"
 			if(61 to 81)
-				msg += "[span_warning("I'm feeling like a mess.")]<br>"
+				msg += "[span_warning("Ещё одна рюмочка точно не повредит!")]<br>"
 			if(81 to INFINITY)
-				msg += "[span_boldwarning("I'm completely wasted.")]<br>"
+				msg += "[span_boldwarning("Ик... где... где я? Кто... я?")]<br>"
 
 	if (HAS_TRAIT(mob_parent, TRAIT_APATHETIC))
-		msg += span_notice("My mood: [span_grey("I don't feel anything.")]<br>")
+		msg += span_notice("Моё настроение: [span_grey("Я ничего не чувствую.")]<br>")
 	else
-		msg += span_notice("My current sanity: ") //Long term
+		msg += span_notice("Мой текущий рассудок: ") //Long term
 		switch(sanity)
 			if(SANITY_GREAT to INFINITY)
-				msg += "[span_boldnicegreen("My mind feels like a temple!")]<br>"
+				msg += "[span_boldnicegreen("Мой разум словно храм!")]<br>"
 			if(SANITY_NEUTRAL to SANITY_GREAT)
-				msg += "[span_nicegreen("I have been feeling great lately!")]<br>"
+				msg += "[span_nicegreen("Я чувствую себя прекрасно!")]<br>"
 			if(SANITY_DISTURBED to SANITY_NEUTRAL)
-				msg += "[span_nicegreen("I have felt quite decent lately.")]<br>"
+				msg += "[span_nicegreen("Я чувствую себя вполне прилично.")]<br>"
 			if(SANITY_UNSTABLE to SANITY_DISTURBED)
-				msg += "[span_warning("I'm feeling a little bit unhinged...")]<br>"
+				msg += "[span_warning("Я чувствую себя немного не в своей тарелке...")]<br>"
 			if(SANITY_CRAZY to SANITY_UNSTABLE)
-				msg += "[span_warning("I'm freaking out!!")]<br>"
+				msg += "[span_warning("Я схожу с ума!!")]<br>"
 			if(SANITY_INSANE to SANITY_CRAZY)
-				msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]<br>"
+				msg += "[span_boldwarning("АХАХАХАХАХАХАХАХАХАХ!!")]<br>"
 
-		msg += span_notice("My current mood: ") //Short term
+		msg += span_notice("Моё текущее настроение: ") //Short term
 		switch(mood_level)
 			if(MOOD_LEVEL_SAD4)
-				msg += "[span_boldwarning("I wish I was dead!")]<br>"
+				msg += "[span_boldwarning("Лучше бы я подох!")]<br>"
 			if(MOOD_LEVEL_SAD3)
-				msg += "[span_boldwarning("I feel terrible...")]<br>"
+				msg += "[span_boldwarning("Я чувствую себя ужасно...")]<br>"
 			if(MOOD_LEVEL_SAD2)
-				msg += "[span_boldwarning("I feel very upset.")]<br>"
+				msg += "[span_boldwarning("Я чувствую себя расстроенно.")]<br>"
 			if(MOOD_LEVEL_SAD1)
-				msg += "[span_warning("I'm a bit sad.")]<br>"
+				msg += "[span_warning("Я немного грущу.")]<br>"
 			if(MOOD_LEVEL_NEUTRAL)
-				msg += "[span_grey("I'm alright.")]<br>"
+				msg += "[span_grey("Я в порядке.")]<br>"
 			if(MOOD_LEVEL_HAPPY1)
-				msg += "[span_nicegreen("I feel pretty okay.")]<br>"
+				msg += "[span_nicegreen("Я чувствую себя вполне нормально.")]<br>"
 			if(MOOD_LEVEL_HAPPY2)
-				msg += "[span_boldnicegreen("I feel pretty good.")]<br>"
+				msg += "[span_boldnicegreen("Я чувствую себя довольно хорошо.")]<br>"
 			if(MOOD_LEVEL_HAPPY3)
-				msg += "[span_boldnicegreen("I feel amazing!")]<br>"
+				msg += "[span_boldnicegreen("Я чувствую себя потрясающе!")]<br>"
 			if(MOOD_LEVEL_HAPPY4)
-				msg += "[span_boldnicegreen("I love life!")]<br>"
+				msg += "[span_boldnicegreen("Я обожаю жизнь!")]<br>"
 
 	var/list/additional_lines = list()
 	SEND_SIGNAL(user, COMSIG_CARBON_MOOD_CHECK, additional_lines)
 	if (length(additional_lines))
 		msg += "[additional_lines.Join("<br>")]<br>"
 
-	msg += "[span_notice("Moodlets:")]<br>"//All moodlets
+	msg += "[span_notice("Модификаторы:")]<br>"//All moodlets
 	if(mood_events.len)
 		for(var/category in mood_events)
 			var/datum/mood_event/event = mood_events[category]
@@ -493,13 +493,13 @@
 				if(MOOD_HAPPY2 to INFINITY)
 					msg += "[span_boldnicegreen(event.description)]<br>"
 	else
-		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]<br>"
+		msg += "&bull; [span_grey("Сейчас у меня нет особой реакции на что-либо.")]<br>"
 
 	if(LAZYLEN(mob_parent.personalities))
 		msg += span_notice("You know yourself to be [mob_parent.get_parsonality_string()].<br>")
 
 	if(LAZYLEN(mob_parent.quirks))
-		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
+		msg += span_notice("У вас имеются следующие модификаторы: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
 
 	to_chat(user, boxed_message(msg))
 

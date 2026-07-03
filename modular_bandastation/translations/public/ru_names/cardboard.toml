@@ -1,0 +1,8 @@
+[cardboard]
+nominative = "картон"
+genitive = "картона"
+dative = "картону"
+accusative = "картон"
+instrumental = "картоном"
+prepositional = "картоне"
+gender = "male"

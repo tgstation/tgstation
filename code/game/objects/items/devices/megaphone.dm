@@ -12,9 +12,9 @@
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/megaphone/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is uttering [user.p_their()] last words into \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	spamcheck = 0//so they dont have to worry about recharging
-	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
+	user.say("АААААААААААААА!!!!", forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS
 
 /obj/item/megaphone/equipped(mob/equipper, slot)
@@ -36,6 +36,7 @@
 	else
 		playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
 		speech_args[SPEECH_SPANS] |= voicespan
+		LAZYADD(speech_args[SPEECH_MODS][MODE_TTS_FILTERS], /datum/singleton/sound_effect/megaphone) // Bandastation Addition
 
 /obj/item/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)
 	SIGNAL_HANDLER

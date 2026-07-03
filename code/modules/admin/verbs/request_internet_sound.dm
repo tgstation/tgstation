@@ -40,7 +40,8 @@
 	admin_message += ("[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)] has requested the following to be played:<br>")
 	admin_message += ("[span_linkify(request_url)] [ADMIN_PLAY_INTERNET(request_url, credit)]")
 
-	for(var/client/admin_client in GLOB.admins)
+	var/list/admins = get_holders_with_rights(R_ADMIN) // BANDASTATION EDIT: Proper permissions
+	for(var/client/admin_client in admins) // BANDASTATION EDIT: Proper permissions
 		if(get_chat_toggles(admin_client) & CHAT_PRAYER)
 			to_chat(admin_client, fieldset_block("Internet sound requested", jointext(admin_message, ""), "boxed_message"), type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
 

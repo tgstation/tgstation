@@ -1,40 +1,40 @@
 /datum/personality/callous
 	savefile_key = "callous"
-	name = "Callous"
-	desc = "I don't care much about what happens to other people."
-	pos_gameplay_desc = "Does not mind seeing death"
-	neg_gameplay_desc = "Prefers not to help people"
+	name = "Бессердечный"
+	desc = "Меня не очень волнует, что происходит с другими людьми."
+	pos_gameplay_desc = "Не прочь увидеть смерть"
+	neg_gameplay_desc = "Предпочитает не помогать людям"
 	groups = list(PERSONALITY_GROUP_DEATH)
 
 /datum/personality/compassionate
 	savefile_key = "compassionate"
-	name = "Compassionate"
-	desc = "I like giving a hand to those in need."
-	pos_gameplay_desc = "Likes helping people"
-	neg_gameplay_desc = "Seeing death affects your mood more"
+	name = "Сострадательный"
+	desc = "Я люблю помогать тем, кто нуждается в поддержке."
+	pos_gameplay_desc = "Любит помогать людям"
+	neg_gameplay_desc = "Вид смерти больше влияет на настроение"
 	groups = list(PERSONALITY_GROUP_DEATH, PERSONALITY_GROUP_MISANTHROPY)
 
 /datum/personality/empathetic
 	savefile_key = "empathetic"
-	name = "Empathetic" // according to google "empathic" means you understand other people, while "empathetic" means you feel what they feel
-	desc = "Other people's feelings are important to me."
-	pos_gameplay_desc = "Likes seeing other people happy"
-	neg_gameplay_desc = "Dislikes seeing other people sad"
+	name = "Эмпатичный" // according to google "empathic" means you understand other people, while "empathetic" means you feel what they feel
+	desc = "Чувства других людей важны для меня."
+	pos_gameplay_desc = "Любит видеть других людей счастливыми"
+	neg_gameplay_desc = "Не любит видеть других людей грустными"
 	groups = list(PERSONALITY_GROUP_OTHERS)
 
 /datum/personality/misanthropic
 	savefile_key = "misanthropic"
-	name = "Misanthropic"
-	desc = "We should have never entered the stars."
-	pos_gameplay_desc = "Likes seeing other people sad"
-	neg_gameplay_desc = "Dislikes seeing other people happy"
+	name = "Мизантроп"
+	desc = "Нам вообще не следовало отправляться к звёздам."
+	pos_gameplay_desc = "Любит видеть других людей грустными"
+	neg_gameplay_desc = "Не любит видеть других людей счастливыми"
 	groups = list(PERSONALITY_GROUP_OTHERS, PERSONALITY_GROUP_MISANTHROPY)
 
 /datum/personality/aloof
 	savefile_key = "aloof"
-	name = "Aloof"
-	desc = "Why is everyone so touchy? I'd rather be left alone."
-	neg_gameplay_desc = "Dislikes being grabbed, touched, or hugged"
+	name = "Отчужденный"
+	desc = "Почему все такие чувствительные? Я бы предпочёл остаться один."
+	neg_gameplay_desc = "Не любит, когда его хватают, трогают или обнимают"
 	personality_trait = TRAIT_BADTOUCH
 
 /datum/personality/aloof/apply_to_mob(mob/living/who)

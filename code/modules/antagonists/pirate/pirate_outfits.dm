@@ -146,7 +146,7 @@
 	suit = null
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	head = null
-	belt = /obj/item/storage/belt/holster/detective/full/ert
+	accessory = /obj/item/clothing/accessory/holster/detective/veteran_advisor //BANDASTATION EDIT: Accessory holsters
 
 /datum/outfit/pirate/lustrous
 	name = "Lustrous Scintillant"

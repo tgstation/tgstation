@@ -1,8 +1,8 @@
 /datum/language/xenocommon
 	name = "Xenomorph"
-	desc = "The common tongue of the xenomorphs."
+	desc = "Общий язык ксеноморфов."
 	key = "4"
-	syllables = list("sss","sSs","SSS")
+	syllables = list("шшш","шШш","ШШШ")
 	default_priority = 50
 	space_chance = 0
 	sentence_chance = 0

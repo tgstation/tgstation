@@ -1,0 +1,8 @@
+["large crowbar"]
+nominative = "большой лом"
+genitive = "большого лома"
+dative = "большому лому"
+accusative = "большой лом"
+instrumental = "большим ломом"
+prepositional = "большом ломе"
+gender = "male"

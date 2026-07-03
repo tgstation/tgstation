@@ -126,7 +126,7 @@
 		return SPEED_POTION_STOP
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 	var/datum/component/riding/theoretical_riding_component = riding_component_type
-	var/theoretical_speed = initial(theoretical_riding_component.vehicle_move_delay)
+	var/theoretical_speed = modified_move_delay(initial(theoretical_riding_component.vehicle_move_delay)) // BANDASTATION EDIT - Vehicle speed
 	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit to pass
 		to_chat(user, span_warning("[ridable_atom] can't be made any faster!"))
 		return SPEED_POTION_STOP

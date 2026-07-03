@@ -44,7 +44,7 @@
 /datum/component/living_heart/proc/on_organ_removed(obj/item/organ/source, mob/living/carbon/old_owner)
 	SIGNAL_HANDLER
 
-	to_chat(old_owner, span_userdanger("As your living [source.name] leaves your body, you feel less connected to the Mansus!"))
+	to_chat(old_owner, span_userdanger("Когда [source.ru_p_yours()] [source.declent_ru(NOMINATIVE)] покидает ваше тело, вы чувствуете себя менее привязанным к Мансусу!"))
 	qdel(src)
 
 /**
@@ -66,8 +66,8 @@
  * Allows a heretic to track sacrifice targets.
  */
 /datum/action/cooldown/track_target
-	name = "Living Heartbeat"
-	desc = "LMB: Chose one of your sacrifice targets to track. RMB: Repeats last target you chose to track."
+	name = "Биение живого сердца"
+	desc = "ЛКМ: Выберите одну из целей для отслеживания. ПКМ: Повторяет последнюю цель, которую вы выбрали для отслеживания."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_heretic"
 	button_icon = 'icons/obj/antags/eldritch.dmi'
@@ -110,7 +110,7 @@
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		owner.balloon_alert(owner, "no targets, visit a rune!")
+		owner.balloon_alert(owner, "нет цели, посетите руну")
 		StartCooldown(1 SECONDS)
 		return TRUE
 
@@ -174,8 +174,8 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-				and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+			to_chat(owner, span_hierophant("[capitalize(tracked_mob.declent_ru(NOMINATIVE))] в состоянии смерти. Принесите их к руне трансмутации \
+				и вызовите \"[sac_knowledge.name]\", чтобы принести их в жертву!"))
 
 	StartCooldown()
 	return TRUE
@@ -199,7 +199,7 @@
 	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
 		// "Hell if I know"
-		balloon_message = "on another plane!"
+		balloon_message = "в другом мире!"
 
 	// They're not on the same z-level as us
 	else if(our_z != their_z)
@@ -208,24 +208,24 @@
 			// We're on a multi-z station
 			if(is_station_level(our_z))
 				if(our_z > their_z)
-					balloon_message = "below you!"
+					balloon_message = "под вами!"
 				else
-					balloon_message = "above you!"
+					balloon_message = "над вами!"
 			// We're off station, they're not
 			else
-				balloon_message = "on station!"
+				balloon_message = "на станции!"
 
 		// Mining
 		else if(is_mining_level(their_z))
-			balloon_message = "on lavaland!"
+			balloon_message = "на лавалэнде!"
 
 		// In the gateway
 		else if(is_away_level(their_z) || is_secret_level(their_z))
-			balloon_message = "beyond the gateway!"
+			balloon_message = "во вратах!"
 
 		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
 		else
-			balloon_message = "on another plane!"
+			balloon_message = "в другом мире!"
 
 	// They're on the same z-level as us!
 	else
@@ -236,16 +236,16 @@
 
 		switch(dist)
 			if(0 to 15)
-				balloon_message = "very near, [dir2text(dir)]!"
+				balloon_message = "очень близко, [dir2text(dir)]!"
 				arrow_color = COLOR_GREEN
 			if(16 to 31)
-				balloon_message = "near, [dir2text(dir)]!"
+				balloon_message = "близко, [dir2text(dir)]!"
 				arrow_color = COLOR_YELLOW
 			if(32 to 127)
-				balloon_message = "far, [dir2text(dir)]!"
+				balloon_message = "далеко, [dir2text(dir)]!"
 				arrow_color = COLOR_ORANGE
 			else
-				balloon_message = "very far!"
+				balloon_message = "очень далеко!"
 				arrow_color = COLOR_RED
 
 		if(owner.hud_used)
@@ -255,7 +255,7 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			balloon_message = "they're dead, " + balloon_message
+			balloon_message = "мертвы, " + balloon_message
 
 	return balloon_message
 

@@ -1,6 +1,6 @@
 /datum/mood_event/drunk
 	mood_change = 3
-	description = "Everything just feels better after a drink or two."
+	description = "После напитка-другого всё становится лучше."
 	/// The blush overlay to display when the owner is drunk
 	var/datum/bodypart_overlay/simple/emote/blush_overlay
 
@@ -18,22 +18,22 @@
 	switch(drunkness)
 		if(0 to 30)
 			mood_change = 3
-			description = "Everything just feels better after a drink or two."
+			description = "После одной-двух рюмок всё становится лучше."
 		if(30 to 45)
 			mood_change = 4
-			description = "Is it getting hotter, or is it just me? I need another drink to cool down."
+			description = "Становится всё жарче, или мне только кажется? Мне нужно выпить ещё, чтобы остыть."
 		if(45 to 60)
 			mood_change = 5
-			description = "Who keeps moving the floor? I'm going to talk to them... after this drink."
+			description = "Кто продолжает двигать пол? Я собираюсь поговорить с ним... после того, как выпью."
 		if(60 to 90)
 			mood_change = 6
-			description = "I'm noooot drunk, you're drunk! In fact... I need another drink!"
+			description = "Я вооовсе не пьян, ты пьян! На самом деле... Мне нужно выпить ещё!"
 		if(90 to INFINITY)
 			mood_change = 3 // crash out
-			description = "You're my BESSST frien'... You and me agains' th' world, buddy. Le's get another drink."
+			description = "Ты мой лууууууучший дру'хх! Мы с тобо'й прооотив все'гхо мииира, при...ятель. Давааай ещё по одной..."
 	if(HAS_PERSONALITY(owner, /datum/personality/teetotal))
 		mood_change *= -1.5
-		description = "I don't like drinking... It makes me feel horrible."
+		description = "Я не люблю пить... Из-за этого я чувствую себя ужасно."
 	if(HAS_PERSONALITY(owner, /datum/personality/bibulous))
 		mood_change *= 1.5
 	if(old_mood != mood_change)
@@ -44,46 +44,46 @@
 
 /datum/mood_event/drunk_after
 	mood_change = 2
-	description = "The buzz might be gone, but I still feel good."
+	description = "Может, кайф и прошел, но я все ещё чувствую себя хорошо."
 	timeout = 5 MINUTES
 
 /datum/mood_event/wrong_brandy
-	description = "I hate that type of drink."
+	description = "Я ненавижу такие напитки."
 	mood_change = -2
 	timeout = 6 MINUTES
 
 /datum/mood_event/quality_revolting
-	description = "That drink was the worst thing I've ever consumed."
+	description = "Это был самый худший напиток из всей истории напитков."
 	mood_change = -8
 	timeout = 7 MINUTES
 
 /datum/mood_event/quality_nice
-	description = "That drink wasn't bad at all."
+	description = "Этот напиток был неплох."
 	mood_change = 2
 	timeout = 7 MINUTES
 
 /datum/mood_event/quality_good
-	description = "That drink was pretty good."
+	description = "Этот напиток был хорош."
 	mood_change = 4
 	timeout = 7 MINUTES
 
 /datum/mood_event/quality_verygood
-	description = "That drink was great!"
+	description = "Этот напиток был прекрасным!"
 	mood_change = 6
 	timeout = 7 MINUTES
 
 /datum/mood_event/quality_fantastic
-	description = "That drink was amazing!"
+	description = "Этот напиток был невероятен!"
 	mood_change = 8
 	timeout = 7 MINUTES
 
 /datum/mood_event/amazingtaste
-	description = "Amazing taste!"
+	description = "Невероятный вкус!"
 	mood_change = 50
 	timeout = 10 MINUTES
 
 /datum/mood_event/wellcheers
-	description = "What a tasty can of Wellcheers! The salty grape flavor is a great pick-me-up."
+	description = "Ах, хороший экземпляр Wellcheers. Соленый виноградный вкус отлично поднимает настроение."
 	mood_change = 3
 	timeout = 7 MINUTES
 

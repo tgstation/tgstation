@@ -1,0 +1,8 @@
+["carving knife"]
+nominative = "резной нож"
+genitive = "резного ножа"
+dative = "резному ножу"
+accusative = "резной нож"
+instrumental = "резным ножом"
+prepositional = "резном ноже"
+gender = "male"

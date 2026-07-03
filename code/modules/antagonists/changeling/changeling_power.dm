@@ -94,19 +94,19 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return FALSE
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling.chem_charges < chemical_cost)
-		user.balloon_alert(user, "needs [chemical_cost] chemicals!")
+		user.balloon_alert(user, "требуется [chemical_cost] химикатов!")
 		return FALSE
 	if(changeling.absorbed_count < req_dna)
-		user.balloon_alert(user, "needs [req_dna] dna sample\s!")
+		user.balloon_alert(user, "требуется [req_dna] образцов ДНК!")
 		return FALSE
 	if(changeling.true_absorbs < req_absorbs)
-		user.balloon_alert(user, "needs [req_absorbs] absorption\s!")
+		user.balloon_alert(user, "требуется [req_absorbs] поглощений!")
 		return FALSE
 	if(req_stat < user.stat)
-		user.balloon_alert(user, "incapacitated!")
+		user.balloon_alert(user, "недееспособны!")
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_DEATHCOMA) && !ignores_fakedeath)
-		user.balloon_alert(user, "playing dead!")
+		user.balloon_alert(user, "притворяемся мёртвым!")
 		return FALSE
 	return TRUE
 
@@ -116,6 +116,6 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(!ishuman(user))
 		return FALSE
 	if(req_human && ismonkey(user))
-		user.balloon_alert(user, "become human!")
+		user.balloon_alert(user, "станьте гуманоидом!")
 		return FALSE
 	return TRUE

@@ -1,8 +1,8 @@
 /datum/action/changeling/mmi_talk
 	name = "MMI Talk"
-	desc = "Our decoy brain has been implanted into a Man-Machine Interface. \
-		In order to maintain our secrecy, we can speak through the decoy as if a normal brain. \
-		The decoy brain will relay speech it hears to us in purple."
+	desc = "Наш ложный мозг был имплантирован в человеко-машинный интерфейс. \
+		Чтобы сохранить секретность, мы можем говорить через обманку, как через обычный мозг. \
+		Ложный мозг будет передавать вам услышанную речь в фиолетовом цвете."
 	button_icon = 'icons/obj/devices/assemblies.dmi'
 	category = "stealth"
 	button_icon_state = "mmi_off"
@@ -115,7 +115,7 @@
 
 	var/obj/item/mmi/mmi = brain_ref.loc
 	if(mmi.brainmob.stat != CONSCIOUS)
-		to_chat(usr, span_warning("Our decoy brain is too damaged to speak."))
+		to_chat(usr, span_warning("Наш ложный мозг слишком поврежден, чтобы говорить."))
 	else
 		// Say will perform input sanitization and such for us
 		mmi.brainmob.say(params["message"], sanitize = TRUE)

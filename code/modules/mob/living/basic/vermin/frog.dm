@@ -1,6 +1,6 @@
 /mob/living/basic/frog
-	name = "frog"
-	desc = "They seem a little sad."
+	name = "лягушка"
+	desc = "Выглядит грустно."
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
@@ -72,8 +72,8 @@
 		playsound(src, stepped_sound, vol = 50, vary = TRUE)
 
 /mob/living/basic/frog/rare
-	name = "rare frog"
-	desc = "They seem a little smug."
+	name = "яркая лягушка"
+	desc = "Выглядит самодовольно."
 	icon_state = "rare_frog"
 	icon_living = "rare_frog"
 	icon_dead = "rare_frog_dead"
@@ -84,8 +84,8 @@
 
 /// These frogs would REALLY rather like to get at your blood basically by any means possible
 /mob/living/basic/frog/crazy
-	name = "trash frog"
-	desc = "They seem a little mad."
+	name = "помойная лягушка"
+	desc = "Выглядит безумно."
 	icon_state = "frog_trash"
 	icon_living = "frog_trash"
 	icon_dead = "frog_trash_dead"
@@ -99,8 +99,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/frog/trash
 
 /mob/living/basic/frog/crazy/rare
-	name = "crazy frog"
-	desc = "They look hopping mad."
+	name = "безумная лягушка"
+	desc = "Выглядит умалишенным безумцем."
 	icon_state = "rare_frog_trash"
 	icon_living = "rare_frog_trash"
 	icon_dead = "rare_frog_trash_dead"
@@ -111,16 +111,16 @@
 
 /// The cold doesn't bother him
 /mob/living/basic/frog/icemoon_facility
-	name = "Peter Jr."
-	desc = "They seem a little cold."
+	name = "Пит Младший"
+	desc = "Выглядит немного холодным."
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	pressure_resistance = 200
 	habitable_atmos = null
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/frog/icemoon_facility/crazy
-	name = "Crazy Pete"
-	desc = "The cold is really getting to him."
+	name = "Безумный Пит"
+	desc = "Холод его изрядно измотал."
 	icon_state = "frog_trash"
 	icon_living = "frog_trash"
 	icon_dead = "frog_trash_dead"
@@ -129,8 +129,8 @@
 
 /// Frog spawned by leapers which explodes on attack
 /mob/living/basic/frog/suicide
-	name = "suicide frog"
-	desc = "Driven by sheer will."
+	name = "лягушка смертник"
+	desc = "По собственной воле."
 	icon_state = "frog_trash"
 	icon_living = "frog_trash"
 	icon_dead = "frog_trash_dead"
@@ -152,8 +152,8 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_OWNER_SELF_HARM_RESPONSES = list(
-			"*me licks its own eyeballs in disapproval.",
-			"*me croaks sadly."
+			"*я облизываю собственные глазки в знак неодобрения.",
+			"*я грустно квакаю."
 		)
 	)
 

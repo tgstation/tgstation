@@ -1,112 +1,86 @@
 @use 'sass:color';
 @use './colors.scss';
 
-.window {
-  background-color: black;
-  position: relative;
-  overflow: hidden;
-}
-
 @keyframes shine {
-  0% {
-    transform: rotate(0deg);
+  from {
+    background-position-x: -220px;
   }
-  50% {
-    transform: rotate(270deg);
-  }
-  100% {
-    transform: rotate(360deg);
+
+  to {
+    background-position-x: 255px;
   }
 }
 
-.shine {
-  animation: shine 15s linear infinite;
+.window {
+  --font-size: 15px;
+  --font-family: 'Consolas', monospace;
+  --channel-color: gray;
+  --background-color: oklch(from var(--channel-color) 0.125 calc(c / 2) h);
+  --color: var(--channel-color);
+
   position: absolute;
   inset: 0;
-  background-size: 150% 150%;
-}
+  caret-color: var(--color);
+  background: linear-gradient(
+    130deg,
+    var(--color) 15%,
+    oklch(from var(--color) calc(l * 1.3) calc(c - 0.05) h) 20%,
+    var(--color) 25%
+  );
+  background-size: 250%;
+  animation: shine 10s infinite ease-in-out;
 
-.window-lightMode {
-  background-color: colors.$lightMode;
-  border: 2px solid colors.$lightBorder;
-}
+  &-light {
+    --background-color: oklch(from var(--channel-color) 1 0.025 h);
+    --color: oklch(from var(--channel-color) 0.45 0.15 h);
+  }
 
-/** Window sizes */
-.window-30 {
-  height: 30px;
-}
-
-.window-50 {
-  height: 50px;
-}
-
-.window-70 {
-  height: 70px;
+  &::selection {
+    background-color: var(--color);
+    color: var(--background-color);
+  }
 }
 
 .content {
-  background-color: black;
-  display: grid;
-  font: 'tgfont';
-  grid-template-columns: 4rem 1fr;
-  inset: 2px;
-  overflow: hidden;
-  padding: 2px;
+  --border-size: 2px;
   position: absolute;
-}
-
-.content-lightMode {
-  background-color: white;
+  inset: var(--border-size);
+  display: grid;
+  grid-template-columns: calc(5ch + 0.75rem) 1fr;
+  padding: var(--border-size);
+  background-color: var(--background-color);
+  z-index: 1;
 }
 
 .button {
-  background-color: colors.$button;
-  border-radius: 0.3rem;
-  border: none;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: bold;
-  outline: none;
-  overflow: hidden;
-  padding: 0.1rem;
+  --shadow-color: var(--color);
+  all: unset;
+  cursor: pointer;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  &:hover {
-    background-color: color.adjust(
-      colors.$button,
-      $lightness: 10%,
-      $space: hsl
-    );
-  }
-}
+  font-weight: 600;
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+  padding: 0 0.25rem;
+  color: var(--color);
+  box-shadow: inset 0 0 2px 1px var(--shadow-color);
+  border-radius: 3px;
 
-.button-lightMode {
-  background-color: colors.$lightBorder;
-  border: none;
-  color: black;
   &:hover {
-    background-color: colors.$lightHover;
+    --shadow-color: oklch(from var(--color) calc(l + 0.25) calc(c - 0.033) h);
   }
 }
 
 .textarea {
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: 1.1rem;
-  margin: 0.1rem 0 0 0.4rem;
-  outline: none;
-  resize: none;
-  overflow: hidden;
   scrollbar-width: thin;
-  scrollbar-color: color.scale(
-      colors.$button,
-      $lightness: 20% * colors.$scrollbar-color-multiplier
-    )
-    transparent;
-}
-
-.textarea-large {
-  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  scrollbar-color: oklch(from var(--color) l c h / 0.5) transparent;
+  resize: none;
+  overflow-y: auto;
+  padding: 2px 4px 2px 6px;
+  margin-left: 2px;
+  font-size: var(--font-size);
+  background-color: transparent;
+  color: var(--color);
+  border: none;
+  outline: none;
 }

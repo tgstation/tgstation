@@ -5,7 +5,7 @@
 	min_players = 10
 	max_occurrences = 5
 	weight = 20
-	description = "This anomaly causes you to hallucinate."
+	description = "Эта аномалия вызывает галлюцинации."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 2
 
@@ -17,4 +17,4 @@
 /datum/round_event/anomaly/anomaly_hallucination/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Hallucinatory event detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Галлюцинаторное событие обнаружено на [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.declent_ru(NOMINATIVE)].", "Обнаружена аномалия")

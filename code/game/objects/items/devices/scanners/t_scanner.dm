@@ -18,7 +18,7 @@
 	var/on = FALSE
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 /obj/item/t_scanner/proc/toggle_on()

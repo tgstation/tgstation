@@ -1,99 +1,54 @@
-Among-many
-Azurepelt
-Borealis
-Dark
-Darkmagic
-Darko
-Deathbringer
-Doomancer
-Evergreen
-Evilton
-Fide
-Gray
-Honko
-Infinitum
-Inverse
-Lifereaper
-Meatsmith
-Midnight
-Mother-of-dragons
-Mountain-Mother
-Namekeeper
-Nauseam
-Rasa
-Runespear
-Sequitur
-Shado
-Shadowdancer
-Shorekeeper
-Smith
-Spellstone
-Starfall
-Starlightking
-Starlightqueen
-Stormcaller
-Strange
-Suneater
-Truenamer
-Unseen
-Voidfall
-Voidstabber
-Volente
-Weatherwax
-Who-was-blood
-Who-was-light
-Who-was-stone
-Windshearer
-Worldshaker
-Yagg
-le Fay
-of Void
-the Alchemist
-the All Knowing
-the Amazing
-the Annoyed
-the Annoying
-the Bandit Killer
-the Benevolent
-the Blue
-the Brown
-the Colourless
-the Conquerer
-the Dappled
-the Deathless
-the Destroyer
-the Dragon Spooker
-the Dragoncaller
-the Drunk
-the Emperor
-the Empty
-the Ethereal
-the Excoherent
-the Gray
-the Great
-the Herb
-the Impaler
-the Incoherent
-the Jaunter
-the Magician
-the Manual
-the Moldywarp
-the Necromancer
-the Obscure
-the Powerful
-the Raven
-the Red
-the Remorseful
-the Seething
-the Sorcelator
-the Spiral King
-the Unending
-the Unseen
-the Unstoppable
-the Wandsmith
-the Waxmancer
-the Weeping
-the White
-the Wife
-the Wise
-the Wizzard
+Белый
+Бесконечный
+Бессмертный
+Бурлящий
+Бурый
+Везучий
+Великий
+Великодушный
+Ветровоск
+Ворон
+Восхитительный
+Всезнающий
+Горестный
+Гроза Драконов
+Жёлтый
+Жёлтый Король
+Завоеватель
+Заклинатель
+Зелёный
+ибн Хоттаб
+из Пустоты
+де Морт
+Император
+Красный
+Кудесник
+Кузнец
+ле Фэй
+Могучий
+Мудрый
+Незримый
+Неостановимый
+Малфой
+Рэддл
+Обратный
+Оранжевый
+О’Салливан
+Потный
+Пурпурный
+Дурмстранг
+Разрушитель
+Гриффиндор
+Пуффендуй
+Созидатель
+Слизерин
+Когтевран
+Серый
+Синий
+Спиральный Король
+Стрэндж
+Тёмномагия
+Тёмный
+Убийца
+Хонко
+Чёрный

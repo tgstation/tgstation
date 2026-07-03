@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 		playsound(T, SFX_PORTAL_CREATED, 20, TRUE, SILENCED_SOUND_EXTRARANGE) // much much quieter
 
 /datum/round_event/wormholes/announce(fake)
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
+	priority_announce("Зафиксированы пространственно-временные аномалии на борту станции. Дополнительная информация отсутствует.", "Обнаружена аномалия", ANNOUNCER_SPANOMALIES)
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)

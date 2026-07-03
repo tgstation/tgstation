@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/jaunt/mirror_walk
-	name = "Mirror Walk"
-	desc = "Allows you to traverse invisibly and freely across the station within the realm of the mirror. \
-		You can only enter and exit the realm of mirrors when nearby reflective surfaces and items, \
-		such as windows, mirrors, and reflective walls or equipment. \
-		You will slowly heal damage while in this form."
+	name = "Проход в Зазеркалье"
+	desc = "Позволяет незаметно и свободно перемещаться по станции в пределах Зазеркалья. \
+		Войти в мир зеркал и выйти из него можно только при наличии рядом отражающих поверхностей и предметов, \
+		например, окна, зеркала, отражающей стены или оборудования. \
+		Медленно исцеляет при нахождении в этой форме."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -40,12 +40,12 @@
 	var/turf/owner_turf = get_turf(owner)
 	if(!is_reflection_nearby(get_turf(owner_turf)))
 		if(feedback)
-			to_chat(owner, span_warning("There are no reflective surfaces nearby to [we_are_phasing ? "exit":"enter"] the mirror's realm here!"))
+			to_chat(owner, span_warning("Поблизости нет отражающих поверхностей, чтобы [we_are_phasing ? "выйти из мира": "войти в мир"] зеркал здесь!"))
 		return FALSE
 
 	if(owner_turf.is_blocked_turf(exclude_mobs = TRUE))
 		if(feedback)
-			to_chat(owner, span_warning("Something is blocking you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
+			to_chat(owner, span_warning("Что-то блокирует вас от [we_are_phasing ? "выход из мира": "входа в мир"] зеркал здесь!"))
 		return FALSE
 
 	return TRUE
@@ -60,18 +60,18 @@
 /datum/action/cooldown/spell/jaunt/mirror_walk/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/atom/nearby_reflection = is_reflection_nearby(jaunter)
 	if(!nearby_reflection)
-		to_chat(jaunter, span_warning("There are no reflective surfaces nearby to enter the mirror's realm!"))
+		to_chat(jaunter, span_warning("Поблизости нет отражающих поверхностей, чтобы войти в мир зеркал!"))
 		return
 
 	jaunter.Beam(nearby_reflection, icon_state = "light_beam", time = phase_out_time)
-	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
+	nearby_reflection.visible_message(span_warning("[capitalize(nearby_reflection.declent_ru(NOMINATIVE))] начинают мерцать и слегка дрожать!"))
 	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
 	playsound(jaunter, 'sound/effects/magic/ethereal_enter.ogg', 50, TRUE, -1)
 	jaunter.visible_message(
-		span_boldwarning("[jaunter] phases out of reality, vanishing before your very eyes!"),
-		span_notice("You jump into the reflection coming off of [nearby_reflection], entering the mirror's realm."),
+		span_boldwarning("[capitalize(jaunter.declent_ru(NOMINATIVE))] исчезает из реальности, растворяясь на ваших глазах!"),
+		span_notice("Вы прыгаете в отражение, исходящее от [nearby_reflection.declent_ru(GENITIVE)], и попадаете в мир зеркал."),
 	)
 
 	// Pass the turf of the nearby reflection to the parent call
@@ -86,17 +86,17 @@
 	var/turf/phase_turf = get_turf(unjaunter)
 	var/atom/nearby_reflection = is_reflection_nearby(phase_turf)
 	if(!nearby_reflection)
-		to_chat(unjaunter, span_warning("There are no reflective surfaces nearby to exit from the mirror's realm!"))
+		to_chat(unjaunter, span_warning("Поблизости нет отражающих поверхностей для выхода из мира зеркал!"))
 		return FALSE
 
 	// It would likely be a bad idea to teleport into an ai monitored area (ai sat)
 	var/area/phase_area = get_area(phase_turf)
 	if(phase_area.motion_monitored)
-		to_chat(unjaunter, span_warning("It's probably not a very wise idea to exit the mirror's realm here."))
+		to_chat(unjaunter, span_warning("Выходить из зеркального царства здесь, вероятно, не очень разумно."))
 		return FALSE
 
 	nearby_reflection.Beam(phase_turf, icon_state = "light_beam", time = phase_in_time)
-	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
+	nearby_reflection.visible_message(span_warning("[capitalize(nearby_reflection.declent_ru(NOMINATIVE))] начинает мерцать и слегка дрожать!"))
 	if(!do_after(unjaunter, phase_in_time, nearby_reflection, hidden = TRUE))
 		return FALSE
 
@@ -119,8 +119,8 @@
 	if (!nearby_reflection) // Should only be true if you're forced out somehow, like by having the spell removed
 		return
 	unjaunter.visible_message(
-		span_boldwarning("[unjaunter] phases into reality before your very eyes!"),
-		span_notice("You jump out of the reflection coming off of [nearby_reflection], exiting the mirror's realm."),
+		span_boldwarning("[capitalize(unjaunter.declent_ru(NOMINATIVE))] появляется в реальности на ваших глазах!"),
+		span_notice("Вы выпрыгиваете из отражения, исходящего от [nearby_reflection.declent_ru(GENITIVE)], выходя из мира зеркал."),
 	)
 
 /**

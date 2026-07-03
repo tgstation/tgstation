@@ -1,0 +1,7 @@
+#include "_mapping.dm"
+
+#include "code\landmarks.dm"
+#include "code\layers.dm"
+#include "code\templates.dm"
+#include "code\areas\off_station.dm"
+#include "code\areas\station.dm"

@@ -157,6 +157,22 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// For when you don't want the "breast" effect to be applied (the one that cuts two pixels in the middle of the front of the uniform when facing east or west).
 #define FEMALE_UNIFORM_NO_BREASTS (1<<2)
 
+// BANDASTATION EDIT START - more masks for female clothing
+/// Tgstation stores its masks there
+#define FEMALE_MASK_ICON_DEFAULT 'icons/mob/clothing/under/masking_helpers.dmi'
+/// Bandastation stores its masks there
+#define FEMALE_MASK_ICON_MODULAR 'modular_bandastation/mobs/icons/clothing/masking_helpers.dmi'
+
+// Icon states stored in FEMALE_MASK_ICON_MODULAR
+#define FEMALE_MASK_TURTLENECK "female_turtleneck"
+#define FEMALE_MASK_RUS_ARMY "female_rus_army"
+
+// Flags for /datum/female_uniform::mask_flags
+
+/// This mask is always applied when suit is adjusted
+#define FEMALE_MASK_APPLY_ON_ADJUSTED (1<<0)
+// BANDASTATION EDIT END
+
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
 #define NORMAL_STYLE 0
 #define ALT_STYLE 1
@@ -366,22 +382,22 @@ GLOBAL_LIST_INIT(tool_items, list(
 
 // Keys for equip_in_one_of_slots, if you add new ones update the assoc lists in equip_in_one_of_slots
 /// Items placed into the left pocket.
-#define LOCATION_LPOCKET "in your left pocket"
+#define LOCATION_LPOCKET "в левом кармане"
 /// Items placed into the right pocket
-#define LOCATION_RPOCKET "in your right pocket"
+#define LOCATION_RPOCKET "в правом кармане"
 /// Items placed into the backpack.
-#define LOCATION_BACKPACK "in your backpack"
+#define LOCATION_BACKPACK "в сумке"
 /// Items placed into the hands.
-#define LOCATION_HANDS "in your hands"
+#define LOCATION_HANDS "в руках"
 /// Items placed in the glove slot.
-#define LOCATION_GLOVES "on your hands"
+#define LOCATION_GLOVES "на руках"
 /// Items placed in the eye/glasses slot.
-#define LOCATION_EYES "covering your eyes"
+#define LOCATION_EYES "на глазах"
 /// Items placed in the mask slot.
-#define LOCATION_MASK "covering your face"
+#define LOCATION_MASK "на лице"
 /// Items placed on the head/hat slot.
-#define LOCATION_HEAD "on your head"
+#define LOCATION_HEAD "на голове"
 /// Items placed in the neck slot.
-#define LOCATION_NECK "around your neck"
+#define LOCATION_NECK "на шее"
 /// Items placed in the id slot
-#define LOCATION_ID "in your ID slot"
+#define LOCATION_ID "в кармашке ID карты"

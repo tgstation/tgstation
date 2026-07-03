@@ -1,0 +1,251 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"j" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"o" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"p" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"x" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"E" = (
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"J" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
+	name = "mining cart"
+	},
+/obj/item/stack/ore/glass{
+	amount = 25
+	},
+/obj/item/stack/ore/silver{
+	amount = 5
+	},
+/obj/item/stack/ore/gold{
+	amount = 2
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"K" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"P" = (
+/obj/modular_map_connector,
+/obj/structure/barricade/wooden,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"W" = (
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+
+(1,1,1) = {"
+j
+P
+o
+o
+j
+j
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
+"}
+(2,1,1) = {"
+e
+t
+t
+E
+e
+e
+e
+e
+p
+p
+p
+p
+p
+p
+p
+p
+p
+"}
+(3,1,1) = {"
+e
+x
+t
+t
+t
+t
+t
+e
+e
+e
+e
+p
+p
+p
+p
+p
+p
+"}
+(4,1,1) = {"
+e
+e
+e
+e
+e
+t
+t
+t
+t
+e
+e
+p
+p
+p
+p
+p
+p
+"}
+(5,1,1) = {"
+e
+e
+J
+t
+e
+e
+e
+t
+t
+e
+e
+p
+p
+p
+p
+p
+p
+"}
+(6,1,1) = {"
+e
+W
+K
+W
+m
+t
+e
+t
+t
+e
+e
+p
+p
+p
+p
+p
+p
+"}
+(7,1,1) = {"
+e
+K
+W
+K
+K
+t
+t
+t
+e
+e
+e
+p
+p
+p
+p
+p
+p
+"}
+(8,1,1) = {"
+e
+W
+e
+e
+e
+e
+e
+e
+e
+t
+e
+p
+p
+p
+p
+p
+p
+"}
+(9,1,1) = {"
+e
+W
+e
+t
+e
+e
+e
+t
+t
+t
+e
+p
+p
+p
+p
+p
+p
+"}
+(10,1,1) = {"
+e
+t
+t
+t
+t
+t
+t
+t
+t
+e
+e
+p
+p
+p
+p
+p
+p
+"}

@@ -1,8 +1,8 @@
 /// Repairing specific organs
 /datum/surgery_operation/organ/repair
 	abstract_type = /datum/surgery_operation/organ/repair
-	name = "repair organ"
-	desc = "Repair a patient's damaged organ."
+	name = "Восстановление органа"
+	desc = "Восстановление поврежденного органа пациента."
 	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
@@ -19,7 +19,7 @@
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 	if(!repeatable)
-		desc += " This procedure can only be performed once per organ."
+		desc += " Эту процедуру можно провести только один раз для каждого органа."
 
 /datum/surgery_operation/organ/repair/state_check(obj/item/organ/organ)
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))
@@ -29,12 +29,12 @@
 /datum/surgery_operation/organ/repair/all_required_strings()
 	. = ..()
 	if(!repeatable)
-		. += "the organ must be moderately damaged"
+		. += "орган должен быть умеренно поврежден"
 
 /datum/surgery_operation/organ/repair/all_blocked_strings()
 	. = ..()
 	if(!repeatable)
-		. += "the organ must not have been surgically repaired prior"
+		. += "орган не должен был подвергаться хирургическому восстановлению ранее"
 
 /datum/surgery_operation/organ/repair/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.set_organ_damage(organ.maxHealth * heal_to_percent)
@@ -45,9 +45,9 @@
 	organ.apply_organ_damage(organ.maxHealth * failure_damage_percent)
 
 /datum/surgery_operation/organ/repair/lobectomy
-	name = "excise damaged lung lobe"
-	rnd_name = "Lobectomy (Lung Surgery)"
-	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
+	name = "Удаление поврежденной доли легкого"
+	rnd_name = "Лобэктомия (Восстановление лёгких)"
+	desc = "Восстановление поврежденных лёгких пациента путем удаления наиболее поврежденной доли."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
@@ -65,20 +65,20 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to make an incision in [FORMAT_ORGAN_OWNER(organ)]'s lungs..."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("Вы начинаете делать надрез в легких [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You feel a stabbing pain in your chest!")
+	display_pain(organ.owner, "Вы чувствуете колющую боль в груди!")
 
 /datum/surgery_operation/organ/repair/lobectomy/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully excise [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
-		span_notice("[surgeon] successfully excises [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
-		span_notice("[surgeon] successfully excises [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
+		span_notice("Вы успешно удаляете наиболее повреждённую долю легкого [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет наиболее повреждённую долю легкого [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет наиболее повреждённую долю легкого [organ.owner.declent_ru(GENITIVE)]."),
 	)
 
 /datum/surgery_operation/organ/repair/lobectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -87,15 +87,15 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You screw up, failing to excise [FORMAT_ORGAN_OWNER(organ)]'s damaged lobe!"),
-		span_warning("[surgeon] screws up!"),
-		span_warning("[surgeon] screws up!"),
+		span_warning("Вы совершаете ошибку, не сумев удалить повреждённую долю легкого [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] совершает ошибку!"),
+		span_warning("[surgeon] совершает ошибку!"),
 	)
-	display_pain(organ.owner, "You feel a sharp stab in your chest; the wind is knocked out of you and it hurts to catch your breath!")
+	display_pain(organ.owner, "Вы чувствуете резкий укол в груди; у вас перехватывает дыхание, и каждый вдох причиняет боль!")
 
 /datum/surgery_operation/organ/repair/lobectomy/mechanic
-	name = "perform maintenance"
-	rnd_name = "Air Filtration Diagnostic (Lung Surgery)"
+	name = "Проведение техобслуживания"
+	rnd_name = "Диагностика фильтрации воздуха (Восстановление лёгких)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -109,9 +109,9 @@
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 
 /datum/surgery_operation/organ/repair/hepatectomy
-	name = "remove damaged liver section"
-	rnd_name = "Hepatectomy (Liver Surgery)"
-	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
+	name = "Удаление поврежденной части печени"
+	rnd_name = "Гепатэктомия (Восстановление печени)"
+	desc = "Восстановление поврежденной печени пациента путем удаления наиболее поврежденного сегмента."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
@@ -130,37 +130,37 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to cut out a damaged piece of [FORMAT_ORGAN_OWNER(organ)]'s liver..."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("Вы начинаете вырезать поврежденный фрагмент печени [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your abdomen burns in horrific stabbing pain!")
+	display_pain(organ.owner, "Ваш живот горит от ужасной колющей боли!")
 
 /datum/surgery_operation/organ/repair/hepatectomy/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully remove the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
-		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
-		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
+		span_notice("Вы успешно удаляете повреждённую часть печени [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет повреждённую часть печени [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет повреждённую часть печени [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "The pain receeds slightly!")
+	display_pain(organ.owner, "Боль немного отступает!")
 
 /datum/surgery_operation/organ/repair/hepatectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You cut the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
-		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
-		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
+		span_warning("Вы отрезали не ту часть печени [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] отрезал не ту часть печени [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] отрезал не ту часть печени [organ.owner.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(organ.owner, "The pain in your abdomen intensifies!")
+	display_pain(organ.owner, "Боль в животе усиливается!")
 
 /datum/surgery_operation/organ/repair/hepatectomy/mechanic
-	name = "perform maintenance"
-	rnd_name = "Impurity Management System Diagnostic (Liver Surgery)"
+	name = "Проведение техобслуживания"
+	rnd_name = "Диагностика системы очистки от примесей (Восстановление печени)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -174,9 +174,9 @@
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 
 /datum/surgery_operation/organ/repair/coronary_bypass
-	name = "graft coronary bypass"
-	rnd_name = "Coronary Artery Bypass Graft (Heart Surgery)"
-	desc = "Graft a bypass onto a patient's damaged heart to restore proper blood flow."
+	name = "Коронарное шунтирование"
+	rnd_name = "Аортокоронарное шунтирование (Восстановление сердца)"
+	desc = "Установка шунта на поврежденное сердце пациента для восстановления нормального кровотока."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
 		TOOL_WIRECUTTER = 2.85,
@@ -193,39 +193,39 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart..."),
-		span_notice("[surgeon] begins to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
-		span_notice("[surgeon] begins to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
+		span_notice("Вы начинаете устанавливать шунт на сердце [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает устанавливать шунт на сердце [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает устанавливать шунт на сердце [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "The pain in your chest is unbearable! You can barely take it anymore!")
+	display_pain(organ.owner, "Боль в груди невыносима! Вы едва можете это терпеть!")
 
 /datum/surgery_operation/organ/repair/coronary_bypass/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
-		span_notice("[surgeon] successfully grafts a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
-		span_notice("[surgeon] successfully grafts a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
+		span_notice("Вы успешно установили шунт на сердце [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно установил шунт на сердце [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно установил шунт на сердце [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "The pain in your chest throbs, but your heart feels better than ever!")
+	display_pain(organ.owner, "Боль в груди пульсирует, но сердце чувствует себя лучше, чем когда-либо!")
 
 /datum/surgery_operation/organ/repair/coronary_bypass/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	organ.bodypart_owner?.adjustBleedStacks(30)
-	var/blood_name = LOWER_TEXT(organ.owner?.get_bloodtype()?.get_blood_name()) || "blood"
+	var/blood_name = LOWER_TEXT(organ.owner?.get_bloodtype()?.get_blood_name()) || "крови"
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You screw up in attaching the graft, and it tears off, tearing part of the heart!"),
-		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [FORMAT_ORGAN_OWNER(organ)]'s chest profusely!"),
-		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [FORMAT_ORGAN_OWNER(organ)]'s chest profusely!"),
+		span_warning("Вы ошибаетесь при креплении шунта, и он отрывается, повреждая часть сердца!"),
+		span_warning("[surgeon] совершает ошибку, из-за чего поток [blood_name] обильно хлещет из груди [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] совершает ошибку, из-за чего поток [blood_name] обильно хлещет из груди [organ.owner.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(organ.owner, "Your chest burns; you feel like you're going insane!")
+	display_pain(organ.owner, "Грудь горит; кажется, вы сходите с ума от боли!")
 
 /datum/surgery_operation/organ/repair/coronary_bypass/mechanic
-	name = "access engine internals"
-	rnd_name = "Engine Diagnostic (Heart Surgery)"
+	name = "Доступ к внутренностям сервомотора"
+	rnd_name = "Диагностика сервомотора (Хирургия сердца)"
 	implements = list(
 		TOOL_CROWBAR = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -239,9 +239,9 @@
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 
 /datum/surgery_operation/organ/repair/gastrectomy
-	name = "remove damaged stomach section"
-	rnd_name = "Gastrectomy (Stomach Surgery)"
-	desc = "Perform repairs to a patient's stomach by removing a damaged section."
+	name = "Удаление поврежденной части желудка"
+	rnd_name = "Гастрэктомия (Восстановление желудка)"
+	desc = "Восстановление желудка пациента путем удаления поврежденного сегмента."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
@@ -258,7 +258,7 @@
 	failure_damage_percent = 0.15
 
 /datum/surgery_operation/organ/repair/gastrectomy/get_any_tool()
-	return "Any sharp edged item"
+	return "Любой острый предмет"
 
 /datum/surgery_operation/organ/repair/gastrectomy/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match
@@ -268,38 +268,39 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to cut out a damaged piece of [FORMAT_ORGAN_OWNER(organ)]'s stomach..."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
-		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("Вы начинаете вырезать поврежденный фрагмент желудка [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает делать надрез у [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You feel a horrible stab in your gut!")
+	display_pain(organ.owner, "Вы чувствуете ужасную колющую боль в животе!")
 
 /datum/surgery_operation/organ/repair/gastrectomy/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully remove the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
-		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
-		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
+		span_notice("Вы успешно удаляете повреждённую часть желудка [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет повреждённую часть желудка [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удаляет повреждённую часть желудка [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "The pain in your gut receeds slightly!")
+	display_pain(organ.owner, "Боль в животе немного утихает!")
 
 /datum/surgery_operation/organ/repair/gastrectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You cut the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
-		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
-		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
+		span_warning("Вы отрезали не ту часть желудка [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] отрезал не ту часть желудка [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] отрезал не ту часть желудка [organ.owner.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(organ.owner, "The pain in your gut intensifies!")
+	display_pain(organ.owner, "Боль в животе усиливается!")
 
 /datum/surgery_operation/organ/repair/gastrectomy/mechanic
-	name = "perform maintenance"
-	rnd_name = "Nutrient Processing System Diagnostic (Stomach Surgery)"
+	name = "Проведение техобслуживания"
+	rnd_name = "Диагностика системы переработки нутриентов (Хирургия желудка)"
 	implements = list(
+		TOOL_WRENCH = 1.05,
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
@@ -313,9 +314,9 @@
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 
 /datum/surgery_operation/organ/repair/ears
-	name = "ear surgery"
-	rnd_name = "Ototomy (Ear surgery)" // source: i made it up
-	desc = "Repair a patient's damaged ears to restore hearing."
+	name = "Операция на ушах"
+	rnd_name = "Ототомия (Хирургия ушей)" // source: i made it up
+	desc = "Восстановление поврежденных ушей пациента для возвращения слуха."
 	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -330,7 +331,7 @@
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/repair/ears/all_blocked_strings()
-	return ..() + list("if the limb has bones, they must be intact")
+	return ..() + list("если в конечности есть кости, они должны быть целы")
 
 /datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
@@ -342,11 +343,11 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s ears..."),
-		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s ears."),
-		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s ears."),
+		span_notice("Вы начинаете лечить уши [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает лечить уши [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает лечить уши [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You feel a dizzying pain in your head!")
+	display_pain(organ.owner, "Вы чувствуете головокружительную боль в голове!")
 
 /datum/surgery_operation/organ/repair/ears/on_success(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -355,11 +356,11 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully fix [FORMAT_ORGAN_OWNER(organ)]'s ears."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s ears."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s ears."),
+		span_notice("Вы успешно вылечили уши [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно вылечил уши [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно вылечил уши [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head swims, but it seems like you can feel your hearing coming back!")
+	display_pain(organ.owner, "Голова идет кругом, но, кажется, слух начинает возвращаться!")
 
 /datum/surgery_operation/organ/repair/ears/on_failure(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
@@ -367,26 +368,26 @@
 		display_results(
 			surgeon,
 			organ.owner,
-			span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
-			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
-			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+			span_warning("Вы случайно тыкаете туда, где должен быть мозг [organ.owner.declent_ru(GENITIVE)]! Хорошо, что его там нет."),
+			span_warning("[surgeon] случайно тыкает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]! Или сделал бы это, будь у пациента мозг."),
+			span_warning("[surgeon] случайно попадает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
 		)
 		return
 
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("Вы случайно тычите инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] случайно тычет инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] случайно тычет инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
+	display_pain(organ.owner, "Вы чувствуете пронзающую боль, проходящую сквозь голову прямо в мозг!")
 	organ.apply_organ_damage(70)
 
 /datum/surgery_operation/organ/repair/eyes
-	name = "eye surgery"
-	rnd_name = "Vitrectomy (Eye Surgery)"
-	desc = "Repair a patient's damaged eyes to restore vision."
+	name = "Операция на глазах"
+	rnd_name = "Витрэктомия (Хирургия глаз)"
+	desc = "Восстановление поврежденных глаз пациента для возвращения зрения."
 	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -401,7 +402,7 @@
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/repair/eyes/all_blocked_strings()
-	return ..() + list("if the limb has bones, they must be intact")
+	return ..() + list("если в конечности есть кости, они должны быть целы")
 
 /datum/surgery_operation/organ/repair/eyes/state_check(obj/item/organ/organ)
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
@@ -416,11 +417,11 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s eyes..."),
-		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
-		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
+		span_notice("Вы начинаете лечить глаза [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает лечить глаза [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает лечить глаза [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You feel a stabbing pain in your eyes!")
+	display_pain(organ.owner, "Вы чувствуете колющую боль в глазах!")
 
 /datum/surgery_operation/organ/repair/eyes/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -429,11 +430,11 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully fix [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
+		span_notice("Вы успешно вылечили глаза [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно вылечил глаза [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно вылечил глаза [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your vision blurs, but it seems like you can see a little better now!")
+	display_pain(organ.owner, "Зрение затуманено, но кажется, теперь вы видите немного лучше!")
 
 /datum/surgery_operation/organ/repair/eyes/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
@@ -441,26 +442,26 @@
 		display_results(
 			surgeon,
 			organ.owner,
-			span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
-			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
-			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+			span_warning("Вы случайно тыкаете туда, где должен быть мозг [organ.owner.declent_ru(GENITIVE)]! Хорошо, что его там нет."),
+			span_warning("[surgeon] случайно тыкает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]! Или сделал бы это, будь у пациента мозг."),
+			span_warning("[surgeon] случайно попадает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
 		)
 		return
 
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("Вы случайно попадаете инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] случайно попадает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_warning("[surgeon] случайно попадает инструментом прямо в мозг [organ.owner.declent_ru(GENITIVE)]!"),
 	)
-	display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
+	display_pain(organ.owner, "Вы чувствуете пронзающую боль, проходящую сквозь голову прямо в мозг!")
 	organ.apply_organ_damage(70)
 
 /datum/surgery_operation/organ/repair/brain
-	name = "brain surgery"
-	rnd_name = "Neurosurgery (Brain Surgery)"
-	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
+	name = "Операция на мозге"
+	rnd_name = "Нейрохирургия (Хирургия мозга)"
+	desc = "Восстановление поврежденных тканей мозга пациента для возвращения когнитивных функций."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
 		TOOL_SCREWDRIVER = 2.85,
@@ -485,45 +486,45 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s brain..."),
-		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("Вы начинаете лечить мозг [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает лечить мозг [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает проводить операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
+	display_pain(organ.owner, "Ваша голова пульсирует от невообразимой боли!")
 
 /datum/surgery_operation/organ/repair/brain/on_success(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.apply_organ_damage(-organ.maxHealth * heal_to_percent) // no parent call, special healing for this one
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You succeed in fixing [FORMAT_ORGAN_OWNER(organ)]'s brain."),
-		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s brain!"),
-		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("Вам удалось прооперировать мозг [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно оперирует мозг [organ.owner.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] завершает операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "The pain in your head receeds, thinking becomes a bit easier!")
+	display_pain(organ.owner, "Боль в голове отступает, думать становится немного легче!")
 	if (organ.owner)
 		organ.owner.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
 	else if (organ.brainmob)
 		organ.brainmob.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
 	organ.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(organ.damage > organ.maxHealth * 0.1)
-		to_chat(surgeon, "[FORMAT_ORGAN_OWNER(organ)]'s brain looks like it could be fixed further.")
+		to_chat(surgeon, "Мозг [organ.owner.declent_ru(GENITIVE)] выглядит так, будто его можно вылечить еще немного.")
 
 /datum/surgery_operation/organ/repair/brain/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You screw up, causing more damage!"),
-		span_warning("[surgeon] screws up, causing brain damage!"),
-		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_warning("Вы совершаете ошибку, нанося еще больше повреждений!"),
+		span_warning("[surgeon] совершает ошибку, вызывая повреждение мозга!"),
+		span_notice("[surgeon] завершает операцию на мозге [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your head throbs with horrible pain; thinking hurts!")
+	display_pain(organ.owner, "Ваша голова пульсирует от ужасной боли; даже думать больно!")
 	organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/organ/repair/brain/mechanic
-	name = "perform neural debugging"
-	rnd_name = "Wetware OS Diagnostics (Brain Surgery)"
+	name = "Проведение нейронной отладки"
+	rnd_name = "Wetware OS диагностика (Хирургия мозга)"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
 		TOOL_HEMOSTAT = 1.05,

@@ -2,6 +2,7 @@
 	"name": "tgui",
 	"version": "6.0.0",
 	"dependencies": {
+		"@uidotdev/usehooks": "^2.4.1",
 		"common": "workspace:*",
 		"color-blend": "4.0.0",
 		"dateformat": "^5.0.3",
@@ -15,6 +16,7 @@
 		"marked-smartypants": "^1.1.9",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
+		"react-zoom-pan-pinch": "^3.7.0",
 		"react-json-tree": "^0.20.0",
 		"tgui-core": "^5.10.0",
 		"tgui-dev-server": "workspace:*"

@@ -1,0 +1,15 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/requests_console/directional/east{
+	name = "Captain's Requests Console";
+	department = "Captain's Desk"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
+
+(1,1,1) = {"
+a
+"}

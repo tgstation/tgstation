@@ -102,11 +102,30 @@
 	if((methods & INGEST) || !ishuman(human_thing))
 		return
 
+	// BANDASTATION MOD START - Cryogelidia fix
+	// I can't make this modular because we have a SHOULD_CALL_PARENT macro in the parent proc.
+	// The problem is that this reagent applies the effect even if its volume hasn't been passed.
+	// The effect is persistent and is linked to a signal, but since volume = 0, the signal isn't registered
+	// and we're stuck in a permanent ice prison. I also removed the broken on_mob_end_metabolize proc.
+	// It causes runtime due to multiple freeze effect qdels (currently handled by signals).
+	// I'm using (>= 1) because we can get touch protection around 0.5, and the proc will work perfectly.
+
+	if(touch_protection >= 1)
+		return
+
+	// BANDASTATION MOD END - Cryogelidia fix
+
 	if(HAS_TRAIT(human_thing, TRAIT_RESISTCOLD))
 		holder.del_reagent(type)
 		return
 
 	human_thing.apply_status_effect(/datum/status_effect/reagent_effect/freeze, type)
+
+// BANDASTATION MOD START: Cryogelidia fix
+// /datum/reagent/inverse/cryostylane/on_mob_end_metabolize(mob/living/affected_mob)
+// 	. = ..()
+// 	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/freeze)
+// BANDASTATION MOD END: Cryogelidia fix
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -119,7 +138,3 @@
 		return
 
 	return ..()
-
-/datum/reagent/inverse/cryostylane/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/freeze)

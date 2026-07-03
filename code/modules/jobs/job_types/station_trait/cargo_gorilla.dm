@@ -1,10 +1,10 @@
 /datum/job/cargo_gorilla
 	title = JOB_CARGO_GORILLA
-	description = "Assist the supply department by moving freight and disposing of unwanted fruits."
+	description = "Помогайте отделу поставок в перемещении грузов и утилизации ненужных фруктов."
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = SUPERVISOR_QM
+	supervisors = JOB_QUARTERMASTER_RU
 	spawn_type = /mob/living/basic/gorilla/cargorilla
 	config_tag = "CARGO_GORILLA"
 	random_spawns_possible = FALSE
@@ -43,6 +43,6 @@
 	gorilla_id.set_account(bank_account)
 	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
-	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
-	to_chat(spawned, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
+	to_chat(spawned, span_boldnotice("Вы Каргорила, дружелюбный член станции и грузоперевозчик."))
+	to_chat(spawned, span_notice("Вы можете поднимать ящики, кликая на них, и класть их на пол, кликая по нему."))
 	LAZYADD(spawned.mind.special_roles, "Cargorilla")

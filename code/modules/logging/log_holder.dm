@@ -32,7 +32,7 @@ GLOBAL_REAL(logger, /datum/log_holder)
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
 
-ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", ADMIN_CATEGORY_HIDDEN) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_MAIN
 	logger.ui_interact(user.mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)
@@ -227,10 +227,14 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 	if(!human_readable_enabled)
 		return
 
-	file_path = category.get_output_file(null, "log")
+	file_path = category.get_output_file(null, "log", logis_log = TRUE) // BANDASTATION EDIT - Logis: added `logis_log = TRUE`
 	if(fexists(file_path))
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
-		fcopy(file_path, get_recovery_file_for(file_path))
+		// BANDASTATION REMOVAL START - Logis
+		// rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
+		// fcopy(file_path, get_recovery_file_for(file_path))
+		// BANDASTATION REMOVAL END - Logis
+		return
+
 	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
 
 #undef LOG_CATEGORY_RESET_FILE_MARKER

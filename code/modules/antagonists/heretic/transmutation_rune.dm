@@ -1,7 +1,7 @@
 /// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
 	name = "transmutation rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
+	desc = "В полу выгравирован плавный круг из фигур и рун, заполненный густой черной жидкостью, похожей на смолу."
 	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "main1"
 	anchored = TRUE
@@ -24,8 +24,8 @@
 	if(!IS_HERETIC(user))
 		return
 
-	. += span_notice("Allows you to transmute objects by invoking the rune after collecting the prerequisites overhead.")
-	. += span_notice("You can use your <i>Mansus Grasp</i> on the rune to remove it.")
+	. += span_notice("Позволяет трансмутировать предметы при использовании руны после выполнения всех условий.")
+	. += span_notice("Вы можете использовать <i>хватку Мансуса</i> на руне, чтобы удалить ее.")
 
 /obj/effect/heretic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -55,11 +55,11 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
-		loc.balloon_alert(user, "no rituals available!")
+		loc.balloon_alert(user, "нет доступных ритуалов!")
 		is_in_use = FALSE
 		return
 
-	var/chosen = tgui_input_list(user, "Chose a ritual to attempt.", "Chose a Ritual", rituals)
+	var/chosen = tgui_input_list(user, "Выберите исполняемый ритуал", "Выбор ритуала", rituals)
 	if(!chosen || !istype(rituals[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
 		is_in_use = FALSE
 		return
@@ -166,9 +166,9 @@
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
-		loc.balloon_alert(user, "ritual failed, missing components!")
+		loc.balloon_alert(user, "ритуал провален, нехватает компонентов!")
 		// Then let them know what they're missing
-		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		to_chat(user, span_hierophant_warning("Вам не хватает [english_list(what_are_we_missing)] для завершения ритуала \"[ritual.name]\"."))
 		return FALSE
 
 	//Everything's good, proceed and collect from the available stacks what's needed if needed.
@@ -222,7 +222,7 @@
 	// No feedback is given on failure here -
 	// the ritual itself should handle it (providing specifics as to why it failed)
 	if(ritual_result)
-		loc.balloon_alert(user, "ritual complete")
+		loc.balloon_alert(user, "ритуал завершен")
 
 	return ritual_result
 

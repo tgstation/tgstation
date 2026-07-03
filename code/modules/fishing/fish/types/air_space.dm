@@ -114,7 +114,7 @@
 /obj/item/fish/starfish/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
 	if (prob(20))
-		user.say("I must go. My people need me.", forced = "starfish suicide")
+		user.say("Я должен идти. Я нужен своему народу.", forced = "starfish suicide")
 	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
 	return MANUAL_SUICIDE
 

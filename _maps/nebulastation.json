@@ -4,6 +4,7 @@
 	"map_path": "map_files/NebulaStation",
 	"map_file": "NebulaStation.dmm",
 	"give_players_hooks": 1,
+	"main_floor": 2,
 	"shuttles": {
 		"cargo": "cargo_nebula",
 		"ferry": "ferry_nebula",
@@ -21,5 +22,19 @@
 			"Linkage": "Cross"
 		}
 	],
+	"job_changes": {
+		"Nanotrasen Representative": {
+			"spawn_positions": 1
+		},
+		"Blueshield": {
+			"spawn_positions": 1
+		},
+		"Magistrate": {
+			"spawn_positions": 1
+		},
+		"Explorer": {
+			"spawn_positions": 4
+		}
+	},
 	"bonus_weakpoints": 2
 }

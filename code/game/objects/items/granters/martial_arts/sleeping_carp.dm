@@ -1,23 +1,23 @@
 /obj/item/book/granter/martial/carp
 	martial = /datum/martial_art/the_sleeping_carp
 	name = "mysterious scroll"
-	martial_name = "sleeping carp"
-	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
-	greet = span_sciradio("You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-		directed toward you while in Combat Mode. You are also able to sometimes dodge melee and unarmed attacks against you, but only as long as you dress in appropriate martial arts clothing. Or \
-		carp-themed clothing. Your body has also hardened itself, granting extra protection against lasting wounds that would otherwise mount during extended combat. However, you are also unable to \
-		use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.")
+	martial_name = "основы Спящего карпа"
+	desc = "Свиток, испещрённый странными знаками. Похоже, это зарисовки какого-то боевого искусства."
+	greet = span_sciradio("Вы овладели древним боевым искусством Спящего Карпа! Ваш рукопашный бой стал намного эффективнее, и теперь, находясь в боевом режиме, вы способны отражать любые снаряды.\
+		направленные на вас. Также, если вы одеты в подходящую для боевых искусств одежду, или одежду связанную с карпами, вы способны время от времени уклоняться от холодного оружия и атак ближнего боя. \
+		Ваше тело также укрепилось, обеспечивая дополнительную защиту от серьёзных ран которые иначе накапливались бы во время затяжного боя. Однако вы также теряете способность \
+		использовать любые виды дальнобойного оружия. Вы можете узнать больше о своем новообретенном искусстве, воспользовавшись функцией «Вспомнить уроки» на вкладке «Спящий Карп».")
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "sleepingcarp"
 	worn_icon_state = "scroll"
 	remarks = list(
-		"Wait, a high protein diet is really all it takes to become stabproof...?",
-		"Overwhelming force, immovable object...",
-		"Focus... And you'll be able to incapacitate any foe in seconds...",
-		"I must pierce armor for maximum damage...",
-		"I don't think this would combine with other martial arts...",
-		"Become one with the carp...",
-		"Glub...",
+		"Подождите, диета с высоким содержанием белка - это действительно всё, что нужно, чтобы стать устойчивым к колото-ножевым ранениям...?",
+		"Непреодолимая сила, неподвижный объект...",
+		"Сфокусируйтесь... И вы сможете вывести из строя любого противника за считанные секунды...",
+		"Я должен пробить броню, чтобы нанести максимальный урон...",
+		"Я не думаю, что это будет сочетаться с другими боевыми искусствами...",
+		"Стать единым с карпом...",
+		"Бульк...",
 	)
 
 /obj/item/book/granter/martial/carp/on_reading_finished(mob/living/carbon/user)
@@ -28,7 +28,7 @@
 	. = ..()
 	if(uses <= 0)
 		name = "empty scroll"
-		desc = "It's completely blank."
+		desc = "Свиток абсолютно пуст."
 		icon_state = "blankscroll"
 	else
 		name = initial(name)

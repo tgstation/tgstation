@@ -1,6 +1,6 @@
 /obj/item/ammo_box/magazine/recharge
 	name = "power pack"
-	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles."
+	desc = "Перезаряжаемый съёмный аккумулятор, который служит магазином для лазерных винтовок."
 	icon_state = "oldrifle-20"
 	base_icon_state = "oldrifle"
 	ammo_type = /obj/item/ammo_casing/laser
@@ -9,7 +9,7 @@
 
 /obj/item/ammo_box/magazine/recharge/update_desc()
 	. = ..()
-	desc = "[initial(desc)] It has [stored_ammo.len] shot\s left."
+	desc = "[initial(desc)] Осталось зарядов: [stored_ammo.len]."
 
 /obj/item/ammo_box/magazine/recharge/update_icon_state()
 	. = ..()

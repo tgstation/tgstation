@@ -681,7 +681,7 @@
 		return FALSE
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
-		to_chat(user, span_warning("This machine requires sight to use."))
+		to_chat(user, span_warning("Чтобы воспользоваться этой машиной, нужно иметь зрение."))
 		return FALSE
 
 	// machines have their own lit up display screens and LED buttons so we don't need to check for light
@@ -713,7 +713,7 @@
 	add_fingerprint(user)
 	update_last_used(user)
 	if(isAI(user) && !SScameras.is_visible_by_cameras(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
-		to_chat(user, span_warning("You can no longer connect to this device!"))
+		to_chat(user, span_warning("Вы больше не можете взаимодействовать с этим устройством!"))
 		return FALSE
 	return ..()
 
@@ -770,7 +770,7 @@
 		if(user_unbuckle_mob(buckled_mobs[1],user))
 			return TRUE
 
-	var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+	var/unbuckled = tgui_input_list(user, "Кого вы хотите отстегнуть?", "Отстегивание", sort_names(buckled_mobs))
 	if(isnull(unbuckled))
 		return FALSE
 	if(user_unbuckle_mob(unbuckled,user))
@@ -885,7 +885,7 @@
 		return deconstruct_on_fail ? default_deconstruction_crowbar(user, crowbar) : ITEM_INTERACT_BLOCKING
 
 	crowbar.play_tool_sound(src, 50)
-	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
+	user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] вскрывает [declent_ru(ACCUSATIVE)]."), span_notice("Вы вскрываете [declent_ru(ACCUSATIVE)]."))
 	open_machine(density_to_set = open_density)
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
@@ -1052,7 +1052,7 @@
 
 	screwdriver.play_tool_sound(src, 50)
 	toggle_panel_open()
-	balloon_alert(user, "maintenance hatch [panel_open ? "opened" : "closed"]")
+	balloon_alert(user, "панель обслуживания [panel_open ? "открыта" : "закрыта"]")
 	return ITEM_INTERACT_SUCCESS
 
 /**
@@ -1072,7 +1072,7 @@
 
 	wrench.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
-	to_chat(user, span_notice("You rotate [src]."))
+	to_chat(user, span_notice("Вы поворачиваете [declent_ru(ACCUSATIVE)]."))
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, user, wrench)
 	return ITEM_INTERACT_SUCCESS
 
@@ -1135,7 +1135,7 @@
 					break
 			if(secondary_part.get_part_rating() > current_rating)
 				//store name of part incase we qdel it below
-				var/secondary_part_name = secondary_part.name
+				var/secondary_part_name = secondary_part.declent_ru(ACCUSATIVE)
 				if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
 					if (istype(primary_part_base, /datum/stock_part))
 						var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
@@ -1160,7 +1160,7 @@
 					physical_part = primary_part_base
 
 				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE, force = STORAGE_SOFT_LOCKED)
-				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
+				to_chat(user, span_notice("[capitalize(physical_part.declent_ru(NOMINATIVE))] заменяется на [secondary_part_name]."))
 				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
 
@@ -1205,7 +1205,7 @@
 				part_count[component] = board.req_components[component]
 
 
-	var/text = span_notice("It contains the following parts:")
+	var/text = span_notice("Внутри имеются следующие компоненты:")
 	for(var/component_part in part_count)
 		var/part_name
 		var/icon/html_icon
@@ -1213,35 +1213,35 @@
 		//infer name & icon of part. stacks are just type paths so we have to get their initial values
 		if(ispath(component_part, /obj/item/stack))
 			var/obj/item/stack/stack_ref = component_part
-			part_name = initial(stack_ref.singular_name)
+			part_name = declent_ru_initial(stack_ref::name, NOMINATIVE, stack_ref::singular_name)
 			html_icon = initial(stack_ref.icon)
 			icon_state = initial(stack_ref.icon_state)
 		else
 			var/obj/item/part = component_part
-			part_name = part.name
+			part_name = part.declent_ru(NOMINATIVE)
 			html_icon = part.icon
 			icon_state = part.icon_state
 		//merge icon & name into text
-		text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [part_name]\s.")
+		text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [part_name].")
 
 	return text
 
 /obj/machinery/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
-		. += span_notice("It looks broken and non-functional.")
+		. += span_notice("Выглядит сломано и нефункционально.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				. += "It looks slightly damaged."
+				. += "Имеет незначительные повреждения."
 			if(25 to 50)
-				. += "It appears heavily damaged."
+				. += "Имеет значительные повреждения."
 			if(0 to 25)
-				. += span_warning("It's falling apart!")
+				. += span_warning("Разваливается на части!")
 
 /obj/machinery/examine_descriptor(mob/user)
-	return "machine"
+	return "машина"
 
 /obj/machinery/examine_more(mob/user)
 	. = ..()
@@ -1313,7 +1313,7 @@
  * However, the proc may also be used elsewhere.
  */
 /obj/machinery/proc/AI_notify_hack()
-	var/alertstr = span_userdanger("Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].")
+	var/alertstr = span_userdanger("Сетевая тревога: Обнаружена попытка взлома[get_area(src)?" в [get_area_name(src, TRUE)]":". Невозможно определить местоположение"].")
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, alertstr)
 

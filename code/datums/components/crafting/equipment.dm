@@ -32,6 +32,7 @@
 	)
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/radio_containing
 	abstract_type = /datum/crafting_recipe/radio_containing

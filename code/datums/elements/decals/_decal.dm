@@ -145,6 +145,11 @@
 /datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)
 	SIGNAL_HANDLER
 
+	// BANDASTATION ADDITION - GRAYSCALE WOODEN FLOORS - START
+	var/atom/atom_source = source
+	if(istype(atom_source, /turf/open/floor/wood))
+		pic.appearance_flags = RESET_COLOR | KEEP_APART
+	// BANDASTATION ADDITION - GRAYSCALE WOODEN FLOORS - END
 	overlay_list += pic
 
 /datum/element/decal/proc/clean_react(datum/source, clean_types)

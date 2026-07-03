@@ -1,11 +1,11 @@
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
-	desc = "Nothing like a good drink to make you feel on top of the world. Whenever you're drunk, you slowly recover from injuries."
+	desc = "Ничто так не помогает почувствовать себя на вершине мира, как хорошая выпивка. Когда вы пьяны, вы медленно восстанавливаетесь от повреждений."
 	icon = FA_ICON_WINE_BOTTLE
 	value = 8
-	gain_text = span_notice("You feel like a drink would do you good.")
-	lose_text = span_danger("You no longer feel like drinking would ease your pain.")
-	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
+	gain_text = span_notice("Вам кажется, что немного выпить не помешает.")
+	lose_text = span_danger("Вам больше не хочется пить, чтобы облегчить боль.")
+	medical_record_text = "У пациента необычайно эффективный метаболизм печени, и он может медленно регенерировать раны, употребляя алкогольные напитки."
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/booze)
 

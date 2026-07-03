@@ -1,0 +1,8 @@
+[Bridge]
+nominative = "мостик"
+genitive = "мостика"
+dative = "мостику"
+accusative = "мостик"
+instrumental = "мостиком"
+prepositional = "мостике"
+gender = "male"

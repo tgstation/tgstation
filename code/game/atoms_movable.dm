@@ -354,8 +354,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
 		visible_message(
-			span_danger("[src] crashes into [impacted_turf]!"),
-			span_userdanger("You crash into [impacted_turf]!"),
+			span_danger("[capitalize(declent_ru(NOMINATIVE))] врезается в [impacted_turf.declent_ru(ACCUSATIVE)]!"),
+			span_userdanger("Вы врезаетесь в [impacted_turf.declent_ru(ACCUSATIVE)]!"),
 		)
 	if(!(impact_flags & ZIMPACT_NO_SPIN))
 		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)

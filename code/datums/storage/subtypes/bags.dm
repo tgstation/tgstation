@@ -110,7 +110,7 @@
 ///Tray bag
 /datum/storage/bag/tray
 	max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
-	insert_preposition = "on"
+	insert_preposition = "на"
 	max_slots = 8
 	max_total_storage = 16
 
@@ -270,7 +270,7 @@
 	numerical_stacking = FALSE
 	max_total_storage = 200
 	max_slots = 20
-	insert_preposition = "in"
+	insert_preposition = "в"
 	allow_big_nesting = TRUE
 
 /datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)

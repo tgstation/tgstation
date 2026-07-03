@@ -1,6 +1,6 @@
 // Given to heretic monsters.
 /datum/action/cooldown/spell/list_target/telepathy/eldritch
-	name = "Eldritch Telepathy"
+	name = "Потусторонняя связь"
 	school = SCHOOL_FORBIDDEN
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"

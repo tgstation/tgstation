@@ -1,35 +1,63 @@
-<!-- Write **BELOW** The Headers and **ABOVE** The comments else it may not be viewable. -->
-<!-- You can view Contributing.MD for a detailed description of the pull request process. -->
+<!-- Пишите **НИЖЕ** заголовков и **ВЫШЕ** комментариев, иначе что то может пойти не так. -->
+<!-- Вы можете прочитать Contributing.MD, если хотите узнать больше. -->
 
-## About The Pull Request
+## Что этот PR делает
 
-<!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
+<!-- Вкратце опишите изменения, которые вносите. -->
+<!-- Опишите **все** изменения, так как противное может сказаться на рассмотрении этого PR'а! -->
+<!-- Если вы исправляете Issue, добавьте "Fixes #xxxx" (где xxxx - номер Issue) где-нибудь в описании PR'а. Это автоматически закроет Issue после принятия PR'а. -->
 
-## Why It's Good For The Game
+## Почему это хорошо для игры
 
-<!-- Argue for the merits of your changes and how they benefit the game, especially if they are controversial and/or far reaching. If you can't actually explain WHY what you are doing will improve the game, then it probably isn't good for the game in the first place. -->
+<!-- Опишите, почему, по вашему, эти изменения следует добавить в игру. -->
+
+## Изображения изменений
+
+<!-- Если изменения затрагивают визуал/спрайты/карты - прикрепите скриншоты, вставьте видео или иным образом визуализируйте изменения. -->
+
+## Тестирование
+
+<!-- Опишите процесс тестирования - каким образом и что вы проверяли в своих изменениях. В этой секции недостаточно просто указать "Локально". -->
 
 ## Changelog
 
-<!-- If your PR modifies aspects of the game that can be concretely observed by players or admins you should add a changelog. If your change does NOT meet this description, remove this section. Be sure to properly mark your PRs to prevent unnecessary GBP loss. You can read up on GBP and its effects on PRs in the tgstation guides for contributors. Please note that maintainers freely reserve the right to remove and add tags should they deem it appropriate. You can attempt to finagle the system all you want, but it's best to shoot for clear communication right off the bat. -->
+<!-- Важно строго соблюдать ёмкость и стилистическую форму наполнения чейнджлога! -->
 
 :cl:
-add: Added new mechanics or gameplay changes
-add: Added more things
-del: Removed old things
-qol: made something easier to use
-balance: rebalanced something
-fix: fixed a few things
-sound: added/modified/removed audio or sound effects
-image: added/modified/removed some icons or images
-map: added/modified/removed map content
-spellcheck: fixed a few typos
-code: changed some code
-refactor: refactored some code
-config: changed some config setting
-admin: messed with admin stuff
-server: something server ops should know
+add: Изменена или добавлена геймплейная механика.
+admin: Изменён админский инструментарий.
+balance: Внесены правки в баланс.
+code_imp: Улучшено качество кода.
+config: Изменён конфиг.
+del: Удалено что-то из игры.
+fix: Исправлена ошибка/недоработка.
+image: Добавлено/изменено изображение в игре.
+map: Добавлено/изменено/удалено что-то на карте.
+qol: Что-то стало удобнее.
+refactor: Значительно улучшено качество кода.
+server: Изменено что-то серверное, о чём должен знать хост.
+sound: Добавлен, изменён или удалён звук.
+translation: Переведён контент в игре.
+typo: Исправлена опечатка.
 /:cl:
 
-<!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->
-<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
+<!-- Оба :cl:'а должны быть на месте, что-бы чейнджлог работал! Вы можете написать свой ник справа от первого :cl:, если хотите. Иначе будет использован ваш ник на ГитХабе. -->
+<!-- Вы можете использовать несколько записей с одинаковым префиксом (Они используются только для иконки в игре) и удалить ненужные. Помните, что чейнджлог должен быть понятен обычным игроком. -->
+<!-- Если чейнджлог не влияет на игроков(например, это рефактор), вы можете исключить всю секцию. -->
+<!-- Пример хороших чейнджлогов:
+add: В аплинк повара добавлен мануал CQC за 20 ТК.
+admin: Добавлено новое Smite действие - "Сломать колени".
+balance: Разлёт дроби 12 калибра, скаттер лазер шеллов, драконьего дыхания и резиновой дроби был увеличен.
+code_imp: Число дополнительных необходимых шкафов СБ теперь вычисляется точнее.
+config: Добавлена/убрана настройка слотов СБ через конфиг.
+del: Удалена возможность рыбалки в лотках гидропоники.
+fix: Исправлена ошибка, из-за которой неудачный вызов ОБР мог резко ухудшить производительность игры.
+image: Изменены спрайты для револьверов .357
+map: Добавлена новая игровая карта - Nebula Station.
+qol: Смерть в мини-играх больше не сбрасывает таймер возрождения.
+refactor: Значительно улучшено качество кода модульной TTS сабсистемы.
+server: Flaky тесты перенесены на ubuntu-20.04.
+sound: Добавлен новый звук для Гамма кода на станции.
+translation: Добавлен перевод приёмов и сообщений в чат для Спящего Карпа.
+typo: Исправлена опечатка в предыстории расы КПБ.
+-->

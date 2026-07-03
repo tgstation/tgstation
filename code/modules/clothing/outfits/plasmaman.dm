@@ -4,8 +4,8 @@
 	uniform = /obj/item/clothing/under/plasmaman
 	gloves = /obj/item/clothing/gloves/color/plasmaman
 	head = /obj/item/clothing/head/helmet/space/plasmaman
-	r_hand = /obj/item/tank/internals/plasmaman/belt/full
-	internals_slot = ITEM_SLOT_HANDS
+	r_pocket = /obj/item/tank/internals/plasmaman/belt/full // BANDASTATION EDIT - Plasmaman internals spawn location. Before: r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_RPOCKET // BANDASTATION EDIT - Plasmaman internals spawn location. Before: internals_slot = ITEM_SLOT_HANDS
 
 /datum/outfit/plasmaman/security
 	name = "Security Plasmaman"

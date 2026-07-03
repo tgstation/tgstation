@@ -32,13 +32,13 @@
 #define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<6)
 
 //Program categories
-#define PROGRAM_CATEGORY_DEVICE "Device Tools"
-#define PROGRAM_CATEGORY_EQUIPMENT "Equipment"
-#define PROGRAM_CATEGORY_GAMES "Games"
-#define PROGRAM_CATEGORY_SECURITY "Security & Records"
-#define PROGRAM_CATEGORY_ENGINEERING "Engineering"
-#define PROGRAM_CATEGORY_SUPPLY "Supply"
-#define PROGRAM_CATEGORY_SCIENCE "Science"
+#define PROGRAM_CATEGORY_DEVICE "Инструменты"
+#define PROGRAM_CATEGORY_EQUIPMENT "Оборудование"
+#define PROGRAM_CATEGORY_GAMES "Игры"
+#define PROGRAM_CATEGORY_SECURITY "Безопасность и записи"
+#define PROGRAM_CATEGORY_ENGINEERING "Инженерия"
+#define PROGRAM_CATEGORY_SUPPLY "Снабжение"
+#define PROGRAM_CATEGORY_SCIENCE "Наука"
 
 ///The default amount a program should take in cell use.
 #define PROGRAM_BASIC_CELL_USE 2 WATTS

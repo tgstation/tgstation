@@ -6,6 +6,7 @@
 #define span_admin(str) ("<span class='admin'>" + str + "</span>")
 #define span_adminprefix(str) ("<span class='admin prefix'>" + str + "</span>")
 #define span_adminhelp(str) ("<span class='adminhelp'>" + str + "</span>")
+#define span_mentorhelp(str) ("<span class='mentorhelp'>" + str + "</span>") // BANDASTATION ADDITION - Mentors
 #define span_adminnotice(str) ("<span class='adminnotice'>" + str + "</span>")
 #define span_adminobserverooc(str) ("<span class='adminobserverooc'>" + str + "</span>")
 #define span_adminooc(str) ("<span class='adminooc'>" + str + "</span>")

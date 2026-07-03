@@ -1,0 +1,8 @@
+[Theater]
+nominative = "театр"
+genitive = "театра"
+dative = "театру"
+accusative = "театр"
+instrumental = "театром"
+prepositional = "театре"
+gender = "male"

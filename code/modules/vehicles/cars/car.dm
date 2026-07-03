@@ -95,7 +95,7 @@
 /obj/vehicle/sealed/car/vehicle_move(direction)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, vehicle_move_delay)
+	COOLDOWN_START(src, cooldown_vehicle_move, modified_move_delay(vehicle_move_delay)) // BANDASTATION EDIT - Vehicle speed
 
 	if(COOLDOWN_FINISHED(src, enginesound_cooldown))
 		COOLDOWN_START(src, enginesound_cooldown, engine_sound_length)

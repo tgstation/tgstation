@@ -23,32 +23,32 @@
 	return our_mix.gases[gas_type][MOLES]
 
 /datum/bounty/item/atmospherics/pluox_tank
-	name = "Full Tank of Pluoxium"
-	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated. (20 Moles)"
+	name = "Полный баллон Pluoxium"
+	description = "НИО ЦК изучает сверхкомпактные баллоны. Отправьте нам полный баллон Pluoxium и вам будет отправлена компенсация. (20 молей)"
 	gas_type = /datum/gas/pluoxium
 
 /datum/bounty/item/atmospherics/nitrium_tank
-	name = "Full Tank of Nitrium"
-	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitrium so they can get started. (20 Moles)"
+	name = "Полный баллон Nitrium"
+	description = "Нечеловеческий персонал станции 88 вызвался волонтёрами в тестировании препаратов, повышающих работоспособность. Отправьте им полный баллон Nitrium, чтобы они смогли начать. (20 молей)"
 	gas_type = /datum/gas/nitrium
 
 /datum/bounty/item/atmospherics/freon_tank
-	name = "Full Tank of Freon"
-	description = "The Supermatter of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it! (20 Moles)"
+	name = "Полный баллон фреона"
+	description = "Суперматтерия на станции 33 начала процесс расслоения. Доставьте баллон Freon, чтобы помочь им остановить это! (20 молей)"
 	gas_type = /datum/gas/freon
 
 /datum/bounty/item/atmospherics/tritium_tank
-	name = "Full Tank of Tritium"
-	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium. (20 Moles)"
+	name = "Полный баллон Tritium"
+	description = "Станция 49 ищет кикстарт для их исследовательской программы. Отправьте им полный баллон Tritium. (20 молей)"
 	gas_type = /datum/gas/tritium
 
 /datum/bounty/item/atmospherics/hydrogen_tank
-	name = "Full Tank of Hydrogen"
-	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it. (20 Moles)"
+	name = "Полный баллон Hydrogen"
+	description = "Наш научный департамент работает над созданием более электроэффективных батареек, использующих водород в качестве катализатора. Отправьте нам полный баллон Hydrogen. (20 молей)"
 	gas_type = /datum/gas/hydrogen
 
 /datum/bounty/item/atmospherics/zauker_tank
-	name = "Full Tank of Zauker"
-	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Zauker gas. Ship us a tank full of it. (20 Moles)"
+	name = "Полный баллон Zauker"
+	description = "Основная планета \[REDACTED] была выбрана в качестве тестового полигона для нового оружия, что использует газ Zauker. Отправьте полный баллон Zauker. (20 молей)"
 	reward = CARGO_CRATE_VALUE * 20
 	gas_type = /datum/gas/zauker

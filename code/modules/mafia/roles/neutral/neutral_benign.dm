@@ -1,7 +1,7 @@
 /datum/mafia_role/fugitive
-	name = "Fugitive"
-	desc = "You're on the run. You can use a vest twice to become immune for a night, and you win by surviving to the end of the game with anyone."
-	win_condition = "survive to the end of the game, with anyone"
+	name = "Беглец"
+	desc = "Вы в бегах. Вы можете использовать жилет дважды, чтобы стать неуязвимым на одну ночь. Вы победите, если доживете до конца игры с кем угодно."
+	win_condition = "доживет до конца игры с кем угодно."
 	revealed_outfit = /datum/outfit/mafia/fugitive
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
@@ -21,4 +21,4 @@
 
 	if(game_status == MAFIA_ALIVE)
 		game.award_role(winner_award, src)
-		game.send_message("<span class='big comradio'>!! FUGITIVE VICTORY !!</span>")
+		game.send_message("<span class='big comradio'>!! ПОБЕДА БЕГЛЕЦА !!</span>")

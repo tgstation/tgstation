@@ -1,0 +1,8 @@
+[headphones]
+nominative = "наушники"
+genitive = "наушников"
+dative = "наушникам"
+accusative = "наушники"
+instrumental = "наушниками"
+prepositional = "наушниках"
+gender = "plural"

@@ -3,7 +3,7 @@
 	filedesc = "ExperTrak Skill Tracker"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "generic"
-	extended_desc = "Scan and view your current marketable job skills."
+	extended_desc = "Сканируйте и просматривайте свои текущие навыки работы на бирже труда."
 	size = 2
 	tgui_id = "NtosSkillTracker"
 	program_icon = "medal"

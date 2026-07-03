@@ -6,7 +6,7 @@
 // releasing a homing, very damaging projectile
 /obj/item/gun/ballistic/rifle/lionhunter
 	name = "\improper Lionhunter's Rifle"
-	desc = "An antique looking rifle that looks immaculate despite being clearly very old."
+	desc = "Антикварная винтовка, которая выглядит безупречно, несмотря на свою явную старость."
 	slot_flags = ITEM_SLOT_BACK
 	icon_state = "lionhunter"
 	inhand_icon_state = "lionhunter"
@@ -50,7 +50,7 @@
 		return TRUE
 
 	if(currently_aiming)
-		user.balloon_alert(user, "already aiming!")
+		user.balloon_alert(user, "уже целитесь!")
 		return FALSE
 
 	var/distance = get_dist(user, target)
@@ -62,7 +62,7 @@
 	if(distance <= min_distance || !isliving(target))
 		return TRUE
 
-	user.balloon_alert(user, "taking aim...")
+	user.balloon_alert(user, "прицеливание...")
 	user.playsound_local(get_turf(user), 'sound/items/weapons/gun/general/chunkyrack.ogg', 100, TRUE)
 
 	var/image/reticle = image(
@@ -93,7 +93,7 @@
 		viewer.client?.images -= reticle
 
 	if(!.)
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, "прервано!")
 
 	return .
 
@@ -176,7 +176,7 @@
 // Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/speedloader/strilka310/lionhunter
 	name = "stripper clip (.310 hunter)"
-	desc = "A stripper clip of mysterious, atypical ammo. It doesn't fit into normal ballistic rifles."
+	desc = "Стрипперная обойма с загадочными, нетипичными патронами. Они не подходят к обычным баллистическим винтовкам."
 	icon_state = "lionhunter_strip"
 	ammo_type = /obj/item/ammo_casing/strilka310/lionhunter
 	max_ammo = 3

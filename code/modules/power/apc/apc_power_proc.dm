@@ -19,10 +19,10 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
 	if(low_power_nightshift_lights)
-		balloon_alert(user, "power is too low!")
+		balloon_alert(user, "слишком мало питания!")
 		return
 	if(last_nightshift_switch > world.time - 10 SECONDS) //~10 seconds between each toggle to prevent spamming
-		balloon_alert(user, "night breaker is cycling!")
+		balloon_alert(user, "цикл освещения перезаряжается!")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
@@ -45,8 +45,8 @@
 		return
 	operating = !operating
 	if (user)
-		var/enabled_or_disabled = operating ? "enabled" : "disabled"
-		balloon_alert(user, "power [enabled_or_disabled]")
+		var/enabled_or_disabled = operating ? "включёно" : "выключено"
+		balloon_alert(user, "питание [enabled_or_disabled]")
 		user.log_message("turned [enabled_or_disabled] the [src]", LOG_GAME)
 		add_hiddenprint(user)
 	update()

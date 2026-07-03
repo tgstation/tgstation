@@ -272,7 +272,7 @@
 	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
 /obj/item/dest_tagger/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins tagging [user.p_their()] final destination! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	if (islizard(user))
 		to_chat(user, span_notice("*HELL*"))//lizard nerf
 	else

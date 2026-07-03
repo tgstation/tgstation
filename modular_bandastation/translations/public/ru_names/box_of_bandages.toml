@@ -1,0 +1,8 @@
+["box of bandages"]
+nominative = "коробка с бинтами"
+genitive = "коробки с бинтами"
+dative = "коробке с бинтами"
+accusative = "коробку с бинтами"
+instrumental = "коробкой с бинтами"
+prepositional = "коробке с бинтами"
+gender = "female"

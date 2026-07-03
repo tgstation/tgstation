@@ -1,0 +1,8 @@
+[cigar]
+nominative = "сигара"
+genitive = "сигары"
+dative = "сигаре"
+accusative = "сигару"
+instrumental = "сигарой"
+prepositional = "сигаре"
+gender = "female"

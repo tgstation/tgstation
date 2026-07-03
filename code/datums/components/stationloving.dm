@@ -134,6 +134,11 @@
 		/area/shuttle/pod_2,
 		/area/shuttle/pod_3,
 		/area/shuttle/pod_4,
+		// BANDASTATION ADDITION START - Nuke disk and centcom gear rework
+		/area/shuttle/specops,
+		/area/shuttle/transport,
+		/area/shuttle/argos,
+		// BANDASTATION ADDITION END - Nuke disk and centcom gear rework
 	))
 	// Typecache of areas on the centcom Z-level that we allow the disk to stay on
 	var/static/list/disallowed_centcom_areas = typecacheof(list(

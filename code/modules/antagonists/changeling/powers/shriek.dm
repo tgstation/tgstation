@@ -1,8 +1,8 @@
 /datum/action/changeling/resonant_shriek
 	name = "Resonant Shriek"
-	desc = "Our lungs and vocal cords shift, allowing us to emit a noise that deafens and confuses non-changelings, causing them to lose some control over their movements. \
-		Best used to stop prey from escaping. Doesn't work well in a vacuum. Costs 20 chemicals."
-	helptext = "Emits a high-frequency sound that confuses and deafens humans to hamper their movement, blows out nearby lights and overloads cyborg sensors."
+	desc = "Наши легкие и голосовые связки смещаются, позволяя нам на короткое время издать звук, который оглушает и сбивает с толку не-генокрадов. \
+		Идеально для остановки побега жертвы. Плохо работает в вакууме. Стоит 20 химикатов."
+	helptext = "Излучает высокочастотный звук, который сбивает с толку и оглушает людей, выбивает свет и перегружает сенсоры киборгов."
 	button_icon_state = "resonant_shriek"
 	category = "combat"
 	chemical_cost = 20
@@ -14,7 +14,7 @@
 /datum/action/changeling/resonant_shriek/sting_action(mob/user)
 	..()
 	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't shriek in pipes!")
+		user.balloon_alert(user, "не можем кричать в трубах!")
 		return FALSE
 	playsound(user, 'sound/effects/screech.ogg', 100)
 	for(var/mob/living/living in get_hearers_in_view(4, user))
@@ -34,7 +34,7 @@
 
 /datum/action/changeling/dissonant_shriek
 	name = "Technophagic Shriek"
-	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Breaks headsets and cameras, and can sometimes break laser weaponry, doors, and modsuits. Costs 20 chemicals."
+	desc = "Мы смещаем голосовые связки, чтобы выпустить высокочастотный звук, который перегружает близлежащую электронику. Ломает наушники и камеры, а так же, иногда ломает лазерное оружие, двери и модсьюты. Стоит 20 химикатов."
 	button_icon_state = "technophagic_shriek"
 	category = "combat"
 	chemical_cost = 20
@@ -44,7 +44,7 @@
 /datum/action/changeling/dissonant_shriek/sting_action(mob/user)
 	..()
 	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't shriek in pipes!")
+		user.balloon_alert(user, "не можем кричать в трубах!")
 		return FALSE
 	empulse(get_turf(user), 2, 5, 1, emp_source = src)
 	for(var/obj/machinery/light/L in range(5, usr))

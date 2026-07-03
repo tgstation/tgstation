@@ -1,0 +1,2067 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ac" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"ae" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	max_integrity = 400
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.88;n2=82.04;co2=0.14;TEMP=293.21"
+	},
+/area/shuttle/escape)
+"af" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	name = "BoxStation emergency evac bay";
+	dwidth = 12;
+	height = 18;
+	shuttle_id = "emergency_home";
+	width = 32
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	max_integrity = 400
+	},
+/obj/docking_port/mobile/emergency/shuttle_build{
+	name = "Mothroach Supermatter Shuttle"
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.81;n2=82;co2=0.21;TEMP=293.26"
+	},
+/area/shuttle/escape)
+"ag" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	max_integrity = 400
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.86;n2=82;co2=0.15;TEMP=293.23"
+	},
+/area/shuttle/escape)
+"ah" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	max_integrity = 400
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ai" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"aj" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"al" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/machinery/portable_atmospherics/canister/nob,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"an" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/closet/radiation,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"ao" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aq" = (
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"ar" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 4
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 4;
+	atom_integrity = 185
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"as" = (
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"aw" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"ax" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"az" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aA" = (
+/obj/structure/closet{
+	name = "evidence closet"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aB" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/sign/warning/radiation/directional/east,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aD" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aG" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Airlock"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"aI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"aJ" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"aK" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/sign/warning/radiation/directional/west,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aL" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"aN" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"aP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"aR" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aS" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aT" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/recharger{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aU" = (
+/obj/machinery/recharge_station{
+	req_access = list("robotics")
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/effect/mapping_helpers/airalarm/engine_access,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "mothsm"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"aV" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bc" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/modular_computer/preset/engineering,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"be" = (
+/mob/living/basic/mothroach{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"bg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"bh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/machinery/door/airlock/security/glass,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/effect/turf_decal/trimline/dark_red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bl" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bm" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bo" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/basic/bot/firebot{
+	dir = 1;
+	icon_state = "firebots1"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"br" = (
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"bs" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"bD" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/soda_cans/tonic{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bE" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bF" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bG" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"bH" = (
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"bI" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"bJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 5
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"bK" = (
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"bM" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"bO" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"bR" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"bT" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"bU" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/moth_piping/directional/south,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"bW" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"bX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ca" = (
+/mob/living/basic/mothroach{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"cb" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cd" = (
+/obj/machinery/computer/security{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape)
+"ce" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 8
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"cf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=31.63;TEMP=5.33"
+	},
+/area/shuttle/escape)
+"cg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=22.5;TEMP=5.21"
+	},
+/area/shuttle/escape)
+"ch" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=31.21;TEMP=5.16"
+	},
+/area/shuttle/escape)
+"ci" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"cj" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=21.76;n2=82;co2=0.25;TEMP=293.26"
+	},
+/area/shuttle/escape)
+"cn" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"cr" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"cu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cy" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cA" = (
+/obj/machinery/computer/aifixer{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape)
+"cB" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=93.87;TEMP=4.91"
+	},
+/area/shuttle/escape)
+"cC" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "Moth_Escape_Shuttle_SM"
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=93.87;TEMP=4.91"
+	},
+/area/shuttle/escape)
+"cD" = (
+/obj/machinery/air_sensor{
+	chamber_id = "mothsm"
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=93.87;TEMP=4.91"
+	},
+/area/shuttle/escape)
+"cE" = (
+/obj/machinery/power/supermatter_crystal/shard{
+	anchored = 1
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=66.11;TEMP=4.76"
+	},
+/area/shuttle/escape)
+"cF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=88.2;TEMP=4.7"
+	},
+/area/shuttle/escape)
+"cH" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=21.74;n2=82;co2=0.26;TEMP=293.26"
+	},
+/area/shuttle/escape)
+"cM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"cP" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"cQ" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Airlock";
+	atom_integrity = 375;
+	max_integrity = 400
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"cR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"cS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"cT" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/status_display/evac{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"cU" = (
+/obj/machinery/door/airlock/command/glass,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/shuttle/escape)
+"cV" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cX" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"cY" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape)
+"cZ" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"da" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=245.64;TEMP=4.44"
+	},
+/area/shuttle/escape)
+"db" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=242.25;TEMP=4.46"
+	},
+/area/shuttle/escape)
+"dc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "n2=249.97;TEMP=4.38"
+	},
+/area/shuttle/escape)
+"de" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=21.85;n2=82;co2=0.16;TEMP=293.22"
+	},
+/area/shuttle/escape)
+"df" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"dh" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"dj" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"dm" = (
+/obj/machinery/status_display/evac{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"dn" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"dq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"dt" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"du" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dw" = (
+/obj/machinery/computer/communications{
+	dir = 1;
+	req_access = list("command")
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape)
+"dx" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"dz" = (
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"dA" = (
+/obj/machinery/power/emitter{
+	dir = 8;
+	anchored = 1;
+	req_access = list("engine_equip")
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"dB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 9
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"dC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dF" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"dJ" = (
+/obj/machinery/light/floor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Airlock"
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"dO" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dQ" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dR" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/structure/sign/poster/official/moth_delam/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dS" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dU" = (
+/obj/machinery/computer/crew{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape)
+"dV" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"dW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dZ" = (
+/obj/machinery/light/floor,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ea" = (
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/wall_healer/free/directional/north,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"eb" = (
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"ed" = (
+/obj/effect/turf_decal/siding/white/corner,
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/beaker/cryoxadone,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"ee" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/obj/structure/table/glass,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"ef" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eg" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/obj/structure/table/glass,
+/obj/effect/spawner/surgery_tray/full,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"eh" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/structure/table/optable,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"ei" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"el" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"eo" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/champagne{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/obj/item/food/cornchips/random,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"ep" = (
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_y = -10
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"eq" = (
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/obj/item/food/no_raisin{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/obj/item/food/cornchips/random,
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"er" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/button/door/directional/north{
+	id = "Moth_Escape_Shuttle_SM";
+	name = "Open SM Blast Door"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"es" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 10
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"et" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ex" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"ey" = (
+/obj/structure/grille{
+	dir = 1
+	},
+/obj/structure/window/reinforced/shuttle{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ez" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/stasis,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"eA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eE" = (
+/obj/machinery/stasis,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"eF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"eG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"eH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"eI" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"eJ" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/dark,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"eK" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/mob/living/basic/mothroach/bar,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"eP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"eR" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	icon_state = "connector";
+	pipe_color = "#00FFFF"
+	},
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/structure/sign/poster/official/moth_epi/directional/north,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"eS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eT" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eW" = (
+/obj/effect/turf_decal/trimline/blue/filled/end,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"eZ" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"fa" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"fc" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = 27;
+	req_access = list("engineering")
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/obj/machinery/power/smes{
+	charge = 25e+006;
+	output_level = 0
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"fd" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/power/smes{
+	charge = 25e+006;
+	output_level = 0
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"ff" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"fh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"fi" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"fk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/cryo_cell,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"fl" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"fm" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"fn" = (
+/obj/machinery/limbgrower,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/beaker/synthflesh,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"fo" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/item/defibrillator/loaded,
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"fp" = (
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/shuttle/escape)
+"fq" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"hD" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/sign/warning/radiation/directional/north,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=21.65;n2=82.05;co2=0.37;TEMP=293.3"
+	},
+/area/shuttle/escape)
+"lF" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/sign/poster/official/moth_hardhat/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"nI" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"nS" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"oh" = (
+/obj/effect/turf_decal/siding/white,
+/obj/structure/sign/poster/official/moth_delam/directional/north,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"pQ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/moth_hardhat/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"re" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"AQ" = (
+/mob/living/basic/mothroach{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"DD" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/moth_meth/directional/west,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"IN" = (
+/obj/effect/turf_decal/siding/white,
+/obj/structure/sign/warning/radiation/directional/north,
+/turf/open/floor/iron/half,
+/area/shuttle/escape)
+"LQ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/machinery/power/smes{
+	charge = 25e+006;
+	output_level = 0
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"OA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/moth_delam/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"Wo" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/closet/radiation,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+aa
+ai
+ac
+ac
+fq
+ac
+ac
+ae
+ac
+af
+ac
+ac
+fq
+ac
+ac
+ag
+ac
+ah
+ac
+ai
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+eI
+bl
+al
+Wo
+an
+ao
+ai
+aq
+ar
+as
+pQ
+nS
+dF
+DD
+aw
+ax
+ac
+aS
+aA
+ac
+ai
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+eI
+bl
+aD
+aV
+aE
+aF
+aG
+aH
+aI
+aJ
+bT
+bT
+bT
+bT
+bT
+aP
+fq
+aR
+az
+aT
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+ac
+ac
+aU
+aV
+aW
+aV
+ai
+OA
+aN
+bs
+aN
+aN
+aN
+be
+aN
+bg
+bh
+bi
+bj
+bk
+ac
+ac
+fq
+fq
+fq
+aa
+"}
+(5,1,1) = {"
+aK
+dC
+bm
+bn
+bo
+bn
+ai
+cM
+br
+bs
+cM
+cM
+cM
+cM
+cM
+cr
+fq
+bW
+bX
+bk
+ai
+bD
+bE
+bF
+fq
+fq
+"}
+(6,1,1) = {"
+bc
+bG
+bH
+bI
+bJ
+bK
+dZ
+hD
+bM
+bO
+bT
+bT
+bR
+bT
+bT
+bU
+ac
+bW
+bX
+bk
+ai
+ca
+cb
+cX
+cd
+fq
+"}
+(7,1,1) = {"
+aj
+ce
+cf
+cg
+ch
+ci
+cj
+aN
+be
+aL
+aN
+aN
+aN
+aN
+aN
+cr
+ac
+ac
+cu
+ai
+ai
+cx
+cy
+cX
+cA
+fq
+"}
+(8,1,1) = {"
+cB
+cC
+cD
+cE
+cF
+ci
+cH
+cM
+cM
+aL
+nI
+cM
+cM
+cM
+cM
+cP
+cQ
+cR
+cS
+cT
+cU
+cV
+cW
+cX
+cY
+fq
+"}
+(9,1,1) = {"
+cn
+cZ
+da
+db
+dc
+ci
+de
+df
+bT
+dh
+dm
+dj
+dj
+re
+dm
+dn
+ai
+ai
+dq
+ai
+ai
+dt
+du
+cX
+dw
+fq
+"}
+(10,1,1) = {"
+dx
+dy
+dz
+dA
+dB
+bK
+ai
+IN
+dF
+ai
+ai
+ai
+dJ
+ai
+ai
+ai
+ai
+dO
+el
+dQ
+ai
+dR
+dS
+cX
+dU
+fq
+"}
+(11,1,1) = {"
+aB
+aC
+dV
+dW
+dX
+dY
+dZ
+ea
+eb
+ai
+ed
+ee
+ef
+eg
+eh
+ei
+ai
+bW
+el
+bk
+ai
+eo
+ep
+eq
+fq
+fq
+"}
+(12,1,1) = {"
+ac
+ac
+er
+es
+et
+eu
+ai
+oh
+ex
+ey
+ez
+eA
+eB
+eC
+eD
+eE
+eF
+eG
+eH
+bk
+ac
+ac
+fq
+fq
+fq
+aa
+"}
+(13,1,1) = {"
+eI
+bl
+eJ
+eK
+eK
+eM
+aG
+eO
+eP
+ai
+eR
+eS
+eT
+eT
+eV
+eW
+ai
+lF
+AQ
+fa
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+eI
+bl
+fc
+LQ
+fd
+ff
+ai
+fh
+fi
+ai
+fk
+fl
+fm
+fn
+fo
+fp
+fq
+dO
+eZ
+ac
+ai
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+ai
+ac
+ac
+fq
+ac
+ac
+ac
+fq
+ac
+ac
+ac
+fq
+ac
+ac
+ac
+fq
+ac
+ac
+ai
+aa
+aa
+aa
+aa
+aa
+aa
+"}

@@ -3,7 +3,7 @@
 	icon_state = "picket"
 	inhand_icon_state = "picket"
 	name = "blank picket sign"
-	desc = "It's blank."
+	desc = "Он чист и невинен."
 	force = 5
 	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	w_class = WEIGHT_CLASS_BULKY
@@ -16,7 +16,7 @@
 
 /obj/item/picket_sign/cyborg
 	name = "metallic nano-sign"
-	desc = "A high tech picket sign used by silicons that can reprogram its surface at will. Probably hurts to get hit by, too."
+	desc = "Высокотехнологичный плакат используемый кремниевыми формами жизни с возможностью в любой момент изменить надпись."
 	force = 13
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/nano_picket_sign)
@@ -24,7 +24,7 @@
 /obj/item/picket_sign/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	label = input
-	AddComponent(/datum/component/rename, name, "It reads: [input]")
+	AddComponent(/datum/component/rename, name, "Надпись: [input]")
 	return "[input] sign"
 
 /obj/item/picket_sign/rename_reset()
@@ -35,9 +35,9 @@
 		return
 	COOLDOWN_START(src, picket_sign_cooldown, 5 SECONDS)
 	if(label)
-		user.manual_emote("waves around \the \"[label]\" sign.")
+		user.manual_emote("размахивает плакатом с надписью \"[label]\"!")
 	else
-		user.manual_emote("waves around a blank sign.")
+		user.manual_emote("потрясает в воздухе пустым плакатом!")
 	var/direction = prob(50) ? -1 : 1
 	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
 		animate(user, pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)

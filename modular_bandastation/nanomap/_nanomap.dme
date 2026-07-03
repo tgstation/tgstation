@@ -1,0 +1,6 @@
+#include "_nanomap.dm"
+
+#include "code/camera_console.dm"
+#include "code/crew_monitor.dm"
+#include "code/nanomap_assets.dm"
+#include "code/nanomap_datum.dm"

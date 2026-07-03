@@ -43,44 +43,43 @@ export const AntagInfoRevolution = () => {
                 <Stack vertical>
                   {lone_wolf ? (
                     <Stack.Item>
-                      - You are a lone leader of the revolution. It is
-                      recommended to act swiftly and decisively - when the
-                      revolution is sufficiently large, more leaders will be
-                      promoted.
+                      - Вы одинокий лидер революции. Рекомендуется действовать
+                      быстро и решительно - когда революция станет достаточно
+                      большой, будут назначены новые лидеры.
                     </Stack.Item>
                   ) : (
                     <Stack.Item>
-                      - There are multiple leaders of the revolution. It is
-                      recommended to work together and establish a plan BEFORE
-                      you start converting the crew - being outed early can
-                      prove extremely detrimental.
+                      - У революции несколько лидеров. Рекомендуется действовать
+                      сообща и составить план ДО того, как вы начнете обращать
+                      экипаж - раннее раскрытие может сильно навредить.
                     </Stack.Item>
                   )}
                   <Stack.Item>
-                    - Convert the crew to your cause with a flash - any flash
-                    will work.
+                    - Обращайте экипаж на свою сторону вспышкой - подойдет любая
+                    вспышка.
                   </Stack.Item>
                   <Stack.Item>
-                    - Mindshields will prevent conversion. You can identify them
-                    via the flashing blue border around their job icon.
+                    - Щиты разума защищают от обращения. Их можно определить по
+                    мигающей синей рамке вокруг иконки должности.
                   </Stack.Item>
                   <Stack.Item>
-                    - The revolution is lost if you and your fellow leaders are
-                    all killed or exiled. Do not let that happen!
+                    - Революция проиграна, если вы и все ваши лидеры будете
+                    убиты или изгнаны. Не допустите этого!
                   </Stack.Item>
                 </Stack>
               ) : (
                 <Stack vertical>
                   <Stack.Item>
-                    - Help your cause. Do not harm your fellow freedom fighters.
+                    - Помогайте своему делу. Не вредите своим товарищам по
+                    борьбе за свободу.
                   </Stack.Item>
                   <Stack.Item>
-                    - You can identify your comrades by the red "R" icons, and
-                    your leaders by the blue "R" icons.
+                    - Вы можете узнать своих товарищей по красным значкам "R", а
+                    лидеров - по синим значкам "R".
                   </Stack.Item>
                   <Stack.Item>
-                    - The revolution is lost if all of your leaders are killed
-                    or exiled. Do not let that happen!
+                    - Революция проиграна, если все ваши лидеры будут убиты или
+                    изгнаны. Не допустите этого!
                   </Stack.Item>
                 </Stack>
               )}
@@ -91,11 +90,11 @@ export const AntagInfoRevolution = () => {
                 <Stack.Item>
                   <Stack vertical>
                     <Stack.Item fontSize="16px" textAlign="center">
-                      You must kill or exile the heads of staff:
+                      Вы должны убить или изгнать глав отделов:
                     </Stack.Item>
                     {heads.map((head, i) => (
                       <Stack.Item key={`head-${i}`}>
-                        - {head.name}, the {head.role}
+                        - {head.name}, {head.role}
                       </Stack.Item>
                     ))}
                   </Stack>
@@ -108,13 +107,13 @@ export const AntagInfoRevolution = () => {
                 <Stack.Item>
                   <Stack vertical>
                     <Stack.Item italic>
-                      To identify your fellow leaders, use the following code:
+                      Чтобы опознать своих лидеров, используйте следующий код:
                     </Stack.Item>
                     <Stack.Item textColor="blue">
-                      Phrases: {formatCodes(code_phrases)}
+                      Фразы: {formatCodes(code_phrases)}
                     </Stack.Item>
                     <Stack.Item textColor="red">
-                      Responses: {formatCodes(code_responses)}
+                      Ответы: {formatCodes(code_responses)}
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>

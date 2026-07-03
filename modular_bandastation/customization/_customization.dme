@@ -1,0 +1,3 @@
+#include "_customization.dm"
+
+#include "code/sprite_accessories/hair.dm"

@@ -75,6 +75,8 @@
 	var/obj/machinery/newscaster/pai/newscaster
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
+	/// Crew Monitor - BANDASTATION ADDITION
+	var/obj/item/sensor_device/crew_monitor
 
 	///The messeenger ability that pAIs get when they are put in a PDA.
 	var/datum/action/innate/pai/messenger/messenger_ability
@@ -145,6 +147,7 @@
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
+	QDEL_NULL(crew_monitor) // BANDASTATION ADDITION
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
 	QDEL_NULL(leash)
@@ -189,6 +192,10 @@
 		newscaster = null
 	else if(gone == signaler)
 		signaler = null
+	// BANDASTATION ADDITION - START
+	else if(gone == crew_monitor)
+		crew_monitor = null
+	// BANDASTATION ADDITION - END
 	return ..()
 
 /mob/living/silicon/pai/proc/on_hacking_cable_del(atom/source)

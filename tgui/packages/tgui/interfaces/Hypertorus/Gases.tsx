@@ -47,17 +47,17 @@ type HypertorusData = {
 
 const moderator_gases_help = {
   plasma:
-    'Produces basic gases. Has a modest heat bonus to help kick start the early fusion process. When added in large quantities, its high heat capacity can help to slow down temperature changes to manageable speeds.',
-  bz: 'Produces intermediate gases at Fusion Level 3 or higher. Massively increases radiation, and induces hallucinations in bystanders.',
+    'Производит основные газы. Имеет небольшой тепловой бонус, помогающий запустить ранний процесс синтеза. При добавлении в больших количествах его высокая теплоемкость может помочь замедлить изменение температуры до приемлемой скорости.',
+  bz: 'Производит промежуточные газы на уровне термоядерного синтеза 3 или выше. Сильно повышает радиацию и вызывает галлюцинации у окружающих.',
   proto_nitrate:
-    'Produces advanced gases. Massively increases radiation, and accelerates the rate of temperature change. Make sure you have enough cooling.',
-  o2: 'When added in high quantities, rapidly purges iron content. Does not purge iron content fast enough to keep up with damage at high Fusion Levels.',
+    'Производит продвинутые газы. Сильно увеличивает радиацию и ускоряет скорость изменения температуры. Убедитесь что у вас достаточно охлаждения.',
+  o2: 'При добавлении в больших количествах быстро очищает железо. Не очищает содержание железа достаточно быстро, чтобы успевать за уроном на высоких уровнях синтеза.',
   healium:
-    'Directly heals a heavily damaged HFR core at high Fusion Levels, but is rapidly consumed in the process.',
+    'Непосредственно восстанавливает сильно поврежденное ядро HFR на высоких уровнях синтеза, но быстро расходуется в процессе.',
   antinoblium:
-    'Provides huge amounts of energy and radiation. Can cause dangerous electrical storms even from a healthy HFR core when present in more than trace amounts. Wear appropriate electrical protection when handling.',
+    'Обеспечивает огромное количество энергии и излучения. Может вызывать опасные электрические бури даже в исправном HFR-ядре, если присутствует в более чем следовых количествах. При работе с ним используйте соответствующие средства электрозащиты.',
   freon:
-    'Saps most forms of energy expression. Slows the rate of temperature change.',
+    'Поглощает большинство форм энергии. Замедляет скорость изменения температуры.',
 } as const;
 
 const moderator_gases_sticky_order = ['plasma', 'bz', 'proto_nitrate'] as const;
@@ -105,14 +105,14 @@ const GasList = (props: GasListProps) => {
         label={
           <>
             <HoverHelp content={rateHelp} />
-            Injection control:
+            Управление впрыском:
           </>
         }
       >
         <Button
           disabled={start_power === 0 || start_cooling === 0}
           icon={data[input_switch] ? 'power-off' : 'times'}
-          content={data[input_switch] ? 'On' : 'Off'}
+          content={data[input_switch] ? 'Вкл' : 'Выкл'}
           selected={data[input_switch]}
           onClick={() => act(input_switch)}
         />
@@ -170,7 +170,7 @@ export const HypertorusGases = (props) => {
 
   return (
     <>
-      <Section title="Internal Fusion Gases">
+      <Section title="Газы внутреннего синтеза">
         {selected_fuel ? (
           <GasList
             input_rate="fuel_injection_rate"
@@ -181,19 +181,19 @@ export const HypertorusGases = (props) => {
             minimumScale={500}
             prepend={() => <HelpDummy />}
             rateHelp={
-              'The rate at which new fuel is added from the fuel input port.' +
-              ' This rate affects the rate of production,' +
-              ' even when input is not active.'
+              'Скорость, с которой новое топливо добавляется из порта подачи топлива.' +
+              ' Этот показатель влияет на скорость производства,' +
+              ' даже если ввод не активен.'
             }
             stickyGases={selected_fuel.requirements}
           />
         ) : (
           <Box align="center" color="red">
-            {'No recipe selected'}
+            {'Рецепт не выбран'}
           </Box>
         )}
       </Section>
-      <Section title="Moderator Gases">
+      <Section title="Газы модератора">
         <GasList
           input_rate="moderator_injection_rate"
           input_switch="start_moderator"
@@ -202,7 +202,7 @@ export const HypertorusGases = (props) => {
           raw_gases={moderator_gases}
           minimumScale={500}
           rateHelp={
-            'The rate at which new moderator gas is added from the moderator port.'
+            'Скорость, с которой новый газ модератора добавляется из порта.'
           }
           stickyGases={moderator_gases_sticky_order}
           prepend={(gas) =>

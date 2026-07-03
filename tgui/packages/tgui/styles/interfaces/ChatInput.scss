@@ -1,0 +1,73 @@
+.ChatInput {
+  position: relative;
+  line-height: 16px;
+  background-color: var(--color-base);
+  border-radius: var(--border-radius-medium);
+  transition: box-shadow var(--transition-time-medium);
+  z-index: 1;
+
+  &.editing {
+    box-shadow: inset 0 0 2px var(--color-primary);
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    background-color: hsl(from var(--color-base) h calc(s - 20) calc(l + 5));
+
+    .ChatInput__Text,
+    .ChatInput__Buttons {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &--cooldown {
+    pointer-events: none;
+    mask-image: linear-gradient(
+      90deg,
+      black var(--cooldown),
+      hsla(0, 0%, 0%, 0.5) 0
+    );
+  }
+
+  &--flash {
+    animation: flash 1s ease-in-out 1;
+  }
+
+  &__Text {
+    cursor: text;
+    flex: 1;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    overflow-wrap: anywhere;
+    max-height: calc(5lh + 1em);
+    padding: 0.5em 0.75em;
+    outline: none;
+
+    &--placeholder:before {
+      content: attr(data-placeholder);
+      color: var(--color-label);
+      opacity: 0.66;
+    }
+  }
+
+  &__LeftCharacters {
+    user-select: none;
+    align-self: end;
+    line-height: 1;
+    font-size: 0.9em;
+    color: var(--color-label);
+    opacity: 0.66;
+  }
+
+  @keyframes flash {
+    0%,
+    100% {
+      filter: none;
+    }
+    50% {
+      filter: drop-shadow(0 0 0.2em var(--color-primary));
+    }
+  }
+}

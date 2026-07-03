@@ -73,6 +73,9 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
+// BANDASTATION ADD START - SSD INDICATOR
+#define COMSIG_MOB_ADMIN_GHOSTED "mod_admin_ghosted"
+// BANDASTATION ADD END - SSD INDICATOR
 /// can_roll_midround(datum/antagonist/antag_type) from certain midround rulesets, (mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
 #define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_before_midround_roll"
 	#define CANCEL_ROLL (1<<1)
@@ -261,7 +264,7 @@
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"
 
-/// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
+/// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop, immobilize)
 #define COMSIG_MOB_SLIPPED "mob_slipped"
 
 /// From the base of /datum/component/callouts/proc/callout_picker(mob/user, atom/clicked_atom): (datum/callout_option/callout, atom/target)

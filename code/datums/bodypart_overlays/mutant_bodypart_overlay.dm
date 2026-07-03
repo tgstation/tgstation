@@ -6,6 +6,11 @@
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
 	var/feature_key = ""
 
+	/// BANDASTATION ADDITION START - Species
+	/// If `color_source` is `ORGAN_COLOR_FEATURE` this feature key will be used to find color
+	var/dna_color_feature_key = ""
+	/// BANDASTATION ADDITION END - Species
+
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
 	///Override of the color of the organ, from dye sprays
@@ -150,6 +155,17 @@
 				draw_color = my_head.fixed_hair_color || my_head.hair_color
 			else //inherit mutant color of the bodypart if the owner doesn't have hair.
 				draw_color = bodypart_owner.draw_color
+
+		/// BANDASTATION ADDITION START - Species
+		if(ORGAN_COLOR_FEATURE)
+			if(!dna_color_feature_key)
+				stack_trace("No `dna_color_feature_key` defined in `[type]` with color_source=ORGAN_COLOR_FEATURE")
+				return FALSE
+
+			var/color = bodypart_owner.owner?.dna?.features[dna_color_feature_key]
+			if(color)
+				draw_color = color
+		/// BANDASTATION ADDITION END - Species
 
 	return TRUE
 

@@ -9,7 +9,7 @@
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
 			if (spawner)
-				to_chat(spawner, span_warning("Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!"))
+				to_chat(spawner, span_warning("Гармоники блюспейса ограничивают на станции количество мартышек, а именно до: [cap]!"))
 			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
 	return ..()

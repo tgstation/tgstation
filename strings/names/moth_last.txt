@@ -1,57 +1,40 @@
-Accurata
-Adultera
-Albipuncta
-Albostriata
-Albovenosa
-Argentea
-Bicolorata
-Bifasciata
-Cameroni
-Chiangmai
-Combinata
-Convecta
-Cuneilinea
-Curvata
-Dentata
-Empyrea
-Eucrossa
-Ferrilinea
-Fraterna
-Goniosigma
-Hamifera
-Hirashimai
-Hypophaea
-Ignita
-Impura
-Infrargyrea
-Insularis
-Intermediata
-Intolerabilis
-Laevusta
-Languida
-Liebherri
-Lineatipes
-Lucida
-Maxima
-Mediana
-Modesta
-Monticola
-Naumanni
-Nepalina
-Obscura
-Osseogrisea
-Pastellina
-Phlebitis
-Pyrausta
-Radiata
-Riparia
-Rufulosa
-Semicana
-Separata
-Siamensis
-Simplex
-Toumodi
-Undicilia
-Uruma
-Vittata
-Yuennana
+Альтаира
+Антареса
+Арктура
+Андромеды
+Альдебарана
+Альбирео
+Алголя
+Альфы Круциус
+Бетельгейзе
+Беты Ауриги
+Велеса
+Веги
+Гакруса
+Гекаты
+Глизе
+Гаммы Сигни
+Дагона
+Денеб
+Долины Феникса
+Димидиума
+Капелла
+Кассиопеи
+Лютеции
+Миры
+Мимозы
+Менкалинана
+Ориона
+Осириса
+Проциона
+Поллукса
+Полариса
+Регула
+Спики
+Садра
+Скопления Плеяд
+Теотонио
+Туманности Орла
+Туманности Краба
+Туманности Вуали
+Хадара

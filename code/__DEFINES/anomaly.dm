@@ -15,7 +15,7 @@
 ///Time in seconds before anomaly is announced
 #define ANOMALY_ANNOUNCE_MEDIUM_TIME (2 EVENT_SECONDS)
 ///Let them know how far away the anomaly is
-#define ANOMALY_ANNOUNCE_MEDIUM_TEXT "long range scanners. Expected location:"
+#define ANOMALY_ANNOUNCE_MEDIUM_TEXT "сканерах дальнего действия. Предполагаемая локация:"
 
 /**
  * Chaotic but not harmful anomalies. Give the station a chance to find it on their own.
@@ -26,7 +26,7 @@
 ///Time in seconds before anomaly is announced
 #define ANOMALY_ANNOUNCE_HARMFUL_TIME (30 EVENT_SECONDS)
 ///Let them know how far away the anomaly is
-#define ANOMALY_ANNOUNCE_HARMFUL_TEXT "localized scanners. Detected location:"
+#define ANOMALY_ANNOUNCE_HARMFUL_TEXT "локальных сканерах. Зафиксированная локация:"
 
 /**
  * Anomalies that can fuck you up. Give them a bit of warning.
@@ -37,4 +37,4 @@
 ///Time in seconds before anomaly is announced
 #define ANOMALY_ANNOUNCE_DANGEROUS_TIME (30 EVENT_SECONDS)
 ///Let them know how far away the anomaly is
-#define ANOMALY_ANNOUNCE_DANGEROUS_TEXT "localized scanners. Detected location:"
+#define ANOMALY_ANNOUNCE_DANGEROUS_TEXT "локальных сканерах. Зафиксированная локация:"

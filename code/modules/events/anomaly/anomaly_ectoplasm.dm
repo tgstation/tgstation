@@ -4,7 +4,7 @@
 
 /datum/round_event_control/anomaly/anomaly_ectoplasm
 	name = "Anomaly: Ectoplasmic Outburst"
-	description = "Anomaly that produces an effect of varying intensity based on how many ghosts are orbiting it."
+	description = "Аномалия, вызывающая эффект различной интенсивности в зависимости от количества призраков, находящихся вокруг нее."
 	typepath = /datum/round_event/anomaly/anomaly_ectoplasm
 	min_players = 30
 	max_occurrences = 2
@@ -41,7 +41,7 @@
 /datum/round_event/anomaly/anomaly_ectoplasm/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Paranormal ectoplasmic outburst detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Паранормальный выброс эктоплазмы обнаружен на [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.declent_ru(NOMINATIVE)].", "Обнаружена аномалия")
 
 /datum/event_admin_setup/anomaly_ectoplasm
 	///The admin-selected intensity

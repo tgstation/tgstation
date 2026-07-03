@@ -81,13 +81,13 @@
 
 	switch(solved_type)
 		if(GIZMO_PUZZLE_WRONG)
-			holder.balloon_alert(user, "buzz")
+			holder.balloon_alert(user, "бзз...")
 			playsound(holder, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_CORRECT)
-			holder.balloon_alert(user, "ping")
+			holder.balloon_alert(user, "динь...")
 			playsound(holder, 'sound/machines/ping.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_SOLVED)
-			holder.balloon_alert(user, "creak")
+			holder.balloon_alert(user, "крррхх...")
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
 
 /// Sequences can be a bit shorter since you have to constantly type and scream them

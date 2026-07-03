@@ -1,0 +1,8 @@
+[stove]
+nominative = "плита"
+genitive = "плиты"
+dative = "плите"
+accusative = "плиту"
+instrumental = "плитой"
+prepositional = "плите"
+gender = "female"

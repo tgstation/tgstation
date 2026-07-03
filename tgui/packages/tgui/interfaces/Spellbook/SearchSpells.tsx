@@ -39,12 +39,12 @@ export function SearchSpells(props) {
     return (
       <Stack width="100%" vertical>
         <Stack.Item>
-          <NoticeBox>No spells found!</NoticeBox>
+          <NoticeBox>Заклинания не найдены!</NoticeBox>
         </Stack.Item>
         <Stack.Item>
           <Box italic align="center" color="lightgrey">
-            Search tip: Searching "Robeless" will only show you spells that
-            don't require wizard garb!
+            Совет по поиску: Поиск по запросу «robeless» покажет вам только те заклинания,
+            которые не требуют облачения волшебника!
           </Box>
         </Stack.Item>
       </Stack>

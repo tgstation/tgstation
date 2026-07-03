@@ -1,10 +1,10 @@
 //Both ERT and DS are handled by the same datums since they mostly differ in equipment in objective.
 /datum/team/ert
-	name = "Emergency Response Team"
+	name = "Отряд быстрого реагирования"
 	var/datum/objective/mission //main mission
 
 /datum/antagonist/ert
-	name = "Emergency Response Officer"
+	name = "Офицер ОБР"
 	can_elimination_hijack = ELIMINATION_PREVENT
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
@@ -18,7 +18,7 @@
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
 	var/datum/outfit/plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
-	var/role = "Security Officer"
+	var/role = "Сотрудник службы безопасности"
 	var/list/name_source
 	var/random_names = TRUE
 	var/rip_and_tear = FALSE
@@ -48,19 +48,19 @@
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
 
 /datum/antagonist/ert/official
-	name = "CentCom Official"
+	name = "Представитель Центрального Командования"
 	show_name_in_check_antagonists = TRUE
 	var/datum/objective/mission
-	role = "Inspector"
+	role = "Инспектор"
 	random_names = FALSE
 	outfit = /datum/outfit/centcom/centcom_official
 
 /datum/antagonist/ert/official/greet()
 	. = ..()
 	if (ert_team)
-		to_chat(owner, "<span class='warningplain'>Central Command is sending you to [station_name()] with the task: [ert_team.mission.explanation_text]</span>")
+		to_chat(owner, "<span class='warningplain'>Центральное командование отправляет вас на [station_name()] с следующей задачей: [ert_team.mission.explanation_text]</span>")
 	else
-		to_chat(owner, "<span class='warningplain'>Central Command is sending you to [station_name()] with the task: [mission.explanation_text]</span>")
+		to_chat(owner, "<span class='warningplain'>Центральное командование отправляет вас на [station_name()] с следующей задачей: [mission.explanation_text]</span>")
 
 /datum/antagonist/ert/official/forge_objectives()
 	if (ert_team)
@@ -69,7 +69,7 @@
 		return
 	var/datum/objective/missionobj = new ()
 	missionobj.owner = owner
-	missionobj.explanation_text = "Conduct a routine performance review of [station_name()] and its Captain."
+	missionobj.explanation_text = "Проведите проверку работоспособности [station_name()] и её Капитана."
 	missionobj.completed = TRUE
 	mission = missionobj
 	objectives |= mission
@@ -80,21 +80,21 @@
 	outfit = /datum/outfit/centcom/ert/security/alert
 
 /datum/antagonist/ert/engineer
-	role = "Engineer"
+	role = "Инженер"
 	outfit = /datum/outfit/centcom/ert/engineer
 
 /datum/antagonist/ert/engineer/red
 	outfit = /datum/outfit/centcom/ert/engineer/alert
 
 /datum/antagonist/ert/medic
-	role = "Medical Officer"
+	role = "Медик"
 	outfit = /datum/outfit/centcom/ert/medic
 
 /datum/antagonist/ert/medic/red
 	outfit = /datum/outfit/centcom/ert/medic/alert
 
 /datum/antagonist/ert/commander
-	role = "Commander"
+	role = "Командир"
 	outfit = /datum/outfit/centcom/ert/commander
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 
@@ -102,11 +102,11 @@
 	outfit = /datum/outfit/centcom/ert/commander/alert
 
 /datum/antagonist/ert/janitor
-	role = "Janitor"
+	role = "Уборщик"
 	outfit = /datum/outfit/centcom/ert/janitor
 
 /datum/antagonist/ert/janitor/heavy
-	role = "Heavy Duty Janitor"
+	role = "Уборщик-специалист"
 	outfit = /datum/outfit/centcom/ert/janitor/heavy
 
 /datum/antagonist/ert/deathsquad
@@ -140,7 +140,7 @@
 	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/chaplain
-	role = "Chaplain"
+	role = "Священник"
 	outfit = /datum/outfit/centcom/ert/chaplain
 
 /datum/antagonist/ert/chaplain/inquisitor
@@ -158,18 +158,18 @@
 	owner.set_holy_role(HOLY_ROLE_PRIEST)
 
 /datum/antagonist/ert/intern
-	name = "CentCom Intern"
+	name = "Стажёр ЦК"
 	outfit = /datum/outfit/centcom/centcom_intern
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
-	role = "Intern"
+	role = "Стажёр ЦК"
 	suicide_cry = "FOR MY INTERNSHIP!!"
 
 /datum/antagonist/ert/intern/leader
-	name = "CentCom Head Intern"
+	name = "Главный стажёр ЦК"
 	outfit = /datum/outfit/centcom/centcom_intern/leader
 	random_names = FALSE
-	role = "Head Intern"
+	role = "Главный стажёр"
 
 /datum/antagonist/ert/intern/unarmed
 	outfit = /datum/outfit/centcom/centcom_intern/unarmed
@@ -178,7 +178,7 @@
 	outfit = /datum/outfit/centcom/centcom_intern/leader/unarmed
 
 /datum/antagonist/ert/clown
-	role = "Clown"
+	role = "Клоун"
 	outfit = /datum/outfit/centcom/ert/clown
 	plasmaman_outfit = /datum/outfit/plasmaman/party_comedian
 
@@ -187,26 +187,26 @@
 	name_source = GLOB.clown_names
 
 /datum/antagonist/ert/janitor/party
-	role = "Party Cleaning Service"
+	role = "Служба уборки праздников"
 	outfit = /datum/outfit/centcom/ert/janitor/party
 	plasmaman_outfit = /datum/outfit/plasmaman/party_janitor
 
 /datum/antagonist/ert/security/party
-	role = "Party Bouncer"
+	role = "Вышибала праздника"
 	outfit = /datum/outfit/centcom/ert/security/party
 	plasmaman_outfit = /datum/outfit/plasmaman/party_bouncer
 
 /datum/antagonist/ert/engineer/party
-	role = "Party Constructor"
+	role = "Праздничный строитель"
 	outfit = /datum/outfit/centcom/ert/engineer/party
 	plasmaman_outfit = /datum/outfit/plasmaman/party_constructor
 
 /datum/antagonist/ert/clown/party
-	role = "Party Comedian"
+	role = "Праздничный комик"
 	outfit = /datum/outfit/centcom/ert/clown/party
 
 /datum/antagonist/ert/commander/party
-	role = "Party Coordinator"
+	role = "Координатор праздника"
 	outfit = /datum/outfit/centcom/ert/commander/party
 
 /datum/antagonist/ert/create_team(datum/team/ert/new_team)
@@ -214,15 +214,15 @@
 		ert_team = new_team
 
 /datum/antagonist/ert/bounty_armor
-	role = "Armored Bounty Hunter"
+	role = "Бронированный охотник за головами"
 	outfit = /datum/outfit/bountyarmor/ert
 
 /datum/antagonist/ert/bounty_hook
-	role = "Hookgun Bounty Hunter"
+	role = "Охотник за головами с крюком"
 	outfit = /datum/outfit/bountyhook/ert
 
 /datum/antagonist/ert/bounty_synth
-	role = "Synthetic Bounty Hunter"
+	role = "Синтетический охотник за головами"
 	outfit = /datum/outfit/bountysynth/ert
 
 /datum/antagonist/ert/forge_objectives()
@@ -249,55 +249,55 @@
 	if(!ert_team)
 		return
 
-	to_chat(owner, "<span class='warningplain'><B><font size=3 color=red>You are the [name].</font></B></span>")
+	to_chat(owner, "<span class='warningplain'><B><font size=3 color=red>Вы - [name].</font></B></span>")
 
-	var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+	var/missiondesc = "Ваш отряд был отправлен с миссией на [station_name()] департаментом защиты активов Нанотрейзен."
 	if(leader) //If Squad Leader
-		missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
+		missiondesc += " Возглавьте свой отряд, чтобы обеспечить выполнение миссии. Отправляйтесь на шаттл, когда ваша команда будет готова."
 	else
-		missiondesc += " Follow orders given to you by your squad leader."
+		missiondesc += " Следуйте приказам, отданным вашим лидером отряда."
 	if(!rip_and_tear)
-		missiondesc += " Avoid civilian casualties when possible."
+		missiondesc += " Избегайте жертв среди гражданских, если это возможно."
 
-	missiondesc += "<span class='warningplain'><BR><B>Your Mission</B> : [ert_team.mission.explanation_text]</span>"
+	missiondesc += "<span class='warningplain'><BR><B>Ваша задача</B>: [ert_team.mission.explanation_text]</span>"
 	to_chat(owner,missiondesc)
 
 /datum/antagonist/ert/marine
-	name = "Marine Commander"
+	name = "Командир морпехов"
 	outfit = /datum/outfit/centcom/ert/marine
-	role = "Commander"
+	role = "Командир"
 
 /datum/antagonist/ert/marine/security
-	name = "Marine Heavy"
+	name = "Тяжёлый морпех"
 	outfit = /datum/outfit/centcom/ert/marine/security
-	role = "Trooper"
+	role = "Боец"
 
 /datum/antagonist/ert/marine/engineer
-	name = "Marine Engineer"
+	name = "Инженер морпех"
 	outfit = /datum/outfit/centcom/ert/marine/engineer
-	role = "Engineer"
+	role = "Инженер"
 
 /datum/antagonist/ert/marine/medic
-	name = "Marine Medic"
+	name = "Медик морпех"
 	outfit = /datum/outfit/centcom/ert/marine/medic
-	role = "Medical Officer"
+	role = "Медицинский офицер"
 
 /datum/antagonist/ert/militia
-	name = "Frontier Militia"
+	name = "Пограничное ополчение"
 	outfit = /datum/outfit/centcom/militia
-	role = "Volunteer"
+	role = "Доброволец"
 
 /datum/antagonist/ert/militia/general
-	name = "Frontier Militia General"
+	name = "Генерал пограничного ополчения"
 	outfit = /datum/outfit/centcom/militia/general
-	role = "General"
+	role = "Генерал"
 
 /datum/antagonist/ert/medical_commander
-	role = "Chief EMT"
+	role = "Главный парамедик"
 	outfit = /datum/outfit/centcom/ert/medical_commander
 	plasmaman_outfit = /datum/outfit/plasmaman/medical_commander
 
 /datum/antagonist/ert/medical_technician
-	role = "Emergency Medical Technician"
+	role = "Фельдшер"
 	outfit = /datum/outfit/centcom/ert/medical_technician
 	plasmaman_outfit = /datum/outfit/plasmaman/medical_technician

@@ -292,6 +292,10 @@
 	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
+	/// BANDASTATION ADDITION START - Species
+	new /obj/item/reagent_containers/blood/skrell(src)
+	new /obj/item/reagent_containers/blood/moth(src)
+	/// BANDASTATION ADDITION END - Species
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 	new /obj/item/paper/fluff/jobs/medical/blood_types(src)

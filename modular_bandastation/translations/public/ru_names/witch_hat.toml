@@ -1,0 +1,8 @@
+["witch hat"]
+nominative = "шляпа ведьмы"
+genitive = "шляпы ведьмы"
+dative = "шляпе ведьмы"
+accusative = "шляпу ведьмы"
+instrumental = "шляпой ведьмы"
+prepositional = "шляпе ведьмы"
+gender = "female"

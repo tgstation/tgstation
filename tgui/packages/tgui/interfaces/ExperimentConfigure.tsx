@@ -115,15 +115,13 @@ export function TechwebServer(props: TechwebServerProps) {
               backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
               className="ExperimentTechwebServer__ConnectButton"
             >
-              {server.selected ? 'Disconnect' : 'Connect'}
+              {server.selected ? 'Отключиться' : 'Подключиться'}
             </Button>
           </Stack.Item>
         )}
       </Stack>
       <Box className="ExperimentTechwebServer__WebContent">
-        <span>
-          Connectivity to this web is maintained by the following servers...
-        </span>
+        <span>Соединение к этой сети поддерживают следующие сервера...</span>
         <LabeledList>
           {server.all_servers.map((individual_servers, new_index) => (
             <Box key={new_index}>{individual_servers}</Box>
@@ -244,22 +242,22 @@ export function ExperimentConfigure(props) {
 
   let textContent = '';
   if (experiments.length === 0) {
-    textContent = 'No experiments found on this web';
+    textContent = 'Не найдены эксперименты в этой сети';
   } else if (always_active) {
     textContent =
-      'This device is configured to attempt to perform all available experiments, so no further configuration is necessary.';
+      'Это устройство настроено для выполнения всех доступных экспериментов. Дальнейшие настройки не нужны.';
   } else {
-    textContent = 'Select one of the following experiments...';
+    textContent = 'Выберите один из следующих экспериментов...';
   }
 
   return (
     <Window width={600} height={735}>
       <Window.Content scrollable>
-        <Section title="Servers">
+        <Section title="Сервера">
           <Box color="label">
             {webs.size > 0
-              ? 'Please select a techweb to connect to...'
-              : 'Found no servers connected to a techweb!'}
+              ? 'Пожалуйста, выберите техсеть для подключения...'
+              : 'Не найдены сервера, подключенные к техсети!'}
           </Box>
           {webs.size > 0 &&
             Array.from(webs, ([techweb, techwebs]) => (
@@ -270,7 +268,7 @@ export function ExperimentConfigure(props) {
           {techwebs.some((e) => e.selected) && (
             <Stack.Item>
               <Section
-                title="Experiments"
+                title="Эксперименты"
                 className="ExperimentConfigure__ExperimentsContainer"
                 fill
               >
@@ -293,7 +291,7 @@ export function ExperimentConfigure(props) {
                 disabled={!experiments.some((e) => e.selected)}
                 icon="flask"
               >
-                Perform Experiment
+                Выполнить эксперимент
               </Button>
             </Stack.Item>
           )}

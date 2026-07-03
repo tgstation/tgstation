@@ -1,12 +1,12 @@
 /datum/job/security_officer
 	title = JOB_SECURITY_OFFICER
-	description = "Protect company assets, follow the Standard Operating \
-		Procedure, eat donuts."
+	description = "Защищайте активы компании, следуйте Стандартным Рабочим \
+		Процедурам, жрите пончики."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
-	supervisors = "the Head of Security, and the head of your assigned department (if applicable)"
+	supervisors = "Главой Службы Безопасности, Смотрителем"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
@@ -159,9 +159,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	if(player_client)
 		if(department)
-			to_chat(player_client, "<b>You have been assigned to [department]!</b>")
+			to_chat(player_client, "<b>Вы были закрепленны за [department]!</b>")
 		else
-			to_chat(player_client, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+			to_chat(player_client, "<b>Вы не были закрепленны за каким-либо отделом. Патрулируйте станцию и помогайте нуждающимся.</b>")
 
 	return department
 

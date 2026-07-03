@@ -7,8 +7,8 @@
 	var/report_message = "Complete this goal."
 
 /datum/station_goal/proc/send_report()
-	priority_announce("Priority Nanotrasen directive received. Project \"[name]\" details inbound.", "Incoming Priority Message", SSstation.announcer.get_rand_report_sound())
-	print_command_report(get_report(),"Nanotrasen Directive [pick(GLOB.phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
+	priority_announce("Приоритетная директива Нанотрейзен. Поступили детали проекта \"[name]\".", "Входящее приоритетное сообщение", SSstation.announcer.get_rand_report_sound())
+	print_command_report(get_report(),"Директива Нанотрейзен [pick(GLOB.phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
 	on_report()
 
 /datum/station_goal/proc/on_report()
@@ -23,9 +23,9 @@
 
 /datum/station_goal/proc/get_result()
 	if(check_completion())
-		return "<li>[name] : [span_greentext("Completed!")]</li>"
+		return "<li>[name] : [span_greentext("Выполнена!")]</li>"
 	else
-		return "<li>[name] : [span_redtext("Failed!")]</li>"
+		return "<li>[name] : [span_redtext("Провалена!")]</li>"
 
 /datum/station_goal/Topic(href, href_list)
 	..()

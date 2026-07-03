@@ -40,10 +40,13 @@
 #define R_SPAWN (1<<12)
 #define R_AUTOADMIN (1<<13)
 #define R_DBRANKS (1<<14)
+// BANDASTATION ADDITION START - Mentors
+#define R_MENTOR (1<<15)
+// BANDASTATION ADDITION END
 
 #define R_DEFAULT R_AUTOADMIN
 
-#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_EVERYTHING (1<<16)-1 //the sum of all other rank permissions, used for +EVERYTHING
 
 #define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
@@ -60,6 +63,7 @@
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_SET_SD_CODE "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];set_selfdestruct_code=1'>SETCODE</a>)"
+#define ADMIN_ERT_RESPOND "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ert_respond=1'>ERT</a>)" // BANDASTATION ADDITION
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)] [ADMIN_INDIVIDUALLOG(user)] [ADMIN_SMITE(user)]"
 #define ADMIN_FULLMONTY(user) "[key_name_admin(user)] [ADMIN_FULLMONTY_NONAME(user)]"
 #define ADMIN_JMP(src) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
@@ -202,3 +206,41 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 #define SMITE_DELAY (1<<1)
 /// Stuns the target for a short duration, ignores stun immunity
 #define SMITE_STUN (1<<2)
+
+// BANDASTATION ADDITION START - Ticket manager
+#define TICKET_OPEN 0
+#define TICKET_CLOSED 1
+#define TICKET_RESOLVED 2
+
+#define TICKET_TYPE_ADMIN "Admin"
+#define TICKET_TYPE_MENTOR "Mentor"
+#define TICKET_TYPE_HIDDEN_PM "Private Message"
+#define TICKET_TYPE_HIDDEN_TICKET "Ticket"
+
+#define TICKET_MANAGER_USER_TYPE_PLAYER 0
+#define TICKET_MANAGER_USER_TYPE_MENTOR 1
+#define TICKET_MANAGER_USER_TYPE_ADMIN 2
+
+#define TICKET_AHELP_ACTION_OPENED "Opened"
+#define TICKET_AHELP_ACTION_REOPENED "Reopened"
+#define TICKET_AHELP_ACTION_CLOSED "Closed"
+#define TICKET_AHELP_ACTION_RESOLVED "Resolved"
+#define TICKET_AHELP_ACTION_RECONNECTED "Reconnected"
+#define TICKET_AHELP_ACTION_DISCONNECTED "Disconnected"
+#define TICKET_AHELP_ACTION_REPLY "Reply"
+#define TICKET_AHELP_ACTION_CONVERT "Convert"
+#define TICKET_AHELP_ACTION_UNASSIGNED "Unassigned"
+#define TICKET_AHELP_ACTION_ASSIGNED "Assigned"
+
+#define TICKET_LOG_SENDER_ADMIN_TICKET_LOG "ADMIN_TICKET_LOG"
+#define TICKET_LOG_SENDER_CLIENT_CONNECTED "CLIENT_CONNECTED"
+#define TICKET_LOG_SENDER_CLIENT_DISCONNECTED "CLIENT_DISCONNECTED"
+
+#define TICKET_OPEN_LINK(id, msg) ("<a href='byond://?src=[GLOB.ticket_manager_ref];ticket_id=[id];open_ticket=1'>[msg]</a>")
+#define TICKET_REPLY_LINK(id, msg) (span_adminsay("<a href='byond://?src=[GLOB.ticket_manager_ref];ticket_id=[id];reply_ticket=1'>[msg]</a>"))
+#define TICKET_RESOLVE_LINK(id) ("<a href='byond://?src=[GLOB.ticket_manager_ref];ticket_id=[id];resolve_ticket=1'>Решить</a>")
+#define TICKET_CLOSE_LINK(id) ("<a href='byond://?src=[GLOB.ticket_manager_ref];ticket_id=[id];close_ticket=1'>Закрыть</a>")
+
+#define TICKET_ADMIN(user, id) "[ADMIN_FULLMONTY_NONAME(user)] [TICKET_RESOLVE_LINK(id)] [TICKET_CLOSE_LINK(id)] [TICKET_OPEN_LINK(id, "Открыть чат")]"
+#define TICKET_MENTOR(user, id) "[ADMIN_FLW(user)] [TICKET_RESOLVE_LINK(id)] [TICKET_CLOSE_LINK(id)] [TICKET_OPEN_LINK(id, "Открыть чат")]"
+// BANDASTATION ADDITION END - Ticket manager

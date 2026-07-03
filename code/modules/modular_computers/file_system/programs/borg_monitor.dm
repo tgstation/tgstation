@@ -4,7 +4,7 @@
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	ui_header = "borg_mon.gif"
 	program_open_overlay = "generic"
-	extended_desc = "This program allows for remote monitoring of station cyborgs."
+	extended_desc = "Эта программа позволяет удаленно следить за киборгами станции."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_ROBOTICS)
 	size = 5
@@ -172,7 +172,7 @@
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	ui_header = "borg_mon.gif"
 	program_open_overlay = "generic"
-	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
+	extended_desc = "Эта программа позволяет удаленно следить за киборгами, назначенными для миссии."
 	program_flags = PROGRAM_ON_SYNDINET_STORE
 	download_access = null
 	circuit_comp_type = /obj/item/circuit_component/mod_program/borg_monitor/syndie

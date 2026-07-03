@@ -72,6 +72,18 @@
 	/// Boolean that tells SSmapping to load all away missions in the codebase.
 	var/load_all_away_missions = FALSE
 
+	// BANDASTATION ADDITION START - Underfloor Blobs
+	/// Main floor of the map. Null as default, if not specified in json
+	var/main_floor = null
+	// BANDASTATION ADDITION END - Underfloor Blobs
+
+	// BANDASTATION ADDITION START - Station Fluff
+	/// This name will override all other station names, like holiday or randomly generated.
+	/// Station name change still will work.
+	var/fluff_name = null
+	/// Welcome sound that will play on round start instead of the announcer's one.
+	var/sound/welcome_sound_override = null
+	// BANDASTATION ADDITION END - Station Fluff
 	/// Number of additional weakpoints to spawn for SSminor_mapping
 	var/bonus_weakpoints = 0
 
@@ -227,6 +239,21 @@
 	if ("give_players_hooks" in json)
 		give_players_hooks = json["give_players_hooks"]
 
+	// BANDASTATION ADDITION START - Underfloor Blobs
+	if ("main_floor" in json)
+		main_floor = json["main_floor"]
+	// BANDASTATION ADDITION END - Underfloor Blobs
+
+	// BANDASTATION ADDITION START - Station Fluff
+	if ("fluff_name" in json)
+		fluff_name = json["fluff_name"]
+	if ("welcome_sound_override" in json)
+		var/file_path = json["welcome_sound_override"]
+		if(!fexists(file_path))
+			log_world("Welcome sound ([file_path]) does not exist!")
+		else
+			welcome_sound_override = file(file_path)
+	// BANDASTATION ADDITION END - Station Fluff
 	if ("bonus_weakpoints" in json)
 		bonus_weakpoints = json["bonus_weakpoints"]
 

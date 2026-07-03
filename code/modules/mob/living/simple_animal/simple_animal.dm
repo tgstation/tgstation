@@ -338,7 +338,7 @@
 
 
 /mob/living/simple_animal/get_default_say_verb()
-	return length(speak_emote) ? pick(speak_emote) : ..()
+	return length(speak_emote) ? ru_say_verb(pick(speak_emote)) : ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value

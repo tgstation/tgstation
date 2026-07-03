@@ -8,6 +8,8 @@ $department_map: (
   'Science': var(--color-purple),
   'Service': var(--color-green),
   'Silicon': var(--color-pink),
+  'NTRepresentation': hsl(from var(--color-blue) h s calc(l + 7.5)),
+  'Justice': hsl(from var(--color-pink) h s calc(l + 7.5)),
 );
 
 .CrewManifest {

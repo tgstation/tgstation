@@ -301,6 +301,7 @@
 		/obj/item/toy/plush/unicorn = 3,
 		/obj/item/toy/plush/monkey = 3,
 		/obj/item/toy/plush/donkpocket = 3,
+		/obj/item/toy/plush/pig = 2, // BANDASTATION ADDITION - Pig toy
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,

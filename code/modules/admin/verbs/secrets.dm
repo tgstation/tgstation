@@ -1,6 +1,6 @@
 GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 
-ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(secrets, R_DEBUG|R_FUN, "Secrets", "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu.", ADMIN_CATEGORY_GAME)
 	var/datum/secrets_menu/tgui = new(user)
 	tgui.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Secrets Panel")
@@ -153,7 +153,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] renamed the station to \"[new_name]\".")
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
-			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+			priority_announce("[command_name()] переименовало станцию в \"[new_name]\".")
 		if("reset_name")
 			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
 			if(confirmed != "Yes")
@@ -162,7 +162,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the station name."))
-			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+			priority_announce("[command_name()] переименовало станцию в \"[new_name]\".")
 		if("moveferry")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send CentCom Ferry"))
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
@@ -333,7 +333,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					airlock.req_access = list()
 					airlock.req_one_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
-			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
+			priority_announce("Центральное Командование активировало блокировку всех шлюзов. Пожалуйста, потратьте это время на знакомство с коллегами.", null, SSstation.announcer.get_rand_report_sound())
 		if("send_shuttle_back")
 			if (!is_funmin)
 				return
@@ -341,7 +341,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				to_chat(usr, span_warning("Emergency shuttle not currently in transit!"), confidential = TRUE)
 				return
 			var/make_announcement = tgui_alert(usr, "Make a CentCom announcement?", "Emergency shuttle return", list("Yes", "Custom Text", "No")) || "No"
-			var/announcement_text = "Emergency shuttle trajectory overriden, rerouting course back to [station_name()]."
+			var/announcement_text = "Траектория эвакуационного шаттла изменена, перенаправление курса обратно на [station_name()]."
 			if (make_announcement == "Custom Text")
 				announcement_text = tgui_input_text(usr, "Custom CentCom announcement", "Emergency shuttle return", multiline = TRUE) || announcement_text
 			var/new_timer = tgui_input_number(usr, "How long should the shuttle remain in transit?", "When are we droppin' boys?", 180, 600)
@@ -352,9 +352,9 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if (make_announcement != "No")
 				priority_announce(
 					text = announcement_text,
-					title = "Shuttle Trajectory Override",
+					title = "Принудительное изменение траектории шаттла",
 					sound =  'sound/announcer/announcement/announce_dig.ogg',
-					sender_override = "Emergency Shuttle Uplink Alert",
+					sender_override = "Система оповещения эвакуационного шаттла",
 					color_override = "grey",
 				)
 			SSshuttle.emergency.timer = INFINITY
@@ -744,7 +744,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+				chosen.client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 				spawned_mob.PossessByPlayer(chosen.key)
 			players -= chosen
 		if (ishuman(spawned_mob) && ispath(humanoutfit, /datum/outfit))

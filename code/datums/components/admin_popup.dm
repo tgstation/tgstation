@@ -3,11 +3,11 @@
 /datum/component/admin_popup
 	/// The user's most active ticket. If this is resolved, closed, or replied to,
 	/// then the component will delete itself.
-	var/datum/admin_help/ticket
+	var/datum/help_ticket/ticket  // BANDASTATION EDIT: Original - var/datum/admin_help/ticket
 
 	var/atom/movable/screen/admin_popup/admin_popup
 
-/datum/component/admin_popup/Initialize(datum/admin_help/ticket)
+/datum/component/admin_popup/Initialize(datum/help_ticket/ticket)  // BANDASTATION EDIT: Original - datum/admin_help/ticket
 	if (!istype(parent, /client))
 		return COMPONENT_INCOMPATIBLE
 
@@ -63,7 +63,7 @@
 	plane = ABOVE_HUD_PLANE
 	layer = ADMIN_POPUP_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "TOP-5,LEFT"
+	screen_loc = "TOP-6,LEFT" // BANDASTATION EDIT: Original - TOP-5,LEFT
 	maptext_height = 480
 	maptext_width = 480
 	maptext = ""
@@ -105,7 +105,7 @@
 	last_color_index = (last_color_index % colors.len) + 1
 
 	var/message = "<span style='color: [colors[last_color_index]]; text-align: center; font-size: 24pt'>"
-	message += "HEY!<br>An admin is trying to talk to you!<br>Check your chat window,<br>and click their name to respond!"
+	message += "АЛЛО!<br>Администратор хочет поговорить с тобой!<br>Проверь свой чат,<br>и ответь на сообщение!"
 	message += "</span>"
 
 	maptext = MAPTEXT(message)
@@ -116,10 +116,10 @@
 /proc/give_admin_popup(client/target, client/admin, message)
 	log_admin("[key_name(admin)] sent an admin popup to [key_name(target)].")
 
-	var/datum/admin_help/current_ticket = target.current_ticket
+	var/datum/help_ticket/current_ticket = target.persistent_client.current_help_ticket // BANDASTATION EDIT: Original - target.current_ticket
 	if (!current_ticket)
 		to_chat(admin, span_warning("[key_name(target)] had no active ahelp, aborting."))
 		return
 
-	admin.cmd_admin_pm(target, message)
+	GLOB.ticket_manager.add_ticket_message(admin, current_ticket, message)  // BANDASTATION EDIT: Original - admin.cmd_admin_pm(target, message)
 	target.AddComponent(/datum/component/admin_popup, current_ticket)

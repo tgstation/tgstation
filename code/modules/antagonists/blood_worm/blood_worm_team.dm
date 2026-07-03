@@ -1,5 +1,5 @@
 /datum/team/blood_worm
-	name = "\improper Blood Worms"
+	name = "\improper Кровяные черви"
 	member_name = "blood worm"
 
 	var/blood_consumed_total = 0
@@ -60,16 +60,16 @@
 /datum/team/blood_worm/roundend_report()
 	var/list/report = list()
 
-	report += span_header("\The [name]:")
+	report += span_header("[name]:")
 	report += printplayerlist(members)
 
 	if (length(objectives))
-		report += span_header("Their collective goals:")
+		report += span_header("Общие цели:")
 		report += print_objective_list()
 
 	report += ""
 
-	report += did_we_win() ? span_greentext("The [name] were successful!") : span_redtext("The [name] have failed!")
+	report += did_we_win() ? span_greentext("[name] выполнил цели!") : span_redtext("[name] провалился!")
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 

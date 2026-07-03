@@ -27,6 +27,12 @@
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: ASAY: [text]")
 
+/// Logging for MentorSay (MSAY) messages
+/proc/log_mentorsay(text, list/data)
+	GLOB.admin_activities.Add(text)
+	logger.Log(LOG_CATEGORY_ADMIN_MSAY, text, data)
+	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: MSAY: [text]")
+
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text, list/data)
 	logger.Log(LOG_CATEGORY_ADMIN_DSAY, text, data)

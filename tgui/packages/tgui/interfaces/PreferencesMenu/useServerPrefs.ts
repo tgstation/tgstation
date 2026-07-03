@@ -27,6 +27,18 @@ export const ServerPrefs = createContext<ServerData | undefined>({
     loadout_tabs: [],
   },
   species: {},
+  // BANDASTATION ADDITION START - TTS
+  text_to_speech: {
+    providers: [],
+    seeds: [],
+    phrases: [],
+  },
+  // BANDASTATION ADDITION END - TTS
+  // BANDASTATION ADDITION START - Feat: Augmentations
+  pref_job_slots: {},
+  profile_index: 0,
+  body_modifications: [],
+  // BANDASTATION ADDITION END - Feat: Augmentations
 });
 
 export function useServerPrefs() {

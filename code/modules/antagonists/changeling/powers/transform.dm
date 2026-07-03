@@ -1,6 +1,6 @@
 /datum/action/changeling/transform
 	name = "Transform"
-	desc = "We take on the appearance and voice of one we have absorbed. Costs 5 chemicals."
+	desc = "Мы принимаем облик и голос того, кого поглотили. Стоит 5 химикатов."
 	button_icon_state = "transform"
 	chemical_cost = 5
 	dna_cost = CHANGELING_POWER_INNATE
@@ -15,7 +15,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -31,7 +31,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -48,7 +48,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -65,7 +65,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -81,7 +81,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -97,7 +97,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -113,7 +113,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -130,7 +130,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice("Вы возвращаете [declent_ru(ACCUSATIVE)] в свое тело."))
 		qdel(src)
 		return
 	. = ..()
@@ -187,7 +187,7 @@
 	if(!istype(user))
 		return
 
-	var/list/disguises = list("Drop Flesh Disguise" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_drop"))
+	var/list/disguises = list("Сбросить маскировку из плоти" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_drop"))
 	for(var/datum/changeling_profile/current_profile as anything in stored_profiles)
 		var/datum/icon_snapshot/snap = current_profile.profile_snapshot
 		var/image/disguise_image = image(icon = snap.icon, icon_state = snap.icon_state)
@@ -198,7 +198,7 @@
 	if(!chosen_name)
 		return
 
-	if(chosen_name == "Drop Flesh Disguise")
+	if(chosen_name == "Сбросить маскировку из плоти")
 		for(var/slot in slot2type)
 			if(istype(user.vars[slot], slot2type[slot]))
 				qdel(user.vars[slot])

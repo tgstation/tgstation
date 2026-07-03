@@ -144,15 +144,15 @@ export const HypertorusRecipes = (props: RecipeProps) => {
       <Table>
         <MemoRow header>
           <Table.Cell />
-          <Table.Cell colSpan={2}>Fuel</Table.Cell>
-          <Table.Cell colSpan={2}>Fusion Byproducts</Table.Cell>
-          <Table.Cell colSpan={6}>Produced gases</Table.Cell>
-          <Table.Cell colSpan={6}>Effects</Table.Cell>
+          <Table.Cell colSpan={2}>Топливо</Table.Cell>
+          <Table.Cell colSpan={2}>Побочные продукты синтеза</Table.Cell>
+          <Table.Cell colSpan={6}>Вырабатываемые газы</Table.Cell>
+          <Table.Cell colSpan={6}>Эффекты</Table.Cell>
         </MemoRow>
         <MemoRow header>
           <Table.Cell />
-          <Table.Cell>Primary</Table.Cell>
-          <Table.Cell>Secondary</Table.Cell>
+          <Table.Cell>Основное</Table.Cell>
+          <Table.Cell>Дополнительное</Table.Cell>
           <Table.Cell colSpan={2} />
           <Table.Cell>Tier 1</Table.Cell>
           <Table.Cell>Tier 2</Table.Cell>

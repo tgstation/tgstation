@@ -1,8 +1,8 @@
 /datum/techweb_node/basic_arms
 	id = TECHWEB_NODE_BASIC_ARMS
 	starting_node = TRUE
-	display_name = "Basic Arms"
-	description = "Ballistics can be unpredictable in space."
+	display_name = "Базовая амуниция"
+	description = "Базовое исследование баллистических боеприпасов."
 	design_ids = list(
 		"toy_armblade",
 		"toygun",
@@ -20,8 +20,8 @@
 
 /datum/techweb_node/sec_equip
 	id = TECHWEB_NODE_SEC_EQUIP
-	display_name = "Security Equipment"
-	description = "All the essentials to subdue a mime."
+	display_name = "Оборудование службы безопасности"
+	description = "Базовое снаряжение службы безопасности для того, чтобы поддерживать порядок."
 	prereq_ids = list(TECHWEB_NODE_BASIC_ARMS)
 	design_ids = list(
 		"secdata",
@@ -46,8 +46,8 @@
 
 /datum/techweb_node/riot_supression
 	id = TECHWEB_NODE_RIOT_SUPRESSION
-	display_name = "Riot Supression"
-	description = "When you are on the opposing side of a revolutionary movement."
+	display_name = "Подавление беспорядков"
+	description = "Разработка и внедрение специализированного оборудования для нейтрализации массовых беспорядков и противодействия особо опасным нарушителям."
 	prereq_ids = list(TECHWEB_NODE_SEC_EQUIP)
 	design_ids = list(
 		"clown_firing_pin",
@@ -63,8 +63,8 @@
 
 /datum/techweb_node/explosives
 	id = TECHWEB_NODE_EXPLOSIVES
-	display_name = "Explosives"
-	description = "For once, intentional explosions."
+	display_name = "Взрывчатка"
+	description = "Разработка и стандартизация корпусов для взрывных устройств контролируемого действия."
 	prereq_ids = list(TECHWEB_NODE_RIOT_SUPRESSION)
 	design_ids = list(
 		"large_grenade",
@@ -77,8 +77,8 @@
 
 /datum/techweb_node/exotic_ammo
 	id = TECHWEB_NODE_EXOTIC_AMMO
-	display_name = "Exotic Ammunition"
-	description = "Specialized bullets designed to ignite, freeze, and inflict various other effects on targets, expanding combat capabilities."
+	display_name = "Экзотические боеприпасы"
+	description = "Разработка и производство специализированных боеприпасов. Боеприпасы предназначены для оказания целевого воздействия на цель, значительно расширяя тактические возможности подразделений."
 	prereq_ids = list(TECHWEB_NODE_EXPLOSIVES)
 	design_ids = list(
 		"c38_hotshot",
@@ -98,8 +98,8 @@
 
 /datum/techweb_node/electric_weapons
 	id = TECHWEB_NODE_ELECTRIC_WEAPONS
-	display_name = "Electric Weaponry"
-	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
+	display_name = "Электрическое оружие"
+	description = "Разработка лучевого оружия двойного назначения для летального и нелетального применения."
 	prereq_ids = list(TECHWEB_NODE_RIOT_SUPRESSION)
 	design_ids = list(
 		"stunrevolver",
@@ -112,8 +112,8 @@
 
 /datum/techweb_node/beam_weapons
 	id = TECHWEB_NODE_BEAM_WEAPONS
-	display_name = "Advanced Beam Weaponry"
-	description = "So advanced, even engineers are baffled by its operational principles."
+	display_name = "Продвинутое лучевое оружие"
+	description = "Разработка лучевого оружия, использующего принципы, выходящие за рамки стандартных инженерных протоколов"
 	prereq_ids = list(TECHWEB_NODE_ELECTRIC_WEAPONS)
 	design_ids = list(
 		"xray_laser",

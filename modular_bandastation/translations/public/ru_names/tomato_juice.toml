@@ -1,0 +1,8 @@
+["tomato juice"]
+nominative = "томатный сок"
+genitive = "томатного сока"
+dative = "томатному соку"
+accusative = "томатный сок"
+instrumental = "томатным соком"
+prepositional = "томатном соке"
+gender = "male"

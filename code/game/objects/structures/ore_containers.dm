@@ -27,7 +27,7 @@
 	for(var/obj/item/stack/ore/ore_item in contents)
 		ores += list(list(
 			"id" = REF(ore_item),
-			"name" = ore_item.name,
+			"name" = ore_item.declent_ru(NOMINATIVE),
 			"amount" = ore_item.amount,
 			"icon" = ore_item::icon,
 			"icon_state" = ore_item::icon_state,

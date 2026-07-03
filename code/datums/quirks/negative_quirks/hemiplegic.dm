@@ -1,11 +1,11 @@
 /datum/quirk/hemiplegic
 	name = "Hemiplegic"
-	desc = "Half of your body doesn't work. Nothing will ever fix this."
+	desc = "Половина вашего тела не работает. Ничто никогда это не исправит."
 	icon = FA_ICON_CIRCLE_HALF_STROKE
 	value = -10 // slightly more bearable than paraplegic but not by much
 	gain_text = null // Handled by trauma.
 	lose_text = null
-	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
+	medical_record_text = "Пациент имеет не поддающееся лечению нарушение двигательной функции половины своего тела."
 	hardcore_value = 10
 	mail_goodies = list(
 		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
@@ -23,7 +23,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	medical_record_text = "Patient has an untreatable impairment in motor function on the [side_choice::paralysis_type] half of their body."
+	medical_record_text = "Пациент имеет не поддающееся лечению нарушение двигательной функции [side_choice::paralysis_type]."
 	human_holder.gain_trauma(side_choice, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/hemiplegic/remove()

@@ -1,0 +1,8 @@
+["beer keg"]
+nominative = "кега пива"
+genitive = "кеги пива"
+dative = "кеге пива"
+accusative = "кегу пива"
+instrumental = "кегой пива"
+prepositional = "кеге пива"
+gender = "female"

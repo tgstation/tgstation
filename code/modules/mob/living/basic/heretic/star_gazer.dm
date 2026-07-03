@@ -1,14 +1,14 @@
 /mob/living/basic/heretic_summon/star_gazer
-	name = "\improper Star Gazer"
-	desc = "A creature that has been tasked to watch over the stars."
+	name = "Star Gazer"
+	desc = "Существо, которому было поручено наблюдать за звёздами."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	icon_state = "star_gazer"
 	icon_living = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
 	mob_biotypes = MOB_HUMANOID | MOB_SPECIAL
-	response_help_continuous = "passes through"
-	response_help_simple = "pass through"
+	response_help_continuous = "проходит через"
+	response_help_simple = "прошёл через"
 	speed = -0.2
 	maxHealth = 6000
 	health = 6000
@@ -18,8 +18,8 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	sentience_type = SENTIENCE_BOSS
-	attack_verb_continuous = "ravages"
-	attack_verb_simple = "ravage"
+	attack_verb_continuous = "опустошаете"
+	attack_verb_simple = "опустошаете"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
@@ -96,7 +96,7 @@
 		return
 	begging_timer = addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE) // Keep begging until someone accepts
 	var/mob/chosen_ghost = SSpolling.poll_ghost_candidates(
-		"Do you want to play as an ascended heretic's stargazer?",
+		"Вы хотите сыграть за Звездочёта вознёсшегося еретика?",
 		check_jobban = ROLE_HERETIC,
 		poll_time = 20 SECONDS,
 		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
@@ -140,8 +140,8 @@
 		log_combat(src, nearby_mob, "slashed")
 
 /datum/action/cooldown/recall_stargazer
-	name = "Seek master"
-	desc = "Teleports you to your master"
+	name = "Поиск мастера"
+	desc = "Телепортирует вас к вашему мастеру"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -159,9 +159,9 @@
 	return TRUE
 
 /datum/action/cooldown/spell/stargazer_laser
-	name = "Star Gaze"
-	desc = "Generates a massive death beam that eradicates everything in it's path. \
-			Has it's own gravitational pull, sucking in new victims."
+	name = "Звёздный взгляд"
+	desc = "Генерирует мощный смертоносный луч, который уничтожает всё на своём пути.\
+			Обладает собственным гравитационным полем, затягивающим в себя новых жертв."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -367,12 +367,12 @@
 				if(living_victim.stat > CONSCIOUS)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.visible_message(
-						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \
-							For a moment, you see their silhouette flail in agony before fading to mere atoms."),
-						span_boldbig(span_hypnophrase("THE POWER OF THE COSMOS ITSELF POURS OUT OVER YOUR FORM. \
-							WAVES OF HEAT LATCH ONTO YOUR BODY, PULLING IT APART AT THE SEAMS. \
-							YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
-							MOTES OF MERE DUST..."))
+						span_danger("Вы видите [living_victim.declent_ru(GENITIVE)], [genderize_ru (living_victim.gender, "охваченного", "охваченную", "охваченное", "охваченных")]  обжигающим гневом космоса. \
+							На мгновение вы видите, как силуэт бьётся в агонии, прежде чем рассыпаться на атомы."),
+						span_boldbig(span_hypnophrase("СИЛА САМОГО КОСМОСА ИЗЛИВАЕТСЯ НА ВАC. \
+							ВОЛНЫ ТЕПЛА ОХВАТЫВАЮТ ВАШЕ ТЕЛО, РАСТЯГИВАЯ ЕГО ПО ШВАМ. \
+							ВАШЕ ПОЛНОЕ УНИЧТОЖЕНИЕ ЗАНИМАЕТ ВСЕГО МГНОВЕНИЕ, ПРЕЖДЕ ЧЕМ ВЫ СНОВА СТАНЕТЕ ТЕМ, КЕМ БЫЛИ ВСЕГДА. \
+							ПЫЛЬЮ..."))
 						)
 					living_victim.dust()
 				living_victim.emote("scream")
@@ -424,8 +424,8 @@
 	can_attack_dense_objects = TRUE
 
 /datum/pet_command/attack/star_gazer
-	speech_commands = list("attack", "sic", "kill", "slash them")
-	command_feedback = "stares!"
-	pointed_reaction = "stares intensely!"
+	speech_commands = list("атакуй", "фас", "убей", "разорви их", "attack", "sic", "kill", "slash them")
+	command_feedback = "смотрит!"
+	pointed_reaction = "пристально смотрит!"
 	refuse_reaction = "..."
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack

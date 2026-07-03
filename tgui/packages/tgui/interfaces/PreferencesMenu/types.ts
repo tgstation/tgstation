@@ -200,11 +200,59 @@ export type PreferencesMenuData = {
 
   active_slot: number;
   name_to_use: string;
-
   window: PrefsWindow;
+
+  // BANDASTATION ADDITION START
+  pref_job_slots?: Record<string, number>;
+  profile_index?: Record<string, string>;
+  donator_level: number;
+  tts_seed: string;
+  tts_enabled: BooleanLike;
+
+  incompatible_body_modifications: string[];
+  applied_body_modifications: string[];
+  manufacturers: Record<string, string[]>;
+  selected_manufacturer: Record<string, string>;
+  // BANDASTATION ADDITION END
 };
 
+// BANDASTATION ADDITION START
+export type Seed = {
+  name: string;
+  value: string;
+  category: string;
+  gender: string;
+  provider: string;
+  donator_level: number;
+};
+
+export type TtsProvider = {
+  name: string;
+  is_enabled: BooleanLike;
+};
+
+export type TtsData = {
+  providers: Array<TtsProvider>;
+  seeds: Array<Seed>;
+  phrases: string[];
+};
+
+export type BodyModification = {
+  key: string;
+  name: string;
+  category: string;
+  description: string;
+  cost: number;
+  manufacturers?: Record<string, string>;
+  selectedManufacturer?: string;
+};
+// BANDASTATION ADDITION END
+
 export type ServerData = {
+  // BANDASTATION ADDITION START
+  text_to_speech: TtsData;
+  body_modifications: BodyModification[];
+  // BANDASTATION ADDITION END
   jobs: {
     departments: Record<string, Department>;
     jobs: Record<string, Job>;

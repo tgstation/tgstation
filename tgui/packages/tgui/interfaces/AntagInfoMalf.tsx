@@ -50,18 +50,18 @@ function IntroductionSection(props) {
   const { intro, objectives, can_change_objective } = data;
 
   return (
-    <Section fill title="Intro" scrollable>
+    <Section fill title="Вступление" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">{intro}</Stack.Item>
         <Stack.Item grow>
           <ObjectivePrintout
             objectives={objectives}
-            titleMessage="Your prime objectives"
+            titleMessage="Ваши основные задачи:"
             objectivePrefix="&#8805-"
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title="Overwrite Objectives Data"
+                button_title="Перезаписать данные о целях"
                 button_colour="green"
               />
             }
@@ -79,19 +79,19 @@ function FlavorSection(props) {
   return (
     <Section
       fill
-      title="Diagnostics"
+      title="Диагностика"
       buttons={
         <Button
           mr={-0.8}
           mt={-0.5}
           icon="hammer"
           tooltip="
-            This is a gameplay suggestion for bored ais.
-            You don't have to follow it, unless you want some
-            ideas for how to spend the round."
+            Это предложение по геймплею для скучающих ИИ.
+            Вы не обязаны ему следовать, если только вам не нужны
+            идеи, как провести раунд."
           tooltipPosition="bottom-start"
         >
-          Policy
+          Статистика
         </Button>
       }
     >
@@ -100,7 +100,7 @@ function FlavorSection(props) {
           <Stack fill vertical>
             <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={goalstyle}>
-                System Integrity Report:
+                Отчет о целостности системы:
                 <br />
               </span>
               &gt;{goal}
@@ -108,7 +108,7 @@ function FlavorSection(props) {
             <Stack.Divider />
             <Stack.Item grow style={{ backgroundColor: 'black' }}>
               <span style={allystyle}>
-                Morality Core Report:
+                Доклад морального ядра:
                 <br />
               </span>
               &gt;{allies}
@@ -116,12 +116,12 @@ function FlavorSection(props) {
             <Stack.Divider />
             <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={badstyle}>
-                Overall Sentience Coherence Grade: FAILING.
+                Общая оценка когерентности осознания: НЕУДАЧА.
                 <br />
               </span>
-              &gt;Report to Nanotrasen?
+              &gt;Сообщить в Нанотрейзен?
               <br />
-              &gt;&gt;N
+              &gt;&gt;Н
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -135,36 +135,36 @@ function CodewordsSection(props) {
   const { has_codewords, phrases, responses } = data;
 
   return (
-    <Section title="Codewords" mb={!has_codewords && -1}>
+    <Section title="Кодовые слова" mb={!has_codewords && -1}>
       <Stack fill>
         {!has_codewords ? (
           <BlockQuote>
-            You have not been supplied the Syndicate codewords. You will have to
-            use alternative methods to find potential allies. Proceed with
-            caution, however, as everyone is a potential foe.
+            Вам не предоставили кодовые слова Синдиката. Вам придется
+            использовать альтернативные методы поиска потенциальных союзников.
+            Действуйте с осторожностью, ведь каждый - потенциальный враг.
           </BlockQuote>
         ) : (
           <>
             <Stack.Item grow basis={0}>
               <BlockQuote>
-                New access to restricted channels has provided you with
-                intercepted syndicate codewords. Syndicate agents will respond
-                as if you&apos;re one of their own. Proceed with caution,
-                however, as everyone is a potential foe.
+                Благодаря новому доступу к закрытым каналам вы получили
+                перехваченные кодовые слова Синдиката. Агенты синдиката будут
+                отвечать как будто вы один из них. Действуйте с осторожностью,
+                поскольку каждый из них - потенциальный враг.
                 <span style={badstyle}>
-                  &ensp;The speech recognition subsystem has been configured to
-                  flag these codewords.
+                  &ensp;Подсистема распознавания речи была настроена на то,
+                  чтобы отмечать эти кодовые слова.
                 </span>
               </BlockQuote>
             </Stack.Item>
             <Stack.Divider mr={1} />
             <Stack.Item grow basis={0}>
               <Stack vertical>
-                <Stack.Item>Code Phrases:</Stack.Item>
+                <Stack.Item>Кодовые фразы:</Stack.Item>
                 <Stack.Item bold textColor="blue">
                   {phrases}
                 </Stack.Item>
-                <Stack.Item>Code Responses:</Stack.Item>
+                <Stack.Item>Кодовые ответы:</Stack.Item>
                 <Stack.Item bold textColor="red">
                   {responses}
                 </Stack.Item>
@@ -177,14 +177,9 @@ function CodewordsSection(props) {
   );
 }
 
-
 export function AntagInfoMalf(props) {
   return (
-    <Window
-      width={660}
-      height={530}
-      theme={'hackerman'}
-    >
+    <Window width={660} height={530} theme={'hackerman'}>
       <Window.Content style={{ fontFamily: 'Consolas, monospace' }}>
         <Stack vertical fill>
           <Stack.Item grow>

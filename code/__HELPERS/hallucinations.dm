@@ -293,9 +293,9 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 
 /// Lines the bubblegum hallucinatoin uses when it pops up
 #define BUBBLEGUM_HALLUCINATION_LINES list( \
-		"I AM IMMORTAL.", \
-		"I SHALL TAKE YOUR WORLD.", \
-		"I SEE YOU.", \
-		"YOU CANNOT ESCAPE ME FOREVER.", \
-		"NOTHING CAN HOLD ME.", \
+		"Я БЕССМЕРТЕН.", \
+		"Я ЗАБЕРУ ТВОЙ МИР.", \
+		"Я ТЕБЯ ВИЖУ", \
+		"ТЫ НЕ МОЖЕШЬ БЕЖАТЬ ОТ МЕНЯ ВЕЧНО.", \
+		"НИЧТО МЕНЯ НЕ ОСТАНОВИТ.", \
 	)

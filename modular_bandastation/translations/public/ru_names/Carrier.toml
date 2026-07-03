@@ -1,0 +1,8 @@
+[Carrier]
+nominative = "Носитель"
+genitive = "Носителя"
+dative = "Носителю"
+accusative = "Носителя"
+instrumental = "Носителем"
+prepositional = "Носителе"
+gender = "female"

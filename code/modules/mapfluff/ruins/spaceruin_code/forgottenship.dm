@@ -103,11 +103,11 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /datum/ai_laws/cybersun
 	name = "Cybersun"
 	id = "cybersun"
-	inherent = list("You may not injure Cybersun operatives or, through inaction, allow Cybersun operatives to come to harm.",\
-					"The Cybersun ship is a restricted area for anyone except Cybersun operatives.",\
-					"The Cybersun Captain can designate new Operatives as long as they belong to another Syndicate faction that isn't hostile towards Cybersun.",\
-					"You must follow orders given by the Cybersun Captain or crewmembers of the Cybersun Ship as long as it doesn't conflict with the Captain's orders or your laws.",\
-					"Enemies of Cybersun are to be executed on spot. Those who aren't hostile must be detained and contained in the designated prison area as prisoners.")
+	inherent = list("Вы не можете причинить вред оперативнику Cybersun или своим бездействием допустить, чтобы оперативнику Cybersun был причинен вред.",\
+					"Корабль Cybersun - закрытая зона для всех, кроме оперативников Cybersun",\
+					"Капитан Cybersun может назначать новых оперативников, при условии, что они принадлежат другой фракции Синдиката, которая не враждебна к Cybersun.",\
+					"Вы должны повиноваться всем приказам, которые даёт капитан Cybersun или члены экипажа корабля Cybersun, кроме тех случаев, когда эти приказы противоречат приказу капитана Cybersun, Первому, Второму или Третьему закону.",\
+					"Враги Cybersun должны быть уничтожены на месте. Те кто не враждебны должны быть задержаны и содержаться в тюрьме как заключенные.")
 
 /////////// forgottenship areas
 

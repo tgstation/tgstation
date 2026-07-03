@@ -256,3 +256,6 @@ define_sanity_output.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+
+# BANDASTATION MOD: ru_names.toml generated at compile time
+/modular_bandastation/translations/public/ru_names.toml

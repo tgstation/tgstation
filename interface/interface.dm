@@ -10,8 +10,8 @@
 		return
 
 	var/query = tgui_input_text(src,
-		"Type what you want to know about. This will open the wiki in your web browser. Type nothing to go to the main page.",
-		"Wiki",
+		"Напишите что-то о чём вы хотите узнать. Это откроет вики в вашем браузере. Если ничего не введено, то откроется главная страница.",
+		"Вики",
 		max_length = MAX_MESSAGE_LEN,
 	)
 	if(isnull(query)) //cancelled out
@@ -52,6 +52,10 @@
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 		return
+
+	if(tgui_alert(usr, "Хотите перейти на страницу нашего репозитория?", "GitHub", list("Да", "Нет")) != "Да")
+		return
+
 	DIRECT_OUTPUT(src, link(githuburl))
 
 /client/verb/config()
@@ -77,14 +81,12 @@
 	var/testmerge_data = GLOB.revdata.testmerge
 	var/has_testmerge_data = (length(testmerge_data) != 0)
 
-	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	var/message = "Нашли баг? Сообщите о нём нам! Это откроет вам страницу создания Issue на Github, открыть?"
 	if(has_testmerge_data)
-		message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
+		message += "\n Следующие экспериментальные изменения активны и возможно причина вашей проблемы. В таком случае, постарайтесь не плодить ишуи, и попробуйте найти существующую, где вы можете оставить больше деталей: \n"
 		message += GLOB.revdata.GetTestMergeInfo(FALSE)
 
-	// We still use tg_alert here because some people were concerned that if someone wanted to report that tgui wasn't working
-	// then the report issue button being tgui-based would be problematic.
-	if(tg_alert(src, message, "Report Issue", "Yes", "No") != "Yes")
+	if(tgui_alert(usr, message, "Сообщить о баге", list("Ладно", "Миссклик...")) != "Ладно")
 		return
 
 	var/base_link = githuburl + "/issues/new?template=bug_report_form.yml"

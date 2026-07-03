@@ -1,0 +1,629 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/shutters{
+	id = "maintmememan"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"h" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"k" = (
+/turf/closed/wall,
+/area/station/maintenance/port/aft)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/camera,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"s" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters{
+	id = "maintmememan"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "maintmememan"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"C" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"F" = (
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"Q" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/five,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/port/aft)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+h
+a
+a
+h
+h
+h
+h
+h
+h
+h
+h
+h
+Q
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+k
+k
+k
+k
+k
+k
+k
+k
+k
+k
+Q
+Q
+Q
+Q
+Q
+Q
+h
+h
+h
+h
+h
+a
+a
+"}
+(4,1,1) = {"
+p
+f
+f
+k
+B
+G
+r
+R
+U
+k
+k
+Q
+k
+k
+k
+k
+k
+Q
+h
+h
+h
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+f
+k
+y
+y
+y
+y
+y
+X
+k
+k
+k
+Y
+F
+D
+k
+k
+k
+k
+k
+k
+h
+"}
+(6,1,1) = {"
+a
+a
+m
+f
+v
+f
+f
+f
+f
+f
+k
+y
+y
+y
+y
+y
+y
+y
+k
+N
+q
+k
+h
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+y
+s
+y
+y
+y
+y
+O
+y
+y
+s
+y
+M
+k
+h
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+W
+k
+y
+y
+y
+E
+y
+y
+y
+k
+y
+z
+k
+h
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+k
+k
+y
+o
+A
+w
+y
+k
+k
+y
+k
+k
+h
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+t
+V
+k
+k
+C
+C
+C
+k
+k
+y
+g
+k
+Q
+h
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+Z
+H
+H
+H
+H
+H
+C
+y
+k
+k
+Q
+Q
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+n
+u
+C
+y
+k
+Q
+Q
+Q
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+x
+k
+y
+k
+Q
+Q
+Q
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+y
+k
+y
+k
+Q
+Q
+Q
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+y
+y
+y
+k
+Q
+Q
+Q
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

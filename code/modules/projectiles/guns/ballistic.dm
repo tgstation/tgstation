@@ -90,11 +90,11 @@
 	///Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
 	var/internal_magazine = FALSE
 	///Phrasing of the bolt in examine and notification messages; ex: bolt, slide, etc.
-	var/bolt_wording = "bolt"
+	var/bolt_wording = "затвора"
 	///Phrasing of the magazine in examine and notification messages; ex: magazine, box, etx
-	var/magazine_wording = "magazine"
+	var/magazine_wording = "магазина"
 	///Phrasing of the cartridge in examine and notification messages; ex: bullet, shell, dart, etc.
-	var/cartridge_wording = "bullet"
+	var/cartridge_wording = "патронов"
 	///length between individual racks
 	var/rack_delay = 5
 	///time of the most recent rack, used for cooldown purposes
@@ -206,7 +206,7 @@
 	else if(chambered) // if you don't have a magazine, is there something chambered?
 		return "\n[chambered.add_notes_ammo()]"
 	else // we have a very expensive mechanical paperweight.
-		return "\nThe lack of magazine and usable cartridge in chamber makes its usefulness questionable, at best."
+		return "\nОтсутствие магазина и пригодного для стрельбы патрона в патроннике заставляет задуматься о полезности оружия."
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
@@ -287,11 +287,11 @@
 	if(!burst_fire_selection)
 		burst_size = 1
 		fire_delay = 0 SECONDS
-		balloon_alert(user, "switched to semi-automatic")
+		balloon_alert(user, "режим - полуавтомат")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
-		balloon_alert(user, "switched to [burst_size]-round burst")
+		balloon_alert(user, "режим - очередь из [burst_size] патрон[declension_ru(burst_size, "а", "ов", "ов")]")
 
 	if(burst_select_sound)
 		playsound(user, burst_select_sound, 50, TRUE)
@@ -436,11 +436,11 @@
 	if (bolt_type == BOLT_TYPE_OPEN)
 		if(!bolt_locked) //If it's an open bolt, racking again would do nothing
 			if (user)
-				balloon_alert(user, "[bolt_wording] already cocked!")
+				balloon_alert(user, "повторный взвод [bolt_wording] невозможен!")
 			return
 		bolt_locked = FALSE
 	if (user)
-		balloon_alert(user, "[bolt_wording] racked")
+		balloon_alert(user, "взвод [bolt_wording]")
 	process_chamber(!chambered, FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
@@ -453,7 +453,7 @@
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	if (user)
-		balloon_alert(user, "[bolt_wording] dropped")
+		balloon_alert(user, "спуск [bolt_wording]")
 	chamber_round()
 	bolt_locked = FALSE
 	update_appearance()
@@ -461,12 +461,12 @@
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
 	if(!istype(AM, accepted_magazine_type))
-		balloon_alert(user, "[AM.name] doesn't fit!")
+		balloon_alert(user, "[AM.declent_ru(NOMINATIVE)] не вставляется!")
 		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
 		if (display_message)
-			balloon_alert(user, "[magazine_wording] loaded")
+			balloon_alert(user, "вставка [magazine_wording]")
 		if (magazine.ammo_count())
 			playsound(src, load_sound, load_sound_volume, load_sound_vary)
 		else
@@ -476,7 +476,7 @@
 		update_appearance()
 		return TRUE
 	else
-		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
+		to_chat(user, span_warning("Кажется, [AM.declent_ru(NOMINATIVE)] застревает на вашей руке!"))
 		return FALSE
 
 ///Handles all the logic of magazine ejection, if tac_load is set that magazine will be tacloaded in the place of the old eject
@@ -491,16 +491,16 @@
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
-			balloon_alert(user, "[magazine_wording] swapped")
+			balloon_alert(user, "извлечение [magazine_wording]")
 		else
-			to_chat(user, span_warning("You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing."))
+			to_chat(user, span_warning("Вы извлекаете магазин, но не можете вставить новый. Как неловко."))
 			magazine = null
 	else
 		magazine = null
 	user.put_in_hands(old_mag)
 	old_mag.update_appearance()
 	if (display_message)
-		balloon_alert(user, "[magazine_wording] unloaded")
+		balloon_alert(user, "извлечение [magazine_wording]")
 	update_appearance()
 
 /obj/item/gun/ballistic/can_shoot()
@@ -520,7 +520,7 @@
 			eject_magazine(user, FALSE, tool)
 			return ITEM_INTERACT_SUCCESS
 
-		balloon_alert(user, "already loaded!")
+		balloon_alert(user, "оружие уже заряжено!")
 		return ITEM_INTERACT_FAILURE
 
 	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
@@ -534,22 +534,22 @@
 
 	if(istype(tool, /obj/item/suppressor))
 		if(!can_suppress)
-			balloon_alert(user, "[tool.name] doesn't fit!")
+			balloon_alert(user, "не подходит!")
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.is_holding(src))
-			balloon_alert(user, "not in hand!")
+			balloon_alert(user, "не в руке!")
 			return ITEM_INTERACT_FAILURE
 
 		if(suppressed)
-			balloon_alert(user, "already has a suppressor!")
+			balloon_alert(user, "уже имеет глушитель!")
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "cannot attach!")
+			balloon_alert(user, "нельзя прикрепить!")
 			return ITEM_INTERACT_FAILURE
 
-		balloon_alert(user, "[tool.name] attached")
+		balloon_alert(user, "глушитель прикреплён")
 		install_suppressor(tool)
 		return ITEM_INTERACT_SUCCESS
 
@@ -567,7 +567,7 @@
 	if (!num_loaded)
 		return FALSE
 
-	balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
+	balloon_alert(user, "[num_loaded] патрон[declension_ru(num_loaded, "", "а", "ов")] заряжен[declension_ru(num_loaded, "", "о", "ы")]")
 	playsound(src, load_sound, load_sound_volume, load_sound_vary)
 	if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
 		chamber_round()
@@ -583,7 +583,7 @@
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	var/could_it_misfire = can_misfire || chambered.can_misfire
 	if(target != user && chambered.loaded_projectile && could_it_misfire && prob(misfire_probability) && blow_up(user))
-		to_chat(user, span_userdanger("[src] misfires!"))
+		to_chat(user, span_userdanger("[capitalize(declent_ru(NOMINATIVE))] даёт осечку!"))
 		return
 
 	if (sawn_off)
@@ -625,7 +625,7 @@
 		return CLICK_ACTION_BLOCKING
 	if(!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "[suppressor.name] removed")
+	balloon_alert(user, "снятие [suppressor.declent_ru(GENITIVE)]")
 	user.put_in_hands(suppressor)
 	clear_suppressor()
 	return CLICK_ACTION_SUCCESS
@@ -689,32 +689,32 @@
 
 	if (!num_unloaded)
 		if (!forced)
-			balloon_alert(user, "it's empty!")
+			balloon_alert(user, "пуст!")
 		return
 
 	if (!forced)
-		balloon_alert(user, "[num_unloaded] [cartridge_wording]\s unloaded")
+		balloon_alert(user, "[num_unloaded] патрон[declension_ru(num_unloaded, "", "а", "ов")] разряжен[declension_ru(num_unloaded, "", "о", "ы")]")
 	playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 	update_appearance()
 
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
-	. += "It has <b>[get_ammo(count_chambered)]</b> round\s remaining."
+	. += "Внутри имеется <b>[get_ammo(count_chambered)]</b> патрон[declension_ru(get_ammo(count_chambered), "", "а", "ов")]."
 
 	if (!chambered && !hidden_chambered)
-		. += "It does not seem to have a round chambered."
+		. += "Похоже, что нет заряженного патрона."
 	if (bolt_locked)
-		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
+		. += "[capitalize(bolt_wording)] взведен и должен быть опущен перед стрельбой или очисткой."
 	if (suppressor)
-		. += "It has a suppressor [can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."]"
+		. += "Имеется глушитель, который [can_unsuppress ? "может быть снят с помощью <b>Альт-Клик</b>." : "является неотъемленной частью и не может быть снят."]"
 	if(can_misfire)
-		. += span_danger("You get the feeling this might explode if you fire it...")
+		. += span_danger("Вы чувствуете, что оружие взорвется, если из него выстрелить...")
 		if(misfire_probability > 0)
-			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
+			. += span_danger("Исходя из состояния оружия, имеется шанс в [misfire_probability]% для осечки.")
 	else if(misfire_probability > 0)
-		. += span_warning("You get a feeling this might explode if you fire it with the wrong ammunitions...")
-		. += span_warning("Given the state of the gun, there is a [EXAMINE_HINT("[misfire_probability]%")] chance it'll misfire.")
+		. += span_warning("Вы чувствуете, что оружие взорвется, если из него выстрелить неподходящим боеприпасом...")
+		. += span_warning("Исходя из состояния оружия, имеется шанс в [EXAMINE_HINT("[misfire_probability]%")] для осечки.")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
@@ -740,12 +740,12 @@
 /obj/item/gun/ballistic/suicide_act(mob/living/user)
 	var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && chambered.loaded_projectile.damage > 0)
-		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] вставляет ствол [declent_ru(GENITIVE)] себе в рот. Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
 			process_fire(user, user, FALSE, null, BODY_ZONE_HEAD)
-			user.visible_message(span_suicide("[user] blows [user.p_their()] brain[user.p_s()] out with [src]!"))
+			user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] выносит себе мозг с помощью [declent_ru(GENITIVE)]!"))
 			var/turf/target = get_ranged_target_turf(user, REVERSE_DIR(user.dir), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
@@ -753,10 +753,10 @@
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return BRUTELOSS
 		else
-			user.visible_message(span_suicide("[user] panics and starts choking to death!"))
+			user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] паникует и начинает задыхаться до смерти!"))
 			return OXYLOSS
 	else
-		user.visible_message(span_suicide("[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
+		user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] притворяется, что выносит себе мозг с помощью [declent_ru(GENITIVE)]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
 		return OXYLOSS
 
@@ -774,27 +774,28 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!saw.get_sharpness() || (!is_type_in_typecache(saw, GLOB.gun_saw_types) && saw.tool_behaviour != TOOL_SAW)) //needs to be sharp. Otherwise turned off eswords can cut this.
 		return
 	if(sawn_off)
-		balloon_alert(user, "it's already shortened!")
+		balloon_alert(user, "уже обрезано!")
 		return
 	if (SEND_SIGNAL(src, COMSIG_GUN_BEING_SAWNOFF, user) & COMPONENT_CANCEL_SAWING_OFF)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
+	user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] пытается обрезать [declent_ru(ACCUSATIVE)]."), span_notice("Вы пытаетесь обрезать [declent_ru(ACCUSATIVE)]..."))
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
-		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
+		user.visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] выстреливает!"), span_danger("[capitalize(declent_ru(NOMINATIVE))] выстреливает вам в лицо!"))
 		return
 
 	if(!do_after(user, 3 SECONDS, target = src))
 		return
 	if(sawn_off)
 		return
-	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] обрезает [declent_ru(ACCUSATIVE)]!"), span_notice("Вы обрезаете [declent_ru(ACCUSATIVE)]."))
 	sawn_off = TRUE
 	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
 	if(!handle_modifications)
 		return TRUE
+	ru_names_rename(ru_names_toml("sawn-off", suffix = " [declent_ru(GENITIVE)]", override_base = "sawn-off [src.name]"))
 	name = "sawn-off [src.name]"
 	desc = sawn_desc
 	update_weight_class(WEIGHT_CLASS_NORMAL)
@@ -816,18 +817,18 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return
 
 	if(!user.is_holding(src))
-		balloon_alert(user, "hold to modify!")
+		balloon_alert(user, "нужно держать для модификации!")
 		return TRUE
 
 	if(get_ammo())
-		balloon_alert(user, "can't modify while loaded!")
+		balloon_alert(user, "нужно разрядить для модификации!")
 		return
 
 	if(!bolt_locked && bolt_type == BOLT_TYPE_LOCKING)
-		balloon_alert(user, "the bolt is in the way!")
+		balloon_alert(user, "вам мешает затвор!")
 		return
 
-	balloon_alert(user, "tinkering...")
+	balloon_alert(user, "модификация...")
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
@@ -837,13 +838,13 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(alternative_ammo_misfires)
 			can_misfire = TRUE
 		fire_sound = alternative_fire_sound
-		to_chat(user, span_notice("You modify [src]. Now it will fire [alternative_caliber] rounds."))
+		to_chat(user, span_notice("Вы модифицируете [declent_ru(ACCUSATIVE)]. Теперь оружие стреляет из: [alternative_caliber]."))
 	else
 		magazine.caliber = initial_caliber
 		if(alternative_ammo_misfires)
 			can_misfire = FALSE
 		fire_sound = initial_fire_sound
-		to_chat(user, span_notice("You reset [src]. Now it will fire [initial_caliber] rounds."))
+		to_chat(user, span_notice("Вы восстанавливаете [declent_ru(ACCUSATIVE)]. Теперь оружие стреляет из: [initial_caliber]."))
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
@@ -880,7 +881,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 /obj/item/suppressor
 	name = "suppressor"
-	desc = "A syndicate small-arms suppressor for maximum espionage."
+	desc = "Универсальный глушитель для малокалиберного оружия, предназначенный для максимальной скрытности."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY

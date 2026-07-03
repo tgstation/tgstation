@@ -73,7 +73,7 @@ GLOBAL_VAR(command_name)
 	if (GLOB.command_name)
 		return GLOB.command_name
 
-	var/name = "Central Command"
+	var/name = "Центральное Командование"
 
 	GLOB.command_name = name
 	return name
@@ -87,7 +87,7 @@ GLOBAL_VAR(command_name)
 /proc/station_name()
 	if(!GLOB.station_name)
 		var/newname
-		var/config_station_name = CONFIG_GET(string/stationname)
+		var/config_station_name = SSmapping.current_map?.fluff_name || CONFIG_GET(string/stationname) // BANDASTATION ADDITION - Station Fluff
 		if(config_station_name)
 			newname = config_station_name
 		else
@@ -255,7 +255,7 @@ GLOBAL_VAR(command_name)
 					if(2)
 						var/datum/job/job = pick(SSjob.joinable_occupations)
 						if(job)
-							. += job.title //Returns a job.
+							. += LOWER_TEXT(job_title_ru(job.title)) //Returns a job.
 						else
 							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
 							. += "Bug"

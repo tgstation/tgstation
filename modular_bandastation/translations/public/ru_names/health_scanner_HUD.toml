@@ -1,0 +1,8 @@
+["health scanner HUD"]
+nominative = "медицинский ИЛС"
+genitive = "медицинского ИЛС"
+dative = "медицинскому ИЛС"
+accusative = "медицинский ИЛС"
+instrumental = "медицинским ИЛС"
+prepositional = "медицинском ИЛС"
+gender = "male"

@@ -1,6 +1,6 @@
 /mob/living/basic/snail
-	name = "snail"
-	desc = "Is petting this thing sanitary?"
+	name = "улитка"
+	desc = "Маленькая улиточка со своим маленьким домиком. Не гигиеничная..."
 	icon_state = "snail"
 	icon_living = "snail"
 	icon_dead = "snail_dead"

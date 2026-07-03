@@ -1,6 +1,6 @@
 /datum/language/piratespeak
 	name = "Piratespeak"
-	desc = "The language of space pirates."
+	desc = "Язык космических пиратов."
 	key = "p"
 	space_chance = 100
 	sentence_chance = 10
@@ -10,9 +10,9 @@
 	additional_syllable_high = -1
 	default_priority = 90
 	syllables = list(
-		"arr", "ahoy", "rum", "aye", "blimey", "booty", "bucko", "grog", "treasure",
-		"me", "scallywag", "landlubber", "poopdeck", "ye", "avast",
-		"shiver", "timbers", "matey", "swashbuckler"
+		"арр", "ахой", "ром", "ай", "чёрт возьми", "добыча", "приятель", "грог", "сокровище",
+		"мне", "негодяй", "сухопутный", "ют", "ты", "стой",
+		"содрогайся", "брёвна", "дружище", "сорвиголова"
 	)
 	icon_state = "pirate"
 	always_use_default_namelist = TRUE

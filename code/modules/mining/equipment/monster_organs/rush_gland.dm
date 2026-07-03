@@ -90,7 +90,7 @@
 	if (lavaland_equipment_pressure_check(get_turf(source)))
 		return
 	smack_into(source)
-	source.visible_message(span_warning("[source] crashes into [target]!"))
+	source.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] врезается в [target.declent_ru(ACCUSATIVE)]!"))
 	if (isliving(target))
 		smack_into(target)
 	qdel(src)

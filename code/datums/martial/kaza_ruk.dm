@@ -139,7 +139,7 @@
 	defender.visible_message(
 		span_warning("[attacker] [sweeping_language] sweeps [defender]!"),
 		span_userdanger("Your legs are sweeped by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		null,
 		attacker,
 	)
@@ -159,7 +159,7 @@
 	defender.visible_message(
 		span_warning("[attacker] pounds [defender] on the chest!"),
 		span_userdanger("Your chest is slammed by [attacker]! You can't breathe!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -178,7 +178,7 @@
 	defender.visible_message(
 		span_warning("[attacker] karate chops [defender]'s neck!"),
 		span_userdanger("Your neck is karate chopped by [attacker], rendering you unable to speak!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -209,7 +209,7 @@
 		defender.visible_message(
 			span_danger("[attacker] disarms [defender]!"),
 			span_userdanger("You're disarmed by [attacker]!"),
-			span_hear("You hear aggressive shuffling!"),
+			span_hear("Вы слышите агрессивное шарканье!"),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)

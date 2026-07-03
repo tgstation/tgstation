@@ -4,7 +4,7 @@
 	filedesc = "BotKeeper"
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	program_open_overlay = "robot"
-	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
+	extended_desc = "Пульт дистанционного управления, используемый для подачи основных команд неразумным роботам."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 6
 	tgui_id = "NtosRoboControl"
@@ -140,7 +140,8 @@
 			var/area/current_area = get_area(current_user)
 			if(!current_area || QDELETED(current_user))
 				return
-			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
-			_alert_drones(msg, TRUE, current_user)
+			var/alert_message = "[params["ping_type"]] priority alert in [current_area.name]!"
+			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [alert_message]")
+			_alert_drones(msg, TRUE, current_user, tts_message = alert_message, tts_seed = /datum/tts_seed/silero/glados)
 			to_chat(current_user, msg)
 			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)

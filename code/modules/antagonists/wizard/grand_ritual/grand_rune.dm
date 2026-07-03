@@ -12,7 +12,7 @@
  */
 /obj/effect/grand_rune
 	name = "grand rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
+	desc = "Плавный круг из фигур и рун выгравирован на полу, линии извиваются и движутся на ваших глазах."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
 	pixel_x = -33
@@ -42,30 +42,30 @@
 	/// Things you might yell when invoking a rune
 	var/static/list/possible_magic_words = list(
 		list("*scream", "*scream", "*scream"),
-		list("Abra...", "Cadabra...", "Alakazam!"),
-		list("Azarath!", "Metrion!", "Zinthos!!"),
-		list("Bibbity!", "Bobbity!", "Boo!"),
-		list("Bish", "Bash", "Bosh!"),
-		list("Eenie... ", "Meenie... ", "Minie'Mo!!"),
-		list("Esaelp!", "Ouy Knaht!", "Em Esucxe!!"),
-		list("Fus", "Roh", "Dah!!"),
+		list("Абра...", "Кадабра...", "Алаказам!"),
+		list("Азарат!", "Метрион!", "Зинтрос!!"),
+		list("Бибити!", "Бобити!", "Буу!"),
+		list("Биш", "Баш", "Бош!"),
+		list("Эни... ", "Мени... ", "Миниму!!"),
+		list("Эсальп!", "Оу Натх!", "Ем Есукзме!!"),
+		list("Фус", "Ро", "Да!!"),
 		list("git checkout origin master", "git reset --hard HEAD~2", "git push origin master --force!!"),
-		list("Hocus Pocus!", "Flim Flam!", "Wabbajack!"),
-		list("I wish I may...", "I wish I might...", "Have this wish I wish tonight!"),
-		list("Klaatu!", "Barada!", "Nikto!!"),
-		list("Let expanse contract!", "Let eon become instant!", "Throw wide the gates!!"),
-		list("Levios!", "Graviole!", "Explomb!!"),
-		list("Micrato", "Raepij", "Sathonich!"),
-		list("Noctu!", "Orfei!", "Aude! Fraetor!"),
-		list("Quas!", "Wex!", "Exort!"),
-		list("Sim!", "Sala!", "Bim!"),
-		list("Seven shadows cast, seven fates foretold!", "Let their words echo in your empty soul!", "Ruination is come!!"),
-		list("Swiftcast! Hastega! Abjurer's Ward II! Extend IV! Tenser's Advanced Enhancement! Protection from Good! Enhance Effect III! Arcane Re...",
-			"...inforcement IV! Turn Vermin X! Protection from Evil II! Mage's Shield! Venerious's Mediocre Enhancement II! Expand Power! Banish Hu...",
-			"...nger II! Protection from Neutral! Surecastaga! Refresh! Refresh II! Sharpcast X! Aetherial Manipulation! Ley Line Absorption! Invoke Grand Ritual!!"),
-		list("Ten!", "Chi!", "Jin!"),
-		list("Ultimate School of Magic!", "Ultimate Ritual!", "Macrocosm!!"),
-		list("Y-abbaa", "Dab'Bah", "Doom!!"),
+		list("Фокус Покус!", "Флим Флам!", "Вабаджак!"),
+		list("Я желаю...", "Я бы хотел...", "Желание, которое я загадаю сегодня вечером!"),
+		list("Клату!", "Барада!", "Никто!!"),
+		list("Пусть расширяются просторы!", "Пусть эон станет мгновением!", "Распахните ворота настежь!!"),
+		list("Левиос!", "Гравиоле!", "Експломб!!"),
+		list("Микрато", "Рапиж", "Сактонишь!"),
+		list("Нокту!", "Орфей!", "Ауде! Фраетор!"),
+		list("Квуас!", "Векс!", "Ексорт!"),
+		list("Сим!", "Сала!", "Бим!"),
+		list("Семь теней отброшены, семь судеб предсказаны!", "Пусть их слова отзвучат в вашей пустой душе.!", "Разрушение наступило!!"),
+		list("Свифткаст! Хастега! Ограждающее поле 2! Продление 4! Продвинутое усиление Тенсера! Защита от добра! Усиление эффекта 3! Аркановое ус...",
+			"...иление 4! Превращение паразитов 10! Защита от зла 2! Щит мага! Посредственное усиление Венериуса 2! Расширить силу! Изгнать го...",
+			"...лод 2! Защита от нейтралов! Сурекастага! Обновление! Обновление 2! Шарпкаст 10! Эфирная манипуляция! Поглощение Лей-линии! Вызвать Великий Ритуал!!"),
+		list("Тен!", "Чи!", "Джи!"),
+		list("Высшая школа магии!", "Ультимативный ритуал!", "Макрокосмос!!"),
+		list("Яабa", "Да Ба", "Дуум!!"),
 	)
 
 /// Prepare magic words and hide from silicons
@@ -85,20 +85,20 @@
 /obj/effect/grand_rune/proc/announce_rune()
 	var/area/created_area = get_area(src)
 	if (potency >= GRAND_RITUAL_IMMINENT_FINALE_POTENCY)
-		priority_announce("Major anomalous fluctuations to local spacetime detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce("Крупные аномальные флуктуации локального пространства-времени, обнаруженные в: [created_area.name].", "Обнаружена аномалия")
 		return
 	if (potency >= GRAND_RITUAL_RUNES_WARNING_POTENCY)
-		priority_announce("Unusual anomalous energy fluctuations detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce("Необычные аномальные флуктуации энергии, обнаруженные в: [created_area.name].", "Обнаружена аномалия")
 		return
 
 /obj/effect/grand_rune/examine(mob/user)
 	. = ..()
 	if (times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
-		. += span_notice("Its power seems to have been expended.")
+		. += span_notice("Её сила, похоже, была исчерпана.")
 		return
 	if(!IS_WIZARD(user))
 		return
-	. += span_notice("Invoke this rune [GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked] more times to complete the ritual.")
+	. += span_notice("Задействуйте эту руну еще [GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked] раз, чтобы завершить ритуал.")
 
 /obj/effect/grand_rune/can_interact(mob/living/user)
 	. = ..()
@@ -121,11 +121,11 @@
 /obj/effect/grand_rune/proc/invoke_rune(mob/living/user)
 	is_in_use = TRUE
 	add_channel_effect(user)
-	user.balloon_alert(user, "invoking rune...")
+	user.balloon_alert(user, "призываем руну...")
 
 	if(!do_after(user, invoke_time, src))
 		remove_channel_effect(user)
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, "прервано!")
 		is_in_use = FALSE
 		return
 
@@ -149,7 +149,7 @@
 			haunt_color = spell_colour, \
 			haunt_duration = 10 SECONDS, \
 			aggro_radius = 0, \
-			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldly energies..."), \
+			spawn_message = span_revenwarning("[sacrifice.declent_ru(NOMINATIVE)] начинает парить и кружиться в воздухе, окутываясь потусторонними энергиями..."), \
 		)
 		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
 	cheese_sacrificed += length(cheese_to_haunt)
@@ -211,12 +211,12 @@
 		possible_events += possible_event
 
 	if (!length(possible_events))
-		visible_message(span_notice("[src] makes a sad whizzing noise."))
+		visible_message(span_notice("Печальный свистящий звук издается из [src.name]."))
 		return
 
 	var/datum/round_event_control/final_event = pick (possible_events)
 	final_event.run_event(event_cause = "a Grand Ritual Rune")
-	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
+	to_chat(user, span_notice("Ваша выпущенная магия поражает экипаж: [final_event.name]!"))
 
 /// Applies some local side effects to the area
 /obj/effect/grand_rune/proc/trigger_side_effects(mob/living/user)
@@ -295,13 +295,13 @@
 	var/announce = null
 	switch (dire_warnings_given)
 		if (0)
-			announce = "Large anomalous energy spike detected in: [created_area.name]."
+			announce = "Обнаружен большой аномальный всплеск энергии в: [created_area.name]."
 		if (1)
-			announce = "Automatic causality stabilisation failed, recommend urgent intervention in: [created_area.name]."
+			announce = "Автоматическая стабилизация казусов не удалась, рекомендуем срочное вмешательство в: [created_area.name]."
 		if (2)
-			announce = "Imminent local reality failure in: [created_area.name]. All crew please prepare to evacuate."
+			announce = "Неминуемый провал локальной реальности в: [created_area.name]. Всем членам экипажа приготовиться к эвакуации."
 	if (announce)
-		priority_announce(announce, "Anomaly Alert")
+		priority_announce(announce, "Обнаружена аномалия")
 	dire_warnings_given++
 	return ..()
 
@@ -311,7 +311,7 @@
 		return
 	var/round_time_passed = world.time - SSticker.round_start_time
 	if (chosen_effect && finale_effect.minimum_time >= round_time_passed)
-		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(finale_effect.minimum_time - round_time_passed)]</b>!"))
+		to_chat(user, span_warning("Выбранный гранд-финал будет доступен только в <b>[DisplayTimeText(finale_effect.minimum_time - round_time_passed)]</b>!"))
 		return
 	return ..()
 
@@ -333,8 +333,8 @@
 	var/datum/radial_menu_choice/choice_none = new()
 	choice_none.name = PICK_NOTHING
 	choice_none.image = image(icon = 'icons/mob/actions/actions_cult.dmi', icon_state = "draw")
-	choice_none.info = "The ultimate use of your gathered power! They will never expect you to continue to do \
-		exactly the same kind of thing you've been doing this whole time!"
+	choice_none.info = "Высшее применение собранной вами силы! Они никогда не будут ожидать, что вы будете продолжать \
+		делать то же самое, что делали все это время!"
 	options += list("[choice_none.name]" = choice_none)
 
 	var/pick = show_radial_menu(user, user, options, require_near = TRUE, tooltips = TRUE)
@@ -376,9 +376,9 @@
  */
 /obj/effect/grand_rune/finale/cheesy
 	name = "especially grand rune"
-	desc = "A ritual circle of maddening shapes and outlines, its mere presence an insult to reason."
+	desc = "Ритуальный круг безумных форм и очертаний, само присутствие которого оскорбляет разум."
 	icon_state = "wizard_rune_cheese"
-	magic_words = list("Greetings! Salutations!", "Welcome! Now go away.", "Leave. Run. Or die.")
+	magic_words = list("Здравствуйте! Приветствую!", " Добро пожаловать! А теперь уходи.", "Уходи. Беги. Или умри.")
 	remains_typepath = /obj/effect/decal/cleanable/grand_remains/cheese
 
 /obj/effect/grand_rune/finale/cheesy/Initialize(mapload, potency)
@@ -393,7 +393,7 @@
  */
 /obj/effect/decal/cleanable/grand_remains
 	name = "circle of ash"
-	desc = "Looks like someone's been drawing weird shapes with ash on the ground."
+	desc = "Похоже, кто-то рисовал пеплом на земле странные фигуры."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune_burned"
 	pixel_x = -28
@@ -406,7 +406,7 @@
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"
-	desc = "The bizarre shapes on the ground turn out to be a cheese crust burned to black tar."
+	desc = "Причудливые фигуры на земле оказываются сырной коркой, сгоревшей до черной смолы."
 	icon_state = "wizard_rune_cheese_burned"
 
 #undef PICK_NOTHING

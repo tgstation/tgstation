@@ -1,0 +1,8 @@
+["proximity sensor"]
+nominative = "датчик движения"
+genitive = "датчика движения"
+dative = "датчику движения"
+accusative = "датчик движения"
+instrumental = "датчиком движения"
+prepositional = "датчике движения"
+gender = "male"

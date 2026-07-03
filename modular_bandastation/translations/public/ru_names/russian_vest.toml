@@ -1,0 +1,8 @@
+["russian vest"]
+nominative = "русский жилет"
+genitive = "русского жилета"
+dative = "русскому жилету"
+accusative = "русский жилет"
+instrumental = "русским жилетом"
+prepositional = "русском жилете"
+gender = "male"

@@ -3,7 +3,7 @@
 	filedesc = "Notepad"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "generic"
-	extended_desc = "Jot down your work-safe thoughts and what not."
+	extended_desc = "Запишите свои мысли о том, как безопасно работать и что не стоит делать."
 	size = 2
 	tgui_id = "NtosNotepad"
 	program_icon = "book"

@@ -149,6 +149,17 @@
 /// Access to the Lawyer's office.
 #define ACCESS_LAWYER "lawyer"
 
+// BANDASTATION ADD - START Jobs Module
+/// Access to Blueshield's office and closet
+#define ACCESS_BLUESHIELD "blueshield"
+/// Access to Nanotrasen Representative's office and closet
+#define ACCESS_NANOTRASEN_REPRESENTATIVE "nanotrasen_representative"
+/// Access to Magistrate's office and closet
+#define ACCESS_MAGISTRATE "magistrate"
+/// Access to Explorer's closets
+#define ACCESS_EXPLORER "explorer"
+// BANDASTATION ADD - END
+
 /// - - - AWAY MISSIONS - - -
 /*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
 	or a 2000 year-old temple? */
@@ -194,6 +205,7 @@
 /// SYNDICATE
 #define ACCESS_SYNDICATE "syndicate"
 #define ACCESS_SYNDICATE_LEADER "syndicate_leader"
+#define ACCESS_SYNDICATE_COMMAND "syndicate_command" // BANDASTATION EDIT ADDITION - Jobs Module
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
@@ -311,6 +323,7 @@
 	ACCESS_ENGINEERING, \
 	ACCESS_EVA, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_EXPLORER, \
 	ACCESS_GATEWAY, \
 	ACCESS_GENETICS, \
 	ACCESS_HYDROPONICS, \
@@ -376,6 +389,9 @@
 	ACCESS_HOP, \
 	ACCESS_QM, \
 	ACCESS_RD, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NANOTRASEN_REPRESENTATIVE, \
+	ACCESS_MAGISTRATE, \
 )
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
@@ -400,6 +416,7 @@
 #define SYNDICATE_ACCESS list( \
 	ACCESS_SYNDICATE, \
 	ACCESS_SYNDICATE_LEADER, \
+	ACCESS_SYNDICATE_COMMAND, \
 )
 
 /// Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)
@@ -442,7 +459,6 @@
 	ACCESS_HYDROPONICS, \
 	ACCESS_JANITOR, \
 	ACCESS_KITCHEN, \
-	ACCESS_LAWYER, \
 	ACCESS_LIBRARY, \
 	ACCESS_SERVICE, \
 	ACCESS_THEATRE, \
@@ -529,6 +545,7 @@
 	ACCESS_QM, \
 	ACCESS_SHIPPING, \
 	ACCESS_VAULT, \
+	ACCESS_EXPLORER, \
 )
 /// Name for the Command region.
 #define REGION_COMMAND "Command"
@@ -548,6 +565,27 @@
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
+
+/// BANDASTATION ADDITION START - Jobs Module
+/// Name for the Justice region.
+#define REGION_JUSTICE "Justice"
+/// Used to seed the accesses_by_region list in SSid_access.
+/// A list of all regional accesses that are overseen by the Magistrate.
+#define REGION_ACCESS_JUSTICE list( \
+	ACCESS_LAWYER, \
+	ACCESS_MAGISTRATE, \
+)
+
+/// Name for the NT Representation region.
+#define REGION_NT_REPRESENTATION "NT Representation"
+/// Used to seed the accesses_by_region list in SSid_access.
+/// A list of all regional accesses that are overseen by the Nanotrasen Representative.
+#define REGION_ACCESS_NT_REPRESENTATION list( \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NANOTRASEN_REPRESENTATIVE, \
+)
+/// BANDASTATION ADDITION END - Jobs Module
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
@@ -578,11 +616,15 @@
 	/obj/item/modular_computer/pda/heads/ce = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
+	/obj/item/modular_computer/pda/heads/nanotrasen_representative = list(REGION_COMMAND), \
+	/obj/item/modular_computer/pda/heads/magistrate = list(REGION_COMMAND), \
+	/obj/item/modular_computer/pda/heads/blueshield = list(REGION_COMMAND, REGION_NT_REPRESENTATION), \
+	/obj/item/modular_computer/pda/lawyer = list(REGION_JUSTICE), \
 	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/pda/explorer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/botanist = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/roboticist = list(REGION_RESEARCH), \
 	/obj/item/modular_computer/pda/curator = list(REGION_GENERAL), \
@@ -602,6 +644,8 @@
 	REGION_RESEARCH, \
 	REGION_SECURITY, \
 	REGION_SUPPLY, \
+	REGION_JUSTICE, \
+	REGION_NT_REPRESENTATION, \
 )
 
 /// Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.

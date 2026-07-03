@@ -1,6 +1,6 @@
 /datum/antagonist/heartbreaker
 	name = "\improper Heartbreaker"
-	roundend_category = "valentines"
+	roundend_category = "Валентинки"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR LONELINESS!!"

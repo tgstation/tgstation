@@ -192,6 +192,12 @@
 		new /regex(@"(\w)X", "g") = "$1KSSS",
 		new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1",
 		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
+		// BANDASTATION EDIT START - speech mod
+		new /regex("с+", "g") = "ссс",
+		new /regex("C+", "g") = "ССС",
+		new /regex("ч+", "g") = "щ",
+		new /regex("Ч+", "g") = "Щ",
+		// BANDASTATION END
 	)
 
 /obj/item/organ/tongue/lizard/Initialize(mapload)
@@ -402,6 +408,16 @@
 			continue
 		if(mothership == tongue.mothership)
 			to_chat(living_mob, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = user == living_mob)
+			// BANDASTATION ADDITION START - TTS
+			user.cast_tts(
+				living_mob,
+				message,
+				is_local = FALSE,
+				effects = list(/datum/singleton/sound_effect/telepathy),
+				channel_override = CHANNEL_TTS_TELEPATHY,
+				check_deafness = FALSE
+			)
+			// BANDASTATION ADDITION END
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, user)

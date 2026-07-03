@@ -13,7 +13,7 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_ADMIN, "Admin PM Mob", mob/target in world)
 	if(!ismob(target))
 		to_chat(
 			src,
@@ -25,7 +25,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/t
 	user.cmd_admin_pm(target.client, null)
 	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
-ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(cmd_admin_pm_panel, R_ADMIN, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""
@@ -522,13 +522,14 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	// Our current ticket id, if one exists
 	var/ticket_id = ticket?.id
 
+	var/list/admins = get_holders_with_rights(R_ADMIN) /// BANDASTATION EDIT: Proper permissions
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
 		if(ticket)
 			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [sanitize_text(trim(raw_message))]")
 		else
 			log_admin_private("PM: [our_name]->External: [sanitize_text(trim(raw_message))]")
-		for(var/client/lad in GLOB.admins)
+		for(var/client/lad as anything in admins) /// BANDASTATION EDIT: Proper permissions
 			to_chat(lad,
 				type = MESSAGE_TYPE_ADMINPM,
 				html = span_notice("<B>PM: [our_linked_ckey]-&gt;External:</B> [keyword_parsed_msg]"),
@@ -555,7 +556,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	else
 		log_admin_private("PM: [our_name]->[recipient_name]: [sanitize_text(trim(raw_message))]")
 	//we don't use message_admins here because the sender/receiver might get it too
-	for(var/client/lad in GLOB.admins)
+	for(var/client/lad as anything in admins)
 		if(lad.key == key || lad.key == recipient_key) //check to make sure client/lad isn't the sender or recipient
 			continue
 		to_chat(lad,

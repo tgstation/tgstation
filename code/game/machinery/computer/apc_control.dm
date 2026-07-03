@@ -1,6 +1,6 @@
 /obj/machinery/computer/apc_control
 	name = "power flow control console"
-	desc = "Used to remotely control the flow of power to different parts of the station."
+	desc = "Используется для удалённого управления потоком энергии на разные части станции."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
 	req_access = list(ACCESS_CE)
@@ -30,7 +30,7 @@
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
 	if(!isAdminGhostAI(user))
-		to_chat(user,span_warning("[src] does not support AI control.")) //You already have APC access, cheater!
+		to_chat(user,span_warning("[declent_ru(NOMINATIVE)] не доступен для контроля ИИ.")) //You already have APC access, cheater!
 		return
 	return ..()
 
@@ -40,7 +40,7 @@
 	obj_flags |= EMAGGED
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
-		balloon_alert(user, "access controller shorted")
+		balloon_alert(user, "управление доступами замкнуто")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 

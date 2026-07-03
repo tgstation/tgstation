@@ -10,6 +10,10 @@
 #define SEE_THROUGH_MAP_THREE_X_TWO "3x2"
 ///One row of three tiles above the atom, but offset one tile to the left because of how billboards work
 #define SEE_THROUGH_MAP_BILLBOARD "billboard"
+// BANDASTATION ADDITION - START
+///A 3x3 area, with the tile directly above hidden
+#define SEE_THROUGH_MAP_STATION_STATUE "station_statue"
+// BANDASTATION ADDITION - END
 ///Two rows of three wide, but offset one tile to the left because thats how shipping containers work
 #define SEE_THROUGH_MAP_SHIPPING_CONTAINER "shipping_container"
 ///Seethrough component for the ratvar wreck, in shape of the ratvar wreck
@@ -68,6 +72,17 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0),
 		list(0, 0, 0), list(1, 0, 0), list(2, 0, 0)
 	),
+	// BANDASTATION ADDITION - START
+	// XXX
+	// XXX
+	// XXX
+	// OAO
+	SEE_THROUGH_MAP_STATION_STATUE = list(
+		list(-1, 1, 0), list(0, 1, 0), list(1, 1, 0),
+		list(-1, 0, 0), list(0, 0, 0), list(1, 0, 0),
+		list(-1, -1, 0), list(0, -1, 0), list(1, -1, 0)
+	),
+	// BANDASTATION ADDITION - END
 	//No
 	SEE_THROUGH_MAP_RATVAR_WRECK = list(
 		list(3, 5, 0), list(4, 5, 0), list(5, 5, 0), list(6, 5, 0),

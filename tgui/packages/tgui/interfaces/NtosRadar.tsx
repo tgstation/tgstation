@@ -77,12 +77,12 @@ const ObjectDisplay = (props) => {
       <Section>
         <Button
           icon="redo-alt"
-          content={scanning ? 'Scanning...' : 'Scan'}
+          content={scanning ? 'Сканирование...' : 'Сканировать'}
           color="blue"
           disabled={scanning}
           onClick={() => act('scan')}
         />
-        {!object.length && !scanning && <div>No trackable signals found</div>}
+        {!object.length && !scanning && <div>Не обнаружены сигналы</div>}
         {!scanning &&
           object.map((object) => (
             <div
@@ -110,7 +110,7 @@ const ObjectDisplay = (props) => {
 };
 
 /** Returns target information */
-const TargetDisplay = (props) => {
+function TargetDisplay(props) {
   const { data } = useBackend<Data>();
   const { selected, target } = data;
 
@@ -151,4 +151,4 @@ const TargetDisplay = (props) => {
       left={`${target.locx * 10 + 16}px`}
     />
   );
-};
+}

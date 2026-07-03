@@ -1,0 +1,9 @@
+#include "_prime_only.dm"
+
+#include "fish_portal_rebalance/code/machine_circuitboards.dm"
+
+#include "../_defines220/code/defines/bodycam.dm"
+#include "../~components/code/bodycam_camera.dm"
+#include "../~components/code/pausable_bodycam.dm"
+#include "../objects/code/items/clothing/accessories/bodycam.dm"
+#include "code/bodycam_vending.dm"

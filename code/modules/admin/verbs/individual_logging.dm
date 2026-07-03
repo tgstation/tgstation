@@ -57,7 +57,12 @@
 		if(nlog_type & ntype)
 			var/list/all_the_entrys = log_source[log_type]
 			for(var/entry in all_the_entrys)
-				concatenated_logs += "<b>[entry]</b><br>[all_the_entrys[entry]]"
+				// BANDASTATION EDIT: Jump macro
+				var/log_msg = all_the_entrys[entry]
+				var/processed_entry = linkify_logging_coords(entry)
+				var/processed_msg = linkify_logging_coords(log_msg)
+				concatenated_logs += "<b>[processed_entry]</b><br>[processed_msg]<hr>"
+				// BANDASTATION EDIT END
 
 	if(length(concatenated_logs))
 		sortTim(concatenated_logs, cmp = GLOBAL_PROC_REF(cmp_text_dsc)) //Sort by timestamp.
@@ -76,3 +81,11 @@
 	//This is necessary because num2text drops digits and rounds on big numbers. If more defines get added in the future it could break again.
 	log_type = num2text(log_type, MAX_BITFLAG_DIGITS)
 	return "<a href='byond://?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
+
+// BANDASTATION ADDITION: Jump macro
+/proc/linkify_logging_coords(text)
+	if(!text || !findtext(text, "(")) return text
+	// ищем - (имя (число, число, число))
+	var/static/regex/R = new(@"\(([^)]+)\s+\((\d+),\s*(\d+),\s*(\d+)\)\)", "g")
+	return R.Replace(text, "($1 ($2,$3,$4)) <a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=$2;Y=$3;Z=$4'>\[JMP\]</a>")
+// BANDASTATION ADDITION END

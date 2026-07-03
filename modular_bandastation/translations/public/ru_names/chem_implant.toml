@@ -1,0 +1,8 @@
+["chem implant"]
+nominative = "химический имплант"
+genitive = "химического импланта"
+dative = "химическому импланту"
+accusative = "химический имплант"
+instrumental = "химическим имплантом"
+prepositional = "химическом импланте"
+gender = "male"

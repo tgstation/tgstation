@@ -119,7 +119,7 @@ ADMIN_VERB(cmd_show_at_markers, R_DEBUG, "Show roundstart AT markers", "Places a
 
 	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turf Markers")
 
-ADMIN_VERB(enable_mapping_verbs, R_DEBUG, "Enable Mapping Verbs", "Enable all mapping verbs.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(enable_mapping_verbs, R_DEBUG, "Enable Mapping Verbs", "Enable all mapping verbs.", ADMIN_CATEGORY_DEBUG) // BANDASTATION EDIT: Original - ADMIN_CATEGORY_MAPPING
 	SSadmin_verbs.update_visibility_flag(user, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Enable Debug Verbs")
 

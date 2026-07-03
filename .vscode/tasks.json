@@ -203,6 +203,21 @@
 			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: rebuild tgfont"
+		},
+		{
+			"type": "shell",
+			"command": ".\\tools\\translations\\new_ru_name_fragment.cmd",
+			"args": ["${selectedText}"],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"focus": false,
+				"showReuseMessage": false,
+				"clear": false,
+				"close": false
+			},
+			"problemMatcher": [],
+			"label": "ru_names: new fragment from selection"
 		}
 	]
 }

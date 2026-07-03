@@ -1,0 +1,8 @@
+["cargo data disk"]
+nominative = "диск данных снабжения"
+genitive = "диска данных снабжения"
+dative = "диску данных снабжения"
+accusative = "диск данных снабжения"
+instrumental = "диском данных снабжения"
+prepositional = "диске данных снабжения"
+gender = "male"

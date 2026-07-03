@@ -1,0 +1,1185 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bD" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"cq" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"cu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"cR" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"dc" = (
+/obj/docking_port/stationary{
+	shuttle_id = "argos_home";
+	name = "port bay 1";
+	height = 17;
+	width = 12;
+	dwidth = 5
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"er" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"eK" = (
+/turf/closed/wall/r_wall,
+/area/station/hallway/secondary/entry)
+"fd" = (
+/turf/closed/wall,
+/area/station/hallway/secondary/entry)
+"ft" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/r_wall,
+/area/station/hallway/secondary/entry)
+"ij" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"ik" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/cable,
+/obj/effect/landmark/generic_maintenance_landmark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"jT" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/hooded/wintercoat{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/delivery/red,
+/turf/open/floor/iron/textured,
+/area/station/hallway/secondary/entry)
+"ke" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/entry)
+"kg" = (
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"kt" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"lH" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry)
+"mi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"mT" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"nm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"nE" = (
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"pF" = (
+/obj/structure/sign/warning/docking/directional/south,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"pG" = (
+/obj/effect/mapping_helpers/airlock/access/all/command/eva,
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/turf/open/floor/iron/textured,
+/area/station/hallway/secondary/entry)
+"qs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"qu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/entry)
+"rB" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"rV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"se" = (
+/obj/item/radio/intercom/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"sJ" = (
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"sP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"tE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/cafeteria{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry)
+"uq" = (
+/turf/template_noop,
+/area/template_noop)
+"vg" = (
+/obj/machinery/light/small/dim/directional/north,
+/obj/structure/cable,
+/obj/structure/sign/warning/cold_temp/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"vh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"vl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"wj" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/mapping_helpers/no_atoms_ontop,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"wq" = (
+/obj/structure/flora/grass/both/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"wx" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"xl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/mining_weather_monitor/directional/north,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/hallway/secondary/entry)
+"xQ" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"yo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"yC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/hallway/secondary/entry)
+"zx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/mining_weather_monitor/directional/east,
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"Aj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/rack,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/shovel,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/radio/off,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"AP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/entry)
+"CI" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/structure/sign/warning/docking/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Dy" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/west,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry)
+"DK" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"El" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Emergency EVA Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/eva,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/secondary/entry)
+"Gn" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"HJ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"NN" = (
+/obj/structure/rack,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_y = 3
+	},
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery/red,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/secondary/entry)
+"Pl" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"PV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"PZ" = (
+/obj/structure/sign/warning/docking/directional/south,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Qv" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/winterboots/ice_boots/eva{
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/hooded/wintercoat/eva{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/camera/directional/north{
+	c_tag = "Arrivals Emergency EVA"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/secondary/entry)
+"RO" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"RU" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Su" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"SC" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"SG" = (
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"ST" = (
+/obj/machinery/light/directional/west,
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry)
+"Ta" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Tj" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/machinery/camera/directional/north{
+	c_tag = "Arrivals External Access"
+	},
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/iron/large,
+/area/station/hallway/secondary/entry)
+"Ty" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/turf/open/floor/iron/textured,
+/area/station/hallway/secondary/entry)
+"UB" = (
+/obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"VY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/sign/warning/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"Ww" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/mining_weather_monitor/directional/north,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
+"Ya" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/entry)
+"YA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"YT" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/entry)
+"Zh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+
+(1,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+"}
+(2,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+"}
+(3,1,1) = {"
+uq
+uq
+uq
+uq
+nE
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+"}
+(4,1,1) = {"
+uq
+uq
+uq
+wx
+wj
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wj
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wj
+wx
+wx
+wx
+wx
+uq
+uq
+"}
+(5,1,1) = {"
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+wj
+wx
+uq
+uq
+"}
+(6,1,1) = {"
+uq
+uq
+Ta
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+SC
+wx
+SC
+wx
+SC
+SC
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+uq
+uq
+"}
+(7,1,1) = {"
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+SC
+SC
+wx
+SC
+wx
+SC
+SC
+wx
+wx
+wx
+wx
+uq
+uq
+"}
+(8,1,1) = {"
+uq
+uq
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+wx
+wx
+SC
+SC
+SC
+SC
+wx
+SC
+wx
+wx
+wx
+SC
+SC
+SC
+PZ
+fd
+fd
+fd
+uq
+"}
+(9,1,1) = {"
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+SC
+SC
+wx
+SC
+wx
+SC
+wx
+wx
+wx
+wx
+SC
+fd
+vl
+fd
+ST
+lH
+Dy
+"}
+(10,1,1) = {"
+uq
+uq
+uq
+wx
+SC
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+SC
+wx
+wx
+SC
+SC
+dc
+YT
+sJ
+RO
+er
+SG
+Zh
+"}
+(11,1,1) = {"
+uq
+uq
+wx
+wx
+SC
+wx
+SC
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+wx
+SC
+YT
+sJ
+mT
+er
+SG
+Zh
+"}
+(12,1,1) = {"
+uq
+uq
+wx
+wx
+wx
+SC
+wx
+SC
+SC
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+SC
+fd
+vl
+fd
+cR
+Pl
+rV
+"}
+(13,1,1) = {"
+uq
+uq
+wx
+wx
+wx
+SC
+SC
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+wx
+wx
+SC
+SC
+SC
+wx
+SC
+SC
+SC
+CI
+fd
+fd
+fd
+Ww
+"}
+(14,1,1) = {"
+uq
+uq
+nE
+wx
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+wx
+wx
+SC
+wx
+wx
+SC
+wx
+wx
+SC
+wx
+SC
+nE
+wx
+Ta
+wx
+fd
+PV
+"}
+(15,1,1) = {"
+uq
+uq
+wx
+wx
+wx
+SC
+SC
+SC
+wx
+wx
+SC
+SC
+wx
+wx
+SC
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+eK
+eK
+eK
+eK
+VY
+"}
+(16,1,1) = {"
+uq
+uq
+nE
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+SC
+eK
+eK
+xl
+AP
+YA
+cu
+"}
+(17,1,1) = {"
+uq
+uq
+uq
+nE
+wj
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+wj
+nE
+wx
+SC
+wx
+Gn
+HJ
+HJ
+HJ
+YA
+NN
+Ya
+ke
+El
+uq
+"}
+(18,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+nE
+wx
+wx
+wx
+wx
+wx
+DK
+kg
+kg
+kg
+ft
+Qv
+yC
+qu
+eK
+uq
+"}
+(19,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+wx
+wx
+SC
+rB
+RU
+fd
+YA
+YA
+eK
+eK
+eK
+pG
+eK
+eK
+uq
+"}
+(20,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wq
+wx
+wx
+xQ
+fd
+vg
+kt
+kt
+jT
+mi
+sP
+YA
+tE
+uq
+"}
+(21,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+wx
+wx
+wx
+wx
+wx
+wx
+nE
+DK
+bD
+qs
+ik
+vh
+se
+Su
+nm
+Ty
+UB
+uq
+"}
+(22,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+wx
+wx
+nE
+wx
+wx
+ij
+wx
+pF
+fd
+Tj
+yo
+cq
+fd
+zx
+Aj
+fd
+fd
+uq
+"}
+(23,1,1) = {"
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+uq
+fd
+fd
+uq
+uq
+uq
+"}

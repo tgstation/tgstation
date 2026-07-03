@@ -1,7 +1,7 @@
 //pig
 /mob/living/basic/pig
-	name = "pig"
-	desc = "A fat pig."
+	name = "Свинья"
+	desc = "Жирнюча."
 	icon_state = "pig"
 	icon_living = "pig"
 	icon_dead = "pig_dead"

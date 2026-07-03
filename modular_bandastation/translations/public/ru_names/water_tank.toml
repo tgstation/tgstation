@@ -1,0 +1,8 @@
+["water tank"]
+nominative = "бак с водой"
+genitive = "бака с водой"
+dative = "баку с водой"
+accusative = "бак с водой"
+instrumental = "баком с водой"
+prepositional = "баке с водой"
+gender = "male"

@@ -30,7 +30,7 @@ type Transactions = {
 
 export const NtosPay = (props) => {
   return (
-    <NtosWindow width={495} height={655}>
+    <NtosWindow width={500} height={655}>
       <NtosWindow.Content>
         <NtosPayContent />
       </NtosWindow.Content>
@@ -45,8 +45,8 @@ export const NtosPayContent = (props) => {
   if (!name) {
     return (
       <NoticeBox>
-        You need to insert your ID card into the card slot in order to use this
-        application.
+        Чтобы воспользоваться этим приложением, необходимо вставить свою
+        ID-карту в слот для карты.
       </NoticeBox>
     );
   }
@@ -73,11 +73,9 @@ const Introduction = (props) => {
   return (
     <Section textAlign="center">
       <Table>
-        <Table.Row>Hi, {name}.</Table.Row>
-        <Table.Row>Your pay token is {owner_token}.</Table.Row>
-        <Table.Row>
-          Account balance: {money} credit{money === 1 ? '' : 's'}
-        </Table.Row>
+        <Table.Row>Привет, {name}.</Table.Row>
+        <Table.Row>Ваш платежный токен {owner_token}.</Table.Row>
+        <Table.Row>Баланс: {money}¢</Table.Row>
       </Table>
     </Section>
   );
@@ -96,21 +94,21 @@ const TransferSection = (props) => {
   return (
     <Stack>
       <Stack.Item>
-        <Section title="Transfer Money">
+        <Section title="Перевести деньги">
           <Box>
             <Tooltip
-              content="Enter the pay token of the account you want to transfer credits to."
+              content="Введите платежный токен счета, на который вы хотите перевести кредиты."
               position="top"
             >
               <Input
-                placeholder="Pay Token"
+                placeholder="Платежный токен"
                 width="190px"
                 onChange={setToken}
               />
             </Tooltip>
           </Box>
           <Tooltip
-            content="Enter amount of credits to transfer."
+            content="Укажите количество кредитов для перевода."
             position="top"
           >
             <RestrictedInput
@@ -131,15 +129,15 @@ const TransferSection = (props) => {
               })
             }
           >
-            Send credits
+            Отправить
           </Button>
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Get Token" width="270px" height="98px">
+        <Section title="Получить токен" width="275px" height="98px">
           <Box>
             <Input
-              placeholder="Full name of account."
+              placeholder="Полное название счета."
               width="190px"
               onChange={setNameToToken}
             />
@@ -150,7 +148,7 @@ const TransferSection = (props) => {
                 })
               }
             >
-              Get it
+              Принять
             </Button>
           </Box>
           <Divider hidden />
@@ -167,7 +165,7 @@ const TransactionHistory = (props) => {
   const { transaction_list = [] } = data;
 
   return (
-    <Section fill title="Transaction History">
+    <Section fill title="История переводов">
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
           {transaction_list.map((log, index) => (
@@ -195,10 +193,10 @@ const TableHeaders = (props) => {
     <Table>
       <Table.Row>
         <Table.Cell color="label" width="100px">
-          Amount
+          Сумма
         </Table.Cell>
         <Table.Cell color="label" textAlign="center">
-          Reason
+          Причина
         </Table.Cell>
       </Table.Row>
     </Table>

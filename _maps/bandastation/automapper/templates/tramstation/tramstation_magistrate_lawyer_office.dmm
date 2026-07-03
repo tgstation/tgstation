@@ -1,0 +1,1096 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"az" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"aU" = (
+/obj/structure/chair{
+	name = "Judge";
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ba" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"by" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"bJ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"bM" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"bN" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Courtroom"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/court,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"cn" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"cr" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"cK" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ec" = (
+/obj/structure/table/wood,
+/obj/item/folder/blue,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"en" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"ey" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/sign/clock/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Courtroom Jury North"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"ff" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"gb" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Lawyer's Office"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"hc" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom,
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ho" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"iy" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"iR" = (
+/obj/structure/chair{
+	name = "Judge";
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Courtroom"
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ja" = (
+/obj/structure/chair{
+	name = "Defense"
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ji" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"kK" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"kL" = (
+/obj/structure/chair{
+	name = "Prosecution";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ll" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"lr" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"lz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"lQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"ma" = (
+/obj/structure/table/wood,
+/obj/item/gavelblock,
+/obj/item/gavelhammer,
+/obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"mB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"mF" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Courtroom Jury South"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"ng" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"oe" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"oi" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/fax{
+	fax_name = "Magistrate's Office";
+	name = "Magistrate's Fax Machine";
+	pixel_y = 4
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"oy" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"qs" = (
+/obj/structure/closet/secure_closet/magistrate,
+/obj/machinery/button/door/directional/north{
+	id = "law_office";
+	name = "Privacy Shutters Control";
+	req_access = list("lawyer")
+	},
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"ru" = (
+/obj/structure/table/wood,
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Magistrate's Desk";
+	req_access = list("magistrate")
+	},
+/obj/item/clipboard{
+	pixel_y = 4
+	},
+/obj/item/stamp/magistrate,
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"rH" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"sv" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"sH" = (
+/obj/structure/chair{
+	name = "Defense"
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ty" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"tU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"uc" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"ur" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"uV" = (
+/turf/closed/wall,
+/area/station/security/courtroom)
+"vb" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"vp" = (
+/obj/structure/chair{
+	name = "Judge";
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"vt" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"vw" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"vM" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"wc" = (
+/obj/effect/landmark/navigate_destination/court,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"xr" = (
+/obj/structure/chair,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"xs" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/noticeboard/directional/north,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"xD" = (
+/turf/closed/wall,
+/area/station/service/lawoffice)
+"xH" = (
+/obj/machinery/door/airlock/corporate{
+	name = "Law Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"xI" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"zg" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"zY" = (
+/obj/machinery/door/airlock/security{
+	name = "Courtroom Holding Area"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/central/greater)
+"Ax" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/paper_bin{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/skull{
+	desc = "Бедный Йорик...";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"AH" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"AI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/holopad,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"AO" = (
+/obj/machinery/door/airlock/corporate/glass{
+	name = "Courtroom"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"AP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"AU" = (
+/obj/structure/rack,
+/obj/item/storage/briefcase{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/briefcase/secure,
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/directional/north,
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/megaphone{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Bp" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/security/courtroom)
+"BP" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Cb" = (
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Magistrate's Desk";
+	req_access = list("magistrate")
+	},
+/obj/item/radio/intercom/command/directional/west,
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"Cg" = (
+/obj/machinery/newscaster/directional/north,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"CN" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"DW" = (
+/obj/machinery/door/airlock/corporate{
+	name = "Law Office"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"Ei" = (
+/obj/structure/filingcabinet/employment,
+/obj/machinery/requests_console/directional/south{
+	name = "Law Office Requests Console";
+	department = "Law Office"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"ES" = (
+/obj/machinery/vending/wardrobe/law_wardrobe,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"FW" = (
+/obj/machinery/requests_console/directional/south{
+	name = "Magistrate's Office Request Console";
+	department = "Magistrate's Office"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"Hv" = (
+/turf/closed/wall,
+/area/station/maintenance/central/greater)
+"HD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/sign/clock/directional/west,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"HV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Ir" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"Jv" = (
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"KG" = (
+/obj/structure/closet/secure_closet/lawyer,
+/obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/stamp/law,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"Ln" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"Me" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"My" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"NS" = (
+/obj/structure/chair{
+	name = "Prosecution";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Of" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Og" = (
+/obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"PN" = (
+/turf/template_noop,
+/area/template_noop)
+"QK" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"Sl" = (
+/obj/structure/chair/comfy/corp{
+	dir = 4
+	},
+/obj/effect/landmark/start/magistrate,
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"Sw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window/left/directional/north{
+	name = "Law Office Delivery Chute"
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/service/lawoffice)
+"SX" = (
+/obj/machinery/conveyor_switch/oneway{
+	name = "Shipment Delivery Chute Activator";
+	pixel_x = 10;
+	id = "lawyerdropoff"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"Tl" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Tm" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"UB" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"UF" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"Wa" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"Wr" = (
+/obj/machinery/computer/prisoner/management{
+	req_access = list("lawyer");
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"WE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "law_office";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/service/lawoffice)
+"XU" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+"YC" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"YW" = (
+/obj/machinery/button/door/directional/west{
+	id = "law_office";
+	name = "Law Office Shutter Control";
+	req_access = list("lawyer")
+	},
+/turf/open/floor/carpet/black,
+/area/station/service/lawoffice)
+"Zs" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/courtroom)
+"ZH" = (
+/obj/effect/landmark/start/lawyer,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/station/service/lawoffice)
+"ZY" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/courtroom)
+
+(1,1,1) = {"
+Hv
+Hv
+Hv
+zY
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+PN
+PN
+PN
+PN
+PN
+"}
+(2,1,1) = {"
+Hv
+Wa
+rH
+ZY
+vp
+iR
+aU
+cK
+HD
+ES
+Hv
+PN
+PN
+PN
+PN
+PN
+"}
+(3,1,1) = {"
+Hv
+xr
+BP
+xI
+ur
+ma
+ty
+cn
+Jv
+by
+Hv
+PN
+PN
+PN
+PN
+PN
+"}
+(4,1,1) = {"
+Hv
+AU
+vM
+Of
+zg
+az
+HV
+My
+Tl
+oy
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+"}
+(5,1,1) = {"
+Hv
+Cg
+ja
+ec
+Jv
+uc
+Jv
+AH
+NS
+tU
+xD
+xs
+Cb
+YW
+Wr
+Hv
+"}
+(6,1,1) = {"
+Hv
+Og
+sH
+XU
+Me
+vb
+UB
+hc
+kL
+UF
+xH
+Ir
+Ax
+Sl
+FW
+Hv
+"}
+(7,1,1) = {"
+Hv
+vw
+vw
+vw
+vw
+bN
+vw
+vw
+vw
+vw
+xD
+CN
+iy
+ru
+oi
+Hv
+"}
+(8,1,1) = {"
+Hv
+Zs
+QK
+vt
+cr
+lz
+vt
+vt
+cr
+lQ
+xD
+gb
+AI
+ba
+en
+Hv
+"}
+(9,1,1) = {"
+Hv
+bJ
+Ln
+YC
+Ln
+wc
+ho
+AP
+AP
+lr
+xD
+qs
+ll
+ZH
+Ei
+Hv
+"}
+(10,1,1) = {"
+Hv
+ey
+sv
+bM
+kK
+Tm
+ff
+ng
+ji
+mF
+xD
+KG
+mB
+oe
+SX
+Sw
+"}
+(11,1,1) = {"
+Hv
+uV
+uV
+Bp
+Bp
+AO
+Bp
+Bp
+uV
+uV
+xD
+xD
+DW
+WE
+xD
+xD
+"}

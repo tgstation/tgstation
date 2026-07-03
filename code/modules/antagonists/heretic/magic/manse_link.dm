@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/manse_link
-	name = "Manse Link"
-	desc = "This spell allows you to pierce through reality and connect minds to one another \
-		via your Mansus Link. All minds connected to your Mansus Link will be able to communicate discreetly across great distances."
+	name = "Связь Мансуса"
+	desc = "Это заклинание позволяет вам пронзать реальность и соединять разумы друг с другом с помощью \
+		связи Мансуса. Все разумы, подключённые к вашей связи Мансуса, смогут незаметно общаться на больших расстояниях."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -49,23 +49,23 @@
 /datum/action/cooldown/spell/pointed/manse_link/proc/do_linking(mob/living/linkee)
 	var/datum/component/mind_linker/linker = target
 	if(linkee.stat == DEAD)
-		to_chat(owner, span_warning("They're dead!"))
+		to_chat(owner, span_warning("Они мертвы!"))
 		return FALSE
 
-	to_chat(owner, span_notice("You begin linking [linkee]'s mind to yours..."))
-	to_chat(linkee, span_warning("You feel your mind being pulled somewhere... connected... intertwined with the very fabric of reality..."))
+	to_chat(owner, span_notice("Вы начинаете соединять сознание [linkee.declent_ru(GENITIVE)] со своим..."))
+	to_chat(linkee, span_warning("Вы чувствуете, что ваш разум куда-то тянут... соединяют... переплетают с самой тканью реальности..."))
 
 	if(!do_after(owner, link_time, linkee, hidden = TRUE))
-		to_chat(owner, span_warning("You fail to link to [linkee]'s mind."))
-		to_chat(linkee, span_warning("The foreign presence leaves your mind."))
+		to_chat(owner, span_warning("Вам не удается связать себя с разумом [linkee.declent_ru(GENITIVE)]."))
+		to_chat(linkee, span_warning("Чужое присутствие покидает ваш разум."))
 		return FALSE
 
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(linkee))
 		return FALSE
 
 	if(!linker.link_mob(linkee))
-		to_chat(owner, span_warning("You can't seem to link to [linkee]'s mind."))
-		to_chat(linkee, span_warning("The foreign presence leaves your mind."))
+		to_chat(owner, span_warning("Вы не можете связать себя с разумом [linkee.declent_ru(GENITIVE)]."))
+		to_chat(linkee, span_warning("Чужое присутствие покидает ваш разум."))
 		return FALSE
 
 	return TRUE

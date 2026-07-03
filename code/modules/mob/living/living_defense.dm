@@ -15,17 +15,17 @@
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
-			to_chat(src, span_userdanger("Your armor was penetrated!"))
+			to_chat(src, span_userdanger("Ваша броня была пробита!"))
 	else if(our_armor >= 100)
 		if(absorb_text)
 			to_chat(src, span_notice("[absorb_text]"))
 		else
-			to_chat(src, span_notice("Your armor absorbs the blow!"))
+			to_chat(src, span_notice("Ваша броня поглощает удар!"))
 	else
 		if(soften_text)
 			to_chat(src, span_warning("[soften_text]"))
 		else
-			to_chat(src, span_warning("Your armor softens the blow!"))
+			to_chat(src, span_warning("Ваша броня смягчает удар!"))
 	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)
@@ -127,16 +127,16 @@
 	var/hit_limb_zone = check_hit_limb_zone_name(def_zone)
 	var/organ_hit_text = ""
 	if (hit_limb_zone)
-		organ_hit_text = " in \the [parse_zone_with_bodypart(hit_limb_zone)]"
+		organ_hit_text = " в [parse_zone_with_bodypart(hit_limb_zone, declent = ACCUSATIVE)]"
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
-			to_chat(src, span_userdanger("You're shot by \a [proj][organ_hit_text]!"))
+			to_chat(src, span_userdanger("[capitalize(proj.declent_ru(NOMINATIVE))] попадает по вам[organ_hit_text]!"))
 		if (SUPPRESSED_NONE)
-			visible_message(span_danger("[src] is hit by \a [proj][organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_danger("[capitalize(proj.declent_ru(NOMINATIVE))] попадает [declent_ru(DATIVE)][organ_hit_text]!"), \
+					span_userdanger("[capitalize(proj.declent_ru(NOMINATIVE))] попадает по вам[organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(is_blind())
-				to_chat(src, span_userdanger("You feel something hit you[organ_hit_text]!"))
+				to_chat(src, span_userdanger("Вы чувствуете, как что-то попадает по вам[organ_hit_text]!"))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -236,7 +236,7 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))
 		// Filled with made up numbers for non-items.
-		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE) & SUCCESSFUL_BLOCK)
+		if(check_block(AM, 30, "[AM.declent_ru(ACCUSATIVE)]", THROWN_PROJECTILE_ATTACK, 0, BRUTE) & SUCCESSFUL_BLOCK)
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
@@ -244,14 +244,14 @@
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
-				visible_message(span_danger("[src] is hit by [AM]!"), \
-							span_userdanger("You're hit by [AM]!"))
+				visible_message(span_danger("[capitalize(AM.declent_ru(NOMINATIVE))] врезается в [(declent_ru(ACCUSATIVE))]!"), \
+							span_userdanger("В вас врезается [AM.declent_ru(NOMINATIVE)]!"))
 		log_combat(AM, src, "hit ")
 		return ..()
 
 	var/obj/item/thrown_item = AM
 	if(throwingdatum?.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
-		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
+		if(check_block(AM, thrown_item.throwforce, "[thrown_item.declent_ru(ACCUSATIVE)]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
@@ -269,8 +269,8 @@
 		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return ..()
 
-	visible_message(span_danger("[src] is hit by [thrown_item]!"),
-		span_userdanger("You're hit by [thrown_item]!"))
+	visible_message(span_danger("[capitalize(thrown_item.declent_ru(NOMINATIVE))] врезается в [declent_ru(ACCUSATIVE)]!"),
+		span_userdanger("В вас врезается [thrown_item.declent_ru(NOMINATIVE)]!"))
 	if(!thrown_item.throwforce)
 		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return
@@ -278,8 +278,8 @@
 	var/armor = run_armor_check(
 		zone,
 		MELEE,
-		"Your armor has protected your [parse_zone_with_bodypart(zone)].",
-		"Your armor has softened hit to your [parse_zone_with_bodypart(zone)].",
+		"Ваша броня защищает вашу [parse_zone_with_bodypart(zone)].",
+		"Ваша броня смягчает удар по вашей [parse_zone_with_bodypart(zone, declent = DATIVE)].",
 		thrown_item.armour_penetration,
 		"",
 		FALSE,
@@ -308,8 +308,8 @@
 		return FALSE
 	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
 	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
-		visible_message(span_warning("[src] catches [item]!"), \
-						span_userdanger("You catch [item] in mid-air!"))
+		visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] ловит [item.declent_ru(ACCUSATIVE)]!"), \
+						span_userdanger("Вы ловите [item.declent_ru(ACCUSATIVE)] в воздухе!"))
 		return TRUE
 
 ///Checks the requites for catching a throw item.
@@ -332,9 +332,9 @@
 	if(!istype(target))
 		return GRAB_SKIP
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
-		return GRAB_FAILURE
-	if(target.check_block(src, 0, "[src]'s grab", UNARMED_ATTACK))
-		return GRAB_FAILURE
+		return FALSE
+	if(target.check_block(src, 0, "захват [declent_ru(GENITIVE)]", UNARMED_ATTACK))
+		return FALSE
 	target.grabbedby(src)
 	return GRAB_SUCCESS
 
@@ -350,11 +350,11 @@
 		return
 
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
-		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
+		to_chat(user, span_warning("Нельзя схватить [declent_ru(ACCUSATIVE)] ещё агрессивнее!"))
 		return FALSE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
+		to_chat(user, span_warning("Вы не хотите рисковать причинить боль [declent_ru(DATIVE)]!"))
 		return FALSE
 
 	grippedby(user)
@@ -375,9 +375,9 @@
 	if(user.grab_state) //only the first upgrade is instantaneous
 		var/old_grab_state = user.grab_state
 		var/grab_upgrade_time = instant ? 0 : 30
-		visible_message(span_danger("[user] starts to tighten [user.p_their()] grip on [src]!"), \
-						span_userdanger("[user] starts to tighten [user.p_their()] grip on you!"), span_hear("You hear aggressive shuffling!"), null, user)
-		to_chat(user, span_danger("You start to tighten your grip on [src]!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает усиливать захват на [declent_ru(PREPOSITIONAL)]!"), \
+						span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] начинает усиливать захват на вас!"), span_hear("Вы слышите агрессивное шарканье!"), null, user)
+		to_chat(user, span_danger("Вы начинаете усиливать захват на [declent_ru(PREPOSITIONAL)]!"))
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				log_combat(user, src, "attempted to neck grab", addition="neck grab")
@@ -392,28 +392,28 @@
 		if(GRAB_AGGRESSIVE)
 			var/add_log = ""
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
-				visible_message(span_danger("[user] firmly grips [src]!"),
-								span_danger("[user] firmly grips you!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You firmly grip [src]!"))
+				visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] крепко хватает [declent_ru(ACCUSATIVE)]!"),
+								span_danger("[capitalize(user.declent_ru(NOMINATIVE))] крепко хватает вас!"), span_hear("Вы слышите агрессивное шарканье!"), null, user)
+				to_chat(user, span_danger("Вы крепко хватаете [declent_ru(ACCUSATIVE)]!"))
 				add_log = " (pacifist)"
 			else
-				visible_message(span_danger("[user] grabs [src] aggressively!"), \
-								span_userdanger("[user] grabs you aggressively!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You grab [src] aggressively!"))
+				visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] агрессивно хватает [declent_ru(ACCUSATIVE)]!"), \
+								span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] агрессивно хватает вас!"), span_hear("Вы слышите агрессивное шарканье!"), null, user)
+				to_chat(user, span_danger("Вы агрессивно хватаете [declent_ru(ACCUSATIVE)]!"))
 			stop_pulling()
 			log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 		if(GRAB_NECK)
 			log_combat(user, src, "grabbed", addition="neck grab")
-			visible_message(span_danger("[user] grabs [src] by the neck!"),\
-							span_userdanger("[user] grabs you by the neck!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You grab [src] by the neck!"))
+			visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] хватает [declent_ru(ACCUSATIVE)] за шею!"),\
+							span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] хватает вас за шею!"), span_hear("Вы слышите агрессивное шарканье!"), null, user)
+			to_chat(user, span_danger("Вы хватаете [declent_ru(ACCUSATIVE)] за шею!"))
 			if(!buckled && !density)
 				Move(user.loc)
 		if(GRAB_KILL)
 			log_combat(user, src, "strangled", addition="kill grab")
-			visible_message(span_danger("[user] is strangling [src]!"), \
-							span_userdanger("[user] is strangling you!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You're strangling [src]!"))
+			visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] начинает душить [declent_ru(ACCUSATIVE)]!"), \
+							span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] начинает душить вас!"), span_hear("Вы слышите агрессивное шарканье!"), null, user)
+			to_chat(user, span_danger("Вы начинаете душить [declent_ru(ACCUSATIVE)]!"))
 			if(!buckled && !density)
 				Move(user.loc)
 	user.set_pull_offsets(src, user.grab_state)
@@ -427,20 +427,20 @@
 	if(user.melee_damage_upper == 0)
 		if(user != src)
 			visible_message(
-				span_notice("[user] [user.friendly_verb_continuous] [src]!"),
-				span_notice("[user] [user.friendly_verb_continuous] you!"),
+				span_notice("[capitalize(user.declent_ru(NOMINATIVE))] [ru_attack_verb(user.friendly_verb_continuous)] [declent_ru(ACCUSATIVE)]!"),
+				span_notice("[capitalize(user.declent_ru(NOMINATIVE))] [ru_attack_verb(user.friendly_verb_continuous)] вас!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				ignored_mobs = user,
 			)
-			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
+			to_chat(user, span_notice("Вы [ru_attack_verb(user.friendly_verb_simple)] [declent_ru(ACCUSATIVE)]!"))
 		return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt anyone!"))
+		to_chat(user, span_warning("Вы не хотите никому причинить вред!"))
 		return FALSE
 
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	if(check_block(user, damage, "[user]'s [user.attack_verb_simple]", UNARMED_ATTACK, user.armour_penetration, user.melee_damage_type))
+	if(check_block(user, damage, "атаку [capitalize(user.declent_ru(ACCUSATIVE))]", UNARMED_ATTACK, user.armour_penetration, user.melee_damage_type)) // TODO220 - translate this somehow using [user.attack_verb_simple]
 		return FALSE
 
 	if(user.attack_sound)
@@ -448,8 +448,8 @@
 
 	user.do_attack_animation(src)
 	visible_message(
-		span_danger("[user] [user.attack_verb_continuous] [src]!"),
-		span_userdanger("[user] [user.attack_verb_continuous] you!"),
+		span_danger("[capitalize(user.declent_ru(NOMINATIVE))] [ru_attack_verb(user.attack_verb_continuous)] [declent_ru(ACCUSATIVE)]!"),
+		span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] [ru_attack_verb(user.attack_verb_continuous)] вас!"),
 		null,
 		COMBAT_MESSAGE_RANGE,
 		user,
@@ -461,7 +461,7 @@
 
 	var/armor_block = run_armor_check(user.zone_selected, MELEE, armour_penetration = user.armour_penetration)
 
-	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
+	to_chat(user, span_danger("Вы [ru_attack_verb(user.attack_verb_simple)] [declent_ru(ACCUSATIVE)]!"))
 	var/damage_done = apply_damage(
 		damage = damage,
 		damagetype = user.melee_damage_type,
@@ -492,87 +492,87 @@
 	if (!user.combat_mode)
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt anyone!"))
+		to_chat(user, span_warning("Вы не хотите никому причинить вред!"))
 		return FALSE
 
 	if(!user.get_bodypart(BODY_ZONE_HEAD))
 		return FALSE
 	if(user.is_mouth_covered(ITEM_SLOT_MASK))
-		to_chat(user, span_warning("You can't bite with your mouth covered!"))
+		to_chat(user, span_warning("Вы не можете кусаться с закрытым ртом!"))
 		return FALSE
 
-	if(check_block(user, 1, "[user]'s bite", UNARMED_ATTACK, 0, BRUTE))
+	if(check_block(user, 1, "укус [capitalize(user.declent_ru(GENITIVE))]", UNARMED_ATTACK, 0, BRUTE))
 		return FALSE
 
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 	if (HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || prob(75))
 		log_combat(user, src, "attacked")
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message(span_danger("[user.name] bites [src]!"), \
-						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You bite [src]!"))
+		visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] кусает [declent_ru(ACCUSATIVE)]!"), \
+						span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] кусает вас!"), span_hear("Вы слышите кусание!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("Вы кусаете [declent_ru(ACCUSATIVE)]!"))
 		return TRUE
 	else
-		visible_message(span_danger("[user.name]'s bite misses [src]!"), \
-						span_danger("You avoid [user.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your bite misses [src]!"))
+		visible_message(span_danger("Укус  [user.declent_ru(GENITIVE)] промахивается по [declent_ru(DATIVE)]!"), \
+						span_danger("Вы уворачиваетесь от укуса [user.declent_ru(GENITIVE)]!"), span_hear("Вы слышите звук захлопывающейся пасти!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning("Ваш укус промахивается по [declent_ru(DATIVE)]!"))
 
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	if(L.combat_mode)
 		if(HAS_TRAIT(L, TRAIT_PACIFISM))
-			to_chat(L, span_warning("You don't want to hurt anyone!"))
+			to_chat(L, span_warning("Вы не хотите никому причинить вред!"))
 			return FALSE
 
-		if(check_block(L, 1, "[L]'s bite", UNARMED_ATTACK, 0, BRUTE))
+		if(check_block(L, 1, "укус [L.declent_ru(GENITIVE)]", UNARMED_ATTACK, 0, BRUTE))
 			return FALSE
 
 		L.do_attack_animation(src)
 		if(prob(90))
 			log_combat(L, src, "attacked")
-			visible_message(span_danger("[L.name] bites [src]!"), \
-							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_danger("You bite [src]!"))
+			visible_message(span_danger("[capitalize(L.declent_ru(NOMINATIVE))] кусает [declent_ru(ACCUSATIVE)]!"), \
+							span_userdanger("[capitalize(L.declent_ru(NOMINATIVE))] кусает вас!"), span_hear("Вы слышите кусание!"), COMBAT_MESSAGE_RANGE, L)
+			to_chat(L, span_danger("Вы кусаете [declent_ru(ACCUSATIVE)]!"))
 			playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			return TRUE
 		else
-			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
-							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_warning("Your bite misses [src]!"))
+			visible_message(span_danger("Укус [L.declent_ru(GENITIVE)] промахивается по [declent_ru(DATIVE)]!"), \
+							span_danger("Вы уворачиваетесь от укуса [L.declent_ru(GENITIVE)]!"), span_hear("Вы слышите звук захлопывающейся пасти!"), COMBAT_MESSAGE_RANGE, L)
+			to_chat(L, span_warning("Ваш укус промахивается по [declent_ru(DATIVE)]!"))
 			return FALSE
 
-	visible_message(span_notice("[L.name] rubs its head against [src]."), \
-					span_notice("[L.name] rubs its head against you."), null, null, L)
-	to_chat(L, span_notice("You rub your head against [src]."))
+	visible_message(span_notice("[capitalize(L.declent_ru(NOMINATIVE))] трется головой об [declent_ru(ACCUSATIVE)]."), \
+					span_notice("[capitalize(L.declent_ru(NOMINATIVE))] трется головой об вас."), null, null, L)
+	to_chat(L, span_notice("Вы третесь головой об [declent_ru(ACCUSATIVE)]."))
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(check_block(user, 0, "[user]'s tackle", UNARMED_ATTACK, 0, BRUTE))
+		if(check_block(user, 0, "попытку уронить от [capitalize(user.declent_ru(GENITIVE))]", UNARMED_ATTACK, 0, BRUTE))
 			return FALSE
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
 
 	if(user.combat_mode)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to hurt anyone!"))
+			to_chat(user, span_warning("Вы не хотите никому причинить вред!"))
 			return FALSE
-		if(check_block(user, user.melee_damage_upper, "[user]'s slash", UNARMED_ATTACK, 0, BRUTE))
+		if(check_block(user, user.melee_damage_upper, "разрезающий удар от [capitalize(user.declent_ru(GENITIVE))]", UNARMED_ATTACK, 0, BRUTE))
 			return FALSE
 		user.do_attack_animation(src)
 		return TRUE
 
-	visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
-					span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
-	to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
+	visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] поглаживает [declent_ru(ACCUSATIVE)] своей косоподобной рукой."), \
+					span_notice("[capitalize(user.declent_ru(NOMINATIVE))] поглаживает вас своей косоподобной рукой."), null, null, user)
+	to_chat(user, span_notice("Вы поглаживаете [declent_ru(ACCUSATIVE)] своей косоподобной рукой."))
 	return FALSE
 
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt [src]!"))
+		to_chat(user, span_warning("Вы не хотите причинить вред [declent_ru(DATIVE)]!"))
 		return FALSE
 	return TRUE
 
@@ -603,11 +603,17 @@
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
 		adjust_stamina_loss(shock_damage)
+	//BANDASTATION EDIT START - electrocute message
+	var/shock_name = source
+	if(isatom(source))
+		var/atom/source_as_atom = source
+		shock_name = capitalize(source_as_atom.declent_ru(NOMINATIVE))
+	//BANDASTATION EDIT END
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
 		visible_message(
-			span_danger("[src] was shocked by \the [source]!"), \
-			span_userdanger("You feel a powerful shock coursing through your body!"), \
-			span_hear("You hear a heavy electrical crack.") \
+			span_danger("[shock_name] ударяет током [capitalize(declent_ru(ACCUSATIVE))]!"), \
+			span_userdanger("Вы чувствуете мощный разряд, проходящий через всё ваше тело!"), \
+			span_hear("Вы слышите сильный электрический треск.") \
 		)
 	return shock_damage
 
@@ -700,12 +706,12 @@
 		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0, 1, 0, 250))
 
 	if(ears.damage >= 15 && prob(ears.damage - 5))
-		to_chat(src, span_userdanger("You can't hear anything!"))
+		to_chat(src, span_userdanger("Вы ничего не слышите!"))
 		// Makes you deaf, enough that you need a proper source of healing, it won't self heal
 		// you need earmuffs, inacusiate, or replacement
 		ears.set_organ_damage(ears.maxHealth)
 	else if(ears.damage >= 5)
-		to_chat(src, span_warning("Your ears start to ring[ears.damage >= 15 ? " badly!":"!"]"))
+		to_chat(src, span_warning("У вас начинает[ears.damage >= 15 ? " очень сильно":""] звенеть в ушах!"))
 
 
 //to damage the clothes worn by a mob
@@ -819,18 +825,18 @@
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			var/knocked_down = target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
-			target.visible_message(span_danger("[name] shoves [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"),
-				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
+			target.visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] толкает [target.declent_ru(ACCUSATIVE)], сбивая [target.ru_p_them()] с ног!"),
+				span_userdanger("Вы сбиты с ног от толчка [declent_ru(GENITIVE)]!"), span_hear("Вы слышите агрессивное шарканье с последующим громким стуком!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("Вы толкаете [target.declent_ru(ACCUSATIVE)], сбивая [target.ru_p_them()] с ног!"))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		if(target.Paralyze(SHOVE_CHAIN_PARALYZE))
 			target.apply_status_effect(/datum/status_effect/no_side_kick)
-			target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-							span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+			target.visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] пинает [target.declent_ru(ACCUSATIVE)] в [target.ru_p_them()] бок!"),
+							span_userdanger("[capitalize(declent_ru(NOMINATIVE))] пинает вас в ваш бок!"), span_hear("Вы слышите агрессивное шарканье с последующим громким стуком!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("Вы пинаете [target.declent_ru(ACCUSATIVE)] в [target.ru_p_them()] бок!"))
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
 			log_combat(src, target, "kicks", "onto their side (paralyzing)")
 			return
@@ -838,14 +844,14 @@
 	target.get_shoving_message(src, weapon, shove_flags)
 
 	//Take their lunch money
-	var/target_held_item = target.get_active_held_item()
+	var/datum/target_held_item = target.get_active_held_item()
 	var/append_message = weapon ? " with [weapon]" : ""
 	// If it's in our typecache, they're staggered and it exists, disarm. If they're knocked down, disarm too.
 	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered) && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+		target.visible_message(span_danger("[capitalize(target.declent_ru(NOMINATIVE))] роняет [target_held_item.declent_ru(ACCUSATIVE)]!"),
+			span_warning("Вы роняете [target_held_item.declent_ru(ACCUSATIVE)]!"), null, COMBAT_MESSAGE_RANGE)
 
 	if(shove_flags & SHOVE_CAN_STAGGER)
 		target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
@@ -869,11 +875,11 @@
 
 ///Send the chat feedback message for shoving
 /mob/living/proc/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
-	visible_message(span_danger("[shover] shoves [name][weapon ? " with [weapon]" : ""]!"),
-		span_userdanger("You're shoved by [shover][weapon ? " with [weapon]" : ""]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(shover, span_danger("You shove [name][weapon ? " with [weapon]" : ""]!"))
+	visible_message(span_danger("[capitalize(shover.declent_ru(NOMINATIVE))] толкает [declent_ru(ACCUSATIVE)][weapon ? " с помощью [weapon.declent_ru(GENITIVE)]" : ""]!"),
+		span_userdanger("[capitalize(shover.declent_ru(NOMINATIVE))] толкает вас[weapon ? " с помощью [weapon.declent_ru(GENITIVE)]" : ""]!"), span_hear("Вы слышите агрессивное шарканье!"), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(shover, span_danger("Вы толкаете [declent_ru(ACCUSATIVE)][weapon ? " с помощью [weapon.declent_ru(GENITIVE)]" : ""]!"))
 
-/mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+/mob/living/proc/check_block(atom/hit_by, damage, attack_text = "атаку", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hit_by, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
 		return SUCCESSFUL_BLOCK
 

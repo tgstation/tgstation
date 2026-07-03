@@ -255,7 +255,7 @@
 			var/sheet_amount = amount / SHEET_MATERIAL_AMOUNT
 			var/obj/sheet_type = material.sheet_type
 			data["materials"] += list(list(
-				"name" = material.name,
+				"name" = capitalize(material.declent_ru(NOMINATIVE)),
 				"id" = REF(material),
 				"amount" = sheet_amount,
 				"category" = "material",

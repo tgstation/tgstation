@@ -7,14 +7,21 @@
 				"a": "ah",
 				"u": "oo",
 				"c": " NAR ",
-				"s": " SIE "
+				"s": " SIE ",
+				"о": "у",
+				"т": "чх",
+				"а": "ах",
+				"у": "оо",
+				"ц": " НАР ",
+				"с": " СИ "
 			},
 			"uncommon": {
-				" ": " no hope... ",
-				"H": " IT COMES... "
+				"N": "ОН ИДЁТ",
+				" ": " нет надежды... ",
+				"Н": " ОН ИДЁТ... "
 			}
 		},
-		"string_replacements": ["'", "fth", "nglu", "glor"],
-		"string_additions": ["agn"]
+		"string_replacements": ["'", "фтх", "нхлу", "чр"],
+		"string_additions": ["агн"]
 	}
 }

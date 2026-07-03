@@ -1,0 +1,8 @@
+[sink]
+nominative = "раковина"
+genitive = "раковины"
+dative = "раковине"
+accusative = "раковину"
+instrumental = "раковиной"
+prepositional = "раковине"
+gender = "female"

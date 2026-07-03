@@ -18,7 +18,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
-	cartridge_wording = "arrow"
+	cartridge_wording = "стрел"
 	bolt_type = BOLT_TYPE_NO_BOLT
 	click_on_low_ammo = FALSE
 	must_hold_to_load = TRUE

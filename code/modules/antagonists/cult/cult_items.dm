@@ -655,10 +655,10 @@ Striking a noncultist, however, will tear their flesh."}
 		if(!remaining_curses)
 			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
 
-		var/curse_message = pick_n_take(remaining_curses) || "Something has gone horrendously wrong..."
+		var/curse_message = pick_n_take(remaining_curses) || "Что-то пошло ужасающе неправильно..."
 
-		curse_message += " The shuttle will be delayed by three minutes."
-		priority_announce("[curse_message]", "System Failure", 'sound/announcer/notice/notice1.ogg')
+		curse_message += " Эвакуационный шаттл задерживается на три минуты."
+		priority_announce("[curse_message]", "Обнаружена неисправность в системе", 'sound/announcer/notice/notice1.ogg')
 		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.")))
 		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
@@ -667,8 +667,8 @@ Striking a noncultist, however, will tear their flesh."}
 			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.")))
 
 		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
-			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(priority_announce), omfg_message, "Priority Alert", 'sound/announcer/announcement/announce_syndi.ogg', null, "Nanotrasen Department of Transportation: Central Command"), rand(2 SECONDS, 6 SECONDS))
+			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "ОТЪЕБИТЕСЬ ОТ НАС!"
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(priority_announce), omfg_message, "Приоритетное оповещение", 'sound/announcer/announcement/announce_syndi.ogg', null, "Центральное Командование: Транспортный Департамент Нанотрейзен"), rand(2 SECONDS, 6 SECONDS))
 			for(var/mob/iter_player as anything in GLOB.player_list)
 				if(IS_CULTIST(iter_player))
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)

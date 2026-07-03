@@ -89,6 +89,9 @@
 	/// Cooldown tracker to prevent message spam when resisting pressure while opening via unrestricted latch
 	COOLDOWN_DECLARE(pressure_push_cooldown)
 
+	///Sound to play when knocked on
+	var/knock_sound = 'modular_bandastation/aesthetics_sounds/sound/door_metal_knock_1.ogg' // BANDASTATION ADDITION: KNOCK
+
 /datum/armor/machinery_door
 	melee = 30
 	bullet = 30
@@ -163,6 +166,7 @@
 
 	if(isnull(held_item) && Adjacent(user))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
+		context[SCREENTIP_CONTEXT_RMB] = "Постучать" // BANDASTATION ADDITION: KNOCK
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)
@@ -313,6 +317,13 @@
 		var/mob/living/living_user = user
 		if(!(living_user.mobility_flags & MOBILITY_USE))
 			return
+	// BANDASTATION ADDITION START: KNOCK
+	if(islist(modifiers) && modifiers[RIGHT_CLICK])
+		knock_on(user)
+		user.visible_message(span_notice("[user] стучит в [src]."), \
+			span_notice("Вы стучите в [src]."))
+		return TRUE
+	// BANDASTATION ADDITION END: KNOCK
 	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
@@ -755,7 +766,11 @@
 /obj/machinery/door/zap_act(power, zap_flags)
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
-
+// BANDASTATION ADDITION START: KNOCK
+/obj/machinery/door/proc/knock_on(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(src, knock_sound, 100, TRUE)
+// BANDASTATION ADDITION END: KNOCK
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
 /obj/machinery/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)
 	SIGNAL_HANDLER

@@ -39,7 +39,7 @@
 	SIGNAL_HANDLER
 
 	if(item.force >= 5 || item.throwforce >= 5 || item.override_notes || item.offensive_notes || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
-		examine_texts += span_notice("<a href='byond://?src=[REF(item)];examine=1'>See combat information.</a>")
+		examine_texts += span_notice("<a href='byond://?src=[REF(item)];examine=1'>Боевые характеристики.</a>")
 
 /**
  *
@@ -79,16 +79,16 @@
 			readout += "It's pointy and could cause piercing wounds."
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
+			readout += "Примерно нужно ударов, чтобы обезвредить врага: [span_warning("[HITS_TO_CRIT(source.force)]")]"
 		else
-			readout += "It does not deal noticeable melee damage."
+			readout += "Не наносит значимого урона ударами."
 
 		if(source.throwforce > 0)
-			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
+			readout += "Примерно нужно бросков, чтобы обезвредить врага: [span_warning("[HITS_TO_CRIT(source.throwforce)]")]"
 		else
-			readout += "It does not deal noticeable throwing damage."
+			readout += "Не наносит значимого урона бросками."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
-			readout += "It has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability and [span_warning("[weapon_tag_convert(source.block_chance)]")] blocking capability."
+			readout += "Имеет [span_warning("[weapon_tag_convert(source.armour_penetration)]")] способность к пробитию брони и [span_warning("[weapon_tag_convert(source.block_chance)]")] вероятность блокирования."
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes
@@ -113,14 +113,14 @@
 /datum/element/weapon_description/proc/weapon_tag_convert(tag_val)
 	switch(tag_val)
 		if(0)
-			return "NO"
+			return "НИКАКУЮ"
 		if(1 to 25)
-			return "LITTLE"
+			return "НИЗКУЮ"
 		if(26 to 50)
-			return "AVERAGE"
+			return "СРЕДНЮЮ"
 		if(51 to 75)
-			return "ABOVE-AVERAGE"
+			return "ВЫШЕ-СРЕДНЕГО"
 		if(76 to INFINITY)
-			return "EXCELLENT"
+			return "ПРЕВОСХОДНУЮ"
 		else
-			return "WEIRD"
+			return "СТРАННУЮ"

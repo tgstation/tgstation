@@ -1,0 +1,8 @@
+["book bag"]
+nominative = "сумка для книг"
+genitive = "сумки для книг"
+dative = "сумке для книг"
+accusative = "сумку для книг"
+instrumental = "сумкой для книг"
+prepositional = "сумке для книг"
+gender = "female"

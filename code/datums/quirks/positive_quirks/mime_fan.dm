@@ -1,12 +1,12 @@
 /datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
-	desc = "You're a fan of mime antics and get a mood boost from wearing your mime pin."
+	desc = "Вы поклонник выходок мимов и получаете заряд бодрости от ношения их значков."
 	icon = FA_ICON_THUMBTACK
 	value = 2
 	mob_trait = TRAIT_MIME_FAN
-	gain_text = span_notice("You are a big fan of the Mime.")
-	lose_text = span_danger("The mime doesn't seem so great.")
-	medical_record_text = "Patient reports being a big fan of mimes."
+	gain_text = span_notice("Вы большой поклонник пантомимы.")
+	lose_text = span_danger("Похоже, мимы не такие и крутые, как казалось раньше.")
+	medical_record_text = "Пациент сообщает, что очень любит мимов."
 	mail_goodies = list(
 		/obj/item/toy/crayon/mime,
 		/obj/item/clothing/mask/gas/mime,

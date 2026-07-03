@@ -1,79 +1,79 @@
-﻿Aggressive
-Ancient
-Angry
-Beloved
-Bewildered
-Big
-Bloody
-Brief
-Broad
-Chubby
-Clumsy
-Common
-Crooked
-Crooked
-Curved
-Curvy
-Deep
-Deep Blue
-Defeated
-Despicable
-Elusive
-Epic
-Fast
-Fitted
-Flat
-Forked
-Frustratingly Elusive
-Genuine
-Grumpy
-Haunted
-Helpful
-High
-Hollow
-Hungry
-Itchy
-Lackluster
-Lazy
-Legendary
-Low
-Mildly Menacing
-Mysterious
-Narrow
-Nasty
-Nice
-Normal
-Old
-Quick
-Rare
-Renegade
-Repulsive
-Robust
-Rogue
-Round
-Rugged
-Sated
-Savage
-Scarcely Lethal
-Scratchy
-Shallow
-Short
-Sinuous
-Skinny
-Slimy
-Slow
-Small
-Spotted
-Square Nose
-Steep Nose
-Strange
-Sweeping
+Агрессивный
+Древний
+Злой
+Любимый
+Озадаченный
+Большой
+Кровавый
+Краткий
+Широкий
+Пухлый
+Неуклюжий
+Обычный
+Кривой
+Кривой
+Изогнутый
+Кривой
+Глубокий
+Глубокий синий
+Побежденный
+Презренный
+Неуловимый
+Эпический
+Быстрый
+Подходящий
+Плоский
+Вилообразный
+Разочаровывающе неуловимый
+Подлинный
+Ворчливый
+Призрачный
+Полезный
+Высокий
+Полый
+Голодный
+Зудящий
+Вялый
+Ленивый
+Легендарный
+Низкий
+Немного угрожающий
+Таинственный
+Узкий
+Мерзкий
+Приятный
+Нормальный
+Старый
+Быстрый
+Редкий
+Ренегат
+Отталкивающий
+Крепкий
+Бродячий
+Круглый
+Прочный
+Насыщенный
+Неистовый
+Смертельно опасный
+Царапающийся
+Неглубокий
+Короткий
+Грешный
+Тощий
+Тонкий
+Медленный
+Маленький
+Пятнистый
+Квадратный нос
+Острый нос
+Странный
+Подметающий
 The
-Thoughtless
-Truly Feared
-Twisted
-Unique
-Unremarkable
-Unusual
-Vintage
-Wicked
+Бездумный
+Воистину боятся
+Крученый
+Уникальный
+Неприметный
+Необычный
+Старинный
+Злой

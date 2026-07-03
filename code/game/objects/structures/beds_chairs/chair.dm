@@ -1,6 +1,8 @@
+#define DECLENT_PREPOSITION_S ((copytext_char(declent_ru(NOMINATIVE), 1, 2) in list("с", "С")) ? "со" : "с") // BANDASTATION EDIT
+
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force."
+	desc = "Это стул, на нём сидят. Хочешь ты этого или нет."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
@@ -23,6 +25,7 @@
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
 	if(prob(0.2))
+		ru_names_rename(ru_names_list("tactical [name]", "тактический [declent_ru(NOMINATIVE)]", "тактического [declent_ru(GENITIVE)]", "тактическому [declent_ru(DATIVE)]", "тактический [declent_ru(ACCUSATIVE)]", "тактическим [declent_ru(INSTRUMENTAL)]", "тактическом [declent_ru(PREPOSITIONAL)]", gender = declent_ru("gender")))
 		name = "tactical [name]"
 		fishing_modifier -= 8
 	MakeRotate()
@@ -35,14 +38,14 @@
 
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] sits down on [src]."),
-			span_notice("You sit down on [src]."),
+			span_notice("[buckler] садится на [declent_ru(NOMINATIVE)]."),
+			span_notice("Вы садитесь на [declent_ru(NOMINATIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_buckled.visible_message(
-			span_notice("[buckler] sits [being_buckled] down on [src]."),
-			span_notice("[buckler] sits you down on [src]."),
+			span_notice("[buckler] усаживает [being_buckled] на [declent_ru(NOMINATIVE)]."),
+			span_notice("[buckler] усаживает вас на [declent_ru(NOMINATIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -52,22 +55,22 @@
 
 	if(being_unbuckled == unbuckler)
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] stands up from [src]."),
-			span_notice("You stand up from [src]."),
+			span_notice("[unbuckler] встаёт [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
+			span_notice("Вы встаёте [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] stands [being_unbuckled] up from [src]."),
-			span_notice("[unbuckler] stands you up from [src]."),
+			span_notice("[unbuckler] помогает [being_unbuckled] встать [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
+			span_notice("[unbuckler] помогает вам встать [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
-	. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	. += span_notice("[capitalize(declent_ru(NOMINATIVE))] скрепле[genderize_ru(gender, "н", "на", "но", "ны")] парой <b>болтов</b>.")
 	if(!has_buckled_mobs() && can_buckle)
-		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
+		. += span_notice("Перетащите на него своего персонажа, чтобы сесть.")
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
@@ -121,10 +124,10 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, span_notice("You connect the shock kit to \the [src], electrifying it "))
+		to_chat(user, span_notice("Вы прикручиваете набор шокера к [declent_ru(DATIVE)], электризуя его!"))
 	else
 		user.put_in_active_hand(input_shock_kit)
-		to_chat(user, span_notice("You cannot fit the shock kit onto \the [src]!"))
+		to_chat(user, span_notice("Вы не можете прицепить набор шокера к [declent_ru(DATIVE)]!"))
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
@@ -181,7 +184,7 @@
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
-	desc = "Old is never too old to not be in fashion."
+	desc = "Крафт нынче в моде."
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
@@ -199,7 +202,7 @@
 
 /obj/structure/chair/comfy
 	name = "comfy chair"
-	desc = "It looks comfy."
+	desc = "Выглядит уютненько."
 	icon_state = "comfychair"
 	color = rgb(255, 255, 255)
 	resistance_flags = FLAMMABLE
@@ -227,7 +230,7 @@
 
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
-	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+	desc = "Крепкое и комфортное кресло для дальних космических перелётов. Оборудовано надголовным ограничителем чтобы вас не выкинуло в стену при жёсткой посадке."
 	icon_state = "shuttle_chair"
 	buildstacktype = /obj/item/stack/sheet/mineral/titanium
 	buckle_sound = SFX_SEATBELT_BUCKLE
@@ -250,28 +253,28 @@
 /obj/structure/chair/comfy/shuttle/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] sits down on [src], pulling the overhead restraint down to secure [buckler.p_them()]self."),
-			span_notice("You sit down on [src], pulling the overhead restraint down to secure yourself."),
+			span_notice("[buckler] усаживается в [declent_ru(NOMINATIVE)], опуская ограничитель."),
+			span_notice("Вы усаживаетесь в [declent_ru(NOMINATIVE)], опуская ограничитель."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_buckled.visible_message(
-			span_notice("[buckler] sits [being_buckled] down on [src], pulling the overhead restraint down to secure [buckler.p_them()]."),
-			span_notice("[buckler] sits you down on [src], pulling the overhead restraint down to secure you."),
+			span_notice("[buckler] усаживает [being_buckled] в [declent_ru(NOMINATIVE)], опуская ограничитель."),
+			span_notice("[buckler] усаживает вас в [declent_ru(NOMINATIVE)], опуская ограничитель."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
 /obj/structure/chair/comfy/shuttle/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
 	if(being_unbuckled == unbuckler)
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] flips the overhead restraint up, standing up from [src]."),
-			span_notice("You flip the overhead restraint up, standing up from [src]."),
+			span_notice("[unbuckler] откидывает ограничитель вверх, вставая [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
+			span_notice("Вы откидываете ограничители вверх, вставая [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] flips the overhead restraint up, standing [being_unbuckled] up from [src]."),
-			span_notice("[unbuckler] flips the overhead restraint up, standing you up from [src]."),
+			span_notice("[unbuckler] откидывает ограничитель вверх, поднимая [being_unbuckled] [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
+			span_notice("[unbuckler] откидывает ограничитель вверх, поднимая вас [DECLENT_PREPOSITION_S] [declent_ru(GENITIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -288,7 +291,7 @@
 
 /obj/structure/chair/comfy/carp
 	name = "carpskin chair"
-	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
+	desc = "Роскошное кресло. Множество пурпурных чешуек красиво переливаются на свету."
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
 	fishing_modifier = -12
@@ -326,7 +329,7 @@
 
 /obj/structure/chair/stool
 	name = "stool"
-	desc = "Apply butt."
+	desc = "Присядьте."
 	icon_state = "stool"
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
@@ -350,11 +353,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	if(!item_chair || has_buckled_mobs())
 		return
 	if(flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to pick up \the [src], but it fades away!"))
+		to_chat(user, span_notice("Вы пытаетесь поднять [declent_ru(ACCUSATIVE)], но он растворяется!"))
 		qdel(src)
 		return
 
-	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
+	user.visible_message(span_notice("[user] хватает [declent_ru(ACCUSATIVE)]."), span_notice("Вы хватаете [declent_ru(ACCUSATIVE)]."))
 	var/obj/item/chair_item = new item_chair(loc)
 	chair_item.set_custom_materials(custom_materials)
 	TransferComponents(chair_item)
@@ -367,7 +370,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
 /obj/structure/chair/stool/bar
 	name = "bar stool"
-	desc = "It has some unsavory stains on it..."
+	desc = "Фу, он липкий."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
 
@@ -379,7 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/stool/bamboo
 	name = "bamboo stool"
-	desc = "A makeshift bamboo stool with a rustic look."
+	desc = "Небрежно сколоченный табурет. О таком бы сказали «винтаж», но ценителей среди нас не найдёшь."
 	icon_state = "bamboo_stool"
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -390,7 +393,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair
 	name = "chair"
-	desc = "Bar brawl essential."
+	desc = "Незаменим для барной потасовки."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
@@ -419,7 +422,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	AddElement(/datum/element/cuffable_item)
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] заносит над собой [declent_ru(NOMINATIVE)]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
 
@@ -434,25 +437,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/turf = user.loc
 	if(!istype(turf) || isgroundlessturf(turf))
-		to_chat(user, span_warning("You need ground to plant this on!"))
+		to_chat(user, span_warning("Вам нужна твёрдая поверхность, чтобы поставить [declent_ru(NOMINATIVE)]!"))
 		return
 	if(!user.dropItemToGround(src))
-		to_chat(user, span_warning("[src] is stuck to your hand!"))
+		to_chat(user, span_warning("[declent_ru(NOMINATIVE)] прилип[genderize_ru(gender, "", "ла", "ло", "ли")] к вашей руке!"))
 		return
 	if(flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
+		to_chat(user, span_notice("Вы пытаетесь поставить [declent_ru(ACCUSATIVE)], но он растворяется!"))
 		qdel(src)
 		return
 
 	for(var/obj/object in turf)
 		if(istype(object, /obj/structure/chair))
-			to_chat(user, span_warning("There is already a chair here!"))
+			to_chat(user, span_warning("Здесь уже есть [declent_ru(NOMINATIVE)]!"))
 			return
 		if(object.density && !(object.flags_1 & ON_BORDER_1))
-			to_chat(user, span_warning("There is already something here!"))
+			to_chat(user, span_warning("Здесь уже что-то есть!"))
 			return
 
-	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
+	user.visible_message(span_notice("[user] ставит [declent_ru(ACCUSATIVE)]."), span_notice("Вы ставите [declent_ru(ACCUSATIVE)]."))
 	var/obj/structure/chair/chair = new origin_type(turf)
 	chair.set_custom_materials(custom_materials)
 	TransferComponents(chair)
@@ -475,7 +478,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
+		owner.visible_message(span_danger("[owner] отражает [attack_text] с помощью [declent_ru(GENITIVE)]!"))
 		if(take_chair_damage(damage, damage_type, MELEE)) // Our chair takes our incoming damage for us, which can result in it smashing.
 			smash(owner)
 		return TRUE
@@ -496,7 +499,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(!take_chair_damage(damage_to_inflict, damtype, MELEE)) // If we would do enough damage to bring our chair's integrity to 0, we instead go past the check to smash it against our target
 		return
 
-	user.visible_message(span_danger("[user] smashes [src] to pieces against [give_this_fucker_the_chair]"))
+	user.visible_message(span_danger("[user] разбивает [declent_ru(ACCUSATIVE)] в щепки об [give_this_fucker_the_chair]"))
 	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		if(vulnerable_hit || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
 			give_this_fucker_the_chair.Knockdown(2 SECONDS, daze_amount = daze_amount)
@@ -562,14 +565,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/old
 	name = "strange chair"
-	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
+	desc = "Это стул, на нём сидят. Хочешь ты этого или нет. Выглядит ОЧЕНЬ неудобным."
 	icon_state = "chairold"
 	item_chair = null
 	fishing_modifier = 4
 
 /obj/structure/chair/bronze
 	name = "brass chair"
-	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
+	desc = "Вращающееся кресло из бронзы. У него маленькие шестерёнки вместо колёс!"
 	anchored = FALSE
 	icon_state = "brass_chair"
 	buildstacktype = /obj/item/stack/sheet/bronze
@@ -602,18 +605,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/chair/bronze/click_alt(mob/user)
 	turns = 0
 	if(!(datum_flags & DF_ISPROCESSING))
-		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \
-		span_notice("Automated spinny chairs. The pinnacle of ancient Ratvarian technology."))
+		user.visible_message(span_notice("[user] вращает [declent_ru(ACCUSATIVE)], и последние остатки технологии Ратвара заставляют его вращаться ВЕЧНО."), \
+		span_notice("Автоматические вращающиеся кресла. Вершина древней технологии Ратвара."))
 		START_PROCESSING(SSfastprocess, src)
 	else
-		user.visible_message(span_notice("[user] stops [src]'s uncontrollable spinning."), \
-		span_notice("You grab [src] and stop its wild spinning."))
+		user.visible_message(span_notice("[user] останавливает неконтролируемое вращение [declent_ru(GENITIVE)]."), \
+		span_notice("Вы хватаете [declent_ru(ACCUSATIVE)] и останавливаете его бешеное вращение."))
 		STOP_PROCESSING(SSfastprocess, src)
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/mime
 	name = "invisible chair"
-	desc = "The mime needs to sit down and shut up."
+	desc = "Мимам стоит сидеть (и помалкивать)."
 	anchored = FALSE
 	icon_state = null
 	buildstacktype = null
@@ -636,7 +639,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/chair/plastic
 	icon_state = "plastic_chair"
 	name = "folding plastic chair"
-	desc = "No matter how much you squirm, it'll still be uncomfortable."
+	desc = "Сколько ни вертись, всё равно неудобно."
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
@@ -656,15 +659,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
-		to_chat(Mob, span_warning("The chair begins to pop and crack, you're too heavy!"))
+		to_chat(Mob, span_warning("[declent_ru(NOMINATIVE)] начинает трещать и ломаться, вы слишком тяжелы!"))
 		if(do_after(Mob, 6 SECONDS, progress = FALSE))
-			Mob.visible_message(span_notice("The plastic chair snaps under [Mob]'s weight!"))
+			Mob.visible_message(span_notice("[declent_ru(NOMINATIVE)] ломается под весом [Mob]!"))
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)
 
 /obj/item/chair/plastic
 	name = "folding plastic chair"
-	desc = "Somehow, you can always find one under the wrestling ring."
+	desc = "Ну и дешманщина."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "folded_chair"
 	inhand_icon_state = "folded_chair"
@@ -680,19 +683,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/musical
 	name = "musical chair"
-	desc = "You listen to this. Either by will or by force."
+	desc = "Значит слушай сюда... зачётная музычка, а?"
 	item_chair = /obj/item/chair/musical
 	particles = new /particles/musical_notes
 
 /obj/item/chair/musical
 	name = "musical chair"
-	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
+	desc = "О, это ж прям как в детском садике. Чё? Говоришь, ты космический нищук-голодранец и у тебя не было детства? Боже правый, не разводи нюни."
 	particles = new /particles/musical_notes
 	origin_type = /obj/structure/chair/musical
 
 /obj/structure/handrail
 	name = "handrail"
-	desc = "Hold on tight!"
+	desc = "Держитесь крепче!"
 	icon = 'icons/obj/handrail.dmi'
 	icon_state = "handrail"
 	anchored = TRUE
@@ -732,8 +735,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/handrail/proc/stop_buckle(mob/living/source, ...)
 	SIGNAL_HANDLER
 	source.visible_message(
-		span_warning("[source] loses [source.p_their()] grip on [src]!"),
-		span_warning("You lose your grip on [src]!"),
+		span_warning("[source] теряет хватку на [declent_ru(PREPOSITIONAL)]!"),
+		span_warning("Вы теряете хватку на [declent_ru(PREPOSITIONAL)]!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
@@ -741,8 +744,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/handrail/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	buckler.visible_message(
-		span_notice("[buckler] grabs [src] tight, keeping [buckler.p_them()]self upright."),
-		span_notice("You grab [src] tight, keeping yourself upright."),
+		span_notice("[buckler] крепко хватается за [declent_ru(ACCUSATIVE)], удерживая себя в вертикальном положении."),
+		span_notice("Вы крепко хватаетесь за [declent_ru(ACCUSATIVE)], удерживая себя в вертикальном положении."),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
@@ -750,15 +753,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/handrail/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
 	if(being_unbuckled == unbuckler)
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] lets go of [src]."),
-			span_notice("You let go of [src]."),
+			span_notice("[unbuckler] отпускает [declent_ru(ACCUSATIVE)]."),
+			span_notice("Вы отпускаете [declent_ru(ACCUSATIVE)]."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 	else
 		being_unbuckled.visible_message(
-			span_warning("[unbuckler] forces [being_unbuckled] to let go of [src]!"),
-			span_warning("[unbuckler] forces you to let go of [src]!"),
+			span_warning("[unbuckler.declent_ru(NOMINATIVE)] заставляет [being_unbuckled.declent_ru(ACCUSATIVE)] отпустить [declent_ru(ACCUSATIVE)]!"),
+			span_warning("[unbuckler] заставляет вас отпустить [declent_ru(ACCUSATIVE)]!"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
+
+#undef DECLENT_PREPOSITION_S // BANDASTATION EDIT

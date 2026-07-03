@@ -1,17 +1,17 @@
 /datum/job/warden
 	title = JOB_WARDEN
-	description = "Watch over the Brig and Prison Wing, release prisoners when \
-		their time is up, issue equipment to security, be a security officer when \
-		they all eventually die."
+	description = "Смотрите за бригом и тюремным блоком, отпускайте заключенных, \
+		когда их время подходит к концу, следите за арсеналом, выступайте в роли сотрудника безопасности \
+		после того, как они все умрут."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOS
+	supervisors = JOB_HEAD_OF_SECURITY_RU
 	minimal_player_age = 7
-	exp_requirements = 300
-	exp_required_type = EXP_TYPE_CREW
-	exp_granted_type = EXP_TYPE_CREW
+	exp_requirements = 600
+	exp_required_type = EXP_TYPE_SECURITY
+	exp_granted_type = EXP_TYPE_SECURITY
 	config_tag = "WARDEN"
 
 	outfit = /datum/outfit/job/warden

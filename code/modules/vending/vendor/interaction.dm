@@ -156,7 +156,7 @@
 		to_chat(user, span_warning("There's nothing to restock!"))
 		return
 
-	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] [MONEY_NAME]." : "."]"))
+	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained][MONEY_NAME]." : "."]"))
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
 	if(credits_contained >= 1)
@@ -195,7 +195,7 @@
 /obj/machinery/vending/proc/freebie(freebies)
 	PRIVATE_PROC(TRUE)
 
-	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some [MONEY_NAME]" : ""]!"))
+	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)

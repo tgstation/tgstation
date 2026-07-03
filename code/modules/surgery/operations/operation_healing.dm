@@ -6,9 +6,9 @@
 #define COMBO_SURGERY (1<<2)
 
 /datum/surgery_operation/basic/tend_wounds
-	name = "tend wounds"
-	rnd_name = "Tend Wounds"
-	desc = "Perform superficial wound care on a patient's bruises and burns."
+	name = "Обработка ран"
+	rnd_name = "Обработка ран"
+	desc = "Проведите поверхностный уход за ушибами и ожогами пациента."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_SCREWDRIVER = 1.5,
@@ -33,7 +33,7 @@
 	var/healing_multiplier = 0.07
 
 /datum/surgery_operation/basic/tend_wounds/all_required_strings()
-	return ..() + list("the patient must have brute or burn damage")
+	return ..() + list("у пациента должны быть ушибы или ожоги")
 
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
 	return patient.get_brute_loss() > 0 || patient.get_fire_loss() > 0
@@ -49,8 +49,8 @@
 		if(!all_healing)
 			all_healing = new()
 			all_healing.image = image(/obj/item/storage/medkit/advanced)
-			all_healing.name = "tend bruises and burns"
-			all_healing.info = "Heal a patient's superficial bruises, cuts, and burns."
+			all_healing.name = "Обработайте ушибы и ожоги"
+			all_healing.info = "Вылечите поверхностные ушибы, порезы и ожоги пациента."
 			LAZYSET(cached_healing_options, "[COMBO_SURGERY]", all_healing)
 
 		options[all_healing] = list(
@@ -66,8 +66,8 @@
 		if(!brute_healing)
 			brute_healing = new()
 			brute_healing.image = image(/obj/item/storage/medkit/brute)
-			brute_healing.name = "tend bruises"
-			brute_healing.info = "Heal a patient's superficial bruises and cuts."
+			brute_healing.name = "Обработка ушибов"
+			brute_healing.info = "Вылечите поверхностные ушибы и порезы пациента."
 			LAZYSET(cached_healing_options, "[BRUTE_SURGERY]", brute_healing)
 
 		options[brute_healing] = list(
@@ -81,8 +81,8 @@
 		if(!burn_healing)
 			burn_healing = new()
 			burn_healing.image = image(/obj/item/storage/medkit/fire)
-			burn_healing.name = "tend burns"
-			burn_healing.info = "Heal a patient's superficial burns."
+			burn_healing.name = "Обработка ожогов"
+			burn_healing.info = "Вылечите поверхностные ожоги пациента."
 			LAZYSET(cached_healing_options, "[BURN_SURGERY]", burn_healing)
 
 		options[burn_healing] = list(
@@ -112,19 +112,19 @@
 	var/brute_heal = operation_args[OPERATION_BRUTE_HEAL] > 0
 	var/burn_heal = operation_args[OPERATION_BURN_HEAL] > 0
 	if(brute_heal && burn_heal)
-		woundtype = "wounds"
+		woundtype = "раны"
 	else if(brute_heal)
-		woundtype = "bruises"
+		woundtype = "ушибы"
 	else //why are you trying to 0,0...?
-		woundtype = "burns"
+		woundtype = "ожоги"
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You attempt to patch some of [patient]'s [woundtype]."),
-		span_notice("[surgeon] attempts to patch some of [patient]'s [woundtype]."),
-		span_notice("[surgeon] attempts to patch some of [patient]'s [woundtype]."),
+		span_notice("Вы пытаетесь наложить швы на [woundtype] у [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] пытается наложить швы на [woundtype] у [patient.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] пытается наложить швы на [woundtype] у [patient.declent_ru(GENITIVE)]."),
 	)
-	display_pain(patient, "Your [woundtype] sting like hell!")
+	display_pain(patient, "Ваши [woundtype] адски болят!")
 
 #define CONDITIONAL_DAMAGE_MESSAGE(brute, burn, combo_msg, brute_msg, burn_msg) "[(brute > 0 && burn > 0) ? combo_msg : (brute > 0 ? brute_msg : burn_msg)]"
 
@@ -140,26 +140,26 @@
 
 	if(show_stats(surgeon, patient))
 		if(brute_healed > 0 && patient.get_brute_loss() > 0)
-			progress_text += ". Remaining brute: <font color='#ff3333'>[patient.get_brute_loss()]</font>"
+			progress_text += ". Оставшиеся раны: <font color='#ff3333'>[patient.get_brute_loss()]</font>"
 		if(burn_healed > 0 && patient.get_fire_loss() > 0)
-			progress_text += ". Remaining burn: <font color='#ff9933'>[patient.get_fire_loss()]</font>"
+			progress_text += ". Оставшиеся ожоги: <font color='#ff9933'>[patient.get_fire_loss()]</font>"
 		return progress_text
 
 	switch(estimated_remaining_steps)
 		if(-INFINITY to 1)
 			return
 		if(1 to 3)
-			progress_text += ", finishing up the last few [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "signs of damage", "scrapes", "burn marks")]"
+			progress_text += ", заканчиваю работу над последними [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "признаками повреждения", "ссадинами", "ожогами")]"
 		if(3 to 6)
-			progress_text += ", counting down the last few [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "patches of trauma", "bruises", "blisters")] left to treat"
+			progress_text += ", считаю последние [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "очаги повреждений", "гематомы", "ожоговые пузыри")]"
 		if(6 to 9)
-			progress_text += ", continuing to plug away at [patient.p_their()] extensive [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "injuries", "rupturing", "roasting")]"
+			progress_text += ", продолжаю методично обрабатывать [patient.ru_p_them()] обширные [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "травмы", "разрывы", "ожоги")]"
 		if(9 to 12)
-			progress_text += ", steadying yourself for the long surgery ahead"
+			progress_text += ", настраиваясь на долгую операцию впереди"
 		if(12 to 15)
-			progress_text += ", though [patient.p_they()] still look[patient.p_s()] more like [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "smooshed baby food", "ground beef", "burnt steak")] than a person"
+			progress_text += ", хотя всё ещё больше напоминает [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "мясное пюре", "говяжий фарш", "обугленный стейк")], чем на человека"
 		if(15 to INFINITY)
-			progress_text += ", though you feel like you're barely making a dent in treating [patient.p_their()] [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "broken", "pulped", "charred")] body"
+			progress_text += ", хотя кажется, будто ваши усилия почти не сокращают объём [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "искореженного", "размозжённого", "обугленного")] тела"
 
 	return progress_text
 
@@ -181,8 +181,8 @@
 #undef CONDITIONAL_DAMAGE_MESSAGE
 
 /datum/surgery_operation/basic/tend_wounds/on_success(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
-	var/user_msg = "You succeed in fixing some of [patient]'s wounds" //no period, add initial space to "addons"
-	var/target_msg = "[surgeon] fixes some of [patient]'s wounds" //see above
+	var/user_msg = "Вам удается залечить некоторые раны [patient.declent_ru(GENITIVE)]" //no period, add initial space to "addons"
+	var/target_msg = "[surgeon] залечивает некоторые раны [patient.declent_ru(GENITIVE)]" //see above
 
 	var/brute_healed = operation_args[OPERATION_BRUTE_HEAL]
 	var/burn_healed = operation_args[OPERATION_BURN_HEAL]
@@ -191,8 +191,8 @@
 	var/accessibility_modifier = 1.0
 	if(!patient.is_location_accessible(BODY_ZONE_CHEST, IGNORED_OPERATION_CLOTHING_SLOTS))
 		accessibility_modifier = 0.55
-		user_msg += " as best as you can while [patient.p_they()] [patient.p_have()] clothing on"
-		target_msg += " as best as [surgeon.p_they()] can while [patient.p_they()] [patient.p_have()] clothing on"
+		user_msg += " насколько это возможно, пока [patient.ru_p_they()] [patient.ru_p_have()] на себе одежду"
+		target_msg += " насколько это возможно, пока [patient.ru_p_they()] [patient.ru_p_have()] на себе одежду"
 
 	var/brute_multiplier = operation_args[OPERATION_BRUTE_MULTIPLIER] * dead_multiplier * accessibility_modifier
 	var/burn_multiplier = operation_args[OPERATION_BURN_MULTIPLIER] * dead_multiplier * accessibility_modifier
@@ -219,9 +219,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You screwed up!"),
-		span_warning("[surgeon] screws up!"),
-		span_notice("[surgeon] fixes some of [patient]'s wounds."),
+		span_warning("Вы ошибаетесь!"),
+		span_warning("[surgeon] ошибается!"),
+		span_notice("[surgeon] залечивает некоторые раны [patient.declent_ru(GENITIVE)]."),
 		target_detailed = TRUE,
 	)
 	var/brute_dealt = operation_args[OPERATION_BRUTE_HEAL] * 0.8
@@ -246,7 +246,7 @@
 	healing_multiplier = 0.2
 
 /datum/surgery_operation/basic/tend_wounds/combo
-	rnd_name = "Advanced Tend Wounds"
+	rnd_name = "Улучшенная обработка ран"
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded
 	can_heal = COMBO_SURGERY

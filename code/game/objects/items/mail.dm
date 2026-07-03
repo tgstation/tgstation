@@ -1,6 +1,6 @@
 /// Mail is tamper-evident and unresealable, postmarked by CentCom for an individual recepient.
 /obj/item/mail
-	name = "mail"
+	name = "письмо"
 	gender = NEUTER
 	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
 	icon = 'icons/obj/service/bureaucracy.dmi'
@@ -45,7 +45,7 @@
 	var/static/list/department_colors
 
 /obj/item/mail/envelope
-	name = "envelope"
+	name = "конверт"
 	icon_state = "mail_large"
 	goodie_count = 2
 	stamp_max = 2
@@ -167,7 +167,7 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	name = "[initial(name)] для [recipient.name], ([job_title_ru(recipient.assigned_role.title)])"
 	recipient_ref = WEAKREF(recipient)
 
 	var/mob/living/body = recipient.current

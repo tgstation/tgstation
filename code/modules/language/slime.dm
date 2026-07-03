@@ -1,8 +1,8 @@
 /datum/language/slime
 	name = "Slime"
-	desc = "A melodic and complex language spoken by slimes. Some of the notes are inaudible to humans."
+	desc = "Мелодичный и сложный язык, на котором говорят слизни. Некоторые ноты не слышны людям."
 	key = "k"
-	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix")
+	syllables = list("кр","крр","ксук","кил","куум","ксукм","вол","ксрим","заоо","ку-уу","кикс","коо","зикс")
 	special_characters = list("!","*")
 	default_priority = 70
 

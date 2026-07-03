@@ -21,7 +21,7 @@
 	owner.announce_objectives()
 
 /datum/objective/space_carp
-	explanation_text = "Protect the rift to summon more carps."
+	explanation_text = "Защищайте разлом призыва карпов."
 	var/datum/weakref/rift
 
 /datum/objective/space_carp/check_completion()

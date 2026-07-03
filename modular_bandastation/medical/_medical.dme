@@ -1,0 +1,6 @@
+#include "_medical.dm"
+
+// https://github.com/tgstation/tgstation/pull/93697
+#include "code/surgery/vocal_cords.dm"
+//#include "code/surgery/surgery_fail_chance.dm"
+#include "code/surgery/fail_chance.dm"

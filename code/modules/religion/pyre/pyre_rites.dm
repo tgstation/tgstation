@@ -10,10 +10,10 @@
 	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
 	ritual_length = 12 SECONDS
-	ritual_invocations = list("And so to support the holder of the Ever-Burning Candle ...",
-	"... allow this unworthy apparel to serve you ...",
-	"... make it strong enough to burn a thousand times and more ...")
-	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
+	ritual_invocations = list("Дабы поддержать держателя Вечно-Горящей свечи ...",
+	"... позволь этому непригодному одеянию служить тебе ...",
+	"... сделай его достаточно крепким, чтобы гореть тысячу раз и больше ...")
+	invoke_msg = "... Выйди на свет в своей новой форме и присоединись к нерастворимому воску едино-истинного пламени!"
 	favor_cost = 700
 ///the piece of clothing that will be fireproofed, only one per rite
 	var/obj/item/clothing/chosen_clothing
@@ -45,11 +45,11 @@
 	name = "Burning Offering"
 	desc = "Sacrifice a buckled burning or husked corpse for favor. The more burn damage the corpse has the more favor you will receive."
 	ritual_length = 15 SECONDS
-	ritual_invocations = list("Burning body ...",
-	"... cleansed by the flame ...",
-	"... we were all created from fire ...",
-	"... and to it ...")
-	invoke_msg = "... WE RETURN! "
+	ritual_invocations = list("Горящее тело ...",
+	"... очищенное пламенем ...",
+	"... все мы сделаны из огня ...",
+	"... и к нему мы ...")
+	invoke_msg = "... ВОЗВРАЩАЕМСЯ! "
 ///the burning corpse chosen for the sacrifice of the rite
 	var/mob/living/carbon/chosen_sacrifice
 
@@ -102,7 +102,7 @@
 	name = "Immortal Candles"
 	desc = "Create five unextinguishable candles that never run out of wax."
 	ritual_length = 10 SECONDS
-	invoke_msg = "Burn bright, little candles, for you will only extinguish along with the universe."
+	invoke_msg = "Горите ярко, маленькие свечки, ибо вы погаснете вместе со Вселенной."
 	favor_cost = 200
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -118,11 +118,11 @@
 	desc = "Enchants a holy arrow to set someone on fire on hit, or if the victim is already on fire... note, this consumes the arrow."
 	ritual_length = 15 SECONDS
 	ritual_invocations = list(
-		"And so to keep the Ever-Burning Candle protected ...",
-		"... grant this feeble bolt your blessing ...",
-		"... make it burn bright ...",
+		"Чтобы защитить Вечно-Горящую свечу ...",
+		"... даруй этому слабому болту своё благословение ...",
+		"... пусть горит он ярко ...",
 	)
-	invoke_msg = "... a blazing star is born!"
+	invoke_msg = "... зажгись, пылающая звезда!"
 	favor_cost = 1500
 	///arrow to enchant
 	var/obj/item/ammo_casing/arrow/holy/enchant_target

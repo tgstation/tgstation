@@ -121,7 +121,7 @@
 	loot = list(
 		/obj/effect/spawner/random/engineering/vending_restock/common = 935,
 		/obj/effect/spawner/random/engineering/vending_restock/rare = 60,
-		/obj/effect/spawner/random/engineering/vending_restock/oddity = 5,
+		// /obj/effect/spawner/random/engineering/vending_restock/oddity = 5, // BANDASTATION EDIT: Remove bad vendors on the station
 	)
 
 /obj/effect/spawner/random/engineering/vending_restock/wardrobe

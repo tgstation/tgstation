@@ -4,8 +4,8 @@
  * Baby birds that grow into big chickens.
  */
 /mob/living/basic/chick
-	name = "\improper chick"
-	desc = "Adorable! They make such a racket though."
+	name = "цыпленок"
+	desc = "Маленькая прелесть! Но такая шумная..."
 	icon_state = "chick"
 	icon_living = "chick"
 	icon_dead = "chick_dead"
@@ -19,10 +19,10 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_harm_continuous = "клюет"
+	response_harm_simple = "клюет"
+	attack_verb_continuous = "клюёт"
+	attack_verb_simple = "клюёт"
 	health = 3
 	maxHealth = 3
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB

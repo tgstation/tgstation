@@ -127,9 +127,9 @@
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "robot",
-			SPECIES_PERK_NAME = "Asimov Superiority",
-			SPECIES_PERK_DESC = "The AI and their cyborgs are, by default, subservient only \
-				to humans. As a human, silicons are required to both protect and obey you.",
+			SPECIES_PERK_NAME = "Превосходство Азимова",
+			SPECIES_PERK_DESC = "ИИ и киборги, по-умолчанию, подчиняются только людям \
+				Будучи человеком, синтетики обязаны защищать и выполнять ваши указания.",
 		))
 
 	var/human_authority_setting = CONFIG_GET(string/human_authority)
@@ -138,8 +138,8 @@
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bullhorn",
-			SPECIES_PERK_NAME = "Chain of Command",
-			SPECIES_PERK_DESC = "Nanotrasen only recognizes humans for command roles, such as Captain.",
+			SPECIES_PERK_NAME = "Цепь командования",
+			SPECIES_PERK_DESC = "Нанотрейзен признает только людей на роли командования, таких как Капитана.",
 		))
 
 	return to_add

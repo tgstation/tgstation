@@ -1,177 +1,177 @@
 //nutrition
 /datum/mood_event/fat
-	description = "<B>I'm so fat...</B>" //muh fatshaming
+	description = "<B>Я ожирел...</B>" //muh fatshaming
 	mood_change = -6
 
 /datum/mood_event/too_wellfed
-	description = "I think I've eaten too much."
+	description = "Кажется, я переел."
 	mood_change = 0
 
 /datum/mood_event/wellfed
-	description = "I'm stuffed!"
+	description = "Ух, как наелся!"
 	mood_change = 8
 
 /datum/mood_event/fed
-	description = "I have recently had some food."
+	description = "Я недавно поел."
 	mood_change = 5
 
 /datum/mood_event/hungry
-	description = "I'm getting a bit hungry."
+	description = "Я немного проголодался."
 	mood_change = -3
 
 /datum/mood_event/hungry_very
-	description = "I'm hungry!"
+	description = "Я голодаю!"
 	mood_change = -6
 
 /datum/mood_event/starving
-	description = "I'm starving!"
+	description = "Я умираю с голода!"
 	mood_change = -10
 
 //charge
 /datum/mood_event/supercharged
-	description = "I can't possibly keep all this power inside, I need to release some quick!"
+	description = "Я не могу сдерживать всю эту энергию внутри, мне нужно срочно высвободить её!"
 	mood_change = -10
 
 /datum/mood_event/overcharged
-	description = "I feel dangerously overcharged, perhaps I should release some power."
+	description = "Я немного переполнен энергией, мне бы следовало немного её освободить."
 	mood_change = -4
 
 /datum/mood_event/charged
-	description = "I feel the power in my veins!"
+	description = "Я чувствую энергию в своих венах!"
 	mood_change = 6
 
 /datum/mood_event/lowpower
-	description = "My power is running low, I should go charge up somewhere."
+	description = "Моя энергия на исходе, мне бы подзарядиться."
 	mood_change = -6
 
 /datum/mood_event/decharged
-	description = "I'm in desperate need of some electricity!"
+	description = "Мне крайне необходимо зарядиться!"
 	mood_change = -10
 
 //Disgust
 /datum/mood_event/gross
-	description = "I saw something gross."
+	description = "Я видел что-то противное."
 	mood_change = -4
 
 /datum/mood_event/verygross
-	description = "I think I'm going to puke..."
+	description = "Кажется, меня сейчас стошнит..."
 	mood_change = -6
 
 /datum/mood_event/disgusted
-	description = "Oh god, that's disgusting..."
+	description = "О боже, это отвратительно..."
 	mood_change = -8
 
 /datum/mood_event/disgust/bad_smell
-	description = "I can smell something horribly decayed inside this room."
+	description = "Я чувствую ужасный запах разложения в этой комнате."
 	mood_change = -6
 
 /datum/mood_event/disgust/nauseating_stench
-	description = "The stench of rotting carcasses is unbearable!"
+	description = "Вонь от гниющих трупов невыносима!"
 	mood_change = -12
 
 /datum/mood_event/disgust/dirty_food
-	description = "That was too dirty to eat..."
+	description = "Это было не слишком гигиенично есть..."
 	mood_change = -6
 	timeout = 4 MINUTES
 
 /datum/mood_event/disgust/dirty_food/add_effects(...)
 	if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
 		mood_change *= 0.25
-		description = "That food was dirty, but edible."
+		description = "Еда была грязной, но съедобной."
 	if(HAS_PERSONALITY(owner, /datum/personality/gourmand))
 		mood_change *= 1.5
-		description = "That food was filthy, was it made in a dumpster?!"
+		description = "Это еда была грязной. Её что, готовили в мусорном баке?!"
 
 //Generic needs events
 /datum/mood_event/shower
-	description = "I have recently had a nice shower."
+	description = "Я недавно принял приятный душ."
 	mood_change = 4
 	timeout = 5 MINUTES
 
 /datum/mood_event/shower/add_effects(shower_reagent)
 	if(istype(shower_reagent, /datum/reagent/blood))
 		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || (owner.mob_biotypes & MOB_UNDEAD))
-			description = "The sensation of a lovely blood shower felt good."
+			description = "Ощущение прекрасного кровавого душа было великолепным."
 			mood_change = 6 // you sicko
 		else
-			description = "I have recently had a horrible shower raining blood!"
+			description = "Недавно я принял ужасный душ, из которого лилась кровь!"
 			mood_change = -4
 			timeout = 3 MINUTES
 	else if(istype(shower_reagent, /datum/reagent/water))
 		if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
-			description = "I hate being wet!"
+			description = "Ненавижу быть мокрым!"
 			mood_change = -2
 			timeout = 3 MINUTES
 		else
 			return // just normal clean shower
 	else // it's dirty ass water
-		description = "I have recently had a dirty shower!"
+		description = "Недавно я принял грязный душ!"
 		mood_change = -3
 		timeout = 3 MINUTES
 
 /datum/mood_event/hot_spring
-	description = "It's so relaxing to bathe in steamy water..."
+	description = "Это так расслабляет - купаться в горячей воде..."
 	mood_change = 5
 
 /datum/mood_event/hot_spring_hater
-	description = "No, no, no, no, I don't want to take a bath!"
+	description = "Нет, нет, нет, я не хочу принимать ванну!"
 	mood_change = -2
 
 /datum/mood_event/hot_spring_left
-	description = "That was an enjoyable bath."
+	description = "Было приятно помыться в тёплой воде."
 	mood_change = 4
 	timeout = 4 MINUTES
 
 /datum/mood_event/hot_spring_hater_left
-	description = "I hate baths! And I hate how cold it's once you step out of it!"
+	description = "Я ненавижу ванны! Ненавижу, как холодно становится, когда выходишь из ванны!"
 	mood_change = -3
 	timeout = 2 MINUTES
 
 /datum/mood_event/fresh_laundry
-	description = "There's nothing like the feeling of a freshly laundered jumpsuit."
+	description = "Ах, ничего не сравнится с ощущением свежевыстиранного комбинезона."
 	mood_change = 2
 	timeout = 10 MINUTES
 
 /datum/mood_event/surrounded_by_silicon
-	description = "I'm surrounded by perfect lifeforms!!"
+	description = "Я окружен совершенными формами жизни!!"
 	mood_change = 8
 
 /datum/mood_event/around_many_silicon
-	description = "So many silicon lifeforms near me!"
+	description = "Так много синтетиков вокруг меня!"
 	mood_change = 4
 
 /datum/mood_event/around_silicon
-	description = "The silicon lifeforms near me are absolutely perfect."
+	description = "Эти синтетики абсолютно совершенны."
 	mood_change = 2
 
 /datum/mood_event/around_organic
-	description = "The organics near me remind me of the inferiority of flesh."
+	description = "Органики вокруг меня напоминают о слабости плоти."
 	mood_change = -2
 
 /datum/mood_event/around_many_organic
-	description = "So many disgusting organics!"
+	description = "Так много отвратительных органиков!"
 	mood_change = -4
 
 /datum/mood_event/surrounded_by_organic
-	description = "I'm surrounded by disgusting organics!!"
+	description = "Я окружен отвратительными органиками!!"
 	mood_change = -8
 
 /datum/mood_event/completely_robotic
-	description = "I've abandoned my feeble flesh, my form is perfect!!"
+	description = "Я отбросил свою слабую плоть, моя форма совершенна!"
 	mood_change = 8
 
 /datum/mood_event/very_robotic
-	description = "I'm more robot than organic!"
+	description = "Я больше робот, чем органик!"
 	mood_change = 4
 
 /datum/mood_event/balanced_robotic
-	description = "I'm part machine, part organic."
+	description = "Часть машина, часть органик."
 	mood_change = 0
 
 /datum/mood_event/very_organic
-	description = "I hate this feeble and weak flesh!"
+	description = "Я ненавижу эту слабую и немощную плоть!"
 	mood_change = -4
 
 /datum/mood_event/completely_organic
-	description = "I'm completely organic, this is miserable!!"
+	description = "Я полностью органик, это ужасно!!"
 	mood_change = -8

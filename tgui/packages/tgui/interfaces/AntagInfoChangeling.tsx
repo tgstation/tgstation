@@ -126,7 +126,7 @@ const IntroductionSection = (props) => {
     >
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
-          You are {true_name} from the
+          Вы {true_name} из
           <span style={hivestyle}> {hive_name}</span>.
         </Stack.Item>
         <Stack.Item>
@@ -135,7 +135,7 @@ const IntroductionSection = (props) => {
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title={'Evolve New Directives'}
+                button_title={'Развить новые директивы'}
                 button_colour={'green'}
               />
             }
@@ -150,25 +150,25 @@ const AbilitiesSection = () => {
   const { act, data } = useBackend<Info>();
   const { true_name } = data;
   return (
-    <Section fill title="Abilities">
+    <Section fill title="Способности">
       <Stack fill>
         <Stack.Item grow>
           <Stack fill vertical>
             <Stack.Item textColor="label" grow>
-              Your
-              <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
-              you to steal the DNA and memories of a victim. The
-              <span style={absorbstyle}>&ensp;Extract DNA Sting</span> ability
-              also steals the DNA of a victim, and is undetectable, but does not
-              grant you their memories or speech patterns.
+              Ваша способность<span style={absorbstyle}>&ensp;Absorb DNA</span>{' '}
+              позволяет вам украсть ДНК и воспоминания жертвы. Способность
+              <span style={absorbstyle}>&ensp;Extract DNA Sting</span> также
+              крадет ДНК жертвы и не поддается обнаружению, но не дает вам их
+              воспоминаний или образцов речи.
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item textColor="label" grow>
-              Your
-              <span style={revivestyle}>&ensp;Reviving Stasis</span> ability
-              allows you to revive. It means nothing short of a complete body
-              destruction can stop you! Obviously, this is loud and so should
-              not be done in front of people you are not planning on silencing.
+              Ваша способность
+              <span style={revivestyle}>&ensp;Reviving Stasis </span>
+              позволяет вам возродиться. Это значит, что ничто, кроме полного
+              разрушения тела, не сможет остановить вас! Разумеется, это громко,
+              поэтому не стоит делать это в присутствии людей, которых вы не
+              собираетесь заткнуть.
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -176,19 +176,20 @@ const AbilitiesSection = () => {
         <Stack.Item grow>
           <Stack fill vertical>
             <Stack.Item textColor="label" grow>
-              Your
-              <span style={transformstyle}>&ensp;Transform</span> ability allows
-              you to change into the form of those you have collected DNA from,
-              lethally and nonlethally. It will also mimic (NOT REAL CLOTHING)
-              the clothing they were wearing for every slot you have open.
+              Ваша способность
+              <span style={transformstyle}>&ensp;Transform</span> позволяет вам
+              превратиться в форму тех, у кого вы собрали ДНК, летально и
+              нелетально. Он также будет имитировать (НЕ НАСТОЯЩУЮ ОДЕЖДУ)
+              одежду, в которую они были одеты, для каждого вашего свободного
+              слота.
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item textColor="label" grow>
-              The
-              <span style={storestyle}>&ensp;Cellular Emporium</span> is where
-              you purchase more abilities beyond your starting kit. You have 10
-              genetic points to spend on abilities and you are able to readapt
-              after absorbing a body, refunding your points for different kits.
+              <span style={storestyle}>&ensp;Cellular Emporium</span> это место,
+              где вы приобретаете новые способности, помимо стартового набора. У
+              вас есть 10 генетических очков, которые вы можете потратить на
+              способности, и вы можете реадаптироваться после поглощения тела,
+              возвращая свои очки для разных наборов.
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -248,21 +249,21 @@ const MemoriesSection = (props) => {
     <Section
       fill
       scrollable={!!memories && !!memories.length}
-      title="Stolen Memories"
+      title="Украденные воспоминания"
       buttons={
         <Button
           icon="info"
           tooltipPosition="left"
           tooltip={`
-            Absorbing targets allows
-            you to collect their memories. They should
-            help you impersonate your target!
+            Поглощая цели, вы можете
+            получить их воспоминания. Они должны
+            помочь вам выдать себя за свою цель!
           `}
         />
       }
     >
       {(!!memories && !memories.length && (
-        <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
+        <Dimmer fontSize="20px">Сначала поглотите жертву!</Dimmer>
       )) || (
         <Stack vertical>
           <Stack.Item>
@@ -289,10 +290,10 @@ const VictimPatternsSection = (props) => {
     <Section
       fill
       scrollable={!!stolen_antag_info}
-      title="Additional Stolen Information"
+      title="Дополнительная украденная информация"
     >
       {(!!stolen_antag_info && stolen_antag_info) || (
-        <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
+        <Dimmer fontSize="20px">Сначала поглотите жертву!</Dimmer>
       )}
     </Section>
   );

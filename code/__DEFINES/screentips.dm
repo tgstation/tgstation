@@ -23,10 +23,10 @@
 #define SCREENTIP_CONTEXT_CTRL_SHIFT_LMB "Ctrl-Shift-LMB"
 
 /// Screentips are always disabled
-#define SCREENTIP_PREFERENCE_DISABLED "Disabled"
+#define SCREENTIP_PREFERENCE_DISABLED "Выключено"
 
 /// Screentips are always enabled
-#define SCREENTIP_PREFERENCE_ENABLED "Enabled"
+#define SCREENTIP_PREFERENCE_ENABLED "Включено"
 
 /// Screentips are only enabled when they have context
-#define SCREENTIP_PREFERENCE_CONTEXT_ONLY "Only with tips"
+#define SCREENTIP_PREFERENCE_CONTEXT_ONLY "Только с подсказками"

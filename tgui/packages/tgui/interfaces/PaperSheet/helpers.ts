@@ -1,5 +1,11 @@
-import { InteractionType, type WritingImplement } from './types';
+import {
+  InteractionType,
+  type PaperReplacement,
+  type WriteButtonLocation,
+  type WritingImplement,
+} from './types';
 
+const replacementRegex: RegExp = /\[(\w+)\]/gi;
 export function canEdit(heldItemDetails?: WritingImplement): boolean {
   if (!heldItemDetails) {
     return false;
@@ -8,13 +14,18 @@ export function canEdit(heldItemDetails?: WritingImplement): boolean {
   return heldItemDetails.interaction_mode === InteractionType.writing;
 }
 
-type TokenizerReturn = {
-  type: string;
-  raw: string;
-};
+export function parseReplacements(
+  text: string,
+  replacements: PaperReplacement[] | undefined,
+) {
+  const list = Array.isArray(replacements) ? replacements : [];
+  return text.replace(replacementRegex, (match, p1) => {
+    return list.find((value) => p1 === value.key)?.value || match;
+  });
+}
 
-export function tokenizer(src: string): TokenizerReturn | undefined {
-  const rule = /^\[_+\]/;
+export function tokenizer(src: string) {
+  const rule = /^\[input_field\]/;
   const match = src.match(rule);
   if (match) {
     return {
@@ -39,4 +50,26 @@ export function walkTokens(token) {
       token.href = '';
       break;
   }
+}
+
+// Extracts the write button location from a full ID.
+export function getWriteButtonLocation(id: string): WriteButtonLocation {
+  const ids: string[] = id.replace('paperfield_', '').split('_');
+  return { paperInputRef: `[${ids[0]}]`, fieldId: Number(ids[1]) };
+}
+
+// Builds a write button ID.
+export function createWriteButtonId(
+  paperInputRef: string,
+  fieldId: number,
+): string {
+  return `paperfield_${paperInputRef.replaceAll(/[[\]]/g, '')}_${fieldId}`;
+}
+
+export function propRegex(propName: string) {
+  return new RegExp(`${propName}=([a-zA-Z0-9]+)`, 'i');
+}
+
+export function blankPropRegex(propName: string) {
+  return new RegExp(`${propName}\\s*=\\s*([^;\\]]+)(?:;|$)`, 'i');
 }

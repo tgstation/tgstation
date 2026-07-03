@@ -131,55 +131,57 @@ const NtosNotepadMenuBar = (props: MenuBarProps) => {
       <MenuBar.Dropdown
         entry="file"
         openWidth="22rem"
-        display={<PartiallyUnderlined str="File" indexStart={0} />}
+        display={<PartiallyUnderlined str="Файл" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'New')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'Новый')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Сохранить')} />
         <MenuBar.Dropdown.Separator key="firstSep" />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', 'Выйти...')} />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="edit"
         openWidth="22rem"
-        display={<PartiallyUnderlined str="Edit" indexStart={0} />}
+        display={<PartiallyUnderlined str="Правка" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', 'Вырезать')} />
+        <MenuBar.Dropdown.MenuItem
+          {...getMenuItemProps('copy', 'Копировать')}
+        />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', 'Вставить')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('delete', 'Удалить')} />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="format"
         openWidth="15rem"
-        display={<PartiallyUnderlined str="Format" indexStart={1} />}
+        display={<PartiallyUnderlined str="Формат" indexStart={1} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItemToggle
           checked={wordWrap}
-          {...getMenuItemProps('wordWrap', 'Word Wrap')}
+          {...getMenuItemProps('wordWrap', 'Перенос слов')}
         />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="view"
         openWidth="15rem"
-        display={<PartiallyUnderlined str="View" indexStart={0} />}
+        display={<PartiallyUnderlined str="Вид" indexStart={0} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItemToggle
           checked={showStatusBar}
-          {...getMenuItemProps('statusBar', 'Status Bar')}
+          {...getMenuItemProps('statusBar', 'Строка состояния')}
         />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="help"
         openWidth="17rem"
-        display={<PartiallyUnderlined str="Help" indexStart={0} />}
+        display={<PartiallyUnderlined str="Справка" indexStart={0} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItem
-          {...getMenuItemProps('aboutNotepad', 'About Notepad')}
+          {...getMenuItemProps('aboutNotepad', 'О программе')}
         />
       </MenuBar.Dropdown>
     </MenuBar>
@@ -286,22 +288,22 @@ const AboutDialog = (props: AboutDialogProps) => {
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
 
   return (
-    <Dialog title="About Notepad" onClose={close} width={'500px'}>
+    <Dialog title="О программе" onClose={close} width={'500px'}>
       <div className="Dialog__body">
         <span className="NtosNotepad__AboutDialog__logo">NtOS</span>
         <Divider />
         <Box className="NtosNotepad__AboutDialog__text">
           <span style={paragraphStyle}>Nanotrasen NtOS</span>
           <span style={paragraphStyle}>
-            Version 7815696ecbf1c96e6894b779456d330e
+            Версия 7815696ecbf1c96e6894b779456d330e
           </span>
           <span style={paragraphStyle}>
-            &copy; NT Corporation. All rights reserved.
+            &copy; NT Corporation. Все права защищены.
           </span>
           <span style={{ padding: '3rem 1rem 3rem 2rem' }}>
-            The NtOS operating system and its user interface are protected by
-            trademark and other pending or existing intellectual property rights
-            in the Sol system and other regions.
+            Операционная система NtOS и ее пользовательский интерфейс защищены
+            товарными знаками и другими заявленными или существующими правами на
+            интеллектуальную собственность в системе Sol и других регионах.
           </span>
           <span
             style={{
@@ -309,7 +311,7 @@ const AboutDialog = (props: AboutDialogProps) => {
               maxWidth: '35rem',
             }}
           >
-            This product is licensed under the NT Corporation Terms to:
+            Этот продукт лицензирован в соответствии с условиями корпорации NT:
           </span>
           <span style={{ padding: '0 1rem 0 4rem' }}>
             {show_imprint ? login.IDName : 'Unknown'}
@@ -345,11 +347,11 @@ export const NtosNotepad = (props) => {
 
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
-    logger.log(`Saving the document as ${newDocumentName}`);
+    logger.log(`Документ сохранен как ${newDocumentName}`);
     act('UpdateNote', { newnote: text });
     setOriginalText(text);
     setDocumentName(newDocumentName);
-    logger.log('Attempting to retry previous action');
+    logger.log('Попытка повторить предыдущее действие');
     setActiveDialog(Dialogs.NONE);
 
     // Retry the previous action now that we've saved. The previous action could be to
@@ -367,7 +369,7 @@ export const NtosNotepad = (props) => {
     // This is a guard function that throws up the "unsaved changes" dialog if the user is
     // attempting to do something that will make them lose data
     if (!retrying && originalText !== text) {
-      logger.log('Unsaved changes. Asking client to save');
+      logger.log('Несохраненные изменения. Запрос клиента на сохранение');
       setRetryAction(() => action);
       setActiveDialog(Dialogs.UNSAVED_CHANGES);
       return true;
@@ -379,7 +381,7 @@ export const NtosNotepad = (props) => {
     if (ensureUnsavedChangesAreHandled(exit, retrying)) {
       return;
     }
-    logger.log('Exiting Notepad');
+    logger.log('Выход из блокнота');
     act('PC_exit');
   };
   const newNote = (retrying = false) => {

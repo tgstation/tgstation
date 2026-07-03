@@ -1,0 +1,8 @@
+["glass table"]
+nominative = "стеклянный стол"
+genitive = "стеклянного стола"
+dative = "стеклянному столу"
+accusative = "стеклянный стол"
+instrumental = "стеклянным столом"
+prepositional = "стеклянном столе"
+gender = "male"

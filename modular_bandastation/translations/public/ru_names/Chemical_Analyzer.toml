@@ -1,0 +1,8 @@
+["Chemical Analyzer"]
+nominative = "химический анализатор"
+genitive = "химического анализатора"
+dative = "химическому анализатору"
+accusative = "химический анализатор"
+instrumental = "химическим анализатором"
+prepositional = "химическом анализаторе"
+gender = "male"

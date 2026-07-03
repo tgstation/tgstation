@@ -39,10 +39,23 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	/// World.time this player last died
 	var/time_of_death = 0
 
-/datum/persistent_client/New(ckey)
+	/// BANDASTATION ADDITION START - SScentral
+	/// Discord of the player
+	var/discord_id
+	/// Key of the player
+	var/key
+	/// Ckey of the player
+	var/ckey
+	/// Client var used for tracking the ticket the (usually) not-admin client is dealing with
+	var/datum/help_ticket/current_help_ticket
+	/// BANDASTATION ADDITION END - SScentral
+
+/datum/persistent_client/New(ckey, key)
 	achievements = new(ckey)
 	GLOB.persistent_clients_by_ckey[ckey] = src
 	GLOB.persistent_clients += src
+	src.ckey = ckey /// BANDASTATION ADDITION - SScentral
+	src.key = key /// BANDASTATION ADDITION - Mentors
 
 /datum/persistent_client/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
@@ -53,7 +66,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 /datum/persistent_client/proc/set_client(client/new_client)
 	if(client == new_client)
 		return
-	
+
 	if(client)
 		client.persistent_client = null
 	client = new_client

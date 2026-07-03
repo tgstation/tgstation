@@ -1,0 +1,8 @@
+["material fishing rod"]
+nominative = "удочка из материала"
+genitive = "удочки из материала"
+dative = "удочке из материала"
+accusative = "удочку из материала"
+instrumental = "удочкой из материала"
+prepositional = "удочке из материала"
+gender = "female"

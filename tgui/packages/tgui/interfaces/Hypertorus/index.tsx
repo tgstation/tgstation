@@ -65,17 +65,17 @@ const HypertorusMainControls = (props) => {
     <Section>
       <Stack>
         <Stack.Item color="label" mb={1}>
-          {'Start power: '}
+          {'Питание: '}
           <Button
             disabled={power_level > 0}
             icon={start_power ? 'power-off' : 'times'}
-            content={start_power ? 'On' : 'Off'}
+            content={start_power ? 'Вкл' : 'Выкл'}
             selected={start_power}
             onClick={() => act('start_power')}
           />
         </Stack.Item>
         <Stack.Item color="label">
-          {'Start cooling: '}
+          {'Запуск охлаждения: '}
           <Button
             disabled={
               start_fuel === 1 ||
@@ -84,13 +84,13 @@ const HypertorusMainControls = (props) => {
               (start_cooling && power_level > 0)
             }
             icon={start_cooling ? 'power-off' : 'times'}
-            content={start_cooling ? 'On' : 'Off'}
+            content={start_cooling ? 'Вкл' : 'Выкл'}
             selected={start_cooling}
             onClick={() => act('start_cooling')}
           />
         </Stack.Item>
       </Stack>
-      <Collapsible title="Recipe selection">
+      <Collapsible title="Выбор рецепта">
         <HypertorusRecipes
           baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
@@ -146,7 +146,7 @@ export const Hypertorus = (props) => {
 
   return (
     <Window
-      title="Hypertorus Fusion Reactor control panel"
+      title="Панель управления Hypertorus Fusion Reactor"
       width={width}
       height={height}
     >

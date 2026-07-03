@@ -3,7 +3,7 @@
 	filedesc = "Revelation"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "hostile"
-	extended_desc = "This virus can destroy hard drive of system it is executed on. It may be obfuscated to look like another non-malicious program. Once armed, it will destroy the system upon next execution."
+	extended_desc = "Этот вирус может уничтожить жесткий диск системы, на которой он запущен. Он может быть замаскирован под другую программу, не являющуюся вредоносной. После запуска он уничтожит систему при следующем использовании."
 	size = 13
 	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRevelation"

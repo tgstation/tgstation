@@ -1,5 +1,5 @@
 
-#define TEXT_NO_TASTE "something indescribable"
+#define TEXT_NO_TASTE "чего-то неописуемого"
 
 //=============================== TASTE GRAPH ====================================
 //                                                                              //
@@ -44,7 +44,7 @@
 
 	// If we have exactly one taste, don't bother with relative strengths
 	if(length(tastes) == 1)
-		return tastes[1]
+		return "вкус [tastes[1]]"
 
 	// Sort tastes descending by strength, so strong flavours come first
 	sortTim(tastes, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
@@ -70,12 +70,12 @@
 	var/list/taste_messages = list()
 
 	if(LAZYLEN(strong_tastes))
-		taste_messages += "the strong flavor of [english_list(strong_tastes, TEXT_NO_TASTE)]"
+		taste_messages += "сильный аромат [english_list(strong_tastes, TEXT_NO_TASTE)]"
 	if(LAZYLEN(mild_tastes))
 		// Prefix "some " if there are strong flavors to avoid seeming like a strong flavor
-		taste_messages += "[LAZYLEN(strong_tastes) ? "some " : ""][english_list(mild_tastes, TEXT_NO_TASTE)]"
+		taste_messages += "[LAZYLEN(strong_tastes) ? "вкус " : "вкус "][english_list(mild_tastes, TEXT_NO_TASTE)]"
 	if(LAZYLEN(weak_tastes))
-		taste_messages += "a hint of [english_list(weak_tastes, TEXT_NO_TASTE)]"
+		taste_messages += "нотку [english_list(weak_tastes, TEXT_NO_TASTE)]"
 
 	return english_list(taste_messages, TEXT_NO_TASTE)
 

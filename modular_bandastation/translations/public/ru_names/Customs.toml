@@ -1,0 +1,8 @@
+[Customs]
+nominative = "таможня"
+genitive = "таможни"
+dative = "таможне"
+accusative = "таможню"
+instrumental = "таможней"
+prepositional = "таможне"
+gender = "female"

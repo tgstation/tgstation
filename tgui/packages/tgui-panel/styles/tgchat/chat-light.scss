@@ -317,6 +317,11 @@ em {
   font-weight: bold;
 }
 
+.mentorsay {
+  color: hsl(219, 100%, 51%);
+  font-weight: bold;
+}
+
 .admin {
   color: hsl(224.9, 100%, 63.3%);
   font-weight: bold;
@@ -571,6 +576,11 @@ h2.alert {
 
 .adminhelp {
   color: hsl(0, 100%, 50%);
+  font-weight: bold;
+}
+
+.mentorhelp {
+  color: #0077bb;
   font-weight: bold;
 }
 
@@ -1102,6 +1112,8 @@ $alert-stripe-colors: (
   'red': hsl(0, 100%, 85.1%),
   'purple': hsl(295.1, 100%, 88%),
   'grey': hsl(0, 0%, 89%),
+  // BANDASTATION ADDITION
+  'white': hsl(0, 0%, 85.1%),
 );
 
 $alert-stripe-alternate-colors: (
@@ -1114,6 +1126,8 @@ $alert-stripe-alternate-colors: (
   'red': hsl(0, 100%, 88%),
   'purple': hsl(294.8, 100%, 91%),
   'grey': hsl(0, 0%, 92.2%),
+  // BANDASTATION ADDITION
+  'white': hsl(0, 0%, 88%),
 );
 
 $alert-major-header-colors: (
@@ -1126,6 +1140,8 @@ $alert-major-header-colors: (
   'red': hsl(340.8, 100%, 25.1%),
   'purple': hsl(266.5, 83%, 30%),
   'grey': hsl(336.1, 100%, 25.1%),
+  // BANDASTATION ADDITION
+  'white': hsl(0, 0%, 39%),
 );
 
 $alert-subheader-header-colors: (
@@ -1138,6 +1154,8 @@ $alert-subheader-header-colors: (
   'red': hsl(220.2, 100%, 26.1%),
   'purple': hsl(220.2, 100%, 26.1%),
   'grey': hsl(220.2, 100%, 26.1%),
+  // BANDASTATION ADDITION
+  'white': hsl(220.2, 100%, 26.1%),
 );
 
 $border-width: 4;
@@ -1269,4 +1287,9 @@ $border-width-px: $border-width * 1px;
       $space: hsl
     );
   }
+}
+
+// BANDASTATION ADDITION START
+.looc {
+  color: #6699cc;
 }

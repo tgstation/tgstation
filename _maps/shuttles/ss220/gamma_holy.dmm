@@ -1,0 +1,208 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bx" = (
+/obj/item/book/bible/booze,
+/obj/item/book/bible/booze,
+/obj/item/clothing/suit/hooded/chaplain_hoodie,
+/obj/item/clothing/suit/hooded/chaplain_hoodie,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/structure/closet/crate{
+	name = "Religious Supplies Crate"
+	},
+/obj/item/seeds/watermelon/holy,
+/obj/item/seeds/watermelon/holy,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"mE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Gamma Armory Shuttle Airlock"
+	},
+/obj/docking_port/mobile/gamma,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/gamma)
+"qF" = (
+/obj/structure/closet/secure_closet/gamma_shotgun,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"sm" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"vM" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/gamma)
+"wK" = (
+/obj/machinery/wall_healer/directional/west,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/gamma)
+"xL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"AK" = (
+/turf/open/floor/glass/reinforced,
+/area/shuttle/gamma)
+"JW" = (
+/obj/machinery/suit_storage_unit/security,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"Lu" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/gamma)
+"MG" = (
+/obj/item/storage/medkit/brute{
+	pixel_y = -8;
+	pixel_x = -4
+	},
+/obj/item/storage/medkit/fire{
+	pixel_y = -8;
+	pixel_x = 4
+	},
+/obj/item/storage/medkit/o2{
+	pixel_y = 8;
+	pixel_x = -4
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/storage/medkit/surgery_syndie{
+	pixel_x = -4;
+	name = "advanced surgical medkit"
+	},
+/obj/item/storage/medkit/advanced{
+	pixel_x = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"Nx" = (
+/obj/machinery/light/directional/east,
+/obj/structure/closet/secure_closet/gamma_weapon,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"NJ" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"NW" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/gamma)
+"NX" = (
+/obj/machinery/suit_storage_unit/security,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"QK" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/gamma)
+"RO" = (
+/obj/machinery/cell_charger{
+	pixel_x = 2;
+	pixel_y = 12
+	},
+/obj/item/stock_parts/power_store/cell/hyper{
+	pixel_x = -4
+	},
+/obj/item/stock_parts/power_store/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper{
+	pixel_x = 4
+	},
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"UL" = (
+/obj/structure/closet/secure_closet/gamma_holy,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+"Vv" = (
+/turf/template_noop,
+/area/template_noop)
+"Xm" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/sign/warning/directional/east,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/gamma)
+
+(1,1,1) = {"
+vM
+vM
+vM
+vM
+mE
+vM
+vM
+vM
+Vv
+"}
+(2,1,1) = {"
+vM
+bx
+RO
+MG
+NJ
+wK
+JW
+vM
+vM
+"}
+(3,1,1) = {"
+Lu
+NJ
+NJ
+NJ
+NJ
+AK
+sm
+QK
+xL
+"}
+(4,1,1) = {"
+vM
+UL
+Nx
+qF
+Xm
+NW
+NX
+vM
+vM
+"}
+(5,1,1) = {"
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+vM
+Vv
+"}

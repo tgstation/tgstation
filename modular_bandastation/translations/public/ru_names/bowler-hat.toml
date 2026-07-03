@@ -1,0 +1,8 @@
+[bowler-hat]
+nominative = "котелок"
+genitive = "котелка"
+dative = "котелку"
+accusative = "котелок"
+instrumental = "котелком"
+prepositional = "котелке"
+gender = "male"

@@ -1,0 +1,8 @@
+[beret]
+nominative = "берет"
+genitive = "берета"
+dative = "берету"
+accusative = "берет"
+instrumental = "беретом"
+prepositional = "берете"
+gender = "male"

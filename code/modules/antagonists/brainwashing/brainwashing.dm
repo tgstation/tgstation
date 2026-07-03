@@ -31,7 +31,7 @@
 	name = "\improper Brainwashed Victim"
 	pref_flag = ROLE_BRAINWASHED
 	stinger_sound = 'sound/music/antag/brainwashed.ogg'
-	roundend_category = "brainwashed victims"
+	roundend_category = "Жертвы с промытыми мозгами"
 	show_in_antagpanel = TRUE
 	antag_hud_name = "brainwashed"
 	antagpanel_category = ANTAG_GROUP_CREW

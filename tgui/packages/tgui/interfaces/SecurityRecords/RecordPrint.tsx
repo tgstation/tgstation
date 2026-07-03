@@ -80,63 +80,63 @@ export const RecordPrint = (props) => {
             icon="question"
             onClick={() => swapTabs(PRINTOUT.Missing)}
             selected={printType === PRINTOUT.Missing}
-            tooltip="Prints a poster with mugshot and description."
+            tooltip="Печатает постер с фото и описанием."
             tooltipPosition="bottom"
           >
-            Missing
+            Пропажа
           </Button>
           <Button
             disabled={innocent}
             icon="file-alt"
             onClick={() => swapTabs(PRINTOUT.Rapsheet)}
             selected={printType === PRINTOUT.Rapsheet}
-            tooltip={`Prints a standard paper with the record on it.${
-              innocent ? ' (Requires crimes)' : ''
+            tooltip={`Печатает бумагу с записями охраны.${
+              innocent ? ' (Укажите преступления)' : ''
             }`}
             tooltipPosition="bottom"
           >
-            Rapsheet
+            Уголовное дело
           </Button>
           <Button
             disabled={innocent}
             icon="handcuffs"
             onClick={() => swapTabs(PRINTOUT.Wanted)}
             selected={printType === PRINTOUT.Wanted}
-            tooltip={`Prints a poster with mugshot and crimes.${
-              innocent ? ' (Requires crimes)' : ''
+            tooltip={`Печатает постер с фото и преступлениями.${
+              innocent ? ' (Укажите преступления)' : ''
             }`}
             tooltipPosition="bottom"
           >
-            Wanted
+            Розыск
           </Button>
           <Button color="bad" icon="times" onClick={reset} />
         </>
       }
       fill
       scrollable
-      title="Print Record"
+      title="Печать записи"
     >
       <Stack color="label" fill vertical>
         <Stack.Item>
-          <Box>Enter a Header:</Box>
+          <Box>Введите заголовок:</Box>
           <Input onChange={setHeader} maxLength={7} value={header} />
           <Button
             icon="sync"
             onClick={() => clearField('header')}
-            tooltip="Reset"
+            tooltip="Сбросить"
           />
         </Stack.Item>
         <Stack.Item>
-          <Box>Enter an Alias:</Box>
+          <Box>Введите псевдоним:</Box>
           <Input onChange={setAlias} maxLength={42} value={alias} width="55%" />
           <Button
             icon="sync"
             onClick={() => clearField('alias')}
-            tooltip="Reset"
+            tooltip="Сбросить"
           />
         </Stack.Item>
         <Stack.Item>
-          <Box>Enter a Description:</Box>
+          <Box>Введите описание:</Box>
           <Stack fill>
             <Stack.Item grow>
               <Input
@@ -150,7 +150,7 @@ export const RecordPrint = (props) => {
               <Button
                 icon="sync"
                 onClick={() => clearField('description')}
-                tooltip="Reset"
+                tooltip="Сбросить"
               />
             </Stack.Item>
           </Stack>
@@ -158,10 +158,10 @@ export const RecordPrint = (props) => {
         <Stack.Item mt={2}>
           <Box align="right">
             <Button color="bad" onClick={() => setOpen(false)}>
-              Cancel
+              Отмена
             </Button>
             <Button color="good" onClick={printSheet}>
-              Print
+              Распечатать
             </Button>
           </Box>
         </Stack.Item>

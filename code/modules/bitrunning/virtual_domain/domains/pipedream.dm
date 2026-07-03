@@ -1,12 +1,12 @@
 /datum/lazy_template/virtual_domain/pipedream
-	name = "Disposal Pipe Factory"
+	name = "Завод труб отправки"
 	cost = BITRUNNER_COST_LOW
-	desc = "An abandoned and infested factory manufacturing disposal pipes."
+	desc = "Заброшенный и зараженный завод по производству труб отправки."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
 	completion_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
-	help_text = "Not long ago, this place was thriving with activity. The workers \
-	seemed to have left in a hurry, and now productivity is in the bin. Something \
-	must have trashed the place, but what?"
+	help_text = "Не так давно здесь кипела бурная деятельность. Рабочие, \
+	похоже, уходили в спешке, и производительность теперь на нуле. Что-то, \
+	должно быть, разгромило это место, но что?"
 	is_modular = TRUE
 	key = "pipedream"
 	map_name = "pipedream"
@@ -18,7 +18,7 @@
 
 // ID Trims
 /datum/id_trim/factory
-	assignment = "Factory Worker"
+	assignment = "Заводчанин"
 	trim_state = "trim_cargotechnician"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
@@ -28,7 +28,7 @@
 		)
 
 /datum/id_trim/factory/qm
-	assignment = "Factory Quartermaster"
+	assignment = "Заводской квартирмейстер"
 	trim_state = "trim_quartermaster"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_CARGO_BROWN
@@ -50,7 +50,7 @@
 
 //Outfits
 /datum/outfit/factory
-	name = "Factory Worker"
+	name = "Заводчанин"
 
 	id_trim = /datum/id_trim/factory
 	id = /obj/item/card/id/advanced/
@@ -63,7 +63,7 @@
 	l_pocket = /obj/item/flashlight/seclite
 
 /datum/outfit/factory/guard
-	name = "Factory Guard"
+	name = "Охранник завода"
 
 	uniform = /obj/item/clothing/under/rank/security/officer/grey
 	suit = /obj/item/clothing/suit/armor/vest/alt
@@ -75,7 +75,7 @@
 	r_pocket = /obj/item/assembly/flash/handheld
 
 /datum/outfit/factory/qm
-	name = "Factory Quartermaster"
+	name = "Заводской квартирмейстер"
 
 	id_trim = /datum/id_trim/factory/qm
 	id = /obj/item/card/id/advanced/silver

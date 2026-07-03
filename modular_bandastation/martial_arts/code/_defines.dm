@@ -1,0 +1,7 @@
+// Judo combos
+#define ARMBAR_COMBO "DDG"
+#define EYEPOKE_COMBO "DH"
+#define GOLDENBLAST_COMBO "EDEGDDGEDDGE"
+#define JUDOTHROW_COMBO "GD"
+#define WHEELTHROW_COMBO "GDH"
+#define DISCOMBOBULATE_COMBO "discombobulate"

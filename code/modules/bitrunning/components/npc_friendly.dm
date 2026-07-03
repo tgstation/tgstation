@@ -13,6 +13,7 @@
 		ROLE_ALIEN,
 		ROLE_GLITCH,
 		ROLE_SYNDICATE,
+		ROLE_DEATHSQUAD, // BANDASTATION ADD: More factions friendly for bitrun
 	)
 	/// List of factions previously held by the player
 	var/list/previous_factions

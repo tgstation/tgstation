@@ -28,7 +28,7 @@
 	for(var/datum/bitrunning_gimmick/loadout as anything in selectable_loadouts)
 		names += initial(loadout.name)
 
-	var/choice = tgui_input_list(user, message = "Select a gimmick loadout",  title = "Bitrunning Program", items = names)
+	var/choice = tgui_input_list(user, message = "Выберите тематический набор снаряжения",  title = "Программа битрана", items = names)
 	if(isnull(choice) || !user.is_holding(src))
 		return
 

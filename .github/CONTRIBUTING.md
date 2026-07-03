@@ -1,118 +1,86 @@
 # CONTRIBUTING
 
-1. [Reporting Issues](#reporting-issues)
-2. [Introduction](#introduction)
-3. [Getting Started](#getting-started)
-4. [Meet the Team](#meet-the-team)
-   1. [Headcoder](#headcoder)
-   2. [Maintainers](#maintainers)
-   3. [Issue Managers](#issue-managers)
-5. [Development Guides](#development-guides)
-6. [Pull Request Process](#pull-request-process)
-7. [Good Boy Points](#good-boy-points)
-8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
-9. [Banned content](#banned-content)
-10. [A word on Git](#a-word-on-git)
+1. [Репорт багов](#репорт-багов)
+2. [Введение](#введение)
+3. [Приступая к работе](#приступая-к-работе)
+4. [Знакомство с командой](#знакомство-с-командой)
+   1. [Ведущий Разработчик](#ведущий-разработчик)
+   2. [Мейнтейнеры](#мейнтейнеры-билда)
+   3. [Разработчики](#разработчики)
+5. [Добавление переводов](#добавление-переводов)
+6. [Гайды по разработке](#гайды-по-разработке)
+7. [Процесс открытия Pull Request](#процесс-открытия-pull-request)
+8. [Портирование фич/спрайтов/звуков/инструментов с других кодбаз](#портирование-фичспрайтовзвуковинструментов-с-других-кодбаз)
+9. [Запрещенный контент](#запрещенный-контент)
+10. [Пару слов о Git](#пару-слов-о-git)
 
-## Reporting Issues
+## Репорт багов
 
-If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
+Если вы столкнулись с ошибкой в игре, лучший способ сообщить о ней кодерам - это наш [GitHub Issue Tracker](https://github.com/ss220club/BandaStation/issues). Убедитесь, что вы используете прилагаемый шаблон проблемы, и укажите ID раунда.
+Если у вас нет учетной записи, создание новой займет всего одну минуту.
 
-(If you don't have an account, making a new one takes only one minute.)
+Если у вас возникли трудности, обратитесь за помощью в канал [#разработка-bs](https://discord.com/channels/1097181193939730453/1214475261547118612) в нашем [Discord](https://discord.gg/ss220) канале.
 
-If you have difficulty, ask for help in the #coding-general channel on our discord.
+## Введение
 
-## Introduction
+Приветствуем и добро пожаловать на страницу вклада нашего проекта SS220, билда BandaStation.
 
-Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing - thank you! Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below; at /tg/station, we strive to maintain code stability and maintainability, and to do that, we need all pull requests to hold up to those specifications. It's in everyone's best interests - including yours! - if the same bug doesn't have to be fixed twice because of duplicated code.
+Каждый может внести свой вклад в этот проект, если он следует простым рекомендациям и требованиям описанным ниже; мы стремимся поддерживать стабильность и качество кода и для этого нам нужно, чтобы все пулл-реквесты соответствовали этим требованиям. В интересах всех - в том числе и ваших! - если одну и ту же ошибку не придется исправлять дважды.
 
-First things first, we want to make it clear how you can contribute (if you've never contributed before), as well as the kinds of powers the team has over your additions, to avoid any unpleasant surprises if your pull request is closed for a reason you didn't foresee.
+Прежде всего, мы хотим разъяснить, как вы можете внести свой вклад (если вы никогда не делали этого раньше), а также какими полномочиями обладает команда разработки по отношению к вашим изменениям, чтобы избежать неприятных сюрпризов, если ваш пулл-реквест будет закрыт по непредусмотренной вами причине.
 
-## Getting Started
+## Приступая к работе
 
-/tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
+У проекта есть достаточно четкое виденье касаемо билда - есть вещи которые необходимо сделать, есть второстепенное и опциональное. Но это не значит, что на внесение вклада есть какие-либо ограничения, кроме тех, что ограничиваются адекватностью вашего изменения. Если вы хотите внести свой вклад или узнать, с какими проблемами вы можете справиться с нулевыми знаниями о структуре кода игры, вот несколько полезных руководств.
 
-If you want to contribute the first thing you'll need to do is [set up Git](https://hackmd.io/@tgstation/HJ8OdjNBc) so you can download the source code.
-After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
+Если вы хотите внести свой вклад, первое, что вам нужно сделать, это [настроить Git](https://hackmd.io/@tgstation/HJ8OdjNBc), чтобы вы могли загрузить исходный код.
+После настройки опционально перейдите в командной строке git в папку с проектом и выполните команду: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
-We have a [list of guides on the wiki](http://tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+У нас есть [список руководств на Вики](https://bs.ss220.club/index.php/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_%D0%B2%D0%BD%D0%B5%D1%81%D0%B5%D0%BD%D0%B8%D1%8E_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9_%D0%B2_%D0%B8%D0%B3%D1%80%D1%83), которые помогут вам начать вносить вклад с помощью Git и DreamMaker. Новичкам рекомендуется сначала работать над небольшими проектами, например, исправлениями мелких ошибок. Если вам нужна помощь в обучении программированию в BYOND, загляните в этот [репозиторий ресурсов](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+Также существует открытая база знаний, в которой собраны различные полезные гайды и программы для любого случая. Найти её можно в нашем канале [#база-знаний-ss13](https://discord.com/channels/1097181193939730453/1178413376695709716).
 
-You can of course, as always, ask for help on the Discord channels or the forums. We're just here to have fun and help out, so please don't expect professional support.
+Открытый список с [вашим вдохновением, здесь](https://github.com/ss220club/BandaStation/issues). Вы можете брать любой промаркированный без назначенного разработчика (отсутствуют Assignees).
 
-## Meet the Team
+Вы конечно можете попросить помощи, или совета в канале Discord [#разработка-bs](https://discord.com/channels/1097181193939730453/1214475261547118612). Мы здесь только для того, чтобы получать удовольствие и помогать, так что, пожалуйста, не ждите профессиональной поддержки.
 
-### Headcoder
+## Знакомство с командой
 
-The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
+### Ведущий Разработчик
 
-### Maintainers
+Ведущий разработчик координирует работу мейнтейнеров и участвует в принятии решений по развитию игрового сервера.
 
-Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
+Он выполняет функции мейнтейнеров, отвечает за общий вектор развития игровой и технической части билда, выступает связующим звеном между участниками команды являясь их доверенным лицом.
 
-Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+### Мейнтейнеры билда
 
-<details>
-<summary>Maintainer Guidelines</summary>
+Мейнтейнеры билда представляют собой ключевую силу, отвечают за определение направления, развитие игрового опыта и техническую часть проекта различной сложности.
 
-These are the few directives we have for project maintainers.
+Они следят за качеством вносимых изменений. Если предложенный пулл-реквест не соответствует требованиям, они могут запросить правки или закрыть его (обычно с указанием причины).
 
-- Do not merge PRs you create.
-- Do not merge PRs until 24 hours have passed since it was opened. Exceptions include:
-  - Emergency fixes.
-    - Try to get secondary maintainer approval before merging if you are able to.
-  - PRs with empty commits intended to generate a changelog.
-- Do not merge PRs that contain content from the [banned content list](/CONTRIBUTING.md#banned-content).
-- Do not close PRs purely for breaking a template if the same information is contained without it.
+Мейнтейнеры билда могут откатить ваши изменения, если сочтут, что их не стоит поддерживать, или если они не соответствуют ожиданиям/требованиям.
 
-These are not steadfast rules as maintainers are expected to use their best judgement when operating.
+### Разработчики
 
-</details>
+Разработчики - участники проекта с подтверждёнными навыками разработки, - отличившиеся лица с соответствующей ролью.
 
-### Issue Managers
+Они могут запрашивать изменения в вашем пулл-реквесте. Старайтесь не игнорировать их.
 
-Issue Managers help out the project by labelling bug reports and PRs and closing bug reports which are duplicates or are no longer applicable.
+## Гайды по разработке
 
-<details>
-<summary>What You Can and Can't Do as an Issue Manager</summary>
-
-This should help you understand what you can and can't do with your newfound github permissions.
-
-Things you **CAN** do:
-
-- Label issues appropriately
-- Close issues when appropriate
-- Label PRs, unless you are goofball.
-
-Things you **CAN'T** do:
-
-- [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
-- Close issues purely for breaking a template if the same information is contained without it.
-
-For more information reference the [Issue Manager Guide](/.github/guides/ISSUE_MANAGER.md)
-
-</details>
-
----
-
-Our team is entirely voluntary, as such we extend our thanks to maintainers, issue managers, and contributors alike for helping keep the project alive.
-
-## Development Guides
-
-#### Writing readable code
+#### Написание читаемого кода
 
 [Style guide](/.github/guides/STYLE.md)
 
-#### Writing sane code
+#### Написание здравого кода
 
 [Code standards](/.github/guides/STANDARDS.md)
 
-#### Writing understandable code
+#### Написание понятного кода
 
 [Autodocumenting code](/.github/guides/AUTODOC.md)
 
-#### Misc
+#### Прочее
 
 - [AI Datums](/code/datums/ai/learn_ai.md)
 - [Embedding TGUI Components in Chat](/tgui/docs/chat-embedded-components.md)
@@ -125,89 +93,109 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 - [UI Development](/.github/tgui/README.md)
 - [Visual Effects and Systems](/.github/guides/VISUALS.md)
 
-## Pull Request Process
+## Процесс открытия Pull Request
 
-There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
+Строгого процесса рассмотрения пулл-реквеста не существует. Иногда рассмотрение и слияние (мерж) могут занять продолжительное время: чем больше изменение, тем больше времени потребуется, прежде чем оно будет принято. Каждый член команды разработки - волонтер, который уделяет свое время поддержке и внесению вклада, поэтому пожалуйста будьте вежливы и уважительны. Вот несколько полезных способов облегчить работу вам и ревьюверам при составлении пулл-реквеста.
 
-- Make sure your pull request complies to the requirements outlined here
+- Убедитесь, что ваш пулл-реквест соответствует требованиям, изложенным здесь.
 
-- You are expected to have tested your pull requests if it is anything that would warrant testing. Text only changes, single number balance changes, and similar generally don't need testing, but anything else does. This means by extension web edits are disallowed for larger changes.
+- Ожидается, что вы протестируете свои изменения, если это что-то, что требует тестирования. Изменения только текста, или цифры в балансе и т.п. обычно не нуждаются в тестировании, но все остальное - нуждается. Это означает, что веб-редактирование запрещено для больших изменений.
 
-- You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
+- Если изменение значительное, чтобы избежать ненужных растрат времени в пустую с вашей и нашей стороны, мы ожидаем, что перед началом разработки вы обсудите изменения с старшими разработчиками и получите их одобрение на реализацию.
 
-- We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
+- От вас будут требовать, чтобы вы документировали все свои изменения в пулл-реквесте. Если вы этого не сделаете, это приведет к задержке, так как нам придется задавать вопросы о том, почему вы внесли изменения. Вы можете ускорить процесс, сделав свой пулл-реквест читаемым и понятным, с данными "до/после". Если вы оптимизируете код, вы должны предоставить доказательства того, что ваши изменения работают быстрее, с помощью профайлинга.
 
-- If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
+- Мы просим вас корректно заполнять чейнджлог для документирования изменений, которые вы предлагаете игрокам, чтобы наши игроки не были застигнуты врасплох этими изменениями.
 
-- If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+- Если вы предлагаете несколько изменений, которые меняют множество различных аспектов кода, вы должны разделить их на разные пулл-реквесты, чтобы облегчить их рассмотрение и отклонить/принять те изменения, которые будут сочтены приемлемыми.
+  Если изменение большое (например больше 500 строк кода), постарайтесь разбить его на нескольких небольших пулл-реквестов, если это возможно.
 
-- If your pull request is not finished, you may open it as a draft for potential review. If you open it as a full-fledged PR make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
+- Если ваш пулл-реквест рассмотрен и ваши изменения были вмержены (добавлены) в игру, то добавленный вами код больше не принадлежит только вам, а всем; все могут работать над ним, но вы также можете поддержать или возразить против вносимых изменений, что, скорее всего, будет иметь больший вес, поскольку именно вы добавили это.
 
-- While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality _before_ you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
+- Если ваш пулл-реквест не закончен, то вы можете его открыть в статусе draft. Если вы открываете его как полноценный PR, убедитесь, что его можно хотя бы протестировать локально. Пулл-реквесты, которые не удовлетворяют хотя бы этому требованию, будут закрыты. Вы можете попросить переоткрыть пулл-реквест, когда будете готовы, или сделать новый.
 
-- After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+- Хотя мы и не против помочь контрибьюторам (и особенно новым) привести к стандартам ваши изменения с помощью ревью, от более крупных контрибьюторов ожидается, что они пройдут более высокую планку полноты и качества кода _до_ открытия пулл-реквеста. Старшие разработчики могут закрывать такие пулл-реквесты, которые считаются существенно неполноценными. Вам следует потратить некоторое время на обсуждение с ревьюверами или другими разработчики того, как улучшить ваши изменения.
 
-## Justifying Your Changes
+- После ревью открытого пулл-реквеста, мейнтейнеры могут перевести его в статус draft. Как только вы отработаете по их замечаниям, не стесняйтесь снова пометить пулл-реквест как `Ready For Review`.
 
-You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement.
+## Обоснование изменений
 
-Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
+Вы должны объяснить, почему вы открыли пулл-реквест в пункте "Почему это хорошо для игры". В противном случае, ваш пулл-реквест может быть закрыт, или у вас могут потребовать, чтобы вы исправили его до мержа. Разумное обоснование ваших изменений - обязательное требование.
 
-- Assert and argue that the current state of affairs in the game is not good, and needs changing.
-- Assert and argue that your pull request will either fix or help fix the problems you described.
-- Assert and argue that any downsides introduced by your solution as a matter of design, if any, are worth it, and why they are worth it.
+Ваш пункт "Почему это хорошо для игры" должен содержать честную и аргументированную позицию.
 
-More controversial changes have higher standards for justification to be considered reasonable. A bugfix for example does not typically require any effort at all in justification as its value to the game is usually self evident, however a major feature overhaul or balance change may require significant explanation to adequately justify its supposed benefit to the game.
+Более спорные изменения имеют более высокие стандарты обоснования, чтобы считаться разумными. Например, исправление ошибок обычно не требует никаких усилий для обоснования, так как их ценность для игры обычно очевидна, однако серьезная перестройка функций или изменение баланса могут потребовать значительных объяснений, чтобы адекватно обосновать их предполагаемую пользу для игры.
 
-This is still a requirement if your pull request is supported and/or requested by maintainers before it is opened. This is still a requirement if your pull request is supported and/or requested by head coders before it is opened. The purpose of arguing for your changes is not to convince just the maintainer team of its merits, it is to document the "why" behind your changes to the game to a necessary level of detail. The reason behind a change must exist as it is the purpose of this codebase to improve the game, thus said reasoning must be adequately stated and explained.
+Причина изменений должна существовать, так как одна из целей нашего проекта является улучшение игры, поэтому эти причины должны быть адекватно изложены и объяснены.
 
-This is also still a requirement if your pull request has a corresponding design document that justifies your changes inside it. You must always properly justify changes (those that actually need justification) within the pull request, even if you also do it elsewhere. This is to ensure that:
+Это требование сохраняется и в том случае, если ваш запрос на исправление имеет соответствующий проектный документ, который обосновывает ваши изменения в нем. Вы всегда должны правильно обосновывать изменения (те, которые действительно нуждаются в обосновании) в пулл-реквесте, даже если вы также делаете это в другом месте. Это необходимо для того, чтобы:
 
-1. All reviewers can easily see the reasoning behind your changes on the pull request itself, no reliance on other sites required.
-2. The actual, manifested implementation of the idea behind the design document is being justified after said implementation is actually realized. This is in contrast to any reasoning put on the design document itself, which very well may have been made before any work was done on it, possibly even by an author different from the author of the pull request. Any idea in the design document may have had compromises put into it due to complications not seen in the original vision, thus the current state of the implementation (the pull request as it stands) must be defended, explained, and ultimately justified in and of itself. Of course, you should still list the design document the pull request is implementing, and may even use arguments from the design document if said arguments are applicable to the current reality of your proposed changes.
+1. Все могут легко увидеть обоснование ваших изменений в самом пулл-реквесте, без надобности обращаться к другим ресурсам.
+2. Фактическая, явная реализация идеи, лежащей в основе дизайн-документа, обосновывается после того, как эта реализация фактически реализована. Это противоположно любому обоснованию самого дизайн-документа, которое, вполне возможно, было сделано до начала работы над ним, возможно, даже автором, отличным от автора пулл-реквеста. Любая идея в проектном документе могла быть подвергнута компромиссам из-за сложностей, не предусмотренных первоначальным видением, поэтому текущее состояние реализации должно быть объяснено и в конечном итоге оправдано само по себе.
 
-## Good Boy Points
+## Портирование фич/спрайтов/звуков/инструментов с других кодбаз
 
-Each GitHub account has a score known as Good Boy Points, or GBP. This is a system we use to ensure that the codebase stays maintained and that contributors fix bugs as well as add features.
+Если вы портируете что-либо из других кодовых баз, вы должны отдать им должное. Обычно рекомендуется указывать их пулл-реквесте. Обратите внимание на то, какую лицензию они используют: портирование вещей из кодовых баз AGPLv3 и GPLv3 разрешено.
 
-The GBP gain or loss for a PR depends on the type of changes the PR makes, represented by the tags assigned to the PR by the tgstation github bot or maintainers. Generally speaking, fixing bugs, updating sprites, or improving maps increases your GBP score, while adding mechanics, or rebalancing things will cost you GBP.
+Что касается спрайтов и звуков, вы должны указать автора (или пулл-реквест с кодовой базы) и, возможно, саму кодовую базу. Все ресурсы /tg/station и BandaStation, включая иконки и звуки, находятся под лицензией [Creative Commons 3.0 BY-SA](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное.
 
-The GBP change of a PR is the sum of greatest positive and lowest negative values it has. For example, a PR that has tags worth +10, +4, -1, -7, will net 3 GBP (10 - 7).
+## Добавление переводов
 
-Negative GBP increases the likelihood of a maintainer closing your PR. With that chance being higher the lower your GBP is. Be sure to use the proper tags in the changelog to prevent unnecessary GBP loss. Maintainers reserve the right to change tags as they deem appropriate.
+Переводы имён предметов (переменная "name" у "/obj/item") требуют отдельных файлов перевода.
 
-There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
+Они хранятся в `modular_bandastation/translations/public/ru_names/` - по одному `.toml` файлу на каждое имя. `ru_names.toml` генерируется автоматически при сборке, не редактируйте его напрямую.
 
-You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml).
+### Tombi для VSCode
 
-## Porting features/sprites/sounds/tools from other codebases
+При работе в VSCode - вы можете использовать рекомендованное расширение [Tombi](https://tombi-toml.github.io/tombi/) для большего удобства, подсветки синтаксиса, раннего выявления неверно заполненного файла перевода.
 
-If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
+Для его установки: введите - @recommended в строке поиска окошка расширений Visual Studio Code, или найдите Tombi вручную.
 
-Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+### Как добавить перевод для нового предмета используя VSCode
 
-## Banned content
+1. Выделите английское название предмета в редакторе (например `fish`).
+2. Запустите задачу **`ru_names: new fragment from selection`** (Ctrl+Shift+P -> Run Task).
+   - Можно назначить хоткей: `Ctrl+Alt+N` -> `workbench.action.tasks.runTask` -> `ru_names: new fragment from selection`.
+3. В директории `ru_names/` появится новый файл готовый для заполнения.
 
-Do not add any of the following in a Pull Request or risk getting the PR closed:
+### Структура файла
 
-- National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-- Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
-- Code which violates GitHub's [terms of service](https://github.com/site/terms).
+```toml
+["fish"]
+nominative    = "рыба"     # именительный  — Это (что?) рыба - обязательное!
+genitive      = "рыбы"     # родительный   — Нет (чего?) рыбы
+dative        = "рыбе"     # дательный     — Дать (чему?) рыбе
+accusative    = "рыбу"     # винительный   — Вижу (что?) рыбу
+instrumental  = "рыбой"    # творительный  — Работаю (чем?) рыбой
+prepositional = "рыбе"     # предложный    — Думаю (о чём?) о рыбе
+gender = "female"          # male / female / neuter / plural
+```
 
-Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+Поле `nominative` является обязательным - остальные падежи используют его как fallback если не заполнены.
 
-## A word on Git
+## Запрещенный контент
 
-This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
+Не добавляйте в пулл-реквест ничего из перечисленного ниже, иначе рискуете получить закрытие PR и возможную блокировку на внесение изменений:
 
-Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
+- Пропаганда нацизма, терроризма и других форм ненависти или насилия.
+- Изменения, нарушающие законодательство большинства стран, в частности стран, основного контингента игроков.
+- Изменения, нарушающие правила платформы Twitch в рамках использования запрещенных слов, символик, изображений, или звуков.
+- Изменения, не несущие никакого смысла для нашего проекта или направленные против нашего проекта.
+- Крупные и серьезные изменения без предварительного одобрения.
+- Код, нарушающий [условия предоставления услуг GitHub](https://github.com/site/terms).
 
-Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
+Если чего-то нет в этом списке, это не значит, что это допустимо. Руководствуйтесь здравым смыслом.
 
-Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
+## Пару слов о Git
 
-## Using the Maintainer Role Ping in Discord
+В этом репозитории используются окончания строк `LF` для всего кода, как указано в файлах **.gitattributes** и **.editorconfig**.
 
-When your PR is labeled as "Stale", you are permitted to ping the `@Maintainer` role on the /tg/station Discord. Using this ping for anything else can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
+Если это не переопределено или используется нестандартный git-бинарный файл, настройки окончаний строк должны применяться к вашему клону автоматически.
 
-Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.
+Примечание: VSC требует [расширения](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig), чтобы воспользоваться преимуществами editorconfig.
+
+## Stale label пулл-реквестов
+
+Когда ваш PR помечен как "Stale" и вы хотите поспешить с его ревью, - сообщайте об этом в открытый чат разработки - #разработка-ss13 в Discord SS220. Постарайтесь воздержаться от пингов роли мейнтейнеров и разработчиков. Неоправданное использование этого пинга может сопровождаться таймаутом и направлением к модераторам за дальнейшие нарушения.
+
+Не стесняйтесь общаться и получать отзывы в канале [#разработка-bs](https://discord.com/channels/1097181193939730453/1214475261547118612), [#ss13-трекер](https://discord.com/channels/1097181193939730453/1181261198096875670) до того, как ваш PR станет неактуальным, чтобы повысить интерес и получить отзывы.

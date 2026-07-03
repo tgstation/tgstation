@@ -3,10 +3,10 @@
 
 /datum/action/changeling/augmented_eyesight
 	name = "Augmented Eyesight"
-	desc = "Creates more light sensing rods in our eyes, allowing our vision to penetrate most blocking objects. \
-		Protects our vision from flashes while inactive."
-	helptext = "Grants us x-ray vision or flash protection. \
-		We will become a lot more vulnerable to flash-based devices while x-ray vision is active."
+	desc = "Создает больше светочувствительных палочек в наших глазах, что позволяет нашему зрению проникать сквозь большинство загораживающих предметов. \
+		Защищает наше зрение от вспышек во время бездействия."
+	helptext = "Дает нам рентгеновское зрение или защиту от вспышек. \
+		Пока рентгеновское зрение активно, мы станем гораздо более уязвимыми для устройств со вспышкой."
 	button_icon_state = "augmented_eyesight"
 	category = "utility"
 	chemical_cost = 0
@@ -22,7 +22,7 @@
 	RegisterSignal(user, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	if(!isnull(ling_eyes))
 		ling_eyes.flash_protect = FLASH_PROTECTION_WELDER //Adjust the user's eyes' flash protection
-		to_chat(user, span_changeling("We adjust our eyes to protect them from bright lights."))
+		to_chat(user, span_changeling("Мы настраиваем глаза, чтобы защитить их от яркого света."))
 
 /datum/action/changeling/augmented_eyesight/sting_action(mob/living/carbon/user)
 	if(!istype(user))
@@ -30,7 +30,7 @@
 
 	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(ling_eyes))
-		user.balloon_alert(user, "no eyes!")
+		user.balloon_alert(user, "нет глаз!")
 		return FALSE
 
 	..()
@@ -39,13 +39,13 @@
 		active = FALSE
 		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
 		ling_eyes.flash_protect = max(ling_eyes.flash_protect += 3, FLASH_PROTECTION_WELDER)
-		to_chat(user, span_changeling("We adjust our eyes to protect them from bright lights."))
+		to_chat(user, span_changeling("Мы настраиваем глаза, чтобы защитить их от яркого света."))
 
 	else
 		active = TRUE
 		ADD_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
 		ling_eyes.flash_protect = max(ling_eyes.flash_protect += -3, FLASH_PROTECTION_HYPER_SENSITIVE)
-		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls."))
+		to_chat(user, span_changeling("Мы настраиваем глаза, чтобы чувствовать добычу сквозь стены."))
 
 	user.update_sight()
 	return TRUE

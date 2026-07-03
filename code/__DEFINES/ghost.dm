@@ -12,21 +12,21 @@
 
 //Ghost showing preferences:
 /// The main player's ghost will display as a simple white ghost
-#define GHOST_ACCS_NONE "Default sprites"
+#define GHOST_ACCS_NONE "Стандартные спрайты"
 /// The main player's ghost will display as a transparent mob
-#define GHOST_ACCS_DIR "Only directional sprites"
+#define GHOST_ACCS_DIR "Только направленные спрайты"
 /// The main player's ghost will display as a transparent mob with clothing
-#define GHOST_ACCS_FULL "Full accessories"
+#define GHOST_ACCS_FULL "Полностью с аксессуарами"
 
 /// The default ghost display selection for the main player
 #define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
 
 /// The other players ghosts will display as a simple white ghost
-#define GHOST_OTHERS_SIMPLE "White ghosts"
+#define GHOST_OTHERS_SIMPLE "Белые призраки"
 /// The other players ghosts will display as transparent mobs
-#define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
+#define GHOST_OTHERS_DEFAULT_SPRITE "Стандартные спрайты"
 /// The other players ghosts will display as transparent mobs with clothing
-#define GHOST_OTHERS_THEIR_SETTING "Their sprites"
+#define GHOST_OTHERS_THEIR_SETTING "Их спрайты"
 
 /// The default ghost display selection when viewing other players
 #define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING

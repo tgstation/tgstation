@@ -1,0 +1,3 @@
+#include "_autowiki.dm"
+
+#include "code/autowiki_emoji.dm"

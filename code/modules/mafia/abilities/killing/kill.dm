@@ -4,11 +4,11 @@
  * During the night, attacks a player in attempts to kill them.
  */
 /datum/mafia_ability/attack_player
-	name = "Attack"
-	ability_action = "attempt to attack"
+	name = "Нападение"
+	ability_action = "попробовать напасть"
 	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
 	///The message told to the player when they are killed.
-	var/attack_action = "killed by"
+	var/attack_action = "убит"
 	///Whether the player will suicide if they hit a Town member.
 	var/honorable = FALSE
 
@@ -18,22 +18,22 @@
 		return FALSE
 
 	if(!target_role.kill(game, host_role, FALSE))
-		host_role.send_message_to_player(span_danger("Your attempt at killing [target_role.body.real_name] was prevented!"))
+		host_role.send_message_to_player(span_danger("Твоя попытка убить [target_role.body.real_name] был предотвращёна!"))
 	else
-		target_role.send_message_to_player(span_userdanger("You have been [attack_action] \a [host_role.name]!"))
+		target_role.send_message_to_player(span_userdanger("Вы были [attack_action]ы [host_role.name]!"))
 		if(honorable && (target_role.team & MAFIA_TEAM_TOWN))
-			host_role.send_message_to_player(span_userdanger("You have killed an innocent crewmember. You will die tomorrow night."))
+			host_role.send_message_to_player(span_userdanger("Вы убили невинного члена экипажа. Вы умрете завтра ночью."))
 			RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(internal_affairs))
 	return TRUE
 
 /datum/mafia_ability/attack_player/proc/internal_affairs(datum/mafia_controller/game)
 	SIGNAL_HANDLER
-	host_role.send_message_to_player(span_userdanger("You have been killed by Nanotrasen Internal Affairs!"))
+	host_role.send_message_to_player(span_userdanger("Вы были убиты сотрудником внутренних дел Нанотрейзен!"))
 	host_role.reveal_role(game, verbose = TRUE)
 	host_role.kill(game, host_role, FALSE) //you technically kill yourself but that shouldn't matter
 
 /datum/mafia_ability/attack_player/execution
-	name = "Execute"
-	ability_action = "attempt to execute"
-	attack_action = "executed by"
+	name = "Казнь"
+	ability_action = "попробовать казнить"
+	attack_action = "казнен"
 	honorable = TRUE

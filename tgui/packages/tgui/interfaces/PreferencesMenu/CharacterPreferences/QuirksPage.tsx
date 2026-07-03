@@ -1,4 +1,5 @@
 import { filter } from 'es-toolkit/compat';
+import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
@@ -7,9 +8,12 @@ import {
   Floating,
   Icon,
   Input,
+  ProgressBar,
+  Section,
   Stack,
   Tooltip,
 } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import {
@@ -35,7 +39,7 @@ function getColorValueClass(quirk: Quirk) {
 
 function getCorrespondingPreferences(
   customization_options: string[],
-  relevant_preferences: Record<string, string> = {},
+  relevant_preferences: Record<string, string>,
 ) {
   return Object.fromEntries(
     filter(Object.entries(relevant_preferences), ([key, value]) =>
@@ -51,37 +55,33 @@ type QuirkListProps = {
 };
 
 type QuirkProps = {
-  handleClick: (quirkName: string, quirk: Quirk) => void;
+  onClick: (quirkName: string, quirk: Quirk) => void;
   randomBodyEnabled: boolean;
   selected: boolean;
   serverData: ServerData;
-  quirkActionLocked: boolean;
 };
 
 function QuirkList(props: QuirkProps & QuirkListProps) {
   const {
     quirks = [],
     selected,
-    handleClick,
+    onClick,
     serverData,
     randomBodyEnabled,
-    quirkActionLocked,
   } = props;
 
   return (
-    <Stack vertical g={0}>
+    <Stack vertical>
       {quirks.map(([quirkKey, quirk]) => (
-        <Stack.Item key={quirkKey} m={0}>
-          <QuirkDisplay
-            handleClick={handleClick}
-            quirk={quirk}
-            quirkKey={quirkKey}
-            randomBodyEnabled={randomBodyEnabled}
-            selected={selected}
-            serverData={serverData}
-            quirkActionLocked={quirkActionLocked}
-          />
-        </Stack.Item>
+        <QuirkDisplay
+          key={quirkKey}
+          quirk={quirk}
+          quirkKey={quirkKey}
+          randomBodyEnabled={randomBodyEnabled}
+          selected={selected}
+          serverData={serverData}
+          onClick={onClick}
+        />
       ))}
     </Stack>
   );
@@ -94,103 +94,51 @@ type QuirkDisplayProps = {
 } & QuirkProps;
 
 function QuirkDisplay(props: QuirkDisplayProps) {
-  const { quirk, quirkKey, handleClick, selected, quirkActionLocked } = props;
+  const { quirk, quirkKey, onClick, selected } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
 
+  const className = 'PreferencesMenu__QuirksQuirk';
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
-
-  const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
-
   const child = (
-    <Box
-      className={className}
-      style={{
-        opacity: props.quirkActionLocked ? 0.6 : 1,
-        pointerEvents: props.quirkActionLocked ? 'none' : 'auto',
-      }}
-      onClick={() => {
-        if (quirkActionLocked)
-          return;
+    <Stack
+      fill
+      g={0}
+      className={classes([
+        className,
+        getColorValueClass(quirk),
+        failTooltip && 'Unremovable',
+      ])}
+      onClick={(event) => {
+        event.stopPropagation();
         if (selected) {
           setCustomizationExpanded(false);
         }
 
-        handleClick(quirkKey, quirk);
+        onClick(quirkKey, quirk);
       }}
     >
-      <Stack fill g={0}>
-        <Stack.Item
-          align="center"
-          style={{
-            minWidth: '15%',
-            maxWidth: '15%',
-            textAlign: 'center',
-          }}
-        >
-          <Icon color="#333" fontSize={3} name={icon} />
-        </Stack.Item>
-
-        <Stack.Item
-          align="stretch"
-          ml={0}
-          style={{
-            borderRight: '1px solid black',
-          }}
-        />
-
-        <Stack.Item
-          grow
-          ml={0}
-          style={{
-            // Fixes an IE bug for text overflowing in Flex boxes
-            minWidth: '0%',
-          }}
-        >
-          <Stack vertical fill>
-            <Stack.Item
-              className={`${className}--${getColorValueClass(quirk)}`}
-              style={{
-                borderBottom: '1px solid black',
-                padding: '2px',
-              }}
-            >
-              <Stack
-                fill
-                style={{
-                  fontSize: '1.2em',
-                }}
-              >
-                <Stack.Item grow basis="content">
-                  <b>{name}</b>
-                </Stack.Item>
-
-                <Stack.Item>
-                  <b>{value}</b>
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-
-            <Stack.Item
-              grow
-              basis="content"
-              mt={0}
-              style={{
-                padding: '3px',
-              }}
-            >
-              {description}
-              {!!customizable && (
-                <QuirkPopper
-                  {...props}
-                  customizationExpanded={customizationExpanded}
-                  setCustomizationExpanded={setCustomizationExpanded}
-                />
-              )}
-            </Stack.Item>
+      <Stack.Item className={`${className}--Icon`}>
+        <Icon fontSize={3} name={icon} />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack fill vertical g={0}>
+          <Stack fill bold className={`${className}--Name`}>
+            <Stack.Item grow>{name}</Stack.Item>
+            <Stack.Item>{value}</Stack.Item>
           </Stack>
-        </Stack.Item>
-      </Stack>
-    </Box>
+          <Stack.Item grow className={`${className}--Desc`}>
+            {description}
+            {!!customizable && (
+              <QuirkPopper
+                {...props}
+                customizationExpanded={customizationExpanded}
+                setCustomizationExpanded={setCustomizationExpanded}
+              />
+            )}
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 
   if (failTooltip) {
@@ -207,6 +155,7 @@ type QuirkPopperProps = {
 
 function QuirkPopper(props: QuirkPopperProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { character_preferences } = data;
   const {
     customizationExpanded,
     quirk,
@@ -215,11 +164,7 @@ function QuirkPopper(props: QuirkPopperProps) {
     serverData,
     setCustomizationExpanded,
   } = props;
-
   const { customizable, customization_options } = quirk;
-
-  const { character_preferences } = data;
-
   const hasExpandableCustomization =
     customizable &&
     selected &&
@@ -233,67 +178,75 @@ function QuirkPopper(props: QuirkPopperProps) {
       onOpenChange={setCustomizationExpanded}
       content={
         hasExpandableCustomization && (
-          <Box
+          <Stack.Item
+            className="PreferencesMenu__QuirksQuirk--Customization"
             onClick={(e) => {
               e.stopPropagation();
             }}
-            style={{
-              boxShadow: '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
-            }}
           >
-            <Stack maxWidth="300px" backgroundColor="black" px="5px" py="3px">
-              <Stack.Item>
-                <PreferenceList
-                  preferences={getCorrespondingPreferences(
-                    customization_options,
-                    character_preferences.manually_rendered_features,
-                  )}
-                  randomizations={getRandomization(
-                    getCorrespondingPreferences(
-                      customization_options,
-                      character_preferences.manually_rendered_features,
-                    ),
-                    serverData,
-                    randomBodyEnabled,
-                  )}
-                  maxHeight="100px"
-                />
-              </Stack.Item>
-            </Stack>
-          </Box>
+            <PreferenceList
+              preferences={getCorrespondingPreferences(
+                customization_options,
+                character_preferences.manually_rendered_features,
+              )}
+              randomizations={getRandomization(
+                getCorrespondingPreferences(
+                  customization_options,
+                  character_preferences.manually_rendered_features,
+                ),
+                serverData,
+                randomBodyEnabled,
+              )}
+            />
+          </Stack.Item>
         )
       }
     >
-      <div style={{ display: 'flow-root' }}>
+      <Box style={{ float: 'right' }}>
         {selected && (
           <Button
-            selected={customizationExpanded}
             icon="cog"
-            tooltip="Customize"
-            style={{
-              float: 'right',
-            }}
+            tooltip="Настроить"
+            selected={customizationExpanded}
           />
         )}
-      </div>
+      </Box>
     </Floating>
   );
 }
 
-function StatDisplay(props) {
-  const { children } = props;
+type StatDisplayProps = {
+  value: number;
+  maxValue?: number;
+  children: ReactNode;
+};
 
+function StatDisplay(props: StatDisplayProps) {
+  const { children, value, maxValue } = props;
   return (
-    <Box
-      backgroundColor="#eee"
-      bold
-      color="black"
-      fontSize="1.2em"
-      px={3}
-      py={0.5}
+    <ProgressBar
+      value={value}
+      maxValue={maxValue}
+      ranges={
+        maxValue
+          ? {
+              good: [-Infinity, maxValue * 0.5],
+              average: [maxValue * 0.5, maxValue * 0.75],
+              bad: [maxValue * 0.75, Infinity],
+            }
+          : {
+              good: [0, Infinity],
+              bad: [-Infinity, 0],
+            }
+      }
     >
-      {children}
-    </Box>
+      <Stack fill textAlign="left">
+        <Stack.Item grow>{children}</Stack.Item>
+        <Stack.Item>
+          {value} {maxValue ? `/ ${maxValue}` : ''}
+        </Stack.Item>
+      </Stack>
+    </ProgressBar>
   );
 }
 
@@ -309,19 +262,6 @@ function QuirkPage() {
   const selectedQuirks = data.selected_quirks;
   function setSelectedQuirks(selected_quirks) {
     data.selected_quirks = selected_quirks;
-  }
-
-  const [quirkActionLocked, setQuirkActionLocked] = useState(false);
-
-  function withQuirkDebounce(debounce: () => void, delay = 200) {
-    if (quirkActionLocked) return;
-
-    setQuirkActionLocked(true);
-    debounce();
-
-    setTimeout(() => {
-      setQuirkActionLocked(false);
-    }, delay);
   }
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -346,7 +286,6 @@ function QuirkPage() {
 
   let balance = -data.default_quirk_balance;
   let positiveQuirks = 0;
-
   for (const selectedQuirkName of selectedQuirks) {
     const selectedQuirk = quirkInfo[selectedQuirkName];
     if (!selectedQuirk) {
@@ -365,9 +304,9 @@ function QuirkPage() {
 
     if (quirk.value > 0) {
       if (maxPositiveQuirks !== -1 && positiveQuirks >= maxPositiveQuirks) {
-        return "You can't have any more positive quirks!";
+        return 'Вы не можете иметь еще больше позитивных черт!';
       } else if (pointsEnabled && balance + quirk.value > 0) {
-        return 'You need a negative quirk to balance this out!';
+        return 'Вам нужна отрицательная черта, чтобы получить очки!';
       }
     }
 
@@ -385,160 +324,128 @@ function QuirkPage() {
           incompatibleQuirk !== quirk.name &&
           selectedQuirkNames.indexOf(incompatibleQuirk) !== -1
         ) {
-          return `This is incompatible with ${incompatibleQuirk}!`;
+          return `Несовместимо с ${incompatibleQuirk}!`;
         }
       }
     }
     if (data.species_disallowed_quirks.includes(quirk.name)) {
-      return 'This quirk is incompatible with your selected species.';
+      return 'Эта черта несовместима с выбранной расой.';
     }
     return;
   }
 
   function getReasonToNotRemove(quirkName: string) {
     const quirk = quirkInfo[quirkName];
-
     if (pointsEnabled && balance - quirk.value > 0) {
-      return 'You need to remove a positive quirk first!';
+      return 'Нужно убрать позитивную черту!';
     }
-
-    return;
   }
 
-  return (
-    <Stack fill>
-      <Stack.Item basis="50%">
-        <Stack vertical fill align="center">
-          <Stack.Item>
-            {maxPositiveQuirks > 0 ? (
-              <Box fontSize="1.3em">Positive Quirks</Box>
-            ) : (
-              <Box mt={pointsEnabled ? 3.4 : 0} />
-            )}
-          </Stack.Item>
-
-          <Stack.Item>
-            {maxPositiveQuirks > 0 ? (
-              <StatDisplay>
-                {positiveQuirks} / {maxPositiveQuirks}
-              </StatDisplay>
-            ) : (
-              <Box mt={pointsEnabled ? 3.4 : 0} />
-            )}
-          </Stack.Item>
-
-          <Stack.Item>
-            <Box as="b" fontSize="1.6em">
-              Available Quirks
-            </Box>
-          </Stack.Item>
-          <Stack.Item>
+  const availableQuirls = (
+    <Stack fill vertical>
+      <Stack.Item>
+        {maxPositiveQuirks > 0 && (
+          <StatDisplay value={positiveQuirks} maxValue={maxPositiveQuirks}>
+            Позитивные черты
+          </StatDisplay>
+        )}
+      </Stack.Item>
+      <Stack.Item grow className="PreferencesMenu__Quirks">
+        <Section
+          fill
+          scrollable
+          title="Доступные черты"
+          buttons={
             <Input
-              placeholder="Search quirks..."
+              placeholder="Поиск черт..."
               width="200px"
               value={searchQuery}
               onChange={setSearchQuery}
             />
-          </Stack.Item>
-          <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
-            <QuirkList
-              selected={false}
-              quirkActionLocked={quirkActionLocked}
-              handleClick={(quirkName, quirk) => {
-                if (getReasonToNotAdd(quirkName) !== undefined) {
-                  return;
-                }
+          }
+        >
+          <QuirkList
+            selected={false}
+            onClick={(quirkName, quirk) => {
+              if (getReasonToNotAdd(quirkName) !== undefined) {
+                return;
+              }
 
-                withQuirkDebounce(() => {
-                  setSelectedQuirks(selectedQuirks.concat(quirkName));
-                  act('give_quirk', { quirk: quirk.name });
-                });
-              }}
-              quirks={quirks
-                .filter(([quirkName, _]) => {
-                  return (
-                    selectedQuirks.indexOf(quirkName) === -1 &&
-                    quirkSearch(quirkInfo[quirkName])
-                  );
-                })
-                .map(([quirkName, quirk]) => {
-                  return [
-                    quirkName,
-                    {
-                      ...quirk,
-                      failTooltip: getReasonToNotAdd(quirkName),
-                    },
-                  ];
-                })}
-              serverData={server_data}
-              randomBodyEnabled={randomBodyEnabled}
-            />
-          </Stack.Item>
-        </Stack>
+              setSelectedQuirks(selectedQuirks.concat(quirkName));
+
+              act('give_quirk', { quirk: quirk.name });
+            }}
+            quirks={quirks
+              .filter(([quirkName, _]) => {
+                return (
+                  selectedQuirks.indexOf(quirkName) === -1 &&
+                  quirkSearch(quirkInfo[quirkName])
+                );
+              })
+              .map(([quirkName, quirk]) => {
+                return [
+                  quirkName,
+                  {
+                    ...quirk,
+                    failTooltip: getReasonToNotAdd(quirkName),
+                  },
+                ];
+              })}
+            serverData={server_data}
+            randomBodyEnabled={randomBodyEnabled}
+          />
+        </Section>
       </Stack.Item>
+    </Stack>
+  );
 
-      <Stack.Item align="center">
-        <Icon name="exchange-alt" size={1.5} ml={2} mr={2} />
+  const currentQuirks = (
+    <Stack fill vertical>
+      <Stack.Item>
+        {pointsEnabled && (
+          <StatDisplay value={balance}>Баланс черт</StatDisplay>
+        )}
       </Stack.Item>
+      <Stack.Item grow className={classes(['PreferencesMenu__Quirks'])}>
+        <Section fill scrollable title="Текущие черты">
+          <QuirkList
+            selected
+            onClick={(quirkName, quirk) => {
+              if (getReasonToNotRemove(quirkName) !== undefined) {
+                return;
+              }
 
-      <Stack.Item basis="50%">
-        <Stack vertical fill align="center">
-          <Stack.Item>
-            {pointsEnabled ? (
-              <Box fontSize="1.3em">Quirk Balance</Box>
-            ) : (
-              <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
-            )}
-          </Stack.Item>
-          <Stack.Item>
-            {pointsEnabled ? (
-              <StatDisplay>{balance}</StatDisplay>
-            ) : (
-              <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
-            )}
-          </Stack.Item>
-          <Stack.Item>
-            <Box as="b" fontSize="1.6em">
-              Current Quirks
-            </Box>
-          </Stack.Item>
-          <Stack.Item p={1.5} /> {/* Filler to better align the menu*/}
-          <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
-            <QuirkList
-              selected
-              quirkActionLocked={quirkActionLocked}
-              handleClick={(quirkName, quirk) => {
-                if (getReasonToNotRemove(quirkName) !== undefined) {
-                  return;
-                }
+              setSelectedQuirks(
+                selectedQuirks.filter((otherQuirk) => quirkName !== otherQuirk),
+              );
 
-                withQuirkDebounce(() => {
-                  setSelectedQuirks(
-                    selectedQuirks.filter((otherQuirk) => quirkName !== otherQuirk),
-                  );
-
-                  act('remove_quirk', { quirk: quirk.name });
-                });
-              }}
-              quirks={quirks
-                .filter(([quirkName, _]) => {
-                  return selectedQuirks.indexOf(quirkName) !== -1;
-                })
-                .map(([quirkName, quirk]) => {
-                  return [
-                    quirkName,
-                    {
-                      ...quirk,
-                      failTooltip: getReasonToNotRemove(quirkName),
-                    },
-                  ];
-                })}
-              serverData={server_data}
-              randomBodyEnabled={randomBodyEnabled}
-            />
-          </Stack.Item>
-        </Stack>
+              act('remove_quirk', { quirk: quirk.name });
+            }}
+            quirks={quirks
+              .filter(([quirkName, _]) => {
+                return selectedQuirks.indexOf(quirkName) !== -1;
+              })
+              .map(([quirkName, quirk]) => {
+                return [
+                  quirkName,
+                  {
+                    ...quirk,
+                    failTooltip: getReasonToNotRemove(quirkName),
+                  },
+                ];
+              })}
+            serverData={server_data}
+            randomBodyEnabled={randomBodyEnabled}
+          />
+        </Section>
       </Stack.Item>
+    </Stack>
+  );
+
+  return (
+    <Stack fill>
+      <Stack.Item grow>{availableQuirls}</Stack.Item>
+      <Stack.Item grow>{currentQuirks}</Stack.Item>
     </Stack>
   );
 }

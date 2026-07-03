@@ -94,7 +94,7 @@ export function QuantumConsole(props) {
   const { data } = useBackend<Data>();
 
   return (
-    <Window title="Quantum Console" width={500} height={500}>
+    <Window title="Квантовая консоль" width={500} height={500}>
       <Window.Content>
         {!!data.connected && !data.ready && <LoadingScreen />}
         <AccessView />
@@ -108,7 +108,7 @@ function AccessView(props) {
   const [tab, setTab] = useSharedState('tab', 0);
 
   if (!isConnected(data)) {
-    return <NoticeBox danger>No server connected!</NoticeBox>;
+    return <NoticeBox danger>Нет подключеня к серверу!</NoticeBox>;
   }
 
   const {
@@ -134,7 +134,7 @@ function AccessView(props) {
       ? '???'
       : sorted.find(({ id }) => id === generated_domain)?.name;
   } else {
-    selected = 'Nothing loaded';
+    selected = 'Ничего не загружено';
   }
 
   return (
@@ -144,20 +144,20 @@ function AccessView(props) {
           buttons={
             <Stack fill>
               <Tooltip
-                content="Toggles whether you broadcast your
-                  bitrun to station Entertainment Monitors."
+                content="Включить/отключить трансляцию вашего битрана
+                  на станционные развлекательные экраны."
               >
                 <Button.Checkbox
                   checked={broadcasting}
                   disabled={broadcasting_on_cd}
                   onClick={() => act('broadcast')}
                 >
-                  Broadcast
+                  Прямой эфир
                 </Button.Checkbox>
               </Tooltip>
               <Tooltip
-                content="Get a random domain for more rewards.
-                  Weighted towards your current points. Minimum: 1 point."
+                content="Получите случайный домен для дополнительных наград.
+                  Взвешено по вашим текущим очкам. Минимум - 1 очко."
               >
                 <Button
                   disabled={
@@ -167,10 +167,10 @@ function AccessView(props) {
                   onClick={() => act('random_domain')}
                   mr={1}
                 >
-                  Randomize
+                  Случайно
                 </Button>
               </Tooltip>
-              <Tooltip content="Accrued points for purchasing domains.">
+              <Tooltip content="Полученные очки для покупки доменов.">
                 <Icon color="pink" name="star" mr={1} />
                 {points}
               </Tooltip>
@@ -178,7 +178,7 @@ function AccessView(props) {
           }
           fill
           scrollable
-          title="Virtual Domains"
+          title="Виртуальные домены"
         >
           <Tabs fluid>
             <Tabs.Tab
@@ -188,7 +188,7 @@ function AccessView(props) {
               onClick={() => setTab(0)}
               icon="chevron-down"
             >
-              Peaceful
+              Мирные
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Low)}
@@ -197,7 +197,7 @@ function AccessView(props) {
               onClick={() => setTab(1)}
               icon="chevron-down"
             >
-              Easy
+              Легкие
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Medium)}
@@ -206,7 +206,7 @@ function AccessView(props) {
               onClick={() => setTab(2)}
               icon="chevron-down"
             >
-              Medium
+              Средние
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.High)}
@@ -215,7 +215,7 @@ function AccessView(props) {
               onClick={() => setTab(3)}
               icon="chevron-down"
             >
-              Hard <Icon name="skull" ml={1} />{' '}
+              Сложные <Icon name="skull" ml={1} />{' '}
             </Tabs.Tab>
           </Tabs>
           {filtered.map((domain) => (
@@ -233,12 +233,12 @@ function AccessView(props) {
               <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
-              <Tooltip content="Begins shutdown. Will notify anyone connected.">
+              <Tooltip content="Начинает отключение. Уведомит всех подключенных.">
                 <Button.Confirm
                   disabled={!ready || !generated_domain}
                   onClick={() => act('stop_domain')}
                 >
-                  Stop Domain
+                  Остановить домен
                 </Button.Confirm>
               </Tooltip>
             </Stack.Item>
@@ -278,10 +278,10 @@ function DomainEntry(props: DomainEntryProps) {
     buttonName = '???';
   } else if (current) {
     buttonIcon = 'download';
-    buttonName = 'Deployed';
+    buttonName = 'Загружен';
   } else {
     buttonIcon = 'coins';
-    buttonName = 'Deploy';
+    buttonName = 'Загрузить';
   }
 
   const canView = name !== '???';
@@ -289,7 +289,7 @@ function DomainEntry(props: DomainEntryProps) {
   return (
     <Collapsible
       buttons={
-        <Tooltip content={!!generated_domain && 'Stop current domain first.'}>
+        <Tooltip content={!!generated_domain && 'Остановите текущий домен.'}>
           <Button
             disabled={!!generated_domain || !ready || occupied || points < cost}
             icon={buttonIcon}
@@ -312,20 +312,20 @@ function DomainEntry(props: DomainEntryProps) {
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
-          {!!is_modular && ' (Modular)'}
-          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
-          {!!announce_ghosts && ' (Ghost Interaction)'}
+          {!!is_modular && ' (Модульное)'}
+          {!!has_secondary_objectives && ' (Доступны дополнительные задачи)'}
+          {!!announce_ghosts && ' (Взаимодействие с призраками)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
             <Table.Row>
-              <Tooltip content="Points cost for deploying domain.">
+              <Tooltip content="Требуемые очки для покупки домена.">
                 <DisplayDetails amount={cost} color="pink" icon="star" />
               </Tooltip>
             </Table.Row>
             <Table.Row>
-              <Tooltip content="Reward for competing domain.">
+              <Tooltip content="Награда за выполнение домена.">
                 <DisplayDetails amount={reward} color="gold" icon="coins" />
               </Tooltip>
             </Table.Row>
@@ -346,12 +346,12 @@ const AvatarDisplay = (props) => {
 
   return (
     <Section
-      title="Connected Clients"
+      title="Подключенные клиенты"
       buttons={
         <Stack align="center">
           {!!generated_domain && (
             <Stack.Item>
-              <Tooltip content="Available bandwidth for new connections.">
+              <Tooltip content="Пропускная способность позволяет создать новое соединение.">
                 <DisplayDetails
                   color="green"
                   icon="broadcast-tower"
@@ -361,9 +361,9 @@ const AvatarDisplay = (props) => {
             </Stack.Item>
           )}
           <Stack.Item>
-            <Tooltip content="Refresh avatar data.">
+            <Tooltip content="Обновить информацию аватаров.">
               <Button icon="sync" onClick={() => act('refresh')}>
-                Refresh
+                Обновить
               </Button>
             </Tooltip>
           </Stack.Item>
@@ -374,7 +374,7 @@ const AvatarDisplay = (props) => {
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
           <Table.Row key={name}>
             <Table.Cell color="label">
-              {pilot} as{' '}
+              {pilot} как{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
             </Table.Cell>
             <Table.Cell collapsing>
@@ -424,7 +424,7 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <Table.Cell color="label">None</Table.Cell>;
+    return <Table.Cell color="label">Никакие</Table.Cell>;
   }
 
   if (typeof amount === 'string') {

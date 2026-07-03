@@ -1,0 +1,13 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/mob/living/basic/mothroach/wrynroach{
+	name = "Жужука"
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/starboard/fore)
+
+(1,1,1) = {"
+a
+"}

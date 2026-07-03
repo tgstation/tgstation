@@ -1,0 +1,168 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sst)
+"af" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sst)
+"ax" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"aG" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sst)
+"aJ" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"aK" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/poddoor{
+	id = "sst_side_shuttle_door";
+	name = "Outer Blast Door"
+	},
+/obj/machinery/button/door/directional/north{
+	id = "sst_side_shuttle_door";
+	name = "Shuttle Blast Door Control";
+	req_access = list("syndicate")
+	},
+/obj/docking_port/mobile/syndicate_sst,
+/turf/open/floor/plating,
+/area/shuttle/syndicate_sst)
+"aN" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/syndicate_sst)
+"bs" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"bQ" = (
+/obj/structure/chair/comfy/shuttle/tactical,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"cp" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"cA" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/button/door/directional/east{
+	id = "sst_front_shuttle_door";
+	req_access = list("syndicate");
+	name = "Shuttle Blast Door Control"
+	},
+/obj/machinery/door/poddoor{
+	id = "sst_front_shuttle_door";
+	name = "Outer Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/syndicate_sst)
+"cT" = (
+/turf/template_noop,
+/area/template_noop)
+"lJ" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/sst{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"nN" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"pQ" = (
+/obj/machinery/computer/shuttle/syndicate/sst{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate_sst)
+"Ro" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/shuttle/syndicate_sst)
+
+(1,1,1) = {"
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+cT
+"}
+(2,1,1) = {"
+aa
+aG
+nN
+ax
+nN
+nN
+aJ
+bQ
+pQ
+Ro
+Ro
+"}
+(3,1,1) = {"
+af
+aG
+bs
+bs
+bs
+bs
+bs
+bs
+bs
+bs
+cA
+"}
+(4,1,1) = {"
+aN
+aG
+cp
+cp
+cp
+cp
+cp
+bs
+lJ
+Ro
+Ro
+"}
+(5,1,1) = {"
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+Ro
+aK
+Ro
+Ro
+cT
+"}

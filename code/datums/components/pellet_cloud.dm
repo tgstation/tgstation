@@ -191,7 +191,7 @@
 	var/self_harm_radius_mult = 3
 
 	if(punishable_triggerer && prob(60))
-		to_chat(punishable_triggerer, span_userdanger("Your plan to whack someone with a grenade on a stick backfires on you, literally!"))
+		to_chat(punishable_triggerer, span_userdanger("Ваш план огреть кого-то гранатой на палке оборачивается против вас - в прямом смысле!"))
 		self_harm_radius_mult = 1 // we'll still give the guy who got hit some extra shredding, but not 3*radius
 		pellet_delta += radius
 		for(var/i in 1 to radius)
@@ -208,13 +208,13 @@
 	for(var/M in martyrs)
 		var/mob/living/martyr = M
 		if(radius > 4)
-			martyr.visible_message("<b>[span_danger("[martyr] heroically covers \the [parent] with [martyr.p_their()] body, absorbing a load of the shrapnel!")]</b>", span_userdanger("You heroically cover \the [parent] with your body, absorbing a load of the shrapnel!"))
+			martyr.visible_message("<b>[span_danger("[martyr] героически закрывает собой [parent.declent_ru(ACCUSATIVE)], принимая на себя большую часть осколков!")]</b>", span_userdanger("Вы героически закрываете собой [parent.declent_ru(ACCUSATIVE)], принимая на себя большую часть осколков!"))
 			magnitude_absorbed += round(radius * 0.5)
 		else if(radius >= 2)
-			martyr.visible_message("<b>[span_danger("[martyr] heroically covers \the [parent] with [martyr.p_their()] body, absorbing some of the shrapnel!")]</b>", span_userdanger("You heroically cover \the [parent] with your body, absorbing some of the shrapnel!"))
+			martyr.visible_message("<b>[span_danger("[martyr] героически закрывает собой [parent.declent_ru(ACCUSATIVE)], принимая на себя часть осколков!")]</b>", span_userdanger("Вы героически закрываете собой [parent.declent_ru(ACCUSATIVE)], принимая на себя часть осколков!"))
 			magnitude_absorbed += 2
 		else
-			martyr.visible_message("<b>[span_danger("[martyr] heroically covers \the [parent] with [martyr.p_their()] body, snuffing out the shrapnel!")]</b>", span_userdanger("You heroically cover \the [parent] with your body, snuffing out the shrapnel!"))
+			martyr.visible_message("<b>[span_danger("[martyr] героически закрывает собой [parent.declent_ru(ACCUSATIVE)], полностью гася осколки!")]</b>", span_userdanger("Вы героически закрываете собой [parent.declent_ru(ACCUSATIVE)], полностью гася осколки!"))
 			magnitude_absorbed = radius
 
 		var/pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
@@ -340,14 +340,14 @@
 
 		var/limb_hit_text = ""
 		if(hit_part)
-			limb_hit_text = " in the [hit_part.plaintext_zone]"
+			limb_hit_text = " по [hit_part.ru_plaintext_zone[PREPOSITIONAL]]"
 
 		if(num_hits > 1)
-			target.visible_message(span_danger("[target] is hit by [num_hits] [proj_name][plural_s(proj_name)][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by [num_hits] [proj_name]s[limb_hit_text]!"))
+			target.visible_message(span_danger("В [target.declent_ru(ACCUSATIVE)] попадают [num_hits] [proj_name][limb_hit_text][damage ? "" : ", не оставляя следов"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("В вас попадают [num_hits] [proj_name][limb_hit_text]!"))
 		else
-			target.visible_message(span_danger("[target] is hit by a [proj_name][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by a [proj_name][limb_hit_text]!"))
+			target.visible_message(span_danger("В [target.declent_ru(ACCUSATIVE)] попадает [proj_name][limb_hit_text][damage ? "" : ", не оставляя следов"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("В вас попадает [proj_name][limb_hit_text]!"))
 
 	for(var/M in purple_hearts)
 		var/mob/living/martyr = M

@@ -3,7 +3,7 @@
 	filedesc = "MODsuit Control"
 	program_open_overlay = "modsuit_control"
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
-	extended_desc = "This program allows people to connect a MODsuit to it, allowing remote control."
+	extended_desc = "Эта программа позволяет подключить MODsuit к устройству, обеспечивая дистанционное управление."
 	size = 2
 	tgui_id = "NtosMODsuit"
 	program_icon = "user-astronaut"

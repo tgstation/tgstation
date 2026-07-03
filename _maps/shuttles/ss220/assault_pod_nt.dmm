@@ -1,0 +1,126 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/machinery/porta_turret/centcom_shuttle,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/assault_pod/nanotrasen)
+"c" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/shuttle/assault_pod/nanotrasen)
+"d" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/assault_pod/nanotrasen)
+"e" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Assault Pod"
+	},
+/obj/docking_port/mobile/assault_pod/nanotrasen{
+	port_direction = 4;
+	preferred_direction = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/assault_pod/nanotrasen)
+"h" = (
+/obj/machinery/computer/shuttle/nanotrasen/drop_pod,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/assault_pod/nanotrasen)
+"p" = (
+/turf/open/floor/pod,
+/area/shuttle/assault_pod/nanotrasen)
+"t" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Assault Pod"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/assault_pod/nanotrasen)
+"D" = (
+/obj/structure/chair/comfy/shuttle/tactical,
+/obj/machinery/light/directional/north,
+/turf/open/floor/pod,
+/area/shuttle/assault_pod/nanotrasen)
+"H" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/shuttle/assault_pod/nanotrasen)
+"L" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/pod,
+/area/shuttle/assault_pod/nanotrasen)
+"V" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+V
+b
+d
+t
+d
+b
+V
+"}
+(2,1,1) = {"
+b
+d
+c
+p
+c
+d
+b
+"}
+(3,1,1) = {"
+d
+c
+p
+H
+p
+c
+d
+"}
+(4,1,1) = {"
+t
+p
+L
+h
+D
+p
+e
+"}
+(5,1,1) = {"
+d
+H
+p
+c
+p
+H
+d
+"}
+(6,1,1) = {"
+b
+d
+H
+p
+H
+d
+b
+"}
+(7,1,1) = {"
+V
+b
+d
+t
+d
+b
+V
+"}

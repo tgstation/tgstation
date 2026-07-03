@@ -1,0 +1,10 @@
+{
+	"colored_silver": [
+		{
+			"type": "icon_state",
+			"icon_state": "colored_silver",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

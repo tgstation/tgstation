@@ -143,4 +143,4 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
             os.remove(fileName)
 
     with open(monthFile, 'w', encoding='utf-8') as f:
-        yaml.dump(currentEntries, f, default_flow_style=False)
+        yaml.dump(currentEntries, f, default_flow_style=False, allow_unicode=True)

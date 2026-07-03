@@ -1,0 +1,285 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/medical_kiosk,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"b" = (
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/item/emergency_bed{
+	pixel_y = 6
+	},
+/obj/item/emergency_bed{
+	pixel_y = 11
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/west,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"c" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/west,
+/obj/structure/table/reinforced/rglass,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/wrap/gauze,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"f" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"g" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/cold/directional/north,
+/obj/item/radio/intercom/directional/north,
+/obj/structure/bed/medical,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"k" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/bed/medical,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"l" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/radio/intercom/directional/south,
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"p" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"A" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Medbay - Treatment Center";
+	name = "medbay camera";
+	network = list("ss13","medbay")
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/firealarm/directional/north,
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"C" = (
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"E" = (
+/obj/item/reagent_containers/chem_pack{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/chem_pack{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/chem_pack{
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"H" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/clothing/neck/stethoscope{
+	pixel_y = 4
+	},
+/obj/item/clothing/neck/stethoscope,
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/box/masks,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"I" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"K" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"N" = (
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical{
+	pixel_y = 3
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/spray/cleaner,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"O" = (
+/turf/template_noop,
+/area/template_noop)
+"P" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
+"T" = (
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/hud/health,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"W" = (
+/obj/machinery/newscaster/directional/east,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"X" = (
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/east,
+/obj/structure/table/reinforced/rglass,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/wrap/gauze,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+"Z" = (
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/item/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/storage/box/rxglasses{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/storage/box/beakers,
+/turf/open/floor/iron,
+/area/station/medical/treatment_center)
+
+(1,1,1) = {"
+c
+f
+O
+O
+O
+O
+k
+b
+"}
+(2,1,1) = {"
+g
+I
+O
+O
+O
+O
+O
+E
+"}
+(3,1,1) = {"
+I
+P
+O
+O
+O
+O
+O
+O
+"}
+(4,1,1) = {"
+O
+O
+O
+T
+a
+O
+O
+O
+"}
+(5,1,1) = {"
+O
+O
+O
+H
+N
+O
+O
+O
+"}
+(6,1,1) = {"
+p
+K
+O
+O
+O
+O
+O
+O
+"}
+(7,1,1) = {"
+A
+p
+O
+O
+O
+O
+O
+l
+"}
+(8,1,1) = {"
+X
+W
+O
+O
+O
+O
+C
+Z
+"}

@@ -1,6 +1,6 @@
 /datum/language/drone
 	name = "Drone"
-	desc = "A heavily encoded damage control coordination stream, with special flags for hats."
+	desc = "Сильно закодированный поток координации контроля повреждений со специальными флагами для шляп."
 	spans = list(SPAN_ROBOT)
 	key = "d"
 	flags = NO_STUTTER

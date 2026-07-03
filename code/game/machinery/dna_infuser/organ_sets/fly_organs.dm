@@ -62,6 +62,12 @@
 		new /regex("Z+", "g") = "ZZZ",
 		"s" = "z",
 		"S" = "Z",
+		// BANDASTATION EDIT START - speech mod
+		new /regex("з+", "g") = "ззз",
+		new /regex("З+", "g") = "ЗЗЗ",
+		"с" = "з",
+		"С" = "З",
+		// BANDASTATION END
 	)
 
 

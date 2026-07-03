@@ -62,6 +62,16 @@
 	var/my_message = format_message(user,message)
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
+		// BANDASTATION ADDITION START - TTS
+		owner.cast_tts(
+			spider,
+			message,
+			is_local = FALSE,
+			effects = list(/datum/singleton/sound_effect/telepathy),
+			channel_override = CHANNEL_TTS_TELEPATHY,
+			check_deafness = FALSE
+		)
+		// BANDASTATION ADDITION END
 	for(var/ghost in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(ghost, user)
 		to_chat(ghost, "[link] [my_message]")

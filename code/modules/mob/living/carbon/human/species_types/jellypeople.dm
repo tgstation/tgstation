@@ -335,6 +335,9 @@
 
 	H.transfer_quirk_datums(spare)
 	H.mind.transfer_to(spare)
+	// BANDASTATION ADD START - SSD INDICATOR
+	SEND_SIGNAL(owner, COMSIG_SLIMEMAN_SWAPPED_BODY)
+	// BANDASTATION ADD END - SSD INDICATOR
 	spare.visible_message(
 		span_warning("[H] distorts as a new body \"steps out\" of [H.p_them()]."),
 		span_notice("...and after a moment of disorentation, you're besides yourself!"),
@@ -480,6 +483,9 @@
 		to_chat(M.current, span_notice("You abandon this body..."))
 	M.current.transfer_quirk_datums(dupe)
 	M.transfer_to(dupe)
+	// BANDASTATION ADD START - SSD INDICATOR
+	SEND_SIGNAL(owner, COMSIG_SLIMEMAN_SWAPPED_BODY)
+	// BANDASTATION ADD END - SSD INDICATOR
 	dupe.visible_message(span_notice("[dupe] blinks and looks around."), span_notice("...and move this one instead."))
 
 

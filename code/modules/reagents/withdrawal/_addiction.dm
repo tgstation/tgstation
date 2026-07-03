@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT_TYPED(addictions, /datum/addiction, init_subtypes_w_path_keys(/
 /datum/addiction/proc/lose_addiction(datum/mind/victim_mind)
 	victim_mind.current.clear_mood_event("[type]_addiction")
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_LOSE_ADDICTION, victim_mind)
-	to_chat(victim_mind.current, span_notice("You feel like you've gotten over your need for drugs."))
+	to_chat(victim_mind.current, span_notice("Вы чувствуете, как употребление наркотиков теряет какой-либо смысл."))
 	end_withdrawal(victim_mind.current)
 	LAZYREMOVE(victim_mind.active_addictions, type)
 

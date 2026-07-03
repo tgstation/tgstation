@@ -1,0 +1,8 @@
+[inducer]
+nominative = "индуктор"
+genitive = "индуктора"
+dative = "индуктору"
+accusative = "индуктор"
+instrumental = "индуктором"
+prepositional = "индукторе"
+gender = "male"

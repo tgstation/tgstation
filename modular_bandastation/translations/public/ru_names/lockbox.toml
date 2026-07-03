@@ -1,0 +1,8 @@
+[lockbox]
+nominative = "запирающийся ящик"
+genitive = "запирающегося ящика"
+dative = "запирающемуся ящику"
+accusative = "запирающийся ящик"
+instrumental = "запирающимся ящиком"
+prepositional = "запирающемся ящике"
+gender = "male"

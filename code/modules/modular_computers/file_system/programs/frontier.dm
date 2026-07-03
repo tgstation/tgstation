@@ -2,7 +2,7 @@
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
-	extended_desc = "Scientific paper publication and navigation software."
+	extended_desc = "Программное обеспечение для публикации и навигации по научным статьям."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 12
 	program_open_overlay = "research"
@@ -180,11 +180,11 @@
 			if(length(params))
 				for (var/changed_entry in params)
 					if (changed_entry == "title")
-						paper_to_be.title = sanitize(params[changed_entry])
+						paper_to_be.title = sanitize(params[changed_entry], apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 					if (changed_entry == "author")
-						paper_to_be.author = sanitize(params[changed_entry])
+						paper_to_be.author = sanitize(params[changed_entry], apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 					if (changed_entry == "abstract")
-						paper_to_be.abstract = sanitize(params[changed_entry])
+						paper_to_be.abstract = sanitize(params[changed_entry], apply_ic_filter = TRUE) // BANDASTATION EDIT - Sanitize emotes
 				return TRUE
 		if("change_tab")
 			current_tab = params["new_tab"]

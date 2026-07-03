@@ -21,7 +21,7 @@
 
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
-	desc = "Gambling for the antisocial."
+	desc = "Самое главное - вовремя дать заднюю."
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "slots"
 	icon_keyboard = null
@@ -157,17 +157,17 @@
 				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))
 					balance = max(balance - SPIN_PRICE, 0)
-				to_chat(user, span_warning("[src] spits your coin back out!"))
+				to_chat(user, span_warning("[src] выплевывает монету обратно!"))
 				return ITEM_INTERACT_BLOCKING
 			else
 				if(!user.temporarilyRemoveItemFromInventory(inserted_coin))
 					return ITEM_INTERACT_BLOCKING
-				balloon_alert(user, "coin inserted")
+				balloon_alert(user, "монета вставлена")
 				balance += inserted_coin.value
 				qdel(inserted_coin)
 				return ITEM_INTERACT_SUCCESS
 		else
-			balloon_alert(user, "holochips only!")
+			balloon_alert(user, "принимаются только голочипы!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(inserted, /obj/item/holochip))
@@ -175,12 +175,12 @@
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "[inserted_chip.credits] [MONEY_NAME_AUTOPURAL(inserted_chip.credits)] inserted")
+			balloon_alert(user, "[declension_ru(inserted_chip.credits, "вставлен", "вставлено", "вставлено")] [inserted_chip.credits] [declension_ru(inserted_chip.credits, "кредит", "кредита", "кредитов")]")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
 			return ITEM_INTERACT_SUCCESS
 		else
-			balloon_alert(user, "coins only!")
+			balloon_alert(user, "принимаются только монеты!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/card/id/id_card = inserted.GetID()
@@ -216,15 +216,15 @@
 
 /obj/machinery/computer/slot_machine/multitool_act(mob/living/user, obj/item/tool)
 	if(balance > 0)
-		say("ERROR! Please empty the machine balance before altering paymode.") //Prevents converting coins into holocredits and vice versa
+		say("ОШИБКА! Пожалуйста, опустошите машину перед изменением способа оплаты.") //Prevents converting coins into holocredits and vice versa
 		return ITEM_INTERACT_BLOCKING
 
 	if(paymode == HOLOCHIP)
 		paymode = COIN
-		balloon_alert(user, "now using coins")
+		balloon_alert(user, "переключено на монеты")
 	else
 		paymode = HOLOCHIP
-		balloon_alert(user, "now using holochips")
+		balloon_alert(user, "переключено на голочипы")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -332,7 +332,7 @@
 	var/the_name
 	if(user)
 		the_name = user.real_name
-		visible_message(span_notice("[user] pulls the lever and the slot machine starts spinning!"))
+		visible_message(span_notice("[user] тянет рычаг и слот-машина начинает крутиться!"))
 		if(isliving(user))
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots_spin", /datum/mood_event/slots)
@@ -372,16 +372,16 @@
 /// Check if the machine can be spun
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(machine_stat & NOPOWER)
-		balloon_alert(user, "no power!")
+		balloon_alert(user, "нет энергии!")
 		return FALSE
 	if(machine_stat & BROKEN)
-		balloon_alert(user, "machine broken!")
+		balloon_alert(user, "машина сломана!")
 		return FALSE
 	if(working)
-		balloon_alert(user, "already spinning!")
+		balloon_alert(user, "машина уже крутится!")
 		return FALSE
 	if(balance < SPIN_PRICE)
-		balloon_alert(user, "insufficient balance!")
+		balloon_alert(user, "недостаточно кредитов!")
 		return FALSE
 	return TRUE
 
@@ -422,8 +422,8 @@
 	else if(check_middle_row_all(jackpot_path))
 		winning = WINNING_JACKPOT
 		var/prize = money + PRIZE_JACKPOT
-		say("JACKPOT! You win [prize] [MONEY_NAME]!")
-		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
+		say("ДЖЕКПОТ! Вы выиграли [prize] [MONEY_NAME]!")
+		priority_announce("Поздравляем [user ? user.real_name : usrname] с крупным выигрышем в [get_area(src)]!")
 		user.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/win/jackpot)
 		add_memory_in_range(user, 7, /datum/memory/won_jackpot, protagonist = user, deuteragonist = src)
 		jackpots += 1
@@ -440,25 +440,25 @@
 
 	else if(linelength == 5)
 		winning = WINNING_BIG
-		say("Big Winner! You win a thousand [MONEY_NAME]!")
+		say("Большой выигрыш! Вы выиграли 1000[MONEY_NAME]!")
 		give_money(PRIZE_BIG)
 		user.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
 		winning = WINNING_SMALL
-		say("Winner! You win four hundred [MONEY_NAME]!")
+		say("Выигрыш! Вы выиграли 400[MONEY_NAME]!")
 		give_money(PRIZE_SMALL)
 		user.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/win)
 
 	else if(linelength == 3)
 		winning = WINNING_FREESPIN
-		balloon_alert(user, "won 3 free games!")
+		balloon_alert(user, "получено 3 фриспина!")
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
 		winning = WINNING_NOTHING
-		balloon_alert(user, "no luck!")
+		balloon_alert(user, "неудача!")
 		did_player_win = FALSE
 		user.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/loss)
 

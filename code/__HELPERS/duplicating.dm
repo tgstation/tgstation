@@ -48,6 +48,11 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"vars",
 	"verbs",
 	"x", "y", "z",
+	// BANDASTATION FIX START: fix strip menu contents
+	"covered_slots",
+	"obscured_slots",
+	"pixloc",
+	// BANDASTATION FIX END: fix strip menu contents
 ))
 GLOBAL_PROTECT(duplicate_forbidden_vars)
 
@@ -84,6 +89,7 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 			//transfer DNA over (also body features), then update skin color.
 			original_carbon.dna.copy_dna(copied_carbon.dna)
 			copied_carbon.updateappearance(mutcolor_update = TRUE)
+			copied_carbon.regenerate_icons() // BANDASTATION FIX: appearance copying
 
 		var/mob/living/original_living = original
 		var/mob/living/copied_living = made_copy

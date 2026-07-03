@@ -28,11 +28,10 @@ jobs:
           days-before-close: 7
           days-before-issue-stale: 14
           days-before-issue-close: 14
-          stale-pr-label: "Stale"
+          stale-pr-label: ":poop: Stale"
           stale-issue-label: "Stale"
           any-of-issue-labels: "Cleanup Flagged,🤖 Flaky Test Report"
           remove-issue-stale-when-updated: false
-          exempt-issue-labels: "RED LABEL"
           exempt-pr-labels: "RED LABEL,Good First PR"
           operations-per-run: 300
       - name: Filter staled pull requests for announcement

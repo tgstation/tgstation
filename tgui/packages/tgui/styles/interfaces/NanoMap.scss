@@ -1,0 +1,286 @@
+@keyframes highlighted {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(3);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+@mixin nanoButton() {
+  opacity: 1 !important;
+  pointer-events: all;
+  background-color: var(--nanomap-background);
+  color: hsla(0, 0%, 100%, 0.66);
+  border: var(--border-thickness-tiny) solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--nanomap-shadow);
+  backdrop-filter: var(--nanomap-blur);
+
+  &:hover {
+    background-color: hsl(
+      from var(--nanomap-background) h s calc(l + var(--adjust-hover))
+    );
+    color: hsla(0, 0%, 100%, 1);
+  }
+
+  &--selected {
+    color: var(--color-green);
+
+    &:hover {
+      color: hsl(from var(--color-green) h s calc(l + var(--adjust-hover)));
+    }
+  }
+
+  &--disabled {
+    cursor: var(--cursor-default);
+    background-color: hsl(
+      from var(--nanomap-background) h s l / 0.75
+    ) !important;
+    color: hsl(
+      from var(--color-red) h s calc(l + var(--adjust-color))
+    ) !important;
+  }
+
+  i {
+    vertical-align: middle;
+  }
+}
+
+.NanoMap {
+  --nanomap-blur: saturate(150%) var(--blur-medium);
+  --nanomap-shadow: 0 1px 0.2rem hsla(0, 0%, 0%, 0.75);
+  --nanomap-background: hsl(
+    from var(--color-base) h s calc(l - var(--adjust-color)) / 0.85
+  );
+  padding: var(--space-m);
+  background-color: var(--color-section);
+
+  &__Controls {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    text-align: center;
+    gap: var(--space-s);
+    padding: 0 var(--space-m);
+    z-index: 10;
+
+    .Button {
+      @include nanoButton();
+    }
+
+    &--zoom {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      background-color: hsl(from var(--color-green) h s calc(l + 10) / 0.33);
+      border-radius: var(--border-radius-large);
+      transition: width var(--transition-time-medium);
+      z-index: -1;
+    }
+  }
+
+  &__Buttons {
+    padding: var(--space-m) 0;
+    z-index: 10;
+
+    .Button {
+      @include nanoButton();
+    }
+  }
+
+  &__Minimap {
+    user-select: none;
+    background-color: var(--nanomap-background);
+    border: var(--border-thickness-tiny) solid var(--color-border);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--nanomap-shadow);
+    backdrop-filter: var(--nanomap-blur);
+
+    .rzpp-preview {
+      border: var(--border-thickness-tiny) solid
+        hsl(from var(--color-border) h s l / 0.33) !important;
+      box-shadow: hsla(0, 0%, 0%, 0.33) 0px 0px 0px 9999px !important;
+    }
+  }
+
+  &__Object {
+    cursor: var(--cursor-pointer);
+    font-size: 6px;
+    line-height: 0;
+    padding: 0;
+    height: 2em;
+    width: 2em;
+    border: 2px solid hsl(from var(--color-border-dark) h s l / 0.5);
+    border-radius: var(--border-radius-small);
+    transition-property: background-color, border-color, transform;
+    transition-duration: var(--transition-time-medium);
+
+    &--circular {
+      border-radius: var(--border-radius-circular);
+    }
+
+    &--wrapper {
+      --map-button-scale: 1.25;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+
+      &.highlighted {
+        z-index: 5;
+      }
+
+      &.tracked {
+        --map-button-scale: 1;
+        transition-property: transform;
+        transition-duration: 1s;
+        transition-timing-function: linear;
+      }
+    }
+
+    &--inner {
+      position: relative;
+      display: inline-flex;
+    }
+
+    &--highlighted {
+      position: absolute;
+      inset: 0;
+      border: var(--border-thickness-tiny) solid var(--color-good);
+      border-radius: var(--border-radius-circular);
+      filter: drop-shadow(0 0 1px hsla(0, 0%, 0%, 0.5));
+      animation: 1.5s highlighted infinite;
+    }
+
+    &--direction {
+      position: absolute;
+      inset: 0;
+
+      svg {
+        overflow: visible;
+      }
+
+      polygon {
+        fill: hsl(from var(--color-green) h s l / 0.75);
+        mask-image: linear-gradient(to top, transparent 0%, black 25%);
+        transform: translate(-100%, -100%);
+      }
+    }
+
+    &--selected {
+      transform: scale(1.5);
+      z-index: 3;
+    }
+
+    &--hidden {
+      display: none;
+    }
+
+    .Icon {
+      position: absolute;
+      transform: translate(-0.25em, 0.2em);
+    }
+  }
+}
+
+/** Positioning */
+.NanoMap {
+  position: relative;
+
+  &__Controls,
+  &__Buttons,
+  &__Minimap--container {
+    position: absolute;
+  }
+
+  &__Minimap--container {
+    top: var(--space-l);
+    left: var(--space-l);
+    z-index: 10;
+  }
+
+  &__Controls {
+    right: 0;
+    bottom: -2.25rem;
+    left: 0;
+  }
+
+  &__Buttons {
+    top: 0;
+    right: -2.25rem;
+    bottom: 0;
+  }
+
+  &--top-right,
+  &--bottom-right {
+    .NanoMap__Minimap--container {
+      right: var(--space-l);
+      left: unset;
+    }
+  }
+
+  &--bottom-left,
+  &--bottom-right {
+    .NanoMap__Minimap--container {
+      top: unset;
+      bottom: var(--space-l);
+    }
+  }
+
+  &--bottom-left,
+  &--bottom-right {
+    .NanoMap__Controls {
+      top: -2.1rem;
+      bottom: unset;
+    }
+  }
+
+  &--top-right,
+  &--bottom-right {
+    .NanoMap__Buttons {
+      right: unset;
+      left: -2.25rem;
+    }
+  }
+
+  /** Disabled minimap layout */
+  &__Minimap--disabled {
+    pointer-events: none;
+    inset: 0 !important;
+    display: flex;
+    margin: var(--space-l);
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .NanoMap__Controls,
+    .NanoMap__Buttons {
+      position: relative;
+      inset: unset;
+      padding: 0;
+
+      .Button {
+        pointer-events: all;
+      }
+    }
+
+    .NanoMap__Controls {
+      width: 150px;
+    }
+  }
+
+  &--bottom-left,
+  &--bottom-right {
+    .NanoMap__Minimap--disabled {
+      align-items: flex-end;
+    }
+  }
+}

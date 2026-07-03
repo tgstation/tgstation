@@ -25,7 +25,7 @@
 	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1), null, target, distance_from_edge = 10)
 
 /datum/round_event/dark_matteor/announce(fake)
-	priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/announcer/alarm/airraid.ogg')
+	priority_announce("Тревога. Помехи в работе метеоритных спутников привлекли темный маттериор. Объект стремительно приближается к [GLOB.station_name]. Приготовьтесь к столкновению", "Метеоры", 'sound/announcer/alarm/airraid.ogg')
 
 /datum/event_admin_setup/warn_admin/dark_matteor
 	warning_text = "Dark Matt-eors spawn singularities. The round is ending once a dark matt-eor hits the station. Proceed anyways?"

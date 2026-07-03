@@ -139,7 +139,7 @@
 	INVOKE_ASYNC(src, PROC_REF(its_on_the_mouse), offerer, taker)
 
 /obj/item/organ/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker)
-	offerer.say("For you, it's on the mouse.")
+	offerer.say("Для вас, все самое чумовое.")
 	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
 /obj/item/organ/tongue/rat/on_life(seconds_per_tick)

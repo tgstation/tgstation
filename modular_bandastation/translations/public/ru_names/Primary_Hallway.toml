@@ -1,0 +1,8 @@
+["Primary Hallway"]
+nominative = "основной коридор"
+genitive = "основного коридора"
+dative = "основному коридору"
+accusative = "основной коридор"
+instrumental = "основным коридором"
+prepositional = "основном коридоре"
+gender = "male"

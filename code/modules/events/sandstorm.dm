@@ -38,20 +38,20 @@
 	var/start_side_text = "unknown"
 	switch(start_side)
 		if(NORTH)
-			start_side_text = "fore"
+			start_side_text = "носа"
 		if(SOUTH)
-			start_side_text = "aft"
+			start_side_text = "кормы"
 		if(EAST)
-			start_side_text = "starboard"
+			start_side_text = "правого борта"
 		if(WEST)
-			start_side_text = "port"
+			start_side_text = "левого борта"
 		else
 			stack_trace("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
 			kill()
 			return
 
-	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
-		Impact is expected in the next two minutes. All employees are encouraged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
+	priority_announce("Большая волна космической пыли приближается с [start_side_text] станции. \
+		Удар ожидается в ближайшие две минуты. Всем сотрудникам рекомендуется по возможности оказать помощь в ремонте и уменьшении ущерба.", "Экстренное оповещение о столкновении")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteors_sandstorm, start_side)

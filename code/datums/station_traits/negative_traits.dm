@@ -1,17 +1,17 @@
 /datum/station_trait/carp_infestation
-	name = "Carp infestation"
+	name = "Нашествие карпов"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Dangerous fauna is present in the area of this station."
+	report_message = "В районе станции обитает опасная фауна."
 	trait_to_give = STATION_TRAIT_CARP_INFESTATION
 
 /datum/station_trait/distant_supply_lines
-	name = "Distant supply lines"
+	name = "Удаленные линии снабжения"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
 	show_in_report = TRUE
-	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
+	report_message = "Из-за удаленности от наших обычных линий снабжения заказы на доставку грузов обходятся дороже."
 	blacklist = list(/datum/station_trait/strong_supply_lines)
 
 /datum/station_trait/distant_supply_lines/on_round_start()
@@ -19,17 +19,17 @@
 
 ///A negative trait that stops mail from arriving (or the inverse if on holiday). It also enables a specific shuttle loan situation.
 /datum/station_trait/mail_blocked
-	name = "Postal workers strike"
+	name = "Забастовка почтовых работников"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
+	report_message = "В связи с продолжающейся забастовкой, объявленной профсоюзом почтовых работников, почта в эту смену доставляться не будет."
 
 /datum/station_trait/mail_blocked/on_round_start()
 	//This is either a holiday or Sunday... well then, let's flip the situation.
 	if(SSeconomy.mail_blocked)
-		name = "Postal system overtime"
-		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
+		name = "Сверхурочная работа почтовой системы"
+		report_message = "Несмотря на выходной, почтовая система сегодня работает сверхурочно. Доставка почты будет осуществляться в эту смену."
 	else
 		var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
 		our_event.unavailable_situations -= /datum/shuttle_loan_situation/mail_strike
@@ -42,29 +42,29 @@
 	return ..()
 
 /datum/station_trait/late_arrivals
-	name = "Late Arrivals"
+	name = "Позднее прибытие"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "Sorry for that, we didn't expect to fly into that vomiting goose while bringing you to your new station."
+	report_message = "Извините за это, мы не ожидали, что столкнёмся с этим блюющим гусем, когда будем отправлять вас на новую станцию."
 	trait_to_give = STATION_TRAIT_LATE_ARRIVALS
 	blacklist = list(/datum/station_trait/random_spawns, /datum/station_trait/hangover)
 
 /datum/station_trait/random_spawns
-	name = "Drive-by landing"
+	name = "Высадка на ходу"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
+	report_message = "Извините, мы пролетели мимо вашей станции на несколько миль, поэтому просто доставили вас к станции на капсулах. Надеемся, вы не против!"
 	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
 	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/hangover)
 
 /datum/station_trait/hangover
-	name = "Hangover"
+	name = "Похмелье"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "Ohh....Man....That mandatory office party from last shift...God that was awesome..I woke up in some random toilet 3 sectors away..."
+	report_message = "Оох... Чувак... Эта обязательная офисная вечеринка в прошлую смену... Боже, это было потрясающе... Я проснулся в каком-то туалете в трёх секторах отсюда..."
 	trait_to_give = STATION_TRAIT_HANGOVER
 	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns)
 
@@ -97,25 +97,25 @@
 
 
 /datum/station_trait/blackout
-	name = "Blackout"
+	name = "Блэкаут"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
 	show_in_report = TRUE
-	report_message = "Station lights seem to be damaged, be safe when starting your shift today."
+	report_message = "Освещение станции, похоже, повреждено. Будьте осторожны, начиная смену сегодня."
 
 /datum/station_trait/blackout/on_round_start()
 	. = ..()
 	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
-		if(is_station_level(apc.z) && prob(60))
+		if(is_station_level(apc.z) && prob(30)) /// BANDASTATION EDIT: original prob(60) - Station traits
 			apc.overload_lighting()
 
 /datum/station_trait/empty_maint
-	name = "Cleaned out maintenance"
+	name = "Вычищенные технические тоннели"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	cost = STATION_TRAIT_COST_LOW //Most of maints is literal trash anyway
 	show_in_report = TRUE
-	report_message = "Our workers cleaned out most of the junk in the maintenance areas."
+	report_message = "Наши рабочие убрали большую часть мусора в зонах технических тоннелей."
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
 
@@ -144,11 +144,11 @@
 	UnregisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/slow_shuttle
-	name = "Slow Shuttle"
+	name = "Медленный шаттл"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
+	report_message = "Из-за удаленности нашей станции снабжения, время полета грузового шаттла до вашего отдела снабжения будет больше."
 	blacklist = list(/datum/station_trait/quick_shuttle)
 
 /datum/station_trait/slow_shuttle/New()
@@ -161,12 +161,12 @@
 	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/bot_languages
-	name = "Bot Language Matrix Malfunction"
+	name = "Неисправность языковой матрицы ботов"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 4
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
+	report_message = "У дружелюбных ботов вашей станции из-за некоего события сгорела языковая матрица, что привело к появлению странных, и незнакомых речевых моделей."
 	trait_to_give = STATION_TRAIT_BOTS_GLITCHED
 
 /datum/station_trait/bot_languages/New()
@@ -182,13 +182,13 @@
 		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/machine_languages
-	name = "Machine Language Matrix Malfunction"
+	name = "Неисправность матрицы машинного языка"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	cost = STATION_TRAIT_COST_FULL
 	show_in_report = TRUE
-	report_message = "Your station's machines have had their language matrix fried due to an event, \
-		resulting in some strange and unfamiliar speech patterns."
+	report_message = "Языковая матрица машин вашей станции вышла из строя из-за некоего события, \
+		что привело к появлению странных и непривычных речевых моделей."
 	trait_to_give = STATION_TRAIT_MACHINES_GLITCHED
 
 /datum/station_trait/machine_languages/New()
@@ -198,7 +198,7 @@
 	report_message = "Your station's machinery have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
 
 /datum/station_trait/revenge_of_pun_pun
-	name = "Revenge of Pun Pun"
+	name = "Месть Пун Пуна"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
@@ -293,8 +293,8 @@
 
 // Abstract station trait used for traits that modify a random event in some way (their weight or max occurrences).
 /datum/station_trait/random_event_weight_modifier
-	name = "Random Event Modifier"
-	report_message = "A random event has been modified this shift! Someone forgot to set this!"
+	name = "Модификатор случайных событий"
+	report_message = "В эту смену было изменено случайное событие! Кто-то забыл это настроить!"
 	show_in_report = TRUE
 	abstract_type = /datum/station_trait/random_event_weight_modifier
 	weight = 0
@@ -316,21 +316,21 @@
 	modified_event.max_occurrences += max_occurrences_modifier
 
 /datum/station_trait/random_event_weight_modifier/ion_storms
-	name = "Ionic Stormfront"
-	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
+	name = "Ионная буря"
+	report_message = "Над системой вашей станции проходит ионная буря. Ожидайте повышенную вероятность воздействия ионных бурь на силиконовые модули вашей станции."
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
 
 /datum/station_trait/random_event_weight_modifier/ion_storms/get_pulsar_message()
-	var/advisory_string = "Advisory Level: <b>ERROR</b></center><BR>"
-	advisory_string += scramble_message_replace_chars("Your sector's advisory level is ERROR. An electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data.", 35)
+	var/advisory_string = "Уровень предупреждения: <b>ОШИБКА</b></center><BR>"
+	advisory_string += scramble_message_replace_chars("Уровень предупреждения для вашего сектора — ОШИБКА. Электромагнитное поле прорвалось сквозь расположенное поблизости оборудование для наблюдения, что привело к серьезной потере данных. Были восстановлены частичные данные, которые не выявили серьезных угроз для активов Нанотрейзен в секторе КССП; однако Министерство разведки рекомендует сохранять высокую степень готовности к потенциальным угрозам из-за отсутствия полных данных.", 35)
 	return advisory_string
 
 /datum/station_trait/random_event_weight_modifier/rad_storms
-	name = "Radiation Stormfront"
-	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
+	name = "Радиационная буря"
+	report_message = "Через систему вашей станции проходит радиоактивная буря. Ожидайте повышенную вероятность прохождения радиационных бурь над вашей станцией, а также возможность возникновения нескольких радиационных бурь во время вашей смены."
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	event_control_path = /datum/round_event_control/radiation_storm
@@ -338,8 +338,8 @@
 	max_occurrences_modifier = 2
 
 /datum/station_trait/random_event_weight_modifier/dust_storms
-	name = "Dust Stormfront"
-	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelihood of space dust storms damaging the station hull."
+	name = "Пыльная буря"
+	report_message = "Пространство вокруг вашей станции затянуто облаками космической пыли. Ожидайте повышенную вероятность повреждения корпуса станции пылевыми бурями."
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
@@ -348,18 +348,18 @@
 	max_occurrences_modifier = 3
 
 /datum/station_trait/cramped_escape_pods
-	name = "Cramped Escape Pods"
+	name = "Тесные спасательные капсулы"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Due to budget cuts, we have downsized your escape pods."
+	report_message = "В связи с сокращением бюджета мы уменьшили размер ваших спасательных капсул."
 	trait_to_give = STATION_TRAIT_SMALLER_PODS
 	blacklist = list(/datum/station_trait/luxury_escape_pods)
 
 /datum/station_trait/revolutionary_trashing
-	name = "Post-Revolutionary Fervor"
+	name = "Постреволюционный пыл"
 	show_in_report = TRUE
-	report_message = "Your station was recently reclaimed from a revolutionary commune. We couldn't clean up after them in time."
+	report_message = "Вашу станцию недавно отбили у революционной коммуны. Мы не успели за ними убраться."
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_to_give = STATION_TRAIT_REVOLUTIONARY_TRASHING
 	weight = 2
@@ -556,12 +556,12 @@
 
 ///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
-	name = "Radioactive Nebula"
+	name = "Радиоактивная туманность"
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = STATION_TRAIT_SPACE_BOUND //maybe when we can LOOK UP
 	weight = 1
 	show_in_report = TRUE
-	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
+	report_message = "Ваша станция расположена внутри радиоактивной туманности. Установка защиты от туманности является первоочередной задачей."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
@@ -604,13 +604,13 @@
 
 	//Give robotics some radiation protection modules for modsuits
 	var/datum/supply_pack/supply_pack_modsuits = new /datum/supply_pack/engineering/rad_protection_modules()
-	send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/centcompod)
+	send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/teleporter) // BANDASTATION EDIT - Original: send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/teleporter)
 
 	//Send a nebula shielding unit to engineering
 	var/datum/supply_pack/supply_pack_shielding = new /datum/supply_pack/engineering/rad_nebula_shielding_kit()
-	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
+	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/teleporter)) // BANDASTATION EDIT - Original: if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/teleporter))
 		//if engineering isn't valid, just send it to the bridge
-		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
+		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/teleporter)  // BANDASTATION EDIT - Original: send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/teleporter)
 
 	// Let medical know resistance is futile
 	if (/area/station/medical/virology in GLOB.areas_by_type)
@@ -619,7 +619,7 @@
 			/area/station/medical/virology,
 			"NT Virology Department",
 			force = TRUE,
-			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+			force_pod_type = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: force_pod_type = /obj/structure/closet/supplypod/centcompod,
 		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
@@ -670,9 +670,9 @@
 			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
 
 			priority_announce(
-				{"Is everything okay there? We're getting high radiation readings from inside the station. \
-				We're sending an emergency shielding unit for now, it will last [initial(rad_shield.detonate_in) / (1 MINUTES)] minutes. \n\n\
-				Set up the nebula shielding. You can order construction kits at cargo if yours have been lost.
+				{"У вас всё в порядке? Мы получаем высокие показатели радиации внутри станции. \
+				Мы отправляем аварийный блок защиты, он продержится [initial(rad_shield.detonate_in) / (1 MINUTES)] минут. \n\n\
+				Установите защиту от радиации. Вы можете заказать строительные наборы в отделе снабжения, если ваши были утеряны.
 				"}
 			)
 
@@ -692,20 +692,20 @@
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation
 	var/obj/machinery/gravity_generator/main/innate_shielding = /obj/machinery/gravity_generator/main
 	//How long do we have until the first shielding unit needs to be up?
-	var/deadline = "[(initial(innate_shielding.radioactive_nebula_shielding) * intensity_increment_time) / (1 MINUTES)] minute\s"
+	var/deadline = "[(initial(innate_shielding.radioactive_nebula_shielding) * intensity_increment_time) / (1 MINUTES)] минут"
 	//For how long each shielding unit will protect for
-	var/shielder_time = "[(initial(shielder.shielding_strength) * intensity_increment_time) / (1 MINUTES)] minute\s"
+	var/shielder_time = "[(initial(shielder.shielding_strength) * intensity_increment_time) / (1 MINUTES)] минут"
 	//Max shielders, excluding the grav-gen to avoid confusion when that goes down
 	var/max_shielders = ((maximum_nebula_intensity / intensity_increment_time)) / initial(shielder.shielding_strength)
 
-	var/announcement = {"Your station has been constructed inside a radioactive nebula. \
-		Standard spacesuits will not protect against the nebula and using them is strongly discouraged. \n\n\
+	var/announcement = {"Ваша станция была построена внутри радиоактивной туманности. \
+		Стандартные скафандры не защитят от радиации, и использовать их настоятельно не рекомендуется. \n\n\
 
-		EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generator's innate radiation shielding \
-		will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
-		shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
-		You have [deadline] before the nebula enters the station. \
-		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
+		ИНФОРМАЦИЯ ПОВЫШЕННОЙ ВАЖНОСТИ: Станция все глубже погружается в туманность, а встроенная в гравитационный генератор защита от радиации \
+		долго не продержится. Ваш инженерный отдел получил все необходимые материалы для создания \
+		защиты от туманности. Дополнительное снаряжение может заказано в отделе снабжения. \n\n\
+		У вас [deadline] до проявления особенностей туманности на станции. \
+		Каждый защитный блок обеспечивает дополнительные [shielder_time] защиты, установите [max_shielders] блоков защиты, чтобы полностью решить проблему радиации.
 	"}
 
 	priority_announce(announcement, sound = 'sound/announcer/notice/notice1.ogg')
@@ -738,26 +738,26 @@
 
 /// Calls down an eternal storm on planetary stations
 /datum/station_trait/storm/foreverstorm
-	name = "Forever Storm"
+	name = "Вечный шторм"
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = STATION_TRAIT_PLANETARY
 	weight = 3
 	show_in_report = TRUE
-	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
+	report_message = "Похоже, шторм не утихнет в ближайшее время, берегите себя."
 	storm_type = /datum/weather/snow_storm/forever_storm
 
 /datum/station_trait/storm/foreverstorm/get_pulsar_message()
-	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
-	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
+	var/advisory_string = "Уровень предупреждения: <b>Ледяной гигант</b></center><BR>"
+	advisory_string += "Продолжающаяся метель нарушила работу нашего оборудования для наблюдения, и на данный момент мы не можем предоставить точную информацию об угрозе. Рекомендуем вам соблюдать меры безопасности и воздержаться от посещения территории вокруг станции."
 	return advisory_string
 
 /datum/station_trait/spiked_drinks
-	name = "Spiked Drinks"
+	name = "Напитки с добавками"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 3
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
+	report_message = "Из-за аварии на мегафабрике Robust Softdrinks в некоторых напитках могут содержаться следы этанола или психоактивных химических веществ."
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 /datum/station_trait/structural_weakness

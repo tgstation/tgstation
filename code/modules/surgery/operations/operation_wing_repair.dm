@@ -1,8 +1,8 @@
 /datum/surgery_operation/organ/fix_wings
-	name = "repair wings"
-	rnd_name = "Pteroplasty (Wing Repair)"
-	desc = "Repair a patient's damaged wings to restore flight capability."
-	rnd_desc = "A surgical procedure that repairs damaged wings using Synthflesh."
+	name = "Восстановление крыльев"
+	rnd_name = "Птеропластика (Починка крыльев)"
+	desc = "Восстановление повреждённых крыльев пациента, чтобы вернуть ему возможность летать."
+	rnd_desc = "Хирургическая процедура восстановления повреждённых крыльев с использованием синтплоти."
 	implements = list(
 		TOOL_HEMOSTAT = 1.15,
 		TOOL_SCREWDRIVER = 2.85,
@@ -19,10 +19,10 @@
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
 
 /datum/surgery_operation/organ/fix_wings/all_required_strings()
-	return ..() + list("the wings must be burnt", "the patient must be dosed with >=5u [/datum/reagent/medicine/c2/synthflesh::name]")
+	return ..() + list("крылья должны быть обожжены", "пациент должен получить >5u [/datum/reagent/medicine/c2/synthflesh::name]")
 
 /datum/surgery_operation/organ/fix_wings/all_blocked_strings()
-	return ..() + list("if the limb has bones, they must be intact")
+	return ..() + list("если в конечности есть кости, они должны быть целыми")
 
 /datum/surgery_operation/organ/fix_wings/state_check(obj/item/organ/wings/moth/organ)
 	if(!organ.burnt)
@@ -38,21 +38,21 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to repair [organ.owner]'s damaged wings..."),
-		span_notice("[surgeon] begins to repair [organ.owner]'s damaged wings."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s damaged wings."),
+		span_notice("Вы начинаете чинить повреждённые крылья [organ.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает чинить повреждённые крылья [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] начинает операцию на повреждённых крыльях [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "Your wings sting like hell!")
+	display_pain(organ.owner, "Ваши крылья адски жгутся!")
 
 /datum/surgery_operation/organ/fix_wings/on_success(obj/item/organ/wings/moth/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You succeed in repairing [organ.owner]'s wings."),
-		span_notice("[surgeon] successfully repairs [organ.owner]'s wings!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner]'s wings."),
+		span_notice("Вам удаётся полностью восстановить крылья [organ.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно восстанавливает крылья [organ.owner.declent_ru(GENITIVE)]!"),
+		span_notice("[surgeon] завершает операцию на крыльях [organ.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(organ.owner, "You can feel your wings again!")
+	display_pain(organ.owner, "Вы снова чувствуете свои крылья!")
 	// heal the wings in question
 	organ.heal_wings(surgeon, ALL)
 

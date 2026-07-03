@@ -1,0 +1,8 @@
+["welding goggles"]
+nominative = "сварочные очки"
+genitive = "сварочных очков"
+dative = "сварочным очкам"
+accusative = "сварочные очки"
+instrumental = "сварочными очками"
+prepositional = "сварочных очках"
+gender = "plural"

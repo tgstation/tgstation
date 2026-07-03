@@ -7,7 +7,7 @@
 	hits = 1 //Instantly splatters apart when it hits anything.
 	hitpwr = EXPLODE_LIGHT
 	threat = 100
-	signature = "xenobiological lifesign" //In the extremely unlikely one-in-a-million chance that one of these gets reported by the stray meteor event
+	signature = "ксенобиологических форм жизни" //In the extremely unlikely one-in-a-million chance that one of these gets reported by the stray meteor event
 	///Where we want our changeling to, by whatever means, end up at.
 	var/atom/landing_target
 

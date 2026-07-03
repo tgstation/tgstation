@@ -1,0 +1,8 @@
+[photobooth]
+nominative = "фотокабина"
+genitive = "фотокабины"
+dative = "фотокабине"
+accusative = "фотокабину"
+instrumental = "фотокабиной"
+prepositional = "фотокабине"
+gender = "female"

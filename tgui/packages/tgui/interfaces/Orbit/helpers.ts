@@ -1,3 +1,4 @@
+import { ReverseJobsRu } from '../../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { DEPARTMENT2COLOR, HEALTH, THREAT, VIEWMODE } from './constants';
 import type { AntagGroup, Antagonist, Observable, ViewMode } from './types';
 
@@ -46,7 +47,7 @@ export function getDisplayName(full_name: string, nickname?: string): string {
 
 /** Returns the department the player is in */
 export function getDepartmentByJob(job: string): string | undefined {
-  const withoutParenthesis = job.replace(/ \(.*\)/, '');
+  const withoutParenthesis = ReverseJobsRu(job).replace(/ \(.*\)/, '');
 
   for (const department in DEPARTMENT2COLOR) {
     if (DEPARTMENT2COLOR[department].trims.includes(withoutParenthesis)) {

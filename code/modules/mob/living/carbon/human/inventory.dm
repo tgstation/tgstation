@@ -198,7 +198,7 @@
 			s_store = equipping
 			update_suit_storage()
 		else
-			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
+			to_chat(src, span_danger("Вы пытаетесь экипировать предмет в слот, который не поддерживется кодом игры. Сообщите кодерам!"))
 			not_handled = TRUE
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
@@ -312,13 +312,13 @@
 	// Notify user of missing valid breathing apparatus.
 	if (wear_mask)
 		// Invalid mask
-		to_chat(src, span_warning("[wear_mask] can't use [tank]!"))
+		to_chat(src, span_warning("[capitalize(wear_mask.declent_ru(NOMINATIVE))] не может использовать [tank.declent_ru(ACCUSATIVE)]!"))
 	else if (head)
 		// Invalid headgear
-		to_chat(src, span_warning("[head] isn't airtight! You need a mask!"))
+		to_chat(src, span_warning("[capitalize(head.declent_ru(NOMINATIVE))] не герметична! Вам нужна маска!"))
 	else
 		// Not wearing any breathing apparatus.
-		to_chat(src, span_warning("You need a mask!"))
+		to_chat(src, span_warning("Вам нужна маска!"))
 
 /// Returns TRUE if the tank successfully toggles open/closed. Opens the tank only if a breathing apparatus is found.
 /mob/living/carbon/human/toggle_externals(obj/item/tank)
@@ -364,7 +364,7 @@
 
 /// take the most recent item out of a slot or place held item in a slot
 
-/mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
+/mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "пояса")
 	if(incapacitated)
 		return
 	var/obj/item/thing = get_active_held_item()
@@ -374,7 +374,7 @@
 		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, src, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
-			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
+			to_chat(src, span_warning("У вас нет [slot_item_name], чтобы брать что-то оттуда!"))
 			return
 		if(equip_to_slot_if_possible(thing, slot_type))
 			update_held_items()
@@ -386,19 +386,19 @@
 		else
 			if(thing_reject & COMPONENT_STORAGE_HOTKEY_HANDLED)
 				return
-			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
+			to_chat(src, span_warning("Вы не можете поместить [thing.declent_ru(ACCUSATIVE)] в [equipped_item.ru_p_own(ACCUSATIVE)] [equipped_item.declent_ru(ACCUSATIVE)]!"))
 		return
 	if(!storage.supports_smart_equip)
 		return
 	if (equipped_item.atom_storage.locked) // Determines if container is locked before trying to put something in or take something out so we dont give out information on contents (or lack of)
-		to_chat(src, span_warning("\The [equipped_item] is locked!"))
+		to_chat(src, span_warning("Замок на [equipped_item.declent_ru(PREPOSITIONAL)] закрыт!"))
 		return
 	if(thing) // put thing in storage item
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
-			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
+			to_chat(src, span_warning("Вы не можете поместить [thing.declent_ru(ACCUSATIVE)] в [equipped_item.ru_p_own(ACCUSATIVE)] [equipped_item.declent_ru(ACCUSATIVE)]!"))
 		return
 	if(!storage.real_location.contents.len) // nothing to take out
-		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
+		to_chat(src, span_warning("Нечего вытаскивать из [equipped_item.declent_ru(GENITIVE)]!"))
 		return
 	var/obj/item/stored = storage.real_location.contents[storage.real_location.contents.len]
 	if(!stored || stored.on_found(src))

@@ -12,9 +12,9 @@
 	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
 	abstract_type = /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
-	var/name = "Basic knowledge"
+	var/name = "Базовые знания"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
-	var/desc = "Basic knowledge of forbidden arts."
+	var/desc = "Базовые знания о запретных искусствах."
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
 	/// Assoc list of [typepaths we need] to [amount needed].
@@ -55,8 +55,8 @@
 /datum/heretic_knowledge/proc/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
 	// consider moving this check to a type instead
 	if(is_final_knowledge && !our_heretic.unlimited_blades)
-		var/choice = tgui_alert(user, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this? The blade cap will also be removed.", "Get Final Spell?", list("Yes", "No"))
-		if(choice != "Yes")
+		var/choice = tgui_alert(user, "ЭТО ОТКЛЮЧИТ ВОЗМОЖНОСТЬ РАЗБИТЬ ВАШ КЛИНОК. Вы готовы изучить это? Ограничение на количества клинков будет убрано.", "Изучить финальное заклинание?", list("Да", "Нет"))
+		if(choice != "Да")
 			return FALSE
 	return TRUE
 
@@ -135,9 +135,9 @@
 /datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
 	// If we need a human, there is a high likelihood we actually need a (dead) body
 	if(ispath(item_path, /mob/living/carbon/human))
-		return "bod[number_of_things > 1 ? "ies" : "y"]"
+		return "тел[number_of_things > 1 ? "а" : "о"]"
 	if(ispath(item_path, /mob/living))
-		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
+		return "каркас[number_of_things > 1 ? "ы" : ""] любого типа"
 	return "[initial(item_path.name)]\s"
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
@@ -242,7 +242,7 @@
 			LAZYREMOVE(created_items, ref)
 
 	if(LAZYLEN(created_items) >= limit)
-		loc.balloon_alert(user, "ritual failed, at limit!")
+		loc.balloon_alert(user, "ритуал провален - превышен лимит!")
 		return FALSE
 
 	return TRUE
@@ -279,7 +279,7 @@
 		our_heretic.heretic_path = new column_path()
 	if(!our_heretic.heretic_path)
 		// If we don't have a path, we can't continue.
-		to_chat(user, span_warning("Oh shit, something broke, no path found!"))
+		to_chat(user, span_warning("Вот чёрт! Что-то сломалось, путь не найден!"))
 		stack_trace("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
 		return
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
@@ -444,7 +444,7 @@
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, checked_target = summoned, ignore_category = poll_ignore_define, alert_pic = summoned, role_name_text = summoned.name)
 	if(isnull(chosen_one))
-		loc.balloon_alert(user, "ritual failed, no ghosts!")
+		loc.balloon_alert(user, "ритуал провален, нет призраков!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
 		QDEL_IN(summoned, 0.6 SECONDS)
 		return FALSE
@@ -475,9 +475,9 @@
  * A subtype of knowledge that generates random ritual components.
  */
 /datum/heretic_knowledge/knowledge_ritual
-	name = "Ritual of Knowledge"
-	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
-	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
+	name = "Ритуал познания"
+	desc = "Случайно создаваемый ритуал трансмутации, который вознаграждается очками знаний и может быть выполнен только один раз."
+	gain_text = "Все может стать ключом к разгадке секретов, скрытых за Вратами. Я должен быть осторожным и мудрым."
 	abstract_type = /datum/heretic_knowledge/knowledge_ritual
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
@@ -531,15 +531,15 @@
 
 	var/list/requirements_string = list()
 
-	to_chat(user, span_hierophant("The [name] requires the following:"))
+	to_chat(user, span_hierophant("Для [name] требуется следующее:"))
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
 		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)]\s..."))
 		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)]\s"
 
-	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
+	to_chat(user, span_hierophant("За его выполнение вы получите [KNOWLEDGE_RITUAL_POINTS] очков знаний. Вы можете проверить знания в ваших \"иследованных знаниях\"."))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	desc = "Позволяет трансмутировать [english_list(requirements_string)] для получения [KNOWLEDGE_RITUAL_POINTS] бонусных очков знаний. Это можно выполнить только один раз."
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed
@@ -552,9 +552,9 @@
 	our_heretic.adjust_knowledge_points(KNOWLEDGE_RITUAL_POINTS)
 	was_completed = TRUE
 
-	to_chat(user, span_boldnotice("[name] completed!"))
+	to_chat(user, span_boldnotice("[name] завершено!"))
 	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
-	desc += " (Completed!)"
+	desc += " (Завершен!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [round_timestamp()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
 	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
@@ -638,9 +638,9 @@
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_path.route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [round_timestamp()].")
 	notify_ghosts(
-		"[user.real_name] has completed an ascension ritual!",
+		"[user.real_name] завершил ритуал вознесения!",
 		source = user,
-		header = "A Heretic is Ascending!",
+		header = "Еретик вознесся!",
 	)
 	priority_announce(
 		text = replacetext(replacetext(announcement_text, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)),
@@ -650,7 +650,7 @@
 	)
 
 	if(EMERGENCY_IDLE_OR_RECALLED)
-		SSshuttle.call_evac_shuttle("Critical reality rupture detected on supranatural casuality long-range scanners. Mass crew casualty and possible station destruction determined to be beyond acceptable probability. Priority evacuation shuttle dispatched.")
+		SSshuttle.call_evac_shuttle("Сканерами дальнего действия зафиксирован критический разрыв в реальности, вызванный потусторонними силами. Вероятность массовых потерь экипажа и уничтожения станции превышает допустимые рассчётные вероятности. Запущен приоритетный эвакуационный шаттл.")
 	SSshuttle.emergency_no_recall = TRUE
 
 	if(!isnull(ascension_achievement))

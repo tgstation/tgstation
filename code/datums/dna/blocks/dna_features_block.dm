@@ -86,3 +86,148 @@
 
 /datum/dna_block/feature/accessory/pod_hair
 	feature_key = FEATURE_POD_HAIR
+
+// BANDASTATION ADD START - Species
+// MARK: Vulpkanin
+/datum/dna_block/feature/accessory/vulpkanin_head_markings
+	feature_key = FEATURE_VULPKANIN_HEAD_MARKINGS
+
+/datum/dna_block/feature/accessory/vulpkanin_chest_markings
+	feature_key = FEATURE_VULPKANIN_CHEST_MARKINGS
+
+/datum/dna_block/feature/accessory/vulpkanin_limb_markings
+	feature_key = FEATURE_VULPKANIN_LIMB_MARKINGS
+
+/datum/dna_block/feature/accessory/vulpkanin_tail
+	feature_key = FEATURE_VULPKANIN_TAIL
+
+/datum/dna_block/feature/accessory/vulpkanin_tail_markings
+	feature_key = FEATURE_VULPKANIN_TAIL_MARKINGS
+
+/datum/dna_block/feature/accessory/vulpkanin_facial_hair
+	feature_key = FEATURE_VULPKANIN_FACIAL_HAIR
+
+// MARK: Tajaran
+/datum/dna_block/feature/accessory/tajaran_tail
+	feature_key = FEATURE_TAJARAN_TAIL
+
+/datum/dna_block/feature/accessory/tajaran_head_markings
+	feature_key = FEATURE_TAJARAN_HEAD_MARKINGS
+
+/datum/dna_block/feature/accessory/tajaran_chest_markings
+	feature_key = FEATURE_TAJARAN_CHEST_MARKINGS
+
+/datum/dna_block/feature/accessory/tajaran_tail_markings
+	feature_key = FEATURE_TAJARAN_TAIL_MARKINGS
+
+/datum/dna_block/feature/accessory/tajaran_facial_hair
+	feature_key = FEATURE_TAJARAN_FACIAL_HAIR
+
+/datum/dna_block/feature/accessory/tajaran_limb_markings
+	feature_key = FEATURE_TAJARAN_LIMB_MARKINGS
+
+// MARK: Vulpkanin colors
+/datum/dna_block/feature/vulpkanin_body_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_VULPKANIN_BODY_MARKINGS_COLOR
+
+/datum/dna_block/feature/vulpkanin_body_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/vulpkanin_body_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/vulpkanin_tail_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_VULPKANIN_TAIL_MARKINGS_COLOR
+
+/datum/dna_block/feature/vulpkanin_tail_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/vulpkanin_tail_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/vulpkanin_head_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_VULPKANIN_HEAD_MARKINGS_COLOR
+
+/datum/dna_block/feature/vulpkanin_head_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/vulpkanin_head_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/vulpkanin_facial_hair_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_VULPKANIN_FACIAL_HAIR_COLOR
+
+/datum/dna_block/feature/vulpkanin_facial_hair_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/vulpkanin_facial_hair_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+// MARK: Tajaran colors
+/datum/dna_block/feature/tajaran_body_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_TAJARAN_BODY_MARKINGS_COLOR
+
+/datum/dna_block/feature/tajaran_body_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/tajaran_body_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/tajaran_head_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_TAJARAN_HEAD_MARKINGS_COLOR
+
+/datum/dna_block/feature/tajaran_head_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/tajaran_head_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/tajaran_tail_markings_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_TAJARAN_TAIL_MARKINGS_COLOR
+
+/datum/dna_block/feature/tajaran_tail_markings_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/tajaran_tail_markings_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+/datum/dna_block/feature/tajaran_facial_hair_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_TAJARAN_FACIAL_HAIR_COLOR
+
+/datum/dna_block/feature/tajaran_facial_hair_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/tajaran_facial_hair_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+
+// MARK: Skrell
+/datum/dna_block/feature/accessory/skrell_head_tentacle
+	feature_key = FEATURE_SKRELL_HEAD_TENTACLE
+
+/datum/dna_block/feature/accessory/skrell_tentacle_ornament
+	feature_key = FEATURE_SKRELL_HEAD_TENTACLE_ORNAMENT
+
+/datum/dna_block/feature/accessory/skrell_cloth_wrap
+	feature_key = FEATURE_SKRELL_CLOTH_WRAP
+
+/datum/dna_block/feature/accessory/skrell_cloth_wrap_toggle
+	feature_key = FEATURE_SKRELL_CLOTH_WRAP_TOGGLE
+
+/datum/dna_block/feature/skrell_cloth_wrap_color
+	block_length = DNA_BLOCK_SIZE_COLOR
+	feature_key = FEATURE_SKRELL_CLOTH_WRAP_COLOR
+
+/datum/dna_block/feature/skrell_cloth_wrap_color/create_unique_block(mob/living/carbon/human/target)
+	return sanitize_hexcolor(target.dna.features[feature_key], include_crunch = FALSE)
+
+/datum/dna_block/feature/skrell_cloth_wrap_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	target.dna.features[feature_key] = sanitize_hexcolor(get_block(dna_hash))
+// BANDASTATION ADD END - Species

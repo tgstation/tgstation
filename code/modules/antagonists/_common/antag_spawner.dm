@@ -76,7 +76,7 @@
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
+	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 	M.PossessByPlayer(C.key)
 	var/datum/mind/app_mind = M.mind
 
@@ -152,7 +152,7 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
-	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
@@ -328,7 +328,7 @@
 	/// What category to ignore the poll
 	var/poll_ignore_category = POLL_IGNORE_SYNDICATE
 	/// text given when device fails to secure candidates
-	var/fail_text = "Unable to connect to Syndicate command. Please wait and try again later or use the beacon on your uplink to get your points refunded."
+	var/fail_text = "Невозможно соединиться с командованием Синдиката. Пожалуйста, подождите и повторите попытку позже или воспользуйтесь маяком на аплинке, чтобы вернуть свои очки."
 
 /obj/item/antag_spawner/loadout/proc/check_usability(mob/user)
 	if(used)
@@ -347,7 +347,7 @@
 	if(!(check_usability(user)))
 		return
 
-	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
+	to_chat(user, span_notice("Вы активируете [declent_ru(ACCUSATIVE)] и ждёте подтверждения."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
 		check_jobban = role_to_play,
 		poll_time = 10 SECONDS,
@@ -373,7 +373,7 @@
 /obj/item/antag_spawner/loadout/spawn_antag(client/our_client, turf/T, mob/user)
 	var/mob/living/spawned_mob = new spawn_type()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	our_client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+	our_client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE) // BANDASTATION MOD - Do not apply body mods on roles
 	spawned_mob.ckey = our_client.key
 	var/datum/mind/op_mind = spawned_mob.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the spawned_mob) is in nullspace, so just move the spawned_mob somewhere safe
@@ -400,7 +400,7 @@
 
 /obj/item/antag_spawner/loadout/contractor
 	name = "contractor support beacon"
-	desc = "A beacon sold to the most prestigeous syndicate members, a single-use radio for calling immediate backup."
+	desc = "Маяк, проданный самым престижным членам синдиката, одноразовое радио для немедленного вызова подкрепления."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	outfit = /datum/outfit/contractor_partner
@@ -410,8 +410,8 @@
 	role_to_play = ROLE_CONTRACTOR_SUPPORT
 
 /obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
-	to_chat(contractor_support, "\n[span_alertwarning("[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.")]")
-	to_chat(contractor_support, "[span_alertwarning("Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.")]")
+	to_chat(contractor_support, "\n[span_alertwarning("[user.real_name] - ваш начальник. Выполняйте любые их приказы. Вы здесь только для того, чтобы поддержать их миссию.")]")
+	to_chat(contractor_support, "[span_alertwarning("Если они погибнут или станут недоступны по какой-либо причине, вы должны помочь другим активным агентам в этой зоне миссии, насколько это возможно.")]")
 
 /obj/item/antag_spawner/loadout/monkey_man
 	name = "monkey agent beacon"

@@ -1,0 +1,8 @@
+["Patient Room B"]
+nominative = "вторая палата пациента"
+genitive = "второй палаты пациента"
+dative = "второй палате пациента"
+accusative = "вторую палату пациента"
+instrumental = "второй палатой пациента"
+prepositional = "второй палате пациента"
+gender = "female"

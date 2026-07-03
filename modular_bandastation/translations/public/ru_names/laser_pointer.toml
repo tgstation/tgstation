@@ -1,0 +1,8 @@
+["laser pointer"]
+nominative = "лазерная указка"
+genitive = "лазерной указки"
+dative = "лазерной указке"
+accusative = "лазерную указку"
+instrumental = "лазерной указкой"
+prepositional = "лазерной указке"
+gender = "female"

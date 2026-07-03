@@ -155,7 +155,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 	log_admin("[key_name(user)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [M.key] full access."))
 
-ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
+ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_HIDDEN, mob/M) // BANDASTATION REPLACEMENT: Original: ADMIN_CATEGORY_DEBUG
 	if(M.ckey)
 		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return

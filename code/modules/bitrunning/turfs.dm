@@ -1,6 +1,6 @@
 /turf/open/indestructible/bitrunning_transport
 	name = "circuit floor"
-	desc = "Looks complex. You can see the circuits running through the floor."
+	desc = "Выглядит сложным. Вы можете видеть электрические цепи, проходящие через пол."
 	icon_state = "bitrunning"
 
 /turf/closed/indestructible/binary

@@ -4,8 +4,8 @@
 	icon_state = "clothes"
 	icon_deny = "clothes-deny"
 	panel_type = "panel15"
-	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
-	vend_reply = "Thank you for using the ClothesMate!"
+	product_slogans = "Одежда для успеха!;Приготовьтесь выглядеть шикарно!;Только посмотрите на эту красоту!;Зачем оставлять стиль на произвол судьбы? Воспользуйтесь ClothesMate!"
+	vend_reply = "Благодарим за использование ClothesMate!"
 	product_categories = list(
 		list(
 			"name" = "Head",
@@ -48,7 +48,7 @@
 			"name" = "Accessories",
 			"icon" = "glasses",
 			"products" = list(
-				/obj/item/clothing/accessory/pride = 15,
+				// /obj/item/clothing/accessory/pride = 15, // BANDASTATION REMOVAL
 				/obj/item/clothing/accessory/waistcoat = 4,
 				/obj/item/clothing/accessory/sweatervest = 4,
 				/obj/item/clothing/suit/toggle/suspenders = 4,
@@ -63,6 +63,7 @@
 				/obj/item/storage/belt/fannypack = 3,
 				/obj/item/storage/belt/fannypack/blue = 3,
 				/obj/item/storage/belt/fannypack/red = 3,
+				/obj/item/clothing/neck/cloak/colorable_cloak = 3, // BANDASTATION ADD
 			),
 		),
 

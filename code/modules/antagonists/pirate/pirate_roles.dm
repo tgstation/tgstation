@@ -11,12 +11,12 @@
 	anchored = TRUE
 	density = FALSE
 	show_flavor = FALSE //Flavour only exists for spawners menu
-	you_are_text = "You are a space pirate."
-	flavour_text = "The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot."
+	you_are_text = "Вы — космический пират"
+	flavour_text = "От станции поступил отказ в оплате за вашу защиту. Защитите корабль, похитьте кредиты со станции и совершите набег на неё для ещё большей добычи."
 	spawner_job_path = /datum/job/space_pirate
 	allow_custom_character = GHOSTROLE_TAKE_PREFS_APPEARANCE
 	///Rank of the pirate on the ship, it's used in generating pirate names!
-	var/rank = "Deserter"
+	var/rank = "Дезертир"
 	///Path of the structure we spawn after creating a pirate.
 	var/fluff_spawn = /obj/structure/showcase/machinery/oldpod/used
 
@@ -42,11 +42,11 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain
-	rank = "Renegade Leader"
+	rank = "Лидер ренегатов"
 	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/gunner
-	rank = "Rogue"
+	rank = "Отступник"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton
 	name = "pirate remains"
@@ -54,29 +54,29 @@
 	density = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	prompt_name = "a skeleton pirate"
+	prompt_name = "пират-скелет"
 	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate
-	rank = "Mate"
+	rank = "Боцман"
 	fluff_spawn = null
 	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
-	rank = "Captain"
+	rank = "Капитан"
 	outfit = /datum/outfit/pirate/captain/skeleton
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner
-	rank = "Gunner"
+	rank = "Канонир"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale
 	name = "elegant sleeper"
 	desc = "Cozy. You get the feeling you aren't supposed to be here, though..."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "a silverscale"
+	prompt_name = "серебрянная чешуя"
 	mob_species = /datum/species/lizard/silverscale
 	outfit = /datum/outfit/pirate/silverscale
-	rank = "High-born"
+	rank = "Знатного рода"
 	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
@@ -89,26 +89,26 @@
 		else
 			first_name = pick(GLOB.lizard_names_male + GLOB.lizard_names_female)
 
-	return "[rank] [first_name]-Silverscale"
+	return "[rank] [first_name]-Серебрянная чешуя"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/captain
-	rank = "Old-guard"
+	rank = "Старая гвардия"
 	outfit = /datum/outfit/pirate/silverscale/captain
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
-	rank = "Top-drawer"
+	rank = "Первого класса"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne
 	name = "\improper Interdyne sleeper"
 	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
-	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
-	flavour_text = "The station has refused to fund your research, so you will 'convince' them to donate to your charitable cause."
+	you_are_text = "Вы — бывший фармацевт Интердайн, а теперь космический пират."
+	flavour_text = "Станция отказалась финансировать ваши исследования, так что вы \"убедите\" их пожертвовать свои средства на ваше благородное дело."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "An Ex-Interdyne employee"
+	prompt_name = "бывший сотрудник Интердайн"
 	outfit = /datum/outfit/pirate/interdyne
-	rank = "Pharmacist"
+	rank = "Фармацевт"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/generate_pirate_name(spawn_gender)
 	var/first_name
@@ -123,39 +123,39 @@
 	return "[rank] [first_name]"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior
-	rank = "Pharmacist Director"
+	rank = "Директор-фармацевт"
 	outfit = /datum/outfit/pirate/interdyne/captain
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior
-	rank = "Pharmacist"
+	rank = "Фармацевт"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey
 	name = "\improper Assistant sleeper"
 	desc = "A very dirty cryogenic sleeper. You're not sure if it even works."
 	density = FALSE
-	you_are_text = "You used to be a Nanotrasen assistant, until a riot gone awry. Now you wander space, ransacking any ships you come across!"
-	flavour_text = "There's nothing a toolbox can't whack in the head enough times to spill blood, or in this case money. Loot everything!"
+	you_are_text = "Раньше вы были ассистентом Нанотрейзен, пока один неудачный бунт не изменил всё. Теперь вы странствуете по космосу и грабите любой шаттл, который попадётся на пути!"
+	flavour_text = "Нет ничего такого, во что нельзя было бы хорошенько треснуть тулбоксом, чтобы пролить кровь... или, в нашем случае, добыть деньги. Бери всё что захочешь!"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "An assistant gone loose"
+	prompt_name = "ассистент, вышедший из-под контроля"
 	outfit = /datum/outfit/pirate/grey
-	rank = "Tider"
+	rank = "Тайдер"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey/shitter
-	rank = "Tidemaster"
+	rank = "Тайд-мастер"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs
 	name = "\improper Space IRS sleeper"
 	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
-	you_are_text = "You are an agent working for the space IRS"
-	flavour_text = "Not even in the expanse of the expanding universe can someone evade the tax man! Whether you are just a well disciplined and professional pirate gang or an actual agent from a local polity. You will squeeze the station dry of its income regardless! Through peaceful means or otherwise..."
+	you_are_text = "Вы — агент космической налоговой службы."
+	flavour_text = "Даже в бескрайних просторах расширяющейся вселенной никто не скроется от налоговика! Будь вы просто образцовой пиратской бандой или настоящим агентом местного правительства — вы выжмете из станции все до последнего кредита! Мирными средствами или не очень..."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	prompt_name = "An agent of the space IRS"
+	prompt_name = "Агент космической налоговой службы"
 	outfit = /datum/outfit/pirate/irs
 	fluff_spawn = null // dirs are fucked and I don't have the energy to deal with it
-	rank = "Agent"
+	rank = "Агент"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs/generate_pirate_name(spawn_gender)
 	var/first_name
@@ -171,54 +171,54 @@
 
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs/auditor
-	rank = "Head Auditor"
+	rank = "Главный аудитор"
 	outfit = /datum/outfit/pirate/irs/auditor
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous
 	name = "lustrous crystal"
 	desc = "A crystal housing a mutated Ethereal, it emanates a foreboding glow."
 	density = FALSE
-	you_are_text = "Once you were a proud Ethereal, now all that remains is your hunger for the precious bluespace crystal."
-	flavour_text = "The station has denied you your bluespace crystals, the sweet ambrosia of the fifth-dimension. Strike the earth!"
+	you_are_text = "Когда-то вы были гордым Эфириалом, но теперь от вас осталась лишь жажда драгоценного блюспейс-кристалла."
+	flavour_text = "Станция отказала вам в блюспейс-кристаллах — сладкой амброзии пятого измерения. Нанесите удар!"
 	icon = 'icons/mob/effects/ethereal_crystal.dmi'
 	icon_state = "ethereal_crystal"
 	fluff_spawn = null
-	prompt_name = "a geode dweller"
+	prompt_name = "пещерный обитатель"
 	mob_species = /datum/species/ethereal/lustrous
 	outfit = /datum/outfit/pirate/lustrous
-	rank = "Scintillant"
+	rank = "Сверкающий"
 	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
-	rank = "Radiant"
+	rank = "Сияющий"
 	outfit = /datum/outfit/pirate/lustrous/captain
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
-	rank = "Coruscant"
+	rank = "Мерцающий"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval
 	name = "\improper Improvised sleeper"
 	desc = "A body bag poked with holes, currently being used as a sleeping bag. Someone seems to be sleeping inside of it."
 	density = FALSE
-	you_are_text = "You were a nobody before, until you were given a sword and the opportunity to rise up in ranks. If you put some effort, you can make it big!"
-	flavour_text = "Raiding some cretins while engaging in bloodsport and violence? what a deal. Stay together and pillage everything!"
+	you_are_text = "Раньше вы были никем, пока вам не вручили меч и возможность подняться по рангу. Если приложите усилия, вас ждёт успех!"
+	flavour_text = "Грабить кретинов, занимаясь кровавым спортом и насилием? Беспроигрышный вариант. Держитесь вместе и разграбьте всё до нитки!"
 	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "bodybag"
 	fluff_spawn = null
-	prompt_name = "a medieval warmonger"
+	prompt_name = "средневековый завоеватель"
 	outfit = /datum/outfit/pirate/medieval
-	rank = "Footsoldier"
+	rank = "Пехотинец"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
-	if(rank == "Footsoldier")
+	if(rank == "Пехотинец")
 		spawned_mob.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), INNATE_TRAIT)
 		spawned_mob.AddComponent(/datum/component/unbreakable)
 		var/datum/action/cooldown/mob_cooldown/dash/dodge = new(spawned_mob)
 		dodge.Grant(spawned_mob)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
-	rank = "Warlord"
+	rank = "Полководец"
 	outfit = /datum/outfit/pirate/medieval/warlord
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)

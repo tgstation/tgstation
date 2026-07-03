@@ -45,7 +45,7 @@
 	var/obj/item/paper/top_paper
 
 /obj/item/clipboard/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] begins putting [user.p_their()] head into the clip of \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return BRUTELOSS //The clipboard's clip is very strong. Industrial duty. Can kill a man easily.
 
 /obj/item/clipboard/Initialize(mapload)

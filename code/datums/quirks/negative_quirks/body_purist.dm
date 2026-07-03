@@ -1,12 +1,12 @@
 /datum/quirk/body_purist
 	name = "Body Purist"
-	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
+	desc = "Вы верите, что ваше тело - это храм, а его естественная форма - воплощение совершенства. Соответственно, вы презираете идею когда-либо дополнять его неестественными частями, кибернетическими протезами или чем-то подобным."
 	icon = FA_ICON_PERSON_RAYS
 	value = -2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
-	gain_text = span_danger("You now begin to hate the idea of having cybernetic implants.")
-	lose_text = span_notice("Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.")
-	medical_record_text = "This patient has disclosed an extreme hatred for unnatural bodyparts and augmentations."
+	gain_text = span_danger("Теперь вам начинает не нравиться идея установки каких-либо имплантатов.")
+	lose_text = span_notice("Может быть, импланты - это не так уж и плохо. Теперь вы нормально относитесь ко всем видам изменения тела.")
+	medical_record_text = "Пациент проявляет негативную реакцию на неестественные части тела и аугментации."
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
 	var/cybernetics_level = 0

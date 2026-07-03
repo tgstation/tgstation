@@ -12,7 +12,7 @@
 	show_to_ghosts = TRUE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
-	roundend_category = "obsessed"
+	roundend_category = "Одержимые"
 	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
@@ -39,6 +39,8 @@
 	can_elimination_hijack = ELIMINATION_PREVENT
 	ui_name = null
 
+#define RANDOM_TARGET "Рандом" // BANDASTATION ADD
+
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current
 	if(!istype(C))
@@ -47,10 +49,30 @@
 	if(!C.get_organ_by_type(/obj/item/organ/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
+
+	// BANDASTATION ADD - Start
+	var/list/admin_pool = list("[RANDOM_TARGET]" = TRUE)
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || player == C)
+			continue
+		admin_pool += player
+
+	var/picked = tgui_input_list(admin, "Выберите цель одержимости", "Выбор цели одержимости", admin_pool)
+	if(!picked)
+		return
+	// BANDASTATION ADD - End
+
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	//PRESTO FUCKIN MAJESTO
-	C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	// BANDASTATION ADD - Start
+	if(picked == RANDOM_TARGET)
+		C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	else
+		C.gain_trauma(/datum/brain_trauma/special/obsessed, null, picked)//ZAP
+	// BANDASTATION ADD - END
+
+#undef RANDOM_TARGET // BANDASTATION ADD
 
 /datum/antagonist/obsessed/greet()
 	play_stinger()
@@ -183,7 +205,7 @@
 
 /datum/objective/assassinate/obsessed/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Murder [target.name], the [target_role_type ? english_list(target.get_special_roles()) : target.assigned_role.title]."
+		explanation_text = "Убейте [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())]."
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
 		explanation_text = "Free Objective"
@@ -193,8 +215,9 @@
 	var/datum/mind/obsessed_target
 
 /datum/objective/assassinate/jealous/update_explanation_text()
+	..()
 	if(target?.current && obsessed_target)
-		explanation_text = "Murder [target.name], [obsessed_target]'s coworker."
+		explanation_text = "Убейте [target.name], коллегу [obsessed_target]."
 	else
 		explanation_text = "Free Objective"
 		completed = TRUE
@@ -230,7 +253,7 @@
 		timer = 5 MINUTES + pick(-60 SECONDS, 0)
 
 	if(target?.current)
-		explanation_text = "Spend [DisplayTimeText(timer)] around [target.name] while they're alive."
+		explanation_text = "Проведите [DisplayTimeText(timer)] возле [target.name], пока они живы."
 	else
 		explanation_text = "Free Objective"
 		completed = TRUE
@@ -245,10 +268,8 @@
 /datum/objective/hug/update_explanation_text()
 	if(!hugs_needed)
 		hugs_needed = rand(4,6)
-
 	if(target?.current)
-		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
-
+		explanation_text = "Обнимите [target.name] [hugs_needed] раз, пока они живы."
 	else
 		explanation_text = "Free Objective"
 		completed = TRUE
@@ -263,7 +284,7 @@
 
 /datum/objective/polaroid/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Take a photo of [target.name] while they're alive, and keep it in your bag."
+		explanation_text = "Сделайте фото [target.name], пока они живы, и храните фотографию у себя."
 	else
 		explanation_text = "Free Objective"
 		completed = TRUE
@@ -280,7 +301,7 @@
 
 /datum/objective/steal/heirloom_thief/update_explanation_text()
 	if(steal_target)
-		explanation_text = "Steal [target]'s family heirloom, [steal_target] they cherish."
+		explanation_text = "Украдите семейную реликвию, [steal_target.declent_ru(NOMINATIVE)], которая чтится у [target.name]."
 	else
 		explanation_text = "Free Objective"
 		completed = TRUE

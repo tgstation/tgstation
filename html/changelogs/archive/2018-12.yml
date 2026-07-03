@@ -38,7 +38,7 @@
   - bugfix: Fixed vampires repairing robotic limbs every tick of life()...
   - bugfix: Fixed shadowpeople healing robotic limbs every tick of life()
   - bugfix: Fixed poppeople healing robotic limbs every tick of life()
-  - bugfix: Fixed adjustBruteLoss and adjustFireLoss not properly discriminating for
+  - bugfix: Fixed adjust_brute_loss and adjust_fire_loss not properly discriminating for
       limb status types.
   - tweak: Fixed bibles healing robotic limbs, because your false deity can't fix
       SCIENCE.

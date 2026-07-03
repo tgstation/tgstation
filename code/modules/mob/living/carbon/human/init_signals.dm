@@ -62,8 +62,8 @@
 	if(!dropItemToGround(changed, force = TRUE))
 		return
 	visible_message(
-		span_warning("[changed] falls out of [src]'s pockets!"),
-		span_warning("[changed] falls out of your pockets!"),
+		span_warning("[capitalize(changed.declent_ru(NOMINATIVE))] падает из карманов [declent_ru(GENITIVE)]!"),
+		span_warning("[capitalize(changed.declent_ru(NOMINATIVE))] падает из ваших карманов!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)

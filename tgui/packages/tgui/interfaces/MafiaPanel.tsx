@@ -124,9 +124,9 @@ export const MafiaPanelData = (props) => {
                           icon="address-book"
                           tooltipPosition="bottom-start"
                           tooltip={`
-                            This is the list of roles in the game. You can
-                            press the question mark to get a quick blurb
-                            about the role itself.`}
+                            Это список ролей в игре.
+                            Вы можетенажать на знак вопроса,
+                            чтобы получить краткую информациюо самой роли.`}
                         />
                       </Tabs.Tab>
                       <Tabs.Tab
@@ -140,9 +140,9 @@ export const MafiaPanelData = (props) => {
                           icon="pencil"
                           tooltipPosition="bottom-start"
                           tooltip={`
-                            This is your notes, anything you want to write
-                            can be saved for future reference. You can
-                            also send it to chat with a button.`}
+                            Это ваши заметки, все, что вы хотите написать
+                            можно сохранить для дальнейшего использования. Вы можете
+                            также отправить их в чат с помощью кнопки.`}
                         />
                       </Tabs.Tab>
                     </Tabs>
@@ -163,7 +163,7 @@ export const MafiaPanel = (props) => {
   const { act, data } = useBackend<MafiaData>();
   const { roleinfo } = data;
   return (
-    <Window title="Mafia" theme={roleinfo?.role_theme} width={900} height={600}>
+    <Window title="Мафия" theme={roleinfo?.role_theme} width={900} height={600}>
       <Window.Content>
         <MafiaPanelData />
       </Window.Content>
@@ -197,7 +197,7 @@ const MafiaChat = (props) => {
             color="bad"
             fluid
             textAlign="center"
-            tooltip="Sends your message to chat."
+            tooltip="Отправляет ваше сообщение в чат."
             onClick={() => {
               setMessagingBox('');
               act('send_message_to_chat', { message: message_to_send });
@@ -221,43 +221,43 @@ const MafiaLobby = (props) => {
     <Section
       fill
       scrollable
-      title="Lobby"
+      title="Лобби"
       buttons={
         <>
           <Button
             icon="clipboard-check"
             tooltipPosition="bottom-start"
             tooltip={`
-              Signs you up for the next game. If there
-              is an ongoing one, you will be signed up
-              for the next.
+            Записывает вас на следующую игру. Если
+            игра продолжается, вы будете записаны
+            на следующую.
             `}
-            content="Sign Up"
+            content="Присоеденится"
             onClick={() => act('mf_signup')}
           />
           <Button
             icon="arrow-right"
             tooltipPosition="bottom-start"
             tooltip={`
-              Submit a vote to start the game early.
-              Starts when half of the current signup list have voted to start.
-              Requires a bare minimum of six players.
+            Отправьте голос, чтобы начать игру раньше.
+            Начинается, когда за начало проголосует половина из текущего списка участников.
+            Требуется минимум шесть игроков.
             `}
-            content="Start Now!"
+            content="Начать сейчас!"
             onClick={() => act('vote_to_start')}
           />
         </>
       }
     >
       <NoticeBox info textAlign="center">
-        The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
-        valid players signed up.
+        В лобби сейчас {readyGhosts ? readyGhosts.length : '0'}/12
+        Присоеденившихся игроков.
       </NoticeBox>
       {!!is_observer && (
         <NoticeBox color="green" textAlign="center">
-          Players who sign up for Mafia while dead will be returned to their
-          bodies after the game finishes, allowing you to temporarily exit to
-          play a match.
+          Игроки, которые присоединились к Мафии будучи мертвыми, будут
+          возвращены в свои тела после окончания игры, что позволит вам временно
+          выйти из игры, чтобы сыграть матч.
         </NoticeBox>
       )}
       {lobbydata.map((lobbyist) => (
@@ -302,11 +302,11 @@ const MafiaRole = (props) => {
     >
       <Stack>
         <Stack.Item grow>
-          <Box fontSize="16px">You are the {roleinfo.role}</Box>
+          <Box fontSize="16px">Вы {roleinfo.role}</Box>
           {!!roleinfo.role_dead && (
             <Box bold>
-              You are currently dead. You may speak with the Chaplain at night,
-              if there is one.
+              Вы уже мертвы. Вы можете поговорить с Священником ночью, если он
+              есть.
             </Box>
           )}
           {!roleinfo.role_dead && <Box italic>{roleinfo.desc}</Box>}
@@ -372,7 +372,7 @@ const MafiaNotesTab = (props) => {
         maxLength={600}
         className="Section__title candystripe"
         onChange={setNotesMessage}
-        placeholder="Insert Notes..."
+        placeholder="Вставить заметки..."
         value={note_message}
       />
 
@@ -381,14 +381,14 @@ const MafiaNotesTab = (props) => {
         fluid
         textAlign="center"
         onClick={() => act('change_notes', { new_notes: note_message })}
-        tooltip="Saves whatever is written as your notepad. This can't be done while dead."
+        tooltip="Сохраняет все написанное в блокноте. Этого нельзя сделать во время смерти."
       >
         Save
       </Button>
       <Button.Confirm
         color="bad"
         fluid
-        content="Send to Chat"
+        content="Отправить в чат"
         textAlign="center"
         onClick={() => act('send_notes_to_chat')}
       />
@@ -399,23 +399,26 @@ const MafiaNotesTab = (props) => {
 const MafiaJudgement = (props) => {
   const { act, data } = useBackend();
   return (
-    <Section title="Judgement">
+    <Section title="Приговор">
       <Flex>
         <Button
           icon="smile-beam"
           color="good"
           onClick={() => act('vote_innocent')}
         >
-          Innocent
+          Невинный
         </Button>
-        <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
+        <Box>
+          Настало время проголосовать, голосуйте за невиновность или виновность
+          обвиняемого!
+        </Box>
         <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
-          Guilty
+          Виновен
         </Button>
       </Flex>
       <Flex justify="center">
         <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>
-          Abstain
+          Воздержался
         </Button>
       </Flex>
     </Section>
@@ -445,7 +448,7 @@ const MafiaPlayers = (props) => {
               <Stack.Item>
                 {player.votes !== undefined &&
                   !!player.alive &&
-                  `Votes: ${player.votes}`}
+                  `Голоса: ${player.votes}`}
               </Stack.Item>
               <Stack.Item minWidth="42px" textAlign="center">
                 {player.possible_actions?.map((action) => (
@@ -473,36 +476,36 @@ const MafiaPlayers = (props) => {
 const MafiaAdmin = (props) => {
   const { act, data } = useBackend();
   return (
-    <Collapsible title="ADMIN CONTROLS" color="red">
+    <Collapsible title="АДМИНСКИЙ КОНТРОЛЬ" color="red">
       <Section>
-        <Collapsible title="A kind, coder warning" color="transparent">
-          Almost all of these are all built to help me debug the game (ow,
-          debugging a 12 player game!) So they are rudamentary and prone to
-          breaking at the drop of a hat. Make sure you know what you&apos;re
-          doing when you press one. Also because an admin did it: do not
-          gib/delete/dust anyone! It will runtime the game to death
+        <Collapsible title="Предупреждение от кодера" color="transparent">
+          Почти все они созданы для того, чтобы помочь мне отладить игру. (вау,
+          отладка игры для 12 игроков!) Поэтому они рудаментарны и склонны
+          сломаться в любой момент. Убедитесь, что вы знаете, что делаете, когда
+          нажимаете на кнопку. Также, поскольку это сделал администратор: не
+          удаляйте никого! Это запустит игру до смерти.
         </Collapsible>
         <Button icon="arrow-right" onClick={() => act('next_phase')}>
-          Next Phase
+          Следующая фаза
         </Button>
         <Button icon="home" onClick={() => act('players_home')}>
-          Send All Players Home
+          Отправить всех игроков по домам
         </Button>
         <Button icon="sync-alt" onClick={() => act('new_game')}>
-          New Game
+          Новая игра
         </Button>
         <Button icon="skull" onClick={() => act('nuke')}>
-          Nuke
+          Нюка
         </Button>
         <br />
         <Button icon="paint-brush" onClick={() => act('debug_setup')}>
-          Create Custom Setup
+          Создать пользовательскую настройку
         </Button>
         <Button icon="paint-roller" onClick={() => act('cancel_setup')}>
-          Reset Custom Setup
+          Сброс пользовательских настроек
         </Button>
         <Button icon="magic" onClick={() => act('start_now')}>
-          Start now!
+          Начать сейчас!
         </Button>
       </Section>
     </Collapsible>

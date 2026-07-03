@@ -1,0 +1,8 @@
+[hotdog]
+nominative = "хот-дог"
+genitive = "хот-дога"
+dative = "хот-догу"
+accusative = "хот-дог"
+instrumental = "хот-догом"
+prepositional = "хот-доге"
+gender = "male"

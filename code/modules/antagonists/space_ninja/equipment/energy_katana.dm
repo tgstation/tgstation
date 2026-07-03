@@ -12,7 +12,7 @@
 /obj/item/energy_katana
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
-	desc_controls = "Right-click to dash."
+	desc_controls = "ПКМ для скачка."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "energy_katana"
 	inhand_icon_state = "energy_katana"

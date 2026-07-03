@@ -23,7 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
 	SetupTraits()
-	display_lobby_traits()
+	// display_lobby_traits() BANDASTATION REMOVAL - HTML Title Screen
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
@@ -154,6 +154,12 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			return
 		//Rolls from the table for the specific trait type
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits)
+
+		// BANDASTATION FIX Start - 0 weight traits
+		if(!trait_type)
+			return
+		// BANDASTATION FIX End - 0 weight traits
+
 		selectable_traits -= trait_type
 		budget -= initial(trait_type.cost)
 		setup_trait(trait_type)
@@ -171,6 +177,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		var/datum/station_trait/trait_to_remove = i
 		selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove
 
+/* BANDASTATION REMOVAL - HTML Title Screen
 /// Update station trait lobby buttons for clients who joined before we initialised this subsystem
 /datum/controller/subsystem/processing/station/proc/display_lobby_traits()
 	for (var/mob/dead/new_player/player as anything in GLOB.new_player_list)
@@ -178,3 +185,4 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if (!istype(observer_hud))
 			continue
 		observer_hud.show_station_trait_buttons()
+*/

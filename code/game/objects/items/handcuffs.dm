@@ -15,7 +15,7 @@
 	icon = 'icons/obj/weapons/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return OXYLOSS
 
 // Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
@@ -454,7 +454,7 @@
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 

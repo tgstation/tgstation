@@ -1,0 +1,8 @@
+[handcuffs]
+nominative = "наручники"
+genitive = "наручников"
+dative = "наручникам"
+accusative = "наручники"
+instrumental = "наручниками"
+prepositional = "наручниках"
+gender = "plural"

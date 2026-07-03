@@ -85,6 +85,7 @@
 	added_foodtypes = JUNKFOOD
 	dish_category = DISH_CAKE
 	meal_category = MEAL_DESSERT
+	//crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /datum/crafting_recipe/food/energycake
 	name = "Energy cake"

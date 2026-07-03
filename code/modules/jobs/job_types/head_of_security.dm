@@ -1,19 +1,19 @@
 /datum/job/head_of_security
 	title = JOB_HEAD_OF_SECURITY
-	description = "Coordinate security personnel, ensure they are not corrupt, \
-		make sure every department is protected."
+	description = "Руководите отделом службы безопасности, убедитесь в их неподкупности, \
+		следите за тем, чтобы все отделы охранялись."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	head_announce = RADIO_CHANNEL_SECURITY
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = JOB_CAPTAIN_RU
 	req_admin_notify = 1
 	minimal_player_age = 14
-	exp_requirements = 300
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SECURITY
-	exp_granted_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_COMMAND
 	config_tag = "HEAD_OF_SECURITY"
 
 	outfit = /datum/outfit/job/hos
@@ -42,7 +42,7 @@
 	voice_of_god_power = 1.4 //Command staff has authority
 
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
-	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
+	return "В связи с нехваткой персонала, недавно назначенный исполняющий обязанности капитана [captain.real_name] на борту!"
 
 /datum/job/head_of_security/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

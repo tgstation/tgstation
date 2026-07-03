@@ -1,0 +1,8 @@
+[monocle]
+nominative = "монокль"
+genitive = "монокля"
+dative = "моноклю"
+accusative = "монокль"
+instrumental = "моноклем"
+prepositional = "монокле"
+gender = "male"

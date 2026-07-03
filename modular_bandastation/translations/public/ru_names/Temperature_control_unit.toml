@@ -1,0 +1,8 @@
+["Temperature control unit"]
+nominative = "термомашина"
+genitive = "термомашины"
+dative = "термомашине"
+accusative = "термомашину"
+instrumental = "термомашиной"
+prepositional = "термомашине"
+gender = "female"

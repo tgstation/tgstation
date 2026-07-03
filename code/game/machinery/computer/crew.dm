@@ -67,7 +67,13 @@
 		entry["toxin"] = player_record["toxdam"]
 		entry["burn"] = player_record["burndam"]
 		entry["brute"] = player_record["brutedam"]
-		entry["location"] = player_record["area"]
+		// BANDASTATION MOD START: Location data
+		var/location_data = player_record["position"]
+		if(islist(location_data) && location_data["area"])
+			entry["location"] = location_data["area"]
+		else
+			entry["location"] = player_record["area"]
+		// BANDASTATION MOD END: Location data
 		entry["health"] = player_record["health"]
 		new_table += list(entry)
 
@@ -76,10 +82,11 @@
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 
+/** BANDASTATION REMOVAL - Crew Monitor NanoMap
 /obj/machinery/computer/crew/ui_interact(mob/user)
 	. = ..()
 	GLOB.crewmonitor.show(user,src)
-
+*/
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 /datum/crewmonitor
@@ -162,7 +169,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "CrewConsole")
+		ui = new(user, src, "CrewConsole220") // BANDASTATION REPLACEMENT: CrewConsole
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
@@ -239,7 +246,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (id_card)
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
-			var/trim_assignment = id_card.get_trim_assignment()
+			var/trim_assignment = job_title_ru_to_en(id_card.get_trim_assignment())
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
 
@@ -274,7 +281,16 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Location
 		if (sensor_mode >= SENSOR_COORDS)
+			/* BANDASTATION REPLACEMENT - Start
 			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
+			*/
+			entry["position"] = list(
+				"area" = capitalize(get_area_name(tracked_living_mob, format_text = TRUE)),
+				"x" = tracked_living_mob.x,
+				"y" = tracked_living_mob.y,
+				"z" = tracked_living_mob.z,
+			)
+			// BANDASTATION REPLACEMENT - END
 
 		results[++results.len] = entry
 

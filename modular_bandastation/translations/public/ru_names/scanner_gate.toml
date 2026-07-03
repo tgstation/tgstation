@@ -1,0 +1,8 @@
+["scanner gate"]
+nominative = "сканирующие ворота"
+genitive = "сканирующих ворот"
+dative = "сканирующим воротам"
+accusative = "сканирующие ворота"
+instrumental = "сканирующими воротами"
+prepositional = "сканирующих воротах"
+gender = "plural"

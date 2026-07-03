@@ -1,0 +1,8 @@
+["chemistry backpack"]
+nominative = "рюкзак химика"
+genitive = "рюкзака химика"
+dative = "рюкзаку химика"
+accusative = "рюкзак химика"
+instrumental = "рюкзаком химика"
+prepositional = "рюкзаке химика"
+gender = "male"

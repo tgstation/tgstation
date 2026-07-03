@@ -1,6 +1,6 @@
 /datum/mafia_role/hos
-	name = "Head of Security"
-	desc = "You can decide to execute at night, killing and revealing their role. If they are innocent, you will die at the start of the next night."
+	name = "Глава службы безопасности"
+	desc = "Вы можете принять решение о казни ночью, убив и раскрыв их роль. Если они невиновны, вы умрете в начале следующей ночи.."
 	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL | ROLE_UNIQUE
 	revealed_outfit = /datum/outfit/mafia/hos
@@ -11,8 +11,8 @@
 	role_unique_actions = list(/datum/mafia_ability/attack_player/execution)
 
 /datum/mafia_role/warden
-	name = "Warden"
-	desc = "You can lockdown during the night once, killing any visitors, including town members."
+	name = "Смотритель"
+	desc = "Вы можете запереться на ночь один раз, убивая всех посетителей, включая членов города."
 
 	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL

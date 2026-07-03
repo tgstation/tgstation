@@ -1,0 +1,8 @@
+[spoon]
+nominative = "ложка"
+genitive = "ложки"
+dative = "ложке"
+accusative = "ложку"
+instrumental = "ложкой"
+prepositional = "ложке"
+gender = "female"

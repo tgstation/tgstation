@@ -22,7 +22,7 @@
 	defender.visible_message(
 		span_danger("[attacker] [atk_verb]ed [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"), \
 		span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_hear("Вы слышите противный звук удара плоти о плоть!"),
 		null,
 		attacker,
 	)

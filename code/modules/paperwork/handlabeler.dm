@@ -64,7 +64,7 @@
 	if(!length(label))
 		balloon_alert(user, "no text set!")
 		return FALSE
-	if(length(interacting_with.name) + length(label) > MAX_LABEL_LEN)
+	if(length(interacting_with.name) + length_char(label) > MAX_LABEL_LEN)
 		balloon_alert(user, "label too long!")
 		return FALSE
 	if(ismob(interacting_with))

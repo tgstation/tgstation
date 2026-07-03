@@ -2,18 +2,18 @@ import { type Antagonist, Category } from '../base';
 
 const SentientCreature: Antagonist = {
   key: 'sentiencepotionspawn',
-  name: 'Sentient Creature',
+  name: 'Разумное существо',
   description: [
     `
-		Either by cosmic happenstance, or due to crew's shenanigans, you have been
-		given sentience!
+        Либо по космической случайности, либо из-за махинаций экипажа,
+        вы получили разум!
 	  `,
 
     `
-		This is a blanket preference. The more benign ones include random human
-		level intelligence events, the cargorilla, and creatures uplifted via sentience
-		potions. The less friendly ones include the regal rat, and the boosted
-		mining elite mobs.
+        Это универсальное предпочтение. К более дружелюбным относятся случайные события,
+        связанные с интеллектом человеческого уровня, каргорилла и существа,
+        поднятые с помощью зелий разумности. К менее дружелюбным относятся
+        крысиный король и усиленные шахтерские элитные мобы.
 	  `,
   ],
   category: Category.Midround,

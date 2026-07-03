@@ -1,0 +1,17 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 7;
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain/private)
+
+(1,1,1) = {"
+a
+"}

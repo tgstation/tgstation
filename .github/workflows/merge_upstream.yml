@@ -1,0 +1,50 @@
+name: Merge Upstream
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: create_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+      - run: echo "GH_TOKEN=${{ steps.create_token.outputs.token }}" >> "$GITHUB_ENV"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub openai
+
+      - name: Download the script
+        run: |
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/tools/changelog/changelog_utils.py
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/tools/merge-upstream/merge_upstream.py
+          wget https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/tools/merge-upstream/translation_context.txt
+
+      - name: Run the script
+        env:
+          GITHUB_TOKEN: ${{ env.GH_TOKEN }}
+          TARGET_REPO: "ss220club/BandaStation"
+          TARGET_BRANCH: "master"
+          UPSTREAM_REPO: "tgstation/tgstation"
+          UPSTREAM_BRANCH: "master"
+          MERGE_BRANCH: "merge-upstream"
+          CHANGELOG_AUTHOR: "tgstation"
+          TRANSLATE_CHANGES: "true"
+          OPENAI_API_KEY: ${{ secrets.ORG_EMPTY_TOKEN }}
+          LOG_LEVEL: ${{ runner.debug && 'DEBUG' || 'INFO' }}
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "Upstream Sync"
+          python3 -u merge_upstream.py

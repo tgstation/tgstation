@@ -664,12 +664,15 @@
 	exposure_based = TRUE
 	wall_icon_state = "mountainrock"
 
+/* BANDASTATION REMOVAL
 /turf/closed/mineral/random/snow/change_ore(ore_type, random = TRUE)
 	. = ..()
 	if(mineral_type)
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+*/
 
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(

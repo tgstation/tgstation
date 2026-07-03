@@ -1,0 +1,8 @@
+[head]
+nominative = "голова"
+genitive = "головы"
+dative = "голове"
+accusative = "голову"
+instrumental = "головой"
+prepositional = "голове"
+gender = "female"

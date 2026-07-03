@@ -1,9 +1,9 @@
 /datum/experiment/physical
-	name = "Physical Experiment"
-	description = "An experiment requiring a physical reaction to continue"
-	exp_tag = "Physical Experiment"
-	performance_hint = "To perform physical experiments you must use a hand-held scanner unit to track objects in our world relevant to \
-		your experiment. Activate the experiment on your scanner, scan the object to track, and then complete the objective."
+	name = "Физический эксперимент"
+	description = "Эксперимент, требующий физической реакции для продолжения"
+	exp_tag = "Физ. Эксперимент"
+	performance_hint = "Для проведения физических экспериментов вам необходимо использовать ручной сканер для отслеживания объектов, относящиеся к \
+		вашему эксперименту. Активируйте эксперимент на своем сканере, отсканируйте объект для отслеживания, а затем выполните поставленную задачу."
 	/// The atom that is currently being watched by this experiment
 	var/atom/currently_scanned_atom
 	/// Linked experiment handler

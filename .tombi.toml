@@ -1,0 +1,3 @@
+[[schemas]]
+path = "tools/translations/schema.json"
+include = ["modular_bandastation/translations/public/ru_names/*.toml"]

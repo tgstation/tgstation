@@ -1,0 +1,8 @@
+[emitter]
+nominative = "эмиттер"
+genitive = "эмиттера"
+dative = "эмиттеру"
+accusative = "эмиттер"
+instrumental = "эмиттером"
+prepositional = "эмиттере"
+gender = "male"

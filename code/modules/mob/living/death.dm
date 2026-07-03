@@ -241,9 +241,9 @@
 	var/valid_area_check = !death_area || !(death_area.area_flags & NO_DEATH_MESSAGE)
 	if(player_mob_check)
 		if(valid_area_check)
-			deadchat_broadcast(" has died at <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
+			deadchat_broadcast(" умирает в <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
 		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
-			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
+			to_chat(src, span_deadsay(span_big("Свободный обзор за призрака недоступен.\nПожалуйста, используйте Orbit, Teleport, и Jump для наблюдения.")))
 			ghostize(TRUE)
 	set_disgust(0)
 	SetSleeping(0, 0)
@@ -262,6 +262,18 @@
 	if (client)
 		client.move_delay = initial(client.move_delay)
 
-	persistent_client?.time_of_death = timeofdeath
+	update_time_of_death(timeofdeath) // BANDASTATION EDIT - Context-aware time_of_death updates
 
 	return TRUE
+
+// BANDASTATION EDIT START - Context-aware time_of_death updates
+/mob/proc/update_time_of_death(time)
+	var/area/current_area = get_area(src)
+	var/should_update_client = !current_area || !(current_area.area_flags & NO_DEATH_MESSAGE)
+	if(should_update_client)
+		persistent_client?.time_of_death = time
+
+/mob/living/update_time_of_death(time)
+	timeofdeath = time
+	..(time)
+// BANDASTATION EDIT END

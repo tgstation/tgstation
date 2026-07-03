@@ -1,0 +1,8 @@
+[cucumber]
+nominative = "огурец"
+genitive = "огурца"
+dative = "огурцу"
+accusative = "огурец"
+instrumental = "огурцом"
+prepositional = "огурце"
+gender = "male"

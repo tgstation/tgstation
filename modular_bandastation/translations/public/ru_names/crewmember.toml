@@ -1,0 +1,8 @@
+[crewmember]
+nominative = "член экипажа"
+genitive = "члена экипажа"
+dative = "члену экипажа"
+accusative = "члена экипажа"
+instrumental = "членом экипажа"
+prepositional = "члене экипажа"
+gender = "male"

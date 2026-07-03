@@ -77,11 +77,11 @@
 	var/integrity = atom_integrity/max_integrity * 100
 	switch(integrity)
 		if(50 to 99)
-			examine_text = "It looks slightly damaged."
+			examine_text = "Имеет незначительные повреждения."
 		if(25 to 50)
-			examine_text = "It appears heavily damaged."
+			examine_text = "Имеет значительные повреждения."
 		if(0 to 25)
-			examine_text = span_warning("It's falling apart!")
+			examine_text = span_warning("Разваливается на части!")
 
 	return examine_text
 

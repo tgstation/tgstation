@@ -36,7 +36,7 @@
 		radiation_pulse(get_turf(src), max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
 /obj/item/nuke_core/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[capitalize(user.declent_ru(NOMINATIVE))] трет [declent_ru(ACCUSATIVE)] об себя! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	return TOXLOSS
 
 //nuke core box, for carrying the core
@@ -60,7 +60,7 @@
 	ncore.forceMove(src)
 	core = ncore
 	icon_state = "core_container_loaded"
-	to_chat(user, span_warning("Container is sealing..."))
+	to_chat(user, span_warning("Контейнер герметизируется..."))
 	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
@@ -70,12 +70,12 @@
 		icon_state = "core_container_sealed"
 		playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
-			to_chat(loc, span_warning("[src] is sealed, [core]'s radiation is contained."))
+			to_chat(loc, span_warning("[src] надежно запечатывается, радиация [core.declent_ru(GENITIVE)] сдерживается."))
 
 /obj/item/nuke_core_container/attackby(obj/item/nuke_core/core, mob/user)
 	if(istype(core))
 		if(!user.temporarilyRemoveItemFromInventory(core))
-			to_chat(user, span_warning("The [core] is stuck to your hand!"))
+			to_chat(user, span_warning("[capitalize(core.declent_ru(NOMINATIVE))] застревает на вашей руке!"))
 			return
 		else
 			load(core, user)
@@ -100,33 +100,33 @@
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
 
 /obj/item/paper/guides/antag/nuke_instructions
-	default_raw_text = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
+	default_raw_text = "Как вскрыть терминал самоуничтожения Нанотрейзен и извлечь из него плутониевое ядро:<br>\
 	<ul>\
-	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel</li>\
-	<li>Dislodge and remove the front panel with a crowbar</li>\
-	<li>Cut the inner metal plate with a welding tool</li>\
-	<li>Pry off the inner plate with a crowbar to expose the radioactive core</li>\
-	<li>Use the core container to remove the plutonium core; the container will take some time to seal</li>\
+	<li>С помощью отвертки с очень тонким наконечником (прилагается) отвинтите переднюю панель терминала</li>\
+	<li>Подденьте и снимите переднюю панель с помощью лома</li>\
+	<li>Разрежьте внутреннюю металлическую пластину с помощью сварки</li>\
+	<li>Подденьте внутреннюю пластину ломом, чтобы обнажить радиоактивное ядро</li>\
+	<li>Используйте контейнер для ядра, чтобы извлечь плутониевое ядро; для герметизации контейнера потребуется некоторое время</li>\
 	<li>???</li>\
 	</ul>"
 
 /obj/item/paper/guides/antag/hdd_extraction
-	default_raw_text = "<h1>Source Code Theft & You - The Idiot's Guide to Crippling Nanotrasen Research & Development</h1><br>\
-	Rumour has it that Nanotrasen are using their R&D Servers to create something awful! They've codenamed it Project Goon, whatever that means.<br>\
-	This cannot be allowed to stand. Below is all our intel for stealing their source code and crippling their research efforts:<br>\
+	default_raw_text = "<h1>Кража исходного кода и Вы! - руководство для идиотов по уничтожению исследований и разработок Нанотрейзен</h1><br>\
+	Ходят слухи, что Нанотрейзен используют свои научные сервера для создания чего-то ужасного! Они дали ему кодовое название «Проект Гуны», что бы это ни значило.<br>\
+	Этого нельзя допустить. Ниже приведены все наши данные о том, как украсть их исходный код и подорвать их исследовательские усилия:<br>\
 	<ul>\
-	<li>Locate the physical R&D Server mainframes. Intel suggests these are stored in specially cooled rooms deep within their Science department.</li>\
-	<li>Nanotrasen is a corporation not known for subtlety in design. You should be able to identify the master server by any distinctive markings.</li>\
-	<li>Tools are on-site procurement. Screwdriver, crowbar and wirecutters should be all you need to do the job.<li>\
-	<li>The front panel screws are hidden in recesses behind stickers. Easily removed once you know they're there.</li>\
-	<li>You'll probably find the hard drive in secure housing. You may need to pry it loose with a crowbar, shouldn't do too much damage.</li>\
-	<li>Finally, carefully cut all of the hard drive's connecting wires. Don't rush this, snipping the wrong wire could wipe all data!</li>\
+	<li>Найдите физические серверные мэйнфреймы РнД. Разведка предполагает, что они хранятся в специально охлаждаемых помещениях в глубине их научного отдела.</li>\
+	<li>Нанотрейзен - корпорация, не отличающаяся изысканностью дизайна. Вы должны быть в состоянии определить главный сервер по каким-либо отличительным знакам.</li>\
+	<li>Инструменты можно найти на месте. Отвертка, лом и кусачки - это все, что вам нужно для работы.</li>\
+	<li>Винты передней панели спрятаны в углублениях за наклейками. Их легко открутить, как только вы узнаете, что они там есть.</li>\
+	<li>Вероятно, жесткий диск находится в надежном корпусе. Возможно, вам придется поддеть его ломом, но это не должно нанести большого вреда.</li>\
+	<li>Наконец, аккуратно перережьте все соединительные провода жесткого диска. Не торопитесь, перерезание неправильного провода может привести к уничтожению всех данных!</li>\
 	</ul>\
-	Removing this drive is guaranteed to cripple research efforts regardless of what data is contained on it.<br>\
-	The thing's probably hardwired. No putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
-	Survive the shift and extract the hard drive safely.<br>\
-	Succeed and you will receive a coveted green highlight on your record for this assignment. Fail us and red's the last colour you'll ever see.<br>\
-	Do not disappoint us.<br>"
+	Извлечение этого диска гарантированно подорвет исследовательскую работу, независимо от того, какие данные на нем содержатся.<br>\
+	Вероятно, эта штука имеет сложную фиксацию. После извлечения ее уже не вернуть на место. Если экипаж узнает, то скорее всего, будет в бешенстве как пчелы!<br>\
+	Переживите смену, заберите и не повредите жесткий диск.<br>\
+	Справитесь - получите заветную зеленую отметку в свой послужной список за это задание. Провалите задание - красный цвет станет последним в вашей жизни.<br>\
+	Не разочаровывайте нас.<br>"
 
 /obj/item/disk/computer/hdd_theft
 	name = "r&d server hard disk drive"
@@ -139,15 +139,15 @@
 // STEALING SUPERMATTER
 
 /obj/item/paper/guides/antag/supermatter_sliver
-	default_raw_text = "How to safely extract a supermatter sliver:<br>\
+	default_raw_text = "Как безопасно извлечь осколок суперматерии:<br>\
 	<ul>\
-	<li>You must have active magnetic anchoring at all times near an active supermatter crystal.</li>\
-	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
-	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
-	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
-	<li>Physical contact of any object with the sliver will dust the object, as well as yourself.</li>\
-	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal.</li>\
-	<li>Get the hell out before the crystal delaminates.</li>\
+	<li>Вы должны постоянно иметь активную магнитную фиксацию вблизи активного кристалла суперматерии.</li>\
+	<li>Подойдите к активному кристаллу суперматерии, используя средства индивидуальной защиты от радиации. НЕ ВСТУПАЙТЕ В ФИЗИЧЕСКИЙ КОНТАКТ.</li>\
+	<li>С помощью суперматериального скальпеля (прилагается) отрежьте осколок кристалла.</li>\
+	<li>Используйте суперматериальные щипцы для извлечения (прилагаются), чтобы безопасно поднять отрезанный осколок.</li>\
+	<li>Физический контакт любого предмета с осколком превратит его в пыль, а также вас самих.</li>\
+	<li>С помощью щипцов поместите осколок в предусмотренный контейнер, которому потребуется некоторое время для герметизации.</li>\
+	<li>Убирайтесь к чертовой матери, пока кристалл не расслоился!</li>\
 	<li>???</li>\
 	</ul>"
 
@@ -181,16 +181,16 @@
 	if(istype(W, /obj/item/hemostat/supermatter))
 		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
-			to_chat(user, span_warning("\The [tongs] is already holding a supermatter sliver!"))
+			to_chat(user, span_warning("[capitalize(tongs.declent_ru(NOMINATIVE))] уже держит осколок суперматерии!"))
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
 		tongs.update_appearance()
-		to_chat(user, span_notice("You carefully pick up [src] with [tongs]."))
+		to_chat(user, span_notice("Вы осторожно поднимаете [declent_ru(ACCUSATIVE)] с помощью [tongs.declent_ru(GENITIVE)]."))
 	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
 	else
-		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
+		to_chat(user, span_notice("[capitalize(W.declent_ru(NOMINATIVE))] и [declent_ru(NOMINATIVE)] обращаются в пыль от прикосновения друг с другом!"))
 		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(W)
@@ -210,9 +210,9 @@
 	else
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
 		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_ENGINE)
-	victim.visible_message(span_danger("As [victim] is hit by [src], both flash into dust and silence fills the room..."),\
-		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
-		span_hear("Everything suddenly goes silent."))
+	victim.visible_message(span_danger("Когда [declent_ru(NOMINATIVE)] врезается в [victim.declent_ru(ACCUSATIVE)], они обращаются в пыль от прикосновения друг с другом, и тишина заполняет комнату..."),\
+		span_userdanger("[capitalize(declent_ru(NOMINATIVE))] врезается в вас, и все внезапно затихает. \n[capitalize(declent_ru(NOMINATIVE))] обращается в пыль, и как только вы замечаете это, вы тоже обращаетесь."),\
+		span_hear("Все внезапно затихает."))
 	victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
@@ -223,9 +223,9 @@
 	..()
 	if(!isliving(user) || HAS_TRAIT(user, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
-			span_userdanger("You reach for [src] with your hands. That was dumb."),\
-			span_hear("Everything suddenly goes silent."))
+	user.visible_message(span_danger("[capitalize(user.declent_ru(NOMINATIVE))] протягивает руку и пытается поднять [declent_ru(ACCUSATIVE)]. [capitalize(user.ru_p_them())] тело начинает светиться и вспыхивает, а затем обращается в пыль!"),\
+			span_userdanger("Вы тянетесь к [declent_ru(DATIVE)] руками. Это было глупо..."),\
+			span_hear("Все внезапно затихает."))
 	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
@@ -248,7 +248,7 @@
 	T.sliver = null
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
-	to_chat(user, span_warning("Container is sealing..."))
+	to_chat(user, span_warning("Контейнер герметизируется..."))
 	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
@@ -258,7 +258,7 @@
 		icon_state = "core_container_sealed"
 		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
-			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
+			to_chat(loc, span_warning("[capitalize(declent_ru(NOMINATIVE))] надежно герметизируется, [sliver.declent_ru(NOMINATIVE)] содержится в безопасности."))
 
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
@@ -314,7 +314,7 @@
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
-		visible_message(span_notice("\The [sliver] falls out of \the [src] as it hits the ground."))
+		visible_message(span_notice("[capitalize(sliver.declent_ru(NOMINATIVE))] выпадает из [declent_ru(GENITIVE)] при падении на землю."))
 		sliver = null
 		update_appearance()
 	return ..()
@@ -337,9 +337,9 @@
 		qdel(AM)
 	if (user)
 		log_combat(user, AM, "consumed", sliver, "via [src]")
-		user.visible_message(span_danger("As [user] touches [AM] with \the [src], both flash into dust and silence fills the room..."),\
-			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
-			span_hear("Everything suddenly goes silent."))
+		user.visible_message(span_danger("Когда [user.declent_ru(NOMINATIVE)] прикасается к [AM.declent_ru(DATIVE)] с помощью [declent_ru(GENITIVE)], они все обращаются в пыль, и тишина заполняет комнату..."),\
+			span_userdanger("Вы прикасаетесь к [AM.declent_ru(DATIVE)] с помощью [declent_ru(GENITIVE)], и всё внезапно замолкает.\n[capitalize(AM.declent_ru(NOMINATIVE))] и [sliver.declent_ru(NOMINATIVE)] обращаются в пыль, и как только вы замечаете это, вы тоже обращаетесь."),\
+			span_hear("Все внезапно затихает."))
 		user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		user.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)

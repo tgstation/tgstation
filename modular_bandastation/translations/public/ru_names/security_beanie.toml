@@ -1,0 +1,8 @@
+["security beanie"]
+nominative = "шапка охраны"
+genitive = "шапки охраны"
+dative = "шапке охраны"
+accusative = "шапку охраны"
+instrumental = "шапкой охраны"
+prepositional = "шапке охраны"
+gender = "female"

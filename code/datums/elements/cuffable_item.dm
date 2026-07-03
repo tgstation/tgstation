@@ -4,6 +4,10 @@
 /datum/element/cuffable_item/Attach(datum/target)
 	. = ..()
 
+// BANDASTATION MOD START: Temp cuffable remove
+#ifdef CUFFABLE_ITEMS_DISABLED
+	return
+#else
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
@@ -13,6 +17,8 @@
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+#endif
+// BANDASTATION MOD END: Temp cuffable remove
 
 ///Tell the player about the interaction if they examine the item twice.
 /datum/element/cuffable_item/proc/on_examine_more(obj/item/source, mob/user, list/examine_list)

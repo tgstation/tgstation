@@ -1,0 +1,8 @@
+[Brig]
+nominative = "бриг"
+genitive = "брига"
+dative = "бригу"
+accusative = "бриг"
+instrumental = "бригом"
+prepositional = "бриге"
+gender = "male"

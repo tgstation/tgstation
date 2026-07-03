@@ -1,0 +1,11 @@
+#include "_ticket_manager.dm"
+
+#include "code/__DEFINES/_defines.dm"
+#include "code/client.dm"
+#include "code/help_ui_handler/help_ui_handler.dm"
+#include "code/help_ticket/ahelp_keywords.dm"
+#include "code/help_ticket/help_ticket.dm"
+#include "code/help_ticket/help_ticket_type.dm"
+#include "code/ticket_manager/manager_helpers.dm"
+#include "code/ticket_manager/manager_topic.dm"
+#include "code/ticket_manager/manager_ui.dm"

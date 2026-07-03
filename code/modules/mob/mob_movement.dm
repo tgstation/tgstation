@@ -159,7 +159,7 @@
 		return TRUE
 	else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
-		to_chat(src, span_warning("You're restrained! You can't move!"))
+		to_chat(src, span_warning("Вы сдержаны! Вы не можете двигаться!"))
 		return TRUE
 	return mob.resist_grab(TRUE)
 
@@ -235,17 +235,17 @@
 			if(stepTurf)
 				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
 				if(salt)
-					to_chat(L, span_warning("[salt] bars your passage!"))
+					to_chat(L, span_warning("[capitalize(salt.declent_ru(NOMINATIVE))] не дает вам пройти!"))
 					if(isrevenant(L))
 						var/mob/living/basic/revenant/ghostie = L
 						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
 						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
-					to_chat(L, span_warning("Some strange aura is blocking the way."))
+					to_chat(L, span_warning("Какая-то странная аура не дает вам прохода."))
 					return
 				if(locate(/obj/effect/blessing) in stepTurf)
-					to_chat(L, span_warning("Holy energies block your path!"))
+					to_chat(L, span_warning("Святая энергия блокирует вам проход!"))
 					return
 
 				L.forceMove(stepTurf)
@@ -291,7 +291,7 @@
 	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) //You're pushing off something movable, so it moves
 		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
 		backup.last_pushoff = world.time
-		to_chat(src, span_info("You push off of [backup] to propel yourself."))
+		to_chat(src, span_info("Вы отталкиваетесь от [backup.declent_ru(GENITIVE)] для движения."))
 	return TRUE
 
 /// We handle lattices via backups
@@ -376,11 +376,12 @@
  * paralyze - time (in deciseconds) the slip leaves them paralyzed / unable to move
  * daze - time (in deciseconds) the slip leaves them vulnerable to shove stuns
  * force_drop = the slip forces them to drop held items
+ * immobilize = time (in deciseconds) the slip leaves them immobilized
  */
-/mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
-	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
+/mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE, immobilize) // BANDASTATION EDIT - Immobilizing slippery
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop, immobilize) // BANDASTATION EDIT - Immobilizing slippery
 
-/mob/living/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
+/mob/living/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE, immobilize) // BANDASTATION EDIT - Immobilizing slippery
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
 	add_mood_event("slipped", /datum/mood_event/slipped)
 	add_personality_mood_to_viewers(src, "slip_observed", list(/datum/personality/whimsical = /datum/mood_event/whimsical_slip), range = 5)
@@ -563,11 +564,11 @@
 
 	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
-	balloon_alert(src, "moving up...")
+	balloon_alert(src, "двигаетесь вверх...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move upwards."))
+		to_chat(src, span_notice("Вы двигаетесь вверх."))
 
 ///Moves a mob down a z level
 /mob/proc/down()
@@ -587,11 +588,11 @@
 
 	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
-	balloon_alert(src, "moving down...")
+	balloon_alert(src, "двигаетесь вниз...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move down."))
+		to_chat(src, span_notice("Вы двигаетесь вниз."))
 	return FALSE
 
 /mob/abstract_move(atom/destination)

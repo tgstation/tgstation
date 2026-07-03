@@ -1,0 +1,8 @@
+["WINE skillchip"]
+nominative = "скилл-чип \"ВИНО\""
+genitive = "скилл-чипа \"ВИНО\""
+dative = "скилл-чипу \"ВИНО\""
+accusative = "скилл-чип \"ВИНО\""
+instrumental = "скилл-чипом \"ВИНО\""
+prepositional = "скилл-чипе \"ВИНО\""
+gender = "male"

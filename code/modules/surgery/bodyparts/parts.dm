@@ -6,7 +6,7 @@
 	max_damage = LIMB_MAX_HP_CORE
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
-	plaintext_zone = "chest"
+	plaintext_zone = "грудь"
 	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
@@ -159,8 +159,8 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
-	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
-	unarmed_attack_verbs_continuous = list("punches")
+	unarmed_attack_verbs = list("бьет") /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs_continuous = list("бьет")
 	grappled_attack_verb = "pummel"
 	grappled_attack_verb_continuous = "pummels"
 	unarmed_damage_low = 5
@@ -312,7 +312,7 @@
 	icon_state = "default_human_l_arm"
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
-	plaintext_zone = "left arm"
+	plaintext_zone = "левая рука"
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	held_index = 1
 	px_x = -6
@@ -394,7 +394,7 @@
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
 	icon_state = "default_human_r_arm"
-	plaintext_zone = "right arm"
+	plaintext_zone = "правая рука"
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = BODYPARTS_HIGH_LAYER
 	held_index = 2
@@ -483,8 +483,8 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_attack_verbs_continuous = list("kicks")
+	unarmed_attack_verbs = list("пинает") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs_continuous = list("пинает")
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
@@ -564,7 +564,7 @@
 	icon_state = "default_human_l_leg"
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
-	plaintext_zone = "left leg"
+	plaintext_zone = "левая нога"
 	px_x = -2
 	px_y = 12
 	can_be_disabled = TRUE
@@ -645,7 +645,7 @@
 	icon_state = "default_human_r_leg"
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
-	plaintext_zone = "right leg"
+	plaintext_zone = "правая нога"
 	px_x = 2
 	px_y = 12
 	bodypart_trait_source = RIGHT_LEG_TRAIT

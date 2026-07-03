@@ -115,6 +115,10 @@
 #define CARP_STYLE_FACTOR (1<<18)
 /// Prevents clothing from losing bodyparts coverage when shredded
 #define NO_ZONE_DISABLING (1<<19)
+// BANDASTATION ADDITION - START
+/// Does not leave fibers behind
+#define FIBERLESS_GLOVES (1<<20)
+// BANDASTATION ADDITION - END
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

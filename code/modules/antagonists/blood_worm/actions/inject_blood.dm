@@ -1,8 +1,8 @@
 #define REQUIRED_ACCUMULATION(wound) (1 + (wound.severity - 1) * 0.3)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject
-	name = "Inject Blood"
-	desc = "Inject your blood into the damaged tissues of your host, healing them in exchange for your own health."
+	name = "Введение крови"
+	desc = "Введите свою кровь в поврежденные ткани вашего носителя, исцеляя его в обмен на ваше собственное здоровье."
 
 	button_icon_state = "inject_blood"
 
@@ -34,7 +34,7 @@
 
 	if (worm.get_worm_health() - health_cost < minimum_health)
 		if (feedback)
-			owner.balloon_alert(owner, "out of blood!")
+			owner.balloon_alert(owner, "закончилась кровь!")
 		return FALSE
 
 	return ..()
@@ -46,11 +46,11 @@
 	host.apply_status_effect(status_effect_type, worm)
 
 	host.visible_message(
-		message = span_danger("[host]'s wounds start healing unnaturally quickly!"),
+		message = span_danger("Раны [host.declent_ru(ACCUSATIVE)] начинают заживать с необычайной скоростью!"),
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_notice("You inject blood into the damaged tissues of your host."))
+	to_chat(owner, span_notice("Вы вводите кровь в поврежденные ткани вашего носителя."))
 
 	worm.adjust_worm_health(-health_cost)
 
@@ -198,8 +198,8 @@
 	worm = null
 
 /atom/movable/screen/alert/status_effect/blood_worm_transfuse
-	name = "Blood Injection"
-	desc = "The injected blood is rapidly healing your host."
+	name = "Введение крови"
+	desc = "Введенная кровь быстро заживляет организм вашего носителя."
 	icon = 'icons/mob/actions/actions_blood_worm.dmi'
 	icon_state = "inject_blood"
 

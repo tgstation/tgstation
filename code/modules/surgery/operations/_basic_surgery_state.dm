@@ -16,13 +16,13 @@
 /datum/status_effect/basic_surgery_state/on_apply()
 	. = ..()
 	if(owner.has_limbs)
-		stack_trace("Applied a basic surgery state to [owner], which has limbs. This status effect is intended for limbless mobs.")
+		stack_trace("Применил базовое хирургическое состояние к [owner.declent_ru(GENITIVE)], у которого есть конечности. Этот эффект предназначен для существ без конечностей.")
 
 /datum/status_effect/basic_surgery_state/get_examine_text()
 	if(HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_OPEN))
-		return "[owner.p_Their()] skin is open[HAS_SURGERY_STATE(surgery_state, SURGERY_BONE_SAWED) ? " and bones are sawed opened" : ""]."
+		return "Кожа у [owner.declent_ru(GENITIVE)] открыта [HAS_SURGERY_STATE(surgery_state, SURGERY_BONE_SAWED) ? " и кости распилены и открыты" : ""]."
 	// other states are not yet supported
-	stack_trace("Surgery state holder had unsupported state(s): [jointext(bitfield_to_list(surgery_state, SURGERY_STATE_READABLE), ", ")]")
+	stack_trace("Система хирургических операций зафиксировала недопустимое состояние(я): [jointext(bitfield_to_list(surgery_state, SURGERY_STATE_READABLE), ", ")]")
 	return null
 
 /datum/status_effect/basic_surgery_state/refresh(mob/living/old_owner, added_state = NONE, removed_state = NONE)

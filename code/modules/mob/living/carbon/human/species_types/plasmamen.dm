@@ -115,40 +115,40 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "user-shield",
-			SPECIES_PERK_NAME = "Protected",
-			SPECIES_PERK_DESC = "Plasmamen are immune to radiation, poisons, and most diseases.",
+			SPECIES_PERK_NAME = "Защищенные",
+			SPECIES_PERK_DESC = "Плазмамены защищены от радиации, ядов и большинства болезней.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bone",
-			SPECIES_PERK_NAME = "Wound Resistance",
-			SPECIES_PERK_DESC = "Plasmamen have higher tolerance for damage that would wound others.",
+			SPECIES_PERK_NAME = "Сопротивление ранам",
+			SPECIES_PERK_DESC = "Плазмамены обладают повышенной устойчивостью к получению ран.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Plasma Healing",
-			SPECIES_PERK_DESC = "Plasmamen can heal wounds by consuming plasma.",
+			SPECIES_PERK_NAME = "Лечение плазмой",
+			SPECIES_PERK_DESC = "Плазмамены могут лечиться, потребляя плазму.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "hard-hat",
-			SPECIES_PERK_NAME = "Protective Helmet",
-			SPECIES_PERK_DESC = "Plasmamen's helmets provide them shielding from the flashes of welding, as well as an inbuilt flashlight.",
+			SPECIES_PERK_NAME = "Защитный шлем",
+			SPECIES_PERK_DESC = "Шлема плазмаменов имеют защиту от вспышек и встроенный фонарик.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fire",
-			SPECIES_PERK_NAME = "Living Torch",
-			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
+			SPECIES_PERK_NAME = "Живой факел",
+			SPECIES_PERK_DESC = "Плазмамены мгновенно воспламеняются при контакте их тела с кислородом.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "briefcase-medical",
-			SPECIES_PERK_NAME = "Complex Biology",
-			SPECIES_PERK_DESC = "Plasmamen take specialized medical knowledge to be \
-				treated. Do not expect speedy revival, if you are lucky enough to get \
-				one at all.",
+			SPECIES_PERK_NAME = "Комплексная биология",
+			SPECIES_PERK_DESC = "Для лечения плазмаменов нужны специальные медицинские \
+				знания. Не ожидайте быстрого воскрешения, если вам вообще посчастливится \
+				его получить.",
 		),
 	)
 

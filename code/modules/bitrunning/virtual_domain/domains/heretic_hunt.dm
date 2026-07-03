@@ -1,10 +1,10 @@
 /datum/lazy_template/virtual_domain/heretic_hunt
-	name = "Heretical Hunt"
+	name = "Еретическая охота"
 	cost = BITRUNNER_COST_LOW
-	desc = "Betray your fellow man to achieve ultimate power."
+	desc = "Предай своего ближнего, чтобы получить абсолютную силу."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	help_text = "Heretics require sacrifice to fuel their dark rituals - bring corpses back to the ritual site! \
-		Corpses of higher ranking crew members are more valuable and may be holding useful equipment."
+	help_text = "Еретики требуют жертвоприношений для своих тёмных ритуалов - приносите трупы обратно на место ритуала! \
+		Трупы членов экипажа более высокого ранга представляют большую ценность и могут содержать полезное обмундирование."
 	forced_outfit = /datum/outfit/virtual_domain_heretic
 	key = "heretic_hunt"
 	map_name = "heretic_hunt"
@@ -53,14 +53,14 @@
 
 	// mimic a ritual effect
 	if(locate(/obj/structure/closet/crate/secure/bitrunning/encrypted) in range(1, rune))
-		rune.balloon_alert_to_viewers("ritual completed")
+		rune.balloon_alert_to_viewers("ритуал завершён")
 	else
-		rune.balloon_alert_to_viewers("sacrifice accepted")
+		rune.balloon_alert_to_viewers("жертвоприношение принято")
 	flick("[rune.icon_state]_active", rune)
 	playsound(rune, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 /datum/outfit/virtual_domain_heretic
-	name = "Virtual Domain Heretic"
+	name = "Еретик виртуального домена"
 
 	// this gear is just given to them in the safehouse
 	// suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
@@ -83,7 +83,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_REINFORCEMENTS_SAY = "Help me!",
+		BB_REINFORCEMENTS_SAY = "Помоги мне!",
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
@@ -130,7 +130,7 @@
 // The actual crewmate
 /mob/living/basic/fake_crewman
 	name = "crewmember"
-	desc = "How do you do, fellow crewmen?"
+	desc = "Как делишки, космонавтик?"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	faction = list(FACTION_HOSTILE, "vdom_fake_crew")
 	icon = 'icons/mob/simple/simple_human.dmi'

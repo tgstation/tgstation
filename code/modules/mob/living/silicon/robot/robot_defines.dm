@@ -18,7 +18,7 @@
 	mouse_drop_zone = TRUE
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 	default_hand_amount = 3
-	examine_thats = "This is"
+	examine_thats = "Это"
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null

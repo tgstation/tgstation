@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	filedesc = "Plexagon HR Core"
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "id"
-	extended_desc = "Program for viewing and changing job slot availability."
+	extended_desc = "Программа для просмотра и изменения доступности рабочих мест."
 	download_access = list(ACCESS_COMMAND)
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 4

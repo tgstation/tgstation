@@ -515,7 +515,7 @@
 		dat += medical ? candidate.medical_record_text : candidate.name
 
 	if(!length(dat))
-		return medical ? "No issues have been declared." : "None"
+		return medical ? "Каких-либо проблем не зафиксировано." : "Пусто"
 	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_quirk_datums() //removes all trait datums

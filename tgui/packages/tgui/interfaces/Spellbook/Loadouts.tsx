@@ -15,27 +15,26 @@ export function Loadouts(props) {
           <SingleLoadout
             loadoutId="loadout_classic"
             loadoutColor="purple"
-            name="The Classic Wizard"
+            name="Классический Волшебник"
             icon="fire"
-            author="Archchancellor Gray"
+            author="Архиканцлер Грей"
             blurb="
-                This is the classic wizard, crazy popular in
-                the 2550's. Comes with Fireball, Magic Missile,
-                Ei Nath, and Ethereal Jaunt. The key here is that
-                every part of this kit is very easy to pick up and use.
+                Это классический волшебник, безумно популярный в
+                2550-х годах. Включает Fireball, Magic Missile,
+                Ei Nath и Ethereal Jaunt.
+                Каждую часть этого набора легко использовать.
               "
           />
           <SingleLoadout
-            name="Mjolnir's Power"
+            name="Сила Мьёльнира"
             icon="hammer"
             loadoutId="loadout_hammer"
             loadoutColor="green"
-            author="Jegudiel Worldshaker"
+            author="Егудиэль Миродрожатель"
             blurb="
-                The power of the mighty Mjolnir! Best not to lose it.
-                This loadout has Summon Item, Mutate, Blink, Force Wall,
-                Tesla Blast, and Mjolnir. Mutate is your utility in this case:
-                Use it for limited ranged fire and getting out of bad blinks.
+                Сила могучего Мьёльнира! Лучше не терять его.
+                Этот набор включает Summon Item, Mutate, Blink, Force Wall,
+                Tesla Blast и Mjolnir. Mutate - ваша утилита в этом случае.
               "
           />
         </Stack>
@@ -43,28 +42,27 @@ export function Loadouts(props) {
       <Stack.Item>
         <Stack fill>
           <SingleLoadout
-            name="Fantastical Army"
+            name="Фантастическая Армия"
             icon="pastafarianism"
             loadoutId="loadout_army"
             loadoutColor="yellow"
-            author="Prospero Spellstone"
+            author="Просперо Зачарованный Камень"
             blurb="
-                Why kill when others will gladly do it for you?
-                Embrace chaos with your kit: Soulshards, Staff of Change,
-                Necro Stone, Teleport, and Jaunt! Remember, no offense spells!
+                Зачем убивать, когда другие с радостью сделают это за вас?
+                Примите хаос: Soulshards, Staff of Change,
+                Necro Stone, Teleport и Jaunt!
              "
           />
           <SingleLoadout
-            name="Soul Tapper"
+            name="Похититель Душ"
             icon="skull"
             loadoutId="loadout_tap"
             loadoutColor="white"
-            author="Tom the Empty"
+            author="Том Пустой"
             blurb="
-                Embrace the dark, and tap into your soul.
-                You can recharge very long recharge spells
-                like Ei Nath by jumping into new bodies with
-                Mind Swap and starting Soul Tap anew.
+                Примите тьму и воспользуйтесь своей душой.
+                Используйте мощные заклинания, такие как Ei Nath, меняя тела с
+                Mind Swap и начиная Soul Tap заново.
               "
           />
         </Stack>
@@ -92,7 +90,7 @@ function SingleLoadout(props: Props) {
         {blurb}
         <Divider />
         <Button.Confirm
-          confirmContent="Confirm Purchase?"
+          confirmContent="Подтвердить покупку?"
           confirmIcon="dollar-sign"
           confirmColor="good"
           fluid
@@ -103,10 +101,10 @@ function SingleLoadout(props: Props) {
             })
           }
         >
-          Purchase Loadout
+          Приобрести набор
         </Button.Confirm>
         <Divider />
-        <Box color={loadoutColor}>Added by {author}.</Box>
+        <Box color={loadoutColor}>Добавлено {author}.</Box>
       </Section>
     </Stack.Item>
   );

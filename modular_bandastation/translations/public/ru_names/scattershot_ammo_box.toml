@@ -1,0 +1,8 @@
+["scattershot ammo box"]
+nominative = "патроны для LBX AC 10"
+genitive = "патронов для LBX AC 10"
+dative = "патронам для LBX AC 10"
+accusative = "патроны для LBX AC 10"
+instrumental = "патронами для LBX AC 10"
+prepositional = "патронах для LBX AC 10"
+gender = "plural"

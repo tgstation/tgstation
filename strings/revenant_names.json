@@ -1,52 +1,29 @@
 {
-	"spirit_type": [
-		"Essence",
-		"Ghost",
-		"Phantom",
-		"Revenant",
-		"Soul",
-		"Spectre",
-		"Spirit"
-	],
+	"spirit_type": ["Призрак", "Фантом", "Дух", "Тень"],
 
 	"adverb": [
-		"",
-		"brutal ",
-		"fiery ",
-		"hideous ",
-		"indifferent ",
-		"malevolent ",
-		"peaceful ",
-		"silent ",
-		"violent ",
-		"abysmal ",
-		"abyssal ",
-		"dark ",
-		"endless ",
-		"eternal ",
-		"hateful ",
-		"searing ",
-		"vicious "
+		" вечной ",
+		" тихой ",
+		" тёмной ",
+		" скорбной ",
+		" яростной ",
+		" голодной ",
+		" проклятой ",
+		" забытой ",
+		" безмолвной ",
+		" ледяной "
 	],
 
 	"theme": [
-		"despair",
-		"agony",
-		"screams",
-		"vengeance",
-		"hellfire",
-		"anger",
-		"suffering",
-		"death",
-		"destruction",
-		"hate",
-		"misery",
-		"disease",
-		"desperation",
-		"sorrow",
-		"ruin",
-		"salt",
-		"grief",
-		"laughter"
+		"ночи",
+		"зимы",
+		"мести",
+		"ненависти",
+		"агонии",
+		"тоски",
+		"печали",
+		"обиды",
+		"пустоты",
+		"боли"
 	]
 }

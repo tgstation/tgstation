@@ -12,10 +12,10 @@
 	var/list/data = ..()
 
 	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = list(
-		UPLINK_PDA = "PDA",
-		UPLINK_RADIO = "Radio",
-		UPLINK_PEN = "Pen",
-		UPLINK_IMPLANT = "Implant ([UPLINK_IMPLANT_TELECRYSTAL_COST]TC)",
+		UPLINK_PDA = "КПК",
+		UPLINK_RADIO = "Радио",
+		UPLINK_PEN = "Ручка",
+		UPLINK_IMPLANT = "Имплант ([UPLINK_IMPLANT_TELECRYSTAL_COST]ТК)",
 	)
 
 	return data

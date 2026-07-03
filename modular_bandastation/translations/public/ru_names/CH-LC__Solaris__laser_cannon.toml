@@ -1,0 +1,8 @@
+["CH-LC \"Solaris\" laser cannon"]
+nominative = "лазерная пушка \"Солярис\""
+genitive = "лазерной пушки \"Солярис\""
+dative = "лазерной пушке \"Солярис\""
+accusative = "лазерную пушку \"Солярис\""
+instrumental = "лазерной пушкой \"Солярис\""
+prepositional = "лазерной пушке \"Солярис\""
+gender = "female"

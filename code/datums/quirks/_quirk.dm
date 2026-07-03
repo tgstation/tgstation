@@ -223,7 +223,7 @@
  * * default_location - If the item isn't possible to equip in a valid slot, this is a description of where the item was spawned.
  * * notify_player - If TRUE, adds strings to where_items_spawned list to be output to the player in [/datum/quirk/item_quirk/post_add()]
  */
-/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = FALSE)
+/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "у ваших ног", notify_player = FALSE)
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 
@@ -235,7 +235,7 @@
 		open_backpack = TRUE
 
 	if(notify_player)
-		LAZYADD(where_items_spawned, span_boldnotice("You have \a [quirk_item] [where]. [flavour_text]"))
+		LAZYADD(where_items_spawned, span_boldnotice("У вас есть [quirk_item.declent_ru(NOMINATIVE)] [where]. [flavour_text]"))
 
 /datum/quirk/item_quirk/post_add()
 	if(open_backpack)

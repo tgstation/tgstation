@@ -6,7 +6,7 @@
 	icon_state = "RunicVendor"
 	panel_type = "panel10"
 	product_slogans = "Come get free magic!;50% off on Mjollnirs today!; Buy a warp whistle and get another one free!"
-	vend_reply = "Please, stand still near the vending machine for your special package!"
+	vend_reply = "Пожалуйста, стойте на месте, чтобы получить свой специальный набор!"
 	resistance_flags = FIRE_PROOF
 	light_mask = "RunicVendor-light-mask"
 	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION

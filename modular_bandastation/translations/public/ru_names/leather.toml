@@ -1,0 +1,8 @@
+[leather]
+nominative = "кожа"
+genitive = "кожи"
+dative = "коже"
+accusative = "кожу"
+instrumental = "кожей"
+prepositional = "коже"
+gender = "female"

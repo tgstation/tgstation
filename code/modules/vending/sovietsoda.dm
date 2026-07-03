@@ -4,7 +4,7 @@
 	icon_state = "sovietsoda"
 	panel_type = "panel8"
 	light_mask = "soviet-light-mask"
-	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
+	product_ads = "За Царя и Родину.;Вы выполнили свою норму питания сегодня?;Очень хорошо!;Мы простые люди, это всё что мы едим.;Если есть человек, есть проблема. Если нет человека, нет проблемы."
 	products = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda = 30,
 	)

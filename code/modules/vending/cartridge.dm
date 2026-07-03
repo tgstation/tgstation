@@ -2,7 +2,7 @@
 /obj/machinery/vending/cart
 	name = "\improper PTech"
 	desc = "Cartridges for PDAs."
-	product_slogans = "Carts to go!"
+	product_slogans = "Карточки в дорогу!"
 	icon_state = "cart"
 	icon_deny = "cart-deny"
 	panel_type = "panel6"

@@ -1,6 +1,6 @@
 import { Icon, Stack } from 'tgui-core/components';
 
-import { TYPE_ICONS } from '../constants';
+import { TYPE_ICONS, TYPE_NAMES } from '../constants';
 import type { Diet } from '../types';
 
 type Props = {
@@ -34,7 +34,7 @@ export function FoodtypeContent(props: Props) {
         <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
       <Stack.Item grow style={{ textTransform: 'capitalize' }}>
-        {type.toLowerCase()}
+        {TYPE_NAMES[type] || type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
         {type === 'Can Make'

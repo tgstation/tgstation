@@ -1,0 +1,8 @@
+[chips]
+nominative = "чипсы"
+genitive = "чипсов"
+dative = "чипсам"
+accusative = "чипсы"
+instrumental = "чипсами"
+prepositional = "чипсах"
+gender = "plural"

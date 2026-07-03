@@ -92,7 +92,7 @@
 
 /datum/round_event/supermatter_surge/announce(fake)
 	var/class_to_announce = fake ? pick(1, 2, 3, 4) : surge_class
-	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [class_to_announce] Supermatter Surge Alert", 'sound/machines/engine_alert/engine_alert3.ogg')
+	priority_announce("Система мониторинга целостности кристала обнаружила необычные атмосферные параметры в камере суперматерии, выходная мощность кристалла суперматерии значительно увеличилась. Требуется инженерное вмешательство для стабилизации работы двигателя.", "Всплеск суперматерии класса [class_to_announce]", 'sound/machines/engine_alert/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
 	engine.bullet_energy = surge_class + SURGE_BULLET_ENERGY_ADDITION
@@ -105,7 +105,7 @@
 	sm_gas.powerloss_inhibition = initial(sm_gas.powerloss_inhibition)
 	sm_gas.heat_power_generation = initial(sm_gas.heat_power_generation)
 	sm_gas.heat_modifier = initial(sm_gas.heat_modifier)
-	priority_announce("The supermatter surge has dissipated, crystal output readings have normalized.", "Anomaly Cleared")
+	priority_announce("Всплеск суперматерии рассеялся, выходные показатели кристалла нормализовались.", "Аномалия устранена")
 	engine = null
 	sm_gas = null
 
@@ -126,7 +126,7 @@
 	fakeable = FALSE
 
 /datum/round_event/supermatter_surge/poly/announce(fake)
-	priority_announce("The Crystal Integrity Monitoring System has detected unusual parrot type resonance in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class P Supermatter Surge Alert", 'sound/machines/engine_alert/engine_alert3.ogg')
+	priority_announce("Система мониторинга целостности кристала обнаружила необычный резонанс типа «попугай» в камере суперматерии, выходная мощность кристалла суперматерии значительно увеличилась. Требуется инженерное вмешательство для стабилизации работы двигателя.", "Всплеск суперматерии класса По", 'sound/machines/engine_alert/engine_alert3.ogg')
 
 #undef SURGE_DURATION_MIN
 #undef SURGE_DURATION_MAX

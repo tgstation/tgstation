@@ -5,7 +5,7 @@
 	min_players = 10
 	max_occurrences = 5
 	weight = 20
-	description = "This anomaly replaces the limbs of nearby people."
+	description = "Эта аномалия заменяет конечности находящихся рядом людей."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 2
 
@@ -17,4 +17,4 @@
 /datum/round_event/anomaly/anomaly_bioscrambler/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Biologic limb swapping agent detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name]. Wear biosuits or other protective gear to counter the effects.", "Anomaly Alert")
+	priority_announce("Биологический агент замены конечностей обнаружен на [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.declent_ru(NOMINATIVE)]. Используйте биокостюмы или другое защитное снаряжение, чтобы противостоять последствиям.", "Обнаружена аномалия")

@@ -9,7 +9,7 @@
 	/// Station timestamp
 	var/time
 
-/datum/medical_note/New(author = "Anonymous", content = "No details provided.", time = "--:--:--")
+/datum/medical_note/New(author = "Anonymous", content = "Детали не указаны.", time = "--:--:--")
 	src.author = author
 	src.content = content
 	src.time = time

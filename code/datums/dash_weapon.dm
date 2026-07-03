@@ -29,7 +29,7 @@
 		return FALSE
 	if (current_charges <= 0)
 		if (feedback)
-			owner.balloon_alert(owner, "no charges!")
+			owner.balloon_alert(owner, "нет зарядов!")
 		return FALSE
 	return TRUE
 
@@ -48,13 +48,13 @@
 	var/turf/current_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
 	if(!(target in view(user.client.view, user)))
-		user.balloon_alert(user, "out of view!")
+		user.balloon_alert(user, "вне поля зрения!")
 		return FALSE
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		user.balloon_alert(user, "destination blocked!")
 		return FALSE
 	if(!do_teleport(user, target_turf, no_effects = TRUE))
-		user.balloon_alert(user, "dash blocked!")
+		user.balloon_alert(user, "скачок заблокирован!")
 		return FALSE
 
 	// Note: It's possible do_teleport, for whatever reason,
@@ -87,4 +87,4 @@
 	if(!owner)
 		return
 	owner.update_mob_action_buttons()
-	dashing_item.balloon_alert(owner, "[current_charges]/[max_charges] dash charges")
+	dashing_item.balloon_alert(owner, "[current_charges]/[max_charges] зарядов")

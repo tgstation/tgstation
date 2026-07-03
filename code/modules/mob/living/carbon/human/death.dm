@@ -38,21 +38,21 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
 				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.get_blood_volume(apply_modifiers = TRUE)]cl ([round((src.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
-	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. \
-		If you do not wish to be brought back, use the \"Do Not Resuscitate\" button at the bottom of your screen."))
+	to_chat(src, span_warning("Вы погибли. Если ваше тело не было уничтожено, вас могут вернуть к жизни другие игроки. \
+		Если вы не хотите возвращаться в тело, используйте кнопку \"Do Not Resuscitate\" (DNR) внизу экрана."))
 	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
-		to_chat(src, span_warning("Ghost movement is currently disabled by admins. To leave your body use the Ghost verb."))
+		to_chat(src, span_warning("Движение будучи призраком в данный момент отключено. Чтобы покинуть тело используйте Ghost вёрб во вкладке OOC."))
 
 /mob/living/carbon/human/proc/reagents_readout()
 	var/readout = "[get_bloodtype()?.get_blood_name() || "Blood"]stream:"
 	for(var/datum/reagent/reagent in reagents?.reagent_list)
-		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
+		readout += "<br>[round(reagent.volume, 0.001)] юнитов [reagent.name]"
 
-	readout += "<br>Stomach:"
+	readout += "<br>Желудок:"
 	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])
-			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"
+			readout += "<br>[round(bile.volume, 0.001)] юнитов [bile.name]"
 
 	return readout
 

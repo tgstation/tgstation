@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/projectile/moon_parade
-	name = "Lunar parade"
-	desc = "This unleashes the parade, making everyone in its way join it and suffer hallucinations."
+	name = "Лунный парад"
+	desc = "Начинает парад, заставляя всех на его пути присоединиться к нему и страдать от галлюцинаций."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -15,8 +15,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	active_msg = "You prepare to make them join the parade!"
-	deactive_msg = "You stop the music and halt the parade... for now."
+	active_msg = "Вы готовитесь заставить их присоединиться к параду!"
+	deactive_msg = "Вы останавливаете музыку и прекращаете парад... пока что."
 	cast_range = 12
 	projectile_type = /obj/projectile/moon_parade
 	antimagic_flags = MAGIC_RESISTANCE_MOON
@@ -64,7 +64,7 @@
 
 	// Anti-magic destroys the projectile for consistency and counterplay
 	if(victim.can_block_magic(MAGIC_RESISTANCE_MOON))
-		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
+		visible_message(span_warning("Парад попадает по [victim.declent_ru(DATIVE)], и внезапно вы вновь мыслите ясно!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	return ..()

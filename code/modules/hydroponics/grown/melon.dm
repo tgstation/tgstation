@@ -16,7 +16,7 @@
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is swallowing [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	user.gib(DROP_ALL_REMAINS)
 	new product(drop_location())
 	qdel(src)

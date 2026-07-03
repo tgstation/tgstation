@@ -25,7 +25,7 @@
 	return S
 
 /obj/item/seeds/kudzu/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 	plant(user)
 	return BRUTELOSS
 

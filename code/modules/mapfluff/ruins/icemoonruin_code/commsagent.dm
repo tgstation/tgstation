@@ -4,24 +4,24 @@
 	icon_state = "tape_white"
 	used_capacity = 10 MINUTES
 	storedinfo = list(
-		"\[00:04\]Three.",
-		"\[00:05\]Years.",
-		"\[00:07\]Three FUCKING years in this frozen hellhole",
-		"\[00:11\]My mission's supposed to be over already!",
-		"\[00:15\]Nanotrasen has left their place to rot for like what,",
-		"\[00:20\]8, 9, 10 months? I lost track of it",
-		"\[00:25\]This was supposed to be a mission for TWO men,",
-		"\[00:29\]But the other agent hasn't even given any signs of waking up...",
+		new /datum/tape_message("00:04", text = "Три."),
+		new /datum/tape_message("00:05", text = "Года."),
+		new /datum/tape_message("00:07", text = "Три ЧЕРТОВЫХ года в этом морозильнике"),
+		new /datum/tape_message("00:11", text = "Моя миссия должна быть закончена уже!"),
+		new /datum/tape_message("00:15", text = "Nanotrasen оставил свое место сгнить на как,"),
+		new /datum/tape_message("00:20", text = "8, 9, 10 месяцев? Я потерял счет"),
+		new /datum/tape_message("00:25", text = "Это была миссия для ДВУХ человек,"),
+		new /datum/tape_message("00:29", text = "Но другой агент даже не дает никаких признаков пробуждения..."),
 		//long silence
-		"\[02:00\]I can't do this anymore, man.",
-		"\[02:03\]I need to get out,",
-		"\[02:06\]Maybe with the gorilla gloves, i could...",
-		"\[02:11\]Hm.",
+		new /datum/tape_message("02:00", text = "Я не могу этого больше, чел."),
+		new /datum/tape_message("02:03", text = "Мне нужно уйти,"),
+		new /datum/tape_message("02:06", text = "Может быть, с перчатками гориллы, я могу..."),
+		new /datum/tape_message("02:11", text = "Хм."),
 		//shorter silence
-		"\[02:34\]I'm gonna go for it.",
-		"\[02:37\]If anyone finds this tape,",
-		"\[02:40\]whatever the outcome was,",
-		"\[02:43\]just know that i didn't regret it."
+		new /datum/tape_message("02:34", text = "Я решил рискнуть."),
+		new /datum/tape_message("02:37", text = "Если кто-то найдет эту ленту,"),
+		new /datum/tape_message("02:40", text = "независимо от исхода,"),
+		new /datum/tape_message("02:43", text = "просто знай, что я не пожалел об этом.")
 	)
 	timestamp = list (
 		4 SECONDS,
@@ -50,5 +50,5 @@
 	icon_state = "tape_red"
 	used_capacity = 10 MINUTES
 	storedinfo = list(
-		"\[00:01\]"
+		new /datum/tape_message("00:01")
 	)

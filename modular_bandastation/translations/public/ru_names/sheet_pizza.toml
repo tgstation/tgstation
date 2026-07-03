@@ -1,0 +1,8 @@
+["sheet pizza"]
+nominative = "пицца-лист"
+genitive = "пиццы-листа"
+dative = "пицце-листу"
+accusative = "пиццу-лист"
+instrumental = "пиццей-листом"
+prepositional = "пицце-листе"
+gender = "female"

@@ -1,14 +1,14 @@
 
 /datum/action/cooldown/spell/list_target/telepathy
 	name = "Telepathy"
-	desc = "Telepathically transmits a message to the target."
+	desc = "Телепатически передает сообщение цели."
 	button_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_transmit"
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
-	choose_target_message = "Choose a target to whisper to."
+	choose_target_message = "Выберите цель, которой хотите прошептать."
 
 	/// The message we send to the next person via telepathy.
 	var/message
@@ -22,12 +22,12 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	message = tgui_input_text(owner, "What do you wish to whisper to [cast_on]?", "[src]", max_length = MAX_MESSAGE_LEN)
+	message = tgui_input_text(owner, "Что бы вы хотели шепнуть [declent_ru(cast_on, GENITIVE)]?", "[src.declent_ru(NOMINATIVE)]", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 
 	if(get_dist(cast_on, owner) > target_radius)
-		owner.balloon_alert(owner, "they're too far!")
+		owner.balloon_alert(owner, "они слишком далеко!")
 		return . | SPELL_CANCEL_CAST
 
 	if(!message)
@@ -42,14 +42,16 @@
 
 	var/failure_message_for_ghosts = ""
 
-	to_chat(owner, "<span class='[bold_telepathy_span]'>You transmit to [cast_on]:</span> [formatted_message]")
+	to_chat(owner, "<span class='[bold_telepathy_span]'>Вы передаете [declent_ru(cast_on, GENITIVE)]:</span> [formatted_message]")
+	owner.cast_tts(owner, message, is_local = FALSE, channel_override = CHANNEL_TTS_TELEPATHY, check_deafness = FALSE) // BANDASTATION ADDITION - TTS
 	if(!cast_on.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
-		cast_on.balloon_alert(cast_on, "you hear a voice")
-		to_chat(cast_on, "<span class='[bold_telepathy_span]'>You hear a voice in your head...</span> [formatted_message]")
+		cast_on.balloon_alert(cast_on, "вы слышите голос")
+		to_chat(cast_on, "<span class='[bold_telepathy_span]'>Вы слышите голос в своей голове...</span> [formatted_message]")
+		owner.cast_tts(cast_on, message, is_local = FALSE, channel_override = CHANNEL_TTS_TELEPATHY, check_deafness = FALSE) // BANDASTATION ADDITION - TTS
 	else
-		owner.balloon_alert(owner, "transmission blocked!")
-		to_chat(owner, span_warning("Something has blocked your transmission!"))
-		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (blocked by antimagic)</span>"
+		owner.balloon_alert(owner.declent_ru(NOMINATIVE), "передача заблокирована!")
+		to_chat(owner, span_warning("Что-то заблокировало вашу передачу!"))
+		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (заблокировано антимагией)</span>"
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		if(!isobserver(ghost))

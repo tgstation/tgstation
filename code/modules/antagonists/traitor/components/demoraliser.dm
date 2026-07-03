@@ -98,83 +98,83 @@
 
 /datum/demoralise_moods/poster
 	mood_category = "evil poster"
-	antag_notification = "Nice poster."
+	antag_notification = "Хороший плакат."
 	antag_mood = /datum/mood_event/traitor_poster_antag
-	crew_notification = "Wait, is what that poster says true?"
+	crew_notification = "Подожди, а правда ли то, что написано на этом плакате?"
 	crew_mood = /datum/mood_event/traitor_poster_crew
-	authority_notification = "Hey! Who put up that poster?"
+	authority_notification = "Э блять! Кто повесил этот плакат?"
 	authority_mood = /datum/mood_event/traitor_poster_auth
 	reading_requirements = (READING_CHECK_LITERACY | READING_CHECK_LIGHT)
 
 /datum/mood_event/traitor_poster_antag
-	description = "I am doing the right thing."
+	description = "Я поступаю правильно."
 	mood_change = 2
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_poster_crew
-	description = "That poster made me feel bad about my job..."
+	description = "Этот плакат заставил меня чувствовать себя плохо из-за своей работы..."
 	mood_change = -2
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_poster_auth
-	description = "That poster better not be giving the crew any funny ideas..."
+	description = "Надеюсь этот плакат не будет давать экипажу никаких забавных идей..."
 	mood_change = -3
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/demoralise_moods/graffiti
 	mood_category = "evil graffiti"
-	antag_notification = "A three headed snake. Nice."
+	antag_notification = "Трехглавая змея. Заебись."
 	antag_mood = /datum/mood_event/traitor_graffiti_antag
-	crew_notification = "Is that... a three headed snake?"
+	crew_notification = "Это... трёхголовая змея?"
 	crew_mood = /datum/mood_event/traitor_graffiti_crew
-	authority_notification = "A three headed snake only means trouble."
+	authority_notification = "Трехглавая змея означает только неприятности."
 	authority_mood = /datum/mood_event/traitor_graffiti_auth
 
 /datum/mood_event/traitor_graffiti_antag
-	description = "The Syndicate logo? How delightfully bold."
+	description = "Логотип Синдиката? Как восхитительно смело."
 	mood_change = 2
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_graffiti_crew
-	description = "The Syndicate logo? Am I safe here?"
+	description = "Логотип Синдиката? Я точно здесь в безопасности?"
 	mood_change = -2
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_graffiti_auth
-	description = "Which of these layabouts drew that Syndicate logo?!"
+	description = "Кто из этих бездельников нарисовал логотип Синдиката?!"
 	mood_change = -3
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/demoralise_moods/module
 	mood_category = "module"
-	antag_notification = "I feel oddly refreshed."
+	antag_notification = "Я чувствую себя странно отдохнувшим."
 	antag_mood = /datum/mood_event/traitor_module_antag
-	crew_notification = "My head hurts. It feels like something is driving nails into my brain!"
+	crew_notification = "Моя голова болит. Такое ощущение, будто что-то вбивает мне гвозди в мозг!"
 	crew_mood = /datum/mood_event/traitor_module_crew
-	authority_notification = "My heads beginning to spin. The enemy is at the gate. I'm all alone..."
+	authority_notification = "У меня начинает кружиться голова. Враг у ворот. Я одинок..."
 	authority_mood = /datum/mood_event/traitor_module_auth
 	reading_requirements = (READING_CHECK_LIGHT)
 
 /datum/mood_event/traitor_module_antag
-	description = "I think I'll cause problems on purpose."
+	description = "Думаю, я специально создам проблемы."
 	mood_change = 1
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_module_crew
-	description = "They're on the station! I know it! They're going to get me!"
+	description = "Они на станции! Я знаю это! Они собираются схватить меня!"
 	mood_change = -4
 	timeout = 2 MINUTES
 	hidden = TRUE
 
 /datum/mood_event/traitor_module_auth
-	description = "Nobody on this station is on my side, and the enemy could be anyone! I have to take more drastic measures..."
+	description = "Никто на этой станции не на моей стороне, а врагом может быть кто угодно! Придётся принять более решительные меры..."
 	mood_change = -5
 	timeout = 2 MINUTES
 	hidden = TRUE

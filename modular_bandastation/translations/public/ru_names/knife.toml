@@ -1,0 +1,8 @@
+[knife]
+nominative = "нож"
+genitive = "ножа"
+dative = "ножу"
+accusative = "нож"
+instrumental = "ножом"
+prepositional = "ноже"
+gender = "male"

@@ -137,6 +137,12 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
 
+/// BANDASTATION ADDITION START - Species
+#define isvulpkanin(A) (is_species(A, /datum/species/vulpkanin))
+#define istajaran(A) (is_species(A, /datum/species/tajaran))
+#define isskrell(A) (is_species(A, /datum/species/skrell))
+/// BANDASTATION ADDITION END - Species
+
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))

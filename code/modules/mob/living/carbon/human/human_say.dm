@@ -27,7 +27,7 @@
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			return "signs"
 		return "gurgles"
-	return  tongue.temp_say_mod || tongue.say_mod || ..()
+	return  ru_say_verb(tongue.temp_say_mod) || ru_say_verb(tongue.say_mod) || ..()
 
 /mob/living/carbon/human/get_voice(add_id_name = FALSE)
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))

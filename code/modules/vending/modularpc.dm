@@ -5,8 +5,8 @@
 	icon_deny = "modularpc-deny"
 	panel_type = "panel21"
 	light_mask = "modular-light-mask"
-	product_ads = "Get your gamer gear!;The best GPUs for all of your space-crypto needs!;The most robust cooling!;The finest RGB in space!"
-	vend_reply = "Game on!"
+	product_ads = "Получите свои геймперские приблуды!;Лучшие видеокарты для всех ваших нужд в космо-крипте!;Самое надёжное охлаждение!;Лучшая RGB-подсветка в космосе!"
+	vend_reply = "Игра начинается!"
 	products = list(
 		/obj/item/disk/computer = 8,
 		/obj/item/modular_computer/laptop = 4,

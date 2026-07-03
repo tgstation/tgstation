@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/apetra_vulnera
-	name = "Apetra Vulnera"
-	desc = "Causes severe bleeding on every limb of a target which has more than 15 brute damage. \
-		Wounds a random limb if no limb is sufficiently damaged."
+	name = "Неприкосновенные раны"
+	desc = "Вызывает обильное кровотечение из каждой части тела, которое имеет более 15-ти ушибов. \
+		Накладывает рану на случайную часть тела, если не найдены подходящие части тела."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -32,8 +32,8 @@
 
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("[cast_on]'s bruises briefly glow, but repels the effect!"),
-			span_danger("Your bruises sting a little, but you are protected!")
+			span_danger("Раны [cast_on.declent_ru(GENITIVE)] на мгновение излучают свет, но эффект заблокирован!"),
+			span_danger("Раны немного жгут, но вы защищены!")
 		)
 		return FALSE
 
@@ -50,8 +50,8 @@
 		crit_wound.apply_wound(pick(cast_on.get_bodyparts()))
 
 	cast_on.visible_message(
-		span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),
-		span_danger("Your scratches and bruises are torn open by some horrible unholy force!")
+		span_danger("Раны и царапины [cast_on.declent_ru(GENITIVE)] разрываются нечистой силой!"),
+		span_danger("Ваши раны и царапины разрываются какой-то ужасной нечистой силой!")
 	)
 
 	new /obj/effect/temp_visual/cleave(get_turf(cast_on))

@@ -68,7 +68,7 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	sound_to_playing_players('sound/music/antag/bloodcult/narsie_rises.ogg')
+	sound_to_playing_players('modular_bandastation/cult_overhaul/sound/narsie/narsie_risen.ogg') // BANDASTATION EDIT - Cult Overhaul
 
 	var/area/area = get_area(src)
 	if(area)
@@ -251,35 +251,40 @@
  *  * [/proc/cult_ending_helper()]
  */
 /proc/begin_the_end()
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_begin_check)), 5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_begin_check)), 15 SECONDS) // BANDASTATION EDIT - Cult Overhaul (5 -> 15 seconds timer before announce to evade ear rape during cult rise)
 
 ///First crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Доклад статуса? Мы обнаружили аномалию, но она почти сразу же пропала.","[command_name()]: Отдел паранормальных явлений", 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce(
-		text = "An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.",
-		title = "[command_name()] Higher Dimensional Affairs",
-		sound = 'sound/announcer/alarm/airraid.ogg',
+		// BANDASTATION EDIT START - Cult Overhaul (text tweak)
+		text = "Внимание, это приоритетное оповещение. \
+			Сектор Эпсилон Эридани был подвергнут вторжению древней богоподобной враждебной сущности, \
+			у нас есть подтвержденная информация о массовых порабощениях по всему сектору. Положению присвоен сценарий \
+			\"ПОЛНОЕ ИСТРЕБЛЕНИЕ\". Приказ на принятие мер получен и авторизован. Ожидаемое время готовности: 60 секунд.",
+		// BANDASTATION EDIT END - Cult Overhaul
+		title = "[command_name()]: Отдел паранормальных явлений",
+		sound = 'modular_bandastation/cult_overhaul/sound/announcements/cult_rise_announcement.ogg', // BANDASTATION EDIT - Cult Overhaul (sound replacement)
 	)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_second_check)), 50 SECONDS)
 
 ///Second crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
-		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Моделирование прервано, датчики сообщают о нормализации пространственного явления. Хорошая работа, экипаж.","[command_name()]: Отдел паранормальных явлений", 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
-	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","[command_name()] Higher Dimensional Affairs")
+	priority_announce("Моделирование беспричинного изменения пространства завершено. Начинаем развертывание.","[command_name()]: Отдел паранормальных явлений")
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_start_destroy_station)), 5 SECONDS)
 
 ///security level and shuttle lockdowns for [/proc/begin_the_end()]
 /proc/narsie_start_destroy_station()
-	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	// SSsecurity_level.set_level(SEC_LEVEL_DELTA) // BANDASTATION REMOVAL - Cult Overhaul
 	SSshuttle.registerHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = TRUE
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_apocalypse)), 1 MINUTES)
@@ -287,12 +292,13 @@
 ///Third crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_apocalypse()
 	if(QDELETED(GLOB.cult_narsie)) // tres
-		priority_announce("Normalization detected! Abort the solution package!","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Явление нормализовано! Отменить развертывание!","[command_name()]: Отдел паранормальных явлений", 'sound/announcer/notice/notice1.ogg')
 		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_last_second_win)), 2 SECONDS)
 		return
 	if(GLOB.cult_narsie.resolved == FALSE)
+		priority_announce("Тревога! Обнаружен запуск орбитального эммитера. Протоколы безопасности станции обнулены, возобновление нево@#$%^-...", "Оповещение безопасности", 'sound/announcer/notice/notice1.ogg', color_override = "red") // BANDASTATION ADDITION - Cult Overhaul
 		GLOB.cult_narsie.resolved = TRUE
 		sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper)), 12 SECONDS)

@@ -1,0 +1,8 @@
+["chemist labcoat"]
+nominative = "лабораторный халат химика"
+genitive = "лабораторного халата химика"
+dative = "лабораторному халату химика"
+accusative = "лабораторный халат химика"
+instrumental = "лабораторным халатом химика"
+prepositional = "лабораторном халате химика"
+gender = "male"

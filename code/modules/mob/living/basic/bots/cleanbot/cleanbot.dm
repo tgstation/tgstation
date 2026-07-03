@@ -284,6 +284,7 @@
 	return TRUE
 
 /mob/living/basic/bot/cleanbot/proc/update_title(new_job_title)
+	new_job_title = job_title_ru_to_en(new_job_title) // BANDASTATION ADDITION - Check for ru job title
 	if(isnull(job_titles[new_job_title]) || (new_job_title in stolen_valor))
 		return
 

@@ -1,11 +1,11 @@
 /datum/job/bridge_assistant
 	title = JOB_BRIDGE_ASSISTANT
-	description = "Watch over the Bridge, command its consoles, and spend your days brewing coffee for higher-ups."
+	description = "Следите за мостиком, управляйте консолями на нем и проводите дни, варя кофе для вышестоящих лиц."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD //not really a head but close enough
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = "the Captain, and in non-Bridge related situations the other heads"
+	supervisors = "Капитаном, а в ситуациях, не связанных с мостиком, другими главами"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW

@@ -81,10 +81,10 @@
 	name = "Synthetic Conversion"
 	desc = "Convert a humanoid individual into a (superior) android. Buckle a human to convert them, otherwise this rite will convert you."
 	ritual_length = 30 SECONDS
-	ritual_invocations = list("By the inner workings of our god ...",
-						"... We call upon you, in the face of adversity ...",
-						"... to complete us, removing that which is undesirable ...")
-	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	ritual_invocations = list("Внутренними механизмами нашего бога ...",
+						"... Мы взываем к тебе, пред лицом невзгод ...",
+						"... заверши нас, удалив то, что нежеланно ...")
+	invoke_msg = "... Восстань, наш чемпион! Стань тем, чего жаждет твоя душа, обрети жизнь в этом мире в своём истинном облике!!!"
 	favor_cost = 1000
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, atom/religious_tool)
@@ -131,10 +131,10 @@
 	desc = "Receive a blessing from the machine god to further your ascension."
 	ritual_length = 5 SECONDS
 	ritual_invocations = list(
-		"Let your will power our forges.",
-		"...Help us in our great conquest!",
+		"Пусть твоя воля питает наши кузницы.",
+		"... Окажи нам помощь в нашем великом завоевании!",
 	)
-	invoke_msg = "The end of flesh is near!"
+	invoke_msg = "Конец плоти близок!"
 	favor_cost = 2000
 
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -180,7 +180,7 @@
 ///all greed rites cost money instead
 /datum/religion_rites/greed
 	ritual_length = 5 SECONDS
-	invoke_msg = "Sorry I was late, I was just making a shitload of money."
+	invoke_msg = "Извините, что опоздал, я просто зарабатывал хуеву тучу денег."
 	var/money_cost = 0
 
 /datum/religion_rites/greed/can_afford(mob/living/user)
@@ -202,9 +202,9 @@
 	. = ..()
 
 /datum/religion_rites/greed/vendatray
-	name = "Purchase Vend-A-Tray"
-	desc = "Summons a vend-a-tray. You can use it to sell items!"
-	invoke_msg = "I need a vend-a-tray to make some more money!"
+	name = "Purchase Vend-a-tray"
+	desc = "Summons a Vend-a-tray. You can use it to sell items!"
+	invoke_msg = "Мне нужен венд-лоток, чтобы заработать еще немного денег!"
 	money_cost = 300
 
 /datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -217,7 +217,7 @@
 /datum/religion_rites/greed/custom_vending
 	name = "Purchase Personal Vending Machine"
 	desc = "Summons a custom vending machine. You can use it to sell MANY items!"
-	invoke_msg = "If I get a custom vending machine for my products, I can be RICH!"
+	invoke_msg = "Если я куплю торговый автомат для своих товаров, то я смогу стать БОГАТЫМ!"
 	money_cost = 1000 //quite a step up from vendatray
 
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -233,10 +233,10 @@
 	name = "Maintenance Adaptation"
 	desc = "Begin your metamorphasis into a being more fit for Maintenance."
 	ritual_length = 10 SECONDS
-	ritual_invocations = list("I abandon the world ...",
-	"... to become one with the deep ...",
-	"... My form will become twisted ...")
-	invoke_msg = "... but my smile I will keep!"
+	ritual_invocations = list("Я оставляю этот мир ...",
+	"... дабы стать единым целым с глубиной.",
+	"Моя форма будет искажена ...")
+	invoke_msg = "... но свою улыбку сберегу!"
 	favor_cost = 150 //150u of organic slurry
 
 /datum/religion_rites/maint_adaptation/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
@@ -267,7 +267,7 @@
 	name = "Adapted Eyes"
 	desc = "Only available after maintenance adaptation. Your eyes will adapt as well, becoming useless in the light."
 	ritual_length = 10 SECONDS
-	invoke_msg = "I no longer want to see the light."
+	invoke_msg = "Я больше не хочу видеть свет."
 	favor_cost = 300 //300u of organic slurry, i'd consider this a reward of the sect
 
 /datum/religion_rites/adapted_eyes/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
@@ -296,7 +296,7 @@
 	name = "Moldify"
 	desc = "Once adapted to the Maintenance, you will not be able to eat regular food. This should help."
 	ritual_length = 5 SECONDS
-	invoke_msg = "Moldify!"
+	invoke_msg = "Заплесневей!"
 	favor_cost = 5 //5u of organic slurry
 	///the food that will be molded, only one per rite
 	var/obj/item/food/mold_target
@@ -327,7 +327,7 @@
 	name = "Create Ritual Totem"
 	desc = "Creates a ritual totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
 	favor_cost = 100
-	invoke_msg = "Padala!!"
+	invoke_msg = "Падала!!!"
 	///the food that will be molded, only one per rite
 	var/obj/item/stack/sheet/mineral/wood/converted
 
@@ -358,7 +358,7 @@
 /datum/religion_rites/sparring_contract
 	name = "Summon Sparring Contract"
 	desc = "Turns some paper into a sparring contract."
-	invoke_msg = "I will train in the name of my god."
+	invoke_msg = "Я буду тренироваться во имя моего бога."
 	///paper to turn into a sparring contract
 	var/obj/item/paper/contract_target
 
@@ -393,8 +393,8 @@
 	name = "Declare Arena"
 	desc = "Declare a new area as fit for sparring. You'll be able to select it in contracts."
 	ritual_length = 6 SECONDS
-	ritual_invocations = list("I seek new horizons ...")
-	invoke_msg = "... may my climb be steep."
+	ritual_invocations = list("Я стремлюсь к новым горизонтам ...")
+	invoke_msg = "... и пусть мой подъем будет крут."
 	favor_cost = 1 //only costs one holy battle for a new area
 	var/area/area_instance
 
@@ -420,7 +420,7 @@
 	name = "Forge Ceremonial Gear"
 	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring and quite heavy to lug around."
 	ritual_length = 10 SECONDS
-	invoke_msg = "Weapons in your name! Battles with your blood!"
+	invoke_msg = "Оружие во имя твоё! Бои с кровью твоей!"
 	favor_cost = 0
 	///the material that will be attempted to be forged into a weapon
 	var/obj/item/stack/sheet/converted
@@ -466,7 +466,7 @@
 	name = "Become Unbreakable"
 	desc = "Your training has made you unbreakable. In times of crisis, you will attempt to keep fighting on."
 	ritual_length = 10 SECONDS
-	invoke_msg = "My will must be unbreakable. Grant me this boon!"
+	invoke_msg = "Моя воля должна быть непоколебимой. Даруй мне это благословение!"
 	favor_cost = 4 //4 duels won
 
 /datum/religion_rites/unbreakable/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
@@ -486,7 +486,7 @@
 	name = "Become Tenacious"
 	desc = "Your training has made you tenacious. In times of crisis, you will be able to crawl faster."
 	ritual_length = 10 SECONDS
-	invoke_msg = "Grant me your tenacity! I have proven myself!"
+	invoke_msg = "Даруй мне своё упорство! Я доказал свою надежность!"
 	favor_cost = 3 //3 duels won
 
 /datum/religion_rites/tenacious/perform_rite(mob/living/carbon/human/user, atom/religious_tool)

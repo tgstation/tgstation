@@ -60,7 +60,7 @@
 	if(value)
 		if(synced_bank_account)
 			synced_bank_account.adjust_money(value)
-			say("[MONEY_NAME_CAPITALIZED] deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance] [MONEY_SYMBOL].")
+			say("[MONEY_NAME_CAPITALIZED] deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance][MONEY_SYMBOL].")
 		qdel(weapon)
 		return
 	return ..()
@@ -112,13 +112,13 @@
 	switch(action)
 		if("siphon")
 			if(is_station_level(src.z) || is_centcom_level(src.z))
-				say("Siphon of station [MONEY_NAME] has begun!")
+				say("Siphon of station credits has begun!")
 				start_siphon(ui.user)
 			else
 				say("Error: Console not in reach of station, withdrawal cannot begin.")
 			. = TRUE
 		if("halt")
-			say("Station [MONEY_NAME_SINGULAR] withdrawal halted.")
+			say("Station credits withdrawal halted.")
 			end_siphon()
 			. = TRUE
 

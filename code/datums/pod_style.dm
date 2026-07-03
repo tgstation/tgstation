@@ -149,3 +149,15 @@
 	glow_color = null
 	rubble_type = RUBBLE_NONE
 	id = "seethrough"
+
+/datum/pod_style/teleport
+	name = "портал доставки"
+	ui_name = "Teleport"
+	desc = "Высокотехнологичный портал для межзвездной доставки. Обеспечивает мгновенный доступ к товарам из любой точки вселенной."
+	shape = POD_SHAPE_OTHER
+	has_door = FALSE
+	icon_state = null
+	decal_icon = null
+	glow_color = null
+	rubble_type = RUBBLE_NONE
+	id = "teleport"

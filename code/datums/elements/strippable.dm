@@ -94,7 +94,7 @@
 		return FALSE
 
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
-		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
+		to_chat(user, span_warning("Вы не можете экипировать [equipping.declent_ru(ACCUSATIVE)] на [source.declent_ru(ACCUSATIVE)], предмет застрял на вашей руке!"))
 		return FALSE
 
 	if (equipping.item_flags & ABSTRACT)
@@ -146,13 +146,13 @@
 		return FALSE
 
 	source.visible_message(
-		span_warning("[user] tries to remove [source]'s [item.name]."),
-		span_userdanger("[user] tries to remove your [item.name]."),
-		blind_message = span_hear("You hear rustling."),
+		span_warning("[capitalize(user.declent_ru(NOMINATIVE))] пытается снять [item.declent_ru(ACCUSATIVE)] у [source.declent_ru(GENITIVE)]."),
+		span_userdanger("[capitalize(user.declent_ru(NOMINATIVE))] пытается снять [item.ru_p_yours(ACCUSATIVE)] [item.declent_ru(ACCUSATIVE)]."),
+		blind_message = span_hear("Вы слышите шорох."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_danger("You try to remove [source]'s [item.name]..."))
+	to_chat(user, span_danger("Вы пытаетесь снять [item.declent_ru(ACCUSATIVE)] у [source.declent_ru(GENITIVE)]..."))
 	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
@@ -161,11 +161,11 @@
 		var/mob/living/carbon/human/victim_human = source
 		if(victim_human.key && !victim_human.client) // AKA braindead
 			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
-				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
+				var/list/new_entry = list(list(user.name, "пытался снять [item.ru_p_yours(ACCUSATIVE)] [item.declent_ru(ACCUSATIVE)]", world.time))
 				LAZYADD(victim_human.afk_thefts, new_entry)
 
 		else if(victim_human.is_blind())
-			to_chat(source, span_userdanger("You feel someone fumble with your belongings."))
+			to_chat(source, span_userdanger("Вы чувствуете, как кто-то шарится с вашими вещами."))
 
 	return TRUE
 
@@ -229,7 +229,7 @@
 		return FALSE
 
 	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-		to_chat(user, span_warning("\The [equipping] doesn't fit in that place!"))
+		to_chat(user, span_warning("[capitalize(equipping.declent_ru(NOMINATIVE))] не подходит сюда!"))
 		return FALSE
 
 	return TRUE

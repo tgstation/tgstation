@@ -1,0 +1,176 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"hm" = (
+/obj/machinery/door/poddoor/shuttledock,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/plating,
+/area/station/security/armory)
+"mg" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+"qJ" = (
+/turf/template_noop,
+/area/template_noop)
+"rF" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"td" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Armory External"
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"CQ" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
+"FW" = (
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/turf/template_noop,
+/area/space/nearstation)
+"Oi" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"PN" = (
+/obj/structure/secure_safe/directional/east,
+/turf/template_noop,
+/area/space/nearstation)
+"QL" = (
+/turf/open/space/basic,
+/area/space)
+"SH" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 5;
+	name = "SS13: Gamma Armory";
+	shuttle_id = "gamma_home";
+	width = 9
+	},
+/turf/open/space/basic,
+/area/space)
+"Ux" = (
+/obj/effect/turf_decal/delivery/red,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"ZF" = (
+/obj/structure/sign/warning/docking/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/vehicle/ridden/secway,
+/obj/item/key/security,
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Warden's Office"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/armory)
+
+(1,1,1) = {"
+qJ
+qJ
+qJ
+FW
+qJ
+mg
+ZF
+qJ
+PN
+qJ
+qJ
+"}
+(2,1,1) = {"
+qJ
+td
+qJ
+qJ
+qJ
+hm
+qJ
+qJ
+qJ
+qJ
+qJ
+"}
+(3,1,1) = {"
+rF
+QL
+QL
+QL
+QL
+SH
+QL
+QL
+QL
+QL
+Oi
+"}
+(4,1,1) = {"
+Oi
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+CQ
+"}
+(5,1,1) = {"
+rF
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+CQ
+"}
+(6,1,1) = {"
+Oi
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+CQ
+"}
+(7,1,1) = {"
+Oi
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+QL
+Oi
+"}
+(8,1,1) = {"
+Ux
+Oi
+Oi
+CQ
+CQ
+CQ
+CQ
+CQ
+Oi
+Oi
+Ux
+"}

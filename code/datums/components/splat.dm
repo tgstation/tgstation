@@ -57,9 +57,9 @@
 	SIGNAL_HANDLER
 	if(caught) //someone caught us!
 		return
-	splat(source, hit_atom)
+	splat(source, hit_atom, throwing_datum)
 
-/datum/component/splat/proc/splat(atom/movable/source, atom/hit_atom)
+/datum/component/splat/proc/splat(atom/movable/source, atom/hit_atom, datum/thrownthing/throwing_datum)
 	var/turf/hit_turf = get_turf(hit_atom)
 	new smudge_type(hit_turf)
 	var/can_splat_on = TRUE
@@ -67,7 +67,7 @@
 		var/mob/living/living_target_getting_hit = hit_atom
 		if(iscarbon(living_target_getting_hit))
 			can_splat_on = !!(living_target_getting_hit.get_bodypart(BODY_ZONE_HEAD))
-		hit_callback?.Invoke(living_target_getting_hit, can_splat_on)
+		hit_callback?.Invoke(living_target_getting_hit, can_splat_on, throwing_datum)
 	if(can_splat_on && is_type_in_typecache(hit_atom, GLOB.splattable))
 		hit_atom.AddComponent(/datum/component/face_decal/splat, icon_state, layer, splat_color || source.color, memory_type, moodlet_type)
 	SEND_SIGNAL(source, COMSIG_MOVABLE_SPLAT, hit_atom)

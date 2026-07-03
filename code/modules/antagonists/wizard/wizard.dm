@@ -2,18 +2,18 @@
 GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard
-	name = "\improper Space Wizard"
-	roundend_category = "wizards/witches"
+	name = "\proper Космический Волшебник"
+	roundend_category = "Волшебники/Ведьмы"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
 	pref_flag = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
 	ui_name = "AntagInfoWizard"
-	suicide_cry = "FOR THE FEDERATION!!"
+	suicide_cry = "ЗА ФЕДЕРАЦИЮ!!"
 	preview_outfit = /datum/outfit/wizard
 	can_assign_self_objectives = TRUE
-	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
+	default_custom_objective = "Продемонстрируйте свои невероятные и разрушительные магические способности."
 	hardcore_random_bonus = TRUE
 
 	var/give_objectives = TRUE
@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/list/perks = list()
 
 /datum/antagonist/wizard_minion
-	name = "Wizard Minion"
+	name = "Помощник волшебника"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
@@ -70,8 +70,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		return
 	var/datum/objective/custom/custom_objective = new()
 	custom_objective.owner = owner
-	custom_objective.name = "Serve [wiz_team.master_wizard?.owner]"
-	custom_objective.explanation_text = "Serve [wiz_team.master_wizard?.owner]"
+	custom_objective.name = "Служи [wiz_team.master_wizard?.owner]"
+	custom_objective.explanation_text = "Служи [wiz_team.master_wizard?.owner]"
 	objectives += custom_objective
 
 /datum/antagonist/wizard_minion/get_team()
@@ -110,12 +110,12 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return wiz_team
 
 /datum/team/wizard
-	name = "\improper Wizard team"
+	name = "\proper Команда Волшебников"
 	var/datum/antagonist/wizard/master_wizard
 
 /datum/antagonist/wizard/proc/create_wiz_team()
 	wiz_team = new(owner)
-	wiz_team.name = "[owner.current.real_name] team"
+	wiz_team.name = "Команда [owner.current.real_name]"
 	wiz_team.master_wizard = src
 
 /// Initialises the grand ritual action for this mob
@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.send_to_late_join(owner.current)
-		to_chat(owner, "HOT INSERTION, GO GO GO")
+		to_chat(owner, "ПРЯМО СЕЙЧАС, ПОШЕЛ ПОШЕЛ ПОШЕЛ")
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
@@ -224,7 +224,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = sanitize_name(reject_bad_text(tgui_input_text(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)))
+	var/newname = sanitize_name(reject_bad_text(tgui_input_text(wiz_mob, "Ваше имя - [name]. Вы хотите изменить его на другое?", "Смена имени", randomname, MAX_NAME_LEN)))
 
 	if (!newname)
 		newname = randomname
@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	SIGNAL_HANDLER
 	var/datum/objective/custom/successful_ritual = new()
 	successful_ritual.owner = owner
-	successful_ritual.explanation_text = "Complete the Grand Ritual at least seven times."
+	successful_ritual.explanation_text = "Завершите Великий ритуал не менее семи раз."
 	successful_ritual.completed = TRUE
 	objectives = list(successful_ritual)
 	UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/apprentice
-	name = "Wizard Apprentice"
+	name = "Ученик мага"
 	antag_hud_name = "apprentice"
 	can_assign_self_objectives = FALSE
 	move_to_lair = FALSE
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_age = APPRENTICE_AGE_MIN
 
 /datum/antagonist/wizard/apprentice/greet()
-	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow [master.p_their()] orders and help [master.p_them()] in accomplishing [master.p_their()] goals.")
+	to_chat(owner, "<B>Вы ученик [master.current.real_name]! Вы связаны магическим контрактом, чтобы следовать приказам и помогать в выполнении целей своего учителя.")
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/assign_ritual()
@@ -292,18 +292,18 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 				/datum/action/cooldown/spell/aoe/magic_missile,
 				/datum/action/cooldown/spell/pointed/projectile/fireball,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned powerful, \
-				destructive spells. You are able to cast magic missile and fireball."))
+			to_chat(owner, span_bold("Однако ваша служба не прошла даром. \
+				Учась у [master.current.real_name], вы выучили мощные, \
+				разрушительные заклинания. Вы можете использовать заклинания «Magic Missile» и «Fireball»."))
 
 		if(APPRENTICE_BLUESPACE)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/teleport/area_teleport/wizard,
 				/datum/action/cooldown/spell/jaunt/ethereal_jaunt,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned reality-bending \
-				mobility spells. You are able to cast teleport and ethereal jaunt."))
+			to_chat(owner, span_bold("Однако ваша служба не прошла даром. \
+				Учась у [master.current.real_name], вы изучили заклинания перемещения, \
+				изменяющие реальность. Вы можете использовать заклинания «Teleport» и «Ethereal Jaunt»."))
 
 		if(APPRENTICE_HEALING)
 			spells_to_grant = list(
@@ -313,17 +313,17 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			items_to_grant = list(
 				/obj/item/gun/magic/staff/healing,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned life-saving \
-				survival spells. You are able to cast charge and forcewall, and have a staff of healing."))
+			to_chat(owner, span_bold("Однако ваша служба не прошла даром. \
+				Учась у [master.current.real_name], вы изучили жизненно-спасительные \
+				заклинания выживания. Вы можете использовать заклинания «Charge» и «Forcewall», а также владеете посохом исцеления."))
 		if(APPRENTICE_ROBELESS)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/aoe/knock,
 				/datum/action/cooldown/spell/pointed/mind_transfer,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned stealthy, \
-				robeless spells. You are able to cast knock and mindswap."))
+			to_chat(owner, span_bold("Однако ваша служба не прошла даром. \
+				Учась у [master.current.real_name], Вы выучили скрытные заклинания, \
+				не нуждающиеся в магических одеяниях. Вы можете использовать заклинания «Knock» и «Mindswap»."))
 
 	for(var/spell_type in spells_to_grant)
 		var/datum/action/cooldown/spell/new_spell = new spell_type(owner)
@@ -337,19 +337,19 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = owner
 	new_objective.target = master
-	new_objective.explanation_text = "Protect [master.current.real_name], the wizard."
+	new_objective.explanation_text = "Защищайте волшебника - [master.current.real_name]."
 	objectives += new_objective
 
 //Random event wizard
 /datum/antagonist/wizard/apprentice/imposter
-	name = "Wizard Imposter"
+	name = "Волшебник-самозванец"
 	show_in_antagpanel = FALSE
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
 	. = ..()
-	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	to_chat(owner, "<B>Обманите и запутайте экипаж, чтобы отвести злобу от вашего прекрасного оригинала!</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/imposter/equip_wizard()
@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	blink.Grant(H)
 
 /datum/antagonist/wizard/academy
-	name = "Academy Teacher"
+	name = "Учитель академии"
 	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
@@ -405,7 +405,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	exiled.implant(living_current)
 
 /datum/antagonist/wizard/academy/create_objectives()
-	var/datum/objective/new_objective = new("Protect Wizard Academy from the intruders")
+	var/datum/objective/new_objective = new("Защитите Академию волшебников от незваных гостей")
 	new_objective.owner = owner
 	objectives += new_objective
 
@@ -415,20 +415,20 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 	parts += printplayer(owner)
 	if (ritual)
-		parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
+		parts += "<br><B>Завершенно Великих ритуалов:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
 	var/wizardwin = TRUE
 	for(var/datum/objective/objective in objectives)
 		if(!objective.check_completion())
 			wizardwin = FALSE
-		parts += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+		parts += "<B>Задача #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 		count++
 
 	if(wizardwin)
-		parts += span_greentext("The wizard was successful!")
+		parts += span_greentext("Волшебник был успешен!")
 	else
-		parts += span_redtext("The wizard has failed!")
+		parts += span_redtext("Волшебник провалился!")
 
 	var/list/purchases = list()
 	for(var/list/log as anything in GLOB.wizard_spellbook_purchases_by_key[owner.key])
@@ -438,10 +438,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		purchases += "[amount > 1 ? "[amount]x ":""][initial(bought.name)]"
 
 	if(length(purchases))
-		parts += span_bold("[owner.name] used the following spells:")
+		parts += span_bold("[owner.name] использовал следующие заклинания:")
 		parts += purchases.Join(", ")
 	else
-		parts += span_bold("[owner.name] didn't buy any spells!")
+		parts += span_bold("[owner.name] не покупал никаких заклинаний!")
 
 	return parts.Join("<br>")
 
@@ -449,10 +449,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/team/wizard/roundend_report()
 	var/list/parts = list()
 
-	parts += span_header("Wizards/witches of [master_wizard.owner.name] team were:")
+	parts += span_header("Волшебниками/ведьмами из команды [master_wizard.owner.declent_ru(GENITIVE)] были:")
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += span_header("[master_wizard.owner.name] apprentices and minions were:")
+	parts += span_header("Учениками и помощниками [master_wizard.owner.declent_ru(GENITIVE)] были:")
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

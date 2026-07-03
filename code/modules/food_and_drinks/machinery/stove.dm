@@ -1,6 +1,6 @@
 /obj/machinery/stove
 	name = "stove"
-	desc = "You'd think this thing would be more useful in here."
+	desc = "Можно подумать, что здесь эта штука была бы полезнее."
 	icon = 'icons/obj/machines/kitchen_stove.dmi'
 	icon_state = "stove"
 	base_icon_state = "stove"
@@ -27,7 +27,7 @@
 // - Tasting the pot to learn its exact contents w/o sci goggles (chef skillchip?)
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
-	desc = "A tall soup designed to mix and cook all kinds of soup."
+	desc = "Высокая кастрюля предназначенная для смешивания и приготовления всех видов супов."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"
@@ -56,19 +56,19 @@
 
 /obj/item/reagent_containers/cup/soup_pot/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Remove ingredient"
+		context[SCREENTIP_CONTEXT_RMB] = "Убрать ингредиент"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	else if(can_add_ingredient(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Add ingredient"
+		context[SCREENTIP_CONTEXT_LMB] = "Добавить ингредиент"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
 /obj/item/reagent_containers/cup/soup_pot/examine(mob/user)
 	. = ..()
-	. += span_notice("There's room for <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> more ingredients \
-		or <b>[reagents.maximum_volume - reagents.total_volume]</b> more units of reagents in there.")
+	. += span_notice("Есть место для еще <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> ингредиентов \
+		или <b>[reagents.maximum_volume - reagents.total_volume]</b> [declension_ru((reagents.maximum_volume - reagents.total_volume),"юнит","юнита","юнитов")] реагентов.")
 
 /**
  * Override standard reagent examine with something a bit more sensible for the soup pot,
@@ -77,7 +77,7 @@
 /obj/item/reagent_containers/cup/soup_pot/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
 	SIGNAL_HANDLER
 
-	examine_list += "Inside, you can see:"
+	examine_list += "Внутри вы можете увидеть:"
 
 	if(LAZYLEN(added_ingredients) || reagents.total_volume > 0)
 		var/list/ingredient_amounts = list()
@@ -85,7 +85,7 @@
 			ingredient_amounts[ingredient.type] += 1
 
 		for(var/obj/item/ingredient_type as anything in ingredient_amounts)
-			examine_list += "&bull; [ingredient_amounts[ingredient_type]] [initial(ingredient_type.name)]\s"
+			examine_list += "&bull; [ingredient_amounts[ingredient_type]] единиц[declension_ru(ingredient_amounts[ingredient_type], "у", "ы", "")] [declent_ru_initial(ingredient_type::name, GENITIVE, ingredient_type::name)]"
 
 		var/unknown_volume = 0
 		for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
@@ -93,24 +93,24 @@
 				|| istype(current_reagent, /datum/reagent/water) \
 				|| istype(current_reagent, /datum/reagent/consumable) \
 			)
-				examine_list += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+				examine_list += "&bull; [round(current_reagent.volume, 0.01)] [declension_ru(round(unknown_volume, 0.01),"юнит","юнита","юнитов")] [current_reagent.name]"
 			else
 				unknown_volume += current_reagent.volume
 
 		if(unknown_volume > 0)
-			examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+			examine_list += "&bull; [round(unknown_volume, 0.01)] [declension_ru(round(unknown_volume, 0.01),"юнит","юнита","юнитов")] неизвестного реагента"
 
 		if(reagents.total_volume > 0)
 			if(can_see_insides)
-				examine_list += span_notice("The contents of [src] have a temperature of [reagents.chem_temp]K.")
+				examine_list += span_notice("Содержимое [declent_ru(GENITIVE)] имеет температуру в [reagents.chem_temp]K.")
 			else if(reagents.chem_temp > WATER_BOILING_POINT) // boiling point
-				examine_list += span_notice("The contents of [src] are boiling.")
+				examine_list += span_notice("Содержимое [declent_ru(GENITIVE)] кипит.")
 
 	else
-		examine_list += "Nothing."
+		examine_list += "Ничего."
 
 	if(reagents.is_reacting)
-		examine_list += span_warning("It is currently mixing!")
+		examine_list += span_warning("Прямо сейчас смешиваются!")
 
 	return STOP_GENERIC_REAGENT_EXAMINE
 
@@ -136,13 +136,13 @@
 		if(!can_add_ingredient(tray_item))
 			continue
 		if(LAZYLEN(added_ingredients) >= max_ingredients)
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, "заполнено!")
 			return TRUE
 		if(tray.atom_storage.attempt_remove(tray_item, src))
 			loaded++
 			LAZYADD(added_ingredients, tray_item)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		to_chat(user, span_notice("Вы перемещаете [loaded] [declension_ru(loaded,"предмет","предмета","предметов")] в [declent_ru(ACCUSATIVE)]."))
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
@@ -159,15 +159,15 @@
 
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
-		balloon_alert(user, "too many ingredients!")
+		balloon_alert(user, "слишком много ингредиентов!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		balloon_alert(user, "can't add that!")
+		balloon_alert(user, "нельзя это добавить!")
 		return ITEM_INTERACT_BLOCKING
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient added")
+	balloon_loc.balloon_alert(user, "ингредиент добавлен")
 	user.face_atom(balloon_loc)
 
 	LAZYADD(added_ingredients, item)
@@ -187,7 +187,7 @@
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient removed")
+	balloon_loc.balloon_alert(user, "ингредиент убран")
 	user.face_atom(balloon_loc)
 
 	update_appearance(UPDATE_OVERLAYS)

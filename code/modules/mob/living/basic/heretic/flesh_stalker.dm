@@ -1,8 +1,8 @@
 /// Durable ambush mob with an EMP ability
 /mob/living/basic/heretic_summon/stalker
-	name = "\improper Flesh Stalker"
+	name = "Flesh Stalker"
 	real_name = "Flesh Stalker"
-	desc = "An abomination cobbled together from varied remains. Its appearance changes slightly every time you blink."
+	desc = "Мерзость, собранная из различных останков. Её облик слегка меняется каждый раз, когда вы моргаете."
 	icon_state = "stalker"
 	icon_living = "stalker"
 	maxHealth = 150

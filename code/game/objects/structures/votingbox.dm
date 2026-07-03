@@ -121,7 +121,7 @@
 		return FALSE
 
 	for(var/datum/paper_input/text as anything in voting_slip.raw_text_inputs)
-		if(findtext(text.raw_text, "<h1>Voting Results:</h1><hr><ol>"))
+		if(findtext(text.get_raw_text(), "<h1>Voting Results:</h1><hr><ol>"))
 			return FALSE
 	return TRUE
 
@@ -174,7 +174,7 @@
 
 		var/full_vote_text = ""
 		for(var/datum/paper_input/text as anything in paper_content.raw_text_inputs)
-			full_vote_text += "[text.raw_text]"
+			full_vote_text += "[text.get_raw_text()]"
 
 		if(!results[full_vote_text])
 			results[full_vote_text] = 1

@@ -33,12 +33,12 @@
 
 		var/list/entry_contents = list()
 
-		entry_contents["name"] = escape_value(format_text(stock_part.name))
+		entry_contents["name"] = escape_value(declent_ru_initial(format_text(stock_part.name), NOMINATIVE, format_text(stock_part.name)))
 		entry_contents["icon"] = escape_value(format_text(create_icon(stock_part)))
 		entry_contents["desc"] = escape_value(format_text(stock_part.desc))
 		entry_contents["tier"] = escape_value(format_text("[stock_part.rating]"))
 		entry_contents["sources"] = escape_value(format_text(generate_source_list(recipe)))
-		entry_contents["node"] = escape_value(format_text(required_node.display_name))
+		entry_contents["node"] = escape_value(declent_ru_initial(format_text(required_node.display_name), NOMINATIVE, format_text(required_node.display_name)))
 		entry_contents["materials"] = escape_value(format_text(generate_material_list(recipe)))
 
 		output += include_template("Autowiki/StockPart", entry_contents)
@@ -69,13 +69,13 @@
 	var/list/source_list = list()
 
 	if(recipe.build_type & PROTOLATHE)
-		source_list.Add("Protolathe")
+		source_list.Add(capitalize(declent_ru_initial("protolathe", NOMINATIVE, "Protolathe")))
 
 	if(recipe.build_type & AWAY_LATHE)
-		source_list.Add("Ancient Protolathe")
+		source_list.Add(capitalize(declent_ru_initial("ancient protolathe", NOMINATIVE, "Ancient Protolathe")))
 
 	if(recipe.build_type & AUTOLATHE)
-		source_list.Add("Autolathe")
+		source_list.Add(capitalize(declent_ru_initial("autolathe", NOMINATIVE, "Autolathe")))
 
 	return source_list.Join(", ")
 
@@ -84,6 +84,6 @@
 
 	for(var/ingredient_type, amount in recipe.materials)
 		var/datum/material/ingredient = new ingredient_type()
-		materials += "[amount] [ingredient.name]"
+		materials += "[amount] [ingredient.declent_ru(NOMINATIVE)]"
 
 	return materials.Join("<br>")

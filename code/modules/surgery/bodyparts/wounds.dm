@@ -117,6 +117,10 @@
 		return
 
 	var/datum/wound/possible_wound = pick_weight(possible_wounds)
+	// BANDASTATION EDIT START
+	if(isnull(possible_wound)) // it can null with cranial fissure
+		return
+	// BANDASTATION EDIT END
 	var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
 	var/datum/wound/replaced_wound = null
 	for(var/datum/wound/existing_wound as anything in wounds)

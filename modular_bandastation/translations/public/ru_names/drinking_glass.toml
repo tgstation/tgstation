@@ -1,0 +1,8 @@
+["drinking glass"]
+nominative = "стакан"
+genitive = "стакана"
+dative = "стакану"
+accusative = "стакан"
+instrumental = "стаканом"
+prepositional = "стакане"
+gender = "male"

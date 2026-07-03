@@ -1,0 +1,8 @@
+[Boutique]
+nominative = "бутик"
+genitive = "бутика"
+dative = "бутику"
+accusative = "бутик"
+instrumental = "бутиком"
+prepositional = "бутике"
+gender = "male"

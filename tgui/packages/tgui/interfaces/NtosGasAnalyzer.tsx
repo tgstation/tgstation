@@ -14,7 +14,7 @@ export const NtosGasAnalyzer = (props) => {
   const { act, data } = useBackend<NtosGasAnalyzerData>();
   const { atmozphereMode, clickAtmozphereCompatible } = data;
   return (
-    <NtosWindow width={500} height={450}>
+    <NtosWindow width={560} height={450}>
       <NtosWindow.Content scrollable>
         {!!clickAtmozphereCompatible && (
           <Button
@@ -24,14 +24,14 @@ export const NtosGasAnalyzer = (props) => {
             textAlign="center"
             tooltip={
               atmozphereMode === 'click'
-                ? 'Right-click on objects while holding the tablet to scan them. Right-click on the tablet to scan the current location.'
-                : 'The app will update its gas mixture reading automatically.'
+                ? 'ПКМ на объектах, удерживая планшет, чтобы отсканировать их. ПКМ на планшете, чтобы отсканировать текущее местоположение.'
+                : 'Приложение будет автоматически обновлять показания газовой смеси.'
             }
             tooltipPosition="bottom"
           >
             {atmozphereMode === 'click'
-              ? 'Scanning tapped objects. Click to switch.'
-              : 'Scanning current location. Click to switch.'}
+              ? 'Сканирование объектов. Нажмите, чтобы переключиться.'
+              : 'Сканирование текущего местоположения. Нажмите, чтобы переключиться.'}
           </Button>
         )}
         <GasAnalyzerContent />

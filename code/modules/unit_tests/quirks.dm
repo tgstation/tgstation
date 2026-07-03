@@ -44,6 +44,10 @@
 		/datum/species/ethereal = /obj/item/reagent_containers/blood/ethereal,
 		/datum/species/skeleton = null, // Anyone with noblood should not get a blood bag
 		/datum/species/jelly = /obj/item/reagent_containers/blood/toxin,
+		/// BANDASTATION ADDITION START - Species
+		/datum/species/skrell = /obj/item/reagent_containers/blood/skrell,
+		/datum/species/moth = /obj/item/reagent_containers/blood/moth,
+		/// BANDASTATION ADDITION END - Species
 	)
 
 /datum/unit_test/blood_deficiency_mail/Run()

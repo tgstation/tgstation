@@ -120,7 +120,7 @@
 		)
 		var/datum/disease/fake_virus = pick(virus_candidates)
 		illness_type = initial(fake_virus.name)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
+	priority_announce("Вспышка биологической угрозы 7-го уровня зафиксирована на борту [station_name()]. Всему персоналу надлежит сдержать её распространение.", "[illness_type]", ANNOUNCER_OUTBREAK7)
 
 	// Set status displays to biohazard alert
 	send_status_display_biohazard_alert()

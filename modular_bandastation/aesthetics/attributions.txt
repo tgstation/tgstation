@@ -1,0 +1,3 @@
+Works below licensed with Creative Commons 3.0 BY-SA license
+
+medalbox.dmi - Modified by dj-34, original sprite from Shiptest https://github.com/shiptest-ss13/Shiptest/blob/HEAD/icons/obj/storage.dmi

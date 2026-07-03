@@ -6,71 +6,71 @@ import type { TabType } from './types';
 
 export const TAB2NAME: TabType[] = [
   {
-    title: 'Enscribed Name',
+    title: 'Вписанное имя',
     blurb:
-      "This book answers only to its owner, and of course, must have one. The permanence of the pact between a spellbook and its owner ensures such a powerful artifact cannot fall into enemy hands, or be used in ways that break the Federation's rules such as bartering spells.",
+      "Эта книга отвечает только своему владельцу и, конечно, должна его иметь. Постоянство договора между книгой заклинаний и ее владельцем гарантирует, что такой мощный артефакт не попадёт в руки врага и не будет использован способами, нарушающими правила Федерации, такие как обмен заклинаниями.",
     component: EnscribedName,
   },
   {
-    title: 'Table of Contents',
+    title: 'Оглавление',
     component: TableOfContents,
   },
   {
-    title: 'Offensive',
-    blurb: 'Spells and items geared towards debilitating and destroying.',
+    title: 'Наступление',
+    blurb: 'Заклинания и предметы, направленные на ослабление и уничтожение.',
     scrollable: true,
   },
   {
-    title: 'Defensive',
+    title: 'Защита',
     blurb:
-      "Spells and items geared towards improving your survivability or reducing foes' ability to attack.",
+      "Заклинания и предметы, направленные на повышение вашей выживаемости или снижение способности врагов атаковать.",
     scrollable: true,
   },
   {
-    title: 'Mobility',
+    title: 'Мобильность',
     blurb:
-      'Spells and items geared towards improving your ability to move. It is a good idea to take at least one.',
+      'Заклинания и предметы, направленные на улучшение вашей способности к перемещению. Рекомендуется взять хотя бы одно.',
     scrollable: true,
   },
   {
-    title: 'Assistance',
+    title: 'Поддержка',
     blurb:
-      'Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.',
+      'Заклинания и предметы, направленные на привлечение внешних сил для помощи вам или улучшения ваших других предметов и способностей.',
     scrollable: true,
   },
   {
-    title: 'Challenges',
+    title: 'Испытания',
     blurb:
-      'The Wizard Federation is looking for shows of power. Arming the station against you will increase the danger, but will grant you more charges for your spellbook.',
+      'Федерация Волшебников ищет проявления силы. Вооружив станцию против вас, вы увеличите опасность, но получите больше зарядов для вашей книги заклинаний.',
     locked: true,
     scrollable: true,
   },
   {
-    title: 'Rituals',
+    title: 'Ритуалы',
     blurb:
-      'These powerful spells change the very fabric of reality. Not always in your favour.',
+      'Эти мощные заклинания изменяют саму ткань реальности. Не всегда в вашу пользу.',
     scrollable: true,
   },
   {
-    title: 'Loadouts',
+    title: 'Комплекты',
     blurb:
-      'The Wizard Federation accepts that sometimes, choosing is hard. You can choose from some approved wizard loadouts here.',
+      'Федерация Волшебников признаёт, что иногда выбор труден. Здесь вы можете выбрать одобренные комплекты волшебника.',
     component: Loadouts,
   },
   {
-    title: 'Randomize',
+    title: 'Случайно',
     blurb:
-      "If you didn't like the loadouts offered, you can embrace chaos. Not recommended for newer wizards.",
+      "Если вам не понравились предложенные комплекты, вы можете предаться хаосу. Не рекомендуется для начинающих волшебников.",
     component: Randomize,
   },
   {
-    title: 'Perks',
+    title: 'Перки',
     blurb:
-      'Perks are useful (and not so useful) improvements to the soul and body collected from all corners of the universe.',
+      'Перки - это полезные (и не очень) улучшения души и тела, собранные со всех уголков вселенной.',
     scrollable: true,
   },
   {
-    title: 'Table of Contents',
+    title: 'Оглавление',
     component: TableOfContents,
   },
 ];

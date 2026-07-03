@@ -1,0 +1,58 @@
+:root {
+  --mineswepper-border-base: var(--color-base);
+  --mineswepper-border: hsl(
+    from var(--mineswepper-border-base) h s calc(l + 20)
+  );
+
+  &.theme-ntOS95 {
+    --mineswepper-border-base: var(--color-section);
+  }
+}
+
+.Minesweeper__closed {
+  cursor: var(--cursor-pointer);
+  vertical-align: middle;
+  border: var(--border-thickness-small) outset var(--mineswepper-border) !important;
+  outline: none !important;
+  transition-duration: 0s;
+
+  &:hover {
+    border-color: hsl(
+      from var(--mineswepper-border) h s calc(l + 10)
+    ) !important;
+  }
+}
+
+.Minesweeper__open {
+  position: relative;
+  pointer-events: none;
+  vertical-align: middle;
+  text-align: center;
+  font-size: medium;
+  background-color: hsl(from var(--mineswepper-border-base) h s calc(l + 7.5));
+  outline: none !important;
+}
+
+.Minesweeper__list {
+  tr > td {
+    text-align: center;
+  }
+
+  tr:not(:first-child) {
+    cursor: var(--cursor-pointer);
+    height: 2em;
+    line-height: 1.75em;
+    transition: background-color 50ms;
+
+    &:hover,
+    &:active {
+      background-color: var(--color-base);
+    }
+  }
+}
+
+.Minesweeper__infobox {
+  user-select: none;
+  max-height: 8em;
+  border: var(--border-thickness-medium) outset var(--mineswepper-border);
+}

@@ -51,7 +51,7 @@
 	add_to_accounts = player_account
 	setup_unique_account_id()
 	update_account_job_lists(job)
-	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
+	pay_token = uppertext("[copytext_char(newname, 1, 2)][copytext_char(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]") // BANDASTATION EDIT - _char
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -167,11 +167,11 @@
 /datum/bank_account/proc/pay_debt(amount, is_payment = TRUE)
 	var/amount_to_pay = min(amount, account_debt)
 	if(is_payment)
-		if(!adjust_money(-amount, "Other: Debt Payment"))
+		if(!adjust_money(-amount, "Прочее: Оплата долга"))
 			return 0
 	else
-		add_log_to_history(-amount, "Other: Debt Collection")
-	log_econ("[amount_to_pay] [MONEY_NAME] were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+		add_log_to_history(-amount, "Прочее: Взыскание долгов")
+	log_econ("[amount_to_pay][MONEY_NAME] were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
 	account_debt -= amount_to_pay
 	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
 	return amount_to_pay
@@ -185,11 +185,11 @@
  */
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount, transfer_reason)
 	if(from.has_money(amount))
-		var/reason_to = "Transfer: From [from.account_holder]"
-		var/reason_from = "Transfer: To [account_holder]"
+		var/reason_to = "Перевод: От [from.account_holder]"
+		var/reason_from = "Перевод: [account_holder]"
 
 		if(IS_DEPARTMENTAL_ACCOUNT(from))
-			reason_to = "Nanotrasen: Salary"
+			reason_to = "Нанотрейзен: Зарплата"
 			reason_from = ""
 
 		if(transfer_reason)
@@ -199,7 +199,7 @@
 		adjust_money(amount, reason_to)
 		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
-		log_econ("[amount] [MONEY_NAME] were transferred from [from.account_holder]'s account to [src.account_holder]")
+		log_econ("[amount][MONEY_NAME] were transferred from [from.account_holder]'s account to [src.account_holder]")
 		return TRUE
 	return FALSE
 
@@ -212,7 +212,7 @@
  * * skippable - if TRUE, this proc may pay out nothing if the account has paydays_to_skip
  * * event - the name of the event that is being processed, used for bank card messages.
  */
-/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Payday")
+/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Выплата зарплаты")
 	if(!account_job)
 		return FALSE
 
@@ -228,19 +228,19 @@
 	if(amount_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
-		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
+		adjust_money(money_to_transfer, "Нанотрейзен: Оплата смены")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
-		log_econ("[money_to_transfer] [MONEY_NAME] were given to [src.account_holder]'s account from income.")
+		log_econ("[money_to_transfer][MONEY_NAME] were given to [src.account_holder]'s account from income.")
 		return TRUE
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
 	if(isnull(department_account))
-		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
+		bank_card_talk("ОШИБКА: [event] отменена. Не удалось связаться со счётом отдела.")
 		return FALSE
 	if(!transfer_money(department_account, money_to_transfer))
-		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		bank_card_talk("ОШИБКА: [event] отменена. Средств отдела недостаточно.")
 		return FALSE
-	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
+	bank_card_talk("[event] успешна. На аккаунте теперь [account_balance][MONEY_SYMBOL].")
 	return TRUE
 
 /**

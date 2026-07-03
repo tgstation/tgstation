@@ -1,0 +1,10 @@
+{
+	"colored_neon": [
+		{
+			"type": "icon_state",
+			"icon_state": "colored_neon",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

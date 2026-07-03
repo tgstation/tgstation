@@ -2,11 +2,11 @@ import { type Antagonist, Category } from '../base';
 
 const BloodWormInfestation: Antagonist = {
   key: 'bloodworminfestation',
-  name: 'Blood Worm Infestation',
+  name: 'Заражение кровяным червём',
   description: [
     `
-      Become a giant, parasitic blood worm. Start as a hatchling, take hosts,
-      consume blood and conquer the entire station alongside your siblings!
+      Стань гигантским паразитическим кровяным червём. Начав жизнь личинкой в теле носителя,
+      питайтесь кровью и вместе со своими сородичами покорите всю станцию!
     `,
   ],
   category: Category.Midround,

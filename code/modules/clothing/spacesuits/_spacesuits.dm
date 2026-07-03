@@ -92,7 +92,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/captain,
+		/obj/item/tank/jetpack, // BANDASTATION EDIT - any jetpack is allowed
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -374,9 +374,9 @@
 /obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
-		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! Кажется, [user.ru_p_they()] пытается совершить самоубийство!"))
 		return BRUTELOSS
-	user.say("You want proof? I'll give you proof! Here's proof of what'll happen to you if you stay here with your stuff!", forced = "space helmet suicide")
+	user.say("Тебе нужны доказательства? Я дам тебе доказательства! Вот доказательство того, что с тобой случится, если ты останешься здесь со своей дурью!", forced = "space helmet suicide")
 	user.visible_message(span_suicide("[user] is removing [user.p_their()] helmet to make a point! Yo, holy shit, [user.p_they()] dead!")) //the use of p_they() instead of p_their() here is intentional
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)

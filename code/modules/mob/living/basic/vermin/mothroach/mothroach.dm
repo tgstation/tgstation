@@ -1,6 +1,6 @@
 /mob/living/basic/mothroach
-	name = "mothroach"
-	desc = "This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches."
+	name = "таракамоль"
+	desc = "Очаровательный ГМО-продукт многочисленных попыток генетического скрещивания людей-мотыльков с тараканами."
 	icon_state = "mothroach"
 	icon_living = "mothroach"
 	icon_dead = "mothroach_dead"

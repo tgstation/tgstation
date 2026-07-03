@@ -85,7 +85,7 @@
 	qdel(implant)
 
 /obj/item/organ/heart/gland/heal/proc/reject_cyberimp(obj/item/organ/cyberimp/implant)
-	owner.visible_message(span_warning("[owner] vomits up his [implant.name]!"), span_userdanger("You suddenly vomit up your [implant.name]!"))
+	owner.visible_message(span_warning("[owner] vomits up his [declent_ru(implant.name, ACCUSATIVE)]!"), span_userdanger("You suddenly vomit up your [declent_ru(implant.name, ACCUSATIVE)]!"))
 	owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 	implant.Remove(owner)
 	implant.forceMove(owner.drop_location())
@@ -171,7 +171,7 @@
 
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
-		owner.visible_message(span_warning("[owner]'s [limb.plaintext_zone] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.plaintext_zone] suddenly detaches from your body!"))
+		owner.visible_message(span_warning("[owner]'s [limb.ru_plaintext_zone[PREPOSITIONAL]] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.ru_plaintext_zone[PREPOSITIONAL]] suddenly detaches from your body!"))
 		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
 		limb.drop_limb()
 	else

@@ -1,0 +1,8 @@
+["prescription glasses"]
+nominative = "очки по рецепту"
+genitive = "очков по рецепту"
+dative = "очкам по рецепту"
+accusative = "очки по рецепту"
+instrumental = "очками по рецепту"
+prepositional = "очках по рецепту"
+gender = "male"

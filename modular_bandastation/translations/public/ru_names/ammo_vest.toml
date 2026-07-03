@@ -1,0 +1,8 @@
+["ammo vest"]
+nominative = "разгрузка под магазины"
+genitive = "разгрузки под магазины"
+dative = "разгрузке под магазины"
+accusative = "разгрузку под магазины"
+instrumental = "разгрузкой под магазины"
+prepositional = "разгрузке под магазины"
+gender = "female"

@@ -18,6 +18,7 @@
 // Interfaces
 @include meta.load-css('./interfaces/Accounting.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
 @include meta.load-css('./interfaces/Emojipedia.scss');
@@ -31,6 +32,7 @@
 @include meta.load-css('./interfaces/LibraryComputer.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/Mecha.scss');
+@include meta.load-css('./interfaces/Minesweeper.scss');
 @include meta.load-css('./interfaces/NtosMessenger.scss');
 @include meta.load-css('./interfaces/NtosNanopaint.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');
@@ -44,8 +46,10 @@
 @include meta.load-css('./interfaces/SlotMachine.scss');
 @include meta.load-css('./interfaces/SpriteAuditor.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
+@include meta.load-css('./interfaces/TicketManager.scss'); // BANDASTATION
 @include meta.load-css('./interfaces/Trophycase.scss');
 @include meta.load-css('./interfaces/Uplink.scss');
+@include meta.load-css('./interfaces/Who.scss'); // BANDASTATION
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
 @include meta.load-css('./interfaces/AnomalyTower.scss');

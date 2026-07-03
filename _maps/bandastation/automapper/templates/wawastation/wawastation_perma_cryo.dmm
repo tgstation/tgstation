@@ -1,0 +1,17 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/computer/cryopod/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/security/prison)
+"M" = (
+/obj/machinery/cryopod/prison/directional/north,
+/turf/open/floor/iron,
+/area/station/security/prison)
+
+(1,1,1) = {"
+a
+"}
+(2,1,1) = {"
+M
+"}

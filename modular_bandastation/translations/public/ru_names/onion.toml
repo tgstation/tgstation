@@ -1,0 +1,8 @@
+[onion]
+nominative = "лук"
+genitive = "лука"
+dative = "луку"
+accusative = "лук"
+instrumental = "луком"
+prepositional = "луке"
+gender = "male"

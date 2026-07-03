@@ -320,7 +320,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.Unconscious(10 SECONDS)
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
+	convertee.mind.add_antag_datum(/datum/antagonist/cult/converted, cult_team) // BANDASTATION EDIT - Use special datum to track converted cultists
 
 	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
 		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
@@ -685,7 +685,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	cult_team.narsie_summoned = TRUE
 	..()
-	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
+	sound_to_playing_players('modular_bandastation/cult_overhaul/sound/narsie/narsie_summon.ogg') // BANDASTATION EDIT - Cult Overhaul
 	var/turf/rune_turf = get_turf(src)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		cult_team.true_cultists += cult_mind

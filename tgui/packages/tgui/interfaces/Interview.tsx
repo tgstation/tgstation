@@ -81,12 +81,12 @@ export const Interview = (props) => {
     >
       <Window.Content scrollable>
         {(!read_only && (
-          <Section title="Welcome!">
+          <Section title="Приветствуем!">
             <p>{linkifyText(welcome_message)}</p>
           </Section>
         )) || <RenderedStatus status={status} queue_pos={queue_pos} />}
         <Section
-          title="Questionnaire"
+          title="Вопросы"
           buttons={
             <span>
               <Button
@@ -95,7 +95,7 @@ export const Interview = (props) => {
                 icon="envelope"
                 tooltip={
                   !allAnswered &&
-                  `Please answer all questions.
+                  `Пожалуйста, ответьте на все вопросы.
                      ${numAnswered} / ${questions.length}`
                 }
               >
@@ -133,20 +133,20 @@ export const Interview = (props) => {
           {!read_only && (
             <>
               <Box as="p" color="label">
-                Please answer the following questions.
+                Пожалуйста, ответьте на вопросы ниже.
                 <ul>
                   <li>
-                    You can press enter key or the save button to save an
-                    answer.
+                    Чтобы сохранить ответ, вы можете нажать Enter, или кнопку
+                    Save.
                   </li>
                   <li>
-                    You can edit your answers until you press the submit button.
+                    Вы можете редактировать ответы, пока не нажмете Submit.
                   </li>
-                  <li>Press SUBMIT when you are done.</li>
+                  <li>Нажмите SUBMIT, когда закончите.</li>
                 </ul>
               </Box>
               <NoticeBox info align="center">
-                You will not be able to edit your answers after submitting.
+                Вы не сможете редактировать свои ответы после отправки.
               </NoticeBox>
             </>
           )}
@@ -164,14 +164,13 @@ const RenderedStatus = (props: { status: string; queue_pos: number }) => {
 
   switch (status) {
     case STATUS.Approved:
-      return <NoticeBox success>This interview was approved.</NoticeBox>;
+      return <NoticeBox success>Ваша заявка одобрена.</NoticeBox>;
     case STATUS.Denied:
-      return <NoticeBox danger>This interview was denied.</NoticeBox>;
+      return <NoticeBox danger>Ваша заявка была отклонена.</NoticeBox>;
     default:
       return (
         <NoticeBox info>
-          Your answers have been submitted. You are position {queue_pos} in
-          queue.
+          Ваши ответы отправлены. Ваша позиция в очереди: {queue_pos}.
         </NoticeBox>
       );
   }

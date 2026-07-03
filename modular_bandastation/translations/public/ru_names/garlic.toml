@@ -1,0 +1,8 @@
+[garlic]
+nominative = "чеснок"
+genitive = "чеснока"
+dative = "чесноку"
+accusative = "чеснок"
+instrumental = "чесноком"
+prepositional = "чесноке"
+gender = "male"

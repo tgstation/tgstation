@@ -461,36 +461,24 @@ SUBSYSTEM_DEF(job)
 	// From assign_all_overflow_positions()
 	// 4. Anyone with the overflow role enabled has been given the overflow role.
 
-	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
-	var/list/available_occupations = joinable_occupations.Copy()
-	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
-
-	for(var/datum/job/job in available_occupations)
-		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
+	/// BANDASTATION EDIT START - Job Priority Staffing
+	var/list/available_occupations = list()
+	for(var/datum/job/job as anything in joinable_occupations)
+		// Make sure the job isn't filled
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
-			available_occupations -= job
 			continue
 
-		// Command jobs are handled via fill_all_head_positions_at_priority(...)
-		// Remove these jobs from the list of available occupations to prevent multiple players being assigned to the same
-		// limited role without constantly having to iterate over the available_occupations list and re-check them.
-		if(job in command_department?.department_jobs)
-			available_occupations -= job
+		available_occupations += job
 
 	job_debug("DO: Running standard job assignment")
 
 	for(var/level in level_order)
-		job_debug("JOBS: Filling in head roles, Level: [job_priority_level_to_string(level)]")
-		// Fill the head jobs first each level
-		fill_all_head_positions_at_priority(level)
-
 		// Loop through all unassigned players
-		for(var/mob/dead/new_player/player in unassigned)
-			if(!allow_all)
-				if(popcap_reached())
-					job_debug("JOBS: Popcap reached, trying to reject player: [player]")
-					try_reject_player(player)
+		for(var/mob/dead/new_player/player as anything in unassigned)
+			if(!allow_all && popcap_reached())
+				job_debug("JOBS: Popcap reached, trying to reject player: [player]")
+				try_reject_player(player)
 
 			job_debug("JOBS: Finding a job for player: [player], at job priority pref: [job_priority_level_to_string(level)]")
 
@@ -516,14 +504,16 @@ SUBSYSTEM_DEF(job)
 				job_debug("JOBS: Player not eligible for any available jobs at this priority level: [player]")
 				continue
 
-			// Otherwise, pick one of those jobs at random.
-			var/datum/job/picked_job = pick(possible_jobs)
+			// Otherwise, pick highest priority job.
+			var/datum/job/picked_job = pick_highest_priority_job(possible_jobs)
 
 			job_debug("JOBS: Now assigning role to player: [player], Job:[picked_job.title]")
 			assign_role(player, picked_job, do_eligibility_checks = FALSE)
 			if((picked_job.current_positions >= picked_job.spawn_positions) && picked_job.spawn_positions != -1)
 				job_debug("JOBS: Job is now full, Job: [picked_job], Positions: [picked_job.current_positions], Limit: [picked_job.spawn_positions]")
 				available_occupations -= picked_job
+
+	/// BANDASTATION EDIT END - Job Priority Staffing
 
 	job_debug("DO: Ending standard job assignment")
 
@@ -536,7 +526,7 @@ SUBSYSTEM_DEF(job)
 	job_debug("DO: Handle unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		if(!give_random_job(player))
+		if(!give_priority_job(player)) /// BANDASTATION EDIT - Job Priority Staffing
 			if(!assign_role(player, get_job_type(overflow_role))) //If everything is already filled, make them an assistant
 				job_debug("DO: Forced antagonist could not be assigned any random job or the overflow role. divide_occupations failed.")
 				job_debug("---------------------------------------------------")
@@ -578,7 +568,7 @@ SUBSYSTEM_DEF(job)
 				try_reject_player(player)
 				return
 		if (BERANDOMJOB)
-			if(!give_random_job(player))
+			if(!give_priority_job(player)) /// BANDASTATION EDIT - Job Priority Staffing
 				job_debug("HU: Player cannot be given a random job, trying to reject: [player]")
 				try_reject_player(player)
 				return
@@ -637,18 +627,22 @@ SUBSYSTEM_DEF(job)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
 	var/ssc = CONFIG_GET(number/security_scaling_coeff)
+	// BANDASTATION EDIT START - Configurable officer positions
+	var/min_positions = CONFIG_GET(number/security_min_positions)
+	var/max_positions = CONFIG_GET(number/security_max_positions)
 	if(ssc > 0)
 		if(J.spawn_positions > 0)
-			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len / ssc))) //Scale between configured minimum and 12 officers
+			var/officer_positions = clamp(round(unassigned.len / ssc), min_positions, max_positions) //Scale between configured minimum and maximum officers
 			job_debug("SOP: Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
 
-	//Spawn some extra eqipment lockers if we have more than 5 officers
+	//Spawn some extra eqipment lockers if needed
 	var/equip_needed = J.total_positions
 	if(equip_needed < 0) // -1: infinite available slots
-		equip_needed = 12
-	for(var/i=equip_needed-5, i>0, i--)
+		equip_needed = max_positions
+	for(var/i = equip_needed - GLOB.security_closets_count, i > 0, i--)
+	// BANDASTATION EDIT END
 		if(GLOB.secequipment.len)
 			var/spawnloc = GLOB.secequipment[1]
 			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
@@ -892,18 +886,20 @@ SUBSYSTEM_DEF(job)
 		// However no guarantee of game state between then and now, so don't skip eligibility checks on assign_role.
 		assign_role(new_player, get_job_type(LAZYACCESS(forced_occupations, mind)))
 
-	// Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
-	job_debug("APP: Assigning all JP_HIGH head of staff roles.")
-	var/head_count = fill_all_head_positions_at_priority(JP_HIGH)
+	/// BANDASTATION REMOVAL START - Job Priority Staffing
+	// // Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
+	// job_debug("APP: Assigning all JP_HIGH head of staff roles.")
+	// var/head_count = fill_all_head_positions_at_priority(JP_HIGH)
 
-	// If nobody has JP_HIGH on a Head role, try to force at least one Head of Staff so every shift has the best chance
-	// of having at least one leadership role.
-	if(head_count == 0)
-		force_one_head_assignment()
+	// // If nobody has JP_HIGH on a Head role, try to force at least one Head of Staff so every shift has the best chance
+	// // of having at least one leadership role.
+	// if(head_count == 0)
+	// 	force_one_head_assignment()
 
-	// Fill out all AI positions.
-	job_debug("APP: Filling all AI positions")
-	fill_ai_positions()
+	// // Fill out all AI positions.
+	// job_debug("APP: Filling all AI positions")
+	// fill_ai_positions()
+	/// BANDASTATION REMOVAL END - Job Priority Staffing
 
 /datum/controller/subsystem/job/proc/assign_all_overflow_positions()
 	job_debug("OVRFLW: Assigning all overflow roles.")

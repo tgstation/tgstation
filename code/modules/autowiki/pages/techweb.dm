@@ -13,7 +13,7 @@
 			continue
 
 		output += "\n\n" + include_template("Autowiki/TechwebEntry", list(
-			"name" = escape_value(node.display_name),
+			"name" = escape_value(declent_ru_initial(node.display_name, NOMINATIVE, node.display_name)),
 			"description" = escape_value(node.description),
 			"prerequisites" = generate_prerequisites(node.prereq_ids),
 			"designs" = generate_designs(node.design_ids),
@@ -30,7 +30,7 @@
 	for (var/design_id in design_ids)
 		var/datum/design/design = SSresearch.techweb_designs[design_id]
 		output += include_template("Autowiki/TechwebEntryDesign", list(
-			"name" = escape_value(design.name),
+			"name" = escape_value(declent_ru_initial(design.name, NOMINATIVE, design.name)),
 			"description" = escape_value(design.get_description()),
 		))
 
@@ -42,7 +42,7 @@
 	for (var/prereq_id in prereq_ids)
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[prereq_id]
 		output += include_template("Autowiki/TechwebEntryPrerequisite", list(
-			"name" = escape_value(node.display_name),
+			"name" = escape_value(declent_ru_initial(node.display_name, NOMINATIVE, node.display_name)),
 		))
 
 	return output

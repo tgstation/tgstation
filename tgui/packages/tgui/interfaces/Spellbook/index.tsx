@@ -21,16 +21,16 @@ export const widthSection = '466px';
 export const heightSection = '456px';
 
 const searchVerbs = [
-  'Searching',
-  'Seeking',
-  'Contemplating',
-  'Divining',
-  'Scrying',
-  'Peeking',
-  'Pondering',
-  'Gazing',
-  'Studying',
-  'Reviewing',
+  'Поиск',
+  'В поиске',
+  'Размышление',
+  'Предсказание',
+  'Ясновидение',
+  'Подглядывание',
+  'Раздумье',
+  'Вглядывание',
+  'Изучение',
+  'Просмотр',
 ];
 
 export function Spellbook(props) {
@@ -48,7 +48,7 @@ export function Spellbook(props) {
   }, [spellSearch]);
 
   return (
-    <Window title="Spellbook" theme="wizard" width={950} height={540}>
+    <Window title="Книга заклинаний" theme="wizard" width={950} height={540}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -65,7 +65,7 @@ export function Spellbook(props) {
                         icon="arrow-rotate-left"
                         onClick={() => setSpellSearch('')}
                       >
-                        Stop {selectedVerb}
+                        Остановить {selectedVerb}
                       </Button>
                     }
                   >
@@ -82,13 +82,13 @@ export function Spellbook(props) {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {`${points} points left to spend.`}
+                    {`Осталось очков: ${points}`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>
                   <Input
                     width={15}
-                    placeholder="Search for a spell..."
+                    placeholder="Поиск заклинания..."
                     onChange={setSpellSearch}
                   />
                 </Stack.Item>

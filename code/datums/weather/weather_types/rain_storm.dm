@@ -1,19 +1,19 @@
 /datum/weather/particle/rain_storm
 	name = "rain"
-	desc = "Heavy thunderstorms rain down below, drenching anyone caught in it."
+	desc = "На землю выпадают обильные дожди, промачивая до нитки всех, кто попал под них."
 
 	particle_type = /particles/weather/rain_storm
 	min_severity = 30
 
-	telegraph_message = span_danger("Thunder rumbles far above. You hear droplets drumming against the canopy.")
+	telegraph_message = span_danger("Издалека доносятся раскаты грома. Вы отчётливо слышите стук капель, падающих со сгущающихся туч.")
 	telegraph_overlay = "rain_low"
 	telegraph_duration = 30 SECONDS
 
-	weather_message = span_userdanger("<i>Rain pours down around you!</i>")
+	weather_message = span_userdanger("<i>На вас выпадает дождь!</i>")
 	weather_overlay = "rain_high"
 
-	end_message = span_bolddanger("The downpour gradually slows to a light shower.")
-	end_overlay = "rain_low"
+	end_message = span_bolddanger("Стук дождя постепенно затихает.")
+	telegraph_overlay = "rain_low"
 	end_duration = 30 SECONDS
 
 	// Don't display overlays when using particle weather
@@ -106,18 +106,18 @@
 	probability = 0 // admeme event
 
 /datum/weather/particle/rain_storm/acid
-	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
+	desc = "Выбросы серы и углерода в атмосферу приводят к образованию кислотных частиц в облаках. В конечном итоге их накапливается достаточно, чтобы сконденсироваться и выпасть обратно в виде сернокислотных дождей."
 
 	telegraph_duration = 40 SECONDS
-	telegraph_message = span_warning("Thunder rumbles far above. You hear acidic droplets hissing against the canopy. Seek shelter!")
+	telegraph_message = span_warning("Вы слышите звуки падения капель и следующее за ними кислотное шипение. Поскорее найдите укрытие.")
 	telegraph_sound = 'sound/effects/siren.ogg'
 
-	weather_message = span_userdanger("<i>Acidic rain pours down around you! Get inside!</i>")
+	weather_message = span_userdanger("<i>Кислотный дождь начинает обильно выпадать, расплавляя всё, на что попадает. Немедленно прячьтесь внутрь!</i>")
 	weather_duration_lower = 1 MINUTES
 	weather_duration_upper = 2 MINUTES
 
 	end_duration = 10 SECONDS
-	end_message = span_bolddanger("The downpour gradually slows to a light shower. It should be safe outside now.")
+	end_message = span_bolddanger("Стук кислотных капель постепенно затихает. Теперь можно безопасно выходить наружу.")
 
 	// these are weighted by acidpwr which causes more damage the higher it is
 	whitelist_weather_reagents = list(
@@ -129,9 +129,9 @@
 
 /datum/weather/particle/rain_storm/wizard
 	name = "magical rain"
-	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
+	desc = "На землю выпадают магические дожди, обдавая всех, кто попал под них, странными каплями."
 
-	telegraph_message = span_danger("A magical rain cloud appears above. You hear droplets falling down.")
+	telegraph_message = span_danger("Над вашей головой сгущаются магические тучи. Вы отчетливо слышите их стук, когда они начинают падать на землю")
 	protected_areas = /datum/weather/rad_storm::protected_areas
 
 	// same time durations as floor_is_lava event

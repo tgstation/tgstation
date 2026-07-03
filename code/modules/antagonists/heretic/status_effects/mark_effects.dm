@@ -166,9 +166,9 @@
 
 	var/mob/thrower = throw_args[4]
 	if(istype(thrower))
-		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+		to_chat(thrower, span_hypnophrase("Потусторонняя сила не позволяет вам выбросить [source.declent_ru(ACCUSATIVE)] из [get_area_name(locked_to)]!"))
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase("Потусторонняя сила не позволяет вам быть выброшенным из [get_area_name(locked_to)]!"))
 
 	return COMPONENT_CANCEL_THROW
 
@@ -179,7 +179,7 @@
 	if(!is_escaping_locked_area(source, destination))
 		return
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase("Потусторонняя сила препятствует вашему побегу из [get_area_name(locked_to)]!"))
 
 	source.Stun(1 SECONDS)
 	return TRUE
@@ -196,7 +196,7 @@
 	if(forced || !is_escaping_locked_area(old_loc, source))
 		return
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase("Потусторонняя сила препятствует вашему побегу из [get_area_name(locked_to)]!"))
 
 	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
 
@@ -262,7 +262,7 @@
 		return FALSE
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))
-	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
+	owner.balloon_alert(owner, "вы чувствуете, что и мышке не навредите!")
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
@@ -281,7 +281,7 @@
 
 	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
-	owner.balloon_alert(owner, "you feel able to once again strike!")
+	owner.balloon_alert(owner, "вы чувствуете, что можете снова драться!")
 
 /datum/status_effect/eldritch/moon/on_effect()
 	owner.adjust_confusion(30 SECONDS)

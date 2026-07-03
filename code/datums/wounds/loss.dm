@@ -12,8 +12,8 @@
 	threshold_minimum = WOUND_DISMEMBER_OUTRIGHT_THRESH // not actually used since dismembering is handled differently, but may as well assign it since we got it
 
 /datum/wound/loss
-	name = "Dismemberment Wound"
-	desc = "oof ouch!!"
+	name = "Рана от ампутации"
+	desc = "Ай яй яй!!"
 
 	sound_effect = 'sound/effects/dismember.ogg'
 	severity = WOUND_SEVERITY_LOSS
@@ -35,14 +35,14 @@
 	var/self_msg
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
-		occur_text = "is split open, causing [victim.p_their()] internal organs to spill out!"
-		self_msg = "is split open, causing your internal organs to spill out!"
+		occur_text = "рассекается, вызывая выпадение [victim.ru_p_them()] внутренних органов!"
+		self_msg = "рассекается, вызывая выпадение ваших внутренних органов!"
 	else
 		occur_text = dismembered_part.get_dismember_message(wounding_type, outright)
 
-	var/msg = span_bolddanger("[victim]'s [dismembered_part.plaintext_zone] [occur_text]")
+	var/msg = span_bolddanger("[capitalize(dismembered_part.ru_plaintext_zone[NOMINATIVE] || dismembered_part.plaintext_zone)] у [victim.declent_ru(GENITIVE)] [occur_text]")
 
-	victim.visible_message(msg, span_userdanger("Your [dismembered_part.plaintext_zone] [self_msg ? self_msg : occur_text]"))
+	victim.visible_message(msg, span_userdanger("Ваша [dismembered_part.ru_plaintext_zone[NOMINATIVE] || dismembered_part.plaintext_zone] [self_msg ? self_msg : occur_text]"))
 
 	loss_wounding_type = wounding_type
 
@@ -61,25 +61,25 @@
 	if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
-				occur_text = "is outright smashed to a gross pulp, severing it completely!"
+				occur_text = "разбивается в отвратительное месиво, отрываясь!"
 			if(WOUND_SLASH)
-				occur_text = "is outright slashed off, severing it completely!"
+				occur_text = "чисто срезается, полностью отсекаясь!"
 			if(WOUND_PIERCE)
-				occur_text = "is outright blasted apart, severing it completely!"
+				occur_text = "разрывается, полностью отсекаясь!"
 			if(WOUND_BURN)
-				occur_text = "is outright incinerated, falling to dust!"
+				occur_text = "сгорает, превратившись в пыль!"
 	else
 		var/bone_text = get_internal_description()
 		var/tissue_text = get_external_description()
 
 		switch(wounding_type)
 			if(WOUND_BLUNT)
-				occur_text = "is shattered through the last [bone_text] holding it together, severing it completely!"
+				occur_text = "теряет от удара последнюю [bone_text], что удерживала конечность!"
 			if(WOUND_SLASH)
-				occur_text = "is slashed through the last [tissue_text] holding it together, severing it completely!"
+				occur_text = "теряет от разреза последнюю [tissue_text], что удерживала конечность!"
 			if(WOUND_PIERCE)
-				occur_text = "is pierced through the last [tissue_text] holding it together, severing it completely!"
+				occur_text = "теряет от прокалывания последнюю [tissue_text], что удерживала конечность!"
 			if(WOUND_BURN)
-				occur_text = "is completely incinerated, falling to dust!"
+				occur_text = "сгорает, превратившись в пыль!"
 
 	return occur_text

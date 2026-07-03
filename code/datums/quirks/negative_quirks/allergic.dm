@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
-	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
+	desc = "С самого детства у вас была аллергия на некоторые химические вещества..."
 	icon = FA_ICON_PRESCRIPTION_BOTTLE
 	value = -6
-	gain_text = span_danger("You feel your immune system shift.")
-	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
-	medical_record_text = "Patient's immune system responds violently to certain chemicals."
+	gain_text = span_danger("Вы чувствуете, как меняется ваша иммунная система.")
+	lose_text = span_notice("Вы чувствуете, как ваша иммунная система приходит норму.")
+	medical_record_text = "Иммунная система пациента бурно реагирует на определенные химические вещества."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
@@ -35,8 +35,8 @@
 		allergy_chem_names += initial(chem_type.name)
 
 	allergy_string = allergy_chem_names.Join(", ")
-	name = "Extreme [allergy_string] Allergies"
-	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
+	name = "Экстремальная аллергия на: <b>[LOWER_TEXT(allergy_string)]</b>"
+	medical_record_text = "Иммунная система пациента бурно реагирует на: <b>[LOWER_TEXT(allergy_string)]</b>"
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_metab))
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
@@ -50,7 +50,7 @@
 
 /datum/quirk/item_quirk/allergic/post_add()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
-	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
+	to_chat(quirk_holder, span_boldnotice("У вас аллергия на: <b>[LOWER_TEXT(allergy_string)]</b>. Убедитесь, что вы не употребляете ничего из этого!"))
 
 /datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick)
 	SIGNAL_HANDLER

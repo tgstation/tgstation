@@ -1,0 +1,8 @@
+["Mining Dock"]
+nominative = "шахтерский док"
+genitive = "шахтерского дока"
+dative = "шахтерскому доку"
+accusative = "шахтерский док"
+instrumental = "шахтерским доком"
+prepositional = "шахтерском доке"
+gender = "male"

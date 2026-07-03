@@ -29,7 +29,7 @@ export const ExosuitFabricator = (props) => {
   }
 
   return (
-    <Window title="Exosuit Fabricator" width={1100} height={600}>
+    <Window title="Фабрикатор экзокостюмов" width={1100} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -54,7 +54,7 @@ export const ExosuitFabricator = (props) => {
                         });
                       }}
                     >
-                      Queue All
+                      Всё в очередь
                     </Button>
                   )}
                 />
@@ -207,27 +207,27 @@ const Queue = (props: QueueProps) => {
         <Stack.Item>
           <Section
             fill
-            title="Queue"
+            title="Очередь"
             buttons={
               <>
                 <Button.Confirm
                   disabled={!queue.length}
                   color="bad"
                   icon="minus-circle"
-                  content="Clear Queue"
+                  content="Очистить очередь"
                   onClick={() => act('clear_queue')}
                 />
                 {(!!processing && (
                   <Button
                     disabled={!queue.length}
-                    content="Stop"
+                    content="Остановить"
                     icon="stop"
                     onClick={() => act('stop_queue')}
                   />
                 )) || (
                   <Button
                     disabled={!queue.length}
-                    content="Build Queue"
+                    content="Начать сборку"
                     icon="play"
                     onClick={() => act('build_queue')}
                   />

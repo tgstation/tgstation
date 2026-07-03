@@ -1,0 +1,337 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"b" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"c" = (
+/turf/open/floor/iron/smooth,
+/area/station/security/lockers)
+"d" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"e" = (
+/turf/closed/wall/r_wall,
+/area/station/security/lockers)
+"h" = (
+/obj/structure/fence/door,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"l" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/security/lockers)
+"m" = (
+/turf/template_noop,
+/area/template_noop)
+"n" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 4;
+	height = 5;
+	name = "SS13: Gamma Armory";
+	shuttle_id = "gamma_home";
+	width = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"o" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/nanotrasen,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"p" = (
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"r" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"x" = (
+/obj/structure/fence/door{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"z" = (
+/turf/open/floor/glass,
+/area/station/security/lockers)
+"A" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"C" = (
+/turf/closed/wall/ice,
+/area/icemoon/surface/outdoors/nospawn)
+"D" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Equipment Room"
+	},
+/obj/structure/closet/bombcloset/security,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/security/lockers)
+"E" = (
+/mob/living/basic/mining/polarbear{
+	move_force = 999;
+	name = "Louie"
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"G" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"H" = (
+/mob/living/basic/mining/polarbear{
+	move_force = 999;
+	name = "Dewey"
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"I" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"J" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/l3closet/security,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/station/security/lockers)
+"K" = (
+/obj/effect/turf_decal/bot/right,
+/obj/machinery/recharge_station,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/security/lockers)
+"M" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"N" = (
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"O" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"P" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Q" = (
+/obj/machinery/door/poddoor/shuttledock{
+	checkdir = 8
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/atmos_shield_gen/active,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/security/lockers)
+"S" = (
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"T" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"V" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"W" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"X" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Y" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Z" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+m
+r
+M
+Y
+d
+x
+r
+M
+d
+r
+m
+m
+"}
+(2,1,1) = {"
+m
+T
+S
+S
+S
+O
+O
+S
+S
+a
+m
+m
+"}
+(3,1,1) = {"
+m
+A
+S
+S
+S
+S
+S
+S
+S
+P
+m
+m
+"}
+(4,1,1) = {"
+m
+A
+S
+S
+S
+S
+S
+S
+S
+p
+C
+W
+"}
+(5,1,1) = {"
+m
+A
+S
+S
+S
+S
+S
+S
+S
+S
+o
+V
+"}
+(6,1,1) = {"
+m
+Z
+G
+X
+X
+n
+X
+X
+G
+I
+h
+b
+"}
+(7,1,1) = {"
+m
+V
+e
+e
+e
+Q
+e
+e
+e
+E
+C
+N
+"}
+(8,1,1) = {"
+m
+H
+e
+K
+c
+c
+l
+D
+e
+m
+m
+m
+"}
+(9,1,1) = {"
+m
+m
+m
+m
+m
+z
+m
+J
+e
+m
+m
+m
+"}

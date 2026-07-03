@@ -1,0 +1,8 @@
+["bike horn"]
+nominative = "велосипедный гудок"
+genitive = "велосипедного гудка"
+dative = "велосипедному гудку"
+accusative = "велосипедный гудок"
+instrumental = "велосипедным гудком"
+prepositional = "велосипедном гудке"
+gender = "male"

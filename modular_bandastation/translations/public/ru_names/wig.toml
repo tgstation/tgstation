@@ -1,0 +1,8 @@
+[wig]
+nominative = "парик"
+genitive = "парика"
+dative = "парику"
+accusative = "парик"
+instrumental = "париком"
+prepositional = "парике"
+gender = "male"

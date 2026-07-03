@@ -31,6 +31,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
 .adminsay				{color:	#FF4500;	font-weight: bold;}
+.mentorsay				{color:	#055dff;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
@@ -79,6 +80,7 @@ h1.alert, h2.alert		{color: #000000;}
 .hear					{color: #000099;	font-style: italic;}
 .adminnotice			{color: #0000ff;}
 .adminhelp				{color: #ff0000;	font-weight: bold;}
+.mentorhelp				{color: #0077bb;	font-weight: bold;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}

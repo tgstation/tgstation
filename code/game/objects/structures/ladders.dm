@@ -30,14 +30,14 @@
 
 /obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(up)
-		context[SCREENTIP_CONTEXT_LMB] = "Climb up"
+		context[SCREENTIP_CONTEXT_LMB] = "Подняться наверх"
 	if(down)
-		context[SCREENTIP_CONTEXT_RMB] = "Climb down"
+		context[SCREENTIP_CONTEXT_RMB] = "Спуститься вниз"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/ladder/examine(mob/user)
 	. = ..()
-	. += span_info("[EXAMINE_HINT("Left-click")] it to start moving up; [EXAMINE_HINT("Right-click")] to start moving down.")
+	. += span_info("[EXAMINE_HINT("ЛКМ")] для подъема наверх; [EXAMINE_HINT("ПКМ")] для спуска вниз.")
 
 /obj/structure/ladder/Destroy(force)
 	GLOB.ladders -= src
@@ -228,7 +228,7 @@
 
 /obj/structure/ladder/singularity_pull(atom/singularity, current_size)
 	if (!(resistance_flags & INDESTRUCTIBLE))
-		visible_message(span_danger("[src] is torn to pieces by the gravitational pull!"))
+		visible_message(span_danger("[capitalize(declent_ru(NOMINATIVE))] разрывается на части от гравитационной тяги!"))
 		qdel(src)
 
 /obj/structure/ladder/proc/use(mob/user, going_up = TRUE)
@@ -236,13 +236,13 @@
 		return
 
 	if(!up && !down)
-		balloon_alert(user, "doesn't lead anywhere!")
+		balloon_alert(user, "никуда не ведет!")
 		return
 	if(going_up ? !up : !down)
-		balloon_alert(user, "can't go any further [going_up ? "up" : "down"]")
+		balloon_alert(user, "больше некуда [going_up ? "подниматься наверх" : "спускаться вниз"]")
 		return
 	if(user.buckled && user.buckled.anchored)
-		balloon_alert(user, "buckled to something anchored!")
+		balloon_alert(user, "цель пристегнута к чему-то прикрученному!")
 		return
 	if(travel_time)
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
@@ -270,13 +270,13 @@
 
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
-	var/up_down = going_up ? "up" : "down"
-	user.balloon_alert_to_viewers("climbing [up_down]...")
+	var/up_down = going_up ? "поднимается наверх" : "спускается вниз"
+	user.balloon_alert_to_viewers("[up_down]...")
 
 /obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE, grant_exp = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
 	if(!ladder)
-		balloon_alert(user, "there's nothing that way!")
+		balloon_alert(user, "в этом направлении пусто!")
 		return
 	var/response = SEND_SIGNAL(user, COMSIG_LADDER_TRAVEL, src, ladder, going_up)
 	if(response & LADDER_TRAVEL_BLOCK)
@@ -300,18 +300,18 @@
 
 /// The messages shown after the player has finished climbing. Players can see this happen from either src or the destination so we've 2 POVs here
 /obj/structure/ladder/proc/show_final_fluff_message(mob/user, obj/structure/ladder/destination, going_up)
-	var/up_down = going_up ? "up" : "down"
+	var/up_down = going_up ? "поднимается наверх" : "спускается вниз"
 
 	//POV of players around the source
-	visible_message(span_notice("[user] climbs [up_down] [src]."))
+	visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] [up_down] по [declent_ru(DATIVE)]."))
 	//POV of players around the destination
-	user.balloon_alert_to_viewers("climbed [up_down]")
+	user.balloon_alert_to_viewers("[up_down]")
 
 /// Shows a radial menu that players can use to climb up and down a stair.
 /obj/structure/ladder/proc/show_options(mob/user, is_ghost = FALSE)
 	var/list/tool_list = list()
-	tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
-	tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+	tool_list["Наверх"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	tool_list["Вниз"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 
 	var/datum/callback/check_menu
 	if(!is_ghost)
@@ -320,9 +320,9 @@
 
 	var/going_up
 	switch(result)
-		if("Up")
+		if("Наверх")
 			going_up = TRUE
-		if("Down")
+		if("Вниз")
 			going_up = FALSE
 		else
 			return
@@ -430,7 +430,7 @@
 ///Ghosts use the byond default popup menu function on right click, so this is going to work a little differently for them.
 /obj/structure/ladder/proc/ghost_use(mob/user)
 	if (!up && !down)
-		balloon_alert(user, "doesn't lead anywhere!")
+		balloon_alert(user, "никуда не ведет!")
 		return
 	if(!up) //only goes down
 		travel(user, going_up = FALSE, is_ghost = TRUE)

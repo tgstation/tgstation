@@ -1,0 +1,8 @@
+["cargo beret"]
+nominative = "берет снабжения"
+genitive = "берета снабжения"
+dative = "берету снабжения"
+accusative = "берет снабжения"
+instrumental = "беретом снабжения"
+prepositional = "берете снабжения"
+gender = "male"

@@ -1,0 +1,18 @@
+{
+	"breathscarf": [
+		{
+			"type": "icon_state",
+			"icon_state": "breathscarf",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"breathscarf_up": [
+		{
+			"type": "icon_state",
+			"icon_state": "breathscarf_up",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

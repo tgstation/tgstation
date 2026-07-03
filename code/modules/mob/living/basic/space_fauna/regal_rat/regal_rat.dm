@@ -3,7 +3,7 @@
 /// The cheesiest, most crowned rat of them all. Regent superior of all rats in maintenance... at least until someone else tries to encroach on their claim.
 /mob/living/basic/regal_rat
 	name = "feral regal rat"
-	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom."
+	desc = "Эволюционировавшая крыса, созданная с помощью какой-то странной науки. Он со смертоносной эффективностью ведёт за собой крыс, живущих поблизости, чтобы защитить свое королевство."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
@@ -59,9 +59,9 @@
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
-		role_name = "the Regal Rat, cheesy be their crown",\
+		role_name = "Королевская Крыса! Пусть корона тлится сыром Его Величеству!",\
 		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
-		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
+		assumed_control_message = "Вы - независимая, дикая сила на станции! Собирайте монеты, мусор, сыр и прочее, укрываясь в темноте!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 		poll_chat_border_icon = /obj/item/food/cheese/wedge,\
 	)
@@ -85,14 +85,14 @@
 		return
 
 	if(isregalrat(user))
-		. += span_warning("Who is this foolish false king? This will not stand!")
+		. += span_warning("Король-самозванец посмел посягнуть на корону? Непростительно!")
 		return
 
 	if(ismouse(user))
 		if(user.faction_check_atom(src, exact_match = TRUE))
-			. += span_notice("This is your king. Long live [p_their()] majesty!")
+			. += span_notice("Это Ваш король. Да здравствует Его Величество!")
 		else
-			. += span_warning("This is a false king! Strike [p_them()] down!")
+			. += span_warning("Это не Ваш король! Сокрушите его!")
 		return
 
 	. += special_moniker
@@ -108,9 +108,9 @@
 /// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
-		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
+		"Всем встать! [name] восходит на трон в [get_area(src)].",
 		source = src,
-		header = "Sentient Rat Created",
+		header = "Появилась разумная крыса",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
@@ -124,49 +124,49 @@
 /mob/living/basic/regal_rat/proc/grant_titles()
 	// The title conveyed upon us thanks to our position.
 	var/static/list/titles = list(
-		"Bojar",
-		"Emperor",
-		"King",
-		"Lord",
-		"Master",
-		"Overlord",
-		"Prince",
-		"Shogun",
-		"Supreme",
-		"Tsar",
+		"Боярин",
+		"Император",
+		"Король",
+		"Лорд",
+		"Мастер",
+		"Повелитель",
+		"Принц",
+		"Сёгун",
+		"Государь",
+		"Царь",
 	)
 
 	// The domain which we have conquered by inheritance or sheer force.
 	var/static/list/kingdoms = list(
-		"Cheese",
-		"Garbage",
-		"Maintenance",
-		"Miasma",
-		"Plague",
-		"Trash",
-		"Vermin",
+		"Сыра",
+		"Отбросов",
+		"Техов",
+		"Миазмы",
+		"Чумы",
+		"Мусора",
+		"Вредительства",
 	)
 
 	// The descriptor of our character.
 	var/static/list/descriptors = list(
-		"Big Cheese",
-		"Brute",
-		"Champion of All Mislaid Creatures",
-		"Foul",
-		"Great",
-		"Grey",
-		"Horrible",
-		"Populator",
-		"Powerful",
-		"Quiet",
-		"Vain",
+		"Большесырый",
+		"Жестокий",
+		"Чемпион заблудших существ",
+		"Омерзительный",
+		"Великий",
+		"Серый",
+		"Ужасный",
+		"Популятор",
+		"Могущественный",
+		"Тихий",
+		"Тщеславный",
 	)
 
 	var/selected_title = pick(titles)
 	var/selected_kingdom = pick(kingdoms)
 
-	name = "[selected_title] [selected_kingdom], the [pick(descriptors)]" // ex "Tsar Maintenance, the Brute"
-	special_moniker = "You better not screw with [p_their()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
+	name = "[selected_title] [selected_kingdom], [pick(descriptors)]" // ex "Tsar Maintenance, the Brute"
+	special_moniker = "Крыса [selected_kingdom]. [selected_title]... Да кто вообще дал ему такой титул этой дыры?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
 /mob/living/basic/regal_rat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
@@ -198,11 +198,11 @@
 
 	var/mob/living/living_target = the_target
 	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
-		balloon_alert(src, "already dead!")
+		balloon_alert(src, "уже мёртв!")
 		return FALSE
 
 	if(living_target.faction_check_atom(src, exact_match = TRUE))
-		balloon_alert(src, "one of your soldiers!")
+		balloon_alert(src, "один из ваших слуг!")
 		return FALSE
 
 	return TRUE
@@ -220,16 +220,16 @@
 		return FALSE
 
 	visible_message(
-		span_warning("[src] starts licking [target] passionately!"),
-		span_notice("You start licking [target]..."),
-		span_warning("You hear a disgusting slurping sound..."),
+		span_warning("[src] начинает страстно лизать [target]!"),
+		span_notice("Вы начинаете лизать [target]..."),
+		span_warning("Вы слышите отвратительный чавкающий звук..."),
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
 		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
-	balloon_alert(src, "licked")
+	balloon_alert(src, "облизано")
 	return TRUE
 
 /**
@@ -242,7 +242,7 @@
  */
 /mob/living/basic/regal_rat/proc/cheese_heal(obj/item/target, amount, message)
 	if(health >= maxHealth)
-		balloon_alert(src, "you feel full!")
+		balloon_alert(src, "вы чувствуете сытость!")
 		return
 
 	to_chat(src, message)

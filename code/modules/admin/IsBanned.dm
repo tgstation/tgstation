@@ -53,16 +53,17 @@
 		qdel(query_client_in_db)
 
 	//Whitelist
-	if(!real_bans_only && !C && CONFIG_GET(flag/usewhitelist))
+	// BANDASTATION EDIT - SSCentral - Admins need wls too
+	if(!real_bans_only && CONFIG_GET(flag/usewhitelist)) // Allow whitelist banning people who are already on a server
 		if(!check_whitelist(ckey))
-			if (admin)
-				log_admin("The admin [ckey] has been allowed to bypass the whitelist")
-				if (message)
-					message_admins(span_adminnotice("The admin [ckey] has been allowed to bypass the whitelist"))
-					addclientmessage(ckey,span_adminnotice("You have been allowed to bypass the whitelist"))
-			else
-				log_access("Failed Login: [ckey] - Not on whitelist")
-				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
+			// if (admin)
+			// 	log_admin("The admin [ckey] has been allowed to bypass the whitelist")
+			// 	if (message)
+			// 		message_admins(span_adminnotice("The admin [ckey] has been allowed to bypass the whitelist"))
+			// 		addclientmessage(ckey,span_adminnotice("You have been allowed to bypass the whitelist"))
+			// else
+			log_access("Failed Login: [ckey] - Not on whitelist")
+			return list("reason"="whitelist", "desc" = "\nПричина: Вас ([key]) нет в вайтлисте этого сервера. Приобрести доступ возможно у одного из стримеров Банды за баллы канала или получить как часть бонусов за подписку на boosty, начиная со 2 тира.")
 
 	//Guest Checking
 	if(!real_bans_only && !C && is_guest_key(key))
@@ -75,7 +76,7 @@
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(!real_bans_only && !C && extreme_popcap && !admin)
+	if(!real_bans_only && !C && extreme_popcap && !admin && !CONFIG_GET(string/panic_server_address))
 		var/popcap_value = GLOB.clients.len
 		if(popcap_value >= extreme_popcap && !GLOB.joined_player_list.Find(ckey))
 			if(!CONFIG_GET(flag/byond_member_bypass_popcap) || !world.IsSubscribed(ckey, "BYOND"))

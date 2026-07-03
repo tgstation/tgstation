@@ -1,6 +1,6 @@
 /datum/experiment/scanning/random
-	name = "Base random scanning experiment"
-	description = "This experiment's contents will be randomized. Good luck!"
+	name = "Эксперимент со случайным сканированием"
+	description = "Содержание этого эксперимента будет рандомизировано. Удачи!"
 	///list of types which that can be included in the experiment. Randomly picked from on New
 	var/list/possible_types = list()
 	/// The total desired number of atoms to have scanned
@@ -24,7 +24,7 @@
 	. = ..()
 	damage_percent = rand(15, 95)
 	//updating the description with the damage_percent var set
-	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to around [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
+	description = "Ваши фабрикаторы мехов позволяют быстро производить их в небольших масштабах, но структурная целостность созданных деталей уступает тем, что изготовлены более традиционно. Повредите пару мехов до целостности около [damage_percent]% и просканируйте их, чтобы помочь нам определить, как броня выходит из строя под нагрузкой."
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
@@ -35,9 +35,9 @@
 	if(!istype(stompy))
 		return FALSE //Not a mech
 	if(!HAS_TRAIT(stompy,TRAIT_MECHA_CREATED_NORMALLY))
-		experiment_handler.announce_message("Scanned mech was not made by crew. There is nothing to learn here.")
+		experiment_handler.announce_message("Отсканированный мех не был сделан экипажем. Здесь нечему учиться.")
 		return FALSE //Not hand-crafted
 	if(!(stompy.equip_by_category[MECHA_L_ARM] && stompy.equip_by_category[MECHA_R_ARM]))
-		experiment_handler.announce_message("Scanned mech is missing equipment on their arms to proceed this experiment.")
+		experiment_handler.announce_message("Отсканированный мех не имеет оборудования, необходимого для проведения эксперимента.")
 		return FALSE //Both arms need be filled
 	return ..()

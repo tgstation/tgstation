@@ -471,6 +471,7 @@
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
 	time = 3 SECONDS
 	category = CAT_CONTAINERS
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY // BANDASTATION ADDITION - Crafting unit test workaround
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	name = "mushroom bowl"

@@ -1,0 +1,8 @@
+[wrench]
+nominative = "гаечный ключ"
+genitive = "гаечного ключа"
+dative = "гаечному ключу"
+accusative = "гаечный ключ"
+instrumental = "гаечным ключом"
+prepositional = "гаечном ключе"
+gender = "male"

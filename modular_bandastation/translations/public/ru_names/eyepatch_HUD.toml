@@ -1,0 +1,8 @@
+["eyepatch HUD"]
+nominative = "повязка с ИЛС"
+genitive = "повязки с ИЛС"
+dative = "повязке с ИЛС"
+accusative = "повязку с ИЛС"
+instrumental = "повязкой с ИЛС"
+prepositional = "повязке с ИЛС"
+gender = "female"

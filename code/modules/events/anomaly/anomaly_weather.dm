@@ -4,9 +4,9 @@
 
 	max_occurrences = 2
 	weight = 10
-	description = "This anomaly causes weather effects to manifest indoors. \
-		It can be cause completely harmless weather like light rain, or something which could harm unprotected individuals like snowstorms. \
-		Note, triggering multiple at once will likely break weather sound effects."
+	description = "Эта аномалия приводит к тому, что погодные условия проявляются в помещении. \
+		Она может вызвать совершенно безобидную погоду, такую как небольшой дождь, или что-то такое как снежные бури, что может нанести вред незащищенным людям. \
+		Обратите внимание, одновременное использование нескольких эффектов, скорее всего, приведет к нарушению звуковых эффектов погоды."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 5
 	admin_setup = list(
@@ -30,7 +30,7 @@
 /datum/round_event/anomaly/anomaly_weather/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Barometric anomaly detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Барометрическая аномалия обнаружена на [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.declent_ru(NOMINATIVE)].", "Обнаружена аномалия")
 
 /datum/round_event/anomaly/anomaly_weather/make_anomaly(turf/anomaly_turf)
 	return new anomaly_path(anomaly_turf, null, null, forced_weather_type, forced_thunder_chance)
@@ -41,8 +41,8 @@
 
 	max_occurrences = 1
 	weight = 5
-	description = "This anomaly causes more hazardous weather effects to manifest indoors, like thunderstorms with frequent lightning strikes. \
-		This version will trigger lightning strikes which can cause decent damage to people and equipment alike."
+	description = "Эта аномалия приводит к более опасным погодным явлениям в помещении, таким как грозы с частыми ударами молний. \
+		Эта версия вызовет удары молнии, которые могут нанести значительный ущерб как людям, так и оборудованию."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 7
 
@@ -54,7 +54,7 @@
 /datum/round_event/anomaly/anomaly_weather/thundering/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Severe barometric anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Серьезная барометрическая аномалия обнаружена на [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.declent_ru(NOMINATIVE)].", "Обнаружена аномалия")
 
 /datum/event_admin_setup/listed_options/weather_anomaly
 	input_text = "Weather type? Be very careful with the dangerous ones!"

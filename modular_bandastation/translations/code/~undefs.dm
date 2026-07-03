@@ -1,0 +1,1 @@
+#undef PATH_TO_TRANSLATE_DATA

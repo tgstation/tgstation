@@ -4,15 +4,15 @@
 #define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
 
 /datum/antagonist/traitor
-	name = "\improper Traitor"
-	roundend_category = "traitors"
+	name = "\proper Предатель"
+	roundend_category = "Предатели"
 	antagpanel_category = "Traitor"
 	pref_flag = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
 	ui_name = "AntagInfoTraitor"
-	suicide_cry = "FOR THE SYNDICATE!!"
+	suicide_cry = "ЗА СИНДИКАТ!!"
 	preview_outfit = /datum/outfit/traitor
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
@@ -140,6 +140,7 @@
 		if(generated == job_objective)
 			job_objective = null
 		objectives += generated
+	list_clear_nulls(objectives) // BANDASTATION EDIT: Safety for uplink and TP
 
 /**
  * ## forge_ending_objective
@@ -175,7 +176,7 @@
 
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais(skip_syndicate = TRUE)
-		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
+		if(active_ais.len && GLOB.joined_player_list.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len))) // BANDASTATION EDIT: div by zero check
 			var/datum/objective/destroy/destroy_objective = new()
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
@@ -270,13 +271,13 @@
 		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				traitor_won = FALSE
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+			objectives_text += "<br><B>Задача #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
-		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
+		var/uplink_text = "(использовал [used_telecrystals] ТК) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
 			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
@@ -290,9 +291,9 @@
 	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitor_won)
-		result += span_greentext("The [special_role_text] was successful!")
+		result += span_greentext("[special_role_text] был успешен!")
 	else
-		result += span_redtext("The [special_role_text] has failed!")
+		result += span_redtext("[special_role_text] провалился!")
 		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
@@ -306,20 +307,20 @@
 
 	if(completed_contracts <= 0)
 		return
-	var/plural_check = "contract"
+	var/plural_check = "контракт"
 	if (completed_contracts > 1)
-		plural_check = "contracts"
-	var/sent_data = "Completed [span_greentext("[completed_contracts]")] [plural_check] for a total of [span_greentext("[tc_total] TC")]!<br>"
+		plural_check = "контракты"
+	var/sent_data = "Выполнил [span_greentext("[completed_contracts]")] [plural_check] на общую сумму в [span_greentext("[tc_total] ТК")]!<br>"
 	if(contractor_support_unit)
-		sent_data += "<b>[contractor_support_unit.owner.key]</b> played <b>[contractor_support_unit.owner.current.name]</b>, their contractor support unit.<br>"
+		sent_data += "<b>[contractor_support_unit.owner.key]</b> был <b>[contractor_support_unit.owner.current.name]</b>, помощником контратника.<br>"
 	return sent_data
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(SStraitor.syndicate_code_phrase, ", ")
 	var/responses = jointext(SStraitor.syndicate_code_response, ", ")
 
-	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
+	var/message = "<br><b>Кодовыми фразами были:</b> <span class='bluetext'>[phrases]</span><br>\
+					<b>Кодовыми ответами были:</b> [span_redtext("[responses]")]<br>"
 
 	return message
 

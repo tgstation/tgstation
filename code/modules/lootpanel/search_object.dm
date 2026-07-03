@@ -19,7 +19,7 @@
 	. = ..()
 
 	src.item = item
-	name = item.name
+	name = item.declent_ru(NOMINATIVE)
 	if(isobj(item))
 		path = item.type
 

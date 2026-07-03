@@ -49,6 +49,7 @@
 		if(stat != DEAD)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick)
+			handle_ssd(seconds_per_tick) // BANDASTATION ADD - SSD INDICATOR
 
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()

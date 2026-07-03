@@ -170,7 +170,7 @@
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/get_default_say_verb()
-	return length(speak_emote) ? pick(speak_emote) : ..()
+	return length(speak_emote) ? ru_say_verb(pick(speak_emote)) : ..()
 
 /mob/living/basic/death(gibbed)
 	. = ..()

@@ -100,7 +100,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/get_roundend_success_suffix()
 	if(no_failure)
 		return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
-	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
+	return check_completion() ? span_greentext("Успех!") : span_redtext("Неудача.")
 
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
 	if(!islist(dupe_search_range))
@@ -210,7 +210,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(LAZYLEN(our_mind.failed_special_equipment))
 		podspawn(list(
 			"target" = get_turf(owner),
-			"style" = /datum/pod_style/syndicate,
+			"path" = /obj/structure/closet/supplypod/teleporter/syndicate, // BANDASTATION EDIT - Original: "style" = /datum/pod_style/syndicate,
 			"spawn" = our_mind.failed_special_equipment,
 		))
 		our_mind.failed_special_equipment = null
@@ -230,9 +230,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
+		explanation_text = "Убейте [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())]."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -280,9 +280,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
+		explanation_text = "Убейте или отправьте в изгнание [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())]."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/maroon
 	name = "maroon"
@@ -302,9 +302,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())], from escaping alive."
+		explanation_text = "Не дайте [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())], эвакуироватся живым со станции."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/maroon/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -333,9 +333,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
+		explanation_text = "Украдите мозг [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())]."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/debrain/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -359,9 +359,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
+		explanation_text = "Защитите [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())]."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/protect/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -384,9 +384,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())] escapes alive and out of custody."
+		explanation_text = "Удостоверьтесь, что [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())], сбежит живым и вне заключения."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/jailbreak/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -400,14 +400,14 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())] is delivered to Nanotrasen alive and in custody."
+		explanation_text = "Удостоверьтесь, что [target.name], [!target_role_type ? job_title_ru(target.assigned_role.title) : english_list(target.get_special_roles())], доставлен на ЦК живым и в заключении."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/hijack
 	name = "hijack"
-	explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console)."
-	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console). Leave no team member behind."
+	explanation_text = "Угоните эвакуационный шаттл, взломав его навигационные протоколы через консоль управления (Alt-Клик по консоли эвакуационного шаттла)."
+	team_explanation_text = "Угоните эвакуационный шаттл, взломав его навигационные протоколы через консоль управления (Alt-Клик по консоли эвакуационного шаттла). Все члены вашей команды должны выжить."
 	martyr_compatible = FALSE //Technically you won't get both anyway.
 	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
 	admin_grantable = TRUE
@@ -424,8 +424,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/elimination
 	name = "elimination"
-	explanation_text = "Slaughter all loyalist crew aboard the shuttle. You, and any likeminded individuals, must be the only remaining people on the shuttle."
-	team_explanation_text = "Slaughter all loyalist crew aboard the shuttle. You, and any likeminded individuals, must be the only remaining people on the shuttle. Leave no team member behind."
+	explanation_text = "Убейте всех лоялистов на борту шаттла. Вы и любые единомышленники, должно быть единственными живыми на шаттле."
+	team_explanation_text = "Уничтожьте всех лоялистов на борту шаттла. Вы и любые единомышленники должны быть единственными живыми на шаттле. Все члены вашей команды должны выжить."
 	martyr_compatible = FALSE
 
 /datum/objective/elimination/check_completion()
@@ -439,7 +439,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/elimination/highlander
 	name="highlander elimination"
-	explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
+	explanation_text = "Сбегите на шаттле в одиночку. Убедитесь, что никто другой кроме вас не сбежал."
 
 /datum/objective/elimination/highlander/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -449,13 +449,17 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(!considered_alive(M, enforce_human = FALSE) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
 			return FALSE
 	return SSshuttle.emergency.elimination_hijack(filter_by_human = FALSE, solo_hijack = TRUE)
-
+//BANDASTATION EDIT START - Rework Malf objectives
 /datum/objective/block
 	name = "no organics on shuttle"
-	explanation_text = "Do not allow any organic lifeforms with sapience to escape on the shuttle alive."
+	explanation_text = "Не позволяйте разумным органическим формам жизни сбежать на шаттле живыми. \
+	Захват шаттла эвакуации синтетиками неплохая идея. \
+	Успешное использование устройства судного дня - тоже вариант."
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
+	if(GLOB.station_was_nuked)
+		return TRUE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
@@ -463,25 +467,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 				return FALSE
 	return TRUE
-
-/datum/objective/purge
-	name = "no mutants on shuttle"
-	explanation_text = "Ensure no nonhuman humanoid species with sapience are present aboard the escape shuttle."
-	martyr_compatible = TRUE
-
-/datum/objective/purge/check_completion()
-	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return TRUE
-	for(var/mob/living/player in GLOB.player_list)
-		if((get_area(player) in SSshuttle.emergency.shuttle_areas) && player.mind && player.stat != DEAD && ishuman(player))
-			var/mob/living/carbon/human/H = player
-			if(H.dna.species.id != SPECIES_HUMAN)
-				return FALSE
-	return TRUE
-
+// BANDASTATION EDIT END
 /datum/objective/robot_army
 	name = "robot army"
-	explanation_text = "Have at least eight active cyborgs synced to you."
+	explanation_text = "Синхронизируйте с собой как минимум восемь активных киборгов."
 	martyr_compatible = FALSE
 
 /datum/objective/robot_army/check_completion()
@@ -498,8 +487,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/escape
 	name = "escape"
-	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
-	team_explanation_text = "Have all members of your team escape on a shuttle or pod alive, without being in custody."
+	explanation_text = "Сбегите живым на эвакуационном шаттле или челноке, при этом не являясь в заключении."
+	team_explanation_text = "Все члены вашей команды должны сбежать живыми на эвакуационном шаттле или челноке, при этом не являясь в заключении."
 	admin_grantable = TRUE
 
 /datum/objective/escape/check_completion()
@@ -527,18 +516,18 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target?.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role.title]"
+		explanation_text = "Сбегите на эвакуационном шаттле или челноке под личиной [target_real_name], [job_title_ru(target.assigned_role.title)]"
 		var/mob/living/carbon/human/H
 		if(ishuman(target.current))
 			H = target.current
 		if(H && H.get_id_name() != target_real_name)
 			target_missing_id = 1
 		else
-			explanation_text += " while wearing their identification card"
+			explanation_text += ", при этом нося ID карту цели"
 		explanation_text += "." //Proper punctuation is important!
 
 	else
-		explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
+		explanation_text = "Сбегите живым на эвакуационном шаттле или челноке, при этом не являясь в заключении."
 
 /datum/objective/escape/escape_with_identity/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -557,7 +546,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/survive
 	name = "survive"
-	explanation_text = "Stay alive until the end."
+	explanation_text = "Оставайтесь в живых до самого конца."
 	admin_grantable = TRUE
 
 /datum/objective/survive/check_completion()
@@ -569,7 +558,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/survive/malf //Like survive, but for Malf AIs
 	name = "survive AI"
-	explanation_text = "Prevent your own deactivation."
+	explanation_text = "Предотвратите вашу деактивацию."
 	admin_grantable = FALSE
 
 /datum/objective/survive/malf/check_completion()
@@ -581,7 +570,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/exile
 	name = "exile"
-	explanation_text = "Stay alive off station. Do not go to CentCom."
+	explanation_text = "Оставайтесь в живых за пределами станции. Не улетайте на ЦК."
 
 /datum/objective/exile/check_completion()
 	var/list/owners = get_owners()
@@ -594,7 +583,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/martyr
 	name = "martyr"
-	explanation_text = "Die a glorious death."
+	explanation_text = "Умрите славной смертью!"
 	admin_grantable = TRUE
 
 /datum/objective/martyr/check_completion()
@@ -608,7 +597,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/nuclear
 	name = "nuclear"
-	explanation_text = "Destroy the station with a nuclear device."
+	explanation_text = "Уничтожьте станцию ​​с помощью ядерного устройства."
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
 
@@ -649,11 +638,11 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(item)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]."
+		explanation_text = "Украдите [targetinfo.name]"
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 		return
 
 /datum/objective/steal/admin_edit(mob/admin)
@@ -762,9 +751,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/protect_object/update_explanation_text()
 	. = ..()
 	if(protect_target)
-		explanation_text = "Protect \the [protect_target] at all costs."
+		explanation_text = "Защитите любой ценой - [protect_target]."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/protect_object/check_completion()
 	return !isnull(protect_target)
@@ -799,7 +788,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/absorb/update_explanation_text()
 	. = ..()
-	explanation_text = "Extract [target_amount] compatible genome\s."
+	explanation_text = "Извлеките [target_amount] совместимых генов."
 
 /datum/objective/absorb/admin_edit(mob/admin)
 	var/count = input(admin,"How many people to absorb?","absorb",target_amount) as num|null
@@ -821,7 +810,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/absorb_most
 	name = "absorb most"
-	explanation_text = "Extract more compatible genomes than any other Changeling."
+	explanation_text = "Извлеките больше совместимых генов, чем любой другой генокрад."
 
 /datum/objective/absorb_most/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -842,7 +831,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/absorb_changeling
 	name = "absorb changeling"
-	explanation_text = "Absorb another Changeling."
+	explanation_text = "Поглотите другого генокрада."
 
 /datum/objective/absorb_changeling/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -882,9 +871,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/destroy/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Destroy [target.name], the experimental AI."
+		explanation_text = "Уничтожьте [target.name], экспериментальный ИИ."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Свободная задача."
 
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
@@ -897,7 +886,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal_n_of_type
 	name = "steal five of"
-	explanation_text = "Steal some items!"
+	explanation_text = "Украдите некоторые предметы!"
 	//what types we want to steal
 	var/list/wanted_items = list()
 	//how many we want to steal
@@ -925,7 +914,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal_n_of_type/summon_guns
 	name = "steal guns"
-	explanation_text = "Steal at least five guns!"
+	explanation_text = "Украдите как минимум пять видов огнестрельного оружия!"
 	wanted_items = list(/obj/item/gun)
 	amount = 5
 
@@ -935,7 +924,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"
-	explanation_text = "Steal at least five magical artefacts!"
+	explanation_text = "Украдите не менее пяти магических артефактов!"
 	wanted_items = list()
 	amount = 5
 
@@ -961,7 +950,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal_n_of_type/organs
 	name = "steal organs"
-	explanation_text = "Steal at least 5 organic organs! They must be kept healthy."
+	explanation_text = "Украдите как минимум 5 органических органов! Их необходимо поддерживать свежими."
 	wanted_items = list(/obj/item/organ)
 	amount = 5 //i want this to be higher, but the organs must be fresh at roundend
 

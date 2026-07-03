@@ -37,33 +37,33 @@ export const AntagInfoSpy = () => {
           backgroundImage: 'none',
         }}
       >
-        <Section title={`You are the ${antag_name || 'Spy'}.`}>
+        <Section title={`Вы ${antag_name || 'Шпион'}.`}>
           <Stack vertical fill ml={1} mr={1}>
             <Stack.Item fontSize={1.2}>
-              You have been equipped with a special uplink device disguised as{' '}
-              {uplink_location || 'something'} that will allow you to steal from
-              the station.
+              Вы были оснащены специальным аплинком, замаскированным под{' '}
+              {uplink_location || 'что-то'}, который поможет вам красть вещи со
+              станции.
             </Stack.Item>
             <Stack.Item>
               <span style={greenText}>
-                <b>Use it in hand</b> to access your uplink, and{' '}
-                <b>right click</b> on bounty targets to steal them.
+                <b>Используйте в руке</b> чтобы включить аплинк, и <b>ПКМ</b> по
+                вещам-целям, чтобы их украсть.
               </span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
-              You may not be alone: There may be other spies on the station.
+              Вы можете быть не одни: на станции могут находиться другие шпионы.
             </Stack.Item>
             <Stack.Item>
-              Work together or work against them: The choice is yours, but{' '}
+              Работайте вместе, или против них: Выбор за вами, но{' '}
               <span style={redText}>
-                the same bounty cannot be claimed twice.
+                но вы не сможете получить награду дважды.
               </span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
               <ObjectivePrintout
-                titleMessage={'Your mission, should you choose to accept it'}
+                titleMessage={'Ваша миссия, если вы решите ее принять'}
                 objectives={objectives}
               />
             </Stack.Item>

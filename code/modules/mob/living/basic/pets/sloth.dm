@@ -1,8 +1,8 @@
 GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /mob/living/basic/sloth
-	name = "sloth"
-	desc = "An adorable, sleepy creature."
+	name = "ленивец"
+	desc = "Очаровательная сонная зверушка."
 	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "sloth"
 	icon_living = "sloth"
@@ -45,7 +45,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 /datum/emote/sloth/smile_slow
 	key = "ssmile"
 	key_third_person = "slowlysmiles"
-	message = "slowly smiles!"
+	message = "медленно улыбается!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /mob/living/basic/sloth/Initialize(mapload)
@@ -69,14 +69,14 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	return ..()
 
 /mob/living/basic/sloth/paperwork
-	name = "Paperwork"
-	desc = "Cargo's pet sloth. About as useful as the rest of the techs."
+	name = "Бумажник"	// Попробуем его так обозвать, звучит интересней и лучше чем "Пейперворк". Если народу не понравится - откатим.
+	desc = "Грузовой ленивец. Настолько же расторопный как и остальные бюрократы."
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/sloth/citrus
-	name = "Citrus"
-	desc = "Cargo's pet sloth. She's dressed in a horrible sweater."
+	name = "Цитрус"
+	desc = "Офисный ленивец. Так же быстро решает проблемы отделов, как и остальные агенты внутренних дел."
 	icon_state = "cool_sloth"
 	icon_living = "cool_sloth"
 	icon_dead = "cool_sloth_dead"
@@ -104,5 +104,5 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /datum/ai_planning_subtree/random_speech/sloth
 	speech_chance = 1
-	emote_hear = list("snores.", "yawns.")
-	emote_see = list("dozes off.", "looks around sleepily.")
+	emote_hear = list("храпит.", "зевает.")
+	emote_see = list("засыпает.", "лениво оглядывается.", "сонно оглядывается.", "в полудреме.")

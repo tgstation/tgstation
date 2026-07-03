@@ -157,10 +157,10 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "thermometer-empty",
-		SPECIES_PERK_NAME = "Cold-blooded",
-		SPECIES_PERK_DESC = "Lizardpeople have higher tolerance for hot temperatures, but lower \
-			tolerance for cold temperatures. Additionally, they cannot self-regulate their body temperature - \
-			they are as cold or as warm as the environment around them is. Stay warm!",
+		SPECIES_PERK_NAME = "Хладнокровный",
+		SPECIES_PERK_DESC = "[plural_form] лучше переносят высокие температуры, но хуже \
+			низкие. Кроме того, они не могут самостоятельно регулировать температуру своего тела - \
+			они имеют такую же температуру, что и окружающая среда. Держитесь в тепле!",
 	))
 
 	return to_add

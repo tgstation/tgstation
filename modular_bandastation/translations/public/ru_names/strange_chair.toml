@@ -1,0 +1,8 @@
+["strange chair"]
+nominative = "странный стул"
+genitive = "странного стула"
+dative = "странному стулу"
+accusative = "странный стул"
+instrumental = "странным стулом"
+prepositional = "странном стуле"
+gender = "male"

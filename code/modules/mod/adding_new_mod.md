@@ -235,7 +235,7 @@ After this, we want to put our special code, a basic effect of healing all mobs 
 	for(var/mob/living/carbon/carbon_mob in range(5, src))
 		if(carbon_mob == mod.wearer)
 			continue
-		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brain_damage_healed)
+		carbon_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, -brain_damage_healed)
 		mod.wearer.Beam(carbon_mob, icon_state = "plasmabeam", time = 1.5 SECONDS)
 	playsound(src, 'sound/effects/magic.ogg', 100, TRUE)
 	drain_power(use_energy_cost)

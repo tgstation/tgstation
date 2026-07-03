@@ -62,6 +62,19 @@
 	for(var/mob/listener as anything in GLOB.player_list)
 		if(IS_CULTIST(listener))
 			to_chat(listener, my_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = listener == user)
+			// BANDASTATION ADDITION START - TTS
+			if(listener == user)
+				continue
+
+			user.cast_tts(
+				listener,
+				message,
+				is_local = FALSE,
+				effects = list(/datum/singleton/sound_effect/telepathy),
+				channel_override = CHANNEL_TTS_TELEPATHY,
+				check_deafness = FALSE
+			)
+			// BANDASTATION ADDITION END
 		else if(listener in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(listener, user)
 			to_chat(listener, "[link] [my_message]", type = MESSAGE_TYPE_RADIO)

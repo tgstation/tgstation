@@ -47,7 +47,7 @@
 		/obj/item/ammo_box/magazine/uzim9mm,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/food/pizzaslice/dank, // more silly, less destructive
-		/obj/item/ammo_box/magazine/m223,
+		/obj/item/ammo_box/magazine/c223, // BANDASTATION EDIT - Original (/obj/item/ammo_box/magazine/m223)
 	)
 
 

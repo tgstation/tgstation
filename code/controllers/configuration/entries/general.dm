@@ -33,6 +33,8 @@
 /// server name (the name of the game window)
 /datum/config_entry/string/servername
 
+/datum/config_entry/string/discord_url // BANDASTATION ADD
+
 /// short form server name used for the DB
 /datum/config_entry/string/serversqlname
 

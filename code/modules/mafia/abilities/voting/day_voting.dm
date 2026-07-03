@@ -4,8 +4,8 @@
  * During the vote period, voting for someone is showing your intent to get them lynched.
  */
 /datum/mafia_ability/voting
-	name = "Vote"
-	ability_action = "vote for hanging"
+	name = "Голосовать"
+	ability_action = "голосовать за повешение"
 	valid_use_period = MAFIA_PHASE_VOTING
 	action_priority = null
 

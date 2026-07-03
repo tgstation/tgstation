@@ -23,13 +23,13 @@ type Props = {
 function getTimeOrCat(entry: SpellEntry) {
   if (entry.cat === SpellCategory.Rituals) {
     if (entry.times) {
-      return `Cast ${entry.times} times.`;
+      return `Прочитано раз: ${entry.times}`;
     } else {
-      return 'Not cast yet.';
+      return 'Еще не прочитано.';
     }
   } else {
     if (entry.cooldown) {
-      return `${entry.cooldown}s Cooldown`;
+      return `${entry.cooldown}с Перезарядка`;
     } else {
       return '';
     }
@@ -55,7 +55,7 @@ export function SpellTabDisplay(props: Props) {
                 {getTimeOrCat(entry)}
               </Stack.Item>
               <Stack.Item width="60px" ml={pointOffset}>
-                {entry.cost} points
+                Очки: {entry.cost}
               </Stack.Item>
               {entry.buyword === Buywords.Learn && (
                 <Stack.Item>
@@ -66,8 +66,8 @@ export function SpellTabDisplay(props: Props) {
                     tooltipPosition="bottom-start"
                     tooltip={
                       entry.requires_wizard_garb
-                        ? 'Requires wizard garb.'
-                        : 'Can be cast without wizard garb.'
+                        ? 'Требуется одежда волшебника.'
+                        : 'Можно произносить без одежды волшебника.'
                     }
                   />
                 </Stack.Item>
@@ -97,7 +97,7 @@ export function SpellTabDisplay(props: Props) {
                   </Button>
                   <br />
                   {!entry.refundable ? (
-                    <NoticeBox>No refunds.</NoticeBox>
+                    <NoticeBox>Возврата нет.</NoticeBox>
                   ) : (
                     <Button
                       textAlign="center"
@@ -109,7 +109,7 @@ export function SpellTabDisplay(props: Props) {
                         })
                       }
                     >
-                      Refund
+                      Вернуть
                     </Button>
                   )}
                 </Stack.Item>

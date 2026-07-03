@@ -1,0 +1,107 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/status_display/supply{
+	pixel_x = -32
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/qm)
+"c" = (
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/effect/landmark/event_spawn,
+/obj/structure/disposalpipe/segment,
+/obj/item/folder/yellow{
+	pixel_y = 6;
+	pixel_x = 7
+	},
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/qm,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"i" = (
+/obj/machinery/computer/security/qm{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/requests_console/directional/west{
+	name = "Quartermaster's Requests Console";
+	department = "Quartermaster's Desk"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/camera{
+	dir = 10;
+	network = list("ss13","cargo");
+	c_tag = "Cargo - Quartermaster's Office"
+	},
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/qm)
+"j" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"o" = (
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"v" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/landmark/start/quartermaster,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"L" = (
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"P" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/qm)
+"W" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/sign/calendar/directional/west,
+/obj/machinery/fax/heads/qm,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/qm)
+
+(1,1,1) = {"
+i
+a
+W
+"}
+(2,1,1) = {"
+v
+o
+j
+"}
+(3,1,1) = {"
+c
+P
+L
+"}

@@ -39,8 +39,10 @@
 	if(!isnull(has_water_reclaimer))
 		src.has_water_reclaimer = has_water_reclaimer
 	update_appearance(UPDATE_ICON)
+	/* BANDASTATION REMOVAL START - Stupid TG Shit
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
 		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/toilet])
+	BANDASTATION REMOVAL START - Stupid TG Shit */
 	AddElement(/datum/element/fish_safe_storage)
 	register_context()
 	create_reagents(reagent_capacity)

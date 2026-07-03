@@ -1,7 +1,7 @@
 /datum/surgery_operation/limb/debride
-	name = "debride infected flesh"
-	rnd_name = "Debridement"
-	desc = "Remove infected or necrotic flesh from a patient's wound to promote healing."
+	name = "Обработка зараженной плоти"
+	rnd_name = "Обработка раны"
+	desc = "Удаление инфицированной или омертвевшей плоти из раны пациента, чтобы ускорить заживление."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_SCALPEL = 1.25,
@@ -32,7 +32,7 @@
 	return image(/obj/item/reagent_containers/applicator/patch/aiuri)
 
 /datum/surgery_operation/limb/debride/all_required_strings()
-	return list("the limb must have a second degree or worse burn") + ..()
+	return list("на конечности должен быть ожог второй степени или хуже") + ..()
 
 /datum/surgery_operation/limb/debride/state_check(obj/item/bodypart/limb)
 	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
@@ -50,11 +50,11 @@
 		if(-INFINITY to 1)
 			return null
 		if(1 to 2)
-			progress_text = ", preparing to remove the last remaining bits of infection"
+			progress_text = ", подготовка к удалению последних остатков инфекции"
 		if(2 to 4)
-			progress_text = ", steadily narrowing the remaining bits of infection"
+			progress_text = ", неуклонно сокращая количество оставшихся очагов инфекции"
 		if(5 to INFINITY)
-			progress_text = ", though there's still quite a lot to excise"
+			progress_text = ", хотя ещё довольно много подлежит удалению"
 
 	return progress_text
 
@@ -62,11 +62,11 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to excise infected flesh from [FORMAT_LIMB_OWNER(limb)]..."),
-		span_notice("[surgeon] begins to excise infected flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]."),
-		span_notice("[surgeon] begins to excise infected flesh from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("Вы начинаете удалять зараженную плоть с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]..."),
+		span_notice("[surgeon] начинает удалять зараженную плоть с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]."),
+		span_notice("[surgeon] начинает удалять зараженную плоть с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
 	)
-	display_pain(limb.owner, "The infection in your [limb.plaintext_zone] stings like hell! It feels like you're being stabbed!")
+	display_pain(limb.owner, "Инфекция в вашей [limb.ru_plaintext_zone[PREPOSITIONAL]] приносит адскую боль! Такое чувство, что вас режут ножом!")
 
 /datum/surgery_operation/limb/debride/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, default_display_results = FALSE)
 	limb.receive_damage(3, wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)
@@ -76,17 +76,17 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully excise some of the infected flesh from [FORMAT_LIMB_OWNER(limb)][get_progress(wound)]."),
-		span_notice("[surgeon] successfully excises some of the infected flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] successfully excises some of the infected flesh from  [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы успешно удалили часть зараженной плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]][get_progress(wound)] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] успешно удалил часть зараженной плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] успешно удалил часть зараженной плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 
 /datum/surgery_operation/limb/debride/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You carve away some of the healthy flesh from [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] carves away some of the healthy flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
-		span_notice("[surgeon] carves away some of the healthy flesh from  [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("Вы отрезаете немного здоровой плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]."),
+		span_notice("[surgeon] отрезает немного здоровой плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)] с помощью [tool.declent_ru(ACCUSATIVE)]!"),
+		span_notice("[surgeon] отрезает немного здоровой плоти с [limb.ru_plaintext_zone[PREPOSITIONAL]] у [limb.owner.declent_ru(GENITIVE)]!"),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)

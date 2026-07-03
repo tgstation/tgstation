@@ -26,7 +26,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls."))
-	user.say("M'lady.", forced = "fedora suicide")
+	user.say("Миледи.", forced = "fedora suicide")
 	sleep(1 SECONDS)
 	H.facial_hairstyle = "Neckbeard"
 	return BRUTELOSS

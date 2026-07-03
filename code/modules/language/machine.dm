@@ -1,13 +1,13 @@
 /datum/language/machine
 	name = "Encoded Audio Language"
-	desc = "An efficient language of encoded tones developed by synthetics and cyborgs."
+	desc = "Эффективный язык закодированных тонов, разработанный синтетиками и киборгами."
 	spans = list(SPAN_ROBOT)
 	key = "6"
 	flags = NO_STUTTER
 	syllables = list(
-		"beep", "beep", "beep", "beep", "beep", "boop", "boop", "boop",
-		"bop", "bop", "dee", "dee", "doo", "doo", "hiss", "hss", "buzz",
-		"buzz", "bzz", "ksssh", "keey", "wurr", "wahh", "tzzz",
+		"бип", "бип", "бип", "бип", "бип", "буп", "буп", "буп",
+		"боп", "боп", "ди", "ди", "ду", "ду", "с-с-с", "ссс", "жжж",
+		"жжж", "бзз", "кссш", "кии", "врр", "ваа", "тззз",
 	)
 	space_chance = 0
 	sentence_chance = 0

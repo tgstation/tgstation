@@ -244,11 +244,11 @@
 
 			switch(response_info)
 				if(NOT_IN_SERVICE)
-					tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
+					tram.nav_beacon.say("Трамвай в данный момент недоступен. Пожалуйста, свяжитесь с техническим специалистом.")
 				if(INVALID_PLATFORM)
-					tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
+					tram.nav_beacon.say("Ошибка конфигурации. Пожалуйста, свяжитесь с техническим специалистом.")
 				if(INTERNAL_ERROR)
-					tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					tram.nav_beacon.say("Ошибка контроллера трамвая. Пожалуйста, обратитесь к техническому специалисту или члену экипажа, имеющему доступ к телекоммуникационным системам трамвая, для сброса контроллера.")
 				else
 					return
 

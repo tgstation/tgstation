@@ -1,0 +1,8 @@
+["grenadier belt"]
+nominative = "пояс гренадира"
+genitive = "пояса гренадира"
+dative = "поясу гренадира"
+accusative = "пояс гренадира"
+instrumental = "поясом гренадира"
+prepositional = "поясе гренадира"
+gender = "male"

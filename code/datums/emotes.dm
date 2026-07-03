@@ -58,13 +58,13 @@
 	/// Can only code call this event instead of the player.
 	var/only_forced_audio = FALSE
 	/// The cooldown between the uses of the emote.
-	var/cooldown = 0.8 SECONDS
+	var/cooldown = 3 SECONDS // BANDASTATION EDIT: 0.8 -> 3
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
 	/// How long is the shared emote cooldown triggered by this emote when used intentionally?
-	var/manual_general_emote_audio_cooldown = 2 SECONDS
+	var/manual_general_emote_audio_cooldown = 3 SECONDS // BANDASTATION EDIT: 2 -> 3
 	/// How long is the specific emote cooldown triggered by this emote when used intentionally?
-	var/manual_specific_emote_audio_cooldown = 5 SECONDS
+	var/manual_specific_emote_audio_cooldown = 3 SECONDS // BANDASTATION EDIT: 5 -> 3
 	/// How long is the shared emote cooldown triggered by this emote when forced?
 	var/forced_general_emote_audio_cooldown = 2 SECONDS
 	/// How long is the specific emote cooldown triggered by this emote when forced?
@@ -99,8 +99,8 @@
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
  *
  */
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
-	var/msg = select_message_type(user, message, intentional)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, message_override = null) // BANDASTATION EDIT - Emote Panel
+	var/msg = message_override || select_message_type(user, message, intentional) // BANDASTATION EDIT - Emote Panel
 	if(params)
 		if(message_param)
 			msg = select_param(user, params)
@@ -138,7 +138,7 @@
 		if(use_sound_tokens && sound_wall_ignore)
 			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = 50)
 		else
-			playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
+			playsound(source = user,soundin = tmp_sound,vol = 50, vary = vary, ignore_walls = sound_wall_ignore, frequency = frequency) // BANDASTATION EDIT - vary is optional
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
