@@ -7,7 +7,7 @@
 	name = "Carrot cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/food/grown/carrot = 2
+		/obj/item/food/grown/carrotlike/carrot = 2
 	)
 	result = /obj/item/food/cake/carrot
 	dish_category = DISH_CAKE

@@ -25,7 +25,7 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/organ/lungs = 1,
@@ -180,7 +180,7 @@
 	reqs = list(
 		/obj/item/food/grilled_moonfish = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/datum/reagent/consumable/korta_milk = 5,
 		/datum/reagent/consumable/ethanol/wine = 5
 	)
@@ -270,7 +270,7 @@
 	name = "Demit nizaya"
 	reqs = list(
 		/obj/item/food/spaghetti/nizaya = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/datum/reagent/consumable/korta_milk = 5,
