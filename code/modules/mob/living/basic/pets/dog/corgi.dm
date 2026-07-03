@@ -112,28 +112,32 @@
 			armorval += inventory_back.get_armor_rating(type)
 	return armorval * 0.5
 
-/mob/living/basic/pet/dog/corgi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/razor))
-		if(shaved)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
-			return
-		if(!can_be_shaved)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
-			return
-		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
-		if(do_after(user, 5 SECONDS, target = src))
-			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
-			shaved = TRUE
-			icon_living = "[icon_living]_shaved"
-			icon_dead = "[icon_living]_shaved_dead"
-			if(stat == CONSCIOUS)
-				icon_state = icon_living
-			else
-				icon_state = icon_dead
-		return TRUE
+/mob/living/basic/pet/dog/corgi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/razor))
+		return ..()
 
-	return  ..()
+	if(shaved)
+		to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!can_be_shaved)
+		to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] starts to shave [src] using \the [tool]."), span_notice("You start to shave [src] using \the [tool]..."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] shaves [src]'s hair using \the [tool]."))
+	playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
+	shaved = TRUE
+	icon_living = "[icon_living]_shaved"
+	icon_dead = "[icon_living]_shaved_dead"
+	if(stat == CONSCIOUS)
+		icon_state = icon_living
+	else
+		icon_state = icon_dead
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
 	. = ..()
