@@ -171,7 +171,7 @@
 		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
 			receive |= radio_hearers
 			var/datum/weakref/radio_ref = WEAKREF(radio)
-			for(var/mob/possible_hearer as anything in radio_hearers)
+			for(var/mob/possible_hearer in radio_hearers)
 				if(!isnull(possible_hearer.client) && can_hear_radio_tts(possible_hearer, frequency))
 					receive_radios[radio_ref] ||= list()
 					receive_radios[radio_ref] += WEAKREF(possible_hearer)
