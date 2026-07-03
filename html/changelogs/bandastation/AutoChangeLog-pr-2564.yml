@@ -1,0 +1,4 @@
+author: "IWantSomeFish"
+delete-after: True
+changes:
+  - bugfix: "Исправлено некорректное отображение причёски \"Long Bedhead 2\"."
