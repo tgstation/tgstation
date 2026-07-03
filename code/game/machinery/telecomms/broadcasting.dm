@@ -106,8 +106,6 @@
 	copy.levels = levels
 	return copy
 
-GLOBAL_VAR_INIT(debug_radio_tts, TRUE)
-
 /// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
 	set waitfor = FALSE
@@ -161,7 +159,7 @@ GLOBAL_VAR_INIT(debug_radio_tts, TRUE)
 		called_radio.on_receive_message(data)
 	var/list/message_mods = data["mods"]
 
-	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER) || GLOB.debug_radio_tts
+	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
 	// Flat list of mobs who can hear the message
 	var/list/receive
 	// Assoc list of weakref to a radio to list of weakrefs to mobs who can hear the message
