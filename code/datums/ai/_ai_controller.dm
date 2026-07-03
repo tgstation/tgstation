@@ -180,22 +180,39 @@ multiple modular subtrees with behaviors
 			continue
 		var/value = desc[key]
 		if(islist(value))
-			var/list/resolved_list = list()
-			for(var/item in value)
-				if(islist(item))
-					resolved_list += list(_substitute_bindings(item, merged))
-				else if(istext(item) && copytext(item, 1, 2) == "$")
-					var/binding_name = copytext(item, 2)
-					resolved_list += isnull(merged[binding_name]) ? item : merged[binding_name]
-				else
-					resolved_list += item
-			out[key] = resolved_list
+			out[key] = _substitute_bindings_in_list(value, merged)
 		else if(istext(value) && copytext(value, 1, 2) == "$")
 			var/binding_name = copytext(value, 2)
 			out[key] = isnull(merged[binding_name]) ? value : merged[binding_name]
 		else
 			out[key] = value
 	return out
+
+/// Substitutes bindings inside a descriptor value list, preserving assoc entries
+/datum/ai_controller/proc/_substitute_bindings_in_list(list/input, list/merged)
+	var/list/resolved_list = list()
+	for(var/item in input)
+		var/assoc_value = isnum(item) ? null : input[item]
+		if(!isnull(assoc_value))
+			if(islist(assoc_value))
+				resolved_list[item] = _substitute_bindings_in_list(assoc_value, merged) //recursion baby
+			else if(istext(assoc_value) && copytext(assoc_value, 1, 2) == "$")
+				var/binding_name = copytext(assoc_value, 2)
+				resolved_list[item] = isnull(merged[binding_name]) ? assoc_value : merged[binding_name]
+			else
+				resolved_list[item] = assoc_value
+		else if(islist(item))
+			resolved_list += list(_substitute_bindings(item, merged))
+		else if(istext(item) && copytext(item, 1, 2) == "$")
+			var/binding_name = copytext(item, 2)
+			var/resolved = isnull(merged[binding_name]) ? item : merged[binding_name]
+			if(islist(resolved))
+				resolved_list += list(resolved)
+			else
+				resolved_list += resolved
+		else
+			resolved_list += item
+	return resolved_list
 
 /**
  * Recursively builds a BT node tree from a descriptor list.
