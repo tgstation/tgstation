@@ -76,8 +76,6 @@
 		if(HAS_TRAIT(user, TRAIT_PRIMITIVE))
 			if(!do_after(user, primitive_escape_time, target = src))
 				return
-	return ..()
-
 		open_machine()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -115,6 +113,8 @@
 
 /obj/machinery/dna_scannernew/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
+		return FALSE
+	if(locked) //haha bro u cant open it its locked xD
 		return FALSE
 
 	..()
