@@ -224,5 +224,3 @@
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 5 SECONDS)  // Make extra sure the virtualspeaker gets qdeleted
-
-#undef COMPRESSION_REPLACE_CHARACTER_THRESHOLD
