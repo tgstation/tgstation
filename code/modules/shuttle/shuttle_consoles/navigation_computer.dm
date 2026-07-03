@@ -374,6 +374,11 @@
 
 /mob/eye/camera/remote/shuttle_docker
 	use_visibility = FALSE
+	// Pale blue, should look nice I think
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 40
+	lighting_cutoff_blue = 50
+	sight = BLIND|SEE_TURFS
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()
 	var/list/image/extra_images = list()
@@ -398,14 +403,6 @@
 	for(var/level in zlevel_stack)
 		zlevels_in_range |= get_linked_z_levels_in_range(level, console.zlink_range)
 	return zlevels_in_range[into]
-
-
-/mob/eye/camera/remote/shuttle_docker/update_remote_sight(mob/living/user, list/new_sight)
-	user.set_sight(BLIND|SEE_TURFS)
-	lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
-	// Pale blue, should look nice I think
-	user.lighting_color_cutoffs = list(30, 40, 50)
-	return TRUE
 
 /datum/action/innate/shuttledocker_rotate
 	name = "Rotate"

@@ -460,7 +460,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(view_range == short_range) //unfocused
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
-/obj/machinery/camera/update_remote_sight(mob/living/user, list/new_sight)
+/obj/machinery/camera/update_remote_sight(mob/living/user)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	user.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
 	user.lighting_color_cutoffs = list(0, 0, 0)

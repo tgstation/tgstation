@@ -636,9 +636,6 @@
 /obj/machinery/atmospherics/proc/return_pipenets()
 	return list()
 
-/obj/machinery/atmospherics/update_remote_sight(mob/user, list/new_sight)
-	new_sight[1] |= SEE_TURFS|BLIND //make sure that we can see turfs in order to navigate around...
-
 /**
  * Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
  */

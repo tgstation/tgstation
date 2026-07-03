@@ -218,12 +218,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
-	// Make sure the mob can also ee in the dark
-	mob.lighting_cutoff_red = min(mob.lighting_cutoff_red, 20)
-	mob.lighting_cutoff_green = min(mob.lighting_cutoff_green, 20)
-	mob.lighting_cutoff_blue = min(mob.lighting_cutoff_blue, 20)
-	mob.update_sight()
-
+	// Make sure the mob can also see in the dark
+	ADD_TRAIT(mob, TRAIT_TRUE_NIGHT_VISION, FISH_TRAIT_DATUM)
 	RegisterSignal(mob, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
 /datum/fish_trait/nocturnal/proc/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick = SSMOBS_DT)
