@@ -657,6 +657,9 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request.is_complete() && request_blips.is_complete() && request_blips_radio.is_complete() && request_radio.is_complete() && request_radio_gibberish.is_complete()
 
+#undef TTS_REQUEST_REF
+#undef TTS_REQUEST_EXPIRE
+
 /**
  * Checks if the passed mob can hear radio TTS
  *
