@@ -1,5 +1,5 @@
 /obj/item/food/grown/melonlike
-	seed = null
+	seed = /obj/item/seeds/watermelon
 	name = "melon?"
 	desc = "You felt like this was a melon, but it definitely isn't. You should tell somebody about this."
 	icon_state = "watermelon"
@@ -9,13 +9,13 @@
 	var/chestplate_type = null
 	/// fire-resistant version of above
 	var/fire_resistant_chestplate_type = null
-	/// headgear recieved by hollowing out the melon
+	/// headgear received by hollowing out the melon
 	var/helmet_type = null
 	/// fire-resistant version of above
 	var/fire_resistant_helmet_type = null
-	/// pulp recieved by hollowing out the melon
+	/// pulp received by hollowing out the melon
 	var/pulp_type = null
-	/// slices recieved by cutting the melon
+	/// slices received by cutting the melon
 	var/slice_type = null
 
 /obj/item/food/grown/melonlike/make_processable()
