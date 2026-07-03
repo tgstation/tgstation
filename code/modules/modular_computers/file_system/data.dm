@@ -34,6 +34,13 @@
 	filetype = "LOG"
 
 /**
+ * NTCode
+ * Holds a program, written in the NTCode Programming Language
+ */
+/datum/computer_file/data/text/ntcode
+	filetype = "NC"
+
+/**
  * Ordnance data
  * Holds possible experiments to do
  */
