@@ -335,67 +335,89 @@ export function CommandBar() {
     }
   };
 
-  const handleTabOrEnterSelect = () => {
+  const hasNoInput = () => {
+    if (!selectedVerb && !input) return true;
+    if (mode !== 'Command' && selectedVerb && parsedArgs.length <= filledArgs.length && !currentToken) return true;
+    return false;
+  };
+
+  const selectCurrentSuggestion = (): boolean => {
     if (!selectedVerb && verbSuggestions.length > 0) {
-      return verbSuggestions[selectedIndex];
+      selectVerb(verbSuggestions[selectedIndex]);
+      return true;
     }
-    return null;
+    if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
+      selectTypepath(typepathSuggestions[selectedIndex]);
+      return true;
+    }
+    if (isCurrentArgList && listSuggestions.length > 0) {
+      fillArg(listSuggestions[selectedIndex]);
+      return true;
+    }
+    if (selectedVerb && targetSuggestions.length > 0) {
+      fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
+      return true;
+    }
+    return false;
+  };
+
+  const blurToMap = () => {
+    inputRef.current?.blur();
+    Byond.winset('map', { focus: true });
+  };
+
+  const dismissOrReset = () => {
+    mode !== 'Command' ? enterChatMode(mode) : resetState();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown' && hasSuggestions) {
-      e.preventDefault();
-      setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
-    } else if (e.key === 'ArrowUp' && hasSuggestions) {
-      e.preventDefault();
-      setSelectedIndex((i) => Math.max(i - 1, 0));
-    } else if (e.key === ' ' && !inQuotedArg) {
-      if (!selectedVerb) {
+    switch (e.key) {
+      case 'ArrowDown':
+        if (!hasSuggestions) return;
         e.preventDefault();
-        if (verbSuggestions.length > 0) {
+        setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
+        return;
+      case 'ArrowUp':
+        if (!hasSuggestions) return;
+        e.preventDefault();
+        setSelectedIndex((i) => Math.max(i - 1, 0));
+        return;
+      case ' ':
+        if (inQuotedArg) return;
+        e.preventDefault();
+        if (!selectedVerb && verbSuggestions.length > 0) {
           selectVerb(verbSuggestions[selectedIndex]);
         }
-      } else if (input.endsWith(' ')) {
+        return;
+      case 'Tab':
         e.preventDefault();
-      }
-    } else if (e.key === 'Tab') {
-      e.preventDefault();
-      const chatModeEmpty = mode !== 'Command' && selectedVerb && parsedArgs.length <= filledArgs.length && !currentToken;
-      if ((!selectedVerb && !input) || chatModeEmpty) {
-        inputRef.current?.blur();
-        Byond.winset('map', { focus: true });
-      } else if (!selectedVerb && verbSuggestions.length > 0) {
-        selectVerb(verbSuggestions[selectedIndex]);
-      } else if (isCurrentArgTypepath && typepathSuggestions.length > 0) {
-        selectTypepath(typepathSuggestions[selectedIndex]);
-      } else if (isCurrentArgList && listSuggestions.length > 0) {
-        fillArg(listSuggestions[selectedIndex]);
-      } else if (selectedVerb && targetSuggestions.length > 0) {
-        fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
-      }
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      const verbToSelect = handleTabOrEnterSelect();
-      if (verbToSelect) {
-        if (verbToSelect.args.length === 0) {
-          Byond.sendMessage('verbs/invoke', {
-            verb_type: verbToSelect.type,
-            args: {},
-          });
-          mode !== 'Command' ? enterChatMode(mode) : resetState();
+        if (hasNoInput()) {
+          blurToMap();
         } else {
-          selectVerb(verbToSelect);
+          selectCurrentSuggestion();
         }
-      } else if (isCurrentArgList && listSuggestions.length > 0) {
-        fillArg(listSuggestions[selectedIndex]);
-      } else if (selectedVerb && targetSuggestions.length > 0 && !isCurrentArgTypepath) {
-        fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
-      } else if (selectedVerb) {
-        invokeVerb();
+        return;
+      case 'Enter': {
+        e.preventDefault();
+        if (!selectedVerb && verbSuggestions.length > 0) {
+          const verb = verbSuggestions[selectedIndex];
+          if (verb.args.length === 0) {
+            Byond.sendMessage('verbs/invoke', { verb_type: verb.type, args: {} });
+            dismissOrReset();
+          } else {
+            selectVerb(verb);
+          }
+        } else if (selectCurrentSuggestion()) {
+          // handled
+        } else if (selectedVerb) {
+          invokeVerb();
+        }
+        return;
       }
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      mode !== 'Command' ? enterChatMode(mode) : resetState();
+      case 'Escape':
+        e.preventDefault();
+        dismissOrReset();
+        return;
     }
   };
 
