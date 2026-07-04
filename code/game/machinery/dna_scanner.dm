@@ -17,8 +17,6 @@
 	var/message_cooldown
 	var/breakout_time = 1200
 	var/obj/machinery/computer/dna_console/linked_console = null
-	///How long does a primitive being (e.g. monkey) need to get out of the console? Lock it if you dont want em getting out.
-	var/primitive_escape_time = 3 SECONDS
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	. = ..()
@@ -72,12 +70,12 @@
 	open_machine()
 
 /obj/machinery/dna_scannernew/container_resist_act(mob/living/user)
-	if(!locked)
-		if(HAS_TRAIT(user, TRAIT_PRIMITIVE))
-			if(!do_after(user, primitive_escape_time, target = src))
-				return
+	if(HAS_TRAIT(user, TRAIT_PRIMITIVE))
+		if(locked)
+			return //Your primitive brain cant escape a dna scanner noob
+	else if(!locked) //Not locked and not primitive? escape immediately
 		open_machine()
-		return
+
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
