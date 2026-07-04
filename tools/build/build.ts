@@ -208,6 +208,8 @@ export const DmTarget = new Juke.Target({
     'tgui/public/tgui.html',
     `${DME_NAME}.dme`,
     NamedVersionFile,
+    // Not a source file, but we gotta check if new flags got set.
+    '.vscode/.buildflags',
   ],
   outputs: ({ get }) => {
     if (get(DmVersionParameter)) {
