@@ -26191,10 +26191,10 @@
 /turf/closed/wall/rust,
 /area/station/service/kitchen)
 "ioK" = (
-/obj/machinery/computer/upload/borg{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/upload/borg/no_lock{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "ioQ" = (
@@ -73703,7 +73703,7 @@
 	name = "Auxiliary Research Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/science/auxlab)
 "xmn" = (
 /obj/structure/chair/pew/right{
@@ -76318,10 +76318,10 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ycd" = (
-/obj/machinery/computer/upload/ai{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/upload/ai/no_lock{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "ycp" = (
