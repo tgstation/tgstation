@@ -1,0 +1,182 @@
+{
+	"$comment": "Single source of truth for build/debug flags and presets. Edit flags and presets HERE. Consumed by the build-flags picker extension and by tools/build/generate_flag_configs (which regenerates the static fallback launch configs). Every flag's 'define' should be a real -D toggle, i.e. it appears in code/_compile_options.dm or is consumed by tools/build/build.ts (e.g. ALL_TEMPLATES).",
+	"version": 1,
+	"categories": ["Testing", "Debugging", "Map", "Performance", "Misc"],
+	"flags": [
+		{
+			"id": "TESTING",
+			"define": "TESTING",
+			"label": "Testing",
+			"category": "Testing",
+			"description": "Enables testing() debug messages. Also turns on DATUMVAR_DEBUGGING_MODE, atmos/lighting update visualisers and max-share tracking."
+		},
+		{
+			"id": "REAGENTS_TESTING",
+			"define": "REAGENTS_TESTING",
+			"label": "Reagents testing",
+			"category": "Testing",
+			"description": "Debug messages for every reaction step (very spammy). Requires TESTING.",
+			"requires": ["TESTING"]
+		},
+		{
+			"id": "MAP_TEST",
+			"define": "MAP_TEST",
+			"label": "Map test mode",
+			"category": "Map",
+			"description": "Disables common annoyances (rat spawns, random light breakage) so mappers can test without shenanigans."
+		},
+		{
+			"id": "LOWMEMORYMODE",
+			"define": "LOWMEMORYMODE",
+			"label": "Low memory mode",
+			"category": "Map",
+			"description": "Forces runtimestation for a quicker compilation cycle."
+		},
+		{
+			"id": "ABSOLUTE_MINIMUM",
+			"define": "ABSOLUTE_MINIMUM",
+			"label": "Absolute minimum",
+			"category": "Map",
+			"description": "Forces runtimestation_minimal, the smallest possible map.",
+			"requires": ["LOWMEMORYMODE"]
+		},
+		{
+			"id": "TIMER_DEBUG",
+			"define": "TIMER_DEBUG",
+			"label": "Timer debug",
+			"category": "Debugging",
+			"description": "Compiles full timer debug info. Warning: increases timer creation cost ~5x."
+		},
+		{
+			"id": "REFERENCE_DOING_IT_LIVE",
+			"define": "REFERENCE_DOING_IT_LIVE",
+			"label": "Reference tracking (live)",
+			"category": "Debugging",
+			"description": "Sets up the ref tracker for a live environment, logging hard-deletes to harddels.log. Uses fast reftracking but less accurate."
+		},
+		{
+			"id": "REFERENCE_TRACKING_STANDARD",
+			"define": "REFERENCE_TRACKING_STANDARD",
+			"label": "Reference tracking (standard)",
+			"category": "Debugging",
+			"description": "Local hard-deletion hunting. Spends all its time searching (slower but thorough), logging to harddels.log.",
+			"conflictsWith": ["REFERENCE_DOING_IT_LIVE"]
+		},
+		{
+			"id": "DATUMVAR_DEBUGGING_MODE",
+			"define": "DATUMVAR_DEBUGGING_MODE",
+			"label": "Datum var debugging",
+			"category": "Debugging",
+			"description": "Caches datum vars so you can retrieve them later to see which vars changed. Implied by TESTING."
+		},
+		{
+			"id": "UNIT_TESTS",
+			"define": "UNIT_TESTS",
+			"label": "Unit tests",
+			"category": "Testing",
+			"description": "Runs all unit tests, then shuts down."
+		},
+		{
+			"id": "USE_BYOND_TRACY",
+			"define": "USE_BYOND_TRACY",
+			"label": "byond-tracy profiler",
+			"category": "Performance",
+			"description": "Attempts to load prof.dll/libprof.so on boot for Tracy profiling. You must build byond-tracy yourself look at the guide for info."
+		},
+		{
+			"id": "MC_TAB_TRACY_INFO",
+			"define": "MC_TAB_TRACY_INFO",
+			"label": "byond-tracy MC tab info",
+			"category": "Performance",
+			"description": "Displays byond-tracy's status in the MC tab."
+		},
+		{
+			"id": "PERFORMANCE_TESTS",
+			"define": "PERFORMANCE_TESTS",
+			"label": "Performance tests",
+			"category": "Performance",
+			"description": "Boots, runs world.run_performance_tests(), then shuts down the server."
+		},
+		{
+			"id": "DO_NOT_DEFER_ASSETS",
+			"define": "DO_NOT_DEFER_ASSETS",
+			"label": "Do not defer assets",
+			"category": "Performance",
+			"description": "Generates all assets up front during initialize instead of deferring them when needed."
+		},
+		{
+			"id": "PROFILE_MAPLOAD_INIT_ATOM",
+			"define": "PROFILE_MAPLOAD_INIT_ATOM",
+			"label": "Profile mapload init atom",
+			"category": "Performance",
+			"description": "Profiles atom initialization during map load."
+		},
+		{
+			"id": "DISABLE_DREAMLUAU",
+			"define": "DISABLE_DREAMLUAU",
+			"label": "Disable Dreamluau",
+			"category": "Misc",
+			"description": "Fully disables Dreamluau."
+		},
+		{
+			"id": "VERB_STRESS_TEST",
+			"define": "VERB_STRESS_TEST",
+			"label": "Verb stress test",
+			"category": "Performance",
+			"description": "Forces verb processing into just the 2% of a tick we normally reserve for it, for simulating highpop."
+		},
+		{
+			"id": "FORCE_VERB_OVERTIME",
+			"define": "FORCE_VERB_OVERTIME",
+			"label": "Force verb overtime",
+			"category": "Performance",
+			"description": "Forces all verbs to run into overtime all of the time, negating the reserve 2%.",
+			"requires": ["VERB_STRESS_TEST"]
+		},
+		{
+			"id": "ALL_TEMPLATES",
+			"define": "ALL_TEMPLATES",
+			"label": "All templates",
+			"category": "Map",
+			"description": "Includes all map templates in the build (needed for some map/ruin testing)."
+		}
+	],
+	"presets": [
+		{
+			"id": "low_memory",
+			"label": "Low memory mode",
+			"flags": ["LOWMEMORYMODE"]
+		},
+		{
+			"id": "absolute_minimum",
+			"label": "Absolute minimum",
+			"flags": ["LOWMEMORYMODE", "ABSOLUTE_MINIMUM"]
+		},
+		{
+			"id": "testing",
+			"label": "Testing",
+			"flags": [
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			]
+		},
+		{
+			"id": "testing_low_memory",
+			"label": "Testing + low memory mode",
+			"flags": [
+				"LOWMEMORYMODE",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			]
+		},
+		{
+			"id": "map_testing",
+			"label": "Map testing",
+			"flags": ["TESTING", "MAP_TEST"]
+		}
+	]
+}

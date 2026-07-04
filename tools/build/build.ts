@@ -49,6 +49,30 @@ export const DefineParameter = new Juke.Parameter({
   alias: 'D',
 });
 
+/**
+ * Debug defines selected interactively via the "TG Build Flags" VS Code
+ * extension, which writes one define per line to .vscode/.buildflags.
+ *
+ * Reading them here lets the checkbox picker drive local builds WITHOUT the
+ * build depending on the extension: if the file is absent (CI, TGS, or the
+ * extension simply isn't installed) this returns nothing and the build is
+ * unaffected. The file is gitignored, so it never exists in CI. Prevents non-plugin users from dying.
+ */
+function getLocalFlagFileDefines(): string[] {
+  if (TGS_MODE) {
+    return [];
+  }
+  try {
+    return fs
+      .readFileSync('.vscode/.buildflags', 'utf8')
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.startsWith('#'));
+  } catch {
+    return [];
+  }
+}
+
 export const PortParameter = new Juke.Parameter({
   type: 'string',
   alias: 'p',
@@ -94,7 +118,7 @@ export const CutterTarget = new Juke.Target({
     const temp_path = `${cutter_path}_temp`; // yes this means its file extension is .exe_temp I don't really care
     await downloadFile(download_from, temp_path);
     fs.copyFileSync(temp_path, cutter_path);
-    fs.rmSync(temp_path)
+    fs.rmSync(temp_path);
     if (process.platform !== 'win32') {
       await Juke.exec('chmod', ['+x', cutter_path]);
     }
@@ -168,7 +192,9 @@ export const DmTarget = new Juke.Target({
     SkipIconCutter,
   ],
   dependsOn: ({ get }) => [
-    get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
+    [...get(DefineParameter), ...getLocalFlagFileDefines()].includes(
+      'ALL_TEMPLATES',
+    ) && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
   ],
   inputs: [
@@ -191,7 +217,15 @@ export const DmTarget = new Juke.Target({
   },
   executes: async ({ get }) => {
     await DreamMaker(`${DME_NAME}.dme`, {
-      defines: ['CBT', ...get(DefineParameter)],
+      // Dedupe so a flag passed both on the CLI and via .buildflags does not
+      // produce a dupe. Not ideal but it means we can support both
+      defines: [
+        ...new Set([
+          'CBT',
+          ...get(DefineParameter),
+          ...getLocalFlagFileDefines(),
+        ]),
+      ],
       warningsAsErrors: get(WarningParameter).includes('error'),
       ignoreWarningCodes: get(NoWarningParameter),
       namedDmVersion: get(DmVersionParameter),
