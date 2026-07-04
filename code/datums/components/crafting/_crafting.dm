@@ -586,11 +586,7 @@
 	switch(action)
 		if("make", "make_mass")
 			var/mob/user = usr
-			var/recipe = text2path(params["recipe"])
-			var/datum/crafting_recipe/crafting_recipe = GLOB.cooking_recipes_by_typepath[recipe] || GLOB.crafting_recipes_by_typepath[recipe]
-			if(isnull(crafting_recipe))
-				return
-
+			var/datum/crafting_recipe/crafting_recipe = locate(params["recipe"]) in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes)
 			busy = TRUE
 			ui_interact(user)
 			if(action == "make_mass")
