@@ -495,6 +495,7 @@
 	icon_state = "goliath_hide"
 	window_colour = "#860000"
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
+	replace_carpets = list(/turf/open/floor/carpet/goliath = 10)
 	replace_walls = /turf/closed/wall/mineral/cult
 	replace_objs = list(
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1),
@@ -524,6 +525,12 @@
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
+	replace_com_floors = list(/turf/open/floor/glass/reinforced = 1)
+	replace_sec_floors = list(/turf/open/floor/glass/reinforced = 1)
+	replace_sci_floors = list(/turf/open/floor/glass/plasma = 1)
+	replace_med_floors = list(/turf/open/floor/glass/titanium = 1)
+	replace_eng_floors = list(/turf/open/floor/glass/titanium = 1)
+	replace_car_floors = list(/obj/item/stack/tile/plastitanium_glass = 1)
 	sound = SFX_SHATTER
 	guardian = list(/mob/living/basic/eyeball = 7, /mob/living/basic/mining/watcher/glass = 3)
 
@@ -546,7 +553,7 @@
 	/// List of tables we can pick from, set up in New
 	var/list/valid_tables
 
-	guardian = list(/mob/living/basic/trooper/pirate/ranged/irs = 10)
+	guardian = list(/mob/living/basic/trooper/pirate/ranged/irs = 10) ///irs has nothing to do in their dimension, so they come here.
 
 /datum/dimension_theme/fancy/New()
 	. = ..()
@@ -681,3 +688,22 @@
 	)
 	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'
 	guardian = list(/mob/living/basic/trooper/clock_cultist = 10)
+
+///Evil fucked up dimension
+/datum/dimension_theme/horror
+	name = "Horror"
+	icon = 'icons/obj/antags/abductor.dmi'
+	icon_state = "sheet-abductor"
+	material = /datum/material/alloy/alien
+	replace_walls = /turf/closed/wall/mineral/abductor
+	replace_floors = list(/turf/open/floor/hauntium = 1)
+	replace_carpets = list(/turf/open/floor/carpet/human = 10)
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 9, /obj/structure/bed/abductor = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
+	)
+
+	guardian = list(/mob/living/basic/trooper/abductor/melee = 7, /mob/living/basic/trooper/abductor/ranged = 3)

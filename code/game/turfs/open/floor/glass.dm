@@ -114,3 +114,20 @@
 
 /turf/open/floor/glass/reinforced/plasma/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/glass/titanium
+	name = "titanium glass floor"
+	desc = "When you stare into vastness or space, it might stare back. Or the people below you might."
+	icon = 'icons/turf/floors/glass_titanium.dmi'
+	icon_state = "glass_titanium-0"
+	base_icon_state = "glass_titanium"
+	floor_tile = /obj/item/stack/tile/titanium_glass
+
+
+/turf/open/floor/glass/plastitanium
+	name = "plastitanium glass floor"
+	desc = "Remember to wave and say hi to whatever is down below."
+	icon = 'icons/turf/floors/glass_plastitanium.dmi'
+	icon_state = "glass_plastitanium-0"
+	base_icon_state = "glass_plastitanium"
+	floor_tile = /obj/item/stack/tile/plastitanium_glass

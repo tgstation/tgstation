@@ -467,6 +467,68 @@
 /obj/item/stack/tile/carpet/donk/thirty
 	amount = 30
 
+/obj/item/stack/tile/carpet/bear
+	name = "Bear fur carpet"
+	desc = "Bear fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-bear"
+	turf_type = /turf/open/floor/carpet/bear
+	merge_type = /obj/item/stack/tile/carpet/bear
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/polar_bear
+	name = "Polar fur carpet"
+	desc = "Polar bear fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-bear-polar"
+	inhand_icon_state = "tile-silver"
+	turf_type = /turf/open/floor/carpet/polar_bear
+	merge_type = /obj/item/stack/tile/carpet/polar_bear
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/moth
+	name = "Moth fur carpet"
+	desc = "Moth fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-moth"
+	inhand_icon_state = "tile-carpet-moth"
+	turf_type = /turf/open/floor/carpet/moth
+	merge_type = /obj/item/stack/tile/carpet/moth
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/goliath
+	name = "Goliath hide carpet"
+	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
+	icon_state = "tile-carpet-goliath"
+	inhand_icon_state = "tile-carpet-goliath"
+	turf_type = /turf/open/floor/carpet/goliath
+	merge_type = /obj/item/stack/tile/carpet/goliath
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/carp
+	name = "Carp scales carpet"
+	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
+	icon_state = "tile-carpet-carp"
+	inhand_icon_state = "tile-carpet-carp"
+	turf_type = /turf/open/floor/carpet/carp
+	merge_type = /obj/item/stack/tile/carpet/carp
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/lizard
+	name = "Lizard scales carpet"
+	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
+	icon_state = "tile-carpet-lizard"
+	inhand_icon_state = "tile-carpet-uranium"
+	turf_type = /turf/open/floor/carpet/lizard
+	merge_type = /obj/item/stack/tile/carpet/lizard
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/human
+	name = "Human skin carpet"
+	desc = "Carpet made from flayed human skin. Fresh and moist."
+	icon_state = "tile_carpet_human"
+	inhand_icon_state = "tile-carpet-skin"
+	turf_type = /turf/open/floor/carpet/human
+	merge_type = /obj/item/stack/tile/carpet/human
+	tile_reskin_types = null
+
 /obj/item/stack/tile/carpet/neon
 	name = "neon carpet"
 	singular_name = "neon carpet tile"
@@ -1637,3 +1699,23 @@
 	turf_type = /turf/open/floor/glass/reinforced/plasma
 	merge_type = /obj/item/stack/tile/rglass/plasma
 	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)
+
+/obj/item/stack/tile/titanium_glass
+	name = "titanium glass floor"
+	singular_name = "titanium glass floor tile"
+	desc = "Titanium glass window floor, because whatever that is down there is probably space."
+	icon_state = "tile_titaniumglass"
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-tglass"
+	merge_type = /obj/item/stack/tile/titanium_glass
+	mats_per_unit = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 0.25)
+
+/obj/item/stack/tile/plastitanium_glass
+	name = "plastitanium glass floor"
+	singular_name = "plastitanium glass floor tile"
+	desc = "Plastitanium glass window floor, because whatever that is down there is not meant to be comprehanded."
+	icon_state = "tile_plastitaniumglass"
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-ptglass"
+	merge_type = /obj/item/stack/tile/plastitanium_glass
+	mats_per_unit = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT * 0.25)

@@ -89,3 +89,12 @@
 	)
 	result_amount = 4
 	category = CAT_TILES
+
+/datum/crafting_recipe/goliath
+	name = "Goliath Carpet"
+	result = /obj/item/stack/tile/carpet/goliath
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/goliath_hide = 1,
+		/obj/item/stack/sheet/sinew = 1,
+	)
+	result_amount = 4

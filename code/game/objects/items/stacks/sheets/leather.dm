@@ -56,6 +56,7 @@
 GLOBAL_LIST_INIT(human_recipes, list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("human skin carpet", /obj/item/stack/tile/carpet/human, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/animalhide/carbon/human/get_main_recipes()
@@ -93,6 +94,14 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 
 /obj/item/stack/sheet/animalhide/mothroach/five
 	amount = 5
+
+GLOBAL_LIST_INIT(mothroach_recipes, list ( \
+	new/datum/stack_recipe("moth carpet", /obj/item/stack/tile/carpet/moth, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/mothroach/get_main_recipes()
+	. = ..()
+	. += GLOB.mothroach_recipes
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -166,6 +175,15 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 /obj/item/stack/sheet/animalhide/carbon/lizard/five
 	amount = 5
 
+GLOBAL_LIST_INIT(lizard_recipes, list ( \
+	new/datum/stack_recipe("lizard carpet", /obj/item/stack/tile/carpet/lizard, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/carbon/lizard/get_main_recipes()
+	. = ..()
+	. += GLOB.lizard_recipes
+
+
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien chitin"
 	singular_name = "alien chitin piece"
@@ -201,6 +219,7 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carpskin fishing bag", /obj/item/storage/bag/fishing/carpskin, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("carpskin carpet", /obj/item/stack/tile/carpet/carp, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
@@ -331,12 +350,20 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide
 
+GLOBAL_LIST_INIT(polar_bear_pelt_recipes, list ( \
+	new/datum/stack_recipe("polar bear carpet", /obj/item/stack/tile/carpet/polar_bear, 1, 4, 20, category = CAT_TILES), \
+))
+
 /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
 	name = "polar bear hides"
 	desc = "Pieces of a polar bear's fur, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon_state = "polar_bear_hide"
 	singular_name = "polar bear hide"
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
+
+/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide/get_main_recipes()
+	. = ..()
+	. += GLOB.polar_bear_pelt_recipes
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -364,7 +391,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/bear
 	name = "bear hide"
 	desc = "Fuzzy pelts from a bear. Imagine how warm you could be, wrapped up in a coat of this stuff."
-	icon_state = "bear_hide" //change
+	icon_state = "bear_hide" //change ///change what?
 	singular_name = "bear pelt"
 	merge_type = /obj/item/stack/sheet/animalhide/bear
 	novariants = FALSE
@@ -372,6 +399,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	new/datum/stack_recipe("bear costume", /obj/item/clothing/suit/costume/bear_suit, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("bear hat", /obj/item/clothing/head/costume/bearpelt, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bear carpet", /obj/item/stack/tile/carpet/bear, 1, 4, 20, category = CAT_TILES), \
 ))
 
 /obj/item/stack/sheet/animalhide/bear/get_main_recipes()

@@ -275,7 +275,7 @@
 
 /turf/open/floor/bone/meaty
 	name = "fresh meat floor"
-	icon_state = "mearbone_tile"
+	icon_state = "meatbone_tile"
 	desc = "Spine-crawling, made literal."
 	floor_tile = /obj/item/stack/tile/bone/meaty
 
