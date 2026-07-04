@@ -8,10 +8,19 @@
 		return FALSE
 	if(!controller)
 		return FALSE
+	// Anything that attacked us is a valid target even if we can't eat it.
+	if(target in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		var/datum/targeting_strategy/retaliate_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
+		return retaliate_strategy.is_valid_target(living_mob, target, vision_range)
+
 	var/mob/living/basic/slime/hunter = living_mob
 	var/mob/living/candidate = target
 	if(!isliving(candidate))
 		return FALSE
+
+	// We're already latched onto them and feeding; don't invalidate our own meal.
+	if(hunter.buckled == candidate)
+		return TRUE
 
 	var/static/list/slime_faction
 	if(isnull(slime_faction))

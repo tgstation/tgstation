@@ -12,9 +12,9 @@
 	ignore_target_status = TRUE
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targeting_strategy/basic/holding_object/is_valid_target(mob/living/living_mob, atom/target, vision_range)
-	var/datum/ai_controller/controller = living_mob.ai_controller
-	var/object_type_path = controller.blackboard[target_item_key]
+/datum/targeting_strategy/basic/holding_object/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	var/datum/ai_controller/our_controller = living_mob.ai_controller
+	var/object_type_path = our_controller.blackboard[target_item_key]
 
 	if (object_type_path == null)
 		return FALSE // no op

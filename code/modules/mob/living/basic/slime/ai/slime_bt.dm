@@ -33,8 +33,7 @@
 
 /**
  * Gate for slime food searching: passes only when the slime is unbuckled and is
- * hungry, rabid, or already has a combat target. Wrap the food acquire_target leaf
- * (target_source = oview, targeting_strategy = slime_food) with this.
+ * hungryor rabid.
  */
 /datum/bt_node/decorator/slime_wants_to_eat
 
@@ -46,7 +45,7 @@
 		return TRUE
 	if(controller.blackboard[BB_SLIME_RABID])
 		return TRUE
-	return !isnull(controller.blackboard[BB_CURRENT_TARGET])
+	return TRUE
 
 
 ///im about to eat this guy up
@@ -65,6 +64,7 @@
 		if(slime_pawn.buckled == target) //we got em boys
 			return AI_BEHAVIOR_DELAY
 		else
+			slime_pawn.stop_feeding()
 			return AI_BEHAVIOR_FAILED //epic fail; try again
 
 	if(!slime_pawn.can_feed_on(target))

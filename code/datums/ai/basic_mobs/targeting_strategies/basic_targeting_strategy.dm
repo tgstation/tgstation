@@ -10,7 +10,7 @@
 	/// If this blackboard key is TRUE, makes us only target wounded mobs
 	var/target_wounded_key
 
-/datum/targeting_strategy/basic/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
@@ -95,7 +95,7 @@
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
 /datum/targeting_strategy/basic/allow_items
 
-/datum/targeting_strategy/basic/allow_items/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(isitem(the_target))
 		// trust fall exercise
@@ -103,7 +103,7 @@
 
 /datum/targeting_strategy/basic/require_traits
 
-/datum/targeting_strategy/basic/require_traits/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/require_traits/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -123,7 +123,7 @@
 	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
 
-/datum/targeting_strategy/basic/of_size/is_valid_target(mob/living/owner, atom/target, vision_range)
+/datum/targeting_strategy/basic/of_size/is_valid_target(mob/living/owner, atom/target, vision_range, datum/ai_controller/controller = null)
 	if(!isliving(target))
 		return FALSE
 	. = ..()
@@ -156,7 +156,7 @@
 
 /datum/targeting_strategy/basic/allow_turfs
 
-/datum/targeting_strategy/basic/allow_turfs/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_turfs/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 	if(isturf(the_target))
 		return TRUE
 	return ..()
@@ -164,7 +164,7 @@
 /// Subtype which searches for mobs that havent been gutted by megafauna
 /datum/targeting_strategy/basic/no_gutted_mobs
 
-/datum/targeting_strategy/basic/no_gutted_mobs/is_valid_target(mob/living/owner, mob/living/target, vision_range)
+/datum/targeting_strategy/basic/no_gutted_mobs/is_valid_target(mob/living/owner, mob/living/target, vision_range, datum/ai_controller/controller = null)
 	if(!istype(target) || target.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
 	return ..()
@@ -174,7 +174,7 @@
 
 /datum/targeting_strategy/basic/exact_match/ignore_friends
 
-/datum/targeting_strategy/basic/exact_match/ignore_friends/is_valid_target(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/exact_match/ignore_friends/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if (!.)
 		return FALSE
