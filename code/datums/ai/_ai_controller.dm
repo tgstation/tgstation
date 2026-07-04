@@ -373,7 +373,6 @@ multiple modular subtrees with behaviors
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
-		if(grid.client_contents.len)
 			return FALSE
 	return TRUE
 
