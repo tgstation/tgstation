@@ -567,6 +567,7 @@
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE
 
+/// Returns a list of crafting recipe datums that are available given current crafting state and the user's learned recipes.
 /datum/component/personal_crafting/proc/get_visible_recipes(mob/user)
 	var/list/recipes_to_show = list()
 	switch(mode)
