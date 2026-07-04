@@ -444,6 +444,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE
 		randomise_appearance_prefs()
+		all_quirks = list()
 		read_preference(/datum/preference/name/real_name)
 		recently_updated_keys |= /datum/preference/name/real_name
 		save_character()
