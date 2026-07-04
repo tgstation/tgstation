@@ -18,6 +18,7 @@ import { Window } from '../layouts';
 
 const STORAGE_FAVOURITES = 'adminverbpanel-favourites';
 const STORAGE_USER_CATEGORIES = 'adminverbpanel-user-categories';
+const STORAGE_SELECTED_CATEGORY = 'adminverbpanel-selected-category';
 
 type VerbArgument = {
   name: string;
@@ -112,11 +113,15 @@ export function AdminVerbPanel() {
     const load = async () => {
       const storedFavs = await storage.get(STORAGE_FAVOURITES);
       const storedCats = await storage.get(STORAGE_USER_CATEGORIES);
+      const storedTab = await storage.get(STORAGE_SELECTED_CATEGORY);
       if (storedFavs && typeof storedFavs === 'object') {
         setFavourites(storedFavs);
       }
       if (Array.isArray(storedCats)) {
         setUserCategories(storedCats);
+      }
+      if (typeof storedTab === 'string' || storedTab === null) {
+        setSelectedCategoryRaw(storedTab);
       }
     };
     load();
@@ -211,7 +216,11 @@ export function AdminVerbPanel() {
 
   const primitiveArgs = selectedVerb?.arguments.filter(isPrimitiveArg) ?? [];
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategoryRaw] = useState<string | null>(null);
+  const setSelectedCategory = (cat: string | null) => {
+    setSelectedCategoryRaw(cat);
+    storage.set(STORAGE_SELECTED_CATEGORY, cat);
+  };
 
   const hasFavourites = Object.keys(favourites).length > 0;
   const uncategorizedFavs = Object.entries(favourites)

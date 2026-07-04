@@ -33,6 +33,10 @@
 // tgchat styles
 @include meta.load-css('./tgchat/chat-dark.scss');
 
+.Panel__stack {
+  gap: 0 !important;
+}
+
 :root {
   --chat-text-color: hsl(210, 50%, 80%);
 

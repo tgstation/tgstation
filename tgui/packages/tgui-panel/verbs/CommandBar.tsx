@@ -360,7 +360,8 @@ export function CommandBar() {
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      if (!selectedVerb && !input) {
+      const chatModeEmpty = mode !== 'Command' && selectedVerb && parsedArgs.length <= filledArgs.length && !currentToken;
+      if ((!selectedVerb && !input) || chatModeEmpty) {
         inputRef.current?.blur();
         Byond.winset('map', { focus: true });
       } else if (!selectedVerb && verbSuggestions.length > 0) {

@@ -32,7 +32,7 @@ export function Panel(props) {
 
   return (
     <Pane theme={settings.theme} canSuspend={false}>
-      <Stack fill vertical>
+      <Stack fill vertical className="Panel__stack">
         <Stack.Item>
           <Section fitted>
             <Stack mr={1} align="center">
