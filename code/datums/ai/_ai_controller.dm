@@ -73,7 +73,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
 	if(ai_status)
-		GLOB.ai_controllers_by_status[ai_status] -= src
+		SSai_controllers.ai_controllers_by_status[ai_status] -= src
 		for(var/datum/controller/subsystem/ai_controllers/controller_subsystem in Master.subsystems)
 			if(controller_subsystem.planning_status == ai_status)
 				controller_subsystem.currentrun -= src
@@ -319,7 +319,7 @@ multiple modular subtrees with behaviors
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		GLOB.ai_controllers_by_zlevel[pawn_turf.z] += src
+		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
@@ -373,6 +373,7 @@ multiple modular subtrees with behaviors
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
+		if(grid.client_contents.len)
 			return FALSE
 	return TRUE
 
@@ -438,7 +439,10 @@ multiple modular subtrees with behaviors
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if((!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS))|| !able_to_run)
+	if(!able_to_run)
+		return AI_STATUS_OFF
+	// AI on station z-levels always stays awake, even with no clients present
+	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS) && !is_station_level(pawn_turf.z))
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_IDLE
@@ -452,10 +456,10 @@ multiple modular subtrees with behaviors
 		if((mob_pawn?.client && !continue_processing_when_client))
 			return
 	if(old_turf)
-		GLOB.ai_controllers_by_zlevel[old_turf.z] -= src
+		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(isnull(new_turf))
 		return
-	GLOB.ai_controllers_by_zlevel[new_turf.z] += src
+	SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
 	reset_ai_status()
 
 ///Abstract proc for initializing the pawn to the new controller
@@ -477,7 +481,7 @@ multiple modular subtrees with behaviors
 		ai_movement.stop_moving_towards(src)
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
+		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -588,13 +592,13 @@ multiple modular subtrees with behaviors
 
 	//remove old status, if we've got one
 	if(ai_status)
-		GLOB.ai_controllers_by_status[ai_status] -= src
+		SSai_controllers.ai_controllers_by_status[ai_status] -= src
 		for(var/datum/controller/subsystem/ai_controllers/controller_subsystem in Master.subsystems)
 			if(controller_subsystem.planning_status == ai_status)
 				controller_subsystem.currentrun -= src
 				break
 	ai_status = new_ai_status
-	GLOB.ai_controllers_by_status[new_ai_status] += src
+	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
 	if(ai_status == AI_STATUS_OFF)
 		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
 			cancel_current_plan()

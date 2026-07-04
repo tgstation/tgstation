@@ -21,8 +21,20 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/target_priority_strategies
 	/// List of all target_source singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_sources()
 	var/list/target_sources
+	///AI controllers, sorted by their status
+	var/list/ai_controllers_by_status = list(
+		AI_STATUS_ON = list(),
+		AI_STATUS_OFF = list(),
+		AI_STATUS_IDLE = list()
+	)
+	///AI controllers, sorted by their z level
+	var/list/ai_controllers_by_zlevel = list()
 
-
+/datum/controller/subsystem/ai_controllers/Recover()
+	if(islist(SSai_controllers.ai_controllers_by_status))
+		ai_controllers_by_status = SSai_controllers.ai_controllers_by_status
+	if(islist(SSai_controllers.ai_controllers_by_zlevel))
+		ai_controllers_by_zlevel = SSai_controllers.ai_controllers_by_zlevel
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_targeting_strats()
@@ -31,13 +43,13 @@ SUBSYSTEM_DEF(ai_controllers)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
-	var/list/planning_list = GLOB.ai_controllers_by_status[planning_status]
+	var/list/planning_list = ai_controllers_by_status[planning_status]
 	msg = "\n  Planning AIs:[length(planning_list)]/[round(our_cost,1)]%"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	if(!resumed)
-		var/list/planning_list = GLOB.ai_controllers_by_status[planning_status]
+		var/list/planning_list = ai_controllers_by_status[planning_status]
 		currentrun = planning_list.Copy()
 		summing_cost = 0
 
@@ -60,11 +72,11 @@ SUBSYSTEM_DEF(ai_controllers)
 
 ///Called when the max Z level was changed, updating our coverage.
 /datum/controller/subsystem/ai_controllers/proc/on_max_z_changed()
-	if(!length(GLOB.ai_controllers_by_zlevel))
-		GLOB.ai_controllers_by_zlevel = new /list(world.maxz,0)
-	while (GLOB.ai_controllers_by_zlevel.len < world.maxz)
-		GLOB.ai_controllers_by_zlevel.len++
-		GLOB.ai_controllers_by_zlevel[GLOB.ai_controllers_by_zlevel.len] = list()
+	if(!length(ai_controllers_by_zlevel))
+		ai_controllers_by_zlevel = new /list(world.maxz,0)
+	while (ai_controllers_by_zlevel.len < world.maxz)
+		ai_controllers_by_zlevel.len++
+		ai_controllers_by_zlevel[ai_controllers_by_zlevel.len] = list()
 
 /datum/controller/subsystem/ai_controllers/proc/setup_targeting_strats()
 	targeting_strategies = list()
