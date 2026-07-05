@@ -1,7 +1,7 @@
 {
 	"$comment": "Single source of truth for build/debug flags and presets. Edit flags and presets HERE. Consumed by the build-flags picker extension and by tools/build/generate_flag_configs (which regenerates the static fallback launch configs). Every flag's 'define' should be a real -D toggle, i.e. it appears in code/_compile_options.dm or is consumed by tools/build/build.ts (e.g. ALL_TEMPLATES).",
 	"version": 1,
-	"categories": ["Testing", "Debugging", "Map", "Performance", "Misc"],
+	"categories": ["Map", "Testing", "Debugging", "Performance", "Misc"],
 	"flags": [
 		{
 			"id": "TESTING",
@@ -14,9 +14,35 @@
 			"id": "REAGENTS_TESTING",
 			"define": "REAGENTS_TESTING",
 			"label": "Reagents testing",
-			"category": "Testing",
+			"category": "Testineg",
 			"description": "Debug messages for every reaction step (very spammy). Requires TESTING.",
 			"requires": ["TESTING"]
+		},
+		{
+			"id": "force_map",
+			"define": "FORCE_MAP",
+			"label": "Force map",
+			"category": "Map",
+			"type": "select",
+			"valueFormat": "quoted",
+			"description": "Overrides the map loaded at round start.",
+			"options": [
+				{ "value": "", "label": "default" },
+				{ "value": "deltastation", "label": "Delta Station" },
+				{ "value": "icebox", "label": "Ice Box Station" },
+				{ "value": "metastation", "label": "MetaStation" },
+				{ "value": "tramstation", "label": "Tramstation" },
+				{ "value": "nebulastation", "label": "NebulaStation" },
+				{ "value": "wawastation", "label": "Wawastation" },
+				{ "value": "catwalkstation", "label": "Catwalk Station (test)" },
+				{ "value": "gateway_test", "label": "Gateway Test (test)" },
+				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
+				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
+				{
+					"value": "runtimestation_minimal",
+					"label": "Minimal Runtime Station"
+				}
+			]
 		},
 		{
 			"id": "MAP_TEST",

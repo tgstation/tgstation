@@ -26,5 +26,7 @@
 		"**/node_modules": true
 	},
 	"Lua.diagnostics.enable": false,
-	"tgBuildFlags.baseTask": "Build All"
+	"tgBuildFlags.baseTask": "Build All",
+	"tgBuildFlags.configPath": "tools/build/build_flags.json",
+	"tgBuildFlags.injectionMode": "cli-args"
 }
