@@ -35,7 +35,7 @@
 
 /obj/effect/mob_spawn/corpse/facehugger/create(mob/user, newname, apply_prefs)
 	var/obj/item/clothing/mask/facehugger/spawned_facehugger = new mob_type(loc)
-	spawned_facehugger.Die()
+	spawned_facehugger.die()
 	qdel(src)
 
 ///dead goliath spawner
