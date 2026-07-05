@@ -18,7 +18,7 @@
 	if(!isliving(fugitive_hunter) || !ishuman(target))
 		return
 	var/mob/living/carbon/human/fugitive = target
-	var/datum/antagonist/fugitive/fug_antag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)
+	var/datum/antagonist/fugitive/fug_antag = IS_FUGITIVE(fugitive)
 	if(!fug_antag)
 		to_chat(fugitive_hunter, span_warning("This is not a wanted fugitive!"))
 		return
@@ -80,7 +80,7 @@
 
 /obj/machinery/fugitive_capture/psyker/process() //I have no fucking idea how to make click-dragging work for psykers so this one just sucks them in.
 	for(var/mob/living/carbon/human/potential_victim in range(1, get_turf(src)))
-		var/datum/antagonist/fugitive/fug_antag = potential_victim.mind.has_antag_datum(/datum/antagonist/fugitive)
+		var/datum/antagonist/fugitive/fug_antag = IS_FUGITIVE(potential_victim)
 		if(fug_antag)
 			potential_victim.visible_message(span_alert("[potential_victim] is violently sucked into the [src]!"))
 			add_prisoner(potential_victim, fug_antag)

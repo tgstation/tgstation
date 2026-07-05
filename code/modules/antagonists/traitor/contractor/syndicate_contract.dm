@@ -88,7 +88,7 @@
 	if(!isliving(sent_mob))
 		return
 	var/mob/living/person_sent = sent_mob
-	var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
+	var/datum/antagonist/traitor/traitor_data = IS_TRAITOR(owner)
 	if(person_sent == contract.target.current)
 		traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem += contract.payout
 		traitor_data.uplink_handler.contractor_hub.contracts_completed++

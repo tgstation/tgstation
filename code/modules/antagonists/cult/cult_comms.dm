@@ -52,7 +52,7 @@
 	user.whisper(html_decode(message), filterproof = TRUE)
 	var/title = "Acolyte"
 	var/span = "cult italic"
-	var/datum/antagonist/cult/cult_datum = user.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/cult_datum = IS_CULTIST(user)
 	if(cult_datum.is_cult_leader())
 		span = "cult_large"
 		title = "Master"
@@ -92,7 +92,7 @@
 /datum/action/innate/cult/master/IsAvailable(feedback = FALSE)
 	if(!owner.mind || GLOB.cult_narsie)
 		return FALSE
-	var/datum/antagonist/cult/cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/cult_datum = IS_CULTIST(owner)
 	if(!cult_datum.is_cult_leader())
 		return FALSE
 	return ..()
@@ -107,13 +107,13 @@
 	. = ..()
 	if (!.)
 		return
-	var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/mind_cult_datum = IS_CULTIST(owner)
 	if(!mind_cult_datum || mind_cult_datum.cult_team.leader_passed_on)
 		return FALSE
 
 /datum/action/innate/cult/master/pass_role/Activate()
 	var/list/choices = list()
-	var/datum/antagonist/cult/owner_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/owner_datum = IS_CULTIST(owner)
 	for(var/datum/mind/team_member as anything in owner_datum.cult_team.members)
 		if(!team_member.current || !ishuman(team_member.current) || team_member.current == owner || team_member.current.stat == DEAD)
 			continue
@@ -134,7 +134,7 @@
 		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
 		return
 
-	var/datum/antagonist/cult/target_datum = master_mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/target_datum = IS_CULTIST(master)
 	if(!target_datum || owner_datum.cult_team != target_datum?.cult_team)
 		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
 		return
@@ -146,7 +146,7 @@
 		to_chat(owner, span_cult("[new_master] has declined your offer."))
 		return
 
-	if (!IsAvailable() || !master_mind.has_antag_datum(/datum/antagonist/cult) || !master.client)
+	if (!IsAvailable() || !IS_CULTIST(master))
 		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
 		return
 
@@ -160,7 +160,7 @@
 	button_icon_state = "sintouch"
 
 /datum/action/innate/cult/master/finalreck/Activate()
-	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/antag = IS_CULTIST(owner)
 	if(!antag)
 		return
 	var/place = get_area(owner)
@@ -252,7 +252,7 @@
 	return ..()
 
 /datum/action/innate/cult/master/cultmark/do_ability(mob/living/clicker, atom/clicked_on)
-	var/datum/antagonist/cult/cultist = clicker.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/cult/cultist = IS_CULTIST(clicker)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
 
@@ -290,7 +290,7 @@
 	return ..() && isobserver(owner)
 
 /datum/action/innate/cult/ghostmark/Activate()
-	var/datum/antagonist/cult/cultist = owner.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/cult/cultist = IS_CULTIST(owner)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
 

@@ -271,7 +271,7 @@
 
 /obj/item/toy/balloon/syndicate/pickup(mob/living/user)
 	. = ..()
-	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+	if(user && user.mind && user.is_antag())
 		user.add_mood_event("badass_antag", /datum/mood_event/badass_antag)
 
 /obj/item/toy/balloon/syndicate/dropped(mob/living/user)

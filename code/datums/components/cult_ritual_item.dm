@@ -249,7 +249,7 @@
 	var/entered_rune_name
 	var/chosen_keyword
 
-	var/datum/antagonist/cult/user_antag = cultist.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/cult/user_antag = IS_CULTIST(cultist)
 	var/datum/team/cult/user_team = user_antag?.get_team()
 	if(!user_antag || !user_team)
 		stack_trace("[type] - [cultist] attempted to scribe a rune, but did not have an associated [user_antag ? "cult team":"cult antag datum"]!")

@@ -108,7 +108,7 @@
 	if(!owner)
 		return
 
-	var/datum/antagonist/blob/blobtag = owner.mind.has_antag_datum(/datum/antagonist/blob)
+	var/datum/antagonist/blob/blobtag = IS_BLOB(owner)
 	if(!blobtag)
 		Remove(owner)
 		return

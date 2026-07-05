@@ -50,7 +50,7 @@
 
 /// Sets up the ghost poll
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
-	var/datum/antagonist/nukeop/op_datum = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	var/datum/antagonist/nukeop/op_datum = IS_NUKE_OP(user)
 	if(isnull(op_datum))
 		balloon_alert(user, "invalid access!")
 		return

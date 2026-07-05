@@ -167,9 +167,9 @@
 	if(user.mind)
 		if(is_clown_job(user.mind.assigned_role)) //traitor clowns can use this, even though they're technically not clumsy
 			return TRUE
-		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
+		if(IS_CLOWN_OP(user)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
 			return TRUE
-		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
+		if(IS_CLOWN_OP_LEADER(user)) //Wanna hear a funny joke?
 			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
 	return FALSE
 

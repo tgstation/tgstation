@@ -137,7 +137,7 @@
 	syndicate_name = new_name
 	name = "[syndicate_name] Team"
 	for(var/datum/mind/synd_mind in members)
-		var/datum/antagonist/nukeop/synd_datum = synd_mind.has_antag_datum(/datum/antagonist/nukeop)
+		var/datum/antagonist/nukeop/synd_datum = IS_NUKE_OP(synd_mind.current)
 		synd_datum?.give_alias()
 
 /datum/team/nuclear/proc/admin_spawn_reinforcement(mob/admin)
@@ -324,7 +324,7 @@
 		return
 
 	for(var/datum/mind/synd_mind as anything in members)
-		var/datum/antagonist/nukeop/synd_datum = synd_mind.has_antag_datum(/datum/antagonist/nukeop)
+		var/datum/antagonist/nukeop/synd_datum = IS_NUKE_OP(synd_mind.current)
 		synd_datum?.memorize_code()
 
 /datum/team/nuclear/proc/assign_nuke()

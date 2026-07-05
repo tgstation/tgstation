@@ -9,7 +9,7 @@
 	var/hud_icon
 
 /datum/spellbook_entry/perks/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	var/datum/antagonist/wizard/wizard_datum = IS_WIZARD(user)
 	if(wizard_datum)
 		wizard_datum.perks += src
 	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
@@ -83,7 +83,7 @@
 
 /datum/spellbook_entry/perks/gamble/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
-	var/datum/antagonist/wizard/check_perks = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	var/datum/antagonist/wizard/check_perks = IS_WIZARD(user)
 	var/perks_allocated = 0
 	var/list/taking_perks = list()
 	for(var/datum/spellbook_entry/perks/generate_perk in book.entries)

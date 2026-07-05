@@ -253,7 +253,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(length(myriad_targets))
 		var/mob/living/new_convertee = pick(myriad_targets)
 		var/mob/living/first_invoker = invokers[1]
-		var/datum/antagonist/cult/first_invoker_datum = first_invoker.mind.has_antag_datum(/datum/antagonist/cult)
+		var/datum/antagonist/cult/first_invoker_datum = IS_CULTIST(first_invoker)
 		var/datum/team/cult/cult_team = first_invoker_datum.get_team()
 
 		var/is_convertable = is_convertable_to_cult(new_convertee, cult_team)
@@ -663,7 +663,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	if(!is_station_level(z))
 		return
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/cult/user_antag = IS_CULTIST(user)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
@@ -1102,7 +1102,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/user_antag = IS_CULTIST(user)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	if(length(summon_objective.summon_spots) <= 1)
 		to_chat(user, span_cult_large("Only one ritual site remains - it must be reserved for the final summoning!"))

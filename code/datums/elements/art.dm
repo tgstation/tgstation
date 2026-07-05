@@ -55,7 +55,7 @@
 
 /datum/element/art/rev/apply_moodlet(atom/source, mob/living/user, impress)
 	var/msg
-	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
+	if(IS_REVOLUTIONARY(user))
 		user.add_mood_event("artgreat", /datum/mood_event/artgreat)
 		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 	else

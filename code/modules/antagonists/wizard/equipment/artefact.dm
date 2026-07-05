@@ -261,7 +261,7 @@
 	spooky_scaries |= target
 	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
 	to_chat(target, span_userdanger("[user.p_Theyre()] your master now, assist [user.p_them()] even if it costs you your new life!"))
-	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	var/datum/antagonist/wizard/antag_datum = IS_WIZARD(user)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
 			antag_datum.create_wiz_team()

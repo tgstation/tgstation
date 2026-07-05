@@ -25,7 +25,7 @@
 	our_jaunt = new(brain_owner)
 	our_jaunt.Grant(brain_owner)
 
-	if(brain_owner.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
+	if(IS_NIGHTMARE(brain_owner)) //Only a TRUE NIGHTMARE is worthy of using this ability
 		terrorize_spell = new(src)
 		terrorize_spell.Grant(brain_owner)
 

@@ -307,9 +307,21 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a changeling
 #define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
+/// check for fallen changeling (a changeling that has lost their powers, not a regular ling)
+#define IS_FALLEN_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/fallen_changeling))
 
-/// Checks if the given mob is a nuclear operative
+/// Checks if the given mob is a nuclear operative. this works on clown operatives aswell
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
+/// checks if the given mob is a clown operative exclusively
+#define IS_CLOWN_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop/clownop))
+/// checks if the given mob is battlecruiser member
+#define IS_BATTLECRUISER_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/battlecruiser))
+/// checks for ops and clown ops leaders:
+#define IS_NUKE_OP_LEADER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop/leader))
+#define IS_CLOWN_OP_LEADER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop/leader/clownop))
+
+/// checks if the given mob is a pirate
+#define IS_PIRATE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/pirate))
 
 //Tells whether or not someone is a space ninja
 #define IS_SPACE_NINJA(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ninja))
@@ -331,14 +343,40 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a spy!
 #define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
-/// check for blud worm
-#define IS_BLOOD_WORM(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/blood_worm))
-// check for nightmare
+// checks if the mob is a blood brother
+#define IS_BLOOD_BROTHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brother))
+
+// checks if the mob is nightmare
 #define IS_NIGHTMARE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nightmare))
-// check for blob
+
+// checks if the mob is blob
 #define IS_BLOB(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/blob))
-// check for obsessed
+
+// checks if the mob is obsessed
 #define IS_OBSESSED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/obsessed))
+
+// checks if the mob is a space dragon
+#define IS_SPACE_DRAGON(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/space_dragon))
+
+// checks if the mob is brainwashed
+#define IS_BRAINWASHED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brainwashed))
+// checks if the mob is hypnotized
+#define IS_HYPNOTIZED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/hypnotized))
+
+// checks if the mob is an ashwalker
+#define IS_ASHWALKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ashwalker))
+
+// checks if the mob is bitrunning glitch
+#define IS_BITRUNNING_GLITCH(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch))
+
+// checks if the mob is fugitive
+#define IS_FUGITIVE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/fugitive))
+
+// checks if the mob is an abductor
+#define IS_ABDUCTOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/abductor))
+
+// checks if the mob has highlander antag datum
+#define IS_HIGHLANDER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/highlander))
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(

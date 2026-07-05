@@ -114,14 +114,13 @@
 	if(HAS_TRAIT(attacked_mob, TRAIT_EVIL))
 		guilty(attacked_mob, "for an almost fanatical commitment to EEEEVIL!")
 	if(attacked_mob.mind)
-		var/datum/mind/guilty_conscience = attacked_mob.mind
-		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))
+		if(IS_ABDUCTOR(attacked_mob))
 			guilty(attacked_mob, "for their blatant surgical malice...")
-		if(guilty_conscience.has_antag_datum(/datum/antagonist/nightmare))
+		if(IS_NIGHTMARE(attacked_mob))
 			guilty(attacked_mob, "for being a light-consuming nightmare!")
-		if(guilty_conscience.has_antag_datum(/datum/antagonist/ninja))
+		if(IS_SPACE_NINJA(attacked_mob))
 			guilty(attacked_mob, "for their misaligned association with the Spider Clan!")
-		var/datum/antagonist/heretic/heretic_datum = guilty_conscience.has_antag_datum(/datum/antagonist/heretic)
+		var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(attacked_mob)
 		if(heretic_datum?.ascended)
 			guilty(attacked_mob, "for blasphemous, heretical, out of control worship!")
 

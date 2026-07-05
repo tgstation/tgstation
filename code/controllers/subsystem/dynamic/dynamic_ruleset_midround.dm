@@ -1208,7 +1208,7 @@
 
 /datum/dynamic_ruleset/midround/from_living/obsesed/antag_check(mob/candidate)
 	// Obsessed is a special case, it can select other antag players
-	return !candidate.mind.has_antag_datum(/datum/antagonist/obsessed)
+	return !IS_OBSESSED(candidate)
 
 /datum/dynamic_ruleset/midround/from_living/obsesed/assign_role(datum/mind/candidate)
 	var/obj/item/organ/brain/brain = candidate.current.get_organ_by_type(__IMPLIED_TYPE__)

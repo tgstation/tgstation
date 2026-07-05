@@ -314,8 +314,8 @@
 
 /datum/dynamic_ruleset/roundstart/nukies/proc/call_infiltrator()
 	for(var/datum/mind/leader_mind as anything in selected_minds)
-		var/datum/antagonist/nukeop/leader/nuke_leader = leader_mind.has_antag_datum(/datum/antagonist/nukeop/leader)
-		nuke_leader?.spawn_infiltrator()
+		var/datum/antagonist/nukeop/leader/nuke_leader = IS_NUKE_OP_LEADER(leader_mind.current)
+		nuke_leader.spawn_infiltrator()
 
 #undef ELEVATOR_WIDTH
 #undef ELEVATOR_HEIGHT

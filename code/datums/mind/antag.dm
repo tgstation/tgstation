@@ -77,7 +77,7 @@
 /datum/mind/proc/remove_antags_for_borging()
 	remove_antag_datum(/datum/antagonist/cult)
 
-	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
+	var/datum/antagonist/rev/revolutionary = IS_REVOLUTIONARY(current)
 	revolutionary?.remove_revolutionary()
 
 /**
@@ -238,7 +238,7 @@
 */
 /datum/mind/proc/try_give_equipment_fallback()
 	var/uplink_exists
-	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+	var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(current)
 	if(traitor_datum)
 		uplink_exists = traitor_datum.uplink_ref
 	if(!uplink_exists)
@@ -251,7 +251,7 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_wizard()
-	if(has_antag_datum(/datum/antagonist/wizard))
+	if((IS_WIZARD(mind.current)))
 		return
 	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 	add_antag_datum(/datum/antagonist/wizard)

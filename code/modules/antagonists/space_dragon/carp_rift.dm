@@ -14,7 +14,7 @@
 	button_icon_state = "carp_rift"
 
 /datum/action/innate/summon_rift/Activate()
-	var/datum/antagonist/space_dragon/dragon = owner.mind?.has_antag_datum(/datum/antagonist/space_dragon)
+	var/datum/antagonist/space_dragon/dragon = IS_SPACE_DRAGON(owner)
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)

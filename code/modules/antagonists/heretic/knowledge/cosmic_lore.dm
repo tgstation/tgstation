@@ -278,7 +278,7 @@
 	star_gazer_mob.add_traits(stargazer_traits, type)
 	star_gazer_mob.leash_to(star_gazer_mob, user)
 
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
 	blade_upgrade.combo_duration = 10 SECONDS
 	blade_upgrade.combo_duration_amount = 10 SECONDS

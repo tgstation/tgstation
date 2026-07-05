@@ -75,7 +75,7 @@
 		return
 	if (isnull(ninja))
 		return
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective?.completed = TRUE
 

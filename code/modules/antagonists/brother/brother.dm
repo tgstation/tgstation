@@ -89,7 +89,7 @@
 			flashed.balloon_alert(source, "that's your target!")
 			return
 
-	if (flashed.mind.has_antag_datum(/datum/antagonist/brother))
+	if (IS_BLOOD_BROTHER(flashed))
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
@@ -237,10 +237,10 @@
 /// Adds a new brother to the team
 /datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
 #ifndef TESTING
-	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
+	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || IS_BLOOD_BROTHER(new_brother))
 		return FALSE
 #else
-	if (isnull(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
+	if (isnull(new_brother) || IS_BLOOD_BROTHER(new_brother))
 		return FALSE
 #endif
 
@@ -300,12 +300,12 @@
 
 	if (brothers_left == 0 && remaining_brothers > 0)
 		for (var/datum/mind/brother_mind as anything in members)
-			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			var/datum/antagonist/brother/brother_datum = IS_BLOOD_BROTHER(brother_mind.current)
 			brother_datum?.grant_conversion_skills()
 
 	else if (brothers_left > 0 && remaining_brothers <= 0)
 		for (var/datum/mind/brother_mind as anything in members)
-			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			var/datum/antagonist/brother/brother_datum = IS_BLOOD_BROTHER(brother_mind.current)
 			brother_datum?.remove_conversion_skills()
 	brothers_left = remaining_brothers
 

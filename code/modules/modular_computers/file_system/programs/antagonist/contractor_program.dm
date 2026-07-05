@@ -45,7 +45,7 @@
 			return TRUE
 
 		if("PRG_login")
-			var/datum/antagonist/traitor/traitor_user = user.mind.has_antag_datum(/datum/antagonist/traitor)
+			var/datum/antagonist/traitor/traitor_user = IS_TRAITOR(user)
 			if(!traitor_user)
 				error = "UNAUTHORIZED USER"
 				return TRUE

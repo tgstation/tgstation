@@ -40,7 +40,7 @@
 
 	var/obj/machinery/abductor/console/console
 	if(ishuman(imp_in))
-		var/datum/antagonist/abductor/new_abductor = imp_in.mind.has_antag_datum(/datum/antagonist/abductor)
+		var/datum/antagonist/abductor/new_abductor = IS_ABDUCTOR(imp_in)
 		if(new_abductor)
 			console = get_abductor_console(new_abductor.team.team_number)
 			if(!console)

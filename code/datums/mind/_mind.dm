@@ -450,7 +450,7 @@
 				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
 				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
 			if("uplink")
-				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+				var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(current)
 				if(!give_uplink(antag_datum = traitor_datum || null))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")

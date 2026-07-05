@@ -14,7 +14,7 @@
 	if(!isliving(usr))
 		return
 	var/mob/living/usr_is_living = usr
-	var/datum/antagonist/wizard/wizard_datum = usr_is_living.mind.has_antag_datum(/datum/antagonist/wizard)
+	var/datum/antagonist/wizard/wizard_datum = IS_WIZARD(usr_is_living)
 	if(!wizard_datum)
 		return
 	compact = !compact

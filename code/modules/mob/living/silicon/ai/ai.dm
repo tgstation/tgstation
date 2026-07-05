@@ -963,7 +963,7 @@
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
 		doom_n_boom.hacked_command_areas += apcarea
 		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
-		var/datum/antagonist/malf_ai/malf_ai_datum = mind.has_antag_datum(/datum/antagonist/malf_ai)
+		var/datum/antagonist/malf_ai/malf_ai_datum = IS_MALF_AI(malfai)
 		if(malf_ai_datum)
 			malf_ai_datum.update_static_data_for_all_viewers()
 		else //combat software AIs use a different UI

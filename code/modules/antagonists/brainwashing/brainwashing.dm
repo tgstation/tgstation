@@ -4,7 +4,7 @@
 	if(!islist(directives))
 		directives = list(directives)
 	var/datum/mind/brainwash_mind = brainwash_victim.mind
-	var/datum/antagonist/brainwashed/brainwashed_datum = brainwash_mind.has_antag_datum(/datum/antagonist/brainwashed)
+	var/datum/antagonist/brainwashed/brainwashed_datum = IS_BRAINWASHED(brainwash_victim)
 	if(brainwashed_datum)
 		for(var/O in directives)
 			var/datum/objective/brainwashing/objective = new(O)

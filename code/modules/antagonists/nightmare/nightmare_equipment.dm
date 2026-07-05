@@ -35,14 +35,14 @@
 
 /obj/item/light_eater/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/nightmare))
+	if(!IS_NIGHTMARE(user))
 		return
 	RegisterSignal(user, COMSIG_MOB_ENTER_JAUNT, PROC_REF(prepare_crit_timer))
 	RegisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT, PROC_REF(stop_crit_timer))
 
 /obj/item/light_eater/dropped(mob/user, silent = FALSE)
 	. = ..()
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/nightmare))
+	if(!IS_NIGHTMARE(user))
 		return
 	UnregisterSignal(user, COMSIG_MOB_ENTER_JAUNT)
 	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)

@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(isnull(guardian))
 		return null
 	// Add the wizard team datum
-	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	var/datum/antagonist/wizard/antag_datum = IS_WIZARD(user)
 	if(isnull(antag_datum))
 		return guardian
 	if(!antag_datum.wiz_team)

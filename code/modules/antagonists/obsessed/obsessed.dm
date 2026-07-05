@@ -207,7 +207,7 @@
 	var/list/all_coworkers = list()
 	var/our_departments = obsessed_target.assigned_role.departments_bitflags
 	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
-		if(crewmember == obsessed_target || crewmember.has_antag_datum(/datum/antagonist/obsessed))
+		if(crewmember == obsessed_target || IS_OBSESSED(crewmember.current))
 			continue // the jealousy target has to have a job, and not be the obsession or obsessed.
 
 		if(our_departments & crewmember.assigned_role.departments_bitflags)

@@ -24,7 +24,7 @@
 	if(!ismob(crafter))
 		return
 	var/mob/living/builder = crafter
-	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/antagonist/cult/cultist = IS_CULTIST(builder)
 	cult_team = cultist?.get_team()
 
 /// Tries to find a cultist. If it succeeds, it also takes advantage of the moment to define the structure's cult team if it's not set yet.
@@ -34,7 +34,7 @@
 		return FALSE
 
 	if(isnull(cult_team))
-		var/datum/antagonist/cult/cultist = fool.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
+		var/datum/antagonist/cult/cultist = IS_CULTIST(fool)
 		cult_team = cultist?.get_team()
 
 	return TRUE

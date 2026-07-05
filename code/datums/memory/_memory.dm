@@ -300,7 +300,7 @@
 	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
 	// This can be signalized or something in the future
-	var/datum/antagonist/obsessed/creeper = memorizer_mind.has_antag_datum(/datum/antagonist/obsessed)
+	var/datum/antagonist/obsessed/creeper = IS_OBSESSED(crew_member)
 	if(creeper && creeper.trauma.obsession)
 		crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
 

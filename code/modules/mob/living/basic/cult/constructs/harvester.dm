@@ -75,7 +75,7 @@
 	..()
 
 /datum/action/innate/seek_master/Activate()
-	var/datum/antagonist/cult/cult_status = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/antagonist/cult/cult_status = IS_CULTIST(owner)
 	if(!cult_status)
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in cult_status.cult_team.objectives
