@@ -533,7 +533,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		else
 			icon_state = "water_cooler"
 
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	update_appearance()
 
 ///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
