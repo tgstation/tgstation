@@ -155,18 +155,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifndef FORCE_MAP //If we already defined forcemap we are forcing it through debug flags, this allows us to run low memory mode with another map, in case you want to for some reason.
-#ifdef LOWMEMORYMODE
-#ifndef ABSOLUTE_MINIMUM
-#define FORCE_MAP "runtimestation"
-#else
-#define FORCE_MAP "runtimestation_minimal"
-#endif
-#endif
-#endif
-#if defined(FORCE_MAP) && !defined(FORCE_MAP_DIRECTORY)
 #define FORCE_MAP_DIRECTORY "_maps"
-#endif
 
 //Additional code for the above flags.
 #ifdef TESTING

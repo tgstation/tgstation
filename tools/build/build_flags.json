@@ -4,12 +4,20 @@
 	"categories": ["Map", "Testing", "Debugging", "Performance", "Misc"],
 	"flags": [
 		{
+			"id": "AUTOSTART_GAME",
+			"define": "AUTOSTART_GAME",
+			"label": "Auto Start",
+			"category": "Testing",
+			"description": "Start the game as soon as initializations finish."
+		},
+		{
 			"id": "TESTING",
 			"define": "TESTING",
 			"label": "Testing",
 			"category": "Testing",
 			"description": "Enables testing() debug messages. Also turns on DATUMVAR_DEBUGGING_MODE, atmos/lighting update visualisers and max-share tracking."
 		},
+
 		{
 			"id": "REAGENTS_TESTING",
 			"define": "REAGENTS_TESTING",
@@ -52,19 +60,18 @@
 			"description": "Disables common annoyances (rat spawns, random light breakage) so mappers can test without shenanigans."
 		},
 		{
-			"id": "LOWMEMORYMODE",
-			"define": "LOWMEMORYMODE",
-			"label": "Low memory mode",
+			"id": "SKIP_LAVALAND",
+			"define": "SKIP_LAVALAND",
+			"label": "No Lavaland",
 			"category": "Map",
-			"description": "Forces runtimestation for a quicker compilation cycle."
+			"description": "Prevents Lavaland from loading in."
 		},
 		{
-			"id": "ABSOLUTE_MINIMUM",
-			"define": "ABSOLUTE_MINIMUM",
-			"label": "Absolute minimum",
+			"id": "SKIP_SPACE_LEVELS",
+			"define": "SKIP_SPACE_LEVELS",
+			"label": "No space ruins",
 			"category": "Map",
-			"description": "Forces runtimestation_minimal, the smallest possible map.",
-			"requires": ["LOWMEMORYMODE"]
+			"description": "Makes no space levels load in."
 		},
 		{
 			"id": "TIMER_DEBUG",
@@ -171,12 +178,14 @@
 		{
 			"id": "low_memory",
 			"label": "Low memory mode",
-			"flags": ["LOWMEMORYMODE"]
+			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS"],
+			"values": { "force_map": "runtimestation" }
 		},
 		{
 			"id": "absolute_minimum",
 			"label": "Absolute minimum",
-			"flags": ["LOWMEMORYMODE", "ABSOLUTE_MINIMUM"]
+			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS", "AUTOSTART_GAME"],
+			"values": { "force_map": "runtimestation" }
 		},
 		{
 			"id": "testing",
@@ -192,12 +201,14 @@
 			"id": "testing_low_memory",
 			"label": "Testing + low memory mode",
 			"flags": [
-				"LOWMEMORYMODE",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
 				"TESTING",
 				"REAGENTS_TESTING",
 				"TIMER_DEBUG",
 				"REFERENCE_DOING_IT_LIVE"
-			]
+			],
+			"values": { "force_map": "runtimestation" }
 		},
 		{
 			"id": "map_testing",
