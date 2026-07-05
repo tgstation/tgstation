@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Tendrils now remove their corrupted tiles after death"
+  - bugfix: "Tendrils got their death sound back"

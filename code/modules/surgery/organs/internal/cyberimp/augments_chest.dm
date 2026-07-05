@@ -23,7 +23,10 @@
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
-		to_chat(owner, span_notice("You feel less hungry..."))
+		var/feed_text = "You feel less hungry..."
+		if(owner.nutrition >= NUTRITION_LEVEL_FED)
+			feed_text = "You feel very full..."
+		to_chat(owner, span_notice(feed_text))
 		owner.adjust_nutrition(25 * seconds_per_tick)
 		addtimer(CALLBACK(src, PROC_REF(synth_cool)), 5 SECONDS)
 
@@ -46,6 +49,19 @@
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/organ/cyberimp/chest/nutriment/black_market
+	name = "nutriment pump implant PLUS PLUS PLUS"
+	desc = "This implant will synthesize and pump into your bloodstream a large amount of nutriment basically whenever."
+	icon_state = "bm_nutriment_implant"
+	aug_overlay = "nutripump_bm"
+	hunger_threshold = NUTRITION_LEVEL_FAT
+	poison_amount = 15
+
+/obj/item/organ/cyberimp/chest/nutriment/black_market/on_life(seconds_per_tick)
+	. = ..()
+	if(owner.nutrition >= NUTRITION_LEVEL_FAT && owner.overeatduration <= OVEREAT_TIME_LIMIT)
+		owner.overeatduration = min(owner.overeatduration + 40 SECONDS, OVEREAT_TIME_LIMIT)
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "reviver implant"

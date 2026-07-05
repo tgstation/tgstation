@@ -79,16 +79,17 @@
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(P))
-		if(!user.can_write(P))
-			return
-		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
-		if(txt && user.can_perform_action(src))
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			scribble = txt
-	else
-		return ..()
+/obj/item/photo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_WRITING_UTENSIL(tool))
+		return NONE
+	if(!user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
+	var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
+	if(!txt || !user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	scribble = txt
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/photo/examine(mob/user)
 	. = ..()
@@ -114,9 +115,7 @@
 		+ "</body></html>", "window=photo_showing;size=[scribble ? "480x580" : "480x480"]")
 	onclose(user, "[name]")
 
-/obj/item/photo/verb/rename()
-	set name = "Rename photo"
-	set src in usr
+GAME_VERB_SRC(/obj/item/photo, rename, usr, "Rename photo", null)
 
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards

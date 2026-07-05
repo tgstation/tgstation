@@ -121,25 +121,35 @@
 		return TRUE
 	. = ..()
 
-/obj/item/clipboard/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/paper))
+/obj/item/clipboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper))
 		//Add paper into the clipboard
-		if(!user.transferItemToLoc(weapon, src))
-			return
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		if(top_paper)
 			UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
-		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
-		top_paper = weapon
-		to_chat(user, span_notice("You clip [weapon] onto [src]."))
-	else if(istype(weapon, /obj/item/pen) && !pen)
+		RegisterSignal(tool, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
+		top_paper = tool
+		to_chat(user, span_notice("You clip [tool] onto [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/pen) && !pen)
 		//Add a pen into the clipboard, attack (write) if there is already one
-		if(!usr.transferItemToLoc(weapon, src))
-			return
-		pen = weapon
-		to_chat(usr, span_notice("You slot [weapon] into [src]."))
-	else if(top_paper)
-		top_paper.attackby(user.get_active_held_item(), user)
-	update_appearance()
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		pen = tool
+		to_chat(user, span_notice("You slot [tool] into [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(top_paper)
+		top_paper.item_interaction(user, user.get_active_held_item())
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
 
 /obj/item/clipboard/attack_self(mob/user)
 	add_fingerprint(usr)

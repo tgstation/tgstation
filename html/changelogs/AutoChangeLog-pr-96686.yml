@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "Change blood deficiency to start with 85% blood instead of 80%"
+  - bugfix: "Fix blood deficiency from causing gasping, stamina loss, and blurriness"

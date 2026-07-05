@@ -660,11 +660,12 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
-			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
-			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
+			//At this point the APC is fully powered. If we've swapped to night lights because of low power then
+			//that gets undone here. The night lights are disabled depending on nightshift or security level.
+			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
-				if(nightshift_disabled)
+				var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)

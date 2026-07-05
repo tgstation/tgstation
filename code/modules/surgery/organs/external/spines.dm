@@ -28,7 +28,10 @@
 
 ///Bodypart overlay for spines
 /datum/bodypart_overlay/mutant/spines
-	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER
+	)
 	feature_key = FEATURE_SPINES
 	dyable = TRUE
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE

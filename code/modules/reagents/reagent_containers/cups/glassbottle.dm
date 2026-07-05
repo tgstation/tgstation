@@ -34,7 +34,6 @@
 	. = ..()
 	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
 	AddElement(/datum/element/slapcrafting, recipes)
-	register_context()
 	register_item_context()
 
 /obj/item/reagent_containers/cup/glass/bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

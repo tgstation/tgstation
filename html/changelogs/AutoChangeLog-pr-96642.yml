@@ -1,0 +1,6 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Wizards can now successfully refund summoning items"
+  - bugfix: "Holopayment stands can now take payment"
+  - code_imp: "21 things have been moved from attackby() to item_interaction()"
