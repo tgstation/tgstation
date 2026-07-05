@@ -362,12 +362,17 @@
 			turfs += checked_turf
 	return turfs
 
-///Returns a list of turfs around a center that can be reached from said center (blocked by density) using a breadth-first flood fill
-/proc/circle_reachable_turfs(turf/center, radius = 3)
+///Returns a list of turfs around a center that can be reached from said center (blocked by density and directional obstacles like windows/windoors) using a breadth-first flood fill.
+///Turfs are matched against the same circular radius used by circle_range_turfs()/circle_view_turfs(), rather than merely the number of steps taken to reach them,
+///since a path detouring around an obstacle can need more steps than a straight line of length radius to reach a turf that is still within the circle.
+/proc/circle_reachable_turfs(turf/center, radius = 3, datum/can_pass_info/pass_info)
 	var/list/turfs = list()
 	var/list/checked = alist(center = TRUE)
 	var/list/current_ring = list(center)
-	for(var/step in 1 to radius)
+	var/rsq = radius * (radius + 0.5)
+	if(!pass_info)
+		pass_info = new(no_id = TRUE)
+	for(var/step in 1 to radius * 2) //extra slack steps allow detouring around obstacles while still bounding the search
 		var/list/next_ring = list()
 		for(var/turf/checking as anything in current_ring)
 			for(var/direction in GLOB.alldirs)
@@ -375,10 +380,13 @@
 				if(!neighbor || checked[neighbor])
 					continue
 				checked[neighbor] = TRUE
-				if(neighbor.is_blocked_turf(exclude_mobs = TRUE))
+				if(neighbor.density || checking.LinkBlockedWithAccess(neighbor, pass_info))
 					continue
 				next_ring += neighbor
-				turfs += neighbor
+				var/dx = neighbor.x - center.x
+				var/dy = neighbor.y - center.y
+				if(dx * dx + dy * dy <= rsq)
+					turfs += neighbor
 		if(!length(next_ring))
 			break
 		current_ring = next_ring
