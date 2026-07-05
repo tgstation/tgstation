@@ -269,6 +269,7 @@
 	body.client?.prefs.safe_transfer_prefs_to(body)
 	body.dna.remove_all_mutations()
 	body.dna.update_dna_identity()
+	return TRUE
 
 /**
  * Handles anything extra you want to happen after applying prefs
