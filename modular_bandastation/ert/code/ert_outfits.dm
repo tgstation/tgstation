@@ -47,6 +47,7 @@
 	organs = list(
 		/obj/item/organ/cyberimp/arm/toolkit/flash = 1,
 		/obj/item/organ/cyberimp/brain/anti_stun = 1,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
@@ -125,6 +126,7 @@
 	organs = list(
 		/obj/item/organ/cyberimp/arm/toolkit/esword = 1,
 		/obj/item/organ/cyberimp/brain/anti_stun = 1,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 
 /datum/outfit/centcom/ert/commander/gamma/post_equip(mob/living/carbon/human/squaddie, visuals_only = FALSE)
@@ -211,6 +213,7 @@
 		/obj/item/organ/cyberimp/arm/toolkit/surgery = 1,
 		/obj/item/organ/cyberimp/eyes/hud/medical = 1,
 		/obj/item/organ/cyberimp/brain/anti_stun = 1,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	suit_store = /obj/item/gun/energy/e_gun/nuclear
 
@@ -290,6 +293,7 @@
 		/obj/item/organ/cyberimp/brain/anti_stun = 1,
 		/obj/item/organ/cyberimp/eyes/hud/diagnostic = 1,
 		/obj/item/organ/cyberimp/arm/toolkit/toolset = 1,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full
 	suit_store = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
@@ -348,6 +352,7 @@
 	organs = list(
 		/obj/item/organ/cyberimp/brain/anti_stun = 1,
 		/obj/item/organ/cyberimp/eyes/hud/security = 1,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	belt = /obj/item/claymore
 	suit_store = /obj/item/gun/energy/e_gun/nuclear
@@ -416,7 +421,8 @@
 		/obj/item/clothing/head/beret/ert/janitor = 1,
 	)
 	organs = list(
-		/obj/item/organ/cyberimp/brain/anti_stun
+		/obj/item/organ/cyberimp/brain/anti_stun,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
 
@@ -473,7 +479,8 @@
 		/obj/item/stack/sheet/mineral/bananium = 15,
 	)
 	organs = list(
-		/obj/item/organ/cyberimp/brain/anti_stun
+		/obj/item/organ/cyberimp/brain/anti_stun,
+		/obj/item/organ/eyes/robotic/tacvisor/centcom = 1,
 	)
 	belt = /obj/item/storage/belt/military/assault/ert/full_gamma_clown
 	shoes = /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat

@@ -24,6 +24,7 @@
 #include "code/items/wallets.dm"
 #include "code/items/mech_core.dm"
 #include "code/items/sabre.dm"
+#include "code/items/centcom_tacvisor.dm"
 #include "code/items/clothing/belt.dm"
 #include "code/items/clothing/accessories/accessories.dm"
 #include "code/items/clothing/accessories/gloves_accessories.dm"

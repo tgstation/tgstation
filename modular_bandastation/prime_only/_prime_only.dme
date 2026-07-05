@@ -1,6 +1,6 @@
 #include "_prime_only.dm"
 
-#include "fish_portal_rebalance/code/machine_circuitboards.dm"
+#include "code/fishing_portal_generator.dm"
 
 #include "../_defines220/code/defines/bodycam.dm"
 #include "../~components/code/bodycam_camera.dm"

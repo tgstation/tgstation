@@ -615,6 +615,10 @@
 			COMSIG_MOB_EQUIPPED_ITEM,
 			COMSIG_MOB_UNEQUIPPED_ITEM,
 			COMSIG_LIVING_UPDATE_OFFSETS,
+			// BANDASTATION EDIT START: Fix image pos after grab & fall
+			COMSIG_ATOM_NO_LONGER_PULLED,
+			COMSIG_LIVING_GET_PULLED,
+			// BANDASTATION EDIT END: Fix image pos after grab & fall
 		))
 	mob_overlays.Cut()
 	direct_view_tracking.Cut()
@@ -667,6 +671,10 @@
 		// Lying down/being pushed
 		RegisterSignal(source, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(refresh_overlay))
 		RegisterSignal(source, COMSIG_LIVING_UPDATE_OFFSETS, PROC_REF(refresh_overlay))
+		// BANDASTATION EDIT START: Fix image pos after grab
+		RegisterSignal(source, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(refresh_overlay))
+		RegisterSignal(source, COMSIG_LIVING_GET_PULLED, PROC_REF(refresh_overlay))
+		// BANDASTATION EDIT END: Fix image pos after grab
 
 	mob_overlays[source] = make_overlay(source)
 	owner.client?.images |= mob_overlays[source]
@@ -699,6 +707,11 @@
 	static_effect.blend_mode = BLEND_INSET_OVERLAY
 	appearance_copy.overlays += static_effect
 	appearance_copy.override = TRUE
+	// BANDASTATION EDIT START: Fix image pos after grab & fall
+	appearance_copy.transform = null
+	appearance_copy.pixel_x = 0
+	appearance_copy.pixel_y = 0
+	// BANDASTATION EDIT END: Fix image pos after grab & fall
 	var/image/overlay_image = image(appearance_copy, target)
 	overlay_image.name = "Unknown"
 	overlay_image.override = TRUE
