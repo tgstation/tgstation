@@ -1165,12 +1165,20 @@
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 
-	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
-	var/effective_grab_state = pulledby.grab_state
-	//The amount of damage inflicted on a failed resist attempt.
-	var/damage_on_resist_fail = rand(7, 13)
-	// Base chance to escape a grab. Divided by effective grab state
-	var/escape_chance = BASE_GRAB_RESIST_CHANCE
+	var/list/grab_stats = list(
+		// Our effective grab state.
+		// GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
+		pulledby.grab_state,
+		/// The amount of damage inflicted on a failed resist attempt.
+		rand(7, 13),
+		// Base chance to escape a grab. Divided by effective grab state.
+		BASE_GRAB_RESIST_CHANCE,
+	)
+	SEND_SIGNAL(pulledby, COMSIG_MOVABLE_GRABBED_RESISTING, src, grab_stats)
+
+	var/effective_grab_state = grab_stats[GRAB_STAT_EFFECTIVE_STATE]
+	var/damage_on_resist_fail = grab_stats[GRAB_STAT_FAIL_DAMAGE]
+	var/escape_chance = grab_stats[GRAB_STAT_ESCAPE_CHANCE]
 
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
@@ -1184,26 +1192,14 @@
 	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
 		effective_grab_state--
 
-	//If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
-	if(pulledby && ishuman(pulledby))
+	// If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	if(ishuman(pulledby))
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
 			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
 			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
 			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
-
-		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
-		var/puller_drunkenness = human_puller.get_drunk_amount()
-		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
-			damage_on_resist_fail += clamp((human_puller.get_fire_loss() + human_puller.get_brute_loss()) / 10, 3, 20)
-			effective_grab_state++
-
-		var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
-		if(puller_art?.can_use(human_puller))
-			damage_on_resist_fail += puller_art.grab_damage_modifier
-			effective_grab_state += puller_art.grab_state_modifier
-			escape_chance += puller_art.grab_escape_chance_modifier
 
 	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
 	if(effective_grab_state >= GRAB_AGGRESSIVE)

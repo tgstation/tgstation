@@ -689,7 +689,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "Ev" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/holiday/bar_keg,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "EC" = (

@@ -175,7 +175,7 @@
 	SIGNAL_HANDLER
 
 	var/mutable_appearance/mutation_appearance = mutable_appearance(mutation_icon, mutation_icon_state, -layer_used)
-	owner.apply_height_offsets(mutation_appearance, offset_location)
+	owner.apply_height(mutation_appearance, offset_location)
 
 	overlay_list += mutation_appearance
 

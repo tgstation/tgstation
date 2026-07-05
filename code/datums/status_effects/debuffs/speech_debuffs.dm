@@ -64,7 +64,7 @@
 	make_tts_message_original = TRUE
 	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
 
-	/// The probability of adding a stutter to any character
+	/// The probability of adding a stutter to any word
 	var/stutter_prob = 75
 	/// The chance of a four character stutter
 	var/four_char_chance = 10
@@ -116,6 +116,52 @@
 		var/datum/quirk/social_anxiety/host_quirk = owner.get_quirk(/datum/quirk/social_anxiety)
 		stutter_prob = clamp(host_quirk?.calculate_mood_mod() * 0.5, 5, 50)
 	return ..()
+
+/datum/status_effect/speech/stutter/obsession
+	id = "obsession_stutter"
+	stutter_prob = 25
+	four_char_chance = 5
+	three_char_chance = 25
+	two_char_chance = 100
+	remove_on_fullheal = FALSE
+
+	COOLDOWN_DECLARE(stutter_cooldown)
+
+/datum/status_effect/speech/stutter/obsession/handle_message(datum/source, list/message_args)
+	if(should_stutter())
+		var/datum/brain_trauma/special/obsessed/obsession_trauma = get_obsession()
+		stutter_prob = initial(stutter_prob)
+		four_char_chance = initial(four_char_chance) * max(1 - (obsession_trauma.time_spend_creeping / (10 SECONDS)), 0.01)
+		three_char_chance = initial(three_char_chance) * max(1 - (obsession_trauma.time_spend_creeping / (20 SECONDS)), 0.01)
+		two_char_chance = initial(two_char_chance) * max(1 - (obsession_trauma.time_spend_creeping / (40 SECONDS)), 0.01)
+	else
+		stutter_prob = 0
+	return ..()
+
+/datum/status_effect/speech/stutter/obsession/apply_speech(original_word, index)
+	. = ..()
+	if(. == original_word || !should_stutter())
+		return
+	var/datum/brain_trauma/special/obsessed/obsession_trauma = get_obsession()
+	to_chat(owner, span_warning("Being near [obsession_trauma.obsession.real_name] makes you nervous and stutter..."))
+	COOLDOWN_START(src, stutter_cooldown, rand(4, 8) SECONDS)
+
+/datum/status_effect/speech/stutter/obsession/proc/get_obsession()
+	if(!ishuman(owner))
+		return null
+
+	var/mob/living/carbon/human/human_owner = owner
+	return human_owner.has_trauma_type(/datum/brain_trauma/special/obsessed)
+
+/datum/status_effect/speech/stutter/obsession/proc/should_stutter()
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, stutter_cooldown))
+		return FALSE
+	var/datum/brain_trauma/special/obsessed/obsession_trauma = get_obsession()
+	if(isnull(obsession_trauma) || !obsession_trauma.viewing || obsession_trauma.witnessed_death)
+		return FALSE
+	return TRUE
 
 /datum/status_effect/speech/stutter/derpspeech
 	id = "derp_stutter"

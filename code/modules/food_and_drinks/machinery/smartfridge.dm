@@ -211,6 +211,12 @@
 	else
 		. += span_info("Можно [EXAMINE_HINT("прикрутить")] к полу.")
 
+/// Returns details related to the fridge status
+/obj/machinery/smartfridge/proc/status_examine()
+	. = list()
+
+	. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
 
@@ -260,64 +266,64 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
-/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!machine_stat)
-		var/shown_contents_length = visible_items()
-		if(shown_contents_length >= max_n_of_items)
-			balloon_alert(user, "нет места!")
-			return FALSE
+/obj/machinery/smartfridge/proc/can_load_item(obj/item/loadable)
+	return !(loadable.item_flags & ABSTRACT) && !(loadable.flags_1 & HOLOGRAM_1) && accept_check(loadable)
 
-		if(!(weapon.item_flags & ABSTRACT) && \
-			!(weapon.flags_1 & HOLOGRAM_1) && \
-			accept_check(weapon) \
+/obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if(machine_stat)
+		if(machine_stat & NOPOWER)
+			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/loaded_count = visible_items()
+	if(loaded_count >= max_n_of_items)
+		balloon_alert(user, "no space!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Loading a single item
+	if(can_load_item(tool))
+		load(tool, user)
+		user.visible_message(
+			span_notice("[user] adds \the [tool] to \the [src]."),
+			span_notice("You add \the [tool] to \the [src]."),
 		)
-			load(weapon, user)
-			user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] перемещает [weapon.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."), span_notice("Вы переместили [weapon.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."))
-			SStgui.update_uis(src)
-			if(visible_contents)
-				update_appearance()
-			return TRUE
+		load(tool, user)
+		user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] перемещает [tool.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."), span_notice("Вы переместили [tool.declent_ru(ACCUSATIVE)] в [declent_ru(ACCUSATIVE)]."))
+		SStgui.update_uis(src)
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(weapon, /obj/item/storage/bag))
-			var/obj/item/storage/bag = weapon
-			var/loaded = 0
-			for(var/obj/item/object in bag.contents)
-				if(shown_contents_length >= max_n_of_items)
-					break
-				if(!(object.item_flags & ABSTRACT) && \
-					!(object.flags_1 & HOLOGRAM_1) && \
-					accept_check(object) \
-				)
-					load(object, user)
-					loaded++
-			SStgui.update_uis(src)
+	// Loading from a bag (until fridge is full)
+	if(istype(tool, /obj/item/storage/bag))
+		var/loaded = 0
+		for(var/obj/item/object in tool.contents)
+			if(loaded_count >= max_n_of_items)
+				break
+			if(!can_load_item(object))
+				continue
+			load(object, user)
+			loaded++
+			loaded_count++
 
-			if(loaded)
-				if(shown_contents_length >= max_n_of_items)
-					user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] перекладывает предметы из [weapon.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."), \
-						span_notice("Вы перемещаете содержимое из [weapon.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."))
-				else
-					user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] перекладывает предметы из [weapon.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."), \
-						span_notice("Вы перемещаете содержимое из [weapon.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."))
-				if(weapon.contents.len)
-					to_chat(user, span_warning("Некоторые предметы не влазят."))
-				if (visible_contents)
-					update_appearance()
-				return TRUE
-			else
-				to_chat(user, span_warning("В [weapon.declent_ru(PREPOSITIONAL)] нет ничего, что можно положить в [declent_ru(ACCUSATIVE)]!"))
-				return FALSE
+		SStgui.update_uis(src)
 
-	if(!powered())
-		to_chat(user, span_warning("Магнитные двери [declent_ru(GENITIVE)] не откроются без энергии!"))
-		return FALSE
+		if(!loaded)
+			to_chat(user, span_warning("В [tool.declent_ru(PREPOSITIONAL)] нет ничего, что можно положить в [declent_ru(ACCUSATIVE)]!"))
+			return ITEM_INTERACT_BLOCKING
 
-	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("[capitalize(declent_ru(NOMINATIVE))] отказывается принимать [weapon.declent_ru(ACCUSATIVE)]."))
-		return FALSE
+		user.visible_message(span_notice("[capitalize(user.declent_ru(NOMINATIVE))] перекладывает предметы из [tool.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."), \
+						span_notice("Вы перемещаете содержимое из [tool.declent_ru(GENITIVE)] в [declent_ru(ACCUSATIVE)]."))
+		if(length(tool.contents))
+			to_chat(user, span_warning("Некоторые предметы не влазят."))
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	to_chat(user, span_warning("\The [src] smartly refuses [tool]."))
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Can this item be accepted by the smart fridge
@@ -579,6 +585,10 @@
 		tool_tip_set = TRUE
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
+
+/obj/machinery/smartfridge/drying/rack/status_examine()
+	. = list()
+	. += span_notice("It looks like this unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()

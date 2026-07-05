@@ -6,12 +6,18 @@
 	min_severity = 30
 
 	telegraph_message = span_danger("Издалека доносятся раскаты грома. Вы отчётливо слышите стук капель, падающих со сгущающихся туч.")
+	telegraph_overlay = "rain_low"
 	telegraph_duration = 30 SECONDS
 
 	weather_message = span_userdanger("<i>На вас выпадает дождь!</i>")
+	weather_overlay = "rain_high"
 
 	end_message = span_bolddanger("Стук дождя постепенно затихает.")
+	telegraph_overlay = "rain_low"
 	end_duration = 30 SECONDS
+
+	// Don't display overlays when using particle weather
+	weather_alpha = 0
 
 	weather_duration_lower = 3 MINUTES
 	weather_duration_upper = 5 MINUTES

@@ -9,7 +9,7 @@
 	random_gain = FALSE
 	known_trauma = FALSE
 	/// Type for the bodypart texture we add
-	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+	var/bodypart_texture_type = /datum/bodypart_texture/spacey
 	/// Color in which we paint the space texture
 	var/space_color = COLOR_WHITE
 	///traits we give on gain
@@ -90,7 +90,7 @@
 	SIGNAL_HANDLER
 
 	// Not updating because on_gain/on_lose() call it down the line, and calls coming from comsigs update the owner's body themselves
-	limb.add_bodypart_overlay(new bodypart_overlay_type(), update = FALSE)
+	limb.add_bodypart_texture(bodypart_texture_type, update = FALSE)
 	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
@@ -99,10 +99,9 @@
 /datum/brain_trauma/voided/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
-	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
-	if(overlay)
-		limb.remove_bodypart_overlay(overlay, update = FALSE)
-		limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
+
+	limb.remove_bodypart_texture(bodypart_texture_type, update = FALSE)
+	limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
 
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb

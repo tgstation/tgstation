@@ -2861,7 +2861,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/syndicate_base/infteam)
 "gJs" = (
-/obj/structure/reagent_dispensers/beerkeg{
+/obj/effect/spawner/random/food_or_drink/keg{
 	desc = "Собственность Шерлока Субботина"
 	},
 /turf/open/floor/iron/dark/smooth_large,
