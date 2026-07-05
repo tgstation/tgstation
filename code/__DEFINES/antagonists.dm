@@ -331,6 +331,15 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a spy!
 #define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
+/// check for blud worm
+#define IS_BLOOD_WORM(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/blood_worm))
+// check for nightmare
+#define IS_NIGHTMARE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nightmare))
+// check for blob
+#define IS_BLOB(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/blob))
+// check for obsessed
+#define IS_OBSESSED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/obsessed))
+
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/abductor,
