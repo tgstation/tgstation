@@ -246,8 +246,7 @@
 #endif
 
 	// this spends a conversion slot via add_member()
-	if (isnull(new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)))
-		return FALSE
+	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
 
 	for (var/datum/mind/brother_mind as anything in members)
 		if (brother_mind == new_brother.mind)
