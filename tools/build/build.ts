@@ -49,30 +49,6 @@ export const DefineParameter = new Juke.Parameter({
   alias: 'D',
 });
 
-/**
- * Debug defines selected interactively via the "TG Build Flags" VS Code
- * extension, which writes one define per line to .vscode/.buildflags.
- *
- * Reading them here lets the checkbox picker drive local builds WITHOUT the
- * build depending on the extension: if the file is absent (CI, TGS, or the
- * extension simply isn't installed) this returns nothing and the build is
- * unaffected. The file is gitignored, so it never exists in CI. Prevents non-plugin users from dying.
- */
-function getLocalFlagFileDefines(): string[] {
-  if (TGS_MODE) {
-    return [];
-  }
-  try {
-    return fs
-      .readFileSync('.vscode/.buildflags', 'utf8')
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0 && !line.startsWith('#'));
-  } catch {
-    return [];
-  }
-}
-
 export const PortParameter = new Juke.Parameter({
   type: 'string',
   alias: 'p',
@@ -192,9 +168,7 @@ export const DmTarget = new Juke.Target({
     SkipIconCutter,
   ],
   dependsOn: ({ get }) => [
-    [...get(DefineParameter), ...getLocalFlagFileDefines()].includes(
-      'ALL_TEMPLATES',
-    ) && DmMapsIncludeTarget,
+    get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
   ],
   inputs: [
@@ -208,26 +182,20 @@ export const DmTarget = new Juke.Target({
     'tgui/public/tgui.html',
     `${DME_NAME}.dme`,
     NamedVersionFile,
-    // Not a source file, but we gotta check if new flags got set.
-    '.vscode/.buildflags',
   ],
   outputs: ({ get }) => {
-    if (get(DmVersionParameter)) {
-      return []; // Always rebuild when dm version is provided
+    if (get(DmVersionParameter) || get(DefineParameter).length > 0) {
+      // Always rebuild when a dm version or explicit CLI defines (e.g. from
+      // the TG Build Flags extension) are provided, since Juke's staleness
+      // check only compares file mtimes and has no way to tell that the
+      // defines used for the last build differ from this run's.
+      return [];
     }
     return [`${DME_NAME}.dmb`, `${DME_NAME}.rsc`];
   },
   executes: async ({ get }) => {
     await DreamMaker(`${DME_NAME}.dme`, {
-      // Dedupe so a flag passed both on the CLI and via .buildflags does not
-      // produce a dupe. Not ideal but it means we can support both
-      defines: [
-        ...new Set([
-          'CBT',
-          ...get(DefineParameter),
-          ...getLocalFlagFileDefines(),
-        ]),
-      ],
+      defines: ['CBT', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
       ignoreWarningCodes: get(NoWarningParameter),
       namedDmVersion: get(DmVersionParameter),
