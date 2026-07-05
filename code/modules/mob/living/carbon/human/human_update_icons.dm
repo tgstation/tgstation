@@ -348,6 +348,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
 		// BANDASTATION EDIT END: SPECIES CLOTHING ICONS
+		apply_height(head_overlay, UPPER_BODY)
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -405,6 +406,7 @@ There are several things that need to be remembered:
 			mutant_override = FALSE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
+		apply_height(suit_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -450,6 +452,7 @@ There are several things that need to be remembered:
 			mutant_override = FALSE
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
+		apply_height(mask_overlay, LOWER_BODY)
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 	// BANDASTATION EDIT STOP - SPECIES CLOTHING ICONS
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
