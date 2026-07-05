@@ -251,7 +251,7 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_wizard()
-	if((IS_WIZARD(mind.current)))
+	if((IS_WIZARD(current)))
 		return
 	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 	add_antag_datum(/datum/antagonist/wizard)

@@ -259,7 +259,7 @@
 	victim.death()
 	on_victim_consumed(victim, jaunter)
 
-	var/datum/antagonist/slaughter/antag = jaunter.mind?.has_antag_datum(/datum/antagonist/slaughter)
+	var/datum/antagonist/slaughter/antag = IS_SLAUGHTER_DEMON(jaunter)
 	if(!isnull(antag))
 		antag.consume_count++
 

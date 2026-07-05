@@ -358,6 +358,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 // checks if the mob is a space dragon
 #define IS_SPACE_DRAGON(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/space_dragon))
 
+// checks if the mob is a slaughter demon
+#define IS_SLAUGHTER_DEMON(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/slaughter))
+
 // checks if the mob is brainwashed
 #define IS_BRAINWASHED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brainwashed))
 // checks if the mob is hypnotized

@@ -34,7 +34,7 @@
 	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
 		origin.transfer_to(spawned_monkey)
 		spawned_monkey.PossessByPlayer(origin.key)
-		var/datum/antagonist/changeling/changeling_datum = origin.has_antag_datum(/datum/antagonist/changeling)
+		var/datum/antagonist/changeling/changeling_datum = IS_CHANGELING(origin.current)
 		if(!changeling_datum)
 			changeling_datum = origin.add_antag_datum(/datum/antagonist/changeling/headslug)
 		if(changeling_datum.can_absorb_dna(owner))

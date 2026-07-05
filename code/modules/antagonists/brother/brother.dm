@@ -215,7 +215,7 @@
 	. = ..()
 	if (!length(objectives))
 		forge_brother_objectives()
-	if (!new_member.has_antag_datum(/datum/antagonist/brother))
+	if (!IS_BLOOD_BROTHER(new_member.current))
 		add_brother(new_member.current)
 	else
 		set_brothers_left(brothers_left - 1)

@@ -402,7 +402,7 @@
 	var/list/headrev_list = list()
 
 	for(var/datum/mind/revolutionary in members)
-		if(revolutionary.has_antag_datum(/datum/antagonist/rev/head))
+		if(IS_HEAD_REVOLUTIONARY(revolutionary.current))
 			headrev_list += revolutionary
 
 	return headrev_list
@@ -435,7 +435,7 @@
 	if(!length(promotable))
 		return
 	var/datum/mind/new_leader = pick(promotable)
-	var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
+	var/datum/antagonist/rev/rev = IS_REVOLUTIONARY(new_leader.current)
 	rev.promote()
 
 /// Mutates the ticker to report that the revs have won

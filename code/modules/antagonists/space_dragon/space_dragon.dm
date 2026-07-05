@@ -230,7 +230,7 @@
 	explanation_text = "Summon 3 rifts in order to flood the station with carp."
 
 /datum/objective/summon_carp/update_explanation_text()
-	var/datum/antagonist/space_dragon/dragon_owner = owner.has_antag_datum(/datum/antagonist/space_dragon)
+	var/datum/antagonist/space_dragon/dragon_owner = IS_SPACE_DRAGON(owner.current)
 	if(isnull(dragon_owner))
 		return
 

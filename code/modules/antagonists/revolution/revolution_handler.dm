@@ -86,7 +86,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 
 	// Remove everyone as a revolutionary
 	for(var/datum/mind/rev_mind as anything in revs.members)
-		var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+		var/datum/antagonist/rev/rev_antag = IS_REVOLUTIONARY(rev_mind.current)
 		if (!isnull(rev_antag))
 			rev_antag.remove_revolutionary(DECONVERTER_STATION_WIN)
 			if(rev_mind in revs.ex_headrevs)

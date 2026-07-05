@@ -394,6 +394,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/eye/blob/mind_initialize()
 	. = ..()
-	var/datum/antagonist/blob/blob = mind.has_antag_datum(/datum/antagonist/blob)
+	var/datum/antagonist/blob/blob = IS_BLOB(src)
 	if(!blob)
 		mind.add_antag_datum(/datum/antagonist/blob)

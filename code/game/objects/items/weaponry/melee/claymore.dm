@@ -174,10 +174,10 @@
 	var/closest_victim
 	var/closest_distance = 255
 	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
-		if(scot.mind?.has_antag_datum(/datum/antagonist/highlander) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(IS_HIGHLANDER(scot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = scot
 	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
-		if(siliscot.mind?.has_antag_datum(/datum/antagonist/highlander) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(IS_HIGHLANDER(siliscot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = siliscot
 
 	if(!closest_victim)

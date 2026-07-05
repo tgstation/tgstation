@@ -1120,7 +1120,7 @@
 	explanation_text = "Sacrifice at least [target_amount] crewmembers."
 
 /datum/objective/minor_sacrifice/check_completion()
-	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner.current)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (heretic_datum.total_sacrifices >= target_amount)
@@ -1132,7 +1132,7 @@
 	explanation_text = "Sacrifice 1 head of staff."
 
 /datum/objective/major_sacrifice/check_completion()
-	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner.current)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (heretic_datum.high_value_sacrifices >= target_amount)
@@ -1162,7 +1162,7 @@
 	explanation_text = "Research at least [target_amount] knowledge from the Mansus. You start with [length(GLOB.heretic_start_knowledge)] researched."
 
 /datum/objective/heretic_research/check_completion()
-	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner.current)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (length(heretic_datum.researched_knowledge) >= target_amount)

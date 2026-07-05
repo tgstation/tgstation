@@ -62,7 +62,7 @@
 	button_icon_state = "locate_carp_rift"
 
 /datum/action/innate/locate_rift/Activate()
-	var/datum/antagonist/space_dragon/dragon_datum = owner.mind?.has_antag_datum(/datum/antagonist/space_dragon)
+	var/datum/antagonist/space_dragon/dragon_datum = IS_SPACE_DRAGON(owner)
 	var/mob/living/dragon_mob = dragon_datum?.owner.current
 	if(!dragon_mob)
 		return
