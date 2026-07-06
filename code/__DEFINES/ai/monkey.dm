@@ -34,3 +34,5 @@
 #define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
 ///Whether the monkey wants to press some shit
 #define BB_MONKEY_WANNA_PRESS_SOME_SHIT "Monkeys wants to press something"
+///Whether the monkey can look for patrons again
+#define BB_MONKEY_PATRON_FIND_COOLDOWN "Monkeys can look for patron"

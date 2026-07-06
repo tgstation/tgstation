@@ -131,41 +131,67 @@
 
 	return FALSE
 
+/// Gathers weapon upgrade candidates: nearby ground items, then held items of nearby humans.
+/datum/target_source/monkey_weapon_upgrade
+
+/datum/target_source/monkey_weapon_upgrade/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
+	var/list/candidates = list()
+	for(var/obj/item/ground_item in oview(range, pawn))
+		candidates += ground_item
+	for(var/mob/living/carbon/human/nearby_human in oview(range, pawn))
+		candidates += nearby_human.held_items
+	return candidates
+
+/// Weapon upgrade candidate: not two-handed, not blacklisted, and hits harder than our bite.
+/datum/targeting_strategy/monkey_weapon_upgrade
+
+/datum/targeting_strategy/monkey_weapon_upgrade/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/candidate = target
+	if(HAS_TRAIT(candidate, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][candidate])
+		return FALSE
+	if(candidate.force < 2) // our bite already does ~2 damage
+		return FALSE
+	return TRUE
+
 /// Scans nearby items and mobs for a better weapon and sets BB_MONKEY_PICKUPTARGET
-/datum/bt_node/ai_behavior/monkey_find_weapon
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon
 
-/datum/bt_node/ai_behavior/monkey_find_weapon/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/can_search(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-
 	if(!(locate(/obj/item) in living_pawn.held_items))
 		controller.set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
-
 	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // already have a gun
+		return FALSE // already have a gun
+	return ..()
 
-	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(5, living_pawn))
-		nearby_items += item
+/// Prefers any gun once gun neurons are activated, else the strongest candidate that beats our current best held item.
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	var/mob/living/living_pawn = controller.pawn
 
-	var/obj/item/weapon = GetBestWeapon(controller, nearby_items, living_pawn.held_items)
+	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED])
+		for(var/obj/item/candidate as anything in filtered_targets)
+			if(isgun(candidate))
+				return candidate
 
-	var/pickpocket = FALSE
-	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(controller, human.held_items + weapon, living_pawn.held_items)
-		if(held_weapon == weapon)
+	var/top_force = 0
+	for(var/obj/item/held in living_pawn.held_items)
+		if(HAS_TRAIT(held, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][held])
 			continue
-		pickpocket = TRUE
-		weapon = held_weapon
+		top_force = max(top_force, held.force)
 
-	if(!weapon || (weapon in living_pawn.held_items))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/obj/item/best
+	for(var/obj/item/candidate as anything in filtered_targets)
+		if(candidate.force <= top_force)
+			continue
+		best = candidate
+		top_force = candidate.force
+	return best
 
-	if(weapon.force < 2) // our bite already does ~2 damage
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	controller.set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	controller.set_blackboard_key(BB_MONKEY_PICKUP_IS_PICKPOCKET, pickpocket ? TRUE : null)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/on_target_found(datum/ai_controller/controller, atom/target, datum/targeting_strategy/strategy)
+	controller.set_blackboard_key(BB_MONKEY_PICKUP_IS_PICKPOCKET, ismob(target.loc) ? TRUE : null)
 
 
 /// Selects a target from BB_MONKEY_ENEMIES or picks any visible mob if aggressive.  This should be ported to new targetting but its so fkn bespoke
@@ -311,8 +337,6 @@
 		controller.override_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
 	return TRUE
 
-// --- Recruitment ---
-
 /// Rallies nearby monkeys against the current attack target
 /datum/bt_node/ai_behavior/recruit_monkeys
 	var/target_key
@@ -324,7 +348,7 @@
 	for(var/mob/living/nearby_monkey in view(living_pawn, MONKEY_ENEMY_VISION))
 		if(QDELETED(nearby_monkey) || !HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
 			continue
-		if(!SPT_PROB(MONKEY_RECRUIT_PROB, seconds_per_tick))
+		if(prob(MONKEY_RECRUIT_PROB))
 			continue
 		nearby_monkey.ai_controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, attack_target, MONKEY_RECRUIT_HATED_AMOUNT)
 
@@ -385,7 +409,7 @@
 		INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(controller.blackboard[BB_MONKEY_IDLE_RARE_EMOTES]))
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-// --- BT Subtrees ---
+///monkey trees
 
 /datum/bt_node/subtree/monkey_combat
 	behavior_tree_json = "code/datums/ai/monkey/monkey_combat.bt.json"

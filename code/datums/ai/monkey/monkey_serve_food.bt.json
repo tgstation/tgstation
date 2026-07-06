@@ -9,11 +9,20 @@
 		"type": "sequence",
 		"children": [
 			{
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/monkey_find_patrons",
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/cooldown",
 				"vars": {
-					"patrons_key": "BB_monkey_patrons_nearby",
-					"give_target_key": "BB_monkey_current_give_target"
+					"cooldown_key": "BB_MONKEY_PATRON_FIND_COOLDOWN",
+					"cooldown_duration": "1 SECONDS",
+					"lock_on_succeed": false
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/monkey_find_patrons",
+					"vars": {
+						"patrons_key": "BB_monkey_patrons_nearby",
+						"give_target_key": "BB_monkey_current_give_target"
+					}
 				}
 			},
 			{

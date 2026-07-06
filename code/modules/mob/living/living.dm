@@ -1034,7 +1034,8 @@
 		if (!buckled.anchored)
 			buckled.moving_from_pull = moving_from_pull
 			. = buckled.Move(newloc, direct, glide_size)
-			buckled.moving_from_pull = null
+			if(buckled) //buckled can become unbuckled, apparently
+				buckled.moving_from_pull = null
 		return
 
 	var/old_direction = dir

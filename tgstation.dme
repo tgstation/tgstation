@@ -1008,6 +1008,7 @@
 #include "code\datums\ai\basic_mobs\target_sources\oview_single_type.dm"
 #include "code\datums\ai\basic_mobs\target_sources\oview_typed_from_bb_key.dm"
 #include "code\datums\ai\basic_mobs\target_sources\range_turfs_typecache_visible.dm"
+#include "code\datums\ai\basic_mobs\target_sources\slime_source.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\_targeting_strategy.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\accessible_cable.dm"
 #include "code\datums\ai\basic_mobs\targeting_strategies\ally_mob.dm"

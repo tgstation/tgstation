@@ -79,6 +79,8 @@
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
 #define BB_SONG_LINES "song_lines"
+///mob doesn't use hand code so we're assuming its instrument is up its ass
+#define BB_INSTRUMENT_UP_ASS "Has its instrument up its ass"
 
 ///bane ai used by example script
 #define BB_BANE_BATMAN "BB_bane_batman"

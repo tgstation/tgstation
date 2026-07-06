@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
+		BB_INSTRUMENT_UP_ASS = TRUE,
 	)
 
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home

@@ -101,10 +101,9 @@
 		},
 		{
 			"type": "decorator",
-			"decorator": "/datum/bt_node/decorator/bb_key_equals",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
 			"vars": {
-				"key": "BB_monkey_tamed",
-				"value": false
+				"key": "BB_monkey_tamed"
 			},
 			"child": {
 				"type": "subtree",
