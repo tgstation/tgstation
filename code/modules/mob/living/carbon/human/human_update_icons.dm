@@ -455,10 +455,11 @@ There are several things that need to be remembered:
 /obj/item/proc/get_bodyshape_icon(icon/base_icon, key, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
-		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
-			greyscale_colors = get_general_color(base_icon)
+		var/used_greyscale = greyscale_colors
+		if(isnull(used_greyscale) || length(SSgreyscale.ParseColorString(used_greyscale)) > 1)
+			used_greyscale = get_general_color(base_icon)
 
-		var/index = "[key]-[type]-[greyscale_colors]"
+		var/index = "[key]-[type]-[used_greyscale]"
 		var/static/list/digitigrade_clothing_cache = list()
 		var/icon/resulting_icon = digitigrade_clothing_cache[index]
 		if(!resulting_icon)
