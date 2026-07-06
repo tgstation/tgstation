@@ -48,7 +48,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/mob/living/carbon/human/human = owner
-	if(istype(human) && prob(force_say_chance) && (duration >= 6 SECONDS || (duration >= 3 SECONDS && prob(66))) )
+	if(istype(human) && prob(force_say_chance) && (duration >= 6 SECONDS || (duration >= 2 SECONDS && prob(66))) )
 		human.force_say(alter_phrases, immediate = TRUE, major = (duration >= 1 MINUTES))
 
 //STUN
