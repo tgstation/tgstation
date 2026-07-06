@@ -130,3 +130,19 @@
 /// Additional UI data to be passed to the crafting UI for this recipe
 /datum/crafting_recipe/proc/crafting_ui_data()
 	return list()
+
+///Handles what to do with objects that were used to make the result.
+/datum/crafting_recipe/proc/handle_components(atom/result, list/components_used)
+	for(var/atom/movable/component as anything in components_used) //delete anything that wasn't stored inside the object
+		if(component.loc != result || isturf(result))
+			qdel(component)
+		else
+			//the mats of this part have already been added to the crafted object, however the object cannot be deleted
+			//for a reason (e.g. the crafted object can be disassembled), so we need it to be ignored by mat redemption as well
+			ADD_TRAIT(component, TRAIT_IGNORED_BY_MAT_REDEMPTION, REF(src))
+			RegisterSignal(component, COMSIG_ATOM_EXITED, PROC_REF(on_component_exited))
+
+///Remove the TRAIT_IGNORED_BY_MAT_REDEMPTION trait from any part that leaves the crafted object they're located in
+/datum/crafting_recipe/proc/on_component_exited(atom/movable/component)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(component, TRAIT_IGNORED_BY_MAT_REDEMPTION, REF(src))

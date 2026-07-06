@@ -299,9 +299,7 @@
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
 	if(set_materials)
 		result.set_custom_materials(total_materials)
-	for(var/atom/movable/component as anything in stuff_to_use) //delete anything that wasn't stored inside the object
-		if(component.loc != result || isturf(result))
-			qdel(component)
+	recipe.handle_components(result, stuff_to_use)
 	if(!PERFORM_ALL_TESTS(crafting))
 		SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
 	return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
