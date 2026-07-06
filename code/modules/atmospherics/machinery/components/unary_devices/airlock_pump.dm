@@ -182,7 +182,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
-	if(is_operational)
+	if(!is_operational)
 		stack_trace("Airlock pump on but not operational, it should've been cancelled by on_set_is_operational")
 		stop_cycle(null, unbolt_only = TRUE)
 		return
