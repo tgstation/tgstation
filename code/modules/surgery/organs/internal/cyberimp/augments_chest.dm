@@ -9,6 +9,7 @@
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "nutriment_implant"
 	aug_overlay = "nutripump"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -47,6 +48,7 @@
 	aug_overlay = "nutripump_adv"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
+	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/cyberimp/chest/nutriment/black_market
 	name = "nutriment pump implant PLUS PLUS PLUS"
@@ -68,6 +70,7 @@
 	aug_overlay = "reviver"
 	emissive_overlay = TRUE
 	slot = ORGAN_SLOT_HEART_AID
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3)
 	var/revive_cost = 0
 	var/reviving = FALSE
 	COOLDOWN_DECLARE(reviver_cooldown)
@@ -188,6 +191,7 @@
 	emissive_overlay = TRUE
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 	var/on = FALSE
 
 /obj/item/organ/cyberimp/chest/thrusters/Initialize(mapload)
@@ -299,6 +303,7 @@
 		Contains a slot which can be upgraded with a gravity anomaly core, improving its performance."
 	icon_state = "herculean_implant"
 	slot = ORGAN_SLOT_SPINE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3)
 	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
 	var/athletics_boost_multiplier = 0.8
 	/// How much additional throwing speed does our spinal implant grant us.

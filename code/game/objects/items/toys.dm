@@ -53,6 +53,7 @@
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon_red-e"
 	inhand_icon_state = "balloon-empty"
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
@@ -142,6 +143,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.6)
 	var/random_color = TRUE
 	/// the string describing the name of balloon's current colour.
 	var/current_color
@@ -512,7 +514,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
 	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
 	var/bullets = 7
@@ -568,7 +570,7 @@
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon_state()
@@ -711,6 +713,7 @@
 	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
@@ -1862,6 +1865,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	force = 0
 	throwforce = 5
 	reach = 2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/min_reach = 2
 
 /obj/item/extendohand/acme
