@@ -13,13 +13,6 @@ import {
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
-function sortJobs(entries: [string, Job][], head?: string) {
-  return sortBy(entries, [
-    ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key,
-  ]);
-}
-
 const PRIORITY_BUTTON_SIZE = '18px';
 
 type PriorityButtonProps = {
@@ -267,7 +260,7 @@ function Department(props: DepartmentProps) {
   const data = useServerPrefs();
   if (!data) return;
 
-  const { departments, jobs } = data.jobs;
+  const { departments, jobs, jobs_sorted} = data.jobs;
   const department = departments[name];
 
   // This isn't necessarily a bug, it's like this
@@ -278,10 +271,9 @@ function Department(props: DepartmentProps) {
     return null;
   }
 
-  const jobsForDepartment = sortJobs(
-    Object.entries(jobs).filter(([_, job]) => job.department === name),
-    department.head,
-  );
+  const jobsForDepartment = jobs_sorted
+    .map((jobName) => [jobName, jobs[jobName]] as const)
+    .filter(([, job]) => job.department === name);
 
   return (
     <Box>
@@ -342,11 +334,6 @@ function JoblessRoleDropdown(props) {
 }
 
 export function JobsPage() {
-  const departmentColumns = [
-    ['Engineering', 'Science', 'Silicon', 'Assistant'],
-    ['Captain', 'Service', 'Cargo'],
-    ['Security', 'Medical'],
-  ];
   return (
     <>
       <JoblessRoleDropdown />
@@ -354,20 +341,27 @@ export function JobsPage() {
         <Stack.Item mt={15}>
           <Stack fill g={1} className="PreferencesMenu__Jobs">
             <Stack.Item>
-              <Stack>
-                {departmentColumns.map((column, columnIndex) => (
-                  <Stack.Item
-                    key={columnIndex}
-                    mt={columnIndex === 1 ? -5.9 : undefined}
-                  >
-                    <Stack vertical>
-                      <PriorityHeaders />
-                      {column.map((department) => (
-                        <Department key={department} department={department} />
-                      ))}
-                    </Stack>
-                  </Stack.Item>
-                ))}
+              <Stack vertical>
+                <PriorityHeaders />
+                <Department department="Engineering" />
+                <Department department="Science" />
+                <Department department="Silicon" />
+                <Department department="Assistant" />
+              </Stack>
+            </Stack.Item>
+            <Stack.Item mt={-5.9}>
+              <Stack vertical>
+                <PriorityHeaders />
+                <Department department="Captain" />
+                <Department department="Service" />
+                <Department department="Cargo" />
+              </Stack>
+            </Stack.Item>
+            <Stack.Item>
+              <Stack vertical>
+                <PriorityHeaders />
+                <Department department="Security" />
+                <Department department="Medical" />
               </Stack>
             </Stack.Item>
           </Stack>
