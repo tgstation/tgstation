@@ -29,38 +29,6 @@
   text-align: center;
 }
 
-.command {
-  background-color: #948f02;
-}
-
-.security {
-  background-color: #a30000;
-}
-
-.engineering {
-  background-color: #fb5613;
-}
-
-.medical {
-  background-color: #337296;
-}
-
-.science {
-  background-color: #993399;
-}
-
-.cargo {
-  background-color: #a8732b;
-}
-
-.service {
-  background-color: #6eaa2c;
-}
-
-.silicon {
-  background-color: #ff00ff;
-}
-
 .abstract {
   background-color: #708090;
 }
