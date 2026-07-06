@@ -40,7 +40,7 @@
 	if(isnull(ai_controller))
 		return
 
-	if(!path)
+	if(!length(path))
 		return
 
 
