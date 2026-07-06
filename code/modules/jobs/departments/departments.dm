@@ -1,5 +1,6 @@
 /// Singleton representing a category of jobs forming a department.
 /datum/job_department
+	abstract_type = /datum/job_department
 	/// Department as displayed on different menus.
 	var/department_name = DEPARTMENT_UNASSIGNED
 	/// Bitflags associated to the specific department.
