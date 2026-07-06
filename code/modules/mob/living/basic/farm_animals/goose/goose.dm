@@ -30,8 +30,6 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	/// Do we actually destroy food we eat?
 	var/conserve_food = FALSE
-	/// Unfortunately, geese want to eat every item
-	var/static/list/item_typecache = typecacheof(/obj/item)
 
 /mob/living/basic/goose/Initialize(mapload)
 	. = ..()
@@ -41,8 +39,6 @@
 
 	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(on_tried_gobbling))
 	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_gobbled))
-
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, item_typecache)
 
 /mob/living/basic/goose/death(gibbed)
 	if (!gibbed && length(contents))
