@@ -16,7 +16,7 @@
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
 	/// Chance of triggering a force_say
-	var/force_say_chance = 50
+	var/force_say_chance = 66
 	/// If TRUE we run update_stat on apply/remove
 	var/needs_update_stat = FALSE
 	/// Suffixes attached to the force_say when applied, uses the "hurt" suffixes by default
