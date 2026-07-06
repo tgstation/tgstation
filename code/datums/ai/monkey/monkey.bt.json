@@ -4,6 +4,7 @@
 	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
 	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
 	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
 	"finish_on_primary": true,
 	"children": [
 		{
@@ -47,12 +48,112 @@
 				"invert": true
 			},
 			"child": {
-				"type": "leaf",
-				"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
-				"vars": {
-					"attack_target_key": "BB_CURRENT_TARGET",
-					"enemies_key": "BB_monkey_enemies"
-				}
+				"type": "selector",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/monkey_set_combat_target",
+						"vars": {
+							"attack_target_key": "BB_CURRENT_TARGET",
+							"enemies_key": "BB_monkey_enemies"
+						}
+					},
+					{
+						"type": "sequence",
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_true",
+										"vars": {
+											"key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+											"vars": {
+												"target_key": "BB_monkey_current_press_target",
+												"targeting_strategy": "/datum/targeting_strategy/anything",
+												"target_source": "/datum/target_source/monkey_press_target",
+												"vision_range": 2
+											}
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_true",
+										"vars": {
+											"invert": true,
+											"key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT"
+										},
+										"child": {
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/random_chance",
+											"vars": {
+												"chance": 0.2
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/set_bb_key",
+												"vars": {
+													"target_key": "BB_MONKEY_WANNA_PRESS_SOME_SHIT",
+													"value": true
+												}
+											}
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/succeed"
+									}
+								]
+							},
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+										"vars": {
+											"key": "BB_MY_PAWN"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+											"vars": {
+												"target_key": "BB_monkey_current_give_target",
+												"targeting_strategy": "/datum/targeting_strategy/anything",
+												"target_source": "/datum/target_source/oview_single_type/human_mob",
+												"vision_range": 2
+											}
+										}
+									},
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/target_is_holding_item",
+										"vars": {
+											"invert": true,
+											"key": "BB_MY_PAWN"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/clear_key",
+											"vars": {
+												"key": "BB_monkey_current_give_target"
+											}
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/succeed"
+									}
+								]
+							}
+						]
+					}
+				]
 			}
 		}
 	]

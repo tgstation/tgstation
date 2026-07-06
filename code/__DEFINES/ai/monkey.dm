@@ -32,3 +32,5 @@
 #define BB_MONKEY_IDLE_RARE_EMOTES "BB_monkey_idle_rare_emotes"
 /// Whether the monkey believes its gun still works (20% chance it doesn't notice a dry-fire)
 #define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
+///Whether the monkey wants to press some shit
+#define BB_MONKEY_WANNA_PRESS_SOME_SHIT "Monkeys wants to press something"

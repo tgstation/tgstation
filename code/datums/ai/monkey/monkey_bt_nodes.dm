@@ -356,35 +356,20 @@
 	controller.blackboard[give_target_key] ||= pick(nearby_patrons)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// --- Shenanigans support ---
 
-/// Finds a press target: uses BB_MONKEY_PRESS_TYPEPATH if set, else a random nearby atom
-/datum/bt_node/ai_behavior/monkey_find_press_target
-	var/target_key
-	time_between_perform = 2 SECONDS
+/// Gathers press targets: filtered to BB_MONKEY_PRESS_TYPEPATH's type if set, else any nearby obj.
+/datum/target_source/monkey_press_target
 
-/datum/bt_node/ai_behavior/monkey_find_press_target/perform(seconds_per_tick, datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(target_key))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
+/datum/target_source/monkey_press_target/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/locate_path = controller.blackboard[BB_MONKEY_PRESS_TYPEPATH]
-	var/mob/living/living_pawn = controller.pawn
-	var/atom/found
-
-	if(locate_path)
-		found = locate(locate_path) in oview(2, living_pawn)
-	else
-		var/list/candidates = list()
-		for(var/obj/visible in oview(1, living_pawn))
-			candidates += visible
-		if(length(candidates))
-			found = pick(candidates)
-
-	if(!found)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	controller.set_blackboard_key(target_key, found)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	var/list/candidates = list()
+	for(var/obj/potential_candidate in oview(range, pawn))
+		if(locate_path)
+			if(istype(potential_candidate, locate_path))
+				candidates += potential_candidate
+				break //found a bell fuck everything else
+		candidates += potential_candidate
+	return candidates
 
 /// Idle wander/emote behavior. Reads emote lists from BB_MONKEY_IDLE_COMMON_EMOTES and BB_MONKEY_IDLE_RARE_EMOTES.
 /datum/bt_node/ai_behavior/monkey_idle
