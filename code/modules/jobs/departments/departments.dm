@@ -53,7 +53,6 @@
 	return pick(nation_prefixes) + pick(nation_suffixes)
 
 /// Returns a simplifed spaceless string for use in stuff like CSS.
-/// Used to determine the header color to be displayed in the ban panel, classes defined in banpanel.css
 /datum/job_department/proc/get_label_class()
 	return LOWER_TEXT(replacetext(department_name, " ", "_"))
 
@@ -73,6 +72,7 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
+	ui_color = "#6681a5"
 	primary_work_area = /area/station/command
 
 /datum/job_department/command
