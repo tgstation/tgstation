@@ -225,7 +225,7 @@
 	if(cig.lit)
 		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(target_mob == user)
-		cig.attackby(src, user)
+		cig.item_interaction(user, src)
 		return
 
 	if(fancy)

@@ -355,7 +355,7 @@
 		return
 	var/turf/turf = get_turf(cell)
 	forceMove(turf)
-	attackby(cell, user) //puts it into the heater
+	item_interaction(user, cell) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()

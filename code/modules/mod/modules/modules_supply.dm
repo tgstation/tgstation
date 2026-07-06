@@ -182,7 +182,7 @@
 		return
 
 	if(drain_power(use_energy_cost))
-		target.attackby(src, mod.wearer)
+		target.item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -212,7 +212,7 @@
 	var/has_ore = !isnull(rock.mineral_type)
 	if (has_ore)
 		toolspeed /= 2
-	rock.attackby(src, bumper, null, null, exp_multiplier)
+	rock.item_interaction(bumper, src, null, exp_multiplier)
 	if (has_ore)
 		toolspeed *= 2
 

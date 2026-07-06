@@ -148,7 +148,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(cig.lit)
 		to_chat(user, span_warning("[cig] is already lit!"))
 	if(M == user)
-		cig.attackby(src, user)
+		cig.item_interaction(user, src)
 	else
 		cig.light(span_notice("[user] holds [src] out for [M], and lights [cig]."))
 
@@ -625,7 +625,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(cig.lit)
 		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(M == user)
-		cig.attackby(src, user)
+		cig.item_interaction(user, src)
 	else
 		cig.light(span_notice("[user] holds \the [src] out for [M], and lights [M.p_their()] [cig.name]."))
 

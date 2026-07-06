@@ -424,7 +424,7 @@
 			else
 				var/obj/item/in_hands = user.get_active_held_item()
 				if (in_hands)
-					attackby(in_hands, user)
+					item_interaction(user, in_hands)
 				update_icon()
 
 	interact(user)

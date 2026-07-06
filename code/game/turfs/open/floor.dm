@@ -143,16 +143,16 @@
 	if(overfloor_placed && pry_tile(I, user))
 		return TRUE
 
-/turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
-	if(T.turf_type == type && T.turf_dir == dir)
+/turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/newtile, mob/user, list/modifiers)
+	if(newtile.turf_type == type && newtile.turf_dir == dir)
 		return
-	var/obj/item/crowbar/CB = user.is_holding_tool_quality(TOOL_CROWBAR)
-	if(!CB)
+	var/obj/item/crowbar/tool = user.is_holding_tool_quality(TOOL_CROWBAR)
+	if(!tool)
 		return
-	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
-	if(!istype(P))
+	var/turf/open/floor/plating/bare_floor = pry_tile(tool, user, TRUE)
+	if(!istype(bare_floor))
 		return
-	P.attackby(T, user, modifiers)
+	bare_floor.item_interaction(user, newtile, modifiers)
 
 /turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
 	I.play_tool_sound(src, 80)
