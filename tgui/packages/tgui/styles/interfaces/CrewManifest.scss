@@ -11,18 +11,16 @@ $department_map: (
 );
 
 .CrewManifest {
-  @each $department-name, $color-value in $department_map {
-    &--#{$department-name} {
+    &--Section {
       .Section {
         &__title {
-          border-color: $color-value;
+          border-color: var(--department-color);;
         }
         &__titleText {
-          color: $color-value;
+          color: var(--department-color);;
         }
       }
     }
-  }
 
   &__Cell {
     padding: var(--space-s) 0;
