@@ -48,7 +48,8 @@
 				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
 				{
 					"value": "runtimestation_minimal",
-					"label": "Minimal Runtime Station"
+					"label": "Minimal Runtime Station. Only works with minimal centcom.",
+					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"]
 				}
 			]
 		},
@@ -185,7 +186,8 @@
 			"define": "MINIMAL_CENTCOM",
 			"label": "Minimal CentCom",
 			"category": "Map",
-			"description": "Uses a smaller CentCom map to save on memory/load time."
+			"description": "Uses a mini centcom. Required for runtimestation minimal and cant be used without it.",
+			"requiresValues": { "force_map": "runtimestation_minimal" }
 		}
 	],
 	"presets": [
