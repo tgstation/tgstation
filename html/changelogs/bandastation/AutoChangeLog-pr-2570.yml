@@ -1,0 +1,4 @@
+author: "Ingakem"
+delete-after: True
+changes:
+  - bugfix: "Исправлено некорректное отображение спрайтов пород на Лаваленде."
