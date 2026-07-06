@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	lock = new
 	lock.Grant(src)
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
-	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
+	ai_controller?.force_ai_off() //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	visible_message(span_danger("[src] starts to move!"))
 	REMOVE_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.clear_forced_off()
 	if(length(contents))
 		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
 	return TRUE

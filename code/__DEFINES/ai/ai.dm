@@ -15,10 +15,8 @@
 //If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
 ///The AI is currently active.
 #define AI_STATUS_ON "ai_on"
-///The AI is currently offline for any reason.
+///The AI is not running. Cancels any active plans if set.
 #define AI_STATUS_OFF "ai_off"
-///The AI is currently in idle mode.
-#define AI_STATUS_IDLE "ai_idle"
 
 //Flags returned by get_able_to_run()
 ///pauses AI processing

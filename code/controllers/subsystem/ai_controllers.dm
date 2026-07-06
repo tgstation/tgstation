@@ -25,7 +25,6 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/ai_controllers_by_status = list(
 		AI_STATUS_ON = list(),
 		AI_STATUS_OFF = list(),
-		AI_STATUS_IDLE = list()
 	)
 	///AI controllers, sorted by their z level
 	var/list/ai_controllers_by_zlevel = list()

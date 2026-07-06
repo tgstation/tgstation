@@ -21,6 +21,8 @@ multiple modular subtrees with behaviors
 	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current status of AI (OFF/ON)
 	var/ai_status
+	///Set by force_ai_off() when an outside system deliberately disables this AI. While TRUE, get_expected_ai_status() always returns AI_STATUS_OFF, so status recalculations (stat changes, z changes, client login/logout) cannot re-enable us. Cleared via clear_forced_off().
+	var/forced_off = FALSE
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/consecutive_pathing_attempts
 	///Can the AI remain in control if there is a client?
@@ -392,7 +394,7 @@ multiple modular subtrees with behaviors
 		return
 
 	if(should_idle())
-		set_ai_status(AI_STATUS_IDLE)
+		set_ai_status(AI_STATUS_OFF)
 
 /datum/ai_controller/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER
@@ -400,8 +402,8 @@ multiple modular subtrees with behaviors
 	if (!(locate(/mob/living) in target_list))
 		return
 
-	if(ai_status == AI_STATUS_IDLE)
-		set_ai_status(AI_STATUS_ON)
+	if(ai_status == AI_STATUS_OFF)
+		reset_ai_status()
 
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
@@ -413,11 +415,29 @@ multiple modular subtrees with behaviors
 	set_ai_status(get_expected_ai_status())
 
 /**
+ * Deliberately disables this AI until clear_forced_off() is called.
+ * Unlike a bare set_ai_status(AI_STATUS_OFF), this survives status recalculations
+ * from stat changes, z-level changes, client login/logout and the like.
+ */
+/datum/ai_controller/proc/force_ai_off(additional_flags = NONE)
+	forced_off = TRUE
+	set_ai_status(AI_STATUS_OFF, additional_flags)
+
+/// Undoes force_ai_off() and recalculates what status we should be in.
+/datum/ai_controller/proc/clear_forced_off()
+	forced_off = FALSE
+	reset_ai_status()
+
+/**
  * Gets the AI status we expect the AI controller to be on at this current moment.
- * Returns AI_STATUS_OFF if it's inhabited by a Client and shouldn't be, if it's dead and cannot act while dead, or is on a z level without clients.
+ * Returns AI_STATUS_OFF if it has been forced off, is inhabited by a Client and shouldn't be, is dead and cannot act while dead,
+ * or is sleeping for performance (off-station with no clients on its z-level or none nearby; client arrival wakes these automatically).
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+	if (forced_off)
+		return AI_STATUS_OFF
+
 	if (isnull(get_turf(pawn)))
 		return AI_STATUS_OFF
 
@@ -444,7 +464,7 @@ multiple modular subtrees with behaviors
 	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS) && !is_station_level(pawn_turf.z))
 		return AI_STATUS_OFF
 	if(should_idle())
-		return AI_STATUS_IDLE
+		return AI_STATUS_OFF
 	return AI_STATUS_ON
 
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
@@ -1024,7 +1044,7 @@ multiple modular subtrees with behaviors
 				active_node_label = found.label
 				break
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Active Execution Index", "[active_execution_index] ([active_node_label])")
-	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : (ai_status == AI_STATUS_IDLE ? "IDLE" : "OFF"))
+	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "AI Status", ai_status == AI_STATUS_ON ? "ON" : "OFF")
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Execution Context", "Able to Run", able_to_run ? "TRUE" : "FALSE")
 
 	// Blackboard snapshot

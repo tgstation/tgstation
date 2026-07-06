@@ -180,7 +180,7 @@
 
 /mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
 	current_bodypart = part
-	ai_controller.set_ai_status(AI_STATUS_OFF)
+	ai_controller.force_ai_off()
 	RegisterSignal(current_bodypart, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_lost))
 	if(current_bodypart.owner)
 		RegisterSignal(current_bodypart.owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
@@ -198,7 +198,7 @@
 		return
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.clear_forced_off()
 	forceMove(limb.drop_location())
 	qdel(limb)
 
