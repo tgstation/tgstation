@@ -64,6 +64,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 
 /datum/targeting_strategy/basic/mushroom
+	custom_faction_check = TRUE
 
 ///we only attacked another mushrooms
 /datum/targeting_strategy/basic/mushroom/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)

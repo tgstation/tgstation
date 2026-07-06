@@ -40,7 +40,7 @@
 		candidates = typecache_filter_list(oview(range, pawn), bb_typecache)
 	return candidates
 
-/// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level.
+/// Gathers nearby atoms via hearers() plus any hostile machines on the same z-level. (I should probably split out the hostile machine part but oh well)
 /datum/target_source/hearers
 
 /datum/target_source/hearers/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)

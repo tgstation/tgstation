@@ -27,6 +27,7 @@ have ways of interacting with a specific mob and control it.
 	)
 
 /datum/targeting_strategy/basic/monkey
+	custom_faction_check = TRUE
 
 /datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	// if they wronged us, all bets are off

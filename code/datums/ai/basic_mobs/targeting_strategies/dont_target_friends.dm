@@ -1,5 +1,6 @@
 /// Don't target an atom in our friends list (or turfs), anything else is fair game
 /datum/targeting_strategy/basic/not_friends
+	ignore_faction = TRUE //friends dont care about factions
 	/// Stop regarding someone as a valid target once they pass this stat level, setting it to DEAD means you will happily attack corpses
 	var/attack_until_past_stat = HARD_CRIT
 	/// If we can try to closed turfs or not
@@ -20,10 +21,6 @@
 		return FALSE
 
 	return ..()
-
-///friends dont care about factions
-/datum/targeting_strategy/basic/not_friends/faction_check(mob/living/living_mob, mob/living/the_target)
-	return FALSE
 
 /datum/targeting_strategy/basic/not_friends/attack_closed_turfs
 	attack_closed_turf = TRUE

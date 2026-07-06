@@ -23,6 +23,7 @@
 
 /// Target nearby friendlies if they are hurt (and are not themselves Legions)
 /datum/targeting_strategy/basic/legion
+	custom_faction_check = TRUE
 
 /datum/targeting_strategy/basic/legion/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (!living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly))

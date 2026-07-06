@@ -5,6 +5,12 @@
 	var/check_factions_exactly = FALSE
 	/// Whether we care for seeing the target or not
 	var/ignore_sight = FALSE
+	/// Whether we skip faction checks entirely, never rejecting a target over factions
+	var/ignore_faction = FALSE
+	/// If TRUE the faction check is inverted, making us only target mobs that DO share a faction with us
+	var/invert_faction_check = FALSE
+	/// Set to TRUE on subtypes that override faction_check() with custom logic, routing the check through the proc instead of the inlined macro
+	var/custom_faction_check = FALSE
 	/// Blackboard key containing the minimum stat of a living mob to target
 	var/minimum_stat_key = BB_TARGET_MINIMUM_STAT
 	/// If this blackboard key is TRUE, makes us only target wounded mobs
@@ -42,29 +48,27 @@
 	if (vision_range && get_dist(living_mob, the_target) > vision_range)
 		return FALSE
 
-	if(!ignore_sight && !can_see(living_mob, the_target, vision_range)) //Target has moved behind cover and we have lost line of sight to it
-		return FALSE
-
 	if(isliving(the_target)) //Targeting vs living mobs
-		if(ignore_target_status)
-			return TRUE
-		var/mob/living/living_target = the_target
-		if(faction_check(our_controller, living_mob, living_target))
-			return FALSE
-		if(living_target.stat > our_controller.blackboard[minimum_stat_key])
-			return FALSE
-		if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
-			return FALSE
+		if(!ignore_target_status)
+			var/mob/living/living_target = the_target
+			if(custom_faction_check ? faction_check(our_controller, living_mob, living_target) : TARGETING_FACTION_CHECK(src, our_controller, living_mob, living_target))
+				return FALSE
+			if(living_target.stat > our_controller.blackboard[minimum_stat_key])
+				return FALSE
+			if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
+				return FALSE
 
-		return TRUE
-
-	if(ismecha(the_target)) //Targeting vs mechas
+	else if(ismecha(the_target)) //Targeting vs mechas
 		var/obj/vehicle/sealed/mecha/M = the_target
+		var/valid_occupant = FALSE
 		for(var/occupant in M.occupants)
 			if(is_valid_target(living_mob, occupant)) //Can we attack any of the occupants?
-				return TRUE
+				valid_occupant = TRUE
+				break
+		if(!valid_occupant)
+			return FALSE
 
-	if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
+	else if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
 		var/obj/machinery/porta_turret/P = the_target
 		if(P.in_faction(living_mob)) //Don't attack if the turret is in the same faction
 			return FALSE
@@ -72,9 +76,13 @@
 			return FALSE
 		if(P.machine_stat & BROKEN) //Or turrets that are already broken
 			return FALSE
-		return TRUE
 
-	return FALSE
+	else //Not a type of thing we can target
+		return FALSE
+
+	if(!ignore_sight && !can_see(living_mob, the_target, vision_range)) //Sight check goes last, it's by far the most expensive
+		return FALSE
+	return TRUE
 
 /datum/targeting_strategy/basic/find_hidden_mobs(mob/living/living_mob, atom/target)
 	. = ..()
@@ -85,11 +93,10 @@
 /datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range)
 	return can_see(living_mob, target, range)
 
-/// Returns true if the mob and target share factions
+/// Returns true if the mob and target share factions.
+/// Slow path for subtypes with custom_faction_check set; everything else uses TARGETING_FACTION_CHECK directly
 /datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
-		return FALSE
-	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
+	return TARGETING_FACTION_CHECK(src, controller, living_mob, the_target)
 
 /// Subtype more forgiving for items.
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
@@ -150,9 +157,7 @@
 
 /// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
 /datum/targeting_strategy/basic/same_faction
-
-/datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
-	return !..() // inverts logic to ONLY target mobs that share a faction
+	invert_faction_check = TRUE
 
 /datum/targeting_strategy/basic/allow_turfs
 

@@ -19,6 +19,7 @@
 
 ///targeting strat to attack non cultists
 /datum/targeting_strategy/basic/cultist
+	custom_faction_check = TRUE
 
 /datum/targeting_strategy/basic/cultist/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	return IS_CULTIST_OR_CULTIST_MOB(the_target)

@@ -2,6 +2,18 @@
 #define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_controllers.target_priority_strategies[targeting_type]
 #define GET_TARGET_SOURCE(source_type) SSai_controllers.target_sources[source_type]
 
+/**
+ * Returns TRUE if the target should be rejected based on factions.
+ * Inlined faction check for targeting strategies but with less proc overhead.
+ * Strategies with fully custom faction logic set custom_faction_check and override faction_check() instead.
+ */
+#define TARGETING_FACTION_CHECK(strategy, controller, living_mob, the_target) \
+	(((strategy).ignore_faction || (controller).blackboard[BB_ALWAYS_IGNORE_FACTION] || (controller).blackboard[BB_TEMPORARILY_IGNORE_FACTION]) \
+		? (strategy).invert_faction_check \
+		: ((living_mob).faction_check_atom((the_target), exact_match = (strategy).check_factions_exactly) \
+			? !(strategy).invert_faction_check \
+			: (strategy).invert_faction_check))
+
 // Revalidation modes for /datum/bt_node/ai_behavior/acquire_target
 /// If a target is already set, validate it via is_valid_target before searching. Replace if invalid.
 #define TARGET_REVALIDATE 1
