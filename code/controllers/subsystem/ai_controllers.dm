@@ -1,3 +1,6 @@
+/// How many of the most expensive controllers to track per pass for the MC stat entry
+#define AI_STAT_EXPENSIVE_TRACKED 5
+
 /// The subsystem used to tick [/datum/ai_controllers] instances. Handling the re-checking of plans.
 SUBSYSTEM_DEF(ai_controllers)
 	name = "AI Controller Ticker"
@@ -23,6 +26,12 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/longest_tick_gap
 	/// Running longest tick gap of the in-progress pass.
 	var/summing_tick_gap
+	/// Display strings for the most expensive controllers of the last completed pass, most expensive first.
+	var/list/most_expensive = list()
+	/// Running top-cost candidates of the in-progress pass. Assoc list of controller -> SelectBehaviors cost in ms, has a capped amount of entries
+	var/list/summing_expensive = list()
+	/// Cheapest cost in summing_expensive once it's full; a controller must beat this to enter the list.
+	var/summing_expensive_cutoff = 0
 	/// List of all targeting_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_targeting_strats()
 	var/list/targeting_strategies
 	/// List of all target_priority_strategy singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_target_priority_strats()
@@ -52,6 +61,8 @@ SUBSYSTEM_DEF(ai_controllers)
 /datum/controller/subsystem/ai_controllers/stat_entry(msg)
 	msg = "\n  Active:[length(ai_controllers_by_status[planning_status])]|Off:[length(ai_controllers_by_status[AI_STATUS_OFF])]"
 	msg += "\n  Pass:[pass_size - length(currentrun)]/[pass_size]|AvgPass:[round(average_pass_time * 0.1, 0.1)]s|WorstGap:[round(longest_tick_gap * 0.1, 0.1)]s"
+	if(length(most_expensive))
+		msg += "\n  Top: [most_expensive.Join(" | ")]"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
@@ -60,6 +71,8 @@ SUBSYSTEM_DEF(ai_controllers)
 		currentrun = planning_list.Copy()
 		summing_cost = 0
 		summing_tick_gap = 0
+		summing_expensive = list()
+		summing_expensive_cutoff = 0
 		pass_started = world.time
 		pass_size = length(currentrun)
 
@@ -77,7 +90,24 @@ SUBSYSTEM_DEF(ai_controllers)
 			summing_tick_gap = max(summing_tick_gap, tick_gap)
 			seconds_per_tick = tick_gap * 0.1
 		ai_controller.last_bt_tick = world.time
+		var/controller_timer = TICK_USAGE_REAL
 		ai_controller.SelectBehaviors(seconds_per_tick)
+
+		///Lets check if this is an expensive controller
+		var/tick_cost = TICK_DELTA_TO_MS(TICK_USAGE_REAL - controller_timer)
+		if(tick_cost > summing_expensive_cutoff)
+			summing_expensive[ai_controller] = tick_cost
+			if(length(summing_expensive) > AI_STAT_EXPENSIVE_TRACKED)
+				var/cheapest_cost = INFINITY
+				var/datum/ai_controller/cheapest
+				for(var/datum/ai_controller/candidate as anything in summing_expensive)
+					if(summing_expensive[candidate] < cheapest_cost)
+						cheapest_cost = summing_expensive[candidate]
+						cheapest = candidate
+				summing_expensive -= cheapest
+				summing_expensive_cutoff = INFINITY
+				for(var/datum/ai_controller/candidate as anything in summing_expensive)
+					summing_expensive_cutoff = min(summing_expensive_cutoff, summing_expensive[candidate])
 
 		if(MC_TICK_CHECK)
 			break
@@ -88,6 +118,20 @@ SUBSYSTEM_DEF(ai_controllers)
 
 	average_pass_time = MC_AVERAGE(average_pass_time, world.time - pass_started)
 	longest_tick_gap = summing_tick_gap
+
+	// Publish the pass's most expensive controllers as display strings, sorted most expensive first.
+	// Only a handful of entries, so a selection sort is fine.
+	var/list/expensive_entries = list()
+	while(length(summing_expensive))
+		var/costliest_cost = 0
+		var/datum/ai_controller/costliest
+		for(var/datum/ai_controller/candidate as anything in summing_expensive)
+			if(summing_expensive[candidate] >= costliest_cost)
+				costliest_cost = summing_expensive[candidate]
+				costliest = candidate
+		summing_expensive -= costliest
+		expensive_entries += "[costliest.pawn || costliest] [round(costliest_cost, 0.01)]ms"
+	most_expensive = expensive_entries
 
 ///Called when the max Z level was changed, updating our coverage.
 /datum/controller/subsystem/ai_controllers/proc/on_max_z_changed()
@@ -114,3 +158,5 @@ SUBSYSTEM_DEF(ai_controllers)
 	for(var/source_type in subtypesof(/datum/target_source))
 		var/datum/target_source/source = new source_type
 		target_sources[source_type] = source
+
+#undef AI_STAT_EXPENSIVE_TRACKED

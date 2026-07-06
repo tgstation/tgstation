@@ -1080,7 +1080,6 @@
 #include "code\datums\ai\generic_behaviors\express_happiness.dm"
 #include "code\datums\ai\generic_behaviors\face_target_or_face_initial.dm"
 #include "code\datums\ai\generic_behaviors\fail.dm"
-#include "code\datums\ai\generic_behaviors\find_and_set.dm"
 #include "code\datums\ai\generic_behaviors\find_furthest_turf_from_target.dm"
 #include "code\datums\ai\generic_behaviors\find_nearby.dm"
 #include "code\datums\ai\generic_behaviors\find_target_facing_turf.dm"

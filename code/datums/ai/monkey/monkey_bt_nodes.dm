@@ -330,7 +330,6 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-// --- Serve food support ---
 
 /// Scans nearby humans for patrons to serve; fails if bartender present or fewer than 1 patron found
 /datum/bt_node/ai_behavior/monkey_find_patrons
