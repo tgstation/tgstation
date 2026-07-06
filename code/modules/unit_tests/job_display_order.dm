@@ -5,8 +5,8 @@
 	var/alist/unique_indexes = alist()
 	// joinable_occupations instead of all_occupations because human_ai and ai have the same index otherwise... Is this a source of flaky fails..? Unsure
 	for(var/datum/job/job in SSjob.joinable_occupations)
-		var/jobs_display_order = job.display_order
-		if(!jobs_display_order)
+		var/jobs_display_order = job.display_order_with_department()
+		if(!jobs_display_order || job.display_order)
 			TEST_FAIL("[job] has no set display order.")
 		else if(unique_indexes["[jobs_display_order]"])
 			TEST_FAIL("[job] has the same index as [unique_indexes["[jobs_display_order]"]] of: [jobs_display_order].")
