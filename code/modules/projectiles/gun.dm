@@ -120,6 +120,7 @@
 	. = ..()
 	if(ispath(pin))
 		pin = new pin
+		pin.set_custom_materials(null) //WIP TODO: handle this in a better way
 		pin.gun_insert(new_gun = src, starting = TRUE)
 
 	add_seclight_point()

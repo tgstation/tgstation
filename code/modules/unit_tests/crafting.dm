@@ -140,7 +140,7 @@
 				objects_with_mats_inside += contained.type
 		if(length(objects_with_mats_inside))
 			TEST_FAIL("[result.type] from [recipe.type] has the following objects inside it that would skew the materials counted for mat redemption etc.: \
-				[json_encode(objects_with_mats_inside, JSON_PRETTY_PRINT)]. You can add the TRAIT_IGNORED_BY_MAT_REDEMPTION trait or ABSTRACT item flag to fix it in many cases.")
+				\[[english_list(objects_with_mats_inside, and_text = "")]\]. You can add the TRAIT_IGNORED_BY_MAT_REDEMPTION trait or ABSTRACT item flag to fix it in many cases.")
 			clear_trash()
 			return
 

@@ -833,6 +833,7 @@
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
+	sparkler.item_flags |= ABSTRACT
 
 /obj/item/melee/baton/security/cattleprod/add_deep_lore()
 	return

@@ -145,11 +145,11 @@
 
 	GLOB.janitor_devices += src
 
-	var/obj/item/reagent_containers/cup/bucket/bucket_obj = new
-	bucket_obj.forceMove(src)
+	var/obj/item/reagent_containers/cup/bucket/bucket_obj = new (src)
+	bucket_obj.item_flags |= ABSTRACT
 
-	var/obj/item/mop/new_mop = new
-	new_mop.forceMove(src)
+	var/obj/item/mop/new_mop = new (src)
+	new_mop.item_flags |= ABSTRACT
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/bot/foam = BB_CLEANBOT_FOAM,

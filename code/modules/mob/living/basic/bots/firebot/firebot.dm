@@ -69,6 +69,7 @@
 
 /mob/living/basic/bot/firebot/proc/create_extinguisher()
 	internal_ext = new /obj/item/extinguisher(src)
+	internal_ext.item_flags |= ABSTRACT
 	internal_ext.safety = FALSE
 	internal_ext.precision = TRUE
 	internal_ext.max_water = INFINITY

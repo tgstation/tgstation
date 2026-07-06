@@ -57,6 +57,7 @@
 /mob/living/basic/bot/secbot/Initialize(mapload)
 	. = ..()
 	weapon = new baton_type(src)
+	weapon.item_flags |= ABSTRACT
 	update_appearance(UPDATE_ICON)
 	if(commissioned)
 		ADD_TRAIT(src, TRAIT_COMMISSIONED, INNATE_TRAIT)

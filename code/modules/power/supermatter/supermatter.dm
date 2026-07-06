@@ -201,6 +201,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	countdown.start()
 	SSpoints_of_interest.make_point_of_interest(src)
 	radio = new(src)
+	radio.item_flags |= ABSTRACT
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()

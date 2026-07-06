@@ -28,5 +28,6 @@
 
 	grant_actions_by_list(innate_actions)
 	var/obj/item/instrument/piano_synth/piano = new(src)
+	piano.item_flags |= ABSTRACT
 	ai_controller.set_blackboard_key(BB_SONG_INSTRUMENT, piano)
 	update_appearance(UPDATE_ICON)

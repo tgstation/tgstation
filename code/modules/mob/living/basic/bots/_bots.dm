@@ -125,11 +125,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	access_card.item_flags |= ABSTRACT
 	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.set_access(list(ACCESS_ROBOTICS))
 	provide_additional_access()
 
 	internal_radio = new /obj/item/radio(src)
+	internal_radio.item_flags |= ABSTRACT
 	if(radio_key)
 		internal_radio.keyslot = new radio_key
 	internal_radio.subspace_transmission = TRUE

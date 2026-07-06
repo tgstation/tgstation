@@ -58,6 +58,17 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
 
+/obj/item/clothing/mask/gas/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	QDEL_LAZYLIST(gas_filters)
+	var/obj/item/clothing/mask/gas/original = locate() in components
+	if(!original)
+		return
+	for(var/obj/item/gas_filter/gas_filter as anything in original.gas_filters)
+		gas_filter.forceMove(src)
+		LAZYADD(gas_filters, gas_filter)
+	original.gas_filters = null
+
 /obj/item/clothing/mask/gas/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && cig)

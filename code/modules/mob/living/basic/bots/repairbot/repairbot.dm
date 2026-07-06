@@ -88,10 +88,14 @@
 	grant_actions_by_list(abilities)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
 	our_welder = new(src)
+	our_welder.item_flags |= ABSTRACT
 	our_welder.switched_on(src)
 	our_crowbar = new(src)
+	our_crowbar.item_flags |= ABSTRACT
 	our_screwdriver = new(src)
+	our_screwdriver.item_flags |= ABSTRACT
 	our_rods = new(src, our_rods::max_amount)
+	our_rods.item_flags |= ABSTRACT
 	set_color(toolbox_color)
 	START_PROCESSING(SSobj, src)
 
