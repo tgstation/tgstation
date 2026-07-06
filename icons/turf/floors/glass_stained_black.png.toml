@@ -1,0 +1,2 @@
+output_name = "glass_stained_black"
+template = "bitmask/diagonal_32x32.toml"

@@ -98,3 +98,91 @@
 		/obj/item/stack/sheet/sinew = 1,
 	)
 	result_amount = 4
+
+/datum/crafting_recipe/stained_glass_red
+	name = "Red Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/red = 1,
+	)
+	result = /turf/open/floor/glass/stained_red
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_orange
+	name = "Orange Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/orange = 1,
+	)
+	result = /turf/open/floor/glass/stained_orange
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_yellow
+	name = "Yellow Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/yellow = 1,
+	)
+	result = /turf/open/floor/glass/stained_yellow
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_green
+	name = "Green Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/green = 1,
+	)
+	result = /turf/open/floor/glass/stained_green
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_blue
+	name = "Blue Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/blue = 1,
+	)
+	result = /turf/open/floor/glass/stained_blue
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_purple
+	name = "Purple Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/purple = 1,
+	)
+	result = /turf/open/floor/glass/stained_purple
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_white
+	name = "White Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/white = 1,
+	)
+	result = /turf/open/floor/glass/stained_white
+	result_amount = 40
+	category = CAT_TILES
+
+/datum/crafting_recipe/stained_glass_black
+	name = "Black Stained Glass"
+	reqs = list(
+		/obj/item/stack/tile/glass = 40,
+		/obj/item/stack/rods = 20,
+		/obj/item/toy/crayon/black = 1,
+	)
+	result = /turf/open/floor/glass/stained_black
+	result_amount = 40
+	category = CAT_TILES

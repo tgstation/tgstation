@@ -306,6 +306,26 @@
 			if("basalt5", "basalt9")
 				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
+/turf/open/floor/fakesand
+	name = "aesthetic sand flooring"
+	desc = "Safely recreated turf for your desertplanet-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"
+	floor_tile = /obj/item/stack/tile/basalt/sand
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_turf = FALSE
+
+/turf/open/floor/fakesand/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 0)
+	if(prob(15))
+		icon_state = "asteroid[rand(0, 12)]"
+
 /turf/open/floor/carpet
 	name = "carpet"
 	desc = "Soft velvet carpeting. Feels good between your toes."

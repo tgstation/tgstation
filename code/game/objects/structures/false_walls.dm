@@ -292,6 +292,30 @@
 	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 
+/obj/structure/falsewall/rockbrick
+	name = "rock brick wall"
+	desc = "A wall composed out of rock bricks, which doesn't look at all like the rough iron wall."
+	fake_icon = 'icons/turf/walls/rockbrick_wall.dmi'
+	icon_state = "rockbrick_wall-open"
+	base_icon_state = "rockbrick_wall"
+	mineral = /obj/item/stack/sheet/mineral/rock
+	walltype = /turf/closed/wall/mineral/rockbrick
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_STONE_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_STONE_WALLS
+
+/obj/structure/falsewall/rockbrick/wall_fill
+	mineral = /obj/item/stack/wall_filling/rock/basic
+	walltype = /turf/closed/wall/mineral/rockbrick/wall_fill
+
+/obj/structure/falsewall/rockbrick/cobbled
+	name = "cobbled rock wall"
+	desc = "A wall composed out of rock."
+	fake_icon = 'icons/turf/walls/cobbled_wall.dmi'
+	icon_state = "cobbled_wall-open"
+	base_icon_state = "cobblede_wall"
+	mineral = /obj/item/stack/wall_filling/rock/cobbled
+	walltype = /turf/closed/wall/mineral/rockbrick/cobbled
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
@@ -378,6 +402,115 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
+
+/obj/structure/falsewall/plastitanium/wall_fill
+	mineral = /obj/item/stack/wall_filling/plastitanium/basic
+	walltype = /turf/closed/wall/mineral/plastitanium/wall_fill
+
+/obj/structure/falsewall/plastitanium/darkpod
+	name = "dark pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/dark_pod.dmi'
+	icon_state = "dark_pod_walls-open"
+	base_icon_state = "dark_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/pod
+	walltype = /turf/closed/wall/mineral/plastitanium/darkpod
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
+/obj/structure/falsewall/plastitanium/redpod
+	name = "red pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/red_pod.dmi'
+	icon_state = "red_pod_walls-open"
+	base_icon_state = "red_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/redpod
+	walltype = /turf/closed/wall/mineral/plastitanium/redpod
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
+/obj/structure/falsewall/plastitanium/survival
+	name = "pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival_pod_wals-open"
+	base_icon_state = "survival_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
+	walltype = /turf/closed/wall/mineral/plastitanium/survival
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
+/obj/structure/falsewall/bone
+	name = "bone wall"
+	desc = "A bone wall. That's a lot of calcium."
+	fake_icon = 'icons/turf/walls/bone_wall.dmi'
+	icon_state = "bone_wall-open"
+	base_icon_state = "bone_wall"
+	mineral = /obj/item/stack/sheet/bone
+	walltype = /turf/closed/wall/mineral/bone
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_BONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_BONE_WALLS
+
+/obj/structure/falsewall/runite
+	name = "runite wall"
+	desc = "A runite wall. How... magical."
+	fake_icon = 'icons/turf/walls/runite_wall.dmi'
+	icon_state = "runite_wall-open"
+	base_icon_state = "runite_wall"
+	mineral = /obj/item/stack/sheet/mineral/runite
+	walltype = /turf/closed/wall/mineral/runite
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_RUNITE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_RUNITE_WALLS
+
+/obj/structure/falsewall/adamantine
+	name = "adamantine wall"
+	desc = "A adamantine wall. Quite industrial."
+	fake_icon = 'icons/turf/walls/adamantine_wall.dmi'
+	icon_state = "adamantine_wall-open"
+	base_icon_state = "adamantine_wall"
+	mineral = /obj/item/stack/sheet/mineral/adamantine
+	walltype = /turf/closed/wall/mineral/adamantine
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_ADAMANTINE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_ADAMANTINE_WALLS
+
+/obj/structure/falsewall/metalhydrogen
+	name = "metal hydrogen wall"
+	desc = "A metal hydrogen wall. Long live atmosia!"
+	fake_icon = 'icons/turf/walls/metal_hydrogen_wall.dmi'
+	icon_state = "metal_hydrogen_wall-open"
+	base_icon_state = "metal_hydrogen_wall"
+	mineral = /obj/item/stack/sheet/mineral/metal_hydrogen
+	walltype = /turf/closed/wall/mineral/metalhydrogen
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_METALHYDROGEN_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_METALHYDROGEN_WALLS
+
+/obj/structure/falsewall/hauntium
+	name = "hauntium wall"
+	desc = "A hauntium wall. Are you spooked yet?"
+	fake_icon = 'icons/turf/walls/hauntium_wall.dmi'
+	icon_state = "hauntium_wall-open"
+	base_icon_state = "hauntium_wall"
+	mineral = /obj/item/stack/sheet/hauntium
+	walltype = /turf/closed/wall/mineral/hauntium
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_HAUNTIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_HAUNTIUM_WALLS
+
+/obj/structure/falsewall/mythril
+	name = "mythril wall"
+	desc = "A fake mythril wall. You can tell it's fake because it's not perfect like the rest."
+	fake_icon = 'icons/turf/walls/mythril_wall.dmi'
+	icon_state = "mythril_wall-open"
+	base_icon_state = "mythril_wall"
+	mineral = /obj/item/stack/sheet/mineral/mythril
+	walltype = /turf/closed/wall/mineral/mythril
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_MYTHRIL_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_MYTHRIL_WALLS
 
 /obj/structure/falsewall/material
 	name = "wall"
