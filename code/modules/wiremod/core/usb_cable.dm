@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	base_icon_state = "coil"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
 
 	/// The currently connected circuit
 	var/obj/item/integrated_circuit/attached_circuit

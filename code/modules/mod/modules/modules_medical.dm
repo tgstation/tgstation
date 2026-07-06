@@ -18,6 +18,7 @@
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
 
@@ -73,6 +74,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 5)
 	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
 /obj/item/mod/module/quick_carry/on_part_activation()
@@ -105,6 +107,7 @@
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/syringe/mod
 	name = "MOD injector syringe"
@@ -116,6 +119,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 30)
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
+	custom_materials = null
 
 /obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
 	if(reagents?.total_volume)
@@ -138,6 +142,7 @@
 	incompatible_modules = list(/obj/item/mod/module/organizer, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	/// How many organs the module can hold.
 	var/max_organs = 5
 	/// A list of all our organs.
@@ -225,6 +230,7 @@
 	bodybag_type = /obj/structure/closet/body_bag/environmental/hardlight
 	capture_time = 1.5 SECONDS
 	packup_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
 
 ///Defibrillator - Gives the suit an extendable pair of shock paddles.
 /obj/item/mod/module/defibrillator
@@ -245,6 +251,7 @@
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 	var/defib_cooldown = 5 SECONDS
 
 /obj/item/mod/module/defibrillator/Initialize(mapload)
@@ -307,6 +314,7 @@
 	cooldown_time = 1.5 SECONDS
 	overlay_state_inactive = "module_threadripper"
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/silver = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// An associated list of ripped clothing and the body part covering slots they covered before
 	var/list/ripped_clothing = list()
 
@@ -380,9 +388,11 @@
 	device = /obj/item/surgical_processor/mod
 	incompatible_modules = list(/obj/item/mod/module/surgical_processor)
 	cooldown_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/surgical_processor/mod
 	name = "MOD surgical processor"
+	custom_materials = null
 
 /obj/item/mod/module/surgical_processor/preloaded
 	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \

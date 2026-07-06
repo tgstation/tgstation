@@ -150,6 +150,7 @@
 	force = 5
 	volume = 6 //same size as the engineering ones but plasmamen have special lungs that consume less plasma per breath
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8)
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
 	air_contents.set_gas(/datum/gas/plasma, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
@@ -176,7 +177,7 @@
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
-
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
 	air_contents.set_gas(/datum/gas/oxygen, (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
@@ -193,6 +194,7 @@
 	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -203,6 +205,7 @@
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
 	volume = 12 //If it's double of the above, shouldn't it be double the volume??
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
@@ -219,6 +222,7 @@
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/tank/internals/generic/populate_gas()
 	return
