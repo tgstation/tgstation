@@ -421,7 +421,7 @@
 	name = "pod wall"
 	desc = "An easily-compressible wall used for temporary shelter."
 	fake_icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival_pod_wals-open"
+	icon_state = "survival_pod_walls-open"
 	base_icon_state = "survival_pod_walls"
 	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
 	walltype = /turf/closed/wall/mineral/plastitanium/survival
