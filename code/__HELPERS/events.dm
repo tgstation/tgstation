@@ -84,4 +84,34 @@
 		CRASH("Attempted to force event [event_typepath], but the event path could not be found!")
 	addtimer(CALLBACK(our_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, cause), duration)
 
+//Request a color in line with the current holiday or station traits of the station (or not if RANDOM/RAINBOW patterns are used.
+/proc/request_decoration_colors(atom/thing_to_color, pattern, skip_station_trait = FALSE)
+	switch(pattern)
+		if(PATTERN_RANDOM)
+			return "#[random_short_color()]"
+		if(PATTERN_RAINBOW)
+			return get_decoration_color_from_pattern(thing_to_color, PATTERN_DEFAULT, PRIDE_FLAG_COLORS)
+
+	if(!skip_station_trait)
+		for(var/datum/station_trait/trait in SSstation.station_traits)
+			var/decal_color = trait.get_decal_color(thing_to_color, pattern || PATTERN_DEFAULT)
+			if(decal_color)
+				return decal_color
+
+	for(var/holiday_key in GLOB.holidays)
+		var/datum/holiday/holiday_real = GLOB.holidays[holiday_key]
+		if(!holiday_real.holiday_colors)
+			continue
+		return holiday_real.get_holiday_colors(thing_to_color, pattern)
+
+/// Proc to return colors for recoloring atoms based on a pattern and the position of the atom. Primarily used by holidays
+/proc/get_decoration_color_from_pattern(atom/thing_to_color, pattern = PATTERN_DEFAULT, list/colors)
+	if(!length(colors))
+		return
+	switch(pattern)
+		if(PATTERN_DEFAULT)
+			return colors[(thing_to_color.y % colors.len) + 1]
+		if(PATTERN_VERTICAL_STRIPE)
+			return colors[(thing_to_color.x % colors.len) + 1]
+
 #undef UNLIT_AREA_BRIGHTNESS

@@ -23,7 +23,7 @@
 	if(!.)
 		return
 
-	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
+	var/sweetspot_range = clamp(ceil(flashbang_range/sweetspot_divider), 0, flashbang_range)
 	set_light(sweetspot_range, sweetspot_range, flashbang_light)
 
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
@@ -53,7 +53,7 @@
 		return
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
 	var/distance = get_dist(get_turf(src), turf)
-	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
+	var/sweetspot_range = clamp(ceil(flashbang_range/sweetspot_divider), 0, flashbang_range)
 
 	//Flash
 	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)

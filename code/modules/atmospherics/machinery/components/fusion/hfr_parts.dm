@@ -31,13 +31,11 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	return ..()
+/obj/machinery/atmospherics/components/unary/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
+	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/wrench_act(mob/living/user, obj/item/I)
+	return default_change_direction_wrench(user, I)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
@@ -114,15 +112,14 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+/obj/machinery/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
+	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/hypertorus/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
+
+/obj/machinery/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/hypertorus/update_icon_state()
 	if(panel_open)

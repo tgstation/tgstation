@@ -7,4 +7,4 @@
 /datum/preference/toggle/status_bar/apply_to_client(client/client, value)
 	if(isnull(client) || istype(client, /datum/client_interface)) //no winset on mock clients.
 		return
-	winset(client, "mapwindow.status_bar", "is-visible=[value]")
+	winset(client, SKIN_MAPWINDOW_STATUS_BAR, "is-visible=[value]")

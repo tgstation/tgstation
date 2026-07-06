@@ -60,7 +60,7 @@
 	var/obj/structure/closet/crate/C
 	if(paying_account)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
-		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+		C.name = "[crate_name || C.name] - Purchased by [paying_account.account_holder]"
 	else if(!crate_type && !crate_override)
 		CRASH("tried to generate a supply pack without a valid crate type")
 	else if(crate_override)
@@ -70,7 +70,8 @@
 
 	else
 		C = new crate_type(A)
-		C.name = crate_name
+		if(crate_name)
+			C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
@@ -139,7 +140,7 @@
 	name = "materials order"
 	crate_name = "galactic materials market delivery crate"
 	access = FALSE
-	crate_type = /obj/structure/closet/crate/cardboard
+	crate_type = /obj/structure/closet/crate/cargo/mining
 
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
 	. = ..()

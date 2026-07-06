@@ -389,7 +389,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/ui_data(mob/user)
 	var/list/data = list()
-	data["is_admin_ghost_ai"] = isAdminGhostAI()
+	data["is_admin_ghost_ai"] = isAdminGhostAI(user)
 	data["can_send_announcements"] = can_send_announcements
 	data["department"] = department
 	data["emergency"] = emergency

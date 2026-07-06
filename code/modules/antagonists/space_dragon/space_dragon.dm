@@ -10,6 +10,8 @@
 	var/list/datum/mind/carp = list()
 	/// The innate ability to summon rifts
 	var/datum/action/innate/summon_rift/rift_ability
+	/// The innate ability to find where rift locations are
+	var/datum/action/innate/locate_rift/locate_rift_ability
 	/// Current time since the the last rift was activated.  If set to -1, does not increment.
 	var/riftTimer = 0
 	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.
@@ -66,6 +68,7 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	rift_ability = new()
+	locate_rift_ability = new()
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
@@ -80,6 +83,7 @@
 	antag.add_faction(FACTION_CARP)
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
+	locate_rift_ability?.Grant(antag)
 	wavespeak = antag.AddComponent( \
 		/datum/component/mind_linker, \
 		network_name = "Wavespeak", \
@@ -96,12 +100,14 @@
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
 	antag.remove_faction(FACTION_CARP)
 	rift_ability?.Remove(antag)
+	locate_rift_ability?.Remove(antag)
 	QDEL_NULL(wavespeak)
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
 	carp = null
 	QDEL_NULL(rift_ability)
+	QDEL_NULL(locate_rift_ability)
 	QDEL_NULL(wavespeak)
 	chosen_rift_areas.Cut()
 	return ..()

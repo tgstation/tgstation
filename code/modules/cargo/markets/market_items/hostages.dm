@@ -78,7 +78,7 @@
 		var/obj/item/clothing/under/misc/syndicate_souvenir/souvenir = new(loc)
 		humie.equip_to_slot_if_possible(souvenir, ITEM_SLOT_ICLOTHING, indirect_action = TRUE)
 		var/obj/item/clothing/accessory/anti_sec_pin/pin = new(loc)
-		pin.attach(souvenir)
+		pin.try_attach(souvenir)
 
 	if(isnull(humie.w_uniform))
 		//FUCKING SLAVES, GET YOUR CLOTHES BACK ON!

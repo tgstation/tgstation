@@ -18,7 +18,7 @@
 		/obj/item/mod/skin_applier/honkerative = 1,
 	)
 	box = /obj/item/storage/box/survival/syndie
-	implants = list(/obj/item/implant/sad_trombone)
+	implants = list(/obj/item/implant/sad_trombone, /obj/item/implant/tacmap/nuclear)
 
 	uplink_type = /obj/item/uplink/clownop
 
@@ -33,3 +33,4 @@
 	command_radio = TRUE
 
 	id_trim = /datum/id_trim/chameleon/operative/clown_leader
+	implants = list(/obj/item/implant/sad_trombone, /obj/item/implant/tacmap/nuclear/leader)

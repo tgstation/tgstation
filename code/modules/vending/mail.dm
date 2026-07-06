@@ -47,14 +47,11 @@
 
 /// Opening the maintenance panel.
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
-	default_deconstruction_screwdriver(user, "[base_icon_state]-off", base_icon_state, tool)
-	update_appearance(UPDATE_OVERLAYS)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /// Deconstructing the mail sorter.
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(tool)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
@@ -298,7 +295,7 @@
 		. += emissive_appearance(icon, light_mask, src)
 
 /obj/machinery/mailsorter/update_icon_state()
-	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	icon_state = "[base_icon_state][(powered() && !panel_open) ? null : "-off"]"
 	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]-broken"
 	return ..()

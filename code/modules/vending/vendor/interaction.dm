@@ -16,8 +16,7 @@
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return ITEM_INTERACT_FAILURE
-	default_deconstruction_crowbar(attack_item)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, attack_item)
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -29,11 +28,9 @@
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
 	if(anchored)
-		default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item)
-		return ITEM_INTERACT_SUCCESS
-	else
-		to_chat(user, span_warning("You must first secure [src]."))
-		return ITEM_INTERACT_FAILURE
+		return default_deconstruction_screwdriver(user, attack_item)
+	to_chat(user, span_warning("You must first secure [src]."))
+	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/vending/on_set_panel_open(old_value)
 	update_appearance(UPDATE_OVERLAYS)
@@ -162,8 +159,9 @@
 	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] [MONEY_NAME]." : "."]"))
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
-	var/obj/item/holochip/payday = new(src, credits_contained)
-	try_put_in_hand(payday, user)
+	if(credits_contained >= 1)
+		var/obj/item/holochip/payday = new(src, credits_contained)
+		try_put_in_hand(payday, user)
 	credits_contained = 0
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)

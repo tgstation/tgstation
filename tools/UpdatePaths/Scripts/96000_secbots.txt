@@ -1,0 +1,11 @@
+/mob/living/simple_animal/bot/secbot : /mob/living/basic/bot/secbot{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky : /mob/living/basic/bot/secbot/beepsky{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky/armsky : /mob/living/basic/bot/secbot/beepsky/armsky{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky/jr : /mob/living/basic/bot/secbot/beepsky/jr{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky/officer : /mob/living/basic/bot/secbot/beepsky/officer{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky/ofitser : /mob/living/basic/bot/secbot/beepsky/ofitser{@OLD}
+/mob/living/simple_animal/bot/secbot/ed209 : /mob/living/basic/bot/secbot/ed209{@OLD}
+/mob/living/simple_animal/bot/secbot/genesky : /mob/living/basic/bot/secbot/genesky{@OLD}
+/mob/living/simple_animal/bot/secbot/grievous : /mob/living/basic/bot/secbot/grievous{@OLD}
+/mob/living/simple_animal/bot/secbot/pingsky : /mob/living/basic/bot/secbot/pingsky{@OLD}
+/mob/living/basic/bot/honkbot : /mob/living/basic/bot/secbot/honkbot{@OLD}

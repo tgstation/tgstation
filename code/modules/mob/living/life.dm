@@ -13,7 +13,7 @@
 	set waitfor = FALSE
 	SHOULD_NOT_SLEEP(TRUE)
 
-	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_PRE_LIFE, seconds_per_tick)
 
 	if(signal_result & COMPONENT_LIVING_CANCEL_LIFE_PROCESSING) // mmm less work
 		return
@@ -41,17 +41,14 @@
 	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
+	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick)
+	if(QDELETED(src)) // signal handlers such as diseases could delete the mob
+		return
+
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
-			//Mutations and radiation
-			handle_mutations(seconds_per_tick)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick)
-
-		handle_diseases(seconds_per_tick) // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
-
-		if (QDELETED(src)) // Diseases can qdel the mob via transformations
-			return
 
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -64,21 +61,15 @@
 		update_nutrition()
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
-	if (living_flags & BLOOD_UPDATE_QUEUED)
+	if(living_flags & BLOOD_UPDATE_QUEUED)
 		update_blood_effects()
+		living_flags &= ~BLOOD_UPDATE_QUEUED
 
 	if(stat != DEAD)
 		return TRUE
 
 /mob/living/proc/handle_breathing(seconds_per_tick)
 	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, seconds_per_tick)
-	return
-
-/mob/living/proc/handle_mutations(seconds_per_tick)
-	return
-
-/mob/living/proc/handle_diseases(seconds_per_tick)
-	return
 
 // Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick)

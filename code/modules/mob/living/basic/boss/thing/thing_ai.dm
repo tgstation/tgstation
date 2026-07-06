@@ -5,14 +5,15 @@
 		BB_THETHING_ATTACKMODE = TRUE, //Whether we are using our melee abilities right now
 		BB_THETHING_NOAOE = TRUE, // Restricts us to only melee abilities
 		BB_THETHING_LASTAOE = null, // Last AOE ability key executed
-		BB_AGGRO_RANGE = 6, //lets not execute hearers for a 16 tile radius
+		BB_AGGRO_RANGE = 16,
+		BB_AGGRO_GRAB_RANGE = 6,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance // dont need anything better because the arena is a square lol
 	idle_behavior = null
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target/increased_range, //aggros at 6, sees 16 tiles
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/thing_boss_aoe,
 		/datum/ai_planning_subtree/thing_boss_melee,
 	)

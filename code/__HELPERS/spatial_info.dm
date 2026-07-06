@@ -214,6 +214,19 @@
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios, frequency)
+	. = list()
+	.[TTS_GHOST_RADIO] = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive, but needed for radio TTS to sound good.
+	for(var/obj/item/radio/radio as anything in radios)
+		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
+		var/list/weakref_hearers = list()
+		for(var/ref in possible_hearers)
+			weakref_hearers += WEAKREF(ref)
+		if(LAZYLEN(possible_hearers))
+			.[WEAKREF(radio)] = filter_tts_listeners(weakref_hearers, frequency)
+
+
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
 /// Modifies input list.
 /proc/mob_only_listeners(list/atom/movable/hearers)
@@ -241,7 +254,7 @@
 		if(Y1 == Y2)
 			return TRUE //Light cannot be blocked on same tile
 		else
-			var/sign = SIGN(Y2-Y1)
+			var/sign = sign(Y2-Y1)
 			Y1 += sign
 			while(Y1 != Y2)
 				current_turf = locate(X1, Y1, Z)
@@ -257,8 +270,8 @@
 		//b = y - mx
 		var/b = (Y1 + PY1/ICON_SIZE_Y - OFFSET_Y) - m*(X1 + PX1/ICON_SIZE_X - OFFSET_X)//In tiles
 
-		var/signX = SIGN(X2-X1)
-		var/signY = SIGN(Y2-Y1)
+		var/signX = sign(X2-X1)
+		var/signY = sign(Y2-Y1)
 		if(X1 < X2)
 			b += m
 		while(X1 != X2 || Y1 != Y2)

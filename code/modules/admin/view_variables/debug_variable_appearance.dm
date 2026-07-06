@@ -64,6 +64,10 @@
 	var/value = vars[var_name]
 	return "<li style='backgroundColor:white'>(READ ONLY) [var_name] = [_debug_variable_value(var_name, value, 0, src, sanitize = TRUE, display_flags = NONE)]</li>"
 
+/mutable_appearance/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_DEBUG_APPEARANCE, "Debug Appearance")
+
 /mutable_appearance/appearance_mirror/vv_get_dropdown()
 	SHOULD_CALL_PARENT(FALSE)
 
@@ -74,6 +78,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")
 	VV_DROPDOWN_OPTION(VV_HK_DELETE, "Delete")
 	VV_DROPDOWN_OPTION(VV_HK_EXPOSE, "Show VV To Player")
+	VV_DROPDOWN_OPTION(VV_HK_DEBUG_APPEARANCE, "Debug Appearance")
 
 /proc/get_vv_appearance(mutable_appearance/appearance) // actually appearance yadeeyada
 	return new /mutable_appearance/appearance_mirror(appearance)

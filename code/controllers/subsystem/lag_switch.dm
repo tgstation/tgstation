@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(lag_switch)
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
 	/// List of measures that toggle automatically
-	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML, DISABLE_PARALLAX, DISABLE_FOOTSTEPS)
+	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML, DISABLE_PARALLAX, DISABLE_FOOTSTEPS, DISABLE_DEAD_RUNECHAT)
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
 	/// Cooldown between say verb uses when slowmode is enabled
@@ -88,9 +88,11 @@ SUBSYSTEM_DEF(lag_switch)
 	switch(measure_key)
 		if(DISABLE_DEAD_KEYLOOP)
 			if(state)
-				for(var/mob/user as anything in GLOB.player_list)
-					if(user.stat == DEAD && !user.client?.holder)
-						GLOB.keyloop_list -= user
+				var/list/all_observers = GLOB.dead_player_list + GLOB.current_observers_list
+				for(var/mob/observer as anything in all_observers)
+					if(observer.client?.holder) // Don't freeze admins
+						continue
+					GLOB.keyloop_list -= observer
 				deadchat_broadcast(span_big("To increase performance Observer freelook is now disabled. Please use Orbit, Teleport, and Jump to look around."), message_type = DEADCHAT_ANNOUNCEMENT)
 			else
 				GLOB.keyloop_list |= GLOB.player_list

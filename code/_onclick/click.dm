@@ -354,6 +354,13 @@
 /mob/proc/RangedAttack(atom/A, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	A.RangedAttackOn(src, modifiers)
+
+/**
+ * Atom's version of RangedAttack, for when you want to do something when a mob clicks on this with more sanity than just Click()
+ */
+/atom/proc/RangedAttackOn(mob/attacker, list/modifiers)
+	return null
 
 /**
  * Ranged secondary attack

@@ -1,0 +1,16 @@
+// Custom HTML tooltip shown on timeline mark hover, rendered at fixed position
+.evlog-mark-tooltip {
+  position: fixed;
+  background: #1e1e2e;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  white-space: pre-wrap;
+  font-size: 11px;
+  color: #ccc;
+  pointer-events: none;
+  z-index: 9999;
+  min-width: 120px;
+  max-width: 320px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}

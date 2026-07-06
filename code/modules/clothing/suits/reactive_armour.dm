@@ -534,7 +534,7 @@
 	shock_turf_windup(owner.loc)
 
 /obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf_windup(turf/target)
-	new /obj/effect/temp_visual/telegraphing/thunderbolt(target)
+	new /obj/effect/temp_visual/telegraphing/circle(target)
 	addtimer(CALLBACK(src, PROC_REF(shock_turf), target), 1 SECONDS)
 
 /obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf(turf/target)

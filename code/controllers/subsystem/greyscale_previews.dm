@@ -204,12 +204,10 @@ SUBSYSTEM_DEF(greyscale_previews)
 	#endif
 
 	var/filepath = "icons/map_icons/[filename].dmi"
-#ifdef UNIT_TESTS
 	var/old_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
-#endif
-	fcopy(holder, filepath)
-#ifdef UNIT_TESTS
-	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
+	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, holder)
 	if(old_md5 != new_md5)
+		fcopy(holder, filepath)
+#ifdef UNIT_TESTS
 		stack_trace("Generated map icons were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting files in 'icons/map_icons/'")
 #endif

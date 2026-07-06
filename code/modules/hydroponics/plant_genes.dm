@@ -295,6 +295,14 @@
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/our_plant, mob/slipped_target)
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SLIP, slipped_target)
 
+/// Prevents instability from being changed BY cross-pollination.
+/datum/plant_gene/trait/safe_instability
+	name = "Conserved Genetics"
+	description = "With highly conserved genetics, this plant doesn't lose or gain instability in cross-pollination."
+	icon = FA_ICON_SEEDLING
+	rate = 1
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
 /*
  * Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
  * Generates sparks on squash.

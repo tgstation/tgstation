@@ -165,6 +165,7 @@
 
 	down.up = null
 	down.update_appearance(UPDATE_ICON_STATE)
+	down.update_minimap_blip()
 	down = null
 	update_appearance(UPDATE_ICON_STATE)
 	clear_base_transparency()
@@ -188,6 +189,7 @@
 	up.down = null
 	up.clear_base_transparency()
 	up.update_appearance(UPDATE_ICON_STATE)
+	up.update_minimap_blip()
 	up = null
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -195,6 +197,11 @@
 /obj/structure/ladder/proc/disconnect()
 	unlink_down()
 	unlink_up()
+
+/obj/structure/ladder/proc/update_minimap_blip()
+	remove_minimap_blip(MINIMAP_LADDER_BLIP, src)
+	if(up || down)
+		add_minimap_blip(src, MINIMAP_LADDER_BLIP, "ladder")
 
 /obj/structure/ladder/LateInitialize()
 	// By default, discover ladders above and below us vertically
@@ -213,6 +220,7 @@
 	// Linking updates our icon, so if we failed both links we need a manual update
 	if(isnull(down) && isnull(up))
 		update_appearance(UPDATE_ICON_STATE)
+	update_minimap_blip()
 
 /obj/structure/ladder/update_icon_state()
 	icon_state = "[base_icon_state][!!up][!!down]"

@@ -1,6 +1,6 @@
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/secbot/ed209
+	result = /mob/living/basic/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -18,7 +18,7 @@
 
 /datum/crafting_recipe/secbot
 	name = "Secbot"
-	result = /mob/living/simple_animal/bot/secbot
+	result = /mob/living/basic/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -72,7 +72,7 @@
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/basic/bot/honkbot
+	result = /mob/living/basic/bot/secbot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -120,7 +120,7 @@
 
 /datum/crafting_recipe/vim
 	name = "Vim"
-	result = /obj/vehicle/sealed/car/vim
+	result = /obj/vehicle/sealed/mecha/vim
 	reqs = list(
 		/obj/item/clothing/head/helmet/space/eva = 1,
 		/obj/item/bodypart/leg/left/robot = 1,

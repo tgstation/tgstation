@@ -636,7 +636,7 @@
 	id = "liberator_gun"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 15)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/doorhickey
+	build_path = /obj/item/gun/ballistic/automatic/pistol/doohickey
 	category = list(RND_CATEGORY_IMPORTED)
 
 /datum/design/stun_boomerang

@@ -60,6 +60,10 @@
 		MECHA_ARMOR = 2,
 	)
 
+/obj/vehicle/sealed/mecha/honker/dark/Initialize(mapload, built_manually)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
+
 /obj/vehicle/sealed/mecha/honker/dark/loaded
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/honker,

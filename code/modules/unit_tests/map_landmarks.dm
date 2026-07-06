@@ -1,5 +1,6 @@
 /// Tests that [/datum/job/proc/get_default_roundstart_spawn_point] returns a landmark from all joinable jobs.
 /datum/unit_test/maptest_job_roundstart_spawnpoints
+	test_flags = UNIT_TEST_MAP_TEST
 
 /datum/unit_test/maptest_job_roundstart_spawnpoints/Run()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)

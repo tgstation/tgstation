@@ -1,9 +1,9 @@
-const LABEL = "🤖 Flaky Test Report";
-const TITLE_BOT_HEADER = "title: ";
+const LABEL = '🤖 Flaky Test Report';
+const TITLE_BOT_HEADER = 'title: ';
 
 // Only check jobs that start with these.
 // Helps make sure we don't restart something like screenshot tests or linters, which are not known to be flaky.
-const CONSIDERED_JOBS = ["Integration Tests"];
+const CONSIDERED_JOBS = ['Integration Tests'];
 
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
   const jobs = await github.paginate(
@@ -19,7 +19,7 @@ async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
     },
   );
 
-  return jobs.filter((job) => job.conclusion === "failure");
+  return jobs.filter((job) => job.conclusion === 'failure');
 }
 
 export async function rerunFlakyTests({ github, context }) {
@@ -35,7 +35,7 @@ export async function rerunFlakyTests({ github, context }) {
     return CONSIDERED_JOBS.some((title) => job.name.startsWith(title));
   });
   if (filteredFailingJobs.length === 0) {
-    console.log("Failing jobs are NOT designated flaky. Not rerunning.");
+    console.log('Failing jobs are NOT designated flaky. Not rerunning.');
     return;
   }
 
@@ -51,13 +51,13 @@ export async function rerunFlakyTests({ github, context }) {
 // Tries its best to extract a useful error title and message for the given log
 export function extractDetails(log) {
   // Strip off timestamp
-  const lines = log.split(/^[0-9.:T\-]*?Z /gm);
+  const lines = log.split(/^[0-9.:T-]*?Z /gm);
 
   const failureRegex = /^\t?FAILURE #(?<number>[0-9]+): (?<headline>.+)/;
   const groupRegex = /^##\[group\](?<group>.+)/;
 
   const failures = [];
-  let lastGroup = "root";
+  let lastGroup = 'root';
   let loggingFailure;
 
   const newFailure = (failureMatch) => {
@@ -65,7 +65,7 @@ export function extractDetails(log) {
 
     loggingFailure = {
       headline,
-      group: lastGroup.replace("/datum/unit_test/", ""),
+      group: lastGroup.replace('/datum/unit_test/', ''),
       details: [],
     };
   };
@@ -85,7 +85,7 @@ export function extractDetails(log) {
       }
 
       newFailure(failureMatch);
-    } else if (failureMatch || line.startsWith("##")) {
+    } else if (failureMatch || line.startsWith('##')) {
       failures.push(loggingFailure);
       loggingFailure = undefined;
 
@@ -100,7 +100,7 @@ export function extractDetails(log) {
   // We had no logged failures, there's not really anything we can do here
   if (failures.length === 0) {
     return {
-      title: "Flaky test failure with no obvious source",
+      title: 'Flaky test failure with no obvious source',
       failures,
     };
   }
@@ -116,7 +116,7 @@ export function extractDetails(log) {
     return {
       title: `Multiple flaky test failures in ${Array.from(uniqueGroups)
         .sort()
-        .join(", ")}`,
+        .join(', ')}`,
       failures,
     };
   }
@@ -164,7 +164,7 @@ export function extractDetails(log) {
   }
 
   // Try to normalize the title and remove anything that might be variable
-  const normalizedError = failure.headline.replace(/\s*at .+?:[0-9]+.*/g, ""); // "<message> at code.dm:123"
+  const normalizedError = failure.headline.replace(/\s*at .+?:[0-9]+.*/g, ''); // "<message> at code.dm:123"
 
   return {
     title: `Flaky test ${failGroup}: ${normalizedError}`,
@@ -231,11 +231,11 @@ function createBody({ title, failures }, runUrl) {
 	${failures
     .map(
       (failure) =>
-        `${failure.group}: ${failure.headline}\n\t${failure.details.join("\n")}`,
+        `${failure.group}: ${failure.headline}\n\t${failure.details.join('\n')}`,
     )
-    .join("\n")}
+    .join('\n')}
 	\`\`\`
-	`.replace(/^\s*/gm, "");
+	`.replace(/^\s*/gm, '');
 }
 
 export async function reportFlakyTests({ github, context }) {
@@ -254,7 +254,7 @@ export async function reportFlakyTests({ github, context }) {
   // This could one day be relaxed if we face serious enough flaky test problems, so we're going to loop anyway
   if (filteredFailingJobs.length !== 1) {
     console.log(
-      "Multiple jobs failing after retry, assuming maintainer rerun.",
+      'Multiple jobs failing after retry, assuming maintainer rerun.',
     );
 
     return;
@@ -277,8 +277,20 @@ export async function reportFlakyTests({ github, context }) {
     );
 
     if (existingIssueId !== undefined) {
-      // Maybe in the future, if it's helpful, update the existing issue with new links
       console.log(`Existing issue found: #${existingIssueId}`);
+      await github.rest.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: existingIssueId,
+        body: createBody(
+          details,
+          `https://github.com/${context.repo.owner}/${
+            context.repo.repo
+          }/actions/runs/${context.payload.workflow_run.id}/attempts/${
+            context.payload.workflow_run.run_attempt - 1
+          }`,
+        ),
+      });
       return;
     }
 

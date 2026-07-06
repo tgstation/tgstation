@@ -479,7 +479,7 @@
 	description = "It has extra reagent volume."
 	icon = FA_ICON_VIALS
 	/// The new number we set the plant's max_volume to.
-	var/new_capcity = 100
+	var/new_capacity = 100
 
 /datum/plant_gene/trait/modified_volume/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -488,20 +488,20 @@
 
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant))
-		grown_plant.max_volume = new_capcity
+		grown_plant.max_volume = new_capacity
 
 /// Omegaweed's funny 420 max volume gene
 /datum/plant_gene/trait/modified_volume/omega_weed
 	name = "Dank Vesicles"
 	description = "It can hold up to 420 units of reagents."
 	icon = FA_ICON_CANNABIS
-	new_capcity = 420
+	new_capacity = 420
 
 /// Cherry Bomb's increased max volume gene
 /datum/plant_gene/trait/modified_volume/cherry_bomb
 	name = "Powder-Filled Bulbs"
 	description = "It can hold up to 125 units of reagents."
-	new_capcity = 125
+	new_capacity = 125
 
 /// Plants that explode when used (based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
@@ -681,8 +681,8 @@
 		return
 
 	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * seconds_per_tick // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+
+	stank.set_gas(/datum/gas/miasma, (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * seconds_per_tick) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
 

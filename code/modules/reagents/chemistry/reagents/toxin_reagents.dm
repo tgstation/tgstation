@@ -233,7 +233,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
-		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath += 1 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
 		. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
@@ -250,6 +250,54 @@
 /datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/carnivorousblood
+	name = "Carnivorous Blood"
+	description = "An Interdyne-developed biological agent that consumes any blood similar to the blood it was trained on."
+	color ="#C80000"
+	toxpwr = 0
+	taste_description = "carbonated blood"
+	ph = 7.4
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	self_consuming = TRUE
+	// Will hold up to three DNA unique enzymes
+	data = list()
+
+/datum/reagent/toxin/carnivorousblood/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & INHALE)
+		data = list() // Being vaporized is generally undesirable for living creatures
+
+/datum/reagent/toxin/carnivorousblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(!CAN_HAVE_BLOOD(affected_mob) || affected_mob.blood_volume == 0)
+		affected_mob.reagents.remove_reagent(/datum/reagent/toxin/carnivorousblood, volume)
+		return
+	var/multiplier = 1
+	if(affected_mob.stat == DEAD)
+		multiplier *= 2
+	if(affected_mob.dna.unique_enzymes in data)
+		multiplier *= 3
+	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
+	. = ..()
+	feed_dna_list(mix_data)
+
+/// Given a list of DNA keys, adds new keys up to the limit of three distinct sequences.
+/datum/reagent/toxin/carnivorousblood/proc/feed_dna_list(list/adding_list)
+	for(var/dna in adding_list)
+		if(data.len >= 3)
+			return
+		if(dna in data)
+			continue
+		data += dna
 
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
@@ -323,7 +371,7 @@
 /datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
 	PRIVATE_PROC(TRUE)
 
-	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
@@ -368,7 +416,7 @@
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mindbreaker
@@ -758,7 +806,7 @@
 	. = ..()
 	var/heal = 4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -940,7 +988,7 @@
 			affected_mob.Paralyze(60)
 		if(2)
 			affected_mob.losebreath += 10
-			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			need_mob_update = TRUE
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -949,7 +997,7 @@
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10
-				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1110,7 +1158,7 @@
 	. = ..()
 	if(current_cycle > 11)
 		affected_mob.Paralyze(240 * metabolization_ratio * seconds_per_tick)
-	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1453,8 +1501,8 @@
 		toxpwr = 0
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
-		remove_paralysis()
-		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		remove_paralysis(affected_mob)
+		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update = affected_mob.adjust_tox_loss(-3.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(-6.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1569,3 +1617,148 @@
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
 	toxpwr = 1
+
+#define CRITICAL_CAPACITY 45
+
+/datum/reagent/toxin/acid/industrial_waste
+	name = "Industrial Waste"
+	description = "Industrial Waste produced as a side effect of efficient boulder refining. Highly toxic, corrosive, and hard to get rid of."
+	color = "#1eff00"
+	penetrates_skin = TOUCH|VAPOR
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
+	toxpwr = 2
+	acidpwr = 30.0
+	ph = 0.0
+
+/datum/reagent/toxin/acid/industrial_waste/on_new(data)
+	. = ..()
+	if(istype(holder.my_atom, /obj/machinery/plumbing/disposer))
+		RegisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(pre_disposal))
+
+/datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
+	. = ..()
+	var/merged_total = amount + volume
+	if(merged_total >= CRITICAL_CAPACITY)
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
+		var/atom/container = holder.my_atom
+		var/damage_mult = 1
+		if(ismachinery(container))
+			damage_mult = 2
+		container.take_damage(round(merged_total * damage_mult / WASTE_REACTION_THRESHOLD), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
+
+
+/datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
+	. = ..()
+	spew_waste(2) //Can't burn it...
+
+/datum/reagent/toxin/acid/industrial_waste/on_spark_act(power_charge, spark_flags)
+	if((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		return
+	spew_waste(2) //Can't electrify it...
+
+/datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
+	if(reac_volume < WASTE_REACTION_THRESHOLD)
+		return // There's too little waste to do anything.
+	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
+		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
+		goo.visible_message(span_warning("The new waste reactivates [goo]!"))
+		goo.pre_dissolve(FALSE)
+	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
+	var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
+	if(QDELETED(goo))
+		return
+
+	goo.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	goo.reagent_amount = rounded_volume
+
+	if(goo.lazy_init_reagents())
+		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
+		goo.reagents.add_reagent(type, rounded_volume)
+	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
+		goo.pre_dissolve()
+		return // Otherwise there's too little waste to do anything.
+	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste/proc/pre_disposal()
+	SIGNAL_HANDLER
+	var/atom/disaster_zone = holder?.my_atom
+	if(!disaster_zone)
+		return
+	if(prob(10))
+		disaster_zone.balloon_alert_to_viewers("hissssssss!")
+	spew_waste(5) //You can't just dump the industrial waste down the kitchen sink. High range to disincentivize using the chem disposaler.
+
+/**
+ * Pick a random turf in the spew range and split our total amount of waste there.
+ */
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+	if(!spew_range)
+		return
+
+	var/atom/atom_holder = holder.my_atom
+	var/turf/dropturf = get_turf(atom_holder)
+	if(!dropturf)
+		return //Check for at least an inital turf to start
+	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
+	greenboy.color = "#00ff00"
+	var/list/turf/turfs = list()
+	for(var/turf/open/floors in oview(spew_range, dropturf))
+		if(isgroundlessturf(floors))
+			continue
+		turfs += floors
+
+	if(!length(turfs))
+		return
+	dropturf = pick(turfs)
+
+	expose_turf(dropturf, volume/2)
+	volume = round(volume/2, 0.01)
+
+#undef CRITICAL_CAPACITY
+
+/// Gibs you (lol), after an easily curable disease because WERE COWARDS
+/datum/reagent/toxin/gibbium
+	name = "Gibbium"
+	description = "Guess what this does."
+	silent_toxin = TRUE
+	color = "#ff0000"
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "regret"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	/// On what cycle to gib the person
+	var/gib_cycle = 5
+
+/datum/reagent/toxin/gibbium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(current_cycle >= gib_cycle)
+		affected_mob.ForceContractDisease(new /datum/disease/gbs/no_transmission ())
+
+/datum/reagent/toxin/spider_serum
+	name = "Spider Serum"
+	description = "A horrible mutagen that transmutes flesh into spiders."
+	color = "#000000"
+	taste_description = "unending nightmares"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	toxpwr = 0
+	/// The cycle for when to do the "transformation"
+	var/transformation_cycle = 30
+
+/datum/reagent/toxin/spider_serum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(prob(10))
+		new /mob/living/basic/spider/growing/spiderling (get_turf(affected_mob))
+		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
+		to_chat(affected_mob, span_warning("You feel tiny legs climbing up your throat."))
+
+	if(current_cycle >= transformation_cycle)
+		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
+		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)

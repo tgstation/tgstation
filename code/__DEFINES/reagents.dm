@@ -248,7 +248,7 @@
 /// Reaction tags for medication
 #define MEDICATION_REACTION_TAGS (REACTION_TAG_HEALING | REACTION_TAG_DAMAGING | REACTION_TAG_ORGAN | REACTION_TAG_DRUG)
 /// Reaction tags for things the chemist would make
-#define CHEMIST_REACTION_TAGS (REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_COMPONENT)
+#define CHEMIST_REACTION_TAGS (REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE | REACTION_TAG_COMPONENT)
 /// Reaction tags for botanist stuff
 #define BOTANIST_REACTION_TAGS (REACTION_TAG_PLANT | REACTION_TAG_COMPONENT)
 /// Reaction tags for food and drink mainly
@@ -318,3 +318,5 @@
 #define SPARK_ACT_ENCLOSED (1 << 0)
 /// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
 #define SPARK_ACT_WEAKEN_COMMON (1 << 1)
+/// Chemical threshold that industrial waste needs to start eating floors.
+#define WASTE_REACTION_THRESHOLD 10

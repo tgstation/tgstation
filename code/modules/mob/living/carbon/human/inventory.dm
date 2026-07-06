@@ -286,18 +286,29 @@
 	var/obj/item/existing_tank = is_external ? external : internal
 	if(tank == existing_tank)
 		return toggle_close_internals(is_external)
+
 	// Use breathing tube regardless of mask.
 	if(can_breathe_tube())
 		return toggle_open_internals(tank, is_external)
+
 	// Use mask in absence of tube.
-	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
-		// Adjust dishevelled breathing mask back onto face unless it is exempt.
-		if ((wear_mask.up) && !(wear_mask.clothing_flags & INTERNALS_ADJUST_EXEMPT))
-			wear_mask.adjust_visor(src)
+	if(can_breathe_mask())
 		return toggle_open_internals(tank, is_external)
+	// We have a valid mask but it's pulled down
+	else if(isclothing(wear_mask))
+		var/obj/item/clothing/mask = wear_mask
+		if (mask.up && (mask.visor_flags & MASKINTERNALS) && !(mask.clothing_flags & INTERNALS_ADJUST_EXEMPT) && mask.adjust_visor(src))
+			return toggle_open_internals(tank, is_external)
+
 	// Use helmet in absence of tube or valid mask.
 	if(can_breathe_helmet())
 		return toggle_open_internals(tank, is_external)
+	// We have a valid helmet but its visor is up
+	else if(isclothing(head))
+		var/obj/item/clothing/helmet = head
+		if (helmet.up && (helmet.visor_flags & HEADINTERNALS) && !(helmet.clothing_flags & INTERNALS_ADJUST_EXEMPT) && helmet.adjust_visor(src))
+			return toggle_open_internals(tank, is_external)
+
 	// Notify user of missing valid breathing apparatus.
 	if (wear_mask)
 		// Invalid mask

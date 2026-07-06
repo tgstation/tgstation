@@ -46,7 +46,7 @@
 		return
 
 	update_gravity(gravity_state)
-
+	SEND_SIGNAL(src, COMSIG_LIVING_GRAVITY_CHANGED, gravity_state, old_grav_state)
 	if(gravity_state > STANDARD_GRAVITY)
 		gravity_animate()
 	else if(old_grav_state > STANDARD_GRAVITY)

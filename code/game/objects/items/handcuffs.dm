@@ -419,6 +419,8 @@
 	slowdown = 7
 	breakouttime = 30 SECONDS
 	slot_flags = ITEM_SLOT_LEGCUFFED
+	/// Icon state for the legcuff overlay
+	var/legcuff_state = "legcuff"
 
 /**
  * # Bear trap

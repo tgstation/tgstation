@@ -3,7 +3,7 @@
 	description = "Keep yourself occupied in permabrig."
 	faction = FACTION_STATION
 	total_positions = 0
-	spawn_positions = 2
+	spawn_positions = 4
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER

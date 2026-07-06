@@ -199,6 +199,8 @@
 #define ACCESS_BLOODCULT "bloodcult"
 /// HUNTERS
 #define ACCESS_HUNTER "hunter"
+/// HERETIC
+#define ACCESS_HERETIC "heretic"
 
 /// - - - MISC - - -
 	// These don't really fit anywhere else

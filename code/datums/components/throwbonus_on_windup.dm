@@ -163,7 +163,7 @@
 	. = ..()
 	var/static/list/bar_positions = list(0, 2, 4, 6, 8)
 	var/current_percentage = current_count / maximum_count
-	var/bars_to_add = CEILING(length(bar_positions) * current_percentage, 1)
+	var/bars_to_add = ceil(length(bar_positions) * current_percentage)
 	for(var/curr_number in 1 to bars_to_add)
 		var/bar_color
 		switch(curr_number)

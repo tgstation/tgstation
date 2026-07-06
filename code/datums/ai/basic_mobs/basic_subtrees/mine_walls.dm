@@ -21,6 +21,7 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/closed/mineral/target = controller.blackboard[target_key]
 	var/is_gibtonite_turf = istype(target, /turf/closed/mineral/gibtonite)

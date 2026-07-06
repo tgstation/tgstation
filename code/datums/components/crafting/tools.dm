@@ -131,6 +131,10 @@
 	)
 	category = CAT_TOOLS
 
+/datum/crafting_recipe/jaws_of_recovery/New()
+	LAZYADD(blacklist, typecacheof(/obj/item/crowbar/power/paramedic, ignore_root_path = TRUE))
+	return ..()
+
 /datum/crafting_recipe/lantern
 	name = "Lantern"
 	result = /obj/item/flashlight/lantern

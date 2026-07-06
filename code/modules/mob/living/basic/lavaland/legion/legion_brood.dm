@@ -103,8 +103,17 @@
 	else
 		add_ally(creator)
 	created_by = WEAKREF(creator)
-	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
+	if (!ai_controller)
+		return
+
+	ai_controller.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
+	if (!creator.ai_controller)
+		return
+
+	// Inherit our creator's target and reinforcement requests
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	ai_controller.set_blackboard_key(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS])
 
 /// Reference handling
 /mob/living/basic/mining/legion_brood/proc/creator_destroyed()

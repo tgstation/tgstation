@@ -109,7 +109,7 @@
 	RegisterSignal(new_user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(stabilize))
 	if (effect_type)
 		setup_trail(new_user)
-	new_user.inertia_move_multiplier /= drift_force // lower multiplier = faster drifting
+	new_user.inertia_move_multiplier_active /= drift_force // lower multiplier = faster drifting
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/old_user)
 	SIGNAL_HANDLER
@@ -126,7 +126,7 @@
 		COMSIG_MOVABLE_SPACEMOVE,
 	))
 	QDEL_NULL(trail)
-	old_user.inertia_move_multiplier *= drift_force
+	old_user.inertia_move_multiplier_active *= drift_force
 
 /datum/component/jetpack/proc/move_react(mob/source)
 	SIGNAL_HANDLER
@@ -136,13 +136,22 @@
 	if(source.client.intended_direction && check_on_move.Invoke(TRUE)) //You use jet when press keys. yes.
 		trail?.generate_effect()
 
+/// Handles all active 0g movement, including both manual (trying to move a direction in 0g) and automatic (drifting idly in 0g)
 /datum/component/jetpack/proc/stabilize(mob/source, movement_dir, continuous_move, backup)
 	SIGNAL_HANDLER
-	if(!continuous_move && movement_dir)
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-	// Check if we have the fuel to stop this. Do NOT consume any fuel, just check
-	// This is done because things other then us can use our fuel
-	if(stabilize && check_on_move.Invoke(FALSE))
+	/*
+	 * Checks if we should stop any active movement
+	 *
+	 * Obviously we stop all forms of drifting if we have stabilizers active (allowing free space movement)
+	 * Less obviously, we stop need to stop drift if we are trying to move *while passively drifting*
+	 * (Without checking the latter, jetpacks will act very weird and jank. As you move in one direction,
+	 * you will simultaneously drift in that direction, causing you to jump/skip a tile every so often.)
+	 *
+	 * Either way, we need to check that we have the "fuel" to stop this
+	 * DO NOT CONSUME FUEL HERE, just check if we have it
+	 * This is done because things other then us can use our fuel
+	 */
+	if((stabilize || (!continuous_move && movement_dir)) && check_on_move.Invoke(FALSE))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 	return NONE
 

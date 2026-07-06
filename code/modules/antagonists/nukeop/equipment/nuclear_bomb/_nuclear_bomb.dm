@@ -53,6 +53,8 @@ GLOBAL_VAR(station_nuke_source)
 	var/proper_bomb = TRUE //Please
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
+	/// is this nuke on the MINIMAP_BOMB_BLIP tag minimap?
+	var/is_on_minimap = TRUE
 
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
@@ -62,6 +64,7 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
+	update_minimap_blip()
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -523,6 +526,7 @@ GLOBAL_VAR(station_nuke_source)
 		arm_nuke(usr)
 	else
 		disarm_nuke(usr)
+	update_minimap_blip()
 
 /// Arms the nuke, making it active and triggering all pinpointers to start counting down (+delta alert)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
@@ -564,6 +568,12 @@ GLOBAL_VAR(station_nuke_source)
 	countdown.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
 	update_appearance()
+
+/obj/machinery/nuclearbomb/proc/update_minimap_blip()
+	if(!is_on_minimap)
+		return
+	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
+	add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_[timing ? "on" : "off"]", blip_icon, TRUE)
 
 /// If the nuke is active, gets how much time is left until it detonates, in seconds.
 /// If the nuke is not active, gets how much time the nuke is set for, in seconds.

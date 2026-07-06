@@ -56,7 +56,7 @@
 
 	for(var/atom/movable/vomit as anything in GLOB.nebula_vomits)
 		if(!is_station_level(vomit.z))
-			return
+			continue
 
 		valid_vomits += vomit
 	return valid_vomits

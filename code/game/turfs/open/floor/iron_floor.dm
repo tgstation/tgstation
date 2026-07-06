@@ -414,6 +414,7 @@
 	icon_state = "solarpanel"
 	base_icon_state = "solarpanel"
 	floor_tile = /obj/item/stack/tile/iron/solarpanel
+	skip_minimap_rendering = TRUE
 
 /turf/open/floor/iron/solarpanel/airless
 	initial_gas_mix = AIRLESS_ATMOS

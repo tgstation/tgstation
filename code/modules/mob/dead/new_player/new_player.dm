@@ -34,7 +34,7 @@
 	. = ..()
 
 	GLOB.new_player_list += src
-	add_verb(src, /mob/dead/new_player/proc/reset_menu_hud)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -343,13 +343,11 @@
  */
 /mob/dead/new_player/proc/register_for_interview()
 	// First we detain them by removing all the verbs they have on client
-	for (var/v in client.verbs)
-		var/procpath/verb_path = v
+	for (var/procpath/verb_path as anything in client.verbs)
 		remove_verb(client, verb_path)
 
 	// Then remove those on their mob as well
-	for (var/v in verbs)
-		var/procpath/verb_path = v
+	for (var/procpath/verb_path as anything in verbs)
 		remove_verb(src, verb_path)
 
 	// Then we create the interview form and show it to the client
@@ -358,13 +356,11 @@
 		I.ui_interact(src)
 
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
-	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
 
 ///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
-/mob/dead/new_player/proc/reset_menu_hud()
-	set name = "Reset Lobby Menu HUD"
-	set category = "OOC"
+GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", "OOC")
 	var/mob/dead/new_player/new_player = usr
 	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
 		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))

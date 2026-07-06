@@ -23,9 +23,8 @@
 	demoraliser = new(src, 7, TRUE, mood_category)
 	return ..()
 
-/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if (tool.tool_behaviour == TOOL_WIRECUTTER)
-		QDEL_NULL(demoraliser)
+/obj/structure/sign/poster/traitor/wirecutter_act(mob/living/user, obj/item/tool)
+	QDEL_NULL(demoraliser)
 	return ..()
 
 /obj/structure/sign/poster/traitor/Destroy()

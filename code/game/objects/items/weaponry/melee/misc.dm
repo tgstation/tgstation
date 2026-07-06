@@ -386,6 +386,7 @@
 		force_unwielded = 10, \
 		force_wielded = 14, \
 	)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/bambostaff/update_icon_state()
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
@@ -413,6 +414,10 @@
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
+
+/obj/item/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/staff/broom
 	name = "broom"
@@ -488,7 +493,18 @@
 			/obj/effect/decal/cleanable/ants,
 			/obj/item/queen_bee,
 		))
-	AddElement(/datum/element/bane, mob_biotypes = MOB_BUG,  target_type = /mob/living/basic, damage_multiplier = 0, added_damage = 24, requires_combat_mode = FALSE)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_BUG, pre_bane_callback = CALLBACK(src, PROC_REF(bane_check)) )
+
+// Different type of bug mobs get different amounts of damage multipliers
+/obj/item/melee/flyswatter/proc/bane_check(mob/living/target, mob/living/attacker, list/attack_modifiers)
+	if(isanimal_or_basicmob(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 24)
+	else if(isflyperson(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 29)
+	else if(ismoth(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 9)
+	else // ?? Whatever
+		MODIFY_ATTACK_FORCE(attack_modifiers, 14)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))

@@ -79,7 +79,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/new_body = parent
-	var/mob/dead/observer/ghost = new_body.get_ghost() || new_body.ghostize()
+	var/mob/dead/observer/ghost = new_body.get_ghost() || new_body.ghostize(forced = TRUE)
 	if(QDELETED(ghost))
 		stack_trace("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
 		qdel(src) // i guess this is useless now
@@ -90,7 +90,7 @@
 		if(old_mind.current != old_body)
 			stack_trace("Temporary body returning mind to old body, but the mind's current body doesn't match the old body!")
 			old_mind.set_current(old_body)
-		if(old_body.stat != DEAD)
+		if(old_body.stat != DEAD && !IS_FAKE_KEY(old_body.key))
 			ghost.reenter_corpse()
 
 	qdel(src) // we're done here

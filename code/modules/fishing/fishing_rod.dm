@@ -92,11 +92,12 @@
 		set_slot(new line(src), ROD_SLOT_LINE)
 
 	update_appearance()
-
-	//Bane effect that make it extra-effective against mobs with water adaptation (read: fish infusion)
-	AddElement(/datum/element/bane, target_type = /mob/living, damage_multiplier = 1.25)
-	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
-	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
+	AddComponent(/datum/component/bane, \
+		damage_multiplier = 2.25, \
+		should_bane_callback = CALLBACK(src, PROC_REF(should_bane_fish_infusions)), \
+		on_bane_callback = CALLBACK(src, PROC_REF(on_bane_fish_infusions)), \
+		label_text = "fishpeople", \
+	)
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
@@ -260,18 +261,13 @@
 	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
 	return material_chance
 
-///Fishing rodss should only bane fish DNA-infused spessman
-/obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
-	SIGNAL_HANDLER
-	if(!force || !HAS_TRAIT(fish, TRAIT_WATER_ADAPTATION))
-		return COMPONENT_CANCEL_BANING
+/obj/item/fishing_rod/proc/should_bane_fish_infusions(mob/living/target)
+	return force > 0 && HAS_TRAIT(target, TRAIT_WATER_ADAPTATION)
 
-///Fishing rods should hard-counter fish DNA-infused spessman
-/obj/item/fishing_rod/proc/bane_effects(datum/source, mob/living/fish)
-	SIGNAL_HANDLER
-	fish.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
-	fish.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
-	fish.adjust_wet_stacks(-4)
+/obj/item/fishing_rod/proc/on_bane_fish_infusions(mob/living/target, mob/living/attacker)
+	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
+	target.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+	target.adjust_wet_stacks(-4)
 
 /obj/item/fishing_rod/interact(mob/user)
 	if(currently_hooked)
@@ -512,11 +508,11 @@
 			bait_state = "battery_overlay"
 		. += bait_state
 
-/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
-	. += get_fishing_worn_overlays(standing, isinhands, icon_file)
+	. += get_fishing_worn_overlays(standing, isinhands, icon_file, bodyshape)
 
-/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
 	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
@@ -744,7 +740,7 @@
 		return list()
 	return ..()
 
-/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return list()
 	return ..()

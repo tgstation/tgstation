@@ -4,7 +4,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "cP" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear,
+/mob/living/basic/mining/polarbear,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

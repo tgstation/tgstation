@@ -26,7 +26,7 @@
 #define MATERIAL_SILO_STORED (1 << 0)
 /// This material can be used in basic recipes, such as chairs/toilets/tiles
 #define MATERIAL_BASIC_RECIPES (1 << 1)
-/// This material counts as a rigid enough solid to be used to craft tough objects like carving blocks or air tanks
+/// This material counts as a rigid enough solid to be used to craft tough objects like air tanks
 #define MATERIAL_CLASS_RIGID (1 << 2)
 /// The opposite of rigid, this means that the material cannot hold a solid form (like sand) and cannot be used in item crafting
 #define MATERIAL_CLASS_AMORPHOUS (1 << 3)
@@ -140,6 +140,9 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_NO_REAGENTS (1 << 7)
 /// Prevents material items from displaying their descriptors in examine_more with sci glasses
 #define MATERIAL_NO_DESCRIPTORS (1 << 8)
+
+/// Flags for metalgen imprinting
+#define MATERIAL_METALGEN MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item

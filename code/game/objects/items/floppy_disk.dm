@@ -358,6 +358,20 @@
 	. = ..()
 	new /obj/item/disk/data(src)
 
+/obj/item/disk/manipulator
+	name = "manipulator task disk"
+	desc = "A floppy disk containing manipulator tasks."
+	var/list/tasks_data = list()
+
+/obj/item/disk/manipulator/proc/set_tasks(list/new_tasks_data)
+	if(read_only)
+		return FALSE
+	tasks_data = islist(new_tasks_data) ? new_tasks_data : list()
+	return TRUE
+
+/obj/item/disk/manipulator/proc/get_tasks()
+	return tasks_data?.Copy() || list()
+
 #undef STARTING_STICKER
 #undef MAX_DISK_STACK_SIZE
 #undef STACK_PIXEL_STEP

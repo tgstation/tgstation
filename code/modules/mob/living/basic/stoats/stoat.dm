@@ -65,15 +65,15 @@
 		/mob/living/basic/stoat/kit = 100 // Placeholder until we get proper baby stoats
 	)
 	AddComponent(\
-	/datum/component/breed,\
-	can_breed_with = typecacheof(list(/mob/living/basic/stoat)),\
-	baby_paths = baby_paths,\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/stoat)),\
+		baby_paths = baby_paths,\
 	)
 
 /mob/living/basic/stoat/kit
 	name = "\improper stoat kit"
 	real_name = "stoat"
-	desc = "They're a stoat kit!"
+	desc = "An apex predator, but friend-shaped, and tiny..."
 	icon_state = "kit_stoat"
 	icon_living = "kit_stoat"
 	icon_dead = "kit_stoat_dead"
@@ -82,3 +82,15 @@
 	ai_controller = /datum/ai_controller/basic_controller/stoat/kit
 	mob_size = MOB_SIZE_SMALL
 	can_breed = FALSE
+
+/mob/living/basic/stoat/kit/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/growth_and_differentiation,\
+		growth_time = 20 MINUTES,\
+		growth_path = /mob/living/basic/stoat,\
+		growth_probability = 100,\
+		lower_growth_value = 0.5,\
+		upper_growth_value = 1,\
+		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
+	)
