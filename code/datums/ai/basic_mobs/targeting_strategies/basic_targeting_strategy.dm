@@ -11,13 +11,21 @@
 	var/target_wounded_key
 
 /datum/targeting_strategy/basic/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
+	// checks are ordered cheapest first so invalid targets are rejected before the expensive sight check
+	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
+		return FALSE
 
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
 	if(isnull(our_controller))
 		return FALSE
 
-	if(isturf(the_target) || isnull(the_target)) // bail out on invalids
+	if(living_mob.see_invisible < the_target.invisibility) //Target's invisible to us, forget it
+		return FALSE
+
+	if(!isturf(living_mob.loc))
+		return FALSE
+	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
 	if(isobj(the_target.loc))
@@ -35,14 +43,6 @@
 		return FALSE
 
 	if(!ignore_sight && !can_see(living_mob, the_target, vision_range)) //Target has moved behind cover and we have lost line of sight to it
-		return FALSE
-
-	if(living_mob.see_invisible < the_target.invisibility) //Target's invisible to us, forget it
-		return FALSE
-
-	if(!isturf(living_mob.loc))
-		return FALSE
-	if(isturf(the_target.loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
