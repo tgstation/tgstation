@@ -9,6 +9,8 @@
 #define ROCK_COLOR_RED "#861313"
 #define ROCK_COLOR_ICE "#cde2e4"
 #define ROCK_COLOR_ASH "#ccddff"
+#define ROCK_COLOR_SHALE "#353743"
+#define ROCK_COLOR_VOLCANIC_RED "#A60100"
 
 // MARK: Minerals
 /turf/closed/mineral
@@ -17,6 +19,7 @@
 	base_icon_state = "smoothrocks"
 	color = rock_color(ROCK_COLOR)
 	transform = null
+	wall_icon_state = null
 
 /turf/closed/mineral/minimap
 	name = "DO NOT USE!!!"
@@ -42,16 +45,34 @@
 	color = rock_color(ROCK_COLOR_ASH)
 
 /turf/closed/mineral/random/stationside/asteroid
-	icon = MAP_SWITCH(CONTRASTLESS_ROCKS, MAPPING_ROCKS)
+	icon = MAP_SWITCH(CONTRAST_ROCKS, MAPPING_ROCKS)
 	icon_state = rock_icon_state("rock_nochance")
 	base_icon_state = "smoothrocks"
 	color = rock_color(ROCK_COLOR_RED)
+	transform = null
 
 /turf/closed/mineral/asteroid
-	icon = MAP_SWITCH(CONTRASTLESS_ROCKS, MAPPING_ROCKS)
+	icon = MAP_SWITCH(CONTRAST_ROCKS, MAPPING_ROCKS)
 	icon_state = rock_icon_state("redrock")
 	base_icon_state = "smoothrocks"
 	color = rock_color(ROCK_COLOR_RED)
+	transform = null
+
+/turf/closed/mineral/random/volcanic/shale
+	icon = MAP_SWITCH(CONTRAST_ROCKS, MAPPING_ROCKS)
+	icon_state = rock_icon_state("shale")
+	base_icon_state = "smoothrocks"
+	color = rock_color(ROCK_COLOR_SHALE)
+	transform = null
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+
+/turf/closed/mineral/random/volcanic/red_rock
+	icon = MAP_SWITCH(CONTRAST_ROCKS, MAPPING_ROCKS)
+	icon_state = rock_icon_state("redrock")
+	base_icon_state = "smoothrocks"
+	color = rock_color(ROCK_COLOR_VOLCANIC_RED)
+	transform = null
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 // Cold rocks
 /turf/closed/mineral/snowmountain
@@ -94,14 +115,8 @@
 	icon_state = rock_icon_state("rock")
 	base_icon_state = "smoothrocks"
 	color = rock_color(ROCK_COLOR)
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
-	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
-
-/turf/closed/indestructible/rock/Initialize(mapload)
-	. = ..()
-	pixel_x = 0
-	pixel_y = 0
+	transform = null
+	wall_icon_state = null
 
 /turf/closed/indestructible/rock/snow
 	icon = MAP_SWITCH(CONTRASTLESS_ROCKS, MAPPING_ROCKS)
@@ -120,8 +135,6 @@
 	icon_state = rock_icon_state("icerock2")
 	base_icon_state = "smoothrocks"
 	color = rock_color(ROCK_COLOR_ICE)
-	pixel_x = 0
-	pixel_y = 0
 
 #undef CONTRASTLESS_ROCKS
 #undef CONTRAST_ROCKS

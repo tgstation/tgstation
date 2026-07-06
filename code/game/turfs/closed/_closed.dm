@@ -29,6 +29,8 @@
  * I am so sorry
  */
 /turf/closed/proc/add_large_wall_overlay(wall_icon, wall_state)
+// BANDASTATION EDIT START: Rock smoothing
+/*
 	var/static/list/mutable_appearance/wall_overlays = list()
 	var/mutable_appearance/wall_overlay = wall_overlays["[wall_icon]-[wall_state]"]
 	if (!wall_overlay)
@@ -36,3 +38,8 @@
 		wall_overlays["[wall_icon]-[wall_state]"] = wall_overlay
 	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
 	overlays += wall_overlay
+*/
+	var/static/mutable_appearance/wall_overlay = mutable_appearance('icons/turf/mining.dmi', "rock", appearance_flags = RESET_TRANSFORM)
+	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
+	overlays += wall_overlay
+// BANDASTATION EDIT END: Rock smoothing
