@@ -181,21 +181,8 @@
 /datum/bt_node/ai_behavior/find_next_beacon_target
 	var/target_key
 	time_between_perform = 5 SECONDS
-	/// Set while an async reachability check is still going on
-	VAR_PRIVATE/is_checking_reach = FALSE
-	/// TRUE once the async check has written its result.
-	VAR_PRIVATE/async_check_done = FALSE
-	/// Result of the async check.
-	VAR_PRIVATE/async_check_succeeded = FALSE
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller)
-	// Async check in flight  stay RUNNING.
-	if(is_checking_reach)
-		return AI_BEHAVIOR_DELAY
-
-	// Async check just finished  consume result.
-	if(async_check_done)
-		return AI_BEHAVIOR_DELAY | (async_check_succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/obj/machinery/navbeacon/prev_beacon = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
@@ -215,33 +202,12 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(BB_PREVIOUS_BEACON_TARGET, final_target)
-	controller.clear_blackboard_key(target_key)
-
-	if(LAZYACCESS(controller.blackboard[BB_TEMPORARY_IGNORE_LIST], final_target) || get_dist(bot_pawn, final_target) > controller.max_target_distance)
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: [final_target] ignored or out of range (dist=[get_dist(bot_pawn, final_target)] max=[controller.max_target_distance])")
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-
-	is_checking_reach = TRUE
-	INVOKE_ASYNC(src, PROC_REF(async_check_beacon_reach), controller, final_target)
-	return AI_BEHAVIOR_DELAY
-
-/datum/bt_node/ai_behavior/find_next_beacon_target/proc/async_check_beacon_reach(datum/ai_controller/basic_controller/bot/controller, atom/final_target)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	var/reached = controller.set_if_can_reach(key = target_key, target = final_target, duration = 3 MINUTES, distance = controller.max_target_distance)
-	if(!is_checking_reach || QDELETED(bot_pawn))
-		return
-	if(!reached)
-		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] find_next_beacon_target: can't reach [final_target], applying cooldown")
-		controller.set_blackboard_key(BB_BOT_BEACON_COOLDOWN, world.time + BOT_NO_BEACON_PATH_PENALTY)
-	async_check_succeeded = reached
-	async_check_done = TRUE
-	is_checking_reach = FALSE
+	controller.set_blackboard_key(target_key, final_target)
+	return AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/find_next_beacon_target/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	is_checking_reach = FALSE
-	async_check_done = FALSE
-	async_check_succeeded = FALSE
+
 
 /// Records the beacon as visited and clears the target key once the bot is on the same turf.
 /datum/bt_node/ai_behavior/arrive_at_beacon

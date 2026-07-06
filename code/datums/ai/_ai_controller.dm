@@ -45,6 +45,8 @@ multiple modular subtrees with behaviors
 	var/list/override_slots = null
 	/// Decorators in polling mode (observer_abort set, no signal registered). Iterated after each SelectBehaviors tick so their condition is re-evaluated even when skipped by composite resume logic.
 	var/list/polling_observers = null
+	/// world.time of our last SelectBehaviors() tick from SSai_controllers. Used to derive the real seconds_per_tick under load; 0 means no tick since the last status change, so the first tick falls back to the subsystem wait.
+	var/last_bt_tick = 0
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
@@ -376,6 +378,12 @@ multiple modular subtrees with behaviors
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
 			return FALSE
+
+/*
+#ifdef AI_PERFORMANCE_TESTING
+	return FALSE
+#endif
+*/
 	return TRUE
 
 /datum/ai_controller/proc/recalculate_idle(datum/exited)
@@ -435,6 +443,13 @@ multiple modular subtrees with behaviors
  * Returns AI_STATUS_ON otherwise.
  */
 /datum/ai_controller/proc/get_expected_ai_status()
+
+
+/*
+#ifdef AI_PERFORMANCE_TESTING
+	return AI_STATUS_ON
+#endif
+*/
 	if (forced_off)
 		return AI_STATUS_OFF
 
@@ -617,10 +632,13 @@ multiple modular subtrees with behaviors
 				controller_subsystem.currentrun -= src
 				break
 	ai_status = new_ai_status
+	last_bt_tick = 0 // don't count time spent in the previous status towards the next tick's seconds_per_tick
 	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
 	if(ai_status == AI_STATUS_OFF)
 		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
 			cancel_current_plan()
+
+
 
 /datum/ai_controller/proc/cancel_current_plan()
 	active_execution_index = 0

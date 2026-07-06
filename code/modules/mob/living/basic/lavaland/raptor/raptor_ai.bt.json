@@ -122,7 +122,8 @@
 						"behavior": "/datum/bt_node/ai_behavior/acquire_target",
 						"vars": {
 							"target_key": "BB_OWNER_TARGET",
-							"targeting_strategy": "/datum/targeting_strategy/ally_mob"
+							"targeting_strategy": "/datum/targeting_strategy/ally_mob",
+							"target_source": "/datum/target_source/oview_single_type/living_mob"
 						}
 					}
 				},

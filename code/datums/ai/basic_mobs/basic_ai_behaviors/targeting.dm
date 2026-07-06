@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/bt_node/ai_behavior/acquire_target/update_combat_targets/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	var/datum/target_priority_strategy/priority_strategy = GET_TARGET_PRIORITY_STRATEGY(controller.blackboard[priority_strategy_key])
 	if(!priority_strategy)
-		return pick(filtered_targets)
+		return filtered_targets[1]
 	return priority_strategy.select_target(controller, filtered_targets)
 
 /// Picks targets based on which one has the lowest health.

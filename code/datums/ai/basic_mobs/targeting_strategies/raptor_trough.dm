@@ -3,7 +3,7 @@
 
 /datum/targeting_strategy/raptor_trough/is_valid_target(mob/living/living_mob, obj/structure/ore_container/food_trough/raptor_trough/trough, vision_range, datum/ai_controller/controller = null)
 	. = ..()
-	if(!istype(trough) || !.)
+	if(!.)
 		return FALSE
 	if(!can_see(living_mob, trough, vision_range))
 		return FALSE
