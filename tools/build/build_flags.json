@@ -172,6 +172,20 @@
 			"label": "All templates",
 			"category": "Map",
 			"description": "Includes all map templates in the build (needed for some map/ruin testing)."
+		},
+		{
+			"id": "ALL_MAPS",
+			"define": "ALL_MAPS",
+			"label": "All maps",
+			"category": "Map",
+			"description": "Includes every station map in the compiled build instead of just the ones referenced dynamically."
+		},
+		{
+			"id": "MINIMAL_CENTCOM",
+			"define": "MINIMAL_CENTCOM",
+			"label": "Minimal CentCom",
+			"category": "Map",
+			"description": "Uses a smaller CentCom map to save on memory/load time."
 		}
 	],
 	"presets": [
@@ -184,8 +198,13 @@
 		{
 			"id": "absolute_minimum",
 			"label": "Absolute minimum",
-			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS", "AUTOSTART_GAME"],
-			"values": { "force_map": "runtimestation" }
+			"flags": [
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"AUTOSTART_GAME",
+				"MINIMAL_CENTCOM"
+			],
+			"values": { "force_map": "runtimestation_minimal" }
 		},
 		{
 			"id": "testing",

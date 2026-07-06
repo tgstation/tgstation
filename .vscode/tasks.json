@@ -55,7 +55,8 @@
 				"-DSKIP_LAVALAND",
 				"-DSKIP_SPACE_LEVELS",
 				"-DAUTOSTART_GAME",
-				"-DFORCE_MAP=\"runtimestation\""
+				"-DMINIMAL_CENTCOM",
+				"-DFORCE_MAP=\"runtimestation_minimal\""
 			],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
@@ -63,7 +64,8 @@
 					"-DSKIP_LAVALAND",
 					"-DSKIP_SPACE_LEVELS",
 					"-DAUTOSTART_GAME",
-					"-DFORCE_MAP=\"runtimestation\""
+					"-DMINIMAL_CENTCOM",
+					"-DFORCE_MAP=\"runtimestation_minimal\""
 				]
 			},
 			"options": {
