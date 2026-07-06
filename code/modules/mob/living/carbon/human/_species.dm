@@ -893,14 +893,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
 	var/final_armor_block = armor_block
 	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
-		if(damage >= 9)
+		if(damage >= 12 || (damage >= 9 && prob(66)))
 			target.force_say()
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
 		final_armor_block -= limb_accuracy
 		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 	else // Normal attacks do not gain the benefit of armor penetration.
 		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
-		if(damage >= 9)
+		if(damage >= 12 || (damage >= 9 && prob(66)))
 			target.force_say()
 		log_combat(user, target, "punched")
 

@@ -33,8 +33,6 @@
 	var/stun_armour_penetration = 15 // pens very light / cosmetic armor
 	/// What armor does our stun attack check before delivering the attack?
 	var/armour_type_against_stun = MELEE
-	/// Chance of causing force_say() when stunning a human mob
-	var/force_say_chance = 33
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// The path of the default sound to play when we stun something.
@@ -255,10 +253,6 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		if(ishuman(target))
-			var/mob/living/carbon/human/human_target = target
-			if(prob(force_say_chance))
-				human_target.force_say()
 		var/armour_block = target.run_armor_check(BODY_ZONE_CHEST, armour_type_against_stun, null, null, stun_armour_penetration)
 		target.apply_damage(stamina_damage, STAMINA, blocked = armour_block)
 		if(!trait_check)
@@ -435,7 +429,6 @@
 	item_flags = NONE
 	force = 5
 	cooldown = 2.5 SECONDS
-	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
 	stun_armour_penetration = 30 // strong enough to pen sec armor
 	clumsy_knockdown_time = 24 SECONDS
@@ -470,7 +463,6 @@
 	attack_verb_simple = list("beat")
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
-	force_say_chance = 50
 	stamina_damage = 60
 	armour_type_against_stun = ENERGY
 	knockdown_time = 5 SECONDS
