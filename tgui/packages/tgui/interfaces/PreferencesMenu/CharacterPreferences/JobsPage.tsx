@@ -342,6 +342,11 @@ function JoblessRoleDropdown(props) {
 }
 
 export function JobsPage() {
+  const departmentColumns = [
+    ['Engineering', 'Science', 'Silicon', 'Assistant'],
+    ['Captain', 'Service', 'Cargo'],
+    ['Security', 'Medical'],
+  ];
   return (
     <>
       <JoblessRoleDropdown />
@@ -349,27 +354,20 @@ export function JobsPage() {
         <Stack.Item mt={15}>
           <Stack fill g={1} className="PreferencesMenu__Jobs">
             <Stack.Item>
-              <Stack vertical>
-                <PriorityHeaders />
-                <Department department="Engineering" />
-                <Department department="Science" />
-                <Department department="Silicon" />
-                <Department department="Assistant" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item mt={-5.9}>
-              <Stack vertical>
-                <PriorityHeaders />
-                <Department department="Captain" />
-                <Department department="Service" />
-                <Department department="Cargo" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item>
-              <Stack vertical>
-                <PriorityHeaders />
-                <Department department="Security" />
-                <Department department="Medical" />
+              <Stack>
+                {departmentColumns.map((column, columnIndex) => (
+                  <Stack.Item
+                    key={columnIndex}
+                    mt={columnIndex === 1 ? -5.9 : undefined}
+                  >
+                    <Stack vertical>
+                      <PriorityHeaders />
+                      {column.map((department) => (
+                        <Department key={department} department={department} />
+                      ))}
+                    </Stack>
+                  </Stack.Item>
+                ))}
               </Stack>
             </Stack.Item>
           </Stack>
