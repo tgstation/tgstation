@@ -64,7 +64,7 @@
 
 /obj/effect/spawner/abandoned_crate/space_suit
 	loot = list(
-		/obj/item/borg/upgrade/modkit/aoe/mobs = 1,
+		/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs = 1,
 		/obj/item/clothing/suit/space = 1,
 		/obj/item/clothing/head/helmet/space = 1
 		)

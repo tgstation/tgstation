@@ -1,5 +1,6 @@
 /datum/hud/dextrous/voidwalker
 	ui_style = 'icons/hud/screen_voidwalker.dmi'
+	give_generic_combat = FALSE //we give our own version below, here.
 
 /datum/hud/dextrous/voidwalker/initialize_screen_objects()
 	. = ..()

@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/sloth,
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
-	/mob/living/simple_animal/bot/secbot/beepsky,
+	/mob/living/basic/bot/secbot/beepsky,
 	/mob/living/basic/bear/snow/misha,
 	/mob/living/basic/mining/lobstrosity/juvenile,
 )))

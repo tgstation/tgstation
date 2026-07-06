@@ -118,12 +118,11 @@
 	listeningTo = null
 
 /// for inserting cable into the rwd
-/obj/item/rwd/attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/stack/cable_coil))
-		return
-	var/obj/item/stack/cable_coil/cable = attacking_item
-	add_cable(user, cable)
-	return TRUE
+/obj/item/rwd/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
+	add_cable(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rwd/click_alt(mob/user)
 	if(!radial_menu)

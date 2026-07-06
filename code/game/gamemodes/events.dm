@@ -23,7 +23,7 @@
 			continue
 		if(!station_area.requires_power || station_area.always_unpowered )
 			continue
-		if(GLOB.typecache_powerfailure_safe_areas[station_area.type])
+		if(HAS_TRAIT(station_area, TRAIT_AREA_BLOCK_POWER_FAIL))
 			continue
 
 		station_area.power_light = FALSE
@@ -34,7 +34,7 @@
 	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(C.cell && is_station_level(C.z))
 			var/area/A = C.area
-			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+			if(HAS_TRAIT(A, TRAIT_AREA_BLOCK_POWER_FAIL))
 				continue
 
 			C.cell.charge = 0

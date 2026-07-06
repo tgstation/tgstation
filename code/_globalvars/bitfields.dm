@@ -27,6 +27,18 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 	var/name = pick(flags)
 	return flags[name]
 
+/// Returns null if no such field exists, a list of all matching flags by name otherwise
+/proc/get_matching_bitflags(var_name, value)
+	var/list/valid_bitflags = get_valid_bitflags(var_name)
+	if(!length(valid_bitflags))
+		return null
+
+	var/list/flags = list()
+	for (var/bit_name in valid_bitflags)
+		if (value & valid_bitflags[bit_name])
+			flags += bit_name
+	return flags
+
 DEFINE_BITFIELD(admin_flags, list(
 	"ADMIN" = R_ADMIN,
 	"AUTOLOGIN" = R_AUTOADMIN,
@@ -216,6 +228,7 @@ DEFINE_BITFIELD(interaction_flags_item, list(
 DEFINE_BITFIELD(item_flags, list(
 	"ABSTRACT" = ABSTRACT,
 	"BEING_REMOVED" = BEING_REMOVED,
+	"BLUESPACE_INTERFERENCE" = BLUESPACE_INTERFERENCE,
 	"CRUEL_IMPLEMENT" = CRUEL_IMPLEMENT,
 	"DROPDEL" = DROPDEL,
 	"FORCE_STRING_OVERRIDE" = FORCE_STRING_OVERRIDE,
@@ -352,12 +365,6 @@ DEFINE_BITFIELD(mob_biotypes, list(
 
 DEFINE_BITFIELD(mob_flags, list(
 	"MOB_HAS_SCREENTIPS_NAME_OVERRIDE" = MOB_HAS_SCREENTIPS_NAME_OVERRIDE,
-))
-
-DEFINE_BITFIELD(mob_respiration_type, list(
-	"RESPIRATION_OXYGEN" = RESPIRATION_OXYGEN,
-	"RESPIRATION_N2" = RESPIRATION_N2,
-	"RESPIRATION_PLASMA" = RESPIRATION_PLASMA,
 ))
 
 DEFINE_BITFIELD(mobility_flags, list(
@@ -615,12 +622,6 @@ DEFINE_BITFIELD(organ_flags, list(
 	"ORGAN_GHOST" = ORGAN_GHOST,
 	"ORGAN_MUTANT" = ORGAN_MUTANT,
 	"ORGAN_UNUSABLE" = ORGAN_UNUSABLE,
-))
-
-DEFINE_BITFIELD(respiration_type, list(
-	"RESPIRATION_OXYGEN" = RESPIRATION_OXYGEN,
-	"RESPIRATION_N2" = RESPIRATION_N2,
-	"RESPIRATION_PLASMA" = RESPIRATION_PLASMA,
 ))
 
 DEFINE_BITFIELD(liked_foodtypes, list(

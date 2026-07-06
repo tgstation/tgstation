@@ -7,6 +7,11 @@
 /datum/song/ui_host(mob/user)
 	return parent
 
+/datum/song/ui_state(mob/user)
+	if(ispAI(user))
+		return GLOB.always_state
+	return ..()
+
 /datum/song/ui_data(mob/user)
 	var/list/data = ..()
 	data["id"] = id

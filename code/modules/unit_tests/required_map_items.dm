@@ -6,6 +6,7 @@
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
  */
 /datum/unit_test/maptest_required_map_items
+	test_flags = UNIT_TEST_MAP_TEST
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
 
@@ -15,6 +16,7 @@
 /datum/unit_test/maptest_required_map_items/proc/setup_expected_types()
 	expected_types += subtypesof(/obj/item/stamp/head)
 	expected_types += subtypesof(/obj/machinery/modular_computer/preset/cargochat)
+	expected_types += subtypesof(/obj/machinery/fax/heads)
 
 	expected_types += /mob/living/basic/parrot/poly
 	expected_types += /mob/living/basic/pet/dog/corgi/ian

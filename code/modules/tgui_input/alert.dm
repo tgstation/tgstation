@@ -26,7 +26,7 @@
 	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(length(buttons) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many buttons. Use a list.", "TguiAlert")
-		return tgui_input_list(user, message, title, buttons, timeout, autofocus)
+		return tgui_input_list(user, message, title, buttons, timeout=timeout)
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(length(buttons) == 2)

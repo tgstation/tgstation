@@ -316,13 +316,53 @@
 	plane = AREA_PLANE
 
 /atom/movable/screen/plane_master/weather
-	name = "Weather"
-	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
+	name = "Non-Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects. Used when the player has particle weather disabled."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	/// Is this a particle variant?
+	var/particle_weather = FALSE
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	update_state(home.our_hud?.mymob)
+
+/atom/movable/screen/plane_master/weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	update_state(new_hud?.mymob)
+
+/atom/movable/screen/plane_master/weather/proc/update_state(mob/mymob)
+	if(!istype(mymob))
+		return
+
+	// If the client wants particle weather, only show the PARTICLE_WEATHER_PLANE, otherwise only show the normal WEATHER_PLANE
+	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) == particle_weather)
+		set_alpha(255)
+	else
+		set_alpha(0)
+
+/atom/movable/screen/plane_master/weather/particle
+	name = "Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. Used when the player has particle weather enabled."
+	plane = PARTICLE_WEATHER_PLANE
+	particle_weather = TRUE
+
+/atom/movable/screen/plane_master/weather_mask
+	name = "Weather Mask"
+	documentation = "Used to mask particle weather effects to cut out areas unaffected by weather."
+	plane = WEATHER_MASK_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	render_target = WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(!.)
 		return
@@ -355,33 +395,13 @@
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
+		<br>Exists because lighting updating is really slow, and movement needs to feel smooth (also being an overlay lets us muck with it easier)."
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	// I'd love for this to be HSL but filters don't work with blend modes
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
-		1, 1, 1, 0,
-	))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
-		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
-		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
-		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
-		0, 0, 0, 1,
-		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
-	))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"

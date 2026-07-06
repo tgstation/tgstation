@@ -17,5 +17,5 @@
 		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/spider/giant/viper/wizard,
-		/mob/living/simple_animal/bot/secbot/ed209,
+		/mob/living/basic/bot/secbot/ed209,
 	)

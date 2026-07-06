@@ -32,18 +32,29 @@
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
 /datum/action/cooldown/spell/jaunt/space_crawl/can_cast_spell(feedback = TRUE)
+	// we may loose the focus during jaunt, so you need to be always able to exit on a valid turf
+	if(is_jaunting(owner) && is_valid_turf())
+		return TRUE
 	. = ..()
 	if(!.)
 		return FALSE
-	var/turf/my_turf = get_turf(owner)
-	if(isspaceturf(my_turf))
-		return TRUE
-	var/area/my_area = get_area(owner)
-	if (isopenturf(my_turf) && my_area.outdoors && lavaland_equipment_pressure_check(my_turf))
+	if(is_valid_turf())
 		return TRUE
 	if(feedback)
 		to_chat(owner, span_warning("You must stand in space, or an outdoor area with low pressure!"))
 	return FALSE
+
+
+// do not check if we have a focus if we're already jaunting
+/datum/action/cooldown/spell/jaunt/space_crawl/before_cast(atom/cast_on)
+	if(is_jaunting(owner) && is_valid_turf())
+		return NONE
+	. = ..()
+
+/datum/action/cooldown/spell/jaunt/space_crawl/proc/is_valid_turf()
+	var/turf/my_turf = get_turf(owner)
+	var/area/my_area = get_area(owner)
+	return isspaceturf(my_turf) || (isopenturf(my_turf) && my_area.outdoors && lavaland_equipment_pressure_check(my_turf))
 
 /datum/action/cooldown/spell/jaunt/space_crawl/cast(mob/living/cast_on)
 	. = ..()
@@ -93,7 +104,6 @@
 		jaunter.put_in_hands(right_hand)
 
 	jaunter.add_traits(jaunting_traits, SPACE_PHASING)
-	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	playsound(our_turf, 'sound/effects/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	new /obj/effect/temp_visual/space_explosion(our_turf)
@@ -118,7 +128,6 @@
 
 /datum/action/cooldown/spell/jaunt/space_crawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(unjaunter, list(SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING)))
 	playsound(get_turf(unjaunter), 'sound/effects/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	new /obj/effect/temp_visual/space_explosion(get_turf(unjaunter))
 	if(iscarbon(unjaunter))
@@ -127,11 +136,6 @@
 			qdel(space_hand)
 	return ..()
 
-/// Signal proc for [SIGNAL_REMOVETRAIT] via [TRAIT_ALLOW_HERETIC_CASTING], losing our focus midcast will throw us out.
-/datum/action/cooldown/spell/jaunt/space_crawl/proc/on_focus_lost(mob/living/source)
-	SIGNAL_HANDLER
-	var/turf/our_turf = get_turf(source)
-	try_exit_jaunt(our_turf, source, TRUE)
 
 /// Spacecrawl "hands", prevent the user from holding items in spacecrawl
 /obj/item/space_crawl

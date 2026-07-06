@@ -21,11 +21,24 @@ SUBSYSTEM_DEF(traitor)
 	var/list/datum/uplink_handler/uplink_handlers = list()
 	/// The current scaling per minute of progression.
 	var/current_progression_scaling = 1 MINUTES
+	/// List of code words for traitors
+	var/syndicate_code_phrase
+	/// List of code responses for traitors
+	var/syndicate_code_response
+	/// Regex of code words for traitors
+	var/regex/syndicate_code_phrase_regex
+	/// Regex of code responses for traitors
+	var/regex/syndicate_code_response_regex
 
 /datum/controller/subsystem/traitor/Initialize()
 	current_progression_scaling = 1 MINUTES * CONFIG_GET(number/traitor_scaling_multiplier)
 	for(var/theft_item in subtypesof(/datum/objective_item/steal))
 		new theft_item
+
+	syndicate_code_phrase = generate_code_phrase(return_list = TRUE)
+	syndicate_code_phrase_regex = new("([jointext(syndicate_code_phrase, "|")])", "ig")
+	syndicate_code_response = generate_code_phrase(return_list = TRUE)
+	syndicate_code_response_regex = new("([jointext(syndicate_code_response, "|")])", "ig")
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/traitor/fire(resumed)

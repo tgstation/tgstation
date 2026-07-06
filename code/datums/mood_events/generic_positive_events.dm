@@ -230,6 +230,10 @@
 	timeout = 3 SECONDS
 	hidden = TRUE
 
+/datum/mood_event/creeping/dead
+	mood_change = 8
+	timeout = 0
+
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
@@ -302,6 +306,10 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 	event_flags = MOOD_EVENT_SPIRITUAL
+
+/datum/mood_event/sacrifice_good/add_effects(...)
+	if(owner.mind?.holy_role && GLOB.deity)
+		description = "[GLOB.deity] is pleased with this offering!"
 
 /datum/mood_event/artok
 	description = "It's nice to see people are making art around here."
@@ -607,6 +615,8 @@
 	event_flags = MOOD_EVENT_GAMING
 
 /datum/mood_event/slots/win/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	if(istype(new_event, /datum/mood_event/slots/all_gone))
+		return ALLOW_NEW_MOOD
 	if(new_event.mood_change < mood_change)
 		return BLOCK_NEW_MOOD
 	return ..()
@@ -617,8 +627,18 @@
 
 /datum/mood_event/slots/win/jackpot
 	description = "JACKPOT! AW YEAH!"
-	mood_change = 6
-	timeout = 30 MINUTES
+	mood_change = 4
+
+/datum/mood_event/slots/all_gone
+	description = "NOOOOOOO! IT'S ALL GONE!!!"
+	mood_change = -2
+	timeout = 20 MINUTES
+
+/datum/mood_event/slots/all_gone/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	if(istype(new_event, /datum/mood_event/slots/win/jackpot))
+		return ALLOW_NEW_MOOD
+	description = "I'll never get it back..."
+	return BLOCK_NEW_MOOD
 
 /datum/mood_event/empathetic_happy
 	description = "Seeing happy people makes me happy."
@@ -689,3 +709,8 @@
 	description = "What a night! I can't wait to do it all again!"
 	mood_change = 2
 	timeout = 10 MINUTES
+
+/datum/mood_event/gizmo_positive
+	description = "I hear a voice whispering kind words in my ear!"
+	mood_change = 3
+	timeout = 30 SECONDS

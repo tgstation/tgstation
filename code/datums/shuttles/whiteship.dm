@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"
+	prefix = "_maps/shuttles/whiteship/"
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"

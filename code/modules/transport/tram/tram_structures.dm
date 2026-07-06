@@ -103,7 +103,7 @@
 /obj/structure/tram/update_overlays(updates = ALL)
 	. = ..()
 	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio * 4, 1) * 25
+	ratio = ceil(ratio * 4) * 25
 	cut_overlay(damage_overlay)
 	if(ratio > 75)
 		return

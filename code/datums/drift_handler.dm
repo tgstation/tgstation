@@ -223,4 +223,4 @@
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE
 
 /datum/drift_handler/proc/get_loop_delay(atom/movable/movable)
-	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * movable.inertia_move_multiplier
+	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * min(movable.inertia_move_multiplier_passive, movable.inertia_move_multiplier_active)

@@ -1,13 +1,13 @@
-import { strict as assert } from "assert";
-import { createComment } from "./comment.js";
+import { strict as assert } from 'node:assert';
+import { createComment } from './comment.js';
 
 const baseServers = {
   bagil: [
     {
       round_id: 1,
-      datetime: "2020-01-01 00:00:00",
-      server: "bagil",
-      url: "https://tgstation13.org/round/1",
+      datetime: '2020-01-01 00:00:00',
+      server: 'bagil',
+      url: 'https://tgstation13.org/round/1',
     },
   ],
 };
@@ -40,9 +40,9 @@ assert.equal(
       bagil: [
         {
           round_id: 2,
-          datetime: "2020-01-01 01:00:00",
-          server: "bagil",
-          url: "https://tgstation13.org/round/2",
+          datetime: '2020-01-01 01:00:00',
+          server: 'bagil',
+          url: 'https://tgstation13.org/round/2',
         },
       ],
     },

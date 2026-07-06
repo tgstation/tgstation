@@ -20,8 +20,8 @@
 /obj/item/photo/get_save_vars()
 	return ..() - NAMEOF(src, icon)
 
-/obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
-	set_picture(P, datum_name, datum_desc, TRUE)
+/obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE, override_name = TRUE)
+	set_picture(P, datum_name, datum_desc, override_name)
 	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
 	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
 		LAZYADD(SSpersistence.queued_message_bottles, src)
@@ -55,7 +55,7 @@
 		if(!seen)
 			P.mobs_seen -= seen_ref
 			continue
-		if(!isobserver(seen) && !isghostspecies(seen))
+		if(!isobserver(seen) && !isspirit(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		break
@@ -79,16 +79,17 @@
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(P))
-		if(!user.can_write(P))
-			return
-		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
-		if(txt && user.can_perform_action(src))
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			scribble = txt
-	else
-		return ..()
+/obj/item/photo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_WRITING_UTENSIL(tool))
+		return NONE
+	if(!user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
+	var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
+	if(!txt || !user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	scribble = txt
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/photo/examine(mob/user)
 	. = ..()
@@ -111,12 +112,10 @@
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' [width_height]='480' style='image-rendering:pixelated' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=photo_showing;size=480x608")
+		+ "</body></html>", "window=photo_showing;size=[scribble ? "480x580" : "480x480"]")
 	onclose(user, "[name]")
 
-/obj/item/photo/verb/rename()
-	set name = "Rename photo"
-	set src in usr
+GAME_VERB_SRC(/obj/item/photo, rename, usr, "Rename photo", null)
 
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards

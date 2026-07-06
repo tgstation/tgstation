@@ -117,14 +117,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!anchored || charging)
-		return ITEM_INTERACT_BLOCKING
-	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
-	if(.)
-		update_appearance()
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
-	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/recharger/can_crowbar_deconstruct()
+	return ..() && anchored && !charging
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()

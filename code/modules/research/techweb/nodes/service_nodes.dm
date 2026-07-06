@@ -29,6 +29,7 @@
 		"razor",
 		"bucket",
 		"mop",
+		"wet_floor_sign",
 		"pushbroom",
 		"normtrash",
 		"wirebrush",
@@ -37,6 +38,7 @@
 		"water_balloon",
 		"ticket_machine",
 		"radio_entertainment",
+		"rdd",
 		"photocopier",
 	)
 

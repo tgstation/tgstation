@@ -44,7 +44,7 @@
 	hud_icons = list(FAN_HUD)
 
 /datum/atom_hud/data/diagnostic
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, BIG_MANIP_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
 
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
@@ -62,7 +62,7 @@
 	. = ..()
 	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
-	for(var/mob/eye/camera/ai/eye as anything in GLOB.camera_eyes)
+	for(var/mob/eye/camera/ai/eye in GLOB.camera_eyes)
 		eye.update_ai_detect_hud()
 
 /datum/atom_hud/data/malf_apc
@@ -455,46 +455,6 @@ Diagnostic HUDs!
 	else
 		set_hud_image_state(DIAG_CAMERA_HUD, "hudcamera")
 
-/*~~~~~~~~~
-	Bots!
-~~~~~~~~~~*/
-/mob/living/simple_animal/bot/proc/diag_hud_set_bothealth()
-	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
-	if(bot_mode_flags & BOT_MODE_ON)
-		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
-	else if(stat) //Generally EMP causes this
-		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
-	else //Bot is off
-		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
-	if(client) //If the bot is player controlled, it will not be following mode logic!
-		set_hud_image_state(DIAG_BOT_HUD, "hudsentient")
-		return
-
-	switch(mode)
-		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
-			set_hud_image_state(DIAG_BOT_HUD, "hudcalled")
-		if(BOT_CLEANING, BOT_HEALING) //Cleanbot cleaning, repairbot fixing, or Medibot Healing
-			set_hud_image_state(DIAG_BOT_HUD, "hudworking")
-		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
-			set_hud_image_state(DIAG_BOT_HUD, "hudpatrol")
-		if(BOT_PREP_ARREST, BOT_ARREST, BOT_HUNT) //STOP RIGHT THERE, CRIMINAL SCUM!
-			set_hud_image_state(DIAG_BOT_HUD, "hudalert")
-		if(BOT_MOVING, BOT_DELIVER, BOT_GO_HOME, BOT_NAV) //Moving to target for normal bots, moving to deliver or go home for MULES.
-			set_hud_image_state(DIAG_BOT_HUD, "hudmove")
-		else
-			set_hud_image_state(DIAG_BOT_HUD, "")
-
-/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
-	if(QDELETED(cell) || (cell.maxcharge == 0))
-		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
-	else
-		var/chargelvl = (cell.charge/cell.maxcharge)
-		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
-
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
@@ -537,6 +497,18 @@ Diagnostic HUDs!
 	var/list/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 
+/image/proc/get_cached_width()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_WIDTH_INDEX]
+
+/image/proc/get_cached_height()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_HEIGHT_INDEX]
+
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
 
@@ -562,12 +534,18 @@ Diagnostic HUDs!
 	)
 	return max(scale_list) - min(scale_list)
 
+/atom/proc/get_hud_x_offset()
+	return -(get_cached_width() - ICON_SIZE_X) / 2
+
+/atom/proc/get_hud_y_offset()
+	return get_cached_height() - ICON_SIZE_Y
+
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_z = get_cached_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_w = get_hud_x_offset(), pixel_z = get_hud_y_offset(), time = animate_time)
 		return
-	holder.pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2
-	holder.pixel_z = get_cached_height() - ICON_SIZE_Y
+	holder.pixel_w = get_hud_x_offset()
+	holder.pixel_z = get_hud_y_offset()
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing

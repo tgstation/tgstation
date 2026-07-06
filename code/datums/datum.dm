@@ -87,7 +87,7 @@
 
 	/**
 	 * Parent types.
-	 * 
+	 *
 	 * Abstract-ness is a meta-property of a class that is used to indicate
 	 * that the class is intended to be used as a base class for others, and
 	 * should not (or cannot) be instantiated.
@@ -123,6 +123,7 @@
  * Returns [QDEL_HINT_QUEUE]
  */
 /datum/proc/Destroy(force = FALSE)
+	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -160,9 +161,16 @@
 	//END: ECS SHIT
 
 #ifndef DISABLE_DREAMLUAU
+	var/list/to_remove = list()
+	if(ismovable(src))
+		var/atom/movable/src_movable = src
+		to_remove += list(src_movable.vis_contents, src_movable.vis_locs)
 	if(!(datum_flags & DF_STATIC_OBJECT))
-		DREAMLUAU_CLEAR_REF_USERDATA(vars) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
-		DREAMLUAU_CLEAR_REF_USERDATA(src)
+		if(isatom(src))
+			var/atom/src_atom = src
+			to_remove += list(src_atom.contents, src_atom.filters, src_atom.underlays, src_atom.overlays)
+		to_remove += list(vars, src) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(arglist(to_remove))
 #endif
 
 	return QDEL_HINT_QUEUE

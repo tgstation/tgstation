@@ -29,6 +29,7 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "[base_icon_state]0"

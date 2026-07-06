@@ -76,7 +76,7 @@
 			) = 11,
 
 		list( // Mobs
-			/mob/living/basic/bot/honkbot = 5,
+			/mob/living/basic/bot/secbot/honkbot = 5,
 			/mob/living/basic/pet/gondola = 2,
 			/obj/effect/spawner/abandoned_crate/bloodroaches = 1,
 			) = 8,
@@ -186,6 +186,12 @@
 	if(Adjacent(user))
 		ui_interact(user)
 
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/closet/crate/secure/loot/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(!locked)
+		return
+	attack_hand(user)
 	return ITEM_INTERACT_SUCCESS
 
 /// Implements bulls and cows algorithm to compare guess against actual code

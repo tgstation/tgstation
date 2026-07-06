@@ -9,7 +9,6 @@
 #define ACTION_MAJOR_KILL "MAJOR KILL"
 #define ACTION_DISRESPECT "DISRESPECT"
 #define ACTION_MELEED "MELEE'D"
-#define ACTION_ROCK_MINED "ROCK MINED"
 #define ACTION_ORE_MINED "ORE MINED"
 #define ACTION_TRAPPER "TRAPPER"
 #define ACTION_PARRIED "PARRIED"
@@ -19,12 +18,15 @@
 #define ACTION_GIBTONITE_DEFUSED "GIBTONITE DEFUSED"
 #define ACTION_MARK_DETONATED "MARK DETONATED"
 #define ACTION_GEYSER_MARKED "GEYSER MARKED"
+#define ACTION_VENT_TAPPED "VENT TAPPED"
 
 /datum/component/style
 	/// Amount of style we have.
 	var/style_points = -1
 	/// Our style point multiplier.
 	var/point_multiplier = 1
+	/// Permanent multiplier gain from megafauna kills and vent taps
+	var/permanent_multiplier = 0
 	/// The current rank we have.
 	var/rank = STYLE_DULL
 	/// The last point affecting actions we've done
@@ -70,13 +72,15 @@
 	)
 
 
-/datum/component/style/Initialize(multitooled = FALSE)
+/datum/component/style/Initialize(multitooled = FALSE, stored_permanent_multiplier = 0)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	START_PROCESSING(SSdcs, src)
 	if(multitooled)
 		src.multitooled = multitooled
+	if(stored_permanent_multiplier)
+		src.permanent_multiplier = stored_permanent_multiplier
 
 /datum/component/style/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hotswap))
@@ -91,6 +95,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE, PROC_REF(on_gibtonite_defuse))
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
+	RegisterSignal(parent, COMSIG_LIVING_ON_VENT_WIN, PROC_REF(on_vent_win))
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 	var/mob/mob_parent = parent
@@ -160,7 +165,7 @@
 	if(!amount)
 		return
 
-	var/modified_amount = amount * (amount > 0 ? 1 - 0.1 * rank : 1) * (use_multiplier ? point_multiplier : 1)
+	var/modified_amount = amount * (amount > 0 ? 1 - 0.1 * rank : 1) * (use_multiplier ? permanent_multiplier + point_multiplier : 1)
 	style_points = max(style_points + modified_amount, -1)
 	update_screen()
 
@@ -256,11 +261,12 @@
 	return MAPTEXT_PIXELLARI("<font color='[rank_to_color(new_rank)]'>[rank_to_string(new_rank)]</font>")
 
 /datum/component/style/proc/generate_multiplier()
-	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [point_multiplier]X")
+	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [permanent_multiplier + point_multiplier]X")
 
 /datum/component/style/proc/generate_actions()
 	var/action_string = ""
-	for(var/action in actions)
+	for(var/i in 0 to length(actions) - 1)
+		var/action = actions[length(actions) - i]
 		action_string += "<br>" + MAPTEXT_GRAND9K("+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font>")
 	return action_string
 
@@ -276,8 +282,6 @@
 			return "#990000"
 		if(ACTION_MELEED)
 			return "#660033"
-		if(ACTION_ROCK_MINED)
-			return "#664433"
 		if(ACTION_ORE_MINED)
 			return "#663366"
 		if(ACTION_TRAPPER)
@@ -296,6 +300,8 @@
 			return "#ac870e"
 		if(ACTION_GEYSER_MARKED)
 			return "#364866"
+		if(ACTION_VENT_TAPPED)
+			return "#366b55"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
 /datum/component/style/proc/hotswap(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
@@ -320,6 +326,10 @@
 		source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
 	else
 		source.balloon_alert(source, "unable to hotswap!")
+
+/// Increase our permanent multiplier based on the modifier.
+/datum/component/style/proc/adjust_permanent_multiplier(modifier)
+	permanent_multiplier += modifier
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
@@ -365,13 +375,10 @@
 				add_action(ACTION_GIBTONITE_BOOM, 50)
 				return
 
-	if(rock.mineralType)
+	if(rock.mineral_type)
 		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
-		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
-
-	else if(exp_multiplier)
-		add_action(ACTION_ROCK_MINED, 25)
+		rock.mineral_amt = ROUND_UP(rock.mineral_amt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER
@@ -410,6 +417,11 @@
 
 	add_action(ACTION_GEYSER_MARKED, 100)
 
+/datum/component/style/proc/on_vent_win(datum/source, obj/structure/ore_vent/vent)
+	SIGNAL_HANDLER
+
+	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
+	add_action(ACTION_VENT_TAPPED, 250 * vent_value)
 
 // Emote-based multipliers
 /datum/component/style/proc/on_taunt()
@@ -434,6 +446,7 @@
 		return
 	else if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
+
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
 
@@ -454,7 +467,6 @@
 #undef ACTION_MAJOR_KILL
 #undef ACTION_DISRESPECT
 #undef ACTION_MELEED
-#undef ACTION_ROCK_MINED
 #undef ACTION_ORE_MINED
 #undef ACTION_TRAPPER
 #undef ACTION_PARRIED
@@ -464,3 +476,4 @@
 #undef ACTION_GIBTONITE_DEFUSED
 #undef ACTION_MARK_DETONATED
 #undef ACTION_GEYSER_MARKED
+#undef ACTION_VENT_TAPPED

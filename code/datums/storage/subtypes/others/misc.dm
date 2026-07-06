@@ -144,6 +144,26 @@
 /datum/storage/briefcase
 	max_total_storage = 21
 
+/datum/storage/briefcase/gun
+	max_slots = 5
+	max_total_storage = 15
+	/// Max weapons weight that can be stored within, inclusive
+	var/max_weapon_weight = WEAPON_MEDIUM
+
+/datum/storage/briefcase/gun/can_insert(obj/item/to_insert, mob/user, messages, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(istype(to_insert, /obj/item/gun))
+		var/obj/item/gun/gun = to_insert
+		if(gun.weapon_weight > max_weapon_weight)
+			if(messages && user)
+				user.balloon_alert(user, "too heavy!")
+			return FALSE
+
+	return TRUE
+
 ///Pill bottle
 /datum/storage/pillbottle
 	allow_quick_gather = TRUE

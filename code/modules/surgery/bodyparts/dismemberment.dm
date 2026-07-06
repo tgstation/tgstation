@@ -24,22 +24,17 @@
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
-	if (can_bleed())
-		limb_owner.bleed(rand(20, 40))
-
 	drop_limb(dismembered = TRUE)
-
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
-	var/turf/owner_location = limb_owner.loc
-	if(wounding_type != WOUND_BURN && istype(owner_location) && can_bleed())
-		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
 	if(dam_type == BURN)
 		burn()
 		return TRUE
-	if (can_bleed())
+
+	// Assume we had our limb sliced/punched off by this point
+	if(can_bleed())
 		limb_owner.bleed(rand(20, 40))
 
 	var/direction = pick(GLOB.cardinals)
@@ -203,9 +198,7 @@
 		var/obj/item/lost_cuffs = arm_owner.handcuffed
 		arm_owner.set_handcuffed(null)
 		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
-	if(arm_owner.hud_used)
-		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots[held_index]
-		associated_hand?.update_appearance()
+	arm_owner.hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
@@ -309,7 +302,7 @@
 			LAZYREMOVE(wounds, wound)
 			wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
-		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
+		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]") && !(bodypart_flags & BODYPART_STUMP))
 			new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 			new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
@@ -328,7 +321,7 @@
 		// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 		new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 		new_limb_owner.updatehealth()
-		new_limb_owner.update_body()
+		new_limb_owner.update_body() // updates lips + hair + eyes
 		new_limb_owner.update_damage_overlays()
 		if(!special)
 			new_limb_owner.hud_used?.update_locked_slots()
@@ -372,7 +365,7 @@
 		sexy_chad.lip_color = lip_color
 
 	new_head_owner.updatehealth()
-	new_head_owner.update_body()
+	new_head_owner.update_body() // updates lips + hair + eyes
 	new_head_owner.update_damage_overlays()
 
 /obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special, lazy)

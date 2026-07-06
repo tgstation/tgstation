@@ -89,7 +89,7 @@
 	dirt_overlay.color = dirt_color
 	overlays += dirt_overlay
 
-/datum/component/clothing_dirt/proc/on_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/datum/component/clothing_dirt/proc/on_separate_worn_overlays(obj/item/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	SIGNAL_HANDLER
 
 	if (isinhands || !dirtiness || !dirt_state || !(source.flags_cover & PEPPERPROOF))

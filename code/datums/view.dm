@@ -45,16 +45,16 @@
 		SEND_SIGNAL(chief.mob, COMSIG_VIEWDATA_UPDATE, getView())
 
 /datum/view_data/proc/assertFormat()//T-Pose
-	winset(chief, "mapwindow.map", "zoom=0")
+	winset(chief, SKIN_MAPWINDOW_MAP, "zoom=0")
 	zoom = 0
 
 /datum/view_data/proc/resetFormat()//Cuck
 	zoom = chief?.prefs.read_preference(/datum/preference/numeric/pixel_size)
-	winset(chief, "mapwindow.map", "zoom=[zoom]")
+	winset(chief, SKIN_MAPWINDOW_MAP, "zoom=[zoom]")
 	chief?.attempt_auto_fit_viewport() // If you change zoom mode, fit the viewport
 
 /datum/view_data/proc/setZoomMode()
-	winset(chief, "mapwindow.map", "zoom-mode=[chief?.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
+	winset(chief, SKIN_MAPWINDOW_MAP, "zoom-mode=[chief?.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
 
 /datum/view_data/proc/isZooming()
 	return (width || height)

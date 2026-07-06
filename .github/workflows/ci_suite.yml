@@ -1,6 +1,12 @@
 name: CI Suite
 
 on:
+  push:
+    branches:
+    - master
+    - 'project/**'
+    - 'gh-readonly-queue/master/**'
+    - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
       - master
@@ -52,6 +58,7 @@ jobs:
     uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
+      map_config: ${{ needs.collect_data.outputs.map_config }}
       max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   run_alternate_tests:

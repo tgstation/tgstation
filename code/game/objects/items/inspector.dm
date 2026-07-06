@@ -77,7 +77,6 @@
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
-	. += span_info("Use in-hand to scan the local area, creating an encrypted security inspection.")
 	. += span_info("Use on an item to scan if it contains, or is, contraband.")
 	if(!cell_cover_open)
 		. += span_notice("Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool.")

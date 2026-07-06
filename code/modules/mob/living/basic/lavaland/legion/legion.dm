@@ -75,7 +75,7 @@
 /mob/living/basic/mining/legion/update_overlays()
 	. = ..()
 	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)

@@ -69,7 +69,7 @@
 	desc = "These seeds grow into butterbean plants."
 	icon_state = "seed-butterbean"
 	species = "butterbean"
-	plantname = "butterbean Plants"
+	plantname = "Butterbean Plants"
 	product = /obj/item/food/grown/butterbeans
 	potency = 10
 	mutatelist = null

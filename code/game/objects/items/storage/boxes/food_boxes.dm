@@ -593,3 +593,15 @@
 	name = "robusta beans"
 	desc = "A bag containing fresh, dry coffee robusta beans. Ethically sourced and packaged by Waffle Corp."
 	beantype = /obj/item/food/grown/coffee/robusta
+
+/obj/item/storage/box/ramen_beef
+	name = "beef space ramen"
+	desc = "A box containing a brick of dehydrated ramen and a beef flavour sachet."
+	icon_state = "ramen_box"
+	illustration = null
+	storage_type = /datum/storage/box/ramen_beef
+	w_class = WEIGHT_CLASS_SMALL //it's meant to come in packs of five and the box can only hold two items, beef flavour or dry ramen
+
+/obj/item/storage/box/ramen_beef/PopulateContents()
+	new /obj/item/reagent_containers/condiment/pack/beef_flavour(src)
+	new /obj/item/food/spaghetti/ramen_dry(src)

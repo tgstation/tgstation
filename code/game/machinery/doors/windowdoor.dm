@@ -535,6 +535,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
+/obj/machinery/door/window/brigdoor/security/holodeck
+	name = "cell door"
+	desc = "For keeping in criminal scum."
+	req_one_access = COMMON_ACCESS
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holodeck/left, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holodeck/right, 0)
+
+/obj/machinery/door/window/brigdoor/security/holodeck/right
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
 /*
  * Subtype used in unit tests to ensure instant windoor open/close
 */

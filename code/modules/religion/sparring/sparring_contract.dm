@@ -85,7 +85,7 @@
 			resolved_opponents += resolved
 
 	if((user in resolved_opponents) && params["stakes"] == STAKES_HOLY_MATCH)
-		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
+		to_chat(user, span_warning("This contract refuses to allow a holy match with a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE

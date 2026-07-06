@@ -68,6 +68,8 @@
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
 /// If an item has had its /datum/element/weapon_description initialized or not.
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
+/// If an item causes bluespace interference when teleported with.
+#define BLUESPACE_INTERFERENCE (1<<22)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -362,7 +362,7 @@
 /obj/structure/chrono_field/update_overlays()
 	. = ..()
 	var/ttk_frame = 1 - (timetokill / initial(timetokill))
-	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = clamp(ceil(ttk_frame * CHRONO_FRAME_COUNT), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		underlays -= mob_underlay
@@ -418,9 +418,8 @@
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/fresh_air = new
-	fresh_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	fresh_air.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	fresh_air.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	fresh_air.set_gas(/datum/gas/oxygen, MOLES_O2STANDARD)
+	fresh_air.set_gas(/datum/gas/nitrogen, MOLES_N2STANDARD)
 	fresh_air.temperature = T20C
 	return fresh_air
 

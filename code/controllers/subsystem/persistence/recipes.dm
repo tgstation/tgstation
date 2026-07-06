@@ -6,6 +6,8 @@
 	//asert globchems done
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
 		var/datum/chemical_reaction/randomized/R = GLOB.chemical_reactions_list[randomized_type]
+		if(!R)
+			continue
 		file_data["[R.type]"] = list(
 			timestamp = R.created,
 			required_reagents = R.required_reagents,
@@ -20,7 +22,6 @@
 			determin_ph_range = R.determin_ph_range,
 			H_ion_release = R.H_ion_release,
 			purity_min = R.purity_min,
-			results = R.results,
 			required_container = R.required_container
 		)
 

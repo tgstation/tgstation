@@ -98,6 +98,10 @@
 	src.workspace = workspace
 	src.source_photo_or_painting = source_photo_or_painting
 
+/datum/computer_file/data/paint_project/Destroy(force)
+	source_photo_or_painting = null
+	return ..()
+
 /datum/computer_file/data/paint_project/clone(rename)
 	var/datum/computer_file/data/paint_project/temp = ..()
 	temp.workspace = workspace.copy()

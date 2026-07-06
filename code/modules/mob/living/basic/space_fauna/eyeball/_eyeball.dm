@@ -96,16 +96,16 @@
 
 /mob/living/basic/eyeball/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 	if(!ishuman(target))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/mob/living/carbon/human_target = target
 	var/obj/item/organ/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(eyes) || eyes.damage < 10)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	heal_eye_damage(human_target, eyes)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))

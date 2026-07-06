@@ -19,7 +19,7 @@
 	UnregisterSignal(parent, COMSIG_MOB_EXAMINING)
 
 /// When we examine something, check if we have any extra data to add
-/datum/component/security_vision/proc/on_examining(mob/source, atom/target, list/examine_strings)
+/datum/component/security_vision/proc/on_examining(mob/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 	if (!isliving(target))
 		return

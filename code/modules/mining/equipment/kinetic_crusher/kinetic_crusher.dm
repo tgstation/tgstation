@@ -119,12 +119,11 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
-		crusher_trophy.add_to(src, user)
-		return
-	return ..()
+/obj/item/kinetic_crusher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/crusher_trophy))
+		astype(tool, /obj/item/crusher_trophy).add_to(src, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -218,7 +217,7 @@
 	var/backstabbed = FALSE
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
-	if(check_behind(user, target) || boosted_mark)
+	if(check_behind(user, target) && !HAS_TRAIT(target, TRAIT_BACKSTAB_IMMUNE) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
 		playsound(user, backstab_sound, 100, TRUE) //Seriously who spelled it wrong
@@ -335,6 +334,9 @@
 /obj/projectile/destabilizer/Destroy()
 	fired_from = null
 	return ..()
+
+/obj/projectile/destabilizer/is_hostile_projectile()
+	return TRUE
 
 /obj/projectile/destabilizer/proc/on_parry(mob/user)
 	SIGNAL_HANDLER

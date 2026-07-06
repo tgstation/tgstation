@@ -7,12 +7,15 @@
 		In addition, at high style, you are able to swap an item in your hand with one in your backpack by <b>hitting</b> one with another."
 	icon_state = "style_meter"
 	icon = 'icons/obj/clothing/glasses.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	/// The style meter component we give.
 	var/datum/component/style/style_meter
 	/// Mutable appearance added to the attached glasses
 	var/mutable_appearance/meter_appearance
 	/// If this is multitooled, which is passed onto the component on-creation, if one doesn't currently exist
 	var/multitooled = FALSE
+	/// Stored permanent multiplier from doing mining-related tasks (e.g. vents, megafauna)
+	var/stored_permanent_multiplier = 0
 
 /obj/item/style_meter/Initialize(mapload)
 	. = ..()
@@ -49,7 +52,7 @@
 	if(carbon_wearer.glasses != interacting_with)
 		return .
 
-	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled)
+	start_meter(carbon_wearer)
 	return .
 
 /obj/item/style_meter/Moved(atom/old_loc, Dir, momentum_change)
@@ -68,7 +71,7 @@
 			QDEL_NULL(style_meter)
 		return
 
-	style_meter = equipper.AddComponent(/datum/component/style, multitooled)
+	start_meter(equipper)
 
 
 /// Signal proc for when the meter-holding glasses are dropped/unequipped
@@ -122,6 +125,37 @@
 		return
 	QDEL_NULL(style_meter)
 
+/// Create the style meter component, attach it to our wearer, register other things onto the component.
+/obj/item/style_meter/proc/start_meter(mob/living/carbon/carbon_wearer)
+	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled, stored_permanent_multiplier)
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
+	RegisterSignal(carbon_wearer, COMSIG_LIVING_ON_VENT_WIN, PROC_REF(on_vent_win))
+
+/// On a successful vent tap, adjust permanent multiplier, scaling with vent value.
+/obj/item/style_meter/proc/on_vent_win(datum/source, obj/structure/ore_vent/vent)
+	SIGNAL_HANDLER
+
+	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
+	adjust_permanent_multiplier(ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value)
+
+/// When something dies, if it's a megafauna, adjust our permanent multiplier.
+/obj/item/style_meter/proc/on_death(datum/source, mob/living/died, gibbed)
+	SIGNAL_HANDLER
+	if(!style_meter)
+		return
+	// If we have an active style meter, we're on someone's face. Use them to check if the dead megafauna could be credited to them...
+	var/mob/mob_parent = style_meter.parent
+	if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+		return
+
+	if(ismegafauna(died))
+		adjust_permanent_multiplier(ACTION_MULTIPLIER_MAJOR_KILL)
+
+/// Adjust the stored permanent multiplier. If we have an active style meter, update that style meter too.
+/obj/item/style_meter/proc/adjust_permanent_multiplier(modifier)
+	stored_permanent_multiplier += modifier
+	if(style_meter)
+		style_meter.adjust_permanent_multiplier(modifier)
 
 /atom/movable/screen/style_meter_background
 	icon_state = "style_meter_background"

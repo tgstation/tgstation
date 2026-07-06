@@ -49,7 +49,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 /datum/controller/subsystem/verb_manager/input/can_queue_verb(datum/callback/verb_callback/incoming_callback, control)
 	//make sure the incoming verb is actually something we specifically want to handle
-	if(control != "mapwindow.map")
+	if(control != SKIN_MAPWINDOW_MAP)
 		return FALSE
 
 	if(average_click_delay > MAXIMUM_CLICK_LATENCY || !..())

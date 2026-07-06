@@ -114,6 +114,8 @@
 		balloon_alert(src, "failed! retracting...")
 		QDEL_NULL(hacking_cable)
 		return FALSE
+	if(!hacking_cable?.hacking_machine)
+		return FALSE
 	var/obj/machinery/door/door = hacking_cable.hacking_machine
 	balloon_alert(src, "success")
 	door.open()

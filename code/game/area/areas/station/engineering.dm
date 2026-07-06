@@ -3,6 +3,7 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/engineering/circuit_workshop
 	name = "\improper Circuit Workshop"
@@ -15,6 +16,10 @@
 /area/station/engineering/main
 	name = "Engineering"
 	icon_state = "engine"
+
+/area/station/engineering/main/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
 
 /area/station/engineering/hallway
 	name = "Engineering Hallway"
@@ -69,15 +74,27 @@
 	icon_state = "atmos_engine"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
+/area/station/engineering/atmospherics_engine/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
+
 /area/station/engineering/lobby
 	name = "\improper Engineering Lobby"
 	icon_state = "engi_lobby"
 
 /area/station/engineering/supermatter
-	name = "\improper Supermatter Engine"
+	name = "\improper Place Somewhere Around the Supermatter" // don't use this type
 	icon_state = "engine_sm"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+
+/area/station/engineering/supermatter/engine
+	name = "\improper Supermatter Engine"
+	icon_state = "engine_sm"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/engineering/supermatter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
 
 /area/station/engineering/supermatter/waste
 	name = "\improper Supermatter Waste Chamber"
@@ -134,6 +151,7 @@
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"

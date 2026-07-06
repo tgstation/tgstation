@@ -111,8 +111,6 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
-	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
-	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
 	///does the mob have distinct limbs?(arms,legs, chest,head)
@@ -262,3 +260,7 @@
 
 	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
 	var/list/fishing_difficulty_mods_by_source
+
+	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
+	/// When greater than this distance, this mob cannot hear anything of a whisper.
+	var/eavesdrop_range = EAVESDROP_EXTRA_RANGE

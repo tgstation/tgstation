@@ -17,7 +17,7 @@
 	name = "Boxing"
 	id = MARTIALART_BOXING
 	pacifist_style = TRUE
-	help_verb = /mob/living/proc/boxing_help
+	help_verb = "Focus on your Form"
 	/// Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
 	var/honorable_boxer = TRUE
 	/// Can we perform grabs even if it would be dishonorable?
@@ -379,22 +379,20 @@
 		return FALSE
 	return ..()
 
-/mob/living/proc/boxing_help()
-	set name = "Focus on your Form"
-	set desc = "You focus on how to make the most of your boxing form."
-	set category = "Boxing"
-	to_chat(usr, "<b><i>You focus on your form, visualizing how best to throw a punch.</i></b>")
+/datum/martial_art/boxing/get_style_help()
+	. = list()
 
-	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+	. += "<b><i>You focus on your form, visualizing how best to throw a punch.</i></b>"
+	. += "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>"
 
-	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
-	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
-	to_chat(usr, "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
-	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit.</b>")
+	. += "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage."
+	. += "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead."
+	. += "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit."
+	. += "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit.</b>"
 
-	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
-
-	to_chat(usr, "<b><i>Your boxing abilities are only able to be used on other boxers.</i></b>")
+	. += "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>"
+	. += "<b><i>Your boxing abilities are only able to be used on other boxers.</i></b>"
+	return .
 
 // Boxing Variants!
 
@@ -405,25 +403,24 @@
 	name = "Evil Boxing"
 	id = MARTIALART_EVIL_BOXING
 	pacifist_style = FALSE
-	help_verb = /mob/living/proc/evil_boxing_help
+	help_verb = "Focus on Brawling"
 	honorable_boxer = FALSE
 	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRENGTH, TRAIT_STIMMED)
 
-/mob/living/proc/evil_boxing_help()
-	set name = "Focus on Brawling"
-	set desc = "You ponder how best to rearrange the faces of your enemies."
-	set category = "Evil Boxing"
-	to_chat(usr, "<b><i>You contemplate on the violence ahead, visualizing how best to throw a punch.</i></b>")
+/datum/martial_art/boxing/evil/get_style_help()
+	. = list()
 
-	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+	. += "<b><i>You contemplate on the violence ahead, visualizing how best to throw a punch.</i></b>"
+	. += "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>"
 
-	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
-	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
-	to_chat(usr, "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
-	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit.")
-	to_chat(usr, "[span_notice("Sucker Punch")]: Any combination done to a vulnerable target becomes a sucker punch. This could knock them out in one!.</b>")
+	. += "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage."
+	. += "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead."
+	. += "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit."
+	. += "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit."
+	. += "[span_notice("Sucker Punch")]: Any combination done to a vulnerable target becomes a sucker punch. This could knock them out in one!.</b>"
 
-	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
+	. += "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>"
+	return .
 
 /// Hunter Boxing: for the uncaring, completely deranged one-spacer ecological disaster.
 /// The honor check accepts boxing ready targets, OR various biotypes as valid targets. Uses a special crit effect rather than the standard one (against monsters).
@@ -432,7 +429,7 @@
 	name = "Hunter Boxing"
 	id = MARTIALART_HUNTER_BOXING
 	pacifist_style = FALSE
-	help_verb = /mob/living/proc/hunter_boxing_help
+	help_verb = "Focus on the Hunt"
 	default_damage_type = BRUTE
 	boxing_traits = list(TRAIT_BOXING_READY)
 	ignore_grab_restriction = TRUE
@@ -442,23 +439,22 @@
 	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
 	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
 
-/mob/living/proc/hunter_boxing_help()
-	set name = "Focus on the Hunt"
-	set desc = "You focus on how to most effectively punch the hell out of another endangered species."
-	set category = "Hunter Boxing"
-	to_chat(usr, "<b><i>You focus on your Fists. You focus on Adventure. You focus on the Hunt.</i></b>")
+/datum/martial_art/boxing/hunter/get_style_help()
+	. = list()
 
-	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+	. += "<b><i>You focus on your Fists. You focus on Adventure. You focus on the Hunt.</i></b>"
+	. += "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>"
 
-	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
-	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
-	to_chat(usr, "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
-	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to critically hit the target, but slows your next hit.</b>")
+	. += "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage."
+	. += "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead."
+	. += "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit."
+	. += "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to critically hit the target, but slows your next hit.</b>"
 
-	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
-	to_chat(usr, "<b><i>Stringing together effective combos restores some of your health and deals even more damage.</i></b>")
+	. += "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>"
+	. += "<b><i>Stringing together effective combos restores some of your health and deals even more damage.</i></b>"
 
-	to_chat(usr, "<b><i>Your hunter boxing abilities are only able to be used on the various flora, fauna and unnatural creatures that reside in this universe. Against normal humanoids, you are just a boxer.</i></b>")
+	. += "<b><i>Your hunter boxing abilities are only able to be used on the various flora, fauna and unnatural creatures that reside in this universe. Against normal humanoids, you are just a boxer.</i></b>"
+	return .
 
 /datum/martial_art/boxing/hunter/honor_check(mob/living/possible_boxer)
 	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))

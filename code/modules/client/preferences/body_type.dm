@@ -10,11 +10,6 @@
 /datum/preference/choiced/body_type/init_possible_values()
 	return list(USE_GENDER, MALE, FEMALE)
 
-/datum/preference/choiced/body_type/is_valid(value, datum/preferences/preferences)
-	. = ..()
-	if(. && value == USE_GENDER)
-		return gender_has_physique(preferences.read_preference(/datum/preference/choiced/gender))
-
 /datum/preference/choiced/body_type/create_informed_default_value(datum/preferences/preferences)
 	return gender_has_physique(preferences.read_preference(/datum/preference/choiced/gender)) ? USE_GENDER : FEMALE
 

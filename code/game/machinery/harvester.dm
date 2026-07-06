@@ -31,6 +31,9 @@
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
+	if(panel_open)
+		icon_state = "[base_icon_state]-o"
+		return ..()
 	if(state_open)
 		icon_state = "[base_icon_state]-open"
 		return ..()
@@ -147,31 +150,19 @@
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(..())
-		return
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		return
-	return FALSE
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool))
-		return TRUE
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
-/obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
-	. = !(state_open || panel_open) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
-	if(.)
-		tool.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
-		open_machine()
+/obj/machinery/harvester/can_crowbar_pry_open()
+	return !state_open && !panel_open
 
 /obj/machinery/harvester/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

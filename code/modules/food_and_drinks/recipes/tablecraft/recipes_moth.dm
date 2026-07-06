@@ -203,20 +203,6 @@
 	cuisine_category = CUISINE_MOTHIC
 	meal_category = MEAL_APPETIZER
 
-/datum/crafting_recipe/food/hua_mulan_congee
-	name = "Hua Mulan congee"
-	reqs = list(
-		/datum/reagent/consumable/nutriment/soup/rice_porridge = 10,
-		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 2,
-		/obj/item/reagent_containers/cup/bowl = 1,
-	)
-	result = /obj/item/food/bowled/hua_mulan_congee
-	removed_foodtypes = BREAKFAST
-	added_foodtypes = GRAIN
-	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_RICE
-
 /datum/crafting_recipe/food/fried_eggplant_polenta
 	name = "Fried eggplant and polenta"
 	reqs = list(

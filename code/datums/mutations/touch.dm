@@ -88,8 +88,8 @@
 	quality = POSITIVE
 	locked = FALSE
 	difficulty = 16
-	text_gain_indication = span_notice("Your hand feels blessed!")
-	text_lose_indication = span_notice("Your hand feels secular once more.")
+	text_gain_indication = span_notice("Your hands feel blessed!")
+	text_lose_indication = span_notice("Your hands no longer feel blessed.")
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands
 	instability = POSITIVE_INSTABILITY_MAJOR
 	energy_coeff = 1
@@ -124,7 +124,7 @@
 	hand_path = /obj/item/melee/touch_attack/lay_on_hands
 	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
 	drop_message = span_notice("You lower your hand.")
-	/// Multiplies the amount healed.
+	/// Multiplies the amount healed (or damage dealt, in the case of a smite).
 	var/heal_multiplier = 1
 	/// Multiplies the incoming pain from healing. (Halved with synchronizer chromosome)
 	var/pain_multiplier = 1
@@ -140,7 +140,7 @@
 	if(!.)
 		return .
 	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
-	if(IS_ROBOTIC_LIMB(transfer_limb))
+	if(!IS_ORGANIC_LIMB(transfer_limb))
 		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
 		return FALSE
 
@@ -255,43 +255,45 @@
 
 	// Did the transfer work?
 	. = FALSE
-	// Get the hurtguy's limbs and the mendicant's limbs to attempt a 1-1 transfer.
-	var/list/hurt_limbs = hurtguy.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + hurtguy.get_wounded_bodyparts(BODYTYPE_ORGANIC)
-	var/list/mendicant_organic_limbs = list()
-	for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts())
-		if(IS_ORGANIC_LIMB(possible_limb))
-			mendicant_organic_limbs += possible_limb
-
-	// If we have no organic available limbs just give up.
-	if(!length(mendicant_organic_limbs))
-		mendicant.balloon_alert(mendicant, "no organic limbs!")
-		return .
-	if(!length(hurt_limbs))
-		hurtguy.balloon_alert(mendicant, "no damaged organic limbs!")
-		return .
 
 	// Counter to make sure we don't take too much from separate limbs
-	var/total_damage_healed = 0
-	// Transfer damage from one limb to the mendicant's counterpart.
-	for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
+	var/healing_budget = 35 * heal_multiplier
+	// Transfer damage from each limb to the mendicant's counterpart.
+	for(var/obj/item/bodypart/affected_limb as anything in hurtguy.get_bodyparts())
+		if(!(affected_limb.bodytype & BODYTYPE_ORGANIC))
+			continue
 		var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_bodypart(affected_limb.body_zone)
-		// If the compared limb isn't organic, skip it and pick a random one.
-		if(!(mendicant_transfer_limb in mendicant_organic_limbs))
-			mendicant_transfer_limb = pick(mendicant_organic_limbs)
-
-		// Transfer at most 35 damage, by default.
-		var/brute_damage = min(affected_limb.brute_dam, 35 * heal_multiplier)
-		// no double dipping
-		var/burn_damage = min(affected_limb.burn_dam, (35 * heal_multiplier) - brute_damage)
-		if((brute_damage || burn_damage) && total_damage_healed < (35 * heal_multiplier))
-			total_damage_healed += brute_damage + burn_damage
+		var/list/mendicant_organic_limbs = list()
+		for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts(include_stumps = TRUE)) // Keeping this here in case stumps can store damage in the future
+			if(IS_ORGANIC_LIMB(possible_limb) && !IS_STUMP(possible_limb)) // No stumps are currently organic, this is futureproofing.
+				mendicant_organic_limbs += possible_limb
+		// Spread the healing between brute and burn
+		var/affected_limb_damage = affected_limb.brute_dam + affected_limb.burn_dam
+		var/brute_damage = 0
+		var/burn_damage = 0
+		if(healing_budget >= affected_limb_damage)
+			healing_budget -= affected_limb_damage
+			brute_damage = affected_limb.brute_dam
+			burn_damage = affected_limb.burn_dam
+		else
+			if(affected_limb.brute_dam > affected_limb.burn_dam)
+				burn_damage = min(affected_limb.burn_dam, healing_budget/2)
+				brute_damage = healing_budget - burn_damage
+			else
+				brute_damage = min(affected_limb.burn_dam, healing_budget/2)
+				burn_damage = healing_budget - brute_damage
+			healing_budget = 0
+		if((brute_damage || burn_damage))
 			. = TRUE
 			var/brute_taken = brute_damage * pain_multiplier
 			var/burn_taken = burn_damage * pain_multiplier
 			// Heal!
 			affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC)
 			// Hurt!
-			mendicant_transfer_limb.receive_damage(brute_taken, burn_taken, forced = TRUE, wound_bonus = CANT_WOUND)
+			if((mendicant_transfer_limb in mendicant_organic_limbs))
+				mendicant_transfer_limb.receive_damage(brute_taken, burn_taken, forced = TRUE, wound_bonus = CANT_WOUND)
+			else // spread damage if we're trying to heal a bodypart we have no organic parallel of
+				mendicant.take_overall_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC)
 
 		// Force light wounds onto you.
 		for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
@@ -300,21 +302,26 @@
 					if(prob(50 * heal_multiplier))
 						continue
 				if(WOUND_SEVERITY_CRITICAL)
-					if(heal_multiplier < 1.5) // need buffs to transfer crit wounds
+					if(heal_multiplier < 1.5 && prob(30 * heal_multiplier)) // need buffs to transfer crit wounds
 						continue
 			. = TRUE
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
+
+		if(!healing_budget)
+			break
 
 	if(!CAN_HAVE_BLOOD(mendicant) || !CAN_HAVE_BLOOD(hurtguy))
 		return .
 
 	// 10% base
 	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.10) * heal_multiplier
+	var/hurtguy_blood = hurtguy.get_blood_volume()
 	// Too little blood
-	if(hurtguy.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+	if(hurtguy_blood < BLOOD_VOLUME_NORMAL)
+		var/amount_to_transfer = min(max_blood_transfer, BLOOD_VOLUME_NORMAL - hurtguy_blood)
 		// We ignore incompatibility here.
-		var/blood_transferred = mendicant.transfer_blood_to(hurtguy, max_blood_transfer, ignore_low_blood = TRUE, ignore_incompatibility = TRUE)
+		var/blood_transferred = mendicant.transfer_blood_to(hurtguy, amount_to_transfer, ignore_low_blood = TRUE, ignore_incompatibility = TRUE)
 
 		if(!blood_transferred)
 			return
@@ -329,11 +336,12 @@
 			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
 		return
 
-	if(hurtguy.get_blood_volume() < BLOOD_VOLUME_EXCESS)
+	if(hurtguy_blood < BLOOD_VOLUME_MAXIMUM)
 		return
 
+	var/amount_to_receive = min(max_blood_transfer, hurtguy_blood - BLOOD_VOLUME_MAXIMUM)
 	// We ignore incompatibility here.
-	var/blood_received = hurtguy.transfer_blood_to(mendicant, hurtguy.get_blood_volume() - BLOOD_VOLUME_EXCESS, ignore_incompatibility = TRUE)
+	var/blood_received = hurtguy.transfer_blood_to(mendicant, amount_to_receive, ignore_incompatibility = TRUE)
 
 	if(!blood_received)
 		return
@@ -346,6 +354,8 @@
 		to_chat(mendicant, span_notice("Your veins swell and itch!"))
 	else
 		to_chat(mendicant, span_notice("Your veins swell!"))
+	if(!.)
+		mendicant.balloon_alert(hurtguy, "no damaged organic limbs!")
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)

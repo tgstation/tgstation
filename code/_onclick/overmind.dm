@@ -1,36 +1,36 @@
 // Blob Overmind Controls
 
 
-/mob/eye/blob/ClickOn(atom/A, params) //Expand blob
+/mob/eye/blob/ClickOn(atom/clicked_on, params) //Expand blob
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		MiddleClickOn(clicked_on, params)
 		return
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
-		ShiftClickOn(A)
+		ShiftClickOn(clicked_on)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		blob_click_alt(A)
+		blob_click_alt(clicked_on)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
-		CtrlClickOn(A)
+		CtrlClickOn(clicked_on)
 		return
-	var/turf/T = get_turf(A)
-	if(T)
-		expand_blob(T)
+	var/turf/target_turf = get_turf(clicked_on)
+	if(target_turf)
+		expand_blob(target_turf)
 
-/mob/eye/blob/MiddleClickOn(atom/A) //Rally spores
+/mob/eye/blob/MiddleClickOn(atom/clicked_on) //Rally spores
 	. = ..()
-	var/turf/T = get_turf(A)
-	if(T)
-		rally_spores(T)
+	var/turf/target_turf = get_turf(clicked_on)
+	if(target_turf)
+		rally_spores(target_turf)
 
-/mob/eye/blob/CtrlClickOn(atom/A) //Create a shield
-	var/turf/T = get_turf(A)
-	if(T)
-		create_shield(T)
+/mob/eye/blob/CtrlClickOn(atom/clicked_on) //Create a shield
+	var/turf/target_turf = get_turf(clicked_on)
+	if(target_turf)
+		create_shield(target_turf)
 
-/mob/eye/blob/proc/blob_click_alt(atom/A) //Remove a blob
-	var/turf/T = get_turf(A)
-	if(T)
-		remove_blob(T)
+/mob/eye/blob/proc/blob_click_alt(atom/clicked_on) //Remove a blob
+	var/turf/target_turf = get_turf(clicked_on)
+	if(target_turf)
+		remove_blob(target_turf)
