@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	pixel_w = -8
 	base_pixel_w = -8
 	status_flags = NONE
-	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING
+	mob_biotypes = MOB_ORGANIC | MOB_SKELETAL | MOB_MINING | MOB_SPECIAL
 	basic_mob_flags = DEL_ON_DEATH | IMMUNE_TO_FISTS
 	mob_size = MOB_SIZE_HUGE
 	maxHealth = 800
