@@ -1,4 +1,4 @@
-i// This is a list of turf types we dont want to assign to baseturfs unless through initialization or explicitly
+// This is a list of turf types we dont want to assign to baseturfs unless through initialization or explicitly
 GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	/turf/open/space,
 	/turf/baseturf_bottom,
