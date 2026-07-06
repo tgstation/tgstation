@@ -326,5 +326,21 @@
 
 /mob/living/basic/carp/laser
 	name = "laser space carp"
-	desc = "Champions of evil ar very responsible with their pets; they give them toys and fresh food!"
+	desc = "A successful Champions of Evil experiment in weaponized space carp technology, it now shoots LAZERS."
 	icon = 'icons/mob/simple/carp.dmi'
+	maxHealth = 40
+	health = 40
+
+	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
+
+	var/mutable_appearance/lazer_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "fricken_lazer")
+
+/mob/living/basic/carp/laser/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		projectile_type = /obj/projectile/beam/laser/evil,\
+		projectile_sound = 'sound/items/weapons/laser.ogg',\
+		cooldown_time = 2.5 SECONDS,\
+	)
+	new_overlays += lazer_overlay

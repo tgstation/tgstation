@@ -424,3 +424,12 @@
 /obj/projectile/magic/shrink/alien
 	antimagic_flags = NONE
 	shrink_time = 9 SECONDS
+
+//Steals the breath from your lungs
+/obj/projectile/beam/laser/evil
+	name = "evil laser"
+	icon_state = "evil_laser"
+	damage_type = OXY
+	wound_bonus = 0
+	speed = 1.5
+	light_color = "#bb00ff"
