@@ -902,7 +902,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/item/stack/tile/pod/light{
+/obj/item/stack/tile/mineral/plastitanium/pod/light{
 	pixel_x = 6;
 	pixel_y = -4
 	},
