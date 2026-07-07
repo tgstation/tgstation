@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - spellcheck: "Oldstation rnd notes now update properly when you mix them together."

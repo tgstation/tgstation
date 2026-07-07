@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Blood brothers once again have a 10% chance of being able to recruit a team of 3."

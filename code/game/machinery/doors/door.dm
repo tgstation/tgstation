@@ -113,7 +113,7 @@
 	if(multi_tile)
 		set_bounds()
 		set_filler()
-		update_overlays()
+		update_appearance(UPDATE_OVERLAYS)
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)

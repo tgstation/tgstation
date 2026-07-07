@@ -1,0 +1,4 @@
+author: "sergeirocks100"
+delete-after: True
+changes:
+  - spellcheck: "When untying a neckerchief, the item in question will no longer be misspelled as \"neckercheif\"."

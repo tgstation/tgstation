@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - code_imp: "Ensures some code actually updates overlays instead of return a list of them to nobody"
