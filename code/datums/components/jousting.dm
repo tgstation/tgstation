@@ -41,7 +41,7 @@
 	src.max_tile_charge = max_tile_charge
 	src.min_tile_charge = min_tile_charge
 
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_successful_attack))
@@ -50,16 +50,17 @@
 /datum/component/jousting/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
-		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_WEAPON_LABEL_READOUT,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_TRANSFORMING_ON_TRANSFORM,
 	))
 
-/datum/component/jousting/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/component/jousting/proc/label_readout(obj/item/source, list/readout)
 	SIGNAL_HANDLER
-	examine_list += span_notice("It can be used on a vehicle for jousting, dealing potential knockdowns and additional damage.")
+
+	readout += "It can be used on a vehicle for jousting, dealing potential knockdowns and additional damage."
 
 /datum/component/jousting/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER

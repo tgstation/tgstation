@@ -18,10 +18,11 @@
 	src.shock_range = shock_range
 	src.chain_limit = chain_limit
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(try_chain))
+	RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 /datum/element/chain_lightning_attack/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_WEAPON_LABEL_READOUT))
 
 /datum/element/chain_lightning_attack/proc/try_chain(obj/item/source, atom/hit, mob/user)
 	SIGNAL_HANDLER
@@ -44,3 +45,8 @@
 			continue
 		do_chain(source, other_victim, next_target, dont_hit)
 		break
+
+/datum/element/chain_lightning_attack/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It's attacks deal shock damage to a enemy and jump to other targets."

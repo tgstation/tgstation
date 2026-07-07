@@ -19,10 +19,11 @@
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(item_attack), override = TRUE)
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(item_attack_self), override = TRUE)
+		RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 /datum/element/firestacker/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_SELF))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_WEAPON_LABEL_READOUT))
 
 /datum/element/firestacker/proc/stack_on(datum/owner, mob/living/target)
 	target.adjust_fire_stacks(amount)
@@ -44,3 +45,8 @@
 
 	if(isliving(user))
 		stack_on(source, user)
+
+/datum/element/firestacker/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It builds stacks of fire on every attack against a living enemy."

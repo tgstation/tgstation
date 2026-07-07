@@ -16,6 +16,7 @@
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
+		RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 	else if(ishostile(target))
 		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
 	else
@@ -26,7 +27,7 @@
 	src.throw_gentle = throw_gentle
 
 /datum/element/knockback/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_WEAPON_LABEL_READOUT, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 	return ..()
 
 /// triggered after an item attacks something
@@ -68,3 +69,9 @@
 		throw_distance *= -1
 	var/atom/throw_target = get_edge_target_turf(throwee, throw_dir)
 	throwee.safe_throw_at(throw_target, throw_distance, 1, thrower, gentle = throw_gentle)
+
+
+/datum/element/knockback/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It knocks foes back [throw_distance] tiles when struck."

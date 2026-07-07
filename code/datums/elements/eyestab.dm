@@ -25,11 +25,12 @@
 		src.damage = damage
 
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 /datum/element/eyestab/Detach(datum/source, ...)
 	. = ..()
 
-	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
+	UnregisterSignal(source, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_WEAPON_LABEL_READOUT))
 
 /datum/element/eyestab/proc/on_item_attack(datum/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -129,6 +130,11 @@
 			eyes.set_organ_damage(eyes.maxHealth)
 		// Also cause some temp blindness, so that they're still blind even if they get healed
 		target.adjust_temp_blindness_up_to(20 SECONDS, 1 MINUTES)
+
+/datum/element/eyestab/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It deals extra damage and special effects when targeting eyes."
 
 #undef CLUMSY_ATTACK_SELF_CHANCE
 #undef EYESTAB_BLEEDING_THRESHOLD

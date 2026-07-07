@@ -15,3 +15,6 @@
 
 /// The number of hits required to crit a target
 #define HITS_TO_CRIT(damage) round(100 / (damage), 0.1)
+
+/// Force value where we consider it to be a useful weapon to display information about
+#define REAL_WEAPON_CUTOFF 5

@@ -33,9 +33,10 @@
 		return
 
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY , PROC_REF(try_kneecap_target))
+	RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 /datum/element/kneecapping/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY)
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ITEM_WEAPON_LABEL_READOUT))
 
 	return ..()
 
@@ -91,3 +92,8 @@
 	log_combat(attacker, target, "broke the kneecaps of", weapon)
 	attacker.do_attack_animation(target, used_item = weapon)
 	playsound(source = weapon, soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)
+
+/datum/element/kneecapping/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It can be used to kneecap immobilized foes."

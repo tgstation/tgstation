@@ -20,6 +20,7 @@
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	offensive_notes = "It can be used to block projectile attacks and has a custom block behavoir."
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon

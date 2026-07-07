@@ -38,7 +38,7 @@
 /datum/element/weapon_description/proc/warning_label(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	if(item.force >= 5 || item.throwforce >= 5 || item.override_notes || item.offensive_notes || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
+	if(item.force >= REAL_WEAPON_CUTOFF || item.throwforce >= REAL_WEAPON_CUTOFF || item.override_notes || item.offensive_notes || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
 		examine_texts += span_notice("<a href='byond://?src=[REF(item)];examine=1'>See combat information.</a>")
 
 /**
@@ -73,10 +73,8 @@
 
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
-		if (source.get_sharpness() & SHARP_EDGED)
-			readout += "It's sharp and could cause bleeding wounds."
-		if (source.get_sharpness() & SHARP_POINTY)
-			readout += "It's pointy and could cause piercing wounds."
+		if(source.damtype)
+			readout += "By default, it deals [source.damtype] damage."
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
@@ -87,8 +85,18 @@
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
 		else
 			readout += "It does not deal noticeable throwing damage."
+		if(source.reach != 1)
+			readout += "It has a range of [span_warning("[source.reach]")] tiles."
+		if(source.get_sharpness() & SHARP_EDGED)
+			readout += "It's sharp and could cause bleeding wounds."
+		if(source.get_sharpness() & SHARP_POINTY)
+			readout += "It's pointy and could cause piercing wounds."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
 			readout += "It has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability and [span_warning("[weapon_tag_convert(source.block_chance)]")] blocking capability."
+		if(source.wound_bonus || source.exposed_wound_bonus)
+			readout += "It is [span_warning(wound_bonus_readable(source.wound_bonus))] at wounding armor but [span_warning(wound_bonus_readable(source.exposed_wound_bonus))] at wounding flesh."
+		if(source.demolition_mod != 1)
+			readout += "It has a [span_tooltip("demolition modifiers affect the damamge dealt to machines and other objects", "demolition modifier")] of [span_warning("[source.demolition_mod * 100]%")]."
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes
@@ -122,5 +130,24 @@
 			return "ABOVE-AVERAGE"
 		if(76 to INFINITY)
 			return "EXCELLENT"
+		else
+			return "WEIRD"
+
+/datum/element/weapon_description/proc/wound_bonus_readable(value)
+	switch(value)
+		if(-INFINITY to -50)
+			return "ABSYMAL DOGSHIT"
+		if(-49 to -25)
+			return "TERRIBLE"
+		if(-24 to -5)
+			return "WEAK"
+		if(-4 to 4)
+			return "AVERAGE"
+		if(5 to 25)
+			return "ABOVE-AVERAGE"
+		if(26 to 50)
+			return "EXCELLENT"
+		if(51 to INFINITY)
+			return "INSANE"
 		else
 			return "WEIRD"

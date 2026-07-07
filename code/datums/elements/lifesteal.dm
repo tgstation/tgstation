@@ -15,9 +15,10 @@
 	src.flat_heal = flat_heal
 	target.AddElementTrait(TRAIT_ON_HIT_EFFECT, REF(src), /datum/element/on_hit_effect)
 	RegisterSignal(target, COMSIG_ON_HIT_EFFECT, PROC_REF(do_lifesteal))
+	RegisterSignal(target, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 /datum/element/lifesteal/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ON_HIT_EFFECT)
+	UnregisterSignal(source, list(COMSIG_ON_HIT_EFFECT, COMSIG_ITEM_WEAPON_LABEL_READOUT))
 	REMOVE_TRAIT(source, TRAIT_ON_HIT_EFFECT, REF(src))
 	return ..()
 
@@ -28,3 +29,8 @@
 		var/mob/living/damaging = damage_target
 		if(damaging.stat != DEAD)
 			healing.heal_ordered_damage(flat_heal, damage_heal_order)
+
+/datum/element/lifesteal/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	readout += "It steals health and grants it to yourself against any living foe."

@@ -151,6 +151,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, PROC_REF(on_materials_updated))
 	RegisterSignal(parent, COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_APPLY, PROC_REF(on_material_apply))
 	RegisterSignal(parent, COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_REMOVE, PROC_REF(on_material_remove))
+	RegisterSignal(parent, COMSIG_ITEM_WEAPON_LABEL_READOUT, PROC_REF(label_readout))
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
@@ -166,6 +167,7 @@
 		COMSIG_ITEM_REMOVE_FANTASY_BONUSES,
 		COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS,
 		COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS,
+		COMSIG_ITEM_WEAPON_LABEL_READOUT,
 	))
 
 /// Triggered on equip of the item containing the component
@@ -448,6 +450,18 @@
 		force_unwielded /= GET_MATERIAL_MODIFIER(source.get_material_force_modifier(material, source.sharpness), multiplier)
 	else
 		force_wielded /= GET_MATERIAL_MODIFIER(source.get_material_force_modifier(material, source.sharpness), multiplier)
+
+/datum/component/two_handed/proc/label_readout(obj/item/source, list/readout)
+	SIGNAL_HANDLER
+
+	var/list/our_info = list()
+	if(!wielded) // Not currently weilded. Lets remind them that exists.
+		our_info += "It [require_twohands ? "HAS to be" : "should be"] wielded to properly utilize."
+	if(force_wielded > force_unwielded)
+		our_info += "It deals extra damage when wielded."
+
+	if(our_info.len)
+		readout += jointext(our_info, " ")
 
 /**
  * The offhand dummy item for two handed items
