@@ -240,7 +240,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// If, when glorf'd, we will choke on this cig forever
 	var/choke_forever = FALSE
 	/// When choking, what is the maximum amount of time we COULD choke for
-	var/choke_time_max = 30 SECONDS // I am mean
+	var/choke_time_max = 20 SECONDS // I am mean //i am not
 	/// The particle effect of the smoke rising out of the cigarette when lit
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/cig_smoke
 	/// The particle effect of the smoke rising out of the mob when...smoked
@@ -317,7 +317,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/proc/on_forcesay(mob/living/source)
 	SIGNAL_HANDLER
-	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
+	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(14 SECONDS, choke_time_max))
 
 /obj/item/cigarette/proc/on_mob_dir_change(mob/living/source, old_dir, new_dir)
 	SIGNAL_HANDLER
@@ -745,7 +745,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 4 MINUTES
 	chem_volume = 50
 	list_reagents = null
-	choke_time_max = 40 SECONDS
+	choke_time_max = 30 SECONDS
 
 /obj/item/cigarette/rollie/Initialize(mapload)
 	name = pick(list(
@@ -852,7 +852,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 18 MINUTES
 	chem_volume = 65
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
-	choke_time_max = 40 SECONDS
+	choke_time_max = 30 SECONDS
 	lung_harm = 2
 
 /obj/item/cigarette/dart/Initialize(mapload)
@@ -880,7 +880,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 11 MINUTES
 	chem_volume = 40
 	list_reagents = list(/datum/reagent/drug/nicotine = 25)
-	choke_time_max = 40 SECONDS
+	choke_time_max = 30 SECONDS
 
 /obj/item/cigarette/cigar/premium
 	name = "premium cigar"

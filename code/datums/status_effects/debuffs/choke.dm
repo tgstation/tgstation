@@ -211,13 +211,9 @@
 
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
 	owner.visible_message(span_green("[victim] vomits up \the[choking_on]. [victim.p_theyre()] gonna make it!"), \
-			span_green("You vomit up that accursed blockage. YOU CAN BREATHE! The broken chest is a hell of a price to pay."))
-	if(iscarbon(victim))
-		var/mob/living/carbon/carbon_victim = victim
-		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
-		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
+			span_green("You vomit up that accursed blockage. YOU CAN BREATHE!")) //if your heimlich breaks someone's ribs, you are doing it wrong
 
-	playsound(owner, 'sound/mobs/humanoids/human/gag_vomit/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
+	playsound(owner, 'sound/mobs/humanoids/human/gag_vomit/gag_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
 /datum/status_effect/choke/proc/mirror_dir(atom/source, old_dir, new_dir)
