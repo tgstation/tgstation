@@ -114,6 +114,3 @@ jobs:
       - name: Run TGUI Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/build/build.sh --ci lint tgui-test
-      - name: Build TGFont
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/build/build.sh --ci tg-font
