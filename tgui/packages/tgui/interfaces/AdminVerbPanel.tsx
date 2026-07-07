@@ -9,7 +9,6 @@ import {
   Section,
   Stack,
   Table,
-  Tabs,
   TextArea,
 } from 'tgui-core/components';
 
@@ -216,7 +215,9 @@ export function AdminVerbPanel() {
 
   const primitiveArgs = selectedVerb?.arguments.filter(isPrimitiveArg) ?? [];
 
-  const [selectedCategory, setSelectedCategoryRaw] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategoryRaw] = useState<string | null>(
+    null,
+  );
   const setSelectedCategory = (cat: string | null) => {
     setSelectedCategoryRaw(cat);
     storage.set(STORAGE_SELECTED_CATEGORY, cat);
@@ -669,7 +670,7 @@ function TypepathInput(props: TypepathInputProps) {
   };
 
   const selectPath = (path: string) => {
-    onChange(path + '/');
+    onChange(`${path}/`);
     if (path !== lastRequested) {
       setLastRequested(path);
       act('request_typepaths', { parent: path });

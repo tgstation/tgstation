@@ -411,9 +411,7 @@ GAME_VERB_DESC(/client, policy, "Show Policy", "Show special server rules relate
 	browser.set_content(policytext.Join(""))
 	browser.open()
 
-/client/verb/fix_stat_panel()
-	set name = "Fix Stat Panel"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
 	init_verbs()
 
 GAME_VERB_PROC_DESC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")

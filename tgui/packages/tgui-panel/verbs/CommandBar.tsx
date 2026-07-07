@@ -46,7 +46,11 @@ function isTextArg(arg: VerbArg): boolean {
 }
 
 function isListArg(arg: VerbArg): boolean {
-  return arg.source === ARG_SOURCE_LIST && Array.isArray(arg.options) && arg.options.length > 0;
+  return (
+    arg.source === ARG_SOURCE_LIST &&
+    Array.isArray(arg.options) &&
+    arg.options.length > 0
+  );
 }
 
 function parseArgs(raw: string): string[] {
@@ -99,7 +103,7 @@ function serializeInput(
     const arg = verb.args[i];
     return arg && isTextArg(arg) ? `"${a}"` : a;
   });
-  return kebab + ' ' + parts.join(' ') + suffix;
+  return `${kebab} ${parts.join(' ')}${suffix}`;
 }
 
 function suffixForArg(arg: VerbArg | undefined): string {
@@ -200,7 +204,13 @@ function useSuggestions(
         ? targetSuggestions
         : verbSuggestions;
 
-  return { verbSuggestions, typepathSuggestions, targetSuggestions, listSuggestions, allSuggestions };
+  return {
+    verbSuggestions,
+    typepathSuggestions,
+    targetSuggestions,
+    listSuggestions,
+    allSuggestions,
+  };
 }
 
 export function CommandBar() {
@@ -306,11 +316,10 @@ export function CommandBar() {
 
   const selectTypepath = (path: string) => {
     Byond.sendMessage('verbs/request_typepaths', { parent: path });
-    setLastTypepathRequest(path + '/');
+    setLastTypepathRequest(`${path}/`);
     if (!selectedVerb) return;
-    const prefix =
-      filledArgs.length > 0 ? filledArgs.join(' ') + ' ' : '';
-    setInput(toKebab(selectedVerb.name) + ' ' + prefix + path + '/');
+    const prefix = filledArgs.length > 0 ? `${filledArgs.join(' ')} ` : '';
+    setInput(`${toKebab(selectedVerb.name)} ${prefix}${path}/`);
     setSelectedIndex(0);
   };
 
@@ -337,7 +346,13 @@ export function CommandBar() {
 
   const hasNoInput = () => {
     if (!selectedVerb && !input) return true;
-    if (mode !== 'Command' && selectedVerb && parsedArgs.length <= filledArgs.length && !currentToken) return true;
+    if (
+      mode !== 'Command' &&
+      selectedVerb &&
+      parsedArgs.length <= filledArgs.length &&
+      !currentToken
+    )
+      return true;
     return false;
   };
 
@@ -355,7 +370,9 @@ export function CommandBar() {
       return true;
     }
     if (selectedVerb && targetSuggestions.length > 0) {
-      fillArg((targetSuggestions[selectedIndex] as { name: string; ref: string }).ref);
+      fillArg(
+        (targetSuggestions[selectedIndex] as { name: string; ref: string }).ref,
+      );
       return true;
     }
     return false;
@@ -402,7 +419,10 @@ export function CommandBar() {
         if (!selectedVerb && verbSuggestions.length > 0) {
           const verb = verbSuggestions[selectedIndex];
           if (verb.args.length === 0) {
-            Byond.sendMessage('verbs/invoke', { verb_type: verb.type, args: {} });
+            Byond.sendMessage('verbs/invoke', {
+              verb_type: verb.type,
+              args: {},
+            });
             dismissOrReset();
           } else {
             selectVerb(verb);
@@ -427,7 +447,7 @@ export function CommandBar() {
     }
 
     if (selectedVerb) {
-      const verbPrefix = toKebab(selectedVerb.name) + ' ';
+      const verbPrefix = `${toKebab(selectedVerb.name)} `;
       if (!value.startsWith(verbPrefix)) {
         setSelectedVerb(null);
         setFilledArgs([]);
@@ -449,7 +469,9 @@ export function CommandBar() {
         setFilledArgs(newFilled);
         const nextArg = verbArgs[newFilled.length];
         if (nextArg) {
-          setInput(serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)));
+          setInput(
+            serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)),
+          );
         }
       }
     }
@@ -520,17 +542,17 @@ export function CommandBar() {
                       </div>
                     ))
                   : targetSuggestions.map((target, i) => (
-                    <div
-                      key={target.ref}
-                      className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
-                      onMouseEnter={() => setSelectedIndex(i)}
-                      onClick={() => fillArg(target.ref)}
-                    >
-                      <span className="CommandBar__target">
-                        {target.name}
-                      </span>
-                    </div>
-                  ))}
+                      <div
+                        key={target.ref}
+                        className={`CommandBar__suggestion${i === selectedIndex ? ' CommandBar__suggestion--selected' : ''}`}
+                        onMouseEnter={() => setSelectedIndex(i)}
+                        onClick={() => fillArg(target.ref)}
+                      >
+                        <span className="CommandBar__target">
+                          {target.name}
+                        </span>
+                      </div>
+                    ))}
           </div>
         )}
         <input
