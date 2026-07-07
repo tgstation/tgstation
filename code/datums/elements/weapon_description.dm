@@ -75,16 +75,12 @@
 	if(!source.override_notes)
 		if(source.damtype)
 			readout += "By default, it deals [source.damtype] damage."
-		// Make sure not to divide by 0 on accident
-		if(source.force > 0)
-			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
-		else
-			readout += "It does not deal noticeable melee damage."
 
-		if(source.throwforce > 0)
+		if(source.force > REAL_WEAPON_CUTOFF)
+			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
+		if(source.throwforce > REAL_WEAPON_CUTOFF)
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
-		else
-			readout += "It does not deal noticeable throwing damage."
+
 		if(source.reach != 1)
 			readout += "It has a range of [span_warning("[source.reach]")] tiles."
 		if(source.get_sharpness() & SHARP_EDGED)
