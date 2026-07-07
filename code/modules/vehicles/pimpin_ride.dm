@@ -181,6 +181,7 @@
 	icon = 'icons/obj/service/janicart_upgrade.dmi'
 	icon_state = "janicart_upgrade"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// The greyscale config for the on-cart installed upgrade overlay
 	var/overlay_greyscale_config = /datum/greyscale_config/janicart_upgrade/installed
 

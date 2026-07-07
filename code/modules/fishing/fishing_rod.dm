@@ -11,6 +11,7 @@
 	inhand_y_dimension = 64
 	force = 8
 	w_class = WEIGHT_CLASS_HUGE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	/// How far can you cast this
 	var/cast_range = 3
@@ -508,11 +509,11 @@
 			bait_state = "battery_overlay"
 		. += bait_state
 
-/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
-	. += get_fishing_worn_overlays(standing, isinhands, icon_file)
+	. += get_fishing_worn_overlays(standing, isinhands, icon_file, bodyshape)
 
-/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
 	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
@@ -740,7 +741,7 @@
 		return list()
 	return ..()
 
-/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/fishing_rod/telescopic/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return list()
 	return ..()
@@ -804,6 +805,7 @@
 	bait_speed_mult = 1.1
 	deceleration_mult = 1.1
 	gravity_mult = 1.2
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()

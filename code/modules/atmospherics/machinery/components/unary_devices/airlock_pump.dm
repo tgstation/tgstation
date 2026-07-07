@@ -54,7 +54,7 @@
 	///Rate of the pump to remove gases from the air
 	var/volume_rate = 2000
 	///The start time of the current cycle to calculate cycle duration
-	var/cycle_start_time
+	var/emergency_stop_timer
 	///Max duration of cycle, after which the pump will unlock the airlocks with a warning
 	var/cycle_timeout = 10 SECONDS
 	///List of the turfs adjacent to the pump for faster cycling and avoiding wind
@@ -182,10 +182,10 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
-
-	if(!powered())
-		stop_cycle("No power. Cycle aborted.", unbolt_only = TRUE)
-		return //Couldn't complete the cycle due to power outage
+	if(is_operational)
+		stack_trace("Airlock pump on but not operational, it should've been cancelled by on_set_is_operational")
+		stop_cycle(null, unbolt_only = TRUE)
+		return
 
 	var/turf/location = get_turf(loc)
 	if(isclosedturf(location))
@@ -194,10 +194,6 @@
 	if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
 		check_turfs()
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
-
-	if(world.time - cycle_start_time > cycle_timeout)
-		stop_cycle("Cycling timed out, bolts unlocked.", unbolt_only = TRUE)
-		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
 	var/datum/gas_mixture/tile_air = loc.return_air()
@@ -287,6 +283,11 @@
 	else if(airlock in internal_airlocks)
 		start_cycle(ATMOS_DIRECTION_RELEASING, airlock)
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/emergency_stop()
+	if(!on || airlocks_animating || !is_operational)
+		return // Already done
+
+	stop_cycle("Cycling timed out, bolts unlocked.", unbolt_only = TRUE)
 
 ///Start decompression or pressurization cycle depending on the passed direction
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction, obj/machinery/door/airlock/source_airlock = null)
@@ -303,7 +304,7 @@
 	airlocks_animating = FALSE
 
 	set_on(TRUE)
-	cycle_start_time = world.time
+	emergency_stop_timer = addtimer(CALLBACK(src, PROC_REF(emergency_stop)), cycle_timeout, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_DELETE_ME)
 
 	var/turf/local_turf = get_turf(src)
 	var/tile_air_pressure = max(0, local_turf.return_air().return_pressure())
@@ -343,6 +344,7 @@
 	if(!on)
 		return FALSE
 	set_on(FALSE)
+	deltimer(emergency_stop_timer)
 
 	// In case we can open both sides safe_dock will do it for us
 	// it also handles its own messages. If we can't - procceed
@@ -508,7 +510,6 @@
 		else if(open_airlock_on_cycle)
 			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
 
-	cycle_timeout *= round((internal_airlocks.len + external_airlocks.len) / 2)
 	cycling_set_up = TRUE
 	if(can_unwrench)
 		say("Cycling setup complete.")
@@ -585,9 +586,9 @@
 		UnregisterSignal(airlock, COMSIG_QDELETING)
 		airlock.unbolt()
 
+	deltimer(emergency_stop_timer)
 	external_airlocks = list()
 	internal_airlocks = list()
-	cycle_timeout = initial(cycle_timeout)
 	cycling_set_up = FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/relaymove(mob/living/user, direction)
@@ -605,6 +606,9 @@
 		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 			airlock.unbolt()
 		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
+		deltimer(emergency_stop_timer)
+		set_on(FALSE)
+
 	else if(!was_operational && is_operational)
 		// upon regaining power, re-bolt relevant airlocks
 		for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)

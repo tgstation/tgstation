@@ -143,7 +143,9 @@
 #define COMSIG_ITEM_ON_JUICE "on_juice"
 ///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers) when an object is used as compost: (mob/user)
 #define COMSIG_ITEM_ON_COMPOSTED "on_composted"
-///Called when an item is dried by a drying rack
+///Called when an item has finished being deied by a drying rack
+#define COMSIG_ITEM_FINISH_DRYING "item_finish_drying"
+///Called after we're done applying the dried status to the item with the dryable element
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
@@ -222,7 +224,7 @@
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
 /// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, list/modifiers)
 #define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
-/// Called by /obj/item/proc/worn_overlays(list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/// Called by /obj/item/proc/worn_overlays(list/overlays, mutable_appearance/standing, isinhands, icon_file, bodyshape)
 #define COMSIG_ITEM_GET_WORN_OVERLAYS "item_get_worn_overlays"
 /// Called by /obj/item/proc/separate_worn_overlays(list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 #define COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS "item_get_separate_worn_overlays"
@@ -595,6 +597,11 @@
 /// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_CLOSED "wings_closed"
 
+/// Sent from /obj/item/clothing/shoes/bhop/rocket/jet, specifically it's toggle action /datum/action/item_action/toggle_flight
+#define COMSIG_JETBOOTS_ACTIVE "jets_on"
+/// Sent from /obj/item/clothing/shoes/bhop/rocket/jet, specifically it's toggle action /datum/action/item_action/toggle_flight
+#define COMSIG_JETBOOTS_INACTIVE "jets_off"
+
 /// Sent from /obj/item/assembly/on_attach(): (atom/holder)
 #define COMSIG_ASSEMBLY_ATTACHED "assembly_attached"
 
@@ -674,6 +681,11 @@
 /// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
 #define COMSIG_VENDING_DISPENSED "vending_dispensed"
 
+/// From /obj/machinery/vending/vend(): (mob/user, obj/machinery/vending_machine, obj/item/vended_item)
+#define COMSIG_MOB_VENDING_PURCHASE "mob_vending_purchase"
+	/// Stops the mob from picking up whatevr they just purchased (it just goes to the floor)
+	#define VENDING_NO_PICKUP (1<<0)
+
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
 
@@ -687,3 +699,8 @@
 #define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"
 	/// Return to stop the cuffing from happening.
 	#define BLOCK_ITEM_CUFF (1<<0)
+
+/// Sent from /obj/machinery/door/airlock/close, to a movable blocking it from closing: (obj/machinery/door/being_blocked, force_close, force_crush)
+#define COMSIG_MOVABLE_BLOCKING_AIRLOCK "movable_blocking_airlock"
+	/// Forces the airlock to crush whatever's blocking it even if it normally wouldn't
+	#define AIRLOCK_BLOCK_FORCE_CRUSH (1<<0)

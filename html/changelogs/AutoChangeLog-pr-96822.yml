@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Custom material floors and walls of a shuttle are no longer lost on departure or arrival."

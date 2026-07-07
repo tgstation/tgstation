@@ -143,6 +143,7 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The installed power cell.
 	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
@@ -260,7 +261,7 @@
 				balloon_alert(user, "frequency set")
 				. = ITEM_INTERACT_SUCCESS
 
-/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!QDELETED(mod_link.link_call))
 		. += mutable_appearance('icons/mob/clothing/neck.dmi', "modlink_active")

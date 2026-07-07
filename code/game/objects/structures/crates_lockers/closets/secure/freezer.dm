@@ -57,6 +57,7 @@
 		new /obj/item/reagent_containers/condiment/flour(src)
 	new /obj/item/reagent_containers/condiment/rice(src)
 	new /obj/item/reagent_containers/condiment/sugar(src)
+	new /obj/effect/spawner/holiday/powdered_ingredient(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/all_access
 	req_access = null
@@ -73,6 +74,7 @@
 		new /obj/item/reagent_containers/condiment/soymilk(src)
 	for(var/i in 1 to 2)
 		new /obj/item/storage/fancy/egg_box(src)
+	new /obj/effect/spawner/holiday/liquid_ingredient(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
 	req_access = null
@@ -81,10 +83,16 @@
 	name = "meat fridge"
 	req_access = list(ACCESS_KITCHEN)
 
+/obj/structure/closet/secure_closet/freezer/meat/update_name()
+	name = check_holidays(VEGAN_DAY) ? "vegan fridge" : "meat fridge"
+	return ..()
+
 /obj/structure/closet/secure_closet/freezer/meat/PopulateContents()
 	..()
-	for(var/i in 1 to 4)
-		new /obj/item/food/meat/slab/monkey(src)
+	if(!check_holidays(VEGAN_DAY))
+		for(var/i in 1 to 4)
+			new /obj/item/food/meat/slab/monkey(src)
+	new /obj/effect/spawner/holiday/meat_ingredient(src) //this contains holiday specials (and vegan day stuff)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
 	locked = FALSE
@@ -112,6 +120,7 @@
 		new /obj/item/reagent_containers/condiment/soymilk(src)
 	for(var/i in 1 to 2)
 		new /obj/item/storage/fancy/egg_box(src)
+	new /obj/effect/spawner/holiday/liquid_ingredient(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge/all_access
 	req_access = null

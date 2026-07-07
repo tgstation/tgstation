@@ -15,6 +15,7 @@
 	pickup_sound = 'sound/items/handling/pill_bottle_pickup.ogg'
 	drop_sound = 'sound/items/handling/pill_bottle_place.ogg'
 	storage_type = /datum/storage/pillbottle
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	///Number of pills to spawn
 	VAR_PROTECTED/spawn_count

@@ -161,7 +161,7 @@
 	tip_overlay.color = tip_material.color
 	. += tip_overlay
 
-/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
 		return

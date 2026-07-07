@@ -6,8 +6,6 @@
 	var/atom/cook_result
 	///Amount of time required to cook the food
 	var/required_cook_time = 2 MINUTES
-	///Is this a positive grill result?
-	var/positive_result = TRUE
 	///Time spent cooking so far
 	var/current_cook_time = 0
 	///Do we use the large steam sprite?
@@ -30,7 +28,8 @@
 
 	src.cook_result = cook_result
 	src.required_cook_time = required_cook_time
-	src.positive_result = positive_result
+	if(positive_result)
+		ADD_TRAIT(parent, TRAIT_GRILLABLE, REF(src))
 	src.use_large_steam_sprite = use_large_steam_sprite
 	src.added_reagents = added_reagents
 
@@ -76,7 +75,9 @@
 	if(required_cook_time)
 		src.required_cook_time = required_cook_time
 	if(positive_result)
-		src.positive_result = positive_result
+		ADD_TRAIT(parent, TRAIT_GRILLABLE, REF(src))
+	else
+		REMOVE_TRAIT(parent, TRAIT_GRILLABLE, REF(src))
 	if(use_large_steam_sprite)
 		src.use_large_steam_sprite = use_large_steam_sprite
 
@@ -155,7 +156,7 @@
 			LAZYADD(grilled_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 		grilled_result.set_custom_materials(original_object.custom_materials)
 
-	if(IS_EDIBLE(grilled_result) && positive_result)
+	if(IS_EDIBLE(grilled_result) && HAS_TRAIT(parent, TRAIT_GRILLABLE))
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
 	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
 	if(grilled_result.reagents && original_object.reagents)
@@ -169,7 +170,7 @@
 	if(who_placed_us)
 		ADD_TRAIT(grilled_result, TRAIT_HANDMADE, who_placed_us)
 
-	grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
+	grill_source.visible_message("<span class='[HAS_TRAIT(parent, TRAIT_GRILLABLE) ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 	qdel(parent)
@@ -179,14 +180,14 @@
 	SIGNAL_HANDLER
 
 	if(!current_cook_time) //Not grilled yet
-		if(positive_result)
+		if(HAS_TRAIT(parent, TRAIT_GRILLABLE))
 			if(initial(cook_result.name) == PLURAL)
 				examine_list += span_notice("[parent] can be [span_bold("grilled")] into some [initial(cook_result.name)].")
 			else
 				examine_list += span_notice("[parent] can be [span_bold("grilled")] into \a [initial(cook_result.name)].")
 		return
 
-	if(positive_result)
+	if(HAS_TRAIT(parent, TRAIT_GRILLABLE))
 		if(current_cook_time <= required_cook_time * 0.75)
 			examine_list += span_notice("[parent] probably needs to be cooked a bit longer!")
 		else if(current_cook_time <= required_cook_time)

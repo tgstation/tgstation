@@ -100,7 +100,7 @@
 	switch (ore_path::vein_type)
 		if (ORE_VEIN_CLUSTER)
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
-				if (rock.mineral_type)
+				if (rock.mineral_type || istype(rock, /turf/closed/mineral/gibtonite))
 					continue
 
 				var/spread_prob = 100
@@ -116,7 +116,7 @@
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
 				if (rock.base_icon_state != base_icon_state && prob(50))
 					continue
-				if (!rock.mineral_type)
+				if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 					rocks += rock
 
 			for (var/i in 1 to rand(min_vein_size ** 2, max_vein_size ** 2))
@@ -130,7 +130,7 @@
 			for (var/turf/closed/mineral/rock in range(vein_size, src))
 				if (rock.base_icon_state != base_icon_state && prob(50))
 					continue
-				if (!rock.mineral_type)
+				if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 					rocks += rock
 
 			if (!length(rocks))
@@ -165,7 +165,7 @@
 				for (var/turf/closed/mineral/rock in range(vein_size, src))
 					if (rock.base_icon_state != base_icon_state && prob(50))
 						continue
-					if (!rock.mineral_type)
+					if (!rock.mineral_type && !istype(rock, /turf/closed/mineral/gibtonite))
 						rocks += rock
 
 				if (!length(rocks))
@@ -178,7 +178,7 @@
 /turf/closed/mineral/proc/change_ore(ore_type, random = TRUE)
 	if (ispath(ore_type, /obj/item/boulder))
 		scan_state = "rock_boulder" // Yes even the lowly boulder has a scan state
-		spawned_boulder = /obj/item/boulder/gulag_expanded
+		spawned_boulder = /obj/item/boulder/gulag
 		return
 
 	if (random)
@@ -727,8 +727,12 @@
 
 /turf/closed/mineral/random/labormineral/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag = 165,
-		/turf/closed/mineral/gibtonite = 2,
+		/obj/item/boulder/gulag = 30,
+		/obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/iron = 25,
+		/obj/item/stack/ore/plasma = 20,
+		/obj/item/stack/ore/silver = 20,
+		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
 /turf/closed/mineral/random/labormineral/volcanic
@@ -737,12 +741,6 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
-
-/turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
-	return list(
-		/obj/item/boulder/gulag_expanded = 166,
-		/turf/closed/mineral/gibtonite/volcanic = 2,
-	)
 
 // Subtypes for mappers placing ores manually.
 /turf/closed/mineral/random/labormineral/ice
@@ -760,7 +758,11 @@
 
 /turf/closed/mineral/random/labormineral/ice/mineral_chances()
 	return list(
-		/obj/item/boulder/gulag = 168,
+		/obj/item/boulder/gulag = 30,
+		/obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/iron = 25,
+		/obj/item/stack/ore/plasma = 20,
+		/obj/item/stack/ore/silver = 20,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
