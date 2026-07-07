@@ -165,11 +165,6 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 
-/obj/item/gun/ballistic/Destroy()
-	QDEL_NULL(magazine)
-	QDEL_NULL(suppressor)
-	return ..()
-
 /obj/item/gun/ballistic/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	var/replace_chamber = TRUE
@@ -210,9 +205,11 @@
 	if(gone == suppressor)
 		clear_suppressor()
 	if(gone == magazine)
-		magazine.update_appearance()
+		if(!QDELETED(magazine))
+			magazine.update_appearance()
 		magazine = null
-		update_appearance()
+		if(!QDELETED(src))
+			update_appearance()
 
 /obj/item/gun/ballistic/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
@@ -645,8 +642,6 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
-	if(!can_unsuppress)
-		return
 	suppressed = SUPPRESSED_NONE
 	if(suppressor)
 		update_weight_class(w_class - suppressor.w_class)
