@@ -189,7 +189,7 @@
 
 /datum/crafting_recipe/pipegun
 	name = "Pipegun"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/empty
 	reqs = list(
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/pipe = 2,
@@ -203,7 +203,7 @@
 
 /datum/crafting_recipe/pipepistol
 	name = "Pipe Pistol"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/empty
 	reqs = list(
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/pipe = 1,
@@ -249,7 +249,7 @@
 
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime/empty
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
 		/obj/item/food/deadmouse = 1,
