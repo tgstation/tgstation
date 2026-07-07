@@ -76,9 +76,9 @@
 		if(source.damtype)
 			readout += "By default, it deals [source.damtype] damage."
 
-		if(source.force > REAL_WEAPON_CUTOFF)
+		if(source.force >= REAL_WEAPON_CUTOFF)
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
-		if(source.throwforce > REAL_WEAPON_CUTOFF)
+		if(source.throwforce >= REAL_WEAPON_CUTOFF)
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
 
 		if(source.reach != 1)
