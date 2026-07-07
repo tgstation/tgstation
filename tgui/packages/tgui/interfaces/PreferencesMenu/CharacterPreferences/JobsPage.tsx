@@ -289,16 +289,12 @@ function JobRow(props: JobRowProps) {
             {assignedProfileSlot !== null && (
               <Stack.Item grow>
                 <Stack align="center">
-                  <Stack.Item ml={1}>
-                    ↳{' '}
-                    <span
-                      style={{
-                        fontStyle: 'italic',
-                        color: 'var(--color-secondary)',
-                      }}
-                    >
-                      {character_profiles[assignedProfileSlot - 1]}
-                    </span>
+                  <Stack.Item
+                    ml={1}
+                    color="var(--color-secondary)"
+                    fontSize="0.95em"
+                  >
+                    ↳ <i>{character_profiles[assignedProfileSlot - 1]}</i>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -432,13 +428,14 @@ function CharacterSection(props: CharacterSectionsProps) {
       placement="bottom-end"
       content={
         <Box
+          // Dumb way to copy dropdown styling but it works I guess
           style={{
             boxShadow: 'var(--dropdown-menu-blur)',
             backgroundColor: 'var(--dropdown-menu-background)',
             border: 'var(--dropdown-menu-border)',
             borderRadius: 'var(--dropdown-menu-border-radius)',
           }}
-          width="80%"
+          width="75%"
         >
           <Stack vertical p={1}>
             <Stack.Item textAlign="center">
@@ -468,8 +465,11 @@ function CharacterSection(props: CharacterSectionsProps) {
         </Box>
       }
     >
-      <Button onClick={() => setCharacterFloating(!characterFloating)}>
-        {characterFloating ? 'Hide Characters' : 'Show Characters'}
+      <Button
+        onClick={() => setCharacterFloating(!characterFloating)}
+        icon={'angle-down'}
+      >
+        Show Characters
       </Button>
     </Floating>
   );

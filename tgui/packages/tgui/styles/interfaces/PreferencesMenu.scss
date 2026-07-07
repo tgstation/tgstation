@@ -176,7 +176,7 @@ $department_map: (
           left: 50%;
           position: relative;
           top: 50%;
-          transform: translateX(-100%) translateY(-50%) rotate(40deg);
+          transform: translateX(50%) translateY(-50%) rotate(40deg);
           width: 2px;
         }
       }
@@ -184,7 +184,7 @@ $department_map: (
 
     &__PriorityHeader {
       font-weight: bold;
-      transform: translateX(-4px) translateY(-8px) rotate(315deg);
+      transform: translateX(-8px) translateY(-8px) rotate(315deg);
       white-space: nowrap;
       width: 19px;
     }
