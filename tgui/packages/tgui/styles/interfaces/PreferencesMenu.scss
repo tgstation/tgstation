@@ -140,15 +140,10 @@ $department_map: (
           border: var(--border-thickness-small) outset colors.fg($color-value);
           color: black;
 
-          > * {
-            height: calc(100% + 0.2em);
-            padding-bottom: 0.2em;
-          }
-
           .options {
-            margin-right: var(--space-xxs);
+            padding-right: var(--space-xxs);
+            padding-bottom: 0.2em;
             background: hsla(0, 0%, 0%, 0.2);
-            height: 100%;
           }
         }
 
@@ -181,7 +176,7 @@ $department_map: (
           left: 50%;
           position: relative;
           top: 50%;
-          transform: translateX(-50%) translateY(-50%) rotate(40deg);
+          transform: translateX(-100%) translateY(-50%) rotate(40deg);
           width: 2px;
         }
       }
