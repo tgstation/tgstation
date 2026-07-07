@@ -367,13 +367,17 @@ multiple modular subtrees with behaviors
 
 	recalculate_idle()
 
+///Returns TRUE if ai should be idle
 /datum/ai_controller/proc/should_idle()
 	if(ai_traits & CANNOT_GO_IDLE)
 		return FALSE
 	if(isnull(our_cells))
 		return FALSE
 	var/turf/pawn_turf = get_turf(pawn)
-	if(isnull(pawn_turf) || is_station_level(pawn_turf.z))
+	if(isnull(pawn_turf))
+		return FALSE
+	var/area/pawn_area = get_area(pawn_turf)
+	if(istype(pawn_area, /area/station) || istype(pawn_area, /area/shuttle)) //Never idle in station
 		return FALSE
 	for(var/datum/spatial_grid_cell/grid as anything in our_cells.member_cells)
 		if(locate(/mob/living) in grid.client_contents)
@@ -386,6 +390,7 @@ multiple modular subtrees with behaviors
 */
 	return TRUE
 
+///Check if mob should go into idle (from spatial cells)
 /datum/ai_controller/proc/recalculate_idle(datum/exited)
 	if(ai_status == AI_STATUS_OFF)
 		return
@@ -475,8 +480,10 @@ multiple modular subtrees with behaviors
 #endif
 	if(!able_to_run)
 		return AI_STATUS_OFF
-	// AI on station z-levels always stays awake, even with no clients present
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS) && !is_station_level(pawn_turf.z))
+	var/area/pawn_area = get_area(pawn_turf)
+	var/on_station_territory = istype(pawn_area, /area/station) || istype(pawn_area, /area/shuttle)
+	// AI actually standing on the station or a shuttle (not just sharing its z-level, e.g. a ruin) always stays awake
+	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) && !(ai_traits & CAN_RUN_WITHOUT_CLIENTS) && !on_station_territory)
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_OFF
