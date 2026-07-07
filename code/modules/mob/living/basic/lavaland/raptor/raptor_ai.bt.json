@@ -167,7 +167,8 @@
 						"behavior": "/datum/bt_node/ai_behavior/acquire_target",
 						"vars": {
 							"target_key": "BB_RAPTOR_BABY",
-							"targeting_strategy": "/datum/targeting_strategy/baby_raptor"
+							"targeting_strategy": "/datum/targeting_strategy/healthy_raptor_baby",
+							"target_source": "/datum/target_source/oview_raptor_babies"
 						}
 					}
 				},
