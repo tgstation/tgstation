@@ -405,6 +405,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	max_integrity = 100
 	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
+	offensive_notes = "It has the ability to block unarmed and leaping attacks."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
 
