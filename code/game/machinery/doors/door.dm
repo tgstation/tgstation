@@ -206,6 +206,10 @@
 
 	filler.density = density
 	filler.set_opacity(opacity)
+	// Navmesh: the filler writes density directly, bypassing set_density's invalidation hook.
+	var/turf/filler_turf = get_turf(filler)
+	if(filler_turf)
+		filler_turf.nav_dirty()
 
 /**
  * Checks which way the airlock is facing and adjusts the direction accordingly.
