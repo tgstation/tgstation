@@ -115,24 +115,24 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			<hr style='background:#000000; border:0; height:3px'>
 		"}
 		// First we're gonna collect admins by rank, for sorting purposes
-		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
+		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT ckey FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
 		if(!query_extract_admins.warn_execute())
 			qdel(query_extract_admins)
 			return
 		var/list/admins_by_rank = list()
 		while(query_extract_admins.NextRow())
-			var/admin_key = query_extract_admins.item[1]
+			var/admin_ckey = query_extract_admins.item[1]
 			var/admin_rank = query_extract_admins.item[2]
 			for(var/datum/admin_rank/composed_rank as anything in ranks_from_rank_name(admin_rank))
 				admins_by_rank[composed_rank.name] ||= list()
-				admins_by_rank[composed_rank.name] |= list(admin_key)
+				admins_by_rank[composed_rank.name] |= list(admin_ckey)
 		QDEL_NULL(query_extract_admins)
 
-		for(var/stored_key in GLOB.admin_datums)
-			var/datum/admins/live_holder = GLOB.admin_datums[stored_key]
+		for(var/stored_ckey in GLOB.admin_datums)
+			var/datum/admins/live_holder = GLOB.admin_datums[stored_ckey]
 			for(var/datum/admin_rank/composed_rank as anything in live_holder.ranks)
 				admins_by_rank[composed_rank.name] ||= list()
-				admins_by_rank[composed_rank.name] |= list(stored_key)
+				admins_by_rank[composed_rank.name] |= list(stored_ckey)
 
 		// Then, pull the full list of DB ranks
 		var/datum/db_query/query_extract_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
@@ -304,16 +304,16 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		// We're gonna sanity check admin rank info, yea?
 		// We're pulling from the db as a source of truth here, instead of trusting the local lists
 		// First, pull all admin ranks which are used
-		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
+		var/datum/db_query/query_extract_admins = SSdbcore.NewQuery("SELECT IFNULL((SELECT ckey FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].`rank` FROM [format_table_name("admin")]")
 		if(!query_extract_admins.warn_execute())
 			qdel(query_extract_admins)
 			return
 		var/list/admins_by_rank = list()
 		while(query_extract_admins.NextRow())
-			var/admin_key = query_extract_admins.item[1]
+			var/admin_ckey = query_extract_admins.item[1]
 			var/admin_rank = query_extract_admins.item[2]
 			for(var/datum/admin_rank/composed_rank as anything in ranks_from_rank_name(admin_rank))
-				admins_by_rank[composed_rank.name] += list(admin_key)
+				admins_by_rank[composed_rank.name] += list(admin_ckey)
 		QDEL_NULL(query_extract_admins)
 
 		// Then, pull the full list of DB ranks to purity check against

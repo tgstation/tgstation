@@ -1,3 +1,4 @@
+/// List of admin datums INDEXED BY CKEY
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 GLOBAL_LIST_EMPTY(protected_admins)
