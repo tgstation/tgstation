@@ -229,8 +229,41 @@
   - balance: Blood worms are now breathless again.
   - balance: Blood worms take damage from low pressures now (increases with growth
       stage).
+  SmArtKar:
+  - rscadd: Added a magmawing variant of watcher wreaths
+  - rscadd: Magmawing and icewing watchers now drop unique sinew that can be crafted
+      into wreaths or trophies
+  - rscadd: Reworked colossus blaster tubes, and magmawing/icewing wing crusher trophies.
+  - balance: Crusher trophies are no longer random drops, and instead are crafted
+      from mob drops.
+  - balance: Wildhunter knife now refunds a large portion of components used to craft
+      a trophy, and its butchering bonus has been buffed from 10% to 25%
+  - bugfix: Fixed goliath trophy stating it deals 2 times less HP than it does in
+      reality in its description.
   vinylspiders:
   - bugfix: in prefs menu, changing your character name will now update your slot
       button correctly
   - bugfix: fixes an issue where switching slots would carry over the quirks of a
       previous slot until you add or remove a quirk
+2026-07-07:
+  Aliceee2ch:
+  - image: Bacon was resprited
+  FalloutFalcon:
+  - code_imp: Ensures some code actually updates overlays instead of return a list
+      of them to nobody
+  JohnFulpWillard:
+  - spellcheck: Oldstation rnd notes now update properly when you mix them together.
+  PapaMichael:
+  - bugfix: Blood brothers once again have a 10% chance of being able to recruit a
+      team of 3.
+  Robwo:
+  - rscadd: added heads of staff intercoms
+  - image: added color to departmental intercoms
+  - image: added a unique state for syndicate intercoms
+  SmArtKar:
+  - bugfix: Fixed particle weather bleeding through z-levels when different weathers
+      are present
+  - qol: Necropolis stone tiles can no longer be hit
+  sergeirocks100:
+  - spellcheck: When untying a neckerchief, the item in question will no longer be
+      misspelled as "neckercheif".

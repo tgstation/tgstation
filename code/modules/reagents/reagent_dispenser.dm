@@ -377,7 +377,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(prob(2) && mapload)
 		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
 	create_jug()
-	refresh_appearance()
+	update_appearance()
 
 /obj/structure/reagent_dispensers/water_cooler/Destroy()
 	. = ..()
@@ -403,7 +403,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		if(!do_after(user, 5 SECONDS, src))
 			return
 		tipped = FALSE
-		refresh_appearance()
+		update_appearance()
 		return
 
 
@@ -421,6 +421,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	paper_cups--
+
+/obj/structure/reagent_dispensers/water_cooler/update_icon_state()
+	. = ..()
+	if(tipped)
+		icon_state = "water_cooler_disgraced"
+	else
+		if(!our_jug)
+			icon_state = "water_cooler_forlorn"
+		else
+			icon_state = "water_cooler"
 
 /obj/structure/reagent_dispensers/water_cooler/update_overlays()
 	. = ..()
@@ -511,7 +521,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	balloon_alert(user, "attached")
 	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
 	add_fingerprint(user)
-	refresh_appearance()
+	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/water_cooler/boom()
@@ -523,18 +533,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	eject_jug(throw_away = TRUE)
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
-
-/obj/structure/reagent_dispensers/water_cooler/proc/refresh_appearance()
-	if(tipped)
-		icon_state = "water_cooler_disgraced"
-	else
-		if(!our_jug)
-			icon_state = "water_cooler_forlorn"
-		else
-			icon_state = "water_cooler"
-
-	update_overlays()
-	update_appearance()
 
 ///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
 /obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
@@ -558,12 +556,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 		reagents.trans_to(our_jug.reagents, tank_volume)
 
 	our_jug = null
-	refresh_appearance()
+	update_appearance()
 
 ///Handles the visual stuff related to the cooler itself tipping.
 /obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
 	tipped = TRUE
-	refresh_appearance()
+	update_appearance()
 
 ///Pre-tipped version for mapping.
 /obj/structure/reagent_dispensers/water_cooler/fallen

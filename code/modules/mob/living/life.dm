@@ -49,6 +49,8 @@
 		if(stat != DEAD)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick)
+			if(isnull(loc)) // Mice can die and become items from breathing
+				return
 
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
