@@ -316,7 +316,7 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
   executes: async () => {
-    await bun('tgfont:build');
+    await bun('--filter tgfont tgfont:build');
     fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
     fs.copyFileSync(
       'tgui/packages/tgfont/dist/tgfont.css',
