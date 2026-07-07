@@ -315,18 +315,7 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.css',
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
-  executes: async () => {
-    await bun('./tgui/packages/tgfont', 'tgfont:build');
-    fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
-    fs.copyFileSync(
-      'tgui/packages/tgfont/dist/tgfont.css',
-      'tgui/packages/tgfont/static/tgfont.css',
-    );
-    fs.copyFileSync(
-      'tgui/packages/tgfont/dist/tgfont.woff2',
-      'tgui/packages/tgfont/static/tgfont.woff2',
-    );
-  },
+  executes: () => bun('./tgui/packages/tgfont', 'tgfont:build'),
 });
 
 export const TguiTarget = new Juke.Target({
@@ -386,7 +375,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, DmTarget],
+  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -438,7 +427,7 @@ export const CleanAllTarget = new Juke.Target({
 });
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiTarget],
+  dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
