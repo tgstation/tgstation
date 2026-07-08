@@ -32,10 +32,6 @@ SUBSYSTEM_DEF(navmesh)
 	///Space turfs are never prebaked - nothing meaningfully paths through open space
 	var/list/space_type_cache
 
-	/// If TRUE, A* cross-checks every cached edge verdict against LinkBlockedWithAccess and CRASHes
-	/// on mismatch. Expensive; for catching stale-cache / classification bugs during testing.
-	var/validate_against_jps = FALSE
-
 /datum/controller/subsystem/navmesh/Initialize()
 	ground_rep = new /datum/can_pass_info(null, null, no_id = TRUE)
 	ground_rep.movement_type = GROUND
