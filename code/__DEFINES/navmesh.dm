@@ -29,9 +29,8 @@
 /// pass_flags bits that are NOT passability grants and must be stripped when we build a blocker mask
 #define NAV_NON_PASS_FLAGS (LETPASSTHROW | LETPASSCLICKS)
 
-/// TRUE if this movable can affect the navmesh. Mobs are excluded by design. An atom matters if it
-/// is dense, has pass_flags_self (border/gated statics), or forces the CanAStarPass proc to run.
-#define NAV_RELEVANT(AM) (!ismob(AM) && ((AM).density || (AM).pass_flags_self || (AM).can_astar_pass != CANASTARPASS_DENSITY))
+///returns TRUE if this movable should affect the turfs navigatable status
+#define NAV_RELEVANT(AM) (!((AM).flags_1 & NAV_IRRELEVANT_1) && ((AM).density || (AM).can_astar_pass != CANASTARPASS_DENSITY))
 
 /// Movement class selector for a baked bit given a can_pass_info's movement_type.
 #define NAV_CLASS_BIT(pass_info, dir) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? NAV_FLIGHT(dir) : NAV_GROUND(dir))
@@ -59,7 +58,6 @@
 		result = ((T).nav_pass & NAV_CLASS_BIT_FAST((dir), (is_flying))) ? TRUE : FALSE; \
 		if(result && ((T).nav_pass & NAV_COND(dir))) { \
 			for(var/_navec_entry in (T).nav_blockers?["[(dir)]"]) { \
-				SSnavmesh.cond_evaluations++; \
 				if(isnum(_navec_entry)) { \
 					if(!((pass_info).pass_flags & _navec_entry)) { \
 						result = FALSE; \

@@ -221,6 +221,18 @@
 		if(spawn_turf)
 			spawn_turf.nav_dirty()
 
+///Setter for the `density` variable to append behavior related to its changing.
+/atom/movable/set_density(new_value)
+	var/old_density = density
+	. = ..()
+	if(old_density == density)
+		return
+
+	if(!(flags_1 & NAV_IRRELEVANT_1))
+		if(isturf(loc))
+			var/turf/our_turf = loc
+			our_turf.nav_dirty()
+
 /atom/movable/Destroy(force)
 	// Navmesh: a relevant object leaving the world invalidates its turf.
 	if(NAV_RELEVANT(src))

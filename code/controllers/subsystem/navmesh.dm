@@ -1,10 +1,3 @@
-/**
- * Holds the shared state for the experimental turf navmesh: the baseline "representative" pass_infos
- * used to bake static passability bits, the typecaches the bake consults, and stats counters for
- * benchmarking against JPS. Station z-levels are eagerly baked in full at Initialize(); every other
- * turf (plus anything /turf/proc/nav_dirty() marks stale afterwards) goes into a FIFO bake_queue that
- * fire() drains within the per-tick budget.
- */
 SUBSYSTEM_DEF(navmesh)
 	name = "Navmesh"
 	ss_flags = SS_BACKGROUND
@@ -12,40 +5,29 @@ SUBSYSTEM_DEF(navmesh)
 		/datum/controller/subsystem/mapping,
 	)
 
-	/// Representative GROUND mover: no pass_flags, no access, no id. Used to bake the static ground bit.
+	/// GROUND mover representative: no pass_flags, no access, no id. Used to bake the static ground bit.
 	var/datum/can_pass_info/ground_rep
-	/// Representative FLYING mover. Used to bake the static flight bit.
+	/// FLYING mover representative. Used to bake the static flight bit.
 	var/datum/can_pass_info/flying_rep
 
-	/// FIFO queue of turfs awaiting nav_bake(): non-station turfs queued at init, plus anything
-	/// nav_dirty() marks stale afterwards. Appended to at the tail; drained via currentrun below.
+	/// FIFO queue of turfs awaiting nav_bake()
 	var/list/bake_queue = list()
-	/// Working batch popped off the front of bake_queue, walked by index rather than Cut() so draining
-	/// a batch is O(1) per turf instead of O(n). Refilled from bake_queue once exhausted.
+	/// Working batch to run through
 	var/list/currentrun
 	/// Index into currentrun of the next turf to bake.
 	var/currentrun_index = 1
 
-	/// Border/directional blocker types. Mirrors path.dm's directional_blocker_cache. On the SOURCE
-	/// turf we only consider these types (a wall on our north edge is one of these); everything else
-	/// on our own tile doesn't block leaving.
+	/// Border/directional blocker types we care about
 	var/list/border_blocker_cache
 	/// Types whose CanAStarPass gate is a single pass_flag, representable as a plain bitmask entry
-	/// (fast path, no proc call at query time). Assoc: type -> the exact pass_flag the atom honours.
-	/// Note this is NOT pass_flags_self (e.g. a grille's pass_flags_self includes PASSWINDOW but its
-	/// CanAStarPass only honours PASSGRILLE), so the masks are stated explicitly.
 	var/list/mask_whitelist_cache
-	/// Escape hatch: types whose CanAStarPass depends on the mover but which the conditional heuristic
-	/// (pass_flags_self / door / ALWAYS_PROC) would miss, so must be stored as live atom entries.
+	/// Types whose CanAStarPass depends on the mover but arent simple, so they need actual atom refs to process
 	var/list/force_conditional_cache
 
-	// --- stats (for benchmarking / debugging) ---
-	/// How many turf edge-sets we have baked total.
-	var/bakes = 0
-	/// How many nav_dirty() calls have happened.
-	var/dirties = 0
-	/// How many live conditional-entry evaluations A* has performed.
-	var/cond_evaluations = 0
+	///Z-traits we care about and automatically update
+	var/list/auto_dirty_ztraits = list(ZTRAIT_STATION, ZTRAIT_MINING)
+	///All zlevels we care about (filled with previous vars)
+	var/list/auto_dirty_zlevels = list()
 
 	/// If TRUE, A* cross-checks every cached edge verdict against LinkBlockedWithAccess and CRASHes
 	/// on mismatch. Expensive; for catching stale-cache / classification bugs during testing.
@@ -78,21 +60,22 @@ SUBSYSTEM_DEF(navmesh)
 		/obj/structure/thing_boss_spike,
 	))
 
-	// Station z-levels matter immediately (mobs pathing at roundstart), so bake them in full up front.
-	var/list/station_zs = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	for(var/z in station_zs)
+	for(var/z in 1 to world.maxz)
 		prebake_z(z)
 
-	// Everything else (lavaland, mining outposts, space, ruins, ...) is baked lazily in the background:
-	// queue every turf that wasn't just covered above and let fire() drain it within budget.
-	for(var/z in 1 to world.maxz)
-		if(z in station_zs)
-			continue
-		for(var/turf/queued_turf as anything in Z_TURFS(z))
-			queue_turf_bake(queued_turf)
-		CHECK_TICK
+	for(var/z in SSmapping.levels_by_any_trait(auto_dirty_ztraits))
+		auto_dirty_zlevels["[z]"] = TRUE
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(on_new_zlevel))
 
 	return SS_INIT_SUCCESS
+
+///Mark new z-levels as potentially auto-dirty
+/datum/controller/subsystem/navmesh/proc/on_new_zlevel(datum/source, datum/space_level/new_level)
+	SIGNAL_HANDLER
+	for(var/trait in auto_dirty_ztraits)
+		if(new_level.traits[trait])
+			auto_dirty_zlevels["[new_level.z_value]"] = TRUE
+			return
 
 /datum/controller/subsystem/navmesh/stat_entry(msg)
 	var/pending = length(bake_queue) + max(length(currentrun) - currentrun_index + 1, 0)
@@ -117,10 +100,7 @@ SUBSYSTEM_DEF(navmesh)
 		if(MC_TICK_CHECK)
 			return
 
-/**
- * Appends a turf to the FIFO bake queue if it isn't already pending. Safe to call repeatedly (e.g.
- * from nav_dirty()); duplicate enqueues are no-ops until the turf is actually baked.
- */
+///Queue up a turf to be baked since its dirty!
 /datum/controller/subsystem/navmesh/proc/queue_turf_bake(turf/queued_turf)
 	if(queued_turf.turf_flags & NAV_QUEUED)
 		return
@@ -129,10 +109,7 @@ SUBSYSTEM_DEF(navmesh)
 	if(!can_fire)
 		can_fire = TRUE
 
-/**
- * Eagerly bake every turf on the given z-level, warming the cache. Invalidation stays lazy; this
- * just lets us compare cold-query vs warm-query cost. Returns the number of turfs baked.
- */
+///Bake every turf on a z-level. NOT queued so dont just run this please.
 /datum/controller/subsystem/navmesh/proc/prebake_z(z_level)
 	var/count = 0
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))

@@ -20,11 +20,12 @@
  * just went stale.
  */
 /turf/proc/nav_dirty()
-	// Before the subsystem inits nothing is baked (every turf is null), so mapload changes need no
-	// work. This keeps the hooks off the hot mapload path.
+	// Before the subsystem inits nothing is baked
 	if(!SSnavmesh.initialized)
 		return
-	SSnavmesh.dirties++
+	// Only auto-update important z-levels
+	if(!SSnavmesh.auto_dirty_zlevels["[z]"])
+		return
 	nav_pass = null
 	nav_blockers = null
 	SSnavmesh.queue_turf_bake(src)
@@ -45,7 +46,6 @@
  * Computes and caches all 4 outgoing edges for this turf.
  */
 /turf/proc/nav_bake()
-	SSnavmesh.bakes++
 	var/packed = NAV_BAKED
 	var/list/blockers = null
 

@@ -742,6 +742,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		explosive_resistance += get_explosive_block()
 
+	// Navmesh: a density toggle changes our own edges.
+	nav_dirty()
+
 /// Wrapper around inherent_explosive_resistance
 /// We assume this proc is cold, so we can move the "what is our block" into it
 /turf/proc/get_explosive_block()

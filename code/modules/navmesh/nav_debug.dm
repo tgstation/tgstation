@@ -100,10 +100,9 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	for(var/turf/step as anything in nav_jps_path)
 		new /obj/effect/temp_visual/nav_marker(step)
 
-	to_chat(user, span_boldnotice("Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
-		JPS (legacy): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
-		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turf_pathfinder)"]. \
-		(baked so far: [SSnavmesh.bakes], cond evals: [SSnavmesh.cond_evaluations])"))
+	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
+		Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
+		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turf_pathfinder)"]"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)
