@@ -47,7 +47,7 @@
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 	/// List of emote keys and sounds for overriding sounds from emotes
-	VAR_PRIVATE/emote_sounds = list()
+	VAR_PROTECTED/emote_sounds = list()
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
