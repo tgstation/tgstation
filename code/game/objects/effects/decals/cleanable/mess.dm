@@ -41,6 +41,8 @@
 
 /obj/effect/decal/cleanable/glass/Initialize(mapload)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/glass/ex_act()
@@ -142,6 +144,8 @@
 
 /obj/effect/decal/cleanable/greenglow/radioactive/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 5 SECONDS, \
