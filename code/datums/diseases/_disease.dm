@@ -83,6 +83,9 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
+	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
+
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
 	if(spread_flags == new_flags)

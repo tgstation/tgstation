@@ -112,6 +112,7 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(after_ghost_control)), \
 		joinable_mobs_title = "Zombies", \
 	))
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /obj/item/organ/zombie_infection/proc/check_ghost_control_eligibility(mob/candidate)
 	if(QDELETED(src) || QDELETED(owner))
