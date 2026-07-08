@@ -527,6 +527,7 @@
 	emote_sounds = list(
 		/datum/emote/living/deathgasp::key = 'sound/mobs/non-humanoids/hiss/hiss6.ogg',
 		/datum/emote/living/carbon/hiss::key = SFX_HISS,
+		/datum/emote/living/scream::key = 'sound/mobs/non-humanoids/hiss/hiss5.ogg',
 	)
 
 // Aliens can only speak alien and a few other languages.
