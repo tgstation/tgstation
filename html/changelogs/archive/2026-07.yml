@@ -285,3 +285,7 @@
   sergeirocks100:
   - spellcheck: When untying a neckerchief, the item in question will no longer be
       misspelled as "neckercheif".
+2026-07-08:
+  SmArtKar:
+  - bugfix: Fixed cube monkey cap runtimes
+  - bugfix: Fixed revolvers runtiming when non-player mobs try to spin them
