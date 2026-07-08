@@ -74,7 +74,10 @@
 /// MARK: bodypart overlay
 
 /datum/bodypart_overlay/mutant/vulpkanin_tail_markings
-	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = FEATURE_VULPKANIN_TAIL_MARKINGS
 	var/wagging = FALSE
 	var/tail_markings_key = NONE
