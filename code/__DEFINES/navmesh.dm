@@ -84,3 +84,22 @@
 			} \
 		} \
 	} while(FALSE)
+
+// --- JPS-over-navmesh step macros ---------------------------------------------------------------
+// These are the navmesh equivalents of jps.dm's CAN_STEP / STEP_NOT_HERE_BUT_THERE / TURF_CANT_WE_CAN.
+// They are DIRECTION-based (the JPS originals pass a pre-stepped `next` turf; here we pass the dir and
+// let nav_can_step read the cached bit). Used only inside /datum/nav_jps procs, which expose `is_flying`
+// and `pass_info` as locals, so the macros reference those names directly like the JPS macros do.
+
+/// TRUE if the mover can step from `cur_turf` in cardinal or diagonal `dir` to the given `dest` turf,
+/// reading cached bits (bakes lazily). Handles space exclusion and diagonal corner-rounding inside
+/// nav_can_step_to.
+#define NAV_CAN_STEP_TO(cur_turf, dir, dest) ((cur_turf) && (cur_turf).nav_can_step_to((dir), (dest), is_flying, pass_info))
+/// Forced-neighbour test: we canNOT step `dirA` but we CAN step `dirB` from cur_turf. `destA` is the
+/// already-known destination of `dirA` from cur_turf (e.g. a cached cardinal neighbour), so that leg
+/// skips its get_step().
+#define NAV_STEP_NOT_HERE_BUT_THERE_TO(cur_turf, dirA, destA, dirB) (!NAV_CAN_STEP_TO(cur_turf, dirA, destA) && NAV_CAN_STEP_TO(cur_turf, dirB, get_step((cur_turf), (dirB))))
+/// Forced-neighbour test: a border stops our parent reaching a turf we can reach. `dest_cur` is the
+/// already-known destination of `dir_cur` from cur_turf (e.g. a cached cardinal neighbour), so that leg
+/// skips its get_step().
+#define NAV_TURF_CANT_WE_CAN_TO(parent_turf, dir_parent, cur_turf, dir_cur, dest_cur) (!NAV_CAN_STEP_TO(parent_turf, dir_parent, get_step((parent_turf), (dir_parent))) && NAV_CAN_STEP_TO(cur_turf, dir_cur, dest_cur))

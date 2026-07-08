@@ -59,17 +59,25 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	var/list/nav_path = nav_find_path(start, goal, info, max_distance = 0)
 	var/nav_ms = TICK_USAGE_TO_MS(nav_start)
 
-	// A/B comparison against the existing JPS pathfinder (read-only use of the old system).
-	var/list/access = info.access || list()
-	var/jps_start = TICK_USAGE_REAL
-	var/list/jps_path = get_path_to(user.mob, goal, max_distance = 100, access = access)
-	var/jps_ms = TICK_USAGE_TO_MS(jps_start)
+	var/nav_jps_start = TICK_USAGE_REAL
+	var/list/nav_jps_path = nav_jps_find_path(start, goal, info, max_distance = 200)
+	var/nav_jps_ms = TICK_USAGE_TO_MS(nav_jps_start)
 
-	for(var/turf/step as anything in nav_path)
+	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike
+	// nav_find_path/nav_jps_find_path (synchronous), get_path_to yields on SSpathfinder's async queue
+	// via UNTIL(), potentially across several ticks - TICK_USAGE_REAL/TO_MS only measures the current
+	// tick's CPU%, so it goes nonsensical (even negative) across a yield. Use wall-clock time instead.
+	var/list/access = info.access || list()
+	var/jps_start = REALTIMEOFDAY
+	var/list/jps_path = get_path_to(user.mob, goal, max_distance = 0, access = access)
+	var/jps_ms = (REALTIMEOFDAY - jps_start) * 100
+
+	for(var/turf/step as anything in nav_jps_path)
 		new /obj/effect/temp_visual/nav_marker(step)
 
-	to_chat(user, span_boldnotice("Navmesh path: [length(nav_path) ? "[length(nav_path)] steps" : "NO PATH"] in [nav_ms]ms. \
-		JPS: [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
+	to_chat(user, span_boldnotice("Nav A*: [length(nav_path) ? "[length(nav_path)] steps" : "NO PATH"] in [nav_ms]ms. \
+		Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
+		JPS (legacy): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
 		(baked so far: [SSnavmesh.bakes], cond evals: [SSnavmesh.cond_evaluations])"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
@@ -95,6 +103,13 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	var/count = SSnavmesh.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
 
+ADMIN_VERB(navmesh_prebake_all, R_DEBUG, "Navmesh: Prebake All Z-Levels", "Eagerly bakes every turf on all z-levels.", ADMIN_CATEGORY_DEBUG)
+	var/start_time = REALTIMEOFDAY
+	var/total = 0
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		total += SSnavmesh.prebake_z(z)
+	to_chat(user, span_boldnotice("Prebaked [total] turfs across station z-levels in [(REALTIMEOFDAY - start_time) / 10]s."))
+
 /*
  * A minimal pawn that walks a nav path to a target and repaths when it gets stuck (something moved
  * into the way, a door refused it). Demonstrates that mobs and access are resolved at execution time,
@@ -107,7 +122,6 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	icon_state = "mouse_gray"
 	maxHealth = 100
 	health = 100
-	//basic_mob_flags = FLICKS_ON_HIT temp disabled; flag isnt real?
 
 	/// Where we're trying to go.
 	var/atom/nav_target

@@ -274,7 +274,7 @@
 		else
 			found_turfs[current_turf] = TRUE
 
-		if(parent_node.number_tiles + steps_taken > max_distance)
+		if(max_distance && (parent_node.number_tiles + steps_taken > max_distance))
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?

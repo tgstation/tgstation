@@ -42,6 +42,27 @@
 	return NAV_EDGE_OPEN_BAKED(src, dir, NAV_IS_FLYING(pass_info), pass_info)
 
 /**
+ * Unified cardinal-or-diagonal step test used by the JPS-over-navmesh scanner (via the NAV_CAN_STEP_TO
+ * macro). Bakes lazily. `is_flying` is precomputed once per search by the caller.
+ * Takes the destination turf directly rather than deriving it with get_step(src, dir) internally, so
+ * callers that already have the stepped-to turf on hand (loop advance, cached cardinal neighbours in
+ * the scan switch blocks) don't pay for a second get_step() computing the same thing.
+ *
+ * Applies the same space exclusion JPS gets from simulated_only: a mover won't path into space
+ * turfs. This keeps that policy out of the baked mesh (which stays movement-only) while matching the
+ * default get_path_to behaviour we benchmark against.
+ */
+/turf/proc/nav_can_step_to(dir, turf/dest, is_flying, datum/can_pass_info/pass_info)
+	if(isnull(dest) || SSpathfinder.space_type_cache[dest.type])
+		return FALSE
+	NAV_ENSURE_BAKED(src)
+	if(dir & (dir - 1)) // diagonal
+		var/diag_ok
+		NAV_DIAGONAL_OPEN(src, dir, is_flying, pass_info, diag_ok)
+		return diag_ok
+	return NAV_EDGE_OPEN_BAKED(src, dir, is_flying, pass_info)
+
+/**
  * Slow path for a conditional edge: returns TRUE iff `pass_info`'s mover passes every conditional
  * entry on the outgoing `dir` edge. Only reached when the edge's NAV_COND bit is set (uncommon), so
  * the proc-call and list-walk cost here is off the common path.
