@@ -122,6 +122,14 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "hair_bigafro"
 	natural_spawn = FALSE
 
+/datum/sprite_accessory/hair/afro_over_eyes
+	name = "Afro (Over Eyes)"
+	icon_state = "hair_afro_over_eyes"
+
+/datum/sprite_accessory/hair/afrothreequarters
+	name = "Afro (Three Quarters)"
+	icon_state = "hair_afro_three_quarters"
+
 /datum/sprite_accessory/hair/afro_huge
 	name = "Afro (Huge)"
 	icon_state = "hair_hugeafro"
@@ -136,6 +144,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Ahoge"
 	icon_state = "hair_antenna"
 	hair_appendages_inner = list("hair_antenna_a1" = HAIR_APPENDAGE_TOP)
+
+/datum/sprite_accessory/hair/animeprotag
+	name = "Anime Protagonist"
+	icon_state = "hair_anime_protag"
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
@@ -217,6 +229,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/bowlcut2
 	name = "Bowlcut 2"
 	icon_state = "hair_bowlcut2"
+
+/datum/sprite_accessory/hair/bowlcutovereyes
+	name = "Bowl Cut Over Eyes"
+	icon_state = "hair_bowlcut_over_eyes"
 
 /datum/sprite_accessory/hair/braid
 	name = "Braid (Floorlength)"
@@ -320,6 +336,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Coffee House"
 	icon_state = "hair_coffeehouse"
 
+/datum/sprite_accessory/hair/coily
+	name = "Coily"
+	icon_state = "hair_coily"
+
 /datum/sprite_accessory/hair/combover
 	name = "Combover"
 	icon_state = "hair_combover"
@@ -354,6 +374,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Curls"
 	icon_state = "hair_curls"
 
+/datum/sprite_accessory/hair/curtains
+	name = "Curtains"
+	icon_state = "hair_curtains"
+
 /datum/sprite_accessory/hair/cut
 	name = "Cut Hair"
 	icon_state = "hair_c"
@@ -371,6 +395,12 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "hair_doublebun"
 	hair_appendages_inner = list("hair_doublebun_a1" = HAIR_APPENDAGE_REAR)
 	hair_appendages_outer = list("hair_doublebun_a1o" = HAIR_APPENDAGE_REAR)
+
+/datum/sprite_accessory/hair/doubledrills
+	name = "Double Drills"
+	icon_state = "hair_double_drills"
+	hair_appendages_inner = list("hair_double_drills_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_double_drills_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
 
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
@@ -441,6 +471,14 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
+/datum/sprite_accessory/hair/fluffymess
+	name = "Fluffy Mess"
+	icon_state = "hair_fluffy_mess"
+
+/datum/sprite_accessory/hair/frizzysidecut
+	name = "Frizzy Sidecut"
+	icon_state = "hair_frizzy_sidecut"
+
 /datum/sprite_accessory/hair/gelled
 	name = "Gelled Back"
 	icon_state = "hair_gelled"
@@ -464,6 +502,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/hedgehog
 	name = "Hedgehog Hair"
 	icon_state = "hair_hedgehog"
+
+/datum/sprite_accessory/hair/hightopslant
+	name = "Hightop Slant"
+	icon_state = "hair_hightop_slant"
 
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
@@ -502,9 +544,17 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Keanu Hair"
 	icon_state = "hair_keanu"
 
+/datum/sprite_accessory/hair/killmonger
+	name = "Killmonger"
+	icon_state = "hair_killmonger"
+
 /datum/sprite_accessory/hair/kusangi
 	name = "Kusanagi Hair"
 	icon_state = "hair_kusanagi"
+
+/datum/sprite_accessory/hair/longdreads
+	name = "Long Dreadlocks"
+	icon_state = "hair_long_dreads"
 
 /datum/sprite_accessory/hair/long
 	name = "Long Hair 1"
@@ -529,6 +579,12 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Long Bangs"
 	icon_state = "hair_lbangs"
 
+/datum/sprite_accessory/hair/longdreadsup
+	name = "Long Dreads Up"
+	icon_state = "hair_long_dreads_up"
+	hair_appendages_inner = list("hair_long_dreads_up_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_long_dreads_up_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
+
 /datum/sprite_accessory/hair/longemo
 	name = "Long Emo"
 	icon_state = "hair_longemo"
@@ -537,11 +593,19 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Long Fringe"
 	icon_state = "hair_longfringe"
 
+/datum/sprite_accessory/hair/longsidecut
+	name = "Long Sidecut"
+	icon_state = "hair_long_sidecut"
+
 /datum/sprite_accessory/hair/sidepartlongalt
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 	hair_appendages_inner = list("hair_longsidepart_a1" = HAIR_APPENDAGE_HANGING_FRONT)
 	hair_appendages_outer = list("hair_longsidepart_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
+
+/datum/sprite_accessory/hair/longwavy
+	name = "Long Wavy"
+	icon_state = "hair_long_wavy"
 
 /datum/sprite_accessory/hair/megaeyebrows
 	name = "Mega Eyebrows"
@@ -580,9 +644,27 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "hair_unshaven_mohawk"
 	natural_spawn = FALSE
 
+/datum/sprite_accessory/hair/tallmohawk
+	name = "Mohawk (Tall)"
+	icon_state = "hair_tall_mohawk"
+	hair_appendages_inner = list("hair_tall_mohawk_a1" = HAIR_APPENDAGE_TOP)
+	y_offset = 2
+
+/datum/sprite_accessory/hair/moneypiece
+	name = "Money Piece"
+	icon_state = "hair_money_piece"
+
 /datum/sprite_accessory/hair/mulder
 	name = "Mulder"
 	icon_state = "hair_mulder"
+
+/datum/sprite_accessory/hair/mullet
+	name = "Mullet"
+	icon_state = "hair_mullet"
+
+/datum/sprite_accessory/hair/mulletwrattail
+	name = "Mullet with Rat Tail"
+	icon_state = "hair_mullet_with_rat_tail"
 
 /datum/sprite_accessory/hair/odango
 	name = "Odango"
@@ -632,6 +714,28 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "hair_pigtails2"
 	natural_spawn = FALSE
 	hair_appendages_inner = list("hair_pigtails2_a1" = HAIR_APPENDAGE_LEFT, "hair_pigtails2_a2" = HAIR_APPENDAGE_RIGHT)
+
+/datum/sprite_accessory/hair/pigtails4
+	name = "Pigtails 4"
+	icon_state = "hair_pigtails_4"
+	hair_appendages_inner = list("hair_pigtails_4_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_pigtails_4_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
+
+/datum/sprite_accessory/hair/pigtails5
+	name = "Pigtails 5"
+	icon_state = "hair_pigtails_5"
+
+/datum/sprite_accessory/hair/pigtailsantenna
+	name = "Pigtails (Antenna)"
+	icon_state = "hair_pigtails_antenna"
+	hair_appendages_inner = list("hair_pigtails_antenna_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_pigtails_antenna_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
+
+/datum/sprite_accessory/hair/pigtailscupid
+	name = "Pigtails (Cupid)"
+	icon_state = "hair_pigtails_cupid"
+	hair_appendages_inner = list("hair_pigtails_cupid_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_pigtails_cupid_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
 
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
@@ -735,6 +839,17 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	hair_appendages_inner = list("hair_spikyponytail_a1" = HAIR_APPENDAGE_REAR)
 	hair_appendages_outer = list("hair_spikyponytail_a1o" = HAIR_APPENDAGE_REAR)
 
+/datum/sprite_accessory/hair/ponytailfro
+	name = "Ponytail (Fro)"
+	icon_state = "hair_ponytail_fro"
+	hair_appendages_inner = list("hair_ponytail_fro_a1" = HAIR_APPENDAGE_HANGING_REAR)
+
+/datum/sprite_accessory/hair/ponytailwavy
+	name = "Ponytail (Wavy)"
+	icon_state = "hair_ponytail_wavy"
+	hair_appendages_inner = list("hair_ponytail_wavy_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_ponytail_wavy_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
+
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"
 	icon_state = "hair_poofy"
@@ -746,6 +861,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/ronin
 	name = "Ronin"
 	icon_state = "hair_ronin"
+
+/datum/sprite_accessory/hair/sadako
+	name = "Sadako"
+	icon_state = "hair_sadako"
 
 /datum/sprite_accessory/hair/shaved
 	name = "Shaved"
@@ -762,6 +881,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/shortbangs2
 	name = "Short Bangs 2"
 	icon_state = "hair_shortbangs2"
+
+/datum/sprite_accessory/hair/shorterbangs
+	name = "Shorter Bangs"
+	icon_state = "hair_shorter_bangs"
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"
@@ -799,6 +922,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Short Hair Rosa"
 	icon_state = "hair_rosa"
 
+/datum/sprite_accessory/hair/shortwavy
+	name = "Short Wavy"
+	icon_state = "hair_short_wavy"
+
 /datum/sprite_accessory/hair/shoulderlength
 	name = "Shoulder-length Hair"
 	icon_state = "hair_b"
@@ -806,6 +933,20 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/sidecut
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
+
+/datum/sprite_accessory/hair/sidecutbang
+	name = "Sidecut Bang"
+	icon_state = "hair_sidecut_bang"
+
+/datum/sprite_accessory/hair/singedblownback
+	name = "Singed Blown Back"
+	icon_state = "hair_singed_blown_back"
+
+/datum/sprite_accessory/hair/singedpigtails
+	name = "Singed Pigtails"
+	icon_state = "hair_singed_pigtails"
+	hair_appendages_inner = list("hair_singed_pigtails_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_singed_pigtails_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
 
 /datum/sprite_accessory/hair/skinhead
 	name = "Skinhead"
@@ -834,6 +975,18 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/swept2
 	name = "Swept Back Hair 2"
 	icon_state = "hair_swept2"
+
+/datum/sprite_accessory/hair/swirlycurls
+	name = "Swirly Curls"
+	icon_state = "hair_swirly_curls"
+
+/datum/sprite_accessory/hair/swirlycurlsalt
+	name = "Swirl Curls Alt"
+	icon_state = "hair_swirly_curls_alt"
+
+/datum/sprite_accessory/hair/tayama
+	name = "Tayama"
+	icon_state = "hair_tayama"
 
 /datum/sprite_accessory/hair/thinning
 	name = "Thinning"
@@ -868,6 +1021,12 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/hair/twintails
 	name = "Twintails"
 	icon_state = "hair_twintail"
+
+/datum/sprite_accessory/hair/twintailswavy
+	name = "Twintails (Wavy)"
+	icon_state = "hair_twintails_wavy"
+	hair_appendages_inner = list("hair_twintails_wavy_a1" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_twintails_wavy_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
 
 /datum/sprite_accessory/hair/undercut
 	name = "Undercut"
@@ -919,6 +1078,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "hair_wisp"
 	hair_appendages_inner = list("hair_wisp_a1" = HAIR_APPENDAGE_REAR)
 	hair_appendages_outer = list("hair_wisp_a1o" = HAIR_APPENDAGE_REAR)
+
+/datum/sprite_accessory/hair/wolfcut
+	name = "Wolfcut"
+	icon_state = "hair_wolfcut"
 
 /datum/sprite_accessory/hair/ziegler
 	name = "Ziegler"

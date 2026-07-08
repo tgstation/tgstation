@@ -74,55 +74,39 @@
 
 	return ..()
 
-/obj/item/spellbook/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/spellbook/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// This can be generalized in the future, but for now it stays
-	if(istype(O, /obj/item/antag_spawner/contract))
-		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
-		if(!istype(contract_entry))
-			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
-			return
-		if(!contract_entry.can_refund(user, src))
-			to_chat(user, span_warning("Вы не можете вернуть очки за [declent_ru(ACCUSATIVE)]."))
-			return
-		var/obj/item/antag_spawner/contract/contract = O
-		if(contract.used)
+	var/datum/spellbook_entry/item/spawner_entry
+	var/success_string
+	if(istype(tool, /obj/item/antag_spawner/contract))
+		if(astype(tool, /obj/item/antag_spawner/contract).used)
 			to_chat(user, span_warning("Контракт был использован, вы не можете вернуть себе очки!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		spawner_entry = locate(/datum/spellbook_entry/item/contract) in entries
+		success_string = "Вы возвращаете контракт в книгу заклинаний, возвращая себе очки."
 
-		to_chat(user, span_notice("Вы возвращаете контракт в книгу заклинаний, возвращая себе очки."))
-		uses += contract_entry.cost
-		contract_entry.times--
-		qdel(O)
+	if(istype(tool, /obj/item/antag_spawner/slaughter_demon/laughter))
+		spawner_entry = locate(/datum/spellbook_entry/item/hugbottle) in entries
+		success_string = "Если подумать, может быть, вызов демона - не такая уж и смешная идея. Вы возвращаете свои очки."
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
-		var/datum/spellbook_entry/item/hugbottle/demon_entry = locate() in entries
-		if(!istype(demon_entry))
-			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
-			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("Вы не можете вернуть очки за [O.declent_ru(ACCUSATIVE)]."))
-			return
+	else if(istype(tool, /obj/item/antag_spawner/slaughter_demon))
+		spawner_entry = locate(/datum/spellbook_entry/item/bloodbottle) in entries
+		success_string = "Если подумать, возможно, вызов демона - плохая идея. Вы возвращаете свои очки."
 
-		to_chat(user, span_notice("Если подумать, может быть, вызов демона - не такая уж и смешная идея. Вы возвращаете свои очки."))
-		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
+	if(isnull(success_string))
+		return NONE
+	if(!istype(spawner_entry)) // No success_string means it isn't a valid item, no spawner entry means the book doesn't have it(somehow)(they had this check before I got here)
+		to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [tool.declent_ru(ACCUSATIVE)]."))
+		return ITEM_INTERACT_BLOCKING
+	if(!spawner_entry.can_refund(user, src, tool))
+		to_chat(user, span_warning("Вы не можете вернуть очки за [src.declent_ru(ACCUSATIVE)]."))
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
-		var/datum/spellbook_entry/item/bloodbottle/demon_entry = locate() in entries
-		if(!istype(demon_entry))
-			to_chat(user, span_warning("Похоже, что [declent_ru(NOMINATIVE)] не хочет возвращать очки за [O.declent_ru(ACCUSATIVE)]."))
-			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("Вы не можете вернуть очки за [O.declent_ru(ACCUSATIVE)]."))
-			return
-
-		to_chat(user, span_notice("Если подумать, возможно, вызов демона - плохая идея. Вы возвращаете свои очки."))
-		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
-
-	return ..()
+	to_chat(user, span_notice(success_string))
+	uses += spawner_entry.cost
+	spawner_entry.times--
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /// Instantiates our list of spellbook entries.
 /obj/item/spellbook/proc/prepare_spells()

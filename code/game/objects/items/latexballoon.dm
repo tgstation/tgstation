@@ -101,16 +101,17 @@
 		burst()
 	return ..()
 
-/obj/item/latexballoon/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/tank))
-		var/obj/item/tank/air_tank = item
+/obj/item/latexballoon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank))
+		var/obj/item/tank/air_tank = tool
 		blow(air_tank, user)
-		return
-	if(item.get_sharpness() || item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		burst()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	if(tool.get_sharpness() || tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		burst()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 #undef INFLATED
 #undef POPPED

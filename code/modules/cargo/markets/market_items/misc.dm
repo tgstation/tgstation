@@ -230,3 +230,12 @@
 	price_max = PAYCHECK_CREW * 3
 	stock_max = 3
 	availability_prob = 25
+
+/datum/market_item/misc/nutrient_pump
+	name = "Nutriment Pump Implant Plus Plus Plus"
+	desc = "We turned this thing up as far as it'll go, and then some. Guaranteed to keep you well fed at all times."
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3
+	item = /obj/item/organ/cyberimp/chest/nutriment/black_market
+	stock_max = 2
+	availability_prob = 60

@@ -533,7 +533,7 @@
 		if(hit_clothes)
 			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
 
-/mob/living/carbon/adjust_oxy_loss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
+/mob/living/carbon/adjust_oxy_loss(amount, updating_health = TRUE, forced, required_biotype)
 	if(!forced && HAS_TRAIT(src, TRAIT_NOBREATH))
 		amount = min(amount, 0) //Prevents oxy damage but not healing
 
@@ -545,7 +545,7 @@
 	if(!limb)
 		return
 
-/mob/living/carbon/set_oxy_loss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
+/mob/living/carbon/set_oxy_loss(amount, updating_health = TRUE, forced, required_biotype)
 	. = ..()
 	check_passout()
 

@@ -46,9 +46,9 @@
 	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	..()
-	if(atom_integrity < 90)
-		Die()
+	. = ..()
+	if(. && atom_integrity < 90 && !QDELETED(src))
+		die()
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/attacked_item, mob/user, list/modifiers, list/attack_modifiers)
 	return attacked_item.attack_atom(src, user, modifiers)
@@ -56,20 +56,20 @@
 /obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
-		if(Leap(user))
+		if(leap_to(user))
 			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
-		if(Leap(user))
+		if(leap_to(user))
 			return
 	. = ..()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
 	if(user.transferItemToLoc(src, get_turf(M)))
-		Leap(M)
+		leap_to(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	. = ..()
@@ -87,11 +87,11 @@
 	return (exposed_temperature > 300)
 
 /obj/item/clothing/mask/facehugger/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	Die()
+	die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
 	. = ..()
-	Attach(M)
+	attach_to_victim(M)
 
 /obj/item/clothing/mask/facehugger/proc/on_entered(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -103,7 +103,7 @@
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
 	if(CanHug(AM) && Adjacent(AM))
-		return Leap(AM)
+		return leap_to(AM)
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	. = ..()
@@ -121,7 +121,7 @@
 	..()
 	if(stat == CONSCIOUS)
 		icon_state = "[base_icon_state]"
-		Leap(hit_atom)
+		leap_to(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/hit_mob)
 	// valid targets: carbons except aliens and devils
@@ -145,7 +145,7 @@
 	// carbon, has head, not an alien nor has an hivenode or embryo: valid
 	return TRUE
 
-/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
+/obj/item/clothing/mask/facehugger/proc/leap_to(mob/living/hit_mob)
 	//check if not carbon/alien/has facehugger already/ect.
 	if(!valid_to_attach(hit_mob))
 		return FALSE
@@ -160,7 +160,7 @@
 	if(target.is_mouth_covered(ITEM_SLOT_HEAD))
 		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
 							span_userdanger("[src] smashes against your [target.head]!"))
-		Die()
+		die()
 		return FALSE
 
 	if(target.wear_mask)
@@ -175,7 +175,7 @@
 	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke
 
-/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/victim)
+/obj/item/clothing/mask/facehugger/proc/attach_to_victim(mob/living/victim)
 	if(!valid_to_attach(victim))
 		return
 
@@ -193,14 +193,14 @@
 		victim.Paralyze(1 SECONDS)
 		victim.adjust_confusion(20 SECONDS)
 		victim.Knockdown(10 SECONDS)
-	GoIdle() //so it doesn't jump the people that tear it off
+	go_idle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, PROC_REF(Impregnate), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, PROC_REF(impregnate_target), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
+/obj/item/clothing/mask/facehugger/proc/impregnate_target(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
@@ -213,7 +213,7 @@
 		target.visible_message(span_danger("[src] falls limp after violating [target]'s face!"), \
 								span_userdanger("[src] falls limp after violating your face!"))
 
-		Die()
+		die()
 		icon_state = "[base_icon_state]_impregnated"
 		worn_icon_state = "[base_icon_state]_impregnated"
 
@@ -229,7 +229,7 @@
 		target.visible_message(span_danger("[src] violates [target]'s face!"), \
 								span_userdanger("[src] violates your face!"))
 
-/obj/item/clothing/mask/facehugger/proc/GoActive()
+/obj/item/clothing/mask/facehugger/proc/go_active()
 	if(stat == DEAD || stat == CONSCIOUS)
 		return
 
@@ -237,7 +237,7 @@
 	icon_state = "[base_icon_state]"
 	worn_icon_state = "[base_icon_state]"
 
-/obj/item/clothing/mask/facehugger/proc/GoIdle()
+/obj/item/clothing/mask/facehugger/proc/go_idle()
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
@@ -245,9 +245,9 @@
 	icon_state = "[base_icon_state]_inactive"
 	worn_icon_state = "[base_icon_state]_inactive"
 
-	addtimer(CALLBACK(src, PROC_REF(GoActive)), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
+	addtimer(CALLBACK(src, PROC_REF(go_active)), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
-/obj/item/clothing/mask/facehugger/proc/Die()
+/obj/item/clothing/mask/facehugger/proc/die()
 	if(stat == DEAD)
 		return
 
@@ -300,7 +300,7 @@
 	if(stat != CONSCIOUS)
 		return NONE
 	to_chat(user, span_danger("There's something moving inside of \the [letter]!"))
-	Leap(user)
+	leap_to(user)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/clothing/mask/facehugger/lamarr
@@ -330,7 +330,7 @@
 	slowdown = 0
 	integrity_failure = 0
 
-/obj/item/clothing/mask/facehugger/toy/Die()
+/obj/item/clothing/mask/facehugger/toy/die()
 	return
 
 #undef MIN_ACTIVE_TIME

@@ -796,6 +796,7 @@
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon_state = "datadisk12"
 	sticker_icon_state = "o_cargopod"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/disk/cargo/bluespace_pod/setup_reskins()
 	return

@@ -52,13 +52,16 @@
 	var/is_opposite_angle = REVERSE_ANGLE(lying_angle) == lying_prev
 	var/animate_time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME
 	animate(src, transform = ntransform, time = animate_time, dir = final_dir, easing = SINE_EASING)
+	readjust_atom_huds(animate_time)
+
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
+	return TRUE
+
+/mob/living/proc/readjust_atom_huds(animate_time = null)
 	for (var/hud_key in hud_list)
 		var/image/hud_image = hud_list[hud_key]
 		if (istype(hud_image))
 			adjust_hud_position(hud_image, animate_time = animate_time)
-
-	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
-	return TRUE
 
 /// Calculates how far vertically the mob's transform should translate according to its size (1 being "default")
 /mob/living/proc/get_transform_translation_size(value)

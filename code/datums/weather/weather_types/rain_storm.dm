@@ -17,7 +17,7 @@
 	end_duration = 30 SECONDS
 
 	// Don't display overlays when using particle weather
-	weather_alpha = 0
+	overlay_planes = list(WEATHER_PLANE)
 
 	weather_duration_lower = 3 MINUTES
 	weather_duration_upper = 5 MINUTES

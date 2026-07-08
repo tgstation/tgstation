@@ -85,17 +85,17 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/emptysandbag/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/G = W
-		to_chat(user, span_notice("You fill the sandbag."))
-		var/obj/item/stack/sheet/mineral/sandbags/I = new (drop_location())
-		qdel(src)
-		if (Adjacent(user) && !issilicon(user))
-			user.put_in_hands(I)
-		G.use(1)
-	else
-		return ..()
+/obj/item/emptysandbag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/ore/glass))
+		return NONE
+	var/obj/item/stack/ore/glass/sand = tool
+	to_chat(user, span_notice("You fill the sandbag."))
+	var/obj/item/stack/sheet/mineral/sandbags/filled_bag = new (drop_location())
+	qdel(src)
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(filled_bag)
+	sand.use(1)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * Diamond
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	singular_name = "diamond"
 	construction_path_type = "diamond"
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 100
 	merge_type = /obj/item/stack/sheet/mineral/diamond
 	material_type = /datum/material/diamond
 	walltype = /turf/closed/wall/mineral/diamond
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	singular_name = "uranium sheet"
 	construction_path_type = "uranium"
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 50
 	merge_type = /obj/item/stack/sheet/mineral/uranium
 	material_type = /datum/material/uranium
 	walltype = /turf/closed/wall/mineral/uranium
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 5
 	merge_type = /obj/item/stack/sheet/mineral/plasma
 	material_type = /datum/material/plasma
 	walltype = /turf/closed/wall/mineral/plasma
@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	singular_name = "gold bar"
 	construction_path_type = "gold"
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/gold
 	material_type = /datum/material/gold
 	walltype = /turf/closed/wall/mineral/gold
@@ -240,7 +240,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	singular_name = "silver bar"
 	construction_path_type = "silver"
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 10
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
 	table_type = /obj/structure/table/optable
@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	singular_name = "bananium sheet"
 	construction_path_type = "bananium"
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = -5
 	merge_type = /obj/item/stack/sheet/mineral/bananium
 	material_type = /datum/material/bananium
 	walltype = /turf/closed/wall/mineral/bananium
@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	throw_range = 3
 	construction_path_type = "titanium"
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 10
 	merge_type = /obj/item/stack/sheet/mineral/titanium
 	material_type = /datum/material/titanium
 	walltype = /turf/closed/wall/mineral/titanium
@@ -316,25 +316,28 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	. = ..()
 	. += GLOB.titanium_recipes
 
-/obj/item/stack/sheet/mineral/titanium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/stack/sheet/mineral/titanium/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/old_rods = W
-		if(old_rods.merge_type != /obj/item/stack/rods)
-			to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
-		if (old_rods.get_amount() >= 5 && get_amount() >= 1)
-			var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
-			if(!QDELETED(new_rods))
-				new_rods.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			old_rods.use(5)
-			use(1)
-			if(QDELETED(src) && replace && !QDELETED(new_rods))
-				user.put_in_hands(new_rods)
-		else
-			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
-		return
-	return ..()
+	if(!istype(tool, /obj/item/stack/rods))
+		return ..()
+	var/obj/item/stack/rods/old_rods = tool
+	if(old_rods.merge_type != /obj/item/stack/rods)
+		to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if (old_rods.get_amount() < 5 && get_amount() < 1)
+		to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
+	if(!QDELETED(new_rods))
+		new_rods.add_fingerprint(user)
+	var/replace = user.get_inactive_held_item() == src
+	old_rods.use(5)
+	use(1)
+	if(QDELETED(src) && replace && !QDELETED(new_rods))
+		user.put_in_hands(new_rods)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50
@@ -354,7 +357,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	throw_range = 3
 	construction_path_type = "plastitanium"
 	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT)
-	gulag_valid = TRUE
+	gulag_value = 20
 	material_type = /datum/material/alloy/plastitanium
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 	material_flags = NONE
@@ -498,15 +501,15 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 /obj/item/stack/sheet/mineral/coal/grind_results()
 	return list(/datum/reagent/carbon = 20)
 
-/obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //If the temperature of the object is hot enough to start a fire, then ignite
-		var/turf/T = get_turf(src)
-		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		user.log_message("ignited coal", LOG_GAME)
-		fire_act(W.get_temperature())
-		return TRUE
-	else
+/obj/item/stack/sheet/mineral/coal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_temperature() < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //If the temperature of the object is hot enough to start a fire, then ignite
 		return ..()
+	var/turf/jumpturf = get_turf(src)
+	message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(jumpturf)]")
+	user.log_message("ignited coal", LOG_GAME)
+	fire_act(tool.get_temperature())
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/stack/sheet/mineral/coal/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("[GAS_CO2]=[amount*10];[TURF_TEMPERATURE(exposed_temperature)]")
@@ -534,7 +537,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | BOMB_PROOF
-	gulag_valid = TRUE
+	gulag_value = 100
 	mats_per_unit = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
@@ -564,7 +567,7 @@ GLOBAL_LIST_INIT(zaukerite_recipes, list(
 	inhand_icon_state = "sheet-zaukerite"
 	singular_name = "zaukerite crystal"
 	w_class = WEIGHT_CLASS_NORMAL
-	gulag_valid = TRUE
+	gulag_value = 100
 	mats_per_unit = list(/datum/material/zaukerite = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/zaukerite
 	material_type = /datum/material/zaukerite
