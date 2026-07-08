@@ -47,7 +47,7 @@
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 	/// List of emote keys and sounds for overriding sounds from emotes
-	VAR_PROTECTED/emote_sounds = list()
+	VAR_PROTECTED/emote_sounds
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
@@ -137,7 +137,8 @@
 
 /obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	RegisterSignal(receiver, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(get_tongue_emote_sound))
+	if(emote_sounds)
+		RegisterSignal(receiver, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(get_tongue_emote_sound))
 	if(modifies_speech)
 		RegisterSignal(receiver, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	receiver.voice_filter = voice_filter

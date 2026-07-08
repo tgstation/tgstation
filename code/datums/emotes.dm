@@ -270,9 +270,9 @@
 	var/length = length(sounds)
 	if(length)
 		return sounds[length]
-	var/matched_type = is_type_in_list(user,  sounds_by_mobtype, zebra = TRUE)
-	if(matched_type)
-		return get_emote_sound_from_list(sounds_by_mobtype[matched_type], user, key)
+	var/sound_or_sounds = is_type_in_list(user,  sounds_by_mobtype, zebra = TRUE)
+	if(sound_or_sounds)
+		return get_emote_sound_from_list(sound_or_sounds, user)
 	return sound
 
 /**
