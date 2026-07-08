@@ -6,8 +6,9 @@
 	handle_suicide()
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
-/// Override this ENTIRELY if you want to add any special behavior to your suicide handling, if you fuck up the order of operations then shit will break.
+/// The order of operations here is important, if you want to make specific behaviour for a kind of mob killing itself you likely want to override perform_basic_suicide()
 /mob/living/proc/handle_suicide()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!suicide_alert())
 		return
 
