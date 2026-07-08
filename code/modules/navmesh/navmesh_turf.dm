@@ -13,12 +13,9 @@
 /// atom refs = evaluated live via CanAStarPass). Only present on turfs with conditional edges.
 /turf/var/list/nav_blockers
 
-/**
- * Marks this turf and its cardinal neighbours as needing a re-bake, and queues them on SSnavmesh so
- * the background baker picks them up. Cheap (a handful of var writes, no allocation) so it is safe to
- * call from hot movement/density paths. Neighbours are dirtied because their edge pointing back at us
- * just went stale.
- */
+
+
+///Marks this turf and any neighbors as dirty and queue them for baking
 /turf/proc/nav_dirty()
 	// Before the subsystem inits nothing is baked
 	if(!SSnavmesh.initialized)
@@ -37,14 +34,8 @@
 			SSnavmesh.queue_turf_bake(neighbor)
 
 
-// Unified cardinal-or-diagonal step test used by the JPS-over-navmesh scanner, and the conditional-edge
-// blocker walk (numeric = pass_flags mask, atom = evaluated live via CanAStarPass), both live as the
-// NAV_CAN_STEP_TO / NAV_EDGE_OPEN_BAKED statement macros in code/__DEFINES/navmesh.dm, not procs here -
-// they're on the A* and JPS-over-navmesh hot loops, so they're inlined the same way NAV_DIAGONAL_OPEN is.
 
-/**
- * Computes and caches all 4 outgoing edges for this turf.
- */
+///Compute all directions of this turf for pathability
 /turf/proc/nav_bake()
 	var/packed = NAV_BAKED
 	var/list/blockers = null
@@ -90,7 +81,7 @@
 			edge_blockers += dest
 			has_cond = TRUE
 
-	// --- source border objects (forward dir) ---
+	// border objects :(
 	for(var/obj/border in src)
 		if(!SSnavmesh.border_blocker_cache[border.type])
 			continue
@@ -104,7 +95,7 @@
 			if(flight_ok && !border.CanAStarPass(dir, SSnavmesh.flying_rep))
 				flight_ok = FALSE
 
-	// --- destination contents (reverse dir) ---
+	// destination contents (reverse dir)
 	var/reverse = REVERSE_DIR(dir)
 	for(var/atom/movable/iter_object in dest)
 		if(ismob(iter_object))
@@ -128,17 +119,9 @@
 		bits |= NAV_COND(dir)
 	return bits
 
-/**
- * Decides whether `blocker` is a per-mover conditional (access door, pass-flag gated static, or an
- * ALWAYS_PROC atom whose result depends on the mover) and, if so, appends the correct entry to
- * edge_blockers. Returns TRUE if it added a conditional entry, FALSE if the blocker is unconditional
- * (and should be rep-evaluated by the caller).
- *
- * Callers must exclude mobs before calling; mobs are never baked.
- */
+///Figure out if this is mover-dependent and we need to store the atom or if we just need the bitmask
 /turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
-	// Whitelisted pure pass-flag gates (tables, grilles) -> store the exact honoured pass_flag as a
-	// plain mask, so the query is a bit-test with no proc call.
+	// Whitelisted pure pass-flag gates (tables, grilles) -> store the exact honoured pass_flag as a plain mask, so we can just check it cheaply
 	var/mask = SSnavmesh.mask_whitelist_cache[blocker.type]
 	if(mask)
 		edge_blockers += mask
