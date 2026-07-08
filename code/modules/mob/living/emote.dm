@@ -110,6 +110,9 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_IMPORTANT
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
+	sound_wall_ignore = TRUE
+	sound_vary = TRUE
+	sound_volume = 200
 
 /datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
@@ -119,15 +122,16 @@
 		message_animal_or_basic = custom_message
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
+
+/datum/emote/living/deathgasp/get_sound(mob/living/user)
+	. = ..()
+	if(!. && user.death_sound)
+		return user.death_sound
+
+/datum/emote/living/deathgasp/should_play_sound(mob/living/user, intentional = FALSE)
 	if(!user.can_speak() || user.get_oxy_loss() >= 50)
-		return //stop the sound if oxyloss too high/cant speak
-	var/mob/living/carbon/carbon_user = user
-	// For masks that give unique death sounds
-	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
-		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
-		return
-	if(user.death_sound)
-		playsound(user, user.death_sound, 200, TRUE, TRUE)
+		return FALSE //stop the sound if oxyloss too high/cant speak
+	return ..()
 
 /datum/emote/living/drool
 	key = "drool"
@@ -309,11 +313,6 @@
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional, params)
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
-/datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_laugh_sound(user)
-
 /datum/emote/living/look
 	key = "look"
 	key_third_person = "looks"
@@ -378,11 +377,6 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
 
-/datum/emote/living/sneeze/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_sneeze_sound(user)
-
 /datum/emote/living/cough
 	key = "cough"
 	key_third_person = "coughs"
@@ -393,11 +387,6 @@
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional, params)
 	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
-
-/datum/emote/living/cough/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_cough_sound(user)
 
 /datum/emote/living/wheeze
 	key = "wheeze"
@@ -435,10 +424,13 @@
 		return "makes a loud and pained whimper."
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if(!ishuman(user))
+	. = ..()
+	if(!ishuman(user) || !.)
 		return
 	var/mob/living/carbon/human/humie = user
-	return humie.dna.species.get_scream_sound(user)
+	//Rare chance for this banger of a classic to play instead of the avarage joe screams
+	if(humie.physique == MALE && prob(1) && is_species(humie, /datum/species/human))
+		return 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg'
 
 /datum/emote/living/scowl
 	key = "scowl"
@@ -481,11 +473,6 @@
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sigh")
 	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
 
-/datum/emote/living/sigh/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_sigh_sound(user)
-
 /datum/emote/living/sit
 	key = "sit"
 	key_third_person = "sits"
@@ -509,11 +496,6 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
 
-/datum/emote/living/sniff/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_sniff_sound(user)
-
 /datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
@@ -521,12 +503,6 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
-
-// eventually we want to give species their own "snoring" sounds
-/datum/emote/living/snore/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_snore_sound(user)
 
 /datum/emote/living/stare
 	key = "stare"

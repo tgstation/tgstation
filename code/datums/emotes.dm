@@ -69,8 +69,12 @@
 	var/forced_general_emote_audio_cooldown = 2 SECONDS
 	/// How long is the specific emote cooldown triggered by this emote when forced?
 	var/forced_specific_emote_audio_cooldown = 2 SECONDS
+	/// The volume of the sound
+	var/sound_volume = 50
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
+	/// Does this sound vary in pitch?
+	var/sound_vary = FALSE
 	///Does this emote use sound tokens? this means it also ignores walls.
 	var/use_sound_tokens = FALSE
 
@@ -136,9 +140,9 @@
 		else if(vary)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
 		if(use_sound_tokens && sound_wall_ignore)
-			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = 50)
+			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = sound_volume)
 		else
-			playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
+			playsound(source = user,soundin = tmp_sound,vol = sound_volume, vary = sound_vary, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
@@ -260,7 +264,9 @@
  * Returns the sound that will be made while sending the emote.
  */
 /datum/emote/proc/get_sound(mob/living/user)
-	return sound //by default just return this var.
+	var/list/sounds = list(sound)
+	SEND_SIGNAL(user, COMSIG_LIVING_GET_EMOTE_SOUND, key, sounds)
+	return sounds[length(sounds)] //return the sound with the highest priority (last in the list)
 
 /**
  * To get the flags visible/audible messages for ran by the emote.

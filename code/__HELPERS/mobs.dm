@@ -872,3 +872,21 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			if(HAS_PERSONALITY(nearby, personality))
 				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", personality_to_mood[personality]) + args.Copy(4) ))
 				break
+
+///Gets an emote sound from a specific list of sounds. Supports list as values, as well as human physiques. Used by tongues (and some emotes with "default" species sounds if tongueless)
+/proc/get_emote_sound_from_list(list/sound_list, mob/living/user, key)
+	var/sound = sound_list[key]
+	if(islist(sound))
+		var/list/sounds = sound
+		var/list/possible_sounds = sounds.Copy()
+		var/mob/living/carbon/human/humie = ishuman(user) ? user : null
+		if(humie?.physique in possible_sounds)
+			possible_sounds = possible_sounds[humie.physique]
+			if(!islist(possible_sounds))
+				return possible_sounds //it's a single sound
+		else
+			possible_sounds -= list(MALE, FEMALE)
+			if(!length(possible_sounds))
+				return null
+		sound = pick(possible_sounds)
+	return sound

@@ -90,7 +90,6 @@
 		return
 	return ..()
 
-
 /mob/living/carbon/human/Topic(href, href_list)
 
 	if(href_list["see_id"])

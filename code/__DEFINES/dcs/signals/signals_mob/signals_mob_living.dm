@@ -74,6 +74,13 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
+///from base of datum/emote/get_sound(): (key, list/sounds)
+#define COMSIG_LIVING_GET_EMOTE_SOUND "living_get_emote_sound"
+	#define EMOTE_SOUND_BASE 1
+	#define EMOTE_SOUND_TONGUE 2
+	#define EMOTE_SOUND_MASK 3
+	#define EMOTE_SOUND_STATUS_EFFECT 4
+
 // adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
 /// Returned from all the following messages if you actually aren't going to apply any change
 #define COMPONENT_IGNORE_CHANGE (1<<0)

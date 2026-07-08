@@ -71,13 +71,6 @@
 	else
 		give_important_for_life(equipping)
 
-/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
-	return pick(
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
-	)
-
 /datum/species/plasmaman/get_physical_attributes()
 	return "Plasmamen literally breathe and live plasma. They spontaneously combust on contact with oxygen, and besides all the quirks that go with that, \
 		they're very vulnerable to all kinds of physical damage due to their brittle structure."
