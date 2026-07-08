@@ -3,6 +3,18 @@
  * data, and pre-bake a z-level, plus a simple pawn that walks a nav path and repaths on obstruction.
  */
 
+/**
+ * Rust-side A* over the live navmesh, via rust-g's byondapi `turf_pathfinder` feature.
+ * Reads nav_pass / nav_blockers directly from each turf as it searches (locate + var reads over
+ * BYOND's FFI), live-evaluating conditional edges through CanAStarPass so doors/access never go
+ * stale - no graph is pre-serialized to Rust. See rust-g's src/turf_pathfinder.rs for the port.
+ * Requires a rust-g build with the `turf_pathfinder` feature enabled (not in `default`/`all`).
+ * Returns a /list of turfs from start to end, or an empty list if no path exists.
+ */
+/proc/rustg_nav_astar(turf/start, turf/end, datum/can_pass_info/pass_info, is_flying, max_range)
+	var/static/loaded = load_ext(RUST_G, "byond:rustg_nav_astar_ffi")
+	return call_ext(loaded)(start, end, pass_info, is_flying, max_range)
+
 /// Transient marker dropped along a computed nav path.
 /obj/effect/temp_visual/nav_marker
 	name = "nav path marker"
@@ -59,6 +71,21 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 	var/list/nav_jps_path = nav_jps_find_path(start, goal, info, max_distance = 200)
 	var/nav_jps_ms = TICK_USAGE_TO_MS(nav_jps_start)
 
+	// Rust-side A* over the same live navmesh (rust-g's turf_pathfinder feature). Synchronous like
+	// nav_find_path/nav_jps_find_path, so a single before/after TICK_USAGE_REAL snapshot is valid.
+	// Wrapped in try/catch because this needs a rust-g build with turf_pathfinder enabled; falls back
+	// to reporting "unavailable" against a stock rust-g DLL instead of crashing the verb.
+	var/list/rustg_nav_path
+	var/rustg_nav_ms
+	var/rustg_nav_available = TRUE
+	var/rustg_nav_start = TICK_USAGE_REAL
+	try
+		rustg_nav_path = rustg_nav_astar(start, goal, info, NAV_IS_FLYING(info), 200)
+	catch
+		rustg_nav_available = FALSE
+		rustg_nav_path = list()
+	rustg_nav_ms = TICK_USAGE_TO_MS(rustg_nav_start)
+
 	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike
 	// nav_find_path/nav_jps_find_path (synchronous), get_path_to yields on SSpathfinder's async queue
 	// via UNTIL(), potentially across several ticks, so TICK_USAGE_REAL/TO_MS can't be taken as a single
@@ -87,6 +114,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 
 	to_chat(user, span_boldnotice("Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
 		JPS (legacy): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
+		Rust A*: [rustg_nav_available ? (length(rustg_nav_path) ? "[length(rustg_nav_path)] steps in [rustg_nav_ms]ms" : "NO PATH") : "unavailable (rust-g missing turf_pathfinder)"]. \
 		(baked so far: [SSnavmesh.bakes], cond evals: [SSnavmesh.cond_evaluations])"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
