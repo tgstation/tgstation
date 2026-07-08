@@ -1,18 +1,3 @@
-/*
- * Navmesh: cached per-turf directional passability.
- *
- * Experimental, additive-only alternative to querying LinkBlockedWithAccess() per step during
- * pathfinding. Each turf caches, per cardinal direction, whether a baseline GROUND / FLYING mover
- * can leave that turf in that direction, plus a "conditional" bit meaning "there are blockers on
- * this edge that must be evaluated per-mover" (access doors, pass-flag gated statics like tables).
- *
- * Deliberate divergences from JPS, documented here and enforced in the bake:
- * - Mobs are never baked into the mesh (they move constantly and would thrash invalidation). The
- *   mover resolves live mobs at execution time (bump / wait / repath).
- * - Single-z, exactly like JPS.
- */
-
-// --- nav_pass bit layout ------------------------------------------------------------------------
 // nav_pass is a packed int on /turf. null means "unbaked / dirty". Cardinal dir values (1/2/4/8)
 // are used directly as bit groups so we can index by dir with no lookup.
 

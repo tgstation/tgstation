@@ -14,3 +14,8 @@
 
 ///from /datum/move_loop/has_target/jps/frustrations/handle_move_attempt_failure
 #define COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED "moveloop_jps_frustration_incremented"
+
+//from [/datum/move_loop/has_target/navmesh_astar/recalculate_path] ():
+#define COMSIG_MOVELOOP_NAVMESH_REPATH "moveloop_navmesh_repath"
+///from [/datum/move_loop/has_target/navmesh_astar/on_finish_pathing]
+#define COMSIG_MOVELOOP_NAVMESH_FINISHED_PATHING "moveloop_navmesh_finished_pathing"

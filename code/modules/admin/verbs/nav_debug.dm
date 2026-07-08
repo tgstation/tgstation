@@ -55,14 +55,10 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
 
-	var/nav_jps_start = TICK_USAGE_REAL
-	var/list/nav_jps_path = nav_jps_find_path(start, goal, info, max_distance = 200)
-	var/nav_jps_ms = TICK_USAGE_TO_MS(nav_jps_start)
-
-	// Rust-side A* over the same live navmesh (rust-g's turf_pathfinder feature). Synchronous like
-	// nav_find_path/nav_jps_find_path, so a single before/after TICK_USAGE_REAL snapshot is valid.
-	// Wrapped in try/catch because this needs a rust-g build with turf_pathfinder enabled; falls back
-	// to reporting "unavailable" against a stock rust-g DLL instead of crashing the verb.
+	// Rust-side A* over the live navmesh (rust-g's turf_pathfinder feature). Synchronous, so a single
+	// before/after TICK_USAGE_REAL snapshot is valid. Wrapped in try/catch because this needs a rust-g
+	// build with turf_pathfinder enabled; falls back to reporting "unavailable" against a stock rust-g
+	// DLL instead of crashing the verb.
 	var/list/rustg_nav_path
 	var/rustg_nav_ms
 	var/rustg_nav_available = TRUE
@@ -74,9 +70,9 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		rustg_nav_path = list()
 	rustg_nav_ms = TICK_USAGE_TO_MS(rustg_nav_start)
 
-	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike
-	// nav_find_path/nav_jps_find_path (synchronous), get_path_to yields on SSpathfinder's async queue
-	// via UNTIL(), potentially across several ticks, so TICK_USAGE_REAL/TO_MS can't be taken as a single
+	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike the
+	// synchronous rust call above, get_path_to yields on SSpathfinder's async queue via UNTIL(),
+	// potentially across several ticks, so TICK_USAGE_REAL/TO_MS can't be taken as a single
 	// before/after snapshot here. We build the pathfind datum ourselves (rather than going through
 	// get_path_to) so we can read back its accumulated compute_time - the sum of its own search_step()
 	// tick usage, which SSpathfinder.fire() tracks regardless of how many ticks the search spans.
@@ -97,11 +93,10 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		jps_path = list()
 		jps_ms = 0
 
-	for(var/turf/step as anything in nav_jps_path)
+	for(var/turf/step as anything in rustg_nav_path)
 		new /obj/effect/temp_visual/nav_marker(step)
 
 	to_chat(user, span_boldnotice("JPS (OLD): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
-		Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
 		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turf_pathfinder)"]"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
@@ -130,7 +125,9 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 /*
  * A minimal pawn that walks a nav path to a target and repaths when it gets stuck (something moved
  * into the way, a door refused it). Demonstrates that mobs and access are resolved at execution time,
- * not baked into the mesh.
+ * not baked into the mesh. Driven entirely by /datum/move_loop/has_target/navmesh_astar (see
+ * code/controllers/subsystem/movement/movement_types_navmesh.dm) rather than any ad-hoc loop of its
+ * own - SSmovement handles the ticking, repathing, and obstruction recovery.
  */
 /mob/living/basic/nav_tester
 	name = "navmesh tester"
@@ -140,56 +137,15 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	maxHealth = 100
 	health = 100
 
-	/// Where we're trying to go.
-	var/atom/nav_target
-	/// The remaining path (list of turfs).
-	var/list/current_path
-	/// Consecutive failed steps before we give up on the cached path and recompute.
-	var/failed_steps = 0
-
-/mob/living/basic/nav_tester/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSfastprocess, src)
-
-/mob/living/basic/nav_tester/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	nav_target = null
-	current_path = null
-	return ..()
-
 /mob/living/basic/nav_tester/proc/set_nav_target(atom/target)
-	nav_target = target
-	current_path = null
-	failed_steps = 0
-
-/mob/living/basic/nav_tester/process(seconds_per_tick)
-	if(!nav_target)
-		return
-	var/turf/our_turf = get_turf(src)
-	var/turf/goal = get_turf(nav_target)
-	if(!our_turf || !goal || our_turf == goal)
-		return
-
-	if(!length(current_path))
-		current_path = nav_jps_find_path(src, nav_target, max_distance = 0)
-		if(!length(current_path))
-			return
-
-	var/turf/next_step = current_path[1]
-	var/old_turf = our_turf
-	step_towards(src, next_step)
-
-	if(get_turf(src) == next_step)
-		current_path.Cut(1, 2)
-		failed_steps = 0
-	else if(get_turf(src) != old_turf)
-		// We moved but not where we planned (bumped along); trust the mesh, recompute.
-		current_path = null
-	else
-		failed_steps++
-		if(failed_steps >= 2)
-			current_path = null // stuck: mob or door in the way, get a fresh path
-			failed_steps = 0
+	GLOB.move_manager.navmesh_astar_move(
+		src,
+		target,
+		delay = 2,
+		repath_delay = 1 SECONDS,
+		max_path_length = 0,
+		access = list(),
+	)
 
 ADMIN_VERB(navmesh_spawn_tester, R_DEBUG, "Navmesh: Spawn Tester", "Spawns a pawn that walks a navmesh path to the set goal.", ADMIN_CATEGORY_DEBUG)
 	var/turf/here = get_turf(user.mob)
