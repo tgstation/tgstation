@@ -38,6 +38,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		/obj/item/paper,
 		/obj/item/photo,
 		/obj/item/tcgcard,
+		/obj/item/paperplane,
 	)
 	/// List of types which should be allowed to be faxed if hacked
 	var/static/list/exotic_types = list(
@@ -54,7 +55,6 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		/obj/item/holochip,
 		/obj/item/stack/spacecash,
 		/obj/item/throwing_star,
-		/obj/item/paperplane,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
