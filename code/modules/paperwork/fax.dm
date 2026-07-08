@@ -54,6 +54,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		/obj/item/holochip,
 		/obj/item/stack/spacecash,
 		/obj/item/throwing_star,
+		/obj/item/paperplane,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
