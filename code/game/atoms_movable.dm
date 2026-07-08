@@ -228,7 +228,7 @@
 	if(old_density == density)
 		return
 
-	if(!(flags_1 & NAV_IRRELEVANT_1))
+	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
 		if(isturf(loc))
 			var/turf/our_turf = loc
 			our_turf.nav_dirty()

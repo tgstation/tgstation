@@ -1,12 +1,3 @@
-/*
- * Per-turf navmesh storage and bake logic.
- *
- * nav_bake() classifies each of the 4 outgoing cardinal edges once and caches the result in nav_pass
- * (packed bits) plus, for conditional edges, nav_blockers. The classification mirrors the CARDINAL
- * body of /turf/proc/LinkBlockedWithAccess (code/__HELPERS/paths/path.dm) but records WHY an edge is
- * blocked (statically vs per-mover) instead of returning a single bool for one specific mover.
- */
-
 /// Packed passability bits. null = unbaked / dirty. See code/__DEFINES/navmesh.dm for layout.
 /turf/var/nav_pass = null
 /// Lazy assoc: "[dir]" -> flat list of conditional blocker entries (numbers = pass_flags masks,
@@ -53,15 +44,10 @@
 	nav_pass = packed
 	nav_blockers = blockers
 
-/**
- * Classifies the outgoing edge from src to dest in direction `dir`, returning the OR of the relevant
- * NAV_* bits for that dir and appending any conditional blocker entries to `edge_blockers`.
- *
- * Parity notes vs LinkBlockedWithAccess:
- * - dest.density is a hard block there (dense dest turfs are pre-filtered). Same here.
- * - source border objects are consulted with the forward dir, dest contents with the reverse dir.
- * - the "!density && can_astar_pass == CANASTARPASS_DENSITY -> skip" optimization is preserved.
- */
+/*
+* Classifies the outgoing edge from src to dest in direction `dir`, returning the OR of the relevant
+* NAV_* bits for that dir and appending any conditional blocker entries to `edge_blockers`.
+*/
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
 	// --- destination turf itself ---
 	if(dest.density)

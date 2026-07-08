@@ -29,6 +29,9 @@ SUBSYSTEM_DEF(navmesh)
 	///All zlevels we care about (filled with previous vars)
 	var/list/auto_dirty_zlevels = list()
 
+	///Space turfs are never prebaked - nothing meaningfully paths through open space
+	var/list/space_type_cache
+
 	/// If TRUE, A* cross-checks every cached edge verdict against LinkBlockedWithAccess and CRASHes
 	/// on mismatch. Expensive; for catching stale-cache / classification bugs during testing.
 	var/validate_against_jps = FALSE
@@ -59,6 +62,8 @@ SUBSYSTEM_DEF(navmesh)
 		/obj/structure/girder,
 		/obj/structure/thing_boss_spike,
 	))
+
+	space_type_cache = typecacheof(/turf/open/space)
 
 	for(var/z in 1 to world.maxz)
 		prebake_z(z)
@@ -109,10 +114,12 @@ SUBSYSTEM_DEF(navmesh)
 	if(!can_fire)
 		can_fire = TRUE
 
-///Bake every turf on a z-level. NOT queued so dont just run this please.
+///Bake every non-space turf on a z-level. NOT queued so dont just run this please.
 /datum/controller/subsystem/navmesh/proc/prebake_z(z_level)
 	var/count = 0
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))
+		if(space_type_cache[baking_turf.type])
+			continue
 		baking_turf.nav_bake()
 		count++
 		CHECK_TICK

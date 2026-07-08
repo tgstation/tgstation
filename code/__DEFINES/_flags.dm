@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_NEW_GAGS_PREVIEW_1 (1<<18)
 ///This atom should not affect navigation, and does not cause changes in navigation. Useful for mobs and things that move a lot but really should be ignored for navigation
 #define NAV_IRRELEVANT_1 (1<<19)
+///This atom is always baked into the navmesh as a live conditional entry regardless of density (doors), so toggling its density never changes the baked result - skip the nav_dirty() a density change would otherwise trigger
+#define NAV_ALWAYS_CONDITIONAL_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
