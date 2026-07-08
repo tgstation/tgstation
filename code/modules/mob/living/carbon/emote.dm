@@ -28,7 +28,6 @@
 	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 		return FALSE
 	return ..()
-	return
 
 /datum/emote/living/carbon/crack
 	key = "crack"
