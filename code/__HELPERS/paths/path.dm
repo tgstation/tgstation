@@ -96,6 +96,10 @@
 	var/list/datum/callback/on_finish
 	/// Datum that holds the canpass info of this pathing attempt. This is what CanAstarPass sees
 	var/datum/can_pass_info/pass_info
+	/// Accumulated tick-usage-percentage spent in this datum's search_step() calls, summed across
+	/// however many subsystem ticks the search was spread over. Convert with TICK_DELTA_TO_MS() for
+	/// actual compute time, as opposed to wall-clock time which also counts time spent queued/yielded.
+	var/compute_time = 0
 
 /datum/pathfind/Destroy(force)
 	. = ..()

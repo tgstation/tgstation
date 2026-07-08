@@ -32,7 +32,10 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
 		var/datum/pathfind/path = currentrun[length(currentrun)]
-		if(!path.search_step()) // Something's wrong
+		var/step_start = TICK_USAGE_REAL
+		var/step_ok = path.search_step()
+		path.compute_time += TICK_USAGE_REAL - step_start
+		if(!step_ok) // Something's wrong
 			path.early_exit()
 			currentrun.len--
 			continue

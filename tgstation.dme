@@ -5920,7 +5920,6 @@
 #include "code\modules\movespeed\modifiers\mobs.dm"
 #include "code\modules\movespeed\modifiers\reagent.dm"
 #include "code\modules\movespeed\modifiers\status_effects.dm"
-#include "code\modules\navmesh\nav_astar.dm"
 #include "code\modules\navmesh\nav_debug.dm"
 #include "code\modules\navmesh\nav_jps.dm"
 #include "code\modules\navmesh\navmesh_turf.dm"

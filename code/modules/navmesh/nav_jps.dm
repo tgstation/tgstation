@@ -120,7 +120,9 @@
 		if(path_box[1])
 			return null
 		var/turf/next_turf = get_step(current_turf, heading)
-		if(!NAV_CAN_STEP_TO(current_turf, heading, next_turf))
+		var/can_step
+		NAV_CAN_STEP_TO(current_turf, heading, next_turf, can_step)
+		if(!can_step)
 			return null
 		current_turf = next_turf
 		steps_taken++
@@ -146,21 +148,37 @@
 		var/turf/_ww = get_step(current_turf, WEST)
 		switch(heading)
 			if(NORTH)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, NORTHWEST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, NORTHEAST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(_ew, NORTH, current_turf, NORTHEAST, get_step(current_turf, NORTHEAST)) || NAV_TURF_CANT_WE_CAN_TO(_ww, NORTH, current_turf, NORTHWEST, get_step(current_turf, NORTHWEST)))
-					interesting = TRUE
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, NORTHWEST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, NORTHEAST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ew, NORTH, current_turf, NORTHEAST, get_step(current_turf, NORTHEAST), interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ww, NORTH, current_turf, NORTHWEST, get_step(current_turf, NORTHWEST), interesting)
 			if(SOUTH)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, SOUTHWEST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, SOUTHEAST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(_ew, SOUTH, current_turf, SOUTHEAST, get_step(current_turf, SOUTHEAST)) || NAV_TURF_CANT_WE_CAN_TO(_ww, SOUTH, current_turf, SOUTHWEST, get_step(current_turf, SOUTHWEST)))
-					interesting = TRUE
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, SOUTHWEST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, SOUTHEAST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ew, SOUTH, current_turf, SOUTHEAST, get_step(current_turf, SOUTHEAST), interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ww, SOUTH, current_turf, SOUTHWEST, get_step(current_turf, SOUTHWEST), interesting)
 			if(EAST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHEAST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHEAST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(_ss, EAST, current_turf, SOUTHEAST, get_step(current_turf, SOUTHEAST)) || NAV_TURF_CANT_WE_CAN_TO(_ns, EAST, current_turf, NORTHEAST, get_step(current_turf, NORTHEAST)))
-					interesting = TRUE
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHEAST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHEAST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ss, EAST, current_turf, SOUTHEAST, get_step(current_turf, SOUTHEAST), interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ns, EAST, current_turf, NORTHEAST, get_step(current_turf, NORTHEAST), interesting)
 			if(WEST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHWEST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHWEST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(_ss, WEST, current_turf, SOUTHWEST, get_step(current_turf, SOUTHWEST)) || NAV_TURF_CANT_WE_CAN_TO(_ns, WEST, current_turf, NORTHWEST, get_step(current_turf, NORTHWEST)))
-					interesting = TRUE
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHWEST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHWEST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ss, WEST, current_turf, SOUTHWEST, get_step(current_turf, SOUTHWEST), interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(_ns, WEST, current_turf, NORTHWEST, get_step(current_turf, NORTHWEST), interesting)
 
 		if(interesting)
 			var/datum/nav_jps_node/newnode = new /datum/nav_jps_node(current_turf, parent_node, steps_taken)
@@ -181,7 +199,9 @@
 		if(path_box[1])
 			return
 		var/turf/next_turf = get_step(current_turf, heading)
-		if(!NAV_CAN_STEP_TO(current_turf, heading, next_turf))
+		var/can_step
+		NAV_CAN_STEP_TO(current_turf, heading, next_turf, can_step)
+		if(!can_step)
 			return
 		lag_turf = current_turf
 		current_turf = next_turf
@@ -209,31 +229,47 @@
 
 		switch(heading)
 			if(NORTHWEST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, NORTHEAST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHWEST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(lag_turf, NORTH, current_turf, EAST, _ew) || NAV_TURF_CANT_WE_CAN_TO(lag_turf, WEST, current_turf, SOUTH, _ss))
-					interesting = TRUE
-				else
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, NORTHEAST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHWEST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, NORTH, current_turf, EAST, _ew, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, WEST, current_turf, SOUTH, _ss, interesting)
+				if(!interesting)
 					possible_child_node = nav_jps_lateral_scan(current_turf, WEST, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box) \
 						|| nav_jps_lateral_scan(current_turf, NORTH, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box)
 			if(NORTHEAST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, NORTHWEST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHEAST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(lag_turf, NORTH, current_turf, WEST, _ww) || NAV_TURF_CANT_WE_CAN_TO(lag_turf, EAST, current_turf, SOUTH, _ss))
-					interesting = TRUE
-				else
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, NORTHWEST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, SOUTH, _ss, SOUTHEAST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, NORTH, current_turf, WEST, _ww, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, EAST, current_turf, SOUTH, _ss, interesting)
+				if(!interesting)
 					possible_child_node = nav_jps_lateral_scan(current_turf, EAST, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box) \
 						|| nav_jps_lateral_scan(current_turf, NORTH, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box)
 			if(SOUTHWEST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, SOUTHEAST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHWEST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(lag_turf, SOUTH, current_turf, EAST, _ew) || NAV_TURF_CANT_WE_CAN_TO(lag_turf, WEST, current_turf, NORTH, _ns))
-					interesting = TRUE
-				else
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, EAST, _ew, SOUTHEAST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHWEST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, SOUTH, current_turf, EAST, _ew, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, WEST, current_turf, NORTH, _ns, interesting)
+				if(!interesting)
 					possible_child_node = nav_jps_lateral_scan(current_turf, SOUTH, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box) \
 						|| nav_jps_lateral_scan(current_turf, WEST, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box)
 			if(SOUTHEAST)
-				if(NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, SOUTHWEST) || NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHEAST) \
-					|| NAV_TURF_CANT_WE_CAN_TO(lag_turf, SOUTH, current_turf, WEST, _ww) || NAV_TURF_CANT_WE_CAN_TO(lag_turf, EAST, current_turf, NORTH, _ns))
-					interesting = TRUE
-				else
+				NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, WEST, _ww, SOUTHWEST, interesting)
+				if(!interesting)
+					NAV_STEP_NOT_HERE_BUT_THERE_TO(current_turf, NORTH, _ns, NORTHEAST, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, SOUTH, current_turf, WEST, _ww, interesting)
+				if(!interesting)
+					NAV_TURF_CANT_WE_CAN_TO(lag_turf, EAST, current_turf, NORTH, _ns, interesting)
+				if(!interesting)
 					possible_child_node = nav_jps_lateral_scan(current_turf, SOUTH, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box) \
 						|| nav_jps_lateral_scan(current_turf, EAST, null, goal, mintargetdist, max_distance, is_flying, pass_info, open, found_turfs, path_box)
 

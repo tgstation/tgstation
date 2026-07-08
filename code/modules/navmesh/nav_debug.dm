@@ -55,28 +55,37 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 		return
 	var/datum/can_pass_info/info = nav_debug_profile(profile)
 
-	var/nav_start = TICK_USAGE_REAL
-	var/list/nav_path = nav_find_path(start, goal, info, max_distance = 0)
-	var/nav_ms = TICK_USAGE_TO_MS(nav_start)
-
 	var/nav_jps_start = TICK_USAGE_REAL
 	var/list/nav_jps_path = nav_jps_find_path(start, goal, info, max_distance = 200)
 	var/nav_jps_ms = TICK_USAGE_TO_MS(nav_jps_start)
 
 	// A/B comparison against the existing JPS pathfinder (read-only use of the old system). Unlike
 	// nav_find_path/nav_jps_find_path (synchronous), get_path_to yields on SSpathfinder's async queue
-	// via UNTIL(), potentially across several ticks - TICK_USAGE_REAL/TO_MS only measures the current
-	// tick's CPU%, so it goes nonsensical (even negative) across a yield. Use wall-clock time instead.
+	// via UNTIL(), potentially across several ticks, so TICK_USAGE_REAL/TO_MS can't be taken as a single
+	// before/after snapshot here. We build the pathfind datum ourselves (rather than going through
+	// get_path_to) so we can read back its accumulated compute_time - the sum of its own search_step()
+	// tick usage, which SSpathfinder.fire() tracks regardless of how many ticks the search spans.
 	var/list/access = info.access || list()
-	var/jps_start = REALTIMEOFDAY
-	var/list/jps_path = get_path_to(user.mob, goal, max_distance = 0, access = access)
-	var/jps_ms = (REALTIMEOFDAY - jps_start) * 100
+	var/list/hand_around = list()
+	var/datum/pathfind/jps/legacy_path = new()
+	legacy_path.setup(user.mob, access, /*max_distance*/ 0, /*simulated_only*/ TRUE, /*avoid*/ null, \
+		list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)), goal, /*mintargetdist*/ 0, /*skip_first*/ TRUE, DIAGONAL_REMOVE_CLUNKY)
+	var/list/jps_path
+	var/jps_ms
+	if(legacy_path.start())
+		SSpathfinder.active_pathing += legacy_path
+		UNTIL(length(hand_around))
+		jps_path = islist(hand_around[1]) ? hand_around[1] : list()
+		jps_ms = TICK_DELTA_TO_MS(legacy_path.compute_time)
+	else
+		qdel(legacy_path)
+		jps_path = list()
+		jps_ms = 0
 
 	for(var/turf/step as anything in nav_jps_path)
 		new /obj/effect/temp_visual/nav_marker(step)
 
-	to_chat(user, span_boldnotice("Nav A*: [length(nav_path) ? "[length(nav_path)] steps" : "NO PATH"] in [nav_ms]ms. \
-		Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
+	to_chat(user, span_boldnotice("Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
 		JPS (legacy): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
 		(baked so far: [SSnavmesh.bakes], cond evals: [SSnavmesh.cond_evaluations])"))
 
@@ -154,7 +163,7 @@ ADMIN_VERB(navmesh_prebake_all, R_DEBUG, "Navmesh: Prebake All Z-Levels", "Eager
 		return
 
 	if(!length(current_path))
-		current_path = get_nav_path_to(src, nav_target, max_distance = 0)
+		current_path = nav_jps_find_path(src, nav_target, max_distance = 0)
 		if(!length(current_path))
 			return
 

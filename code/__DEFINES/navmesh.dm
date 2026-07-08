@@ -37,8 +37,8 @@
 #define NAV_CLASS_BIT(pass_info, dir) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? NAV_FLIGHT(dir) : NAV_GROUND(dir))
 
 // --- hot-path query macros ----------------------------------------------------------------------
-// Pathfinding touches these once per neighbour per expanded node, so they are inlined to dodge proc
-// call overhead. The rare conditional-entry walk stays a proc (nav_edge_cond).
+// Pathfinding touches these once per neighbour per expanded node, so they (including the rare
+// conditional-entry walk, formerly the nav_edge_cond proc) are inlined to dodge proc call overhead.
 
 /// TRUE if the mover is in a movement class that reads the flight bits. Compute ONCE per search.
 #define NAV_IS_FLYING(pass_info) (((pass_info).movement_type & MOVETYPES_NOT_TOUCHING_GROUND) ? TRUE : FALSE)
@@ -48,13 +48,34 @@
 /// Statement macro: ensure a turf's edges are baked before its bits are read.
 #define NAV_ENSURE_BAKED(T) if(isnull((T).nav_pass)) { (T).nav_bake(); }
 
-/// Boolean expression: can a mover step from an ALREADY-BAKED turf T in cardinal `dir`? An edge is
-/// open iff its movement-class bit is set and, when the edge is conditional, the per-mover entry
-/// walk permits it. `is_flying` is the precomputed NAV_IS_FLYING(pass_info).
-#define NAV_EDGE_OPEN_BAKED(T, dir, is_flying, pass_info) ( \
-	((T).nav_pass & NAV_CLASS_BIT_FAST(dir, is_flying)) && \
-	(!((T).nav_pass & NAV_COND(dir)) || (T).nav_edge_cond((dir), (pass_info))) \
-)
+/// Statement macro: sets `result` TRUE iff a mover can step from an ALREADY-BAKED turf T in cardinal
+/// `dir`. An edge is open iff its movement-class bit is set and, when the edge is conditional, every
+/// blocker entry on it permits the mover (numeric entries are a pass_flags bit-test; atom entries are
+/// evaluated live via CanAStarPass, source-side with the forward dir and dest-side with the reverse
+/// dir, mirroring LinkBlockedWithAccess in code/__HELPERS/paths/path.dm). `is_flying` is the
+/// precomputed NAV_IS_FLYING(pass_info).
+#define NAV_EDGE_OPEN_BAKED(T, dir, is_flying, pass_info, result) \
+	do { \
+		result = ((T).nav_pass & NAV_CLASS_BIT_FAST((dir), (is_flying))) ? TRUE : FALSE; \
+		if(result && ((T).nav_pass & NAV_COND(dir))) { \
+			for(var/_navec_entry in (T).nav_blockers?["[(dir)]"]) { \
+				SSnavmesh.cond_evaluations++; \
+				if(isnum(_navec_entry)) { \
+					if(!((pass_info).pass_flags & _navec_entry)) { \
+						result = FALSE; \
+						break; \
+					} \
+				} else { \
+					var/atom/movable/_navec_blocker = _navec_entry; \
+					var/_navec_eval_dir = (_navec_blocker.loc == (T)) ? (dir) : REVERSE_DIR(dir); \
+					if(!_navec_blocker.CanAStarPass(_navec_eval_dir, (pass_info))) { \
+						result = FALSE; \
+						break; \
+					} \
+				} \
+			} \
+		} \
+	} while(FALSE)
 
 /// Integer octile heuristic scaled to step costs (cardinal 10, diagonal 14).
 #define NAV_HEURISTIC(a, b) (10 * (abs((a).x - (b).x) + abs((a).y - (b).y)) - 6 * min(abs((a).x - (b).x), abs((a).y - (b).y)))
@@ -62,25 +83,33 @@
 /// Statement macro: sets `result` TRUE iff a diagonal step from ALREADY-BAKED `origin` in composite
 /// `dir` can round the corner, i.e. at least one of the two L-routes is clear (both cardinal hops
 /// traversable). Bakes the midstep turfs as needed. Mirrors the corner rule in LinkBlockedWithAccess
-/// (code/__HELPERS/paths/path.dm) so generated paths are actually walkable. `_nav_mid` is a scratch.
+/// (code/__HELPERS/paths/path.dm) so generated paths are actually walkable. `_nav_mid`/`_nav_edge_ok`
+/// are scratch.
 #define NAV_DIAGONAL_OPEN(origin, dir, is_flying, pass_info, result) \
 	do { \
 		result = FALSE; \
 		var/_nav_ns = (dir) & (NORTH | SOUTH); \
 		var/_nav_ew = (dir) & (EAST | WEST); \
 		var/turf/_nav_mid; \
-		if(NAV_EDGE_OPEN_BAKED(origin, _nav_ns, is_flying, pass_info)) { \
+		var/_nav_edge_ok; \
+		NAV_EDGE_OPEN_BAKED(origin, _nav_ns, is_flying, pass_info, _nav_edge_ok); \
+		if(_nav_edge_ok) { \
 			_nav_mid = get_step(origin, _nav_ns); \
 			if(_nav_mid) { \
 				NAV_ENSURE_BAKED(_nav_mid); \
-				if(NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ew, is_flying, pass_info)) { result = TRUE; } \
+				NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ew, is_flying, pass_info, _nav_edge_ok); \
+				if(_nav_edge_ok) { result = TRUE; } \
 			} \
 		} \
-		if(!result && NAV_EDGE_OPEN_BAKED(origin, _nav_ew, is_flying, pass_info)) { \
-			_nav_mid = get_step(origin, _nav_ew); \
-			if(_nav_mid) { \
-				NAV_ENSURE_BAKED(_nav_mid); \
-				if(NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ns, is_flying, pass_info)) { result = TRUE; } \
+		if(!result) { \
+			NAV_EDGE_OPEN_BAKED(origin, _nav_ew, is_flying, pass_info, _nav_edge_ok); \
+			if(_nav_edge_ok) { \
+				_nav_mid = get_step(origin, _nav_ew); \
+				if(_nav_mid) { \
+					NAV_ENSURE_BAKED(_nav_mid); \
+					NAV_EDGE_OPEN_BAKED(_nav_mid, _nav_ns, is_flying, pass_info, _nav_edge_ok); \
+					if(_nav_edge_ok) { result = TRUE; } \
+				} \
 			} \
 		} \
 	} while(FALSE)
@@ -91,15 +120,45 @@
 // let nav_can_step read the cached bit). Used only inside /datum/nav_jps procs, which expose `is_flying`
 // and `pass_info` as locals, so the macros reference those names directly like the JPS macros do.
 
-/// TRUE if the mover can step from `cur_turf` in cardinal or diagonal `dir` to the given `dest` turf,
-/// reading cached bits (bakes lazily). Handles space exclusion and diagonal corner-rounding inside
-/// nav_can_step_to.
-#define NAV_CAN_STEP_TO(cur_turf, dir, dest) ((cur_turf) && (cur_turf).nav_can_step_to((dir), (dest), is_flying, pass_info))
-/// Forced-neighbour test: we canNOT step `dirA` but we CAN step `dirB` from cur_turf. `destA` is the
-/// already-known destination of `dirA` from cur_turf (e.g. a cached cardinal neighbour), so that leg
-/// skips its get_step().
-#define NAV_STEP_NOT_HERE_BUT_THERE_TO(cur_turf, dirA, destA, dirB) (!NAV_CAN_STEP_TO(cur_turf, dirA, destA) && NAV_CAN_STEP_TO(cur_turf, dirB, get_step((cur_turf), (dirB))))
-/// Forced-neighbour test: a border stops our parent reaching a turf we can reach. `dest_cur` is the
-/// already-known destination of `dir_cur` from cur_turf (e.g. a cached cardinal neighbour), so that leg
-/// skips its get_step().
-#define NAV_TURF_CANT_WE_CAN_TO(parent_turf, dir_parent, cur_turf, dir_cur, dest_cur) (!NAV_CAN_STEP_TO(parent_turf, dir_parent, get_step((parent_turf), (dir_parent))) && NAV_CAN_STEP_TO(cur_turf, dir_cur, dest_cur))
+/// Statement macro: sets `result` TRUE iff the mover can step from `cur_turf` in cardinal or diagonal
+/// `dir` to the given `dest` turf, reading cached bits (bakes lazily). Handles space exclusion and
+/// diagonal corner-rounding. Inlined (rather than a /turf/proc) to dodge the proc call in the JPS
+/// inner loop, same reasoning as NAV_DIAGONAL_OPEN above.
+#define NAV_CAN_STEP_TO(cur_turf, dir, dest, result) \
+	do { \
+		result = FALSE; \
+		var/turf/_navcs_cur = (cur_turf); \
+		var/turf/_navcs_dest = (dest); \
+		if(_navcs_cur && _navcs_dest && !SSpathfinder.space_type_cache[_navcs_dest.type]) { \
+			NAV_ENSURE_BAKED(_navcs_cur); \
+			if((dir) & ((dir) - 1)) { \
+				NAV_DIAGONAL_OPEN(_navcs_cur, (dir), is_flying, pass_info, result); \
+			} else { \
+				NAV_EDGE_OPEN_BAKED(_navcs_cur, (dir), is_flying, pass_info, result); \
+			} \
+		} \
+	} while(FALSE)
+/// Statement macro: sets `result` TRUE for a forced-neighbour test - we canNOT step `dirA` but we CAN
+/// step `dirB` from cur_turf. `destA` is the already-known destination of `dirA` from cur_turf (e.g. a
+/// cached cardinal neighbour), so that leg skips its get_step(). Short-circuits like the `&&` it replaces.
+#define NAV_STEP_NOT_HERE_BUT_THERE_TO(cur_turf, dirA, destA, dirB, result) \
+	do { \
+		NAV_CAN_STEP_TO((cur_turf), (dirA), (destA), result); \
+		if(!result) { \
+			NAV_CAN_STEP_TO((cur_turf), (dirB), get_step((cur_turf), (dirB)), result); \
+		} else { \
+			result = FALSE; \
+		} \
+	} while(FALSE)
+/// Statement macro: sets `result` TRUE for a forced-neighbour test - a border stops our parent reaching
+/// a turf we can reach. `dest_cur` is the already-known destination of `dir_cur` from cur_turf (e.g. a
+/// cached cardinal neighbour), so that leg skips its get_step(). Short-circuits like the `&&` it replaces.
+#define NAV_TURF_CANT_WE_CAN_TO(parent_turf, dir_parent, cur_turf, dir_cur, dest_cur, result) \
+	do { \
+		NAV_CAN_STEP_TO((parent_turf), (dir_parent), get_step((parent_turf), (dir_parent)), result); \
+		if(!result) { \
+			NAV_CAN_STEP_TO((cur_turf), (dir_cur), (dest_cur), result); \
+		} else { \
+			result = FALSE; \
+		} \
+	} while(FALSE)

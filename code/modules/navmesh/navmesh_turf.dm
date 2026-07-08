@@ -32,58 +32,11 @@
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
 
-/**
- * The core query: can `pass_info`'s mover step from src to the adjacent turf in cardinal `dir`?
- * Bakes lazily on first touch. Convenience proc for non-hot callers (debug tooling, the test pawn);
- * the A* inner loop uses the NAV_EDGE_OPEN_BAKED macro directly to avoid this proc call.
- */
-/turf/proc/nav_edge_open(dir, datum/can_pass_info/pass_info)
-	NAV_ENSURE_BAKED(src)
-	return NAV_EDGE_OPEN_BAKED(src, dir, NAV_IS_FLYING(pass_info), pass_info)
 
-/**
- * Unified cardinal-or-diagonal step test used by the JPS-over-navmesh scanner (via the NAV_CAN_STEP_TO
- * macro). Bakes lazily. `is_flying` is precomputed once per search by the caller.
- * Takes the destination turf directly rather than deriving it with get_step(src, dir) internally, so
- * callers that already have the stepped-to turf on hand (loop advance, cached cardinal neighbours in
- * the scan switch blocks) don't pay for a second get_step() computing the same thing.
- *
- * Applies the same space exclusion JPS gets from simulated_only: a mover won't path into space
- * turfs. This keeps that policy out of the baked mesh (which stays movement-only) while matching the
- * default get_path_to behaviour we benchmark against.
- */
-/turf/proc/nav_can_step_to(dir, turf/dest, is_flying, datum/can_pass_info/pass_info)
-	if(isnull(dest) || SSpathfinder.space_type_cache[dest.type])
-		return FALSE
-	NAV_ENSURE_BAKED(src)
-	if(dir & (dir - 1)) // diagonal
-		var/diag_ok
-		NAV_DIAGONAL_OPEN(src, dir, is_flying, pass_info, diag_ok)
-		return diag_ok
-	return NAV_EDGE_OPEN_BAKED(src, dir, is_flying, pass_info)
-
-/**
- * Slow path for a conditional edge: returns TRUE iff `pass_info`'s mover passes every conditional
- * entry on the outgoing `dir` edge. Only reached when the edge's NAV_COND bit is set (uncommon), so
- * the proc-call and list-walk cost here is off the common path.
- *
- * Entries are either a pass_flags mask (bit-test) or an atom evaluated live via CanAStarPass. Source-
- * tile border objects evaluate with the forward dir; destination-side atoms with the reverse dir,
- * mirroring LinkBlockedWithAccess (code/__HELPERS/paths/path.dm).
- */
-/turf/proc/nav_edge_cond(dir, datum/can_pass_info/pass_info)
-	var/list/entries = nav_blockers?["[dir]"]
-	for(var/entry in entries)
-		SSnavmesh.cond_evaluations++
-		if(isnum(entry))
-			if(!(pass_info.pass_flags & entry))
-				return FALSE
-		else
-			var/atom/movable/blocker = entry
-			var/eval_dir = (blocker.loc == src) ? dir : REVERSE_DIR(dir)
-			if(!blocker.CanAStarPass(eval_dir, pass_info))
-				return FALSE
-	return TRUE
+// Unified cardinal-or-diagonal step test used by the JPS-over-navmesh scanner, and the conditional-edge
+// blocker walk (numeric = pass_flags mask, atom = evaluated live via CanAStarPass), both live as the
+// NAV_CAN_STEP_TO / NAV_EDGE_OPEN_BAKED statement macros in code/__DEFINES/navmesh.dm, not procs here -
+// they're on the A* and JPS-over-navmesh hot loops, so they're inlined the same way NAV_DIAGONAL_OPEN is.
 
 /**
  * Computes and caches all 4 outgoing edges for this turf.
