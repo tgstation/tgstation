@@ -27,6 +27,7 @@
 	maxHealth = 3
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
+	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/chick
 
@@ -71,7 +72,7 @@
 
 /// We don't grow into a chicken if we're not conscious.
 /mob/living/basic/chick/proc/ready_to_grow()
-	return (stat == CONSCIOUS)
+    return (stat == CONSCIOUS) && !istype(loc, /obj/item/mob_holder)
 
 /// Variant of chick that just spawns in the holodeck so you can pet it. Doesn't grow up.
 /mob/living/basic/chick/permanent
