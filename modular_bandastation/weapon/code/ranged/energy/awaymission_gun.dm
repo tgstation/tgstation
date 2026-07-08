@@ -3,6 +3,12 @@
 	desc = "Прототип оружия с миниатюрным реактором для исследований в крайне отдаленных секторах."
 	icon = 'modular_bandastation/weapon/icons/ranged/energy.dmi'
 	icon_state = "laser_gate"
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
+	)
 	lefthand_file = 'modular_bandastation/weapon/icons/ranged/inhands/energy/lefthand.dmi'
 	righthand_file = 'modular_bandastation/weapon/icons/ranged/inhands/energy/righthand.dmi'
 	inhand_icon_state = "laser_gate"
@@ -46,6 +52,13 @@
 	позволяющей в короткие сроки восполнить необходимую электроэнергию с помощью ручного труда и конвертации личной энергии подключенного к системе зарядки. \
 	\nТеперь еще более нелепый дизайн с торчащими проводами!"
 	icon_state = "laser_gate_mk2"
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 
 /obj/item/gun/energy/laser/awaymission_aeg/mk2/attack_self(mob/living/user)
 	. = ..()
@@ -73,10 +86,18 @@
 	id = "exploreverse_mk1"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75,
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	transfered_materials = list(
+		/obj/item/gun/energy/laser/awaymission_aeg = /obj/item/gun/energy/laser/awaymission_aeg::custom_materials,
+		/obj/item/firing_pin/explorer = /obj/item/firing_pin/explorer::custom_materials,
+		/obj/item/stock_parts/power_store/cell = list(),
+		/obj/item/ammo_casing/energy/lasergun/awaymission_aeg = list(),
 	)
 	build_path = /obj/item/gun/energy/laser/awaymission_aeg
 	category = list(
@@ -89,11 +110,18 @@
 	id = "exploreverse_mk2"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	transfered_materials = list(
+		/obj/item/gun/energy/laser/awaymission_aeg/mk2 = /obj/item/gun/energy/laser/awaymission_aeg/mk2::custom_materials,
+		/obj/item/firing_pin/explorer = /obj/item/firing_pin/explorer::custom_materials,
+		/obj/item/stock_parts/power_store/cell = list(),
+		/obj/item/ammo_casing/energy/lasergun/awaymission_aeg = list(),
 	)
 	build_path = /obj/item/gun/energy/laser/awaymission_aeg/mk2
 	category = list(

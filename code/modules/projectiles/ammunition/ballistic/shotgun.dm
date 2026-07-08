@@ -241,4 +241,9 @@
 	desc = "A 12 gauge anti-material slug. Great for breaching airlocks and windows, quickly and efficiently."
 	icon_state = "breacher"
 	projectile_type = /obj/projectile/bullet/shotgun_breaching
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
+	// BANDASTATION EDIT START: Custom slug design
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3,
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	// BANDASTATION EDIT END: Custom slug design

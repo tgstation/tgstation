@@ -1,5 +1,10 @@
 /obj/item/ai_module/zeroth/onecrew
 	name = "'Onecrew' Core AI Module"
+	custom_materials = list(
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	var/target_name = ""
 	laws = list("Только ИМЯ — член экипажа.")
 
