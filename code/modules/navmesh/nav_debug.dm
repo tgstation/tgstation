@@ -3,18 +3,6 @@
  * data, and pre-bake a z-level, plus a simple pawn that walks a nav path and repaths on obstruction.
  */
 
-/**
- * Rust-side A* over the live navmesh, via rust-g's byondapi `turf_pathfinder` feature.
- * Reads nav_pass / nav_blockers directly from each turf as it searches (locate + var reads over
- * BYOND's FFI), live-evaluating conditional edges through CanAStarPass so doors/access never go
- * stale - no graph is pre-serialized to Rust. See rust-g's src/turf_pathfinder.rs for the port.
- * Requires a rust-g build with the `turf_pathfinder` feature enabled (not in `default`/`all`).
- * Returns a /list of turfs from start to end, or an empty list if no path exists.
- */
-/proc/rustg_nav_astar(turf/start, turf/end, datum/can_pass_info/pass_info, is_flying, max_range)
-	var/static/loaded = load_ext(RUST_G, "byond:rustg_nav_astar_ffi")
-	return call_ext(loaded)(start, end, pass_info, is_flying, max_range)
-
 /// Transient marker dropped along a computed nav path.
 /obj/effect/temp_visual/nav_marker
 	name = "nav path marker"
@@ -114,7 +102,7 @@ ADMIN_VERB(navmesh_run_path, R_DEBUG, "Navmesh: Run Path", "Paths from your turf
 
 	to_chat(user, span_boldnotice("Nav JPS: [length(nav_jps_path) ? "[length(nav_jps_path)] steps" : "NO PATH"] in [nav_jps_ms]ms. \
 		JPS (legacy): [length(jps_path) ? "[length(jps_path)] steps" : "NO PATH"] in [jps_ms]ms. \
-		Rust A*: [rustg_nav_available ? (length(rustg_nav_path) ? "[length(rustg_nav_path)] steps in [rustg_nav_ms]ms" : "NO PATH") : "unavailable (rust-g missing turf_pathfinder)"]. \
+		Rust A*: [rustg_nav_available ? "[length(rustg_nav_path) ? "[length(rustg_nav_path)] steps" : "NO PATH"] in [rustg_nav_ms]ms" : "unavailable (rust-g missing turf_pathfinder)"]. \
 		(baked so far: [SSnavmesh.bakes], cond evals: [SSnavmesh.cond_evaluations])"))
 
 ADMIN_VERB(navmesh_inspect_turf, R_DEBUG, "Navmesh: Inspect Turf", "Prints the baked navmesh data for your current turf.", ADMIN_CATEGORY_DEBUG)
@@ -139,13 +127,6 @@ ADMIN_VERB(navmesh_prebake_z, R_DEBUG, "Navmesh: Prebake Z-Level", "Eagerly bake
 	var/start_time = REALTIMEOFDAY
 	var/count = SSnavmesh.prebake_z(here.z)
 	to_chat(user, span_boldnotice("Prebaked [count] turfs on z[here.z] in [(REALTIMEOFDAY - start_time) / 10]s."))
-
-ADMIN_VERB(navmesh_prebake_all, R_DEBUG, "Navmesh: Prebake All Z-Levels", "Eagerly bakes every turf on all z-levels.", ADMIN_CATEGORY_DEBUG)
-	var/start_time = REALTIMEOFDAY
-	var/total = 0
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		total += SSnavmesh.prebake_z(z)
-	to_chat(user, span_boldnotice("Prebaked [total] turfs across station z-levels in [(REALTIMEOFDAY - start_time) / 10]s."))
 
 /*
  * A minimal pawn that walks a nav path to a target and repaths when it gets stuck (something moved

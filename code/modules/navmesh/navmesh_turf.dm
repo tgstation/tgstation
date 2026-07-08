@@ -14,9 +14,10 @@
 /turf/var/list/nav_blockers
 
 /**
- * Marks this turf and its cardinal neighbours as needing a re-bake. Cheap (a handful of var writes,
- * no allocation) so it is safe to call from hot movement/density paths. Neighbours are dirtied
- * because their edge pointing back at us just went stale.
+ * Marks this turf and its cardinal neighbours as needing a re-bake, and queues them on SSnavmesh so
+ * the background baker picks them up. Cheap (a handful of var writes, no allocation) so it is safe to
+ * call from hot movement/density paths. Neighbours are dirtied because their edge pointing back at us
+ * just went stale.
  */
 /turf/proc/nav_dirty()
 	// Before the subsystem inits nothing is baked (every turf is null), so mapload changes need no
@@ -26,11 +27,13 @@
 	SSnavmesh.dirties++
 	nav_pass = null
 	nav_blockers = null
+	SSnavmesh.queue_turf_bake(src)
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
+			SSnavmesh.queue_turf_bake(neighbor)
 
 
 // Unified cardinal-or-diagonal step test used by the JPS-over-navmesh scanner, and the conditional-edge
