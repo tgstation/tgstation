@@ -20,7 +20,7 @@
 
 	// Fail state
 	converter.attack_self(leader)
-	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum from being AOE flashed, which is not intended.")
+	TEST_ASSERT(!GET_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum from being AOE flashed, which is not intended.")
 	leader.next_move = 0
 	leader.next_click = 0
 
@@ -28,7 +28,7 @@
 	var/obj/item/clothing/glasses = allocate(/obj/item/clothing/glasses/sunglasses)
 	peasant.equip_to_appropriate_slot(glasses)
 	leader.ClickOn(peasant)
-	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum despite being flashproof.")
+	TEST_ASSERT(!GET_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum despite being flashproof.")
 	qdel(glasses)
 	leader.next_move = 0
 	leader.next_click = 0
@@ -38,7 +38,7 @@
 
 	TEST_ASSERT((peasant.get_timed_status_effect_duration(/datum/status_effect/confusion) > 0), "Peasant was not confused after being flashed by the leader.") // Flash confuse
 	TEST_ASSERT(peasant.IsStun(), "Peasant was not stunned after being converted by the leader.") // Conversion stun
-	TEST_ASSERT(IS_REVOLUTIONARY(peasant), "Peasant did not gain revolution antag datum on conversion.")
+	TEST_ASSERT(GET_REVOLUTIONARY(peasant), "Peasant did not gain revolution antag datum on conversion.")
 	TEST_ASSERT_EQUAL(length(revolution.members), 2, "Expected revolution to have 2 members after the leader flashes the peasant.")
 
 /// Tests that cults can convert people with their rune

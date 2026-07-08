@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		CRASH("give_guns() was called without a summon guns global datum!")
 	if(to_equip.stat == DEAD || !to_equip.client || !to_equip.mind)
 		return
-	if(IS_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
+	if(GET_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 		return
 
 	if(!length(to_equip.mind.antag_datums) && prob(GLOB.summon_guns.survivor_probability))
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		CRASH("give_magic() was called without a summon magic global datum!")
 	if(to_equip.stat == DEAD || !to_equip.client || !to_equip.mind)
 		return
-	if(IS_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
+	if(GET_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 		return
 
 	if(!length(to_equip.mind.antag_datums) && prob(GLOB.summon_magic.survivor_probability))

@@ -57,7 +57,7 @@
 				offeredmob.gib()
 				return
 
-			if(IS_ASHWALKER(offeredmob) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
+			if(GET_ASHWALKER(offeredmob) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
 				visible_message(span_warning("Serrated tendrils carefully pull [offeredmob] to [src], absorbing the body and creating it anew."))
 				var/mob/deadmob
 				if(offeredmob.ckey)
@@ -79,14 +79,14 @@
 			var/deliverykey = offeredmob.fingerprintslast //ckey of whoever brought the body
 			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
 			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
-			if(deliverymob && (IS_ASHWALKER(deliverymob)) && (deliverykey in ashies.players_spawned) && (prob(40)))
+			if(deliverymob && (GET_ASHWALKER(deliverymob)) && (deliverykey in ashies.players_spawned) && (prob(40)))
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
 			offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 			offeredmob.gib(DROP_ALL_REMAINS)
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
-				if(IS_ASHWALKER(L))
+				if(GET_ASHWALKER(L))
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 				else
 					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)

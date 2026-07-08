@@ -15,7 +15,7 @@
 /datum/round_event/wizard/magical_rain/start()
 	for(var/mob/living/wizard in GLOB.alive_mob_list)
 		// give it to all wizards even if there are multiple
-		if(IS_WIZARD(wizard) && !HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
+		if(GET_WIZARD(wizard) && !HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
 			ADD_TRAIT(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT)
 			to_chat(wizard, span_reallybig(span_hypnophrase("You feel a magical force giving you resistance to rain!")))
 
@@ -25,6 +25,6 @@
 
 /datum/round_event/wizard/magical_rain/end()
 	for(var/mob/living/wizard in GLOB.alive_mob_list)
-		if(IS_WIZARD(wizard) && HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
+		if(GET_WIZARD(wizard) && HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
 			REMOVE_TRAIT(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT)
 			to_chat(wizard, span_notice("You feel your magical resistance to rain fade!"))

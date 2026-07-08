@@ -9,7 +9,7 @@
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(!changeling)
 		return
 	if(!changeling.chosen_sting)
@@ -20,7 +20,7 @@
 
 /datum/action/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, span_notice("We prepare our sting. Alt+click or click the middle mouse button on a target to sting them."))
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	changeling.chosen_sting = src
 
 	var/atom/movable/screen/ling/sting/sting = user.hud_used?.screen_objects[HUD_CHANGELING_STING]
@@ -30,7 +30,7 @@
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	changeling.chosen_sting = null
 
 	var/atom/movable/screen/ling/sting/sting = user.hud_used?.screen_objects[HUD_CHANGELING_STING]
@@ -40,14 +40,14 @@
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
-		var/datum/antagonist/changeling/changeling = IS_CHANGELING(src)
+		var/datum/antagonist/changeling/changeling = GET_CHANGELING(src)
 		if(changeling?.chosen_sting)
 			changeling.chosen_sting.unset_sting(src)
 
 /datum/action/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(!changeling.chosen_sting)
 		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
@@ -56,7 +56,7 @@
 		return
 	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE)))
 		return // no path within the sting's range is found. what a weird place to use the pathfinding system
-	if(IS_CHANGELING(target))
+	if(GET_CHANGELING(target))
 		sting_feedback(user, target)
 		changeling.chem_charges -= chemical_cost
 	return 1
@@ -65,7 +65,7 @@
 	if(!target)
 		return
 	to_chat(user, span_notice("We stealthily sting [target.name]."))
-	if(IS_CHANGELING(target))
+	if(GET_CHANGELING(target))
 		to_chat(target, span_warning("You feel a tiny prick."))
 	return 1
 
@@ -102,7 +102,7 @@
 
 /datum/action/changeling/sting/transformation/set_sting(mob/user)
 	selected_dna = null
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	var/datum/changeling_profile/new_selected_dna = changeling.select_dna()
 	if(QDELETED(src) || QDELETED(changeling) || QDELETED(user))
 		return
@@ -207,13 +207,13 @@
 
 /datum/action/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
-		var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+		var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 		return changeling.can_absorb_dna(target)
 
 /datum/action/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	..()
 	log_combat(user, target, "stung", "extraction sting")
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
 	return TRUE

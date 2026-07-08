@@ -24,7 +24,7 @@
 		I.updateappearance(mutcolor_update=1)
 		I.domutcheck()
 		I.PossessByPlayer(chosen_one.key)
-		var/datum/antagonist/wizard/master = IS_WIZARD(W)
+		var/datum/antagonist/wizard/master = GET_WIZARD(W)
 		if(!master.wiz_team)
 			master.create_wiz_team()
 		var/datum/antagonist/wizard/apprentice/imposter/imposter = new()

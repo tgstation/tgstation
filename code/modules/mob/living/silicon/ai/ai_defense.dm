@@ -143,7 +143,7 @@
 	balloon_alert(user, "disconnecting neural network...")
 	if(!tool.use_tool(src, user, (stat == DEAD ? 5 SECONDS : 40 SECONDS)))
 		return ITEM_INTERACT_SUCCESS
-	if(IS_MALF_AI(src))
+	if(GET_MALF_AI(src))
 		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))
 		user.electrocute_act(120, src)
 		opened = FALSE

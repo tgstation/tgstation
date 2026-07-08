@@ -63,7 +63,7 @@
 	for(var/mob/living/carbon/human/target in GLOB.alive_mob_list)
 		if(isspaceturf(target.loc) || !isnull(target.dna.species.outfit_important_for_life) || (ruins_spaceworthiness && !is_station_level(target.z)))
 			continue //#savetheminers
-		if(ruins_wizard_loadout && IS_WIZARD(target))
+		if(ruins_wizard_loadout && GET_WIZARD(target))
 			continue
 		if(item_set == CATGIRLS_2015) //Wizard code means never having to say you're sorry
 			target.gender = FEMALE

@@ -14,7 +14,7 @@
 	if(!isliving(usr))
 		return
 	var/mob/living/usr_is_living = usr
-	var/datum/antagonist/wizard/wizard_datum = IS_WIZARD(usr_is_living)
+	var/datum/antagonist/wizard/wizard_datum = GET_WIZARD(usr_is_living)
 	if(!wizard_datum)
 		return
 	compact = !compact

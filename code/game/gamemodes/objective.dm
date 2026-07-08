@@ -790,7 +790,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(!(IS_CHANGELING(P)) && !(P.mind in owners))
+			if(!(GET_CHANGELING(P)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -813,7 +813,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
-		var/datum/antagonist/changeling/changeling = IS_CHANGELING(M.current)
+		var/datum/antagonist/changeling/changeling = GET_CHANGELING(M.current)
 		if(!changeling || !changeling.stored_profiles)
 			continue
 		absorbed_count += changeling.absorbed_count
@@ -829,7 +829,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
-		var/datum/antagonist/changeling/changeling = IS_CHANGELING(M.current)
+		var/datum/antagonist/changeling/changeling = GET_CHANGELING(M.current)
 		if(!changeling || !changeling.stored_profiles)
 			continue
 		absorbed_count += changeling.absorbed_count
@@ -847,7 +847,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/absorb_changeling/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/ling_mind as anything in owners)
-		var/datum/antagonist/changeling/changeling = IS_CHANGELING(ling_mind.current)
+		var/datum/antagonist/changeling/changeling = GET_CHANGELING(ling_mind.current)
 		if(!changeling)
 			continue
 

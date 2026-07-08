@@ -52,7 +52,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(!.)
 		return
 	var/mob/user = owner
-	if(!user || !IS_CHANGELING(user))
+	if(!user || !GET_CHANGELING(user))
 		return
 	try_to_sting(user)
 
@@ -72,7 +72,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(disabled_by_fire && user.fire_stacks && user.on_fire)
 		user.balloon_alert(user, "on fire!")
 		return FALSE
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		changeling.adjust_chemicals(-chemical_cost)
@@ -92,7 +92,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(changeling.chem_charges < chemical_cost)
 		user.balloon_alert(user, "needs [chemical_cost] chemicals!")
 		return FALSE

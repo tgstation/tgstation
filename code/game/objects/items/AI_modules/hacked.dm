@@ -55,7 +55,7 @@
 	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
 		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
 		return
-	if(IS_MALF_AI(malf_candidate)) //Already malf
+	if(GET_MALF_AI(malf_candidate)) //Already malf
 		to_chat(sender, span_warning("Unknown error occurred. Upload process aborted."))
 		return
 

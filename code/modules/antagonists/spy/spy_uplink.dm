@@ -56,7 +56,7 @@
 /datum/component/spy_uplink/proc/on_attack_self(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(IS_SPY(user))
+	if(GET_SPY(user))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 	return NONE
 
@@ -65,7 +65,7 @@
 
 	if(!ismovable(target))
 		return NONE
-	if(!IS_SPY(user))
+	if(!GET_SPY(user))
 		return NONE
 	if(SHOULD_SKIP_INTERACTION(target, source, user))
 		return NONE

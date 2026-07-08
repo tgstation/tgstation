@@ -126,7 +126,7 @@
 
 //checks if we already have an organic suit and casts it off.
 /datum/action/changeling/suit/proc/check_suit(mob/user)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(!ishuman(user) || !changeling)
 		return 1
 	var/mob/living/carbon/human/H = user
@@ -164,7 +164,7 @@
 		user.dropItemToGround(user.head)
 		user.equip_to_slot_if_possible(new helmet_type(user), ITEM_SLOT_HEAD, 1, 1, 1)
 
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	changeling.chem_recharge_slowdown += recharge_slowdown
 	return TRUE
 
@@ -500,7 +500,7 @@
 	weapon_name_simple = "shield"
 
 /datum/action/changeling/weapon/shield/sting_action(mob/user)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user) //So we can read the absorbed_count.
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user) //So we can read the absorbed_count.
 	if(!changeling)
 		return
 

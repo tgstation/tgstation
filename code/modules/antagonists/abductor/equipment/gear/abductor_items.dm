@@ -473,7 +473,7 @@ Return to step 11 of normal process."}
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
 		species = span_notice("[human_victim.dna.species.name]")
-		if(IS_CHANGELING(human_victim))
+		if(GET_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
 		var/obj/item/organ/heart/gland/temp = locate() in human_victim.organs
 		if(temp)

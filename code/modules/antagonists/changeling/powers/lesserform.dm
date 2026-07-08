@@ -31,7 +31,7 @@
 	if(user.movement_type & VENTCRAWLING)
 		user.balloon_alert(user, "can't transform in pipes!")
 		return FALSE
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	var/datum/changeling_profile/chosen_form = select_form(changeling, user)
 	if(!chosen_form)
 		return FALSE

@@ -46,7 +46,7 @@
 /atom/movable/screen/ling/chems/MouseEntered(location,control,params)
 	if(usr != get_mob())
 		return
-	var/datum/antagonist/changeling/antagonist_datum = IS_CHANGELING(hud.mymob)
+	var/datum/antagonist/changeling/antagonist_datum = GET_CHANGELING(hud.mymob)
 	if(!antagonist_datum)
 		return
 	. = ..()
@@ -56,7 +56,7 @@
 /atom/movable/screen/ling/chems/MouseExited(location, control, params)
 	if(usr != get_mob())
 		return
-	var/datum/antagonist/changeling/antagonist_datum = IS_CHANGELING(hud.mymob)
+	var/datum/antagonist/changeling/antagonist_datum = GET_CHANGELING(hud.mymob)
 	if(!antagonist_datum)
 		return
 	. = ..()

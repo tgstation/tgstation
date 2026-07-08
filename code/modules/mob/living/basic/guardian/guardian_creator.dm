@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(length(guardians) && !allow_multiple)
 		balloon_alert(user, "already have one!")
 		return
-	if(IS_CHANGELING(user) && !allow_changeling)
+	if(GET_CHANGELING(user) && !allow_changeling)
 		to_chat(user, ling_failure)
 		return
 	if(used)
@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(isnull(guardian))
 		return null
 	// Add the wizard team datum
-	var/datum/antagonist/wizard/antag_datum = IS_WIZARD(user)
+	var/datum/antagonist/wizard/antag_datum = GET_WIZARD(user)
 	if(isnull(antag_datum))
 		return guardian
 	if(!antag_datum.wiz_team)

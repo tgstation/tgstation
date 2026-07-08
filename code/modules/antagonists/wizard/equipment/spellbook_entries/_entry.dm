@@ -70,7 +70,7 @@
 	for(var/spell in user.actions)
 		if(is_type_in_typecache(spell, no_coexistence_typecache))
 			return FALSE
-	var/datum/antagonist/wizard/wizard_datum = IS_WIZARD(user)
+	var/datum/antagonist/wizard/wizard_datum = GET_WIZARD(user)
 	if(!wizard_datum)
 		return TRUE
 	for(var/perks in wizard_datum.perks)

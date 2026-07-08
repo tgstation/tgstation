@@ -81,7 +81,7 @@
 /obj/machinery/computer/communications/syndicate/get_communication_players()
 	var/list/targets = list()
 	for(var/mob/target in GLOB.player_list)
-		if(target.stat == DEAD || target.z == z || IS_BATTLECRUISER_OP(target))
+		if(target.stat == DEAD || target.z == z || GET_BATTLECRUISER_OP(target))
 			targets += target
 	return targets
 

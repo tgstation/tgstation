@@ -312,7 +312,7 @@
 	if(used)
 		return
 
-	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
+	if(!ishuman(user) || !user.mind || GET_WIZARD(user))
 		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans!"))
 		return
 
@@ -327,7 +327,7 @@
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
+	if(!ishuman(user) || !user.mind || GET_WIZARD(user))
 		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans! You should leave it alone."))
 		user.dropItemToGround(src)
 

@@ -24,7 +24,7 @@
 
 /obj/item/grenade/c4/ninja/examine(mob/user)
 	. = ..()
-	if (!IS_SPACE_NINJA(user))
+	if (!GET_SPACE_NINJA(user))
 		return
 	if (isnull(detonation_area))
 		. += span_notice("This one was provided with no destination set, and cannot be used.")
@@ -48,7 +48,7 @@
 	detonation_area = objective.detonation_location
 
 /obj/item/grenade/c4/ninja/plant_c4(atom/bomb_target, mob/living/user)
-	if(!IS_SPACE_NINJA(user))
+	if(!GET_SPACE_NINJA(user))
 		say("Access denied.")
 		return FALSE
 	if(!check_loc(bomb_target, user))
@@ -75,7 +75,7 @@
 		return
 	if (isnull(ninja))
 		return
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective?.completed = TRUE
 

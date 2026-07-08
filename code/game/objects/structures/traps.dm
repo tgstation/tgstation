@@ -121,7 +121,7 @@
 /obj/structure/trap/stun/hunter/on_entered(datum/source, atom/movable/victim)
 	if(isliving(victim))
 		var/mob/living/living_victim = victim
-		if(IS_FUGITIVE(living_victim))
+		if(GET_FUGITIVE(living_victim))
 			return
 	caught = TRUE
 	. = ..()

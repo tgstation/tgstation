@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Actually *do* the blob's victory: give them their greentext and, depending on the end_round_on_victory variable, decide if everyone dies or if it's just a jumpscare.
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately
-	var/datum/antagonist/blob/B = IS_BLOB(src)
+	var/datum/antagonist/blob/B = GET_BLOB(src)
 	if(B)
 		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
 		if(main_objective)
@@ -394,6 +394,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/eye/blob/mind_initialize()
 	. = ..()
-	var/datum/antagonist/blob/blob = IS_BLOB(src)
+	var/datum/antagonist/blob/blob = GET_BLOB(src)
 	if(!blob)
 		mind.add_antag_datum(/datum/antagonist/blob)

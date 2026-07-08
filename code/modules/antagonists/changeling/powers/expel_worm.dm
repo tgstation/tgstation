@@ -8,7 +8,7 @@
 	button_icon_state = "expel_worm"
 
 /datum/action/changeling_expel_worm/IsAvailable(feedback)
-	if (!IS_CHANGELING(owner))
+	if (!GET_CHANGELING(owner))
 		return FALSE
 	if (!istype(owner, /mob/living/blood_worm_host))
 		return FALSE

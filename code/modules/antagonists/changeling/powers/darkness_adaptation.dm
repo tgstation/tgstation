@@ -35,7 +35,7 @@
 		span_warning("[cling]'s skin suddenly starts shifting and shimmering!"),
 		span_notice("We shift our skin to adapt to the darkness."),
 	)
-	var/datum/antagonist/changeling/changeling_data = IS_CHANGELING(cling)
+	var/datum/antagonist/changeling/changeling_data = GET_CHANGELING(cling)
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown //Slows down chem regeneration
 
 /datum/action/changeling/darkness_adaptation/proc/disable_ability(mob/living/carbon/human/cling)
@@ -46,7 +46,7 @@
 		span_warning("[cling]'s skin goes from shimmering to normal."),
 		span_notice("We stop adapting our skin to the darkness."),
 	)
-	var/datum/antagonist/changeling/changeling_data = IS_CHANGELING(cling)
+	var/datum/antagonist/changeling/changeling_data = GET_CHANGELING(cling)
 	changeling_data?.chem_recharge_slowdown += recharge_slowdown
 
 /// Makes the user harder to see in the dark (and makes the user see in the dark easier)

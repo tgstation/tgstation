@@ -35,7 +35,7 @@
 	mode = MODE_CHANGELING
 
 /datum/saymode/changeling/can_be_used_by(mob/living/user)
-	if(IS_FALLEN_CHANGELING(user))
+	if(GET_FALLEN_CHANGELING(user))
 		// special message for you
 		to_chat(user, span_changeling("<b>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</b>"))
 		return FALSE
@@ -67,7 +67,7 @@
 	datum/language/language,
 	list/message_mods = list()
 )
-	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/ling_sender = GET_CHANGELING(user)
 
 	var/id = ling_sender?.changelingID || user.real_name
 

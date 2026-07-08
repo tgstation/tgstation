@@ -108,7 +108,7 @@
 	if(!owner)
 		return
 
-	var/datum/antagonist/blob/blobtag = IS_BLOB(owner)
+	var/datum/antagonist/blob/blobtag = GET_BLOB(owner)
 	if(!blobtag)
 		Remove(owner)
 		return

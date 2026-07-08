@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	balloon_alert(user, "interface hacked")
 	emag_cooldown = world.time + 100
 
-	if(connected_ai && connected_ai.mind && IS_MALF_AI(connected_ai))
+	if(connected_ai && connected_ai.mind && GET_MALF_AI(connected_ai))
 		to_chat(src, span_danger("ALERT: Foreign software execution prevented."))
 		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, span_danger("ALERT: Cyborg unit \[[src]\] successfully defended against subversion."))

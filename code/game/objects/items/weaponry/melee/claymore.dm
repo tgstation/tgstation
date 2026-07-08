@@ -163,7 +163,7 @@
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(!QDELETED(target) && target.stat == DEAD && IS_HIGHLANDER(target))
+	if(!QDELETED(target) && target.stat == DEAD && GET_HIGHLANDER(target))
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message(span_warning("[target] crumbles to dust beneath [user]'s blows!"), span_userdanger("As you fall, your body crumbles to dust!"))
@@ -174,10 +174,10 @@
 	var/closest_victim
 	var/closest_distance = 255
 	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
-		if(IS_HIGHLANDER(scot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(GET_HIGHLANDER(scot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = scot
 	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
-		if(IS_HIGHLANDER(siliscot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+		if(GET_HIGHLANDER(siliscot) && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = siliscot
 
 	if(!closest_victim)

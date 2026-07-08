@@ -10,7 +10,7 @@
 
 // Fake Voice
 /datum/action/changeling/mimicvoice/sting_action(mob/living/carbon/human/user)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(user.override_voice)
 		changeling.chem_recharge_slowdown -= 0.25
 		user.override_voice = ""
@@ -28,7 +28,7 @@
 	return TRUE
 
 /datum/action/changeling/mimicvoice/Remove(mob/living/carbon/human/user)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(user)
 	if(user.override_voice)
 		changeling?.chem_recharge_slowdown = max(0, changeling.chem_recharge_slowdown - 0.25)
 		user.override_voice = ""

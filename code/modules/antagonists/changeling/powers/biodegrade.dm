@@ -92,7 +92,7 @@
 /datum/action/changeling/biodegrade/proc/punish_with_acid(mob/living/carbon/human/user, mob/living/hapless_manhandler)
 	acid_blast(user, hapless_manhandler)
 	playsound(user, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', 50, TRUE)
-	if(IS_CHANGELING(hapless_manhandler))
+	if(GET_CHANGELING(hapless_manhandler))
 		user.visible_message(
 			span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler]... but nothing happens!"),
 			span_changeling("We prepare our escape, spraying bio-acid on our captor... [span_danger("But nothing happened?!")]"),

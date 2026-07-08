@@ -963,7 +963,7 @@
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
 		doom_n_boom.hacked_command_areas += apcarea
 		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
-		var/datum/antagonist/malf_ai/malf_ai_datum = IS_MALF_AI(src)
+		var/datum/antagonist/malf_ai/malf_ai_datum = GET_MALF_AI(src)
 		if(malf_ai_datum)
 			malf_ai_datum.update_static_data_for_all_viewers()
 		else //combat software AIs use a different UI
@@ -1214,7 +1214,7 @@
 	if(istype(gone, /obj/item/mmi))
 		var/obj/item/mmi/mmi_gone = gone
 		on_core_destroyed(source, NONE)
-		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
+		if(!GET_MALF_AI(src)) //don't pull back shunted malf AIs
 			death(gibbed = TRUE, drop_mmi = FALSE)
 			///the drop_mmi param determines whether the MMI is dropped at their current location
 			///which in this case would be somewhere else, so we drop their MMI at the core instead

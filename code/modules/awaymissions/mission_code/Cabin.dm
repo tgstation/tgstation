@@ -126,7 +126,7 @@
 	user.balloon_alert_to_viewers("warped in")
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, going_up = TRUE)
-	if(!IS_WIZARD(user))
+	if(!GET_WIZARD(user))
 		..()
 
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/

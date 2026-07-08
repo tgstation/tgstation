@@ -77,7 +77,7 @@
 /datum/mind/proc/remove_antags_for_borging()
 	remove_antag_datum(/datum/antagonist/cult)
 
-	var/datum/antagonist/rev/revolutionary = IS_REVOLUTIONARY(current)
+	var/datum/antagonist/rev/revolutionary = GET_REVOLUTIONARY(current)
 	revolutionary?.remove_revolutionary()
 
 /**
@@ -181,11 +181,11 @@
 	if(IS_CULTIST(creator))
 		add_antag_datum(/datum/antagonist/cult)
 
-	else if(IS_REVOLUTIONARY(creator))
+	else if(GET_REVOLUTIONARY(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 
-	else if(IS_NUKE_OP(creator))
+	else if(GET_NUKE_OP(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 		var/datum/antagonist/nukeop/N = new()
 		N.send_to_spawnpoint = FALSE
@@ -251,7 +251,7 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_wizard()
-	if((IS_WIZARD(current)))
+	if((GET_WIZARD(current)))
 		return
 	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 	add_antag_datum(/datum/antagonist/wizard)

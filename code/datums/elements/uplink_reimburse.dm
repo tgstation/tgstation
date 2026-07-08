@@ -33,7 +33,7 @@
 /datum/element/uplink_reimburse/proc/on_examine(datum/target, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(!IS_TRAITOR(user) && !IS_NUKE_OP(user))
+	if(!IS_TRAITOR(user) && !GET_NUKE_OP(user))
 		examine_list += span_warning("There's a label on the side, but it's written in indecipherable gibberish. You have no idea what it means!")
 		return
 

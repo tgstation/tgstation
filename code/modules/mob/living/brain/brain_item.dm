@@ -62,7 +62,7 @@
 	name = initial(name)
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
-	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
+	if(GET_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)

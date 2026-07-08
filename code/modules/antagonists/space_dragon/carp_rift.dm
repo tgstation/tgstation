@@ -14,7 +14,7 @@
 	button_icon_state = "carp_rift"
 
 /datum/action/innate/summon_rift/Activate()
-	var/datum/antagonist/space_dragon/dragon = IS_SPACE_DRAGON(owner)
+	var/datum/antagonist/space_dragon/dragon = GET_SPACE_DRAGON(owner)
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
@@ -62,7 +62,7 @@
 	button_icon_state = "locate_carp_rift"
 
 /datum/action/innate/locate_rift/Activate()
-	var/datum/antagonist/space_dragon/dragon_datum = IS_SPACE_DRAGON(owner)
+	var/datum/antagonist/space_dragon/dragon_datum = GET_SPACE_DRAGON(owner)
 	var/mob/living/dragon_mob = dragon_datum?.owner.current
 	if(!dragon_mob)
 		return

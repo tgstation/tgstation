@@ -125,7 +125,7 @@
 	if(!ishuman(occupant)) //We shouldn't be processing anything other than humans
 		return "Not a humanoid!"
 
-	var/datum/antagonist/abductor/user_abductor = IS_ABDUCTOR(user)
+	var/datum/antagonist/abductor/user_abductor = GET_ABDUCTOR(user)
 	if(!user_abductor)
 		return "Authorization failure. Contact mothership immediately."
 

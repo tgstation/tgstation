@@ -180,7 +180,7 @@
 	else if (aas)
 		aas.broadcast("QUANTUM SERVER CRITICAL ALERT: Unregistered mechanical entity deployed.", list())
 
-	var/datum/antagonist/antag_datum = IS_BITRUNNING_GLITCH(antag)
+	var/datum/antagonist/antag_datum = GET_BITRUNNING_GLITCH(antag)
 	if(istype(antag_datum))
 		antag_datum.show_in_roundend = TRUE
 

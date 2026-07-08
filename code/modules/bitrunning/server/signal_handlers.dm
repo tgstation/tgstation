@@ -40,7 +40,7 @@
 	if((obj_flags & EMAGGED) && isliving(arrived))
 		var/mob/living/creature = arrived
 
-		if(!IS_BITRUNNING_GLITCH(creature))
+		if(!GET_BITRUNNING_GLITCH(creature))
 			return
 
 		INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge)

@@ -272,7 +272,7 @@ Striking a noncultist, however, will tear their flesh."}
 		on_cultist_handle(user)
 	else if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
 		on_heresy_handle(user)
-	else if(IS_WIZARD(user))
+	else if(GET_WIZARD(user))
 		on_wizard_handle(user)
 	else
 		on_normie_handle(user)

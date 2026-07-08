@@ -235,7 +235,7 @@
 		target.wanted_status = WANTED_ARREST
 	update_all_security_huds()
 
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	if(!ninja_antag)
 		return
 	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
@@ -359,7 +359,7 @@
 		return
 	overload_source_code_hdd()
 	to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	if(!ninja_antag)
 		return
 	var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
@@ -378,7 +378,7 @@
 		return
 	stored_research.modify_points_all(0)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	if(!ninja_antag)
 		return
 	var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
@@ -400,7 +400,7 @@
 		return
 
 	hacking_module.communication_console_hack_success = TRUE
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	if(!ninja_antag)
 		return
 	var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
@@ -414,7 +414,7 @@
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
-		var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+		var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 		if(!ninja_antag)
 			return NONE
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
@@ -511,7 +511,7 @@
 	laws = new /datum/ai_laws/ninja_override()
 	model.transform_to(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate_medical, /obj/item/robot_model/saboteur))
 
-	var/datum/antagonist/ninja/ninja_antag = IS_SPACE_NINJA(ninja)
+	var/datum/antagonist/ninja/ninja_antag = GET_SPACE_NINJA(ninja)
 	if(!ninja_antag)
 		return
 	var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
@@ -846,7 +846,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
+	if(GET_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.aim_projectile(target, mod.wearer)
@@ -977,7 +977,7 @@
 	return ..()
 
 /obj/item/mod/module/adrenaline_boost/on_use(mob/activator)
-	if(IS_SPACE_NINJA(mod.wearer))
+	if(GET_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetAllImmobility(0)

@@ -42,7 +42,7 @@
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads)) //Rev heads will get a one-time warning that they shouldn't leave
+	if(is_station_level(user.z) && user.mind && GET_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads)) //Rev heads will get a one-time warning that they shouldn't leave
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return

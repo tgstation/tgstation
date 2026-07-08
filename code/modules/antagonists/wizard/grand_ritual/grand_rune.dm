@@ -96,7 +96,7 @@
 	if (times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
 		. += span_notice("Its power seems to have been expended.")
 		return
-	if(!IS_WIZARD(user))
+	if(!GET_WIZARD(user))
 		return
 	. += span_notice("Invoke this rune [GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked] more times to complete the ritual.")
 
@@ -104,7 +104,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!IS_WIZARD(user))
+	if(!GET_WIZARD(user))
 		return FALSE
 	if(is_in_use)
 		return FALSE

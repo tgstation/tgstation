@@ -84,7 +84,7 @@
 	app.master = user
 	app.school = kind
 
-	var/datum/antagonist/wizard/master_wizard = IS_WIZARD(M)
+	var/datum/antagonist/wizard/master_wizard = GET_WIZARD(M)
 	if(master_wizard)
 		if(!master_wizard.wiz_team)
 			master_wizard.create_wiz_team()
@@ -122,7 +122,7 @@
 	if(used)
 		to_chat(user, span_warning("[src] is out of power!"))
 		return FALSE
-	if(!IS_NUKE_OP(user))
+	if(!GET_NUKE_OP(user))
 		to_chat(user, span_danger("AUTHENTICATION FAILURE. ACCESS DENIED."))
 		return FALSE
 	return TRUE
@@ -162,7 +162,7 @@
 
 	var/new_datum = new antag_datum()
 
-	var/datum/antagonist/nukeop/creator_op = IS_NUKE_OP(nukie)
+	var/datum/antagonist/nukeop/creator_op = GET_NUKE_OP(nukie)
 	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
 	LAZYADD(op_mind.special_roles, special_role_name)
 
@@ -219,7 +219,7 @@
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user, mob/living/nukeop)
 	var/mob/living/silicon/robot/borg
-	var/datum/antagonist/nukeop/creator_op = IS_NUKE_OP(user.current)
+	var/datum/antagonist/nukeop/creator_op = GET_NUKE_OP(user.current)
 	if(!creator_op)
 		return
 	var/obj/structure/closet/supplypod/pod = setup_pod()

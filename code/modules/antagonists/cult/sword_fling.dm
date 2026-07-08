@@ -54,7 +54,7 @@
 			resist_chance = 6
 			fail_text = "You struggle, but [loccer]'s holy grip holds tight against your thrashing."
 			particle_to_spawn = /obj/effect/temp_visual/blessed
-		if(IS_WIZARD(loccer))
+		if(GET_WIZARD(loccer))
 			resist_chance = 3 // magic master
 			fail_text = "You struggle, but [loccer]'s handle on magic easily neutralizes your movement."
 			particle_to_spawn = /obj/effect/particle_effect/sparks/electricity

@@ -191,7 +191,7 @@
 		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
 		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
-	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
+	var/datum/antagonist/malf_ai/malf_datum = GET_MALF_AI(ai_mob)
 	if(malf_datum)
 		malf_datum.add_law_zero()
 

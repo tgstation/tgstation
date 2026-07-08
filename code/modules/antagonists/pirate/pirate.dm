@@ -66,7 +66,7 @@
 	getbooty.update_explanation_text()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
-		var/datum/antagonist/pirate/P = IS_PIRATE(M.current)
+		var/datum/antagonist/pirate/P = GET_PIRATE(M.current)
 		if(P)
 			P.objectives |= objectives
 

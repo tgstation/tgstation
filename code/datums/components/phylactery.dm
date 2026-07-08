@@ -78,7 +78,7 @@
 /datum/component/phylactery/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(IS_WIZARD(user) || isobserver(user))
+	if(GET_WIZARD(user) || isobserver(user))
 		if(user.mind == lich_mind)
 			var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 			examine_list += span_green("Your phylactery. The next time you meet an untimely demise, \

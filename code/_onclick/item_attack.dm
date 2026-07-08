@@ -443,7 +443,7 @@
 				// rev deconversion through blunt trauma.
 				// this can be signalized to the rev datum
 				if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((100 - health) * 0.5)))
-					var/datum/antagonist/rev/rev = IS_REVOLUTIONARY(attacker)
+					var/datum/antagonist/rev/rev = GET_REVOLUTIONARY(attacker)
 					rev?.remove_revolutionary(attacker)
 
 		if(BODY_ZONE_CHEST)

@@ -68,7 +68,7 @@
 	if(!our_server.domain_complete)
 		for(var/datum/weakref/ghostrole_weakref as anything in our_server.spawned_threat_refs)
 			var/mob/living/ghostrole = ghostrole_weakref.resolve()
-			if(ghostrole?.stat == CONSCIOUS && ghostrole.client && IS_BITRUNNING_GLITCH(ghostrole))
+			if(ghostrole?.stat == CONSCIOUS && ghostrole.client && GET_BITRUNNING_GLITCH(ghostrole))
 				to_chat(user, span_danger("A being in the simulation is preventing your retreat. You must either complete your mission or remove the obstacle before safe exit will be possible."))
 				return
 

@@ -786,7 +786,7 @@
 		return FALSE
 	var/mob/living/carbon/human/human_target = target
 
-	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
+	if(GET_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
 		if(human_target == user)
 			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
 			human_target.Stun(10 SECONDS)

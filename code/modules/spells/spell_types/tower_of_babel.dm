@@ -14,7 +14,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if(!target.mind)
 			continue
-		if(IS_WIZARD(target) && !badmin)
+		if(GET_WIZARD(target) && !badmin)
 			// wizards are not only immune but can speak all languages to taunt their victims over the radio
 			target.grant_all_languages(source = LANGUAGE_BABEL)
 			ADD_TRAIT(target.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)

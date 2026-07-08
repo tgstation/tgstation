@@ -25,13 +25,13 @@
 		return
 
 	var/mob/living/carbon/target = owner.pulling
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(owner)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(owner)
 	return changeling.can_absorb_dna(target)
 
 /datum/action/changeling/absorb_dna/sting_action(mob/owner)
 	SHOULD_CALL_PARENT(FALSE) // the only reason to call parent is for proper blackbox logging, and we do that ourselves in a snowflake way
 
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(owner)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(owner)
 	var/mob/living/carbon/human/target = owner.pulling
 	is_absorbing = TRUE
 
@@ -84,7 +84,7 @@
 /datum/action/changeling/absorb_dna/proc/absorb_memories(mob/living/carbon/human/target)
 	var/datum/mind/suckedbrain = target.mind
 
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(owner)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(owner)
 
 	for(var/memory_type in suckedbrain.memories)
 		var/datum/memory/stolen_memory = suckedbrain.memories[memory_type]
@@ -125,7 +125,7 @@
 		to_chat(owner, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
 
 
-	var/datum/antagonist/changeling/target_ling = IS_CHANGELING(target)
+	var/datum/antagonist/changeling/target_ling = GET_CHANGELING(target)
 	if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 		to_chat(owner, span_boldnotice("[target] was one of us. We have absorbed their power."))
 

@@ -1061,12 +1061,12 @@
 
 /datum/reagent/consumable/grenadine/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	if(IS_REVOLUTIONARY(drinker))
+	if(GET_REVOLUTIONARY(drinker))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
 
 /datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(IS_REVOLUTIONARY(drinker))
+	if(GET_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(5 SECONDS * metabolization_ratio * seconds_per_tick)
 		if(drinker.get_stamina_loss() < 80)
 			drinker.adjust_stamina_loss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.

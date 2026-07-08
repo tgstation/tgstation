@@ -2823,7 +2823,7 @@
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	target.adjust_hallucinations(12.5 SECONDS * metabolization_ratio * seconds_per_tick)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(target)
+	var/datum/antagonist/changeling/changeling = GET_CHANGELING(target)
 	changeling?.adjust_chemicals(-5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/pax/peaceborg

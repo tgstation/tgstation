@@ -9,7 +9,7 @@
 	if (!.)
 		return
 
-	if (IS_CHANGELING(src))
+	if (GET_CHANGELING(src))
 		to_chat(src, span_good("The blood worm in your body is vulnerable to your genetic prowess!"))
 
 		if (!expel_worm_action)

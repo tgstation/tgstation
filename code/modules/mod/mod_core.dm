@@ -619,7 +619,7 @@
 		if(THEME_HOLY)
 			if(IS_CULTIST(checked) || IS_HERETIC(checked))
 				return /datum/mood_event/soul_core_torment
-			if(IS_WIZARD(checked))
+			if(GET_WIZARD(checked))
 				return /datum/mood_event/soul_core_discomfort
 
 /obj/item/mod/core/soul/get_charge_icon_state()

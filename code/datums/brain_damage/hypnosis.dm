@@ -39,7 +39,7 @@
 		If it isn't a clear order, you can freely interpret how to do so, as long as you act like the words are your highest priority."))
 	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert(ALERT_HYPNOSIS, /atom/movable/screen/alert/hypnosis)
 	owner.mind.add_antag_datum(/datum/antagonist/hypnotized)
-	antagonist = IS_HYPNOTIZED(owner)
+	antagonist = GET_HYPNOTIZED(owner)
 	antagonist.trauma = src
 
 	// Add the phrase to objectives

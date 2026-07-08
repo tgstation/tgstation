@@ -120,7 +120,7 @@
 	mood_change = parent_type::mood_change * -0.5
 
 /datum/mood_event/conditional/see_death/revolutionary/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return IS_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+	return GET_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 
 /datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob, dusted, gibbed)
 	var/datum/job/possible_head_job = dead_mob.mind?.assigned_role

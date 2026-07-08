@@ -36,7 +36,7 @@
 
 /obj/item/frog_statue/examine(mob/user)
 	. = ..()
-	if(!IS_WIZARD(user))
+	if(!GET_WIZARD(user))
 		return
 	if(isnull(contained_frog))
 		. += span_notice("There are currently no frogs linked to this statue!")
