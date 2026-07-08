@@ -60,8 +60,6 @@
 		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
 	if(!sense_of_taste)
 		add_organ_trait(TRAIT_AGEUSIA)
-	//finish the list of emote sounds with the default list of (voice-based) emote sounds for human, so we don't need to copypaste everything
-	emote_sounds |= GLOB.default_tongue_sounds
 
 
 /obj/item/organ/tongue/examine(mob/user)
@@ -139,7 +137,7 @@
 
 /obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	RegisterSignal(receiver, COMSIG_LIVING_GET_EMOTE_SOUND, PROC_REF(get_tongue_emote_sound))
+	RegisterSignal(receiver, COMSIG_MOB_GET_EMOTE_SOUND, PROC_REF(get_tongue_emote_sound))
 	if(modifies_speech)
 		RegisterSignal(receiver, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	receiver.voice_filter = voice_filter
@@ -154,7 +152,7 @@
 	. = ..()
 
 	temp_say_mod = ""
-	UnregisterSignal(organ_owner, list(COMSIG_MOB_SAY, COMSIG_LIVING_GET_EMOTE_SOUND))
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_SAY, COMSIG_MOB_GET_EMOTE_SOUND))
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	organ_owner.voice_filter = initial(organ_owner.voice_filter)
@@ -181,7 +179,7 @@
 
 /obj/item/organ/tongue/proc/get_tongue_emote_sound(datum/source, key, list/sounds)
 	SIGNAL_HANDLER
-	var/sound_override = get_emote_sound_from_list(emote_sounds, owner, key)
+	var/sound_override = get_emote_sound_from_list(emote_sounds[key], owner)
 	if(sound_override)
 		sounds.len = max(sounds.len, EMOTE_SOUND_TONGUE)
 		sounds[EMOTE_SOUND_TONGUE] = sound_override
@@ -441,7 +439,7 @@
 	liked_foodtypes = GROSS | MEAT | RAW | GORE
 	disliked_foodtypes = NONE
 	emote_sounds = list(
-		/datum/emote/living/scream = list(
+		/datum/emote/living/scream::key = list(
 			'sound/effects/hallucinations/veryfar_noise.ogg',
 			'sound/effects/hallucinations/wail.ogg',
 			'sound/effects/hallucinations/far_noise.ogg',
@@ -527,13 +525,8 @@
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
 	emote_sounds = list(
 		/datum/emote/living/deathgasp::key = 'sound/mobs/non-humanoids/hiss/hiss6.ogg',
-		/datum/emote/living/carbon/hiss = SFX_HISS,
+		/datum/emote/living/carbon/hiss::key = SFX_HISS,
 	)
-
-/obj/item/organ/tongue/alien/get_tongue_emote_sound(datum/source, key, list/sounds)
-	if(isalien(owner) && !(key in /obj/item/organ/tongue/alien::emote_sounds))
-		return //xenos don't get the emote human sounds when emoting, only what's present at compile time.
-	return ..()
 
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/tongue/alien/get_possible_languages()

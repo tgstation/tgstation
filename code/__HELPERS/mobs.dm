@@ -873,19 +873,18 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", personality_to_mood[personality]) + args.Copy(4) ))
 				break
 
-///Gets an emote sound from a specific list of sounds. Supports lists as values, as well as human physiques. Used by tongues and a few other objects that override emote sounds.
-/proc/get_emote_sound_from_list(list/sound_list, mob/living/user, key)
-	var/sound = sound_list[key]
+///Gets an emote sound from a specific list of sounds. Supports lists and genders. Used by emote datums for default sounds, and tongues, masks etc. for overrides.
+/proc/get_emote_sound_from_list(sound, mob/living/user)
 	if(islist(sound))
 		var/list/sounds = sound
 		var/list/possible_sounds = sounds.Copy()
-		var/mob/living/carbon/human/humie = ishuman(user) ? user : null
-		if(humie?.physique in possible_sounds)
-			possible_sounds = possible_sounds[humie.physique]
+		var/gender = astype(user, /mob/living/carbon/human)?.physique || user.gender
+		if(gender in possible_sounds)
+			possible_sounds = possible_sounds[gender]
 			if(!islist(possible_sounds))
 				return possible_sounds //it's a single sound
 		else
-			possible_sounds -= list(MALE, FEMALE)
+			possible_sounds -= list(MALE, FEMALE, PLURAL, NEUTER)
 			if(!length(possible_sounds))
 				return null
 		sound = pick(possible_sounds)

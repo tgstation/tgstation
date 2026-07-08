@@ -280,9 +280,14 @@
 /proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
+	var/highest_matched_type
 	for(var/type in list_to_check)
 		if(istype(type_to_check, type))
-			return !zebra || list_to_check[type] // Subtypes must come first in zebra lists.
+			if(!zebra)
+				return TRUE
+			if(!highest_matched_type || istype(type, highest_matched_type))
+				. = list_to_check[type]
+				highest_matched_type = type
 	return FALSE
 
 /**

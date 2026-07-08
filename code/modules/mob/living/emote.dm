@@ -111,7 +111,7 @@
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
 	sound_wall_ignore = TRUE
-	sound_vary = TRUE
+	vary = TRUE
 	sound_volume = 200
 
 /datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
@@ -207,24 +207,19 @@
 	message_mime = "gasps silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
-
-/datum/emote/living/gasp/get_sound(mob/living/user)
-	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
-		return
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/human_user = user
-	if(human_user.physique == FEMALE)
-		return pick(
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = list(
+			'sound/mobs/humanoids/human/gasp/gasp_male1.ogg',
+			'sound/mobs/humanoids/human/gasp/gasp_male2.ogg',
+			),
+			FEMALE = list(
 			'sound/mobs/humanoids/human/gasp/gasp_female1.ogg',
 			'sound/mobs/humanoids/human/gasp/gasp_female2.ogg',
 			'sound/mobs/humanoids/human/gasp/gasp_female3.ogg',
-			)
-	return pick(
-		'sound/mobs/humanoids/human/gasp/gasp_male1.ogg',
-		'sound/mobs/humanoids/human/gasp/gasp_male2.ogg',
-		)
+			),
+		),
+	)
 
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
@@ -309,6 +304,15 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	manual_specific_emote_audio_cooldown = 8 SECONDS
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = list(
+				'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+				'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
+			),
+			FEMALE = 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg',
+		),
+	)
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional, params)
 	return ..() && user.can_speak(allow_mimes = TRUE)
@@ -376,6 +380,12 @@
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg',
+			FEMALE = 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg',
+		),
+	)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -384,6 +394,26 @@
 	message_mime = "acts out an exaggerated cough!"
 	vary = TRUE
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = list(
+				'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+				'sound/mobs/humanoids/human/cough/male_cough6.ogg',
+			),
+			FEMALE = list(
+				'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+				'sound/mobs/humanoids/human/cough/female_cough6.ogg',
+			),
+		),
+	)
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional, params)
 	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
@@ -412,6 +442,25 @@
 	manual_specific_emote_audio_cooldown = 10 SECONDS
 	forced_specific_emote_audio_cooldown = 4 SECONDS
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = list(
+				'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+				'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+				'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+				'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+				'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+				'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+			),
+			FEMALE = list(
+				'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+				'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+				'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+				'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+				'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+			),
+		),
+	)
 
 /datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
@@ -429,7 +478,7 @@
 		return
 	var/mob/living/carbon/human/humie = user
 	//Rare chance for this banger of a classic to play instead of the avarage joe screams
-	if(humie.physique == MALE && prob(1) && is_species(humie, /datum/species/human))
+	if(humie.physique == MALE && prob(1) && ishumanbasic(humie))
 		return 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg'
 
 /datum/emote/living/scowl
@@ -465,6 +514,12 @@
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = SFX_MALE_SIGH,
+			FEMALE = SFX_FEMALE_SIGH,
+		),
+	)
 
 /datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -495,6 +550,12 @@
 	message_mime = "sniffs silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = 'sound/mobs/humanoids/human/sniff/male_sniff.ogg',
+			FEMALE = 'sound/mobs/humanoids/human/sniff/female_sniff.ogg',
+		),
+	)
 
 /datum/emote/living/snore
 	key = "snore"
@@ -503,6 +564,12 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			MALE = SFX_SNORE_MALE,
+			FEMALE = SFX_SNORE_FEMALE,
+		),
+	)
 
 /datum/emote/living/stare
 	key = "stare"
@@ -800,6 +867,4 @@
 	message_mime = "whistles silently!"
 	vary = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
+	sound = 'sound/mobs/humanoids/human/whistle/whistle1.ogg'

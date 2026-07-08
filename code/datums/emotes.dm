@@ -49,10 +49,16 @@
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
-	/// Sound to play when emote is called.
+	/// A single, default sound to play if nothing else overrides this
 	var/sound
+	/// A more indepth list of sounds to play, ordered by mob type. Takes precedence over [sound]
+	var/list/sounds_by_mobtype
 	/// Does this emote vary in pitch?
 	var/vary = FALSE
+	/// The volume of the sound
+	var/sound_volume = 50
+	/// Does this emote's sound ignore walls?
+	var/sound_wall_ignore = FALSE
 	/// If this emote's sound is affected by TTS pitch
 	var/affected_by_pitch = TRUE
 	/// Can only code call this event instead of the player.
@@ -70,11 +76,6 @@
 	/// How long is the specific emote cooldown triggered by this emote when forced?
 	var/forced_specific_emote_audio_cooldown = 2 SECONDS
 	/// The volume of the sound
-	var/sound_volume = 50
-	/// Does this emote's sound ignore walls?
-	var/sound_wall_ignore = FALSE
-	/// Does this sound vary in pitch?
-	var/sound_vary = FALSE
 	///Does this emote use sound tokens? this means it also ignores walls.
 	var/use_sound_tokens = FALSE
 
@@ -142,7 +143,7 @@
 		if(use_sound_tokens && sound_wall_ignore)
 			playsoundtoken(source = user, soundin = tmp_sound, range = SOUND_RANGE, volume = sound_volume)
 		else
-			playsound(source = user,soundin = tmp_sound,vol = sound_volume, vary = sound_vary, ignore_walls = sound_wall_ignore, frequency = frequency)
+			playsound(source = user,soundin = tmp_sound,vol = sound_volume, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 
 	var/is_important = running_emote_type & EMOTE_IMPORTANT
@@ -264,9 +265,15 @@
  * Returns the sound that will be made while sending the emote.
  */
 /datum/emote/proc/get_sound(mob/living/user)
-	var/list/sounds = list(sound)
-	SEND_SIGNAL(user, COMSIG_LIVING_GET_EMOTE_SOUND, key, sounds)
-	return sounds[length(sounds)] //return the sound with the highest priority (last in the list)
+	var/list/sounds = list()
+	SEND_SIGNAL(user, COMSIG_MOB_GET_EMOTE_SOUND, key, sounds)
+	var/length = length(sounds)
+	if(length)
+		return sounds[length]
+	var/matched_type = is_type_in_list(user,  sounds_by_mobtype, zebra = TRUE)
+	if(matched_type)
+		return get_emote_sound_from_list(sounds_by_mobtype[matched_type], user, key)
+	return sound
 
 /**
  * To get the flags visible/audible messages for ran by the emote.
@@ -398,14 +405,10 @@
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
 	if(emote_type & EMOTE_AUDIBLE && !hands_use_check)
-		if(HAS_TRAIT(user, TRAIT_MUTE))
+		if(HAS_TRAIT(user, TRAIT_MUTE) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
 			return FALSE
-		if(ishuman(user))
-			var/mob/living/carbon/human/loud_mouth = user
-			if(HAS_MIND_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises
-				return FALSE
-			if(!loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE))
-				return FALSE
+		if(iscarbon(user) && !user.get_organ_slot(ORGAN_SLOT_TONGUE))
+			return FALSE
 
 	if(only_forced_audio && intentional)
 		return FALSE

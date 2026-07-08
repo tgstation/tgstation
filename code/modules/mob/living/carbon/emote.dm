@@ -15,24 +15,28 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	affected_by_pitch = FALSE
-
-/datum/emote/living/carbon/clap/get_sound(mob/living/user)
-	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
-		return
-	return pick(
-		'sound/mobs/humanoids/human/clap/clap1.ogg',
-		'sound/mobs/humanoids/human/clap/clap2.ogg',
-		'sound/mobs/humanoids/human/clap/clap3.ogg',
-		'sound/mobs/humanoids/human/clap/clap4.ogg',
+	sounds_by_mobtype = list(
+		/mob/living/carbon = list(
+			'sound/mobs/humanoids/human/clap/clap1.ogg',
+			'sound/mobs/humanoids/human/clap/clap2.ogg',
+			'sound/mobs/humanoids/human/clap/clap3.ogg',
+			'sound/mobs/humanoids/human/clap/clap4.ogg',
+		),
 	)
+
+/datum/emote/living/carbon/clap/should_play_sound(mob/living/user, intentional = FALSE)
+	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
+		return FALSE
+	return ..()
+	return
 
 /datum/emote/living/carbon/crack
 	key = "crack"
 	key_third_person = "cracks"
 	message = "cracks their knuckles."
-	sound = 'sound/mobs/humanoids/human/knuckle_crack/knuckles.ogg'
 	hands_use_check = TRUE
 	cooldown = 6 SECONDS
+	sound = 'sound/mobs/humanoids/human/knuckle_crack/knuckles.ogg'
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
 	if(!iscarbon(user) || user.usable_hands < 2)
@@ -47,6 +51,19 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	stat_allowed = SOFT_CRIT
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
+			FEMALE = list(
+				'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+				'sound/mobs/humanoids/human/cry/female_cry2.ogg',
+			),
+			MALE = list(
+				'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+				'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+				'sound/mobs/humanoids/human/cry/male_cry3.ogg',
+			),
+		),
+	)
 
 /datum/emote/living/carbon/cry/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -73,10 +90,10 @@
 	key = "meow"
 	key_third_person = "meows"
 	vary = TRUE
-	sound = SFX_CAT_MEOW
 	message = "meows!"
 	message_mime = "meows silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = SFX_CAT_MEOW
 
 /datum/emote/living/carbon/meow/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
 	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)))
@@ -87,9 +104,9 @@
 	key = "purr"
 	key_third_person = "purrs"
 	vary = TRUE
-	sound = SFX_CAT_PURR
 	message = "purrs."
 	emote_type = EMOTE_AUDIBLE
+	sound = SFX_CAT_PURR
 
 /datum/emote/living/carbon/purr/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
 	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
@@ -101,8 +118,8 @@
 	key_third_person = "chitters"
 	message = "chitters!"
 	message_mime = "chitters silently?"
-	sound = 'sound/mobs/humanoids/moth/moth_chitter.ogg'
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	sound = 'sound/mobs/humanoids/moth/moth_chitter.ogg'
 
 /datum/emote/living/carbon/mchitter/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
 	if(!ismoth(user))
@@ -121,8 +138,8 @@
 	key_third_person = "squeaks"
 	message = "squeaks!"
 	message_mime = "squeaks silently?"
-	sound = 'sound/mobs/humanoids/moth/moth_squeak.ogg'
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	sound = 'sound/mobs/humanoids/moth/moth_squeak.ogg'
 
 /datum/emote/living/carbon/msqueak/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
 	if(!ismoth(user))
@@ -216,14 +233,12 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	hands_use_check = TRUE
 	affected_by_pitch = FALSE
-
-/datum/emote/living/carbon/snap/get_sound(mob/living/user)
-	if(ishuman(user))
-		return pick(
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = list(
 			'sound/mobs/humanoids/human/snap/fingersnap1.ogg',
 			'sound/mobs/humanoids/human/snap/fingersnap2.ogg',
-			)
-	return null
+		),
+	)
 
 /datum/emote/living/carbon/shoesteal
 	key = "shoesteal"
@@ -256,3 +271,7 @@
 	message = "hisses!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
+	sounds_by_mobtype = list(
+		/mob/living/carbon/human = 'sound/mobs/humanoids/human/hiss/human_hiss.ogg',
+		/mob/living/carbon/alien = SFX_HISS,
+	)
