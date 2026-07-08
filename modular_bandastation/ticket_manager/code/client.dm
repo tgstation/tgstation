@@ -4,11 +4,7 @@
 	/// Cooldown for player ticket response
 	COOLDOWN_DECLARE(ticket_response)
 
-/client/verb/ticket_manager()
-	set name = "Ticket Manager"
-	set desc = "Открыть интерфейс админ/ментор тикетов"
-	set category = "Admin"
-
+GAME_VERB_DESC(/client, ticket_manager, "Ticket Manager", "Открыть интерфейс админ/ментор тикетов", "Admin")
 	GLOB.ticket_manager.ui_interact(mob)
 
 /client/cmd_admin_pm(whom, message)

@@ -230,15 +230,12 @@
 	modal_open = FALSE
 
 /client
-	/// Reference to existing tgui_who datum, created in `client/proc/who()`.
+	/// Reference to existing tgui_who datum, created in `client/proc/open_tgui_who()`.
 	/// Used to avoid spam of creating those datums.
-	var/datum/tgui_who/who = null
+	var/datum/tgui_who/tgui_who_panel = null
 
-/client/who()
-	set name = "Who"
-	set category = "OOC"
+/client/proc/open_tgui_who()
+	if(isnull(tgui_who_panel))
+		tgui_who_panel = new()
 
-	if(isnull(who))
-		who = new()
-
-	who.ui_interact(mob)
+	tgui_who_panel.ui_interact(mob)

@@ -659,7 +659,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
 	QDEL_NULL(parallax_rock)
-	QDEL_NULL(who) // BANDASTATION ADDITION - TGUI Who
+	QDEL_NULL(tgui_who_panel) // BANDASTATION ADDITION - TGUI Who
 	seen_messages = null
 	sound_tokens = null
 	Master.UpdateTickRate()

@@ -3,6 +3,8 @@
 
 GAME_VERB(/client, who, "Who", "OOC")
 
+	// BANDASTATION EDIT START: TGUI Who
+	/*
 	var/msg = ""
 
 	var/list/Lines = list()
@@ -66,6 +68,9 @@ GAME_VERB(/client, who, "Who", "OOC")
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, fieldset_block(span_bold("Current Players"), span_infoplain(msg), "boxed_message"), type = MESSAGE_TYPE_INFO)
+	*/
+	open_tgui_who()
+	// BANDASTATION EDIT END: TGUI Who
 
 GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 

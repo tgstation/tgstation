@@ -1,8 +1,4 @@
-/mob/living/proc/judo_help()
-	set name = "Вспомнить основы"
-	set desc = "Вы взываете к техникам корпоратского дзюдо."
-	set category = "Judo"
-
+GAME_VERB_PROC_DESC(/mob/living, judo_help, "Вспомнить основы", "Вы взываете к техникам корпоратского дзюдо.", "Judo")
 	var/list/message = list()
 	message += span_bolditalic("Вы взываете к техникам корпоратского дзюдо.")
 	message += "[span_notice("Бросок")]: Grab Shove. Возьмите врага в захват и бросьте на пол. Наносит урон стамине."

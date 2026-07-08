@@ -22,10 +22,7 @@
 	. = ..()
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 
-/mob/living/basic/snake/syndicate/verb/chasetail()
-	set name = "Помахать хвостом"
-	set desc = "Ваааай!"
-	set category = "Animal"
+GAME_VERB_DESC(/mob/living/basic/snake/syndicate, chasetail, "Помахать хвостом", "Ваааай!", "Animal")
 	visible_message("[src] [pick("кружится", "махает хвостом")].", "[pick("Вы кружитесь.", "Вы махаете хвостом.")].")
 	spin(20, 1)
 

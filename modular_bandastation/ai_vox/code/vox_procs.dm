@@ -14,11 +14,7 @@
 			return GLOB.vox_sounds_mil
 	return GLOB.vox_sounds
 
-/mob/living/silicon/ai/verb/switch_vox()
-	set name = "Switch Vox Voice"
-	set desc = "Switch your VOX announcement voice!"
-	set category = "AI Commands"
-
+GAME_VERB_DESC(/mob/living/silicon/ai, switch_vox, "Switch Vox Voice", "Switch your VOX announcement voice!", "AI Commands")
 	if(incapacitated)
 		return
 	var/selection = tgui_input_list(src, "Пожалуйста, выберите новый VOX голос:", "VOX VOICE", vox_voices)
