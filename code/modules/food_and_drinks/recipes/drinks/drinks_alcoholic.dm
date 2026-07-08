@@ -790,28 +790,31 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/hot_toddy = 3, /datum/reagent/consumable/ethanol/blue_blazer = 3, /datum/reagent/ash = 2, /datum/reagent/luminescent_fluid = 1)
 	required_temp = 900
 	mix_message = "PLACEHOLDER"
-	mix_sound = 'sound/PLACEHOLDER.ogg' //TODO: Ignition Sound
+	mix_sound = 'sound/effects/fire_puff.ogg'
 
 /datum/chemical_reaction/drink/footsoldiers_razor
 	results=list(/datum/reagent/consumable/ethanol/footsoldiers_razor = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/patron = 3, /datum/reagent/consumable/coffee = 2, /datum/reagent/consumable/ethanol/fernet = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/silver = 1, /datum/reagent/medicine/epinephrine = 1)
 	mix_message = "As the scent of coffee and agave swirls around you, you feel that it's a good day to die."
-	mix_sound = 'sound/PLACEHOLDER.ogg' //TODO:Weapon being drawn?
+	mix_sound = 'sound/items/unsheath.ogg'
 
 /datum/chemical_reaction/drink/farstar_amrita
 	results=list(/datum/reagent/consumable/ethanol/farstar_amrita = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/star = 3, /datum/reagent/consumable/ethanol/singulo = 3, /datum/reagent/toxin/plasma = 2, /datum/reagent/consumable/honey = 2)
 	mix_message = "As the mixture combines, you feel yourself being watched."
+	mix_sound = 'sound/effects/curse/curse6.ogg'
 
 /datum/chemical_reaction/drink/openthroat_draught
 	results=list(/datum/reagent/consumable/ethanol/openthroat_draught = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/trappist = 5, /datum/reagent/consumable/ethanol/poets_dream = 3, /datum/reagent/consumable/shamblers = 2, /datum/reagent/consumable/wellcheers = 2, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/consumable/eggyolk = 1)
 	mix_message = "Distant conversation can be heard, from somewhere unknown. Did someone leave a door open?"
+	//mix_sound = 'sound/music/antag/heretic/heretic_gain_quiet.ogg'
 
 /datum/chemical_reaction/drink/lunacy
 	results=list(/datum/reagent/consumable/ethanol/lunacy = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/suffering_bastard = 4, /datum/reagent/consumable/ethanol/absinthe = 2, /datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/mercury = 1, /datum/reagent/iron = 1)
 	mix_message = "Someone stretches their mouth into a rictus grin. It might even be you."
+	//mix_sound = 'sound/effects/moon_parade_quiet.ogg' TODO: Make this a thing
 
 /datum/chemical_reaction/drink/entropic_brew
 	results=list(/datum/reagent/consumable/ethanol/entropic_brew = 15)
@@ -822,4 +825,4 @@
 	results=list(/datum/reagent/consumable/ethanol/emptiest_glass = 4)
 	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/ethanol/last_word = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/cryostylane = 1)
 	mix_message = "The world seems just a bit paler, for a moment."
-	mix_sound = 'sound/PLACEHOLDER.ogg' //clip from the ascension waltz
+	mix_sound = 'sound/announcer/alarm/clownops.ogg' //TODO: replace with clip from the ascension waltz
