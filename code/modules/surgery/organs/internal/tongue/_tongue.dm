@@ -183,6 +183,7 @@
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_sounds, owner, key)
 	if(sound_override)
+		sounds.len = max(sounds.len, EMOTE_SOUND_TONGUE)
 		sounds[EMOTE_SOUND_TONGUE] = sound_override
 
 /obj/item/organ/tongue/lizard

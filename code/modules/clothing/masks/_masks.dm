@@ -34,6 +34,7 @@
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_sounds, source, key)
 	if(sound_override)
+		sounds.len = max(sounds.len, EMOTE_SOUND_MASK)
 		sounds[EMOTE_SOUND_MASK] = sound_override
 
 /obj/item/clothing/mask/attack_self(mob/user)

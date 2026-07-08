@@ -22,6 +22,7 @@
 	SIGNAL_HANDLER
 	var/sound_override = get_emote_sound_from_list(emote_key_to_sound, owner, key)
 	if(sound_override)
+		sounds.len = max(sounds.len, priority)
 		sounds[priority] = sound_override
 
 /datum/status_effect/replace_sound/on_remove()
