@@ -70,8 +70,9 @@
 	return TRUE
 
 /obj/effect/portal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!Adjacent(user))
+	if(!Adjacent(user) || istype(tool, /obj/item/hand_tele))
 		return ..()
+
 	teleport(user)
 	return ITEM_INTERACT_SUCCESS
 

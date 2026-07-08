@@ -34,6 +34,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/bag/trash
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -88,6 +89,7 @@
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 	storage_type = /datum/storage/bag/trash/bluespace
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
@@ -243,6 +245,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 	storage_type = /datum/storage/bag/ore/holding
+	custom_materials = list(/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
@@ -256,6 +259,7 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
 	. = ..()
@@ -516,23 +520,47 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/rebar_quiver
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
+	actions_types = list(/datum/action/item_action/reload_rebar)
+
+
+/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bag/rebar_quiver/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/reload_rebar))
+		reload_held_rebar(user)
+
+/obj/item/storage/bag/rebar_quiver/proc/reload_held_rebar(mob/user)
+	if(!contents.len)
+		user.balloon_alert(user, "no bolts left!")
+		return
+	var/obj/held_item = user.get_active_held_item()
+	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+		user.balloon_alert(user, "no held crossbow!")
+		return
+	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
+	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
+		user.balloon_alert(user, "no more room!")
+		return
+	if(!do_after(user, held_crossbow.reload_time, user,timed_action_flags = held_crossbow.doafter_flags))
+		return
+
+	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/rebar_quiver/syndicate
 	icon_state = "syndie_quiver_0"
 	worn_icon_state = "syndie_quiver_0"
 	inhand_icon_state = "holyquiver"
-	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
+	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. Allows moving while reloading.\
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
 	storage_type = /datum/storage/bag/rebar_quiver/syndicate
-
-/obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
-	. = ..()
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
 	for(var/to_fill in 1 to 20)
@@ -549,28 +577,6 @@
 			icon_state = "syndie_quiver_2"
 		if(14 to 20)
 			icon_state = "syndie_quiver_3"
-
-/obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/reload_rebar))
-		reload_held_rebar(user)
-
-/obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
-	if(!contents.len)
-		user.balloon_alert(user, "no bolts left!")
-		return
-	var/obj/held_item = user.get_active_held_item()
-	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
-		user.balloon_alert(user, "no held crossbow!")
-		return
-	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
-	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
-		user.balloon_alert(user, "no more room!")
-		return
-	if(!do_after(user, 1.2 SECONDS, user))
-		return
-
-	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"

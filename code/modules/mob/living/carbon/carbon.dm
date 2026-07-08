@@ -1368,13 +1368,13 @@
 	. = ..()
 	// Force a weight update in case we're stasis'd and don't tick
 	if (HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
-		if (overeatduration >= 200 SECONDS)
+		if (overeatduration >= OVEREAT_TIME_LIMIT)
 			return
 
 		to_chat(src, span_notice("You feel fit again!"))
 		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 		return
 
-	if (overeatduration >= 200 SECONDS)
+	if (overeatduration >= OVEREAT_TIME_LIMIT)
 		to_chat(src, span_danger("You suddenly feel blubbery!"))
 		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)

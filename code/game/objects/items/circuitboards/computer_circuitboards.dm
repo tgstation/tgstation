@@ -14,6 +14,7 @@
 	name = "AI Upload"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/ai
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	req_one_access = list(ACCESS_AI_UPLOAD)
 
 /obj/item/circuitboard/computer/aiupload/no_lock
@@ -25,6 +26,7 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	req_one_access = list(ACCESS_AI_UPLOAD)
 	build_path = /obj/machinery/computer/upload/borg
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/computer/borgupload/no_lock
 	req_one_access = null
@@ -549,6 +551,7 @@
 	name = "Robotics Control"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/robotics
+	custom_materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter"

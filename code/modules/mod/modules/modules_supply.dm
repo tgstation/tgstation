@@ -13,6 +13,7 @@
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
@@ -36,6 +37,7 @@
 	overlay_state_inactive = "module_clamp"
 	overlay_state_active = "module_clamp_on"
 	required_slots = list(ITEM_SLOT_GLOVES, ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	/// Time it takes to load a crate.
 	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
@@ -136,6 +138,7 @@
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
 	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
@@ -250,6 +253,7 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5)
 	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 
@@ -370,6 +374,7 @@
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/disposal_connector)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	var/disposal_tag = NONE
 
 /obj/item/mod/module/disposal_connector/Initialize(mapload)

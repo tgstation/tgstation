@@ -300,7 +300,7 @@
 		/datum/reagent/consumable/char = 1,
 	)
 	tastes = list("corn" = 1, "chili" = 1, "char" = 1)
-	foodtypes = VEGETABLES|JUNKFOOD|DAIRY|FRIED
+	foodtypes = VEGETABLES|JUNKFOOD|DAIRY|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 

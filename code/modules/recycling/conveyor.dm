@@ -293,75 +293,85 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	GLOB.move_manager.stop_looping(thing, SSconveyors)
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
-		span_notice("You struggle to pry up [src] with [attacking_item]."))
-
-		if(!attacking_item.use_tool(src, user, 4 SECONDS, volume = 40))
-			return
-		set_operating(FALSE)
-		var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
-		if(!QDELETED(belt_item)) //God I hate stacks
-			transfer_fingerprints_to(belt_item)
-
-		to_chat(user, span_notice("You remove [src]."))
-		qdel(src)
-
-	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src)
-		setDir(turn(dir, -45))
-		to_chat(user, span_notice("You rotate [src]."))
-
-	else if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		attacking_item.play_tool_sound(src)
-		inverted = !inverted
-		update_move_direction()
-		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
-	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		attacking_item.play_tool_sound(src)
-		wire_mode = !wire_mode
-		update_cable()
-		power_change()
-		if(wire_mode)
-			START_PROCESSING(SSmachines, src)
-		else
-			STOP_PROCESSING(SSmachines, src)
-		to_chat(user, span_notice("You set [src]'s wire mode [wire_mode ? "on" : "off"]."))
-	else if(istype(attacking_item, /obj/item/stack/conveyor))
+/obj/machinery/conveyor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/conveyor))
 		// We should place a new conveyor belt machine on the output turf the conveyor is pointing to.
 		var/turf/target_turf = get_step(get_turf(src), forwards)
-		if(!target_turf)
-			return ..()
+		if(!target_turf || isclosedturf(target_turf))
+			return ITEM_INTERACT_BLOCKING
 		for(var/obj/machinery/conveyor/belt in target_turf)
 			to_chat(user, span_warning("You cannot place a conveyor belt on top of another conveyor belt."))
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/stack/conveyor/belt_item = attacking_item
+		var/obj/item/stack/conveyor/belt_item = tool
 		belt_item.use(1)
 		new /obj/machinery/conveyor(target_turf, forwards, id)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		user.transfer_item_to_turf(attacking_item, drop_location())
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		user.transfer_item_to_turf(tool, drop_location())
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/conveyor/crowbar_act(mob/living/user, obj/item/tool)
+	user.visible_message(span_notice("[user] struggles to pry up [src] with [tool]."), \
+	span_notice("You struggle to pry up [src] with [tool]."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 40))
+		return ITEM_INTERACT_BLOCKING
+	set_operating(FALSE)
+	var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
+	if(!QDELETED(belt_item)) //God I hate stacks
+		transfer_fingerprints_to(belt_item)
+
+	to_chat(user, span_notice("You remove [src]."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/conveyor/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	setDir(turn(dir, -45))
+	to_chat(user, span_notice("You rotate [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/conveyor/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	inverted = !inverted
+	update_move_direction()
+	to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/conveyor/multitool_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	wire_mode = !wire_mode
+	update_cable()
+	power_change()
+	if(wire_mode)
+		START_PROCESSING(SSmachines, src)
 	else
-		return ..()
+		STOP_PROCESSING(SSmachines, src)
+	to_chat(user, span_notice("You set [src]'s wire mode [wire_mode ? "on" : "off"]."))
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/conveyor/attackby_secondary(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		attacking_item.play_tool_sound(src)
-		flipped = !flipped
-		update_move_direction()
-		to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
+/obj/machinery/conveyor/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	user.transferItemToLoc(tool, drop_location())
+	return ITEM_INTERACT_SUCCESS
 
-	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src)
-		setDir(turn(dir, 45))
-		to_chat(user, span_notice("You rotate [src]."))
+/obj/machinery/conveyor/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	flipped = !flipped
+	update_move_direction()
+	to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
+	return ITEM_INTERACT_SUCCESS
 
-	else if(!user.combat_mode)
-		user.transferItemToLoc(attacking_item, drop_location())
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/conveyor/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	setDir(turn(dir, 45))
+	to_chat(user, span_notice("You rotate [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/conveyor/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!wire_mode)
@@ -548,10 +558,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/attack_robot_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_wire_tool(attacking_item))
-		wires.interact(user)
-		return TRUE
+/obj/machinery/conveyor_switch/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_wire_tool(tool))
+		return NONE
+	wires.interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
 	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2, round_value = FALSE)
@@ -606,6 +617,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "switch-off"
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	// ID of the switch-in-the-making, to link conveyor belts to it.
 	var/id = ""
 
@@ -644,6 +656,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
 	merge_type = /obj/item/stack/conveyor
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
 	/// ID for linking a belt to one or more switches, all conveyors with the same ID will be controlled the same switch(es).
 	var/id = ""
 
@@ -663,12 +676,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use(1)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(istype(item_used, /obj/item/conveyor_switch_construct))
-		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
-		var/obj/item/conveyor_switch_construct/switch_construct = item_used
-		id = switch_construct.id
+/obj/item/stack/conveyor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/conveyor_switch_construct))
+		return NONE
+	to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
+	var/obj/item/conveyor_switch_construct/switch_construct = tool
+	id = switch_construct.id
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/conveyor/update_weight()
 	return FALSE

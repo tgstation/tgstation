@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Surprise, a follow up refactor to species part rendering, report any oddities with them (wings/snouts/tails/etc)"
