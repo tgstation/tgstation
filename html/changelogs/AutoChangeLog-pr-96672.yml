@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - code_imp: "20 files have been converted from attackby() to item_interaction()"
