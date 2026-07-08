@@ -92,6 +92,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	return ..()
 
+/obj/item/vorpalscythe/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(empowerment == SCYTHE_EMPOWERED)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, bonus_force_multiplier)
+
+	return ..()
+
 //Borrows some amputation shear code, but much more specific
 /obj/item/vorpalscythe/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(!iscarbon(victim) || user.combat_mode)
@@ -171,16 +177,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(empowerment > potential_empowerment) //If the new is weaker than the old, don't reset the timer and don't change our power
 		return
 
-	if(empowerment != SCYTHE_EMPOWERED && potential_empowerment == SCYTHE_EMPOWERED)
-		force *= bonus_force_multiplier
-
 	empowerment = potential_empowerment
 	if(potential_empowerment != SCYTHE_WEAK) //And finally, if it wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()
 	empowerment = SCYTHE_WEAK
-	force = initial(force)
 
 #undef SCYTHE_WEAK
 #undef SCYTHE_SATED
