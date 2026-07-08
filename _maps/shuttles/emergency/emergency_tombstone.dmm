@@ -1,0 +1,1233 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"as" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Tombstone shuttle"
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Cemetery"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aI" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"aS" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"aX" = (
+/obj/item/statuebust,
+/obj/structure/table/wood,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"bG" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/rack,
+/obj/item/storage/box/bodybags,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bR" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/button/crematorium{
+	id = "graveyard_shuttle_crematorium";
+	dir = 4;
+	pixel_y = 25
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ct" = (
+/obj/effect/turf_decal/trimline/blue,
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"cu" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"cV" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"dd" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dh" = (
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"dr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"dy" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"et" = (
+/obj/machinery/portable_atmospherics/canister/miasma,
+/obj/structure/sign/warning/biohazard/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"eW" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"fm" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"fx" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/storage/fancy/candle_box,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"fS" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"gm" = (
+/obj/machinery/smartfridge/organ,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"it" = (
+/obj/structure/closet/jcloset,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"iz" = (
+/obj/effect/spawner/random/trash/hobo_squat{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"iN" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"jl" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"jS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"kz" = (
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 6
+	},
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"kM" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Cemetery"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kR" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/item/storage/fancy/candle_box,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"la" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ly" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"lV" = (
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"mc" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"mm" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"mr" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"mt" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/surgery_tray/full/morgue,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"mx" = (
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 10
+	},
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"mz" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"mZ" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ni" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"nx" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/item/bouquet/poppy{
+	pixel_x = 19
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"ok" = (
+/obj/item/flashlight/flare/torch,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"px" = (
+/obj/item/flashlight/flare/torch,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"qf" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"qn" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"qr" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"qx" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"qM" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"rH" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"si" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"so" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"th" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"vD" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"vK" = (
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"vL" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue"
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"vP" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1;
+	spawn_loot_count = 2;
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"vT" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"vZ" = (
+/obj/structure/bodycontainer/crematorium{
+	id = "graveyard_shuttle_crematorium"
+	},
+/obj/structure/sign/warning/hot_temp/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape/brig)
+"we" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Coroner's Office";
+	req_access = list("morgue_secure")
+	},
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"wu" = (
+/obj/item/flashlight/flare/torch,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"wX" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/structure/rack,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"xc" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"xt" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"yo" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"yJ" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Ab" = (
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Aw" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"AA" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"AS" = (
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 5
+	},
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"Bj" = (
+/turf/template_noop,
+/area/template_noop)
+"Cz" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"DO" = (
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue"
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Ei" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Fi" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue"
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"FJ" = (
+/obj/structure/mineral_door{
+	name = "Crypt"
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"FZ" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/clothing/head/helmet/skull,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"Gf" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1;
+	spawn_loot_count = 2;
+	spawn_loot_chance = 50
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Gs" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/box/gloves,
+/obj/item/reagent_containers/spray/cleaner,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"GU" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"Hy" = (
+/obj/item/flashlight/flare/torch,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"HZ" = (
+/obj/structure/closet/crate/coffin,
+/obj/effect/turf_decal/trimline/dark_red/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"Ih" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Lv" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"MS" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Crematorium"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"MT" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Nw" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Ny" = (
+/obj/item/clothing/head/helmet/skull,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"NU" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"NV" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/vending/wardrobe/coroner_wardrobe,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Oa" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Ow" = (
+/obj/structure/table/wood,
+/obj/item/shovel,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"PM" = (
+/obj/structure/sign/warning/vacuum/directional/south,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"PP" = (
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue";
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Ru" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/item/bouquet/sunflower{
+	pixel_y = 44
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"RZ" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Sn" = (
+/obj/effect/spawner/costume/plaguedoctor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ty" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"Uu" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"UA" = (
+/obj/structure/table/optable,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Vl" = (
+/obj/structure/closet/crate/grave/fresh,
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/exotic/grave,
+/turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"VQ" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Wp" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ws" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue";
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Xg" = (
+/obj/structure/closet/crate/grave/fresh,
+/obj/structure/sign/painting/library{
+	pixel_y = 33;
+	dir = 1
+	},
+/obj/effect/spawner/random/exotic/grave,
+/turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"Xl" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Xv" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/item/shovel,
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"Yp" = (
+/obj/machinery/light/small/dim/directional/east,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	name = "morgue";
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Yt" = (
+/obj/machinery/door/morgue{
+	name = "Occult Study"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"YF" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Secure Morgue"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"YN" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/wasteland/station,
+/area/shuttle/escape)
+"YS" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/exotic/grave,
+/turf/open/misc/dirt/station,
+/area/shuttle/escape)
+"Zj" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Ih
+Ih
+Bj
+Ih
+Ih
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(2,1,1) = {"
+Bj
+Bj
+Ih
+Ih
+Bj
+aI
+aI
+iz
+aI
+aI
+Bj
+Ih
+Ih
+Bj
+Bj
+"}
+(3,1,1) = {"
+Bj
+Bj
+aI
+aI
+Bj
+Uu
+Uu
+Uu
+Uu
+Uu
+Bj
+aI
+aI
+Bj
+Bj
+"}
+(4,1,1) = {"
+Uu
+Uu
+Uu
+Uu
+Bj
+Uu
+et
+Gf
+bR
+Uu
+Bj
+Uu
+Uu
+aS
+Uu
+"}
+(5,1,1) = {"
+Uu
+Aw
+it
+Uu
+lV
+Uu
+Uu
+Yt
+Uu
+Uu
+vP
+Uu
+Cz
+PM
+Uu
+"}
+(6,1,1) = {"
+Uu
+MT
+Uu
+Uu
+Uu
+Uu
+ct
+dh
+jl
+Uu
+Uu
+Uu
+Uu
+mr
+Uu
+"}
+(7,1,1) = {"
+Uu
+qx
+vL
+Fi
+DO
+wX
+mt
+dh
+UA
+bG
+vL
+Fi
+DO
+qn
+Uu
+"}
+(8,1,1) = {"
+Uu
+qx
+xt
+si
+iN
+la
+gm
+we
+NV
+la
+xt
+si
+iN
+qn
+Uu
+"}
+(9,1,1) = {"
+mz
+Wp
+mc
+mc
+mc
+Zj
+mc
+mc
+mc
+Zj
+mc
+mc
+mc
+Ei
+mz
+"}
+(10,1,1) = {"
+mz
+eW
+qM
+qM
+qM
+cu
+qM
+qM
+qM
+cu
+qM
+qM
+qM
+yo
+mz
+"}
+(11,1,1) = {"
+Uu
+qx
+fS
+VQ
+Nw
+la
+fS
+cV
+Nw
+la
+fS
+VQ
+Nw
+qn
+Uu
+"}
+(12,1,1) = {"
+qf
+qx
+Ws
+Yp
+PP
+la
+Ws
+Yp
+PP
+la
+Ws
+Yp
+PP
+Gs
+Uu
+"}
+(13,1,1) = {"
+Uu
+Uu
+Uu
+Uu
+Uu
+RZ
+Uu
+xc
+Uu
+RZ
+Uu
+Uu
+Uu
+Uu
+Uu
+"}
+(14,1,1) = {"
+kM
+ok
+vT
+vT
+vT
+vK
+vT
+vT
+vT
+vK
+vT
+vT
+vT
+px
+Uu
+"}
+(15,1,1) = {"
+Uu
+fm
+vK
+th
+th
+vK
+th
+th
+th
+vK
+th
+th
+vK
+ni
+Uu
+"}
+(16,1,1) = {"
+mz
+so
+vD
+rH
+rH
+Ty
+rH
+rH
+rH
+dy
+rH
+rH
+so
+vD
+mz
+"}
+(17,1,1) = {"
+mz
+Ny
+vD
+rH
+rH
+fx
+rH
+xc
+rH
+kR
+rH
+rH
+so
+FZ
+mz
+"}
+(18,1,1) = {"
+mz
+so
+vD
+rH
+rH
+Ty
+rH
+rH
+rH
+dy
+rH
+rH
+so
+vD
+mz
+"}
+(19,1,1) = {"
+Uu
+fm
+vK
+vT
+vT
+vK
+vT
+vT
+vT
+vK
+vT
+vT
+vK
+ni
+Uu
+"}
+(20,1,1) = {"
+as
+wu
+th
+th
+th
+th
+vK
+vK
+vK
+th
+th
+vK
+th
+Hy
+Uu
+"}
+(21,1,1) = {"
+Uu
+Uu
+mz
+mz
+Uu
+Uu
+so
+vK
+vD
+Uu
+Uu
+FJ
+Uu
+Uu
+Uu
+"}
+(22,1,1) = {"
+MS
+jS
+Xl
+AS
+kz
+mz
+so
+vK
+vD
+Uu
+Xg
+Ru
+Ow
+aX
+Uu
+"}
+(23,1,1) = {"
+Uu
+vZ
+dr
+mZ
+mZ
+MS
+vK
+AA
+vD
+Uu
+Xg
+so
+vK
+vK
+mz
+"}
+(24,1,1) = {"
+Uu
+cb
+NU
+qr
+qr
+mz
+YN
+vK
+GU
+Uu
+Xv
+th
+ly
+nx
+mz
+"}
+(25,1,1) = {"
+Uu
+mm
+Oa
+HZ
+mx
+Uu
+Uu
+YF
+Uu
+Uu
+YS
+Vl
+YS
+YS
+Uu
+"}
+(26,1,1) = {"
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+dd
+Sn
+dd
+Uu
+Uu
+Uu
+Uu
+Uu
+Uu
+"}
+(27,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Uu
+aj
+Lv
+aj
+Uu
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(28,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+mz
+Ab
+yJ
+Ab
+mz
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(29,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+mz
+mz
+xc
+mz
+mz
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
